@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: Claim API
+  version: 1.0.0
+paths:
+  /claim:
+    get:
+      responses:
+        200:
+          description: This is a list of claims
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    full_name:
+                      type: string
+                      example: Michael Hunt
+                    reference:
+                      type: string
+                      example: ref1234
+                    tel_number:
+                      type: string
+                      example: '07802329853'
+                    email:
+                      type: string
+                      example: 'michael.hunt@digital.justice.gov.uk'
+                    address_line1:
+                      type: string
+                      example: '29 Henry Laver Court'
+                    town:
+                      type: string
+                      example: 'Colchester'
+                    created_at:
+                      type: string
+                      format: time
+                    updated_at:
+                      type: string
+                      format: time
