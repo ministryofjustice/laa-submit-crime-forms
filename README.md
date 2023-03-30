@@ -1,24 +1,65 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+#  LAA-Claim-non-standard-magistrate-fee
+#  A service to apply for a claim for a  non standard magistrate fee
 
 * Ruby version
+ruby 3.2.1
 
-* System dependencies
+* Rails version
+rails 7.0.42.0
 
-* Configuration
+## Getting Started
 
-* Database creation
+Clone the repository, and follow these steps in order.  
+The instructions assume you have [Homebrew](https://brew.sh) installed in your machine, as well as use some ruby version manager, usually [rbenv](https://github.com/rbenv/rbenv). If not, please install all this first.
 
-* Database initialization
+**1. Pre-requirements**
 
-* How to run the test suite
+* `brew bundle`
+* `gem install bundler`
+* `bundle install`
 
-* Services (job queues, cache servers, search engines, etc.)
+**2. Configuration**
 
-* Deployment instructions
+After you've defined your DB configuration in the above files, run the following:
 
-* ...
+* `bin/rails db:prepare` (for the development database)
+* `RAILS_ENV=test bin/rails db:prepare` (for the test database)
+
+**3. GOV.UK Frontend (styles, javascript and other assets)**
+
+* `yarn`
+
+**4. Run the app locally**
+
+Once all the above is done, you should be able to run the application as follows:
+
+a) to run 
+   cd app
+   rails s
+
+If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
+
+
+Mainly, the service can be fully used without any external dependencies up until the submission point, where the datastore needs to be locally running 
+to receive the submitted application.  
+Also, some functionality in the dashboard will make use of this datastore.
+
+For active development, and to debug or diagnose issues, running the datastore locally along the Apply application is 
+the recommended way. Follow the instructions in the above repository to setup and run the datastore locally.
+
+Tested via postman
+
+to create a record 
+Rest create(POST)
+http://localhost:3000/claims?full_name='mike hunt'&reference="1234"&tel_number ="07802329853"&email="m-hunt3@sky.com"&address_line1="29 Henry Laver"&town="colchester"&post_code="co33dq"
+ 
+To read a specific id REST READ(GET)
+http://localhost:3000/claims/2
+
+To update a record
+REST UPDATE(PATCH)
+http://localhost:3000/claims/1?full_name="milo"
+
+To delete a specific id
+REST DELETE(DELETE)
+http://localhost:3000/claims/1
