@@ -33,7 +33,8 @@ After you've defined your DB configuration in the above files, run the following
 
 Once all the above is done, you should be able to run the application as follows:
 
-a) to run cd capp
+a) to run 
+   cd app
    rails s
 
 If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
