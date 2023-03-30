@@ -3,10 +3,61 @@ info:
   title: Claim API
   version: 1.0.0
 paths:
+  /claim/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - in: header
+          name: claim-security-header
+          required: false
+          schema:
+            type: integer
+            example: 3142
+      responses:
+        '200':
+          description: This is aclaim
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    full_name:
+                      type: string
+                      example: Michael Hunt
+                    reference:
+                      type: string
+                      example: ref1234
+                    tel_number:
+                      type: string
+                      example: '07802329853'
+                    email:
+                      type: string
+                      example: michael.hunt@digital.justice.gov.uk
+                    address_line1:
+                      type: string
+                      example: 29 Henry Laver Court
+                    town:
+                      type: string
+                      example: Colchester
+                    created_at:
+                      type: string
+                      format: time
+                    updated_at:
+                      type: string
+                      format: time
   /claim:
     get:
       responses:
-        200:
+        '200':
           description: This is a list of claims
           content:
             application/json:
@@ -28,13 +79,13 @@ paths:
                       example: '07802329853'
                     email:
                       type: string
-                      example: 'michael.hunt@digital.justice.gov.uk'
+                      example: michael.hunt@digital.justice.gov.uk
                     address_line1:
                       type: string
-                      example: '29 Henry Laver Court'
+                      example: 29 Henry Laver Court
                     town:
                       type: string
-                      example: 'Colchester'
+                      example: Colchester
                     created_at:
                       type: string
                       format: time
