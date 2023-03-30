@@ -4,6 +4,8 @@ class ClaimsController < ApplicationController
   end
 
   def show
+    @claim = Claim.find(params[:id])
+    render json: @claim
   end
 
   def new
@@ -13,33 +15,38 @@ class ClaimsController < ApplicationController
 
   def create
     @claim = Claim.new(claim_params)
-    if @claim.save
-    end
+    @claim.save
+  end
 
-    def edit
-    end
+  def edit
+    @claim = Claim.find(params[:id])
+  end
 
-    def update
+  def update
+    @claim = Claim.find(params[:id])
+    if @claim.update(claim_params)
     end
+  end
 
-    def delete
-      @claim=Claim.find(params[:id])
-    end
+  def delete
+    @task = Claim.find(params[:id])
+  end
 
-    def destroy
-    end
+  def destroy
+    @task = Claim.find(params[:id])
+    @task.destroy
+  end
 
-    private
+  private
 
-    def claim_params
-      params.require(:claim).permit(
-        :full_name,
-        :reference,
-        :tel_number,
-        :email,
-        :address_line1,
-        :town,
-        :post_code)
-    end
+  def claim_params
+    params.permit(
+      :full_name,
+      :reference,
+      :tel_number,
+      :email,
+      :address_line1,
+      :town,
+      :post_code)
   end
 end
