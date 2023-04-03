@@ -46,6 +46,24 @@ paths:
                 schema:
                  $ref: '#/components/schemas/Claim'
 components:
+  parameters:
+    PageNumber:
+      in: query
+      name: pageNumber
+      description: Page number to return
+      required: false
+      schema:
+        type: integer
+        example: 1
+    PageSize:
+      in: query
+      name: pageSize
+      description: Number of results in the page
+      required: false
+      schema:
+        type: integer
+        example: 10
+        maximum: 100
   schemas:
     Claim:
       type: object
@@ -79,3 +97,6 @@ components:
         updated_at:
           type: string
           format: time
+        
+      
+
