@@ -1,0 +1,135 @@
+require:
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.1
+  SuggestExtensions: false
+  NewCops: enable
+  Exclude:
+    - 'db/**/*'
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'lib/tasks/**/*'
+    - 'lib/generators/**/*'
+    - 'features/**/*'
+    - 'vendor/**/*'
+
+####################################
+## Customization for this project ##
+####################################
+
+# Disabled cops
+###############
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+Layout/HashAlignment:
+  Enabled: false
+
+# Rspec cops
+############
+
+RSpec/SubjectStub:
+  Enabled: false
+
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/BeforeAfterAll:
+  Enabled: false
+
+RSpec/ExpectInHook:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/StubbedMock:
+  Enabled: false
+
+RSpec/NoExpectationExample:
+  Enabled: false
+
+RSpec/Rails/InferredSpecType:
+  Enabled: false
+
+# Enabled but tweaked cops
+##########################
+
+# To be tweaked until we find the right balance
+Metrics/MethodLength:
+  Max: 12
+
+# To be tweaked until we find the right balance
+Metrics/AbcSize:
+  Max: 18
+
+# https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
+Style/HashSyntax:
+  EnforcedStyle: ruby19_no_mixed_keys
+  EnforcedShorthandSyntax: consistent
+
+# https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Naming/BlockForwarding
+Naming/BlockForwarding:
+  EnforcedStyle: explicit
+
+# https://rubydoc.info/gems/rubocop/0.82.0/RuboCop/Cop/Naming/MethodParameterName
+Naming/MethodParameterName:
+  AllowedNames:
+    - as
+
+# Rubocop mistakenly consider `#values` method as being called on a Hash
+Style/HashEachMethods:
+  Exclude:
+    - app/value_objects/value_object.rb
+    - app/forms/steps/case/ioj_form.rb
+
+Naming/PredicateName:
+  AllowedMethods:
+    - has_nino
+    - has_codefendants
+    - has_one_association
+
+# TODO: adjust these values towards the rubocop defaults
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+RSpec/MultipleExpectations:
+  Max: 7
+  Exclude:
+    - spec/presenters/summary/sections/*
+
+RSpec/NestedGroups:
+  Max: 5
+
+RSpec/ExampleLength:
+  Max: 16
+  Exclude:
+    - spec/presenters/summary/sections/*
