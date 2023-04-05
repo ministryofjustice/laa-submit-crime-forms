@@ -6,6 +6,9 @@ ruby "3.2.1"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 
+gem "rspec-expectations"
+gem "rspec-rails", "~> 4.0.1"
+
 gem 'rswag'
 
 gem 'sprockets-rails'
@@ -48,5 +51,17 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+end
+
+group :test do
+  gem "cucumber-rails", require: false
+  gem "database_cleaner"
+  gem "shoulda-matchers"
+  gem "simplecov" 
+  gem "simplecov-lcov" 
+  gem "simplecov-rcov"
+  gem "super_diff"
+  gem "vcr"
+  gem "webmock", ">= 3.13.0"
 end
 
