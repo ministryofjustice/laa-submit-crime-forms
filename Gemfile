@@ -8,10 +8,10 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 gem 'sprockets-rails'
-gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "tzinfo-data"
 
 group :development, :test do
-  gem "debug", platforms: %i[mri mingw x64_mingw]
+  gem "debug"
   gem "pry"
   gem "rspec-expectations"
   gem "rspec-rails"
@@ -31,8 +31,8 @@ group :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem "shoulda-matchers"
-  gem "simplecov" 
-  gem "simplecov-lcov" 
+  gem "simplecov"
+  gem "simplecov-lcov"
   gem "simplecov-rcov"
   gem "super_diff"
   gem "vcr"
