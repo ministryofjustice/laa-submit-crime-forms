@@ -13,19 +13,17 @@ class ClaimsController < ApplicationController
     @claim = Claim.new(position: @count + 1)
   end
 
+  def edit
+    @claim = Claim.find(params[:id])
+  end
+
   def create
     @claim = Claim.new(claim_params)
     @claim.save
   end
 
-  def edit
-    @claim = Claim.find(params[:id])
-  end
-
   def update
     @claim = Claim.find(params[:id])
-    if @claim.update(claim_params)
-    end
   end
 
   def delete
