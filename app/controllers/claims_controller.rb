@@ -47,6 +47,7 @@ class ClaimsController < ApplicationController
       :email,
       :address_line1,
       :town,
-      :post_code)
+      :post_code
+    )
   end
 end
