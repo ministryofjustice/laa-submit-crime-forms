@@ -9,8 +9,8 @@
 
 
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
+log/*
+tmp/*
 !/log/.keep
 !/tmp/.keep
 
@@ -36,3 +36,4 @@
 /config/master.key
 
 .env.local
+coverage/

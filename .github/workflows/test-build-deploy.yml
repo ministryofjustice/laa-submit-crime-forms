@@ -1,0 +1,56 @@
+name: CI and CD
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      RACK_ENV: test
+      RAILS_ENV: test
+      DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/laa-claim-non-standard-magistrate-fee-test"
+
+    services:
+      postgres:
+        image: postgres:14.6-alpine
+        env:
+          POSTGRES_DB: laa-claim-non-standard-magistrate-fee-test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup test database
+        run: bin/rails db:prepare
+
+      - name: Run linters
+        run: bundle exec rubocop
+
+      - name: Run tests
+        run: bundle exec rspec
+
+      - name: Upload rspec coverage (if failure)
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: rspec-coverage
+          path: coverage/*
