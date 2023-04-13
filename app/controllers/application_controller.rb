@@ -5,8 +5,4 @@ class ApplicationController < ActionController::Base
     @current_office_code ||= current_provider&.selected_office_code
   end
   helper_method :current_office_code
-
-  def authenticate_provider!
-    super
-  end
 end
