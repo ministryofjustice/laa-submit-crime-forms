@@ -39,20 +39,24 @@ a) to run
 
 If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
 
-
-Mainly, the service can be fully used without any external dependencies up until the submission point, where the datastore needs to be locally running 
-to receive the submitted application.  
-Also, some functionality in the dashboard will make use of this datastore.
-
-For active development, and to debug or diagnose issues, running the datastore locally along the Apply application is 
-the recommended way. Follow the instructions in the above repository to setup and run the datastore locally.
-
 Tested via postman
 
-to create a record 
-Rest create(POST)
-http://localhost:3000/claims?full_name='mike hunt'&reference="1234"&tel_number ="07802329853"&email="m-hunt3@sky.com"&address_line1="29 Henry Laver"&town="colchester"&post_code="co33dq"
- 
+This has now got basic swagger and rspec integration.
+
+To test:
+1. rails db:migrate (to update the database schema)
+2. rails db:seed (to seed the database with dummy data)
+3. rspec in the root directory to run tests (should be 21 tests)
+4. rails s (to run the server)
+5. open a browser goto to http://localhost:3000/api-docs/index.html(this will display swagger documentation where you should be able to test the api, the api is not finalised as it only takes a record id as input for certain operations - also getting following error Failed to fetch.
+Possible Reasons:
+
+CORS
+Network Failure
+URL scheme must be "http" or "https" for CORS request.)
+
+This works via curl and postman so some config issues ? - will resolve
+
 To read a specific id REST READ(GET)
 http://localhost:3000/claims/2
 
