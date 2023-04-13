@@ -1,0 +1,2 @@
+class ProviderOffice < ApplicationRecord
+end

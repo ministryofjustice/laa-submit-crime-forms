@@ -1,11 +1,11 @@
 require 'swagger_helper'
 
 RSpec.describe 'Claims API', type: :request do
-  path '/claims/{id}/delete' do
+  path '/provider_solicitors/{id}/delete' do
     # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
-    get('delete claim office') do
+    get('delete provider solicitor') do
       response(204, 'successful') do
         let(:id) { '1' }
 
@@ -23,9 +23,9 @@ RSpec.describe 'Claims API', type: :request do
     end
   end
 
-  path '/claims' do
+  path '/provider_solicitors' do
 
-    get('list claims') do
+    get('list provider_solicitors') do
       response(200, 'successful') do
 
         after do |example|
@@ -41,7 +41,7 @@ RSpec.describe 'Claims API', type: :request do
       end
     end
 
-    post('create claim office') do
+    post('create provider solicitor') do
       response(204, 'successful') do
 
         after do |example|
@@ -58,11 +58,11 @@ RSpec.describe 'Claims API', type: :request do
     end
   end
 
-  path '/claims/{id}' do
+  path '/provider_solicitors/{id}' do
     # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
-    get('show claim office') do
+    get('show provider solicitor') do
       response(200, 'successful') do
         let(:id) { '1' }
 
@@ -79,7 +79,7 @@ RSpec.describe 'Claims API', type: :request do
       end
     end
 
-    patch('update claim office') do
+    patch('update provider solicitor') do
       response(204, 'successful') do
         let(:id) { '1' }
 
@@ -96,7 +96,7 @@ RSpec.describe 'Claims API', type: :request do
       end
     end
 
-    put('update claim office') do
+    put('update provider solicitor') do
       response(204, 'successful') do
         let(:id) { '1' }
 
@@ -113,7 +113,7 @@ RSpec.describe 'Claims API', type: :request do
       end
     end
 
-    delete('delete claim office') do
+    delete('delete provider solicitor') do
       response(204, 'successful') do
         let(:id) { '1' }
 

@@ -1,0 +1,167 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/claims/{id}/delete":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: delete claim office
+      responses:
+        '204':
+          description: successful
+  "/claims":
+    get:
+      summary: list claims
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create claim office
+      responses:
+        '204':
+          description: successful
+  "/claims/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show claim office
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update claim office
+      responses:
+        '204':
+          description: successful
+    put:
+      summary: update claim office
+      responses:
+        '204':
+          description: successful
+    delete:
+      summary: delete claim office
+      responses:
+        '204':
+          description: successful
+  "/provider_offices/{id}/delete":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: delete provider office
+      responses:
+        '204':
+          description: successful
+  "/provider_offices":
+    get:
+      summary: list provider_offices
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create provider office
+      responses:
+        '204':
+          description: successful
+  "/provider_offices/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show provider office
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update provider office
+      responses:
+        '204':
+          description: successful
+    put:
+      summary: update provider office
+      responses:
+        '204':
+          description: successful
+    delete:
+      summary: delete provider office
+      responses:
+        '204':
+          description: successful
+  "/provider_solicitors/{id}/delete":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: delete provider solicitor
+      responses:
+        '204':
+          description: successful
+  "/provider_solicitors":
+    get:
+      summary: list provider_solicitors
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create provider solicitor
+      responses:
+        '204':
+          description: successful
+  "/provider_solicitors/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show provider solicitor
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update provider solicitor
+      responses:
+        '204':
+          description: successful
+    put:
+      summary: update provider solicitor
+      responses:
+        '204':
+          description: successful
+    delete:
+      summary: delete provider solicitor
+      responses:
+        '204':
+          description: successful
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
