@@ -51,4 +51,3 @@ group :test do
   gem 'webdrivers'
   gem 'webmock', '>= 3.13.0'
 end
-
