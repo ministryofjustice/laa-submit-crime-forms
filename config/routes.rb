@@ -15,6 +15,18 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :provider_offices do
+      member do
+        get :delete
+      end
+    end
+
+    resources :provider_solicitors do
+      member do
+        get :delete
+      end
+    end
+
     # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
     # Defines the root path route ("/")
