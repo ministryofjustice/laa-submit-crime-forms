@@ -10,8 +10,14 @@ gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 gem 'sprockets-rails'
 gem 'tzinfo-data'
 
+# Authentication
+gem 'devise', '~> 4.8'
+gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-saml', '~> 2.1.0'
+
 group :development, :test do
   gem 'debug'
+  gem 'dotenv-rails'
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec-rails'

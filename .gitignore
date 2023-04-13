@@ -35,5 +35,9 @@ tmp/*
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-.env.local
 coverage/
+
+# Ignore user's individual .env files
+.env.development.local
+.env.test.local
+.env.local

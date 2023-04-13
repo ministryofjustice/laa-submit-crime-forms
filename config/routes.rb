@@ -3,20 +3,27 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+
+  devise_for :providers,
+             skip: [:all],
+             controllers: {
+               omniauth_callbacks: 'providers/omniauth_callbacks'
+             }
+
   # Defines the root path route ("/")
   # root "articles#index"
-    root "main#index"
+  # root "main#index"
 
-    get 'main/index'
+  get 'main/index'
 
-    resources :claims do
-      member do
-        get :delete
-      end
+  resources :claims do
+    member do
+      get :delete
     end
-
-    # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-    # Defines the root path route ("/")
   end
+
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  # Defines the root path route ("/")
+end
 
