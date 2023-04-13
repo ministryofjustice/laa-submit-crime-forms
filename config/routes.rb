@@ -3,6 +3,16 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  root "home#index"
+
+  resource :errors, only: [] do
+    get :application_not_found
+    get :invalid_session
+    get :unhandled
+    get :unauthorized
+    get :not_enrolled
+    get :not_found
+  end
 
   devise_for :providers,
              skip: [:all],
@@ -10,11 +20,13 @@ Rails.application.routes.draw do
                omniauth_callbacks: 'providers/omniauth_callbacks'
              }
 
-  # Defines the root path route ("/")
-  # root "articles#index"
-  # root "main#index"
+  devise_scope :provider do
+    get 'login', to: 'errors#unauthorized', as: :new_provider_session
 
-  get 'main/index'
+    namespace :providers do
+      delete 'logout', to: 'sessions#destroy', as: :logout
+    end
+  end
 
   resources :claims do
     member do

@@ -61,4 +61,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Use the faster rack test by default for system specs
+  config.before(:each, type: :system) { driven_by :rack_test }
 end

@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  helper StepsHelper
+
   prepend_before_action :authenticate_provider!
 
   def current_office_code
