@@ -6,6 +6,7 @@ ruby File.read('.ruby-version').strip
 gem 'bootsnap', require: false
 gem 'govuk_design_system_formbuilder', '~> 3.3.0'
 gem 'importmap-rails'
+gem 'laa_multi_step_forms', path: 'gems/laa_multi_step_forms'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
@@ -51,3 +52,4 @@ group :test do
   gem 'webdrivers'
   gem 'webmock', '>= 3.13.0'
 end
+

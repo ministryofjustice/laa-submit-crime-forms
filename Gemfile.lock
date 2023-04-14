@@ -1,3 +1,9 @@
+PATH
+  remote: gems/laa_multi_step_forms
+  specs:
+    laa_multi_step_forms (0.1.0)
+      rails (>= 7.0.4.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -396,6 +402,7 @@ DEPENDENCIES
   dotenv-rails
   govuk_design_system_formbuilder (~> 3.3.0)
   importmap-rails
+  laa_multi_step_forms!
   omniauth-rails_csrf_protection
   omniauth-saml (~> 2.1.0)
   pg (~> 1.1)
