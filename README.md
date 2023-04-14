@@ -36,12 +36,12 @@ After you've defined your DB configuration in the above files, run the following
 
 Once all the above is done, you should be able to run the application as follows:
 
-a) to run
-   cd app
-   rails s
+a) `bin/dev` - will run foreman, spawning a rails server and `dartsass:watch` to process SCSS files and watch for any changes.
+b) `rails server` - will only run the rails server, usually fine if you are not making changes to the CSS.
+
+You can also compile assets manually with `rails dartsass:build` at any time, and just run the rails server, without foreman.
 
 If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
-
 
 Mainly, the service can be fully used without any external dependencies up until the submission point, where the datastore needs to be locally running
 to receive the submitted application.

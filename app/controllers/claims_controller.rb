@@ -1,6 +1,11 @@
 class ClaimsController < ApplicationController
   def index
-    render json: Claim.all
+    respond_to do |format|
+      format.json { render json: Claim.all }
+      format.all  { render :index, locals: { claims: Claim.all } }
+    end
+
+
   end
 
   def show

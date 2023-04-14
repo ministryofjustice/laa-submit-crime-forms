@@ -1,2 +1,128 @@
-<h1>Claims#index</h1>
-<p>Find me in app/views/claims/index.html.erb</p>
+<style>
+  .app-task-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    @include govuk-media-query($from: tablet) {
+      min-width: 550px;
+    }
+  }
+
+  .app-task-list__section {
+    display: table;
+    @include govuk-font($size:24, $weight: bold);
+  }
+
+  .app-task-list__section-number {
+    display: table-cell;
+
+    @include govuk-media-query($from: tablet) {
+      min-width: govuk-spacing(6);
+      padding-right: 0;
+    }
+  }
+
+  .app-task-list__items {
+    @include govuk-font($size: 19);
+    @include govuk-responsive-margin(9, "bottom");
+    list-style: none;
+    padding-left: 0;
+    @include govuk-media-query($from: tablet) {
+      padding-left: govuk-spacing(6);
+    }
+  }
+
+  .app-task-list__item {
+    border-bottom: 1px solid $govuk-border-colour;
+    margin-bottom: 0 !important;
+    padding-top: govuk-spacing(2);
+    padding-bottom: govuk-spacing(2);
+    @include govuk-clearfix;
+  }
+
+  .govuk-button {
+    margin: 10px;
+  }
+</style>
+
+<% title t('.page_title') %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">Your claims</h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <a href="claim_type" class="govuk-button govuk-button--start">
+      Make a new claim
+    </a>
+  </div>
+
+</div>
+
+<div class="govuk-!-padding-top-8"></div>
+
+<div class="govuk-grid-row">
+  <!-- <div class="govuk-grid-column-two-thirds"> <h3 class="govuk-heading-m">Current applications</h3> </div> -->
+
+  <!-- <div class="govuk-!-padding-top-3"></div> -->
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table" data-module="moj-sortable-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" aria-sort="ascending">Name</th>
+          <th scope="col" class="govuk-table__header" aria-sort="none">Start date</th>
+          <th scope="col" class="govuk-table__header" aria-sort="none">LAA reference</th>
+          <th scope="col" class="govuk-table__header" aria-sort="none">Status</th>
+          <th scope="col" class="govuk-table__header" aria-sort="none">Action</th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body app-task-list__items">
+        <% claims.each do |claim| %>
+          <tr class="govuk-table__row app-task-list__item">
+            <% if claim.status == 'completed' %>
+              <td class="govuk-table__cell">
+                <a href="/application_certificate/<%= application.id %>"><%= claim.name %></a>
+              </td>
+            <% else %>
+              <td class="govuk-table__cell">
+                <a href="/tasklist/<%= application.id %>"><%= application.name %></a>
+              </td>
+            <% end %>
+            <td><%= application.date %></td>
+            <td><%= application.reference %></td>
+            <% if application.status == 'completed' %>
+              <td>
+                <strong class="govuk-tag govuk-tag--green">
+                  Submitted
+                </strong>
+              </td>
+            <% elsif application.status == 'updated' %>
+              <td>
+                <strong class="govuk-tag">
+                  Amended
+                </strong>
+              </td>
+            <% else %>
+              <td>
+                <strong class="govuk-tag govuk-tag--blue">
+                  In progress
+                </strong>
+              </td>
+            <% end %>
+            <td>
+              <a href="/confirm_delete?id=<%= application.id %>&name=<%= application.name %>&reference=<%=  application.reference %>" class="govuk-button govuk-button--secondary">Delete</a>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

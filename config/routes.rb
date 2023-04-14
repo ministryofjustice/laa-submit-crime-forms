@@ -23,6 +23,13 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :about do
+    get :privacy
+    get :contact
+    get :feedback
+    get :accessibility
+  end
+
   resources :claims do
     member do
       get :delete
