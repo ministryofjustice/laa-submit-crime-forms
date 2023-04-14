@@ -1,18 +1,12 @@
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
+
+  # mount this at the route
+  mount LaaMultiStepForms::Engine, at: '/'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   root "home#index"
-
-  resource :errors, only: [] do
-    get :application_not_found
-    get :invalid_session
-    get :unhandled
-    get :unauthorized
-    get :not_enrolled
-    get :not_found
-  end
 
   devise_for :providers,
              skip: [:all],
@@ -25,6 +19,7 @@ Rails.application.routes.draw do
 
     namespace :providers do
       delete 'logout', to: 'sessions#destroy', as: :logout
+      get 'logout', to: 'sessions#destroy'
     end
   end
 
