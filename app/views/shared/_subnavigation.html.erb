@@ -1,0 +1,21 @@
+<nav class="moj-sub-navigation" aria-label="<%= t('.nav_aria_label') %>">
+  <ul class="moj-sub-navigation__list">
+    <li class="moj-sub-navigation__item">
+      <%= link_to t('.in_progress', count: in_progress_count), claims_path,
+                  class: 'moj-sub-navigation__link',
+                  'aria-current': aria_current_page(:in_progress) %>
+    </li>
+
+    <li class="moj-sub-navigation__item">
+      <%= link_to t('.submitted'), claims_path,
+                  class: 'moj-sub-navigation__link',
+                  'aria-current': aria_current_page(:submitted) %>
+    </li>
+
+    <li class="moj-sub-navigation__item">
+      <%= link_to t('.returned', count: returned_count), claims_path(q: 'returned'),
+                  class: 'moj-sub-navigation__link',
+                  'aria-current': aria_current_page(:returned) %>
+    </li>
+  </ul>
+</nav>
