@@ -1,5 +1,5 @@
 module Steps
-  class BaseStepController < ApplicationController
+  class BaseStepController < ::ApplicationController
     before_action :check_application_presence
     before_action :update_navigation_stack, only: [:show, :edit]
 
@@ -29,13 +29,13 @@ module Steps
       record = opts[:record]
 
       @form_object = form_class.new(
-        hash.merge(crime_application: current_crime_application, record: record)
+        hash.merge(application: current_application, record: record)
       )
 
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
         @form_object.save!
-        redirect_to edit_crime_application_path(current_crime_application)
+        redirect_to edit_application_path(current_application)
       elsif @form_object.save
         redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       else
@@ -57,13 +57,13 @@ module Steps
     end
 
     def update_navigation_stack
-      return unless current_crime_application
+      return unless current_application
 
-      stack_until_current_page = current_crime_application
+      stack_until_current_page = current_application
                                  .navigation_stack.take_while { |path| path != request.fullpath }
 
-      current_crime_application.navigation_stack = stack_until_current_page + [request.fullpath]
-      current_crime_application.save!(touch: false)
+      current_application.navigation_stack = stack_until_current_page + [request.fullpath]
+      current_application.save!(touch: false)
     end
   end
 end

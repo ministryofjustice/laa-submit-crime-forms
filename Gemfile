@@ -13,6 +13,7 @@ gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 gem 'sprockets-rails'
 gem 'tzinfo-data'
+gem 'uk_postcode'
 
 # Authentication
 gem 'devise', '~> 4.8'
@@ -53,4 +54,3 @@ group :test do
   gem 'webdrivers'
   gem 'webmock', '>= 3.13.0'
 end
-

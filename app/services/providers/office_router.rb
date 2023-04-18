@@ -13,7 +13,7 @@ module Providers
     end
 
     def path
-      claims_path
+      applications_path
 
       # TODO: add this back in once the office selection is re-enabled
       # if provider.selected_office_code.blank?
