@@ -39,7 +39,7 @@ RSpec.describe 'Sign in user journey' do
     end
 
     it 'redirects to the error page' do
-      expect(current_url).to match(not_enrolled_errors_path)
+      expect(current_url).to match(laa_msf.not_enrolled_errors_path)
       expect(page).to have_content('Your account cannot use this service yet')
     end
   end
@@ -54,7 +54,7 @@ RSpec.describe 'Sign in user journey' do
     end
 
     it 'authenticates the user and redirects to the dashboard' do
-      expect(current_url).to match(claims_path)
+      expect(current_url).to match(applications_path)
     end
   end
 end
