@@ -39,6 +39,25 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Find yarn cache location
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - name: JS package cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install packages with yarn
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Precompile assets
+        run: bin/rails dartsass:build
+
       - name: Setup test database
         run: bin/rails db:prepare
 
