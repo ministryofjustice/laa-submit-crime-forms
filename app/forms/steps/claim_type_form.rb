@@ -34,8 +34,16 @@ module Steps
 
     def persist!
       application.update(
-        attributes
+        attributes.merge(status_attributes)
       )
+    end
+
+    def status_attributes
+      if claim_type == ClaimType::SOMETHING_ELSE
+        { status: :abandoned }
+      else
+        {}
+      end
     end
   end
 end

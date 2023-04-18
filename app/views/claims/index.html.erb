@@ -89,36 +89,42 @@
           <tr class="govuk-table__row app-task-list__item">
             <% if claim.status == 'completed' %>
               <td class="govuk-table__cell">
-                <a href="/application_certificate/<%= application.id %>"><%= claim.name %></a>
+                <a href="/application_certificate/<%= application.id %>"><%= claim.id %></a>
               </td>
             <% else %>
               <td class="govuk-table__cell">
-                <a href="/tasklist/<%= application.id %>"><%= application.name %></a>
+                <a href="/tasklist/<%= claim.id %>"><%= claim.short_id %></a>
               </td>
             <% end %>
-            <td><%= application.date %></td>
-            <td><%= application.reference %></td>
-            <% if application.status == 'completed' %>
-              <td>
+            <td class="govuk-table__cell"><%= claim.date %></td>
+            <td class="govuk-table__cell"><%= claim.ufn %></td>
+            <% if claim.status == 'completed' %>
+              <td class="govuk-table__cell">
                 <strong class="govuk-tag govuk-tag--green">
                   Submitted
                 </strong>
               </td>
-            <% elsif application.status == 'updated' %>
-              <td>
+            <% elsif claim.status == 'updated' %>
+              <td class="govuk-table__cell">
                 <strong class="govuk-tag">
                   Amended
                 </strong>
               </td>
+            <% elsif claim.status == 'abandoned' %>
+              <td class="govuk-table__cell">
+                <strong class="govuk-tag govuk-tag--red">
+                  Abandoned
+                </strong>
+              </td>
             <% else %>
-              <td>
+              <td class="govuk-table__cell">
                 <strong class="govuk-tag govuk-tag--blue">
                   In progress
                 </strong>
               </td>
             <% end %>
-            <td>
-              <a href="/confirm_delete?id=<%= application.id %>&name=<%= application.name %>&reference=<%=  application.reference %>" class="govuk-button govuk-button--secondary">Delete</a>
+            <td class="govuk-table__cell">
+              <a href="/confirm_delete?id=<%= claim.id %>&name=<%= claim.office_code %>&reference=<%=  claim.ufn %>" class="govuk-button govuk-button--secondary">Delete</a>
             </td>
           </tr>
         <% end %>
