@@ -1,7 +1,7 @@
 module LaaMultiStepForms
   class ErrorsController < ::ApplicationController
     skip_before_action :verify_authenticity_token,
-                      :authenticate_provider!
+                       :authenticate_provider!
 
     def invalid_session
       respond_with_status(:ok)

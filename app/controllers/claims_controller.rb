@@ -41,7 +41,6 @@ class ClaimsController < ApplicationController
     end
   end
 
-
   def claim_params
     params.permit(
       :full_name,

@@ -1,11 +1,11 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-require "laa_multi_step_forms"
+require 'laa_multi_step_forms'
 
 module Dummy
   class Application < Rails::Application
