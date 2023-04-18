@@ -1,7 +1,7 @@
 # TODO: use base controller from library??
 class ApplicationController < LaaMultiStepForms::ApplicationController
   def current_application
-    @current_application ||= Claim.find_by(usn: params[:id])
+    @current_application ||= Claim.find_by(id: params[:id])
   end
 
   def current_office_code

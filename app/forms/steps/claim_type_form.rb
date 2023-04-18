@@ -3,21 +3,31 @@ require 'steps/base_form_object'
 module Steps
   class ClaimTypeForm < Steps::BaseFormObject
     attribute :claim_type, :value_object, source: ClaimType
-    attribute :claim_number, :string
-    attribute :claim_date, :multiparam_date
+
+    attribute :rep_order_date, :multiparam_date
+    attribute :cntp_order, :string
+    attribute :cntp_date, :multiparam_date
 
 
     validates_inclusion_of :claim_type, in: :choices
-    validates :claim_date, presence: true,
+    validates :rep_order_date, presence: true,
             multiparam_date: { allow_past: true, allow_future: false },
-            if: :supported_claim_type?
+            if: :non_standard_claim?
+    validates :cntp_order, presence: true, if: :breach_claim?
+    validates :cntp_date, presence: true,
+            multiparam_date: { allow_past: true, allow_future: false },
+            if: :breach_claim?
 
     def choices
       ClaimType.values
     end
 
-    def supported_claim_type?
-      claim_type.supported?
+    def non_standard_claim?
+      claim_type == ClaimType::NON_STANDARD_MAGISTRATE
+    end
+
+    def breach_claim?
+      claim_type == ClaimType::BREACH_OF_INJUNCTION
     end
 
     private

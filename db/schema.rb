@@ -15,15 +15,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_155635) do
   enable_extension "plpgsql"
 
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "usn", null: false
+    t.string "ufn"
     t.string "office_code", null: false
     t.jsonb "navigation_stack", default: [], array: true
     t.string "claim_type"
-    t.string "claim_number"
-    t.datetime "claim_date"
+    t.datetime "rep_order_date"
+    t.string "cntp_order"
+    t.datetime "cntp_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["usn"], name: "index_claims_on_usn", unique: true
+    t.index ["ufn"], name: "index_claims_on_ufn"
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

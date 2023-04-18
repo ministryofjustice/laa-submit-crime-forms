@@ -14,7 +14,7 @@ class ClaimsController < ApplicationController
 
   def create
     initialize_application do |claim|
-      redirect_to edit_steps_claim_type_path(claim.usn)
+      redirect_to edit_steps_claim_type_path(claim.id)
     end
   end
 
@@ -35,9 +35,8 @@ class ClaimsController < ApplicationController
 
   def initialize_application(attributes = {}, &block)
     attributes[:office_code] = current_office_code
-    attributes[:usn] = "#{Date.today.to_fs(:number)}-#{SecureRandom.hex(4)}"
 
-    Claim.create(attributes).tap do |crime_application|
+    Claim.create!(attributes).tap do |crime_application|
       yield(crime_application) if block
     end
   end

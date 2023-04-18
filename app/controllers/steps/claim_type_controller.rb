@@ -1,11 +1,9 @@
 module Steps
   class ClaimTypeController < Steps::BaseStepController
     def edit
-      form_object = ClaimTypeForm.build(
+      @form_object = ClaimTypeForm.build(
         current_application
       )
-
-      render locals: { form_object: }
     end
 
     def update
@@ -15,7 +13,7 @@ module Steps
     private
 
     def decision_tree_class
-      Desisions::SimpleDecisionTree
+      Decisions::SimpleDecisionTree
     end
   end
 end
