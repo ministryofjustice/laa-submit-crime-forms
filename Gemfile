@@ -51,6 +51,4 @@ group :test do
   gem 'simplecov-rcov'
   gem 'super_diff'
   gem 'vcr'
-  gem 'webdrivers'
-  gem 'webmock', '>= 3.13.0'
 end
