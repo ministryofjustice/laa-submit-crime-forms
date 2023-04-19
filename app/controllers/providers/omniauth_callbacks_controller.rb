@@ -30,7 +30,7 @@ module Providers
       return if gatekeeper.provider_enrolled?
 
       Rails.logger.warn "Not enrolled provider access attempt, UID: #{auth_hash.uid}"
-      redirect_to not_enrolled_errors_path
+      redirect_to laa_msf.not_enrolled_errors_path
     end
   end
 end

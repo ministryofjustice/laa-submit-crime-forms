@@ -1,0 +1,37 @@
+---
+en:
+  helpers/dictionary:
+    YESNO: &YESNO
+      'yes': 'Yes'
+      'no': 'No'
+
+  helpers:
+    back_link: Back
+    start_again: Start again
+    submit:
+      save_and_continue: Save and continue
+      save_and_come_back_later: Save and come back later
+      save_and_submit: Save and submit application
+      find_address: Find address
+      try_again: Try again
+      apply_in_eforms: Apply in eForms
+
+    legend:
+      steps_claim_type_form:
+        claim_type: What are you claiming for?
+        rep_order_date: Representation order date
+        cntp_date: CNTP date
+
+
+    hint:
+      steps_claim_type_form:
+        rep_order_date: For example, 27 3 2007
+        cntp_date: For example, 27 3 2007
+
+    label:
+      steps_claim_type_form:
+        claim_type_options:
+          non_standard_magistrate: Non-standard magistrates fee
+          breach_of_injunction: Breach of injunction
+          something_else: Something else
+        cntp_order: CNTP number

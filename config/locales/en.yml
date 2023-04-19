@@ -1,5 +1,8 @@
 
 en:
+  service:
+    name: Claim a non-standard magistrate fee
+
   flash:
     success:
       title: Success

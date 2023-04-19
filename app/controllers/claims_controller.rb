@@ -1,6 +1,6 @@
 class ClaimsController < ApplicationController
   def index
-    render json: Claim.all
+    render :index, locals: { claims: Claim.all }
   end
 
   def show
@@ -8,18 +8,14 @@ class ClaimsController < ApplicationController
     render json: @claim
   end
 
-  def new
-    @count = Claim.count
-    @claim = Claim.new(position: @count + 1)
-  end
-
   def edit
     @claim = Claim.find(params[:id])
   end
 
   def create
-    @claim = Claim.new(claim_params)
-    @claim.save
+    initialize_application do |claim|
+      redirect_to edit_steps_claim_type_path(claim.id)
+    end
   end
 
   def update
@@ -36,6 +32,14 @@ class ClaimsController < ApplicationController
   end
 
   private
+
+  def initialize_application(attributes = {}, &block)
+    attributes[:office_code] = current_office_code
+
+    Claim.create!(attributes).tap do |crime_application|
+      yield(crime_application) if block
+    end
+  end
 
   def claim_params
     params.permit(

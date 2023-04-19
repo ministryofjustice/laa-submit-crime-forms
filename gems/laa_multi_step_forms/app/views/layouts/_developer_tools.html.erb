@@ -1,0 +1,40 @@
+<% content_for(:footer_top) do %>
+  <details class="govuk-details" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">
+        Developer Tools
+      </span>
+    </summary>
+    <div class="govuk-details__text app-util--inline-buttons">
+      <h4 class="govuk-heading-s govuk-!-margin-bottom-0">Current Application ID</h4>
+      <p><%= current_crime_application&.id || 'None' %></p>
+
+      <% if current_crime_application %>
+        <% crime_application = present(current_crime_application, CrimeApplicationPresenter) %>
+
+        <h4 class="govuk-heading-s govuk-!-margin-bottom-0">Quick actions</h4>
+        <p>Speed up some common application actions</p>
+
+        <div class="govuk-button-group">
+          <% if crime_application.in_progress? && !crime_application.applicant&.passporting_benefit %>
+            <%= button_to bypass_dwp_developer_tools_crime_application_path, method: :put,
+                          class: 'govuk-button govuk-!-margin-right-1',
+                          data: { module: 'govuk-button' } do; 'Bypass DWP'; end %>
+          <% end %>
+
+          <% if crime_application.in_progress? %>
+            <%= button_to developer_tools_crime_application_path, method: :delete,
+                          class: 'govuk-button govuk-button--warning',
+                          data: { module: 'govuk-button' } do; 'Destroy'; end %>
+          <% end %>
+
+          <% if crime_application.submitted? %>
+            <%= button_to mark_as_returned_developer_tools_crime_application_path, method: :put,
+                          class: 'govuk-button govuk-!-margin-right-1',
+                          data: { module: 'govuk-button' } do; 'Return application'; end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </details>
+<% end %>

@@ -1,13 +1,15 @@
 class CreateClaims < ActiveRecord::Migration[7.0]
   def change
-    create_table :claims do |t|
-      t.string :full_name
-      t.string :reference
-      t.string :tel_number
-      t.string :email
-      t.string :address_line1
-      t.string :town
-      t.string :post_code
+    create_table :claims, id: :uuid do |t|
+      t.string :ufn, index: true
+      t.string :office_code, null: false
+      t.string :status, default: 'pending'
+      t.jsonb :navigation_stack, array: true, default: []
+
+      t.string :claim_type
+      t.date :rep_order_date
+      t.string :cntp_order
+      t.date :cntp_date
 
       t.timestamps
     end

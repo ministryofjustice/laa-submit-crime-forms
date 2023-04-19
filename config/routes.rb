@@ -1,18 +1,38 @@
+module RouteHelpers
+  def edit_step(name, opts = {}, &block)
+  resource name,
+           only: opts.fetch(:only, [:edit, :update]),
+           controller: name,
+           path_names: { edit: '' } do; block.call if block_given?; end
+  end
+
+  def crud_step(name, opts = {})
+    edit_step name, only: [] do
+      resources only: [:edit, :update, :destroy],
+                except: opts.fetch(:except, []),
+                controller: name, param: opts.fetch(:param),
+                path_names: { edit: '' } do
+        get :confirm_destroy, on: :member if parent_resource.actions.include?(:destroy)
+      end
+    end
+  end
+
+  def show_step(name)
+    resource name, only: [:show], controller: name
+  end
+end
+
 Rails.application.routes.draw do
+  extend RouteHelpers
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
+
+  # mount this at the route
+  mount LaaMultiStepForms::Engine, at: '/'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   root "home#index"
-
-  resource :errors, only: [] do
-    get :application_not_found
-    get :invalid_session
-    get :unhandled
-    get :unauthorized
-    get :not_enrolled
-    get :not_found
-  end
 
   devise_for :providers,
              skip: [:all],
@@ -21,21 +41,30 @@ Rails.application.routes.draw do
              }
 
   devise_scope :provider do
-    get 'login', to: 'errors#unauthorized', as: :new_provider_session
+    get 'login', to: 'laa_multi_step_forms/errors#unauthorized', as: :new_provider_session
 
     namespace :providers do
       delete 'logout', to: 'sessions#destroy', as: :logout
+      get 'logout', to: 'sessions#destroy'
     end
   end
 
-  resources :claims do
+  namespace :about do
+    get :privacy
+    get :contact
+    get :feedback
+    get :accessibility
+  end
+
+  resources :claims, except: [:show, :new, :update], as: :applications do
     member do
       get :delete
     end
   end
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
+  scope 'applications/:id' do
+    namespace :steps do
+      edit_step :claim_type
+    end
+  end
 end
-

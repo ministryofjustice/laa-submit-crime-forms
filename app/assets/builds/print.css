@@ -1,0 +1,1 @@
+@media print{header,footer,.govuk-phase-banner,.govuk-back-link,.app-no-print{display:none}main{padding:0 !important;margin:3em !important}main .govuk-grid-column-two-thirds{width:100% !important}}
