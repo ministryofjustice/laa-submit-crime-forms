@@ -4,14 +4,16 @@ module Decisions
       case step_name
       when :claim_type
         after_claim_type
+      when :firm_details
+        edit(:reason_for_claim)
       end
     end
 
     def after_claim_type
-      if form_object.claim_type.something_else?
-        show('/claims', id: nil, action: :index)
-      else
+      if form_object.claim_type.supported?
         edit(:firm_details)
+      else
+        show('/claims', id: nil, action: :index)
       end
     end
   end

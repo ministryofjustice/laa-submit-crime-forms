@@ -8,3 +8,6 @@ en:
           line_1: This form can only be used to claim for a Non-standard magistrate or a Breach for injunction payment.
           line_2: To claim for a Crime Lower standard payment, please use CWA via the LAA online portal.
           line_3: To claim for a Crime Higher payment, please use CCCD via the CCCD portal.
+    firm_details:
+      edit:
+        page_title: Firm Details page title - TODO

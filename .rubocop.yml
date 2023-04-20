@@ -84,6 +84,10 @@ RSpec/NoExpectationExample:
 RSpec/Rails/InferredSpecType:
   Enabled: false
 
+# fully disabled as could not exclude spec/steps/ directory
+RSpec/FilePath:
+  Enabled: false
+
 # Enabled but tweaked cops
 ##########################
 

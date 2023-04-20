@@ -7,7 +7,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
-Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -31,7 +31,6 @@ RSpec.configure do |config|
   # As a default, we assume a user is signed in all controllers.
   # For specific scenarios, the user can be "signed off".
   config.before(:each, type: :controller) { sign_in }
-
 
   # Use the faster rack test by default for system specs
   config.before(:each, type: :system) { driven_by :rack_test }
