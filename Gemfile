@@ -39,16 +39,13 @@ group :development do
 end
 
 group :test do
-  gem 'cucumber-rails', require: false
-  gem 'database_cleaner'
+  gem 'capybara'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
-  gem 'shoulda-matchers'
   gem 'simplecov'
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'
   gem 'super_diff'
-  gem 'vcr'
 end
