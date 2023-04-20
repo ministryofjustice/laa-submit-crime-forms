@@ -1,27 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe 'User can fill in claim type details', type: :system do
-  let(:claim) { Claim.create(office_code: "AAAA") }
+  let(:claim) { Claim.create(office_code: 'AAAA') }
 
   before do
     visit provider_saml_omniauth_callback_path
   end
 
-  it "can do green path" do
+  it 'can do green path' do
     visit edit_steps_claim_type_path(claim.id)
 
-    choose "Non-standard magistrates fee"
+    choose 'Non-standard magistrates fee'
 
     within '#steps-claim-type-form-claim-type-non-standard-magistrate-conditional' do
-      fill_in "Day", with: "20"
-      fill_in "Month", with: "4"
-      fill_in "Year", with: "2023"
+      fill_in 'Day', with: '20'
+      fill_in 'Month', with: '4'
+      fill_in 'Year', with: '2023'
     end
 
-    click_on "Save and continue"
+    click_on 'Save and continue'
 
     expect(claim.reload).to have_attributes(
-      claim_type: "non_standard_magistrate",
+      claim_type: 'non_standard_magistrate',
       rep_order_date: Date.new(2023, 4, 20)
     )
   end
