@@ -20,6 +20,10 @@ module Decisions
     private
 
     # :nocov:
+    def index(step_controller, params = {})
+      { controller: step_controller, action: :index }.merge(params)
+    end
+
     def show(step_controller, params = {})
       url_options(step_controller, :show, params)
     end

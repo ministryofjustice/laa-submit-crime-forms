@@ -13,7 +13,7 @@ module Decisions
       if form_object.claim_type.supported?
         edit(:firm_details)
       else
-        show('/claims', id: nil, action: :index)
+        index(:claims)
       end
     end
   end
