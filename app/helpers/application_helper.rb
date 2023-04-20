@@ -1,4 +1,14 @@
 module ApplicationHelper
+  # moved here to allow view specs to work
+  def current_application
+    @current_application ||= Claim.find_by(id: params[:id])
+  end
+
+  def current_office_code
+    @current_office_code ||= current_provider&.selected_office_code || current_provider&.office_codes&.first
+  end
+
+
   def service_name
     t('service.name')
   end
@@ -15,13 +25,5 @@ module ApplicationHelper
     raise exception if Rails.application.config.consider_all_requests_local
 
     title ''
-  end
-
-  def decorate(model, decorator_class = nil)
-    (decorator_class || [model.class, :Decorator].join.demodulize.constantize).new(model)
-  end
-
-  def present(model, presenter_class = nil)
-    (presenter_class || [model.class, :Presenter].join.demodulize.constantize).new(model)
   end
 end

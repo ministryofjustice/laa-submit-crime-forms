@@ -85,7 +85,7 @@
       </thead>
 
       <tbody class="govuk-table__body app-task-list__items">
-        <% claims.each do |claim| %>
+        <% @claims.each do |claim| %>
           <tr class="govuk-table__row app-task-list__item">
             <% if claim.status == 'completed' %>
               <td class="govuk-table__cell">

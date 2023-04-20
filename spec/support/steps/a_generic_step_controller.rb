@@ -2,7 +2,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
   describe '#edit' do
     context 'when application is not found' do
       before do
-        # Needed because some specs that include these examples stub current_crime_application,
+        # Needed because some specs that include these examples stub current_application,
         # which is undesirable for this particular test
         allow(controller).to receive(:current_application).and_return(nil)
       end
@@ -36,7 +36,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
       let(:existing_case) { '12345' }
 
       before do
-        # Needed because some specs that include these examples stub current_crime_application,
+        # Needed because some specs that include these examples stub current_application,
         # which is undesirable for this particular test
         allow(controller).to receive(:current_application).and_return(nil)
       end

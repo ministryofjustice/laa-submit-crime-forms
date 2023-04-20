@@ -31,9 +31,7 @@ unless ENV['NOCOVERAGE']
 
     enable_coverage :branch
     primary_coverage :branch
-    # TODO: make line coverage 100 once we have any tests
-    # minimum_coverage branch: 98.77, line: 100
-    minimum_coverage branch: 50.00, line: 85
+    minimum_coverage branch: 98.77, line: 100
   end
 end
 

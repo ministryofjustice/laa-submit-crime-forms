@@ -140,6 +140,14 @@ RSpec.describe Steps::ClaimTypeForm do
               'cntp_date' => nil,
             )
           end
+
+          it 'sets the status to abandoned' do
+            attributes = form.send(:status_attributes)
+            expect(attributes).to eq(
+              'status' => :abandoned,
+             )
+
+          end
         end
       end
     end
