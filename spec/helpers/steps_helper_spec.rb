@@ -46,15 +46,15 @@ RSpec.describe StepsHelper, type: :helper do
   end
 
   describe '#step_header' do
-    let(:current_crime_application) { instance_double(CrimeApplication, navigation_stack:) }
+    let(:current_application) { instance_double(Claim, navigation_stack:) }
     let(:navigation_stack) { %w[/step1 /step2 /step3] }
 
     before do
-      allow(view).to receive(:current_crime_application).and_return(current_crime_application)
+      allow(view).to receive(:current_application).and_return(current_application)
     end
 
     context 'there is a previous path in the stack' do
-      xit 'renders the back link to the previous path' do
+      it 'renders the back link to the previous path' do
         helper.step_header
         expect(view.content_for(:back_link)).to match(%r{<a class="govuk-back-link" href="/step2">Back</a>})
       end
@@ -63,14 +63,14 @@ RSpec.describe StepsHelper, type: :helper do
     context 'there is no previous path in the stack' do
       let(:navigation_stack) { nil }
 
-      xit 'renders the back link to the root path as fallback' do
+      it 'renders the back link to the root path as fallback' do
         helper.step_header
         expect(view.content_for(:back_link)).to match(%r{<a class="govuk-back-link" href="/">Back</a>})
       end
     end
 
     context 'a specific path is provided' do
-      xit 'renders the back link with the provided path' do
+      it 'renders the back link with the provided path' do
         helper.step_header(path: '/another/step')
         expect(view.content_for(:back_link)).to match(%r{<a class="govuk-back-link" href="/another/step">Back</a>})
       end
@@ -78,16 +78,16 @@ RSpec.describe StepsHelper, type: :helper do
   end
 
   describe '#previous_step_path' do
-    let(:current_crime_application) { instance_double(CrimeApplication, navigation_stack:) }
+    let(:current_application) { instance_double(Claim, navigation_stack:) }
 
     before do
-      allow(view).to receive(:current_crime_application).and_return(current_crime_application)
+      allow(view).to receive(:current_application).and_return(current_application)
     end
 
     context 'when the stack is empty' do
       let(:navigation_stack) { [] }
 
-      xit 'returns the root path' do
+      it 'returns the root path' do
         expect(helper.previous_step_path).to eq('/')
       end
     end
@@ -95,8 +95,17 @@ RSpec.describe StepsHelper, type: :helper do
     context 'when the stack has elements' do
       let(:navigation_stack) { %w[/somewhere /over /the /rainbow] }
 
-      xit 'returns the element before the last page' do
+      it 'returns the element before the last page' do
         expect(helper.previous_step_path).to eq('/the')
+      end
+    end
+
+    context 'no current_application' do
+      let(:navigation_stack) { nil }
+
+      it 'returns the root path' do
+        allow(view).to receive(:current_application).and_return(nil)
+        expect(helper.previous_step_path).to eq('/')
       end
     end
   end
@@ -113,7 +122,7 @@ RSpec.describe StepsHelper, type: :helper do
     context 'when a form object without errors is given' do
       let(:form_object) { Steps::BaseFormObject.new }
 
-      xit 'returns nil' do
+      it 'returns nil' do
         expect(helper.govuk_error_summary(form_object)).to be_nil
       end
     end
@@ -127,7 +136,7 @@ RSpec.describe StepsHelper, type: :helper do
         form_object.errors.add(:base, :blank)
       end
 
-      xit 'returns the summary' do
+      it 'returns the summary' do
         expect(
           helper.govuk_error_summary(form_object)
         ).to eq(
@@ -139,7 +148,7 @@ RSpec.describe StepsHelper, type: :helper do
         )
       end
 
-      xit 'prepends the page title with an error hint' do
+      it 'prepends the page title with an error hint' do
         helper.govuk_error_summary(form_object)
         expect(title).to start_with('Error: A page')
       end

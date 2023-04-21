@@ -135,7 +135,7 @@ RSpec/MultipleExpectations:
     - spec/presenters/summary/sections/*
 
 RSpec/NestedGroups:
-  Max: 5
+  Max: 6
 
 RSpec/ExampleLength:
   Max: 16

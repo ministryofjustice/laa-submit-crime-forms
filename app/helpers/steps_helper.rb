@@ -24,7 +24,7 @@ module StepsHelper
 
   def previous_step_path
     # Second to last element in the array, will be nil for arrays of size 0 or 1
-    current_crime_application&.navigation_stack&.slice(-2) || root_path
+    current_application&.navigation_stack&.slice(-2) || root_path
   end
 
   def govuk_error_summary(form_object)
@@ -32,11 +32,11 @@ module StepsHelper
 
     # Prepend to page title so screen readers read it out as soon as possible
     content_for(:page_title, flush: true) do
-      content_for(:page_title).insert(0, t('errors.page_title_prefix'))
+      content_for(:page_title).insert(0, t('laa_multi_step_forms.errors.page_title_prefix'))
     end
 
     fields_for(form_object, form_object) do |f|
-      f.govuk_error_summary t('errors.error_summary.heading')
+      f.govuk_error_summary t('laa_multi_step_forms.errors.error_summary.heading')
     end
   end
 

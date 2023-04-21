@@ -31,4 +31,27 @@ RSpec.describe Decisions::SimpleDecisionTree do
       end
     end
   end
+
+  context 'when step is firm_details' do
+    # TODO: update this when implemented
+    it 'moves to claim index' do
+      claim = Steps::FirmDetailsForm.new(application:)
+      decision_tree = described_class.new(claim, as: :firm_details)
+      expect(decision_tree.destination).to eq(
+        action: :index,
+        controller: :claims,
+      )
+    end
+  end
+
+  context 'when step is unknown' do
+    # TODO: update this when implemented
+    it 'moves to claim index' do
+      decision_tree = described_class.new(double('form'), as: :unknown)
+      expect(decision_tree.destination).to eq(
+        action: :index,
+        controller: :claims,
+      )
+    end
+  end
 end

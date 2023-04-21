@@ -11,13 +11,13 @@ RSpec.describe ApplicationHelper, type: :helper do
     context 'for a blank value' do
       let(:value) { '' }
 
-      xit { expect(title).to eq('Apply for criminal legal aid - GOV.UK') }
+      it { expect(title).to eq('Claim a non-standard magistrate fee - GOV.UK') }
     end
 
     context 'for a provided value' do
       let(:value) { 'Test page' }
 
-      xit { expect(title).to eq('Test page - Apply for criminal legal aid - GOV.UK') }
+      it { expect(title).to eq('Test page - Claim a non-standard magistrate fee - GOV.UK') }
     end
   end
 
@@ -32,54 +32,53 @@ RSpec.describe ApplicationHelper, type: :helper do
       ).to receive(:consider_all_requests_local).and_return(false)
     end
 
-    xit 'calls #title with a blank value' do
+    it 'calls #title with a blank value' do
       expect(helper).to receive(:title).with('')
       helper.fallback_title
     end
-  end
 
-  describe '#decorate' do
-    before do
-      stub_const('FooBar', Class.new)
-      stub_const('FooBarDecorator', Class.new(BaseDecorator))
-    end
-
-    let(:foobar) { FooBar.new }
-
-    context 'for a specific delegator class' do
-      xit 'instantiate the decorator with the passed object' do
-        expect(FooBarDecorator).to receive(:new).with(foobar)
-        helper.decorate(foobar, FooBarDecorator)
-      end
-    end
-
-    context 'using the object to infer the delegator class' do
-      xit 'instantiate the decorator with the passed object inferring the class' do
-        expect(FooBarDecorator).to receive(:new).with(foobar)
-        helper.decorate(foobar)
+    context 'when consider_all_requests_local is true' do
+      it 'raises an exception' do
+        allow(Rails.application.config).to receive(:consider_all_requests_local).and_return(true)
+        expect { helper.fallback_title }.to raise_error('page title missing: my_controller#an_action')
       end
     end
   end
 
-  describe '#present' do
+  describe 'current_office_code' do
     before do
-      stub_const('FooBar', Class.new)
-      stub_const('FooBarPresenter', Class.new(BasePresenter))
+      allow(helper).to receive(:current_provider).and_return(provider)
     end
 
-    let(:foobar) { FooBar.new }
+    context 'current_provider is not set' do
+      let(:provider) { nil }
 
-    context 'for a specific delegator class' do
-      xit 'instantiate the presenter with the passed object' do
-        expect(FooBarPresenter).to receive(:new).with(foobar)
-        helper.present(foobar, FooBarPresenter)
+      it 'returns nil' do
+        expect(helper.current_office_code).to be_nil
       end
     end
 
-    context 'using the object to infer the delegator class' do
-      xit 'instantiate the presenter with the passed object inferring the class' do
-        expect(FooBarPresenter).to receive(:new).with(foobar)
-        helper.present(foobar)
+    context 'when selected_office_code is present' do
+      let(:provider) { instance_double(Provider, selected_office_code: 'A1') }
+
+      it 'returns the selected_office_code' do
+        expect(helper.current_office_code).to eq('A1')
+      end
+    end
+
+    context 'when no selected_office_code but office_codes are present' do
+      let(:provider) { instance_double(Provider, selected_office_code: nil, office_codes: %w[A2 A3]) }
+
+      it 'returns the first office code' do
+        expect(helper.current_office_code).to eq('A2')
+      end
+    end
+
+    context 'when no selected_office_code or office_codes are present' do
+      let(:provider) { instance_double(Provider, selected_office_code: nil, office_codes: []) }
+
+      it 'returns nil' do
+        expect(helper.current_office_code).to be_nil
       end
     end
   end
