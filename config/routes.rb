@@ -65,6 +65,7 @@ Rails.application.routes.draw do
   scope 'applications/:id' do
     namespace :steps do
       edit_step :claim_type
+      edit_step :firm_details
     end
   end
 end

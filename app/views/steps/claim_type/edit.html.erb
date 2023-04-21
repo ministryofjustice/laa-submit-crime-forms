@@ -5,27 +5,23 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-        <%= f.govuk_radio_buttons_fieldset :claim_type, legend: { tag: 'h1', size: 'xl' } do %>
-          <% @form_object.choices.each do |choice| %>
-            <% if choice == ClaimType::NON_STANDARD_MAGISTRATE %>
-              <%= f.govuk_radio_button :claim_type, choice.value do %>
-                <%= f.govuk_date_field :rep_order_date, maxlength_enabled: true %>
-              <% end %>
-            <% elsif choice == ClaimType::BREACH_OF_INJUNCTION %>
-              <%= f.govuk_radio_button :claim_type, choice.value do %>
-                <%= f.govuk_text_field :cntp_order, width: 'one-third', autocomplete: 'off' %>
-                <%= f.govuk_date_field :cntp_date, maxlength_enabled: true %>
-              <% end %>
-            <% else %>
-              <%= f.govuk_radio_button :claim_type, choice.value  do %>
-                <p><%= t('.other_details.line_1') %></p>
-                <p><%= t('.other_details.line_2') %></p>
-                <p><%= t('.other_details.line_3') %></p>
-              <% end %>
-            <% end %>
-          <% end %>
+      <%= f.govuk_radio_buttons_fieldset :claim_type, legend: { tag: 'h1', size: 'xl' } do %>
+        <%= f.govuk_radio_button :claim_type, ClaimType::NON_STANDARD_MAGISTRATE.value do %>
+          <%= f.govuk_date_field :rep_order_date, maxlength_enabled: true %>
         <% end %>
-        <%= f.continue_button(secondary: false) %>
+
+        <%= f.govuk_radio_button :claim_type, ClaimType::BREACH_OF_INJUNCTION.value do %>
+          <%= f.govuk_text_field :cntp_order, width: 'one-third', autocomplete: 'off' %>
+          <%= f.govuk_date_field :cntp_date, maxlength_enabled: true %>
+        <% end %>
+
+        <%= f.govuk_radio_button :claim_type, ClaimType::SOMETHING_ELSE.value  do %>
+          <p><%= t('.other_details.line_1') %></p>
+          <p><%= t('.other_details.line_2') %></p>
+          <p><%= t('.other_details.line_3') %></p>
+        <% end %>
+      <% end %>
+      <%= f.continue_button(secondary: false) %>
     <% end %>
   </div>
 </div>
