@@ -21,13 +21,13 @@ SimpleCov::Formatter::LcovFormatter.config.lcov_file_name = 'lcov.info'
 SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
 
 unless ENV['NOCOVERAGE']
-  SimpleCov.start do
+  SimpleCov.start 'rails' do
     add_filter 'spec/'
     add_filter 'gems/'
     add_filter 'config/'
-    add_filter 'lib/integration_helpers'
-    add_filter 'app/mailers/exception_alert_mailer.rb'
-    add_filter 'app/lib/exception_notifier/templated_notifier.rb'
+
+    add_filter 'app/jobs/application_job.rb'
+    add_filter 'app/mailers/application_mailer.rb'
 
     enable_coverage :branch
     primary_coverage :branch
