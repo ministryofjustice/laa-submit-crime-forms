@@ -14,7 +14,8 @@ RSpec.describe ClaimsController do
   end
 
   context 'create' do
-    let(:claim)  { instance_double(Claim, id: SecureRandom.uuid) }
+    let(:claim) { instance_double(Claim, id: SecureRandom.uuid) }
+
     before do
       allow(Claim).to receive(:create!).and_return(claim)
     end

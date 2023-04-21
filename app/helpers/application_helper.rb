@@ -8,7 +8,6 @@ module ApplicationHelper
     @current_office_code ||= current_provider&.selected_office_code || current_provider&.office_codes&.first
   end
 
-
   def service_name
     t('service.name')
   end

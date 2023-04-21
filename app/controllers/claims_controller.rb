@@ -14,8 +14,6 @@ class ClaimsController < ApplicationController
   def initialize_application(attributes = {}, &block)
     attributes[:office_code] = current_office_code
 
-    Claim.create!(attributes).tap do |crime_application|
-      yield(crime_application)
-    end
+    Claim.create!(attributes).tap(&block)
   end
 end

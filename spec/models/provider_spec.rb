@@ -38,12 +38,12 @@ RSpec.describe Provider, type: :model do
         let(:office_codes) { %w[A1 A2] }
 
         it 'creates a new user record' do
-          expect { described_class.from_omniauth(auth) }.to change(Provider, :count).by(1)
+          expect { described_class.from_omniauth(auth) }.to change(described_class, :count).by(1)
         end
 
         it 'does not set the selected_office_code' do
           described_class.from_omniauth(auth)
-          expect(Provider.last.selected_office_code).to be_nil
+          expect(described_class.last.selected_office_code).to be_nil
         end
       end
 
@@ -52,13 +52,15 @@ RSpec.describe Provider, type: :model do
 
         it 'does not set the selected_office_code' do
           described_class.from_omniauth(auth)
-          expect(Provider.last.selected_office_code).to eq('A1')
+          expect(described_class.last.selected_office_code).to eq('A1')
         end
       end
     end
 
     context 'existing user' do
-      let!(:provider) { described_class.create!(auth_provider: auth.provider, uid: auth.uid, selected_office_code: 'A1') }
+      let!(:provider) do
+        described_class.create!(auth_provider: auth.provider, uid: auth.uid, selected_office_code: 'A1')
+      end
 
       context 'who has an existing office code' do
         context 'that is in the list of office codes' do
@@ -72,7 +74,7 @@ RSpec.describe Provider, type: :model do
 
         context 'that is not in the list of office codes' do
           context 'when multiple office codes' do
-            let(:office_codes) { %[A2 A3] }
+            let(:office_codes) { %(A2 A3) }
 
             it 'clears the office code' do
               described_class.from_omniauth(auth)
@@ -80,7 +82,7 @@ RSpec.describe Provider, type: :model do
             end
           end
 
-          context 'when multiple office codes' do
+          context 'when single office code' do
             let(:office_codes) { %w[A2] }
 
             it 'updates the office code' do

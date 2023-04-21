@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Claim do
   subject { described_class.new(attributes) }
 
-  context '#date' do
+  describe '#date' do
     context 'when rep_order_date is set' do
       let(:attributes) { { rep_order_date: } }
       let(:rep_order_date) { Date.yesterday }
@@ -23,7 +23,7 @@ RSpec.describe Claim do
     end
 
     context 'when neither rep_order_date or cntp_date is set' do
-      let(:attributes) { { } }
+      let(:attributes) { {} }
 
       it 'returns nil' do
         expect(subject.date).to be_nil

@@ -145,8 +145,7 @@ RSpec.describe Steps::ClaimTypeForm do
             attributes = form.send(:status_attributes)
             expect(attributes).to eq(
               'status' => :abandoned,
-             )
-
+            )
           end
         end
       end
