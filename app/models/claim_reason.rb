@@ -1,0 +1,2 @@
+class ClaimReason < ApplicationRecord
+end
