@@ -66,6 +66,7 @@ Rails.application.routes.draw do
     namespace :steps do
       edit_step :claim_type
       edit_step :firm_details
+      edit_step :claim_reason
     end
   end
 end

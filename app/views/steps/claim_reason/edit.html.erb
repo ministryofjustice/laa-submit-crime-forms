@@ -1,0 +1,33 @@
+<% title t('.page_title') %>
+<% step_header(path: applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+        <%= f.govuk_radio_buttons_fieldset :claim_reason, legend: { tag: 'h1', size: 'xl' } do %>
+          <% @form_object.options.each do |option| %>
+            <% if option == ClaimReason::REPRESENTATION_ORDER_WITHDRAWN %>
+              <%= f.govuk_check_box :claim_reason, option.value do %>
+                <%= f.govuk_date_field :rep_order_date, maxlength_enabled: true %>
+              <% end %>
+            <% elsif option == ClaimReason::OTHER %>
+              <%= f.govuk_check_box :claim_reason, option.value do %>
+                <%= f.govuk_text_field :cntp_order, width: 'one-third', autocomplete: 'off' %>
+                <%= f.govuk_date_field :cntp_date, maxlength_enabled: true %>
+              <% end %>
+            <% else %>
+              <%= f.govuk_check_box :claim_reason, option.value  do %>
+                <p><%= t('.other_details.line_1') %></p>
+                <p><%= t('.other_details.line_2') %></p>
+                <p><%= t('.other_details.line_3') %></p>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <%= f.continue_button(secondary: false) %>
+    <% end %>
+  </div>
+</div>
+
+

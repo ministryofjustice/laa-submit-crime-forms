@@ -4,8 +4,8 @@ module Decisions
       case step_name
       when :claim_type
         after_claim_type
-        # when :firm_details
-        # edit(:reason_for_claim)
+          when :firm_details
+          edit(:claim_reason)
       else
         index(:claims)
       end
@@ -15,7 +15,7 @@ module Decisions
       if form_object.claim_type.supported?
         edit(:firm_details)
       else
-        index(:claims)
+        index(:claim_reason)
       end
     end
   end
