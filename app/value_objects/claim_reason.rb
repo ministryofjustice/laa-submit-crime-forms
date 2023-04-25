@@ -1,5 +1,4 @@
 class ClaimReason < ValueObject
-  puts("CLAIM REASON")
   VALUES = [
     CORE_COSTS_EXCEED_HIGHER_LMTS = new(:core_costs_exceed_higher_limits),
     ENHANCED_RATES_CLAIMED    = new(:enhanced_rates_claimed),
@@ -8,16 +7,4 @@ class ClaimReason < ValueObject
     EXTRADITION = new(:extradition),
     OTHER = new(:other),
   ].freeze
-
-  SUPPORTED = [
-    CORE_COSTS_EXCEED_HIGHER_LMTS,
-    ENHANCED_RATES_CLAIMED,
-    COUNCEL_OR_AGENT_ASSIGNED,
-    REPRESENTATION_ORDER_WITHDRAWN,
-    EXTRADITION,
-  ].freeze
-
-  def supported?
-    SUPPORTED.include?(self)
-  end
 end
