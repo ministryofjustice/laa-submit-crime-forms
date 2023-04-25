@@ -21,7 +21,10 @@ en:
         claim_type: What are you claiming for?
         rep_order_date: Representation order date
         cntp_date: CNTP date
-
+      steps_claim_reason_form:
+        claim_reason: Why are you claiming a non-standard magistrates fee ?
+        rep_order_date: Representation order date
+        cntp_date: CNTP date
 
     hint:
       steps_claim_type_form:
@@ -35,3 +38,12 @@ en:
           breach_of_injunction: Breach of injunction
           something_else: Something else
         cntp_order: CNTP number
+      steps_claim_reason_form:
+        claim_reason_options:
+          core_costs_exceed_higher_limits: Core costs exceed higher limits
+          enhanced_rates_claimed: Enhanced rates claimed
+          councel_or_agent_assigned: Councel or agent assigned
+          representation_order_withdrawn_on: Representation order withdrawn on
+          extradition: Extradition
+          other: Other
+
