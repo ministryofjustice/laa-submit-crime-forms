@@ -13,8 +13,6 @@
               <% end %>
             <% elsif option == ClaimReason::OTHER %>
               <%= f.govuk_check_box :claim_reason, option.value do %>
-                <%= f.govuk_text_field :cntp_order, width: 'one-third', autocomplete: 'off' %>
-                <%= f.govuk_date_field :cntp_date, maxlength_enabled: true %>
               <% end %>
             <% else %>
               <%= f.govuk_check_box :claim_reason, option.value  do %>
