@@ -4,10 +4,6 @@ module Steps
   class ClaimReasonForm < Steps::BaseFormObject
     attribute :claim_reason, :value_object, source: ClaimReason
 
-    attribute :rep_order_date, :multiparam_date
-    attribute :cntp_order, :string
-    attribute :cntp_date, :multiparam_date
-
     validates_inclusion_of :claim_reason, in: :options
     validates :rep_order_date, presence: true,
             multiparam_date: { allow_past: true, allow_future: false },
