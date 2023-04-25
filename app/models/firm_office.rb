@@ -1,0 +1,2 @@
+class FirmOffice < ApplicationRecord
+end
