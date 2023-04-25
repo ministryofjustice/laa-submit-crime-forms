@@ -1,2 +1,0 @@
-class ClaimReason < ApplicationRecord
-end
