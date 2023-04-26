@@ -1,13 +1,13 @@
 module Steps
-  class ClaimReasonController < Steps::BaseStepController
+  class ReasonForClaimController < Steps::BaseStepController
     def edit
-      @form_object = ClaimReasonForm.build(
+      @form_object = ReasonForClaimForm.build(
         current_application
       )
     end
 
     def update
-      update_and_advance(ClaimReasonForm, as: :claim_reason)
+      update_and_advance(ReasonForClaimForm, as: :reason_for_claim)
     end
 
     private

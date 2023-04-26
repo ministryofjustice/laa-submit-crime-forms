@@ -5,17 +5,17 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-        <%= f.govuk_radio_buttons_fieldset :claim_reason, legend: { tag: 'h1', size: 'xl' } do %>
+        <%= f.govuk_radio_buttons_fieldset :reason_for_claim, legend: { tag: 'h1', size: 'xl' } do %>
           <% @form_object.options.each do |option| %>
-            <% if option == ClaimReason::REPRESENTATION_ORDER_WITHDRAWN %>
-              <%= f.govuk_check_box :claim_reason, option.value do %>
+            <% if option == ReasonForClaim::REPRESENTATION_ORDER_WITHDRAWN %>
+              <%= f.govuk_check_box :reason_for_claim, option.value do %>
                 <%= f.govuk_date_field :rep_order_date, maxlength_enabled: true %>
               <% end %>
-            <% elsif option == ClaimReason::OTHER %>
-              <%= f.govuk_check_box :claim_reason, option.value do %>
+            <% elsif option == ReasonForClaim::OTHER %>
+              <%= f.govuk_check_box :reason_for_claim, option.value do %>
               <% end %>
             <% else %>
-              <%= f.govuk_check_box :claim_reason, option.value  do %>
+              <%= f.govuk_check_box :reason_for_claim, option.value  do %>
                 <p><%= t('.other_details.line_1') %></p>
                 <p><%= t('.other_details.line_2') %></p>
                 <p><%= t('.other_details.line_3') %></p>

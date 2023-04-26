@@ -6,8 +6,8 @@ module Decisions
       when :claim_type
         after_claim_type
       when :firm_details
-        edit(:claim_reason)
-      when :claim_reason
+        edit(:reason_for_claim)
+      when :reason_for_claim
         edit(:case_details)
       when :case_details
         edit(:case_disposal)

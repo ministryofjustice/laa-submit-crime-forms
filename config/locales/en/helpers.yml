@@ -6,7 +6,8 @@ en:
         claim_type: What are you claiming for?
         rep_order_date: Representation order date
         cntp_date: CNTP date
-<<<<<<< HEAD
+        rep_order_date: Representation order date
+        cntp_date: CNTP date
       steps_firm_details_form[solicitor_attributes]:
         alternative_contact_details: Do you want to add alternative contact details?
       steps_case_details_form:
@@ -24,13 +25,9 @@ en:
         first_hearing_date: Date of first hearing
         in_area: Is this court in a designated area of your firm?
         youth_count: Is this court a youth court?
-=======
-      steps_claim_reason_form:
-        claim_reason: Why are you claiming a non-standard magistrates fee ?
-        rep_order_date: Representation order date
-        cntp_date: CNTP date
+      steps_reason_for_claim_form:
+        reason_for_claim: Why are you claiming a non-standard magistrates fee ?
 
->>>>>>> 8f86b21 (update locale helpers)
     hint:
       steps_claim_type_form:
         rep_order_date: For example, 27 3 2007
@@ -76,7 +73,6 @@ en:
           breach_of_injunction: Breach of injunction
           something_else: Something else
         cntp_order: CNTP number
-<<<<<<< HEAD
       steps_firm_details_form[firm_office_attributes]:
         name: Firm name
         account_number: Firm account number
@@ -136,8 +132,8 @@ en:
       steps_defendants_details_form:
         full_name: Full name
         maat: MAAT ID
-      steps_claim_reason_form:
-        claim_reason_options:
+      steps_reason_for_claim_form:
+        reason_for_claim_options:
           core_costs_exceed_higher_limits: Core costs exceed higher limits
           enhanced_rates_claimed: Enhanced rates claimed
           councel_or_agent_assigned: Councel or agent assigned

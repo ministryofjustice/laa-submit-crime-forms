@@ -1,4 +1,4 @@
-class ClaimReason < ValueObject
+class ReasonForClaim < ValueObject
   VALUES = [
     CORE_COSTS_EXCEED_HIGHER_LMTS = new(:core_costs_exceed_higher_limits),
     ENHANCED_RATES_CLAIMED    = new(:enhanced_rates_claimed),
