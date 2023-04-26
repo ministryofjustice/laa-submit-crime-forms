@@ -6,16 +6,16 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
         <%= f.govuk_radio_buttons_fieldset :reason_for_claim, legend: { tag: 'h1', size: 'xl' } do %>
-          <% @form_object.options.each do |option| %>
-            <% if option == ReasonForClaim::REPRESENTATION_ORDER_WITHDRAWN %>
-              <%= f.govuk_check_box :reason_for_claim, option.value do %>
+          <% @form_object.choices.each do |choice| %>
+            <% if choice == ReasonForClaim::REPRESENTATION_ORDER_WITHDRAWN %>
+              <%= f.govuk_check_box :reason_for_claim, choice.value do %>
                 <%= f.govuk_date_field :rep_order_date, maxlength_enabled: true %>
               <% end %>
-            <% elsif option == ReasonForClaim::OTHER %>
-              <%= f.govuk_check_box :reason_for_claim, option.value do %>
+            <% elsif choice == ReasonForClaim::OTHER %>
+              <%= f.govuk_check_box :reason_for_claim, choice.value do %>
               <% end %>
             <% else %>
-              <%= f.govuk_check_box :reason_for_claim, option.value  do %>
+              <%= f.govuk_check_box :reason_for_claim, choice.value  do %>
                 <p><%= t('.other_details.line_1') %></p>
                 <p><%= t('.other_details.line_2') %></p>
                 <p><%= t('.other_details.line_3') %></p>

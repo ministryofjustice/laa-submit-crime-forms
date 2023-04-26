@@ -4,10 +4,17 @@ module Steps
   class ReasonForClaimForm < Steps::BaseFormObject
     attribute :reason_for_claim, :value_object, source: ReasonForClaim
 
+    #attribute :reasons, array: true, default: []
+    attribute :reason_for_claim, array: true, default: []
 
-    validates_inclusion_of :reason_for_claim, in: :options
+    ReasonForClaim.values.each do |reason_claim|
+      attribute reason_claim, :value_object
+    end
 
-    def options
+
+    #validates_inclusion_of :reason_for_claim, in: :choices
+
+    def choices
       ReasonForClaim.values
     end
 
@@ -22,17 +29,11 @@ module Steps
     private
 
     def persist!
+      debugger
       application.update(
         attributes.merge(status_attributes)
       )
     end
 
-    def status_attributes
-      if reason_for_claim== ReasonForClaim::OTHER
-        { status: :abandoned }
-      else
-        {}
-      end
-    end
   end
 end
