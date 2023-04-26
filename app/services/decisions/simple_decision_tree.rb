@@ -4,8 +4,8 @@ module Decisions
       case step_name
       when :claim_type
         after_claim_type
-      when :firm_details
-        index('/claims')
+        # when :firm_details
+        #   index('/claims')
         # edit(:reason_for_claim)
       else
         index('/claims')

@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Steps::FirmDetailsForm do
   subject { described_class.new(params) }
+
   let(:params) do
     {
       'application' => application,
@@ -15,7 +16,7 @@ RSpec.describe Steps::FirmDetailsForm do
   let(:firm_office) { nil }
   let(:solicitor) { nil }
 
-  context '#initializing nested objects' do
+  describe '#initializing nested objects' do
     context 'form_office' do
       context 'when firm_office_attributes is passed in' do
         let(:firm_office_attributes) { { name: 'Firm Name', postcode: 'AA1 1AA' } }
@@ -119,7 +120,7 @@ RSpec.describe Steps::FirmDetailsForm do
     end
   end
 
-  context '#save!' do
+  describe '#save!' do
     let(:firm_office_form) { double(:firm_office, save!: true) }
     let(:solicitor_form) { double(:solicitor, save!: true) }
 

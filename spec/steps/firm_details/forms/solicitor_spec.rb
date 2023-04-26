@@ -33,6 +33,7 @@ RSpec.describe Steps::FirmDetails::SolicitorForm do
     %i[first_name surname reference_number contact_full_name telephone_number].each do |field|
       context "when #{field} is missing" do
         let(field) { nil }
+
         it 'has is a validation error on the field' do
           expect(form).not_to be_valid
           expect(form.errors.of_kind?(field, :blank)).to be(true)
@@ -42,56 +43,55 @@ RSpec.describe Steps::FirmDetails::SolicitorForm do
   end
 
   describe 'save!' do
-    let!(:application) { Claim.create!(office_code: 'AAA', solicitor:) }
+    let!(:application) { Claim.create!(office_code: 'AAA', solicitor: solicitor) }
     let(:solicitor) { nil }
 
     context 'when application has an existing solicitor' do
       context 'and solicitor details have changed' do
-        let(:solicitor) { Solicitor.new(arguments.merge(first_name: 'Jim') ) }
+        let(:solicitor) { Solicitor.new(arguments.merge(first_name: 'Jim')) }
 
         it 'creates a new solicitor record' do
           expect { subject.save! }.to change(Solicitor, :count).by(1)
-            .and change { application.reload.solicitor_id }
+                                                               .and(change { application.reload.solicitor_id })
         end
       end
 
       context 'and solicitor detail have not changed' do
         let(:solicitor) { Solicitor.new(arguments) }
+
         it 'does nothing' do
-          expect { subject.save! }.to change(Solicitor, :count).by(0)
+          expect { subject.save! }.not_to change(Solicitor, :count)
         end
       end
     end
 
     context 'when application has no solictor but one exists for the the reference code' do
       context 'and solicitor details have changed' do
-        let!(:matching_solicitor) { Solicitor.create!(arguments.merge(first_name: 'Jim') ) }
+        before { Solicitor.create!(arguments.merge(first_name: 'Jim')) }
 
         it 'creates a new solicitor record' do
           expect { subject.save! }.to change(Solicitor, :count).by(1)
-            .and change { application.reload.solicitor_id }
+                                                               .and(change { application.reload.solicitor_id })
         end
       end
 
       context 'and solicitor detail have not changed' do
-        let!(:matching_solicitor) { Solicitor.create!(arguments ) }
+        before { Solicitor.create!(arguments) }
 
         it 'does nothing' do
-          expect { subject.save! }.to change(Solicitor, :count).by(0)
+          expect { subject.save! }.not_to change(Solicitor, :count)
         end
       end
 
       context 'it matches a historic solicitor details' do
-        let!(:old_solicitor) {
-          travel_to(1.day.ago) { Solicitor.create!(arguments) }
-        }
-        let!(:matching_solicitor) {
-          Solicitor.create!(arguments.merge(first_name: 'Jim', previous: old_solicitor) )
-        }
+        before do
+          old_solicitor = travel_to(1.day.ago) { Solicitor.create!(arguments) }
+          Solicitor.create!(arguments.merge(first_name: 'Jim', previous: old_solicitor))
+        end
 
         it 'create a new solicitor record' do
           expect { subject.save! }.to change(Solicitor, :count).by(1)
-            .and change { application.reload.solicitor_id }
+                                                               .and(change { application.reload.solicitor_id })
         end
       end
     end
@@ -99,7 +99,7 @@ RSpec.describe Steps::FirmDetails::SolicitorForm do
     context 'when application has no solictor and non exist for the the reference code' do
       it 'creates a new solicitor record' do
         expect { subject.save! }.to change(Solicitor, :count).by(1)
-          .and change { application.reload.solicitor_id }
+                                                             .and(change { application.reload.solicitor_id })
       end
     end
   end

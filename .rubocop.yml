@@ -143,4 +143,4 @@ RSpec/NestedGroups:
 RSpec/ExampleLength:
   Max: 16
   Exclude:
-    - spec/presenters/summary/sections/*
+    - spec/steps/**/integration_spec.rb

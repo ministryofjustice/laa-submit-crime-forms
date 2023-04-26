@@ -43,7 +43,7 @@ RSpec.describe Steps::FirmDetails::FirmOfficeForm do
       end
     end
 
-    context "when address_line_2 is missing" do
+    context 'when address_line_2 is missing' do
       let(:address_line_2) { nil }
 
       it 'is valid' do
@@ -53,56 +53,55 @@ RSpec.describe Steps::FirmDetails::FirmOfficeForm do
   end
 
   describe 'save!' do
-    let!(:application) { Claim.create!(office_code: 'AAA', firm_office:) }
+    let!(:application) { Claim.create!(office_code: 'AAA', firm_office: firm_office) }
     let(:firm_office) { nil }
 
     context 'when application has an existing firm_office' do
       context 'and firm_office details have changed' do
-        let(:firm_office) { FirmOffice.new(arguments.merge(name: 'Other') ) }
+        let(:firm_office) { FirmOffice.new(arguments.merge(name: 'Other')) }
 
         it 'creates a new firm_office record' do
           expect { subject.save! }.to change(FirmOffice, :count).by(1)
-            .and change { application.reload.firm_office_id }
+                                                                .and(change { application.reload.firm_office_id })
         end
       end
 
       context 'and firm_office detail have not changed' do
         let(:firm_office) { FirmOffice.new(arguments) }
+
         it 'does nothing' do
-          expect { subject.save! }.to change(FirmOffice, :count).by(0)
+          expect { subject.save! }.not_to change(FirmOffice, :count)
         end
       end
     end
 
     context 'when application has no firm_office but one exists for the the account number' do
       context 'and firm_office details have changed' do
-        let!(:matching_firm_office) { FirmOffice.create!(arguments.merge(name: 'Other') ) }
+        before { FirmOffice.create!(arguments.merge(name: 'Other')) }
 
         it 'creates a new firm_office record' do
           expect { subject.save! }.to change(FirmOffice, :count).by(1)
-            .and change { application.reload.firm_office_id }
+                                                                .and(change { application.reload.firm_office_id })
         end
       end
 
       context 'and firm_office detail have not changed' do
-        let!(:matching_firm_office) { FirmOffice.create!(arguments ) }
+        before { FirmOffice.create!(arguments) }
 
         it 'does nothing' do
-          expect { subject.save! }.to change(FirmOffice, :count).by(0)
+          expect { subject.save! }.not_to change(FirmOffice, :count)
         end
       end
 
       context 'it matches a historic firm_office details' do
-        let!(:old_firm_office) {
-          travel_to(1.day.ago) { FirmOffice.create!(arguments ) }
-        }
-        let!(:matching_firm_office) {
-          FirmOffice.create!(arguments.merge(name: 'Other', previous: old_firm_office) )
-        }
+        before do
+          old_firm_office = travel_to(1.day.ago) { FirmOffice.create!(arguments) }
+          FirmOffice.create!(arguments.merge(name: 'Other', previous: old_firm_office))
+        end
 
         it 'create a new firm_office record' do
           expect { subject.save! }.to change(FirmOffice, :count).by(1)
-            .and change { application.reload.firm_office_id }
+                                                                .and(change { application.reload.firm_office_id })
         end
       end
     end
@@ -110,7 +109,7 @@ RSpec.describe Steps::FirmDetails::FirmOfficeForm do
     context 'when application has no firm_office and non exist for the the reference code' do
       it 'creates a new firm_office record' do
         expect { subject.save! }.to change(FirmOffice, :count).by(1)
-          .and change { application.reload.firm_office_id }
+                                                              .and(change { application.reload.firm_office_id })
       end
     end
   end
