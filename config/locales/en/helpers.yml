@@ -48,6 +48,5 @@ en:
         first_name: Solicitor first name
         surname: Solicitor surname
         reference_number: Solicitor reference number
-      steps_firm_details_form[contact_attributes]:
         contact_full_name: Contact full name
         telephone_number: Telephone number

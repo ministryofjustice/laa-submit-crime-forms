@@ -11,6 +11,38 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  gem-test:
+    runs-on: ubuntu-latest
+
+    env:
+      RACK_ENV: test
+      RAILS_ENV: test
+    defaults:
+      run:
+        working-directory: ./gems/laa_multi_step_form
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        working-directory: ./gems/laa_multi_step_form
+        with:
+          bundler-cache: true
+
+      - name: Run linters
+        run: bundle exec rubocop
+
+      - name: Run tests
+        run: bundle exec rspec
+
+      - name: Upload rspec coverage (if failure)
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: rspec-coverage
+          path: coverage/*
+
   test:
     runs-on: ubuntu-latest
 

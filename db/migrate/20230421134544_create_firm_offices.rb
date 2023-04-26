@@ -14,6 +14,6 @@ class CreateFirmOffices < ActiveRecord::Migration[7.0]
     end
 
     add_foreign_key :firm_offices, :firm_offices, column: :previous_id
-    add_reference :claims, :firm_offices, foreign_key: true, type: :uuid, null: true
+    add_reference :claims, :firm_office, foreign_key: true, type: :uuid, null: true
   end
 end

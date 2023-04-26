@@ -12,6 +12,6 @@ class CreateSolicitors < ActiveRecord::Migration[7.0]
     end
 
     add_foreign_key :solicitors, :solicitors, column: :previous_id
-    add_reference :claims, :solicitors, foreign_key: true, type: :uuid, null: true
+    add_reference :claims, :solicitor, foreign_key: true, type: :uuid, null: true
   end
 end

@@ -1,41 +1,6 @@
 require 'steps/base_form_object'
 
 module Steps
-  # we still need to the base errors object to ensure we don;t break
-  # how error handling and validations work. SimpleDelegator is a nice
-  # way of doing this and just overwritting the messages response which
-  # is used byt the `govuk_error_summary` method
-  class ErrorWrapper < SimpleDelegator
-    attr_reader :form, :fields
-
-    # fields is the array nested object to be processed
-    # pass in nil in the array to include errors off the
-    # base object
-    def initialize(form, fields)
-      super(form.errors_non_nested)
-      @form = form
-      @fields = fields
-    end
-
-    def messages
-      fields.flat_map { |field| full_name_attribute(field) }
-    end
-
-    private
-
-    def full_name_attribute(name)
-      if name
-        form[name].errors.messages.map do |key, value|
-          ["#{name}_attributes_#{key}", value]
-        end
-      else
-        messages = form.error.messages.clone
-        fields.each { |field| messages.delete(field.to_s) }
-        messages
-      end
-    end
-  end
-
   class FirmDetailsForm < Steps::BaseFormObject
     attr_accessor :firm_office_attributes, :solicitor_attributes
 
@@ -71,8 +36,8 @@ module Steps
     end
 
     def persist!
-      firm_office.persist!
-      solicitor.persist!
+      firm_office.save!
+      solicitor.save!
     end
   end
 end

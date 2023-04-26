@@ -25,10 +25,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_140330) do
     t.date "cntp_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "firm_offices_id"
-    t.uuid "solicitors_id"
-    t.index ["firm_offices_id"], name: "index_claims_on_firm_offices_id"
-    t.index ["solicitors_id"], name: "index_claims_on_solicitors_id"
+    t.uuid "firm_office_id"
+    t.uuid "solicitor_id"
+    t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
+    t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
   end
 
@@ -77,8 +77,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_140330) do
     t.index ["previous_id"], name: "index_solicitors_on_previous_id"
   end
 
-  add_foreign_key "claims", "firm_offices", column: "firm_offices_id"
-  add_foreign_key "claims", "solicitors", column: "solicitors_id"
+  add_foreign_key "claims", "firm_offices"
+  add_foreign_key "claims", "solicitors"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
   add_foreign_key "solicitors", "solicitors", column: "previous_id"
 end

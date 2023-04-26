@@ -22,11 +22,13 @@ module Steps
       # existing records, as such in this case we create a new record
       def persist!
         existing = application.solicitor || Solicitor.latest.find_by(reference_number:)
-        existing.assign_attributes(attributes)
+        existing&.assign_attributes(attributes)
+
         if existing.nil? || existing.changed?
-          application.create_firm_office(attributes)
+          application.create_solicitor!(attributes)
+          application.save!
         else
-          application.update(solicitor: existing)
+          application.update!(solicitor: existing)
         end
       end
     end

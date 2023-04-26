@@ -1,34 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe Steps::FirmDetailsForm do
-  subject(:form) { described_class.new(arguments) }
-
-  let(:arguments) do
+  subject { described_class.new(params) }
+  let(:params) do
     {
-      application:,
+      'application' => application,
+      'firm_office_attributes' => firm_office_attributes,
+      'solicitor_attributes' => solicitor_attributes,
     }
   end
+  let(:application) { instance_double(Claim, firm_office:, solicitor:) }
+  let(:firm_office_attributes) { nil }
+  let(:solicitor_attributes) { nil }
+  let(:firm_office) { nil }
+  let(:solicitor) { nil }
 
-  let(:application) do
-    instance_double(Claim)
-  end
-
-  describe '#build' do
-    subject { described_class.new(params) }
-
-    let(:params) do
-      {
-        'application' => application,
-        'firm_office_attributes' => firm_office_attributes,
-        'solicitor_attributes' => solicitor_attributes,
-      }
-    end
-    let(:application) { instance_double(Claim, firm_office:, solicitor:) }
-    let(:firm_office_attributes) { nil }
-    let(:solicitor_attributes) { nil }
-    let(:firm_office) { nil }
-    let(:solicitor) { nil }
-
+  context '#initializing nested objects' do
     context 'form_office' do
       context 'when firm_office_attributes is passed in' do
         let(:firm_office_attributes) { { name: 'Firm Name', postcode: 'AA1 1AA' } }
@@ -129,6 +116,21 @@ RSpec.describe Steps::FirmDetailsForm do
           end
         end
       end
+    end
+  end
+
+  context '#save!' do
+    let(:firm_office_form) { double(:firm_office, save!: true) }
+    let(:solicitor_form) { double(:solicitor, save!: true) }
+
+    it 'call persist on the nested firm_office and solicitor objects' do
+      allow(Steps::FirmDetails::FirmOfficeForm).to receive(:new).and_return(firm_office_form)
+      allow(Steps::FirmDetails::SolicitorForm).to receive(:new).and_return(solicitor_form)
+
+      subject.save!
+
+      expect(firm_office_form).to have_received(:save!)
+      expect(solicitor_form).to have_received(:save!)
     end
   end
 end

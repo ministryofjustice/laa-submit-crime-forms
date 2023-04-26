@@ -22,12 +22,13 @@ module Steps
       # however if any details are changed, this should not affect
       # existing records, as such in this case we create a new record
       def persist!
-        existing = application.firm_office || FirmOffice.latest.find_by(acount_number:)
-        existing.assign_attributes(attributes)
-        if existing.nil? || existing_firm.changed?
-          application.create_firm_office(attributes)
+        existing = application.firm_office || FirmOffice.latest.find_by(account_number:)
+        existing&.assign_attributes(attributes)
+        if existing.nil? || existing.changed?
+          application.create_firm_office!(attributes)
+          application.save!
         else
-          application.update(firm_office: existing)
+          application.update!(firm_office: existing)
         end
       end
     end
