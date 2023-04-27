@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_160346) do
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.boolean "extradition"
     t.boolean "other"
+    t.text "reason_for_claim_other"
     t.index ["ufn"], name: "index_claims_on_ufn"
   end
 
