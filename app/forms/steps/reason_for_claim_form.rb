@@ -3,8 +3,8 @@ require 'steps/base_form_object.rb'
 module Steps
   class ReasonForClaimForm < Steps::BaseFormObject
 
-    ReasonForClaim.values.each do |reason_claim|
-      attribute reason_claim, :value_object
+    ReasonForClaim.values.each do |reason_for_claim|
+      attribute reason_for_claim, :boolean
     end
 
     #validate :validate_types
@@ -33,7 +33,6 @@ module Steps
     private
 
     def persist!
-      debugger
       application.update(
         attributes #.merge(attributes_to_reset, status_attributes)
       )
