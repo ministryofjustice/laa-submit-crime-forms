@@ -26,9 +26,9 @@ jobs:
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
-        working-directory: ./gems/laa_multi_step_form
         with:
           bundler-cache: true
+          working-directory: ./gems/laa_multi_step_form
 
       - name: Run linters
         run: bundle exec rubocop
