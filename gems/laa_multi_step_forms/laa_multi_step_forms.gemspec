@@ -22,7 +22,16 @@ Gem::Specification.new do |spec|
     Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
   end
 
+  spec.add_dependency 'govuk_design_system_formbuilder', '~> 3.3.0'
   spec.add_dependency 'rails', '>= 7.0.4.3'
-  spec.add_development_dependency 'rubocop', '~> 1.49.0'
+
+  # Authentication
+  spec.add_dependency 'devise', '~> 4.8'
+  spec.add_dependency 'omniauth-rails_csrf_protection', '~> 1.0.1'
+  spec.add_dependency 'omniauth-saml', '~> 2.1.0'
+
+  spec.add_development_dependency 'rspec-rails', '~> 6.0.1'
+  spec.add_development_dependency 'rubocop', '~> 1.49'
+
   spec.metadata['rubygems_mfa_required'] = 'true'
 end

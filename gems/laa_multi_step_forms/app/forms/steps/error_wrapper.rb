@@ -27,9 +27,9 @@ module Steps
           ["#{name}_attributes_#{key}", value]
         end
       else
-        messages = form.error.messages.clone
+        messages = form.errors_non_nested.messages.clone
         fields.each { |field| messages.delete(field.to_s) }
-        messages
+        messages.to_a
       end
     end
   end
