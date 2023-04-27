@@ -31,7 +31,7 @@ class ValueObject
             :INQUIRY_METHODS, subclass.values.map { |value| "#{value}?".to_sym }
           )
 
-          subclass.values do |value|
+          subclass.values.each do |value|
             subclass.define_method("#{value}?") { value.eql?(self) }
           end
         end

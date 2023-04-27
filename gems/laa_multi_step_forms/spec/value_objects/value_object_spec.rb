@@ -82,7 +82,7 @@ RSpec.describe ValueObject do
       ).to match_array(%i[yes? no?])
     end
 
-    xit 'defines inquiry methods for each of the values' do
+    it 'defines inquiry methods for each of the values' do
       expect(yes_answer.yes?).to be(true)
       expect(yes_answer.no?).to be(false)
 
