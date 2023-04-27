@@ -19,7 +19,7 @@ jobs:
       RAILS_ENV: test
     defaults:
       run:
-        working-directory: ./gems/laa_multi_step_form
+        working-directory: ./gems/laa_multi_step_forms
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -28,7 +28,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-          working-directory: ./gems/laa_multi_step_form
+          working-directory: ./gems/laa_multi_step_forms
 
       - name: Run linters
         run: bundle exec rubocop
