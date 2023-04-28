@@ -30,8 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'omniauth-rails_csrf_protection', '~> 1.0.1'
   spec.add_dependency 'omniauth-saml', '~> 2.1.0'
 
-  spec.add_development_dependency 'rspec-rails', '~> 6.0.1'
-  spec.add_development_dependency 'rubocop', '~> 1.49'
-
   spec.metadata['rubygems_mfa_required'] = 'true'
 end
