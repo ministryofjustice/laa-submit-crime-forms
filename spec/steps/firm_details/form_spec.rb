@@ -71,12 +71,11 @@ RSpec.describe Steps::FirmDetailsForm do
 
     context 'solicitor' do
       context 'when solicitor_attributes is passed in' do
-        let(:solicitor_attributes) { { first_name: 'John', surname: 'Bob' } }
+        let(:solicitor_attributes) { { full_name: 'John Bob' } }
 
         it 'used to set values' do
           expect(subject.solicitor).to have_attributes(
-            first_name: 'John',
-            surname: 'Bob',
+            full_name: 'John Bob',
             reference_number: nil,
           )
         end
@@ -86,8 +85,7 @@ RSpec.describe Steps::FirmDetailsForm do
 
           it 'ignores existing fields' do
             expect(subject.solicitor).to have_attributes(
-              first_name: 'John',
-              surname: 'Bob',
+              full_name: 'John Bob',
               reference_number: nil,
             )
           end
@@ -100,8 +98,7 @@ RSpec.describe Steps::FirmDetailsForm do
 
           it 'populates the values from the DB' do
             expect(subject.solicitor).to have_attributes(
-              first_name: nil,
-              surname: nil,
+              full_name: nil,
               reference_number: 'AAA1',
             )
           end
@@ -110,8 +107,7 @@ RSpec.describe Steps::FirmDetailsForm do
         context 'without an existing record in DB' do
           it 'leaves the fields blank' do
             expect(subject.solicitor).to have_attributes(
-              first_name: nil,
-              surname: nil,
+              full_name: nil,
               reference_number: nil,
             )
           end

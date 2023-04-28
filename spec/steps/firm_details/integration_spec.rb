@@ -16,12 +16,11 @@ RSpec.describe 'User can fill in firm details', type: :system do
     fill_in 'Town or city', with: 'hometown'
     fill_in 'Postcode', with: 'AA1 1AA'
 
-    fill_in 'Solicitor first name', with: 'James'
-    fill_in 'Solicitor surname', with: 'Robert'
+    fill_in 'Solicitor full name', with: 'James Robert'
     fill_in 'Solicitor reference number', with: '2222'
 
     fill_in 'Contact full name', with: 'Jim Bob'
-    fill_in 'Telephone number', with: '07111111111'
+    fill_in 'Email address', with: 'jim@bob.com'
 
     click_on 'Save and continue'
 
@@ -39,11 +38,10 @@ RSpec.describe 'User can fill in firm details', type: :system do
     )
 
     expect(claim.solicitor).to have_attributes(
-      first_name: 'James',
-      surname: 'Robert',
+      full_name: 'James Robert',
       reference_number: '2222',
       contact_full_name: 'Jim Bob',
-      telephone_number: '07111111111',
+      contact_email: 'jim@bob.com',
     )
   end
 end

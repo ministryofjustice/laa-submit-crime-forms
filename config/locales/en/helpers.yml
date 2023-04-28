@@ -27,8 +27,8 @@ en:
       steps_claim_type_form:
         rep_order_date: For example, 27 3 2007
         cntp_date: For example, 27 3 2007
-      steps_firm_details_form[contact_attributes]:
-        telephone_number: For example, 01632 960 001 or +44 808 157 0192
+      steps_firm_details_form[solicitor_attributes]:
+        contact_email: For example, your_name@email.com
 
     label:
       steps_claim_type_form:
@@ -45,8 +45,7 @@ en:
         town: Town or city
         postcode: Postcode
       steps_firm_details_form[solicitor_attributes]:
-        first_name: Solicitor first name
-        surname: Solicitor surname
+        full_name: Solicitor full name
         reference_number: Solicitor reference number
         contact_full_name: Contact full name
-        telephone_number: Telephone number
+        contact_email: Email address

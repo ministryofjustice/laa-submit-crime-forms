@@ -3,17 +3,15 @@ require 'steps/base_form_object'
 module Steps
   module FirmDetails
     class SolicitorForm < Steps::BaseFormObject
-      attribute :first_name, :string
-      attribute :surname, :string
+      attribute :full_name, :string
       attribute :reference_number, :string
       attribute :contact_full_name, :string
-      attribute :telephone_number, :string
+      attribute :contact_email, :string
 
-      validates :first_name, presence: true
-      validates :surname, presence: true
+      validates :full_name, presence: true
       validates :reference_number, presence: true
       validates :contact_full_name, presence: true
-      validates :telephone_number, presence: true
+      validates :contact_email, presence: true
 
       private
 

@@ -26,6 +26,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_140330) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "firm_office_id"
+    t.boolean "core_costs_exceed_higher_limit"
+    t.boolean "enhanced_rates_claimed"
+    t.boolean "councel_or_agent_assigned"
+    t.boolean "representation_order_withdrawn_on"
+    t.date "rep_order_date_withdrawn"
+    t.boolean "extradition"
+    t.boolean "other"
+    t.text "reason_for_claim_other"
     t.uuid "solicitor_id"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
@@ -66,11 +74,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_140330) do
   end
 
   create_table "solicitors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "first_name"
-    t.string "surname"
+    t.string "full_name"
     t.string "reference_number"
     t.string "contact_full_name"
-    t.string "telephone_number"
+    t.string "contact_email"
     t.uuid "previous_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

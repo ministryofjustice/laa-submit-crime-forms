@@ -7,7 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
       <%= f.fields_for :firm_office, as: :firm_details_form do |fo| %>
-        <%= f.govuk_fieldset legend: {} do %>
+        <%= f.govuk_fieldset legend: { text: t(".firm_details"), size: 'm', is_page_heading: true } do %>
           <%= fo.govuk_text_field :name, width: 20 %>
           <%= fo.govuk_text_field :account_number, width: 20 %>
           <%= fo.govuk_text_field :address_line_1, width: 20 %>
@@ -19,14 +19,13 @@
 
       <%= f.fields_for :solicitor, as: :firm_details_form do |so| %>
         <%= f.govuk_fieldset legend: { text: t(".solicitor_details"), size: 'm', is_page_heading: true } do %>
-          <%= so.govuk_text_field :first_name, width: 20 %>
-          <%= so.govuk_text_field :surname, width: 20 %>
+          <%= so.govuk_text_field :full_name, width: 20 %>
           <%= so.govuk_text_field :reference_number, width: 10 %>
         <% end %>
 
         <%= f.govuk_fieldset legend: { text: t(".contact_details"), size: 'm', is_page_heading: true } do %>
           <%= so.govuk_text_field :contact_full_name, width: 'full' %>
-          <%= so.govuk_text_field :telephone_number, width: 10 %>
+          <%= so.govuk_text_field :contact_email, width: 10 %>
         <% end %>
       <% end %>
 
