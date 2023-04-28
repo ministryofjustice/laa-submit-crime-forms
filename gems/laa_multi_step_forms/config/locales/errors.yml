@@ -1,0 +1,52 @@
+---
+en:
+  shared:
+    shared_date_errors: &shared_date_errors
+      blank: Date cannot be blank
+      invalid: Enter a valid date
+      invalid_day: Enter a valid day
+      invalid_month: Enter a valid month
+      invalid_year: Enter a valid year
+      year_too_early: Date is too far in the past
+      future_not_allowed: Date cannot be in the future
+      before_date_from: End date cannot be before start date
+
+  activemodel:
+    errors:
+      models:
+        steps/claim_type_form:
+          attributes:
+            rep_order_date: *shared_date_errors
+            cntp_order:
+              blank: Enter a CNTP number
+            cntp_date: *shared_date_errors
+        steps/firm_details_form:
+          attributes:
+            firm_office:
+              invalid: "Firm office has missing/invalid details"
+            solicitor:
+              invalid: "Solicitor has missing/invalid details"
+            contact:
+              invalid: "Contact details has missing/invalid details"
+        steps/firm_details/firm_office_form:
+          attributes:
+            name:
+              blank: "Enter a firm name"
+            account_number:
+              blank: "Enter an account number"
+            address_line_1:
+              blank: "Enter an address"
+            town:
+              blank: "Enter a town or city"
+            postcode:
+              blank: "Enter a postcode"
+        steps/firm_details/solicitor_form:
+          attributes:
+            full_name:
+              blank: "Enter the solicitor's full name"
+            reference_number:
+              blank: "Enter the solicitor's reference number"
+            contact_full_name:
+              blank: "Enter a contacts name"
+            contact_email:
+              blank: "Enter a contacts email"

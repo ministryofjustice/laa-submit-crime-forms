@@ -1,6 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe StepsHelper, type: :helper do
+  let(:application_klass) do
+    Class.new(ApplicationRecord) do
+      def self.load_schema! = @columns_hash = {}
+      def self.name = 'Application'
+
+      def navigation_stack
+        @navigation_stack ||= []
+      end
+    end
+  end
+
   describe '#step_form' do
     let(:foo_bar_record) do
       Class.new(ApplicationRecord) do
@@ -46,7 +57,7 @@ RSpec.describe StepsHelper, type: :helper do
   end
 
   describe '#step_header' do
-    let(:current_application) { instance_double(Claim, navigation_stack:) }
+    let(:current_application) { instance_double(application_klass, navigation_stack:) }
     let(:navigation_stack) { %w[/step1 /step2 /step3] }
 
     before do
@@ -78,7 +89,7 @@ RSpec.describe StepsHelper, type: :helper do
   end
 
   describe '#previous_step_path' do
-    let(:current_application) { instance_double(Claim, navigation_stack:) }
+    let(:current_application) { instance_double(application_klass, navigation_stack:) }
 
     before do
       allow(view).to receive(:current_application).and_return(current_application)
