@@ -6,8 +6,6 @@ module Decisions
       when :claim_type
         after_claim_type
       when :firm_details
-        edit(:reason_for_claim)
-      when :reason_for_claim
         edit(:case_details)
       when :case_details
         edit(:case_disposal)
@@ -16,10 +14,12 @@ module Decisions
       when :hearing_details, :delete_defendant
         edit(:defendant_details)
       when :defendant_details
-        show(:start_page)
+        edit(:reason_for_claim)
       when :add_defendant
         form_object.application.defendants.create(position: form_object.next_position)
         edit(:defendant_details)
+      when :reason_for_claim
+        show(:start_page)
       else
         index('/claims')
       end

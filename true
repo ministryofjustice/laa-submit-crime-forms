@@ -1,0 +1,48 @@
+
+An error occurred while loading ./:focus=.
+Failure/Error: __send__(method, file)
+
+LoadError:
+  cannot load such file -- /Users/michael.hunt/work/laa-claim-non-standard-magistrate-fee-backend/:focus=
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.1/lib/rspec/core/configuration.rb:2117:in `load'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.1/lib/rspec/core/configuration.rb:2117:in `load_file_handling_errors'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.1/lib/rspec/core/configuration.rb:1617:in `block in load_spec_files'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.1/lib/rspec/core/configuration.rb:1615:in `each'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.1/lib/rspec/core/configuration.rb:1615:in `load_spec_files'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.1/lib/rspec/core/runner.rb:102:in `setup'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.1/lib/rspec/core/runner.rb:86:in `run'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.1/lib/rspec/core/runner.rb:71:in `run'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.1/lib/rspec/core/runner.rb:45:in `invoke'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.1/exe/rspec:4:in `<top (required)>'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/bin/rspec:25:in `load'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/bin/rspec:25:in `<top (required)>'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/lib/bundler/cli/exec.rb:58:in `load'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/lib/bundler/cli/exec.rb:58:in `kernel_load'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/lib/bundler/cli/exec.rb:23:in `run'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/lib/bundler/cli.rb:492:in `exec'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in `invoke_command'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/lib/bundler/vendor/thor/lib/thor.rb:392:in `dispatch'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/lib/bundler/cli.rb:34:in `dispatch'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/lib/bundler/vendor/thor/lib/thor/base.rb:485:in `start'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/lib/bundler/cli.rb:28:in `start'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/exe/bundle:45:in `block in <top (required)>'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/lib/bundler/friendly_errors.rb:117:in `with_friendly_errors'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/lib/ruby/gems/3.2.0/gems/bundler-2.4.8/exe/bundle:33:in `<top (required)>'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/bin/bundle:25:in `load'
+# /Users/michael.hunt/.rbenv/versions/3.2.1/bin/bundle:25:in `<main>'
+# 
+#   Showing full backtrace because every line was filtered out.
+#   See docs for RSpec::Configuration#backtrace_exclusion_patterns and
+#   RSpec::Configuration#backtrace_inclusion_patterns for more information.
+Run options: include {:focus=>true}
+
+All examples were filtered out; ignoring {:focus=>true}
+No examples found.
+
+
+Finished in 0.00002 seconds (files took 0.1492 seconds to load)
+0 examples, 0 failures, 1 error occurred outside of examples
+
+Coverage report generated for RSpec to /Users/michael.hunt/work/laa-claim-non-standard-magistrate-fee-backend/coverage. 0 / 528 LOC (0.0%) covered.
+Lcov style coverage report generated for RSpec to coverage/lcov.info
