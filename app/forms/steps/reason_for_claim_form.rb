@@ -2,6 +2,9 @@ require 'steps/base_form_object.rb'
 
 module Steps
   class ReasonForClaimForm < Steps::BaseFormObject
+    # attribute :reason_for_claim, :value_object, source: ReasonForClaim
+    attribute :rep_order_date_withdrawn, :multiparam_date
+    attribute :reason_for_claim_other, :string
 
     ReasonForClaim.values.each do |reason_for_claim|
       attribute reason_for_claim, :boolean

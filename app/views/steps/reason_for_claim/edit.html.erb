@@ -5,15 +5,15 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-        <%= f.govuk_fieldset legend: { tag: 'h1', size: 'xl' } do %>
-          <% @form_object.choices.each do |choice| %>
+        <%= f.govuk_check_boxes_fieldset :reason_for_claim, legend: { tag: 'h1', size: 'xl' } do %>
+        <% @form_object.choices.each do |choice| %>
             <% if choice == ReasonForClaim::REPRESENTATION_ORDER_WITHDRAWN %>
               <%= f.govuk_check_box choice.value, true, multiple: false do %>
-                <%#= f.govuk_date_field :rep_order_date, maxlength_enabled: true %>
+                <%= f.govuk_date_field :rep_order_date_withdrawn, maxlength_enabled: true %>
               <% end %>
             <% elsif choice == ReasonForClaim::OTHER %>
               <%= f.govuk_check_box  choice.value, true, multiple: false do %>
-                <%#= f.govuk_text_area :reason_for_claim_other %>
+                <%= f.govuk_text_area :reason_for_claim_other %>
               <% end %>
             <% else %>
               <%= f.govuk_check_box choice.value, true, multiple: false  do %>
