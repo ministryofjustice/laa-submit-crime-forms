@@ -15,5 +15,12 @@ module Steps
     def decision_tree_class
       Decisions::SimpleDecisionTree
     end
+
+    def additional_permitted_params
+      [
+        firm_office_attributes: Steps::FirmDetails::FirmOfficeForm.attribute_names,
+        solicitor_attributes: Steps::FirmDetails::SolicitorForm.attribute_names,
+      ]
+    end
   end
 end

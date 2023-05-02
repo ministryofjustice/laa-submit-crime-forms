@@ -84,6 +84,9 @@ RSpec/NoExpectationExample:
 RSpec/Rails/InferredSpecType:
   Enabled: false
 
+Naming/VariableNumber:
+  Enabled: false
+
 # fully disabled as could not exclude spec/steps/ directory
 RSpec/FilePath:
   Enabled: false
@@ -140,4 +143,4 @@ RSpec/NestedGroups:
 RSpec/ExampleLength:
   Max: 16
   Exclude:
-    - spec/presenters/summary/sections/*
+    - spec/steps/**/integration_spec.rb

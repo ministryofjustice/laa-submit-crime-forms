@@ -5,7 +5,6 @@ ruby File.read('.ruby-version').strip
 
 gem 'bootsnap', require: false
 gem 'dartsass-rails', '~> 0.4.0'
-gem 'govuk_design_system_formbuilder', '~> 3.3.0'
 gem 'importmap-rails'
 gem 'laa_multi_step_forms', path: 'gems/laa_multi_step_forms'
 gem 'pg', '~> 1.1'
@@ -14,11 +13,6 @@ gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 gem 'sprockets-rails'
 gem 'tzinfo-data'
 gem 'uk_postcode'
-
-# Authentication
-gem 'devise', '~> 4.8'
-gem 'omniauth-rails_csrf_protection'
-gem 'omniauth-saml', '~> 2.1.0'
 
 # Exceptions notifications
 gem 'sentry-rails'

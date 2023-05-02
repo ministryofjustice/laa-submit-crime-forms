@@ -25,7 +25,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
           decision_tree = described_class.new(claim, as: :claim_type)
           expect(decision_tree.destination).to eq(
             action: :index,
-            controller: :claims,
+            controller: '/claims',
           )
         end
       end
@@ -39,7 +39,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
       decision_tree = described_class.new(claim, as: :firm_details)
       expect(decision_tree.destination).to eq(
         action: :index,
-        controller: :claims,
+        controller: '/claims',
       )
     end
   end
@@ -50,7 +50,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
       decision_tree = described_class.new(double('form'), as: :unknown)
       expect(decision_tree.destination).to eq(
         action: :index,
-        controller: :claims,
+        controller: '/claims',
       )
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_28_155635) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_21_140330) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,7 +25,32 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_155635) do
     t.date "cntp_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "firm_office_id"
+    t.boolean "core_costs_exceed_higher_limit"
+    t.boolean "enhanced_rates_claimed"
+    t.boolean "councel_or_agent_assigned"
+    t.boolean "representation_order_withdrawn_on"
+    t.date "rep_order_date_withdrawn"
+    t.boolean "extradition"
+    t.boolean "other"
+    t.text "reason_for_claim_other"
+    t.uuid "solicitor_id"
+    t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
+    t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
+  end
+
+  create_table "firm_offices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "account_number"
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "town"
+    t.string "postcode"
+    t.uuid "previous_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["previous_id"], name: "index_firm_offices_on_previous_id"
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -48,4 +73,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_155635) do
     t.index ["auth_provider", "uid"], name: "index_providers_on_auth_provider_and_uid", unique: true
   end
 
+  create_table "solicitors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "full_name"
+    t.string "reference_number"
+    t.string "contact_full_name"
+    t.string "contact_email"
+    t.uuid "previous_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["previous_id"], name: "index_solicitors_on_previous_id"
+  end
+
+  add_foreign_key "claims", "firm_offices"
+  add_foreign_key "claims", "solicitors"
+  add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
+  add_foreign_key "solicitors", "solicitors", column: "previous_id"
 end

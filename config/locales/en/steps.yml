@@ -11,3 +11,7 @@ en:
     firm_details:
       edit:
         page_title: Firm Details page title - TODO
+        heading: Enter your details
+        firm_details: Firm details
+        solicitor_details: Solicitor details
+        contact_details: Your contact details
