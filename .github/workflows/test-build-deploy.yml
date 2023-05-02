@@ -107,7 +107,7 @@ jobs:
           path: coverage/*
   build:
     runs-on: ubuntu-latest
-    needs: test
+    needs: [gem-test, test]
     if: (github.ref == 'refs/heads/main') || (github.ref == 'refs/heads/development')
 
     steps:

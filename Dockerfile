@@ -3,7 +3,9 @@ LABEL maintainer="LAA non-standard magistrate fee team"
 
 # dependencies required both at runtime and build time
 RUN apk add --update \
+  build-base \
   postgresql-dev \
+  gcompat \
   tzdata \
   yarn
 
@@ -19,7 +21,6 @@ FROM base AS dependencies
 
 # system dependencies required to build some gems
 RUN apk add --update \
-  build-base \
   git
 
 COPY Gemfile* .ruby-version package.json yarn.lock ./
@@ -27,6 +28,7 @@ COPY ./gems ./gems
 
 RUN bundle config set frozen 'true' && \
   bundle config set without test:development && \
+  bundle config build.nokogiri --use-system-libraries && \
   bundle install --jobs 5 --retry 3
 
 RUN yarn install --frozen-lockfile --ignore-scripts
@@ -57,10 +59,10 @@ COPY . .
 
 # Some ENV variables need to be present by the time
 # the assets pipeline run, but doesn't matter their value.
-RUN SECRET_KEY_BASE=needed_for_assets_precompile \
-  RAILS_ENV=production \
-  ENV_NAME=production \
-  rails assets:precompile --trace
+# RUN SECRET_KEY_BASE=needed_for_assets_precompile \
+#   RAILS_ENV=production \
+#   ENV_NAME=production \
+#   rails assets:precompile --trace
 
 # non-root user should own these directories
 RUN chown -R appuser:appgroup log tmp
