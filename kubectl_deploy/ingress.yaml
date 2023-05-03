@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ubidemo-ingress
+  namespace: laa-claim-non-standard-magistrate-fee-dev
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    external-dns.alpha.kubernetes.io/set-identifier: ubidemo-ingress-laa-claim-non-standard-magistrate-fee-dev-green
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
+spec:
+  ingressClassName: default
+  tls:
+  - hosts:
+    - crm7dev.apps.live.cloud-platform.service.justice.gov.uk 
+  rules:
+  - host: crm7dev.apps.live.cloud-platform.service.justice.gov.uk 
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: ubidemo-service
+            port:
+              number: 5000
