@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ubidemo
+  name: laa-claim-non-standard-magistrate-fee-dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ubidemo
+      app: laa-claim-non-standard-magistrate-fee-dev
   template:
     metadata:
       labels:
-        app: ubidemo
+        app: laa-claim-non-standard-magistrate-fee-dev
     spec:
       containers:
       - name: ubidemo
