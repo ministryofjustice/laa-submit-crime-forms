@@ -4,7 +4,6 @@ metadata:
   name: crm7dev-ingress
   namespace: laa-claim-non-standard-magistrate-fee-dev
   annotations:
-    kubernetes.io/ingress.class: nginx
     external-dns.alpha.kubernetes.io/set-identifier: crm7dev-ingress-laa-claim-non-standard-magistrate-fee-dev-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
 spec:
