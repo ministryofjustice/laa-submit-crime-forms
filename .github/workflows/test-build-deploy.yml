@@ -132,8 +132,8 @@ jobs:
         id: ecr
         uses: jwalton/gh-ecr-push@b10a019116283fff10914554dfe85bfb1c21d41b
         with:
-          access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
+          access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID_DEV }}
+          secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY_DEV }}
           region: eu-west-2
           local-image: app
-          image: ${{ secrets.ECR_NAME }}:${{ github.sha }}, ${{ secrets.ECR_NAME }}:staging.latest
+          image: ${{ secrets.ECR_NAME_DEV }}:${{ github.sha }}, ${{ secrets.ECR_NAME_DEV }}:staging.latest
