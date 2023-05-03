@@ -89,5 +89,5 @@ USER $APPUID
 ENV PORT 3000
 EXPOSE $PORT
 
-# ENTRYPOINT ["./run.sh"]
-CMD tail -f /dev/null\
+ENTRYPOINT ["./run.sh"]
+#CMD tail -f /dev/null\
