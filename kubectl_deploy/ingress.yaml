@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ubidemo-ingress
+  name: crm7dev-ingress
   namespace: laa-claim-non-standard-magistrate-fee-dev
   annotations:
     kubernetes.io/ingress.class: nginx
-    external-dns.alpha.kubernetes.io/set-identifier: ubidemo-ingress-laa-claim-non-standard-magistrate-fee-dev-green
+    external-dns.alpha.kubernetes.io/set-identifier: crm7dev-ingress-laa-claim-non-standard-magistrate-fee-dev-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
 spec:
   ingressClassName: default
@@ -20,6 +20,6 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: ubidemo-service
+            name: laa-claim-non-standard-magistrate-fee-dev
             port:
               number: 5000
