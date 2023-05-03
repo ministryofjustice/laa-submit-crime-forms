@@ -2,6 +2,10 @@ class Claim < ApplicationRecord
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
 
+  def reference
+    'aaaaa'
+  end
+
   def date
     rep_order_date || cntp_date
   end

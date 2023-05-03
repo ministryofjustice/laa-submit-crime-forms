@@ -63,8 +63,10 @@ Rails.application.routes.draw do
   end
 
   scope 'applications/:id' do
+    get '/steps/start_page', to: 'steps/start_page#show', as: 'commit_draft'
     namespace :steps do
       edit_step :claim_type
+      show_step :start_page
       edit_step :firm_details
     end
   end

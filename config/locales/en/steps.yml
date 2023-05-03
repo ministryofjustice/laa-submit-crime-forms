@@ -15,3 +15,12 @@ en:
         firm_details: Firm details
         solicitor_details: Solicitor details
         contact_details: Your contact details
+  laa_multi_step_forms:
+    task_list:
+      show:
+        page_title: New claim page title - TODO
+        heading: Start a new claim
+        subheading: Claim incomplete
+        progress_counter: You have completed %{completed} of %{total} sections.
+        aside:
+          reference: Reference number

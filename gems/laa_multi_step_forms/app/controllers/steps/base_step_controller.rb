@@ -35,7 +35,7 @@ module Steps
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
         @form_object.save!
-        redirect_to edit_application_path(current_application)
+        redirect_to commit_draft_path(current_application)
       elsif @form_object.save
         redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       else

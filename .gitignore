@@ -41,3 +41,4 @@ coverage/
 .env.development.local
 .env.test.local
 .env.local
+app/assets/builds/*

@@ -12,6 +12,7 @@ en:
       steps_claim_type_form:
         rep_order_date: For example, 27 3 2007
         cntp_date: For example, 27 3 2007
+        cntp_order: For example CNTP1234
       steps_firm_details_form[solicitor_attributes]:
         contact_email: For example, your_name@email.com
 
