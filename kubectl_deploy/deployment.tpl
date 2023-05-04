@@ -16,5 +16,5 @@ spec:
       - name: ubidemo
         image: ${ECR_URL}:${IMAGE_TAG}
         ports:
-        - containerPort: 5500
+        - containerPort: 5000
             
