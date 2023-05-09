@@ -56,7 +56,7 @@ Rails.application.routes.draw do
     get :accessibility
   end
 
-  resources :claims, except: [:show, :new, :update], as: :applications do
+  resources :claims, except: [:edit, :show, :new, :update], as: :applications do
     member do
       get :delete
     end
@@ -64,6 +64,7 @@ Rails.application.routes.draw do
 
   scope 'applications/:id' do
     get '/steps/start_page', to: 'steps/start_page#show', as: 'commit_draft'
+    get '/steps/start_page', to: 'steps/start_page#show', as: 'edit_application'
     namespace :steps do
       edit_step :claim_type
       show_step :start_page

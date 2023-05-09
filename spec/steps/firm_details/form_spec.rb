@@ -19,7 +19,7 @@ RSpec.describe Steps::FirmDetailsForm do
   describe '#initializing nested objects' do
     context 'form_office' do
       context 'when firm_office_attributes is passed in' do
-        let(:firm_office_attributes) { { name: 'Firm Name', postcode: 'AA1 1AA' } }
+        let(:firm_office_attributes) { { 'name' => 'Firm Name', 'postcode' => 'AA1 1AA' } }
 
         it 'used to set values' do
           expect(subject.firm_office).to have_attributes(
@@ -71,7 +71,7 @@ RSpec.describe Steps::FirmDetailsForm do
 
     context 'solicitor' do
       context 'when solicitor_attributes is passed in' do
-        let(:solicitor_attributes) { { full_name: 'John Bob' } }
+        let(:solicitor_attributes) { { 'full_name' => 'John Bob' } }
 
         it 'used to set values' do
           expect(subject.solicitor).to have_attributes(
