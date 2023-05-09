@@ -63,8 +63,11 @@ Rails.application.routes.draw do
   end
 
   scope 'applications/:id' do
-    get '/steps/start_page', to: 'steps/start_page#show', as: 'commit_draft'
-    get '/steps/start_page', to: 'steps/start_page#show', as: 'edit_application'
+    # This is used as a generic redirect once a draft has been commited
+    # The idea is that this can be custom to the implementation without
+    # requiring an additional method to store the path.
+    get '/steps/start_page', to: 'steps/start_page#show', as: 'after_commit'
+
     namespace :steps do
       edit_step :claim_type
       show_step :start_page

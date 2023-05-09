@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User can see an application status', type: :system do
-  let(:firm_office) { FirmOffice.create() }
+  let(:firm_office) { FirmOffice.create }
   let(:solicitor) { Solicitor.create(full_name: 'James Robert') }
   let(:claim) { Claim.create(office_code: 'AAAA', solicitor: solicitor, firm_office: firm_office) }
 

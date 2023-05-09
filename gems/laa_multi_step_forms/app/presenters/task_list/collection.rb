@@ -35,11 +35,8 @@ module TaskList
     end
 
     def sections
-      if self.class.const_defined?(:SECTIONS)
-        self.class::SECTIONS
-      else
-        raise 'implement SECTIONS, in subclasses'
-      end
+      raise 'implement SECTIONS, in subclasses' unless self.class.const_defined?(:SECTIONS)
+      self.class::SECTIONS
     end
   end
 end
