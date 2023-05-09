@@ -12,7 +12,7 @@ RSpec.describe 'User can see an application status', type: :system do
   it 'can do green path' do
     visit steps_start_page_path(claim.id)
 
-    within('.moj-task-list__item', text: 'Firm details') do
+    within('.moj-task-list__item', text: 'Your details') do
       expect(page).to have_content('In progress')
     end
   end
