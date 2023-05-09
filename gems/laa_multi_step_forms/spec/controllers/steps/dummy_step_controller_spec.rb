@@ -18,8 +18,7 @@ end
 
 # used so that we can easily stub this method into the controller
 class DummyStepImplementation
-  def self.current_application
-  end
+  def self.current_application; end
 end
 
 RSpec.describe DummyStepController, type: :controller do
@@ -34,7 +33,9 @@ RSpec.describe DummyStepController, type: :controller do
 
   describe 'navigation stack' do
     let(:application_id) { SecureRandom.uuid }
-    let!(:application) { double(:claim, id: application_id, save!: true, 'navigation_stack=': true, navigation_stack: ) }
+    let!(:application) do
+      double(:claim, id: application_id, save!: true, 'navigation_stack=': true, navigation_stack: navigation_stack)
+    end
     let(:dummy_step_path) { "/dummy_step/#{application_id}" }
 
     before do

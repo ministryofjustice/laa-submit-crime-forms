@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe MultiparamDateValidator do
+  subject { klass.new(arguments) }
+
   let(:klass) do
     Class.new(Steps::BaseFormObject) do
       def self.name
@@ -16,20 +18,18 @@ RSpec.describe MultiparamDateValidator do
       validates :future_date, multiparam_date: { allow_past: false, allow_future: true }
     end
   end
-  subject { klass.new(arguments) }
+  let(:arguments) { { simple_date: nil, past_date: nil, future_date: nil } }
 
   around do |spec|
     I18n.backend.load_translations unless I18n.backend.initialized?
-    attributes = %i[simple_date past_date future_date].each_with_object({}) do |date_field, hash|
-      hash[date_field] =  { past_not_allowed: "Past not allowed" }
+    attributes = %i[simple_date past_date future_date].index_with do |_date_field|
+      { past_not_allowed: 'Past not allowed' }
     end
     data = { activemodel: { errors: { models: { multiparam_date_test: { attributes: } } } } }
     I18n.backend.store_translations(:en, data)
     spec.run
     I18n.backend.reload!
   end
-
-  let(:arguments) { { simple_date: nil, past_date: nil, future_date: nil } }
 
   shared_examples 'a multiparam date validation' do |options|
     let(:attribute_name) { options[:attribute_name] }

@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe TaskList::Collection do
   include ActionView::TestCase::Behavior
 
-  let(:klass) {
+  subject { klass.new(view, application:) }
+
+  let(:klass) do
     Class.new(described_class).tap do |klass|
       klass.const_set(:SECTIONS, [[:a, [:a1, :a2]], [:b, [:b1]]])
     end
-  }
-  subject { klass.new(view, application:) }
-
+  end
   let(:name) { :foobar_task }
   let(:application) { double }
 
@@ -47,7 +47,7 @@ RSpec.describe TaskList::Collection do
     it 'iterates through the sections defined, rendering each one' do
       expect(
         TaskList::Section
-      ).to receive(:new).exactly(2).times.and_return(double.as_null_object)
+      ).to receive(:new).twice.and_return(double.as_null_object)
 
       expect(
         subject.render

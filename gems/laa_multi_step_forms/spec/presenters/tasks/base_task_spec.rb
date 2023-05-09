@@ -3,9 +3,8 @@ require 'rails_helper'
 RSpec.describe Tasks::BaseTask do
   subject { described_class.new(application:) }
 
-  let(:details_klass) { Class.new(Tasks::BaseTask) }
+  let(:details_klass) { Class.new(described_class) }
   let(:application) { double(:claim) }
-
 
   describe '.build' do
     context 'for a task with an implementation class' do
