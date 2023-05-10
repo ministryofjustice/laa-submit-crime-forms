@@ -56,15 +56,21 @@ Rails.application.routes.draw do
     get :accessibility
   end
 
-  resources :claims, except: [:show, :new, :update], as: :applications do
+  resources :claims, except: [:edit, :show, :new, :update], as: :applications do
     member do
       get :delete
     end
   end
 
   scope 'applications/:id' do
+    # This is used as a generic redirect once a draft has been commited
+    # The idea is that this can be custom to the implementation without
+    # requiring an additional method to store the path.
+    get '/steps/start_page', to: 'steps/start_page#show', as: 'after_commit'
+
     namespace :steps do
       edit_step :claim_type
+      show_step :start_page
       edit_step :firm_details
     end
   end
