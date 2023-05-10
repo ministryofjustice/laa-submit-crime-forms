@@ -32,7 +32,7 @@ module Steps
     private
 
     def persist!
-      application.update(
+      application.update!(
         attributes.merge(attributes_to_reset, status_attributes)
       )
     end

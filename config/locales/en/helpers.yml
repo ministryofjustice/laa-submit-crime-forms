@@ -35,3 +35,7 @@ en:
         reference_number: Solicitor reference number
         contact_full_name: Contact full name
         contact_email: Email address
+      steps_case_disposal_form:
+        plea_options:
+          'guilty': 'Guilty plea'
+          'not_guilty': 'Not guilty plea'
