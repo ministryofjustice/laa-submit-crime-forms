@@ -8,6 +8,8 @@ module Decisions
         edit(:case_disposal)
       when :case_disposal
         after_case_disposal
+      when :guilty_plea
+        index('/claims', a: 1)
       else
         index('/claims')
       end
@@ -23,9 +25,10 @@ module Decisions
 
     def after_case_disposal
       if form_object.plea == Plea::GUILTY
-        # edit(:plea)
+        edit(:guilty_plea)
+      else
+        index('/claims')
       end
-      index('/claims')
     end
   end
 end
