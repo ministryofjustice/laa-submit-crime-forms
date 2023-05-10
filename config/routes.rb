@@ -24,8 +24,6 @@ end
 
 Rails.application.routes.draw do
   extend RouteHelpers
-  mount Rswag::Ui::Engine => '/api-docs'
-  mount Rswag::Api::Engine => '/api-docs'
 
   # mount this at the route
   mount LaaMultiStepForms::Engine, at: '/'
