@@ -52,11 +52,11 @@ RSpec.describe Tasks::CaseDisposal, type: :system do
       let(:plea) { 'guilty' }
 
       context 'when plea_type is not set' do
+        # TODO: update this to pleaType once implemented
         xit { expect(subject).not_to be_completed }
       end
 
-      context 'when plea_type is not set' do
-        # TODO: update this to pleaType once implemented
+      context 'when plea_type is set' do
         it { expect(subject).to be_completed }
       end
     end
