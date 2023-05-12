@@ -4,9 +4,10 @@ module Decisions
       case step_name
       when :claim_type
         after_claim_type
-        # when :firm_details
-        #   index('/claims')
-        # edit(:reason_for_claim)
+      when :firm_details
+        edit(:case_disposal)
+      when :case_disposal
+        after_case_disposal
       else
         index('/claims')
       end
@@ -18,6 +19,13 @@ module Decisions
       else
         index('/claims')
       end
+    end
+
+    def after_case_disposal
+      if form_object.plea == Plea::GUILTY
+        # edit(:plea)
+      end
+      index('/claims')
     end
   end
 end

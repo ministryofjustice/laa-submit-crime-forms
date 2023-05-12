@@ -15,6 +15,10 @@ en:
         firm_details: Firm details
         solicitor_details: Solicitor details
         contact_details: Your contact details
+    case_disposal:
+      edit:
+        page_title: Firm Details page title - TODO
+        heading: Case disposal
   laa_multi_step_forms:
     task_list:
       show:

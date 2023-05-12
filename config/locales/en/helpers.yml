@@ -6,6 +6,8 @@ en:
         claim_type: What are you claiming for?
         rep_order_date: Representation order date
         cntp_date: CNTP date
+      steps_case_disposal_form:
+        plea: What was the plea in this case?
 
 
     hint:
@@ -35,3 +37,7 @@ en:
         reference_number: Solicitor reference number
         contact_full_name: Contact full name
         contact_email: Email address
+      steps_case_disposal_form:
+        plea_options:
+          'guilty': 'Guilty plea'
+          'not_guilty': 'Not guilty plea'
