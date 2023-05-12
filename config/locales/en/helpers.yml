@@ -9,7 +9,6 @@ en:
       steps_case_disposal_form:
         guilty_pleas: Category 1
         not_guilty_pleas: Category 2
-      steps_case_disposal_form:
         arrest_warrent_date: Date of Issue
         cracked_trial_date: Date guilty pldea indicated to solicitor
 

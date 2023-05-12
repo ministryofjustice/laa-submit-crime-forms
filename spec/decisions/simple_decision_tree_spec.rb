@@ -46,8 +46,8 @@ RSpec.describe Decisions::SimpleDecisionTree do
   end
 
   context 'when step is case_disposal' do
-    # TODO: update this when guilty implemented
-    it 'moves to guilty page' do
+    # TODO: update this when haring details implemented
+    it 'moves to hearing details' do
       claim = Steps::CaseDisposalForm.new(application:)
       decision_tree = described_class.new(claim, as: :case_disposal)
       expect(decision_tree.destination).to eq(
