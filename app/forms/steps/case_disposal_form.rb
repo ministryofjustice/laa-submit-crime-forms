@@ -24,7 +24,17 @@ module Steps
     private
 
     def persist!
-      application.update!(attributes)
+      application.update!(attributes_with_resets)
+    end
+
+    # ensure we reset any date fields when not the plea
+    def attributes_with_resets
+      PleaOptions.values.each_with_object(attributes) do |plea_inst, result|
+        next unless plea_inst.has_date_field?
+        next if plea_inst == plea
+
+        result["#{plea_inst.value}_date"] = nil
+      end
     end
   end
 end

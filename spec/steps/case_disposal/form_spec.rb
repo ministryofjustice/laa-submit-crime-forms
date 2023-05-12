@@ -68,10 +68,24 @@ RSpec.describe Steps::CaseDisposalForm do
               'cracked_trial_date' => nil,
             )
           end
+
+          context 'but date field passed in anyway' do
+            let(:arrest_warrent_date) { Date.yesterday }
+
+            it 'will ignore date field' do
+              expect(subject.save).to be_truthy
+              expect(application).to have_received(:update!).with(
+                'plea' => plea_inst,
+                'arrest_warrent_date' => nil,
+                'cracked_trial_date' => nil,
+              )
+            end
+          end
         end
 
         context 'and requires a date field' do
           next unless plea_inst.has_date_field?
+
           let(:plea) { plea_inst }
           let(:date_field) { "#{plea.value}_date" }
 
