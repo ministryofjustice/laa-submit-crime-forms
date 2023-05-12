@@ -5,13 +5,13 @@ module Steps
     attribute :plea, :value_object, source: PleaOptions
     validates :plea, presence: true, inclusion: { in: PleaOptions.values }
 
-    PleaOptions.values.each do |plea|
-      next unless plea.has_date_field?
+    PleaOptions.each_value do |plea|
+      next unless plea.requires_date_field?
 
       attribute "#{plea.value}_date", :multiparam_date
       validates "#{plea.value}_date", presence: true,
               multiparam_date: { allow_past: true, allow_future: false },
-              if: -> (obj) { obj.plea == plea }
+              if: ->(obj) { obj.plea == plea }
     end
 
     def choices
@@ -30,7 +30,7 @@ module Steps
     # ensure we reset any date fields when not the plea
     def attributes_with_resets
       PleaOptions.values.each_with_object(attributes) do |plea_inst, result|
-        next unless plea_inst.has_date_field?
+        next unless plea_inst.requires_date_field?
         next if plea_inst == plea
 
         result["#{plea_inst.value}_date"] = nil

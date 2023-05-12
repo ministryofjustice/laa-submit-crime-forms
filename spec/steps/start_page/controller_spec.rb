@@ -5,6 +5,7 @@ RSpec.describe Steps::StartPageController, type: :controller do
 
   describe '#show' do
     let(:claim) { Claim.create!(office_code: 'AAA') }
+
     before { claim.update(navigation_stack:) }
 
     context 'when page is already in navigation stack' do
@@ -13,7 +14,7 @@ RSpec.describe Steps::StartPageController, type: :controller do
       it 'does not chnage the navigation stack' do
         get :show, params: { id: claim }
         expect(claim.reload).to have_attributes(
-          navigation_stack: navigation_stack
+          navigation_stack:
         )
       end
     end

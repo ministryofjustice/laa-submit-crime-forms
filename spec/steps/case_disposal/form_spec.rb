@@ -54,9 +54,9 @@ RSpec.describe Steps::CaseDisposalForm do
     end
 
     context 'when `plea` is valid' do
-      PleaOptions.values.each do |plea_inst|
+      PleaOptions.each_value do |plea_inst|
         context 'and does not require a date field' do
-          next if plea_inst.has_date_field?
+          next if plea_inst.requires_date_field?
 
           let(:plea) { plea_inst }
 
@@ -84,7 +84,7 @@ RSpec.describe Steps::CaseDisposalForm do
         end
 
         context 'and requires a date field' do
-          next unless plea_inst.has_date_field?
+          next unless plea_inst.requires_date_field?
 
           let(:plea) { plea_inst }
           let(:date_field) { "#{plea.value}_date" }
@@ -103,7 +103,7 @@ RSpec.describe Steps::CaseDisposalForm do
           end
 
           context 'when date is today' do
-            let(:"#{plea_inst.value}_date") { Date.today }
+            let(:"#{plea_inst.value}_date") { Time.zone.today }
 
             it "updates the record for #{plea_inst}" do
               expect(subject.save).to be_truthy

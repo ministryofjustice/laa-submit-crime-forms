@@ -67,13 +67,13 @@ RSpec.describe PleaOptions do
     end
   end
 
-  describe '#has_date_field?' do
+  describe '#requires_date_field?' do
     context 'for HAS_DATE_FIELD pleas' do
       it 'returns true' do
         date_types = described_class::HAS_DATE_FIELD
 
         expect(
-          date_types.map(&:has_date_field?)
+          date_types.map(&:requires_date_field?)
         ).to all(be_truthy)
       end
     end
@@ -83,7 +83,7 @@ RSpec.describe PleaOptions do
         non_date_types = described_class.values - described_class::HAS_DATE_FIELD
 
         expect(
-          non_date_types.map(&:has_date_field?)
+          non_date_types.map(&:requires_date_field?)
         ).to all(be_falsy)
       end
     end

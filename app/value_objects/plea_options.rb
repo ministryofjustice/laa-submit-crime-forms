@@ -24,7 +24,7 @@ class PleaOptions < ValueObject
     CRACKED_TRIAL,
   ].freeze
 
-  def has_date_field?
+  def requires_date_field?
     HAS_DATE_FIELD.include?(self)
   end
 end
