@@ -7,10 +7,20 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-        <%= f.govuk_collection_radio_buttons :plea, @form_object.choices,
-                                             :value, legend: { size: 'm' } %>
+      <% @form_object.choices.each do |name, pleas| %>
+        <%= f.govuk_radio_buttons_fieldset name, legend: { size: 'm' } do %>
+          <% pleas.each_with_index do |plea, index| %>
+            <span id="<%= plea %>"></span>
+            <%= f.govuk_radio_button :plea, plea.to_s, link_errors: index.zero? do %>
+              <% if plea.has_date_field? %>
+                <%= f.govuk_date_field "#{plea}_date", maxlength_enabled: true %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
 
-        <%= f.continue_button %>
+      <%= f.continue_button %>
     <% end %>
   </div>
 </div>

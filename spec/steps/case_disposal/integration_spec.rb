@@ -15,7 +15,7 @@ RSpec.describe 'User can fill in claim type details', type: :system do
     click_on 'Save and continue'
 
     expect(claim.reload).to have_attributes(
-      plea: Plea::GUILTY.value.to_s,
+      plea: PleaOptions::GUILTY.value.to_s,
     )
   end
 end
