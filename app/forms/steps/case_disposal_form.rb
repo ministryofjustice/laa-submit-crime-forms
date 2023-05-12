@@ -5,7 +5,7 @@ module Steps
     attribute :plea, :value_object, source: PleaOptions
     validates :plea, presence: true, inclusion: { in: PleaOptions.values }
 
-    PleaOptions.values.each do |plea| # rubocop:disable Style/HashEachMethods
+    PleaOptions.values.each do |plea|
       next unless plea.requires_date_field?
 
       attribute "#{plea.value}_date", :multiparam_date
