@@ -19,8 +19,10 @@ RSpec.describe 'User can fill in firm details', type: :system do
     fill_in 'Solicitor full name', with: 'James Robert'
     fill_in 'Solicitor reference number', with: '2222'
 
-    fill_in 'Contact full name', with: 'Jim Bob'
-    fill_in 'Email address', with: 'jim@bob.com'
+    choose 'Yes'
+
+    fill_in 'Full name of alternative contact', with: 'Jim Bob'
+    fill_in 'Email address of alternative contact', with: 'jim@bob.com'
 
     click_on 'Save and continue'
 

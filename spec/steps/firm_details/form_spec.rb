@@ -16,6 +16,17 @@ RSpec.describe Steps::FirmDetailsForm do
   let(:firm_office) { nil }
   let(:solicitor) { nil }
 
+  describe '#choices' do
+    it 'returns the possible choices' do
+      expect(
+        subject.choices
+      ).to eq([
+                YesNoAnswer::YES,
+                YesNoAnswer::NO,
+              ])
+    end
+  end
+
   describe '#initializing nested objects' do
     context 'form_office' do
       context 'when firm_office_attributes is passed in' do
