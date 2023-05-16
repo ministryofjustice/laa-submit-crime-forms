@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Steps::FirmDetails::SolicitorForm do
-  subject(:form) { described_class.new(application:, **arguments) }
+  subject(:form) { described_class.new(application:, alternative_contact_details:, **arguments) }
 
   let(:arguments) do
     {
@@ -20,6 +20,7 @@ RSpec.describe Steps::FirmDetails::SolicitorForm do
   let(:reference_number) { 'ref1' }
   let(:contact_full_name) { 'JimBob' }
   let(:contact_email) { 'job@bob.com' }
+  let(:alternative_contact_details) { 'no' }
 
   describe '#valid?' do
     context 'when all fields are set' do
@@ -28,7 +29,7 @@ RSpec.describe Steps::FirmDetails::SolicitorForm do
       end
     end
 
-    %i[full_name reference_number contact_full_name contact_email].each do |field|
+    %i[full_name reference_number].each do |field|
       context "when #{field} is missing" do
         let(field) { nil }
 
@@ -38,10 +39,102 @@ RSpec.describe Steps::FirmDetails::SolicitorForm do
         end
       end
     end
+
+    %i[contact_full_name contact_email].each do |field|
+      context "when #{field} is missing and alternative_contact_details is NO" do
+        let(field) { nil }
+
+        it 'is not required to be set' do
+          expect(form).to be_valid
+        end
+      end
+
+      context "when #{field} is missing and alternative_contact_details is YES" do
+        let(field) { nil }
+        let(:alternative_contact_details) { 'yes' }
+
+        it 'has is a validation error on the field' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(field, :blank)).to be(true)
+        end
+      end
+    end
+  end
+
+  describe '#alternative_contact_details' do
+    context 'when passed in as yes' do
+      let(:alternative_contact_details) { 'yes' }
+
+      it 'return yes value' do
+        expect(form.alternative_contact_details).to eq(YesNoAnswer::YES)
+      end
+    end
+
+    context 'when passed in as no' do
+      let(:alternative_contact_details) { 'no' }
+
+      it 'return no value' do
+        expect(form.alternative_contact_details).to eq(YesNoAnswer::NO)
+      end
+    end
+
+    context 'when passed in as other' do
+      let(:alternative_contact_details) { 'other' }
+      let(:contact_email) { nil }
+      let(:contact_full_name) { nil }
+
+      it 'determined based on presence of contact email and full anme' do
+        expect(form.alternative_contact_details).to eq(YesNoAnswer::NO)
+      end
+    end
+
+    context 'when not passed in' do
+      let(:alternative_contact_details) { nil }
+
+      context 'when contact_full_name is set' do
+        let(:contact_email) { nil }
+
+        it 'return yes value' do
+          expect(form.alternative_contact_details).to eq(YesNoAnswer::YES)
+        end
+      end
+
+      context 'when contact_email is set' do
+        let(:contact_full_name) { nil }
+
+        it 'return yes value' do
+          expect(form.alternative_contact_details).to eq(YesNoAnswer::YES)
+        end
+      end
+
+      context 'when neither contact fields are set' do
+        let(:contact_email) { nil }
+        let(:contact_full_name) { nil }
+
+        it 'return no value' do
+          expect(form.alternative_contact_details).to eq(YesNoAnswer::NO)
+        end
+      end
+    end
+  end
+
+  describe '#alternative_contact_details?' do
+    context 'when alternative_contact_details is YesNoAnswer::YES' do
+      let(:alternative_contact_details) { 'yes' }
+
+      it { expect(form).to be_alternative_contact_details }
+    end
+
+    context 'when alternative_contact_details is YesNoAnswer::NO' do
+      let(:alternative_contact_details) { 'no' }
+
+      it { expect(form).not_to be_alternative_contact_details }
+    end
   end
 
   describe 'save!' do
     let!(:application) { Claim.create!(office_code: 'AAA', solicitor: solicitor) }
+    let(:alternative_contact_details) { 'yes' }
     let(:solicitor) { nil }
 
     context 'when application has an existing solicitor' do
@@ -98,6 +191,19 @@ RSpec.describe Steps::FirmDetails::SolicitorForm do
       it 'creates a new solicitor record' do
         expect { subject.save! }.to change(Solicitor, :count).by(1)
                                                              .and(change { application.reload.solicitor_id })
+      end
+    end
+
+    context 'when alternative_contact_details is NO' do
+      let(:alternative_contact_details) { 'no' }
+
+      context 'and solicitor detail had contact details' do
+        let(:solicitor) { Solicitor.new(arguments) }
+
+        it 'creates a new solicitor record' do
+          expect { subject.save! }.to change(Solicitor, :count).by(1)
+                                                               .and(change { application.reload.solicitor_id })
+        end
       end
     end
   end

@@ -6,6 +6,8 @@ en:
         claim_type: What are you claiming for?
         rep_order_date: Representation order date
         cntp_date: CNTP date
+      steps_firm_details_form[solicitor_attributes]:
+        alternative_contact_details: Do you want to add alternative contact details?
       steps_case_disposal_form:
         guilty_pleas: Category 1
         not_guilty_pleas: Category 2
@@ -18,7 +20,10 @@ en:
         cntp_date: For example, 27 3 2007
         cntp_order: For example CNTP1234
       steps_firm_details_form[solicitor_attributes]:
-        contact_email: For example, your_name@email.com
+        alternative_contact_details: |
+          We’ll use the contact details on your account if we need to ask you for
+          more information to complete your claim. If you add alternative contact
+          details we’ll use those instead.
       steps_case_disposal_form:
         arrest_warrent_date: For example, 27 3 2007
         cracked_trial_date: For example, 27 3 2007
@@ -40,8 +45,11 @@ en:
       steps_firm_details_form[solicitor_attributes]:
         full_name: Solicitor full name
         reference_number: Solicitor reference number
-        contact_full_name: Contact full name
-        contact_email: Email address
+        contact_full_name: Full name of alternative contact
+        contact_email: Email address of alternative contact
+        alternative_contact_details_options:
+          'yes': 'Yes'
+          'no': 'No'
       steps_case_disposal_form:
         plea_options:
           guilty: Guilty plea

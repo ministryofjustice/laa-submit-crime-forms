@@ -19,7 +19,7 @@ module Steps
     def additional_permitted_params
       [
         firm_office_attributes: Steps::FirmDetails::FirmOfficeForm.attribute_names,
-        solicitor_attributes: Steps::FirmDetails::SolicitorForm.attribute_names,
+        solicitor_attributes: Steps::FirmDetails::SolicitorForm.attribute_names + ['alternative_contact_details'],
       ]
     end
   end

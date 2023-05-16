@@ -22,6 +22,10 @@ module Steps
       @solicitor ||= Steps::FirmDetails::SolicitorForm.new(solicitor_fields.merge(application:))
     end
 
+    def choices
+      YesNoAnswer.values
+    end
+
     private
 
     # *_fields methods use attribute hash for values from User,
@@ -33,8 +37,9 @@ module Steps
     end
 
     def solicitor_fields
+      fields = Steps::FirmDetails::SolicitorForm.attribute_names + ['alternative_contact_details']
       (solicitor_attributes || application.solicitor&.attributes || {})
-        .slice(*Steps::FirmDetails::SolicitorForm.attribute_names)
+        .slice(*fields)
     end
 
     def persist!
