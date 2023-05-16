@@ -7,8 +7,10 @@ en:
         rep_order_date: Representation order date
         cntp_date: CNTP date
       steps_case_disposal_form:
-        plea: What was the plea in this case?
-
+        guilty_pleas: Category 1
+        not_guilty_pleas: Category 2
+        arrest_warrent_date: Date of Issue
+        cracked_trial_date: Date guilty pldea indicated to solicitor
 
     hint:
       steps_claim_type_form:
@@ -17,6 +19,9 @@ en:
         cntp_order: For example CNTP1234
       steps_firm_details_form[solicitor_attributes]:
         contact_email: For example, your_name@email.com
+      steps_case_disposal_form:
+        arrest_warrent_date: For example, 27 3 2007
+        cracked_trial_date: For example, 27 3 2007
 
     label:
       steps_claim_type_form:
@@ -39,5 +44,15 @@ en:
         contact_email: Email address
       steps_case_disposal_form:
         plea_options:
-          'guilty': 'Guilty plea'
-          'not_guilty': 'Not guilty plea'
+          guilty: Guilty plea
+          uncontested_breach: Uncontested breach
+          discontinuance: Discontinuance or withdrawal
+          bind_over: Bind over
+          deferred_sentence: Deferred sentence hearing
+          change_solicitor: Change of solicitor
+          arrest_warrent: Warrent of arrest
+          not_guilty: Not guilty plea
+          cracked_trial: Cracked trial
+          contested: Contested breach
+          deferred_sentence: Discontinuance or withdrawal or bind over or no evidence offered after case fully prepared
+          mixed: Mixed plea

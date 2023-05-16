@@ -46,32 +46,15 @@ RSpec.describe Decisions::SimpleDecisionTree do
   end
 
   context 'when step is case_disposal' do
-    context 'when plea is guilty' do
-      before { application.plea = true }
-
-      # TODO: update this when guilty implemented
-      it 'moves to guilty page' do
-        claim = Steps::CaseDisposalForm.new(application:)
-        decision_tree = described_class.new(claim, as: :case_disposal)
-        expect(decision_tree.destination).to eq(
-          action: :index,
-          controller: '/claims',
-        )
-      end
-    end
-
-    context 'when plea is not guilty' do
-      before { application.plea = false }
-
-      # TODO: update this when guilty implemented
-      it 'moves to hearing details page' do
-        claim = Steps::CaseDisposalForm.new(application:)
-        decision_tree = described_class.new(claim, as: :case_disposal)
-        expect(decision_tree.destination).to eq(
-          action: :index,
-          controller: '/claims',
-        )
-      end
+    # TODO: update this when haring details implemented
+    it 'moves to hearing details' do
+      claim = Steps::CaseDisposalForm.new(application:)
+      decision_tree = described_class.new(claim, as: :case_disposal)
+      expect(decision_tree.destination).to eq(
+        action: :index,
+        controller: '/claims',
+        a: 1
+      )
     end
   end
 

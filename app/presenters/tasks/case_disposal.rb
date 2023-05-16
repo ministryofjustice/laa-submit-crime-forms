@@ -18,7 +18,7 @@ module Tasks
     end
 
     def completed?
-      !application.plea.nil?
+      application.plea.present?
     end
   end
 end
