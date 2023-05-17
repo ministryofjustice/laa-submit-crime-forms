@@ -66,6 +66,7 @@ RUN SECRET_KEY_BASE=needed_for_assets_precompile \
 
 # non-root user should own these directories
 RUN chown -R appuser:appgroup /usr/src/app
+RUN chown -R appuser:appgroup log tmp db
 RUN chmod 750 run.sh
 
 # Download RDS certificates bundle -- needed for SSL verification
