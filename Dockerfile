@@ -36,9 +36,9 @@ RUN yarn install --frozen-lockfile --ignore-scripts
 FROM base
 
 # add non-root user and group with alpine first available uid, 1000
-ENV APPUID 1000
-RUN addgroup -g $APPUID -S appgroup && \
-  adduser -u $APPUID -S appuser -G appgroup
+
+RUN addgroup -g 1000 -S appgroup && \
+  adduser -u 1000 -S appuser -G appgroup
 
 # create some required directories
 RUN mkdir -p /usr/src/app && \
@@ -85,6 +85,7 @@ ARG APP_GIT_COMMIT
 ENV APP_GIT_COMMIT ${APP_GIT_COMMIT}
 
 # switch to non-root user
+ENV APPUID 1000
 USER $APPUID
 
 ENV PORT 3000
