@@ -66,7 +66,7 @@ RUN SECRET_KEY_BASE=needed_for_assets_precompile \
 
 # non-root user should own these directories
 RUN chown -R appuser:appgroup log tmp
-RUN chmod 800 /usr/src/app
+RUN chmod 750 /usr/src/app
 
 # Download RDS certificates bundle -- needed for SSL verification
 # We set the path to the bundle in the ENV, and use it in `/config/database.yml`
