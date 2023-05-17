@@ -1,5 +1,4 @@
 name: CI and CD
-
 on:
   pull_request:
   push:
