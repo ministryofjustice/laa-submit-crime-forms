@@ -91,5 +91,6 @@ USER $APPUID
 ENV PORT 3000
 EXPOSE $PORT
 
+RUN chmod 777 run.sh
 ENTRYPOINT ["./run.sh"]
 #CMD tail -f /dev/null\
