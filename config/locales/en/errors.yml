@@ -79,3 +79,28 @@ en:
               blank: "Enter a contacts name"
             contact_email:
               blank: "Enter a contacts email"
+        steps/case_details_form:
+          attributes:
+            ufn:
+              blank: "Enter a unique file number"
+            main_offence:
+              blank: "Enter the name of the offence"
+            main_offence_date:
+              blank: "Date cannot be blank"
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date is too far in the past
+              future_not_allowed: Date cannot be in the future
+              before_date_from: End date cannot be before start date
+            assigned_counsel:
+              blank: "Assigned counsel cannot be blank"
+            unassigned_counsel:
+              blank: "Unassigned counsel cannot be blank"
+            agent_instructed:
+              blank: "Agent instructed cannot be blank"
+            remitted_to_magistrate:
+              blank: "Remitted to magistrate cannot be blank"
+            invalid: You must select at least one option
+
