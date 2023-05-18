@@ -5,20 +5,20 @@ module Steps
     class_methods do
       attr_accessor :association_name, :through_association
 
-      def build(crime_application)
+      def build(application)
         super(
-          associated_record(crime_application), crime_application:
+          associated_record(application), application:
         )
       end
 
       # Return the record if already exists, or initialise a blank one
-      def associated_record(crime_application)
+      def associated_record(application)
         parent = if through_association
                    # :nocov: enable coverage once we use this in any form
-                   existing_or_build(crime_application, through_association)
+                   existing_or_build(application, through_association)
                    # :nocov:
                  else
-                   crime_application
+                   application
                  end
 
         existing_or_build(parent, association_name)
@@ -32,11 +32,10 @@ module Steps
         self.association_name = name
         self.through_association = through
 
-        define_method(name) do
-          @_assoc ||= self.class.associated_record(crime_application)
+        safe_name = name == :case ? "_#{name}" : name
+        define_method(safe_name) do
+          @_assoc ||= self.class.associated_record(application)
         end
-
-        alias_method :kase, :case if name == :case
       end
     end
   end

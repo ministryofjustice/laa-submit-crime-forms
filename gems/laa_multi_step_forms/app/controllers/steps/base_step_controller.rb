@@ -57,8 +57,6 @@ module Steps
     end
 
     def update_navigation_stack
-      return unless current_application
-
       stack_until_current_page = current_application
                                  .navigation_stack.take_while { |path| path != request.fullpath }
 

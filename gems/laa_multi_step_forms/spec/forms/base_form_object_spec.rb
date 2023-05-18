@@ -42,6 +42,32 @@ RSpec.describe Steps::BaseFormObject do
     end
   end
 
+  describe 'changed?' do
+    let(:klass) do
+      Class.new(described_class) do
+        attribute :name
+      end
+    end
+    let(:record) { { 'name' => 'James' } }
+    let(:form) { klass.new(:record => record, 'name' => name) }
+
+    context 'when attributes have not changed' do
+      let(:name) { 'James' }
+
+      it 'returns false' do
+        expect(form).not_to be_changed
+      end
+    end
+
+    context 'when attributes have changed' do
+      let(:name) { 'Jim' }
+
+      it 'returns false' do
+        expect(form).to be_changed
+      end
+    end
+  end
+
   describe '#save' do
     before do
       allow(subject).to receive(:valid?).and_return(is_valid)

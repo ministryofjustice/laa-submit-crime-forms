@@ -18,6 +18,12 @@ RSpec.describe ValueObject do
     expect(subject).to be_frozen
   end
 
+  context 'when value is not a synbol' do
+    let(:value) { Class.new }
+
+    it { expect { subject }.to raise_error('Raw value must be symbol or implicitly convertible') }
+  end
+
   describe '#==' do
     it 'considers same class/same value equal' do
       expect(foo_one).to eq(also_foo_one)
