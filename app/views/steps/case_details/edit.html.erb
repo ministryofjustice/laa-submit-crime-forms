@@ -1,0 +1,23 @@
+<% title t('.page_title') %>
+<% step_header(path: applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-xl">Case Details</h1>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_text_field :ufn, width: 'one-third', autocomplete: 'off' %>
+      <%= f.govuk_text_field :main_offence, width: 'one-third', autocomplete: 'off' %>
+      <%= f.govuk_date_field :main_offence_date, maxlength_enabled: true %>
+
+      <% @form_object.boolean_fields.each do |field| %>
+        <%= f.govuk_radio_buttons_fieldset field, legend: { size: 'm' } do %>
+          <%= f.govuk_radio_button field, YesNoAnswer::YES.to_s %>
+          <%= f.govuk_radio_button field, YesNoAnswer::NO.to_s %>
+        <% end%>
+      <% end%>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

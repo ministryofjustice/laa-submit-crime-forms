@@ -13,6 +13,13 @@ en:
         not_guilty_pleas: Category 2
         arrest_warrent_date: Date of Issue
         cracked_trial_date: Date guilty pldea indicated to solicitor
+      steps_case_details_form:
+        main_offence_date: Main offence date
+        assigned_counsel: Was there an assigned counsel ?
+        unassigned_counsel: Was there an unassigned counsel ?
+        agent_instructed: Was there an instructed agent ?
+        remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates court ?
+
 
     hint:
       steps_claim_type_form:
@@ -27,6 +34,9 @@ en:
       steps_case_disposal_form:
         arrest_warrent_date: For example, 27 3 2007
         cracked_trial_date: For example, 27 3 2007
+      steps_case_details_form:
+        main_offence_date: For example, 27 3 2007
+        main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name 
 
     label:
       steps_claim_type_form:
@@ -64,3 +74,19 @@ en:
           contested: Contested breach
           deferred_sentence: Discontinuance or withdrawal or bind over or no evidence offered after case fully prepared
           mixed: Mixed plea
+      steps_case_details_form:
+        ufn: Your Unique File Number
+        main_offence: Main offence
+        assigned_counsel: aaaaaaaaa
+        assigned_counsel_options:
+          'yes': 'Yes'
+          'no': 'No'
+        unassigned_counsel_options:
+          'yes': 'Yes'
+          'no': 'No'
+        agent_instructed_options:
+          'yes': 'Yes'
+          'no': 'No'
+        remitted_to_magistrate_options:
+          'yes': 'Yes'
+          'no': 'No'

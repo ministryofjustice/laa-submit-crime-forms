@@ -5,6 +5,8 @@ module Decisions
       when :claim_type
         after_claim_type
       when :firm_details
+        edit(:case_details)
+      when :case_details
         edit(:case_disposal)
       when :case_disposal
         index('/claims', a: 1)
