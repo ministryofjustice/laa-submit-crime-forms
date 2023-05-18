@@ -7,7 +7,9 @@ module Decisions
       when :firm_details
         edit(:case_disposal)
       when :case_disposal
-        index('/claims', a: 1)
+        edit(:hearing_details)
+      when :hearing_details
+        show(:start_page)
       else
         index('/claims')
       end
@@ -15,7 +17,7 @@ module Decisions
 
     def after_claim_type
       if form_object.claim_type.supported?
-        edit(:firm_details)
+        show(:start_page)
       else
         index('/claims')
       end

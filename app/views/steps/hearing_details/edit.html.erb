@@ -1,0 +1,39 @@
+<% title t('.page_title') %>
+<% step_header(path: applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_date_field :first_hearing_date, maxlength_enabled: true %>
+      <%= f.govuk_number_field :number_of_hearing, placeholder: 1, min: 1, step: 1, width: 3 %>
+
+      <%= f.govuk_collection_select :court, LaaMultiStepForms::Court.all, :name, :name,
+                              data: { module: 'accessible-autocomplete' }, width: 20,
+                              options: { include_blank: true }, label: { size: 'm' } %>
+
+      <%= f.govuk_radio_buttons_fieldset :in_area, legend: { size: 'm' } do %>
+        <%= f.govuk_radio_button :in_area, YesNoAnswer::YES.to_s %>
+        <%= f.govuk_radio_button :in_area, YesNoAnswer::NO.to_s %>
+      <% end%>
+      <%= f.govuk_radio_buttons_fieldset :youth_count, legend: { size: 'm' } do %>
+        <%= f.govuk_radio_button :youth_count, YesNoAnswer::YES.to_s %>
+        <%= f.govuk_radio_button :youth_count, YesNoAnswer::NO.to_s %>
+      <% end%>
+
+      <%= f.govuk_collection_select :hearing_outcome, OutcomeCode.all, :name, :name,
+                              data: { module: 'accessible-autocomplete' }, width: 20,
+                              options: { include_blank: true }, label: { size: 'm' } %>
+
+
+      <%= f.govuk_collection_select :matter_type, MatterType.all, :name, :name,
+                              data: { module: 'accessible-autocomplete' }, width: 20,
+                              options: { include_blank: true }, label: { size: 'm' } %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
+
+
