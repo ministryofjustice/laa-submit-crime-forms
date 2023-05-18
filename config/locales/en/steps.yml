@@ -16,8 +16,9 @@ en:
         solicitor_details: Solicitor details
     case_disposal:
       edit:
-        page_title: Firm Details page title - TODO
+        page_title: Case disposal page title - TODO
         heading: Case disposal
+        subheading: You can select an option in either Category 1 or Category 2, but not both.
   laa_multi_step_forms:
     task_list:
       show:

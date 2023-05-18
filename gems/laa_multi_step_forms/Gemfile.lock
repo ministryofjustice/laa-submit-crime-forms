@@ -1,12 +1,23 @@
+GIT
+  remote: https://github.com/ministryofjustice/hmcts_common_platform.git
+  revision: f45aa2fddd05e238493c0c3e202de309ae93acb4
+  tag: v0.2.0
+  specs:
+    hmcts_common_platform (0.1.0)
+
 PATH
   remote: .
   specs:
     laa_multi_step_forms (0.1.0)
       devise (~> 4.8)
       govuk_design_system_formbuilder (~> 3.3.0)
+      hmcts_common_platform
       omniauth-rails_csrf_protection (~> 1.0.1)
       omniauth-saml (~> 2.1.0)
       rails (>= 7.0.4.3)
+      sentry-rails
+      sentry-ruby
+      uk_postcode
 
 GEM
   remote: https://rubygems.org/
@@ -174,6 +185,10 @@ GEM
       activesupport (= 7.0.4.3)
       bundler (>= 1.15.0)
       railties (= 7.0.4.3)
+    rails-controller-testing (1.0.5)
+      actionpack (>= 5.0.1.rc1)
+      actionview (>= 5.0.1.rc1)
+      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -240,6 +255,11 @@ GEM
     ruby-saml (1.15.0)
       nokogiri (>= 1.13.10)
       rexml
+    sentry-rails (5.8.0)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.8.0)
+    sentry-ruby (5.8.0)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -262,6 +282,7 @@ GEM
     timeout (0.3.2)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uk_postcode (2.1.8)
     unicode-display_width (2.4.2)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -276,8 +297,10 @@ PLATFORMS
 
 DEPENDENCIES
   debug
+  hmcts_common_platform!
   laa_multi_step_forms!
   pry
+  rails-controller-testing
   rspec-rails
   rubocop
   rubocop-performance

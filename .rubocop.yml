@@ -120,8 +120,8 @@ Naming/MethodParameterName:
 Style/HashEachMethods:
   Exclude:
     - app/value_objects/value_object.rb
-    - app/forms/steps/case_disposal_form.rb
-    - spec/steps/case_disposal/form_spec.rb
+    - app/forms/steps/**/*
+    - spec/steps/**/*
 
 Naming/PredicateName:
   AllowedMethods:

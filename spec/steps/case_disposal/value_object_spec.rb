@@ -19,7 +19,7 @@ RSpec.describe PleaOptions do
           not_guilty
           cracked_trial
           contested
-          deferred_sentence
+          discontinuance
           mixed
         ]
       )
@@ -49,7 +49,7 @@ RSpec.describe PleaOptions do
           not_guilty
           cracked_trial
           contested
-          deferred_sentence
+          discontinuance
           mixed
         ]
       )

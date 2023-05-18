@@ -1,12 +1,21 @@
+GIT
+  remote: https://github.com/ministryofjustice/hmcts_common_platform.git
+  revision: f45aa2fddd05e238493c0c3e202de309ae93acb4
+  tag: v0.2.0
+  specs:
+    hmcts_common_platform (0.1.0)
+
 PATH
   remote: gems/laa_multi_step_forms
   specs:
     laa_multi_step_forms (0.1.0)
       devise (~> 4.8)
       govuk_design_system_formbuilder (~> 3.3.0)
+      hmcts_common_platform
       omniauth-rails_csrf_protection (~> 1.0.1)
       omniauth-saml (~> 2.1.0)
       rails (>= 7.0.4.3)
+      uk_postcode
 
 GEM
   remote: https://rubygems.org/
@@ -324,6 +333,7 @@ DEPENDENCIES
   dartsass-rails (~> 0.4.0)
   debug
   dotenv-rails
+  hmcts_common_platform!
   importmap-rails
   laa_multi_step_forms!
   pg (~> 1.1)
@@ -344,7 +354,6 @@ DEPENDENCIES
   sprockets-rails
   super_diff
   tzinfo-data
-  uk_postcode
 
 RUBY VERSION
    ruby 3.2.1p31
