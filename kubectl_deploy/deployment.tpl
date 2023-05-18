@@ -17,4 +17,10 @@ spec:
         image: ${ECR_URL}:${IMAGE_TAG}
         ports:
         - containerPort: 5000
+        env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: rds-postgresql-instance-output
+                key: url
             
