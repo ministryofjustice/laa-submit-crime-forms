@@ -50,7 +50,7 @@ module Tasks
     end
 
     def in_progress?
-      raise 'implement in task subclasses'
+      application.navigation_stack.include?(path)
     end
 
     def completed?

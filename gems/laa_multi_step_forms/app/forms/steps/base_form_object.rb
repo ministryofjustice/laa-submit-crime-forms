@@ -40,7 +40,7 @@ module Steps
     # for simple hashes { attr: value }, but complex structures will require
     # their custom, more in-deep change method, overriding this one.
     def changed?
-      !record.slice(attribute_names).eql?(attributes)
+      !record.slice(*attribute_names).eql?(attributes)
     end
 
     def to_key
