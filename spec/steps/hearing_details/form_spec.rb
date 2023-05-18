@@ -27,7 +27,7 @@ RSpec.describe Steps::HearingDetailsForm do
 
   describe '#save' do
     context 'when all fields are provided' do
-      it "returns true" do
+      it 'returns true' do
         expect(subject.save).to be(true)
       end
     end
