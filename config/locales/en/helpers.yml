@@ -8,6 +8,12 @@ en:
         cntp_date: CNTP date
       steps_firm_details_form[solicitor_attributes]:
         alternative_contact_details: Do you want to add alternative contact details?
+      steps_case_details_form:
+        main_offence_date: Main offence date
+        assigned_counsel: Was there an assigned counsel ?
+        unassigned_counsel: Was there an unassigned counsel ?
+        agent_instructed: Was there an instructed agent ?
+        remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates court ?
       steps_case_disposal_form:
         guilty_pleas: Category 1
         not_guilty_pleas: Category 2
@@ -28,6 +34,9 @@ en:
           We’ll use the contact details on your account if we need to ask you for
           more information to complete your claim. If you add alternative contact
           details we’ll use those instead.
+      steps_case_details_form:
+        main_offence_date: For example, 27 3 2007
+        main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name 
       steps_case_disposal_form:
         guilty_pleas_html: |
           <p>You must claim £471.85 if the representation order date was before 30 September
@@ -52,6 +61,7 @@ en:
           'yes': You will not be able to claim for travel expenses and waiting time
         hearing_outcome: Select a hearing outcome from the suggestions that appear when you start to enter it, for example, Change of solicitor (CP02)
         matter_type: Select a matter type from the suggestions that appear when you start to enter it, for example, offences against the person
+
     label:
       steps_claim_type_form:
         claim_type_options:
@@ -72,6 +82,22 @@ en:
         contact_full_name: Full name of alternative contact
         contact_email: Email address of alternative contact
         alternative_contact_details_options:
+          'yes': 'Yes'
+          'no': 'No'
+      steps_case_details_form:
+        ufn: Your Unique File Number
+        main_offence: Main offence
+        assigned_counsel: aaaaaaaaa
+        assigned_counsel_options:
+          'yes': 'Yes'
+          'no': 'No'
+        unassigned_counsel_options:
+          'yes': 'Yes'
+          'no': 'No'
+        agent_instructed_options:
+          'yes': 'Yes'
+          'no': 'No'
+        remitted_to_magistrate_options:
           'yes': 'Yes'
           'no': 'No'
       steps_case_disposal_form:

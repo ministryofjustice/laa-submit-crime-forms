@@ -70,6 +70,7 @@ Rails.application.routes.draw do
       edit_step :claim_type
       show_step :start_page
       edit_step :firm_details
+      edit_step :case_details
       edit_step :case_disposal
       edit_step :hearing_details
     end

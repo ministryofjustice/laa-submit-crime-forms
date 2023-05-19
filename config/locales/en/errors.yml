@@ -79,3 +79,20 @@ en:
               blank: "Enter a contacts name"
             contact_email:
               blank: "Enter a contacts email"
+        steps/case_details_form:
+          attributes:
+            ufn:
+              blank: "Enter a unique file number"
+            main_offence:
+              blank: "Enter the name of the offence"
+            main_offence_date: *shared_date_errors
+            assigned_counsel:
+              blank: "Assigned counsel cannot be blank"
+            unassigned_counsel:
+              blank: "Unassigned counsel cannot be blank"
+            agent_instructed:
+              blank: "Agent instructed cannot be blank"
+            remitted_to_magistrate:
+              blank: "Remitted to magistrate cannot be blank"
+            invalid: You must select at least one option
+
