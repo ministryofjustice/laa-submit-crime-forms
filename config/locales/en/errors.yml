@@ -85,15 +85,7 @@ en:
               blank: "Enter a unique file number"
             main_offence:
               blank: "Enter the name of the offence"
-            main_offence_date:
-              blank: "Date cannot be blank"
-              invalid: Enter a valid date
-              invalid_day: Enter a valid day
-              invalid_month: Enter a valid month
-              invalid_year: Enter a valid year
-              year_too_early: Date is too far in the past
-              future_not_allowed: Date cannot be in the future
-              before_date_from: End date cannot be before start date
+            main_offence_date: *shared_date_errors
             assigned_counsel:
               blank: "Assigned counsel cannot be blank"
             unassigned_counsel:

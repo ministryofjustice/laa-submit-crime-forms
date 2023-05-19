@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Steps::CaseDetailsForm do
-  subject(:form) { described_class.new(application:, **arguments) }
+  let(:form) { described_class.new(application:, **arguments) }
 
   let(:arguments) do
     {
@@ -29,7 +29,7 @@ RSpec.describe Steps::CaseDetailsForm do
   describe '#save' do
     context 'when all fields are set' do
       it 'is valid' do
-        expect(subject.save).to be_truthy
+        expect(form.save).to be_truthy
         expect(application).to have_received(:update!)
         expect(form).to be_valid
       end
@@ -46,12 +46,13 @@ RSpec.describe Steps::CaseDetailsForm do
 
   describe '#invalid?' do
     context 'when no ufn set' do
-      let(:ufn) { '' }
 
-      it 'is invalid' do
-        subject.boolean_fields
-        expect(form).not_to be_valid
+      %i[ufn main_offence main_offence_date assigned_counsel unassigned_counsel agent_instructed remitted_to_magistrate].each do |field|
+        context "when #{field} is missing" do
+          let(field) { nil }
+        end
       end
     end
   end
 end
+
