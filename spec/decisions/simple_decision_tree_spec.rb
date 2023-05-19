@@ -39,11 +39,12 @@ RSpec.describe Decisions::SimpleDecisionTree do
       decision_tree = described_class.new(claim, as: :firm_details)
       expect(decision_tree.destination).to eq(
         action: :edit,
-        controller: :case_disposal,
+        controller: :case_details,
         id: application,
       )
     end
   end
+  
 
   context 'when step is case_disposal' do
     # TODO: update this when haring details implemented
