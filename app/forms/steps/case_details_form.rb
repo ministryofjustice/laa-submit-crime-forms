@@ -4,7 +4,6 @@ module Steps
   class CaseDetailsForm < Steps::BaseFormObject
     BOOLEAN_FIELDS = %i[assigned_counsel unassigned_counsel agent_instructed remitted_to_magistrate].freeze
 
-
     attribute :ufn, :string
     attribute :main_offence, :string
     attribute :main_offence_date, :multiparam_date

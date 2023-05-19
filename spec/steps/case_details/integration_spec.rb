@@ -16,10 +16,10 @@ RSpec.describe 'User can fill in case details', type: :system do
     fill_in 'Month', with: '4'
     fill_in 'Year', with: '2023'
 
-    choose ('steps-case-details-form-assigned-counsel-yes-field')
-    choose ('steps-case-details-form-unassigned-counsel-no-field')
-    choose ('steps-case-details-form-agent-instructed-yes-field')
-    choose ('steps-case-details-form-remitted-to-magistrate-no-field')
+    choose('steps-case-details-form-assigned-counsel-yes-field')
+    choose('steps-case-details-form-unassigned-counsel-no-field')
+    choose('steps-case-details-form-agent-instructed-yes-field')
+    choose('steps-case-details-form-remitted-to-magistrate-no-field')
 
     click_on 'Save and continue'
 

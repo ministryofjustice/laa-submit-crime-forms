@@ -47,6 +47,7 @@ RSpec.describe Steps::CaseDetailsForm do
   describe '#invalid?' do
     context 'when no ufn set' do
       let(:ufn) { '' }
+
       it 'is invalid' do
         subject.boolean_fields
         expect(form).not_to be_valid
@@ -54,4 +55,3 @@ RSpec.describe Steps::CaseDetailsForm do
     end
   end
 end
-
