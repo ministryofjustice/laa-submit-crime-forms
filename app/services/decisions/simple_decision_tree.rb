@@ -1,5 +1,6 @@
 module Decisions
   class SimpleDecisionTree < BaseDecisionTree
+    # rubocop:disable Metrics/MethodLength
     def destination
       case step_name
       when :claim_type
@@ -16,7 +17,7 @@ module Decisions
         index('/claims')
       end
     end
-
+    # rubocop:enable Metrics/MethodLength
     def after_claim_type
       if form_object.claim_type.supported?
         show(:start_page)
