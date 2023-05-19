@@ -44,7 +44,6 @@ RSpec.describe Decisions::SimpleDecisionTree do
       )
     end
   end
-  
 
   context 'when step is case_disposal' do
     # TODO: update this when haring details implemented
