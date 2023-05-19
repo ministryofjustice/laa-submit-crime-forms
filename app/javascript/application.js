@@ -11,17 +11,17 @@ if ($inputs) {
   }
 }
 
-// import accessibleAutocomplete from 'accessible-autocomplete'
+import accessibleAutocomplete from 'accessible-autocomplete'
 
-// const $acElements = document.querySelectorAll('[data-module="accessible-autocomplete"]')
-// if ($acElements) {
-//   for (let i = 0; i < $acElements.length; i++) {
-//     accessibleAutocomplete.enhanceSelectElement({
-//       selectElement: $acElements[i],
-//       defaultValue: ''
-//     })
-//   }
-// }
+const $acElements = document.querySelectorAll('[data-module="accessible-autocomplete"]')
+if ($acElements) {
+  for (let i = 0; i < $acElements.length; i++) {
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: $acElements[i],
+      defaultValue: ''
+    })
+  }
+}
 
 // Avoid flickering header menu on small screens
 // Refer to `stylesheets/local/custom.scss`
