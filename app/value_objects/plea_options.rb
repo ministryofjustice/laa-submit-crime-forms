@@ -13,7 +13,7 @@ class PleaOptions < ValueObject
     NOT_GUILTY = new(:not_guilty),
     CRACKED_TRIAL = new(:cracked_trial),
     CONTESTED = new(:contested),
-    DISCONTINUANCE = new(:deferred_sentence),
+    DISCONTINUANCE = new(:discontinuance),
     MIXED = new(:mixed),
   ].freeze
 

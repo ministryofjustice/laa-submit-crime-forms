@@ -12,11 +12,9 @@ gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 gem 'sprockets-rails'
 gem 'tzinfo-data'
-gem 'uk_postcode'
 
-# Exceptions notifications
-gem 'sentry-rails'
-gem 'sentry-ruby'
+# required as can't specify github in gemspe for laa_multi_step_form
+gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
 
 group :development, :test do
   gem 'debug'

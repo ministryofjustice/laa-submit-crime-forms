@@ -48,27 +48,24 @@ RSpec.describe Tasks::CaseDisposal, type: :system do
   end
 
   describe '#completed?' do
-    context 'when plea is guilty' do
-      let(:plea) { 'guilty' }
+    PleaOptions.values.each do |value|
+      context "when plea is set to #{value}" do
+        let(:plea) { value }
 
-      context 'when plea_type is not set' do
-        # TODO: update this to pleaType once implemented
-        xit { expect(subject).not_to be_completed }
-      end
-
-      context 'when plea_type is set' do
-        it { expect(subject).to be_completed }
+        context 'when plea_type is set' do
+          it { expect(subject).to be_completed }
+        end
       end
     end
-  end
 
-  context 'when plea is not guilty' do
-    let(:plea) { 'not_guilty' }
+    context 'when plea is not guilty' do
+      let(:plea) { 'not_guilty' }
 
-    it { expect(subject).to be_completed }
-  end
+      it { expect(subject).to be_completed }
+    end
 
-  context 'when plea is not set' do
-    it { expect(subject).not_to be_completed }
+    context 'when plea is not set' do
+      it { expect(subject).not_to be_completed }
+    end
   end
 end

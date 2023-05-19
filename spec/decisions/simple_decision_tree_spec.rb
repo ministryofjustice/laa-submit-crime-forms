@@ -10,8 +10,8 @@ RSpec.describe Decisions::SimpleDecisionTree do
           claim = Steps::ClaimTypeForm.new(application:, claim_type:)
           decision_tree = described_class.new(claim, as: :claim_type)
           expect(decision_tree.destination).to eq(
-            action: :edit,
-            controller: :firm_details,
+            action: :show,
+            controller: :start_page,
             id: application,
           )
         end
@@ -46,14 +46,26 @@ RSpec.describe Decisions::SimpleDecisionTree do
   end
 
   context 'when step is case_disposal' do
-    # TODO: update this when haring details implemented
     it 'moves to hearing details' do
       claim = Steps::CaseDisposalForm.new(application:)
       decision_tree = described_class.new(claim, as: :case_disposal)
       expect(decision_tree.destination).to eq(
-        action: :index,
-        controller: '/claims',
-        a: 1
+        action: :edit,
+        controller: :hearing_details,
+        id: application,
+      )
+    end
+  end
+
+  context 'when step is hearing_details' do
+    # TODO: update this when defendant details implemented
+    it 'moves to defendant details' do
+      claim = Steps::CaseDisposalForm.new(application:)
+      decision_tree = described_class.new(claim, as: :hearing_details)
+      expect(decision_tree.destination).to eq(
+        action: :show,
+        controller: :start_page,
+        id: application
       )
     end
   end

@@ -13,10 +13,6 @@ module Tasks
       fulfilled?(FirmDetails)
     end
 
-    def in_progress?
-      false
-    end
-
     def completed?
       application.plea.present?
     end

@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
+  describe '#current_application' do
+    it 'raises an error' do
+      expect { helper.current_application }.to raise_error('implement this action, in subclasses')
+    end
+  end
+
   describe '#title' do
     let(:title) { helper.content_for(:page_title) }
 

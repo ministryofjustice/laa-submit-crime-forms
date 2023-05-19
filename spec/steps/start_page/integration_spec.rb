@@ -6,6 +6,7 @@ RSpec.describe 'User can see an application status', type: :system do
   let(:claim) { Claim.create(office_code: 'AAAA', solicitor: solicitor, firm_office: firm_office) }
 
   before do
+    claim.update(navigation_stack: ["/applications/#{claim.id}/steps/firm_details"])
     visit provider_saml_omniauth_callback_path
   end
 
