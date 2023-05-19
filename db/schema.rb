@@ -27,7 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_10_162831) do
     t.datetime "updated_at", null: false
     t.uuid "firm_office_id"
     t.uuid "solicitor_id"
-    t.text "main_offence"
+    t.string "main_offence"
     t.date "main_offence_date"
     t.string "assigned_counsel"
     t.string "unassigned_counsel"
