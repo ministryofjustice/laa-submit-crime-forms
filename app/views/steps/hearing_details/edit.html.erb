@@ -6,7 +6,7 @@
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_date_field :first_hearing_date, maxlength_enabled: true %>
+      <%= f.govuk_date_field :first_hearing_date, maxlength_enabled: true, id: 'steps-hearing_details-form-first-hearing-date' %>
       <%= f.govuk_number_field :number_of_hearing, placeholder: 1, min: 1, step: 1, width: 3 %>
 
       <%= f.govuk_collection_select :court, LaaMultiStepForms::Court.all, :name, :name,
@@ -22,12 +22,12 @@
         <%= f.govuk_radio_button :youth_count, YesNoAnswer::NO.to_s %>
       <% end%>
 
-      <%= f.govuk_collection_select :hearing_outcome, OutcomeCode.all, :name, :name,
+      <%= f.govuk_collection_select :hearing_outcome, OutcomeCode.all, :id, :name,
                               data: { module: 'accessible-autocomplete' }, width: 20,
                               options: { include_blank: true }, label: { size: 'm' } %>
 
 
-      <%= f.govuk_collection_select :matter_type, MatterType.all, :name, :name,
+      <%= f.govuk_collection_select :matter_type, MatterType.all, :id, :name,
                               data: { module: 'accessible-autocomplete' }, width: 20,
                               options: { include_blank: true }, label: { size: 'm' } %>
 
