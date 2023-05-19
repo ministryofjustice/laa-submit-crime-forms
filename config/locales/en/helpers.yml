@@ -13,6 +13,10 @@ en:
         not_guilty_pleas: Category 2
         arrest_warrent_date: Date of Issue
         cracked_trial_date: Date guilty pldea indicated to solicitor
+      steps_hearing_details_form:
+        first_hearing_date: Date of first hearing
+        in_area: Is this court in a designated area of your firm?
+        youth_count: Is this court a youth court?
 
     hint:
       steps_claim_type_form:
@@ -41,7 +45,13 @@ en:
           standard case and you should use CWA to claim your payment instead
         arrest_warrent_date: For example, 27 3 2007
         cracked_trial_date: For example, 27 3 2007
-
+      steps_hearing_details_form:
+        first_hearing_date: For example, 27 3 2007
+        court: Enter the name of a court, or select one from the suggestions that appear when you start to enter the name.
+        in_area_options:
+          'yes': You will not be able to claim for travel expenses and waiting time
+        hearing_outcome: Select a hearing outcome from the suggestions that appear when you start to enter it, for example, Change of solicitor (CP02)
+        matter_type: Select a matter type from the suggestions that appear when you start to enter it, for example, offences against the person
     label:
       steps_claim_type_form:
         claim_type_options:
@@ -78,3 +88,14 @@ en:
           contested: Contested breach
           discontinuance: Discontinuance or withdrawal or bind over or no evidence offered after case fully prepared
           mixed: Mixed plea
+      steps_hearing_details_form:
+        number_of_hearing: Number of hearing held
+        court: Which court was the hearing held at?
+        in_area_options:
+          'yes': 'Yes'
+          'no': 'No'
+        youth_count_options:
+          'yes': 'Yes'
+          'no': 'No'
+        hearing_outcome: Hearing outcome
+        matter_type: Matter type

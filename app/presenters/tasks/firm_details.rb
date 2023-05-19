@@ -14,8 +14,8 @@ module Tasks
 
     def completed?
       [
-        application.firm_office.values_at(*firm_office_fields).all?(&:present?),
-        application.solicitor.values_at(*solicitor_fields).all?(&:present?),
+        application.firm_office&.values_at(*firm_office_fields)&.all?(&:present?),
+        application.solicitor&.values_at(*solicitor_fields)&.all?(&:present?),
       ].all?
     end
 
