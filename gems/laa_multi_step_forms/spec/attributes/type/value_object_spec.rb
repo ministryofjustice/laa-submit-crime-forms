@@ -25,6 +25,12 @@ RSpec.describe Type::ValueObject do
     it { expect(coerced_value).to be_nil }
   end
 
+  describe 'when value unknown type' do
+    let(:value) { Class.new }
+
+    it { expect(coerced_value).to be_nil }
+  end
+
   describe 'when value is a symbol' do
     let(:value) { :yes }
 

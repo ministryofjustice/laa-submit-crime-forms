@@ -23,6 +23,14 @@ RSpec.describe TaskList::Collection do
       expect(subject[1].name).to eq(:b)
       expect(subject[1].tasks).to eq([:b1])
     end
+
+    context 'when SECTIONS is not defined' do
+      let(:klass) { Class.new(described_class) }
+
+      it 'raises an error' do
+        expect { subject[0] }.to raise_error('implement SECTIONS, in subclasses')
+      end
+    end
   end
 
   describe '#completed' do
