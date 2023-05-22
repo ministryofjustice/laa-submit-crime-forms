@@ -11,8 +11,13 @@ module Decisions
         edit(:case_disposal)
       when :case_disposal
         edit(:hearing_details)
-      when :hearing_details
+      when :hearing_details, :delete_defendant
+        edit(:defendant_details)
+      when :defendant_details
         show(:start_page)
+      when :add_defendant
+        form_object.application.defendants.create(position: form_object.next_position)
+        edit(:defendant_details)
       else
         index('/claims')
       end

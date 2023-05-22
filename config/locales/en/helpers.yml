@@ -23,7 +23,6 @@ en:
         first_hearing_date: Date of first hearing
         in_area: Is this court in a designated area of your firm?
         youth_count: Is this court a youth court?
-
     hint:
       steps_claim_type_form:
         rep_order_date: For example, 27 3 2007
@@ -36,7 +35,7 @@ en:
           details we’ll use those instead.
       steps_case_details_form:
         main_offence_date: For example, 27 3 2007
-        main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name 
+        main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
       steps_case_disposal_form:
         guilty_pleas_html: |
           <p>You must claim £471.85 if the representation order date was before 30 September
@@ -125,3 +124,7 @@ en:
           'no': 'No'
         hearing_outcome: Hearing outcome
         matter_type: Matter type
+      steps_defendants_details_form[defendants_attributes][0]:
+        afull_name: Full Name bb
+      defendants_attributes:
+        full_name: Full Name aa

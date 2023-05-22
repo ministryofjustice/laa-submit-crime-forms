@@ -95,4 +95,9 @@ en:
             remitted_to_magistrate:
               blank: "Remitted to magistrate cannot be blank"
             invalid: You must select at least one option
-
+        steps/defendant_details_form:
+          summary:
+            full_name:
+              blank: Full name (%{name}) cannot be blank
+            maat:
+              blank: MAAT ID (%{name}) cannot be blank
