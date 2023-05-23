@@ -12,7 +12,6 @@ module Steps
     validates :main_offence, presence: true
     validates :main_offence_date, presence: true,
          multiparam_date: { allow_past: true, allow_future: false }
-   
 
     BOOLEAN_FIELDS.each do |field|
       attribute field, :value_object, source: YesNoAnswer

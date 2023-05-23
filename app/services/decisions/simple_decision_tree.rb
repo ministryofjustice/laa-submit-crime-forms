@@ -17,6 +17,7 @@ module Decisions
         index('/claims')
       end
     end
+
     # rubocop:enable Metrics/MethodLength
     def after_claim_type
       if form_object.claim_type.supported?
