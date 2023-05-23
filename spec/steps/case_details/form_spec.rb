@@ -45,7 +45,8 @@ RSpec.describe Steps::CaseDetailsForm do
   end
 
   describe '#invalid?' do
-    %i[ufn main_offence main_offence_date assigned_counsel unassigned_counsel agent_instructed remitted_to_magistrate].each do |field|
+    %i[ufn main_offence main_offence_date assigned_counsel unassigned_counsel agent_instructed
+       remitted_to_magistrate].each do |field|
       context "when #{field} is missing" do
         let(field) { nil }
 
