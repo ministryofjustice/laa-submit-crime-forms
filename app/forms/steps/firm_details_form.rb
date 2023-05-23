@@ -4,15 +4,8 @@ module Steps
   class FirmDetailsForm < Steps::BaseFormObject
     attr_accessor :firm_office_attributes, :solicitor_attributes
 
-    validates :firm_office, presence: true, nested_form: true
-    validates :solicitor, presence: true, nested_form: true
-
-    def errors_nested
-      ErrorWrapper.new(self, [:firm_office, :solicitor])
-    end
-
-    alias errors_non_nested errors
-    alias errors errors_nested
+    validates :firm_office, presence: true, nested: true
+    validates :solicitor, presence: true, nested: true
 
     def firm_office
       @firm_office ||= Steps::FirmDetails::FirmOfficeForm.new(firm_office_fields.merge(application:))
