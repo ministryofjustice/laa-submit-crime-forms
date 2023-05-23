@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NestedValidator do
-  subject { klass.new(name: 'parent', nested_object:, named_nested_object:) }
+  subject { klass.new(name: 'parent', nested_object: nested_object, named_nested_object: named_nested_object) }
 
   let(:klass) do
     Class.new(Steps::BaseFormObject) do
@@ -15,7 +15,7 @@ RSpec.describe NestedValidator do
         Struct.new(:i18n_key, :human).new('nested_validator_object', 'nested object')
       end
 
-      def namer(index)
+      def namer(_index)
         'child'
       end
     end
@@ -52,14 +52,14 @@ RSpec.describe NestedValidator do
       it 'defines a method to access the attribute' do
         expect(subject).not_to be_valid
         expect(subject).to respond_to('nested_object-attributes[0].name')
-        expect(subject.method('nested_object-attributes[0].name').call).to eq(nil)
+        expect(subject.method(:'nested_object-attributes[0].name').call).to be_nil
       end
 
       context 'translations' do
         around do |spec|
           I18n.backend.load_translations unless I18n.backend.initialized?
 
-          summary = { name: { blank: 'Nested object %{name} is not valid' } }
+          summary = { name: { blank: 'Nested object %<name>s is not valid' } }
           data = { activemodel: { errors: { models: { nested_validator_object: { summary: } } } } }
           I18n.backend.store_translations(:en, data)
 
@@ -120,14 +120,14 @@ RSpec.describe NestedValidator do
       it 'defines a method to access the attribute' do
         expect(subject).not_to be_valid
         expect(subject).to respond_to('nested_object-attributes.name')
-        expect(subject.method('nested_object-attributes.name').call).to eq(nil)
+        expect(subject.method(:'nested_object-attributes.name').call).to be_nil
       end
 
       context 'translations' do
         around do |spec|
           I18n.backend.load_translations unless I18n.backend.initialized?
 
-          summary = { name: { blank: 'Nested object %{name} is not valid' } }
+          summary = { name: { blank: 'Nested object %<name>s is not valid' } }
           data = { activemodel: { errors: { models: { nested_validator_object: { summary: } } } } }
           I18n.backend.store_translations(:en, data)
 

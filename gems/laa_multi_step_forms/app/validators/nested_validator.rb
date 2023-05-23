@@ -30,6 +30,7 @@ class NestedValidator < ActiveModel::EachValidator
 
   def indexed_attribute(index, attribute, was_array, attr)
     return "#{attribute}-attributes[#{index}].#{attr}" if was_array
+
     "#{attribute}-attributes.#{attr}"
   end
 

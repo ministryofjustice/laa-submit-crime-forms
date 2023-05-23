@@ -8,7 +8,7 @@ RSpec.describe Tasks::DefendantDetails, type: :system do
     {
       id: id,
       office_code: 'AAA',
-      defendants_attributes:,
+      defendants_attributes: defendants_attributes,
     }
   end
   let(:id) { SecureRandom.uuid }
@@ -43,13 +43,14 @@ RSpec.describe Tasks::DefendantDetails, type: :system do
   end
 
   describe '#completed?' do
-    context 'when not defendants exist' do
+    context 'when no defendants exist' do
       it { expect(subject).not_to be_completed }
     end
 
-    context 'when not defendants exist' do
-      let(:defendants_attributes) { [{full_name: 'Jim Bob'}] }
+    context 'when defendants exist' do
+      let(:defendants_attributes) { [{ full_name: 'Jim Bob' }] }
       let(:defendant_form) { double(:defendant_form, valid?: valid) }
+
       before do
         allow(Steps::DefendantsDetailsForm).to receive(:new).and_return(defendant_form)
       end

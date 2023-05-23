@@ -15,7 +15,7 @@ RSpec.describe Steps::DefendantDetailsForm do
     }
   end
 
-  let(:application) { instance_double(Claim, claim_type:, update!: true) }
+  let(:application) { instance_double(Claim, claim_type: claim_type, update!: true) }
   let(:id) { SecureRandom.uuid }
   let(:full_name) { 'James' }
   let(:maat) { 'AA1' }
@@ -26,13 +26,13 @@ RSpec.describe Steps::DefendantDetailsForm do
 
   describe '#maat_required' do
     context 'when claim_type is NOT BREACH_OF_INJUNCTION' do
-      it { expect(subject).to be_maat_required}
+      it { expect(subject).to be_maat_required }
     end
 
     context 'when claim_type is BREACH_OF_INJUNCTION' do
       let(:claim_type) { ClaimType::BREACH_OF_INJUNCTION.to_s }
 
-      it { expect(subject).not_to be_maat_required}
+      it { expect(subject).not_to be_maat_required }
     end
   end
 
@@ -73,7 +73,7 @@ RSpec.describe Steps::DefendantDetailsForm do
       context 'when claim_type is BREACH_OF_INJUNCTION' do
         let(:claim_type) { ClaimType::BREACH_OF_INJUNCTION.to_s }
 
-        it { expect(subject).to be_valid}
+        it { expect(subject).to be_valid }
       end
     end
   end

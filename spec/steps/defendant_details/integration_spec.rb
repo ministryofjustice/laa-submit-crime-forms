@@ -23,19 +23,16 @@ RSpec.describe 'User can fill in claim type details', type: :system do
 
     click_on 'Save and continue'
 
-    expect(claim.reload.defendants).to match_array([
-      have_attributes(
-        full_name: 'Jim Bob',
-        maat: 'AA1',
-        position: 1,
-        main: true,
-      ),
-      have_attributes(
-        full_name: 'Jack Bob',
-        maat: 'BB1',
-        position: 2,
-        main: false,
-      )
-    ])
+    expect(claim.reload.defendants).to contain_exactly(have_attributes(
+                                                         full_name: 'Jim Bob',
+                                                         maat: 'AA1',
+                                                         position: 1,
+                                                         main: true,
+                                                       ), have_attributes(
+                                                            full_name: 'Jack Bob',
+                                                            maat: 'BB1',
+                                                            position: 2,
+                                                            main: false,
+                                                          ))
   end
 end

@@ -10,7 +10,7 @@ RSpec.describe Steps::DefendantsDetailsForm do
     }
   end
 
-  let(:application) { instance_double(Claim, update!: true, claim_type:, defendants:) }
+  let(:application) { instance_double(Claim, update!: true, claim_type: claim_type, defendants: defendants) }
   let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE }
   let(:defendants) { [] }
   let(:defendants_attributes) { nil }
@@ -46,7 +46,7 @@ RSpec.describe Steps::DefendantsDetailsForm do
       end
     end
 
-    context 'when defendants_attributes is not set but defendants is' do |variable|
+    context 'when defendants_attributes is not set but defendants is' do |_variable|
       let(:defendants) { [Defendant.new(full_name: 'Jake', position: '1')] }
 
       it 'builds the defendants from the DB' do
@@ -62,7 +62,7 @@ RSpec.describe Steps::DefendantsDetailsForm do
     end
 
     context 'when neither defendants_attributes or defendants DB records exist' do
-      it 'creates a default main defendant' do |variable|
+      it 'creates a default main defendant' do |_variable|
         expect(subject.defendants.count).to eq(1)
         expect(subject.defendants.first).to have_attributes(
           id: nil,
@@ -94,17 +94,23 @@ RSpec.describe Steps::DefendantsDetailsForm do
   describe '#show_destroy?' do
     context 'only one defendant' do
       let(:defendants) { [Defendant.new(full_name: 'Jake', position: '1')] }
+
       it { expect(subject).not_to be_show_destroy }
     end
 
     context 'multiple defendants' do
-      let(:defendants) { [Defendant.new(full_name: 'Jake', position: '1'), Defendant.new(full_name: 'Jim', position: '2')] }
+      let(:defendants) do
+        [Defendant.new(full_name: 'Jake', position: '1'), Defendant.new(full_name: 'Jim', position: '2')]
+      end
+
       it { expect(subject).to be_show_destroy }
     end
   end
 
   describe '#next_position' do
-    let(:defendants) { [Defendant.new(full_name: 'Jake', position: '1'), Defendant.new(full_name: 'Jim', position: '20')] }
+    let(:defendants) do
+      [Defendant.new(full_name: 'Jake', position: '1'), Defendant.new(full_name: 'Jim', position: '20')]
+    end
 
     it 'increaments the last position' do
       expect(subject.next_position).to eq(21)
@@ -113,43 +119,45 @@ RSpec.describe Steps::DefendantsDetailsForm do
 
   describe '#validations' do
     context 'when main defendant is invalid' do
-      let(:defendants_attributes) { { '0' => { 'full_name' => 'Jim', 'maat' => nil, 'position' => '1'  } } }
+      let(:defendants_attributes) { { '0' => { 'full_name' => 'Jim', 'maat' => nil, 'position' => '1' } } }
 
       it 'adds a validation error to the base object with marked as main' do
         expect(subject).not_to be_valid
 
         expect(form.errors.of_kind?('defendants-attributes[0].maat', :blank)).to be(true)
-        expect(form.errors['defendants-attributes[0].maat']).to eq(["MAAT ID (main) cannot be blank"])
+        expect(form.errors['defendants-attributes[0].maat']).to eq(['MAAT ID (main) cannot be blank'])
       end
     end
 
     context 'when additional defendant is invalid' do
-      let(:defendants_attributes) {
+      let(:defendants_attributes) do
         {
-          '0' => { 'full_name' => 'Jim', 'maat' => 'AA1', 'position' => '1'  },
+          '0' => { 'full_name' => 'Jim', 'maat' => 'AA1', 'position' => '1' },
           '1' => { 'full_name' => '', 'maat' => nil, 'position' => '1'  },
         }
-      }
+      end
 
       it 'adds a validation error to the base object with marked as main' do
         expect(subject).not_to be_valid
 
         expect(form.errors.of_kind?('defendants-attributes[1].full_name', :blank)).to be(true)
         expect(form.errors.of_kind?('defendants-attributes[1].maat', :blank)).to be(true)
-        expect(form.errors['defendants-attributes[1].full_name']).to eq(["Full name (additional 1) cannot be blank"])
-        expect(form.errors['defendants-attributes[1].maat']).to eq(["MAAT ID (additional 1) cannot be blank"])
+        expect(form.errors['defendants-attributes[1].full_name']).to eq(['Full name (additional 1) cannot be blank'])
+        expect(form.errors['defendants-attributes[1].maat']).to eq(['MAAT ID (additional 1) cannot be blank'])
       end
     end
   end
 
   describe '#save!' do
-    let(:application) { Claim.create!(office_code: 'AAA', defendants:) }
+    let(:application) { Claim.create!(office_code: 'AAA', defendants: defendants) }
     let(:defendants) { [main_defendant, additional_defendant] }
     let(:main_defendant) { Defendant.new(full_name: 'Jake', position: '1') }
     let(:additional_defendant) { Defendant.new(full_name: 'Jim', position: '2') }
 
     context 'when record marked as destroy' do
-      let(:defendants_attributes) { { '0' => main_defendant.attributes, '1' => { 'id' => additional_defendant.id, '_destroy' => '1' } } }
+      let(:defendants_attributes) do
+        { '0' => main_defendant.attributes, '1' => { 'id' => additional_defendant.id, '_destroy' => '1' } }
+      end
 
       it 'will delete it' do
         expect { subject.save! }.to change { application.reload.defendants.count }.by(-1)
