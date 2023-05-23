@@ -83,7 +83,12 @@ the controller object.
 
 ## 3. Value Objects
 
+These are useful when process a list of items - i.e. radio buttons or checkboxes
+where the resulting value/s will be stored in a single field.
 
+This is an alternative to having a lookup table and is preferred due to it NOT
+requiring maintenance in the DB, and being eaier to add/remove values through
+the code itself.
 
 ## 4. Form objects
 
