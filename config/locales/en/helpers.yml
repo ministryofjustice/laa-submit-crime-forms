@@ -124,7 +124,6 @@ en:
           'no': 'No'
         hearing_outcome: Hearing outcome
         matter_type: Matter type
-      steps_defendants_details_form[defendants_attributes][0]:
-        afull_name: Full Name bb
-      defendants_attributes:
-        full_name: Full Name aa
+      steps_defendants_details_form:
+        full_name: Full name
+        maat: MAAT ID

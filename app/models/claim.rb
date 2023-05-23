@@ -1,7 +1,7 @@
 class Claim < ApplicationRecord
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
-  has_many :defendants, dependent: :destroy
+  has_many :defendants, -> { order(:position) }, dependent: :destroy
   accepts_nested_attributes_for :defendants, allow_destroy: true
 
   def reference

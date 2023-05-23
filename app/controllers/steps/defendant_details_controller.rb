@@ -7,7 +7,7 @@ module Steps
     end
 
     def update
-      update_and_advance(DefendantsDetailsForm, as: step_name)
+      update_and_advance(DefendantsDetailsForm, as: step_name, flash: flash_msg)
     end
 
     private

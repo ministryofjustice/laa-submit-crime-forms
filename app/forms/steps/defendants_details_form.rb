@@ -24,7 +24,7 @@ module Steps
     end
 
     def next_position
-      defendants.max(&:position).position + 1
+      defendants.last.position + 1
     end
 
     private
@@ -35,7 +35,7 @@ module Steps
         # { "0"=>{"date_from(3i)"=>"21", ...}, "1"=>{"date_from(3i)"=>"21", ...} }
         defendants_attributes.values
       else
-        application.defendants.order(:position).map do |d|
+        application.defendants.map do |d|
           d.slice(:id, :full_name, :maat, :position, :main)
         end
       end

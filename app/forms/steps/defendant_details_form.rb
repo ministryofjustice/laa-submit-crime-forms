@@ -11,7 +11,6 @@ module Steps
 
     validates :full_name, presence: true
     validates :maat, presence: true, if: :maat_required?
-    attribute :position, :integer
 
     def persisted?
       id.present?
