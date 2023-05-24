@@ -5,7 +5,7 @@ class Claim < ApplicationRecord
   accepts_nested_attributes_for :defendants, allow_destroy: true
 
   def reference
-    'aaaaa'
+    ufn || '###'
   end
 
   def date

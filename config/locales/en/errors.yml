@@ -58,7 +58,7 @@ en:
             contact:
               invalid: "Contact details has missing/invalid details"
         steps/firm_details/firm_office_form:
-          attributes:
+          summary:
             name:
               blank: "Enter a firm name"
             account_number:
@@ -70,7 +70,7 @@ en:
             postcode:
               blank: "Enter a postcode"
         steps/firm_details/solicitor_form:
-          attributes:
+          summary:
             full_name:
               blank: "Enter the solicitor's full name"
             reference_number:
@@ -95,6 +95,21 @@ en:
             remitted_to_magistrate:
               blank: "Remitted to magistrate cannot be blank"
             invalid: You must select at least one option
+        steps/hearing_details_form:
+          attributes:
+            first_hearing_date: *shared_date_errors
+            number_of_hearing:
+              blank: Number of hearings held cannot be blank
+            court:
+              blank: Count cannot be blank
+            in_area:
+              blank: Is this court in a designated area cannot be blank
+            youth_count:
+              blank: Is it a youth court cannot be blank
+            hearing_outcome:
+              blank: Hearing outcome cannot be blank
+            matter_type:
+              blank: Matter type cannot be blank
         steps/defendant_details_form:
           summary:
             full_name:
