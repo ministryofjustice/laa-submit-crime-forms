@@ -91,5 +91,7 @@ USER $APPUID
 ENV PORT 3000
 EXPOSE $PORT
 
+ENV OMNIAUTH_TEST_MODE true
+
 ENTRYPOINT ["./run.sh"]
 #CMD tail -f /dev/null\
