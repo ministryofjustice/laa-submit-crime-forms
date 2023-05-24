@@ -14,7 +14,7 @@ module Steps
       validates :account_number, presence: true
       validates :address_line_1, presence: true
       validates :town, presence: true
-      validates :postcode, presence: true
+      validates :postcode, presence: true, uk_postcode: true
 
       private
 
