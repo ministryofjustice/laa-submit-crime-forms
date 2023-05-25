@@ -7,8 +7,6 @@
 # Ignore bundler config.
 /.bundle
 
-/.idea
-
 
 # Ignore all logfiles and tempfiles.
 log/*
@@ -45,3 +43,6 @@ coverage/
 .env.local
 app/assets/builds/*
 !/app/assets/builds/.keep
+
+.vscode
+.idea
