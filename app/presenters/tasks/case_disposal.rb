@@ -9,8 +9,7 @@ module Tasks
     end
 
     def can_start?
-      # TODO: update this to CaseDetails once implemented
-      fulfilled?(FirmDetails)
+      fulfilled?(CaseDetails)
     end
 
     def completed?
