@@ -6,7 +6,7 @@ ruby File.read('.ruby-version').strip
 gem 'bootsnap', require: false
 gem 'dartsass-rails', '~> 0.4.0'
 gem 'importmap-rails'
-gem 'laa_multi_step_forms', path: 'gems/laa_multi_step_forms'
+gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.4', '>= 7.0.4.3'

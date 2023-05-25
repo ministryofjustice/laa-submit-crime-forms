@@ -157,6 +157,7 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
+    mini_portile2 (2.8.2)
     minitest (5.18.0)
     msgpack (1.6.1)
     net-imap (0.3.4)
@@ -169,9 +170,8 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
-    nokogiri (1.14.3-arm64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.14.3-x86_64-linux)
+    nokogiri (1.14.3)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     omniauth (2.1.1)
       hashie (>= 3.4.6)
@@ -326,8 +326,7 @@ GEM
     zeitwerk (2.6.7)
 
 PLATFORMS
-  arm64-darwin-22
-  x86_64-linux
+  ruby
 
 DEPENDENCIES
   bootsnap
@@ -356,7 +355,7 @@ DEPENDENCIES
   tzinfo-data
 
 RUBY VERSION
-   ruby 3.2.1p31
+   ruby 3.2.2p53
 
 BUNDLED WITH
-   2.4.8
+   2.4.10
