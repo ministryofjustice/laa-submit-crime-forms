@@ -2,34 +2,25 @@ require 'steps/base_form_object'
 
 module Steps
   class ReasonForClaimForm < Steps::BaseFormObject
-    # attribute :reason_for_claim, :value_object, source: ReasonForClaim
-    attribute :rep_order_date_withdrawn, :multiparam_date
-    attribute :reason_for_claim_other, :string
+    attribute :reasons_for_claim, array: true, default: []
+    attribute :representation_order_withdrawn_date, :multiparam_date
+    attribute :reason_for_claim_other_details, :string
 
-    ReasonForClaim.each_value do |reason_for_claim|
-      attribute reason_for_claim, :boolean
+    validate :validate_types
+    validates :representation_order_withdrawn_date, presence: true,
+            multiparam_date: { allow_past: true, allow_future: false },
+            if: -> { reasons_for_claim.include?(ReasonForClaim::REPRESENTATION_ORDER_WITHDRAWN.to_s) }
+
+    validates :reason_for_claim_other_details, presence: true,
+            if: -> { reasons_for_claim.include?(ReasonForClaim::OTHER.to_s) }
+
+    def validate_types
+      errors.add(:reasons_for_claim, :invalid) if reasons_for_claim.empty? || (reasons_for_claim - ReasonForClaim.values.map(&:to_s)).any?
     end
-
-    # validate :validate_types
-
-    # ReasonForClaim.values.each do |reason_claim|
-    #  validates reason_claim,
-    #    presence: true,
-    #    if: -> {types.include?(reason_claim.to_s)}
-    # end
-    # validates_inclusion_of :reason_for_claim, in: :choices
 
     def choices
       ReasonForClaim.values
     end
-
-    # def core_costs_exceed_higher_limits?
-    #  reason_for_claim == ReasonForClaim::CORE_COSTS_EXCEED_HIGHER_LMTS
-    # end
-
-    # def enhanced_rates_claim?
-    #  reason_for_claim == ReasonForClaim::ENHANCED_RATES_CLAIMED
-    # end
 
     private
 
