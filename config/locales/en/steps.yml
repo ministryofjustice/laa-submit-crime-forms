@@ -29,10 +29,38 @@ en:
         heading: Defendant details
         main_defendant_field_set: Main defendant
         defendant_field_set: Additional defendant %{index}
+    defendant_details:
+      edit:
+        page_title: Defendant summary page title - TODO
+        heading: Defendant details
+        main_defendant_field_set: Main defendant
+        defendant_field_set: Additonal defendant %{index}
         main_defendant: main
         defendant: additional %{index}
-        add_button: Add another defendant
-        remove_button: Remove defendant
+    defendant_summary:
+      edit:
+        page_title: Defendant summary page title - TODO
+        heading:
+          one: You added 1 defendant
+          other: You added %{count} defendants
+        main_defendant: Main defendant details
+        additional_defendant: Additonal defendant details
+        header:
+          full_name: Full name
+          maat: MAAT ID
+          action: Action
+        change: Change
+        delete: Delete
+    defendant_delete:
+      edit:
+        page_title: Defendant delete page title - TODO
+        heading: Are you sure you want to delete this defendant?
+        main_defendant: Main defendant details
+        additional_defendant: Additonal defendant details
+        header:
+          full_name: Full name
+          maat: MAAT ID
+          action: Action
 
   laa_multi_step_forms:
     task_list:
