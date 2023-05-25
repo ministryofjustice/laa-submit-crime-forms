@@ -1,6 +1,6 @@
 module Decisions
   class SimpleDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
       when :claim_type
@@ -11,14 +11,19 @@ module Decisions
         edit(:case_disposal)
       when :case_disposal
         edit(:hearing_details)
-      when :hearing_details
+      when :hearing_details, :delete_defendant
+        edit(:defendant_details)
+      when :defendant_details
         show(:start_page)
+      when :add_defendant
+        form_object.application.defendants.create(position: form_object.next_position)
+        edit(:defendant_details)
       else
         index('/claims')
       end
     end
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
-    # rubocop:enable Metrics/MethodLength
     def after_claim_type
       if form_object.claim_type.supported?
         show(:start_page)

@@ -23,6 +23,16 @@ en:
       edit:
         page_title: Hearing details page title - TODO
         heading: Hearing details
+    defendant_details:
+      edit:
+        page_title: Defendant details page title - TODO
+        heading: Defendant details
+        main_defendant_field_set: Main defendant
+        defendant_field_set: Additional defendant %{index}
+        main_defendant: main
+        defendant: additional %{index}
+        add_button: Add another defendant
+        remove_button: Remove defendant
 
   laa_multi_step_forms:
     task_list:

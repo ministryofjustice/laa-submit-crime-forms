@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_12_153017) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_19_131318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,13 +26,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_153017) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "firm_office_id"
+    t.boolean "core_costs_exceed_higher_limit"
+    t.boolean "enhanced_rates_claimed"
+    t.boolean "councel_or_agent_assigned"
+    t.boolean "representation_order_withdrawn_on"
+    t.date "rep_order_date_withdrawn"
+    t.boolean "extradition"
+    t.boolean "other"
+    t.text "reason_for_claim_other"
     t.uuid "solicitor_id"
-    t.string "main_offence"
-    t.date "main_offence_date"
-    t.string "assigned_counsel"
-    t.string "unassigned_counsel"
-    t.string "agent_instructed"
-    t.string "remitted_to_magistrate"
     t.string "plea"
     t.date "arrest_warrent_date"
     t.date "cracked_trial_date"
@@ -43,9 +45,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_153017) do
     t.string "youth_count"
     t.string "hearing_outcome"
     t.string "matter_type"
+    t.string "main_offence"
+    t.date "main_offence_date"
+    t.string "assigned_counsel"
+    t.string "unassigned_counsel"
+    t.string "agent_instructed"
+    t.string "remitted_to_magistrate"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
+  end
+
+  create_table "defendants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "claim_id", null: false
+    t.string "full_name"
+    t.string "maat"
+    t.integer "position"
+    t.boolean "main", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claim_id"], name: "index_defendants_on_claim_id"
   end
 
   create_table "firm_offices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -94,6 +113,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_153017) do
 
   add_foreign_key "claims", "firm_offices"
   add_foreign_key "claims", "solicitors"
+  add_foreign_key "defendants", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
   add_foreign_key "solicitors", "solicitors", column: "previous_id"
 end
