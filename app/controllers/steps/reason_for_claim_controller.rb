@@ -15,5 +15,9 @@ module Steps
     def decision_tree_class
       Decisions::SimpleDecisionTree
     end
+
+    def additional_permitted_params
+      [reasons_for_claim: []]
+    end
   end
 end

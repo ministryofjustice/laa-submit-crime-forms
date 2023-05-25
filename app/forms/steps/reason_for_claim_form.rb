@@ -15,11 +15,16 @@ module Steps
             if: -> { reasons_for_claim.include?(ReasonForClaim::OTHER.to_s) }
 
     def validate_types
-      errors.add(:reasons_for_claim, :invalid) if reasons_for_claim.empty? || (reasons_for_claim - ReasonForClaim.values.map(&:to_s)).any?
+      errors.add(:reasons_for_claim, :blank) if reasons_for_claim.empty?
+      errors.add(:reasons_for_claim, :invalid) if (reasons_for_claim - ReasonForClaim.values.map(&:to_s)).any?
     end
 
     def choices
       ReasonForClaim.values
+    end
+
+    def reasons_for_claim=(ary)
+      super(ary.compact_blank) if ary
     end
 
     private

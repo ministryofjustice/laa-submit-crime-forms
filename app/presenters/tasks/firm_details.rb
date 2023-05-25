@@ -13,20 +13,7 @@ module Tasks
     end
 
     def completed?
-      [
-        application.firm_office&.values_at(*firm_office_fields)&.all?(&:present?),
-        application.solicitor&.values_at(*solicitor_fields)&.all?(&:present?),
-      ].all?
-    end
-
-    private
-
-    def solicitor_fields
-      Steps::FirmDetails::SolicitorForm.attribute_names - %w[contact_full_name contact_email]
-    end
-
-    def firm_office_fields
-      Steps::FirmDetails::FirmOfficeForm.attribute_names - %w[address_line_2]
+      Steps::FirmDetailsForm.new(application:).valid?
     end
   end
 end

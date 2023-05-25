@@ -116,3 +116,12 @@ en:
               blank: Full name (%{name}) cannot be blank
             maat:
               blank: MAAT ID (%{name}) cannot be blank
+        steps/reason_for_claim_form:
+          attributes:
+            reasons_for_claim:
+              blank: Must select at least one reason
+              invalid: Unknown reason selected
+            representation_order_withdrawn_date:
+              blank: Withdrawn date must be set
+            reason_for_claim_other_details:
+              blank: Details must be given
