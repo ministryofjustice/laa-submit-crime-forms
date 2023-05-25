@@ -51,6 +51,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_19_131318) do
     t.string "unassigned_counsel"
     t.string "agent_instructed"
     t.string "remitted_to_magistrate"
+    t.jsonb "reasons_for_claim", default: []
+    t.date "representation_order_withdrawn_date"
+    t.text "reason_for_claim_other_details"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"

@@ -6,6 +6,8 @@ en:
         claim_type: What are you claiming for?
         rep_order_date: Representation order date
         cntp_date: CNTP date
+        rep_order_date: Representation order date
+        cntp_date: CNTP date
       steps_firm_details_form[solicitor_attributes]:
         alternative_contact_details: Do you want to add alternative contact details?
       steps_case_details_form:
@@ -23,6 +25,10 @@ en:
         first_hearing_date: Date of first hearing
         in_area: Is this court in a designated area of your firm?
         youth_count: Is this court a youth court?
+      steps_reason_for_claim_form:
+        reasons_for_claim: Why are you claiming a non-standard magistrate court payment?
+        representation_order_withdrawn_date: Withdrawn date
+
     hint:
       steps_claim_type_form:
         rep_order_date: For example, 27 3 2007
@@ -60,6 +66,9 @@ en:
           'yes': You will not be able to claim for travel expenses and waiting time
         hearing_outcome: Select a hearing outcome from the suggestions that appear when you start to enter it, for example, Change of solicitor (CP02)
         matter_type: Select a matter type from the suggestions that appear when you start to enter it, for example, offences against the person
+      steps_reason_for_claim_form:
+        representation_order_withdrawn_date: For example, 27 3 2007
+        reasons_for_claim: Select all that apply.
 
     label:
       steps_claim_type_form:
@@ -127,3 +136,14 @@ en:
       steps_defendants_details_form:
         full_name: Full name
         maat: MAAT ID
+      steps_reason_for_claim_form:
+        reasons_for_claim_options:
+          core_costs_exceed_higher_limit: Core costs exceed higher limit
+          enhanced_rates_claimed: Enhanced rates claimed
+          councel_or_agent_assigned: Councel or agent assigned
+          representation_order_withdrawn_on: Representation order withdrawn on
+          extradition: Extradition
+          other: Other
+        reason_for_claim_other_details: Enter details
+
+

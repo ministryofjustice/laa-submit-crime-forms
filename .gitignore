@@ -43,3 +43,6 @@ coverage/
 .env.local
 app/assets/builds/*
 !/app/assets/builds/.keep
+
+.vscode
+.idea
