@@ -42,25 +42,7 @@ RSpec.describe Tasks::Defendants, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  describe '#can_start?' do
-    let(:hearing_details) { instance_double(Tasks::HearingDetails, status:) }
-
-    before do
-      allow(Tasks::HearingDetails).to receive(:new).and_return(hearing_details)
-    end
-
-    context 'when hearing details are complete' do
-      let(:status) { TaskStatus::COMPLETED }
-
-      it { expect(subject).to be_can_start }
-    end
-
-    context 'when hearing details are not complete' do
-      let(:status) { TaskStatus::IN_PROGRESS }
-
-      it { expect(subject).not_to be_can_start }
-    end
-  end
+  it_behaves_like 'a task with generic can_start?', Tasks::HearingDetails
 
   describe 'in_progress?' do
     context 'navigation_stack include edit defentant_details path' do
