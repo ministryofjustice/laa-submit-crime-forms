@@ -1,7 +1,7 @@
 module Tasks
   class HearingDetails < BaseTask
     def path
-      edit_steps_hearing_details_path
+      edit_steps_hearing_details_path(application)
     end
 
     def not_applicable?

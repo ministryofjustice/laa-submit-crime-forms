@@ -1,7 +1,7 @@
 module Tasks
   class ReasonForClaim < BaseTask
     def path
-      edit_steps_reason_for_claim_path
+      edit_steps_reason_for_claim_path(application)
     end
 
     def not_applicable?
@@ -9,12 +9,12 @@ module Tasks
     end
 
     def can_start?
-      fulfilled?(DefendantDetails)
+      fulfilled?(Defendants)
     end
 
     def completed?
       application.reasons_for_claim.any? &&
-        Steps::ReasonForClaimForm.new(application:).valid?
+        Steps::ReasonForClaimForm.build(application).valid?
     end
   end
 end

@@ -17,18 +17,18 @@
       </tr>
       </thead>
       <tbody class="govuk-table__body">
-
         <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><%= @form_object.record.full_name %></td>
-            <% if maat_required?(@form_object) %>
-              <td class="govuk-table__cell"><%= @form_object.record.maat %></td>
-            <% end %>
+          <td class="govuk-table__cell"><%= @form_object.record.full_name %></td>
+          <% if maat_required?(@form_object) %>
+            <td class="govuk-table__cell"><%= @form_object.record.maat %></td>
+          <% end %>
         </tr>
       </tbody>
     </table>
 
     <%= step_form @form_object do |f| %>
       <%= f.submit_button('delete_it') do %>
+        <%= f.hidden_field :id %>
         <%= link_to 'Cancel', edit_steps_defendant_summary_path(@form_object.application), class: 'govuk-button__secondary' %>
       <% end %>
     <% end %>

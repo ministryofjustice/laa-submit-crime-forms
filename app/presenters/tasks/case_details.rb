@@ -1,7 +1,7 @@
 module Tasks
   class CaseDetails < BaseTask
     def path
-      edit_steps_case_details_path
+      edit_steps_case_details_path(application)
     end
 
     def not_applicable?
@@ -13,7 +13,7 @@ module Tasks
     end
 
     def completed?
-      Steps::CaseDetailsForm.new(application:).valid?
+      Steps::CaseDetailsForm.build(application).valid?
     end
   end
 end

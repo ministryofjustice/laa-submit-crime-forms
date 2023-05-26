@@ -1,5 +1,7 @@
 module Steps
   class DefendantDetailsController < Steps::BaseStepController
+    before_action :ensure_defendant
+
     def edit
       @form_object = DefendantDetailsForm.build(
         defendant,
@@ -18,11 +20,16 @@ module Steps
     end
 
     def defendant
-      if params[:defendant_id].blank?
+      defendant_id = params[:defendant_id] || params.dig(:steps_defendant_details_form, :id)
+      if defendant_id.blank?
         current_application.defendants.find_or_create_by!(position: 1, main: true)
       else
-        current_application.defendants.find_by!(id: params[:defendant_id])
+        current_application.defendants.find_by(id: defendant_id)
       end
+    end
+
+    def ensure_defendant
+      defendant || redirect_to(edit_steps_defendant_summary_path(current_application))
     end
   end
 end

@@ -8,7 +8,7 @@ module Steps
     validates :add_another, presence: true, inclusion: { in: YesNoAnswer.values }
 
     def add_another=(value)
-      @add_another = YesNoAnswer.new(value)
+      @add_another = value.present? ? YesNoAnswer.new(value) : nil
     end
 
     def choices

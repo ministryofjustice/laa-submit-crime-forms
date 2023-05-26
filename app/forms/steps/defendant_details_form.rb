@@ -11,16 +11,8 @@ module Steps
     validates :full_name, presence: true
     validates :maat, presence: true, if: :maat_required?
 
-    def persisted?
-      id.present?
-    end
-
     def maat_required?
       application.claim_type != ClaimType::BREACH_OF_INJUNCTION.to_s
-    end
-
-    def show_destroy?
-      !main
     end
 
     def label_key

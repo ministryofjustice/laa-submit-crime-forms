@@ -3,6 +3,8 @@ require 'steps/base_form_object'
 
 module Steps
   class DefendantDeleteForm < Steps::BaseFormObject
+    attribute :id
+
     def caption_key
       if record.main
         '.main_defendant'

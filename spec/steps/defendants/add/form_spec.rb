@@ -6,23 +6,24 @@ RSpec.describe Steps::DefendantDetailsForm do
   let(:arguments) do
     {
       application:,
+      record:,
       id:,
       full_name:,
       maat:,
       position:,
       main:,
-      _destroy:,
     }
   end
 
-  let(:application) { instance_double(Claim, claim_type: claim_type, update!: true) }
+  let(:application) { instance_double(Claim, claim_type: claim_type, defendants:, update!: true) }
+  let(:defendants) { [double(:record), record] }
+  let(:record) { double(:record) }
   let(:id) { SecureRandom.uuid }
   let(:full_name) { 'James' }
   let(:maat) { 'AA1' }
   let(:position) { 0 }
   let(:main) { false }
   let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
-  let(:_destroy) { nil }
 
   describe '#maat_required' do
     context 'when claim_type is NOT BREACH_OF_INJUNCTION' do
@@ -36,15 +37,21 @@ RSpec.describe Steps::DefendantDetailsForm do
     end
   end
 
-  describe 'persisted?' do
-    context 'when id is set' do
-      it { expect(subject).to be_persisted }
+  describe '#label_key' do
+    context 'when main is true' do
+      let(:main) { true }
+
+      it { expect(subject.label_key).to eq('.main_defendant_field_set') }
     end
 
-    context 'when id is NOT set' do
-      let(:id) { nil }
+    context 'when main is false' do
+      it { expect(subject.label_key).to eq('.defendant_field_set') }
+    end
+  end
 
-      it { expect(subject).not_to be_persisted }
+  describe '#index' do
+    it 'returns the position of the record in the applications defendants' do
+      expect(subject.index).to eq(1)
     end
   end
 
