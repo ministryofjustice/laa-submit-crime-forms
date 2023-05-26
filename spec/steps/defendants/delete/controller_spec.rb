@@ -6,6 +6,7 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
     # which is undesirable for this particular test
     allow(controller).to receive(:current_application).and_return(current_application)
   end
+
   describe '#edit' do
     context 'when application is not found' do
       let(:current_application) { nil }
@@ -22,7 +23,9 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
     #
     context 'when application is found' do
       let(:existing_case) { Claim.create(office_code: 'AAA') }
-      let(:current_application) { instance_double(Claim, defendants:, navigation_stack: [], 'navigation_stack=': true, save!: true) }
+      let(:current_application) do
+        instance_double(Claim, defendants: defendants, navigation_stack: [], 'navigation_stack=': true, save!: true)
+      end
       let(:defendants) { double(:defendants, find_by: defendant) }
       let(:form) { instance_double(Steps::DefendantDeleteForm) }
 
@@ -90,8 +93,11 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
 
     context 'when application is found' do
       let(:existing_case) { Claim.create(office_code: 'AAA') }
-      let(:current_application) { instance_double(Claim, defendants:, navigation_stack: [], 'navigation_stack=': true, save!: true) }
+      let(:current_application) do
+        instance_double(Claim, defendants: defendants, navigation_stack: [], 'navigation_stack=': true, save!: true)
+      end
       let(:form) { instance_double(Steps::DefendantDeleteForm) }
+
       before do
         allow(Steps::DefendantDeleteForm).to receive(:build).and_return(form)
       end

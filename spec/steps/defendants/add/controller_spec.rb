@@ -5,7 +5,7 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
   it_behaves_like 'a step that can be drafted', Steps::DefendantDetailsForm
 
   describe '#edit' do
-    let(:application) { Claim.create(office_code: 'AA1', defendants:) }
+    let(:application) { Claim.create(office_code: 'AA1', defendants: defendants) }
     let(:defendants) { [] }
 
     context 'when defendant_id is not passed in' do
@@ -25,7 +25,8 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
           allow(Steps::DefendantDetailsForm).to receive(:build)
           expect { get :edit, params: { id: application } }.to change(application.defendants, :count).by(1)
 
-          expect(Steps::DefendantDetailsForm).to have_received(:build).with(application.reload.defendants.last, application:)
+          expect(Steps::DefendantDetailsForm).to have_received(:build).with(application.reload.defendants.last,
+                                                                            application:)
         end
       end
     end
@@ -36,11 +37,13 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
 
         it 'passes the existing defendant to the form' do
           allow(Steps::DefendantDetailsForm).to receive(:build)
-          expect { get :edit, params: { id: application, defendant_id: application.defendants.first.id } }.not_to change(application.defendants, :count)
+          expect do
+            get :edit,
+                params: { id: application, defendant_id: application.defendants.first.id }
+          end.not_to change(application.defendants, :count)
 
           expect(Steps::DefendantDetailsForm).to have_received(:build).with(defendants.first, application:)
         end
-
       end
 
       context 'and defendant does not exists' do
@@ -48,7 +51,9 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
 
         it 'passes the existing defendant to the form' do
           allow(Steps::DefendantDetailsForm).to receive(:build)
-          expect { get :edit, params: { id: application, defendant_id: SecureRandom.uuid } }.not_to change(application.defendants, :count)
+          expect do
+            get :edit, params: { id: application, defendant_id: SecureRandom.uuid }
+          end.not_to change(application.defendants, :count)
 
           expect(response).to redirect_to(edit_steps_defendant_summary_path(application))
         end

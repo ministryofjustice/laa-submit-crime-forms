@@ -5,6 +5,7 @@ require 'steps/base_form_object'
 module Steps
   class AddAnotherForm < Steps::BaseFormObject
     attr_reader :add_another
+
     validates :add_another, presence: true, inclusion: { in: YesNoAnswer.values }
 
     def add_another=(value)

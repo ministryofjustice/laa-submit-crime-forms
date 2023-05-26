@@ -94,10 +94,10 @@ RSpec.describe Decisions::SimpleDecisionTree do
   end
 
   context 'when step is defendant_summary' do
-    before {
+    before do
       application.save
       application.defendants.create(full_name: 'Jim', maat: 'aaa', position: 1)
-    }
+    end
 
     context 'form#add_another is yes' do
       let(:add_another) { 'yes' }

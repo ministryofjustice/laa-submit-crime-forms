@@ -24,7 +24,6 @@ module Steps
       current_application.defendants.find_by(id: defendant_id, main: false)
     end
 
-
     def flash_msg
       { success: t('.edit.deleted_flash') }
     end

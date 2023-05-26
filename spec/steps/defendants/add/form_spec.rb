@@ -15,7 +15,7 @@ RSpec.describe Steps::DefendantDetailsForm do
     }
   end
 
-  let(:application) { instance_double(Claim, claim_type: claim_type, defendants:, update!: true) }
+  let(:application) { instance_double(Claim, claim_type: claim_type, defendants: defendants, update!: true) }
   let(:defendants) { [double(:record), record] }
   let(:record) { double(:record) }
   let(:id) { SecureRandom.uuid }

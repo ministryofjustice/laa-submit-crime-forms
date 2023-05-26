@@ -11,7 +11,7 @@ RSpec.describe Steps::DefendantDeleteForm do
     }
   end
 
-  let(:application) { instance_double(Claim, ) }
+  let(:application) { instance_double(Claim,) }
   let(:record) { instance_double(Defendant, id:, main:) }
   let(:id) { SecureRandom.uuid }
   let(:main) { false }

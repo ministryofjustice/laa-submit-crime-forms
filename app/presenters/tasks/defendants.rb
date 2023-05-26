@@ -17,11 +17,14 @@ module Tasks
     end
 
     def in_progress?
-      (application.navigation_stack & [edit_steps_defendant_summary_path(application), edit_steps_defendant_details_path(application)]).any?
+      application.navigation_stack.intersect?([edit_steps_defendant_summary_path(application),
+                                               edit_steps_defendant_details_path(application)])
     end
 
     def completed?
-      application.defendants.any? && application.defendants.all? { |record| Steps::DefendantDetailsForm.build(record, application:).valid? }
+      application.defendants.any? && application.defendants.all? do |record|
+        Steps::DefendantDetailsForm.build(record, application:).valid?
+      end
     end
   end
 end

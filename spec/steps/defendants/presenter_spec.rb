@@ -63,7 +63,7 @@ RSpec.describe Tasks::Defendants, type: :system do
   end
 
   describe 'in_progress?' do
-    context 'navigation_stack include edit defentant_details path'  do
+    context 'navigation_stack include edit defentant_details path' do
       before { navigation_stack << edit_steps_defendant_details_path(application) }
 
       it { expect(subject).to be_in_progress }
