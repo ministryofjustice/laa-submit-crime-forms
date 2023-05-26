@@ -7,4 +7,8 @@ module ApplicationHelper
   def current_office_code
     @current_office_code ||= current_provider&.selected_office_code || current_provider&.office_codes&.first
   end
+
+  def maat_required?(form)
+    form.application.claim_type != ClaimType::NON_STANDARD_MAGISTRATE
+  end
 end

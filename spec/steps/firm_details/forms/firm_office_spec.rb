@@ -43,6 +43,15 @@ RSpec.describe Steps::FirmDetails::FirmOfficeForm do
       end
     end
 
+    context 'when postcode is invalid' do
+      let(:postcode) { 'AAA' }
+
+      it 'has is a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:postcode, :invalid)).to be(true)
+      end
+    end
+
     context 'when address_line_2 is missing' do
       let(:address_line_2) { nil }
 

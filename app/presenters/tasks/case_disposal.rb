@@ -1,7 +1,7 @@
 module Tasks
   class CaseDisposal < BaseTask
     def path
-      edit_steps_case_disposal_path
+      edit_steps_case_disposal_path(application)
     end
 
     def not_applicable?

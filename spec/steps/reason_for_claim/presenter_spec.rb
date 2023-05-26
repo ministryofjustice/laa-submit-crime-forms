@@ -23,10 +23,10 @@ RSpec.describe Tasks::ReasonForClaim, type: :system do
   end
 
   describe '#can_start?' do
-    let(:defendant_details) { instance_double(Tasks::DefendantDetails, status:) }
+    let(:defendant_details) { instance_double(Tasks::Defendants, status:) }
 
     before do
-      allow(Tasks::DefendantDetails).to receive(:new).and_return(defendant_details)
+      allow(Tasks::Defendants).to receive(:new).and_return(defendant_details)
     end
 
     context 'when case details are complete' do
@@ -47,7 +47,7 @@ RSpec.describe Tasks::ReasonForClaim, type: :system do
     let(:valid) { true }
 
     before do
-      allow(Steps::ReasonForClaimForm).to receive(:new).and_return(form)
+      allow(Steps::ReasonForClaimForm).to receive(:build).and_return(form)
     end
 
     context 'when reasons_for_claim has any values' do

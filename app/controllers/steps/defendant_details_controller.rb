@@ -1,13 +1,16 @@
 module Steps
   class DefendantDetailsController < Steps::BaseStepController
+    before_action :ensure_defendant
+
     def edit
-      @form_object = DefendantsDetailsForm.build(
-        current_application
+      @form_object = DefendantDetailsForm.build(
+        defendant,
+        application: current_application,
       )
     end
 
     def update
-      update_and_advance(DefendantsDetailsForm, as: step_name, flash: flash_msg)
+      update_and_advance(DefendantDetailsForm, as: :defendant_details, record: defendant)
     end
 
     private
@@ -16,22 +19,17 @@ module Steps
       Decisions::SimpleDecisionTree
     end
 
-    def step_name
-      if params.key?('add_defendant')
-        :add_defendant
-      elsif params.to_s.include?('"_destroy"=>"1"')
-        :delete_defendant
+    def defendant
+      defendant_id = params[:defendant_id] || params.dig(:steps_defendant_details_form, :id)
+      if defendant_id.blank?
+        current_application.defendants.find_or_create_by!(position: 1, main: true)
       else
-        :defendant_details
+        current_application.defendants.find_by(id: defendant_id)
       end
     end
 
-    def flash_msg
-      { success: t('.edit.deleted_flash') } if step_name.eql?(:delete_defendant)
-    end
-
-    def additional_permitted_params
-      [defendants_attributes: Steps::DefendantDetailsForm.attribute_names]
+    def ensure_defendant
+      defendant || redirect_to(edit_steps_defendant_summary_path(current_application))
     end
   end
 end

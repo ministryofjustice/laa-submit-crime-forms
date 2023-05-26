@@ -1,7 +1,7 @@
 module Tasks
   class FirmDetails < BaseTask
     def path
-      edit_steps_firm_details_path
+      edit_steps_firm_details_path(application)
     end
 
     def not_applicable?
@@ -13,7 +13,7 @@ module Tasks
     end
 
     def completed?
-      Steps::FirmDetailsForm.new(application:).valid?
+      Steps::FirmDetailsForm.build(application).valid?
     end
   end
 end
