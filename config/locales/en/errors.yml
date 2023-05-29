@@ -125,7 +125,3 @@ en:
               blank: Withdrawn date must be set
             reason_for_claim_other_details:
               blank: Details must be given
-        steps/add_another_form:
-          attributes:
-            add_another:
-              blank: Please choose yes or no to add another record
