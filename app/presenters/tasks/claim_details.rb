@@ -9,12 +9,11 @@ module Tasks
     end
 
     def can_start?
-      fulfilled?(Defendants)
+      fulfilled?(ReasonForClaim)
     end
 
     def completed?
-      application.claim_details.any? &&
-        Steps::ClaimDetails.build(application).valid?
+      Steps::ClaimDetailsForm.build(application).valid?
     end
   end
 end

@@ -8,8 +8,6 @@ en:
         claim_type: What are you claiming for?
         rep_order_date: Representation order date
         cntp_date: CNTP date
-        rep_order_date: Representation order date
-        cntp_date: CNTP date
       steps_firm_details_form[solicitor_attributes]:
         alternative_contact_details: Do you want to add alternative contact details?
       steps_case_details_form:
@@ -39,8 +37,6 @@ en:
         number_of_witnesses: Number of Defence witnesses
         supplemental_claim: Does this bill represent supplemental claim ?
         preparation_time: Was any preparation time spent watching or listening to taped evidence ?
-        Time_spent_hours: Time spent in hours
-        Time_spent_mins: Time spent in minutes
 
     hint:
       steps_claim_type_form:
@@ -133,7 +129,6 @@ en:
         plea_options:
           guilty: Guilty plea
           uncontested_breach: Uncontested breach
-          discontinuance: Discontinuance or withdrawal
           bind_over: Bind over
           deferred_sentence: Deferred sentence hearing
           change_solicitor: Change of solicitor
@@ -180,4 +175,6 @@ en:
         preparation_time_options:
           'yes': 'Yes'
           'no': 'No'
+        time_spent_hours: Time spent in hours
+        time_spent_mins: Time spent in minutes
 
