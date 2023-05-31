@@ -136,10 +136,21 @@ RSpec.describe Decisions::SimpleDecisionTree do
   end
 
   context 'when step is reason_for_claim' do
-    # TODO: update this when case details implemented
-    it 'moves to case details' do
+    it 'moves to claim_details' do
       claim = Steps::ReasonForClaimForm.new(application:)
       decision_tree = described_class.new(claim, as: :reason_for_claim)
+      expect(decision_tree.destination).to eq(
+        action: :edit,
+        controller: :claim_details,
+        id: application
+      )
+    end
+  end
+
+  context 'when step is claim_details' do
+    it 'moves to start_page' do
+      claim = Steps::ClaimDetailsForm.new(application:)
+      decision_tree = described_class.new(claim, as: :claim_details)
       expect(decision_tree.destination).to eq(
         action: :show,
         controller: :start_page,
@@ -149,7 +160,6 @@ RSpec.describe Decisions::SimpleDecisionTree do
   end
 
   context 'when step is unknown' do
-    # TODO: update this when implemented
     it 'moves to claim index' do
       decision_tree = described_class.new(double('form'), as: :unknown)
       expect(decision_tree.destination).to eq(

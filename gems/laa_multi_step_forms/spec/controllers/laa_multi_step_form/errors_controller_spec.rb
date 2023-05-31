@@ -32,8 +32,8 @@ RSpec.describe LaaMultiStepForms::ErrorsController, type: :controller do
   end
 
   it '#unhandled' do
-    get :unhandled, params:  { use_route: :laa_msf }
+    get :unhandled, params: { use_route: :laa_msf }
 
-    expect(response.code).to eq('500')
+    expect(response).to have_http_status(:internal_server_error)
   end
 end

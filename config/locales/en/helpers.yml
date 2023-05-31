@@ -8,8 +8,6 @@ en:
         claim_type: What are you claiming for?
         rep_order_date: Representation order date
         cntp_date: CNTP date
-        rep_order_date: Representation order date
-        cntp_date: CNTP date
       steps_firm_details_form[solicitor_attributes]:
         alternative_contact_details: Do you want to add alternative contact details?
       steps_case_details_form:
@@ -32,6 +30,13 @@ en:
         representation_order_withdrawn_date: Withdrawn date
       steps_add_another_form:
         add_another: Do you want to add another defendant?
+      steps_claim_details_form:
+        claim_details: Claim Details
+        prosecution_evidence: Prosecution Evidence
+        defence_statement: Defence statement
+        number_of_witnesses: Number of Defence witnesses
+        supplemental_claim: Does this bill represent supplemental claim ?
+        preparation_time: Was any preparation time spent watching or listening to taped evidence ?
 
     hint:
       steps_claim_type_form:
@@ -73,6 +78,14 @@ en:
       steps_reason_for_claim_form:
         representation_order_withdrawn_date: For example, 27 3 2007
         reasons_for_claim: Select all that apply.
+      steps_claim_details_form:
+        defence_statement: For example the total number of pages of defence evidence including any
+          statements by the defendant and defence witnesses
+        prosecution_evidence: Where applicable, give the approximate number of pages
+        supplemental_claim_options:
+          'yes': If yes, attach a copy of the previous claim
+        preparation_time_options:
+          'yes': If yes, tell us the total running time of the tape in hours
 
     label:
       steps_claim_type_form:
@@ -116,7 +129,6 @@ en:
         plea_options:
           guilty: Guilty plea
           uncontested_breach: Uncontested breach
-          discontinuance: Discontinuance or withdrawal
           bind_over: Bind over
           deferred_sentence: Deferred sentence hearing
           change_solicitor: Change of solicitor
@@ -153,3 +165,16 @@ en:
         add_another_options:
           'yes': 'Yes'
           'no': 'No'
+      steps_claim_details_form:
+        prosecution_evidence: Prosecution Evidence
+        defence_statement: Defence statement
+        number_of_witnesses: Number of Defence witnesses
+        supplemental_claim_options:
+          'yes': 'Yes'
+          'no': 'No'
+        preparation_time_options:
+          'yes': 'Yes'
+          'no': 'No'
+        time_spent_hours: Time spent in hours
+        time_spent_mins: Time spent in minutes
+
