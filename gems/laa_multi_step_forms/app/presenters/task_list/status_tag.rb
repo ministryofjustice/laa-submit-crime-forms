@@ -4,7 +4,7 @@ module TaskList
 
     DEFAULT_CLASSES = %w[govuk-tag app-task-list__tag].freeze
 
-    GRAY_TAG = 'govuk-tag--grey'
+    GRAY_TAG = 'govuk-tag--grey'.freeze
     STATUSES = {
       TaskStatus::COMPLETED => nil,
       TaskStatus::IN_PROGRESS => 'govuk-tag--blue',
