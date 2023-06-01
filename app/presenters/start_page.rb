@@ -7,9 +7,9 @@ module StartPage
     SECTIONS = [
       [:about_you, [:firm_details]],
       [:case, [:case_details, :case_disposal, :hearing_details]],
-      [:defendant, [:defendants, :reason_for_claim]],
+      [:defendant, [:defendants, ]],
       [:claim,
-      [:claim_justification, :claim_details, :work_items, :letters_calls, :disbursements, :claim_summary,
+      [:reason_for_claim, :claim_details, :work_items, :letters_calls, :disbursements, :claim_summary,
         :additional_info]],
       [:evidence, [:upload_evidence]],
       [:review, [:check_answers]]
