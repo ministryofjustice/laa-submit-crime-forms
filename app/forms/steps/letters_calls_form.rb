@@ -19,10 +19,10 @@ module Steps
     end
 
     def period
-      if application.date < Date.new(2022, 9, 30)
-        :period_pre_sep_22
-      else
+      if application.date&.>=(Date.new(2022, 9, 30))
         :period_post_sep_22
+      else
+        :period_pre_sep_22
       end
     end
 
