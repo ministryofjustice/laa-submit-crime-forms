@@ -1,8 +1,8 @@
 # LAA Multi Step Form Step creation
 
 A step is used to represent a single screen in the multi stage form
-processing, the following is a starter guild to help create new steps
-in the process. This guide should be used with existing steps as a
+processing, the following is a starter guide to help create new steps
+in the task list. This guide should be used with existing steps as a
 guide to the process.
 
 ## 1. Types of Steps
@@ -40,12 +40,12 @@ These create a `edit` and `update` endpoint
 ## 2. Controllers
 
 By default both edit and show step controllers should inherit from
-`Steps::BaseStepController`. This provides a number of reusable feature the main
+`Steps::BaseStepController`. This provides a number of reusable features, the main
 one being:
 
 ### Navigation stack
 
-By default the navigation stack will automatically be update to include the
+By default the navigation stack will automatically be updated to include the
 current path whenever a step controller is accessed.
 
 The main purpose of this is to track which path the user took through the pages
@@ -76,7 +76,7 @@ adding the parameter names to the `additional_permitted_params` response
 Routing to the next step is handled by the DecisionTree object returned from the
 `decision_tree_class` method. The key here is that the current step and the
 underlying application object are passing into this class and it returns a
-hash that can be used by teh rails router to redirect to the next step.
+hash that can be used by the rails router to redirect to the next step.
 
 This means that routing for multiple paths can be more easily tested outside
 the controller object.
@@ -87,7 +87,7 @@ These are useful when process a list of items - i.e. radio buttons or checkboxes
 where the resulting value/s will be stored in a single field.
 
 This is an alternative to having a lookup table and is preferred due to it NOT
-requiring maintenance in the DB, and being eaier to add/remove values through
+requiring maintenance in the DB, and being easier to add/remove values through
 the code itself.
 
 ## 4. Form objects
