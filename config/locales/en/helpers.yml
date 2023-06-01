@@ -177,4 +177,10 @@ en:
           'no': 'No'
         time_spent_hours: Time spent in hours
         time_spent_mins: Time spent in minutes
+      steps_letters_calls_form:
+        letters: Number of letters
+        calls: Number of phone calls
+        apply_uplift_options:
+          'true': Apply an uplift to this work
+        letters_calls_uplift: For example, from any percentage from 1 to 100
 

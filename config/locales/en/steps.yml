@@ -61,6 +61,28 @@ en:
           full_name: Full name
           maat: MAAT ID
           action: Action
+    letters_calls:
+      edit:
+        page_title: Lettera and Calls page title - TODO
+        heading: Letters and phone calls
+        subheading_html: |
+          <p class="govuk-body">For each letter or telephone call you will get:</p>
+          <ul class="govuk-list govuk-list--bullet">
+              <li>£3.56 for representation orders before 30 September 2022</li>
+              <li>£4.09 for representation orders on or after 30 September 2022</li>
+          </ul>
+        total_cost: Total cost
+        summary: View by letters and phone calls
+        headers:
+         items: Items
+         quantity: Quantity
+         total: Total
+        items:
+          letters: Letters
+          calls: Phone calls
+    reason_for_claim:
+      edit:
+        heading: Why are you claiming a non-standard magistrate court payment?
 
   laa_multi_step_forms:
     task_list:
