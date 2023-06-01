@@ -21,7 +21,7 @@ RSpec.describe Steps::LettersCallsForm do
   let(:date) { nil }
 
   describe '#validations' do
-    context '#letters' do
+    describe '#letters' do
       context 'is negative' do
         let(:letters) { -1 }
 
@@ -31,7 +31,7 @@ RSpec.describe Steps::LettersCallsForm do
         end
       end
 
-      context 'is blank'  do
+      context 'is blank' do
         let(:letters) { '' }
 
         it 'have an error' do
@@ -40,20 +40,20 @@ RSpec.describe Steps::LettersCallsForm do
         end
       end
 
-      context 'is zero'  do
+      context 'is zero' do
         let(:letters) { 0 }
 
         it { expect(subject).to be_valid }
       end
 
-      context 'is positive'  do
+      context 'is positive' do
         let(:letters) { 1 }
 
         it { expect(subject).to be_valid }
       end
     end
 
-    context '#calls' do
+    describe '#calls' do
       context 'is negative' do
         let(:calls) { -1 }
 
@@ -63,7 +63,7 @@ RSpec.describe Steps::LettersCallsForm do
         end
       end
 
-      context 'is blank'  do
+      context 'is blank' do
         let(:calls) { '' }
 
         it 'have an error' do
@@ -72,20 +72,20 @@ RSpec.describe Steps::LettersCallsForm do
         end
       end
 
-      context 'is zero'  do
+      context 'is zero' do
         let(:calls) { 0 }
 
         it { expect(subject).to be_valid }
       end
 
-      context 'is positive'  do
+      context 'is positive' do
         let(:calls) { 1 }
 
         it { expect(subject).to be_valid }
       end
     end
 
-    context '#letters_calls_uplift' do
+    describe '#letters_calls_uplift' do
       context 'when apply_uplift is true' do
         context 'is negative' do
           let(:letters_calls_uplift) { -1 }
@@ -96,7 +96,7 @@ RSpec.describe Steps::LettersCallsForm do
           end
         end
 
-        context 'is blank'  do
+        context 'is blank' do
           let(:letters_calls_uplift) { '' }
 
           it 'have an error' do
@@ -105,25 +105,25 @@ RSpec.describe Steps::LettersCallsForm do
           end
         end
 
-        context 'is zero'  do
+        context 'is zero' do
           let(:letters_calls_uplift) { 0 }
 
           it { expect(subject).to be_valid }
         end
 
-        context 'is positive'  do
+        context 'is positive' do
           let(:letters_calls_uplift) { 1 }
 
           it { expect(subject).to be_valid }
         end
 
-        context 'is 100'  do
+        context 'is 100' do
           let(:letters_calls_uplift) { 100 }
 
           it { expect(subject).to be_valid }
         end
 
-        context 'is over 100'  do
+        context 'is over 100' do
           let(:letters_calls_uplift) { 101 }
 
           it 'have an error' do
@@ -168,7 +168,6 @@ RSpec.describe Steps::LettersCallsForm do
         let(:letters_calls_uplift) { nil }
 
         it { expect(subject.apply_uplift).to be_falsey }
-
       end
     end
 

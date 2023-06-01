@@ -10,18 +10,19 @@ module Steps
 
     validates :letters, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     validates :calls, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-    validates :letters_calls_uplift, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, if: :apply_uplift
+    validates :letters_calls_uplift, presence: true,
+numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, if: :apply_uplift
 
     def apply_uplift
       @apply_uplift.nil? ? letters_calls_uplift.present? : @apply_uplift == 'true'
     end
 
     def letters_total
-      letters.to_f * price_per * (1 + letters_calls_uplift.to_f / 100)
+      letters.to_f * price_per * (1 + (letters_calls_uplift.to_f / 100))
     end
 
     def calls_total
-      calls.to_f * price_per * (1 + letters_calls_uplift.to_f / 100)
+      calls.to_f * price_per * (1 + (letters_calls_uplift.to_f / 100))
     end
 
     def total

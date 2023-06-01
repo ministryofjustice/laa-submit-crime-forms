@@ -11,7 +11,6 @@ module Decisions
       claim_details: :letters_calls
     }.freeze
 
-
     SHOW_MAPPING = {
       letters_calls: :start_page,
     }.freeze
