@@ -20,7 +20,7 @@ RSpec.describe TaskList::Section do
     end
 
     context 'when task name is a proc' do
-      let(:tasks) { [:task_one, ->(app) { 'task.two' }] }
+      let(:tasks) { [:task_one, ->(_app) { 'task.two' }] }
 
       it 'evaluates the proc to detmine teh task name' do
         expect(subject.items.map(&:name)).to eq([:task_one, 'task.two'])
