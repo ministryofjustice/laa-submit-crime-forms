@@ -32,6 +32,8 @@ module Type
         source.new(value)
       when source
         value
+      else
+        raise "Unable to cast value #{value.class} (#{value})"
       end
     end
   end

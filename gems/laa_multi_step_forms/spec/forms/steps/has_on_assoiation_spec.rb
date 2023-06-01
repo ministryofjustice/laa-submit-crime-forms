@@ -14,7 +14,9 @@ RSpec.describe Steps::HasOneAssociation do
       Class.new(ApplicationRecord) do
         attr_accessor :favourite_meal, :child
 
-        def build_child; end
+        def build_child
+          # This is a placeholder to help with stubbing for tests
+        end
 
         def self.load_schema! = @columns_hash = {}
       end

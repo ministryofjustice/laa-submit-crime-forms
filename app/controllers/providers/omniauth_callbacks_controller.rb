@@ -13,11 +13,11 @@ module Providers
 
     private
 
-    def after_sign_in_path_for(_)
+    def after_sign_in_path_for(*)
       Providers::OfficeRouter.call(current_provider)
     end
 
-    def after_omniauth_failure_path_for(_)
+    def after_omniauth_failure_path_for(*)
       new_provider_session_path
     end
 

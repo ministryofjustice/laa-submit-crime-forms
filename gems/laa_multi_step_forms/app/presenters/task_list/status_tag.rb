@@ -4,12 +4,13 @@ module TaskList
 
     DEFAULT_CLASSES = %w[govuk-tag app-task-list__tag].freeze
 
+    GRAY_TAG = 'govuk-tag--grey'
     STATUSES = {
       TaskStatus::COMPLETED => nil,
       TaskStatus::IN_PROGRESS => 'govuk-tag--blue',
-      TaskStatus::NOT_STARTED => 'govuk-tag--grey',
-      TaskStatus::UNREACHABLE => 'govuk-tag--grey',
-      TaskStatus::NOT_APPLICABLE => 'govuk-tag--grey',
+      TaskStatus::NOT_STARTED => GRAY_TAG,
+      TaskStatus::UNREACHABLE => GRAY_TAG,
+      TaskStatus::NOT_APPLICABLE => GRAY_TAG,
     }.freeze
 
     def initialize(application, name:, status:)
