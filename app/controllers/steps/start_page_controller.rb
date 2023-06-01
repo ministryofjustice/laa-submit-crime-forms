@@ -1,7 +1,10 @@
 module Steps
   class StartPageController < Steps::BaseStepController
     def show
-      @tasklist = StartPageTaskList.new(
+      @pre_tasklist = StartPage::PreTaskList.new(
+        view_context, application: current_application, show_index: false
+      )
+      @tasklist = StartPage::TaskList.new(
         view_context, application: current_application
       )
       # passed in separately to current_application to

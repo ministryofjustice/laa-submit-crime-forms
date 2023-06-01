@@ -9,7 +9,7 @@ module Tasks
     end
 
     def self.build(name, **kwargs)
-      class_name = "Tasks::#{name.to_s.camelize}"
+      class_name = "Tasks::#{name.to_s.split('.').first.camelize}"
 
       if const_defined?(class_name)
         class_name.constantize.new(**kwargs)

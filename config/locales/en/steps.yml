@@ -62,6 +62,9 @@ en:
           maat: MAAT ID
           action: Action
 
+    reason_for_claim:
+      edit:
+        heading: Why are you claiming a non-standard magistrate court payment?
   laa_multi_step_forms:
     task_list:
       show:

@@ -2,6 +2,7 @@
 en:
   tasklist:
     heading:
+      what: What you are claiming
       about_you: About you
       case: About the case
       defendant: About the defendant
@@ -9,6 +10,8 @@ en:
       evidence: Supporting evidence
       review: Review and confirm
     task:
+      claim_type:
+        non_standard_magistrate: Non-standard magistrates’ court payment
       firm_details: Your details
       case_details: Case details
       case_disposal: Case disposal

@@ -26,7 +26,6 @@ en:
         in_area: Is this court in a designated area of your firm?
         youth_count: Is this court a youth court?
       steps_reason_for_claim_form:
-        reasons_for_claim: Why are you claiming a non-standard magistrate court payment?
         representation_order_withdrawn_date: Withdrawn date
       steps_add_another_form:
         add_another: Do you want to add another defendant?
