@@ -28,22 +28,5 @@ RSpec.describe Tasks::FirmDetails, type: :system do
     it { expect(subject).to be_can_start }
   end
 
-  describe '#completed?' do
-    let(:form) { instance_double(Steps::FirmDetailsForm, valid?: valid) }
-    let(:valid) { true }
-
-    before do
-      allow(Steps::FirmDetailsForm).to receive(:build).and_return(form)
-    end
-
-    context 'when valid is true' do
-      it { expect(subject).to be_completed }
-    end
-
-    context 'when valid is false' do
-      let(:valid) { false }
-
-      it { expect(subject).not_to be_completed }
-    end
-  end
+  it_behaves_like 'a task with generic complete?', Steps::FirmDetailsForm
 end

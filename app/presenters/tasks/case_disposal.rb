@@ -1,15 +1,9 @@
 module Tasks
-  class CaseDisposal < BaseTask
+  class CaseDisposal < Generic
+    PREVIOUS_TASK = CaseDetails
+
     def path
       edit_steps_case_disposal_path(application)
-    end
-
-    def not_applicable?
-      false
-    end
-
-    def can_start?
-      fulfilled?(CaseDetails)
     end
 
     def completed?
