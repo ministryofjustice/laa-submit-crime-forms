@@ -10,12 +10,12 @@ en:
       review: Review and confirm
     task:
       firm_details: Your details
-      claim_reason: Claim reason
       case_details: Case details
       case_disposal: Case disposal
       hearing_details: Hearing details
       defendant_details: Defendant details
-    claim_justification: Claim justification
+      reason_for_claim: Claim reason
+      claim_justification: Claim justification
       claim_details: Claim details
       work_items: Work items
       letters_calls: Letters and phone calls

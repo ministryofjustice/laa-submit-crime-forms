@@ -1,34 +1,46 @@
 module Decisions
   class SimpleDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    EDIT_MAPPING = {
+      firm_details: :case_details,
+      case_details: :case_disposal,
+      case_disposal: :hearing_details,
+      hearing_details: :defendant_details,
+      defendant_details: :defendant_summary,
+      defendant_delete: :defendant_summary,
+      reason_for_claim: :claim_details
+    }.freeze
+
+    SHOW_MAPPING = {
+      claim_details: :start_page,
+    }.freeze
+
     def destination
       case step_name
-      when :claim_type
-        after_claim_type
-      when :firm_details
-        edit(:case_details)
-      when :case_details
-        edit(:case_disposal)
-      when :case_disposal
-        edit(:hearing_details)
-      when :hearing_details, :delete_defendant
-        edit(:defendant_details)
-      when :defendant_details
-        show(:start_page)
-      when :add_defendant
-        form_object.application.defendants.create(position: form_object.next_position)
-        edit(:defendant_details)
+      when :claim_type then after_claim_type
+      when :defendant_summary then after_defendants
+      when *EDIT_MAPPING.keys then edit(EDIT_MAPPING[step_name])
+      when *SHOW_MAPPING.keys then show(SHOW_MAPPING[step_name])
+
       else
         index('/claims')
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     def after_claim_type
       if form_object.claim_type.supported?
         show(:start_page)
       else
         index('/claims')
+      end
+    end
+
+    def after_defendants
+      if form_object.add_another.yes?
+        next_posiiton = form_object.application.defendants.maximum(:position) + 1
+        new_defendant = form_object.application.defendants.create(position: next_posiiton)
+        edit(:defendant_details, defendant_id: new_defendant.id)
+      else
+        edit(:reason_for_claim)
       end
     end
   end

@@ -34,19 +34,5 @@ RSpec.describe Tasks::HearingDetails, type: :system do
     end
   end
 
-  describe '#completed?' do
-    let(:application) { Hash.new('present_value') }
-
-    context 'when all fields have been set' do
-      it { expect(subject).to be_completed }
-    end
-
-    context 'when any fields are blank' do
-      Steps::HearingDetailsForm.attribute_names.each do |attribute|
-        before { application[attribute] = nil }
-
-        it { expect(subject).not_to be_completed }
-      end
-    end
-  end
+  it_behaves_like 'a task with generic complete?', Steps::HearingDetailsForm
 end

@@ -74,6 +74,10 @@ Rails.application.routes.draw do
       edit_step :case_disposal
       edit_step :hearing_details
       edit_step :defendant_details
+      edit_step :defendant_summary
+      edit_step :defendant_delete
+      edit_step :reason_for_claim
+      edit_step :claim_details
     end
   end
 end

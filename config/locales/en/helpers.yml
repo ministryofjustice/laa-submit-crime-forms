@@ -1,6 +1,8 @@
 ---
 en:
   helpers:
+    submit:
+      delete_it: Yes, delete it
     legend:
       steps_claim_type_form:
         claim_type: What are you claiming for?
@@ -23,6 +25,19 @@ en:
         first_hearing_date: Date of first hearing
         in_area: Is this court in a designated area of your firm?
         youth_count: Is this court a youth court?
+      steps_reason_for_claim_form:
+        reasons_for_claim: Why are you claiming a non-standard magistrate court payment?
+        representation_order_withdrawn_date: Withdrawn date
+      steps_add_another_form:
+        add_another: Do you want to add another defendant?
+      steps_claim_details_form:
+        claim_details: Claim Details
+        prosecution_evidence: Prosecution Evidence
+        defence_statement: Defence statement
+        number_of_witnesses: Number of Defence witnesses
+        supplemental_claim: Does this bill represent supplemental claim ?
+        preparation_time: Was any preparation time spent watching or listening to taped evidence ?
+
     hint:
       steps_claim_type_form:
         rep_order_date: For example, 27 3 2007
@@ -60,6 +75,17 @@ en:
           'yes': You will not be able to claim for travel expenses and waiting time
         hearing_outcome: Select a hearing outcome from the suggestions that appear when you start to enter it, for example, Change of solicitor (CP02)
         matter_type: Select a matter type from the suggestions that appear when you start to enter it, for example, offences against the person
+      steps_reason_for_claim_form:
+        representation_order_withdrawn_date: For example, 27 3 2007
+        reasons_for_claim: Select all that apply.
+      steps_claim_details_form:
+        defence_statement: For example the total number of pages of defence evidence including any
+          statements by the defendant and defence witnesses
+        prosecution_evidence: Where applicable, give the approximate number of pages
+        supplemental_claim_options:
+          'yes': If yes, attach a copy of the previous claim
+        preparation_time_options:
+          'yes': If yes, tell us the total running time of the tape in hours
 
     label:
       steps_claim_type_form:
@@ -103,7 +129,6 @@ en:
         plea_options:
           guilty: Guilty plea
           uncontested_breach: Uncontested breach
-          discontinuance: Discontinuance or withdrawal
           bind_over: Bind over
           deferred_sentence: Deferred sentence hearing
           change_solicitor: Change of solicitor
@@ -124,6 +149,32 @@ en:
           'no': 'No'
         hearing_outcome: Hearing outcome
         matter_type: Matter type
-      steps_defendants_details_form:
+      steps_defendant_details_form:
         full_name: Full name
         maat: MAAT ID
+      steps_reason_for_claim_form:
+        reasons_for_claim_options:
+          core_costs_exceed_higher_limit: Core costs exceed higher limit
+          enhanced_rates_claimed: Enhanced rates claimed
+          councel_or_agent_assigned: Councel or agent assigned
+          representation_order_withdrawn_on: Representation order withdrawn on
+          extradition: Extradition
+          other: Other
+        reason_for_claim_other_details: Enter details
+      steps_add_another_form:
+        add_another_options:
+          'yes': 'Yes'
+          'no': 'No'
+      steps_claim_details_form:
+        prosecution_evidence: Prosecution Evidence
+        defence_statement: Defence statement
+        number_of_witnesses: Number of Defence witnesses
+        supplemental_claim_options:
+          'yes': 'Yes'
+          'no': 'No'
+        preparation_time_options:
+          'yes': 'Yes'
+          'no': 'No'
+        time_spent_hours: Time spent in hours
+        time_spent_mins: Time spent in minutes
+

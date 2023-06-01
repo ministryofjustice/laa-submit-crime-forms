@@ -1,0 +1,26 @@
+<% title t('.page_title') %>
+<% step_header(path: applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-xl">Claim details</h1>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_text_field :prosecution_evidence, width: 'one-third', autocomplete: 'off' %>
+      <%= f.govuk_text_field :defence_statement, width: 'one-third', autocomplete: 'off' %>
+      <%= f.govuk_text_field :number_of_witnesses, width: 'one-third', autocomplete: 'off' %>
+      <% @form_object.boolean_fields.each do |field| %>
+        <%= f.govuk_radio_buttons_fieldset field, legend: { size: 'm' } do %>
+          <%= f.govuk_radio_button field, YesNoAnswer::YES.to_s do%>
+            <% if field == :preparation_time %>
+              <%= f.govuk_text_field :time_spent_hours,width: 'one-third' %>
+              <%= f.govuk_text_field :time_spent_mins, width: 'one-third'%>
+            <% end %>
+          <% end %>
+          <%= f.govuk_radio_button field, YesNoAnswer::NO.to_s %>
+        <% end%>
+      <% end%>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

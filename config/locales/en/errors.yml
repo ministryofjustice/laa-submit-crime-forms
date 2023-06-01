@@ -116,3 +116,28 @@ en:
               blank: Full name (%{name}) cannot be blank
             maat:
               blank: MAAT ID (%{name}) cannot be blank
+        steps/reason_for_claim_form:
+          attributes:
+            reasons_for_claim:
+              blank: Must select at least one reason
+              invalid: Unknown reason selected
+            representation_order_withdrawn_date:
+              blank: Withdrawn date must be set
+            reason_for_claim_other_details:
+              blank: Details must be given
+        steps/add_another_form:
+          attributes:
+            add_another:
+              blank: Please choose yes or no to add another record
+        steps/claim_details_form:
+          attributes:
+            prosecution_evidence:
+              blank: Enter Prosecution Evidence
+            defence_statement:
+              blank: Enter Defence statement
+            number_of_witnesses:
+              blank: Enter number of defence witnesses
+            supplemental_claim:
+              blank: Select yes or no for supplemental_claim
+            preparation_time:
+              blank: Select yes or no for preparation_time

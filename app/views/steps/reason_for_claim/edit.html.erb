@@ -1,0 +1,21 @@
+<% title t('.page_title') %>
+<% step_header(path: applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+        <%= f.govuk_check_boxes_fieldset :reasons_for_claim, legend: { tag: 'h1', size: 'xl' } do %>
+          <% @form_object.choices.each do |choice| %>
+            <%= f.govuk_check_box :reasons_for_claim, choice.value.to_s do %>
+              <%= f.govuk_date_field(choice.date_field, maxlength_enabled: true) if choice.date_field? %>
+              <%= f.govuk_text_area(choice.text_field) if choice.text_field? %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
+
+

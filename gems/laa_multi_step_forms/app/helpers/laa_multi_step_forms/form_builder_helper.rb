@@ -11,8 +11,6 @@ module LaaMultiStepForms
       end
     end
 
-    private
-
     def submit_button(i18n_key, opts = {}, &block)
       govuk_submit I18n.t("helpers.submit.#{i18n_key}"), **opts, &block
     end

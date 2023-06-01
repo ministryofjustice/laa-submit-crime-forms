@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Tasks::CaseDisposal, type: :system do
   subject { described_class.new(application:) }
 
-  let(:application) { Claim.create(attributes) }
+  let(:application) { Claim.new(attributes) }
   let(:attributes) do
     {
       id: id,
@@ -22,26 +22,7 @@ RSpec.describe Tasks::CaseDisposal, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  describe '#can_start?' do
-    let(:case_details) { instance_double(Tasks::FirmDetails, status:) }
-
-    before do
-      allow(Tasks::FirmDetails).to receive(:new).and_return(case_details)
-    end
-
-    # TODO: update this to CaseDetails once implemented
-    context 'when case details are complete' do
-      let(:status) { TaskStatus::COMPLETED }
-
-      it { expect(subject).to be_can_start }
-    end
-
-    context 'when case details are not complete' do
-      let(:status) { TaskStatus::IN_PROGRESS }
-
-      it { expect(subject).not_to be_can_start }
-    end
-  end
+  it_behaves_like 'a task with generic can_start?', Tasks::CaseDetails
 
   describe '#in_progress?' do
     it { expect(subject).not_to be_in_progress }
