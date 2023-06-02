@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_154255) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_23_134506) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,15 +26,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_154255) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "firm_office_id"
-    t.boolean "core_costs_exceed_higher_limit"
-    t.boolean "enhanced_rates_claimed"
-    t.boolean "councel_or_agent_assigned"
-    t.boolean "representation_order_withdrawn_on"
-    t.date "rep_order_date_withdrawn"
-    t.boolean "extradition"
-    t.boolean "other"
-    t.text "reason_for_claim_other"
     t.uuid "solicitor_id"
+    t.jsonb "reasons_for_claim", default: []
+    t.date "representation_order_withdrawn_date"
+    t.text "reason_for_claim_other_details"
+    t.string "main_offence"
+    t.date "main_offence_date"
+    t.string "assigned_counsel"
+    t.string "unassigned_counsel"
+    t.string "agent_instructed"
+    t.string "remitted_to_magistrate"
     t.string "plea"
     t.date "arrest_warrent_date"
     t.date "cracked_trial_date"
@@ -45,18 +46,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_154255) do
     t.string "youth_count"
     t.string "hearing_outcome"
     t.string "matter_type"
-    t.string "main_offence"
-    t.date "main_offence_date"
-    t.string "assigned_counsel"
-    t.string "unassigned_counsel"
-    t.string "agent_instructed"
-    t.string "remitted_to_magistrate"
-    t.jsonb "reasons_for_claim", default: []
-    t.date "representation_order_withdrawn_date"
-    t.text "reason_for_claim_other_details"
-    t.integer "letters"
-    t.integer "calls"
-    t.integer "letters_calls_uplift"
     t.string "prosecution_evidence"
     t.string "defence_statement"
     t.integer "number_of_witnesses"
