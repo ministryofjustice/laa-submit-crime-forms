@@ -1,7 +1,10 @@
 require 'steps/base_form_object'
 
-# this is a controller step to determine where to move next, as such it does not
-# persist anything to DB
+# TODO: move this to the engine
+
+# This is a generic form to allow a yes no question to be asked in the view
+# the responce is then used in the DecisionTree to determine the destination
+# without persisting anything to the DB
 module Steps
   class AddAnotherForm < Steps::BaseFormObject
     attr_reader :add_another

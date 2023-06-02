@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_154255) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_02_115048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,6 +114,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_154255) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["previous_id"], name: "index_solicitors_on_previous_id"
+  end
+
+  create_table "work_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "work_type"
+    t.integer "hours"
+    t.integer "minutes"
+    t.date "completed_on"
+    t.string "fee_earner"
+    t.integer "uplift"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "claims", "firm_offices"

@@ -18,11 +18,11 @@ numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_eq
     end
 
     def letters_total
-      letters.to_f * price_per * (1 + (letters_calls_uplift.to_f / 100))
+      letters.to_f * pricing.letters * (1 + (letters_calls_uplift.to_f / 100))
     end
 
     def calls_total
-      calls.to_f * price_per * (1 + (letters_calls_uplift.to_f / 100))
+      calls.to_f * pricing.calls * (1 + (letters_calls_uplift.to_f / 100))
     end
 
     def total
@@ -31,20 +31,8 @@ numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_eq
 
     private
 
-    # TODO: consider moving this to a separate pricing namespace?
-    def period
-      if application.date&.<(Date.new(2022, 9, 30))
-        :period_pre_sep_22
-      else
-        :period_post_sep_22
-      end
-    end
-
-    def price_per
-      {
-        period_pre_sep_22: 3.56,
-        period_post_sep_22: 4.09,
-      }[period]
+    def pricing
+      @pricing ||= Pricing.for(application)
     end
 
     def persist!
