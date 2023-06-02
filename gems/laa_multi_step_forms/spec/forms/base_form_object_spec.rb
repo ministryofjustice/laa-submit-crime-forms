@@ -108,17 +108,14 @@ RSpec.describe Steps::BaseFormObject do
 
   describe '#persisted?' do
     it { expect(subject.persisted?).to be(false) }
-    end
   end
 
   describe '#new_record?' do
     it { expect(subject.new_record?).to be(true) }
-    end
   end
 
   describe '#to_key' do
     it { expect(subject.to_key).to be_nil }
-    end
   end
 
   describe '[]' do
