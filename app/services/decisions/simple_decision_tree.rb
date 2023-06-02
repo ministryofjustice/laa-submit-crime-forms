@@ -7,11 +7,12 @@ module Decisions
       hearing_details: :defendant_details,
       defendant_details: :defendant_summary,
       defendant_delete: :defendant_summary,
-      reason_for_claim: :claim_details
+      reason_for_claim: :claim_details,
+      claim_details: :letters_calls
     }.freeze
 
     SHOW_MAPPING = {
-      claim_details: :start_page,
+      letters_calls: :start_page,
     }.freeze
 
     def destination

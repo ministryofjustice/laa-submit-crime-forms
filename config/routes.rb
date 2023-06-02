@@ -78,6 +78,7 @@ Rails.application.routes.draw do
       edit_step :defendant_delete
       edit_step :reason_for_claim
       edit_step :claim_details
+      edit_step :letters_calls
     end
   end
 end

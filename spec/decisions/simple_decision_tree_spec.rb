@@ -148,9 +148,21 @@ RSpec.describe Decisions::SimpleDecisionTree do
   end
 
   context 'when step is claim_details' do
-    it 'moves to start_page' do
+    it 'moves to letters_calls' do
       claim = Steps::ClaimDetailsForm.new(application:)
       decision_tree = described_class.new(claim, as: :claim_details)
+      expect(decision_tree.destination).to eq(
+        action: :edit,
+        controller: :letters_calls,
+        id: application
+      )
+    end
+  end
+
+  context 'when step is letters_calls' do
+    it 'moves to start_page' do
+      claim = Steps::LettersCallsForm.new(application:)
+      decision_tree = described_class.new(claim, as: :letters_calls)
       expect(decision_tree.destination).to eq(
         action: :show,
         controller: :start_page,
