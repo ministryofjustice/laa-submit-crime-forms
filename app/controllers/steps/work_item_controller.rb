@@ -1,6 +1,6 @@
 module Steps
   class WorkItemController < Steps::BaseStepController
-    before_action :ensure_defendant
+    before_action :ensure_work_item
 
     def edit
       @form_object = WorkItemForm.build(
@@ -23,7 +23,7 @@ module Steps
       @work_item ||= begin
         work_item_id = params[:work_item_id] || params.dig(:steps_work_item_form, :id)
         if work_item_id.blank?
-          current_application.work_items.first_or_create_by
+          current_application.work_items.first_or_create
         else
           current_application.work_items.find_by(id: work_item_id)
         end

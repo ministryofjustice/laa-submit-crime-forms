@@ -3,14 +3,14 @@ module Steps
     before_action :ensure_work_item
 
     def edit
-      @form_object = WorkItemDeleteForm.build(
+      @form_object = DeleteForm.build(
         work_item,
         application: current_application,
       )
     end
 
     def update
-      update_and_advance(WorkItemDeleteForm, as: :work_item_delete, record: work_item, flash: flash_msg)
+      update_and_advance(DeleteForm, as: :work_item_delete, record: work_item, flash: flash_msg)
     end
 
     private

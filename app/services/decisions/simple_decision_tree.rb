@@ -9,7 +9,6 @@ module Decisions
       reason_for_claim: :claim_details,
       claim_details: :work_item,
       work_item: :work_items,
-      work_item_delete: :work_items,
     }.freeze
 
     SHOW_MAPPING = {
@@ -18,7 +17,7 @@ module Decisions
 
     def destination
       case
-      when respond_to?("after_#{step_name}")
+      when respond_to?("after_#{step_name}", true)
         send("after_#{step_name}")
       when EDIT_MAPPING[step_name]
         edit(EDIT_MAPPING[step_name])
@@ -47,7 +46,7 @@ module Decisions
       end
     end
 
-    def after_defendants
+    def after_defendant_summary
       if form_object.add_another.yes?
         next_posiiton = form_object.application.defendants.maximum(:position) + 1
         new_defendant = form_object.application.defendants.create(position: next_posiiton)
@@ -68,10 +67,14 @@ module Decisions
     def after_work_items
       if form_object.add_another.yes?
         new_work_item = form_object.application.work_items.create
-        edit(:work_item, work_items_id: new_work_item.id)
+        edit(:work_item, work_item_id: new_work_item.id)
       else
         edit(:letters_calls)
       end
+    end
+
+    def after_work_item_delete
+      after_claim_details
     end
   end
 end

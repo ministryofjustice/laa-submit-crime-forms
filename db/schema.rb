@@ -117,6 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_115048) do
   end
 
   create_table "work_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "claim_id", null: false
     t.string "work_type"
     t.integer "hours"
     t.integer "minutes"
@@ -125,6 +126,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_115048) do
     t.integer "uplift"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["claim_id"], name: "index_work_items_on_claim_id"
   end
 
   add_foreign_key "claims", "firm_offices"
@@ -132,4 +134,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_115048) do
   add_foreign_key "defendants", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
   add_foreign_key "solicitors", "solicitors", column: "previous_id"
+  add_foreign_key "work_items", "claims"
 end

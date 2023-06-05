@@ -1,9 +1,8 @@
 class Pricing
   class << self
+    # if no date is set then we default to the current pricing rates
     def for(application)
-      return new if application.date.nil?
-
-      return new(data['pre_20220930']) if  (..Date.new(2022, 9, 30).cover?(application.date)
+      return new(data['pre_20220930']) if (..Date.new(2022, 9, 29)).cover?(application.date)
 
       new(data['post_20220930'])
     end
@@ -14,7 +13,8 @@ class Pricing
     end
   end
 
-  FIELDS = %i[letters calls].freeze
+  FIELDS = %w[letters calls].freeze
+
   attr_reader *FIELDS
 
   def initialize(data = {})
