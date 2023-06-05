@@ -37,6 +37,9 @@ en:
         number_of_witnesses: Number of Defence witnesses
         supplemental_claim: Does this bill represent supplemental claim ?
         preparation_time: Was any preparation time spent watching or listening to taped evidence ?
+      steps_other_info_form:
+        concluded: Did the proceedings conclude over 3 months ago?
+
 
     hint:
       steps_claim_type_form:
@@ -86,6 +89,9 @@ en:
           'yes': If yes, attach a copy of the previous claim
         preparation_time_options:
           'yes': If yes, tell us the total running time of the tape in hours
+      
+
+
 
     label:
       steps_claim_type_form:
@@ -183,4 +189,11 @@ en:
         apply_uplift_options:
           'true': Apply an uplift to this work
         letters_calls_uplift: For example, from any percentage from 1 to 100
+      steps_other_info_form:
+        other_info: For example, justification for the time spent on the case, or for any uplift claimed
+        concluded_options:
+          'yes': 'Yes'
+          'no': 'No'
+        conclusion: Tell us why you did not make this claim within 3 months of the conclusion of the proceedings
+        
 

@@ -7,5 +7,8 @@ class ClaimDetails < ActiveRecord::Migration[7.0]
     add_column :claims, :preparation_time, :string
     add_column :claims, :time_spent_hours, :integer
     add_column :claims, :time_spent_mins, :integer
+    add_column :claims, :other_info, :string
+    add_column :claims, :conclusion, :string
+    add_column :claims, :concluded, :string
   end
 end

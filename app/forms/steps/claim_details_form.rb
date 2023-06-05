@@ -13,8 +13,8 @@ module Steps
     validates :prosecution_evidence, presence: true
     validates :defence_statement, presence: true
     validates :number_of_witnesses, presence: true, numericality: { only_integer: true, greater_than: 0 }
-    validates :time_spent_hours, numericality: { only_integer: true, greater_than: 0 }
-    validates :time_spent_mins, numericality: { only_integer: true, greater_than: 0 }
+    # validates :time_spent_hours, numericality: { only_integer: true, greater_than: 0 }
+    # validates :time_spent_mins, numericality: { only_integer: true, greater_than: 0 }
 
     BOOLEAN_FIELDS.each do |field|
       validates field, presence: true, inclusion: { in: YesNoAnswer.values }
