@@ -15,10 +15,11 @@ RSpec.describe Steps::OtherInfoForm do
   let(:application) { instance_double(Claim, update!: true) }
   let(:other_info) { 'other relevent information' }
 
-  describe '#save' do
+  describe '#save concluded yes' do
     context 'when all fields are set and concluded yes' do
       let(:concluded) { 'yes' }
       let(:conclusion) { 'conclusion' }
+
       it 'is valid' do
         expect(form.save).to be_truthy
         expect(application).to have_received(:update!)
@@ -27,10 +28,11 @@ RSpec.describe Steps::OtherInfoForm do
     end
   end
 
-  describe '#save' do
+  describe '#save concluded no' do
     context 'when all fields are set' do
       let(:concluded) { 'no' }
       let(:conclusion) { '' }
+
       it 'is valid' do
         expect(form.save).to be_truthy
         expect(application).to have_received(:update!)
@@ -38,12 +40,12 @@ RSpec.describe Steps::OtherInfoForm do
       end
     end
   end
-
 
   describe '#valid? with concluded yes' do
     context 'when all fields are set' do
       let(:concluded) { 'yes' }
       let(:conclusion) { 'conclusion' }
+
       it 'is valid' do
         expect(form).to be_valid
       end
@@ -54,6 +56,7 @@ RSpec.describe Steps::OtherInfoForm do
     context 'when all fields are set' do
       let(:concluded) { 'no' }
       let(:conclusion) { '' }
+
       it 'is valid' do
         expect(form).to be_valid
       end
