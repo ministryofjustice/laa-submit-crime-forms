@@ -8,7 +8,7 @@ module Steps
     attribute :conclusion, :string
 
     validates :other_info, presence: true
-    validates :conclusion, presence: true
+    validates :conclusion, presence: true, unless: :concluded
 
     BOOLEAN_FIELDS.each do |field|
       validates field, presence: true, inclusion: { in: YesNoAnswer.values }
