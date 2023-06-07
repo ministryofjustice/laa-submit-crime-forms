@@ -4,6 +4,7 @@ module Steps
   class WorkItemForm < Steps::BaseFormObject
     attr_writer :apply_uplift
 
+    attribute :id, :string
     attribute :work_type, :value_object, source: WorkTypes
     attribute :hours, :integer
     attribute :minutes, :integer

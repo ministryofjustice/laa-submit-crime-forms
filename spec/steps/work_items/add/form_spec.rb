@@ -7,6 +7,7 @@ RSpec.describe Steps::WorkItemForm do
     {
       application:,
       record:,
+      id:,
       work_type:,
       hours:,
       minutes:,
@@ -19,8 +20,9 @@ RSpec.describe Steps::WorkItemForm do
 
   let(:application) { instance_double(Claim, work_items: work_items, update!: true, date: date) }
   let(:work_items) { [double(:record), record] }
+  let(:id) { record.id }
   let(:date) { Date.new(2023, 1, 1) }
-  let(:record) { double(:record) }
+  let(:record) { double(:record, id: SecureRandom.uuid) }
   let(:work_type) { WorkTypes.values.sample.to_s }
   let(:hours) { 1 }
   let(:minutes) { 1 }
@@ -205,6 +207,31 @@ RSpec.describe Steps::WorkItemForm do
                                                         [WorkTypes::TRAVEL, 27.6],
                                                         [WorkTypes::WAITING, 27.6],
                                                       ])
+      end
+    end
+  end
+
+  describe 'save!' do
+    let(:application) { Claim.create!(office_code: 'AAA') }
+    let(:record) { WorkItem.create!(uplift: 40, claim: application) }
+
+    context 'when uplift exists in DB but apply_uplift is false in attributes' do
+      let(:apply_uplift) { 'false' }
+
+      it 'resets the uplift value' do
+        subject.save!
+        expect(record.reload).to have_attributes(
+          uplift: nil
+        )
+      end
+    end
+
+    context 'when apply_lift is true and uplift value exists' do
+      it 'sets the uplift value' do
+        subject.save!
+        expect(record.reload).to have_attributes(
+          uplift: 10
+        )
       end
     end
   end
