@@ -45,6 +45,7 @@ RSpec.describe Steps::OtherInfoForm do
     context 'when all fields are set' do
       let(:concluded) { 'yes' }
       let(:conclusion) { 'conclusion' }
+
       it 'is valid' do
         expect(form).to be_valid
       end
@@ -55,43 +56,45 @@ RSpec.describe Steps::OtherInfoForm do
     context 'when all fields are set' do
       let(:concluded) { 'no' }
       let(:conclusion) { '' }
+
       it 'is valid' do
         expect(form).to be_valid
       end
     end
   end
 
- describe 'concluded is #invalid' do
+  describe 'concluded is #invalid' do
     context 'when concluded is other' do
       let(:concluded) { 'other' }
       let(:conclusion) { '' }
+
       it 'is invalid' do
         expect(form).not_to be_valid
       end
     end
   end
 
-describe 'conclusion and other_info is #invalid' do
+  describe 'conclusion and other_info is #invalid' do
     context 'when conclusion is nil' do
       let(:concluded) { 'yes' }
       let(:conclusion) { nil }
       let(:other_info) { nil }
+
       it 'is invalid' do
         expect(form).not_to be_valid
       end
     end
   end
 
-describe 'conclusion is #invalid' do
+  describe 'conclusion is #invalid' do
     context 'when conclusion is nil' do
       let(:concluded) { 'yes' }
       let(:conclusion) { nil }
       let(:other_info) { 'other info' }
+
       it 'is invalid' do
         expect(form).not_to be_valid
       end
     end
   end
-
-
 end
