@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe TaskList::Section do
-  subject { described_class.new(application, name:, tasks:, index:) }
+  subject { described_class.new(application, name:, tasks:, index:, show_index:) }
 
   let(:name) { :foobar_task }
   let(:tasks) { [:task_one, :task_two] }
   let(:index) { 1 }
+  let(:show_index) { true }
 
   let(:application) { double }
 
@@ -16,6 +17,14 @@ RSpec.describe TaskList::Section do
 
     it 'has the proper attributes' do
       expect(subject.items.map(&:name)).to eq(tasks)
+    end
+
+    context 'when task name is a proc' do
+      let(:tasks) { [:task_one, ->(_app) { 'task.two' }] }
+
+      it 'evaluates the proc to detmine teh task name' do
+        expect(subject.items.map(&:name)).to eq([:task_one, 'task.two'])
+      end
     end
   end
 
@@ -46,6 +55,21 @@ RSpec.describe TaskList::Section do
         expect(
           subject.render
         ).to match(%r{<span class="moj-task-list__section-number">3.</span>})
+      end
+    end
+
+    context 'when show_index is false' do
+      let(:show_index) { false }
+
+      it 'renders without numbered headings' do
+        expect(
+          subject.render
+        ).to eq(
+          '<li>' \
+          '<h2 class="moj-task-list__section">Foo Bar Heading</h2>' \
+          '<ul class="moj-task-list__items">[task_markup][task_markup]</ul>' \
+          '</li>'
+        )
       end
     end
   end

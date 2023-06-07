@@ -26,8 +26,8 @@ en:
         in_area: Is this court in a designated area of your firm?
         youth_count: Is this court a youth court?
       steps_reason_for_claim_form:
-        reasons_for_claim: Why are you claiming a non-standard magistrate court payment?
         representation_order_withdrawn_date: Withdrawn date
+        reasons_for_claim: Select all that apply.
       steps_add_another_form:
         add_another: Do you want to add another defendant?
       steps_claim_details_form:
@@ -77,7 +77,6 @@ en:
         matter_type: Select a matter type from the suggestions that appear when you start to enter it, for example, offences against the person
       steps_reason_for_claim_form:
         representation_order_withdrawn_date: For example, 27 3 2007
-        reasons_for_claim: Select all that apply.
       steps_claim_details_form:
         defence_statement: For example the total number of pages of defence evidence including any
           statements by the defendant and defence witnesses
