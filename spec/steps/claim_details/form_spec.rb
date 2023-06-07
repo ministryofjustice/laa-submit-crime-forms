@@ -74,4 +74,16 @@ RSpec.describe Steps::ClaimDetailsForm do
       end
     end
   end
+
+  describe '#invalid? preparation yes' do
+    context 'when all fields are set' do
+      let(:preparation_time) { 'yes' }
+      let(:time_spent_hours) { nil }
+      let(:time_spent_mins) { nil }
+
+      it 'is invalid' do
+        expect(form).not_to be_valid
+      end
+    end
+  end
 end
