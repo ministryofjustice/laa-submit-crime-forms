@@ -45,7 +45,7 @@ RSpec.describe Tasks::WorkItems, type: :system do
   it_behaves_like 'a task with generic can_start?', Tasks::HearingDetails
 
   describe 'in_progress?' do
-    context 'navigation_stack include edit work_items path' do
+    context 'navigation_stack include edit work_item path' do
       before { navigation_stack << edit_steps_work_item_path(application) }
 
       it { expect(subject).to be_in_progress }
@@ -68,7 +68,7 @@ RSpec.describe Tasks::WorkItems, type: :system do
     end
 
     context 'when work items exist' do
-      let(:work_items) { [WorkItem.new()] }
+      let(:work_items) { [WorkItem.new] }
       let(:work_item_form) { double(:work_item_form, valid?: valid) }
 
       before do

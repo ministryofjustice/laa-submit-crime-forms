@@ -15,7 +15,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
     context 'when claim_type is not supported' do
       let(:form) { Steps::ClaimTypeForm.new(application:, claim_type:) }
 
-      context "when step is claim_type" do
+      context 'when step is claim_type' do
         it 'processes to the firm_details page' do
           decision_tree = described_class.new(form, as: :claim_type)
           expect(decision_tree.destination).to eq(
@@ -39,11 +39,12 @@ RSpec.describe Decisions::SimpleDecisionTree do
     end
 
     it_behaves_like 'a generic decision', :hearing_details, :defendant_summary, Steps::DefendantDetailsForm
-    it_behaves_like 'an add_another decision', :defendant_summary, :defendant_details, :reason_for_claim, :defendant_id, block: -> do
-      it 'creates a new defendant on the claim' do
-        expect { decision_tree.destination }.to change(application.defendants, :count).by(1)
-      end
-    end
+    it_behaves_like 'an add_another decision', :defendant_summary, :defendant_details, :reason_for_claim, :defendant_id,
+                    additional_yes_branch_tests: lambda {
+                      it 'creates a new defendant on the claim' do
+                        expect { decision_tree.destination }.to change(application.defendants, :count).by(1)
+                      end
+                    }
   end
 
   it_behaves_like 'a generic decision', :reason_for_claim, :claim_details, Steps::ReasonForClaimForm
@@ -54,17 +55,19 @@ RSpec.describe Decisions::SimpleDecisionTree do
   context 'when work_item exists' do
     before do
       application.save
-      application.work_items.create()
+      application.work_items.create
     end
 
     it_behaves_like 'a generic decision', :work_item_delete, :work_items, Steps::DeleteForm
     it_behaves_like 'a generic decision', :claim_details, :work_items, Steps::ClaimDetailsForm
-    it_behaves_like 'an add_another decision', :work_items, :work_item, :letters_calls, :work_item_id, block: -> do
-      it 'creates a new defendant on the claim' do
-        expect { decision_tree.destination }.to change(application.work_items, :count).by(1)
-      end
-    end
+    it_behaves_like 'an add_another decision', :work_items, :work_item, :letters_calls, :work_item_id,
+                    additional_yes_branch_tests: lambda {
+                      it 'creates a new defendant on the claim' do
+                        expect { decision_tree.destination }.to change(application.work_items, :count).by(1)
+                      end
+                    }
   end
+
   it_behaves_like 'a generic decision', :letters_calls, :start_page, Steps::LettersCallsForm, action_name: :show
 
   context 'when step is unknown' do

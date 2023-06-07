@@ -10,7 +10,7 @@ RSpec.describe Steps::WorkItemController, type: :controller do
 
     context 'when work_item_id is not passed in' do
       context 'when work item already exists' do
-        let(:work_items) { [WorkItem.new()] }
+        let(:work_items) { [WorkItem.new] }
 
         it 'passes the existing work_item to the form' do
           allow(Steps::WorkItemForm).to receive(:build)
@@ -26,7 +26,7 @@ RSpec.describe Steps::WorkItemController, type: :controller do
           expect { get :edit, params: { id: application } }.to change(application.work_items, :count).by(1)
 
           expect(Steps::WorkItemForm).to have_received(:build).with(application.reload.work_items.last,
-                                                                            application:)
+                                                                    application:)
         end
       end
     end

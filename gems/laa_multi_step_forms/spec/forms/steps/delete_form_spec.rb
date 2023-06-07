@@ -12,7 +12,7 @@ RSpec.describe Steps::DeleteForm do
   end
 
   let(:application) { double(:application) }
-  let(:record) { double(record, id:, destroy: true) }
+  let(:record) { double(:record, id: id, destroy: true) }
   let(:id) { SecureRandom.uuid }
 
   describe '#save!' do

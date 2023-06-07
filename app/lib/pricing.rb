@@ -24,7 +24,7 @@ class Pricing
     calls
   ].freeze
 
-  attr_reader *FIELDS
+  attr_reader(*FIELDS)
 
   def initialize(data = {})
     FIELDS.each do |field|

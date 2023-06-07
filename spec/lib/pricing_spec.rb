@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Pricing do
+  subject { described_class.for(application) }
+
   let(:application) { double(:application, date:) }
-  let(:subject) { Pricing.for(application) }
   let(:date) { nil }
 
   describe '#for' do
     context 'when date is nil' do
       it 'returns the current (post CLAIR) pricing' do
-        expect(Pricing).to receive(:new).with({
-          'preparation' => 52.15,
+        expect(described_class).to receive(:new).with({
+                                                        'preparation' => 52.15,
           'advocacy' => 65.42,
           'attendance_with_counsel' => 35.68,
           'attendance_without_counsel' => 35.68,
@@ -17,7 +18,7 @@ RSpec.describe Pricing do
           'waiting' => 27.60,
           'letters' => 4.09,
           'calls' => 4.09,
-        })
+                                                      })
         subject
       end
     end
@@ -26,8 +27,8 @@ RSpec.describe Pricing do
       let(:date) { Date.new(2022, 9, 30) }
 
       it 'returns the current (post CLAIR) pricing' do
-        expect(Pricing).to receive(:new).with({
-          'preparation' => 52.15,
+        expect(described_class).to receive(:new).with({
+                                                        'preparation' => 52.15,
           'advocacy' => 65.42,
           'attendance_with_counsel' => 35.68,
           'attendance_without_counsel' => 35.68,
@@ -35,7 +36,7 @@ RSpec.describe Pricing do
           'waiting' => 27.60,
           'letters' => 4.09,
           'calls' => 4.09,
-        })
+                                                      })
         subject
       end
     end
@@ -44,8 +45,8 @@ RSpec.describe Pricing do
       let(:date) { Date.new(2022, 9, 29) }
 
       it 'returns the old (pre CLAIR) pricing' do
-        expect(Pricing).to receive(:new).with({
-          'preparation' => 45.35,
+        expect(described_class).to receive(:new).with({
+                                                        'preparation' => 45.35,
           'advocacy' => 56.89,
           'attendance_with_counsel' => 31.03,
           'attendance_without_counsel' => 31.03,
@@ -53,7 +54,7 @@ RSpec.describe Pricing do
           'waiting' => 24.0,
           'letters' => 3.56,
           'calls' => 3.56,
-        })
+                                                      })
         subject
       end
     end

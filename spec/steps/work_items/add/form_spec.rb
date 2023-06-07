@@ -32,7 +32,7 @@ RSpec.describe Steps::WorkItemForm do
   describe '#validations' do
     context 'require fields' do
       %w[work_type hours minutes completed_on fee_earner].each do |field|
-        context "#when #{field} is blank" do
+        describe "#when #{field} is blank" do
           let(field) { nil }
 
           it 'have an error' do
@@ -90,7 +90,7 @@ RSpec.describe Steps::WorkItemForm do
           end
         end
 
-        context 'is not an integer'  do
+        context 'is not an integer' do
           let(:uplift) { 1.6 }
 
           it 'casts the value to abn integer' do
@@ -145,6 +145,7 @@ RSpec.describe Steps::WorkItemForm do
   describe '#total_costs' do
     let(:pricing) { instance_double(Pricing, '[]': price) }
     let(:price) { 3.54 }
+
     before do
       allow(Pricing).to receive(:for).and_return(pricing)
     end
@@ -184,26 +185,26 @@ RSpec.describe Steps::WorkItemForm do
 
       it 'uses the old prices' do
         expect(subject.work_types_with_pricing).to eq([
-          [WorkTypes::PREPARATION, 45.35],
-          [WorkTypes::ADVOCACY, 56.89],
-          [WorkTypes::ATTENDANCE_WITH_COUNSEL, 31.03],
-          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 31.03],
-          [WorkTypes::TRAVEL, 24.0],
-          [WorkTypes::WAITING, 24.0],
-        ])
+                                                        [WorkTypes::PREPARATION, 45.35],
+                                                        [WorkTypes::ADVOCACY, 56.89],
+                                                        [WorkTypes::ATTENDANCE_WITH_COUNSEL, 31.03],
+                                                        [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 31.03],
+                                                        [WorkTypes::TRAVEL, 24.0],
+                                                        [WorkTypes::WAITING, 24.0],
+                                                      ])
       end
     end
 
     context 'when application date is after CLAIR' do
       it 'uses the new prices' do
         expect(subject.work_types_with_pricing).to eq([
-          [WorkTypes::PREPARATION, 52.15],
-          [WorkTypes::ADVOCACY, 65.42],
-          [WorkTypes::ATTENDANCE_WITH_COUNSEL, 35.68],
-          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 35.68],
-          [WorkTypes::TRAVEL, 27.6],
-          [WorkTypes::WAITING, 27.6],
-        ])
+                                                        [WorkTypes::PREPARATION, 52.15],
+                                                        [WorkTypes::ADVOCACY, 65.42],
+                                                        [WorkTypes::ATTENDANCE_WITH_COUNSEL, 35.68],
+                                                        [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 35.68],
+                                                        [WorkTypes::TRAVEL, 27.6],
+                                                        [WorkTypes::WAITING, 27.6],
+                                                      ])
       end
     end
   end

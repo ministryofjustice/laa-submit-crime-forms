@@ -10,7 +10,7 @@ RSpec.describe Steps::AddAnotherForm do
     }
   end
 
-  let(:application) { instance_double(Claim) }
+  let(:application) { double(:application) }
   let(:add_another) { nil }
 
   describe '#choices' do

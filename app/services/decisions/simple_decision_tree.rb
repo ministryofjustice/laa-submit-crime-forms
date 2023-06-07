@@ -16,12 +16,11 @@ module Decisions
     }.freeze
 
     def destination
-      case
-      when respond_to?("after_#{step_name}", true)
+      if respond_to?("after_#{step_name}", true)
         send("after_#{step_name}")
-      when EDIT_MAPPING[step_name]
+      elsif EDIT_MAPPING[step_name]
         edit(EDIT_MAPPING[step_name])
-      when SHOW_MAPPING[step_name]
+      elsif SHOW_MAPPING[step_name]
         show(SHOW_MAPPING[step_name])
       else
         index('/claims')
