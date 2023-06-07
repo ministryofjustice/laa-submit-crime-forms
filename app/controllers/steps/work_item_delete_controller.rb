@@ -21,7 +21,7 @@ module Steps
 
     def work_item
       @work_item ||= begin
-        work_item_id = params[:work_item_id] || params.dig(:steps_work_item_delete_form, :id)
+        work_item_id = params[:work_item_id] || params.dig(:steps_delete_form, :id)
         current_application.work_items.find_by(id: work_item_id)
       end
     end

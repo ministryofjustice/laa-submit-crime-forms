@@ -4,7 +4,7 @@ module Steps
   class WorkItemForm < Steps::BaseFormObject
     attr_writer :apply_uplift
 
-    attribute :work_type, :value_object, source: WorkItems
+    attribute :work_type, :value_object, source: WorkTypes
     attribute :hours, :integer
     attribute :minutes, :integer
     attribute :completed_on, :multiparam_date
@@ -28,12 +28,12 @@ module Steps
       @pricing ||= Pricing.for(application)
     end
 
-    def total
-      (hours.to_f + (minutes.to_f / 60)) * pricing[worktype]
+    def total_cost
+      (hours.to_f + (minutes.to_f / 60)) * pricing[work_type]
     end
 
     def work_types_with_pricing
-      WorkItems.values.map do |value|
+      WorkTypes.values.map do |value|
         [value, pricing[value.to_s]]
       end
     end

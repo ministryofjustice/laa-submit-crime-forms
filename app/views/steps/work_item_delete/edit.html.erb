@@ -7,7 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m"><%=  t(@form_object.record.completed_on.to_fs(:long)) %></caption>
+      <caption class="govuk-table__caption govuk-table__caption--m"><%= @form_object.record.completed_on&.to_fs(:long) || t('.completed_date_blank') %></caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.work_type') %></th>
@@ -18,7 +18,7 @@
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <td class="govuk-table__cell"><%= t("helper.steps_work_item_form.work_type_options.#{@form_object.record.work_type}") %></td>
-          <td class="govuk-table__cell"><%= t(".period", hours: @form_object.record.hours, minutes: @form_object.record.minutes) %></td>
+          <td class="govuk-table__cell"><%= t(".period", hours: @form_object.record.hours.to_i, minutes: @form_object.record.minutes.to_i) %></td>
           <td class="govuk-table__cell"><%= @form_object.record.fee_earner %></td>
         </tr>
       </tbody>

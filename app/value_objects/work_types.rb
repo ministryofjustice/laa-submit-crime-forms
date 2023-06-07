@@ -1,4 +1,4 @@
-class WorkItems < ValueObject
+class WorkTypes < ValueObject
   VALUES = [
     PREPARATION = new(:preparation),
     ADVOCACY = new(:advocacy),

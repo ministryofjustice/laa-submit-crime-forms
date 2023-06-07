@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'User can fill in claim type details', type: :system do
+RSpec.describe 'User can manage defendants', type: :system do
   let(:claim) { Claim.create(office_code: 'AAAA', claim_type: ClaimType::NON_STANDARD_MAGISTRATE) }
 
   before do

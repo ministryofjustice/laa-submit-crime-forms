@@ -11,6 +11,7 @@
           <%= f.govuk_radio_button :work_type, work_type, hint: { text: t('.work_type_pricing', price: number_to_currency(price, unit: '£')) }, data: { rate_per_hour: price } %>
         <% end %>
       <% end %>
+
       <%= f.govuk_text_field :hours, width: 'one-third' %>
       <%= f.govuk_text_field :minutes, width: 'one-third'%>
 
@@ -23,6 +24,10 @@
         <% end %>
       <% end %>
 
+      <section id="claim-items-total-section">
+        <span class="govuk-caption-l"><%= t('.total_cost') %></span>
+        <h1 class="govuk-heading-l" id="claim-items-total"><%= number_to_currency(@form_object.total_cost, unit: '£') %></h1>
+      </section>
 
       <%= f.continue_button %>
     <% end %>

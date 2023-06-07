@@ -8,7 +8,7 @@
 
     <% @work_items_by_date.each do |date, work_items| %>
       <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m"><%= date&.to_fs(:long) %></caption>
+        <caption class="govuk-table__caption govuk-table__caption--m"><%= date&.to_fs(:long) || t('.completed_date_blank') %></caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.work_type') %></th>
@@ -21,7 +21,7 @@
           <% work_items.each do |work_item| %>
             <tr class="govuk-table__row">
               <td class="govuk-table__cell"><%= t("helper.steps_work_item_form.work_type_options.#{work_item.work_type}") %></td>
-              <td class="govuk-table__cell"><%= t(".period", hours: work_item.hours, minutes: work_item.minutes) %></td>
+              <td class="govuk-table__cell"><%= t(".period", hours: work_item.hours.to_i, minutes: work_item.minutes.to_i) %></td>
               <td class="govuk-table__cell"><%= work_item.fee_earner %></td>
               <td class="govuk-table__cell">
                 <%= link_to t('.change'), edit_steps_work_item_path(@form_object.application, work_item_id: work_item.id) %>

@@ -1,10 +1,10 @@
 module Tasks
   class WorkItems < Generic
     PREVIOUS_TASK = HearingDetails
-    FORM = Steps::DefendantDetailsForm
+    FORM = Steps::WorkItemForm
 
     def path
-      if application.work_items.count > 1
+      if application.work_items.count > 0
         edit_steps_work_items_path(application)
       else
         edit_steps_work_item_path(application)

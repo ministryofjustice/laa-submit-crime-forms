@@ -142,3 +142,14 @@ en:
               blank: Select yes or no for supplemental_claim
             preparation_time:
               blank: Select yes or no for preparation_time
+        steps/work_item_form:
+          attributes:
+            completed_on: *shared_date_errors
+            fee_earner:
+              blank: Fee earner must be set
+            hours:
+              blank: Hours must be set
+            minutes:
+              blank: Minutes must be set
+            work_type:
+              blank: Type of work must be choosen
