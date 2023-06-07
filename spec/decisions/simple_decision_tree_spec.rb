@@ -33,7 +33,6 @@ RSpec.describe Decisions::SimpleDecisionTree do
   end
 
   context 'when step is firm_details' do
-    # TODO: update this when case_details implemented
     it 'moves to case details page' do
       claim = Steps::FirmDetailsForm.new(application:)
       decision_tree = described_class.new(claim, as: :firm_details)

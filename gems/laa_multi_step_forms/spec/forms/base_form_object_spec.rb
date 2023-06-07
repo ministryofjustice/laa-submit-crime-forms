@@ -54,17 +54,13 @@ RSpec.describe Steps::BaseFormObject do
     context 'when attributes have not changed' do
       let(:name) { 'James' }
 
-      it 'returns false' do
-        expect(form).not_to be_changed
-      end
+      it { expect(form).not_to be_changed }
     end
 
     context 'when attributes have changed' do
       let(:name) { 'Jim' }
 
-      it 'returns false' do
-        expect(form).to be_changed
-      end
+      it { expect(form).to be_changed }
     end
   end
 
@@ -90,9 +86,7 @@ RSpec.describe Steps::BaseFormObject do
         subject.save
       end
 
-      it 'returns false' do
-        expect(subject.save).to be(false)
-      end
+      it { expect(subject.save).to be(false) }
     end
   end
 
@@ -113,21 +107,15 @@ RSpec.describe Steps::BaseFormObject do
   end
 
   describe '#persisted?' do
-    it 'always returns false' do
-      expect(subject.persisted?).to be(false)
-    end
+    it { expect(subject.persisted?).to be(false) }
   end
 
   describe '#new_record?' do
-    it 'always returns true' do
-      expect(subject.new_record?).to be(true)
-    end
+    it { expect(subject.new_record?).to be(true) }
   end
 
   describe '#to_key' do
-    it 'always returns nil' do
-      expect(subject.to_key).to be_nil
-    end
+    it { expect(subject.to_key).to be_nil }
   end
 
   describe '[]' do
