@@ -69,6 +69,7 @@ en:
               blank: "Enter a town or city"
             postcode:
               blank: "Enter a postcode"
+              invalid: "Enter a valid UK postcode"
         steps/firm_details/solicitor_form:
           summary:
             full_name:

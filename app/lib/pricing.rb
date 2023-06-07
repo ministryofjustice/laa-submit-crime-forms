@@ -13,7 +13,16 @@ class Pricing
     end
   end
 
-  FIELDS = %w[letters calls].freeze
+  FIELDS = %w[
+    preparation
+    advocacy
+    attendance_with_counsel
+    attendance_without_counsel
+    travel
+    waiting
+    letters
+    calls
+  ].freeze
 
   attr_reader *FIELDS
 
@@ -24,7 +33,7 @@ class Pricing
   end
 
   def [](key)
-    if FIELDS.include?(key.to_i)
+    if FIELDS.include?(key.to_s)
       instance_variable_get("@#{key}")
     else
       0.0

@@ -1,0 +1,36 @@
+<% title t('.page_title') %>
+<% step_header(path: applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-thirds">
+    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
+    <%= govuk_error_summary(@form_object) %>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m"><%=  t(@form_object.record.completed_on.to_fs(:long)) %></caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.work_type') %></th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.period') %></th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.fee_earner') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= t("helper.steps_work_item_form.work_type_options.#{@form_object.record.work_type}") %></td>
+          <td class="govuk-table__cell"><%= t(".period", hours: @form_object.record.hours, minutes: @form_object.record.minutes) %></td>
+          <td class="govuk-table__cell"><%= @form_object.record.fee_earner %></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.submit_button('delete_it') do %>
+        <%= f.hidden_field :id %>
+        <%= link_to 'Cancel', edit_steps_work_items_path(@form_object.application), class: 'govuk-button__secondary' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+
