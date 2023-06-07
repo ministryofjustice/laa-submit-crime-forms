@@ -23,6 +23,7 @@ module Steps
     private
 
     def persist!
+      attributes['conclusion'].clear if attributes['concluded'] == YesNoAnswer::NO
       application.update!(attributes)
     end
   end

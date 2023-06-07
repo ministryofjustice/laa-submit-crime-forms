@@ -97,4 +97,18 @@ RSpec.describe Steps::OtherInfoForm do
       end
     end
   end
+
+  describe '#save dont save conclusion when concluded no' do
+    context 'when all fields are set' do
+      let(:concluded) { 'no' }
+      let(:conclusion) { 'this is a value' }
+
+      it 'is valid' do
+        expect(form.save).to be_truthy
+        expect(subject).to have_attributes(conclusion: nil)
+        expect(application).to have_received(:update!)
+        expect(form).to be_valid
+      end
+    end
+  end
 end
