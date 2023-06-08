@@ -20,5 +20,4 @@ en:
       sign_in: Sign in
       sign_out: Sign out
     phase_banner:
-      phase: Development
       phase_description: This is a functional prototype of the new proposed CRM7 eForm replacement.
