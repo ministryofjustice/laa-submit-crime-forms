@@ -1,0 +1,23 @@
+.govuk-period-input {
+  font-size: 0
+}
+
+.govuk-period-input:after {
+  content: "";
+  display: block;
+  clear: both
+}
+
+.govuk-period-input__item {
+  display: inline-block;
+  margin-right: 20px;
+  margin-bottom: 0
+}
+
+.govuk-period-input__label {
+  display: block
+}
+
+.govuk-period-input__input {
+  margin-bottom: 0
+}

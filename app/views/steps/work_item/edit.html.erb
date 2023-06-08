@@ -13,8 +13,9 @@
         <% end %>
       <% end %>
 
-      <%= f.govuk_text_field :hours, width: 'one-third' %>
-      <%= f.govuk_text_field :minutes, width: 'one-third'%>
+      <%= f.govuk_period_field :minutes, width: 'one-third' %>
+      <%#= f.govuk_text_field :hours, width: 'one-third' %>
+      <%#= f.govuk_text_field :minutes, width: 'one-third'%>
 
       <%= f.govuk_date_field :completed_on, maxlength_enabled: true %>
       <%= f.govuk_text_field :fee_earner, width: 3 %>
