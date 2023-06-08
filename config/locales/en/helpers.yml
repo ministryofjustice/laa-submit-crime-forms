@@ -37,7 +37,9 @@ en:
         number_of_witnesses: Number of Defence witnesses
         supplemental_claim: Does this bill represent supplemental claim ?
         preparation_time: Was any preparation time spent watching or listening to taped evidence ?
-
+      steps_work_item_form:
+        work_type: Type of work
+        completed_on: Completion date
     hint:
       steps_claim_type_form:
         rep_order_date: For example, 27 3 2007
@@ -85,6 +87,10 @@ en:
           'yes': If yes, attach a copy of the previous claim
         preparation_time_options:
           'yes': If yes, tell us the total running time of the tape in hours
+      steps_work_item_form:
+        completed_on: For example, 27 3 2007
+        fee_earner: For example, JMD
+        period: For example, 1 hour and 30 minutes
 
     label:
       steps_claim_type_form:
@@ -156,7 +162,7 @@ en:
           core_costs_exceed_higher_limit: Core costs exceed higher limit
           enhanced_rates_claimed: Enhanced rates claimed
           councel_or_agent_assigned: Councel or agent assigned
-          representation_order_withdrawn_on: Representation order withdrawn on
+          representation_order_withdrawn: Representation order withdrawn
           extradition: Extradition
           other: Other
         reason_for_claim_other_details: Enter details
@@ -176,6 +182,18 @@ en:
           'no': 'No'
         time_spent_hours: Time spent in hours
         time_spent_mins: Time spent in minutes
+      steps_work_item_form:
+        work_type_options:
+          preparation: Preparation
+          advocacy: Advocacy
+          attendance_with_counsel: Attendance with counsel
+          attendance_without_counsel: Attendance without counsel
+          travel: Travel
+          waiting: Waiting
+        fee_earner: Fee earner initials
+        apply_uplift_options:
+          'true': Apply an uplift to this work
+        uplift: For example, from any percentage from 1 to 100
       steps_letters_calls_form:
         letters: Number of letters
         calls: Number of phone calls

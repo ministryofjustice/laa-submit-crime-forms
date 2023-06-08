@@ -49,8 +49,7 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
       context 'and defendant does not exists' do
         let(:defendants) { [Defendant.new(full_name: 'Jim', maat: 'AA1', main: true, position: 1)] }
 
-        it 'passes the existing defendant to the form' do
-          allow(Steps::DefendantDetailsForm).to receive(:build)
+        it 'redirect to the summary screen' do
           expect do
             get :edit, params: { id: application, defendant_id: SecureRandom.uuid }
           end.not_to change(application.defendants, :count)

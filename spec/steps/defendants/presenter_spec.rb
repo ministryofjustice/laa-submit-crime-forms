@@ -8,12 +8,12 @@ RSpec.describe Tasks::Defendants, type: :system do
     {
       id: id,
       office_code: 'AAA',
-      defendants_attributes: defendants_attributes,
+      defendants: defendants,
       navigation_stack: navigation_stack,
     }
   end
   let(:id) { SecureRandom.uuid }
-  let(:defendants_attributes) { [] }
+  let(:defendants) { [] }
   let(:navigation_stack) { [] }
 
   describe '#path' do
@@ -68,7 +68,7 @@ RSpec.describe Tasks::Defendants, type: :system do
     end
 
     context 'when defendants exist' do
-      let(:defendants_attributes) { [{ full_name: 'Jim Bob' }] }
+      let(:defendants) { [Defendant.new(full_name: 'Jim Bob')] }
       let(:defendant_form) { double(:defendant_form, valid?: valid) }
 
       before do

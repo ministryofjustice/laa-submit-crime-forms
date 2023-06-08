@@ -79,6 +79,9 @@ Rails.application.routes.draw do
       edit_step :reason_for_claim
       edit_step :claim_details
       edit_step :letters_calls
+      edit_step :work_item
+      edit_step :work_items
+      edit_step :work_item_delete
     end
   end
 end
