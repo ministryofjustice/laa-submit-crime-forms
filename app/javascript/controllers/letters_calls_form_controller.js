@@ -34,7 +34,8 @@ function updateDomElementTotal(total) {
 function handleFormChange(event) {
     if (checkIfAllFieldValueExists()) {
         if (event.target === letters || event.target === phone_calls) {
-            updateDomElementTotal();
+            // Update total if letters or phone_calls input values changes
+            (letter_calls_uplift_percentage && letter_calls_uplift_checkbox.checked) ? calculateTotalWithUplift() : updateDomElementTotal();
         }
         if (event.target === letter_calls_uplift_percentage && letter_calls_uplift_checkbox.checked) {
             calculateTotalWithUplift();
