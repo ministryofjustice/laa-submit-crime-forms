@@ -1,6 +1,6 @@
 module StartPage
   class PreTaskList < TaskList::Collection
-    SECTIONS = [[:what, [->(app) { "claim_type.#{app.claim_type || 'pending'}" }]]].freeze
+    SECTIONS = [[:what, [->(app) { "claim_type.#{app.claim_type}" }]]].freeze
   end
 
   class TaskList < TaskList::Collection
