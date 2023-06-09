@@ -1,7 +1,7 @@
 require 'steps/base_form_object'
 
-# this is a controller step to determine where to move next, as such it does not
-# persist anything to DB
+# this is a form to determine where to move next section to repeat
+# an existing section, as such it does not persist anything to DB
 module Steps
   class AddAnotherForm < Steps::BaseFormObject
     attr_reader :add_another

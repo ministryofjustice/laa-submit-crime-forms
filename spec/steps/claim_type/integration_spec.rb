@@ -11,8 +11,7 @@ RSpec.describe 'User can fill in claim type details', type: :system do
     visit edit_steps_claim_type_path(claim.id)
 
     choose 'Non-standard magistrates fee'
-
-    within '#steps-claim-type-form-claim-type-non-standard-magistrate-conditional' do
+    within('.govuk-radios__conditional', text: 'Representation order date') do
       fill_in 'Day', with: '20'
       fill_in 'Month', with: '4'
       fill_in 'Year', with: '2023'

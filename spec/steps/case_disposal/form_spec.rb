@@ -30,9 +30,7 @@ RSpec.describe Steps::CaseDisposalForm do
 
   describe '#save' do
     context 'when `plea` is not provided' do
-      it 'returns false' do
-        expect(subject.save).to be(false)
-      end
+      it { expect(subject.save).to be(false) }
 
       it 'has a validation error on the field' do
         expect(subject).not_to be_valid
@@ -43,9 +41,7 @@ RSpec.describe Steps::CaseDisposalForm do
     context 'when `plea` is not valid' do
       let(:plea) { 'maybe' }
 
-      it 'returns false' do
-        expect(subject.save).to be(false)
-      end
+      it { expect(subject.save).to be(false) }
 
       it 'has a validation error on the field' do
         expect(subject).not_to be_valid

@@ -4,12 +4,12 @@ module Decisions
       firm_details: :case_details,
       case_details: :case_disposal,
       case_disposal: :hearing_details,
-      hearing_details: :defendant_details,
       defendant_details: :defendant_summary,
       defendant_delete: :defendant_summary,
       reason_for_claim: :claim_details,
-      claim_details: :letters_calls,
-      letters_calls: :other_info,
+      claim_details: :work_item,
+      work_item: :work_items,
+      work_items: :other_info,
     }.freeze
 
     SHOW_MAPPING = {
@@ -17,16 +17,18 @@ module Decisions
     }.freeze
 
     def destination
-      case step_name
-      when :claim_type then after_claim_type
-      when :defendant_summary then after_defendants
-      when *EDIT_MAPPING.keys then edit(EDIT_MAPPING[step_name])
-      when *SHOW_MAPPING.keys then show(SHOW_MAPPING[step_name])
-
+      if respond_to?("after_#{step_name}", true)
+        send("after_#{step_name}")
+      elsif EDIT_MAPPING[step_name]
+        edit(EDIT_MAPPING[step_name])
+      elsif SHOW_MAPPING[step_name]
+        show(SHOW_MAPPING[step_name])
       else
         index('/claims')
       end
     end
+
+    private
 
     def after_claim_type
       if form_object.claim_type.supported?
@@ -36,7 +38,15 @@ module Decisions
       end
     end
 
-    def after_defendants
+    def after_hearing_details
+      if form_object.application.defendants.any?
+        edit(:defendant_summary)
+      else
+        edit(:defendant_details)
+      end
+    end
+
+    def after_defendant_summary
       if form_object.add_another.yes?
         next_posiiton = form_object.application.defendants.maximum(:position) + 1
         new_defendant = form_object.application.defendants.create(position: next_posiiton)
@@ -44,6 +54,27 @@ module Decisions
       else
         edit(:reason_for_claim)
       end
+    end
+
+    def after_claim_details
+      if form_object.application.work_items.any?
+        edit(:work_items)
+      else
+        edit(:work_item)
+      end
+    end
+
+    def after_work_items
+      if form_object.add_another.yes?
+        new_work_item = form_object.application.work_items.create
+        edit(:work_item, work_item_id: new_work_item.id)
+      else
+        edit(:letters_calls)
+      end
+    end
+
+    def after_work_item_delete
+      after_claim_details
     end
   end
 end

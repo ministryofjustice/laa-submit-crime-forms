@@ -11,20 +11,28 @@ RSpec.describe UkPostcodeValidator do
     end
   end
   let(:parsed_postcode) { double(:parsed_postcode, full_valid?: postcode_state) }
+  let(:postcode_state) { true }
 
   before do
     allow(UKPostcode).to receive(:parse).and_return(parsed_postcode)
   end
 
-  context 'nested form is valid' do
-    let(:postcode_state) { true }
+  context 'postcode is nil' do
+    let(:postcode) { nil }
 
+    it 'form object is valid' do
+      expect(UKPostcode).not_to receive(:parse)
+      expect(subject).to be_valid
+    end
+  end
+
+  context 'postcode is valid' do
     it 'form object is valid' do
       expect(subject).to be_valid
     end
   end
 
-  context 'nested form is invalid' do
+  context 'postcode is invalid' do
     let(:postcode_state) { false }
 
     it 'attribute is marked as valid' do

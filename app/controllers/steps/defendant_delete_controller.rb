@@ -20,8 +20,10 @@ module Steps
     end
 
     def defendant
-      defendant_id = params[:defendant_id] || params.dig(:steps_defendant_delete_form, :id)
-      current_application.defendants.find_by(id: defendant_id, main: false)
+      @defendant ||= begin
+        defendant_id = params[:defendant_id] || params.dig(:steps_defendant_delete_form, :id)
+        current_application.defendants.find_by(id: defendant_id, main: false)
+      end
     end
 
     def flash_msg

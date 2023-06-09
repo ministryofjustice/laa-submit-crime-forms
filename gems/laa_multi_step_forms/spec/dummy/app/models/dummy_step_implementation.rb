@@ -1,7 +1,20 @@
 # used so that we can easily stub this method into the controller
 class DummyStepImplementation
-  def self.current_application; end
-  def self.form_class; end
-  def self.options; end
-  def self.decision_tree_class; end
+  class << self
+    def current_application
+      # This is a placeholder to help with stubbing for tests
+    end
+
+    def form_class
+      # This is a placeholder to help with stubbing for tests
+    end
+
+    def options
+      # This is a placeholder to help with stubbing for tests
+    end
+
+    def decision_tree_class
+      # This is a placeholder to help with stubbing for tests
+    end
+  end
 end

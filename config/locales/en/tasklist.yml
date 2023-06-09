@@ -2,6 +2,7 @@
 en:
   tasklist:
     heading:
+      what: What you are claiming
       about_you: About you
       case: About the case
       defendant: About the defendant
@@ -9,12 +10,15 @@ en:
       evidence: Supporting evidence
       review: Review and confirm
     task:
+      claim_type:
+        non_standard_magistrate: Non-standard magistrates’ court payment
+        breach_of_injunction: Breach of injunction court payment
       firm_details: Your details
       case_details: Case details
       case_disposal: Case disposal
       hearing_details: Hearing details
       defendants: Defendant details
-      reason_for_claim: Claim reason
+      reason_for_claim: Claim Justification
       claim_justification: Claim justification
       claim_details: Claim details
       work_items: Work items

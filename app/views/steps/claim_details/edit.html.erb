@@ -13,7 +13,7 @@
         <%= f.govuk_radio_buttons_fieldset field, legend: { size: 'm' } do %>
           <%= f.govuk_radio_button field, YesNoAnswer::YES.to_s do%>
             <% if field == :preparation_time %>
-              <%= f.govuk_text_field :time_spent_hours,width: 'one-third' %>
+              <%= f.govuk_text_field :time_spent_hours, width: 'one-third' %>
               <%= f.govuk_text_field :time_spent_mins, width: 'one-third'%>
             <% end %>
           <% end %>
