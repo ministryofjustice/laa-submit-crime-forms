@@ -1,9 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'User can see an application status', type: :system do
+  let(:claim) { Claim.create(office_code: 'AAAA', solicitor:, firm_office:, claim_type:, rep_order_date:) }
   let(:firm_office) { FirmOffice.create }
   let(:solicitor) { Solicitor.create(full_name: 'James Robert') }
-  let(:claim) { Claim.create(office_code: 'AAAA', solicitor: solicitor, firm_office: firm_office) }
+  let(:office_code) { 'AAA' }
+  let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE }
+  let(:rep_order_date) { Date.yesterday }
 
   before do
     claim.update(navigation_stack: ["/applications/#{claim.id}/steps/firm_details"])

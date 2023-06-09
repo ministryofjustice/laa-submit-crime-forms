@@ -7,7 +7,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset :claim_type, legend: { tag: 'h1', size: 'xl' } do %>
         <%= f.govuk_radio_button :claim_type, ClaimType::NON_STANDARD_MAGISTRATE.value do %>
-          <%= f.govuk_date_field :rep_order_date, maxlength_enabled: true %>
+          <%= f.govuk_date_field :rep_order_date, maxlength_enabled: true, legend: { size: 's' } %>
         <% end %>
 
         <%= f.govuk_radio_button :claim_type, ClaimType::BREACH_OF_INJUNCTION.value do %>
