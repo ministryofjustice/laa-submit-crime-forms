@@ -6,7 +6,7 @@ const letter_calls_uplift_checkbox = document.getElementById('steps-letters-call
 const letter_calls_uplift_percentage = document.getElementById('steps-letters-calls-form-letters-calls-uplift-field');
 
 // Calculate the total based on the values of letters and phone_calls inputs
-export function calculateTotal() {
+function calculateTotal() {
     const lettersValue = parseFloat(letters.value) || 0;
     const phoneCallsValue = parseFloat(phone_calls.value) || 0;
     const unitPriceForLetters = parseFloat(letters.getAttribute('data-rate-letters')) || 0;
@@ -21,38 +21,31 @@ export function calculateTotalWithUplift() {
     const upliftPercentage = parseFloat(letter_calls_uplift_percentage.value) || 0;
     const upliftToAdd = currentTotal * (upliftPercentage / 100);
     const totalWithUplift = (currentTotal + upliftToAdd).toFixed(2); // Format total to two decimal places
-    updateDomElementTotal(totalWithUplift);
+    return totalWithUplift;
 }
 
 // Update the DOM element with the provided total, or calculate the total if not provided
-function updateDomElementTotal(total) {
-    const totalAmount = total || calculateTotal();
+function updateDomElementTotal() {
+    const totalAmount = calculateTotalWithUplift();
     total_for_letters_and_phone_calls.innerHTML = '£' + totalAmount;
-}
-
-// Handle change events on the form
-function handleFormChange(event) {
-    if (checkIfAllFieldValueExists()) {
-        if (event.target === letters || event.target === phone_calls) {
-            // Update total if letters or phone_calls input values changes
-            (letter_calls_uplift_percentage && letter_calls_uplift_checkbox.checked) ? calculateTotalWithUplift() : updateDomElementTotal();
-        }
-        if (event.target === letter_calls_uplift_percentage && letter_calls_uplift_checkbox.checked) {
-            calculateTotalWithUplift();
-        }
-        if (event.target === letter_calls_uplift_checkbox) {
-            if (letter_calls_uplift_checkbox.checked) {
-                calculateTotalWithUplift();
-            } else {
-                updateDomElementTotal();
-            }
-        }
-    }
 }
 
 // Check if all necessary field values exist
 function checkIfAllFieldValueExists() {
     return letters.value && phone_calls.value;
+}
+
+// Handle change events on the form
+function handleFormChange(event) {
+    if (checkIfAllFieldValueExists()) {
+        if ((event.target === letters || event.target === phone_calls) || (event.target === letter_calls_uplift_percentage && letter_calls_uplift_checkbox.checked)) {
+            updateDomElementTotal();
+        }
+        if (event.target === letter_calls_uplift_checkbox && !letter_calls_uplift_checkbox.checked) {
+            letter_calls_uplift_percentage.value = 0;
+            updateDomElementTotal();
+        }
+    }
 }
 
 // Attach event listener to the form for change events
