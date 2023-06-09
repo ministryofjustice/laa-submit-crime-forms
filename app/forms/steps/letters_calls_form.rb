@@ -29,11 +29,11 @@ numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_eq
       letters_total + calls_total
     end
 
-    private
-
     def pricing
       @pricing ||= Pricing.for(application)
     end
+
+    private
 
     def persist!
       application.update!(attributes_with_resets)
