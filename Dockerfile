@@ -1,5 +1,5 @@
 FROM ruby:3.2.2-alpine3.17 AS base
-LABEL maintainer="LAA non-standard magistrate fee team"
+LABEL maintainer="Non-standard magistrates' court payment team"
 
 # dependencies required both at runtime and build time
 RUN apk add --update \
