@@ -1,12 +1,7 @@
 class TimePeriodValidator < ActiveModel::EachValidator
   TIME_PERIOD_STRUCT = Struct.new('TIME_PERIOD_STRUCT', :hours, :minutes)
 
-  attr_reader :record, :attribute, :config
-
-  def initialize(options)
-    super
-    @config = options
-  end
+  attr_reader :record, :attribute
 
   def validate_each(record, attribute, value)
     # this will trigger a `:blank` error when `presence: true`

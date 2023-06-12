@@ -102,14 +102,6 @@ en:
           fee_earner: Fee earner
           actions: Actions
         completed_date_blank: Completed date not set
-        period: &period
-          missing: 'Not set'
-          hours:
-            one: '%{count} Hr '
-            other: '%{count} Hrs '
-          minutes:
-            one: '%{count} Min'
-            other: '%{count} Mins'
     work_item_delete:
       edit:
         heading: Are you sure you want to delete this work item?
@@ -119,7 +111,6 @@ en:
           fee_earner: Fee earner
         total_cost: Total cost
         completed_date_blank: Completed date not set
-        period: *period
   laa_multi_step_forms:
     task_list:
       show:
