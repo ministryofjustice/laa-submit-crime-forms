@@ -6,15 +6,13 @@ module Steps
 
     attribute :id, :string
     attribute :work_type, :value_object, source: WorkTypes
-    # attribute :hours, :integer
-    attribute :minutes, :time_period
+    attribute :time_spent, :time_period
     attribute :completed_on, :multiparam_date
     attribute :fee_earner, :string
     attribute :uplift, :integer
 
     validates :work_type, presence: true
-    # validates :hours, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-    validates :minutes, presence: true, time_period: true
+    validates :time_spent, presence: true, time_period: true
     validates :completed_on, presence: true,
             multiparam_date: { allow_past: true, allow_future: false }
     validates :fee_earner, presence: true
@@ -31,7 +29,7 @@ module Steps
     end
 
     def total_cost
-      minutes.try(:valid?) ? apply_uplift!(minutes.to_f / 60) * pricing[work_type] : 0
+      time_spent.try(:valid?) ? apply_uplift!(time_spent.to_f / 60) * pricing[work_type] : nil
     end
 
     def work_types_with_pricing

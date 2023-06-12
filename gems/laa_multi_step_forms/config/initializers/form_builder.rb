@@ -5,7 +5,7 @@ ActionView::Base.default_form_builder = GOVUKDesignSystemFormBuilder::FormBuilde
 GOVUKDesignSystemFormBuilder::FormBuilder.class_eval do
   include LaaMultiStepForms::FormBuilderHelper
 
-  def govuk_period_field(attribute_name, hint: {}, legend: {}, caption: {}, fields: nil, maxlength_enabled: false, form_group: {}, **kwargs, &block)
+  def govuk_period_field(attribute_name, hint: {}, legend: {}, caption: {}, fields: {}, maxlength_enabled: false, form_group: {}, **kwargs, &block)
     GOVUKDesignSystemFormBuilder::Elements::Period.new(self, object_name, attribute_name, hint: hint, legend: legend, caption: caption, fields: fields, maxlength_enabled: maxlength_enabled, form_group: form_group, **kwargs, &block).html
   end
 end

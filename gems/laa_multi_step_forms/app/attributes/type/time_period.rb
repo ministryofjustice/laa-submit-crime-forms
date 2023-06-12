@@ -2,10 +2,12 @@ module Type
   class TimePeriod < ActiveModel::Type::Integer
     class Instance < SimpleDelegator
       def hours
+        return nil if __getobj__.nil?
         __getobj__ / 60
       end
 
       def minutes
+        return nil if __getobj__.nil?
         __getobj__ % 60
       end
 
@@ -44,8 +46,8 @@ module Type
 
 
     def valid_period?(hours, minutes)
-      hours.to_s =~ /\A\d+\z/ && hours.to_i > 0 &&
-       minutes.to_s =~ /\A\d+\z/ && (0..60).include?(minutes.to_i)
+      hours.to_s =~ /\A\d+\z/ && hours.to_i >= 0 &&
+       minutes.to_s =~ /\A\d+\z/ && (0..59).include?(minutes.to_i)
     end
   end
 end

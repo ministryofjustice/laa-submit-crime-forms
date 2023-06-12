@@ -16,7 +16,7 @@ module GOVUKDesignSystemFormBuilder
         @fields.keys.index(key) + 1
       end
 
-      def initialize(builder, object_name, attribute_name, legend:, caption:, hint:, maxlength_enabled:, form_group:, fields:, **kwargs, &block)
+      def initialize(builder, object_name, attribute_name, legend:, caption:, hint:, maxlength_enabled:, form_group:, fields: {}, **kwargs, &block)
         super(builder, object_name, attribute_name, &block)
 
         @legend            = legend
@@ -24,7 +24,7 @@ module GOVUKDesignSystemFormBuilder
         @hint              = hint
         @maxlength_enabled = maxlength_enabled
         @form_group        = form_group
-        @fields            = fields || { hours: 2, minutes: 2 }
+        @fields            = { hours: 2, minutes: 2 }.merge(fields)
         @html_attributes   = kwargs
       end
 

@@ -35,4 +35,7 @@ RSpec.configure do |config|
 
   # Use the faster rack test by default for system specs
   config.before(:each, type: :system) { driven_by :rack_test }
+  config.expect_with :rspec do |c|
+    c.max_formatted_output_length = nil
+  end
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Steps::ClaimDetailsForm do
-  let(:form) { described_class.new(application:, **arguments) }
+  subject { described_class.new(application:, **arguments) }
 
   let(:arguments) do
     {
@@ -11,8 +11,7 @@ RSpec.describe Steps::ClaimDetailsForm do
       number_of_witnesses:,
       supplemental_claim:,
       preparation_time:,
-      time_spent_hours:,
-      time_spent_mins:,
+      time_spent:,
     }
   end
 
@@ -22,6 +21,10 @@ RSpec.describe Steps::ClaimDetailsForm do
   let(:defence_statement) { 'defence statement' }
   let(:number_of_witnesses) { 1 }
   let(:supplemental_claim) { 'yes' }
+  let(:preparation_time) { 'yes' }
+  let(:time_spent) { { 1 => hours, 2 => minutes } }
+  let(:hours) { 2 }
+  let(:minutes) { 40 }
 
   describe '#save preparation time yes' do
     context 'when all fields are set and preparation_time set to yes' do
@@ -30,59 +33,73 @@ RSpec.describe Steps::ClaimDetailsForm do
       let(:time_spent_mins) { 40 }
 
       it 'is valid' do
-        expect(form.save).to be_truthy
+        expect(subject.save).to be_truthy
         expect(application).to have_received(:update!)
-        expect(form).to be_valid
+        expect(subject).to be_valid
       end
     end
   end
 
-  describe '#save preparation no' do
-    context 'when all fields are set and preparation_time set to no' do
-      let(:preparation_time) { 'no' }
-      let(:time_spent_hours) { nil }
-      let(:time_spent_mins) { nil }
+  describe '#save' do
+    let(:application) { Claim.create(office_code: 'AAA', time_spent: time_spent_in_db) }
+    let(:time_spent_in_db) { nil }
 
-      it 'is valid' do
-        expect(form.save).to be_truthy
-        expect(application).to have_received(:update!)
-        expect(form).to be_valid
-      end
-    end
-  end
-
-  describe '#valid? preparation yes' do
-    context 'when all fields are set' do
+    context 'when preparation is yes' do
       let(:preparation_time) { 'yes' }
-      let(:time_spent_hours) { 2 }
-      let(:time_spent_mins) { 40 }
 
-      it 'is valid' do
-        expect(form).to be_valid
+      context 'when time_spent is valid' do
+        it 'is updated the DB in minutes' do
+          expect(subject.save).to be_truthy
+          expect(application.reload).to have_attributes(
+            time_spent: 160
+          )
+        end
       end
     end
-  end
 
-  describe '#valid? preparation no' do
-    context 'when all fields are set' do
+    context 'when preparation is no' do
       let(:preparation_time) { 'no' }
-      let(:time_spent_hours) { nil }
-      let(:time_spent_mins) { nil }
 
-      it 'is valid' do
-        expect(form).to be_valid
+      context 'time_spent has a value in the database' do
+        let(:time_spent_in_db) { 100 }
+
+        it 'clears the database field' do
+          expect(subject.save).to be_truthy
+          expect(application.reload).to have_attributes(
+            time_spent: nil
+          )
+        end
       end
     end
   end
 
-  describe '#invalid? preparation yes' do
-    context 'when all fields are set' do
+  describe '#valid?' do
+    context 'when preparation is yes' do
       let(:preparation_time) { 'yes' }
-      let(:time_spent_hours) { nil }
-      let(:time_spent_mins) { nil }
 
-      it 'is invalid' do
-        expect(form).not_to be_valid
+      context 'when all fields are set' do
+        it { expect(subject).to be_valid }
+      end
+
+      context 'when hours is blank' do
+        let(:hours) { nil }
+
+        it 'is invalid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:time_spent, :blank_hours)).to be(true)
+        end
+      end
+    end
+
+    context 'when preparation is no' do
+      let(:preparation_time) { 'no' }
+
+      context 'when all fields are set' do
+        it { expect(subject).to be_valid }
+      end
+
+      context 'when hours is blank' do
+        it { expect(subject).to be_valid }
       end
     end
   end

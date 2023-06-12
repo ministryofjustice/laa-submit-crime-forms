@@ -17,16 +17,17 @@ RSpec.describe 'User can fill in claim details', type: :system do
     find('.govuk-form-group', text: 'Does this bill represent supplemental claim ?').choose 'Yes'
     find('.govuk-form-group',
          text: 'Was any preparation time spent watching or listening to taped evidence ?').choose 'Yes'
-    fill_in 'Time spent in hours', with: '10'
-    fill_in 'Time spent in minutes', with: '30'
+
+    fill_in 'Hours', with: 10
+    fill_in 'Minutes', with: 30
+
     click_on 'Save and continue'
 
     expect(claim.reload).to have_attributes(
       prosecution_evidence: 'Evidence',
       defence_statement: 'Statement',
       number_of_witnesses: 2,
-      time_spent_hours: 10,
-      time_spent_mins: 30
+      time_spent: 10 * 60 + 30,
     )
   end
 end

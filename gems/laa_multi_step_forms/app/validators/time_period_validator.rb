@@ -32,10 +32,14 @@ class TimePeriodValidator < ActiveModel::EachValidator
   private
 
   def validate_period(time_period)
-    add_error(:invalid_hour)   unless time_period.hours.to_i >= 0
-    add_error(:invalid_minute) unless time_period.minutes.to_i.between?(0, 59)
+    add_error(:blank_hours)     if time_period.hours.nil?
+    add_error(:invalid_hours)   unless time_period.hours.to_i >= 0
+    add_error(:blank_minutes) if time_period.minutes.nil?
+    add_error(:invalid_minutes) unless time_period.minutes.to_i.between?(0, 59)
 
-    unless time_period.is_a?(Type::TimePeriod::Instance)
+    if time_period.is_a?(Type::TimePeriod::Instance)
+      add_error(:invalid_period) unless time_period.to_i >= 0
+    else
       # If, after all, we still don't have a valid date object, it means
       # there are additional errors, like June 31st, or day 29 in non-leap year.
       # We just add a generic error as it would be an overkill to set granular

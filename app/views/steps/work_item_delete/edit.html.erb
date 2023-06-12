@@ -18,7 +18,7 @@
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <td class="govuk-table__cell"><%= t("helper.steps_work_item_form.work_type_options.#{@form_object.record.work_type}") %></td>
-          <td class="govuk-table__cell"><%= t(".period", hours: @form_object.record.hours.to_i, minutes: @form_object.record.minutes.to_i) %></td>
+          <td class="govuk-table__cell"><%= format_period(@form_object.record.time_spent)  %></td>
           <td class="govuk-table__cell"><%= @form_object.record.fee_earner %></td>
         </tr>
       </tbody>

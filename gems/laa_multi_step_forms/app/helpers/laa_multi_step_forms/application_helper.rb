@@ -25,5 +25,12 @@ module LaaMultiStepForms
     def app_environment
       "app-environment-#{ENV.fetch('ENV', 'local')}"
     end
+
+    def format_period(period)
+      return t('.period.missing') if period.nil?
+
+      t(".period.hours", count: period / 60) +
+        t(".period.minutes", count: period % 60)
+    end
   end
 end
