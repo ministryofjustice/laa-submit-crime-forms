@@ -54,20 +54,20 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
   describe '#app_environment' do
     context 'when ENV is set' do
       around do |spec|
-        env = ENV['ENV']
+        env = ENV.fetch('ENV', nil)
         ENV['ENV'] = 'test'
         spec.run
         ENV['ENV'] = env
       end
 
       it 'returns based on ENV variable' do
-        expect(helper.app_environment).to eq("app-environment-test")
+        expect(helper.app_environment).to eq('app-environment-test')
       end
     end
 
     context 'when ENV is not set' do
       it 'returns based with local' do
-        expect(helper.app_environment).to eq("app-environment-local")
+        expect(helper.app_environment).to eq('app-environment-local')
       end
     end
   end
