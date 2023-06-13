@@ -29,7 +29,7 @@ module Steps
     end
 
     def total_cost
-      time_spent.try(:valid?) ? apply_uplift!(time_spent.to_f / 60) * pricing[work_type] : nil
+      time_spent.is_a?(IntegerTimePeriod) ? apply_uplift!(time_spent.to_f / 60) * pricing[work_type] : nil
     end
 
     def work_types_with_pricing

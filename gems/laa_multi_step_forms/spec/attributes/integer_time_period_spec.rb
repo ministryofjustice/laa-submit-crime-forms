@@ -30,10 +30,4 @@ RSpec.describe IntegerTimePeriod do
       it { expect(subject.minutes).to eq(2) }
     end
   end
-
-  describe '#valid?' do
-    let(:value) { nil }
-
-    it { expect(subject).to be_valid }
-  end
 end
