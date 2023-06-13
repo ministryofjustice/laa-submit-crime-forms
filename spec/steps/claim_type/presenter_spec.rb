@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::FirmDetails, type: :system do
+RSpec.describe Tasks::ClaimType, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { Claim.new(attributes) }
@@ -17,13 +17,16 @@ RSpec.describe Tasks::FirmDetails, type: :system do
   let(:solicitor) { nil }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/applications/#{id}/steps/firm_details") }
+    it { expect(subject.path).to eq("/applications/#{id}/steps/claim_type") }
   end
 
   describe '#not_applicable?' do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  it_behaves_like 'a task with generic can_start?', Tasks::ClaimType
-  it_behaves_like 'a task with generic complete?', Steps::FirmDetailsForm
+  describe '#can_start?' do
+    it { expect(subject).to be_can_start }
+  end
+
+  it_behaves_like 'a task with generic complete?', Steps::ClaimTypeForm
 end
