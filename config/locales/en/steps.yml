@@ -83,7 +83,7 @@ en:
           calls: Phone calls
     reason_for_claim:
       edit:
-        heading: Why are you claiming a non-standard magistrate court payment?
+        heading: Why are you claiming a non-standard magistrates' court payment?
     work_item:
       edit:
         page_title: Work Item page title - TODO

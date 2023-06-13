@@ -2,14 +2,17 @@ require 'rails_helper'
 
 RSpec.describe ClaimsController do
   context 'index' do
+    let(:scope) { double(:scope, not: [instance_double(Claim)]) }
+
     before do
-      allow(Claim).to receive(:all).and_return([instance_double(Claim)])
+      allow(Claim).to receive(:where).and_return(scope)
     end
 
     it 'render all claims' do
       get :index
       expect(response).to be_successful
-      expect(Claim).to have_received(:all)
+      expect(Claim).to have_received(:where)
+      expect(scope).to have_received(:not)
     end
   end
 
