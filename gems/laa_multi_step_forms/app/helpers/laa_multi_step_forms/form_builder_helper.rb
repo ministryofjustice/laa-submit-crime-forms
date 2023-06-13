@@ -2,6 +2,7 @@
 # `GOVUKDesignSystemFormBuilder::FormBuilder`. These are app-specific
 # form helpers so can be coupled to application business and logic.
 #
+require_relative '../../lib/govuk_design_system_formbuilder/elements/period'
 module LaaMultiStepForms
   module FormBuilderHelper
     # rubocop:disable Metrics/ParameterLists
