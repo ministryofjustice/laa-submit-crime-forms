@@ -50,11 +50,14 @@ export function handleFormChange(event, form, totalElement, lettersElement, phon
 			const totalWithUplift = calculateTotalWithUplift(currentTotal, 0);
 			updateDomElementTotal(totalWithUplift, totalElement);
 		}
+	} else {
+		// Called when letters or phone calls value is empty
+		updateDomElementTotal(0, totalElement)
 	}
 }
 
 // Attach event listener to the form for change events
-function initializeForm(
+export function initializeForm(
 	form,
 	totalElement,
 	lettersElement,
