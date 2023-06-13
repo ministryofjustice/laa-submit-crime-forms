@@ -35,7 +35,6 @@ RSpec.describe TimePeriodValidator do
     end
   end
 
-
   context 'when time_spent is a hash' do
     let(:time_spent) { { 1 => hours, 2 => minutes } }
     let(:hours) { 1 }

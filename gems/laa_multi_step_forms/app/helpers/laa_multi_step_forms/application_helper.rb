@@ -29,8 +29,8 @@ module LaaMultiStepForms
     def format_period(period)
       return t('helpers.time_period.missing') if period.nil?
 
-      t("helpers.time_period.hours", count: period / 60) +
-        t("helpers.time_period.minutes", count: period % 60)
+      t('helpers.time_period.hours', count: period / 60) +
+        t('helpers.time_period.minutes', count: period % 60)
     end
   end
 end

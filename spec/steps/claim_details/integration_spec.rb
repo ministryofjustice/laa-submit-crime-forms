@@ -27,7 +27,7 @@ RSpec.describe 'User can fill in claim details', type: :system do
       prosecution_evidence: 'Evidence',
       defence_statement: 'Statement',
       number_of_witnesses: 2,
-      time_spent: 10 * 60 + 30,
+      time_spent: (10 * 60) + 30,
     )
   end
 end

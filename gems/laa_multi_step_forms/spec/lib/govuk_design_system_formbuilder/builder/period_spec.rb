@@ -2,7 +2,6 @@
 # With shared example disabled. The idea is that this code will eventually be merged
 # back into the formbuilder repo, as which time the shared examples can be re-enabled.
 
-
 require 'rails_helper'
 
 # Can be removed once merged back in (need to add time_spent and time_spent_required to Person)
@@ -23,11 +22,15 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
   let(:object_name) { :person }
   let(:builder) { described_class.new(object_name, object, helper, {}) }
   let(:parsed_subject) { Nokogiri::HTML::DocumentFragment.parse(subject) }
-  let(:arbitrary_html_content) { builder.tag.p("a wild paragraph has appeared") }
+  let(:arbitrary_html_content) { builder.tag.p('a wild paragraph has appeared') }
   # end replacement of include_context 'setup builder'
 
   describe '#period_input_group' do
+    subject { builder.send(*args) }
+
     let(:method) { :govuk_period_field }
+    let(:field_type) { 'input' }
+    let(:aria_described_by_target) { 'fieldset' }
     let(:attribute) { :time_spent }
 
     let(:fieldset_heading) { 'Writing this test' }
@@ -42,10 +45,6 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
     let(:minute_identifier) { "person_time_spent_#{minutes_multiparam_attribute}" }
 
     let(:args) { [method, attribute] }
-    subject { builder.send(*args) }
-
-    let(:field_type) { 'input' }
-    let(:aria_described_by_target) { 'fieldset' }
 
     # include_examples 'HTML formatting checks'
 
@@ -77,7 +76,8 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
     #     end
 
     #     specify 'the block content should be before the hint and the date inputs' do
-    #       actual = parsed_subject.css([hint_div_selector, block_paragraph_selector, govuk_date_selector].join(",")).flat_map(&:classes)
+    #       actual = parsed_subject.css([hint_div_selector, block_paragraph_selector, govuk_date_selector].
+    #         join(",")).flat_map(&:classes)
     #       expected = %w(block-content govuk-hint govuk-date-input)
 
     #       expect(actual).to eql(expected)
@@ -113,7 +113,7 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
     context 'separate period part inputs' do
       specify 'inputs should have the correct labels' do
         expect(subject).to have_tag('div', with: { class: 'govuk-period-input' }) do
-          %w(Hours Minutes).each do |label_text|
+          %w[Hours Minutes].each do |label_text|
             with_tag('label', text: label_text)
           end
         end
@@ -140,7 +140,7 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
         expect(subject).to have_tag(
           'input',
           count: 2,
-          with: { class: %w(govuk-input govuk-period-input__input) }
+          with: { class: %w[govuk-input govuk-period-input__input] }
         )
       end
 
@@ -148,7 +148,7 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
         expect(subject).to have_tag(
           'input',
           count: 2,
-          with: { class: %w(govuk-input--width-2) }
+          with: { class: %w[govuk-input--width-2] }
         )
       end
     end
@@ -157,11 +157,15 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
       subject { builder.send(*args, maxlength_enabled: false) }
 
       specify 'there should be a hours maxlength attribute' do
-        expect(subject).not_to have_tag('input', with: { name: "#{object_name}[#{attribute}(#{hour_multiparam_attribute})]", maxlength: '2' })
+        expect(subject).not_to have_tag('input',
+                                        with: { name: "#{object_name}[#{attribute}(#{hour_multiparam_attribute})]",
+maxlength: '2' })
       end
 
       specify 'there should be a minutes maxlength attribute' do
-        expect(subject).not_to have_tag('input', with: { name: "#{object_name}[#{attribute}(#{minutes_multiparam_attribute})]", maxlength: '2' })
+        expect(subject).not_to have_tag('input',
+                                        with: { name: "#{object_name}[#{attribute}(#{minutes_multiparam_attribute})]",
+maxlength: '2' })
       end
     end
 
@@ -169,11 +173,15 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
       subject { builder.send(*args, maxlength_enabled: true) }
 
       specify 'there should be a hours maxlength attribute' do
-        expect(subject).to have_tag('input', with: { name: "#{object_name}[#{attribute}(#{hour_multiparam_attribute})]", maxlength: '2' })
+        expect(subject).to have_tag('input',
+                                    with: { name: "#{object_name}[#{attribute}(#{hour_multiparam_attribute})]",
+maxlength: '2' })
       end
 
       specify 'there should be a minutes maxlength attribute' do
-        expect(subject).to have_tag('input', with: { name: "#{object_name}[#{attribute}(#{minutes_multiparam_attribute})]", maxlength: '2' })
+        expect(subject).to have_tag('input',
+                                    with: { name: "#{object_name}[#{attribute}(#{minutes_multiparam_attribute})]",
+maxlength: '2' })
       end
     end
 
@@ -181,30 +189,30 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
       let(:hours) { 3 }
       let(:minutes) { 2 }
 
-      context "when the attribute is a `TimePeriod::Instance` object" do
+      context 'when the attribute is a `IntegerTimePeriod` object' do
         let(:object) do
           Person.new(
             name: 'Joey',
-            time_spent: Type::TimePeriod::Instance.new(182)
+            time_spent: IntegerTimePeriod.new(182)
           )
         end
 
         specify 'should set the hour value correctly' do
           expect(subject).to have_tag('input', with: {
-            id: hour_identifier,
+                                        id: hour_identifier,
             value: hours
-          })
+                                      })
         end
 
         specify 'should set the minutes value correctly' do
           expect(subject).to have_tag('input', with: {
-            id: minute_identifier,
+                                        id: minute_identifier,
             value: minutes
-          })
+                                      })
         end
       end
 
-      context "when the attribute is a multiparameter hash object" do
+      context 'when the attribute is a multiparameter hash object' do
         let(:object) do
           Person.new(
             name: 'Joey',
@@ -214,16 +222,16 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
 
         specify 'should set the hour value correctly' do
           expect(subject).to have_tag('input', with: {
-            id: hour_identifier,
+                                        id: hour_identifier,
             value: hours
-          })
+                                      })
         end
 
         specify 'should set the minutes value correctly' do
           expect(subject).to have_tag('input', with: {
-            id: minute_identifier,
+                                        id: minute_identifier,
             value: minutes
-          })
+                                      })
         end
       end
 
@@ -239,36 +247,42 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
 
         specify 'should set the hour value correctly via the error link id' do
           expect(subject).to have_tag('input', with: {
-            id: 'person-time-spent-field-error',
+                                        id: 'person-time-spent-field-error',
             name: 'person[time_spent(1i)]'
-          })
+                                      })
         end
 
         specify 'should set the minutes value correctly' do
           expect(subject).to have_tag('input', with: {
-            id: minute_identifier,
+                                        id: minute_identifier,
             name: 'person[time_spent(2i)]'
-          })
+                                      })
         end
       end
     end
 
-    describe "additional attributes" do
-      subject { builder.send(*args, data: { test: "abc" }) }
+    describe 'additional attributes' do
+      subject { builder.send(*args, data: { test: 'abc' }) }
 
-      specify "should have additional attributes" do
+      specify 'should have additional attributes' do
         expect(subject).to have_tag('div', with: { 'data-test': 'abc' })
       end
     end
 
-    describe "hashes without the right keys" do
+    describe 'hashes without the right keys' do
       let(:wrong_hash) { { h: 20, m: 3 } }
-      before { object.time_spent = wrong_hash }
-      before { allow(Rails).to receive_message_chain(:logger, :warn) }
-      before { subject }
 
-      specify "logs an appropriate warning" do
-        expect(Rails.logger).to have_received(:warn).with(/No key '.*' found in MULTIPARAMETER_KEY hash/).exactly(wrong_hash.length).times
+      before do
+        object.time_spent = wrong_hash
+        # rubocop:disable RSpec/MessageChain
+        allow(Rails).to receive_message_chain(:logger, :warn)
+        # rubocop:enable RSpec/MessageChain
+        subject
+      end
+
+      specify 'logs an appropriate warning' do
+        expect(Rails.logger).to have_received(:warn).with(/No key '.*' found in MULTIPARAMETER_KEY hash/)
+                                                    .exactly(wrong_hash.length).times
       end
 
       specify "doesn't generate inputs with values" do
@@ -278,14 +292,14 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
       end
     end
 
-    describe "Invalid object" do
+    describe 'Invalid object' do
       before { object.time_spent = double }
 
-      it 'should raise an error' do
-        expect { subject }.to raise_error("invalid TimePeriod-like object: must be a Time Period or Hash in MULTIPARAMETER_KEY format")
+      it 'raises an error' do
+        expect do
+          subject
+        end.to raise_error('invalid TimePeriod-like object: must be a Time Period or Hash in MULTIPARAMETER_KEY format')
       end
     end
-
-
   end
 end

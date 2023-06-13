@@ -34,7 +34,7 @@ RSpec.describe Steps::WorkItemForm do
   describe '#validations' do
     context 'require fields' do
       %w[work_type time_spent completed_on fee_earner].each do |field|
-        context "#when #{field} is blank" do
+        describe "#when #{field} is blank" do
           let(field) { nil }
 
           it 'have an error' do
@@ -45,7 +45,7 @@ RSpec.describe Steps::WorkItemForm do
       end
 
       %w[hours minutes].each do |field|
-        context "#when #{field} is blank" do
+        describe "#when #{field} is blank" do
           let(field) { nil }
 
           it 'have an error' do

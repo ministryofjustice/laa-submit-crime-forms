@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 module GOVUKDesignSystemFormBuilder
   module Elements
     class Period < Base
@@ -16,7 +17,9 @@ module GOVUKDesignSystemFormBuilder
         @fields.keys.index(key) + 1
       end
 
-      def initialize(builder, object_name, attribute_name, legend:, caption:, hint:, maxlength_enabled:, form_group:, fields: {}, **kwargs, &block)
+      # rubocop:disable Metrics/ParameterLists
+      def initialize(builder, object_name, attribute_name, legend:, caption:, hint:, maxlength_enabled:, form_group:,
+                     fields: {}, **kwargs, &block)
         super(builder, object_name, attribute_name, &block)
 
         @legend            = legend
@@ -27,6 +30,7 @@ module GOVUKDesignSystemFormBuilder
         @fields            = { hours: 2, minutes: 2 }.merge(fields)
         @html_attributes   = kwargs
       end
+      # rubocop:enable Metrics/ParameterLists
 
       def html
         Containers::FormGroup.new(*bound, **@form_group, **@html_attributes).html do
@@ -36,7 +40,7 @@ module GOVUKDesignSystemFormBuilder
         end
       end
 
-    private
+      private
 
       def fieldset_options
         { legend: @legend, caption: @caption, described_by: [error_id, hint_id, supplemental_id] }
@@ -64,6 +68,7 @@ module GOVUKDesignSystemFormBuilder
         end
       end
 
+      # rubocop:disable Metrics/MethodLength
       def value(segment)
         attribute = @builder.object.try(@attribute_name)
 
@@ -78,9 +83,11 @@ module GOVUKDesignSystemFormBuilder
             nil
           end
         else
-          fail(ArgumentError, "invalid TimePeriod-like object: must be a Time Period or Hash in MULTIPARAMETER_KEY format")
+          raise(ArgumentError,
+                'invalid TimePeriod-like object: must be a Time Period or Hash in MULTIPARAMETER_KEY format')
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def label(segment, link_errors)
         tag.label(
@@ -116,15 +123,15 @@ module GOVUKDesignSystemFormBuilder
       # in the normal fashion
       def id(segment, link_errors)
         if has_errors? && link_errors
-          field_id(link_errors: link_errors)
+          field_id(link_errors:)
         else
-          [@object_name, @attribute_name, segement_id(segment)].join("_")
+          [@object_name, @attribute_name, segement_id(segment)].join('_')
         end
       end
 
       def name(segment)
         format(
-          "%<object_name>s[%<input_name>s(%<segment>s)]",
+          '%<object_name>s[%<input_name>s(%<segment>s)]',
           object_name: @object_name,
           input_name: @attribute_name,
           segment: segement_id(segment)
@@ -137,3 +144,4 @@ module GOVUKDesignSystemFormBuilder
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
