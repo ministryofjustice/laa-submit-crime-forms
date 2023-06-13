@@ -1,7 +1,20 @@
+# rubocop:disable Lint/EmptyClass
+class GovukDesignSystemFormbuilder
+  class Elements
+    class Period
+      # Need this class to resolve `zeitwerk` autoload issues, burt we need to
+      # use `GOVUKDesignSystemFormBuilder` below so that we don;t have issues
+      # with namespacing for other object.
+      # Remove once this is moved to actual FormBuilder gem
+    end
+  end
+end
+# rubocop:enable Lint/EmptyClass
+
 # rubocop:disable Metrics/ClassLength
 module GOVUKDesignSystemFormBuilder
   module Elements
-    class Period < Base
+    class Period < ::GOVUKDesignSystemFormBuilder::Base
       using PrefixableArray
 
       include Traits::Error

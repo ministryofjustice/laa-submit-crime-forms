@@ -99,6 +99,8 @@ RSpec.describe Steps::ClaimDetailsForm do
       end
 
       context 'when hours is blank' do
+        let(:hours) { nil }
+
         it { expect(subject).to be_valid }
       end
     end
