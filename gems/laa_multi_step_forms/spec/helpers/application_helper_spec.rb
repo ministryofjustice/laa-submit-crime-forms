@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationHelper, type: :helper do
+RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
   describe '#current_application' do
     it 'raises an error' do
       expect { helper.current_application }.to raise_error('implement this action, in subclasses')
@@ -47,6 +47,27 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'raises an exception' do
         allow(Rails.application.config).to receive(:consider_all_requests_local).and_return(true)
         expect { helper.fallback_title }.to raise_error('page title missing: my_controller#an_action')
+      end
+    end
+  end
+
+  describe '#app_environment' do
+    context 'when ENV is set' do
+      around do |spec|
+        env = ENV.fetch('ENV', nil)
+        ENV['ENV'] = 'test'
+        spec.run
+        ENV['ENV'] = env
+      end
+
+      it 'returns based on ENV variable' do
+        expect(helper.app_environment).to eq('app-environment-test')
+      end
+    end
+
+    context 'when ENV is not set' do
+      it 'returns based with local' do
+        expect(helper.app_environment).to eq('app-environment-local')
       end
     end
   end
