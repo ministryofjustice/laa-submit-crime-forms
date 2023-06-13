@@ -5,7 +5,7 @@ function getAttributeAsNumber(element, attributeName, defaultValue = 0) {
 
 // Calculate the total based on the values of letters and phone_calls inputs
 function calculateTotal(lettersValue, phoneCallsValue, unitPriceForLetters, unitPriceForPhoneCalls) {
-	const total = lettersValue * unitPriceForLetters + phoneCallsValue * unitPriceForPhoneCalls;
+	const total = (lettersValue * unitPriceForLetters) + (phoneCallsValue * unitPriceForPhoneCalls);
 	return parseFloat(total.toFixed(2)); // Format total to two decimal places
 }
 
@@ -29,35 +29,33 @@ function checkIfAllFieldValueExists(lettersValue, phoneCallsValue) {
 
 // Handle change events on the form
 export function handleFormChange(event, form, totalElement, lettersElement, phoneCallsElement, upliftCheckboxElement, upliftPercentageElement) {
-	const lettersValue = parseFloat(lettersElement.value) || 0;
-	const phoneCallsValue = parseFloat(phoneCallsElement.value) || 0;
-	const unitPriceForLetters = getAttributeAsNumber(lettersElement, 'data-rate-letters');
-	const unitPriceForPhoneCalls = getAttributeAsNumber(phoneCallsElement, 'data-rate-phone-calls');
-	const upliftPercentage = parseFloat(upliftPercentageElement.value) || 0;
-
-	if (checkIfAllFieldValueExists(lettersValue, phoneCallsValue)) {
-		const currentTotal = calculateTotal(lettersValue, phoneCallsValue, unitPriceForLetters, unitPriceForPhoneCalls);
-		// Triggered when letters or phone calls value changes, or when uplift percentage changes
-		if ([lettersElement, phoneCallsElement, upliftPercentageElement].includes(event.target)) {
-			// Update total
-			const totalWithUplift = calculateTotalWithUplift(currentTotal, upliftPercentage);
-			updateDomElementTotal(totalWithUplift, totalElement);
-		}
+	if ([lettersElement, phoneCallsElement, upliftPercentageElement, upliftCheckboxElement].includes(event.target)) {
+		// Reset uplift percentage value if uplift checkbox is unchecked
 		if (event.target === upliftCheckboxElement && !upliftCheckboxElement.checked) {
 			// Clear uplift percentage value
 			upliftPercentageElement.value = '';
-			// Update total
-			const totalWithUplift = calculateTotalWithUplift(currentTotal, 0);
-			updateDomElementTotal(totalWithUplift, totalElement);
 		}
-	} else {
-		// Called when letters or phone calls value is empty
-		updateDomElementTotal(0, totalElement)
+		// Get the values from the form
+		const lettersValue = parseFloat(lettersElement.value) || 0;
+		const phoneCallsValue = parseFloat(phoneCallsElement.value) || 0;
+		let totalWithUplift;
+		// Check if all necessary field values exist for the calculation
+		if (checkIfAllFieldValueExists(lettersValue, phoneCallsValue)) {
+			// Get the remaining required values from the form for the calculation
+			const unitPriceForLetters = getAttributeAsNumber(lettersElement, 'data-rate-letters');
+			const unitPriceForPhoneCalls = getAttributeAsNumber(phoneCallsElement, 'data-rate-phone-calls');
+			const upliftPercentage = parseFloat(upliftPercentageElement.value) || 0;
+			const currentTotal = calculateTotal(lettersValue, phoneCallsValue, unitPriceForLetters, unitPriceForPhoneCalls);
+			// Calculate the total with uplift
+			totalWithUplift = calculateTotalWithUplift(currentTotal, upliftPercentage);
+		} else { totalWithUplift = 0 }
+		//Update the total in the page.
+		updateDomElementTotal(totalWithUplift, totalElement);
 	}
 }
 
 // Attach event listener to the form for change events
-export function initializeForm(
+function initializeForm(
 	form,
 	totalElement,
 	lettersElement,
