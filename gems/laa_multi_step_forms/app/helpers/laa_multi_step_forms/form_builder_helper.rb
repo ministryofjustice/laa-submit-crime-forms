@@ -4,6 +4,10 @@
 #
 module LaaMultiStepForms
   module FormBuilderHelper
+    def govuk_period_field(attribute_name, hint: {}, legend: {}, caption: {}, fields: {}, maxlength_enabled: false, form_group: {}, **kwargs, &block)
+      GOVUKDesignSystemFormBuilder::Elements::Period.new(self, object_name, attribute_name, hint: hint, legend: legend, caption: caption, fields: fields, maxlength_enabled: maxlength_enabled, form_group: form_group, **kwargs, &block).html
+    end
+
     def continue_button(primary: :save_and_continue, secondary: :save_and_come_back_later,
                         primary_opts: {}, secondary_opts: {})
       submit_button(primary, primary_opts) do

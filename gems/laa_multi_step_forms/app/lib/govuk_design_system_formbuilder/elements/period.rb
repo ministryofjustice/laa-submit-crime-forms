@@ -73,7 +73,7 @@ module GOVUKDesignSystemFormBuilder
           attribute.send(segment)
         elsif attribute.respond_to?(:fetch)
           attribute.fetch(multiparameter_key(segment)) do
-            warn("No key '#{segment}' found in hash. Found #{@fields.keys}")
+            warn("No key '#{segment}' found in MULTIPARAMETER_KEY hash.")
 
             nil
           end
