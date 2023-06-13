@@ -21,5 +21,9 @@ module LaaMultiStepForms
     def service_name
       t('service.name')
     end
+
+    def app_environment
+      "app-environment-#{ENV.fetch('ENV', 'local')}"
+    end
   end
 end
