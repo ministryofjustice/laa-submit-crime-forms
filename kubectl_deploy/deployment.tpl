@@ -23,4 +23,3 @@ spec:
               secretKeyRef:
                 name: rds-postgresql-instance-output
                 key: url
-            
