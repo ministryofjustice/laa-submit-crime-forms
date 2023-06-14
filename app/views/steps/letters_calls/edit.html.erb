@@ -8,11 +8,11 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_number_field :letters, placeholder: 0, min: 1, step: 1, width: 3 %>
-      <%= f.govuk_number_field :calls, placeholder: 0, min: 1, step: 1, width: 3 %>
+      <%= f.govuk_number_field :letters, min: 1, step: 1, width: 3, data:{rate_letters: @form_object.pricing.letters} %>
+      <%= f.govuk_number_field :calls, min: 1, step: 1, width: 3, data:{rate_phone_calls: @form_object.pricing.calls} %>
       <%= f.govuk_check_boxes_fieldset :apply_uplift, multiple: false, legend: nil do %>
         <%= f.govuk_check_box :apply_uplift, 'true', 'false', multiple: false do %>
-          <%= f.govuk_number_field :letters_calls_uplift, placeholder: 0, min: 1, step: 1, max: 100, width: 3, suffix_text: '%' %>
+          <%= f.govuk_number_field :letters_calls_uplift, min: 1, step: 1, max: 100, width: 3, suffix_text: '%' %>
         <% end %>
       <% end %>
 
