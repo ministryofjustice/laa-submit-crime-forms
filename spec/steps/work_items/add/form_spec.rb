@@ -152,15 +152,31 @@ RSpec.describe Steps::WorkItemForm do
       allow(Pricing).to receive(:for).and_return(pricing)
     end
 
-    it 'is equal to hours and minutes * the price for the work type' do
-      expect(subject.total_cost).to be_within(0.0001).of(61.0 * price / 60)
+    it 'is equal to hours and minutes * the price for the work type * uplift' do
+      expect(subject.total_cost).to be_within(0.0001).of(61.0 * (price / 60) * 1.1)
+    end
+
+    context 'when apply uplift is no' do
+      let(:apply_uplift) { 'false' }
+
+      it 'is equal to hours and minutes * the price for the work type' do
+        expect(subject.total_cost).to be_within(0.0001).of(61.0 * price / 60)
+      end
+    end
+
+    context 'when uplift is not set' do
+      let(:uplift) { nil }
+
+      it 'is equal to hours and minutes * the price for the work type' do
+        expect(subject.total_cost).to be_within(0.0001).of(61.0 * price / 60)
+      end
     end
 
     context 'when hours is nil' do
       let(:hours) { nil }
 
       it 'can still calculate a price with minutes' do
-        expect(subject.total_cost).to be_within(0.0001).of(1.0 * price / 60)
+        expect(subject.total_cost).to be_within(0.0001).of(1.0 * (price / 60) * 1.1)
       end
     end
 
@@ -168,7 +184,7 @@ RSpec.describe Steps::WorkItemForm do
       let(:minutes) { nil }
 
       it 'can still calculate a price with hours' do
-        expect(subject.total_cost).to be_within(0.0001).of(60.0 * price / 60)
+        expect(subject.total_cost).to be_within(0.0001).of(60.0 * (price / 60) * 1.1)
       end
     end
 
