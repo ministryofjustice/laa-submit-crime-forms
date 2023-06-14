@@ -23,7 +23,3 @@ spec:
               secretKeyRef:
                 name: rds-postgresql-instance-output
                 key: url
-          - name: ENV
-            value: development
-          - name: RAILS_ENV
-            value: production
