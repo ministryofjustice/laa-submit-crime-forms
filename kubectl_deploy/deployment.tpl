@@ -24,6 +24,6 @@ spec:
                 name: rds-postgresql-instance-output
                 key: url
           - name: ENV
-            value: 'development'
+            value: development
           - name: RAILS_ENV
-            value: 'production'
+            value: production
