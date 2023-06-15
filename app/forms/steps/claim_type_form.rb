@@ -32,9 +32,13 @@ module Steps
     private
 
     def persist!
-      application.update!(
-        attributes.merge(attributes_to_reset, status_attributes)
-      )
+      if claim_type.supported?
+        application.update!(
+          attributes.merge(attributes_to_reset)
+        )
+      else
+        application.destroy
+      end
     end
 
     def attributes_to_reset
@@ -43,14 +47,6 @@ module Steps
         'cntp_order' => breach_claim? ? cntp_order : nil,
         'cntp_date' => breach_claim? ? cntp_date : nil,
       }
-    end
-
-    def status_attributes
-      if claim_type == ClaimType::SOMETHING_ELSE
-        { 'status' => :abandoned }
-      else
-        {}
-      end
     end
   end
 end
