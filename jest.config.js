@@ -4,4 +4,5 @@ module.exports = {
     transform: {
         '^.+\\.js$': 'babel-jest',
     },
+    roots: ['<rootDir>/spec'],
 };
