@@ -129,7 +129,9 @@ Naming/PredicateName:
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:
-  Max: 24
+  Max: 10
+  Exclude:
+    - spec/lib/govuk_design_system_formbuilder/builder/period_spec.rb
 
 RSpec/MultipleExpectations:
   Max: 7

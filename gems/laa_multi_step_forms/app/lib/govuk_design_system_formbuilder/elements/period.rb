@@ -1,16 +1,3 @@
-# rubocop:disable Lint/EmptyClass
-class GovukDesignSystemFormbuilder
-  class Elements
-    class Period
-      # Need this class to resolve `zeitwerk` autoload issues, burt we need to
-      # use `GOVUKDesignSystemFormBuilder` below so that we don;t have issues
-      # with namespacing for other object.
-      # Remove once this is moved to actual FormBuilder gem
-    end
-  end
-end
-# rubocop:enable Lint/EmptyClass
-
 # rubocop:disable Metrics/ClassLength
 module GOVUKDesignSystemFormBuilder
   module Elements
@@ -22,17 +9,20 @@ module GOVUKDesignSystemFormBuilder
       include Traits::Supplemental
       include Traits::HTMLClasses
 
+      FIELDS = %i[hours minutes].freeze
+      DEFAULT_WIDTH = 2
+
       def segement_id(key)
-        "#{@fields.keys.index(key) + 1}i"
+        "#{FIELDS.index(key) + 1}i"
       end
 
       def multiparameter_key(key)
-        @fields.keys.index(key) + 1
+        FIELDS.index(key) + 1
       end
 
       # rubocop:disable Metrics/ParameterLists
       def initialize(builder, object_name, attribute_name, legend:, caption:, hint:, maxlength_enabled:, form_group:,
-                     fields: {}, **kwargs, &block)
+                     widths: {}, **kwargs, &block)
         super(builder, object_name, attribute_name, &block)
 
         @legend            = legend
@@ -40,7 +30,7 @@ module GOVUKDesignSystemFormBuilder
         @hint              = hint
         @maxlength_enabled = maxlength_enabled
         @form_group        = form_group
-        @fields            = { hours: 2, minutes: 2 }.merge(fields)
+        @widths            = widths
         @html_attributes   = kwargs
       end
       # rubocop:enable Metrics/ParameterLists
@@ -62,8 +52,8 @@ module GOVUKDesignSystemFormBuilder
       def period
         tag.div(class: %(#{brand}-period-input)) do
           safe_join(
-            @fields.map.with_index do |(field, width), i|
-              period_part(field, width: width, link_errors: i.zero?)
+            FIELDS.map.with_index do |field, i|
+              period_part(field, width: @widths.fetch(field, DEFAULT_WIDTH), link_errors: i.zero?)
             end
           )
         end
