@@ -1,6 +1,9 @@
 class ClaimsController < ApplicationController
   def index
-    @claims = Claim.all
+    # TODO: delete old claims without a claim type or avoid creating
+    # claim before we have a claim type - this breaks the pattern we
+    # have used for the forms.
+    @claims = Claim.where.not(claim_type: nil)
   end
 
   def create
