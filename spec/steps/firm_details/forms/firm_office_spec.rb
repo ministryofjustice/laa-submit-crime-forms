@@ -20,8 +20,10 @@ RSpec.describe Steps::FirmDetails::FirmOfficeForm do
 
   let(:name) { 'Lawyer 1' }
   let(:account_number) { 'ac1' }
+  # rubocop:disable RSpec/IndexedLet
   let(:address_line_1) { 'home' }
   let(:address_line_2) { 'homely' }
+  # rubocop:enable RSpec/IndexedLet
   let(:town) { 'hometown' }
   let(:postcode) { 'AA1 1AA' }
 
