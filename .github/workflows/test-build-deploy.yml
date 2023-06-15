@@ -97,7 +97,10 @@ jobs:
 
       - name: Run tests
         run: bundle exec rspec
-
+        
+      - name: Run testing framework
+        run: yarn unit-test --coverage
+        
       - name: Upload rspec coverage (if failure)
         if: failure()
         uses: actions/upload-artifact@v2
