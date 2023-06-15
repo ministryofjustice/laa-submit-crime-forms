@@ -31,7 +31,7 @@ module Steps
     end
 
     def total_cost
-      (hours.to_f + (minutes.to_f / 60)) * pricing[work_type]
+      (hours.to_f + (minutes.to_f / 60)) * pricing[work_type] * (1.0 + (apply_uplift ? (uplift.to_f / 100) : 0))
     end
 
     def work_types_with_pricing

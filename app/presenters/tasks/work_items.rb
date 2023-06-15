@@ -1,6 +1,6 @@
 module Tasks
   class WorkItems < Generic
-    PREVIOUS_TASK = HearingDetails
+    PREVIOUS_TASK = ClaimDetails
     FORM = Steps::WorkItemForm
 
     def path
