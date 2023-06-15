@@ -134,13 +134,14 @@ RSpec.describe Steps::ClaimTypeForm do
   end
 
   describe '#save' do
-    let!(:application) { Claim.create!(office_code: 'AAA') }
+    let(:application) { Claim.create!(office_code: 'AAA') }
 
     context 'when claim type is `something else`' do
       let(:claim_type) { ClaimType::SOMETHING_ELSE.to_s }
 
       context 'with details of what has changed' do
         it 'deletes the record' do
+          application
           expect { subject.save! }.to change(Claim, :count).by(-1)
         end
       end
