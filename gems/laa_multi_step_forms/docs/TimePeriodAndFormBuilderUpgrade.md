@@ -22,8 +22,8 @@ The component is made up of 4 main parts plus the associated testing
 
 1. IntegerTimePeriod class
 
-This is a wrapper for an Integer object whihc also exposes methods for
-hours and minutes. It expects the integer it receieve to be the total
+This is a wrapper for an Integer object which also exposes methods for
+hours and minutes. It expects the integer it recieves to be the total
 number of minutes for the given period.
 
 2. TimePeriod type
@@ -31,18 +31,19 @@ number of minutes for the given period.
 This is used to convert values that are passed into the corresponding
 `ActionModel` object.
 
-It is expecting either an Integer or a Hash with the appriate keys and
+It is expecting either an Integer or a Hash with the appropriate keys and
 converts that into either a `IntegerTimePeriod` object if it's valid or
-forward the object (hHsh) if it's invalid.
+forward the object (Hash) if it's invalid.
 
 3. TimePeriodValidator
 
-Used to validate the output of the type, meaning it can accept eitehr
+Used to validate the output of the type, meaning it can accept either
 a `IntegerTimePeriod` or hash with appropriate keys. This allows better
 error messaging when the hash is invalid.
 
-The validator is capable for additing multiple errors to the object,
-by default the GovUK error output only displays the first error,
+The validator is capable for adding multiple errors to the object,
+by default the GovUK error output only displays the first error - 
+meaning the flow of error correcting is resolving one error at a time - 
 as such the ordering of errors being added is important.
 
 4. The form build class GOVUKDesignSystemFormBuilder::Elements::Period
