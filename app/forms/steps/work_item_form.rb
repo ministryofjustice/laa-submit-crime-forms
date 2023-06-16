@@ -12,7 +12,10 @@ module Steps
     attribute :fee_earner, :string
     attribute :uplift, :integer
 
-    validates :work_type, presence: true
+    # TODO: limit this to displayed WorkTypes - this could lead to issues if conditions
+    # are changed as the validation would fail without clearly showing on the summary
+    # page
+    validates :work_type, presence: true, inclusion: { in: WorkTypes.values }
     validates :hours, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     validates :minutes, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     validates :completed_on, presence: true,
