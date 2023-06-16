@@ -12,6 +12,7 @@ gem 'puma', '~> 6.3'
 gem 'rails', '~> 7.0.5'
 gem 'sprockets-rails'
 gem 'tzinfo-data'
+gem "sentry-ruby"
 
 # required as can't specify github in gemspe for laa_multi_step_form
 gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
