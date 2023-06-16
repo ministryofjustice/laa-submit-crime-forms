@@ -8,10 +8,10 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_field :ufn, width: 'one-third', autocomplete: 'off' %>
       <%= f.govuk_text_field :main_offence, width: 'one-third', autocomplete: 'off' %>
-      <%= f.govuk_date_field :main_offence_date, maxlength_enabled: true %>
+      <%= f.govuk_date_field :main_offence_date, maxlength_enabled: true, legend: { size: 's' } %>
 
       <% @form_object.boolean_fields.each do |field| %>
-        <%= f.govuk_radio_buttons_fieldset field, legend: { size: 'm' } do %>
+        <%= f.govuk_radio_buttons_fieldset field, legend: { size: 's' } do %>
           <%= f.govuk_radio_button field, YesNoAnswer::YES.to_s %>
           <%= f.govuk_radio_button field, YesNoAnswer::NO.to_s %>
         <% end%>

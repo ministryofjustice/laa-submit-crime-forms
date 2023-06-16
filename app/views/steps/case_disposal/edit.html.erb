@@ -15,7 +15,7 @@
             <span id="<%= plea %>"></span>
             <%= f.govuk_radio_button :plea, plea.to_s, link_errors: index.zero? do %>
               <% if plea.requires_date_field? %>
-                <%= f.govuk_date_field "#{plea}_date", maxlength_enabled: true %>
+                <%= f.govuk_date_field "#{plea}_date", maxlength_enabled: true, legend: { size: 's', class: 'govuk-date-legend-non-bold' } %>
               <% end %>
             <% end %>
           <% end %>
