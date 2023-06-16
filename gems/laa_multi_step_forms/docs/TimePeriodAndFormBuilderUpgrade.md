@@ -5,7 +5,7 @@ on the GovUK FormBuilder Date component.
 
 Due to this dependency upgrading the GovUK FormBuilder gem can result in
 the TimePeriod component having errors. This document is here to help users
-step through this process.
+understand the component and provide a path for upgrading.
 
 ## Assumptions
 
@@ -20,13 +20,13 @@ FormBuilder gem and remove these issues as dependencies
 
 The component is made up of 4 main parts plus the associated testing
 
-1. `IntegerTimePeriod` class
+1. IntegerTimePeriod class
 
 This is a wrapper for an Integer object whihc also exposes methods for
 hours and minutes. It expects the integer it receieve to be the total
 number of minutes for the given period.
 
-2. `TimePeriod` type
+2. TimePeriod type
 
 This is used to convert values that are passed into the corresponding
 `ActionModel` object.
@@ -35,17 +35,17 @@ It is expecting either an Integer or a Hash with the appriate keys and
 converts that into either a `IntegerTimePeriod` object if it's valid or
 forward the object (hHsh) if it's invalid.
 
-3. `TimePeriodValidator`
+3. TimePeriodValidator
 
 Used to validate the output of the type, meaning it can accept eitehr
 a `IntegerTimePeriod` or hash with appropriate keys. This allows better
 error messaging when the hash is invalid.
 
 The validator is capable for additing multiple errors to the object,
-however by default the GovUK error output only displays the first error,
+by default the GovUK error output only displays the first error,
 as such the ordering of errors being added is important.
 
-4. The form build class `GOVUKDesignSystemFormBuilder::Elements::Period`
+4. The form build class GOVUKDesignSystemFormBuilder::Elements::Period
 
 This class is a copy of the Date component, modified to support hours
 and minutes. This class is likely to be the main issue during any upgrade
@@ -58,7 +58,7 @@ with appropriate keys.
 
 Upgrading the GovUK FormBuilder will potentially require changes to
 the following files, as the underlying modules or interfaces have
-chnaged during the upgrade:
+changed during the upgrade:
 
 1. `GOVUKDesignSystemFormBuilder::Elements::Period` class
 2. `GOVUKDesignSystemFormBuilder::Elements::Period` tests
