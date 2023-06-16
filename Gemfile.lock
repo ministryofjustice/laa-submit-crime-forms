@@ -367,6 +367,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  sentry-ruby
   simplecov
   simplecov-lcov
   simplecov-rcov
