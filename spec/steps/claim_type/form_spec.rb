@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Steps::ClaimTypeForm do
-  subject(:form) { described_class.new(arguments) }
+  subject { described_class.new(arguments) }
 
   let(:arguments) do
     {
@@ -13,22 +13,19 @@ RSpec.describe Steps::ClaimTypeForm do
     }
   end
 
-  let(:application) do
-    instance_double(Claim)
-  end
-
+  let(:application) { instance_double(Claim) }
   let(:claim_type) { nil }
   let(:rep_order_date) { nil }
   let(:cntp_date) { nil }
   let(:cntp_order) { nil }
 
-  describe '#save' do
+  describe '#validations' do
     context 'when `claim_type` is blank' do
       let(:claim_type) { '' }
 
       it 'has is a validation error on the field' do
-        expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:claim_type, :inclusion)).to be(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:claim_type, :inclusion)).to be(true)
       end
     end
 
@@ -36,8 +33,8 @@ RSpec.describe Steps::ClaimTypeForm do
       let(:claim_type) { 'invalid_type' }
 
       it 'has a validation error on the field' do
-        expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:claim_type, :inclusion)).to be(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:claim_type, :inclusion)).to be(true)
       end
     end
 
@@ -47,7 +44,7 @@ RSpec.describe Steps::ClaimTypeForm do
       it { is_expected.to be_valid }
 
       it 'passes validation' do
-        expect(form.errors.of_kind?(:claim_type, :invalid)).to be(false)
+        expect(subject.errors.of_kind?(:claim_type, :invalid)).to be(false)
       end
 
       context 'when non-standard magistrate claim_type' do
@@ -61,7 +58,7 @@ RSpec.describe Steps::ClaimTypeForm do
           it { is_expected.to be_valid }
 
           it 'can reset CNTP fields (leave rep order date)' do
-            attributes = form.send(:attributes_to_reset)
+            attributes = subject.send(:attributes_to_reset)
             expect(attributes).to eq(
               'rep_order_date' => rep_order_date,
               'cntp_order' => nil,
@@ -72,8 +69,8 @@ RSpec.describe Steps::ClaimTypeForm do
 
         context 'without a rep order date' do
           it 'is invalid' do
-            expect(form).not_to be_valid
-            expect(form.errors.of_kind?(:rep_order_date, :blank)).to be(true)
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:rep_order_date, :blank)).to be(true)
           end
         end
       end
@@ -87,11 +84,11 @@ RSpec.describe Steps::ClaimTypeForm do
           let(:cntp_order) { 'AAAA' }
 
           it 'is valid' do
-            expect(form).to be_valid
+            expect(subject).to be_valid
           end
 
           it 'can reset rep order date (leave CNTP fields)' do
-            attributes = form.send(:attributes_to_reset)
+            attributes = subject.send(:attributes_to_reset)
             expect(attributes).to eq(
               'rep_order_date' => nil,
               'cntp_order' => cntp_order,
@@ -102,9 +99,9 @@ RSpec.describe Steps::ClaimTypeForm do
 
         context 'without a CNTP fields being set' do
           it 'is also valid' do
-            expect(form).not_to be_valid
-            expect(form.errors.of_kind?(:cntp_order, :blank)).to be(true)
-            expect(form.errors.of_kind?(:cntp_date, :blank)).to be(true)
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:cntp_order, :blank)).to be(true)
+            expect(subject.errors.of_kind?(:cntp_date, :blank)).to be(true)
           end
         end
 
@@ -113,9 +110,9 @@ RSpec.describe Steps::ClaimTypeForm do
           let(:cntp_order) { 'AAAA' }
 
           it 'is also valid' do
-            expect(form).not_to be_valid
-            expect(form.errors.of_kind?(:cntp_order, :blank)).to be(false)
-            expect(form.errors.of_kind?(:cntp_date, :future_not_allowed)).to be(true)
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:cntp_order, :blank)).to be(false)
+            expect(subject.errors.of_kind?(:cntp_date, :future_not_allowed)).to be(true)
           end
         end
       end
@@ -129,24 +126,23 @@ RSpec.describe Steps::ClaimTypeForm do
           let(:cntp_order) { 'AAAA' }
 
           it 'is valid' do
-            expect(form).to be_valid
+            expect(subject).to be_valid
           end
+        end
+      end
+    end
+  end
 
-          it 'can reset all CNTP and rep order fields' do
-            attributes = form.send(:attributes_to_reset)
-            expect(attributes).to eq(
-              'rep_order_date' => nil,
-              'cntp_order' => nil,
-              'cntp_date' => nil,
-            )
-          end
+  describe '#save' do
+    let(:application) { Claim.create!(office_code: 'AAA') }
 
-          it 'sets the status to abandoned' do
-            attributes = form.send(:status_attributes)
-            expect(attributes).to eq(
-              'status' => :abandoned,
-            )
-          end
+    context 'when claim type is `something else`' do
+      let(:claim_type) { ClaimType::SOMETHING_ELSE.to_s }
+
+      context 'with details of what has changed' do
+        it 'deletes the record' do
+          application
+          expect { subject.save! }.to change(Claim, :count).by(-1)
         end
       end
     end

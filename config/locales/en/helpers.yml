@@ -48,6 +48,8 @@ en:
         cntp_date: For example, 27 3 2007
         cntp_order: For example CNTP1234
       steps_firm_details_form[solicitor_attributes]:
+        full_name: Enter the details of the solicitor managing this case
+        reference_number: For example, 2P341B
         alternative_contact_details: |
           We’ll use the contact details on your account if we need to ask you for
           more information to complete your claim. If you add alternative contact
@@ -105,7 +107,7 @@ en:
         name: Firm name
         account_number: Firm account number
         address_line_1: Address line 1
-        address_line_2: Address line 2
+        address_line_2: Address line 2 (Optional)
         town: Town or city
         postcode: Postcode
       steps_firm_details_form[solicitor_attributes]:
@@ -208,5 +210,5 @@ en:
           'yes': 'Yes'
           'no': 'No'
         conclusion: Tell us why you did not make this claim within 3 months of the conclusion of the proceedings
-        
+
 
