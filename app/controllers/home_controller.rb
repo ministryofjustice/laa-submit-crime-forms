@@ -9,6 +9,4 @@ class HomeController < ApplicationController
     rescue ZeroDivisionError => exception
       Sentry.capture_exception(exception)
     end
-    
-    Sentry.capture_message("test message") 
-end
+  end
