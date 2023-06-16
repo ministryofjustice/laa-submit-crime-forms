@@ -9,8 +9,7 @@ RSpec.describe Steps::WorkItemForm do
       record:,
       id:,
       work_type:,
-      hours:,
-      minutes:,
+      time_spent:,
       completed_on:,
       fee_earner:,
       apply_uplift:,
@@ -24,6 +23,7 @@ RSpec.describe Steps::WorkItemForm do
   let(:date) { Date.new(2023, 1, 1) }
   let(:record) { double(:record, id: SecureRandom.uuid) }
   let(:work_type) { WorkTypes.values.sample.to_s }
+  let(:time_spent) { { 1 => hours, 2 => minutes } }
   let(:hours) { 1 }
   let(:minutes) { 1 }
   let(:completed_on) { Date.new(2023, 3, 1) }
@@ -33,13 +33,24 @@ RSpec.describe Steps::WorkItemForm do
 
   describe '#validations' do
     context 'require fields' do
-      %w[work_type hours minutes completed_on fee_earner].each do |field|
+      %w[work_type time_spent completed_on fee_earner].each do |field|
         describe "#when #{field} is blank" do
           let(field) { nil }
 
           it 'have an error' do
             expect(subject).not_to be_valid
             expect(subject.errors.of_kind?(field, :blank)).to be(true)
+          end
+        end
+      end
+
+      %w[hours minutes].each do |field|
+        describe "#when #{field} is blank" do
+          let(field) { nil }
+
+          it 'have an error' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:time_spent, :"blank_#{field}")).to be(true)
           end
         end
       end
@@ -175,16 +186,16 @@ RSpec.describe Steps::WorkItemForm do
     context 'when hours is nil' do
       let(:hours) { nil }
 
-      it 'can still calculate a price with minutes' do
-        expect(subject.total_cost).to be_within(0.0001).of(1.0 * (price / 60) * 1.1)
+      it 'can not calculate a price' do
+        expect(subject.total_cost).to be_nil
       end
     end
 
     context 'when minutes is nil' do
       let(:minutes) { nil }
 
-      it 'can still calculate a price with hours' do
-        expect(subject.total_cost).to be_within(0.0001).of(60.0 * (price / 60) * 1.1)
+      it 'can not calculate a price' do
+        expect(subject.total_cost).to be_nil
       end
     end
 

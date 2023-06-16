@@ -2,8 +2,20 @@
 # `GOVUKDesignSystemFormBuilder::FormBuilder`. These are app-specific
 # form helpers so can be coupled to application business and logic.
 #
+require_relative '../../lib/govuk_design_system_formbuilder/elements/period'
+
 module LaaMultiStepForms
   module FormBuilderHelper
+    # rubocop:disable Metrics/ParameterLists
+    def govuk_period_field(attribute_name, hint: {}, legend: {}, caption: {}, widths: {}, maxlength_enabled: false,
+                           form_group: {}, **kwargs, &block)
+      GOVUKDesignSystemFormBuilder::Elements::Period.new(
+        self, object_name, attribute_name,
+        hint:, legend:, caption:, widths:, maxlength_enabled:, form_group:, **kwargs, &block
+      ).html
+    end
+    # rubocop:enable Metrics/ParameterLists
+
     def continue_button(primary: :save_and_continue, secondary: :save_and_come_back_later,
                         primary_opts: {}, secondary_opts: {})
       submit_button(primary, primary_opts) do

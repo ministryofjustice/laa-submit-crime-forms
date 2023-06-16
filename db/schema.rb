@@ -51,8 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_103842) do
     t.integer "number_of_witnesses"
     t.string "supplemental_claim"
     t.string "preparation_time"
-    t.integer "time_spent_hours"
-    t.integer "time_spent_mins"
+    t.integer "time_spent"
     t.integer "letters"
     t.integer "calls"
     t.integer "letters_calls_uplift"
@@ -122,8 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_103842) do
   create_table "work_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "claim_id", null: false
     t.string "work_type"
-    t.integer "hours"
-    t.integer "minutes"
+    t.integer "time_spent"
     t.date "completed_on"
     t.string "fee_earner"
     t.integer "uplift"

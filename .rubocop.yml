@@ -131,7 +131,7 @@ Naming/PredicateName:
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:
-  Max: 15
+  Max: 16
 
 RSpec/MultipleExpectations:
   Max: 7
