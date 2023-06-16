@@ -308,7 +308,9 @@ RSpec.describe Steps::WorkItemForm do
   end
 
   describe 'save!' do
-    let(:application) { Claim.create!(office_code: 'AAA', reasons_for_claim: [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s]) }
+    let(:application) do
+      Claim.create!(office_code: 'AAA', reasons_for_claim: [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s])
+    end
     let(:record) { WorkItem.create!(uplift: 40, claim: application) }
 
     context 'when uplift exists in DB but apply_uplift is false in attributes' do
