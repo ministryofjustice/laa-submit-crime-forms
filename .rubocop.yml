@@ -131,7 +131,9 @@ Naming/PredicateName:
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:
-  Max: 15
+  Max: 12
+  Exclude:
+    - spec/steps/work_items/add/form_spec.rb
 
 RSpec/MultipleExpectations:
   Max: 7

@@ -35,8 +35,8 @@ module Steps
     end
 
     def work_types_with_pricing
-      WorkTypes.values.map do |value|
-        [value, pricing[value.to_s]]
+      WorkTypes.values.filter_map do |work_type|
+        [work_type, pricing[work_type.to_s]] if work_type.display?(application)
       end
     end
 
