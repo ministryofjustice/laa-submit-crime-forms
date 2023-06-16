@@ -7,15 +7,12 @@ module Steps
     attribute :prosecution_evidence, :string
     attribute :defence_statement, :string
     attribute :number_of_witnesses, :integer
-    attribute :time_spent_hours, :integer
-    attribute :time_spent_mins,  :integer
+    attribute :time_spent, :time_period
 
     validates :prosecution_evidence, presence: true
     validates :defence_statement, presence: true
     validates :number_of_witnesses, presence: true, numericality: { only_integer: true, greater_than: 0 }
-    validates :time_spent_hours, numericality: { only_integer: true, greater_than: 0 },
-      if: ->(form) { form.preparation_time == YesNoAnswer::YES }
-    validates :time_spent_mins, numericality: { only_integer: true, greater_than: 0 },
+    validates :time_spent, numericality: { only_integer: true, greater_than: 0 }, time_period: true,
       if: ->(form) { form.preparation_time == YesNoAnswer::YES }
 
     BOOLEAN_FIELDS.each do |field|
@@ -30,7 +27,13 @@ module Steps
     private
 
     def persist!
-      application.update!(attributes)
+      application.update!(attributes_to_reset)
+    end
+
+    def attributes_to_reset
+      attributes.merge(
+        time_spent: preparation_time == YesNoAnswer::YES ? time_spent : nil
+      )
     end
   end
 end

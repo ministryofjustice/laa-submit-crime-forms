@@ -27,8 +27,7 @@ RSpec.describe 'User can manage work items', type: :system do
     expect(claim.reload.work_items).to contain_exactly(
       have_attributes(
         work_type: 'advocacy',
-        hours: 1,
-        minutes: 1,
+        time_spent: 61,
         completed_on: Date.new(2023, 4, 20),
         fee_earner: 'JBJ',
         uplift: nil,
@@ -72,8 +71,7 @@ RSpec.describe 'User can manage work items', type: :system do
   it 'can add additional work items' do
     claim.work_items.create(
       work_type: 'apples',
-      hours: 2,
-      minutes: 2,
+      time_spent: 122,
       completed_on: Date.new(2022, 4, 20),
       fee_earner: 'BJB',
       uplift: nil,
@@ -103,16 +101,14 @@ RSpec.describe 'User can manage work items', type: :system do
     expect(claim.reload.work_items).to contain_exactly(
       have_attributes(
         work_type: 'apples',
-        hours: 2,
-        minutes: 2,
+        time_spent: 122,
         completed_on: Date.new(2022, 4, 20),
         fee_earner: 'BJB',
         uplift: nil,
       ),
       have_attributes(
         work_type: 'advocacy',
-        hours: 1,
-        minutes: 1,
+        time_spent: 61,
         completed_on: Date.new(2023, 4, 20),
         fee_earner: 'JBJ',
         uplift: nil,
@@ -123,8 +119,7 @@ RSpec.describe 'User can manage work items', type: :system do
   it 'can delete a work_item' do
     work_item = claim.work_items.create(
       work_type: 'advocacy',
-      hours: 2,
-      minutes: 2,
+      time_spent: 122,
       completed_on: Date.new(2022, 4, 20),
       fee_earner: 'BJB',
       uplift: nil,

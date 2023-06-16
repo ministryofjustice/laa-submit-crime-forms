@@ -111,7 +111,6 @@ en:
           fee_earner: Fee earner
         total_cost: Total cost
         completed_date_blank: Completed date not set
-        period: "%{hours} hr %{minutes} mins"
   laa_multi_step_forms:
     task_list:
       show:

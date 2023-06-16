@@ -15,3 +15,11 @@ en:
       find_address: Find address
       try_again: Try again
       apply_in_eforms: Apply in eForms
+    time_period: &period
+      missing: 'Not set'
+      hours:
+        one: '%{count} Hr '
+        other: '%{count} Hrs '
+      minutes:
+        one: '%{count} Min'
+        other: '%{count} Mins'

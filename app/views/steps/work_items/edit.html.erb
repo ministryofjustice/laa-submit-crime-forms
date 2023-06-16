@@ -21,7 +21,7 @@
           <% work_items.each do |work_item| %>
             <tr class="govuk-table__row">
               <td class="govuk-table__cell"><%= t("helper.steps_work_item_form.work_type_options.#{work_item.work_type}") %></td>
-              <td class="govuk-table__cell"><%= t(".period", hours: work_item.hours.to_i, minutes: work_item.minutes.to_i) %></td>
+              <td class="govuk-table__cell"><%= format_period(work_item.time_spent)  %></td>
               <td class="govuk-table__cell"><%= work_item.fee_earner %></td>
               <td class="govuk-table__cell">
                 <%= link_to t('.change'), edit_steps_work_item_path(@form_object.application, work_item_id: work_item.id) %>

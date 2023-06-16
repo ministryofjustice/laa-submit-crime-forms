@@ -142,14 +142,24 @@ en:
               blank: Select yes or no for supplemental_claim
             preparation_time:
               blank: Select yes or no for preparation_time
+            time_spent:
+              blank_hours: Hours must be set
+              invalid_hours: Hours must be greater than 0
+              blank_minutes: Minutes must be set
+              invalid_minutes: Minutes must be between 0 and 59
+              invalid_period: Period must be greater than 0
+              invalid: Period must be valid
         steps/work_item_form:
           attributes:
             completed_on: *shared_date_errors
             fee_earner:
               blank: Fee earner must be set
-            hours:
-              blank: Hours must be set
-            minutes:
-              blank: Minutes must be set
+            time_spent:
+              blank_hour: Hours must be set
+              invalid_hour: Hours must be greater than 0
+              blank_minutes: Minutes must be set
+              invalid_minutes: Minutes must be between 0 and 59
+              invalid_period: Period must be greater than 0
+              invalid: Period must be valid
             work_type:
               blank: Type of work must be choosen
