@@ -20,7 +20,7 @@ RSpec.describe Steps::WorkItemForm do
 
   let(:application) do
     instance_double(Claim, work_items: work_items, update!: true, date: date, assigned_counsel: assigned_counsel,
-   in_area: in_area)
+   in_area: in_area, reasons_for_claim: reasons_for_claim)
   end
   let(:work_items) { [double(:record), record] }
   let(:id) { record.id }
@@ -35,6 +35,7 @@ RSpec.describe Steps::WorkItemForm do
   let(:uplift) { 10 }
   let(:assigned_counsel) { 'yes' }
   let(:in_area) { 'no' }
+  let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
 
   describe '#validations' do
     context 'require fields' do
@@ -119,31 +120,51 @@ RSpec.describe Steps::WorkItemForm do
     end
   end
 
-  describe '#apply_uplift' do
-    context 'when set to nil - not set' do
-      let(:apply_uplift) { nil }
+  describe '#allow_uplift?' do
+    context 'when reasons_for_claim contains ENHANCED_RATES_CLAIMED' do
+      it { expect(subject).to be_allow_uplift }
+    end
 
-      context 'and letters_calls_uplift is not nil' do
-        let(:uplift) { 10 }
+    context 'when reasons_for_claim does not contain ENHANCED_RATES_CLAIMED' do
+      let(:reasons_for_claim) { ['other'] }
+
+      it { expect(subject).not_to be_allow_uplift }
+    end
+  end
+
+  describe '#apply_uplift' do
+    context 'when reasons_for_claim contains ENHANCED_RATES_CLAIMED' do
+      context 'when set to nil - not set' do
+        let(:apply_uplift) { nil }
+
+        context 'and letters_calls_uplift is not nil' do
+          let(:uplift) { 10 }
+
+          it { expect(subject.apply_uplift).to be_truthy }
+        end
+
+        context 'and letters_calls_uplift is nil' do
+          let(:uplift) { nil }
+
+          it { expect(subject.apply_uplift).to be_falsey }
+        end
+      end
+
+      context 'when set to "true"' do
+        let(:apply_uplift) { 'true' }
 
         it { expect(subject.apply_uplift).to be_truthy }
       end
 
-      context 'and letters_calls_uplift is nil' do
-        let(:uplift) { nil }
+      context 'when set to "false"' do
+        let(:apply_uplift) { 'false' }
 
         it { expect(subject.apply_uplift).to be_falsey }
       end
     end
 
-    context 'when set to "true"' do
-      let(:apply_uplift) { 'true' }
-
-      it { expect(subject.apply_uplift).to be_truthy }
-    end
-
-    context 'when set to "false"' do
-      let(:apply_uplift) { 'false' }
+    context 'when reasons_for_claim does not contain ENHANCED_RATES_CLAIMED' do
+      let(:reasons_for_claim) { ['other'] }
 
       it { expect(subject.apply_uplift).to be_falsey }
     end
@@ -287,7 +308,7 @@ RSpec.describe Steps::WorkItemForm do
   end
 
   describe 'save!' do
-    let(:application) { Claim.create!(office_code: 'AAA') }
+    let(:application) { Claim.create!(office_code: 'AAA', reasons_for_claim: [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s]) }
     let(:record) { WorkItem.create!(uplift: 40, claim: application) }
 
     context 'when uplift exists in DB but apply_uplift is false in attributes' do

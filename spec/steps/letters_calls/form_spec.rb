@@ -13,12 +13,13 @@ RSpec.describe Steps::LettersCallsForm do
     }
   end
 
-  let(:application) { instance_double(Claim, update!: true, date: date) }
+  let(:application) { instance_double(Claim, update!: true, date: date, reasons_for_claim: reasons_for_claim) }
   let(:letters) { 1 }
   let(:calls) { 1 }
   let(:apply_uplift) { 'true' }
   let(:letters_calls_uplift) { 0 }
   let(:date) { nil }
+  let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
 
   describe '#validations' do
     describe '#letters' do
@@ -154,31 +155,51 @@ RSpec.describe Steps::LettersCallsForm do
     end
   end
 
-  describe '#apply_uplift' do
-    context 'when set to nil - not set' do
-      let(:apply_uplift) { nil }
+  describe '#allow_uplift?' do
+    context 'when reasons_for_claim contains ENHANCED_RATES_CLAIMED' do
+      it { expect(subject).to be_allow_uplift }
+    end
 
-      context 'and letters_calls_uplift is not nil' do
-        let(:letters_calls_uplift) { 10 }
+    context 'when reasons_for_claim does not contain ENHANCED_RATES_CLAIMED' do
+      let(:reasons_for_claim) { ['other'] }
+
+      it { expect(subject).not_to be_allow_uplift }
+    end
+  end
+
+  describe '#apply_uplift' do
+    context 'when reasons_for_claim contains ENHANCED_RATES_CLAIMED' do
+      context 'when set to nil - not set' do
+        let(:apply_uplift) { nil }
+
+        context 'and letters_calls_uplift is not nil' do
+          let(:letters_calls_uplift) { 10 }
+
+          it { expect(subject.apply_uplift).to be_truthy }
+        end
+
+        context 'and letters_calls_uplift is nil' do
+          let(:letters_calls_uplift) { nil }
+
+          it { expect(subject.apply_uplift).to be_falsey }
+        end
+      end
+
+      context 'when set to "true"' do
+        let(:apply_uplift) { 'true' }
 
         it { expect(subject.apply_uplift).to be_truthy }
       end
 
-      context 'and letters_calls_uplift is nil' do
-        let(:letters_calls_uplift) { nil }
+      context 'when set to "false"' do
+        let(:apply_uplift) { 'false' }
 
         it { expect(subject.apply_uplift).to be_falsey }
       end
     end
 
-    context 'when set to "true"' do
-      let(:apply_uplift) { 'true' }
-
-      it { expect(subject.apply_uplift).to be_truthy }
-    end
-
-    context 'when set to "false"' do
-      let(:apply_uplift) { 'false' }
+    context 'when reasons_for_claim does not contain ENHANCED_RATES_CLAIMED' do
+      let(:reasons_for_claim) { ['other'] }
 
       it { expect(subject.apply_uplift).to be_falsey }
     end

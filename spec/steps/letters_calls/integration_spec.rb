@@ -8,6 +8,8 @@ RSpec.describe 'User can fill in claim type details', type: :system do
   end
 
   it 'can do green path' do
+    claim.update!(reasons_for_claim: [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s])
+
     visit edit_steps_letters_calls_path(claim.id)
 
     fill_in 'Number of letters', with: 1

@@ -25,8 +25,13 @@ module Steps
             numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 },
             if: :apply_uplift
 
+    def allow_uplift?
+      application.reasons_for_claim.include?(ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s)
+    end
+
     def apply_uplift
-      @apply_uplift.nil? ? uplift.present? : @apply_uplift == 'true'
+      allow_uplift? &&
+        (@apply_uplift.nil? ? uplift.present? : @apply_uplift == 'true')
     end
 
     def pricing
