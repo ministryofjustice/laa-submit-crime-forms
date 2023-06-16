@@ -59,8 +59,7 @@ RSpec.describe 'User can manage work items', type: :system do
     expect(claim.reload.work_items).to contain_exactly(
       have_attributes(
         work_type: 'advocacy',
-        hours: 1,
-        minutes: 1,
+        time_spent: 61,
         completed_on: Date.new(2023, 4, 20),
         fee_earner: 'JBJ',
         uplift: 10,
