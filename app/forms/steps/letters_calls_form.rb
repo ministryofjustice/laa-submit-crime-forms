@@ -30,7 +30,7 @@ numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_eq
       calls.to_f * pricing.calls * (1 + (letters_calls_uplift.to_f / 100))
     end
 
-    def total
+    def total_cost
       letters_total + calls_total
     end
 

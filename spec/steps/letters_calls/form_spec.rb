@@ -216,13 +216,13 @@ RSpec.describe Steps::LettersCallsForm do
       it { expect(subject.letters_total).to eq(2.0 * 4.09 * 1) }
     end
 
-    context 'wehn date is before 30 Sep 2022' do
+    context 'when date is before 30 Sep 2022' do
       let(:date) { Date.new(2022, 9, 29) }
 
       it { expect(subject.letters_total).to eq(2.0 * 3.56 * 1) }
     end
 
-    context 'wehn date is on or after 30 Sep 2022' do
+    context 'when date is on or after 30 Sep 2022' do
       it { expect(subject.letters_total).to eq(2.0 * 4.09 * 1) }
     end
 
@@ -250,13 +250,13 @@ RSpec.describe Steps::LettersCallsForm do
       it { expect(subject.calls_total).to eq(2.0 * 4.09 * 1) }
     end
 
-    context 'wehn date is before 30 Sep 2022' do
+    context 'when date is before 30 Sep 2022' do
       let(:date) { Date.new(2022, 9, 29) }
 
       it { expect(subject.calls_total).to eq(2.0 * 3.56 * 1) }
     end
 
-    context 'wehn date is on or after 30 Sep 2022' do
+    context 'when date is on or after 30 Sep 2022' do
       it { expect(subject.calls_total).to eq(2.0 * 4.09 * 1) }
     end
 
@@ -273,7 +273,7 @@ RSpec.describe Steps::LettersCallsForm do
     end
   end
 
-  describe '#total' do
+  describe '#total_cost' do
     let(:date) { Date.new(2022, 9, 30) }
     let(:letters) { 2 }
     let(:calls) { 3 }
@@ -282,35 +282,35 @@ RSpec.describe Steps::LettersCallsForm do
     context 'when date is not set' do
       let(:date) { nil }
 
-      it { expect(subject.total).to eq(5.0 * 4.09 * 1) }
+      it { expect(subject.total_cost).to eq(5.0 * 4.09 * 1) }
     end
 
-    context 'wehn date is before 30 Sep 2022' do
+    context 'when date is before 30 Sep 2022' do
       let(:date) { Date.new(2022, 9, 29) }
 
-      it { expect(subject.total).to eq(5.0 * 3.56 * 1) }
+      it { expect(subject.total_cost).to eq(5.0 * 3.56 * 1) }
     end
 
-    context 'wehn date is on or after 30 Sep 2022' do
-      it { expect(subject.total).to eq(5.0 * 4.09 * 1) }
+    context 'when date is on or after 30 Sep 2022' do
+      it { expect(subject.total_cost).to eq(5.0 * 4.09 * 1) }
     end
 
     context 'when uplift is set' do
       let(:letters_calls_uplift) { 10 }
 
-      it { expect(subject.total).to eq(5.0 * 4.09 * 1.1) }
+      it { expect(subject.total_cost).to eq(5.0 * 4.09 * 1.1) }
     end
 
     context 'when letters is 0' do
       let(:letters) { 0 }
 
-      it { expect(subject.total).to eq(3.0 * 4.09 * 1) }
+      it { expect(subject.total_cost).to eq(3.0 * 4.09 * 1) }
     end
 
     context 'when calls is 0' do
       let(:calls) { 0 }
 
-      it { expect(subject.total).to eq(2.0 * 4.09 * 1) }
+      it { expect(subject.total_cost).to eq(2.0 * 4.09 * 1) }
     end
   end
 

@@ -1,0 +1,20 @@
+---
+en:
+  summary:
+    change: Change
+    header:
+      items: Items
+      total: Total per item
+    footer:
+      total: Total
+    cost_summary:
+      work_items: Work items
+      preparation: Preparation
+      advocacy: Advocacy
+      attendance_with_counsel: Attendance with counsel
+      attendance_without_counsel: Attendance without counsel
+      travel: Travel
+      waiting: Waiting
+      letters_calls: Letters and phone calls
+      letters: Letters
+      calls: Phone calls
