@@ -1,7 +1,7 @@
 module Steps
   class CostSummaryController < Steps::BaseStepController
     def show
-      @sections = CostSummary.new(current_application).sections
+      @report = CostSummary::Report.new(current_application)
     end
   end
 end

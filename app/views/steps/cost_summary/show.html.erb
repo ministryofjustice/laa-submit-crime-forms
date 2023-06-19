@@ -4,8 +4,16 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-thirds">
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
-      <% @sections.each do |section| %>
-        <%= govuk_summary_list(**section) %>
-      <% end %>
+    <h2 class="govuk-hint"><%= t('.estimate') %></h2>
+    <div class="govuk-heading-l"><%= @report.total_cost %></div>
+
+    <% @report.sections.each do |section| %>
+      <%= govuk_summary_list(**section) %>
+    <% end %>
+
+    <%= form_with url: edit_steps_work_items_path do |f| %>
+      <%= f.continue_button(secondary: false, primary_opts: { method: :get }) %>
+    <% end %>
+
   </div>
 </div>

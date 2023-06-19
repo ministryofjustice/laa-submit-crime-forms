@@ -7,14 +7,15 @@ en:
       total: Total per item
     footer:
       total: Total
-    cost_summary:
-      work_items: Work items
+    cost_summary/work_items:
+      work_items: Work items total %{total}
       preparation: Preparation
       advocacy: Advocacy
       attendance_with_counsel: Attendance with counsel
       attendance_without_counsel: Attendance without counsel
       travel: Travel
       waiting: Waiting
-      letters_calls: Letters and phone calls
+    cost_summary/letters_calls:
+      letters_calls: Letters and phone calls total %{total}
       letters: Letters
       calls: Phone calls
