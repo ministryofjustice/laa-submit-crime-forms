@@ -8,8 +8,9 @@ en:
         claim_type: What are you claiming for?
         rep_order_date: Representation order date
         cntp_date: CNTP date
-      steps_firm_details_form[solicitor_attributes]:
-        alternative_contact_details: Do you want to add alternative contact details?
+      steps_firm_details_form:
+        solicitor_attributes:
+          alternative_contact_details: Do you want to add alternative contact details?
       steps_case_details_form:
         main_offence_date: Main offence date
         assigned_counsel: Was there an assigned counsel ?
@@ -48,13 +49,14 @@ en:
         rep_order_date: For example, 27 3 2007
         cntp_date: For example, 27 3 2007
         cntp_order: For example CNTP1234
-      steps_firm_details_form[solicitor_attributes]:
-        full_name: Enter the details of the solicitor managing this case
-        reference_number: For example, 2P341B
-        alternative_contact_details: |
-          We’ll use the contact details on your account if we need to ask you for
-          more information to complete your claim. If you add alternative contact
-          details we’ll use those instead.
+      steps_firm_details_form:
+        solicitor_attributes:
+          full_name: Enter the details of the solicitor managing this case
+          reference_number: For example, 2P341B
+          alternative_contact_details: |
+            We’ll use the contact details on your account if we need to ask you for
+            more information to complete your claim. If you add alternative contact
+            details we’ll use those instead.
       steps_case_details_form:
         main_offence_date: For example, 27 3 2007
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
@@ -105,21 +107,23 @@ en:
           breach_of_injunction: Breach of injunction
           something_else: Something else
         cntp_order: CNTP number
-      steps_firm_details_form[firm_office_attributes]:
-        name: Firm name
-        account_number: Firm account number
-        address_line_1: Address line 1
-        address_line_2: Address line 2 (Optional)
-        town: Town or city
-        postcode: Postcode
-      steps_firm_details_form[solicitor_attributes]:
-        full_name: Solicitor full name
-        reference_number: Solicitor reference number
-        contact_full_name: Full name of alternative contact
-        contact_email: Email address of alternative contact
-        alternative_contact_details_options:
-          'yes': 'Yes'
-          'no': 'No'
+
+      steps_firm_details_form:
+        firm_office_attributes:
+          name: Firm name
+          account_number: Firm account number
+          address_line_1: Address line 1
+          address_line_2: Address line 2 (Optional)
+          town: Town or city
+          postcode: Postcode
+        solicitor_attributes:
+          full_name: Solicitor full name
+          reference_number: Solicitor reference number
+          contact_full_name: Full name of alternative contact
+          contact_email: Email address of alternative contact
+          alternative_contact_details_options:
+            'yes': 'Yes'
+            'no': 'No'
       steps_case_details_form:
         ufn: Your Unique File Number
         main_offence: Main offence
