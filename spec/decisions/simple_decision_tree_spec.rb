@@ -68,7 +68,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
                     }
   end
 
-  it_behaves_like 'a generic decision', :letters_calls, :other_info, Steps::LettersCallsForm
+  it_behaves_like 'a generic decision', :letters_calls, :cost_summary, Steps::LettersCallsForm, action_name: :show
   it_behaves_like 'a generic decision', :other_info, :start_page, Steps::OtherInfoForm, action_name: :show
 
   context 'when step is unknown' do

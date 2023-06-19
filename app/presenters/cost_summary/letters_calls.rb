@@ -9,22 +9,20 @@ module CostSummary
     def rows
       [
         {
-          key: { text: t("letters") },
+          key: { text: t('letters') },
           value: { text: f(letters_calls_form.letters_total) },
         },
         {
-          key: { text: t("calls") },
+          key: { text: t('calls') },
           value: { text: f(letters_calls_form.calls_total) },
         }
       ]
     end
 
-    def total_cost
-      letters_calls_form.total_cost
-    end
+    delegate :total_cost, to: :letters_calls_form
 
     def title
-      t("letters_calls", total: f(total_cost))
+      t('letters_calls', total: f(total_cost))
     end
   end
 end

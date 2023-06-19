@@ -9,12 +9,12 @@ module Decisions
       reason_for_claim: :claim_details,
       claim_details: :work_item,
       work_item: :work_items,
-      letters_calls: :claim_summary,
       claim_summary: :other_info,
     }.freeze
 
     SHOW_MAPPING = {
       other_info: :start_page,
+      letters_calls: :cost_summary,
     }.freeze
 
     def destination
@@ -82,8 +82,6 @@ module Decisions
         edit(:other_info)
       end
     end
-
-    def
 
     def after_work_item_delete
       after_claim_details

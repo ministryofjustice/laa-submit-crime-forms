@@ -33,7 +33,7 @@ module CostSummary
       helper = Rails.application.routes.url_helpers
       [
         govuk_link_to(
-          t(".change"),
+          t('.change'),
           helper.url_for(controller: "steps/#{key}", action: :edit, id: claim.id, only_path: true)
         ),
       ]
@@ -43,8 +43,8 @@ module CostSummary
 
     def header_row
       {
-        key: { text: t(".header.items") },
-        value: { text: t(".header.total"), classes: 'govuk-summary-list__value-bold' },
+        key: { text: t('.header.items') },
+        value: { text: t('.header.total'), classes: 'govuk-summary-list__value-bold' },
       }
     end
   end

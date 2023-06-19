@@ -82,8 +82,8 @@ Rails.application.routes.draw do
       edit_step :work_item
       edit_step :work_items
       edit_step :work_item_delete
-      edit_step :other_info
       show_step :cost_summary
+      edit_step :other_info
     end
   end
 end

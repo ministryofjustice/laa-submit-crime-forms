@@ -5,7 +5,7 @@ module CostSummary
     def initialize(work_items, claim)
       @claim = claim
       @work_item_forms = work_items
-                            .map { |work_item| Steps::WorkItemForm.build(work_item, application: claim) }
+                         .map { |work_item| Steps::WorkItemForm.build(work_item, application: claim) }
     end
 
     def rows
@@ -26,7 +26,7 @@ module CostSummary
     end
 
     def title
-      t("work_items", total: f(total_cost))
+      t('work_items', total: f(total_cost))
     end
   end
 end

@@ -147,3 +147,7 @@ RSpec/ExampleLength:
   Max: 16
   Exclude:
     - spec/steps/**/integration_spec.rb
+
+Lint/MissingSuper:
+  Exclude:
+    - 'app/presenters/cost_summary/*'
