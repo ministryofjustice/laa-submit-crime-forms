@@ -17,7 +17,10 @@ RSpec.describe Steps::WorkItemForm do
     }
   end
 
-  let(:application) { instance_double(Claim, work_items: work_items, update!: true, date: date) }
+  let(:application) do
+    instance_double(Claim, work_items: work_items, update!: true, date: date, assigned_counsel: assigned_counsel,
+   in_area: in_area, reasons_for_claim: reasons_for_claim)
+  end
   let(:work_items) { [double(:record), record] }
   let(:id) { record.id }
   let(:date) { Date.new(2023, 1, 1) }
@@ -30,6 +33,9 @@ RSpec.describe Steps::WorkItemForm do
   let(:fee_earner) { 'JBJ' }
   let(:apply_uplift) { 'true' }
   let(:uplift) { 10 }
+  let(:assigned_counsel) { 'yes' }
+  let(:in_area) { 'no' }
+  let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
 
   describe '#validations' do
     context 'require fields' do
@@ -125,31 +131,51 @@ RSpec.describe Steps::WorkItemForm do
     end
   end
 
-  describe '#apply_uplift' do
-    context 'when set to nil - not set' do
-      let(:apply_uplift) { nil }
+  describe '#allow_uplift?' do
+    context 'when reasons_for_claim contains ENHANCED_RATES_CLAIMED' do
+      it { expect(subject).to be_allow_uplift }
+    end
 
-      context 'and letters_calls_uplift is not nil' do
-        let(:uplift) { 10 }
+    context 'when reasons_for_claim does not contain ENHANCED_RATES_CLAIMED' do
+      let(:reasons_for_claim) { ['other'] }
+
+      it { expect(subject).not_to be_allow_uplift }
+    end
+  end
+
+  describe '#apply_uplift' do
+    context 'when reasons_for_claim contains ENHANCED_RATES_CLAIMED' do
+      context 'when set to nil - not set' do
+        let(:apply_uplift) { nil }
+
+        context 'and letters_calls_uplift is not nil' do
+          let(:uplift) { 10 }
+
+          it { expect(subject.apply_uplift).to be_truthy }
+        end
+
+        context 'and letters_calls_uplift is nil' do
+          let(:uplift) { nil }
+
+          it { expect(subject.apply_uplift).to be_falsey }
+        end
+      end
+
+      context 'when set to "true"' do
+        let(:apply_uplift) { 'true' }
 
         it { expect(subject.apply_uplift).to be_truthy }
       end
 
-      context 'and letters_calls_uplift is nil' do
-        let(:uplift) { nil }
+      context 'when set to "false"' do
+        let(:apply_uplift) { 'false' }
 
         it { expect(subject.apply_uplift).to be_falsey }
       end
     end
 
-    context 'when set to "true"' do
-      let(:apply_uplift) { 'true' }
-
-      it { expect(subject.apply_uplift).to be_truthy }
-    end
-
-    context 'when set to "false"' do
-      let(:apply_uplift) { 'false' }
+    context 'when reasons_for_claim does not contain ENHANCED_RATES_CLAIMED' do
+      let(:reasons_for_claim) { ['other'] }
 
       it { expect(subject.apply_uplift).to be_falsey }
     end
@@ -214,32 +240,88 @@ RSpec.describe Steps::WorkItemForm do
 
       it 'uses the old prices' do
         expect(subject.work_types_with_pricing).to eq([
-                                                        [WorkTypes::PREPARATION, 45.35],
-                                                        [WorkTypes::ADVOCACY, 56.89],
                                                         [WorkTypes::ATTENDANCE_WITH_COUNSEL, 31.03],
                                                         [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 31.03],
+                                                        [WorkTypes::PREPARATION, 45.35],
+                                                        [WorkTypes::ADVOCACY, 56.89],
                                                         [WorkTypes::TRAVEL, 24.0],
                                                         [WorkTypes::WAITING, 24.0],
                                                       ])
+      end
+
+      context 'when assigned_councel is no' do
+        let(:assigned_counsel) { 'no' }
+
+        it 'does not include ATTENDANCE_WITH_COUNSEL' do
+          expect(subject.work_types_with_pricing).to eq([
+                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 31.03],
+                                                          [WorkTypes::PREPARATION, 45.35],
+                                                          [WorkTypes::ADVOCACY, 56.89],
+                                                          [WorkTypes::TRAVEL, 24.0],
+                                                          [WorkTypes::WAITING, 24.0],
+                                                        ])
+        end
+      end
+
+      context 'when in_area is yes' do
+        let(:in_area) { 'yes' }
+
+        it 'does not include TRAVEL or WAITING' do
+          expect(subject.work_types_with_pricing).to eq([
+                                                          [WorkTypes::ATTENDANCE_WITH_COUNSEL, 31.03],
+                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 31.03],
+                                                          [WorkTypes::PREPARATION, 45.35],
+                                                          [WorkTypes::ADVOCACY, 56.89],
+                                                        ])
+        end
       end
     end
 
     context 'when application date is after CLAIR' do
       it 'uses the new prices' do
         expect(subject.work_types_with_pricing).to eq([
-                                                        [WorkTypes::PREPARATION, 52.15],
-                                                        [WorkTypes::ADVOCACY, 65.42],
                                                         [WorkTypes::ATTENDANCE_WITH_COUNSEL, 35.68],
                                                         [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 35.68],
+                                                        [WorkTypes::PREPARATION, 52.15],
+                                                        [WorkTypes::ADVOCACY, 65.42],
                                                         [WorkTypes::TRAVEL, 27.6],
                                                         [WorkTypes::WAITING, 27.6],
                                                       ])
+      end
+
+      context 'when assigned_councel is no' do
+        let(:assigned_counsel) { 'no' }
+
+        it 'does not include ATTENDANCE_WITH_COUNSEL' do
+          expect(subject.work_types_with_pricing).to eq([
+                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 35.68],
+                                                          [WorkTypes::PREPARATION, 52.15],
+                                                          [WorkTypes::ADVOCACY, 65.42],
+                                                          [WorkTypes::TRAVEL, 27.6],
+                                                          [WorkTypes::WAITING, 27.6],
+                                                        ])
+        end
+      end
+
+      context 'when in_area is yes' do
+        let(:in_area) { 'yes' }
+
+        it 'does not include TRAVEL or WAITING' do
+          expect(subject.work_types_with_pricing).to eq([
+                                                          [WorkTypes::ATTENDANCE_WITH_COUNSEL, 35.68],
+                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 35.68],
+                                                          [WorkTypes::PREPARATION, 52.15],
+                                                          [WorkTypes::ADVOCACY, 65.42],
+                                                        ])
+        end
       end
     end
   end
 
   describe 'save!' do
-    let(:application) { Claim.create!(office_code: 'AAA') }
+    let(:application) do
+      Claim.create!(office_code: 'AAA', reasons_for_claim: [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s])
+    end
     let(:record) { WorkItem.create!(uplift: 40, claim: application) }
 
     context 'when uplift exists in DB but apply_uplift is false in attributes' do
