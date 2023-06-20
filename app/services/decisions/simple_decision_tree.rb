@@ -9,7 +9,6 @@ module Decisions
       reason_for_claim: :claim_details,
       claim_details: :work_item,
       work_item: :work_items,
-      claim_summary: :other_info,
     }.freeze
 
     SHOW_MAPPING = {
@@ -71,15 +70,6 @@ module Decisions
         edit(:work_item, work_item_id: new_work_item.id)
       else
         edit(:letters_calls)
-      end
-    end
-
-    def after_letter_calls
-      if form_object.add_another.yes?
-        new_work_item = form_object.application.work_items.create
-        edit(:summary_claim, work_item_id: new_work_item.id)
-      else
-        edit(:other_info)
       end
     end
 
