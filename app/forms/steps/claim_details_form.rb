@@ -2,12 +2,15 @@ require 'steps/base_form_object'
 
 module Steps
   class ClaimDetailsForm < Steps::BaseFormObject
-    BOOLEAN_FIELDS = %i[supplemental_claim preparation_time].freeze
+    BOOLEAN_FIELDS = %i[supplemental_claim preparation_time work_before work_after].freeze
 
     attribute :prosecution_evidence, :string
     attribute :defence_statement, :string
     attribute :number_of_witnesses, :integer
     attribute :time_spent, :time_period
+    attribute :work_before_date, :date
+    attribute :work_after_date, :date
+
 
     validates :prosecution_evidence, presence: true
     validates :defence_statement, presence: true
@@ -21,18 +24,23 @@ module Steps
     end
 
     def boolean_fields
+      debugger
       self.class::BOOLEAN_FIELDS
     end
 
     private
 
     def persist!
+      debugger
       application.update!(attributes_to_reset)
     end
 
     def attributes_to_reset
+      debugger
       attributes.merge(
-        time_spent: preparation_time == YesNoAnswer::YES ? time_spent : nil
+        time_spent: preparation_time == YesNoAnswer::YES ? time_spent : nil,
+        work_before_date: work_before == YesNoAnswer::YES ? work_before_date : nil,
+        work_after_date: work_after == YesNoAnswer::YES ? work_after_date : nil,
       )
     end
   end

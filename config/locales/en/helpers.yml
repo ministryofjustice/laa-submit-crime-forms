@@ -37,8 +37,10 @@ en:
         defence_statement: Defence statement
         number_of_witnesses: Number of Defence witnesses
         supplemental_claim: Does this bill represent supplemental claim ?
-        preparation_time: Was any preparation time spent watching or listening to taped evidence ?
+        preparation_time: Did you spend time watching or listening to recorded evidence ?
         time_spent: Running time of the recording
+        work_before: Did you do any work before the representation order date ?
+        work_after: Did you do any further work after the last court hearing date?
       steps_other_info_form:
         concluded: Did the proceedings conclude over 3 months ago?
       steps_work_item_form:
@@ -91,9 +93,9 @@ en:
           statements by the defendant and defence witnesses
         prosecution_evidence: Where applicable, give the approximate number of pages
         supplemental_claim_options:
-          'yes': If yes, attach a copy of the previous claim
+          'yes': We'll ask you to upload evidence of this before you submit this claim
         preparation_time_options:
-          'yes': If yes, tell us the total running time of the tape in hours
+          'yes': Running time of the recording
         time_spent: For example, 1 hour and 30 minutes
       steps_work_item_form:
         completed_on: For example, 27 3 2007
@@ -188,6 +190,12 @@ en:
           'yes': 'Yes'
           'no': 'No'
         preparation_time_options:
+          'yes': 'Yes'
+          'no': 'No'
+        work_before_options:
+          'yes': 'Yes'
+          'no': 'No'
+        work_after_options:
           'yes': 'Yes'
           'no': 'No'
       steps_work_item_form:
