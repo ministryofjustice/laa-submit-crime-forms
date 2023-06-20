@@ -20,7 +20,7 @@ module CostSummary
             title: data.title,
             actions: actions(name)
           },
-          rows: [header_row] + data.rows
+          rows: [header_row, *data.rows, footer_row(data)],
         }
       end
     end
@@ -28,6 +28,8 @@ module CostSummary
     def total_cost
       f(items.values.sum(&:total_cost))
     end
+
+    private
 
     def actions(key)
       helper = Rails.application.routes.url_helpers
@@ -39,12 +41,18 @@ module CostSummary
       ]
     end
 
-    private
-
     def header_row
       {
-        key: { text: t('.header.items') },
+        key: { text: t('.header.items'), classes: 'govuk-summary-list__value-width-50' },
         value: { text: t('.header.total'), classes: 'govuk-summary-list__value-bold' },
+      }
+    end
+
+    def footer_row(data)
+      {
+        key: { text: t('.footer.total'), classes: 'govuk-summary-list__value-width-50' },
+        value: { text: f(data.total_cost), classes: 'govuk-summary-list__value-bold' },
+        classes: 'govuk-summary-list__row-double-border'
       }
     end
   end

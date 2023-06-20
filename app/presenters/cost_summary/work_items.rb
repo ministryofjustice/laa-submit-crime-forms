@@ -15,7 +15,7 @@ module CostSummary
       work_types.map do |work_type|
         total_cost = forms[work_type]&.sum(&:total_cost).to_f || 0.0
         {
-          key: { text: t(work_type.to_s) },
+          key: { text: t(work_type.to_s), classes: 'govuk-summary-list__value-width-50' },
           value: { text: f(total_cost) },
         }
       end

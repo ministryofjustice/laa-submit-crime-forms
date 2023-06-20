@@ -9,11 +9,11 @@ module CostSummary
     def rows
       [
         {
-          key: { text: t('letters') },
+          key: { text: t('letters'), classes: 'govuk-summary-list__value-width-50' },
           value: { text: f(letters_calls_form.letters_total) },
         },
         {
-          key: { text: t('calls') },
+          key: { text: t('calls'), classes: 'govuk-summary-list__value-width-50' },
           value: { text: f(letters_calls_form.calls_total) },
         }
       ]
