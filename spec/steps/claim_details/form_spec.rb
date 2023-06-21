@@ -12,6 +12,10 @@ RSpec.describe Steps::ClaimDetailsForm do
       supplemental_claim:,
       preparation_time:,
       time_spent:,
+      work_before:,
+      work_before_date:,
+      work_after:,
+      work_after_date:,
     }
   end
 
@@ -25,12 +29,20 @@ RSpec.describe Steps::ClaimDetailsForm do
   let(:time_spent) { { 1 => hours, 2 => minutes } }
   let(:hours) { 2 }
   let(:minutes) { 40 }
+  let(:work_before) { 'yes' }
+  let(:work_before_date) { Date.new(2023, 1, 1) }
+  let(:work_after) { 'yes' }
+  let(:work_after_date) { Date.new(2023, 1, 1) }
 
   describe '#save preparation time yes' do
     context 'when all fields are set and preparation_time set to yes' do
       let(:preparation_time) { 'yes' }
       let(:time_spent_hours) { 2 }
       let(:time_spent_mins) { 40 }
+      let(:work_before) { 'yes' }
+      let(:work_before_date) { Date.new(2023, 1, 1) }
+      let(:work_after) { 'yes' }
+      let(:work_after_date) { Date.new(2023, 1, 1) }
 
       it 'is valid' do
         expect(subject.save).to be_truthy
@@ -72,6 +84,41 @@ RSpec.describe Steps::ClaimDetailsForm do
       end
     end
   end
+
+
+ describe '#save' do
+    let(:application) { Claim.create(office_code: 'AAA', work_before_date: work_before_date_in_db) }
+    let(:work_before_date_in_db) { nil }
+
+    context 'when work_before is yes' do
+      let(:work_before_date) { 'yes' }
+
+      context 'when time_spent is valid' do
+        it 'is updated the DB in minutes' do
+          expect(subject.save).to be_truthy
+          expect(application.reload).to have_attributes(
+            work_before_date: 160
+          )
+        end
+      end
+    end
+
+    context 'when preparation is no' do
+      let(:preparation_time) { 'no' }
+
+      context 'time_spent has a value in the database' do
+        let(:time_spent_in_db) { 100 }
+
+        it 'clears the database field' do
+          expect(subject.save).to be_truthy
+          expect(application.reload).to have_attributes(
+            time_spent: nil
+          )
+        end
+      end
+    end
+  end
+
 
   describe '#valid?' do
     context 'when preparation is yes' do

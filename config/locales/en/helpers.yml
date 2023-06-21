@@ -39,6 +39,8 @@ en:
         supplemental_claim: Does this bill represent supplemental claim ?
         preparation_time: Did you spend time watching or listening to recorded evidence ?
         time_spent: Running time of the recording
+        work_before_date: Date you started this work
+        work_after_date: Date of last court hearing
         work_before: Did you do any work before the representation order date ?
         work_after: Did you do any further work after the last court hearing date?
       steps_other_info_form:
@@ -97,6 +99,8 @@ en:
         preparation_time_options:
           'yes': Running time of the recording
         time_spent: For example, 1 hour and 30 minutes
+        work_before_date: For example, 27 3 2023
+        work_after_date: For example, 27 3 2023
       steps_work_item_form:
         completed_on: For example, 27 3 2007
         fee_earner: For example, JMD
