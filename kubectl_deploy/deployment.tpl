@@ -21,7 +21,10 @@ spec:
           - name: ENV
             value: Development
           - name: SENTRY_DSN
-            value: https://b3bce9495e484872ae0ab2aeeaedbd54@o345774.ingest.sentry.io/4505369863651328
+            valueFrom:
+              secretKeyRef:
+                name: sentry-dsn
+                key: url
           - name: DATABASE_URL
             valueFrom:
               secretKeyRef:
