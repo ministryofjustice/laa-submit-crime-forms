@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby File.read('.ruby-version').strip
 
 gem 'bootsnap', require: false
-gem 'dartsass-rails', '~> 0.4.0'
+gem 'dartsass-rails', '~> 0.5.0'
 gem 'importmap-rails'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'pg', '~> 1.5'
