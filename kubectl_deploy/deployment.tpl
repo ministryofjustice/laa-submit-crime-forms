@@ -18,6 +18,8 @@ spec:
         ports:
         - containerPort: 5000
         env:
+          - name: ENV
+            value: Development
           - name: DATABASE_URL
             valueFrom:
               secretKeyRef:
