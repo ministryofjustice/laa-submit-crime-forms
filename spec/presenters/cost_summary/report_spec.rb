@@ -32,6 +32,7 @@ RSpec.describe CostSummary::Report do
   end
 
   describe '#sections' do
+    # rubocop:disable RSpec/ExampleLength
     it 'returns an array of data for the Summary list renderer' do
       expect(subject.sections).to eq(
         [
@@ -74,6 +75,7 @@ RSpec.describe CostSummary::Report do
         ]
       )
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 
   describe '#total_cost' do
