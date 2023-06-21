@@ -20,7 +20,7 @@
 
       <section id='letters-calls-total-section'>
         <span class="govuk-caption-l"><%= t('.total_cost') %></span>
-        <h1 class="govuk-heading-l" id='letters-calls-total'><%= number_to_currency(@form_object.total, unit: '£') %></h1>
+        <h1 class="govuk-heading-l" id='letters-calls-total'><%= number_to_currency(@form_object.total_cost, unit: '£') %></h1>
 
         <%= govuk_details(summary_text: t('.summary')) do %>
           <table class="govuk-table">

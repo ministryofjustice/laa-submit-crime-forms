@@ -9,11 +9,11 @@ module Decisions
       reason_for_claim: :claim_details,
       claim_details: :work_item,
       work_item: :work_items,
-      letters_calls: :other_info,
     }.freeze
 
     SHOW_MAPPING = {
       other_info: :start_page,
+      letters_calls: :cost_summary,
     }.freeze
 
     def destination
