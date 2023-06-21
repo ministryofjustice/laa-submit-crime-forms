@@ -1,5 +1,5 @@
 Sentry.init do |config|
-  config.dsn = 'https://b3bce9495e484872ae0ab2aeeaedbd54@o345774.ingest.sentry.io/4505369863651328'
+  config.dsn = ENV['SENTRY_DSN']
 
   # Set traces_sample_rate to 1.0 to capture 100%
   # of transactions for performance monitoring.
