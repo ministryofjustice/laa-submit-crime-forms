@@ -10,6 +10,8 @@ gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.3'
 gem 'rails', '~> 7.0.5'
+gem 'sentry-rails'
+gem 'sentry-ruby'
 gem 'sprockets-rails'
 gem 'tzinfo-data'
 
