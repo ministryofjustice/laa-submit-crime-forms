@@ -33,6 +33,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'rspec-html-matchers'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
