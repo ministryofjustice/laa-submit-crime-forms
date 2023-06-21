@@ -15,8 +15,8 @@ module CostSummary
       work_types.map do |work_type|
         total_cost = forms[work_type]&.sum(&:total_cost).to_f || 0.0
         {
-          key: { text: t(work_type.to_s), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: f(total_cost) },
+          key: { text: translate(work_type.to_s), classes: 'govuk-summary-list__value-width-50' },
+          value: { text: in_pounds(total_cost) },
         }
       end
     end
@@ -26,7 +26,7 @@ module CostSummary
     end
 
     def title
-      t('work_items', total: f(total_cost))
+      translate('work_items', total: in_pounds(total_cost))
     end
   end
 end

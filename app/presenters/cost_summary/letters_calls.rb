@@ -9,12 +9,12 @@ module CostSummary
     def rows
       [
         {
-          key: { text: t('letters'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: f(letters_calls_form.letters_total) },
+          key: { text: translate('letters'), classes: 'govuk-summary-list__value-width-50' },
+          value: { text: in_pounds(letters_calls_form.letters_total) },
         },
         {
-          key: { text: t('calls'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: f(letters_calls_form.calls_total) },
+          key: { text: translate('calls'), classes: 'govuk-summary-list__value-width-50' },
+          value: { text: in_pounds(letters_calls_form.calls_total) },
         }
       ]
     end
@@ -22,7 +22,7 @@ module CostSummary
     delegate :total_cost, to: :letters_calls_form
 
     def title
-      t('letters_calls', total: f(total_cost))
+      translate('letters_calls', total: in_pounds(total_cost))
     end
   end
 end

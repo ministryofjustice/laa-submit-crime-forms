@@ -26,7 +26,7 @@ module CostSummary
     end
 
     def total_cost
-      f(items.values.sum(&:total_cost))
+      in_pounds(items.values.sum(&:total_cost))
     end
 
     private
@@ -35,7 +35,7 @@ module CostSummary
       helper = Rails.application.routes.url_helpers
       [
         govuk_link_to(
-          t('.change'),
+          translate('.change'),
           helper.url_for(controller: "steps/#{key}", action: :edit, id: claim.id, only_path: true)
         ),
       ]
@@ -43,15 +43,15 @@ module CostSummary
 
     def header_row
       {
-        key: { text: t('.header.items'), classes: 'govuk-summary-list__value-width-50' },
-        value: { text: t('.header.total'), classes: 'govuk-summary-list__value-bold' },
+        key: { text: translate('.header.items'), classes: 'govuk-summary-list__value-width-50' },
+        value: { text: translate('.header.total'), classes: 'govuk-summary-list__value-bold' },
       }
     end
 
     def footer_row(data)
       {
-        key: { text: t('.footer.total'), classes: 'govuk-summary-list__value-width-50' },
-        value: { text: f(data.total_cost), classes: 'govuk-summary-list__value-bold' },
+        key: { text: translate('.footer.total'), classes: 'govuk-summary-list__value-width-50' },
+        value: { text: in_pounds(data.total_cost), classes: 'govuk-summary-list__value-bold' },
         classes: 'govuk-summary-list__row-double-border'
       }
     end

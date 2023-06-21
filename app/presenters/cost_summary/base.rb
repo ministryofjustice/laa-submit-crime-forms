@@ -2,7 +2,7 @@ module CostSummary
   class Base
     include ActionView::Helpers::NumberHelper
 
-    def t(key, **opt)
+    def translate(key, **opt)
       if key[0] == ('.')
         I18n.t("summary.#{key}", **opt)
       else
@@ -10,7 +10,7 @@ module CostSummary
       end
     end
 
-    def f(value)
+    def in_pounds(value)
       number_to_currency(value, unit: '£')
     end
   end
