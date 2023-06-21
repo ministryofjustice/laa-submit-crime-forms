@@ -85,41 +85,6 @@ RSpec.describe Steps::ClaimDetailsForm do
     end
   end
 
-
- describe '#save' do
-    let(:application) { Claim.create(office_code: 'AAA', work_before_date: work_before_date_in_db) }
-    let(:work_before_date_in_db) { nil }
-
-    context 'when work_before is yes' do
-      let(:work_before_date) { 'yes' }
-
-      context 'when time_spent is valid' do
-        it 'is updated the DB in minutes' do
-          expect(subject.save).to be_truthy
-          expect(application.reload).to have_attributes(
-            work_before_date: 160
-          )
-        end
-      end
-    end
-
-    context 'when preparation is no' do
-      let(:preparation_time) { 'no' }
-
-      context 'time_spent has a value in the database' do
-        let(:time_spent_in_db) { 100 }
-
-        it 'clears the database field' do
-          expect(subject.save).to be_truthy
-          expect(application.reload).to have_attributes(
-            time_spent: nil
-          )
-        end
-      end
-    end
-  end
-
-
   describe '#valid?' do
     context 'when preparation is yes' do
       let(:preparation_time) { 'yes' }

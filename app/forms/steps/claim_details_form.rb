@@ -11,18 +11,15 @@ module Steps
     attribute :work_before_date, :multiparam_date
     attribute :work_after_date, :multiparam_date
 
-
     validates :prosecution_evidence, presence: true
     validates :defence_statement, presence: true
     validates :number_of_witnesses, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :time_spent, numericality: { only_integer: true, greater_than: 0 }, time_period: true,
         if: ->(form) { form.preparation_time == YesNoAnswer::YES }
-    validates :work_before_date, presence: true, multiparam_date: { allow_past: true, allow_future: false, greater_than: Date.new(2023,3,27) },
+    validates :work_before_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
         if: ->(form) { form.work_before == YesNoAnswer::YES }
     validates :work_after_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
         if: ->(form) { form.work_after == YesNoAnswer::YES }
-
-
 
     BOOLEAN_FIELDS.each do |field|
       validates field, presence: true, inclusion: { in: YesNoAnswer.values }
@@ -39,7 +36,7 @@ module Steps
       application.update!(attributes_to_reset)
     end
 
-    def attributes_to_reset 
+    def attributes_to_reset
       attributes.merge(
         time_spent: preparation_time == YesNoAnswer::YES ? time_spent : nil,
         work_before_date: work_before == YesNoAnswer::YES ? work_before_date : nil,
