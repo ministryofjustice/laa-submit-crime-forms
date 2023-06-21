@@ -68,7 +68,49 @@ RSpec.describe Decisions::SimpleDecisionTree do
                     }
   end
 
-  it_behaves_like 'a generic decision', :letters_calls, :cost_summary, Steps::LettersCallsForm, action_name: :show
+  context 'when step is letters_calls' do
+    let(:local_form) { Steps::LettersCallsForm.new(application:) }
+    let(:decision_tree) { described_class.new(local_form, as: :letters_calls) }
+
+    context 'when no disbursements exist' do
+      let(:disbursement) { instance_double(Disbursement, id: SecureRandom.uuid) }
+      before do
+        allow(application.disbursements).to receive(:create).and_return(disbursement)
+      end
+
+      it 'creates a new disbursement' do
+        decision_tree.destination
+        expect(application.disbursements).to have_received(:create).with(no_args)
+      end
+
+      it 'moves to the page for the disbursement' do
+        expect(decision_tree.destination).to eq(
+          action: :edit,
+          controller: :disbursement_type,
+          id: application,
+          disbursement_id: disbursement.id,
+        )
+
+      end
+    end
+
+    context 'when disbursements exist' do
+      let(:disbursement) { instance_double(Disbursement, id: SecureRandom.uuid) }
+      before do
+        allow(application).to receive(:disbursements).and_return([disbursement])
+      end
+
+      it "moves to page for the first disbursement" do
+        expect(decision_tree.destination).to eq(
+          action: :edit,
+          controller: :disbursement_type,
+          id: application,
+          disbursement_id: disbursement.id,
+        )
+      end
+    end
+  end
+
   it_behaves_like 'a generic decision', :other_info, :start_page, Steps::OtherInfoForm, action_name: :show
 
   context 'when step is unknown' do

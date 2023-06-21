@@ -79,7 +79,7 @@ module Decisions
 
     def after_letters_calls
       if form_object.application.disbursements.any?
-        edit(:start_page)
+        edit(:disbursement_type, disbursement_id: form_object.application.disbursements.first.id)
         # edit(:disbursements)
       else
         disbursement = form_object.application.disbursements.create

@@ -23,7 +23,7 @@ module Steps
     def disbursement
       @disbursement ||= begin
         disbursement_id = params[:disbursement_id]
-        current_application.work_items.find_by(id: disbursement_id)
+        current_application.disbursements.find_by(id: disbursement_id)
       end
     end
 
