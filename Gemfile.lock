@@ -131,6 +131,7 @@ GEM
     globalid (1.1.0)
       activesupport (>= 5.0)
     google-protobuf (3.23.3-x86_64-darwin)
+    google-protobuf (3.23.3-x86_64-linux)
     govuk-components (4.0.0)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (~> 6.0)
@@ -177,6 +178,8 @@ GEM
       net-protocol
     nio4r (2.5.9)
     nokogiri (1.15.2-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.15.2-x86_64-linux)
       racc (~> 1.4)
     omniauth (2.1.1)
       hashie (>= 3.4.6)
@@ -296,6 +299,8 @@ GEM
       rexml
     sass-embedded (1.63.5-x86_64-darwin)
       google-protobuf (~> 3.23)
+    sass-embedded (1.63.5-x86_64-linux-gnu)
+      google-protobuf (~> 3.23)
     sentry-rails (5.9.0)
       railties (>= 5.0)
       sentry-ruby (~> 5.9.0)
@@ -344,6 +349,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-22
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
