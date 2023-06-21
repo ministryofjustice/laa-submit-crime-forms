@@ -1,0 +1,27 @@
+<% title t('.page_title') %>
+<% step_header(path: applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_date_field :disbursement_date, maxlength_enabled: true, legend: { size: 's' } %>
+
+      <%= f.govuk_radio_buttons_fieldset :disbursement_type do %>
+        <%= DisbursementTypes.values.each do |disbursement_type| %>
+          <%= f.govuk_radio_button :disbursement_type, disbursement_type.to_s do %>
+            <% if disbursement_type == DisbursementTypes::OTHER %>
+              <%= f.govuk_collection_select :other_disbursement_type, OtherDisbursementTypes.values, :to_s, :to_s,
+                              data: { module: 'accessible-autocomplete' }, width: 20,
+                              options: { include_blank: true }, label: { size: 's' } %>
+          <% end %>
+          <% end %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
+
+

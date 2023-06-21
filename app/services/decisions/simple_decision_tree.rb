@@ -13,7 +13,7 @@ module Decisions
 
     SHOW_MAPPING = {
       other_info: :start_page,
-      letters_calls: :cost_summary,
+      disbursement_type: :cost_summary,
     }.freeze
 
     def destination
@@ -75,6 +75,16 @@ module Decisions
 
     def after_work_item_delete
       after_claim_details
+    end
+
+    def after_letters_calls
+      if form_object.application.disbursements.any?
+        edit(:start_page)
+        # edit(:disbursements)
+      else
+        disbursement = form_object.application.disbursements.create
+        edit(:disbursement_type, disbursement_id: disbursement.id)
+      end
     end
   end
 end

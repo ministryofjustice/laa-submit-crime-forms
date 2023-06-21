@@ -1,0 +1,2 @@
+class Disbursement < ApplicationRecord
+end
