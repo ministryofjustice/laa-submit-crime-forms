@@ -110,7 +110,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [gem-test, test]
-    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout
@@ -143,6 +142,7 @@ jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     needs: build
+    if: github.ref == 'refs/heads/main'
 
     env:
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE_DEV }}
@@ -166,3 +166,34 @@ jobs:
       - name: Apply the updated manifest
         run: |
           kubectl -n ${{ secrets.KUBE_NAMESPACE_DEV }} apply -f kubectl_deploy
+  deploy-uat:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: uat
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Authenticate to the cluster
+        env:
+          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+        run: |
+          echo "${{ secrets.KUBE_CERT }}" > ca.crt
+          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE}}
+          kubectl config use-context ${KUBE_CLUSTER}
+      
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Deploy to UAT
+        run: |
+          helm upgrade laa-claim-non-standard-magistrate-fee-backend ./helm_deploy/. \
+              --install --wait --force \
+              --namespace=${{ secrets.KUBE_NAMESPACE}} \
+              --values ./helm_deploy/values-uat.yaml \
+              --set image.repository="${{ secrets.ECR_URL_DEV }}" \
+              --set image.tag="${{ github.sha }}" \
+              --atomic
