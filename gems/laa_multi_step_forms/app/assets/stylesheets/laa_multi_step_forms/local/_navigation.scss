@@ -1,0 +1,56 @@
+// Navigation styles
+
+nav {
+  ul {
+    padding-left: 0;
+
+    li {
+      list-style: none;
+
+      &:first-child a {
+        padding-left: 0;
+      }
+
+      &:last-child a {
+        margin-right: 0;
+        padding-right: 0;
+        border-right: none;
+      }
+    }
+
+    a {
+      display: block;
+    }
+  }
+}
+
+.pagination {
+  padding: $gutter-half 0;
+  float: left;
+
+  a {
+    padding: $gutter-one-sixth;
+    border: none;
+  }
+
+  .page {
+    padding: 0 $gutter-one-sixth;
+  }
+
+  .prev {
+    padding-left: $gutter-one-sixth;
+  }
+
+  .next {
+    padding-right: $gutter-one-sixth;
+  }
+
+  .current {
+    padding: $gutter-one-sixth;
+    font-weight: 700;
+  }
+}
+
+.app-pagintion--inline li {
+  display: inline-block;
+}
