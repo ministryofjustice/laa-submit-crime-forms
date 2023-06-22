@@ -14,7 +14,7 @@
             <% if disbursement_type == DisbursementTypes::OTHER %>
               <%= f.govuk_collection_select :other_type, OtherDisbursementTypes.values, :to_sym, :translated,
                               data: { module: 'accessible-autocomplete' }, width: 20,
-                              options: { include_blank: true }, label: { size: 's' } %>
+                              options: { include_blank: true }, label: nil %>
             <% end %>
           <% end %>
         <% end %>

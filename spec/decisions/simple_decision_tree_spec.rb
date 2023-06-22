@@ -74,6 +74,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
 
     context 'when no disbursements exist' do
       let(:disbursement) { instance_double(Disbursement, id: SecureRandom.uuid) }
+
       before do
         allow(application.disbursements).to receive(:create).and_return(disbursement)
       end
@@ -90,17 +91,17 @@ RSpec.describe Decisions::SimpleDecisionTree do
           id: application,
           disbursement_id: disbursement.id,
         )
-
       end
     end
 
     context 'when disbursements exist' do
       let(:disbursement) { instance_double(Disbursement, id: SecureRandom.uuid) }
+
       before do
         allow(application).to receive(:disbursements).and_return([disbursement])
       end
 
-      it "moves to page for the first disbursement" do
+      it 'moves to page for the first disbursement' do
         expect(decision_tree.destination).to eq(
           action: :edit,
           controller: :disbursement_type,

@@ -3,10 +3,10 @@ require 'steps/base_form_object'
 module Steps
   class DisbursementTypeForm < Steps::BaseFormObject
     attr_writer :apply_uplift
+
     attribute :disbursement_date, :multiparam_date
     attribute :disbursement_type, :value_object, source: DisbursementTypes
     attribute :other_type, :value_object, source: OtherDisbursementTypes
-
 
     validates :disbursement_date, presence: true,
             multiparam_date: { allow_past: true, allow_future: false }

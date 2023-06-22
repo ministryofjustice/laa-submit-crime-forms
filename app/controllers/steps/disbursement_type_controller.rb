@@ -1,4 +1,3 @@
-
 module Steps
   class DisbursementTypeController < Steps::BaseStepController
     before_action :ensure_disbursement

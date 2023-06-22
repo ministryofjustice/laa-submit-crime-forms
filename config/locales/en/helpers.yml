@@ -108,7 +108,7 @@ en:
           car: '%{rate} per mile'
           motorcycle: '%{rate} per mile'
           bike: '%{rate} per mile'
-          other: Enter the name of disbursement type, or select one from the suggestions that appear when you start to enter the name.
+        other_type: Enter the name of disbursement type, or select one from the suggestions that appear when you start to enter the name.
 
     label:
       steps_claim_type_form:
