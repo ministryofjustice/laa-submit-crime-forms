@@ -18,6 +18,13 @@ spec:
         ports:
         - containerPort: 5000
         env:
+          - name: ENV
+            value: Development
+          - name: SENTRY_DSN
+            valueFrom:
+              secretKeyRef:
+                name: sentry-dsn
+                key: url
           - name: DATABASE_URL
             valueFrom:
               secretKeyRef:

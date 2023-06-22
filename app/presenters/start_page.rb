@@ -9,7 +9,7 @@ module StartPage
       [:case, [:case_details, :case_disposal, :hearing_details]],
       [:defendant, [:defendants,]],
       [:claim,
-       [:reason_for_claim, :claim_details, :work_items, :letters_calls, :disbursements, :claim_summary,
+       [:reason_for_claim, :claim_details, :work_items, :letters_calls, :disbursements, :cost_summary,
         :additional_info]],
       [:evidence, [:upload_evidence]],
       [:review, [:check_answers]]

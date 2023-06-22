@@ -17,9 +17,11 @@
       <%= f.govuk_date_field :completed_on, maxlength_enabled: true, legend: { size: 's' } %>
       <%= f.govuk_text_field :fee_earner, width: 3 %>
 
-      <%= f.govuk_check_boxes_fieldset :apply_uplift, multiple: false, legend: nil do %>
-        <%= f.govuk_check_box :apply_uplift, 'true', 'false', multiple: false do %>
-          <%= f.govuk_number_field :uplift, placeholder: 0, min: 1, step: 1, max: 100, width: 3, suffix_text: '%' %>
+      <% if @form_object.allow_uplift? %>
+        <%= f.govuk_check_boxes_fieldset :apply_uplift, multiple: false, legend: nil do %>
+          <%= f.govuk_check_box :apply_uplift, 'true', 'false', multiple: false do %>
+            <%= f.govuk_number_field :uplift, placeholder: 0, min: 1, step: 1, max: 100, width: 3, suffix_text: '%' %>
+          <% end %>
         <% end %>
       <% end %>
 

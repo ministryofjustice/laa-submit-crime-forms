@@ -11,7 +11,10 @@ module Steps
     attribute :fee_earner, :string
     attribute :uplift, :integer
 
-    validates :work_type, presence: true
+    # TODO: limit this to displayed WorkTypes - this could lead to issues if conditions
+    # are changed as the validation would fail without clearly showing on the summary
+    # page
+    validates :work_type, presence: true, inclusion: { in: WorkTypes.values }
     validates :time_spent, presence: true, time_period: true
     validates :completed_on, presence: true,
             multiparam_date: { allow_past: true, allow_future: false }
@@ -20,8 +23,13 @@ module Steps
             numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 },
             if: :apply_uplift
 
+    def allow_uplift?
+      application.reasons_for_claim.include?(ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s)
+    end
+
     def apply_uplift
-      @apply_uplift.nil? ? uplift.present? : @apply_uplift == 'true'
+      allow_uplift? &&
+        (@apply_uplift.nil? ? uplift.present? : @apply_uplift == 'true')
     end
 
     def pricing
@@ -33,8 +41,8 @@ module Steps
     end
 
     def work_types_with_pricing
-      WorkTypes.values.map do |value|
-        [value, pricing[value.to_s]]
+      WorkTypes.values.filter_map do |work_type|
+        [work_type, pricing[work_type.to_s]] if work_type.display?(application)
       end
     end
 
