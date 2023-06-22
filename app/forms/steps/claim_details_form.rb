@@ -16,7 +16,7 @@ module Steps
     validates :number_of_witnesses, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :time_spent, numericality: { only_integer: true, greater_than: 0 }, time_period: true,
         if: ->(form) { form.preparation_time == YesNoAnswer::YES }
-    validates :work_before_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
+    validates :work_before_date, presence: true,  multiparam_date: { allow_past: true, allow_future: false },
         if: ->(form) { form.work_before == YesNoAnswer::YES }
     validates :work_after_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
         if: ->(form) { form.work_after == YesNoAnswer::YES }
