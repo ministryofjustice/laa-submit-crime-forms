@@ -12,10 +12,6 @@ RSpec.describe Steps::ClaimDetailsForm do
       supplemental_claim:,
       preparation_time:,
       time_spent:,
-      work_before:,
-      work_before_date:,
-      work_after:,
-      work_after_date:,
     }
   end
 
@@ -29,20 +25,12 @@ RSpec.describe Steps::ClaimDetailsForm do
   let(:time_spent) { { 1 => hours, 2 => minutes } }
   let(:hours) { 2 }
   let(:minutes) { 40 }
-  let(:work_before) { 'yes' }
-  let(:work_before_date) { Date.new(2023, 1, 1) }
-  let(:work_after) { 'yes' }
-  let(:work_after_date) { Date.new(2023, 1, 1) }
 
   describe '#save preparation time yes' do
     context 'when all fields are set and preparation_time set to yes' do
       let(:preparation_time) { 'yes' }
       let(:time_spent_hours) { 2 }
       let(:time_spent_mins) { 40 }
-      let(:work_before) { 'yes' }
-      let(:work_before_date) { Date.new(2023, 1, 1) }
-      let(:work_after) { 'yes' }
-      let(:work_after_date) { Date.new(2023, 1, 1) }
 
       it 'is valid' do
         expect(subject.save).to be_truthy
@@ -85,7 +73,7 @@ RSpec.describe Steps::ClaimDetailsForm do
     end
   end
 
-  describe '#preparation valid?' do
+  describe '#valid?' do
     context 'when preparation is yes' do
       let(:preparation_time) { 'yes' }
 
@@ -117,73 +105,4 @@ RSpec.describe Steps::ClaimDetailsForm do
       end
     end
   end
-
-  describe '#work_before valid?' do
-    context 'when work_before is yes' do
-      let(:work_before) { 'yes' }
-
-      context 'when all fields are set' do
-        it { expect(subject).to be_valid }
-      end
-
-      context 'when work_before_date is blank' do
-        let(:work_before_date) { nil }
-
-        it 'is invalid' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:work_before_date, :blank)).to be(true)
-        end
-      end
-    end
-
-    context 'when work_before is no' do
-      let(:work_before) { 'no' }
-
-      context 'when all fields are set' do
-        it { expect(subject).to be_valid }
-      end
-
-      context 'when work_before_date is blank' do
-        let(:work_before_date) { nil }
-
-        it { expect(subject).to be_valid }
-      end
-    end
-  end
-
- describe '#work_after valid?' do
-    context 'when work_after is yes' do
-      let(:work_after) { 'yes' }
-
-      context 'when all fields are set' do
-        it { expect(subject).to be_valid }
-      end
-
-      context 'when work_after_date is blank' do
-        let(:work_after_date) { nil }
-
-        it 'is invalid' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:work_after_date, :blank)).to be(true)
-        end
-      end
-    end
-
-    context 'when work_after is no' do
-      let(:work_after) { 'no' }
-
-      context 'when all fields are set' do
-        it { expect(subject).to be_valid }
-      end
-
-      context 'when work_after_date is blank' do
-        let(:work_after_date) { nil }
-
-        it { expect(subject).to be_valid }
-      end
-    end
-  end
-
-
 end
-
