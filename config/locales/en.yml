@@ -2,7 +2,17 @@
 en:
   service:
     name: Claim a non-standard magistrates' court payment
-
+  
+  views:
+    pagination:
+      title: "Pagination navigation"
+      first_html: "First <span class='govuk-visually-hidden'>page</span>"
+      last_html: "Last <span class='govuk-visually-hidden'>page</span>"
+      previous_html: "Previous <span class='govuk-visually-hidden'>page</span>"
+      next_html: "Next <span class='govuk-visually-hidden'>page</span>"
+      truncate: "&hellip;"
+      page_html: "<span class='govuk-visually-hidden'>Page </span>%{count}"
+  
   flash:
     success:
       title: Success

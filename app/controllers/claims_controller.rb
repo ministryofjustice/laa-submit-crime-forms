@@ -1,6 +1,6 @@
 class ClaimsController < ApplicationController
   include PaginationHelpers
-  
+
   def index
     # TODO: delete old claims without a claim type or avoid creating
     # claim before we have a claim type - this breaks the pattern we
