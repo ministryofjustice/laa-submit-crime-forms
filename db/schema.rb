@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_21_135533) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_23_103721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,12 +80,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_135533) do
     t.string "disbursement_type"
     t.string "other_type"
     t.string "miles"
-    t.float "total_cost"
+    t.decimal "total_cost_without_vat", precision: 2
     t.text "details"
     t.string "prior_authority"
     t.string "apply_vat"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "vat_amount", precision: 2
     t.index ["claim_id"], name: "index_disbursements_on_claim_id"
   end
 

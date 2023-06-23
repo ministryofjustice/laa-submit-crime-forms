@@ -1,0 +1,26 @@
+<% title t('.page_title') %>
+<% step_header(path: applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= if @form_object.other_disbursement_type? %>
+        <%= f.govuk_number_field :total_cost_without_vat, min: 1, step: 0.01, width: 5 %>
+      <% else %>
+        <%= f.govuk_number_field :miles, min: 1, step: 1, width: 3, suffix_text: 'Miles' %>
+      <% end %>
+      <%= f.govuk_text_area :details %>
+      <%= f.govuk_radio_buttons_fieldset :prior_authority, legend: { size: 'm' } do %>
+        <%= f.govuk_radio_button :prior_authority, YesNoAnswer::YES.to_s %>
+        <%= f.govuk_radio_button :prior_authority, YesNoAnswer::NO.to_s %>
+      <% end%>
+      <%= f.govuk_check_box :apply_vat, 'true', 'false', multiple: false %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
+
+

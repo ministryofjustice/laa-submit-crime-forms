@@ -1,16 +1,16 @@
 module Steps
-  class DisbursementTypeController < Steps::BaseStepController
+  class DisbursementCostController < Steps::BaseStepController
     before_action :ensure_disbursement
 
     def edit
-      @form_object = DisbursementTypeForm.build(
+      @form_object = DisbursementCostForm.build(
         disbursement,
         application: current_application,
       )
     end
 
     def update
-      update_and_advance(DisbursementTypeForm, as: :disbursement_type, record: disbursement)
+      update_and_advance(DisbursementCostForm, as: :disbursement_type, record: disbursement)
     end
 
     private
