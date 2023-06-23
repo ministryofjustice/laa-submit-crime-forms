@@ -1,7 +1,7 @@
 <% title '' %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-three-quarters">
     <%#= render partial: 'shared/flash_banner' %>
 
     <h1 class="govuk-heading-xl">
@@ -9,26 +9,29 @@
     </h1>
 
     <p class="govuk-body">
-      Use this service to apply for criminal legal aid.
+    <%= t('.instruction') %>
     </p>
 
     <h3 class="govuk-heading-m">
-      Before you start
+      <%= t('.section.title')%>
     </h3>
 
-    <p class="govuk-body">
-      You can only use this service if:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>the case is ongoing</li>
-      <li>you know your client's National Insurance number</li>
-      <li>your client does not have a partner</li>
-      <li>your client receives a passporting benefit, including Universal Credit</li>
+    <ul class="govuk-list">
+      <li>
+      <%= link_to t('.section.link.CCCD.name'), "https://claim-crown-court-defence.service.gov.uk/",
+                  class: 'govuk-link',
+                  role: 'link',
+                  target: '_blank'%>
+                  , <%= t('.section.link.CCCD.content') %>
+      </li>
+      <li>
+      <%= link_to t('.section.link.CWA.name'), "https://portal.legalservices.gov.uk/",
+                  class: 'govuk-link',
+                  role: 'link',
+                  target: '_blank'%>
+                  , <%= t('.section.link.CWA.content') %>
+      </li>
     </ul>
-
-    <p class="govuk-body">
-      Use <%#= link_to 'eForms', Settings.eforms_url %> for all other applications.
-    </p>
 
     <% if Rails.env.development? %>
       <%= link_button nil, provider_saml_omniauth_callback_path, class: 'govuk-button--start govuk-!-margin-top-4' do %>
@@ -37,7 +40,6 @@
           <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
         </svg>
       <% end %>
-      <br>
       <br>
     <% end %>
 
