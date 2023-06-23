@@ -3,7 +3,6 @@
     <p class="govuk-visually-hidden">
       <%= t('views.pagination.title') %>
     </p>
-    <%= first_page_tag unless current_page.first? %>
     <%= prev_page_tag unless current_page.first? %>
     <ul class="govuk-pagination__list">
       <% each_page do |page| %>
@@ -15,6 +14,5 @@
       <% end %>
     </ul>
     <%= next_page_tag unless current_page.last? %>
-    <%= last_page_tag unless current_page.last? %>
   </nav>
 <% end %>
