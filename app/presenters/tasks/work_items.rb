@@ -12,8 +12,12 @@ module Tasks
     end
 
     def in_progress?
-      application.navigation_stack.intersect?([edit_steps_work_items_path(application),
-                                               edit_steps_work_item_path(application)])
+      application.navigation_stack.intersect?(
+        [
+          edit_steps_work_items_path(application),
+          edit_steps_work_item_path(application)
+        ]
+      )
     end
 
     def completed?

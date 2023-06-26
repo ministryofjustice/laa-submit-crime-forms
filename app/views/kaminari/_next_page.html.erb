@@ -1,0 +1,3 @@
+ <div class="govuk-pagination__next">
+  <%= link_to_unless current_page.last?, t('views.pagination.next_html').html_safe, url, remote: remote, class: "govuk-link govuk-pagination__link" %>
+</div>
