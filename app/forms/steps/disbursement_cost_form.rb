@@ -33,7 +33,8 @@ module Steps
     end
 
     def total_cost
-      other_disbursement_type? ? total_cost_without_vat : miles * rate
+      return total_cost_without_vat if other_disbursement_type?
+      miles ? miles * rate : nil
     end
 
     def auth_required?

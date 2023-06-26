@@ -114,6 +114,9 @@ en:
     disbursement_type:
       edit:
         heading: Disbursement type
+    disbursement_cost:
+      edit:
+        heading: Disbursement cost
     cost_summary:
       show:
         heading: Check your payment claim
