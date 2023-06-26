@@ -8,10 +8,6 @@ class Claim < ApplicationRecord
                              order(:disbursement_date, :disbursement_type, :id)
                            }, dependent: :destroy, inverse_of: :claim
 
-  def reference
-    ufn || '###'
-  end
-
   def date
     rep_order_date || cntp_date
   end
