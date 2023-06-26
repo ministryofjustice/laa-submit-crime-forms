@@ -34,7 +34,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.internalPort }}
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -55,6 +55,8 @@ spec:
               value: 'production'
             - name: RAILS_LOG_TO_STDOUT
               value: enabled
+            - name: ENV
+              value: {{ .Values.secrets.environment}}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

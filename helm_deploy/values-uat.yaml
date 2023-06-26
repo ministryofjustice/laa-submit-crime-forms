@@ -15,17 +15,18 @@ nameOverride: laa-claim-non-standard-magistrate-fee-backend-app
 fullnameOverride: laa-claim-non-standard-magistrate-fee-backend-app
 
 securityContext:
-   capabilities:
-     drop:
-     - ALL
+  #  capabilities:
+  #    drop:
+  #    - ALL
   #  readOnlyRootFilesystem: true
-   runAsNonRoot: true
-   runAsUser: 10000
-   allowPrivilegeEscalation: false
+  #  runAsNonRoot: true
+  #  runAsUser: 10000
+  #  allowPrivilegeEscalation: false
 
 service:
   type: ClusterIP
-  port: 3000
+  port: 80
+  internalPort: 3000
 
 ingress:
   enabled: true
@@ -43,6 +44,11 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+          backend:
+          service:
+            name: laa-claim-non-standard-magistrate-fee-dev
+            port:
+              number: 3000
   tls:
     - hosts:
       - crm7uat.apps.live.cloud-platform.service.justice.gov.uk
@@ -50,17 +56,16 @@ ingress:
 resources:
   limits:
     cpu: 500m
-    memory: 250Mi
+    memory: 125Mi
   requests:
     cpu: 10m
-    memory: 250Mi
+    memory: 125Mi
 
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 secrets:
   environment: uat
