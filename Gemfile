@@ -6,6 +6,7 @@ ruby File.read('.ruby-version').strip
 gem 'bootsnap', require: false
 gem 'dartsass-rails', '~> 0.5.0'
 gem 'importmap-rails'
+gem 'kaminari'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.3'
@@ -33,6 +34,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
