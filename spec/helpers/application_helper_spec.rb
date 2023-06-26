@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
+RSpec.describe ApplicationHelper, type: :helper do
   describe 'current_office_code' do
     before do
       allow(helper).to receive(:current_provider).and_return(provider)

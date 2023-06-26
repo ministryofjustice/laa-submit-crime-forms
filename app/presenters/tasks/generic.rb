@@ -8,8 +8,8 @@ module Tasks
       fulfilled?(self.class::PREVIOUS_TASK)
     end
 
-    def completed?(rec = record)
-      self.class::FORM.build(rec, application:).valid?
+    def completed?(rec = record, form = self.class::FORM)
+      form.build(rec, application:).valid?
     end
 
     private
