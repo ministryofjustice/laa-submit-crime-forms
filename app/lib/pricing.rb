@@ -1,10 +1,11 @@
 class Pricing
+  # TODO: as this has additional data we might want to consider renaming in the yml file
   class << self
     # if no date is set then we default to the current pricing rates
     def for(application)
-      return new(data['pre_20220930']) if (..Date.new(2022, 9, 29)).cover?(application.date)
+      return new(data['from_start']) if (..Date.new(2022, 9, 29)).cover?(application.date)
 
-      new(data['post_20220930'])
+      new(data['from_20220930'])
     end
 
     # This is cached on the Class to avoid multiple file reads
@@ -20,23 +21,26 @@ class Pricing
     attendance_without_counsel
     travel
     waiting
+
     letters
     calls
+
+    car
+    motorcycle
+    bike
   ].freeze
 
   attr_reader(*FIELDS)
 
   def initialize(data = {})
     FIELDS.each do |field|
-      instance_variable_set("@#{field}", data.fetch(field, 0.0).to_f)
+      instance_variable_set("@#{field}", data.fetch(field, nil)&.to_f)
     end
   end
 
   def [](key)
-    if FIELDS.include?(key.to_s)
-      instance_variable_get("@#{key}")
-    else
-      0.0
-    end
+    return unless FIELDS.include?(key.to_s)
+
+    instance_variable_get("@#{key}")
   end
 end

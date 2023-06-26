@@ -226,10 +226,10 @@ RSpec.describe Steps::WorkItemForm do
     end
 
     context 'result in the price being 0' do
-      let(:price) { 0.0 }
+      let(:price) { nil }
 
       it 'returns 0' do
-        expect(subject.total_cost).to eq(0)
+        expect(subject.total_cost).to be_nil
       end
     end
   end

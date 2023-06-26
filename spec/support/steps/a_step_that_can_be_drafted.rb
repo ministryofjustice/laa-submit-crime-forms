@@ -1,8 +1,11 @@
-RSpec.shared_examples 'a step that can be drafted' do |form_class|
+RSpec.shared_examples 'a step that can be drafted' do |form_class, additional_params_callback = nil|
   describe '#update' do
+    let(:additional_params) { additional_params_callback&.call(self) || {} }
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
     let(:form_class_params_name) { form_class.name.underscore }
-    let(:expected_params) { { :id => existing_case, form_class_params_name => { foo: 'bar' }, :commit_draft => '' } }
+    let(:expected_params) do
+      { :id => existing_case, form_class_params_name => { foo: 'bar' }, :commit_draft => '', **additional_params }
+    end
 
     context 'when application is not found' do
       let(:existing_case) { '12345' }
