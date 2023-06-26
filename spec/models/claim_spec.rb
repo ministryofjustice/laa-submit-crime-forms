@@ -38,4 +38,16 @@ RSpec.describe Claim do
       expect(subject.short_id).to eq(subject.id.first(8))
     end
   end
+
+  context 'laa_reference' do
+    let(:attributes) { {} }
+
+    it 'starts with LAA-' do
+      expect(subject.send(:generate_laa_reference)).to start_with 'LAA-'
+    end
+
+    it 'follows format LAA-[6 alphanumeric characters]' do
+      expect(subject.send(:generate_laa_reference)).to match(/LAA-[A-Za-z0-9]+/)
+    end
+  end
 end

@@ -17,10 +17,12 @@ class Claim < ApplicationRecord
     id.first(8)
   end
 
-  private def generate_laa_reference
+  private
+
+  def generate_laa_reference
     self.laa_reference = loop do
-      random_reference = "LAA" + SecureRandom.alphanumeric(6)
+      random_reference = "LAA-#{SecureRandom.alphanumeric(6)}"
       break random_reference unless Claim.exists?(laa_reference: random_reference)
-    end 
+    end
   end
 end
