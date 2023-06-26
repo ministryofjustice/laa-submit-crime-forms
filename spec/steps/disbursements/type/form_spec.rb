@@ -54,50 +54,6 @@ RSpec.describe Steps::DisbursementTypeForm do
     end
   end
 
-  # describe '#work_types_with_pricing' do
-  #   context 'when application date is before CLAIR' do
-  #     let(:date) { Date.new(2022, 1, 1) }
-
-  #     it 'uses the old prices' do
-  #       expect(subject.work_types_with_pricing).to eq([
-  #                                                       [WorkTypes::ATTENDANCE_WITH_COUNSEL, 31.03],
-  #                                                       [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 31.03],
-  #                                                       [WorkTypes::PREPARATION, 45.35],
-  #                                                       [WorkTypes::ADVOCACY, 56.89],
-  #                                                       [WorkTypes::TRAVEL, 24.0],
-  #                                                       [WorkTypes::WAITING, 24.0],
-  #                                                     ])
-  #     end
-
-  #     context 'when assigned_councel is no' do
-  #       let(:assigned_counsel) { 'no' }
-
-  #       it 'does not include ATTENDANCE_WITH_COUNSEL' do
-  #         expect(subject.work_types_with_pricing).to eq([
-  #                                                         [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 31.03],
-  #                                                         [WorkTypes::PREPARATION, 45.35],
-  #                                                         [WorkTypes::ADVOCACY, 56.89],
-  #                                                         [WorkTypes::TRAVEL, 24.0],
-  #                                                         [WorkTypes::WAITING, 24.0],
-  #                                                       ])
-  #       end
-  #     end
-
-  #     context 'when in_area is yes' do
-  #       let(:in_area) { 'yes' }
-
-  #       it 'does not include TRAVEL or WAITING' do
-  #         expect(subject.work_types_with_pricing).to eq([
-  #                                                         [WorkTypes::ATTENDANCE_WITH_COUNSEL, 31.03],
-  #                                                         [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 31.03],
-  #                                                         [WorkTypes::PREPARATION, 45.35],
-  #                                                         [WorkTypes::ADVOCACY, 56.89],
-  #                                                       ])
-  #       end
-  #     end
-  #   end
-  # end
-
   describe 'save!' do
     let(:application) do
       Claim.create!(office_code: 'AAA')
