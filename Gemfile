@@ -34,6 +34,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
@@ -43,5 +44,4 @@ group :test do
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'
   gem 'super_diff'
-  gem 'rails-controller-testing'
 end
