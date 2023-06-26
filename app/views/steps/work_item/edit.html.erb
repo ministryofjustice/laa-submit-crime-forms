@@ -1,5 +1,5 @@
 <% title t('.page_title') %>
-<% step_header(path: applications_path) %>
+<% step_header %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -20,7 +20,7 @@
       <% if @form_object.allow_uplift? %>
         <%= f.govuk_check_boxes_fieldset :apply_uplift, multiple: false, legend: nil do %>
           <%= f.govuk_check_box :apply_uplift, 'true', 'false', multiple: false do %>
-            <%= f.govuk_number_field :uplift, placeholder: 0, min: 1, step: 1, max: 100, width: 3, suffix_text: '%' %>
+            <%= f.govuk_number_field :uplift, min: 1, step: 1, max: 100, width: 3, suffix_text: '%' %>
           <% end %>
         <% end %>
       <% end %>
