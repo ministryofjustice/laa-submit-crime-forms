@@ -14,6 +14,10 @@ module PaginationHelpers
   end
 
   def current_page
-    params[:page].to_i || 1
+    if params[:page]
+      params[:page].to_i || 1
+    else
+      1
+    end
   end
 end

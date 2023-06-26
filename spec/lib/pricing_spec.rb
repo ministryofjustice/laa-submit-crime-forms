@@ -76,7 +76,7 @@ RSpec.describe Pricing do
   end
 
   describe '#initialize' do
-    let(:bad_pricing) { described_class.new({'travel' => 24.0}) }
+    let(:bad_pricing) { described_class.new({ 'travel' => 24.0 }) }
 
     context 'when data is missing' do
       it { expect(bad_pricing.preparation).to be_nil }
