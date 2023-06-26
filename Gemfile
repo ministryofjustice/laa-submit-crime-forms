@@ -43,4 +43,5 @@ group :test do
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'
   gem 'super_diff'
+  gem 'rails-controller-testing'
 end
