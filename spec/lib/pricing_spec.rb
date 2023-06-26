@@ -75,6 +75,14 @@ RSpec.describe Pricing do
     end
   end
 
+  describe '#initialize' do
+    let(:bad_pricing) { described_class.new({'travel' => 24.0}) }
+
+    context 'when data is missing' do
+      it { expect(bad_pricing.preparation).to be_nil }
+    end
+  end
+
   describe 'accessing field' do
     Pricing::FIELDS.each do |field|
       context "when #{field}" do
