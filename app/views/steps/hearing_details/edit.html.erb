@@ -1,5 +1,5 @@
 <% title t('.page_title') %>
-<% step_header(path: applications_path) %>
+<% step_header %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -7,7 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
       <%= f.govuk_date_field :first_hearing_date, maxlength_enabled: true, id: 'steps-hearing_details-form-first-hearing-date', legend: { size: 's'  } %>
-      <%= f.govuk_number_field :number_of_hearing, placeholder: 1, min: 1, step: 1, width: 3 %>
+      <%= f.govuk_number_field :number_of_hearing, min: 1, step: 1, width: 3 %>
 
       <%= f.govuk_collection_select :court, LaaMultiStepForms::Court.all, :name, :name,
                               data: { module: 'accessible-autocomplete' }, width: 20,

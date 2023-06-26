@@ -111,6 +111,9 @@ en:
           fee_earner: Fee earner
         total_cost: Total cost
         completed_date_blank: Completed date not set
+    disbursement_type:
+      edit:
+        heading: Disbursement type
     cost_summary:
       show:
         heading: Check your payment claim
