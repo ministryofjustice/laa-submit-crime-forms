@@ -5,8 +5,8 @@ RSpec.describe ClaimsController do
     let(:scope) { double(:scope, not: [instance_double(Claim)]) }
 
     before do
-      allow(Claim).to receive(:where).and_return(scope)
       # rubocop:disable RSpec/MessageChain
+      allow(Claim).to receive_message_chain(:where, :order).and_return(scope)
       allow(scope).to receive_message_chain(:page, :per).and_return(scope)
       # rubocop:enable RSpec/MessageChain
       get :index
