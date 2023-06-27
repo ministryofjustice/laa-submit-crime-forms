@@ -16,8 +16,8 @@ RSpec.describe LaaMultiStepForms::FormBuilderHelper, type: :helper do
     context 'standard button' do
       let(:expected_markup) do
         '<button type="submit" formnovalidate="formnovalidate" class="govuk-button govuk-button--secondary" ' \
-        'data-module="govuk-button" data-prevent-double-click="true" name="save_and_refresh">' \
-        'Update the calculation</button>'
+          'data-module="govuk-button" data-prevent-double-click="true" name="save_and_refresh">' \
+          'Update the calculation</button>'
       end
 
       it 'outputs only the continue button' do
@@ -49,7 +49,8 @@ RSpec.describe LaaMultiStepForms::FormBuilderHelper, type: :helper do
         doc = Nokogiri::HTML.fragment(html)
 
         assert_select(
-          doc, 'button', attributes: { class: 'govuk-button govuk-button--secondary custom-class-secondary', foo: 'bar' }
+          doc, 'button', attributes: { class: 'govuk-button govuk-button--secondary custom-class-secondary',
+foo: 'bar' }
         )
       end
     end
