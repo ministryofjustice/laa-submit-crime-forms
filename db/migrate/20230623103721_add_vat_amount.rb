@@ -6,7 +6,7 @@ class AddVatAmount < ActiveRecord::Migration[7.0]
       change_table :disbursements do |t|
         direction.up   do
           t.change :total_cost_without_vat, :decimal, precision: 10, scale: 2
-          t.change :miles, 'integer USING CAST(miles AS integer)'
+          t.change :miles, 'decimal(10,3) USING CAST(miles AS decimal)'
         end
         direction.down do
           t.change :total_cost_without_vat, :float

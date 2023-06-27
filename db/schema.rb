@@ -79,7 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_23_103721) do
     t.date "disbursement_date"
     t.string "disbursement_type"
     t.string "other_type"
-    t.integer "miles"
+    t.decimal "miles", precision: 10, scale: 3
     t.decimal "total_cost_without_vat", precision: 10, scale: 2
     t.text "details"
     t.string "prior_authority"

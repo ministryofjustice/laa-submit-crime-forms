@@ -154,6 +154,19 @@ RSpec.describe Steps::DisbursementCostForm do
             vat_amount: 0.9
           )
         end
+
+        context 'and vat_amount has a part penny' do
+          let(:miles) { 11.5 }
+
+          it 'calculates and stores the total_cost_without_vat and vat_amount rounded to the nearest penny' do
+            subject.save!
+            expect(record.reload).to have_attributes(
+              miles: 11.5,
+              total_cost_without_vat: 5.18,
+              vat_amount: 1.04
+            )
+          end
+        end
       end
     end
 

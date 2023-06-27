@@ -4,7 +4,7 @@ module Steps
   class DisbursementCostForm < Steps::BaseFormObject
     attr_writer :apply_vat
 
-    attribute :miles, :integer
+    attribute :miles, :decimal, precision: 10, scale: 3
     attribute :total_cost_without_vat, :decimal, precision: 10, scale: 2
     attribute :details, :string
     attribute :prior_authority, :value_object, source: YesNoAnswer
