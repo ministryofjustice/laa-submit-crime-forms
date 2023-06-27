@@ -1,6 +1,6 @@
 module Tasks
   class Defendants < Generic
-    PREVIOUS_TASK = HearingDetails
+    PREVIOUS_TASK = FirmDetails
     FORM = Steps::DefendantDetailsForm
 
     def path

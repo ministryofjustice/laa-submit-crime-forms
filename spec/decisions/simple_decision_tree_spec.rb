@@ -27,9 +27,8 @@ RSpec.describe Decisions::SimpleDecisionTree do
     end
   end
 
-  it_behaves_like 'a generic decision', :firm_details, :case_details, Steps::FirmDetailsForm
   it_behaves_like 'a generic decision', :case_disposal, :hearing_details, Steps::CaseDisposalForm
-  it_behaves_like 'a generic decision', :hearing_details, :defendant_details, Steps::HearingDetailsForm
+  it_behaves_like 'a generic decision', :hearing_details, :reason_for_claim, Steps::HearingDetailsForm
   it_behaves_like 'a generic decision', :defendant_details, :defendant_summary, Steps::DefendantDetailsForm
   it_behaves_like 'a generic decision', :defendant_delete, :defendant_summary, Steps::DefendantDeleteForm
   context 'when defendant exists' do
@@ -38,8 +37,8 @@ RSpec.describe Decisions::SimpleDecisionTree do
       application.defendants.create(full_name: 'Jim', maat: 'aaa', position: 1)
     end
 
-    it_behaves_like 'a generic decision', :hearing_details, :defendant_summary, Steps::DefendantDetailsForm
-    it_behaves_like 'an add_another decision', :defendant_summary, :defendant_details, :reason_for_claim, :defendant_id,
+    it_behaves_like 'a generic decision', :firm_details, :defendant_summary, Steps::DefendantDetailsForm
+    it_behaves_like 'an add_another decision', :defendant_summary, :defendant_details, :case_details, :defendant_id,
                     additional_yes_branch_tests: lambda {
                       it 'creates a new defendant on the claim' do
                         expect { decision_tree.destination }.to change(application.defendants, :count).by(1)
