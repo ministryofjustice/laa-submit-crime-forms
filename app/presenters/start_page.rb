@@ -13,7 +13,7 @@ module StartPage
         :additional_info]],
       [:evidence, [:upload_evidence]],
       [:review,
-        [:check_answers, :declaration]],
+       [:check_answers, :declaration]],
     ].freeze
   end
 end
