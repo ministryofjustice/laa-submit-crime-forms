@@ -117,6 +117,10 @@ en:
     disbursement_cost:
       edit:
         heading: Disbursement cost
+        calculation: Calculation
+        before_vat: Before VAT
+        after_vat: After VAT
+
     cost_summary:
       show:
         heading: Check your payment claim

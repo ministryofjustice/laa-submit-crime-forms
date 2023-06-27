@@ -19,7 +19,7 @@ module Steps
     end
 
     def attributes_with_resets
-      attributes.merge(other_type: other_disbursement_type? ? other_type : nil)
+      attributes.merge('other_type' => other_disbursement_type? ? other_type : nil)
     end
 
     def other_disbursement_type?

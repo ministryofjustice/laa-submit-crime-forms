@@ -25,6 +25,24 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
     click_on 'Save and continue'
 
+    fill_in 'Number of miles', with: 100
+    fill_in 'Enter details of this disbursement', with: 'details'
+    check 'Apply 20% VAT to this work'
+
+    click_on 'Update the calculation'
+
+    doc = Nokogiri::HTML(page.html)
+    values = doc.css('.govuk-table th, .govuk-table td').map(&:text)
+
+    expect(values).to eq(
+      [
+        'Before VAT', 'After VAT',
+        '£45.00', '£54.00'
+      ]
+    )
+
+    click_on 'Save and continue'
+
     expect(claim.disbursements).to contain_exactly(
       have_attributes(
         disbursement_date: Date.new(2023, 4, 20),
@@ -46,6 +64,24 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
     choose 'Other disbursement type'
     select 'Accountants'
+
+    click_on 'Save and continue'
+
+    fill_in 'Disbursement cost', with: '105.4'
+    fill_in 'Enter details of this disbursement', with: 'details'
+    check 'Apply 20% VAT to this work'
+
+    click_on 'Update the calculation'
+
+    doc = Nokogiri::HTML(page.html)
+    values = doc.css('.govuk-table th, .govuk-table td').map(&:text)
+
+    expect(values).to eq(
+      [
+        'Before VAT', 'After VAT',
+        '£105.40', '£126.48'
+      ]
+    )
 
     click_on 'Save and continue'
 

@@ -36,6 +36,9 @@ module Steps
         # Validations will not be run when saving a draft
         @form_object.save!
         redirect_to after_commit_path(current_application)
+      elsif params.key?(:save_and_refresh)
+        @form_object.save!
+        render opts.fetch(:render, :edit)
       elsif @form_object.save
         redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       else
