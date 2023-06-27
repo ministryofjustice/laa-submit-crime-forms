@@ -29,7 +29,7 @@ RSpec.describe ClaimsController do
 
     it 'create a new Claim application with the users office_code' do
       post :create
-      expect(Claim).to have_received(:create!).with(hash_including(office_code:  'AAA'))
+      expect(Claim).to have_received(:create!).with(hash_including(office_code: 'AAA'))
     end
 
     it 'create a new Claim application with an laa reference' do
