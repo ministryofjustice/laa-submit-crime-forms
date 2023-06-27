@@ -79,14 +79,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_23_103721) do
     t.date "disbursement_date"
     t.string "disbursement_type"
     t.string "other_type"
-    t.string "miles"
-    t.decimal "total_cost_without_vat", precision: 2
+    t.integer "miles"
+    t.decimal "total_cost_without_vat", precision: 10, scale: 2
     t.text "details"
     t.string "prior_authority"
     t.string "apply_vat"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "vat_amount", precision: 2
+    t.decimal "vat_amount", precision: 10, scale: 2
     t.index ["claim_id"], name: "index_disbursements_on_claim_id"
   end
 

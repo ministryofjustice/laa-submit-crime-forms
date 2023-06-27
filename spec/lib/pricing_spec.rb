@@ -7,6 +7,7 @@ RSpec.describe Pricing do
   let(:date) { nil }
 
   describe '#for' do
+    # rubocop:disable RSpec/ExampleLength
     context 'when date is nil' do
       it 'returns the current (post CLAIR) pricing' do
         expect(described_class).to receive(:new).with(
@@ -22,6 +23,7 @@ RSpec.describe Pricing do
             'car' => 0.45,
             'motorcycle' => 0.45,
             'bike' => 0.25,
+            'vat' => 0.2,
           }
         )
         subject
@@ -45,6 +47,7 @@ RSpec.describe Pricing do
             'car' => 0.45,
             'motorcycle' => 0.45,
             'bike' => 0.25,
+            'vat' => 0.2,
           }
         )
         subject
@@ -68,11 +71,13 @@ RSpec.describe Pricing do
             'car' => 0.45,
             'motorcycle' => 0.45,
             'bike' => 0.25,
+            'vat' => 0.2,
           }
         )
         subject
       end
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 
   describe '#initialize' do
