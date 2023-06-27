@@ -133,4 +133,4 @@ en:
         subheading: Claim incomplete
         progress_counter: You have completed %{completed} of %{total} sections.
         aside:
-          reference: Reference number
+          reference: LAA Reference

@@ -84,6 +84,9 @@ RSpec/NoExpectationExample:
 RSpec/Rails/InferredSpecType:
   Enabled: false
 
+RSpec/MessageChain:
+  Enabled: false
+
 Naming/VariableNumber:
   Enabled: false
 
