@@ -19,7 +19,14 @@ class ClaimsController < ApplicationController
 
   def initialize_application(attributes = {}, &block)
     attributes[:office_code] = current_office_code
-
+    attributes[:laa_reference] = generate_laa_reference
     Claim.create!(attributes).tap(&block)
+  end
+
+  def generate_laa_reference
+    loop do
+      random_reference = "LAA-#{SecureRandom.alphanumeric(6)}"
+      break random_reference unless Claim.exists?(laa_reference: random_reference)
+    end
   end
 end

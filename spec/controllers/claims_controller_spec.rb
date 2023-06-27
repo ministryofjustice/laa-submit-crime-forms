@@ -5,10 +5,8 @@ RSpec.describe ClaimsController do
     let(:scope) { double(:scope, not: [instance_double(Claim)]) }
 
     before do
-      # rubocop:disable RSpec/MessageChain
       allow(Claim).to receive_message_chain(:where, :order).and_return(scope)
       allow(scope).to receive_message_chain(:page, :per).and_return(scope)
-      # rubocop:enable RSpec/MessageChain
       get :index
     end
 
@@ -31,7 +29,12 @@ RSpec.describe ClaimsController do
 
     it 'create a new Claim application with the users office_code' do
       post :create
-      expect(Claim).to have_received(:create!).with(office_code: 'AAA')
+      expect(Claim).to have_received(:create!).with(hash_including(office_code:  'AAA'))
+    end
+
+    it 'create a new Claim application with an laa reference' do
+      post :create
+      expect(Claim).to have_received(:create!).with(hash_including(:laa_reference))
     end
 
     it 'redirects to the edit claim type step' do
@@ -39,4 +42,9 @@ RSpec.describe ClaimsController do
       expect(response).to redirect_to(edit_steps_claim_type_path(claim.id))
     end
   end
+
+  context 'generate LAA reference' do
+    it 'generates reference starting with: LAA- and ending in 6 alphanumeric digits' do
+      expect(subject.send(:generate_laa_reference)).to match(/LAA-[A-Za-z0-9]+/)
+    end
 end
