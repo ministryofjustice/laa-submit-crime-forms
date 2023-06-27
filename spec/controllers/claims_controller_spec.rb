@@ -44,7 +44,8 @@ RSpec.describe ClaimsController do
   end
 
   context 'generate LAA reference' do
-    it 'generates reference starting with: LAA- and ending in 6 alphanumeric digits' do
+    it 'generates reference starting with: LAA- and ending in 6 alphanumeric' do
       expect(subject.send(:generate_laa_reference)).to match(/LAA-[A-Za-z0-9]+/)
     end
+  end
 end
