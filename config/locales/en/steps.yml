@@ -122,8 +122,8 @@ en:
     task_list:
       show:
         page_title: New claim page title - TODO
-        heading: Start a new claim
+        heading: Your claim progress
         subheading: Claim incomplete
         progress_counter: You have completed %{completed} of %{total} sections.
         aside:
-          reference: Reference number
+          reference: LAA Reference number

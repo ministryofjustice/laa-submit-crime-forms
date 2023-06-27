@@ -21,45 +21,13 @@
   </div>
 
   <div class="govuk-grid-column-one-third app-grid-column--sticky">
-    <aside class="app-aside__bar--blue" role="complementary">
-      <h3 class="govuk-heading-s">
+    <aside class="app-aside__bar--blue aside-task-list" role="complementary">
+      <h3 class="govuk-heading-s govuk-!-margin-0">
         <%= t('.aside.reference') %>
       </h3>
       <p class="govuk-body">
         <%= @application.reference %>
       </p>
-
-      <% if false && @application.applicant? %>
-        <h3 class="govuk-heading-s">
-          <%= t('.aside.first_name') %>
-        </h3>
-        <p class="govuk-body">
-          <%#= @application.applicant.first_name %>
-        </p>
-
-        <h3 class="govuk-heading-s">
-          <%= t('.aside.last_name') %>
-        </h3>
-        <p class="govuk-body">
-          <%#= @application.applicant.last_name %>
-        </p>
-
-        <h3 class="govuk-heading-s">
-          <%= t('.aside.date_of_birth') %>
-        </h3>
-        <p class="govuk-body">
-          <%#= @application.applicant_dob %>
-        </p>
-
-        <% if @application.interim_date_stamp %>
-          <h3 class="govuk-heading-s">
-            <%= t('.aside.date_stamp') %>
-          </h3>
-          <p class="govuk-body">
-            <%#= @application.interim_date_stamp %>
-          </p>
-        <% end %>
-      <% end %>
     </aside>
   </div>
 </div>
