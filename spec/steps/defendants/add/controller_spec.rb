@@ -1,8 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Steps::DefendantDetailsController, type: :controller do
-  it_behaves_like 'a generic step controller', Steps::DefendantDetailsForm, Decisions::SimpleDecisionTree
-  it_behaves_like 'a step that can be drafted', Steps::DefendantDetailsForm
+  let(:defendant) { existing_case.is_a?(Claim) ? existing_case.defendants.create : nil }
+
+  it_behaves_like 'a generic step controller', Steps::DefendantDetailsForm, Decisions::SimpleDecisionTree,
+                  ->(scope) { { defendant_id: scope.defendant&.id || '4321' } }
+  it_behaves_like 'a step that can be drafted', Steps::DefendantDetailsForm,
+                  ->(scope) { { defendant_id: scope.defendant&.id || '4321' } }
 
   describe '#edit' do
     let(:application) { Claim.create(office_code: 'AA1', defendants: defendants) }
@@ -14,19 +18,9 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
 
         it 'passes the existing defendant to the form' do
           allow(Steps::DefendantDetailsForm).to receive(:build)
-          expect { get :edit, params: { id: application } }.not_to change(application.defendants, :count)
+          expect { get :edit, params: { id: application, defendant_id: defendants.first.id } }.not_to change(application.defendants, :count)
 
           expect(Steps::DefendantDetailsForm).to have_received(:build).with(defendants.first, application:)
-        end
-      end
-
-      context 'when no main defendant exists' do
-        it 'creates a new main defendant and passes it to the form' do
-          allow(Steps::DefendantDetailsForm).to receive(:build)
-          expect { get :edit, params: { id: application } }.to change(application.defendants, :count).by(1)
-
-          expect(Steps::DefendantDetailsForm).to have_received(:build).with(application.reload.defendants.last,
-                                                                            application:)
         end
       end
     end

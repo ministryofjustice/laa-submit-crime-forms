@@ -20,14 +20,7 @@ module Steps
     end
 
     def defendant
-      @defendant ||= begin
-        defendant_id = params[:defendant_id] || params.dig(:steps_defendant_details_form, :id)
-        if defendant_id.blank?
-          current_application.defendants.find_or_create_by!(position: 1, main: true)
-        else
-          current_application.defendants.find_by(id: defendant_id)
-        end
-      end
+      @defendant ||= current_application.defendants.find_by(id: params[:defendant_id])
     end
 
     def ensure_defendant

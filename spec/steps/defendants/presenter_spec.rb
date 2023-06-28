@@ -20,15 +20,20 @@ RSpec.describe Tasks::Defendants, type: :system do
     before { allow(application.defendants).to receive(:count).and_return(number_of_defendants) }
 
     context 'no defendants' do
+      before { allow(application.defendants).to receive(:create).and_return(new_defendant) }
       let(:number_of_defendants) { 0 }
+      let(:new_defendant) { Defendant.new(id: defendant_id) }
+      let(:defendant_id) { SecureRandom.uuid }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details/#{defendant_id}") }
     end
 
     context 'one defendant' do
       let(:number_of_defendants) { 1 }
+      let(:defendants) { [Defendant.new(id: defendant_id)] }
+      let(:defendant_id) { SecureRandom.uuid }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details/#{defendant_id}") }
     end
 
     context 'more than one defendants' do
@@ -46,7 +51,7 @@ RSpec.describe Tasks::Defendants, type: :system do
 
   describe 'in_progress?' do
     context 'navigation_stack include edit defentant_details path' do
-      before { navigation_stack << edit_steps_defendant_details_path(application) }
+      before { navigation_stack << edit_steps_defendant_details_path(application, defendant_id: '345') }
 
       it { expect(subject).to be_in_progress }
     end

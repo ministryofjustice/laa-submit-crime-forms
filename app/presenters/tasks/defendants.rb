@@ -4,16 +4,25 @@ module Tasks
     FORM = Steps::DefendantDetailsForm
 
     def path
-      if application.defendants.count > 1
-        edit_steps_defendant_summary_path(application)
+      case application.defendants.count
+      when 0
+        defendant = application.defendants.create
+        edit_steps_defendant_details_path(id: application.id, defendant_id: defendant.id)
+      when 1
+        defendant = application.defendants.first
+        edit_steps_defendant_details_path(id: application.id, defendant_id: defendant.id)
       else
-        edit_steps_defendant_details_path(application)
+        edit_steps_defendant_summary_path(application)
       end
     end
 
     def in_progress?
-      application.navigation_stack.intersect?([edit_steps_defendant_summary_path(application),
-                                               edit_steps_defendant_details_path(application)])
+      [
+        edit_steps_defendant_summary_path(application),
+        edit_steps_defendant_details_path(id: application.id, defendant_id: '')
+      ].any? do |path|
+        application.navigation_stack.any? { |stack| stack.start_with?(path) }
+      end
     end
 
     def completed?

@@ -42,6 +42,7 @@ module Decisions
       if form_object.application.defendants.any?
         edit(:defendant_summary)
       else
+        defendant = form_object.application.defendants.create(position: 1, main: true)
         edit(:defendant_details)
       end
     end
@@ -60,7 +61,8 @@ module Decisions
       if form_object.application.work_items.any?
         edit(:work_items)
       else
-        edit(:work_item)
+        new_work_item = form_object.application.work_items.create
+        edit(:work_item, work_item_id: new_work_item.id)
       end
     end
 
@@ -80,7 +82,6 @@ module Decisions
     def after_letters_calls
       if form_object.application.disbursements.any?
         edit(:disbursement_type, disbursement_id: form_object.application.disbursements.first.id)
-        # edit(:disbursements)
       else
         disbursement = form_object.application.disbursements.create
         edit(:disbursement_type, disbursement_id: disbursement.id)
