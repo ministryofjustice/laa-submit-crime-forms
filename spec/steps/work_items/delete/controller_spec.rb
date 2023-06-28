@@ -59,7 +59,9 @@ RSpec.describe Steps::WorkItemDeleteController, type: :controller do
   describe '#update' do
     let(:form_object) { instance_double(Steps::DeleteForm, attributes: { foo: double }) }
     let(:form_object_params_name) { Steps::DeleteForm.name.underscore }
-    let(:expected_params) { { :id => existing_case, form_object_params_name => { foo: 'bar' }, work_item_id: SecureRandom.uuid } }
+    let(:expected_params) do
+      { :id => existing_case, form_object_params_name => { foo: 'bar' }, :work_item_id => SecureRandom.uuid }
+    end
     let(:current_application) { instance_double(Claim, work_items:) }
     let(:work_items) { double(:work_items, find_by: work_item) }
     let(:work_item) { nil }

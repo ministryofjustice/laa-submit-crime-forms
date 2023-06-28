@@ -21,6 +21,7 @@ RSpec.describe Tasks::WorkItems, type: :system do
 
     context 'no work_items' do
       before { application.save }
+
       let(:number_of_work_items) { 0 }
 
       it { expect(subject.path).to eq("/applications/#{id}/steps/work_item/#{application.reload.work_items.first.id}") }

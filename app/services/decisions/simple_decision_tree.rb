@@ -39,12 +39,13 @@ module Decisions
     end
 
     def after_firm_details
-      if form_object.application.defendants.any?
-        edit(:defendant_summary)
-      else
-        defendant = form_object.application.defendants.create(position: 1, main: true)
-        edit(:defendant_details)
-      end
+      direct(
+        page: :defendant_details,
+        summary_page: :defendant_summary,
+        nested_id: :defendant_id,
+        scope: form_object.application.defendants,
+        create_params: { position: 1, main: true }
+      )
     end
 
     def after_defendant_summary
@@ -58,12 +59,12 @@ module Decisions
     end
 
     def after_claim_details
-      if form_object.application.work_items.any?
-        edit(:work_items)
-      else
-        new_work_item = form_object.application.work_items.create
-        edit(:work_item, work_item_id: new_work_item.id)
-      end
+      direct(
+        page: :work_item,
+        summary_page: :work_items,
+        nested_id: :work_item_id,
+        scope: form_object.application.work_items,
+      )
     end
 
     def after_work_items
@@ -76,15 +77,36 @@ module Decisions
     end
 
     def after_work_item_delete
-      after_claim_details
+      direct(
+        page: :work_item,
+        summary_page: :work_items,
+        nested_id: :work_item_id,
+        scope: form_object.application.work_items,
+      )
     end
 
     def after_letters_calls
-      if form_object.application.disbursements.any?
-        edit(:disbursement_type, disbursement_id: form_object.application.disbursements.first.id)
+      direct(
+        page: :disbursement_type,
+        summary_page: :start_page,
+        nested_id: :disbursement_id,
+        options: { edit_when_one: true },
+        scope: form_object.application.disbursements
+      )
+    end
+
+    def direct(page:, summary_page:, nested_id:, scope:, options: { edit_when_one: false }, create_params: {})
+      count = scope.count
+      if count.zero?
+        new_work_item = scope.create(**create_params)
+        edit(page, nested_id => new_work_item.id)
+      elsif count == 1 && options[:edit_when_one]
+        new_work_item = scope.first
+        edit(page, nested_id => new_work_item.id)
+      elsif count.positive?
+        edit(summary_page)
       else
-        disbursement = form_object.application.disbursements.create
-        edit(:disbursement_type, disbursement_id: disbursement.id)
+        edit(:start_page)
       end
     end
   end

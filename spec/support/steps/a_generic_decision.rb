@@ -13,7 +13,7 @@ RSpec.shared_examples 'a generic decision' do |step_name, controller_name, form_
   end
 end
 
-# rubocop:disable Metrics/ParameterLists, Layout/LineLength
+# rubocop:disable Layout/LineLength
 RSpec.shared_examples 'an add_another decision' do |step_name, yes_controller_name, no_controller_name, id_field, action_name: :edit, additional_yes_branch_tests: nil|
   let(:form) { Steps::AddAnotherForm.new(application:, add_another:) }
   let(:decision_tree) { described_class.new(form, as: step_name) }
@@ -47,4 +47,4 @@ RSpec.shared_examples 'an add_another decision' do |step_name, yes_controller_na
     end
   end
 end
-# rubocop:enable Metrics/ParameterLists, Layout/LineLength
+# rubocop:enable Layout/LineLength

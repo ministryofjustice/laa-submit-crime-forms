@@ -21,6 +21,7 @@ RSpec.describe Tasks::Defendants, type: :system do
 
     context 'no defendants' do
       before { allow(application.defendants).to receive(:create).and_return(new_defendant) }
+
       let(:number_of_defendants) { 0 }
       let(:new_defendant) { Defendant.new(id: defendant_id) }
       let(:defendant_id) { SecureRandom.uuid }

@@ -18,7 +18,10 @@ RSpec.describe Steps::WorkItemController, type: :controller do
 
         it 'passes the existing work_item to the form' do
           allow(Steps::WorkItemForm).to receive(:build)
-          expect { get :edit, params: { id: application, work_item_id: work_items.first.id } }.not_to change(application.work_items, :count)
+          expect do
+            get :edit,
+                params: { id: application, work_item_id: work_items.first.id }
+          end.not_to change(application.work_items, :count)
 
           expect(Steps::WorkItemForm).to have_received(:build).with(work_items.first, application:)
         end

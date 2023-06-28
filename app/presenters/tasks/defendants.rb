@@ -4,15 +4,14 @@ module Tasks
     FORM = Steps::DefendantDetailsForm
 
     def path
-      case application.defendants.count
-      when 0
-        defendant = application.defendants.create
-        edit_steps_defendant_details_path(id: application.id, defendant_id: defendant.id)
-      when 1
-        defendant = application.defendants.first
-        edit_steps_defendant_details_path(id: application.id, defendant_id: defendant.id)
-      else
+      scope = application.defendants
+      count = application.defendants.count
+
+      if count > 1
         edit_steps_defendant_summary_path(application)
+      else
+        defendant = count.zero? ? scope.create : scope.first
+        edit_steps_defendant_details_path(id: application.id, defendant_id: defendant.id)
       end
     end
 

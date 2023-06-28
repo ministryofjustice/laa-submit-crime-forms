@@ -18,7 +18,10 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
 
         it 'passes the existing defendant to the form' do
           allow(Steps::DefendantDetailsForm).to receive(:build)
-          expect { get :edit, params: { id: application, defendant_id: defendants.first.id } }.not_to change(application.defendants, :count)
+          expect do
+            get :edit,
+                params: { id: application, defendant_id: defendants.first.id }
+          end.not_to change(application.defendants, :count)
 
           expect(Steps::DefendantDetailsForm).to have_received(:build).with(defendants.first, application:)
         end

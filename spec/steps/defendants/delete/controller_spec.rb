@@ -61,7 +61,9 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
   describe '#update' do
     let(:form_object) { instance_double(Steps::DefendantDeleteForm, attributes: { foo: double }) }
     let(:form_object_params_name) { Steps::DefendantDeleteForm.name.underscore }
-    let(:expected_params) { { :id => existing_case, defendant_id: defendant_id, form_object_params_name => { foo: 'bar' } } }
+    let(:expected_params) do
+      { :id => existing_case, :defendant_id => defendant_id, form_object_params_name => { foo: 'bar' } }
+    end
     let(:current_application) { instance_double(Claim, defendants:) }
     let(:defendants) { double(:defendants, find_by: defendant) }
     let(:defendant_id) { SecureRandom.uuid }
