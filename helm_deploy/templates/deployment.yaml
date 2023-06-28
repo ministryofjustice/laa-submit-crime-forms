@@ -57,6 +57,11 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: secret_key_base
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: sentry-dsn
+                  key: data
             - name: RACK_ENV
               value: 'production'
             - name: RAILS_ENV
