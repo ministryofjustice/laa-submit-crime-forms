@@ -48,13 +48,7 @@ RSpec.describe DummyStepController, type: :controller do
   context 'any other error class' do
     let(:error_class) { Class.new(StandardError) }
 
-    before do
-      allow(Rails.application.config).to receive(:consider_all_requests_local).and_return(local)
-    end
-
     context 'RAILS_ENV is not production' do
-      let(:local) { true }
-
       before do
         ENV['RAILS_ENV'] = 'development'
       end
@@ -65,8 +59,6 @@ RSpec.describe DummyStepController, type: :controller do
     end
 
     context 'RAILS_ENV is production' do
-      let(:local) { false }
-
       before do
         ENV['RAILS_ENV'] = 'production'
         ENV['SENTRY_DSN'] = 'url'
