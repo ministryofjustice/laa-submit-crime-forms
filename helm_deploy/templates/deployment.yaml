@@ -61,7 +61,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: sentry-dsn
-                  key: data
+                  key: url
             - name: RACK_ENV
               value: 'production'
             - name: RAILS_ENV
