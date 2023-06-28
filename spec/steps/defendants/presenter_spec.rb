@@ -42,7 +42,7 @@ RSpec.describe Tasks::Defendants, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  it_behaves_like 'a task with generic can_start?', Tasks::HearingDetails
+  it_behaves_like 'a task with generic can_start?', Tasks::FirmDetails
 
   describe 'in_progress?' do
     context 'navigation_stack include edit defentant_details path' do

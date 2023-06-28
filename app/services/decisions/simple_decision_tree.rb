@@ -1,11 +1,11 @@
 module Decisions
   class SimpleDecisionTree < BaseDecisionTree
     EDIT_MAPPING = {
-      firm_details: :case_details,
-      case_details: :case_disposal,
-      case_disposal: :hearing_details,
       defendant_details: :defendant_summary,
       defendant_delete: :defendant_summary,
+      case_details: :case_disposal,
+      case_disposal: :hearing_details,
+      hearing_details: :reason_for_claim,
       reason_for_claim: :claim_details,
       claim_details: :work_item,
       work_item: :work_items,
@@ -38,7 +38,7 @@ module Decisions
       end
     end
 
-    def after_hearing_details
+    def after_firm_details
       if form_object.application.defendants.any?
         edit(:defendant_summary)
       else
@@ -52,7 +52,7 @@ module Decisions
         new_defendant = form_object.application.defendants.create(position: next_posiiton)
         edit(:defendant_details, defendant_id: new_defendant.id)
       else
-        edit(:reason_for_claim)
+        edit(:case_details)
       end
     end
 
