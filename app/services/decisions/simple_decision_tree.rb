@@ -103,10 +103,8 @@ module Decisions
       elsif count == 1 && options[:edit_when_one]
         new_work_item = scope.first
         edit(page, nested_id => new_work_item.id)
-      elsif count.positive?
-        edit(summary_page)
       else
-        edit(:start_page)
+        edit(summary_page)
       end
     end
   end

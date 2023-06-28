@@ -26,6 +26,7 @@ RSpec.describe Steps::DisbursementTypeController, type: :controller do
       end
     end
 
+
     context 'and disbursement does not exists' do
       let(:work_items) { [] }
 
@@ -35,6 +36,17 @@ RSpec.describe Steps::DisbursementTypeController, type: :controller do
         end.not_to change(application.disbursements, :count)
 
         expect(response).to redirect_to(edit_steps_work_items_path(application))
+      end
+
+      context 'and CREATE_FIRST passed as id' do
+        it 'creates a new main work_item and passes it to the form' do
+          allow(Steps::DisbursementTypeForm).to receive(:build)
+          expect { get :edit, params: { id: application, disbursement_id: StartPage::CREATE_FIRST } }
+            .to change(application.disbursements, :count).by(1)
+
+          expect(Steps::DisbursementTypeForm).to have_received(:build)
+            .with(application.reload.disbursements.last, application:)
+        end
       end
     end
   end

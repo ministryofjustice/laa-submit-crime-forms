@@ -10,7 +10,8 @@ module Tasks
       if count > 1
         edit_steps_defendant_summary_path(application)
       else
-        edit_steps_defendant_details_path(id: application.id, defendant_id: 'create_first')
+        defendant_id = count.zero? ? StartPage::CREATE_FIRST : scope.first.id
+        edit_steps_defendant_details_path(id: application.id, defendant_id: defendant_id)
       end
     end
 

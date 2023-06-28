@@ -20,13 +20,9 @@ RSpec.describe Tasks::Defendants, type: :system do
     before { allow(application.defendants).to receive(:count).and_return(number_of_defendants) }
 
     context 'no defendants' do
-      before { allow(application.defendants).to receive(:create).and_return(new_defendant) }
-
       let(:number_of_defendants) { 0 }
-      let(:new_defendant) { Defendant.new(id: defendant_id) }
-      let(:defendant_id) { SecureRandom.uuid }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details/#{defendant_id}") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details/create_first") }
     end
 
     context 'one defendant' do

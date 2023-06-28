@@ -12,19 +12,14 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
     let(:application) { Claim.create(office_code: 'AA1', defendants: defendants) }
     let(:defendants) { [] }
 
-    context 'when defendant_id is not passed in' do
-      context 'when main defendant already exists' do
-        let(:defendants) { [Defendant.new(full_name: 'Jim', maat: 'AA1', main: true, position: 1)] }
+    context 'when defendant_id CREATE_FIRST flag passed as id' do
+      it 'creates a new defendant and passes it to the form' do
+        allow(Steps::DefendantDetailsForm).to receive(:build)
+        expect { get :edit, params: { id: application, defendant_id: StartPage::CREATE_FIRST } }
+          .to change(application.defendants, :count).by(1)
 
-        it 'passes the existing defendant to the form' do
-          allow(Steps::DefendantDetailsForm).to receive(:build)
-          expect do
-            get :edit,
-                params: { id: application, defendant_id: defendants.first.id }
-          end.not_to change(application.defendants, :count)
-
-          expect(Steps::DefendantDetailsForm).to have_received(:build).with(defendants.first, application:)
-        end
+        expect(Steps::DefendantDetailsForm).to have_received(:build)
+          .with(application.reload.defendants.last, application:)
       end
     end
 

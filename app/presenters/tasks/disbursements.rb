@@ -9,7 +9,7 @@ module Tasks
           id: application, disbursement_id: application.disbursements.first.id
         )
       else
-        edit_steps_disbursement_type_path(id: application, disbursement_id: 'create_first')
+        edit_steps_disbursement_type_path(id: application, disbursement_id: StartPage::CREATE_FIRST)
       end
     end
 
