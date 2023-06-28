@@ -102,6 +102,47 @@ RSpec.describe DummyStepController, type: :controller do
       end
     end
 
+    context 'when refreshing (with save)' do
+      let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, save_and_refresh: true } }
+
+      it 'sets the paramters on the form' do
+        expect(form_class).to receive(:new).with({
+                                                   'application' => application,
+          'record' => nil,
+          'first' => '1',
+          'second' => '2',
+                                                 })
+
+        put :update, params:
+      end
+
+      context 'additional/missing params are passed in' do
+        let(:params) { { id: application.id, test_model: { first: 1, third: 3 }, commit_draft: true } }
+
+        it 'ignore additional and skips missing params' do
+          expect(form_class).to receive(:new).with({
+                                                     'application' => application,
+            'record' => nil,
+            'first' => '1',
+                                                   })
+
+          put :update, params:
+        end
+      end
+
+      it 'calls save! on the form' do
+        expect(form).to receive(:save!)
+
+        put :update, params:
+      end
+
+      it 'renders the form' do
+        put(:update, params:)
+
+        expect(response).to render_template(:edit)
+      end
+    end
+
     context 'when saving the record' do
       let(:params) { { id: application.id, test_model: { first: 1, second: 2 } } }
 
