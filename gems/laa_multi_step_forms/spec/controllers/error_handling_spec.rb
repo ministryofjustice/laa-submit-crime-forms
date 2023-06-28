@@ -53,6 +53,8 @@ RSpec.describe DummyStepController, type: :controller do
     end
 
     context 'RAILS_ENV is not production' do
+      let(:local) { true }
+
       before do
         ENV['RAILS_ENV'] = 'development'
       end
@@ -63,6 +65,8 @@ RSpec.describe DummyStepController, type: :controller do
     end
 
     context 'RAILS_ENV is production' do
+      let(:local) { false }
+
       before do
         ENV['RAILS_ENV'] = 'production'
         ENV['SENTRY_DSN'] = 'url'
