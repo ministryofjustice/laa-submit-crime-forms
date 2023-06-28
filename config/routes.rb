@@ -83,6 +83,7 @@ Rails.application.routes.draw do
       edit_step :work_items
       crud_step :work_item_delete, param: :work_item_id, except: [:destroy]
       crud_step :disbursement_type, param: :disbursement_id, except: [:destroy]
+      crud_step :disbursement_cost, param: :disbursement_id, except: [:destroy]
       show_step :cost_summary
       edit_step :other_info
 

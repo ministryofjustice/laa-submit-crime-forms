@@ -15,6 +15,7 @@ en:
       find_address: Find address
       try_again: Try again
       apply_in_eforms: Apply in eForms
+      update_calculation: Update the calculation
     time_period: &period
       missing: 'Not set'
       hours:

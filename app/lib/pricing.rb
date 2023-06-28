@@ -28,6 +28,8 @@ class Pricing
     car
     motorcycle
     bike
+
+    vat
   ].freeze
 
   attr_reader(*FIELDS)

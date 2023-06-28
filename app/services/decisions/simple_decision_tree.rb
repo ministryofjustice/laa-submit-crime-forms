@@ -107,5 +107,9 @@ module Decisions
         edit(summary_page)
       end
     end
+
+    def after_disbursement_type
+      edit(:disbursement_cost, disbursement_id: form_object.record.id)
+    end
   end
 end
