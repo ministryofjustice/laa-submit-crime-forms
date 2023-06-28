@@ -21,6 +21,19 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
         expect(Steps::DefendantDetailsForm).to have_received(:build)
           .with(application.reload.defendants.last, application:)
       end
+
+      context 'and more than one defendent exists' do
+        let(:defendants) { [Defendant.new, Defendant.new] }
+
+        it 'redirects to the summary page' do
+          expect do
+            get :edit, params: { id: application, defendant_id: StartPage::CREATE_FIRST }
+          end.not_to change(application.disbursements, :count)
+
+          # TODO: update this once we have disbusrements page
+          expect(response).to redirect_to(edit_steps_defendant_summary_path(application))
+        end
+      end
     end
 
     context 'when defendant_id is passed in' do

@@ -22,7 +22,9 @@ module Steps
     def defendant
       @defendant ||=
         if params[:defendant_id] == StartPage::CREATE_FIRST
-          current_application.defendants.create(position: 1, main: true)
+          if current_application.defendants.count <= 1
+            current_application.defendants.find_or_create_by(position: 1, main: true)
+          end
         else
           current_application.defendants.find_by(id: params[:defendant_id])
         end

@@ -1,5 +1,5 @@
 module StartPage
-  CREATE_FIRST = 'create_first'
+  CREATE_FIRST = 'create_first'.freeze
 
   class PreTaskList < TaskList::Collection
     SECTIONS = [[:what, [->(app) { "claim_type.#{app.claim_type}" }]]].freeze
