@@ -4,12 +4,13 @@ module Tasks
     FORMS = [Steps::DisbursementTypeForm].freeze
 
     def path
-      # if application.disbursements.count.positive?
-      #   edit_steps_disbursements_path(application)
-      # else
-      disbursement = application.disbursements.create
-      edit_steps_disbursement_type_path(id: application, disbursement_id: disbursement.id)
-      # end
+      if application.disbursements.count.positive?
+        edit_steps_disbursement_type_path(
+          id: application, disbursement_id: application.disbursements.first.id
+        )
+      else
+        edit_steps_disbursement_type_path(id: application, disbursement_id: 'create_first')
+      end
     end
 
     # TODO: is this inefficient? do we care?

@@ -20,7 +20,12 @@ module Steps
     end
 
     def defendant
-      @defendant ||= current_application.defendants.find_by(id: params[:defendant_id])
+      @defendant ||=
+        if params[:defendant_id] == 'create_first'
+          current_application.defendants.create(position: 1, main: true)
+        else
+          current_application.defendants.find_by(id: params[:defendant_id])
+        end
     end
 
     def ensure_defendant

@@ -20,7 +20,12 @@ module Steps
     end
 
     def work_item
-      @work_item ||= current_application.work_items.find_by(id: params[:work_item_id])
+      @work_item ||=
+        if params[:work_item_id] == 'create_first'
+          current_application.work_items.create
+        else
+          current_application.work_items.find_by(id: params[:work_item_id])
+        end
     end
 
     def ensure_work_item

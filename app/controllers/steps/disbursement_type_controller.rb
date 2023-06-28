@@ -21,8 +21,11 @@ module Steps
 
     def disbursement
       @disbursement ||= begin
-        disbursement_id = params[:disbursement_id]
-        current_application.disbursements.find_by(id: disbursement_id)
+        if params[:disbursement_id] == 'create_first'
+          current_application.disbursements.create
+        else
+          current_application.disbursements.find_by(id: params[:disbursement_id])
+        end
       end
     end
 

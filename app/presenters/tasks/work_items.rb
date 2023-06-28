@@ -7,8 +7,7 @@ module Tasks
       if application.work_items.count.positive?
         edit_steps_work_items_path(application)
       else
-        work_item = application.work_items.create
-        edit_steps_work_item_path(id: application, work_item_id: work_item.id)
+        edit_steps_work_item_path(id: application, work_item_id: "create_first")
       end
     end
 
