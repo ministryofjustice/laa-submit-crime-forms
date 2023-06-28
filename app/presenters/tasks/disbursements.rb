@@ -1,7 +1,10 @@
 module Tasks
   class Disbursements < Generic
     PREVIOUS_TASK = LettersCalls
-    FORMS = [Steps::DisbursementTypeForm].freeze
+    FORMS = [
+      Steps::DisbursementTypeForm,
+      Steps::DisbursementCostForm,
+    ].freeze
 
     def path
       # if application.disbursements.count.positive?
@@ -15,7 +18,8 @@ module Tasks
     # TODO: is this inefficient? do we care?
     def in_progress?
       [
-        edit_steps_disbursement_type_path(id: application.id, disbursement_id: '')
+        edit_steps_disbursement_type_path(id: application.id, disbursement_id: ''),
+        edit_steps_disbursement_cost_path(id: application.id, disbursement_id: ''),
       ].any? do |path|
         application.navigation_stack.any? { |stack| stack.start_with?(path) }
       end
