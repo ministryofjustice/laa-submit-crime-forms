@@ -34,6 +34,7 @@ module Steps
       self.class::VIEW_BOOLEAN_FIELDS
     end
 
+    # state hasnt been set yet and of no use validate on save
     def work_before?
       true
     end
@@ -57,8 +58,12 @@ module Steps
     end
 
     def attributes_to_reset
+      # @work_before and @work_after now set so use on final save -prevents saving if uses sets date
+      # and then decides radio box should be no
       attributes.merge(
         time_spent: preparation_time == YesNoAnswer::YES ? time_spent : nil,
+        work_before_date: @work_before == "yes" ? work_before_date : nil,
+        work_after_date: @work_after == "yes" ? work_after_date : nil,
        )
     end
   end
