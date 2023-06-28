@@ -14,17 +14,22 @@ en:
         non_standard_magistrate: Non-standard magistrates’ court payment
         breach_of_injunction: Breach of injunction court payment
       firm_details: Your details
+      defendants: Defendant details
       case_details: Case details
       case_disposal: Case disposal
       hearing_details: Hearing details
-      defendants: Defendant details
       reason_for_claim: Claim Justification
       claim_justification: Claim justification
       claim_details: Claim details
       work_items: Work items
       letters_calls: Letters and phone calls
       disbursements: Disbursements costs
-      cost_summary: Your cost summary
+      cost_summary: Review your claim
       additional_info: Other relevant information
       upload_evidence: Upload supporting evidence
       check_answers: Check your answers
+      declaration: Confirm declaration and submit claim
+  laa_multi_step_forms:
+    task_list:
+      show:
+        back_to_applications: Back to your claims
