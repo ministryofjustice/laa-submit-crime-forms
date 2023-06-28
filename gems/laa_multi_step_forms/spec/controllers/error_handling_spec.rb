@@ -63,6 +63,10 @@ RSpec.describe DummyStepController, type: :controller do
     context 'consider_all_requests_local is false' do
       let(:local) { false }
 
+      before do 
+        ENV['SENTRY_DSN'] = 'url'
+      end
+
       it 'logs the error' do
         expect(Rails.logger).to receive(:error)
         expect(Sentry).to receive(:capture_exception)
