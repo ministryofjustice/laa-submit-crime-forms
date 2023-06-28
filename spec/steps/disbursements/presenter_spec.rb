@@ -74,20 +74,31 @@ RSpec.describe Tasks::Disbursements, type: :system do
     end
 
     context 'when disbursement_type exist' do
-      let(:disbursement_type_form) { double(:disbursement_type_form, valid?: valid) }
+      let(:disbursement_type_form) { double(:disbursement_type_form, valid?: types_valid) }
+      let(:disbursement_cost_form) { double(:disbursement_type_form, valid?: costs_valid) }
 
       before do
         allow(Steps::DisbursementTypeForm).to receive(:build).and_return(disbursement_type_form)
+        allow(Steps::DisbursementCostForm).to receive(:build).and_return(disbursement_cost_form)
       end
 
-      context 'when they are not valid' do
-        let(:valid) { false }
+      context 'when types are not valid' do
+        let(:types_valid) { false }
+        let(:costs_valid) { true }
 
         it { expect(subject).not_to be_completed }
       end
 
-      context 'when they are valid' do
-        let(:valid) { true }
+      context 'when costs are not valid' do
+        let(:types_valid) { false }
+        let(:costs_valid) { false }
+
+        it { expect(subject).not_to be_completed }
+      end
+
+      context 'when they are all valid' do
+        let(:types_valid) { true }
+        let(:costs_valid) { true }
 
         it { expect(subject).to be_completed }
       end

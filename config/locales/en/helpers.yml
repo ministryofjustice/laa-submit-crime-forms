@@ -47,6 +47,8 @@ en:
       steps_disbursement_type_form:
         disbursement_date: Date
         disbursement_type: Which disbursement type is this is for?
+      steps_disbursement_cost_form:
+        prior_authority: Have you been granted prior authority for this disbursement?
     hint:
       steps_claim_type_form:
         rep_order_date: For example, 27 3 2007
@@ -109,6 +111,12 @@ en:
           motorcycle: '%{rate} per mile'
           bike: '%{rate} per mile'
         other_type: Enter the name of disbursement type, or select one from the suggestions that appear when you start to enter the name.
+      steps_disbursement_cost_form:
+        miles: For example, 2.5 miles
+        total_cost_without_vat: Enter the cost, not including VAT, for example £301.55
+        details: For example, why this disbursement was needed
+        prior_authority_options:
+          'yes': We’ll ask you to upload evidence of this before you submit this claim
 
     label:
       steps_claim_type_form:
@@ -224,6 +232,16 @@ en:
           motorcycle: Motorcycle
           bike: bike
           other: Other disbursement type
+      steps_disbursement_cost_form:
+        miles: Number of miles
+        total_cost_without_vat: Disbursement cost
+        details: Enter details of this disbursement
+        prior_authority_options:
+          'yes': 'Yes'
+          'no': 'No'
+        apply_vat_options:
+          'true': Apply 20% VAT to this work
+
 
       steps_other_info_form:
         other_info: For example, justification for the time spent on the case, or for any uplift claimed
@@ -231,6 +249,7 @@ en:
           'yes': 'Yes'
           'no': 'No'
         conclusion: Tell us why you did not make this claim within 3 months of the conclusion of the proceedings
+
     other_disbursement_type:
       accident_reconstruction_report: Accident Reconstruction Report
       accident_emergency_report: Accident & Emergency Report
