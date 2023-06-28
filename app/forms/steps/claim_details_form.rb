@@ -2,7 +2,11 @@ require 'steps/base_form_object'
 
 module Steps
   class ClaimDetailsForm < Steps::BaseFormObject
-    BOOLEAN_FIELDS = %i[supplemental_claim preparation_time work_before work_after].freeze
+    attr_writer :work_before, :work_after
+
+    BOOLEAN_FIELDS = %i[supplemental_claim preparation_time].freeze
+
+    VIEW_BOOLEAN_FIELDS = %i[supplemental_claim preparation_time work_before work_after].freeze
 
     attribute :prosecution_evidence, :string
     attribute :defence_statement, :string
@@ -17,9 +21,9 @@ module Steps
     validates :time_spent, numericality: { only_integer: true, greater_than: 0 }, time_period: true,
         if: ->(form) { form.preparation_time == YesNoAnswer::YES }
     validates :work_before_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
-        if: ->(form) { form.work_before == YesNoAnswer::YES }
+        if: ->(form) { form.work_before_date}
     validates :work_after_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
-        if: ->(form) { form.work_after == YesNoAnswer::YES }
+        if: ->(form) { form.work_after_date}
 
     BOOLEAN_FIELDS.each do |field|
       validates field, presence: true, inclusion: { in: YesNoAnswer.values }
@@ -27,7 +31,23 @@ module Steps
     end
 
     def boolean_fields
-      self.class::BOOLEAN_FIELDS
+      self.class::VIEW_BOOLEAN_FIELDS
+    end
+
+    def work_before?
+      true
+    end
+
+    def work_before
+      true
+    end
+
+    def work_after?
+      true
+    end
+
+    def work_after
+      true
     end
 
     private
@@ -39,9 +59,7 @@ module Steps
     def attributes_to_reset
       attributes.merge(
         time_spent: preparation_time == YesNoAnswer::YES ? time_spent : nil,
-        work_before_date: work_before == YesNoAnswer::YES ? work_before_date : nil,
-        work_after_date: work_after == YesNoAnswer::YES ? work_after_date : nil,
-      )
+       )
     end
   end
 end

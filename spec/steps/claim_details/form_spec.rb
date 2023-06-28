@@ -12,9 +12,7 @@ RSpec.describe Steps::ClaimDetailsForm do
       supplemental_claim:,
       preparation_time:,
       time_spent:,
-      work_before:,
       work_before_date:,
-      work_after:,
       work_after_date:,
     }
   end
@@ -29,9 +27,7 @@ RSpec.describe Steps::ClaimDetailsForm do
   let(:time_spent) { { 1 => hours, 2 => minutes } }
   let(:hours) { 2 }
   let(:minutes) { 40 }
-  let(:work_before) { 'yes' }
   let(:work_before_date) { Date.new(2023, 1, 1) }
-  let(:work_after) { 'yes' }
   let(:work_after_date) { Date.new(2023, 1, 1) }
 
   describe '#save preparation time yes' do
