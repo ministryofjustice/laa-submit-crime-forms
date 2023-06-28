@@ -10,12 +10,10 @@ RSpec.describe 'User can see an application status', type: :system do
   let(:rep_order_date) { Date.yesterday }
   
 
-  debugger
   it 'can do green path' do
     visit steps_start_page_path(claim.id)
 
     within('.moj-task-list__item', text: 'Your details') do
-      debugger
       expect(page).to have_content('In progress')
     end
   end
@@ -25,12 +23,10 @@ RSpec.describe 'User can see an application status', type: :system do
     visit provider_saml_omniauth_callback_path
   end
    
-  debugger
   it 'can do green path' do
     visit steps_start_page_path(claim.id)
 
     within('.moj-task-list__item', text: 'Your details') do
-      debugger
       expect(page).to have_content('In progress')
     end
   end
