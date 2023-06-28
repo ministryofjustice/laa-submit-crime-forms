@@ -48,7 +48,7 @@ RSpec.describe DummyStepController, type: :controller do
   context 'any other error class' do
     let(:error_class) { Class.new(StandardError) }
 
-    context 'RAILS_ENV is not production' do
+    context 'non production RAILS_ENV' do
       before do
         ENV['RAILS_ENV'] = 'development'
       end
@@ -58,7 +58,7 @@ RSpec.describe DummyStepController, type: :controller do
       end
     end
 
-    context 'RAILS_ENV is production' do
+    context 'production RAILS_ENV' do
       before do
         ENV['RAILS_ENV'] = 'production'
         ENV['SENTRY_DSN'] = 'url'
