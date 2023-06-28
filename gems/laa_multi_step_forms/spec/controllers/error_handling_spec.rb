@@ -52,18 +52,19 @@ RSpec.describe DummyStepController, type: :controller do
       allow(Rails.application.config).to receive(:consider_all_requests_local).and_return(local)
     end
 
-    context 'consider_all_requests_local is true' do
-      let(:local) { true }
+    context 'RAILS_ENV is not production' do
+      before do
+        ENV['RAILS_ENV'] = 'development'
+      end
 
       it 'raises the error' do
         expect { put :update, params: { id: application.id } }.to raise_error(error_class)
       end
     end
 
-    context 'consider_all_requests_local is false' do
-      let(:local) { false }
-
+    context 'RAILS_ENV is production' do
       before do
+        ENV['RAILS_ENV'] = 'production'
         ENV['SENTRY_DSN'] = 'url'
       end
 
