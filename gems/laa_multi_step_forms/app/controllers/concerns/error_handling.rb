@@ -3,6 +3,8 @@ module ErrorHandling
 
   included do
     rescue_from Exception do |exception|
+      Sentry.capture_exception(exception) if ENV.fetch('SENTRY_DSN', nil).present?
+      Rails.logger.error(exception)
       case exception
       when Errors::InvalidSession, ActionController::InvalidAuthenticityToken
         redirect_to laa_msf.invalid_session_errors_path
@@ -12,9 +14,9 @@ module ErrorHandling
       # when Errors::ApplicationSubmitted
       #   redirect_to application_submitted_errors_path
       else
-        Rails.logger.error(exception)
-        Sentry.capture_exception(exception) if ENV.fetch('SENTRY_DSN', nil).present?
-        redirect_to laa_msf.unhandled_errors_path if Rails.application.config.consider_all_requests_local
+        raise if Rails.application.config.consider_all_requests_local
+
+        redirect_to laa_msf.unhandled_errors_path
       end
     end
   end
