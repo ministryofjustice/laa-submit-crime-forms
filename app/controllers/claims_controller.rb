@@ -8,7 +8,7 @@ class ClaimsController < ApplicationController
     filtered_claims = Claim.where(claim_type: ClaimType::SUPPORTED.map(&:to_s)).order('updated_at DESC')
     @claims = filtered_claims.page(current_page).per(page_size)
     #  DELETE AFTER TESTING
-    Sentry.capture_message("Test")
+    Sentry.capture_message('Test')
   end
 
   def create
