@@ -63,7 +63,7 @@ RSpec.describe DummyStepController, type: :controller do
     context 'consider_all_requests_local is false' do
       let(:local) { false }
 
-      before do 
+      before do
         ENV['SENTRY_DSN'] = 'url'
       end
 
