@@ -7,7 +7,7 @@ class ClaimsController < ApplicationController
     # have used for the forms.
     filtered_claims = Claim.where(claim_type: ClaimType::SUPPORTED.map(&:to_s)).order('updated_at DESC')
     @claims = filtered_claims.page(current_page).per(page_size)
-    # DELETE AFTER TESTING
+    #  DELETE AFTER TESTING
     Sentry.capture_exception('Test')
   end
 
