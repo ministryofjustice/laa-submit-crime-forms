@@ -164,7 +164,7 @@ jobs:
         run: |
           helm upgrade laa-claim-non-standard-magistrate-fee-backend ./helm_deploy/. \
               --install --wait --force \
-              --namespace=${{ secrets.KUBE_NAMESPACE}} \
+              --namespace=${{ secrets.KUBE_NAMESPACE_DEV}} \
               --values ./helm_deploy/values-dev.yaml \
               --set image.repository="${{ secrets.ECR_URL_DEV }}" \
               --set image.tag="${{ github.sha }}" \
