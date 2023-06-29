@@ -2,11 +2,11 @@ require 'steps/base_form_object'
 
 module Steps
   class ClaimDetailsForm < Steps::BaseFormObject
-    attr_writer :work_before, :work_after
+    attr_writer :preparation_time, :work_before, :work_after
 
-    BOOLEAN_FIELDS = %i[supplemental_claim preparation_time].freeze
+    BOOLEAN_FIELDS = %i[supplemental_claim].freeze
 
-    VIEW_BOOLEAN_FIELDS = %i[supplemental_claim preparation_time work_before work_after].freeze
+    VIEW_BOOLEAN_FIELDS = %i[supplemental_claim preparation_time  work_before work_after].freeze
 
     attribute :prosecution_evidence, :string
     attribute :defence_statement, :string
@@ -19,11 +19,11 @@ module Steps
     validates :defence_statement, presence: true
     validates :number_of_witnesses, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :time_spent, numericality: { only_integer: true, greater_than: 0 }, time_period: true,
-        if: ->(form) { form.preparation_time == YesNoAnswer::YES }
+      if: ->(form) { @preparation_time == "yes"}
     validates :work_before_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
-        if: ->(form) { form.work_before_date}
+      if: ->(form) { @work_before == "yes"}
     validates :work_after_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
-        if: ->(form) { form.work_after_date}
+      if: ->(form) { @work_after == "yes"}
 
     BOOLEAN_FIELDS.each do |field|
       validates field, presence: true, inclusion: { in: YesNoAnswer.values }
@@ -35,15 +35,11 @@ module Steps
     end
 
     # state hasnt been set yet and of no use validate on save
-    def work_before?
+    def preparation_time
       true
     end
 
     def work_before
-      true
-    end
-
-    def work_after?
       true
     end
 
@@ -58,10 +54,10 @@ module Steps
     end
 
     def attributes_to_reset
-      # @work_before and @work_after now set so use on final save -prevents saving if uses sets date
+      # @preparation_time, @work_before and @work_after now set so use on final save -prevents saving if uses sets date
       # and then decides radio box should be no
       attributes.merge(
-        time_spent: preparation_time == YesNoAnswer::YES ? time_spent : nil,
+        time_spent: @preparation_time == "yes" ? time_spent : nil,
         work_before_date: @work_before == "yes" ? work_before_date : nil,
         work_after_date: @work_after == "yes" ? work_after_date : nil,
        )

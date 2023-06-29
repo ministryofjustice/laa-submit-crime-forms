@@ -24,6 +24,8 @@ RSpec.describe Steps::ClaimDetailsForm do
   let(:number_of_witnesses) { 1 }
   let(:supplemental_claim) { 'yes' }
   let(:preparation_time) { 'yes' }
+  let(:work_before) { 'yes' }
+  let(:work_after) { 'yes' }
   let(:time_spent) { { 1 => hours, 2 => minutes } }
   let(:hours) { 2 }
   let(:minutes) { 40 }
@@ -77,7 +79,7 @@ RSpec.describe Steps::ClaimDetailsForm do
     end
   end
 
-  describe '#valid?' do
+  describe '#preparation is valid?' do
     context 'when preparation is yes' do
       let(:preparation_time) { 'yes' }
 
@@ -87,6 +89,7 @@ RSpec.describe Steps::ClaimDetailsForm do
 
       context 'when hours is blank' do
         let(:hours) { nil }
+        let(:minutes) { nil }
 
         it 'is invalid' do
           expect(subject).not_to be_valid
@@ -97,7 +100,7 @@ RSpec.describe Steps::ClaimDetailsForm do
 
     context 'when preparation is no' do
       let(:preparation_time) { 'no' }
-
+  
       context 'when all fields are set' do
         it { expect(subject).to be_valid }
       end
@@ -108,5 +111,19 @@ RSpec.describe Steps::ClaimDetailsForm do
         it { expect(subject).to be_valid }
       end
     end
+  end
+
+  context 'when work_before is no' do
+      let(:work_before) { 'no' }
+
+      context 'when all fields are set' do
+        it { expect(subject).to be_valid }
+      end
+
+      context 'when work_before_date is blank' do
+        let(:work_before_date) { nil }
+
+        it { expect(subject).to be_valid }
+      end
   end
 end

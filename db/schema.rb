@@ -50,7 +50,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_103842) do
     t.string "defence_statement"
     t.integer "number_of_witnesses"
     t.string "supplemental_claim"
-    t.string "preparation_time"
     t.integer "time_spent"
     t.date "work_before_date"
     t.date "work_after_date"
