@@ -47,5 +47,17 @@ RSpec.describe ClaimsController do
     it 'generates reference starting with: LAA- and ending in 6 alphanumeric' do
       expect(subject.send(:generate_laa_reference)).to match(/LAA-[A-Za-z0-9]+/)
     end
+
+    context 'if LAA reference already exists' do
+      before do
+        allow(SecureRandom).to receive(:alphanumeric).and_return('AAAAAA', 'BBBBBB')
+        expect(Claim).to receive(:exists?).with(laa_reference: 'LAA-AAAAAA').and_return(true)
+        expect(Claim).to receive(:exists?).with(laa_reference: 'LAA-BBBBBB').and_return(false)
+      end
+
+      it 'generates unique ID' do
+        expect(subject.send(:generate_laa_reference)).to eq('LAA-BBBBBB')
+      end
+    end
   end
 end

@@ -8,7 +8,9 @@ RSpec.describe 'User can manage work items', type: :system do
   end
 
   it 'can add a work item' do
-    visit edit_steps_work_item_path(claim.id)
+    work_item = claim.work_items.create
+
+    visit edit_steps_work_item_path(id: claim.id, work_item_id: work_item.id)
 
     choose 'Advocacy'
 
@@ -37,8 +39,9 @@ RSpec.describe 'User can manage work items', type: :system do
 
   it 'can add a work item with uplift' do
     claim.update!(reasons_for_claim: [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s])
+    work_item = claim.work_items.create
 
-    visit edit_steps_work_item_path(claim.id)
+    visit edit_steps_work_item_path(id: claim.id, work_item_id: work_item.id)
 
     choose 'Advocacy'
 
