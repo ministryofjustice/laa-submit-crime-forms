@@ -26,7 +26,14 @@ module Steps
     def calculation_rows
       [
         [translate(:before_vat), translate(:after_vat)],
-        [number_to_currency(total_cost || 0, unit: '£'), number_to_currency((total_cost || 0) + vat, unit: '£')],
+        [{
+          text: number_to_currency(total_cost || 0, unit: '£'),
+          html_attributes: { id: 'total-without-vat' }
+        },
+         {
+           text: number_to_currency((total_cost || 0) + vat, unit: '£'),
+           html_attributes: { id: 'total-with-vat' },
+         }],
       ]
     end
 

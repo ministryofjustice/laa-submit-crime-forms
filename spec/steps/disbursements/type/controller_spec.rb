@@ -26,7 +26,7 @@ RSpec.describe Steps::DisbursementTypeController, type: :controller do
       end
     end
 
-    context 'and disbursement does not exists' do
+    context 'and disbursement not found' do
       let(:work_items) { [] }
 
       it 'redirects to the summary page' do
@@ -35,6 +35,30 @@ RSpec.describe Steps::DisbursementTypeController, type: :controller do
         end.not_to change(application.disbursements, :count)
 
         expect(response).to redirect_to(edit_steps_work_items_path(application))
+      end
+    end
+
+    context 'when disbursement_id is CREATE_FIRST flag' do
+      it 'creates a new main work_item and passes it to the form' do
+        allow(Steps::DisbursementTypeForm).to receive(:build)
+        expect { get :edit, params: { id: application, disbursement_id: StartPage::CREATE_FIRST } }
+          .to change(application.disbursements, :count).by(1)
+
+        expect(Steps::DisbursementTypeForm).to have_received(:build)
+          .with(application.reload.disbursements.last, application:)
+      end
+
+      context 'and more than disbursement item exists' do
+        let(:disbursements) { [Disbursement.new, Disbursement.new] }
+
+        it 'redirects to the summary page' do
+          expect do
+            get :edit, params: { id: application, disbursement_id: StartPage::CREATE_FIRST }
+          end.not_to change(application.disbursements, :count)
+
+          # TODO: update this once we have disbusrements page
+          expect(response).to redirect_to(edit_steps_work_items_path(application))
+        end
       end
     end
   end

@@ -22,13 +22,15 @@ RSpec.describe Tasks::Defendants, type: :system do
     context 'no defendants' do
       let(:number_of_defendants) { 0 }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details/create_first") }
     end
 
     context 'one defendant' do
       let(:number_of_defendants) { 1 }
+      let(:defendants) { [Defendant.new(id: defendant_id)] }
+      let(:defendant_id) { SecureRandom.uuid }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details/#{defendant_id}") }
     end
 
     context 'more than one defendants' do
@@ -46,7 +48,7 @@ RSpec.describe Tasks::Defendants, type: :system do
 
   describe 'in_progress?' do
     context 'navigation_stack include edit defentant_details path' do
-      before { navigation_stack << edit_steps_defendant_details_path(application) }
+      before { navigation_stack << edit_steps_defendant_details_path(application, defendant_id: '345') }
 
       it { expect(subject).to be_in_progress }
     end

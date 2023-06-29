@@ -1,6 +1,6 @@
 module Tasks
   class LettersCalls < Generic
-    PREVIOUS_TASK = ReasonForClaim
+    PREVIOUS_TASK = WorkItems
     FORM = Steps::LettersCallsForm
 
     def path

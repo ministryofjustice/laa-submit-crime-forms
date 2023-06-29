@@ -20,7 +20,12 @@ module Steps
     end
 
     def disbursement
-      @disbursement ||= current_application.disbursements.find_by(id: params[:disbursement_id])
+      @disbursement ||=
+        if params[:disbursement_id] == StartPage::CREATE_FIRST
+          current_application.disbursements.first_or_create if current_application.disbursements.count <= 1
+        else
+          current_application.disbursements.find_by(id: params[:disbursement_id])
+        end
     end
 
     def ensure_disbursement
