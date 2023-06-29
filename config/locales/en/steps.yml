@@ -26,6 +26,7 @@ en:
     claim_details: 
       edit: 
         page_title: Claim Details
+        heading: Claim details
     hearing_details:
       edit:
         page_title: Hearing details
@@ -139,6 +140,10 @@ en:
         page_title: Check your payment claim
         heading: Check your payment claim
         estimate: 'Total estimated:'
+    other_info:
+      edit:
+        page_title: Other Relevant information
+        heading: Other Relevant information
   laa_multi_step_forms:
     task_list:
       show:
