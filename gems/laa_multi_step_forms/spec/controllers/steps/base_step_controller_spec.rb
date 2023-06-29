@@ -173,6 +173,10 @@ RSpec.describe DummyStepController, type: :controller do
         end
 
         context 'when decision_tree_class is not defined' do
+          before do
+            ENV['RAILS_ENV'] = 'development'
+          end
+
           let(:decision_tree_class) { nil }
 
           it 'raises an error' do
