@@ -20,7 +20,7 @@
         <tbody class="govuk-table__body">
           <% work_items.each do |work_item| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= t("helper.steps_work_item_form.work_type_options.#{work_item.work_type}") %></td>
+              <td class="govuk-table__cell"><%= t("helpers.label.steps_work_item_form.work_type_options.#{work_item.work_type || 'missing'}") %></td>
               <td class="govuk-table__cell"><%= format_period(work_item.time_spent)  %></td>
               <td class="govuk-table__cell"><%= work_item.fee_earner %></td>
               <td class="govuk-table__cell">
