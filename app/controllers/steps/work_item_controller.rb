@@ -20,14 +20,12 @@ module Steps
     end
 
     def work_item
-      @work_item ||= begin
-        work_item_id = params[:work_item_id] || params.dig(:steps_work_item_form, :id)
-        if work_item_id.blank?
-          current_application.work_items.first_or_create
+      @work_item ||=
+        if params[:work_item_id] == StartPage::CREATE_FIRST
+          current_application.work_items.first_or_create if current_application.work_items.count <= 1
         else
-          current_application.work_items.find_by(id: work_item_id)
+          current_application.work_items.find_by(id: params[:work_item_id])
         end
-      end
     end
 
     def ensure_work_item
