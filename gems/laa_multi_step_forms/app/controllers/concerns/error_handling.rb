@@ -12,7 +12,7 @@ module ErrorHandling
       # when Errors::ApplicationSubmitted
       #   redirect_to application_submitted_errors_path
       else
-        raise unless (ENV['RAILS_ENV'] = 'production')
+        raise unless ENV['RAILS_ENV'] == 'production'
 
         Sentry.capture_exception(exception) if ENV.fetch('SENTRY_DSN', nil).present?
         Rails.logger.error(exception)
