@@ -3,6 +3,7 @@
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'
 import { } from './controllers/letters_calls_form_controller'
+import { } from './controllers/disbursement_cost_form_controller'
 initAll()
 
 const $inputs = document.querySelectorAll('[data-module="govuk-input"]')
