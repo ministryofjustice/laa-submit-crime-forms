@@ -100,7 +100,7 @@ RSpec.describe Steps::ClaimDetailsForm do
 
     context 'when preparation is no' do
       let(:preparation_time) { 'no' }
-  
+
       context 'when all fields are set' do
         it { expect(subject).to be_valid }
       end
@@ -114,16 +114,16 @@ RSpec.describe Steps::ClaimDetailsForm do
   end
 
   context 'when work_before is no' do
-      let(:work_before) { 'no' }
+    let(:work_before) { 'no' }
 
-      context 'when all fields are set' do
-        it { expect(subject).to be_valid }
-      end
+    context 'when all fields are set' do
+      it { expect(subject).to be_valid }
+    end
 
-      context 'when work_before_date is blank' do
-        let(:work_before_date) { nil }
+    context 'when work_before_date is blank' do
+      let(:work_before_date) { nil }
 
-        it { expect(subject).to be_valid }
-      end
+      it { expect(subject).to be_valid }
+    end
   end
 end

@@ -19,6 +19,5 @@ module Steps
     def additional_permitted_params
       [:preparation_time, :work_before, :work_after]
     end
-
   end
 end
