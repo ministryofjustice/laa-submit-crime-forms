@@ -20,9 +20,11 @@ RSpec.describe Tasks::WorkItems, type: :system do
     before { allow(application.work_items).to receive(:count).and_return(number_of_work_items) }
 
     context 'no work_items' do
+      before { application.save }
+
       let(:number_of_work_items) { 0 }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/work_item") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/work_item/create_first") }
     end
 
     context 'one work_item' do
@@ -46,7 +48,7 @@ RSpec.describe Tasks::WorkItems, type: :system do
 
   describe 'in_progress?' do
     context 'navigation_stack include edit work_item path' do
-      before { navigation_stack << edit_steps_work_item_path(application) }
+      before { navigation_stack << edit_steps_work_item_path(application, work_item_id: '111') }
 
       it { expect(subject).to be_in_progress }
     end

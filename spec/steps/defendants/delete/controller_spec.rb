@@ -12,7 +12,7 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
       let(:current_application) { nil }
 
       it 'redirects to the application not found error page' do
-        get :edit, params: { id: '12345' }
+        get :edit, params: { id: '12345', defendant_id: '3333' }
         expect(response).to redirect_to(controller.laa_msf.application_not_found_errors_path)
       end
     end
@@ -55,25 +55,18 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
           end
         end
       end
-
-      context 'when defendant id is NOT passes in' do
-        let(:defendant) { nil }
-
-        it 'redirects to the summary page' do
-          get :edit, params: { id: existing_case }
-
-          expect(response).to redirect_to(edit_steps_defendant_summary_path(current_application))
-        end
-      end
     end
   end
 
   describe '#update' do
     let(:form_object) { instance_double(Steps::DefendantDeleteForm, attributes: { foo: double }) }
     let(:form_object_params_name) { Steps::DefendantDeleteForm.name.underscore }
-    let(:expected_params) { { :id => existing_case, form_object_params_name => { foo: 'bar' } } }
+    let(:expected_params) do
+      { :id => existing_case, :defendant_id => defendant_id, form_object_params_name => { foo: 'bar' } }
+    end
     let(:current_application) { instance_double(Claim, defendants:) }
     let(:defendants) { double(:defendants, find_by: defendant) }
+    let(:defendant_id) { SecureRandom.uuid }
     let(:defendant) { nil }
 
     context 'when application is not found' do
@@ -148,16 +141,6 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
 
             expect(response).to redirect_to(edit_steps_defendant_summary_path(current_application))
           end
-        end
-      end
-
-      context 'when defendant id is NOT passes in' do
-        let(:defendant) { nil }
-
-        it 'redirects to the summary page' do
-          get :edit, params: { id: existing_case }
-
-          expect(response).to redirect_to(edit_steps_defendant_summary_path(current_application))
         end
       end
     end

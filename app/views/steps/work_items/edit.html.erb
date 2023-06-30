@@ -1,5 +1,5 @@
 <% title t('.page_title') %>
-<% step_header(path: applications_path) %>
+<% step_header %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-thirds">
@@ -25,7 +25,7 @@
               <td class="govuk-table__cell"><%= work_item.fee_earner %></td>
               <td class="govuk-table__cell">
                 <%= link_to t('.change'), edit_steps_work_item_path(@form_object.application, work_item_id: work_item.id) %>
-                <%= link_to t('.duplicate'), edit_steps_defendant_delete_path(@form_object.application, work_item_id: work_item.id) %>
+                <%= link_to t('.duplicate'), edit_steps_work_item_delete_path(@form_object.application, work_item_id: work_item.id) %>
                 <%= link_to t('.delete'), edit_steps_work_item_delete_path(@form_object.application, work_item_id: work_item.id) %>
               </td>
             </tr>

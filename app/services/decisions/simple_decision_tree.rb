@@ -1,11 +1,11 @@
 module Decisions
   class SimpleDecisionTree < BaseDecisionTree
     EDIT_MAPPING = {
-      firm_details: :case_details,
-      case_details: :case_disposal,
-      case_disposal: :hearing_details,
       defendant_details: :defendant_summary,
       defendant_delete: :defendant_summary,
+      case_details: :case_disposal,
+      case_disposal: :hearing_details,
+      hearing_details: :reason_for_claim,
       reason_for_claim: :claim_details,
       claim_details: :work_item,
       work_item: :work_items,
@@ -13,7 +13,7 @@ module Decisions
 
     SHOW_MAPPING = {
       other_info: :start_page,
-      letters_calls: :cost_summary,
+      disbursement_type: :cost_summary,
     }.freeze
 
     def destination
@@ -38,12 +38,14 @@ module Decisions
       end
     end
 
-    def after_hearing_details
-      if form_object.application.defendants.any?
-        edit(:defendant_summary)
-      else
-        edit(:defendant_details)
-      end
+    def after_firm_details
+      direct(
+        page: :defendant_details,
+        summary_page: :defendant_summary,
+        nested_id: :defendant_id,
+        scope: form_object.application.defendants,
+        create_params: { position: 1, main: true }
+      )
     end
 
     def after_defendant_summary
@@ -52,16 +54,17 @@ module Decisions
         new_defendant = form_object.application.defendants.create(position: next_posiiton)
         edit(:defendant_details, defendant_id: new_defendant.id)
       else
-        edit(:reason_for_claim)
+        edit(:case_details)
       end
     end
 
     def after_claim_details
-      if form_object.application.work_items.any?
-        edit(:work_items)
-      else
-        edit(:work_item)
-      end
+      direct(
+        page: :work_item,
+        summary_page: :work_items,
+        nested_id: :work_item_id,
+        scope: form_object.application.work_items,
+      )
     end
 
     def after_work_items
@@ -74,7 +77,39 @@ module Decisions
     end
 
     def after_work_item_delete
-      after_claim_details
+      direct(
+        page: :work_item,
+        summary_page: :work_items,
+        nested_id: :work_item_id,
+        scope: form_object.application.work_items,
+      )
+    end
+
+    def after_letters_calls
+      direct(
+        page: :disbursement_type,
+        summary_page: :start_page,
+        nested_id: :disbursement_id,
+        options: { edit_when_one: true },
+        scope: form_object.application.disbursements
+      )
+    end
+
+    def direct(page:, summary_page:, nested_id:, scope:, options: { edit_when_one: false }, create_params: {})
+      count = scope.count
+      if count.zero?
+        new_work_item = scope.create(**create_params)
+        edit(page, nested_id => new_work_item.id)
+      elsif count == 1 && options[:edit_when_one]
+        new_work_item = scope.first
+        edit(page, nested_id => new_work_item.id)
+      else
+        edit(summary_page)
+      end
+    end
+
+    def after_disbursement_type
+      edit(:disbursement_cost, disbursement_id: form_object.record.id)
     end
   end
 end

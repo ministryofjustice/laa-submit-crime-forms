@@ -7,13 +7,17 @@ module Tasks
       if application.work_items.count.positive?
         edit_steps_work_items_path(application)
       else
-        edit_steps_work_item_path(application)
+        edit_steps_work_item_path(id: application, work_item_id: 'create_first')
       end
     end
 
     def in_progress?
-      application.navigation_stack.intersect?([edit_steps_work_items_path(application),
-                                               edit_steps_work_item_path(application)])
+      [
+        edit_steps_work_items_path(application),
+        edit_steps_work_item_path(id: application.id, work_item_id: '')
+      ].any? do |path|
+        application.navigation_stack.any? { |stack| stack.start_with?(path) }
+      end
     end
 
     def completed?

@@ -48,7 +48,6 @@
 
 <% title t('.page_title') %>
 
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
@@ -94,7 +93,7 @@
               </td>
             <% end %>
             <td class="govuk-table__cell"><%= claim.date %></td>
-            <td class="govuk-table__cell"><%= claim.ufn %></td>
+            <td class="govuk-table__cell"><%= claim.laa_reference %></td>
             <% if claim.status == 'completed' %>
               <td class="govuk-table__cell">
                 <strong class="govuk-tag govuk-tag--green">
@@ -121,11 +120,12 @@
               </td>
             <% end %>
             <td class="govuk-table__cell">
-              <a href="/confirm_delete?id=<%= claim.id %>&name=<%= claim.office_code %>&reference=<%=  claim.ufn %>" class="govuk-button govuk-button--secondary">Delete</a>
+              <a href="/confirm_delete?id=<%= claim.id %>&name=<%= claim.office_code %>&laa_reference=<%=  claim.laa_reference %>" class="govuk-button govuk-button--secondary">Delete</a>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
+    <%= paginate @claims %>
   </div>
 </div>

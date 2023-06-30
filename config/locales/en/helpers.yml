@@ -48,6 +48,11 @@ en:
       steps_work_item_form:
         work_type: Type of work
         completed_on: Completion date
+      steps_disbursement_type_form:
+        disbursement_date: Date
+        disbursement_type: Which disbursement type is this is for?
+      steps_disbursement_cost_form:
+        prior_authority: Have you been granted prior authority for this disbursement?
     hint:
       steps_claim_type_form:
         rep_order_date: For example, 27 3 2007
@@ -105,6 +110,19 @@ en:
         completed_on: For example, 27 3 2007
         fee_earner: For example, JMD
         period: For example, 1 hour and 30 minutes
+      steps_disbursement_type_form:
+        disbursement_date: For example, 27 3 2007
+        disbursement_type_options:
+          car: '%{rate} per mile'
+          motorcycle: '%{rate} per mile'
+          bike: '%{rate} per mile'
+        other_type: Enter the name of disbursement type, or select one from the suggestions that appear when you start to enter the name.
+      steps_disbursement_cost_form:
+        miles: For example, 2.5 miles
+        total_cost_without_vat: Enter the cost, not including VAT, for example £301.55
+        details: For example, why this disbursement was needed
+        prior_authority_options:
+          'yes': We’ll ask you to upload evidence of this before you submit this claim
 
     label:
       steps_claim_type_form:
@@ -220,6 +238,23 @@ en:
         apply_uplift_options:
           'true': Apply an uplift to this work
         letters_calls_uplift: For example, from any percentage from 1 to 100
+      steps_disbursement_type_form:
+        disbursement_type_options:
+          car: Car
+          motorcycle: Motorcycle
+          bike: bike
+          other: Other disbursement type
+      steps_disbursement_cost_form:
+        miles: Number of miles
+        total_cost_without_vat: Disbursement cost
+        details: Enter details of this disbursement
+        prior_authority_options:
+          'yes': 'Yes'
+          'no': 'No'
+        apply_vat_options:
+          'true': Apply 20% VAT to this work
+
+
       steps_other_info_form:
         other_info: For example, justification for the time spent on the case, or for any uplift claimed
         concluded_options:
@@ -227,4 +262,41 @@ en:
           'no': 'No'
         conclusion: Tell us why you did not make this claim within 3 months of the conclusion of the proceedings
 
+    other_disbursement_type:
+      accident_reconstruction_report: Accident Reconstruction Report
+      accident_emergency_report: Accident & Emergency Report
+      accountants: Accountants
+      architects_surveyor: Architects/Surveyor
+      back_calculations: Back Calculations
+      car_travel: Car Travel
+      caell_phone_site_analaysis: Caell Phone Site Analaysis
+      computer_experts: Computer Experts
+      consultant_medical_reports: Consultant Medical Reports
+      dna_testing: DNA Testing
+      drug_expert_report: Drug Expert Report
+      engineer_mechanical_engineer: Engineer/Mechanical Engineer
+      enquiry_agents: Enquiry Agents
+      facial_mapping_experts: Facial Mapping Experts
+      fingerprint_experts: Fingerprint Experts
+      fire_investgation_report: Fire Investgation Report
+      forensic_scientists: Forensic Scientists
+      general_practioners: General Practioners
+      handwriting_experts: Handwriting experts
+      interpreters: Interpreters
+      lip_readers: Lip Readers
+      medical_report: Medical Report
+      meteorologist: Meteorologist
+      overnight_expenses: Overnight Expenses
+      paediatricians_report: Paediatricians Report
+      pathologists: Pathologists
+      photocopying: Photocopying
+      plans_photographs: Plans & Photographs
+      psychiatric_reports: Psychiatric Reports
+      phsycological_reports: Phsycological Reports
+      telecommunications_expert: Telecommunications Expert
+      transcripts: Transcripts
+      translators: Translators
+      travel_expenses_excl_car: Travel expenses (excl car)
+      veternarian_report: Veternarian Report
+      voice_recognition_experts: Voice Recognition
 

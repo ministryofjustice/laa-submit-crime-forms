@@ -7,18 +7,25 @@ RSpec.describe Pricing do
   let(:date) { nil }
 
   describe '#for' do
+    # rubocop:disable RSpec/ExampleLength
     context 'when date is nil' do
       it 'returns the current (post CLAIR) pricing' do
-        expect(described_class).to receive(:new).with({
-                                                        'preparation' => 52.15,
-          'advocacy' => 65.42,
-          'attendance_with_counsel' => 35.68,
-          'attendance_without_counsel' => 35.68,
-          'travel' => 27.60,
-          'waiting' => 27.60,
-          'letters' => 4.09,
-          'calls' => 4.09,
-                                                      })
+        expect(described_class).to receive(:new).with(
+          {
+            'preparation' => 52.15,
+            'advocacy' => 65.42,
+            'attendance_with_counsel' => 35.68,
+            'attendance_without_counsel' => 35.68,
+            'travel' => 27.60,
+            'waiting' => 27.60,
+            'letters' => 4.09,
+            'calls' => 4.09,
+            'car' => 0.45,
+            'motorcycle' => 0.45,
+            'bike' => 0.25,
+            'vat' => 0.2,
+          }
+        )
         subject
       end
     end
@@ -27,16 +34,22 @@ RSpec.describe Pricing do
       let(:date) { Date.new(2022, 9, 30) }
 
       it 'returns the current (post CLAIR) pricing' do
-        expect(described_class).to receive(:new).with({
-                                                        'preparation' => 52.15,
-          'advocacy' => 65.42,
-          'attendance_with_counsel' => 35.68,
-          'attendance_without_counsel' => 35.68,
-          'travel' => 27.60,
-          'waiting' => 27.60,
-          'letters' => 4.09,
-          'calls' => 4.09,
-                                                      })
+        expect(described_class).to receive(:new).with(
+          {
+            'preparation' => 52.15,
+            'advocacy' => 65.42,
+            'attendance_with_counsel' => 35.68,
+            'attendance_without_counsel' => 35.68,
+            'travel' => 27.60,
+            'waiting' => 27.60,
+            'letters' => 4.09,
+            'calls' => 4.09,
+            'car' => 0.45,
+            'motorcycle' => 0.45,
+            'bike' => 0.25,
+            'vat' => 0.2,
+          }
+        )
         subject
       end
     end
@@ -45,18 +58,33 @@ RSpec.describe Pricing do
       let(:date) { Date.new(2022, 9, 29) }
 
       it 'returns the old (pre CLAIR) pricing' do
-        expect(described_class).to receive(:new).with({
-                                                        'preparation' => 45.35,
-          'advocacy' => 56.89,
-          'attendance_with_counsel' => 31.03,
-          'attendance_without_counsel' => 31.03,
-          'travel' => 24.0,
-          'waiting' => 24.0,
-          'letters' => 3.56,
-          'calls' => 3.56,
-                                                      })
+        expect(described_class).to receive(:new).with(
+          {
+            'preparation' => 45.35,
+            'advocacy' => 56.89,
+            'attendance_with_counsel' => 31.03,
+            'attendance_without_counsel' => 31.03,
+            'travel' => 24.0,
+            'waiting' => 24.0,
+            'letters' => 3.56,
+            'calls' => 3.56,
+            'car' => 0.45,
+            'motorcycle' => 0.45,
+            'bike' => 0.25,
+            'vat' => 0.2,
+          }
+        )
         subject
       end
+    end
+    # rubocop:enable RSpec/ExampleLength
+  end
+
+  describe '#initialize' do
+    let(:bad_pricing) { described_class.new({ 'travel' => 24.0 }) }
+
+    context 'when data is missing' do
+      it { expect(bad_pricing.preparation).to be_nil }
     end
   end
 

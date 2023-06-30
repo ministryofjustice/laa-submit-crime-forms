@@ -37,7 +37,9 @@ module Steps
     end
 
     def total_cost
-      time_spent.is_a?(IntegerTimePeriod) ? apply_uplift!(time_spent.to_f / 60) * pricing[work_type] : nil
+      return unless time_spent.is_a?(IntegerTimePeriod) && pricing[work_type]
+
+      apply_uplift!(time_spent.to_f / 60) * pricing[work_type]
     end
 
     def work_types_with_pricing
@@ -57,7 +59,7 @@ module Steps
     end
 
     def attributes_with_resets
-      attributes.merge(uplift: apply_uplift ? uplift : nil)
+      attributes.merge('uplift' => apply_uplift ? uplift : nil)
     end
   end
 end

@@ -1,11 +1,11 @@
 <% title t('.page_title') %>
-<% step_header(path: applications_path) %>
+<% step_header %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <%= govuk_error_summary(@form_object) %>
-    <%= step_form @form_object do |f| %>
+    <%= step_form @form_object, url: steps_defendant_details_path(@form_object.application, defendant_id: @form_object.record.id) do |f| %>
       <%= f.govuk_fieldset legend: { text: t(@form_object.label_key, index: @form_object.index) }, class: 'moj-add-another__item' do %>
         <%= f.hidden_field :id %>
         <%= f.hidden_field :main %>

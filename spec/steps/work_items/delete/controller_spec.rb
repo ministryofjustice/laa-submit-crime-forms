@@ -12,7 +12,7 @@ RSpec.describe Steps::WorkItemDeleteController, type: :controller do
       let(:current_application) { nil }
 
       it 'redirects to the application not found error page' do
-        get :edit, params: { id: '12345' }
+        get :edit, params: { id: '12345', work_item_id: SecureRandom.uuid }
         expect(response).to redirect_to(controller.laa_msf.application_not_found_errors_path)
       end
     end
@@ -53,23 +53,15 @@ RSpec.describe Steps::WorkItemDeleteController, type: :controller do
           end
         end
       end
-
-      context 'when work_item id is NOT passes in' do
-        let(:work_item) { nil }
-
-        it 'redirects to the summary page' do
-          get :edit, params: { id: existing_case }
-
-          expect(response).to redirect_to(edit_steps_work_items_path(current_application))
-        end
-      end
     end
   end
 
   describe '#update' do
     let(:form_object) { instance_double(Steps::DeleteForm, attributes: { foo: double }) }
     let(:form_object_params_name) { Steps::DeleteForm.name.underscore }
-    let(:expected_params) { { :id => existing_case, form_object_params_name => { foo: 'bar' } } }
+    let(:expected_params) do
+      { :id => existing_case, form_object_params_name => { foo: 'bar' }, :work_item_id => SecureRandom.uuid }
+    end
     let(:current_application) { instance_double(Claim, work_items:) }
     let(:work_items) { double(:work_items, find_by: work_item) }
     let(:work_item) { nil }
@@ -141,20 +133,10 @@ RSpec.describe Steps::WorkItemDeleteController, type: :controller do
           let(:work_item) { nil }
 
           it 'redirects to the summary page' do
-            get :edit, params: { id: existing_case, work_item_id: SecureRandom }
+            get :edit, params: { id: existing_case, work_item_id: SecureRandom.uuid }
 
             expect(response).to redirect_to(edit_steps_work_items_path(current_application))
           end
-        end
-      end
-
-      context 'when work_item id is NOT passes in' do
-        let(:work_item) { nil }
-
-        it 'redirects to the summary page' do
-          get :edit, params: { id: existing_case }
-
-          expect(response).to redirect_to(edit_steps_work_items_path(current_application))
         end
       end
     end

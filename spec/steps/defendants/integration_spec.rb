@@ -8,7 +8,8 @@ RSpec.describe 'User can manage defendants', type: :system do
   end
 
   it 'can add a defendant' do
-    visit edit_steps_defendant_details_path(claim.id)
+    defendant = claim.defendants.create(position: 1, main: true)
+    visit edit_steps_defendant_details_path(claim.id, defendant_id: defendant.id)
 
     within('.govuk-fieldset', text: 'Main defendant') do
       fill_in 'Full name', with: 'Jim Bob'

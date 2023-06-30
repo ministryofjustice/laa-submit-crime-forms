@@ -1,18 +1,34 @@
-pre_20220930:
+from_start:
+  # working types
   preparation: 45.35
   advocacy: 56.89
   attendance_with_counsel: 31.03
   attendance_without_counsel: 31.03
   travel: 24.0
   waiting: 24.0
+  # letters and calls
   letters: 3.56
   calls: 3.56
-post_20220930:
+  # disbursement type
+  car: 0.45
+  motorcycle: 0.45
+  bike: 0.25
+  # disbursement cost
+  vat: 0.2
+from_20220930:
+  # working types
   preparation: 52.15
   advocacy: 65.42
   attendance_with_counsel: 35.68
   attendance_without_counsel: 35.68
   travel: 27.60
   waiting: 27.60
+  # letters and calls
   letters: 4.09
   calls: 4.09
+  # disbursement type
+  car: 0.45
+  motorcycle: 0.45
+  bike: 0.25
+  # disbursement cost
+  vat: 0.2
