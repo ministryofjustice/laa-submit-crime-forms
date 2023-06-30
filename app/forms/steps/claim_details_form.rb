@@ -19,11 +19,11 @@ module Steps
     validates :defence_statement, presence: true
     validates :number_of_witnesses, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :time_spent, numericality: { only_integer: true, greater_than: 0 }, time_period: true,
-      if: -> { @preparation_time == YesNoAnswer::YES.to_s }
+      if: :preparation_time
     validates :work_before_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
-      if: -> { @work_before == YesNoAnswer::YES.to_s }
+      if: :work_before
     validates :work_after_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
-      if: -> { @work_after == YesNoAnswer::YES.to_s }
+      if: :work_after
 
     BOOLEAN_FIELDS.each do |field|
       validates field, presence: true, inclusion: { in: YesNoAnswer.values }
@@ -34,14 +34,17 @@ module Steps
       self.class::VIEW_BOOLEAN_FIELDS
     end
 
-    # state hasnt been set yet so nil and of no use validate on save
-    # the save only populates @preparation_time and @work_before and @work_after to yes or no
-    # depending on the choice
-    def preparation_time; end
+    def preparation_time
+      @preparation_time.nil? ? time_spent.present? : @preparation_time == 'yes'
+    end
 
-    def work_before; end
+    def work_before
+      @work_before.nil? ? work_before_date.present? : @work_before == 'yes'
+    end
 
-    def work_after; end
+    def work_after
+      @work_after.nil? ? work_after_date.present? : @work_after == 'yes'
+    end
 
     private
 
@@ -50,12 +53,10 @@ module Steps
     end
 
     def attributes_to_reset
-      # @preparation_time, @work_before and @work_after now set so use on final save -prevents saving if uses sets date
-      # and then decides radio box should be no
       attributes.merge(
-        time_spent: @preparation_time == YesNoAnswer::YES.to_s ? time_spent : nil,
-        work_before_date: @work_before == YesNoAnswer::YES.to_s ? work_before_date : nil,
-        work_after_date: @work_after == YesNoAnswer::YES.to_s ? work_after_date : nil,
+        time_spent: @preparation_time  ? time_spent : nil,
+        work_before_date: @work_before ? work_before_date : nil,
+        work_after_date: @work_after ? work_after_date : nil,
       )
     end
   end

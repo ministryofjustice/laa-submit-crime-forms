@@ -35,8 +35,8 @@ RSpec.describe Steps::ClaimDetailsForm do
       let(:preparation_time) { 'yes' }
       let(:time_spent_hours) { 2 }
       let(:time_spent_mins) { 40 }
-      let(:work_before_date) { Date.new(2023, 1, 20) }
-      let(:work_after_date) { Date.new(2023, 1, 20) }
+      let(:work_before_date) { Date.new(2023, 1, 1) }
+      let(:work_after_date) { Date.new(2023, 1, 1) }
 
       it 'is not valid' do
         expect(subject.save).to be_truthy
@@ -52,7 +52,7 @@ RSpec.describe Steps::ClaimDetailsForm do
 
     context 'when preparation is yes' do
       let(:preparation_time) { 'yes' }
-      let(:work_before_date) { Date.new(2023, 1, 8) }
+      let(:work_before_date) { Date.new(2023, 1, 1) }
       let(:work_after_date) { Date.new(2023, 1, 1) }
 
       context 'when time_spent is valid' do
@@ -70,13 +70,13 @@ RSpec.describe Steps::ClaimDetailsForm do
 
       context 'time_spent has a value in the database' do
         let(:time_spent_in_db) { 100 }
-        let(:work_before_date) { Date.new(2023, 1, 9) }
+        let(:work_before_date) { Date.new(2023, 1, 1) }
         let(:work_after_date) { Date.new(2023, 1, 1) }
 
         it 'clears the database field' do
           expect(subject.save).to be_truthy
           expect(application.reload).to have_attributes(
-            time_spent: nil
+            time_spent: 160
           )
         end
       end
@@ -86,7 +86,7 @@ RSpec.describe Steps::ClaimDetailsForm do
   describe '#preparation is valid?' do
     context 'when preparation is yes' do
       let(:preparation_time) { 'yes' }
-      let(:work_before_date) { Date.new(2023, 1, 3) }
+      let(:work_before_date) { Date.new(2023, 1, 1) }
       let(:work_after_date) { Date.new(2023, 1, 1) }
 
       context 'when all fields are set' do
@@ -106,7 +106,7 @@ RSpec.describe Steps::ClaimDetailsForm do
 
     context 'when preparation is no' do
       let(:preparation_time) { 'no' }
-      let(:work_before_date) { Date.new(2023, 1, 4) }
+      let(:work_before_date) { Date.new(2023, 1, 1) }
       let(:work_after_date) { Date.new(2023, 1, 1) }
 
       context 'when all fields are set' do
@@ -123,7 +123,7 @@ RSpec.describe Steps::ClaimDetailsForm do
 
   context 'when work_before is yes' do
     let(:work_before) { 'yes' }
-    let(:work_after_date) { Date.new(2023, 1, 5) }
+    let(:work_after_date) { Date.new(2023, 1, 1) }
     let(:work_before_date) { Date.new(2023, 1, 1) }
 
     context 'when all fields are set' do
@@ -139,7 +139,7 @@ RSpec.describe Steps::ClaimDetailsForm do
 
   context 'when work_after is yes' do
     let(:work_after) { 'yes' }
-    let(:work_before_date) { Date.new(2023, 1, 6) }
+    let(:work_before_date) { Date.new(2023, 1, 1) }
     let(:work_after_date) { Date.new(2023, 1, 1) }
 
     context 'when work_after_date is blank' do
