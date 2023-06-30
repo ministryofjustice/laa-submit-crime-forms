@@ -93,6 +93,9 @@ en:
     work_items:
       edit:
         page_title: Page title - TODO
+        heading:
+          one: You added %{count} work item
+          other: You added %{count} work items
         change: Change
         duplicate: Duplicate
         delete: Delete

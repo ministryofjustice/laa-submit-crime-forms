@@ -52,8 +52,16 @@ RSpec.describe Decisions::SimpleDecisionTree do
   context 'when work_item exists' do
     before do
       application.save
-      application.work_items.create
+      application.work_items.create(work_item_attributes)
     end
+
+    let(:work_item_attributes) { {
+      work_type: WorkTypes.values.sample.to_s,
+      time_spent: 100,
+      completed_on: Date.yesterday,
+      fee_earner: 'dave',
+      uplift: nil,
+    } }
 
     it_behaves_like 'a generic decision', :work_item_delete, :work_items, Steps::DeleteForm
     it_behaves_like 'a generic decision', :claim_details, :work_items, Steps::ClaimDetailsForm
@@ -63,6 +71,31 @@ RSpec.describe Decisions::SimpleDecisionTree do
                         expect { decision_tree.destination }.to change(application.work_items, :count).by(1)
                       end
                     }
+
+    context 'but is not valid' do
+      let(:work_item_attributes) { {
+        work_type: WorkTypes.values.sample.to_s,
+        time_spent: nil,
+        completed_on: Date.yesterday,
+        fee_earner: 'dave',
+        uplift: nil,
+      } }
+      no_controller_options = {
+        name: :work_items,
+        routing: Proc.new { {
+
+          controller: :work_item,
+          work_item_id: application.work_items.first.id,
+          flash: { error: "Can not continue until valid!" }
+        } }
+      }
+      it_behaves_like 'an add_another decision', :work_items, :work_item, no_controller_options, :work_item_id,
+                      additional_yes_branch_tests: lambda {
+                        it 'creates a new defendant on the claim' do
+                          expect { decision_tree.destination }.to change(application.work_items, :count).by(1)
+                        end
+                      }
+    end
   end
 
   it_behaves_like 'a decision with nested object', step_name: :claim_details, controller: :work_item,
@@ -70,7 +103,7 @@ summary_controller: :work_items, form_class: Steps::ClaimDetailsForm
   it_behaves_like 'a decision with nested object', step_name: :work_item_delete, controller: :work_item,
 summary_controller: :work_items, form_class: Steps::DeleteForm
   it_behaves_like 'a decision with nested object', step_name: :letters_calls, controller: :disbursement_type,
-summary_controller: :start_page, form_class: Steps::LettersCallsForm, edit_when_one: true, nested: :disbursement
+summary_controller: :disbursements, form_class: Steps::LettersCallsForm, edit_when_one: true, nested: :disbursement
 
   it_behaves_like 'a generic decision', :other_info, :start_page, Steps::OtherInfoForm, action_name: :show
 
