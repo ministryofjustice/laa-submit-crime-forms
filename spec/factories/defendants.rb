@@ -1,4 +1,4 @@
-FactoryBot.define  do
+FactoryBot.define do
   factory :defendant do
     id { SecureRandom.uuid }
 

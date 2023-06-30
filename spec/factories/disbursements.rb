@@ -1,4 +1,4 @@
-FactoryBot.define  do
+FactoryBot.define do
   factory :disbursement do
     id { SecureRandom.uuid }
 

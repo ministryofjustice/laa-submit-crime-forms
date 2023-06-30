@@ -13,8 +13,8 @@ RSpec.shared_examples 'a generic decision' do |step_name, controller_name, form_
   end
 end
 
-# rubocop:disable Layout/LineLength
-RSpec.shared_examples 'an add_another decision' do |step_name, yes_controller_name, no_controller, id_field, action_name: :edit, no_action_name: :edit,  additional_yes_branch_tests: nil|
+RSpec.shared_examples 'an add_another decision' do |step_name, yes_controller_name, no_controller,
+  id_field, action_name: :edit, no_action_name: :edit, additional_yes_branch_tests: nil|
   let(:form) { Steps::AddAnotherForm.new(application:, add_another:) }
   let(:decision_tree) { described_class.new(form, as: step_name) }
   let(:add_another) { 'yes' }
@@ -60,4 +60,3 @@ RSpec.shared_examples 'an add_another decision' do |step_name, yes_controller_na
     end
   end
 end
-# rubocop:enable Layout/LineLength

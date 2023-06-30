@@ -121,7 +121,7 @@ module Decisions
         forms = Array(form)
         invalid_instance = scope.detect { |record| forms.any? { |f| !f.build(record, application:).valid? } }
         if invalid_instance
-          edit(add_view, sub_id => invalid_instance.id, flash: { error: 'Can not continue until valid!' })
+          edit(add_view, sub_id => invalid_instance.id, :flash => { error: 'Can not continue until valid!' })
         else
           proceed_url
         end

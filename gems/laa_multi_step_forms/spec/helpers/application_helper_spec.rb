@@ -74,7 +74,7 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
 
   describe '#format_period' do
     context 'when period is nil' do
-      it { expect(helper.format_period(nil)).to eq('Not set') }
+      it { expect(helper.format_period(nil)).to eq('*required') }
     end
 
     context 'when period is not nil' do

@@ -1,4 +1,4 @@
-FactoryBot.define  do
+FactoryBot.define do
   factory :work_item do
     id { SecureRandom.uuid }
 

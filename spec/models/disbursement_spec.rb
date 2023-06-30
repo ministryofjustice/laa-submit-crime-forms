@@ -2,14 +2,15 @@ require 'rails_helper'
 
 RSpec.describe Disbursement do
   subject { described_class.new(attributes) }
+
   let(:attributes) { { total_cost_without_vat:, vat_amount: } }
   let(:total_cost_without_vat) { 10.0 }
   let(:vat_amount) { 0.0 }
 
-
   describe '#total_cost' do
     context 'when total_cost_without_vat is nil' do
       let(:total_cost_without_vat) { nil }
+
       it { expect(subject.total_cost).to be_nil }
     end
 
