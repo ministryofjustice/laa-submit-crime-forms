@@ -1,5 +1,5 @@
 RSpec.shared_examples 'a decision with nested object' do
-    |step_name:, controller:, summary_controller:, form_class:, nested: controller, edit_when_one: false|
+    |step_name:, controller:, summary_controller:, form_class:, nested: controller, edit_when_one: false, create_args: nil|
   context "when step is #{step_name}" do
     let(:local_form) { form_class.new(application:) }
     let(:decision_tree) { described_class.new(local_form, as: step_name) }
@@ -14,7 +14,7 @@ RSpec.shared_examples 'a decision with nested object' do
 
       it 'creates a new disbursement' do
         decision_tree.destination
-        expect(nested_scope).to have_received(:create).with(no_args)
+        expect(nested_scope).to have_received(:create).with(create_args || no_args)
       end
 
       it 'moves to the page for the disbursement' do
