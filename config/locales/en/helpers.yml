@@ -8,6 +8,7 @@ en:
         claim_type: What are you claiming for?
         rep_order_date: Representation order date
         cntp_date: CNTP date
+        ufn:  where is it ?
       steps_firm_details_form:
         solicitor_attributes:
           alternative_contact_details: Do you want to add alternative contact details?
@@ -120,6 +121,7 @@ en:
 
     label:
       steps_claim_type_form:
+        ufn: For example 120223/001
         claim_type_options:
           non_standard_magistrate: Non-standard magistrates' court payment
           breach_of_injunction: Breach of injunction

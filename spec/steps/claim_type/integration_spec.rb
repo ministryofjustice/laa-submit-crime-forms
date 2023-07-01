@@ -10,6 +10,7 @@ RSpec.describe 'User can fill in claim type details', type: :system do
   it 'can do green path' do
     visit edit_steps_claim_type_path(claim.id)
 
+    fill_in 'For example 120223/001', with: '120223/001'
     choose "Non-standard magistrates' court payment"
     within('.govuk-radios__conditional', text: 'Representation order date') do
       fill_in 'Day', with: '20'
@@ -20,6 +21,7 @@ RSpec.describe 'User can fill in claim type details', type: :system do
     click_on 'Save and continue'
 
     expect(claim.reload).to have_attributes(
+      ufn: '120223/001',
       claim_type: 'non_standard_magistrate',
       rep_order_date: Date.new(2023, 4, 20)
     )

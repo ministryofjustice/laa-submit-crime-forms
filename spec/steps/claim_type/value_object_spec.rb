@@ -11,7 +11,6 @@ RSpec.describe ClaimType do
         %w[
           non_standard_magistrate
           breach_of_injunction
-          something_else
         ]
       )
     end
