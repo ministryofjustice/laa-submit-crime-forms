@@ -73,16 +73,17 @@ Rails.application.routes.draw do
       edit_step :case_details
       edit_step :case_disposal
       edit_step :hearing_details
-      edit_step :defendant_details
+      crud_step :defendant_details, param: :defendant_id, except: [:destroy]
       edit_step :defendant_summary
-      edit_step :defendant_delete
+      crud_step :defendant_delete, param: :defendant_id, except: [:destroy]
       edit_step :reason_for_claim
       edit_step :claim_details
       edit_step :letters_calls
-      edit_step :work_item
+      crud_step :work_item, param: :work_item_id, except: [:destroy]
       edit_step :work_items
-      edit_step :work_item_delete
+      crud_step :work_item_delete, param: :work_item_id, except: [:destroy]
       crud_step :disbursement_type, param: :disbursement_id, except: [:destroy]
+      crud_step :disbursement_cost, param: :disbursement_id, except: [:destroy]
       show_step :cost_summary
       edit_step :other_info
 

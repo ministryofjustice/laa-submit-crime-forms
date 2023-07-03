@@ -1,6 +1,6 @@
 module Tasks
   class ReasonForClaim < Generic
-    PREVIOUS_TASK = Defendants
+    PREVIOUS_TASK = HearingDetails
     FORM = Steps::ReasonForClaimForm
 
     def path

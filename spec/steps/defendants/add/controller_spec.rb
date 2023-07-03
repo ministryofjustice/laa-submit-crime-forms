@@ -1,32 +1,37 @@
 require 'rails_helper'
 
 RSpec.describe Steps::DefendantDetailsController, type: :controller do
-  it_behaves_like 'a generic step controller', Steps::DefendantDetailsForm, Decisions::SimpleDecisionTree
-  it_behaves_like 'a step that can be drafted', Steps::DefendantDetailsForm
+  let(:defendant) { existing_case.is_a?(Claim) ? existing_case.defendants.create : nil }
+
+  it_behaves_like 'a generic step controller', Steps::DefendantDetailsForm, Decisions::SimpleDecisionTree,
+                  ->(scope) { { defendant_id: scope.defendant&.id || '4321' } }
+  it_behaves_like 'a step that can be drafted', Steps::DefendantDetailsForm,
+                  ->(scope) { { defendant_id: scope.defendant&.id || '4321' } }
 
   describe '#edit' do
     let(:application) { Claim.create(office_code: 'AA1', defendants: defendants) }
     let(:defendants) { [] }
 
-    context 'when defendant_id is not passed in' do
-      context 'when main defendant already exists' do
-        let(:defendants) { [Defendant.new(full_name: 'Jim', maat: 'AA1', main: true, position: 1)] }
+    context 'when defendant_id CREATE_FIRST flag passed as id' do
+      it 'creates a new defendant and passes it to the form' do
+        allow(Steps::DefendantDetailsForm).to receive(:build)
+        expect { get :edit, params: { id: application, defendant_id: StartPage::CREATE_FIRST } }
+          .to change(application.defendants, :count).by(1)
 
-        it 'passes the existing defendant to the form' do
-          allow(Steps::DefendantDetailsForm).to receive(:build)
-          expect { get :edit, params: { id: application } }.not_to change(application.defendants, :count)
-
-          expect(Steps::DefendantDetailsForm).to have_received(:build).with(defendants.first, application:)
-        end
+        expect(Steps::DefendantDetailsForm).to have_received(:build)
+          .with(application.reload.defendants.last, application:)
       end
 
-      context 'when no main defendant exists' do
-        it 'creates a new main defendant and passes it to the form' do
-          allow(Steps::DefendantDetailsForm).to receive(:build)
-          expect { get :edit, params: { id: application } }.to change(application.defendants, :count).by(1)
+      context 'and more than one defendent exists' do
+        let(:defendants) { [Defendant.new, Defendant.new] }
 
-          expect(Steps::DefendantDetailsForm).to have_received(:build).with(application.reload.defendants.last,
-                                                                            application:)
+        it 'redirects to the summary page' do
+          expect do
+            get :edit, params: { id: application, defendant_id: StartPage::CREATE_FIRST }
+          end.not_to change(application.disbursements, :count)
+
+          # TODO: update this once we have disbusrements page
+          expect(response).to redirect_to(edit_steps_defendant_summary_path(application))
         end
       end
     end

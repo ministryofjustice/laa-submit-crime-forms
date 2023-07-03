@@ -19,21 +19,20 @@ RSpec.describe Tasks::Disbursements, type: :system do
 
   describe '#path' do
     before do
-      allow(application.disbursements).to receive(:create).and_return(disbursement)
-      # allow(application.disbursements).to receive(:count).and_return(number_of_disbursements) }
+      allow(application.disbursements).to receive(:count).and_return(number_of_disbursements)
     end
 
     context 'no disbursements' do
       let(:number_of_disbursements) { 0 }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_type/#{disbursement.id}") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_type/create_first") }
     end
 
-    # context 'one disbursement' do
-    #   let(:number_of_disbursements) { 1 }
+    context 'one disbursement' do
+      let(:number_of_disbursements) { 1 }
 
-    #   it { expect(subject.path).to eq("/applications/#{id}/steps/disbursements") }
-    # end
+      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_type/#{disbursement.id}") }
+    end
 
     # context 'more than one disbursement' do
     #   let(:number_of_disbursements) { 2 }
@@ -74,20 +73,31 @@ RSpec.describe Tasks::Disbursements, type: :system do
     end
 
     context 'when disbursement_type exist' do
-      let(:disbursement_type_form) { double(:disbursement_type_form, valid?: valid) }
+      let(:disbursement_type_form) { double(:disbursement_type_form, valid?: types_valid) }
+      let(:disbursement_cost_form) { double(:disbursement_type_form, valid?: costs_valid) }
 
       before do
         allow(Steps::DisbursementTypeForm).to receive(:build).and_return(disbursement_type_form)
+        allow(Steps::DisbursementCostForm).to receive(:build).and_return(disbursement_cost_form)
       end
 
-      context 'when they are not valid' do
-        let(:valid) { false }
+      context 'when types are not valid' do
+        let(:types_valid) { false }
+        let(:costs_valid) { true }
 
         it { expect(subject).not_to be_completed }
       end
 
-      context 'when they are valid' do
-        let(:valid) { true }
+      context 'when costs are not valid' do
+        let(:types_valid) { false }
+        let(:costs_valid) { false }
+
+        it { expect(subject).not_to be_completed }
+      end
+
+      context 'when they are all valid' do
+        let(:types_valid) { true }
+        let(:costs_valid) { true }
 
         it { expect(subject).to be_completed }
       end

@@ -114,6 +114,13 @@ en:
     disbursement_type:
       edit:
         heading: Disbursement type
+    disbursement_cost:
+      edit:
+        heading: Disbursement cost
+        calculation: Calculation
+        before_vat: Before VAT
+        after_vat: After VAT
+
     cost_summary:
       show:
         heading: Check your payment claim
@@ -122,8 +129,8 @@ en:
     task_list:
       show:
         page_title: New claim page title - TODO
-        heading: Start a new claim
+        heading: Your claim progress
         subheading: Claim incomplete
         progress_counter: You have completed %{completed} of %{total} sections.
         aside:
-          reference: Reference number
+          reference: LAA Reference number

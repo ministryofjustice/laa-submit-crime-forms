@@ -84,6 +84,9 @@ RSpec/NoExpectationExample:
 RSpec/Rails/InferredSpecType:
   Enabled: false
 
+RSpec/MessageChain:
+  Enabled: false
+
 Naming/VariableNumber:
   Enabled: false
 
@@ -101,6 +104,9 @@ Metrics/MethodLength:
 # To be tweaked until we find the right balance
 Metrics/AbcSize:
   Max: 18
+
+Metrics/ParameterLists:
+  Max: 6
 
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:

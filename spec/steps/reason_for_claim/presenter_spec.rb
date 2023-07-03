@@ -22,7 +22,7 @@ RSpec.describe Tasks::ReasonForClaim, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  it_behaves_like 'a task with generic can_start?', Tasks::Defendants
+  it_behaves_like 'a task with generic can_start?', Tasks::HearingDetails
 
   describe '#completed?' do
     let(:form) { instance_double(Steps::ReasonForClaimForm, valid?: valid) }

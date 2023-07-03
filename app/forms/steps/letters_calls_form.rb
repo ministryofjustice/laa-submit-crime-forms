@@ -45,7 +45,7 @@ numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_eq
     end
 
     def attributes_with_resets
-      attributes.merge(letters_calls_uplift: apply_uplift ? letters_calls_uplift : nil)
+      attributes.merge('letters_calls_uplift' => apply_uplift ? letters_calls_uplift : nil)
     end
   end
 end
