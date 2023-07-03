@@ -315,120 +315,79 @@ RSpec.describe Steps::LettersCallsForm do
     end
   end
 
-  describe '#letters_total' do
-    let(:date) { Date.new(2022, 9, 30) }
-    let(:letters) { 2 }
-    let(:letters_calls_uplift) { nil }
+  describe 'calculation_rows' do
+    context 'when values are nil' do
+      let(:letters) { nil }
+      let(:calls) { nil }
 
-    context 'when date is not set' do
-      let(:date) { nil }
-
-      it { expect(subject.letters_total).to eq(2.0 * 4.09 * 1) }
+      it 'returns 0 values' do
+        expect(subject.calculation_rows).to eq(
+          [["Items", "Before uplift", "After uplift"],
+           ["Letters",
+            {:html_attributes=>{:id=>"letters-without-uplift"}, :text=>"£0.00"},
+            {:html_attributes=>{:id=>"letters-with-uplift"}, :text=>"£0.00"}],
+           ["Phone calls",
+            {:html_attributes=>{:id=>"calls-without-uplift"}, :text=>"£0.00"},
+            {:html_attributes=>{:id=>"calls-with-uplift"}, :text=>"£0.00"}]]
+        )
+      end
     end
 
-    context 'when date is before 30 Sep 2022' do
-      let(:date) { Date.new(2022, 9, 29) }
-
-      it { expect(subject.letters_total).to eq(2.0 * 3.56 * 1) }
-    end
-
-    context 'when date is on or after 30 Sep 2022' do
-      it { expect(subject.letters_total).to eq(2.0 * 4.09 * 1) }
-    end
-
-    context 'when uplift is set' do
+    context 'when values are non-nil' do
+      let(:letters) { 2 }
       let(:letters_uplift) { 10 }
+      let(:calls_uplift) { 20 }
 
-      it { expect(subject.letters_total).to eq(2.0 * 4.09 * 1.1) }
-    end
+      context 'when uplift is not required' do
+        let(:apply_letters_uplift) { 'false' }
+        let(:apply_calls_uplift) { 'false' }
 
-    context 'when letters is 0' do
-      let(:letters) { 0 }
+        it 'returns the values' do
+          expect(subject.calculation_rows).to eq(
+            [["Items", "Before uplift", "After uplift"],
+            ["Letters",
+              {:html_attributes=>{:id=>"letters-without-uplift"}, :text=>"£8.18"},
+              {:html_attributes=>{:id=>"letters-with-uplift"}, :text=>"£8.18"}],
+            ["Phone calls",
+              {:html_attributes=>{:id=>"calls-without-uplift"}, :text=>"£4.09"},
+              {:html_attributes=>{:id=>"calls-with-uplift"}, :text=>"£4.09"}]]
+          )
+        end
+      end
 
-      it { expect(subject.letters_total).to eq(0.0 * 4.09 * 1) }
-    end
-  end
+      context 'when uplift is required but values are not set' do
+        let(:letters_uplift) { nil }
+        let(:calls_uplift) { nil }
 
-  describe '#calls_total' do
-    let(:date) { Date.new(2022, 9, 30) }
-    let(:calls) { 2 }
-    let(:letters_calls_uplift) { nil }
+        it 'returns the values' do
+          expect(subject.calculation_rows).to eq(
+            [["Items", "Before uplift", "After uplift"],
+            ["Letters",
+              {:html_attributes=>{:id=>"letters-without-uplift"}, :text=>"£8.18"},
+              {:html_attributes=>{:id=>"letters-with-uplift"}, :text=>"£8.18"}],
+            ["Phone calls",
+              {:html_attributes=>{:id=>"calls-without-uplift"}, :text=>"£4.09"},
+              {:html_attributes=>{:id=>"calls-with-uplift"}, :text=>"£4.09"}]]
+          )
+        end
+      end
 
-    context 'when date is not set' do
-      let(:date) { nil }
-
-      it { expect(subject.calls_total).to eq(2.0 * 4.09 * 1) }
-    end
-
-    context 'when date is before 30 Sep 2022' do
-      let(:date) { Date.new(2022, 9, 29) }
-
-      it { expect(subject.calls_total).to eq(2.0 * 3.56 * 1) }
-    end
-
-    context 'when date is on or after 30 Sep 2022' do
-      it { expect(subject.calls_total).to eq(2.0 * 4.09 * 1) }
-    end
-
-    context 'when uplift is set' do
-      let(:calls_uplift) { 10 }
-
-      it { expect(subject.calls_total).to eq(2.0 * 4.09 * 1.1) }
-    end
-
-    context 'when calls is 0' do
-      let(:calls) { 0 }
-
-      it { expect(subject.calls_total).to eq(0.0 * 4.09 * 1) }
-    end
-  end
-
-  describe '#total_cost' do
-    let(:date) { Date.new(2022, 9, 30) }
-    let(:letters) { 2 }
-    let(:calls) { 3 }
-    let(:letters_calls_uplift) { nil }
-
-    context 'when date is not set' do
-      let(:date) { nil }
-
-      it { expect(subject.total_cost).to eq(5.0 * 4.09 * 1) }
-    end
-
-    context 'when date is before 30 Sep 2022' do
-      let(:date) { Date.new(2022, 9, 29) }
-
-      it { expect(subject.total_cost).to eq(5.0 * 3.56 * 1) }
-    end
-
-    context 'when date is on or after 30 Sep 2022' do
-      it { expect(subject.total_cost).to eq(5.0 * 4.09 * 1) }
-    end
-
-    context 'when letters uplift is set' do
-      let(:letters_uplift) { 10 }
-
-      it { expect(subject.total_cost).to eq(2.0 * 4.09 * 1.1 + 3.0 * 4.09) }
-    end
-
-    context 'when calls uplift is set' do
-      let(:calls_uplift) { 10 }
-
-      it { expect(subject.total_cost).to eq(2.0 * 4.09 + 3.0 * 4.09 * 1.1) }
-    end
-
-    context 'when letters is 0' do
-      let(:letters) { 0 }
-
-      it { expect(subject.total_cost).to eq(3.0 * 4.09 * 1) }
-    end
-
-    context 'when calls is 0' do
-      let(:calls) { 0 }
-
-      it { expect(subject.total_cost).to eq(2.0 * 4.09 * 1) }
+      context 'when uplift is required and values are not set' do
+        it 'returns the values' do
+          expect(subject.calculation_rows).to eq(
+            [["Items", "Before uplift", "After uplift"],
+            ["Letters",
+              {:html_attributes=>{:id=>"letters-without-uplift"}, :text=>"£8.18"},
+              {:html_attributes=>{:id=>"letters-with-uplift"}, :text=>"£9.00"}],
+            ["Phone calls",
+              {:html_attributes=>{:id=>"calls-without-uplift"}, :text=>"£4.09"},
+              {:html_attributes=>{:id=>"calls-with-uplift"}, :text=>"£4.91"}]]
+          )
+        end
+      end
     end
   end
+
 
   describe 'save!' do
     context 'when letters_calls_uplift exists in DB but apply_uplift is false in attributes' do

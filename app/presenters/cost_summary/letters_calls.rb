@@ -10,11 +10,11 @@ module CostSummary
       [
         {
           key: { text: translate('letters'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: in_pounds(letters_calls_form.letters_total) },
+          value: { text: in_pounds(letters_calls_form.letters_after_uplift) },
         },
         {
           key: { text: translate('calls'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: in_pounds(letters_calls_form.calls_total) },
+          value: { text: in_pounds(letters_calls_form.calls_after_uplift) },
         }
       ]
     end

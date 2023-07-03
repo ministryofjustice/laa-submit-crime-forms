@@ -25,34 +25,10 @@
         <% end %>
       <% end %>
 
-      <section id='letters-calls-total-section'>
-        <span class="govuk-caption-l"><%= t('.total_cost') %></span>
-        <h1 class="govuk-heading-l" id='letters-calls-total'><%= number_to_currency(@form_object.total_cost, unit: '£') %></h1>
+      <%= f.refresh_button %>
 
-        <%= govuk_details(summary_text: t('.summary')) do %>
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header"><%= t('.headers.items') %></th>
-                <th scope="col" class="govuk-table__header"><%= t('.headers.quantity') %></th>
-                <th scope="col" class="govuk-table__header"><%= t('.headers.total') %></th>
-              </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><%= t('.items.letters') %></th>
-                <td class="govuk-table__cell" id="letters-calls-table-letter-quantity"><%= @form_object.letters.to_i %></td>
-                <td class="govuk-table__cell" id="letters-calls-table-letter-total"><%= number_to_currency(@form_object.letters_total, unit: '£') %></td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><%= t('.items.calls') %></th>
-                <td class="govuk-table__cell" id="letters-calls-table-call-quantity"><%= @form_object.calls.to_i %></td>
-                <td class="govuk-table__cell" id="letters-calls-table-call-total"><%= number_to_currency(@form_object.calls_total, unit: '£') %></td>
-              </tr>
-            </tbody>
-          </table>
-        <% end %>
-      </section>
+      <%= govuk_table(rows: @form_object.calculation_rows, caption: t('.calculation')) %>
+
       <%= f.continue_button %>
     <% end %>
   </div>
