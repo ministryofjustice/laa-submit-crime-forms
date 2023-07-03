@@ -15,7 +15,7 @@ RSpec.describe Decisions::BaseDecisionTree do
 
   describe '#current_application' do
     it 'returns the forms application' do
-      expect(subject.current_application).to eq(application)
+      expect(subject.application).to eq(application)
     end
   end
 end

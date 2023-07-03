@@ -14,7 +14,7 @@ are to display data (generally used to confirm previously input data).
 
 Edit steps type has a corresponding method that can be used in the routing file:
 
-```
+```ruby
 scope 'applications/:id' do
   namespace :steps do
     edit_step :claim_type
@@ -23,11 +23,29 @@ scope 'applications/:id' do
 end
 ```
 
+In addition to this there are nested steps, these are helpful when adding
+has_many records as they allow the nested objects ID to be in the url.
+
+```ruby
+scope 'applications/:id' do
+  namespace :steps do
+    crud_step :defendant, param: :defendant_id
+  end
+end
+```
+The above snippet creates an edit path of
+`\applications\#{id}\steps\defendant\#{defendant_id}`
+which is then handled by the `Steps::DefendantController` controller.
+
+These types of controller operate the same as the basic `edit_step`
+controllers, with the exception of having the addition `param` parameter
+availble in the controller to help select the nested object. The also
+provide a delete and confirm_destroy endpoint (this has not beed used
+in the CRM-7 replacement, opting to use separate Delete endpoints).
+
 > NOTE: we are using application and steps in the URL to provide a unique path
 > for the step. While this is not required it is recommended to use a consistant
 > approach across applications.
-
-> TODO: should we create a seperate help to setup this namespacing?
 
 ### Show steps
 

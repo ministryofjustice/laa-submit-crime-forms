@@ -1,5 +1,4 @@
 class Pricing
-  # TODO: as this has additional data we might want to consider renaming in the yml file
   class << self
     # if no date is set then we default to the current pricing rates
     def for(application)

@@ -46,6 +46,8 @@ RSpec.describe Steps::DisbursementTypeForm do
       end
 
       context 'when other_type is not set' do
+        let(:other_type) { '' }
+
         it 'have an error' do
           expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:other_type, :blank)).to be(true)

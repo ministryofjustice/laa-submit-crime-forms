@@ -31,14 +31,8 @@ RSpec.describe Tasks::Disbursements, type: :system do
     context 'one disbursement' do
       let(:number_of_disbursements) { 1 }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_type/#{disbursement.id}") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursements") }
     end
-
-    # context 'more than one disbursement' do
-    #   let(:number_of_disbursements) { 2 }
-
-    #   it { expect(subject.path).to eq("/applications/#{id}/steps/disbursements") }
-    # end
   end
 
   describe '#not_applicable?' do
