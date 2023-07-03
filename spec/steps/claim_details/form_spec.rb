@@ -130,8 +130,20 @@ RSpec.describe Steps::ClaimDetailsForm do
       it { expect(subject).to be_valid }
     end
 
+    context 'when work_before is nil' do
+      let(:work_before) { nil }
+
+      it { expect(subject).to be_valid }
+    end
+
     context 'when work_before_date is blank' do
-      let(:work_before_date) { nil }
+      let(:work_before) { '' }
+
+      it { expect(subject).to be_valid }
+    end
+
+    context 'when work_before is no' do
+      let(:work_before) { 'no' }
 
       it { expect(subject).to be_valid }
     end
@@ -142,7 +154,25 @@ RSpec.describe Steps::ClaimDetailsForm do
     let(:work_before_date) { Date.new(2023, 1, 1) }
     let(:work_after_date) { Date.new(2023, 1, 1) }
 
-    context 'when work_after_date is blank' do
+    context 'when all fields are set' do
+      it { expect(subject).to be_valid }
+    end
+
+    context 'when work_after is nil' do
+      let(:work_after) { nil }
+
+      it { expect(subject).to be_valid }
+    end
+
+    context 'when work_after is blank' do
+      let(:work_after) { '' }
+
+      it { expect(subject).to be_valid }
+    end
+
+    context 'when work_after is no' do
+      let(:work_after) { 'no' }
+
       it { expect(subject).to be_valid }
     end
   end
