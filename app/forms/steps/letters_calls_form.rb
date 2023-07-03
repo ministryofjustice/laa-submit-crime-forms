@@ -13,9 +13,11 @@ module Steps
     validates :letters, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     validates :calls, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     validates :letters_uplift, presence: true,
-      numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, if: :apply_letters_uplift
+      numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 },
+      if: :apply_letters_uplift
     validates :calls_uplift, presence: true,
-      numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, if: :apply_calls_uplift
+      numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 },
+      if: :apply_calls_uplift
 
     def allow_uplift?
       application.reasons_for_claim.include?(ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s)
@@ -36,7 +38,7 @@ module Steps
     end
 
     def calculation_rows
-     [
+      [
         [translate(:items), translate(:before_uplift), translate(:after_uplift)],
         letters_row,
         calls_row,
@@ -113,7 +115,7 @@ module Steps
     end
 
     def calls_before_uplift
-       calls.to_f * pricing.letters
+      calls.to_f * pricing.letters
     end
   end
 end

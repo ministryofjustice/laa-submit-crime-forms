@@ -205,7 +205,7 @@ RSpec.describe Steps::LettersCallsForm do
           end
         end
 
-        context 'is not an integer'  do
+        context 'is not an integer' do
           let(:calls_uplift) { 1.6 }
 
           it 'casts the value to abn integer' do
@@ -322,13 +322,13 @@ RSpec.describe Steps::LettersCallsForm do
 
       it 'returns 0 values' do
         expect(subject.calculation_rows).to eq(
-          [["Items", "Before uplift", "After uplift"],
-           ["Letters",
-            {:html_attributes=>{:id=>"letters-without-uplift"}, :text=>"£0.00"},
-            {:html_attributes=>{:id=>"letters-with-uplift"}, :text=>"£0.00"}],
-           ["Phone calls",
-            {:html_attributes=>{:id=>"calls-without-uplift"}, :text=>"£0.00"},
-            {:html_attributes=>{:id=>"calls-with-uplift"}, :text=>"£0.00"}]]
+          [['Items', 'Before uplift', 'After uplift'],
+           ['Letters',
+            { html_attributes: { id: 'letters-without-uplift' }, text: '£0.00' },
+            { html_attributes: { id: 'letters-with-uplift' }, text: '£0.00' }],
+           ['Phone calls',
+            { html_attributes: { id: 'calls-without-uplift' }, text: '£0.00' },
+            { html_attributes: { id: 'calls-with-uplift' }, text: '£0.00' }]]
         )
       end
     end
@@ -344,13 +344,13 @@ RSpec.describe Steps::LettersCallsForm do
 
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
-            [["Items", "Before uplift", "After uplift"],
-            ["Letters",
-              {:html_attributes=>{:id=>"letters-without-uplift"}, :text=>"£8.18"},
-              {:html_attributes=>{:id=>"letters-with-uplift"}, :text=>"£8.18"}],
-            ["Phone calls",
-              {:html_attributes=>{:id=>"calls-without-uplift"}, :text=>"£4.09"},
-              {:html_attributes=>{:id=>"calls-with-uplift"}, :text=>"£4.09"}]]
+            [['Items', 'Before uplift', 'After uplift'],
+             ['Letters',
+              { html_attributes: { id: 'letters-without-uplift' }, text: '£8.18' },
+              { html_attributes: { id: 'letters-with-uplift' }, text: '£8.18' }],
+             ['Phone calls',
+              { html_attributes: { id: 'calls-without-uplift' }, text: '£4.09' },
+              { html_attributes: { id: 'calls-with-uplift' }, text: '£4.09' }]]
           )
         end
       end
@@ -361,13 +361,13 @@ RSpec.describe Steps::LettersCallsForm do
 
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
-            [["Items", "Before uplift", "After uplift"],
-            ["Letters",
-              {:html_attributes=>{:id=>"letters-without-uplift"}, :text=>"£8.18"},
-              {:html_attributes=>{:id=>"letters-with-uplift"}, :text=>"£8.18"}],
-            ["Phone calls",
-              {:html_attributes=>{:id=>"calls-without-uplift"}, :text=>"£4.09"},
-              {:html_attributes=>{:id=>"calls-with-uplift"}, :text=>"£4.09"}]]
+            [['Items', 'Before uplift', 'After uplift'],
+             ['Letters',
+              { html_attributes: { id: 'letters-without-uplift' }, text: '£8.18' },
+              { html_attributes: { id: 'letters-with-uplift' }, text: '£8.18' }],
+             ['Phone calls',
+              { html_attributes: { id: 'calls-without-uplift' }, text: '£4.09' },
+              { html_attributes: { id: 'calls-with-uplift' }, text: '£4.09' }]]
           )
         end
       end
@@ -375,24 +375,25 @@ RSpec.describe Steps::LettersCallsForm do
       context 'when uplift is required and values are not set' do
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
-            [["Items", "Before uplift", "After uplift"],
-            ["Letters",
-              {:html_attributes=>{:id=>"letters-without-uplift"}, :text=>"£8.18"},
-              {:html_attributes=>{:id=>"letters-with-uplift"}, :text=>"£9.00"}],
-            ["Phone calls",
-              {:html_attributes=>{:id=>"calls-without-uplift"}, :text=>"£4.09"},
-              {:html_attributes=>{:id=>"calls-with-uplift"}, :text=>"£4.91"}]]
+            [['Items', 'Before uplift', 'After uplift'],
+             ['Letters',
+              { html_attributes: { id: 'letters-without-uplift' }, text: '£8.18' },
+              { html_attributes: { id: 'letters-with-uplift' }, text: '£9.00' }],
+             ['Phone calls',
+              { html_attributes: { id: 'calls-without-uplift' }, text: '£4.09' },
+              { html_attributes: { id: 'calls-with-uplift' }, text: '£4.91' }]]
           )
         end
       end
     end
   end
 
-
   describe 'save!' do
     context 'when letters_calls_uplift exists in DB but apply_uplift is false in attributes' do
       let(:apply_uplift) { 'false' }
-      let(:application) { Claim.create(office_code: 'AAA', letters_uplift: 10, calls_uplift: 10, letters: letters, calls: calls) }
+      let(:application) do
+        Claim.create(office_code: 'AAA', letters_uplift: 10, calls_uplift: 10, letters: letters, calls: calls)
+      end
 
       it 'resets the letters_uplift and calls_uplift value' do
         subject.save!
