@@ -101,11 +101,12 @@ en:
     work_items:
       edit:
         page_title: Work Items
-        heading: Work Items
+        heading:
+          one: You added %{count} work item
+          other: You added %{count} work items
         change: Change
         duplicate: Duplicate
         delete: Delete
-        period: "%{hours} hr %{minutes} mins"
         add_another: Do you want to add another work item?
         headers:
           work_type: Type of work
@@ -134,7 +135,18 @@ en:
         calculation: Calculation
         before_vat: Before VAT
         after_vat: After VAT
-
+    disbursements:
+      edit:
+        heading:
+          one: You added %{count} disbursement
+          other: You added %{count} disbursements
+        headers:
+          type: Type
+          cost: Cost
+          details: Details
+          actions: Actions
+        disbursement_date_blank: '*required'
+        add_another: Do you want to add another disbursement?
     cost_summary:
       show:
         page_title: Check your payment claim
