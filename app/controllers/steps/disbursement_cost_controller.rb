@@ -10,7 +10,7 @@ module Steps
     end
 
     def update
-      update_and_advance(DisbursementCostForm, as: :disbursement_type, record: disbursement)
+      update_and_advance(DisbursementCostForm, as: :disbursement_cost, record: disbursement)
     end
 
     private
