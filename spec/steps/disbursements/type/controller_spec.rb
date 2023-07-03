@@ -34,7 +34,7 @@ RSpec.describe Steps::DisbursementTypeController, type: :controller do
           get :edit, params: { id: application, disbursement_id: SecureRandom.uuid }
         end.not_to change(application.disbursements, :count)
 
-        expect(response).to redirect_to(edit_steps_work_items_path(application))
+        expect(response).to redirect_to(edit_steps_disbursements_path(application))
       end
     end
 
@@ -56,8 +56,7 @@ RSpec.describe Steps::DisbursementTypeController, type: :controller do
             get :edit, params: { id: application, disbursement_id: StartPage::CREATE_FIRST }
           end.not_to change(application.disbursements, :count)
 
-          # TODO: update this once we have disbusrements page
-          expect(response).to redirect_to(edit_steps_work_items_path(application))
+          expect(response).to redirect_to(edit_steps_disbursements_path(application))
         end
       end
     end

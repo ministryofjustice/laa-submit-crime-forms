@@ -29,7 +29,7 @@ module Steps
     end
 
     def ensure_disbursement
-      disbursement || redirect_to(edit_steps_work_items_path(current_application))
+      disbursement || redirect_to(edit_steps_disbursements_path(current_application))
     end
   end
 end
