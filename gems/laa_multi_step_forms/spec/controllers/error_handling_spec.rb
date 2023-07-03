@@ -61,9 +61,9 @@ RSpec.describe DummyStepController, type: :controller do
 
     context 'production RAILS_ENV' do
       before do
-        allow(ENV).to(receive(:[])).and_call_original
-        allow(ENV).to(receive(:[])).with('RAILS_ENV').and_return('production')
-        allow(ENV).to(receive(:[])).with('SENTRY_DSN').and_return('http://example.com')
+        allow(ENV).to(receive(:fetch)).and_call_original
+        allow(ENV).to(receive(:fetch)).with('RAILS_ENV', nil).and_return('production')
+        allow(ENV).to(receive(:fetch)).with('SENTRY_DSN', nil).and_return('http://example.com')
       end
 
       it 'logs the error' do
