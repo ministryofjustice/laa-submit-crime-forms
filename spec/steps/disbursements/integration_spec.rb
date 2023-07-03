@@ -93,4 +93,19 @@ RSpec.describe 'User can manage disbursements', type: :system do
       )
     )
   end
+
+  it 'can delete a disbursement' do
+    claim = create(:claim)
+    disbursement = create(:disbursement, :valid, claim:)
+
+    visit edit_steps_disbursements_path(claim.id, disbursement_id: disbursement.id)
+
+    click_on 'Delete'
+
+    click_on 'Yes, delete it'
+
+    expect(page).to have_content('The disbursement was deleted')
+
+    expect(Disbursement.find_by(id: disbursement.id)).to be_nil
+  end
 end

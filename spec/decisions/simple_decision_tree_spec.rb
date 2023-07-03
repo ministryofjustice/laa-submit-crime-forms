@@ -122,6 +122,9 @@ RSpec.describe Decisions::SimpleDecisionTree do
                       end
                     }
   end
+  it_behaves_like 'a decision with nested object',
+                  step_name: :disbursement_delete, controller: :disbursement_type, nested: :disbursement,
+                  summary_controller: :disbursements, form_class: Steps::DeleteForm
 
   it_behaves_like 'a generic decision', :other_info, :start_page, Steps::OtherInfoForm, action_name: :show
 
