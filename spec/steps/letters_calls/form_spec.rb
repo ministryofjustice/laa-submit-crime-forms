@@ -8,16 +8,20 @@ RSpec.describe Steps::LettersCallsForm do
       application:,
       letters:,
       calls:,
-      apply_uplift:,
-      letters_calls_uplift:,
+      apply_letters_uplift:,
+      letters_uplift:,
+      apply_calls_uplift:,
+      calls_uplift:,
     }
   end
 
   let(:application) { instance_double(Claim, update!: true, date: date, reasons_for_claim: reasons_for_claim) }
   let(:letters) { 1 }
   let(:calls) { 1 }
-  let(:apply_uplift) { 'true' }
-  let(:letters_calls_uplift) { 0 }
+  let(:apply_letters_uplift) { 'true' }
+  let(:letters_uplift) { 0 }
+  let(:apply_calls_uplift) { 'true' }
+  let(:calls_uplift) { 0 }
   let(:date) { nil }
   let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
 
@@ -86,68 +90,136 @@ RSpec.describe Steps::LettersCallsForm do
       end
     end
 
-    describe '#letters_calls_uplift' do
+    describe '#letters_uplift' do
       context 'when apply_uplift is true' do
         context 'is negative' do
-          let(:letters_calls_uplift) { -1 }
+          let(:letters_uplift) { -1 }
 
           it 'have an error' do
             expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:letters_calls_uplift, :greater_than_or_equal_to)).to be(true)
+            expect(subject.errors.of_kind?(:letters_uplift, :greater_than_or_equal_to)).to be(true)
           end
         end
 
         context 'is blank' do
-          let(:letters_calls_uplift) { '' }
+          let(:letters_uplift) { '' }
 
           it 'have an error' do
             expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:letters_calls_uplift, :blank)).to be(true)
+            expect(subject.errors.of_kind?(:letters_uplift, :blank)).to be(true)
           end
         end
 
         context 'is zero' do
-          let(:letters_calls_uplift) { 0 }
+          let(:letters_uplift) { 0 }
 
           it { expect(subject).to be_valid }
         end
 
         context 'is positive' do
-          let(:letters_calls_uplift) { 1 }
+          let(:letters_uplift) { 1 }
 
           it { expect(subject).to be_valid }
         end
 
         context 'is 100' do
-          let(:letters_calls_uplift) { 100 }
+          let(:letters_uplift) { 100 }
 
           it { expect(subject).to be_valid }
         end
 
         context 'is over 100' do
-          let(:letters_calls_uplift) { 101 }
+          let(:letters_uplift) { 101 }
 
           it 'have an error' do
             expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:letters_calls_uplift, :less_than_or_equal_to)).to be(true)
+            expect(subject.errors.of_kind?(:letters_uplift, :less_than_or_equal_to)).to be(true)
           end
         end
 
         context 'is not an integer'  do
-          let(:letters_calls_uplift) { 1.6 }
+          let(:letters_uplift) { 1.6 }
 
           it 'casts the value to abn integer' do
             expect(subject).to be_valid
-            expect(subject.letters_calls_uplift).to eq(1)
+            expect(subject.letters_uplift).to eq(1)
           end
         end
       end
 
-      context 'when apply_uplift is falsey' do
-        let(:apply_uplift) { 'false' }
+      context 'when apply_letters_uplift is falsey' do
+        let(:apply_letters_uplift) { 'false' }
 
         context 'is negative' do
-          let(:letters_calls_uplift) { -1 }
+          let(:letters_uplift) { -1 }
+
+          it { expect(subject).to be_valid }
+        end
+      end
+    end
+
+    describe '#calls_uplift' do
+      context 'when apply_uplift is true' do
+        context 'is negative' do
+          let(:calls_uplift) { -1 }
+
+          it 'have an error' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:calls_uplift, :greater_than_or_equal_to)).to be(true)
+          end
+        end
+
+        context 'is blank' do
+          let(:calls_uplift) { '' }
+
+          it 'have an error' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:calls_uplift, :blank)).to be(true)
+          end
+        end
+
+        context 'is zero' do
+          let(:calls_uplift) { 0 }
+
+          it { expect(subject).to be_valid }
+        end
+
+        context 'is positive' do
+          let(:calls_uplift) { 1 }
+
+          it { expect(subject).to be_valid }
+        end
+
+        context 'is 100' do
+          let(:calls_uplift) { 100 }
+
+          it { expect(subject).to be_valid }
+        end
+
+        context 'is over 100' do
+          let(:calls_uplift) { 101 }
+
+          it 'have an error' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:calls_uplift, :less_than_or_equal_to)).to be(true)
+          end
+        end
+
+        context 'is not an integer'  do
+          let(:calls_uplift) { 1.6 }
+
+          it 'casts the value to abn integer' do
+            expect(subject).to be_valid
+            expect(subject.calls_uplift).to eq(1)
+          end
+        end
+      end
+
+      context 'when apply_letters_uplift is falsey' do
+        let(:apply_calls_uplift) { 'false' }
+
+        context 'is negative' do
+          let(:calls_uplift) { -1 }
 
           it { expect(subject).to be_valid }
         end
@@ -167,41 +239,79 @@ RSpec.describe Steps::LettersCallsForm do
     end
   end
 
-  describe '#apply_uplift' do
+  describe '#apply_letters_uplift' do
     context 'when reasons_for_claim contains ENHANCED_RATES_CLAIMED' do
       context 'when set to nil - not set' do
-        let(:apply_uplift) { nil }
+        let(:apply_letters_uplift) { nil }
 
         context 'and letters_calls_uplift is not nil' do
-          let(:letters_calls_uplift) { 10 }
+          let(:letters_uplift) { 10 }
 
-          it { expect(subject.apply_uplift).to be_truthy }
+          it { expect(subject.apply_letters_uplift).to be_truthy }
         end
 
         context 'and letters_calls_uplift is nil' do
-          let(:letters_calls_uplift) { nil }
+          let(:letters_uplift) { nil }
 
-          it { expect(subject.apply_uplift).to be_falsey }
+          it { expect(subject.apply_letters_uplift).to be_falsey }
         end
       end
 
       context 'when set to "true"' do
-        let(:apply_uplift) { 'true' }
+        let(:apply_letters_uplift) { 'true' }
 
-        it { expect(subject.apply_uplift).to be_truthy }
+        it { expect(subject.apply_letters_uplift).to be_truthy }
       end
 
       context 'when set to "false"' do
-        let(:apply_uplift) { 'false' }
+        let(:apply_letters_uplift) { 'false' }
 
-        it { expect(subject.apply_uplift).to be_falsey }
+        it { expect(subject.apply_letters_uplift).to be_falsey }
       end
     end
 
     context 'when reasons_for_claim does not contain ENHANCED_RATES_CLAIMED' do
       let(:reasons_for_claim) { ['other'] }
 
-      it { expect(subject.apply_uplift).to be_falsey }
+      it { expect(subject.apply_letters_uplift).to be_falsey }
+    end
+  end
+
+  describe '#apply_calls_uplift' do
+    context 'when reasons_for_claim contains ENHANCED_RATES_CLAIMED' do
+      context 'when set to nil - not set' do
+        let(:apply_calls_uplift) { nil }
+
+        context 'and calls_uplift is not nil' do
+          let(:calls_uplift) { 10 }
+
+          it { expect(subject.apply_calls_uplift).to be_truthy }
+        end
+
+        context 'and letters_calls_uplift is nil' do
+          let(:calls_uplift) { nil }
+
+          it { expect(subject.apply_calls_uplift).to be_falsey }
+        end
+      end
+
+      context 'when set to "true"' do
+        let(:apply_calls_uplift) { 'true' }
+
+        it { expect(subject.apply_calls_uplift).to be_truthy }
+      end
+
+      context 'when set to "false"' do
+        let(:apply_calls_uplift) { 'false' }
+
+        it { expect(subject.apply_calls_uplift).to be_falsey }
+      end
+    end
+
+    context 'when reasons_for_claim does not contain ENHANCED_RATES_CLAIMED' do
+      let(:reasons_for_claim) { ['other'] }
+
+      it { expect(subject.apply_calls_uplift).to be_falsey }
     end
   end
 
@@ -227,7 +337,7 @@ RSpec.describe Steps::LettersCallsForm do
     end
 
     context 'when uplift is set' do
-      let(:letters_calls_uplift) { 10 }
+      let(:letters_uplift) { 10 }
 
       it { expect(subject.letters_total).to eq(2.0 * 4.09 * 1.1) }
     end
@@ -261,7 +371,7 @@ RSpec.describe Steps::LettersCallsForm do
     end
 
     context 'when uplift is set' do
-      let(:letters_calls_uplift) { 10 }
+      let(:calls_uplift) { 10 }
 
       it { expect(subject.calls_total).to eq(2.0 * 4.09 * 1.1) }
     end
@@ -295,10 +405,16 @@ RSpec.describe Steps::LettersCallsForm do
       it { expect(subject.total_cost).to eq(5.0 * 4.09 * 1) }
     end
 
-    context 'when uplift is set' do
-      let(:letters_calls_uplift) { 10 }
+    context 'when letters uplift is set' do
+      let(:letters_uplift) { 10 }
 
-      it { expect(subject.total_cost).to eq(5.0 * 4.09 * 1.1) }
+      it { expect(subject.total_cost).to eq(2.0 * 4.09 * 1.1 + 3.0 * 4.09) }
+    end
+
+    context 'when calls uplift is set' do
+      let(:calls_uplift) { 10 }
+
+      it { expect(subject.total_cost).to eq(2.0 * 4.09 + 3.0 * 4.09 * 1.1) }
     end
 
     context 'when letters is 0' do
@@ -317,12 +433,13 @@ RSpec.describe Steps::LettersCallsForm do
   describe 'save!' do
     context 'when letters_calls_uplift exists in DB but apply_uplift is false in attributes' do
       let(:apply_uplift) { 'false' }
-      let(:application) { Claim.create(office_code: 'AAA', letters_calls_uplift: 10, letters: letters, calls: calls) }
+      let(:application) { Claim.create(office_code: 'AAA', letters_uplift: 10, calls_uplift: 10, letters: letters, calls: calls) }
 
-      it 'resets the letters_calls_uplift value' do
+      it 'resets the letters_uplift and calls_uplift value' do
         subject.save!
         expect(application.reload).to have_attributes(
-          letters_calls_uplift: nil
+          letters_uplift: nil,
+          calls_uplift: nil,
         )
       end
     end
