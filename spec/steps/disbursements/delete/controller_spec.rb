@@ -24,7 +24,8 @@ RSpec.describe Steps::DisbursementDeleteController, type: :controller do
     context 'when application is found' do
       let(:existing_case) { Claim.create(office_code: 'AAA') }
       let(:current_application) do
-        instance_double(Claim, disbursements: disbursements, navigation_stack: [], 'navigation_stack=': true, save!: true)
+        instance_double(Claim, disbursements: disbursements, navigation_stack: [], 'navigation_stack=': true,
+save!: true)
       end
       let(:disbursements) { double(:disbursements, find_by: disbursement) }
       let(:form) { instance_double(Steps::DeleteForm) }
@@ -84,7 +85,8 @@ RSpec.describe Steps::DisbursementDeleteController, type: :controller do
     context 'when application is found' do
       let(:existing_case) { Claim.create(office_code: 'AAA') }
       let(:current_application) do
-        instance_double(Claim, disbursements: disbursements, navigation_stack: [], 'navigation_stack=': true, save!: true)
+        instance_double(Claim, disbursements: disbursements, navigation_stack: [], 'navigation_stack=': true,
+save!: true)
       end
       let(:form) { instance_double(Steps::DeleteForm) }
 
