@@ -29,6 +29,7 @@ RSpec.configure do |config|
   config.include(Devise::Test::ControllerHelpers, type: :controller)
   config.include(AuthenticationHelpers, type: :controller)
   config.include RSpecHtmlMatchers
+  config.include FactoryBot::Syntax::Methods
 
   # As a default, we assume a user is signed in all controllers.
   # For specific scenarios, the user can be "signed off".

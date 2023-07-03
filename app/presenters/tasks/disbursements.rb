@@ -8,9 +8,7 @@ module Tasks
 
     def path
       if application.disbursements.count.positive?
-        edit_steps_disbursement_type_path(
-          id: application, disbursement_id: application.disbursements.first.id
-        )
+        edit_steps_disbursements_path(id: application)
       else
         edit_steps_disbursement_type_path(id: application, disbursement_id: StartPage::CREATE_FIRST)
       end

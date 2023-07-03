@@ -31,5 +31,9 @@ module Steps
     def ensure_work_item
       work_item || redirect_to(edit_steps_work_items_path(current_application))
     end
+
+    def additional_permitted_params
+      [:apply_uplift]
+    end
   end
 end
