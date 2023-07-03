@@ -41,4 +41,8 @@ class OtherDisbursementTypes < ValueObject
   def translated
     I18n.t("helpers.other_disbursement_type.#{value}")
   end
+
+  def blank?
+    value.blank?
+  end
 end
