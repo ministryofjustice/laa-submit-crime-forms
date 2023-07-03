@@ -13,9 +13,7 @@ module Decisions
       raise 'implement this action, in subclasses'
     end
 
-    def current_application
-      form_object.application
-    end
+    delegate :application, to: :form_object
 
     private
 
@@ -33,7 +31,7 @@ module Decisions
     end
 
     def url_options(controller, action, params = {})
-      { controller: controller, action: action, id: current_application }.merge(params)
+      { controller: controller, action: action, id: application }.merge(params)
     end
     # :nocov:
   end

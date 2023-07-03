@@ -12,11 +12,10 @@ module ErrorHandling
       # when Errors::ApplicationSubmitted
       #   redirect_to application_submitted_errors_path
       else
-        raise if Rails.application.config.consider_all_requests_local
+        raise unless ENV.fetch('RAILS_ENV', nil) == 'production'
 
+        Sentry.capture_exception(exception) if ENV.fetch('SENTRY_DSN', nil).present?
         Rails.logger.error(exception)
-        Sentry.capture_exception(exception)
-
         redirect_to laa_msf.unhandled_errors_path
       end
     end
