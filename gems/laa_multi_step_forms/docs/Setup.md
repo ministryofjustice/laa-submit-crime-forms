@@ -46,6 +46,6 @@ the `manifest.js`:
 //= link_tree ../builds
 ```
 
-## 2. Trouble shhoting
+## 2. Trouble shooting
 
-TODO: Please update as issues are encountered
+> Please update as issues are encountered
