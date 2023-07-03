@@ -42,7 +42,5 @@ class OtherDisbursementTypes < ValueObject
     I18n.t("helpers.other_disbursement_type.#{value}")
   end
 
-  def blank?
-    value.blank?
-  end
+  delegate :blank?, to: :value
 end
