@@ -50,7 +50,8 @@ RSpec.describe DummyStepController, type: :controller do
 
     context 'non production RAILS_ENV' do
       before do
-        ENV['RAILS_ENV'] = 'development'
+        allow(ENV.to(receive(:[]))).and_call_original
+        allow(ENV.to(receive(:[]))).with('RAILS_ENV').and_return('development')
       end
 
       it 'raises the error' do
@@ -60,8 +61,9 @@ RSpec.describe DummyStepController, type: :controller do
 
     context 'production RAILS_ENV' do
       before do
-        ENV['RAILS_ENV'] = 'production'
-        ENV['SENTRY_DSN'] = 'url'
+        allow(ENV.to(receive(:[]))).and_call_original
+        allow(ENV.to(receive(:[]))).with('RAILS_ENV').and_return('production')
+        allow(ENV.to(receive(:[]))).with('SENTRY_DSN').and_return('http://example.com')
       end
 
       it 'logs the error' do
