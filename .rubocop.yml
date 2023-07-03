@@ -97,6 +97,9 @@ RSpec/FilePath:
 # Enabled but tweaked cops
 ##########################
 
+Metrics/ClassLength:
+  Exclude:
+    - app/services/decisions/simple_decision_tree.rb
 # To be tweaked until we find the right balance
 Metrics/MethodLength:
   Max: 12
@@ -106,7 +109,7 @@ Metrics/AbcSize:
   Max: 18
 
 Metrics/ParameterLists:
-  Max: 6
+  Max: 7
 
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:

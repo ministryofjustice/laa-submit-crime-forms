@@ -210,6 +210,7 @@ en:
           'no': 'No'
       steps_work_item_form:
         work_type_options:
+          missing: '*required'
           preparation: Preparation
           advocacy: Advocacy
           attendance_with_counsel: Attendance with counsel
@@ -228,6 +229,7 @@ en:
         letters_calls_uplift: For example, from any percentage from 1 to 100
       steps_disbursement_type_form:
         disbursement_type_options:
+          missing: '*required'
           car: Car
           motorcycle: Motorcycle
           bike: bike

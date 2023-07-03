@@ -48,20 +48,23 @@ RSpec.describe DummyStepController, type: :controller do
   context 'any other error class' do
     let(:error_class) { Class.new(StandardError) }
 
-    before do
-      allow(Rails.application.config).to receive(:consider_all_requests_local).and_return(local)
-    end
-
-    context 'consider_all_requests_local is true' do
-      let(:local) { true }
+    context 'non production RAILS_ENV' do
+      before do
+        allow(ENV).to(receive(:[])).and_call_original
+        allow(ENV).to(receive(:[])).with('RAILS_ENV').and_return('development')
+      end
 
       it 'raises the error' do
         expect { put :update, params: { id: application.id } }.to raise_error(error_class)
       end
     end
 
-    context 'consider_all_requests_local is false' do
-      let(:local) { false }
+    context 'production RAILS_ENV' do
+      before do
+        allow(ENV).to(receive(:fetch)).and_call_original
+        allow(ENV).to(receive(:fetch)).with('RAILS_ENV', nil).and_return('production')
+        allow(ENV).to(receive(:fetch)).with('SENTRY_DSN', nil).and_return('http://example.com')
+      end
 
       it 'logs the error' do
         expect(Rails.logger).to receive(:error)
