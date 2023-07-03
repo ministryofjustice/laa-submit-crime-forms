@@ -48,4 +48,4 @@ the `manifest.js`:
 
 ## 2. Trouble shhoting
 
-TODO: Please update as issues are encountered
+> Please update as issues are encountered
