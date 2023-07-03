@@ -2,6 +2,7 @@
 en:
   home:
     index:
+      page_title: "Claim a non-standard magistrates' court payment"
       instruction: "You can only use this service to claim a non-standard magistrates' court payment or a breach of injunction payment."
       section:
         title: "To claim for something else, go to:"
