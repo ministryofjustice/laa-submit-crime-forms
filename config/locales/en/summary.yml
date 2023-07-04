@@ -19,3 +19,7 @@ en:
       letters_calls: Letters and phone calls total %{total}
       letters: Letters
       calls: Phone calls
+    cost_summary/disbursements:
+      disbursements: Disbursements total %{total}
+      standard:
+        car: Car

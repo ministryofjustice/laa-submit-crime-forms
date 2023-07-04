@@ -10,6 +10,7 @@ module CostSummary
       @items = {
         work_items: WorkItems.new(claim.work_items, claim),
         letters_calls: LettersCalls.new(claim),
+        disbursements: Disbursements.new(claim.disbursements, claim)
       }
     end
 
