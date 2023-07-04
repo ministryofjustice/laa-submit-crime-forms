@@ -3,35 +3,43 @@ en:
   steps:
     claim_type:
       edit:
-        page_title: Claim Type page title - TODO
+        page_title: What are you claiming for?
         other_details:
           line_1: This form can only be used to claim for a Non-standard magistrate or a Breach for injunction payment.
           line_2: To claim for a Crime Lower standard payment, please use CWA via the LAA online portal.
           line_3: To claim for a Crime Higher payment, please use CCCD via the CCCD portal.
     firm_details:
       edit:
-        page_title: Firm Details page title - TODO
+        page_title: Enter your details
         heading: Enter your details
         firm_details: Firm details
         solicitor_details: Solicitor details
+    case_details: 
+      edit: 
+        page_title: Case details
+        heading: Case details
     case_disposal:
       edit:
-        page_title: Case disposal page title - TODO
+        page_title: Case disposal
         heading: Case disposal
         subheading: You can select an option in either Category 1 or Category 2, but not both.
+    claim_details: 
+      edit: 
+        page_title: Claim Details
+        heading: Claim details
     hearing_details:
       edit:
-        page_title: Hearing details page title - TODO
+        page_title: Hearing details
         heading: Hearing details
     defendant_details:
       edit:
-        page_title: Defendant details page title - TODO
+        page_title: Defendant details
         heading: Defendant details
         main_defendant_field_set: Main defendant
         defendant_field_set: Additional defendant %{index}
     defendant_details:
       edit:
-        page_title: Defendant summary page title - TODO
+        page_title: Defendant details
         heading: Defendant details
         main_defendant_field_set: Main defendant
         defendant_field_set: Additional defendant %{index}
@@ -39,7 +47,7 @@ en:
         defendant: additional %{index}
     defendant_summary:
       edit:
-        page_title: Defendant summary page title - TODO
+        page_title: Defendant summary
         heading:
           one: You added 1 defendant
           other: You added %{count} defendants
@@ -54,7 +62,7 @@ en:
         add_another: Do you want to add another defendant?
     defendant_delete:
       edit:
-        page_title: Defendant delete page title - TODO
+        page_title: Are you sure you want to delete this defendant?
         heading: Are you sure you want to delete this defendant?
         main_defendant: Main defendant details
         additional_defendant: Additional defendant details
@@ -64,7 +72,7 @@ en:
           actions: Actions
     letters_calls:
       edit:
-        page_title: Lettera and Calls page title - TODO
+        page_title: Letters and phone calls
         heading: Letters and phone calls
         subheading_html: |
           <p class="govuk-body">For each letter or telephone call you will get:</p>
@@ -83,16 +91,16 @@ en:
           calls: Phone calls
     reason_for_claim:
       edit:
-        page_title: Page title - TODO
+        page_title: Why are you claiming a non-standard magistrates' court payment?
         heading: Why are you claiming a non-standard magistrates' court payment?
     work_item:
       edit:
-        page_title: Work Item page title - TODO
+        page_title: What work item are you claiming for?
         heading: What work item are you claiming for?
         work_type_pricing: "%{price} per hour"
     work_items:
       edit:
-        page_title: Page title - TODO
+        page_title: Work Items
         heading:
           one: You added %{count} work item
           other: You added %{count} work items
@@ -108,7 +116,7 @@ en:
         completed_date_blank: Completed date not set
     work_item_delete:
       edit:
-        page_title: Page title - TODO
+        page_title: Are you sure you want to delete this work item?
         heading: Are you sure you want to delete this work item?
         headers:
           work_type: Type of work
@@ -118,11 +126,11 @@ en:
         completed_date_blank: Completed date not set
     disbursement_type:
       edit:
-        page_title: Page title - TODO
+        page_title: Disbursement type
         heading: Disbursement type
     disbursement_cost:
       edit:
-        page_title: Page title - TODO
+        page_title: Disbursement cost
         heading: Disbursement cost
         calculation: Calculation
         before_vat: Before VAT
@@ -141,12 +149,17 @@ en:
         add_another: Do you want to add another disbursement?
     cost_summary:
       show:
+        page_title: Check your payment claim
         heading: Check your payment claim
         estimate: 'Total estimated:'
+    other_info:
+      edit:
+        page_title: Other Relevant information
+        heading: Other Relevant information
   laa_multi_step_forms:
     task_list:
       show:
-        page_title: New claim page title - TODO
+        page_title: Your claim progress
         heading: Your claim progress
         subheading: Claim incomplete
         progress_counter: You have completed %{completed} of %{total} sections.
