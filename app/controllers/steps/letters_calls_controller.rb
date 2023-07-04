@@ -17,7 +17,7 @@ module Steps
     end
 
     def additional_permitted_params
-      [:apply_uplift]
+      %i[apply_letters_uplift apply_calls_uplift]
     end
   end
 end
