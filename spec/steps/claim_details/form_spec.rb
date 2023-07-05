@@ -12,6 +12,8 @@ RSpec.describe Steps::ClaimDetailsForm do
       supplemental_claim:,
       preparation_time:,
       time_spent:,
+      work_before:,
+      work_after:,
       work_before_date:,
       work_after_date:,
     }
@@ -26,6 +28,8 @@ RSpec.describe Steps::ClaimDetailsForm do
   let(:preparation_time) { 'yes' }
   let(:work_before) { 'yes' }
   let(:work_after) { 'yes' }
+  let(:work_before_date) { Date.yesterday }
+  let(:work_after_date) { Date.yesterday }
   let(:time_spent) { { 1 => hours, 2 => minutes } }
   let(:hours) { 2 }
   let(:minutes) { 40 }
@@ -83,97 +87,55 @@ RSpec.describe Steps::ClaimDetailsForm do
     end
   end
 
-  describe '#preparation is valid?' do
-    context 'when preparation is yes' do
-      let(:preparation_time) { 'yes' }
-      let(:work_before_date) { Date.new(2023, 1, 1) }
-      let(:work_after_date) { Date.new(2023, 1, 1) }
+  describe '#validations' do
+    context 'work_before_date' do
+      context 'and work_before is nil' do
+        let(:work_before) { nil }
 
-      context 'when all fields are set' do
+        it 'is valid' do
+          expect(subject).to be_valid
+        end
+      end
+
+      context 'and work_before is no' do
+        let(:work_before) { 'no' }
+
         it { expect(subject).to be_valid }
       end
 
-      context 'when hours is blank' do
-        let(:hours) { nil }
-        let(:minutes) { nil }
+      context 'and work_before is yes' do
+        let(:work_before) { 'yes' }
+        let(:work_before_date) { nil }
 
-        it 'is invalid' do
+        it 'is not valid' do
           expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:time_spent, :blank_hours)).to be(true)
+          expect(subject.errors.of_kind?(:work_before_date, :blank)).to be(true)
         end
       end
     end
 
-    context 'when preparation is no' do
-      let(:preparation_time) { 'no' }
-      let(:work_before_date) { Date.new(2023, 1, 1) }
-      let(:work_after_date) { Date.new(2023, 1, 1) }
-
-      context 'when all fields are set' do
-        it { expect(subject).to be_valid }
-      end
-
-      context 'when hours is blank' do
-        let(:hours) { nil }
+    context 'work_after_date' do
+      context 'and work_after is nil' do
+        let(:work_after) { nil }
 
         it { expect(subject).to be_valid }
       end
-    end
-  end
 
-  context 'when work_before is yes' do
-    let(:work_before) { 'yes' }
-    let(:work_after_date) { Date.new(2023, 1, 1) }
-    let(:work_before_date) { Date.new(2023, 1, 1) }
+      context 'and work_after is no' do
+        let(:work_after) { 'no' }
 
-    context 'when all fields are set' do
-      it { expect(subject).to be_valid }
-    end
+        it { expect(subject).to be_valid }
+      end
 
-    context 'when work_before is nil' do
-      let(:work_before) { nil }
+      context 'and work_after is yes' do
+        let(:work_after) { 'yes' }
+        let(:work_after_date) { nil }
 
-      it { expect(subject).to be_valid }
-    end
-
-    context 'when work_before_date is blank' do
-      let(:work_before) { '' }
-
-      it { expect(subject).to be_valid }
-    end
-
-    context 'when work_before is no' do
-      let(:work_before) { 'no' }
-
-      it { expect(subject).to be_valid }
-    end
-  end
-
-  context 'when work_after is yes' do
-    let(:work_after) { 'yes' }
-    let(:work_before_date) { Date.new(2023, 1, 1) }
-    let(:work_after_date) { Date.new(2023, 1, 1) }
-
-    context 'when all fields are set' do
-      it { expect(subject).to be_valid }
-    end
-
-    context 'when work_after is nil' do
-      let(:work_after) { nil }
-
-      it { expect(subject).to be_valid }
-    end
-
-    context 'when work_after is blank' do
-      let(:work_after) { '' }
-
-      it { expect(subject).to be_valid }
-    end
-
-    context 'when work_after is no' do
-      let(:work_after) { 'no' }
-
-      it { expect(subject).to be_valid }
+        it 'is not valid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:work_after_date, :blank)).to be(true)
+        end
+      end
     end
   end
 end
