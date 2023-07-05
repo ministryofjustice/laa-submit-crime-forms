@@ -19,6 +19,10 @@ module Steps
     validates :hearing_outcome, presence: true
     validates :matter_type, presence: true
 
+    def court_suggestion=(value)
+      self.court = value
+    end
+
     private
 
     def persist!

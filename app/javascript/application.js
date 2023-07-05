@@ -19,7 +19,10 @@ if ($acElements) {
   for (let i = 0; i < $acElements.length; i++) {
     accessibleAutocomplete.enhanceSelectElement({
       selectElement: $acElements[i],
-      defaultValue: ''
+      defaultValue: '',
+      showNoOptionsFound: false,
+      name: $acElements[i].getAttribute('data-name')
+
     })
   }
 }
