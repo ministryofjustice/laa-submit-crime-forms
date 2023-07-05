@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Steps::HearingDetailsForm do
-  subject(:form) { described_class.new(arguments) }
+  subject { described_class.new(arguments) }
 
   let(:arguments) do
     {
@@ -53,6 +53,19 @@ RSpec.describe Steps::HearingDetailsForm do
           expect(subject.errors.of_kind?(field, :blank)).to be(true)
         end
       end
+    end
+  end
+
+  describe 'court' do
+    context 'when court_suggestion is not provided' do
+      it { expect(subject.court).to eq(court) }
+    end
+
+    context 'when court_suggestion is not provided' do
+      subject { described_class.new(arguments.merge(court_suggestion:)) }
+      let(:court_suggestion) { 'apples' }
+
+      it { expect(subject.court).to eq('apples') }
     end
   end
 end
