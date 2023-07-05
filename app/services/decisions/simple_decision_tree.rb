@@ -102,6 +102,15 @@ module Decisions
       )
     end
 
+    def after_disbursement_delete
+      create_new_or_summary(
+        page: :disbursement_type,
+        summary_page: :disbursements,
+        nested_id: :disbursement_id,
+        scope: application.disbursements,
+      )
+    end
+
     def after_letters_calls
       create_new_or_summary(
         page: :disbursement_type,

@@ -70,6 +70,7 @@ en:
           full_name: Full name
           maat: MAAT ID
           actions: Actions
+        deleted_flash: The defendant was deleted
     letters_calls:
       edit:
         page_title: Letters and phone calls
@@ -82,13 +83,11 @@ en:
           </ul>
         total_cost: Total cost
         summary: View by letters and phone calls
-        headers:
-          items: Items
-          quantity: Quantity
-          total: Total
-        items:
-          letters: Letters
-          calls: Phone calls
+        items: Items
+        letters: Letters
+        calls: Phone calls
+        before_uplift: Before uplift
+        after_uplift: After uplift
     reason_for_claim:
       edit:
         page_title: Why are you claiming a non-standard magistrates' court payment?
@@ -124,6 +123,7 @@ en:
           fee_earner: Fee earner
         total_cost: Total cost
         completed_date_blank: Completed date not set
+        deleted_flash: The work item was deleted
     disbursement_type:
       edit:
         page_title: Disbursement type
@@ -147,6 +147,15 @@ en:
           actions: Actions
         disbursement_date_blank: '*required'
         add_another: Do you want to add another disbursement?
+    disbursement_delete:
+      edit:
+        heading: Are you sure you want to delete this disbursement?
+        headers:
+          type: Type
+          cost: Cost
+          details: Details
+        disbursement_date_blank: '*required'
+        deleted_flash: The disbursement was deleted
     cost_summary:
       show:
         page_title: Check your payment claim

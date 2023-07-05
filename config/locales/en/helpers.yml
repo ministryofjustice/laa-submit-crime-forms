@@ -236,9 +236,12 @@ en:
       steps_letters_calls_form:
         letters: Number of letters
         calls: Number of phone calls
-        apply_uplift_options:
+        apply_letters_uplift_options:
           'true': Apply an uplift to this work
-        letters_calls_uplift: For example, from any percentage from 1 to 100
+        apply_calls_uplift_options:
+          'true': Apply an uplift to this work
+        letters_uplift: For example, from any percentage from 1 to 100
+        calls_uplift: For example, from any percentage from 1 to 100
       steps_disbursement_type_form:
         disbursement_type_options:
           missing: '*required'
