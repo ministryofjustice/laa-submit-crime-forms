@@ -139,4 +139,3 @@ RSpec.describe Steps::ClaimDetailsForm do
     end
   end
 end
-
