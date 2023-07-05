@@ -101,6 +101,10 @@ Metrics/MethodLength:
 Metrics/AbcSize:
   Max: 18
 
+Metrics/ParameterLists:
+  Exclude:
+    - app/helpers/laa_multi_step_forms/application_helper.rb
+
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:
   EnforcedStyle: ruby19_no_mixed_keys

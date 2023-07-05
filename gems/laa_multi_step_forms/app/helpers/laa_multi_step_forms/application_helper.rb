@@ -34,9 +34,13 @@ module LaaMultiStepForms
     end
 
     def suggestion_select(form, field, values, id_field, value_field, *args, data: {}, **kwargs)
-      values = values.dup.unshift(fake_record(id_field, value_field, form.object[field]))
       data[:module] = 'accessible-autocomplete'
       data[:name] = "#{form.object_name}[#{field}_suggestion]"
+
+      value = form.object[field]
+      unless values.map(&id_field).include?(value)
+        values = values.dup.unshift(fake_record(id_field, value_field, value))
+      end
 
       form.govuk_collection_select(field, values, id_field, value_field, *args, data:, **kwargs)
     end

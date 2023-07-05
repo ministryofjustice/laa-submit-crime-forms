@@ -64,7 +64,7 @@ RSpec.describe Steps::DisbursementTypeForm do
       it { expect(subject.other_type).to eq(other_disbursement_type) }
     end
 
-    context 'when other_type_suggestion is not passed in' do
+    context 'when other_type_suggestion is passed in' do
       subject(:form) { described_class.new(arguments.merge(other_type_suggestion:)) }
 
       context 'and it matches the translation of other type' do

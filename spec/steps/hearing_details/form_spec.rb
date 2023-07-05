@@ -61,8 +61,9 @@ RSpec.describe Steps::HearingDetailsForm do
       it { expect(subject.court).to eq(court) }
     end
 
-    context 'when court_suggestion is not provided' do
+    context 'when court_suggestion is provided' do
       subject { described_class.new(arguments.merge(court_suggestion:)) }
+
       let(:court_suggestion) { 'apples' }
 
       it { expect(subject.court).to eq('apples') }

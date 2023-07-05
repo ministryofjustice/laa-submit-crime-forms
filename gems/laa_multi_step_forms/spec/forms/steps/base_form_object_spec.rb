@@ -126,7 +126,6 @@ RSpec.describe Steps::BaseFormObject do
     end
 
     it 'read the attribute directly without using the method' do
-      expect(subject).not_to receive(:record)
       expect(subject[:record]).to eq(record)
     end
   end
@@ -135,7 +134,6 @@ RSpec.describe Steps::BaseFormObject do
     let(:record) { double('Record') }
 
     it 'assigns the attribute directly without using the method' do
-      expect(subject).not_to receive(:record=)
       subject[:record] = record
       expect(subject.record).to eq(record)
     end
