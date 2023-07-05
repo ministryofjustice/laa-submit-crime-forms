@@ -42,7 +42,7 @@ RSpec.describe Steps::ClaimDetailsForm do
       let(:work_before_date) { Date.new(2023, 1, 1) }
       let(:work_after_date) { Date.new(2023, 1, 1) }
 
-      it 'is not valid' do
+      it 'is is valid' do
         expect(subject.save).to be_truthy
         expect(application).to have_received(:update!)
         expect(subject).to be_valid
