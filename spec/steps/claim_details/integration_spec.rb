@@ -14,9 +14,9 @@ RSpec.describe 'User can fill in claim details', type: :system do
     fill_in 'Defence statement', with: 'Statement'
     fill_in 'Number of Defence witnesses', with: '2'
 
-    find('.govuk-form-group', text: 'Does this bill represent supplemental claim ?').choose 'Yes'
+    find('.govuk-form-group', text: 'Does this bill represent supplemental claim?').choose 'Yes'
     find('.govuk-form-group',
-         text: 'Was any preparation time spent watching or listening to taped evidence ?').choose 'Yes'
+         text: 'Was any preparation time spent watching or listening to taped evidence?').choose 'Yes'
 
     fill_in 'Hours', with: 10
     fill_in 'Minutes', with: 30

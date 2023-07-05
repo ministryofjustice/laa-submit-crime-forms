@@ -6,9 +6,7 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset :claim_type, legend: { tag: 'h1', size: 'xl' } do %>
-       <h3 class="govuk-heading-m"><%= 'What is you unique file number ?'  %></h3>
        <%= f.govuk_text_field :ufn, width: 'one-third', autocomplete: 'off' %>
-        <h3 class="govuk-heading-m"><%= 'What are you claiming for ?'  %></h3>
        <%= f.govuk_radio_button :claim_type, ClaimType::NON_STANDARD_MAGISTRATE.value do %>
           <%= f.govuk_date_field :rep_order_date, maxlength_enabled: true, legend: { size: 's', class: 'govuk-date-legend-non-bold' } %>
         <% end %>
@@ -21,5 +19,3 @@
     <% end %>
   </div>
 </div>
-
-
