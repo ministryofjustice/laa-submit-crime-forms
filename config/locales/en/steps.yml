@@ -83,13 +83,11 @@ en:
           </ul>
         total_cost: Total cost
         summary: View by letters and phone calls
-        headers:
-          items: Items
-          quantity: Quantity
-          total: Total
-        items:
-          letters: Letters
-          calls: Phone calls
+        items: Items
+        letters: Letters
+        calls: Phone calls
+        before_uplift: Before uplift
+        after_uplift: After uplift
     reason_for_claim:
       edit:
         page_title: Why are you claiming a non-standard magistrates' court payment?
