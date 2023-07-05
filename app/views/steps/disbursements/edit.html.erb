@@ -25,7 +25,7 @@
               <td class="govuk-table__cell"><%= disbursement.details  %></td>
               <td class="govuk-table__cell">
                 <%= link_to t('.change'), edit_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id) %>
-                <%#= link_to t('.delete'), edit_steps_work_item_delete_path(@form_object.application, work_item_id: work_item.id) %>
+                <%= link_to t('.delete'), edit_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id) %>
               </td>
             </tr>
           <% end %>
