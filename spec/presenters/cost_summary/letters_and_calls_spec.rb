@@ -4,9 +4,9 @@ RSpec.describe CostSummary::LettersCalls do
   subject { described_class.new(claim) }
 
   let(:claim) { instance_double(Claim) }
-  let(:form) { instance_double(Steps::LettersCallsForm, letters_total:, calls_total:, total_cost:) }
-  let(:letters_total) { 25.0 }
-  let(:calls_total) { 75.0 }
+  let(:form) { instance_double(Steps::LettersCallsForm, letters_after_uplift:, calls_after_uplift:, total_cost:) }
+  let(:letters_after_uplift) { 25.0 }
+  let(:calls_after_uplift) { 75.0 }
   let(:total_cost) { 100.00 }
 
   before do
