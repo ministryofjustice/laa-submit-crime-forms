@@ -97,6 +97,15 @@ RSpec.describe Steps::ClaimDetailsForm do
         end
       end
 
+      context 'when work before is valid' do
+        let(:work_before) { nil }
+        let(:work_before_date) { Date.yesterday }
+
+        it 'is is valid' do
+          expect(subject.save).to be_truthy
+        end
+      end
+
       context 'and work_before is no' do
         let(:work_before) { 'no' }
 
