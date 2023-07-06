@@ -12,8 +12,7 @@
         <% DisbursementTypes.values.each do |disbursement_type| %>
           <%= f.govuk_radio_button :disbursement_type, disbursement_type.to_s, hint: { text: disbursement_type.hint(@form_object.application) } do %>
             <% if disbursement_type == DisbursementTypes::OTHER %>
-              <%= f.govuk_collection_select :other_type, OtherDisbursementTypes.values, :to_sym, :translated,
-                              data: { module: 'accessible-autocomplete' }, width: 20,
+              <%= suggestion_select f, :other_type, OtherDisbursementTypes.values, :to_sym, :translated, width: 20,
                               options: { include_blank: true }, label: nil %>
             <% end %>
           <% end %>

@@ -17,9 +17,13 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 const $acElements = document.querySelectorAll('[data-module="accessible-autocomplete"]')
 if ($acElements) {
   for (let i = 0; i < $acElements.length; i++) {
+    const name = $acElements[i].getAttribute('data-name')
+
     accessibleAutocomplete.enhanceSelectElement({
       selectElement: $acElements[i],
-      defaultValue: ''
+      defaultValue: '',
+      showNoOptionsFound: name === null,
+      name: name
     })
   }
 }
