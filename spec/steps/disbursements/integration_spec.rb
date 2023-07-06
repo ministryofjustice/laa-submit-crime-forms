@@ -13,7 +13,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
     # start on the letters and calls page to show flow
     fill_in 'Number of letters', with: 1
     fill_in 'Number of phone calls', with: 2
-    expect { click_on 'Save and continue' }.to change(Disbursement, :count).by(0)
+    expect { click_on 'Save and continue' }.not_to change(Disbursement, :count)
 
     within('.govuk-fieldset', text: 'Date') do
       fill_in 'Day', with: '20'

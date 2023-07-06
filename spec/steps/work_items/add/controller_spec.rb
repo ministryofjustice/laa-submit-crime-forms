@@ -31,12 +31,12 @@ RSpec.describe Steps::WorkItemController, type: :controller do
         it 'does not save the new work_item it passes to the form' do
           allow(Steps::WorkItemForm).to receive(:build)
           expect { get :edit, params: { id: application, work_item_id: StartPage::CREATE_FIRST } }
-            .to change(application.work_items, :count).by(0)
+            .not_to change(application.work_items, :count)
 
           expect(Steps::WorkItemForm).to have_received(:build) do |wi, **kwargs|
             expect(wi).to be_a(WorkItem)
             expect(wi).to be_new_record
-            expect(kwargs).to eq(application: application)
+            expect(kwargs).to eq(application:)
           end
         end
 

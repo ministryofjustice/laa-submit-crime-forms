@@ -16,12 +16,12 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
       it 'does not save the new defendant it passes to the form' do
         allow(Steps::DefendantDetailsForm).to receive(:build)
         expect { get :edit, params: { id: application, defendant_id: StartPage::CREATE_FIRST } }
-          .to change(application.defendants, :count).by(0)
+          .not_to change(application.defendants, :count)
 
         expect(Steps::DefendantDetailsForm).to have_received(:build) do |defend, **kwargs|
           expect(defend).to be_a(Defendant)
           expect(defend).to be_new_record
-          expect(kwargs).to eq(application: application)
+          expect(kwargs).to eq(application:)
         end
       end
 

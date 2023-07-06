@@ -1,5 +1,5 @@
 RSpec.shared_examples 'a decision with nested object' do |step_name:, controller:, summary_controller:,
-    form_class:, nested: controller, edit_when_one: false, create_args: nil|
+    form_class:, nested: controller, edit_when_one: false|
   context "when step is #{step_name}" do
     let(:local_form) { form_class.new(application:) }
     let(:decision_tree) { described_class.new(local_form, as: step_name) }

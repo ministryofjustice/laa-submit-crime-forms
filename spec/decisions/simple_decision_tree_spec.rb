@@ -29,8 +29,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
 
   it_behaves_like 'a decision with nested object',
                   step_name: :firm_details, controller: :defendant_details, nested: :defendant,
-                  summary_controller: :defendant_summary, form_class: Steps::FirmDetailsForm,
-                  create_args: { main: true, position: 1 }
+                  summary_controller: :defendant_summary, form_class: Steps::FirmDetailsForm
   it_behaves_like 'a generic decision', :defendant_details, :defendant_summary, Steps::DefendantDetailsForm
   it_behaves_like 'a generic decision', :defendant_delete, :defendant_summary, Steps::DefendantDeleteForm
   context 'when defendant exists' do

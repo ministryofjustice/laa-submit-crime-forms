@@ -42,12 +42,12 @@ RSpec.describe Steps::DisbursementTypeController, type: :controller do
       it 'does not save the new work_item passed to the form' do
         allow(Steps::DisbursementTypeForm).to receive(:build)
         expect { get :edit, params: { id: application, disbursement_id: StartPage::CREATE_FIRST } }
-          .to change(application.disbursements, :count).by(0)
+          .not_to change(application.disbursements, :count)
 
         expect(Steps::DisbursementTypeForm).to have_received(:build) do |disb, **kwargs|
           expect(disb).to be_a(Disbursement)
           expect(disb).to be_new_record
-          expect(kwargs).to eq(application: application)
+          expect(kwargs).to eq(application:)
         end
       end
 
