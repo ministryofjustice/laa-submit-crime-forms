@@ -33,8 +33,6 @@ en:
         add_another: Do you want to add another defendant?
       steps_claim_details_form:
         claim_details: Claim Details
-        prosecution_evidence: Number of pages of prosecution evidence
-        defence_statement: Number of pages of defence statements
         number_of_witnesses: Number of Defence witnesses
         supplemental_claim: Does this bill represent supplemental claim ?
         preparation_time: Did you spend time watching or listening to recorded evidence?
