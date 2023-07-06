@@ -33,8 +33,8 @@ en:
         add_another: Do you want to add another defendant?
       steps_claim_details_form:
         claim_details: Claim Details
-        prosecution_evidence: Prosecution Evidence
-        defence_statement: Defence statement
+        prosecution_evidence: Number of pages of prosecution evidence
+        defence_statement: Number of pages of defence statements
         number_of_witnesses: Number of Defence witnesses
         supplemental_claim: Does this bill represent supplemental claim ?
         preparation_time: Was any preparation time spent watching or listening to taped evidence ?
@@ -96,7 +96,7 @@ en:
           statements by the defendant and defence witnesses
         prosecution_evidence: Where applicable, give the approximate number of pages
         supplemental_claim_options:
-          'yes': If yes, attach a copy of the previous claim
+          'yes': We'll ask you to upload evidence of this before you submit the claim
         preparation_time_options:
           'yes': If yes, tell us the total running time of the tape in hours
         time_spent: For example, 1 hour and 30 minutes
@@ -199,9 +199,9 @@ en:
           'yes': 'Yes'
           'no': 'No'
       steps_claim_details_form:
-        prosecution_evidence: Prosecution Evidence
-        defence_statement: Defence statement
-        number_of_witnesses: Number of Defence witnesses
+        prosecution_evidence: Number of pages of prosecution evidence
+        defence_statement: Number of pages of defence statements
+        number_of_witnesses: Number of witnesses
         supplemental_claim_options:
           'yes': 'Yes'
           'no': 'No'
