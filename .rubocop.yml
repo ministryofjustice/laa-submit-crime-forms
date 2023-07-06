@@ -131,6 +131,7 @@ Style/HashEachMethods:
     - app/value_objects/value_object.rb
     - app/forms/steps/**/*
     - spec/steps/**/*
+    - spec/factories/*
 
 Performance/InefficientHashSearch:
   Exclude:

@@ -43,13 +43,13 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
         'Phone calls', '£12.27', # 4.09 * 3
         'Total', '£20.45',
 
-         "Disbursements total £227.50",
-         "Items", "Total per item",
-         "Car", "£90.00", # 200 * 0.45
-         "DNA Testing", "£30.00",
-         "Custom", "£40.00",
-         "Car", "£67.50", # 150 * 0.45
-         "Total", "£227.50"
+        'Disbursements total £227.50',
+        'Items', 'Total per item',
+        'Car', '£90.00', # 200 * 0.45
+        'DNA Testing', '£30.00',
+        'Custom', '£40.00',
+        'Car', '£67.50', # 150 * 0.45
+        'Total', '£227.50'
       ]
     )
   end
