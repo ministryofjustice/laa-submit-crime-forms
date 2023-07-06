@@ -132,6 +132,10 @@ Style/HashEachMethods:
     - app/forms/steps/**/*
     - spec/steps/**/*
 
+Performance/InefficientHashSearch:
+  Exclude:
+    - app/presenters/cost_summary/disbursements.rb
+
 Naming/PredicateName:
   AllowedMethods:
     - has_nino
