@@ -10,9 +10,9 @@ RSpec.describe 'User can fill in claim details', type: :system do
   it 'can do green path' do
     visit edit_steps_claim_details_path(claim.id)
 
-    fill_in 'Prosecution Evidence', with: 'Evidence'
-    fill_in 'Defence statement', with: 'Statement'
-    fill_in 'Number of Defence witnesses', with: '2'
+    fill_in 'Number of pages prosecution evidence', with: '1'
+    fill_in 'Number of pages defence statements', with: '2'
+    fill_in 'Number of witnesses', with: '3'
 
     find('.govuk-form-group', text: 'Does this bill represent supplemental claim ?').choose 'Yes'
     find('.govuk-form-group',
