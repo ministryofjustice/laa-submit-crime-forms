@@ -4,13 +4,13 @@ module Steps
   class ClaimDetailsForm < Steps::BaseFormObject
     BOOLEAN_FIELDS = %i[supplemental_claim preparation_time].freeze
 
-    attribute :prosecution_evidence, :string
-    attribute :defence_statement, :string
+    attribute :prosecution_evidence, :integer
+    attribute :defence_statement, :integer
     attribute :number_of_witnesses, :integer
     attribute :time_spent, :time_period
 
-    validates :prosecution_evidence, presence: true
-    validates :defence_statement, presence: true
+    validates :prosecution_evidence, presence: true, numericality: { only_integer: true, greater_than: 0 }
+    validates :defence_statement, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :number_of_witnesses, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :time_spent, presence: true, numericality: { only_integer: true, greater_than: 0 }, time_period: true,
       if: ->(form) { form.preparation_time == YesNoAnswer::YES }
