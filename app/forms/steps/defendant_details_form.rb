@@ -2,7 +2,6 @@ require 'steps/base_form_object'
 
 module Steps
   class DefendantDetailsForm < Steps::BaseFormObject
-    attribute :id, :string
     attribute :full_name, :string
     attribute :maat, :string
     attribute :position, :integer
@@ -26,6 +25,7 @@ module Steps
     private
 
     def persist!
+      record.id = nil if record.id == StartPage::CREATE_FIRST
       record.update!(attributes)
     end
   end

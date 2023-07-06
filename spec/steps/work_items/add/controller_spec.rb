@@ -28,13 +28,16 @@ RSpec.describe Steps::WorkItemController, type: :controller do
       end
 
       context 'when no main work_items exists and CREATE_FIRST passed as id' do
-        it 'creates a new main work_item and passes it to the form' do
+        it 'does not save the new work_item it passes to the form' do
           allow(Steps::WorkItemForm).to receive(:build)
           expect { get :edit, params: { id: application, work_item_id: StartPage::CREATE_FIRST } }
-            .to change(application.work_items, :count).by(1)
+            .to change(application.work_items, :count).by(0)
 
-          expect(Steps::WorkItemForm).to have_received(:build).with(application.reload.work_items.last,
-                                                                    application:)
+          expect(Steps::WorkItemForm).to have_received(:build) do |wi, **kwargs|
+            expect(wi).to be_a(WorkItem)
+            expect(wi).to be_new_record
+            expect(kwargs).to eq(application: application)
+          end
         end
 
         context 'and more than one work item exists' do

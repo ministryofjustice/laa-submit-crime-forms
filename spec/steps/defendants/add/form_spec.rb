@@ -7,7 +7,6 @@ RSpec.describe Steps::DefendantDetailsForm do
     {
       application:,
       record:,
-      id:,
       full_name:,
       maat:,
       position:,
@@ -18,7 +17,6 @@ RSpec.describe Steps::DefendantDetailsForm do
   let(:application) { instance_double(Claim, claim_type: claim_type, defendants: defendants, update!: true) }
   let(:defendants) { [double(:record), record] }
   let(:record) { double(:record) }
-  let(:id) { SecureRandom.uuid }
   let(:full_name) { 'James' }
   let(:maat) { 'AA1' }
   let(:position) { 0 }

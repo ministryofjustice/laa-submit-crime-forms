@@ -13,13 +13,16 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
     let(:defendants) { [] }
 
     context 'when defendant_id CREATE_FIRST flag passed as id' do
-      it 'creates a new defendant and passes it to the form' do
+      it 'does not save the new defendant it passes to the form' do
         allow(Steps::DefendantDetailsForm).to receive(:build)
         expect { get :edit, params: { id: application, defendant_id: StartPage::CREATE_FIRST } }
-          .to change(application.defendants, :count).by(1)
+          .to change(application.defendants, :count).by(0)
 
-        expect(Steps::DefendantDetailsForm).to have_received(:build)
-          .with(application.reload.defendants.last, application:)
+        expect(Steps::DefendantDetailsForm).to have_received(:build) do |defend, **kwargs|
+          expect(defend).to be_a(Defendant)
+          expect(defend).to be_new_record
+          expect(kwargs).to eq(application: application)
+        end
       end
 
       context 'and more than one defendent exists' do

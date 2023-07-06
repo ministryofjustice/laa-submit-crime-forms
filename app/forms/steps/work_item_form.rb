@@ -55,6 +55,7 @@ module Steps
     end
 
     def persist!
+      record.id = nil if record.id == StartPage::CREATE_FIRST
       record.update!(attributes_with_resets)
     end
 

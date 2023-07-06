@@ -22,7 +22,7 @@ RSpec.describe Tasks::Defendants, type: :system do
     context 'no defendants' do
       let(:number_of_defendants) { 0 }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details/create_first") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details/#{StartPage::CREATE_FIRST}") }
     end
 
     context 'one defendant' do

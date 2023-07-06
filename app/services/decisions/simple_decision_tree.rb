@@ -141,8 +141,7 @@ module Decisions
                               create_params: {})
       count = scope.count
       if count.zero?
-        new_work_item = scope.create(**create_params)
-        edit(page, nested_id => new_work_item.id)
+        edit(page, nested_id => StartPage::CREATE_FIRST)
       elsif count == 1 && options[:edit_when_one]
         new_work_item = scope.first
         edit(page, nested_id => new_work_item.id)

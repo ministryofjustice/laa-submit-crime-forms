@@ -22,7 +22,9 @@ module Steps
     def work_item
       @work_item ||=
         if params[:work_item_id] == StartPage::CREATE_FIRST
-          current_application.work_items.first_or_create if current_application.work_items.count <= 1
+          if current_application.work_items.count <= 1
+            current_application.work_items.build(id: StartPage::CREATE_FIRST)
+          end
         else
           current_application.work_items.find_by(id: params[:work_item_id])
         end
