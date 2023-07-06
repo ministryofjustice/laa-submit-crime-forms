@@ -1,7 +1,7 @@
 module StartPage
   # This allows us to use the edit and update paths before the
   # associated record is fully saved.
-  CREATE_FIRST = '00000000-0000-0000-0000-000000000000'.freeze
+  NEW_RECORD = '00000000-0000-0000-0000-000000000000'.freeze
 
   class PreTaskList < TaskList::Collection
     SECTIONS = [[:what, [->(app) { "claim_type.#{app.claim_type}" }]]].freeze

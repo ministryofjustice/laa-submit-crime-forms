@@ -13,7 +13,7 @@ RSpec.shared_examples 'a decision with nested object' do |step_name:, controller
           action: :edit,
           controller: controller,
           id: application,
-          "#{nested}_id": StartPage::CREATE_FIRST,
+          "#{nested}_id": StartPage::NEW_RECORD,
         )
       end
     end

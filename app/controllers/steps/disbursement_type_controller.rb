@@ -21,10 +21,8 @@ module Steps
 
     def disbursement
       @disbursement ||=
-        if params[:disbursement_id] == StartPage::CREATE_FIRST
-          if current_application.disbursements.count <= 1
-            current_application.disbursements.build(id: StartPage::CREATE_FIRST)
-          end
+        if params[:disbursement_id] == StartPage::NEW_RECORD
+          current_application.disbursements.build(id: StartPage::NEW_RECORD)
         else
           current_application.disbursements.find_by(id: params[:disbursement_id])
         end

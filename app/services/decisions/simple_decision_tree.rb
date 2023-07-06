@@ -120,8 +120,7 @@ module Decisions
 
     def add_another(scope:, add_view:, sub_id:, form:, proceed_url:)
       if form_object.add_another.yes?
-        instance = scope.create(**create_params)
-        edit(add_view, sub_id => instance.id)
+        edit(add_view, sub_id => StartPage::NEW_RECORD)
       else
         # we direct the user to any invalid forms when they choose next
         forms = Array(form)
@@ -137,7 +136,7 @@ module Decisions
     def create_new_or_summary(page:, summary_page:, nested_id:, scope:, options: { edit_when_one: false })
       count = scope.count
       if count.zero?
-        edit(page, nested_id => StartPage::CREATE_FIRST)
+        edit(page, nested_id => StartPage::NEW_RECORD)
       elsif count == 1 && options[:edit_when_one]
         new_work_item = scope.first
         edit(page, nested_id => new_work_item.id)
