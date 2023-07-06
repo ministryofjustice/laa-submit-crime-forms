@@ -37,7 +37,7 @@ en:
         defence_statement: Number of pages of defence statements
         number_of_witnesses: Number of Defence witnesses
         supplemental_claim: Does this bill represent supplemental claim ?
-        preparation_time: Was any preparation time spent watching or listening to taped evidence ?
+        preparation_time: Did you spend time watching or listening to recorded evidence?
         time_spent: Running time of the recording
       steps_other_info_form:
         concluded: Did the proceedings conclude over 3 months ago?
