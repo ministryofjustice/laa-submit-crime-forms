@@ -4,7 +4,7 @@ FactoryBot.define do
 
     trait :valid do
       disbursement_date { Date.yesterday }
-      disbursement_type { (DisbursementTypes.values - [DisbursementTypes::OTHER]).sample.to_s }
+      disbursement_type { DisbursementTypes.values.reject(&:other?).sample.to_s }
       miles { 100 }
       total_cost_without_vat { 45.0 }
       details { 'Details' }

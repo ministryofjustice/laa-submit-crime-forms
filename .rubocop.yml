@@ -143,6 +143,7 @@ RSpec/MultipleMemoizedHelpers:
   Max: 12
   Exclude:
     - spec/steps/work_items/add/form_spec.rb
+    - spec/presenters/cost_summary/report_spec.rb
 
 RSpec/MultipleExpectations:
   Max: 7

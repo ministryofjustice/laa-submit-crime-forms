@@ -19,7 +19,7 @@ RSpec.describe Steps::DisbursementTypeForm do
   let(:disbursements) { [double(:disbursement), record] }
   let(:disbursement_date) { Date.new(2023, 1, 1) }
   let(:record) { double(:record, id: SecureRandom.uuid) }
-  let(:disbursement_type) { (DisbursementTypes.values - [DisbursementTypes::OTHER]).sample.to_s }
+  let(:disbursement_type) { DisbursementTypes.values.reject(&:other?).sample.to_s }
   let(:other_type) { nil }
 
   describe '#validations' do

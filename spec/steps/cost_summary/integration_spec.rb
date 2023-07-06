@@ -1,44 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'User can see cost breakdowns', type: :system do
-  let(:claim) { Claim.create(office_code:, letters:, calls:, rep_order_date:) }
-
-  let(:office_code) { 'AAA' }
-  let(:letters) { 2 }
-  let(:calls) { 3 }
-  let(:rep_order_date) { Date.yesterday }
-  let(:work_items) do
+  let(:claim) { create(:claim, :costed, work_types:) }
+  let(:work_types) do
     [
-      WorkItem.new(
-        work_type: WorkTypes::ATTENDANCE_WITHOUT_COUNSEL.to_s,
-        time_spent: 90,
-        completed_on: Date.yesterday,
-        fee_earner: 'aaa',
-        uplift: nil,
-      ),
-      WorkItem.new(
-        work_type: WorkTypes::ADVOCACY.to_s,
-        time_spent: 104,
-        completed_on: Date.yesterday,
-        fee_earner: 'aaa',
-        uplift: nil,
-      ),
-      WorkItem.new(
-        work_type: WorkTypes::ADVOCACY.to_s,
-        time_spent: 86,
-        completed_on: Date.yesterday,
-        fee_earner: 'aaa',
-        uplift: nil,
-      ),
+      [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL.to_s, 90],
+      [WorkTypes::ADVOCACY.to_s, 104],
+      [WorkTypes::ADVOCACY.to_s, 86],
     ]
   end
 
   before do
-    work_items.each do |work_item|
-      claim.work_items << work_item
-    end
-
-    claim.update(navigation_stack: ["/applications/#{claim.id}/steps/letters_calls"])
     visit provider_saml_omniauth_callback_path
   end
 
@@ -62,6 +34,10 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
         'Letters', '£8.18', # 4.09 * 2
         'Phone calls', '£12.27', # 4.09 * 3
         'Total', '£20.45',
+
+        'Disbursements total £0.00',
+        'Items', 'Total per item',
+        'Total', '£0.00'
       ]
     )
   end

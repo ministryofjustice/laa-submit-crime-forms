@@ -32,7 +32,7 @@ module CostSummary
       # other_type is only populated for the `other` disbursement typer
       return translate("standard.#{form.record.disbursement_type}") unless form.record.other_type
 
-      known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(form.record.other_type))
+      known_other = OtherDisbursementTypes.value?(OtherDisbursementTypes.new(form.record.other_type))
       return translate("other.#{form.record.other_type}") if known_other
 
       form.record.other_type

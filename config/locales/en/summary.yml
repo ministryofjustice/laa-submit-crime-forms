@@ -23,3 +23,43 @@ en:
       disbursements: Disbursements total %{total}
       standard:
         car: Car
+        motorcycle: Motorcycle
+        bike: Bike
+        other: Other
+      other:
+        accident_reconstruction_report: Accident Reconstruction Report
+        accident_emergency_report: Accident & Emergency Report
+        accountants: Accountants
+        architects_surveyor: Architects/Surveyor
+        back_calculations: Back Calculations
+        car_travel: Car Travel
+        caell_phone_site_analaysis: Caell Phone Site Analaysis
+        computer_experts: Computer Experts
+        consultant_medical_reports: Consultant Medical Reports
+        dna_testing: DNA Testing
+        drug_expert_report: Drug Expert Report
+        engineer_mechanical_engineer: Engineer/Mechanical Engineer
+        enquiry_agents: Enquiry Agents
+        facial_mapping_experts: Facial Mapping Experts
+        fingerprint_experts: Fingerprint Experts
+        fire_investgation_report: Fire Investgation Report
+        forensic_scientists: Forensic Scientists
+        general_practioners: General Practioners
+        handwriting_experts: Handwriting experts
+        interpreters: Interpreters
+        lip_readers: Lip Readers
+        medical_report: Medical Report
+        meteorologist: Meteorologist
+        overnight_expenses: Overnight Expenses
+        paediatricians_report: Paediatricians Report
+        pathologists: Pathologists
+        photocopying: Photocopying
+        plans_photographs: Plans & Photographs
+        psychiatric_reports: Psychiatric Reports
+        phsycological_reports: Phsycological Reports
+        telecommunications_expert: Telecommunications Expert
+        transcripts: Transcripts
+        translators: Translators
+        travel_expenses_excl_car: Travel expenses (excl car)
+        veternarian_report: Veternarian Report
+        voice_recognition_experts: Voice Recognition
