@@ -3,9 +3,9 @@ module Decisions
     EDIT_MAPPING = {
       defendant_details: :defendant_summary,
       defendant_delete: :defendant_summary,
-      case_details: :case_disposal,
-      case_disposal: :hearing_details,
-      hearing_details: :reason_for_claim,
+      case_details: :hearing_details,
+      hearing_details: :case_disposal,
+      case_disposal: :reason_for_claim,
       reason_for_claim: :claim_details,
       claim_details: :work_item,
       work_item: :work_items,

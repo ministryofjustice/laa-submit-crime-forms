@@ -20,7 +20,17 @@
         <tbody class="govuk-table__body">
           <% disbursements.each do |disbursement| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= t("helpers.label.steps_disbursement_type_form.disbursement_type_options.#{disbursement.disbursement_type || 'missing'}") %></td>
+              <td class="govuk-table__cell">
+                <% if disbursement.disbursement_type == DisbursementTypes::OTHER.to_s %>
+                  <% if OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(disbursement.other_type)) %>
+                    <%= t("helpers.other_disbursement_type.#{disbursement.other_type}") %>
+                  <% else %>
+                    <%= disbursement.other_type %>
+                  <% end %>
+                <% else %>
+                  <%= t("helpers.label.steps_disbursement_type_form.disbursement_type_options.#{disbursement.disbursement_type || 'missing'}") %>
+                <% end %>
+              </td>
               <td class="govuk-table__cell"><%= number_to_currency(disbursement.total_cost, unit: '£') %></td>
               <td class="govuk-table__cell"><%= disbursement.details  %></td>
               <td class="govuk-table__cell">
