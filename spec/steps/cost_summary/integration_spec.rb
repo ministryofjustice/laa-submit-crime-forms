@@ -1,12 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe 'User can see cost breakdowns', type: :system do
-  let(:claim) { create(:claim, :costed, work_types:) }
-  let(:work_types) do
+  let(:claim) { create(:claim, :letters_calls, work_items:, disbursements:) }
+  let(:work_items) do
     [
-      [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL.to_s, 90],
-      [WorkTypes::ADVOCACY.to_s, 104],
-      [WorkTypes::ADVOCACY.to_s, 86],
+      build(:work_item, :attendance_without_counsel, time_spent: 90),
+      build(:work_item, :advocacy, time_spent: 104),
+      build(:work_item, :advocacy, time_spent: 86),
+    ]
+  end
+  let(:disbursements) do
+    [
+      build(:disbursement, :valid, :car, age: 5, miles: 200),
+      build(:disbursement, :valid_other, :dna_testing, age: 4, total_cost_without_vat: 30),
+      build(:disbursement, :valid_other, age: 3, other_type: 'Custom', total_cost_without_vat: 40),
+      build(:disbursement, :valid, :car, age: 2, miles: 150),
     ]
   end
 
@@ -35,9 +43,13 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
         'Phone calls', '£12.27', # 4.09 * 3
         'Total', '£20.45',
 
-        'Disbursements total £0.00',
-        'Items', 'Total per item',
-        'Total', '£0.00'
+         "Disbursements total £227.50",
+         "Items", "Total per item",
+         "Car", "£90.00", # 200 * 0.45
+         "DNA Testing", "£30.00",
+         "Custom", "£40.00",
+         "Car", "£67.50", # 150 * 0.45
+         "Total", "£227.50"
       ]
     )
   end
