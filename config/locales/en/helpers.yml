@@ -97,8 +97,6 @@ en:
         prosecution_evidence: Where applicable, give the approximate number of pages
         supplemental_claim_options:
           'yes': We'll ask you to upload evidence of this before you submit the claim
-        preparation_time_options:
-          'yes': If yes, tell us the total running time of the tape in hours
         time_spent: For example, 1 hour and 30 minutes
       steps_work_item_form:
         completed_on: For example, 27 3 2007
