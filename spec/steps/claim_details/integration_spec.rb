@@ -24,9 +24,9 @@ RSpec.describe 'User can fill in claim details', type: :system do
     click_on 'Save and continue'
 
     expect(claim.reload).to have_attributes(
-      prosecution_evidence: 'Evidence',
-      defence_statement: 'Statement',
-      number_of_witnesses: 2,
+      prosecution_evidence: 1,
+      defence_statement: 2,
+      number_of_witnesses: 3,
       time_spent: (10 * 60) + 30,
     )
   end
