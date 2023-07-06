@@ -31,11 +31,7 @@ module Decisions
     private
 
     def after_claim_type
-      if form_object.claim_type.supported?
         show(:start_page)
-      else
-        index('/claims')
-      end
     end
 
     def after_firm_details

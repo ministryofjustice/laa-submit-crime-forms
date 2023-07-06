@@ -34,13 +34,7 @@ module Steps
     private
 
     def persist!
-      if claim_type.supported?
-        application.update!(
-          attributes.merge(attributes_to_reset)
-        )
-      else
-        application.destroy
-      end
+        application.update!(attributes.merge(attributes_to_reset))
     end
 
     def attributes_to_reset
