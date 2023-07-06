@@ -37,12 +37,8 @@ RSpec.describe Steps::ClaimDetailsForm do
   describe '#save preparation time yes' do
     context 'when all fields are set and preparation_time set to yes' do
       let(:preparation_time) { 'yes' }
-      let(:time_spent_hours) { 2 }
-      let(:time_spent_mins) { 40 }
-      let(:work_before_date) { Date.new(2023, 1, 1) }
-      let(:work_after_date) { Date.new(2023, 1, 1) }
 
-      it 'is is valid' do
+      it 'is valid' do
         expect(subject.save).to be_truthy
         expect(application).to have_received(:update!)
         expect(subject).to be_valid
@@ -56,8 +52,6 @@ RSpec.describe Steps::ClaimDetailsForm do
 
     context 'when preparation is yes' do
       let(:preparation_time) { 'yes' }
-      let(:work_before_date) { Date.new(2023, 1, 1) }
-      let(:work_after_date) { Date.new(2023, 1, 1) }
 
       context 'when time_spent is valid' do
         it 'is updated the DB in minutes' do
@@ -74,13 +68,11 @@ RSpec.describe Steps::ClaimDetailsForm do
 
       context 'time_spent has a value in the database' do
         let(:time_spent_in_db) { 100 }
-        let(:work_before_date) { Date.new(2023, 1, 1) }
-        let(:work_after_date) { Date.new(2023, 1, 1) }
 
         it 'clears the database field' do
           expect(subject.save).to be_truthy
           expect(application.reload).to have_attributes(
-            time_spent: 160
+            time_spent: nil
           )
         end
       end
@@ -99,7 +91,6 @@ RSpec.describe Steps::ClaimDetailsForm do
 
       context 'when work before is valid' do
         let(:work_before) { nil }
-        let(:work_before_date) { Date.yesterday }
 
         it 'is is valid' do
           expect(subject.save).to be_truthy
