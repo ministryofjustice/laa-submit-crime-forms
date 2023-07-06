@@ -40,7 +40,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
     it_behaves_like 'an add_another decision', :defendant_summary, :defendant_details, :case_details, :defendant_id,
                     additional_yes_branch_tests: lambda {
                       it 'builds a new defendant on the claim' do
-                        expect { decision_tree.destination }.to change(application.defendants, :count).by(0)
+                        expect { decision_tree.destination }.not_to change(application.defendants, :count)
                       end
                     }
   end
@@ -62,7 +62,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
     it_behaves_like 'an add_another decision', :work_items, :work_item, :letters_calls, :work_item_id,
                     additional_yes_branch_tests: lambda {
                       it 'builds a new work item on the claim' do
-                        expect { decision_tree.destination }.to change(application.work_items, :count).by(0)
+                        expect { decision_tree.destination }.not_to change(application.work_items, :count)
                       end
                     }
 
@@ -81,8 +81,8 @@ RSpec.describe Decisions::SimpleDecisionTree do
       }
       it_behaves_like 'an add_another decision', :work_items, :work_item, no_controller_options, :work_item_id,
                       additional_yes_branch_tests: lambda {
-                      it 'builds a new work item on the claim' do
-                          expect { decision_tree.destination }.to change(application.work_items, :count).by(0)
+                        it 'builds a new work item on the claim' do
+                          expect { decision_tree.destination }.not_to change(application.work_items, :count)
                         end
                       }
     end
@@ -117,7 +117,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
     it_behaves_like 'an add_another decision', :disbursements, :disbursement_type, :cost_summary, :disbursement_id,
                     no_action_name: :show, additional_yes_branch_tests: lambda {
                       it 'builds a new disbursement on the claim' do
-                        expect { decision_tree.destination }.to change(application.disbursements, :count).by(0)
+                        expect { decision_tree.destination }.not_to change(application.disbursements, :count)
                       end
                     }
   end
