@@ -7,7 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
       <% if @form_object.other_disbursement_type? %>
-        <%= f.govuk_number_field :total_cost_without_vat, min: 1, step: 0.01, width: 5,  data: { selector: 'valueField', multipler: @form_object.multiplier } %>
+        <%= f.govuk_number_field :total_cost_without_vat, min: 1, step: 0.01, width: 5, data: { selector: 'valueField', multipler: @form_object.multiplier } %>
       <% else %>
         <%= f.govuk_number_field :miles, min: 1, step: 1, width: 3, suffix_text: 'Miles', data: { selector: 'valueField', multipler: @form_object.multiplier } %>
       <% end %>
