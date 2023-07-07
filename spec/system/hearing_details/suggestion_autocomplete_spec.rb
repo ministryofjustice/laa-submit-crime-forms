@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Test suggestion autocomplete for court', type: :system, javascript: true do
+RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type: :system do
   let(:claim) { create(:claim, :case_disposal) }
 
   it 'can select a value from the autocomplete' do
@@ -11,7 +11,7 @@ RSpec.describe 'Test suggestion autocomplete for court', type: :system, javascri
     click_on 'Save and continue'
 
     fill_in 'Which court was the hearing held at?', with: 'Aldershot'
-    expect(page).to have_field('Which court was the hearing held at?', with:  "Aldershot Magistrates' Court")
+    expect(page).to have_field('Which court was the hearing held at?', with: "Aldershot Magistrates' Court")
 
     click_on 'Save and come back later'
 

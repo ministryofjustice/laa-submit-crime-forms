@@ -3,7 +3,7 @@
 # Cuprite is a modern Capybara driver which uses Chrome CDP API
 # instead of Selenium & co.
 # See https://github.com/rubycdp/cuprite
-require "capybara/cuprite"
+require 'capybara/cuprite'
 
 Capybara.register_driver(:better_cuprite) do |app|
   Capybara::Cuprite::Driver.new(
@@ -15,7 +15,7 @@ Capybara.register_driver(:better_cuprite) do |app|
     inspector: true,
     # Allow running Chrome in a headful mode by setting HEADLESS env
     # var to a falsey value
-    headless: !ENV["HEADLESS"].in?(%w[n 0 no false])
+    headless: !ENV['HEADLESS'].in?(%w[n 0 no false])
   )
 end
 
@@ -30,6 +30,7 @@ module CupriteHelpers
   def debug(binding = nil)
     $stdout.puts "🔎 Open Chrome inspector at http://localhost:#{Capybara.server_port}"
     return binding.break if binding
+
     page.driver.pause
   end
 end

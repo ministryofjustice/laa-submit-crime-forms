@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Test suggestion autocomplete for court', type: :system, javascript: true do
+RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type: :system do
   let(:claim) { create(:claim, :letters_calls) }
   let(:other_type_field) { 'steps_disbursement_type_form[other_type_suggestion]' }
 
@@ -16,12 +16,12 @@ RSpec.describe 'Test suggestion autocomplete for court', type: :system, javascri
     choose 'Other disbursement type', visible: :all
     fill_in other_type_field, with: 'Accident &'
 
-    expect(page).to have_field(other_type_field, with: "Accident & Emergency Report")
+    expect(page).to have_field(other_type_field, with: 'Accident & Emergency Report')
 
     click_on 'Save and come back later'
 
     expect(claim.disbursements.first).to have_attributes(
-      other_type: "accident_emergency_report"
+      other_type: 'accident_emergency_report'
     )
   end
 
