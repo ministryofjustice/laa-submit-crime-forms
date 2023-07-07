@@ -1,4 +1,4 @@
-require 'rails_helper'
+prequire 'rails_helper'
 
 RSpec.describe Tasks::WorkItems, type: :system do
   subject { described_class.new(application:) }

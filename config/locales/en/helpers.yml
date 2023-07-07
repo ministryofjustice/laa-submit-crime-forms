@@ -235,7 +235,7 @@ en:
           missing: '*required'
           car: Car
           motorcycle: Motorcycle
-          bike: bike
+          bike: Bike
           other: Other disbursement type
       steps_disbursement_cost_form:
         miles: Number of miles

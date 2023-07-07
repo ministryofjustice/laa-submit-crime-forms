@@ -35,8 +35,6 @@ RSpec.configure do |config|
   # For specific scenarios, the user can be "signed off".
   config.before(:each, type: :controller) { sign_in }
 
-  # Use the faster rack test by default for system specs
-  config.before(:each, type: :system) { driven_by :rack_test }
   config.expect_with :rspec do |c|
     c.max_formatted_output_length = nil
   end

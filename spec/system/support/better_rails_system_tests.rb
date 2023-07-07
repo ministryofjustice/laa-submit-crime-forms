@@ -24,15 +24,17 @@ RSpec.configure do |config|
   config.include BetterRailsSystemTests, type: :system
 
   # Make urls in mailers contain the correct server host
-  config.around(:each, type: :system) do |ex|
+  config.around(:each, type: :system, javascript: true) do |ex|
     was_host, Rails.application.default_url_options[:host] = Rails.application.default_url_options[:host], Capybara.server_host
     ex.run
     Rails.application.default_url_options[:host] = was_host
   end
 
-  # Make sure this hook runs before others
-  config.prepend_before(:each, type: :system) do
+  # we do this first as it is a prepend meaning this will run last and take priority
+  config.prepend_before(:each, type: :system, javascript: true) do
     # Use JS driver always
     driven_by Capybara.javascript_driver
   end
+  # Use the faster rack test by default for system specs if possible
+  config.prepend_before(:each, type: :system) { driven_by :rack_test }
 end
