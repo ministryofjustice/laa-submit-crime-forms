@@ -8,7 +8,7 @@ require "capybara/cuprite"
 Capybara.register_driver(:better_cuprite) do |app|
   Capybara::Cuprite::Driver.new(
     app,
-    window_size: [1200, 800],
+    window_size: [1200, 1000],
     browser_options: { url_whitelist: %r{http://localhost} },
     # Increase Chrome startup timeout for CI
     process_timeout: 10,

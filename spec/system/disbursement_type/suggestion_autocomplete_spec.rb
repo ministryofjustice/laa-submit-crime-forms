@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Test suggestion autocomplete for court', type: :system, javascript: true do
   let(:claim) { create(:claim, :letters_calls) }
-  let(:other_type_field) { 'steps-disbursement-type-form-other-type-field' }
+  let(:other_type_field) { 'steps_disbursement_type_form[other_type_suggestion]' }
 
   it 'can select a value from the autocomplete' do
     visit provider_saml_omniauth_callback_path
@@ -10,16 +10,18 @@ RSpec.describe 'Test suggestion autocomplete for court', type: :system, javascri
     visit edit_steps_letters_calls_path(id: claim)
 
     click_on 'Save and continue'
-debugger
-    choose 'Other disbursement type'
-    fill_in other_type_field, with: 'Accident'
+    page.scroll_to(find('footer'))
+
+    # Not sure why but this item couldn't be cfound with visible: :all flag
+    choose 'Other disbursement type', visible: :all
+    fill_in other_type_field, with: 'Accident &'
 
     expect(page).to have_field(other_type_field, with: "Accident & Emergency Report")
 
     click_on 'Save and come back later'
 
     expect(claim.disbursements.first).to have_attributes(
-      other_type: "Accident & Emergency Report"
+      other_type: "accident_emergency_report"
     )
   end
 
@@ -30,7 +32,8 @@ debugger
 
     click_on 'Save and continue'
 
-    choose 'Other disbursement type'
+    # Not sure why but this item couldn't be cfound with visible: :all flag
+    choose 'Other disbursement type', visible: :all
     fill_in other_type_field, with: 'Apples'
 
     click_on 'Save and come back later'
@@ -44,7 +47,7 @@ debugger
     let(:disbursement) { create(:disbursement, claim: claim, disbursement_type: DisbursementTypes::OTHER) }
 
     it 'will correctly display values selected from the autocomplete list' do
-      disbursement.update(other_type: 'Accident & Emergency Report')
+      disbursement.update(other_type: 'accident_emergency_report')
 
       visit provider_saml_omniauth_callback_path
 
@@ -54,7 +57,7 @@ debugger
     end
 
     it 'will correctly display custom values' do
-      claim.update(court: 'Apples')
+      disbursement.update(other_type: 'Apples')
 
       visit provider_saml_omniauth_callback_path
 
