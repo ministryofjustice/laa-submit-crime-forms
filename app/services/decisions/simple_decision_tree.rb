@@ -10,6 +10,7 @@ module Decisions
       claim_details: :work_item,
       work_item: :work_items,
       disbursement_cost: :disbursements,
+      other_info: :supporting_evidence
     }.freeze
 
     SHOW_MAPPING = {
