@@ -169,6 +169,46 @@ en:
       edit:
         page_title: Upload supporting evidence
         heading: Upload supporting evidence
+        para1:
+          heading: "Based on your answers, you must upload:"
+          crm8: CRM8 form
+          remittal: evidence of remittal
+          supplemental: evidence of supplemental claim
+          authority: prior authority certification
+        para2:
+          heading: "You might also want to upload:"
+          file: file notes
+          attendance: attendance notes
+          reading: reading case law
+          documentation: documentation
+          prosecution: prosecution evidence review
+          emails: emails
+          representation: representation order
+        upload_warning:
+          icon: "!"
+          assistive: Warning
+          message: If you do not upload this evidence, it might take longer to assess your claim.
+        post_warning:
+          icon: "!"
+          assistive: Warning
+          message: If you post your evidence, it might take longer to assess your claim.
+        file_upload:
+          heading: Upload files
+          caption: Files must be a DOC, DOCX, RTF, JPG, BMP, PNG, TIF or PDF.
+        supporting_evidence: I'll send the supporting evidence by post
+        action: Action
+        status: Status
+        file_name: File Name
+        uploading_docs: Documents waiting to be saved
+        upload_files: Upload files
+        upload_file: Upload files
+        postal_address: |
+          Post your evidence to:
+          Legal Aid Agency
+          1 Unity Square
+          Queensbridge Road
+          Nottingham
+          NG2 1AW
   laa_multi_step_forms:
     task_list:
       show:

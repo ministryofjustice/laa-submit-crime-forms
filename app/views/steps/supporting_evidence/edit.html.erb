@@ -1,2 +1,65 @@
 <% title t('.page_title') %>
 <% step_header %>
+
+<%= tag.div class: "govuk-grid-row" do -%>
+  <%= tag.div class: "govuk-grid-column-three-quarters" do -%>
+    <%= govuk_error_summary(@form_object) %>
+    <%= tag.h1 t('.heading'), class: "govuk-heading-xl govuk-!-margin-bottom-6" %>
+    <%# Answers upload list %>
+    <%= tag.p t('.para1.heading'), class: "govuk-body" do -%>
+      <%= t('.para1.heading') %>
+      <%= tag.ul class: "govuk-list govuk-list--bullet govuk-!-margin-bottom-6 govuk-!-padding-left-6"  do -%>
+        <%= tag.li t('.para1.crm8') %>
+        <%= tag.li t('.para1.remittal') %>
+        <%= tag.li t('.para1.supplemental') %>
+        <%= tag.li t('.para1.authority') %>
+      <% end -%>
+    <% end -%>
+    <%# Upload warning %>
+    <%= tag.div class: "govuk-warning-text" do -%>
+      <%= tag.span t('.upload_warning.icon'), class: "govuk-warning-text__icon", aria: { hidden: true} %>
+      <%= tag.strong class: "govuk-warning-text__text" do -%>
+        <% tag.span t('.upload_warning.assistive'), class:"govuk-warning-text__assistive" %>
+        <%= t('.upload_warning.message') %>
+      <% end -%>
+    <% end -%>
+    <%# Additional upload list %>
+    <%= tag.p t('.para2.heading'), class: "govuk-body" %>
+    <%= tag.ul class: "govuk-list govuk-list--bullet govuk-!-margin-bottom-6 govuk-!-padding-left-6"  do -%>
+      <%= tag.li t('.para2.file') %>
+      <%= tag.li t('.para2.attendance') %>
+      <%= tag.li t('.para2.reading') %>
+      <%= tag.li t('.para2.documentation') %>
+      <%= tag.li t('.para2.prosecution') %>
+      <%= tag.li t('.para2.emails') %>
+      <%= tag.li t('.para2.representation') %>
+    <% end -%>
+    <%= form_with model: @form_object do |form| %>
+      <%# Postal address component %>
+      <%= tag.div class: "govuk-form-group" do -%>
+        <%= tag.fieldset class: "govuk-fieldset" %>
+        <%= tag.div class: "govuk-checkboxes", data: { module: "govuk-checkboxes"} do -%>
+          <%= tag.div class: "govuk-checkboxes__item" do -%>
+            <%= form.check_box "postal-field", class: "govuk-checkboxes__input", data: { "aria-controls": "postal-conditional" } %>
+            <%= form.label "postal-field", t('.supporting_evidence'), class: "govuk-label govuk-checkboxes__label" %>
+          <% end -%>
+          <%= tag.div class: "govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden", id: "postal-conditional" do -%>
+            <%= tag.div class: "govuk-warning-text" do -%>
+              <%= tag.span t('.post_warning.icon'), class: "govuk-warning-text__icon", aria: { hidden: true} %>
+              <%= tag.strong class: "govuk-warning-text__text" do -%>
+                <% tag.span t('.post_warning.assistive'), class:"govuk-warning-text__assistive" %>
+                <%= t('.post_warning.message') %>
+              <% end -%>
+            <% end -%>
+            <%= tag.div class: "govuk-form-group" do -%>
+              <%= tag.pre t('.postal_address'), class: "govuk-body govuk-!-margin-bottom-6" %>
+            <% end -%>
+          <% end -%>
+        <% end -%>
+      <% end -%>
+
+      <%# Continue %>
+      <%= form.continue_button %>
+    <% end -%>
+  <% end -%>
+<% end -%>
