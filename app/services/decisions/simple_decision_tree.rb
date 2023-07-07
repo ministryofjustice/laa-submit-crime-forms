@@ -31,7 +31,7 @@ module Decisions
     private
 
     def after_claim_type
-        show(:start_page)
+      show(:start_page)
     end
 
     def after_firm_details

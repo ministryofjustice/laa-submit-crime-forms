@@ -20,7 +20,7 @@ module TaskList
 
     def items
       @items ||= tasks.map do |name|
-        name = name.respond_to?(:call) ? name.call(application) : name
+        name = name.call(application) if name.respond_to?(:call)
 
         Task.new(application, name:)
       end
