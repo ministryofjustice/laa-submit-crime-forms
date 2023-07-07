@@ -165,6 +165,10 @@ en:
       edit:
         page_title: Other Relevant information
         heading: Other Relevant information
+    supporting_evidence:
+      edit:
+        page_title: Upload supporting evidence
+        heading: Upload supporting evidence
   laa_multi_step_forms:
     task_list:
       show:
