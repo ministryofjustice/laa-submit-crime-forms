@@ -47,33 +47,54 @@ RSpec.describe DummyStepController, type: :controller do
 
   context 'any other error class' do
     let(:error_class) { Class.new(StandardError) }
+    let(:sentry_dsn) { nil }
+    let(:rails_env) { 'development' }
 
     before do
-      allow(Rails.application.config).to receive(:consider_all_requests_local).and_return(local)
+      allow(ENV).to(receive(:fetch)).and_call_original
+      allow(ENV).to(receive(:fetch)).with('RAILS_ENV', nil).and_return(rails_env)
+      allow(ENV).to(receive(:fetch)).with('SENTRY_DSN', nil).and_return(sentry_dsn)
     end
 
-    context 'consider_all_requests_local is true' do
-      let(:local) { true }
-
+    context 'non production RAILS_ENV' do
       it 'raises the error' do
         expect { put :update, params: { id: application.id } }.to raise_error(error_class)
       end
     end
 
-    context 'consider_all_requests_local is false' do
-      let(:local) { false }
+    context 'production RAILS_ENV' do
+      let(:rails_env) { 'production' }
 
-      it 'logs the error' do
-        expect(Rails.logger).to receive(:error)
-        expect(Sentry).to receive(:capture_exception)
+      context 'when SENTRY_DSN is set' do
+        let(:sentry_dsn) { 'http://example.com' }
 
-        put :update, params: { id: application.id }
+        it 'logs the error' do
+          expect(Rails.logger).to receive(:error)
+          expect(Sentry).to receive(:capture_exception)
+
+          put :update, params: { id: application.id }
+        end
+
+        it 'redirects to the error controller' do
+          put :update, params: { id: application.id }
+
+          expect(response).to redirect_to(controller.laa_msf.unhandled_errors_path)
+        end
       end
 
-      it 'redirects to the error contrller' do
-        put :update, params: { id: application.id }
+      context 'when SENTRY_DSN is not set' do
+        it 'does not logs the error' do
+          expect(Rails.logger).to receive(:error)
+          expect(Sentry).not_to receive(:capture_exception)
 
-        expect(response).to redirect_to(controller.laa_msf.unhandled_errors_path)
+          put :update, params: { id: application.id }
+        end
+
+        it 'redirects to the error controller' do
+          put :update, params: { id: application.id }
+
+          expect(response).to redirect_to(controller.laa_msf.unhandled_errors_path)
+        end
       end
     end
   end

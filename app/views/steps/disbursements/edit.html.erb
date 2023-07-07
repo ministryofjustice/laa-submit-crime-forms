@@ -1,0 +1,57 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-thirds">
+    <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.disbursements.count) %></h1>
+    <%= govuk_error_summary(@form_object) %>
+
+    <% @disbursements_by_date.each do |date, disbursements| %>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m"><%= date&.to_fs(:long) || t('.disbursement_date_blank') %></caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.type') %></th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.cost') %></th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.details') %></th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.actions') %></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% disbursements.each do |disbursement| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <% if disbursement.disbursement_type == DisbursementTypes::OTHER.to_s %>
+                  <% if OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(disbursement.other_type)) %>
+                    <%= t("helpers.other_disbursement_type.#{disbursement.other_type}") %>
+                  <% else %>
+                    <%= disbursement.other_type %>
+                  <% end %>
+                <% else %>
+                  <%= t("helpers.label.steps_disbursement_type_form.disbursement_type_options.#{disbursement.disbursement_type || 'missing'}") %>
+                <% end %>
+              </td>
+              <td class="govuk-table__cell"><%= number_to_currency(disbursement.total_cost, unit: '£') %></td>
+              <td class="govuk-table__cell"><%= disbursement.details  %></td>
+              <td class="govuk-table__cell">
+                <%= link_to t('.change'), edit_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id) %>
+                <%= link_to t('.delete'), edit_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: t('.add_another'), size: 'm' } do %>
+        <%= f.govuk_radio_button :add_another, YesNoAnswer::YES.to_s %>
+        <%= f.govuk_radio_button :add_another, YesNoAnswer::NO.to_s %>
+      <% end%>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
+
+

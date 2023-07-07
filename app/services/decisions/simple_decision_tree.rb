@@ -3,17 +3,17 @@ module Decisions
     EDIT_MAPPING = {
       defendant_details: :defendant_summary,
       defendant_delete: :defendant_summary,
-      case_details: :case_disposal,
-      case_disposal: :hearing_details,
-      hearing_details: :reason_for_claim,
+      case_details: :hearing_details,
+      hearing_details: :case_disposal,
+      case_disposal: :reason_for_claim,
       reason_for_claim: :claim_details,
       claim_details: :work_item,
       work_item: :work_items,
+      disbursement_cost: :disbursements,
     }.freeze
 
     SHOW_MAPPING = {
       other_info: :start_page,
-      disbursement_type: :cost_summary,
     }.freeze
 
     def destination
@@ -34,64 +34,107 @@ module Decisions
       show(:start_page)
     end
 
-    def after_firm_details
-      direct(
-        page: :defendant_details,
-        summary_page: :defendant_summary,
-        nested_id: :defendant_id,
-        scope: form_object.application.defendants,
-        create_params: { position: 1, main: true }
-      )
+    def after_disbursement_type
+      edit(:disbursement_cost, disbursement_id: form_object.record.id)
     end
 
     def after_defendant_summary
-      if form_object.add_another.yes?
-        next_posiiton = form_object.application.defendants.maximum(:position) + 1
-        new_defendant = form_object.application.defendants.create(position: next_posiiton)
-        edit(:defendant_details, defendant_id: new_defendant.id)
-      else
-        edit(:case_details)
-      end
-    end
-
-    def after_claim_details
-      direct(
-        page: :work_item,
-        summary_page: :work_items,
-        nested_id: :work_item_id,
-        scope: form_object.application.work_items,
+      next_position = application.defendants.maximum(:position) + 1
+      add_another(
+        scope: application.defendants,
+        add_view: :defendant_details,
+        sub_id: :defendant_id,
+        form: Steps::DefendantDetailsForm,
+        proceed_url: edit(:case_details),
+        create_params: { position: next_position }
       )
     end
 
     def after_work_items
-      if form_object.add_another.yes?
-        new_work_item = form_object.application.work_items.create
-        edit(:work_item, work_item_id: new_work_item.id)
-      else
-        edit(:letters_calls)
-      end
+      add_another(
+        scope: application.work_items,
+        add_view: :work_item,
+        sub_id: :work_item_id,
+        form: Steps::WorkItemForm,
+        proceed_url: edit(:letters_calls),
+      )
     end
 
-    def after_work_item_delete
-      direct(
+    def after_disbursements
+      add_another(
+        scope: application.disbursements,
+        add_view: :disbursement_type,
+        sub_id: :disbursement_id,
+        form: [Steps::DisbursementTypeForm, Steps::DisbursementCostForm],
+        proceed_url: show(:cost_summary),
+      )
+    end
+
+    def after_firm_details
+      create_new_or_summary(
+        page: :defendant_details,
+        summary_page: :defendant_summary,
+        nested_id: :defendant_id,
+        scope: application.defendants,
+        create_params: { position: 1, main: true }
+      )
+    end
+
+    def after_claim_details
+      create_new_or_summary(
         page: :work_item,
         summary_page: :work_items,
         nested_id: :work_item_id,
-        scope: form_object.application.work_items,
+        scope: application.work_items,
+      )
+    end
+
+    def after_work_item_delete
+      create_new_or_summary(
+        page: :work_item,
+        summary_page: :work_items,
+        nested_id: :work_item_id,
+        scope: application.work_items,
+      )
+    end
+
+    def after_disbursement_delete
+      create_new_or_summary(
+        page: :disbursement_type,
+        summary_page: :disbursements,
+        nested_id: :disbursement_id,
+        scope: application.disbursements,
       )
     end
 
     def after_letters_calls
-      direct(
+      create_new_or_summary(
         page: :disbursement_type,
-        summary_page: :start_page,
+        summary_page: :disbursements,
         nested_id: :disbursement_id,
         options: { edit_when_one: true },
-        scope: form_object.application.disbursements
+        scope: application.disbursements
       )
     end
 
-    def direct(page:, summary_page:, nested_id:, scope:, options: { edit_when_one: false }, create_params: {})
+    def add_another(scope:, add_view:, sub_id:, form:, proceed_url:, create_params: {})
+      if form_object.add_another.yes?
+        instance = scope.create(**create_params)
+        edit(add_view, sub_id => instance.id)
+      else
+        # we direct the user to any invalid forms when they choose next
+        forms = Array(form)
+        invalid_instance = scope.detect { |record| forms.any? { |f| !f.build(record, application:).valid? } }
+        if invalid_instance
+          edit(add_view, sub_id => invalid_instance.id, :flash => { error: 'Can not continue until valid!' })
+        else
+          proceed_url
+        end
+      end
+    end
+
+    def create_new_or_summary(page:, summary_page:, nested_id:, scope:, options: { edit_when_one: false },
+                              create_params: {})
       count = scope.count
       if count.zero?
         new_work_item = scope.create(**create_params)
@@ -102,10 +145,6 @@ module Decisions
       else
         edit(summary_page)
       end
-    end
-
-    def after_disbursement_type
-      edit(:disbursement_cost, disbursement_id: form_object.record.id)
     end
   end
 end

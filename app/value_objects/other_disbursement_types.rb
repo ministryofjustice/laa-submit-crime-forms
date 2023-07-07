@@ -41,4 +41,6 @@ class OtherDisbursementTypes < ValueObject
   def translated
     I18n.t("helpers.other_disbursement_type.#{value}")
   end
+
+  delegate :blank?, to: :value
 end

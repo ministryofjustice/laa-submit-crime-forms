@@ -74,13 +74,128 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
 
   describe '#format_period' do
     context 'when period is nil' do
-      it { expect(helper.format_period(nil)).to eq('Not set') }
+      it { expect(helper.format_period(nil)).to eq('*required') }
     end
 
     context 'when period is not nil' do
       it 'formats the value in hours and minutes' do
         expect(helper.format_period(62)).to eq('1 Hr 2 Mins')
         expect(helper.format_period(1)).to eq('0 Hrs 1 Min')
+      end
+    end
+  end
+
+  describe '#suggestion_select' do
+    let(:form) { double(:form, object: object, object_name: 'fruit_container_form', govuk_collection_select: true) }
+    let(:object) { double(:object, '[]': value) }
+    let(:field) { :fruit }
+    let(:value_field) { :name }
+
+    context 'when id_field matches the value_field' do
+      let(:id_field) { value_field }
+      let(:data_class) { Struct.new(id_field) }
+      let(:values) { [data_class.new('Apples'), data_class.new('Pears')] }
+      let(:value) { 'Apples' }
+
+      it 'sets the data variables' do
+        helper.suggestion_select(form, field, values, id_field, value_field)
+
+        expect(form).to have_received(:govuk_collection_select) do |f, _vals, id_f, value_f, data:|
+          expect(f).to eq(field)
+          expect(id_f).to eq(id_field)
+          expect(value_f).to eq(value_field)
+          expect(data).to eq(
+            module: 'accessible-autocomplete',
+            name: 'fruit_container_form[fruit_suggestion]',
+          )
+        end
+      end
+
+      context 'when value is not already in the array of options' do
+        let(:value) { 'Bananas' }
+
+        it 'adds the value to the array of options' do
+          helper.suggestion_select(form, field, values, id_field, value_field)
+
+          expect(form).to have_received(:govuk_collection_select) do |_f, vals, _id_f, _value_f, **_kwargs|
+            expect(vals.map(&:to_h)).to eq(
+              [
+                { name: 'Bananas' },
+                { name: 'Apples' },
+                { name: 'Pears' },
+              ]
+            )
+          end
+        end
+      end
+
+      context 'when value is already in the array of options' do
+        it 'does not update the array of options' do
+          helper.suggestion_select(form, field, values, id_field, value_field)
+
+          expect(form).to have_received(:govuk_collection_select) do |_f, vals, _id_f, _value_f, **_kwargs|
+            expect(vals.map(&:to_h)).to eq(
+              [
+                { name: 'Apples' },
+                { name: 'Pears' },
+              ]
+            )
+          end
+        end
+      end
+    end
+
+    context 'when id_field does not match the value_field' do
+      let(:id_field) { :id }
+      let(:data_class) { Struct.new(id_field, value_field) }
+      let(:values) { [data_class.new('app', 'Apples'), data_class.new('pea', 'Pears')] }
+      let(:value) { 'app' }
+
+      it 'sets the data variables' do
+        helper.suggestion_select(form, field, values, id_field, value_field)
+
+        expect(form).to have_received(:govuk_collection_select) do |f, _vals, id_f, value_f, data:|
+          expect(f).to eq(field)
+          expect(id_f).to eq(id_field)
+          expect(value_f).to eq(value_field)
+          expect(data).to eq(
+            module: 'accessible-autocomplete',
+            name: 'fruit_container_form[fruit_suggestion]',
+          )
+        end
+      end
+
+      context 'when value is not already in the array of options' do
+        let(:value) { 'Bananas' }
+
+        it 'adds the value to the array of options' do
+          helper.suggestion_select(form, field, values, id_field, value_field)
+
+          expect(form).to have_received(:govuk_collection_select) do |_f, vals, _id_f, _value_f, **_kwargs|
+            expect(vals.map(&:to_h)).to eq(
+              [
+                { id: 'Bananas', name: 'Bananas' },
+                { id: 'app', name: 'Apples' },
+                { id: 'pea', name: 'Pears' },
+              ]
+            )
+          end
+        end
+      end
+
+      context 'when value is already in the array of options' do
+        it 'does not update the array of options' do
+          helper.suggestion_select(form, field, values, id_field, value_field)
+
+          expect(form).to have_received(:govuk_collection_select) do |_f, vals, _id_f, _value_f, **_kwargs|
+            expect(vals.map(&:to_h)).to eq(
+              [
+                { id: 'app', name: 'Apples' },
+                { id: 'pea', name: 'Pears' },
+              ]
+            )
+          end
+        end
       end
     end
   end

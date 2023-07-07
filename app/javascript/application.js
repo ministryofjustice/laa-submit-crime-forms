@@ -2,7 +2,6 @@
 
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'
-import { } from './controllers/letters_calls_form_controller'
 import { } from './controllers/disbursement_cost_form_controller'
 initAll()
 
@@ -18,9 +17,13 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 const $acElements = document.querySelectorAll('[data-module="accessible-autocomplete"]')
 if ($acElements) {
   for (let i = 0; i < $acElements.length; i++) {
+    const name = $acElements[i].getAttribute('data-name')
+
     accessibleAutocomplete.enhanceSelectElement({
       selectElement: $acElements[i],
-      defaultValue: ''
+      defaultValue: '',
+      showNoOptionsFound: name === null,
+      name: name
     })
   }
 }

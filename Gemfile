@@ -10,7 +10,7 @@ gem 'kaminari'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.3'
-gem 'rails', '~> 7.0.5'
+gem 'rails', '~> 7.0.6'
 gem 'sentry-rails'
 gem 'sentry-ruby'
 gem 'sprockets-rails'
@@ -34,6 +34,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false

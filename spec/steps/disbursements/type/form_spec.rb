@@ -46,10 +46,37 @@ RSpec.describe Steps::DisbursementTypeForm do
       end
 
       context 'when other_type is not set' do
+        let(:other_type) { '' }
+
         it 'have an error' do
           expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:other_type, :blank)).to be(true)
         end
+      end
+    end
+  end
+
+  describe '#other_type' do
+    let(:other_disbursement_type) { OtherDisbursementTypes.values.sample }
+    let(:other_type) { other_disbursement_type.to_s }
+
+    context 'when other_type_suggestion is not passed in' do
+      it { expect(subject.other_type).to eq(other_disbursement_type) }
+    end
+
+    context 'when other_type_suggestion is passed in' do
+      subject(:form) { described_class.new(arguments.merge(other_type_suggestion:)) }
+
+      context 'and it matches the translation of other type' do
+        let(:other_type_suggestion) { other_disbursement_type.translated }
+
+        it { expect(subject.other_type).to eq(other_disbursement_type) }
+      end
+
+      context 'and it does not match the translation of other type' do
+        let(:other_type_suggestion) { 'Apples' }
+
+        it { expect(subject.other_type).to eq(OtherDisbursementTypes.new('Apples')) }
       end
     end
   end

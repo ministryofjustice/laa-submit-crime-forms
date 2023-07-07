@@ -38,8 +38,12 @@ en:
         defence_statement: Defence statement
         number_of_witnesses: Number of Defence witnesses
         supplemental_claim: Does this bill represent supplemental claim?
-        preparation_time: Was any preparation time spent watching or listening to taped evidence?
+        preparation_time: Did you spend time watching or listening to recorded evidence?
         time_spent: Running time of the recording
+        work_before_date: Date you started this work
+        work_after_date: Date of last court hearing
+        work_before: Did you do any work before the representation order date?
+        work_after: Did you do any further work after the last court hearing date?
       steps_other_info_form:
         concluded: Did the proceedings conclude over 3 months ago?
       steps_work_item_form:
@@ -98,10 +102,12 @@ en:
           statements by the defendant and defence witnesses
         prosecution_evidence: Where applicable, give the approximate number of pages
         supplemental_claim_options:
-          'yes': If yes, attach a copy of the previous claim
+          'yes': We'll ask you to upload evidence of this before you submit this claim
         preparation_time_options:
-          'yes': If yes, tell us the total running time of the tape in hours
+          'yes': Running time of the recording
         time_spent: For example, 1 hour and 30 minutes
+        work_before_date: For example, 27 3 2023
+        work_after_date: For example, 27 3 2023
       steps_work_item_form:
         completed_on: For example, 27 3 2007
         fee_earner: For example, JMD
@@ -212,8 +218,15 @@ en:
         preparation_time_options:
           'yes': 'Yes'
           'no': 'No'
+        work_before_options:
+          'yes': 'Yes'
+          'no': 'No'
+        work_after_options:
+          'yes': 'Yes'
+          'no': 'No'
       steps_work_item_form:
         work_type_options:
+          missing: '*required'
           preparation: Preparation
           advocacy: Advocacy
           attendance_with_counsel: Attendance with counsel
@@ -227,11 +240,15 @@ en:
       steps_letters_calls_form:
         letters: Number of letters
         calls: Number of phone calls
-        apply_uplift_options:
+        apply_letters_uplift_options:
           'true': Apply an uplift to this work
-        letters_calls_uplift: For example, from any percentage from 1 to 100
+        apply_calls_uplift_options:
+          'true': Apply an uplift to this work
+        letters_uplift: For example, from any percentage from 1 to 100
+        calls_uplift: For example, from any percentage from 1 to 100
       steps_disbursement_type_form:
         disbursement_type_options:
+          missing: '*required'
           car: Car
           motorcycle: Motorcycle
           bike: bike

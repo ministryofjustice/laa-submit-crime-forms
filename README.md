@@ -49,20 +49,3 @@ Also, some functionality in the dashboard will make use of this datastore.
 
 For active development, and to debug or diagnose issues, running the datastore locally along the Apply application is
 the recommended way. Follow the instructions in the above repository to setup and run the datastore locally.
-
-Tested via postman
-
-to create a record
-Rest create(POST)
-http://localhost:3000/claims?full_name='mike hunt'&reference="1234"&tel_number ="07802329853"&email="m-hunt3@sky.com"&address_line1="29 Henry Laver"&town="colchester"&post_code="co33dq"
-
-To read a specific id REST READ(GET)
-http://localhost:3000/claims/2
-
-To update a record
-REST UPDATE(PATCH)
-http://localhost:3000/claims/1?full_name="milo"
-
-To delete a specific id
-REST DELETE(DELETE)
-http://localhost:3000/claims/1

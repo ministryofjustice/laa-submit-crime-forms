@@ -4,7 +4,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
-    <h1 class="govuk-heading-xl">Claim details</h1>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_field :prosecution_evidence, width: 'one-third', autocomplete: 'off' %>
       <%= f.govuk_text_field :defence_statement, width: 'one-third', autocomplete: 'off' %>
@@ -14,6 +14,8 @@
           <%= f.govuk_radio_button field, YesNoAnswer::YES.to_s do%>
             <% if field == :preparation_time %>
               <%= f.govuk_period_field :time_spent, width: 'one-third' %>
+            <% elsif %i[work_before work_after].include?(field) %>
+              <%= f.govuk_date_field "#{field}_date", width: 'one-third' %>
             <% end %>
           <% end %>
           <%= f.govuk_radio_button field, YesNoAnswer::NO.to_s %>

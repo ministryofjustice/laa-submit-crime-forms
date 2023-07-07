@@ -45,6 +45,8 @@ en:
       models:
         steps/claim_type_form:
           attributes:
+            claim_type:
+              inclusion: Please select what you are claiming for
             rep_order_date: *shared_date_errors
             cntp_order:
               blank: Enter a CNTP number
@@ -80,6 +82,12 @@ en:
               blank: "Enter a contacts name"
             contact_email:
               blank: "Enter a contacts email"
+        steps/defendant_details_form:
+          attributes:
+            full_name:
+              blank: Full name cannot be blank
+            maat:
+              blank: MAAT ID cannot be blank
         steps/case_details_form:
           attributes:
             ufn:
@@ -96,6 +104,12 @@ en:
             remitted_to_magistrate:
               blank: "Remitted to magistrate cannot be blank"
             invalid: You must select at least one option
+        steps/case_disposal_form:
+          attributes:
+            plea:
+              blank: Please select a case disposal
+            cracked_trial_date: *shared_date_errors
+            arrest_warrent_date: *shared_date_errors
         steps/hearing_details_form:
           attributes:
             first_hearing_date: *shared_date_errors
@@ -111,12 +125,6 @@ en:
               blank: Hearing outcome cannot be blank
             matter_type:
               blank: Matter type cannot be blank
-        steps/defendant_details_form:
-          summary:
-            full_name:
-              blank: Full name (%{name}) cannot be blank
-            maat:
-              blank: MAAT ID (%{name}) cannot be blank
         steps/reason_for_claim_form:
           attributes:
             reasons_for_claim:
@@ -143,18 +151,22 @@ en:
             preparation_time:
               blank: Select yes or no for preparation_time
             time_spent:
+              blank: Time spent must be set
               blank_hours: Hours must be set
               invalid_hours: Hours must be greater than 0
               blank_minutes: Minutes must be set
               invalid_minutes: Minutes must be between 0 and 59
               invalid_period: Period must be greater than 0
               invalid: Period must be valid
+            work_before_date: *shared_date_errors
+            work_after_date: *shared_date_errors
         steps/work_item_form:
           attributes:
             completed_on: *shared_date_errors
             fee_earner:
               blank: Fee earner must be set
             time_spent:
+              blank: Time spent must be set
               blank_hour: Hours must be set
               invalid_hour: Hours must be greater than 0
               blank_minutes: Minutes must be set
@@ -163,3 +175,30 @@ en:
               invalid: Period must be valid
             work_type:
               blank: Type of work must be choosen
+            uplift:
+              blank: Uplift amount must be set
+        steps/letters_calls_form:
+          attributes:
+            letters:
+              blank: Please set the number of letters
+            calls:
+              blank: Please set the number of calls
+            letters_calls_uplift:
+              blank: Uplift amount must be set
+        steps/disbursement_type_form:
+          attributes:
+            disbursement_date: *shared_date_errors
+            disbursement_type:
+              blank: Please set disbursement type
+            other_type:
+              blank: Please set other disbursement type
+        steps/disbursement_cost_form:
+          attributes:
+            miles:
+              blank: Please enter the number of miles travels
+            total_cost_without_vat:
+              blank: Please set total cost
+            details:
+              blank: Please provdie details of disbursement
+            prior_authority:
+              blank: Please confirm if you have prior authority

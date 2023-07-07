@@ -13,8 +13,8 @@ RSpec.shared_examples 'a generic decision' do |step_name, controller_name, form_
   end
 end
 
-# rubocop:disable Layout/LineLength
-RSpec.shared_examples 'an add_another decision' do |step_name, yes_controller_name, no_controller_name, id_field, action_name: :edit, additional_yes_branch_tests: nil|
+RSpec.shared_examples 'an add_another decision' do |step_name, yes_controller_name, no_controller,
+  id_field, action_name: :edit, no_action_name: :edit, additional_yes_branch_tests: nil|
   let(:form) { Steps::AddAnotherForm.new(application:, add_another:) }
   let(:decision_tree) { described_class.new(form, as: step_name) }
   let(:add_another) { 'yes' }
@@ -37,14 +37,26 @@ RSpec.shared_examples 'an add_another decision' do |step_name, yes_controller_na
     context 'when add_another is NO' do
       let(:add_another) { 'no' }
 
-      it "moves to #{no_controller_name}##{action_name}" do
-        expect(decision_tree.destination).to eq(
-          action: action_name,
-          controller: no_controller_name,
-          id: application,
-        )
+      if no_controller.is_a?(Symbol)
+        it "moves to #{no_controller}##{no_action_name}" do
+          expect(decision_tree.destination).to eq(
+            action: no_action_name,
+            controller: no_controller,
+            id: application,
+          )
+        end
+      else
+        let(:routing) { instance_eval(&no_controller[:routing]) }
+
+        it "moves to #{no_controller[:name]}##{action_name}" do
+          expect(decision_tree.destination).to eq(
+            routing.merge(
+              action: no_action_name,
+              id: application,
+            )
+          )
+        end
       end
     end
   end
 end
-# rubocop:enable Layout/LineLength
