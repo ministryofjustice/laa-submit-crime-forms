@@ -1,12 +1,12 @@
 require 'system_helper'
 
 RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type: :system do
-  let(:claim) { create(:claim, :case_disposal) }
+  let(:claim) { create(:claim, :case_details) }
 
   it 'can select a value from the autocomplete' do
     visit provider_saml_omniauth_callback_path
 
-    visit edit_steps_case_disposal_path(id: claim)
+    visit edit_steps_case_details_path(id: claim)
 
     click_on 'Save and continue'
 
@@ -23,7 +23,7 @@ RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type:
   it 'can enter a value not found in the autocoplete' do
     visit provider_saml_omniauth_callback_path
 
-    visit edit_steps_case_disposal_path(id: claim)
+    visit edit_steps_case_details_path(id: claim)
 
     click_on 'Save and continue'
 
