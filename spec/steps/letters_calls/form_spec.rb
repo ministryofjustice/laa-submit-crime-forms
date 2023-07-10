@@ -324,11 +324,11 @@ RSpec.describe Steps::LettersCallsForm do
         expect(subject.calculation_rows).to eq(
           [['Items', 'Before uplift', 'After uplift'],
            ['Letters',
-            { html_attributes: { id: 'letters-without-uplift' }, text: '£0.00' },
-            { html_attributes: { id: 'letters-with-uplift' }, text: '£0.00' }],
+            { html_attributes: { id: 'letters-without-uplift' }, text: '£' },
+            { html_attributes: { id: 'letters-with-uplift' }, text: '£' }],
            ['Phone calls',
-            { html_attributes: { id: 'calls-without-uplift' }, text: '£0.00' },
-            { html_attributes: { id: 'calls-with-uplift' }, text: '£0.00' }]]
+            { html_attributes: { id: 'calls-without-uplift' }, text: '£' },
+            { html_attributes: { id: 'calls-with-uplift' }, text: '£' }]]
         )
       end
     end

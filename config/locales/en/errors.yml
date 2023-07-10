@@ -183,8 +183,10 @@ en:
               blank: Please set the number of letters
             calls:
               blank: Please set the number of calls
-            letters_calls_uplift:
-              blank: Uplift amount must be set
+            letters_uplift:
+              blank: Letters uplift percentage must be set
+            calls_uplift:
+              blank: Calls uplift percentage must be set
         steps/disbursement_type_form:
           attributes:
             disbursement_date: *shared_date_errors

@@ -2,7 +2,6 @@ require 'steps/base_form_object'
 
 module Steps
   class LettersCallsForm < Steps::BaseFormObject
-    include ActionView::Helpers::NumberHelper
     attr_writer :apply_calls_uplift, :apply_letters_uplift
 
     attribute :letters, :integer
@@ -46,7 +45,7 @@ module Steps
     end
 
     def letters_after_uplift
-      if apply_letters_uplift
+      if apply_letters_uplift && letters_before_uplift
         letters_before_uplift * (1 + (letters_uplift.to_f / 100))
       else
         letters_before_uplift
@@ -54,7 +53,7 @@ module Steps
     end
 
     def calls_after_uplift
-      if apply_calls_uplift
+      if apply_calls_uplift && calls_before_uplift
         calls_before_uplift * (1 + (calls_uplift.to_f / 100))
       else
         calls_before_uplift
@@ -71,11 +70,11 @@ module Steps
       [
         translate(:letters),
         {
-          text: number_to_currency(letters_before_uplift || 0, unit: '£'),
+          text: NumberTo.pounds(letters_before_uplift),
           html_attributes: { id: 'letters-without-uplift' }
         },
         {
-          text: number_to_currency(letters_after_uplift, unit: '£'),
+          text: NumberTo.pounds(letters_after_uplift),
           html_attributes: { id: 'letters-with-uplift' },
         }
       ]
@@ -85,11 +84,11 @@ module Steps
       [
         translate(:calls),
         {
-          text: number_to_currency(calls_before_uplift || 0, unit: '£'),
+          text: NumberTo.pounds(calls_before_uplift),
           html_attributes: { id: 'calls-without-uplift' }
         },
         {
-          text: number_to_currency(calls_after_uplift, unit: '£'),
+          text: NumberTo.pounds(calls_after_uplift),
           html_attributes: { id: 'calls-with-uplift' },
         }
       ]
@@ -111,11 +110,11 @@ module Steps
     end
 
     def letters_before_uplift
-      letters.to_f * pricing.letters
+      letters.to_f * pricing.letters if letters
     end
 
     def calls_before_uplift
-      calls.to_f * pricing.letters
+      calls.to_f * pricing.letters if calls
     end
   end
 end
