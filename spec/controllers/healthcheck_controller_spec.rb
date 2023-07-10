@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe HealthcheckController do
   context 'index' do
-
     before do
       get :ping
     end
