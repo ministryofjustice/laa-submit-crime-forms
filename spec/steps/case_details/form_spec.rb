@@ -6,7 +6,6 @@ RSpec.describe Steps::CaseDetailsForm do
   let(:arguments) do
     {
       application:,
-      ufn:,
       main_offence:,
       main_offence_date:,
       assigned_counsel:,
@@ -18,7 +17,6 @@ RSpec.describe Steps::CaseDetailsForm do
 
   let(:application) { instance_double(Claim, update!: true) }
 
-  let(:ufn) { '1234' }
   let(:main_offence) { 'murder' }
   let(:main_offence_date) { Date.new(2023, 4, 1) }
   let(:unassigned_counsel) { 'no' }
@@ -45,8 +43,8 @@ RSpec.describe Steps::CaseDetailsForm do
   end
 
   describe '#invalid?' do
-    %i[ufn main_offence main_offence_date assigned_counsel unassigned_counsel agent_instructed
-       remitted_to_magistrate].each do |field|
+    %i[ main_offence main_offence_date assigned_counsel unassigned_counsel agent_instructed
+        remitted_to_magistrate].each do |field|
       context "when #{field} is missing" do
         let(field) { nil }
 
