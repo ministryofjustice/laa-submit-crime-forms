@@ -19,8 +19,15 @@ FactoryBot.define do
     end
 
     trait :letters_calls do
-      letters { 1 }
-      calls { 1 }
+      rep_order_date { Date.yesterday }
+      letters { 2 }
+      calls { 3 }
+
+      navigation_stack { |claim| ["/applications/#{claim.id}/steps/letters_calls"] }
+
+      after(:build) do |claim, _context|
+        claim.navigation_stack << "/applications/#{claim.id}/steps/letters_calls"
+      end
     end
   end
 end
