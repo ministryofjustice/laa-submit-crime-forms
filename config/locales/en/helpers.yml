@@ -13,10 +13,10 @@ en:
           alternative_contact_details: Do you want to add alternative contact details?
       steps_case_details_form:
         main_offence_date: Main offence date
-        assigned_counsel: Was there an assigned counsel ?
-        unassigned_counsel: Was there an unassigned counsel ?
-        agent_instructed: Was there an instructed agent ?
-        remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates court ?
+        assigned_counsel: Was there an assigned counsel?
+        unassigned_counsel: Was there an unassigned counsel?
+        agent_instructed: Was there an instructed agent?
+        remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates court?
       steps_case_disposal_form:
         guilty_pleas: Category 1
         not_guilty_pleas: Category 2
@@ -34,9 +34,13 @@ en:
       steps_claim_details_form:
         claim_details: Claim Details
         number_of_witnesses: Number of Defence witnesses
-        supplemental_claim: Does this bill represent supplemental claim ?
+        supplemental_claim: Does this bill represent supplemental claim?
         preparation_time: Did you spend time watching or listening to recorded evidence?
         time_spent: Running time of the recording
+        work_before_date: Date you started this work
+        work_after_date: Date of last court hearing
+        work_before: Did you do any work before the representation order date?
+        work_after: Did you do any further work after the last court hearing date?
       steps_other_info_form:
         concluded: Did the proceedings conclude over 3 months ago?
       steps_work_item_form:
@@ -96,6 +100,8 @@ en:
         supplemental_claim_options:
           'yes': We'll ask you to upload evidence of this before you submit the claim
         time_spent: For example, 1 hour and 30 minutes
+        work_before_date: For example, 27 3 2023
+        work_after_date: For example, 27 3 2023
       steps_work_item_form:
         completed_on: For example, 27 3 2007
         fee_earner: For example, JMD
@@ -202,6 +208,12 @@ en:
           'yes': 'Yes'
           'no': 'No'
         preparation_time_options:
+          'yes': 'Yes'
+          'no': 'No'
+        work_before_options:
+          'yes': 'Yes'
+          'no': 'No'
+        work_after_options:
           'yes': 'Yes'
           'no': 'No'
       steps_work_item_form:
