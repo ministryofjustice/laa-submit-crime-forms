@@ -6,6 +6,10 @@ module LaaMultiStepForms
 
     attr_reader :name
 
+    def ==(other)
+      other.name == name
+    end
+
     class << self
       # TODO: we still need to confirm which courts to list.
       #

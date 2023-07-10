@@ -1,6 +1,6 @@
 module Tasks
   class HearingDetails < Generic
-    PREVIOUS_TASK = CaseDisposal
+    PREVIOUS_TASK = CaseDetails
     FORM = Steps::HearingDetailsForm
 
     def path

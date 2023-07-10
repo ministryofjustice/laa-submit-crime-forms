@@ -45,8 +45,9 @@ RSpec.describe Decisions::SimpleDecisionTree do
                     }
   end
 
-  it_behaves_like 'a generic decision', :case_disposal, :hearing_details, Steps::CaseDisposalForm
-  it_behaves_like 'a generic decision', :hearing_details, :reason_for_claim, Steps::HearingDetailsForm
+  it_behaves_like 'a generic decision', :case_details, :hearing_details, Steps::CaseDetailsForm
+  it_behaves_like 'a generic decision', :hearing_details, :case_disposal, Steps::HearingDetailsForm
+  it_behaves_like 'a generic decision', :case_disposal, :reason_for_claim, Steps::CaseDisposalForm
   it_behaves_like 'a generic decision', :reason_for_claim, :claim_details, Steps::ReasonForClaimForm
 
   it_behaves_like 'a decision with nested object',
