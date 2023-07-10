@@ -39,18 +39,20 @@ RSpec.describe Steps::DefendantDetailsForm do
       it { expect(subject.label_key).to eq('.main_defendant_field_set') }
     end
 
-    context 'when main is false but all records are new records' do
+    context 'when main is nil' do
       let(:main) { false }
-      let(:defendants) { [instance_double(Defendant, new_record?: true)] }
 
-      it { expect(subject.label_key).to eq('.main_defendant_field_set') }
-    end
+      context 'and defendant count is zero' do
+        let(:defendants) { double(:defendants, count: 0) }
 
-    context 'when main is false and non new records exist' do
-      let(:main) { false }
-      let(:defendants) { [instance_double(Defendant, new_record?: false)] }
+        it { expect(subject.label_key).to eq('.main_defendant_field_set') }
+      end
 
-      it { expect(subject.label_key).to eq('.defendant_field_set') }
+      context 'and defendant count is non-zero' do
+        let(:defendants) { double(:defendants, count: 1) }
+
+        it { expect(subject.label_key).to eq('.defendant_field_set') }
+      end
     end
   end
 
