@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module BetterRailsSystemTests
+module RailsSystemTestExtensions
   # Use relative path in screenshot message to make it clickable in VS Code when running in Docker
   def image_path
     Pathname.new(absolute_image_path).relative_path_from(Rails.root).to_s
@@ -22,7 +22,7 @@ end
 RSpec.configure do |config|
   # Add #dom_id support
   config.include ActionView::RecordIdentifier, type: :system
-  config.include BetterRailsSystemTests, type: :system
+  config.include RailsSystemTestExtensions, type: :system
 
   # Make urls in mailers contain the correct server host
   config.around(:each, javascript: true, type: :system) do |ex|
