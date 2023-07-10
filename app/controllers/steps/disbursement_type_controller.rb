@@ -31,5 +31,9 @@ module Steps
     def ensure_disbursement
       disbursement || redirect_to(edit_steps_disbursements_path(current_application))
     end
+
+    def additional_permitted_params
+      [:other_type_suggestion]
+    end
   end
 end

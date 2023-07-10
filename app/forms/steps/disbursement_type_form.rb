@@ -12,6 +12,12 @@ module Steps
     # does not have inclusion validator as value can be outside list
     validates :other_type, presence: true, if: :other_disbursement_type?
 
+    def other_type_suggestion=(value)
+      return if other_type && OtherDisbursementTypes.new(other_type).translated == value
+
+      self.other_type = value
+    end
+
     private
 
     def persist!
@@ -23,7 +29,7 @@ module Steps
     end
 
     def other_disbursement_type?
-      disbursement_type == DisbursementTypes::OTHER
+      disbursement_type&.other?
     end
   end
 end

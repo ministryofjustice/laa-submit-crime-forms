@@ -20,7 +20,7 @@ RSpec.describe Steps::DisbursementCostForm do
   end
   let(:disbursements) { [double(:disbursement), record] }
   let(:record) { double(:record, id: SecureRandom.uuid, disbursement_type: disbursement_type, vat_amount: vat_amount) }
-  let(:disbursement_type) { (DisbursementTypes.values - [DisbursementTypes::OTHER]).sample.to_s }
+  let(:disbursement_type) { DisbursementTypes.values.reject(&:other?).sample.to_s }
   let(:miles) { 10 }
   let(:total_cost_without_vat) { nil }
   let(:details) { 'Some text' }

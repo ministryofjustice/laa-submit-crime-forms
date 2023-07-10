@@ -61,11 +61,11 @@ module Steps
     # Needed to behave more like an ActiveRecord model, where you can manipulate the
     # DB attributes making use of `self[:attribute]`
     def [](attr_name)
-      instance_variable_get("@#{attr_name}".to_sym)
+      public_send(attr_name)
     end
 
     def []=(attr_name, value)
-      instance_variable_set("@#{attr_name}".to_sym, value)
+      public_send("#{attr_name}=", value)
     end
 
     private

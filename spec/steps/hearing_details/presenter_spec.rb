@@ -22,6 +22,6 @@ RSpec.describe Tasks::HearingDetails, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  it_behaves_like 'a task with generic can_start?', Tasks::CaseDisposal
+  it_behaves_like 'a task with generic can_start?', Tasks::CaseDetails
   it_behaves_like 'a task with generic complete?', Steps::HearingDetailsForm
 end

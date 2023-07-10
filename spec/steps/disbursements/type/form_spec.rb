@@ -19,7 +19,7 @@ RSpec.describe Steps::DisbursementTypeForm do
   let(:disbursements) { [double(:disbursement), record] }
   let(:disbursement_date) { Date.new(2023, 1, 1) }
   let(:record) { double(:record, id: SecureRandom.uuid) }
-  let(:disbursement_type) { (DisbursementTypes.values - [DisbursementTypes::OTHER]).sample.to_s }
+  let(:disbursement_type) { DisbursementTypes.values.reject(&:other?).sample.to_s }
   let(:other_type) { nil }
 
   describe '#validations' do
@@ -52,6 +52,31 @@ RSpec.describe Steps::DisbursementTypeForm do
           expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:other_type, :blank)).to be(true)
         end
+      end
+    end
+  end
+
+  describe '#other_type' do
+    let(:other_disbursement_type) { OtherDisbursementTypes.values.sample }
+    let(:other_type) { other_disbursement_type.to_s }
+
+    context 'when other_type_suggestion is not passed in' do
+      it { expect(subject.other_type).to eq(other_disbursement_type) }
+    end
+
+    context 'when other_type_suggestion is passed in' do
+      subject(:form) { described_class.new(arguments.merge(other_type_suggestion:)) }
+
+      context 'and it matches the translation of other type' do
+        let(:other_type_suggestion) { other_disbursement_type.translated }
+
+        it { expect(subject.other_type).to eq(other_disbursement_type) }
+      end
+
+      context 'and it does not match the translation of other type' do
+        let(:other_type_suggestion) { 'Apples' }
+
+        it { expect(subject.other_type).to eq(OtherDisbursementTypes.new('Apples')) }
       end
     end
   end
