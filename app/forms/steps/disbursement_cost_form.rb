@@ -46,6 +46,14 @@ module Steps
       pricing[record.disbursement_type] || 1.0
     end
 
+    def total_cost
+      @total_cost ||= if other_disbursement_type?
+                        total_cost_without_vat
+                      elsif miles
+                        miles.to_f * multiplier
+                      end
+    end
+
     private
 
     def translate(key)
@@ -62,14 +70,6 @@ module Steps
         'total_cost_without_vat' => total_cost,
         'vat_amount' => vat,
       )
-    end
-
-    def total_cost
-      @total_cost ||= if other_disbursement_type?
-                        total_cost_without_vat
-                      elsif miles
-                        miles.to_f * multiplier
-                      end
     end
 
     def vat
