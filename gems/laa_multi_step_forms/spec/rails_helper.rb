@@ -47,7 +47,7 @@ RSpec.configure do |config|
   # config.before(:each, type: :controller) { sign_in }
 
   # Use the faster rack test by default for system specs
-  # config.before(:each, type: :system) { driven_by :rack_test }
+  # config.before(:each, type: :integration) { driven_by :rack_test }
   config.include RSpecHtmlMatchers
   config.expect_with :rspec do |c|
     c.max_formatted_output_length = nil
