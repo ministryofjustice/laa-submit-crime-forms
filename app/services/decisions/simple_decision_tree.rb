@@ -9,13 +9,13 @@ module Decisions
       reason_for_claim: :claim_details,
       claim_details: :work_item,
       work_item: :work_items,
-      disbursement_cost: :disbursements,
-      other_info: :equality,
+      disbursement_cost: :disbursements
     }.freeze
 
     SHOW_MAPPING = {
       claim_type: :start_page,
       solicitor_declaration: :claim_confirmation,
+      other_info: :check_answers
     }.freeze
 
     def destination

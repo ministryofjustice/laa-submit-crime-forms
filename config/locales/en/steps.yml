@@ -206,7 +206,9 @@ en:
         feedback:
           link_text: What did you think of this service?
           description: takes 30 seconds
-
+    check_answers:
+      show:
+        page_title: Check your answers
   laa_multi_step_forms:
     task_list:
       show:
