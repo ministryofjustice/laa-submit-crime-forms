@@ -13,7 +13,8 @@ module Decisions
     }.freeze
 
     SHOW_MAPPING = {
-      other_info: :start_page,
+      other_info: :check_answers,
+      check_answers: :start_page
     }.freeze
 
     def destination

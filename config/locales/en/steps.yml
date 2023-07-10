@@ -165,6 +165,9 @@ en:
       edit:
         page_title: Other Relevant information
         heading: Other Relevant information
+    check_answers:
+      show:
+        page_title: Check your answers
   laa_multi_step_forms:
     task_list:
       show:

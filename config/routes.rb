@@ -88,6 +88,7 @@ Rails.application.routes.draw do
       edit_step :disbursements
       show_step :cost_summary
       edit_step :other_info
+      show_step :check_answers
 
     end
   end
