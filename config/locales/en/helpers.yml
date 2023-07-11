@@ -33,8 +33,6 @@ en:
         add_another: Do you want to add another defendant?
       steps_claim_details_form:
         claim_details: Claim Details
-        prosecution_evidence: Prosecution Evidence
-        defence_statement: Defence statement
         number_of_witnesses: Number of Defence witnesses
         supplemental_claim: Does this bill represent supplemental claim?
         preparation_time: Did you spend time watching or listening to recorded evidence?
@@ -86,9 +84,7 @@ en:
           statements by the defendant and defence witnesses
         prosecution_evidence: Where applicable, give the approximate number of pages
         supplemental_claim_options:
-          'yes': We'll ask you to upload evidence of this before you submit this claim
-        preparation_time_options:
-          'yes': Running time of the recording
+          'yes': We'll ask you to upload evidence of this before you submit the claim
         time_spent: For example, 1 hour and 30 minutes
         work_before_date: For example, 27 3 2023
         work_after_date: For example, 27 3 2023
@@ -191,9 +187,9 @@ en:
           'yes': 'Yes'
           'no': 'No'
       steps_claim_details_form:
-        prosecution_evidence: Prosecution Evidence
-        defence_statement: Defence statement
-        number_of_witnesses: Number of Defence witnesses
+        prosecution_evidence: Number of pages of prosecution evidence
+        defence_statement: Number of pages of defence statements
+        number_of_witnesses: Number of witnesses
         supplemental_claim_options:
           'yes': 'Yes'
           'no': 'No'
