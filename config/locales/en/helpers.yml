@@ -68,20 +68,6 @@ en:
         main_offence_date: For example, 27 3 2007
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
       steps_case_disposal_form:
-        guilty_pleas_html: |
-          <p>You must claim £471.85 if the representation order date was before 30 September
-          2022. You must claim £542.63 if the representation order  date was on or after
-          the 30 September 2022.
-
-          <p>If you are claiming less than these amounts, your claim might be a Crime Lower
-          standard case and you should use CWA to claim your payment instead
-        not_guilty_pleas_html: |
-          <p>You must claim £779.64 if the representation order date was before 30 September
-          2022. You must claim £896.59 if the representation order date was before the 30
-          September 2022.
-
-          <p>If you are claiming less than these amounts, your claim might be a Crime Lower
-          standard case and you should use CWA to claim your payment instead
         arrest_warrent_date: For example, 27 3 2007
         cracked_trial_date: For example, 27 3 2007
       steps_hearing_details_form:
@@ -243,7 +229,7 @@ en:
           missing: '*required'
           car: Car
           motorcycle: Motorcycle
-          bike: bike
+          bike: Bike
           other: Other disbursement type
       steps_disbursement_cost_form:
         miles: Number of miles
