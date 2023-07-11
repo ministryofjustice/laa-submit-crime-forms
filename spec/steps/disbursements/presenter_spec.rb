@@ -25,7 +25,7 @@ RSpec.describe Tasks::Disbursements, type: :system do
     context 'no disbursements' do
       let(:number_of_disbursements) { 0 }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_type/create_first") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_type/#{StartPage::NEW_RECORD}") }
     end
 
     context 'one disbursement' do

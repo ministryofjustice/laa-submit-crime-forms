@@ -10,10 +10,10 @@ RSpec.describe 'User can manage disbursements', type: :system do
   it 'can add a simple disbursement' do
     visit edit_steps_letters_calls_path(claim.id)
 
-    # start on the letters and calls page as so we don;t have to manually create the disbursements
+    # start on the letters and calls page to show flow
     fill_in 'Number of letters', with: 1
     fill_in 'Number of phone calls', with: 2
-    expect { click_on 'Save and continue' }.to change(Disbursement, :count).by(1)
+    expect { click_on 'Save and continue' }.not_to change(Disbursement, :count)
 
     within('.govuk-fieldset', text: 'Date') do
       fill_in 'Day', with: '20'

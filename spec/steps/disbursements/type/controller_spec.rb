@@ -38,25 +38,16 @@ RSpec.describe Steps::DisbursementTypeController, type: :controller do
       end
     end
 
-    context 'when disbursement_id is CREATE_FIRST flag' do
-      it 'creates a new main work_item and passes it to the form' do
+    context 'when disbursement_id is NEW_RECORD flag' do
+      it 'does not save the new work_item passed to the form' do
         allow(Steps::DisbursementTypeForm).to receive(:build)
-        expect { get :edit, params: { id: application, disbursement_id: StartPage::CREATE_FIRST } }
-          .to change(application.disbursements, :count).by(1)
+        expect { get :edit, params: { id: application, disbursement_id: StartPage::NEW_RECORD } }
+          .not_to change(application.disbursements, :count)
 
-        expect(Steps::DisbursementTypeForm).to have_received(:build)
-          .with(application.reload.disbursements.last, application:)
-      end
-
-      context 'and more than disbursement item exists' do
-        let(:disbursements) { [Disbursement.new, Disbursement.new] }
-
-        it 'redirects to the summary page' do
-          expect do
-            get :edit, params: { id: application, disbursement_id: StartPage::CREATE_FIRST }
-          end.not_to change(application.disbursements, :count)
-
-          expect(response).to redirect_to(edit_steps_disbursements_path(application))
+        expect(Steps::DisbursementTypeForm).to have_received(:build) do |disb, **kwargs|
+          expect(disb).to be_a(Disbursement)
+          expect(disb).to be_new_record
+          expect(kwargs).to eq(application:)
         end
       end
     end
