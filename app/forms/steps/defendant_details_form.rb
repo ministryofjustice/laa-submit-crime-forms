@@ -13,7 +13,7 @@ module Steps
     end
 
     def label_key
-      ".#{'main_' if is_main_record?}defendant_field_set"
+      ".#{'main_' if main_record?}defendant_field_set"
     end
 
     def index
@@ -38,7 +38,7 @@ module Steps
       end
     end
 
-    def is_main_record?
+    def main_record?
       # check if it set on the DB record
       return true if record.main
 
