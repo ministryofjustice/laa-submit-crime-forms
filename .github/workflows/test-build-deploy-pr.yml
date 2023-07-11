@@ -1,12 +1,10 @@
-name: CI and CD
+name: PR Checks, Build and Deploy
 on:
-  pull_request:
-  push:
-    branches:
-      - main
+  pull_request_target:
+    branches: [main]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.sha }}
   cancel-in-progress: true
 
 jobs:
@@ -22,6 +20,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -64,6 +64,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -97,16 +99,24 @@ jobs:
 
       - name: Run tests
         run: bundle exec rspec
-        
+
       - name: Run testing framework
         run: yarn unit-test
-        
+
       - name: Upload rspec coverage (if failure)
         if: failure()
         uses: actions/upload-artifact@v3
         with:
           name: rspec-coverage
           path: coverage/*
+
+      - name: Upload JS System failure images
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: JS-System-failures
+          path: tmp/capybara/*
+
   build:
     runs-on: ubuntu-latest
     needs: [gem-test, test]
@@ -114,6 +124,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Store current date
         run: echo "BUILD_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
@@ -121,12 +133,13 @@ jobs:
       - name: Build
         run: |
           docker build \
-            --label build.git.sha=${{ github.sha }} \
-            --label build.git.branch=${{ github.ref }} \
+            --label build.git.sha=${{ github.event.pull_request.head.sha }} \
+            --label build.git.branch=${{ github.event.pull_request.head.ref }} \
             --label build.date=${{ env.BUILD_DATE }} \
             --build-arg APP_BUILD_DATE=${{ env.BUILD_DATE }} \
-            --build-arg APP_BUILD_TAG=${{ github.ref }} \
-            --build-arg APP_GIT_COMMIT=${{ github.sha }} \
+            --build-arg APP_BUILD_TAG=${{ github.event.pull_request.head.sha }} \
+            --build-arg APP_GIT_COMMIT=${{ github.event.pull_request.head.sha }} \
+            --build-arg APP_BRANCH_NAME=${{ github.event.pull_request.head.ref }} \
             -t app .
 
       - name: Push to ECR
@@ -137,7 +150,7 @@ jobs:
           secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY_DEV }}
           region: eu-west-2
           local-image: app
-          image: ${{ secrets.ECR_NAME_DEV }}:${{ github.sha }}, ${{ secrets.ECR_NAME_DEV }}:staging.latest
+          image: ${{ secrets.ECR_NAME_DEV }}:${{ github.event.pull_request.head.sha }}, ${{ secrets.ECR_NAME_DEV }}:staging.latest
 
   deploy-dev:
     runs-on: ubuntu-latest
@@ -147,6 +160,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Authenticate to the cluster
         env:
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER_DEV }}
@@ -156,10 +171,10 @@ jobs:
           kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN_DEV }}
           kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE_DEV}}
           kubectl config use-context ${KUBE_CLUSTER}
-          
+
       - name: Install Helm
         uses: azure/setup-helm@v3
-     
+
       - name: Deploy to Dev
         run: |
           helm upgrade laa-claim-non-standard-magistrate-fee-backend ./helm_deploy/. \
@@ -167,7 +182,7 @@ jobs:
               --namespace=${{ secrets.KUBE_NAMESPACE_DEV}} \
               --values ./helm_deploy/values-dev.yaml \
               --set image.repository="${{ secrets.ECR_URL_DEV }}" \
-              --set image.tag="${{ github.sha }}" \
+              --set image.tag="${{ github.event.pull_request.head.sha }}" \
               --atomic
   deploy-uat:
     runs-on: ubuntu-latest
@@ -177,6 +192,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Authenticate to the cluster
         env:
@@ -187,7 +204,7 @@ jobs:
           kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
           kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE}}
           kubectl config use-context ${KUBE_CLUSTER}
-      
+
       - name: Install Helm
         uses: azure/setup-helm@v3
 
@@ -198,37 +215,5 @@ jobs:
               --namespace=${{ secrets.KUBE_NAMESPACE}} \
               --values ./helm_deploy/values-uat.yaml \
               --set image.repository="${{ secrets.ECR_URL_DEV }}" \
-              --set image.tag="${{ github.sha }}" \
-              --atomic
-  deploy-prod:
-    runs-on: ubuntu-latest
-    needs: build
-    environment: production
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Authenticate to the cluster
-        env:
-          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
-        run: |
-          echo "${{ secrets.KUBE_CERT }}" > ca.crt
-          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
-          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
-          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE}}
-          kubectl config use-context ${KUBE_CLUSTER}
-      
-      - name: Install Helm
-        uses: azure/setup-helm@v3
-
-      - name: Deploy to Production
-        run: |
-          helm upgrade laa-claim-non-standard-magistrate-fee-backend ./helm_deploy/. \
-              --install --wait --force \
-              --namespace=${{ secrets.KUBE_NAMESPACE}} \
-              --values ./helm_deploy/values-prod.yaml \
-              --set image.repository="${{ secrets.ECR_URL_DEV }}" \
-              --set image.tag="${{ github.sha }}" \
+              --set image.tag="${{ github.event.pull_request.head.sha }}" \
               --atomic

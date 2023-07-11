@@ -21,7 +21,7 @@ en:
     case_disposal:
       edit:
         page_title: Case disposal
-        heading: Case disposal
+        heading: Select the case disposal
         subheading: You can select an option in either Category 1 or Category 2, but not both.
     claim_details: 
       edit: 

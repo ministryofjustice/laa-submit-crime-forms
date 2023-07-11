@@ -2,11 +2,8 @@ require 'steps/base_form_object'
 
 module Steps
   class DefendantDetailsForm < Steps::BaseFormObject
-    attribute :id, :string
     attribute :full_name, :string
     attribute :maat, :string
-    attribute :position, :integer
-    attribute :main, :boolean, default: false
 
     validates :full_name, presence: true
     validates :maat, presence: true, if: :maat_required?
@@ -16,7 +13,7 @@ module Steps
     end
 
     def label_key
-      ".#{'main_' if main}defendant_field_set"
+      ".#{'main_' if main_record?}defendant_field_set"
     end
 
     def index
@@ -26,7 +23,27 @@ module Steps
     private
 
     def persist!
-      record.update!(attributes)
+      record.id = nil if record.id == StartPage::NEW_RECORD
+      record.update!(attributes.merge(position_attributes))
+    end
+
+    def position_attributes
+      return {} if record.position
+
+      prev_position = application.defendants.maximum(:position)
+      if prev_position
+        { position: prev_position + 1, main: false }
+      else
+        { position: 1, main: true }
+      end
+    end
+
+    def main_record?
+      # check if it set on the DB record
+      return true if record.main
+
+      # DB query to check if any records in DB - ignoring this one which is unsaved
+      application.defendants.count.zero?
     end
   end
 end

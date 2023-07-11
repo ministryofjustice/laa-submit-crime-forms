@@ -21,6 +21,7 @@ module Steps
     private
 
     def persist!
+      record.id = nil if record.id == StartPage::NEW_RECORD
       record.update!(attributes_with_resets)
     end
 
@@ -29,7 +30,7 @@ module Steps
     end
 
     def other_disbursement_type?
-      disbursement_type == DisbursementTypes::OTHER
+      disbursement_type&.other?
     end
   end
 end
