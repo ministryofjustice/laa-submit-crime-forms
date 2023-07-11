@@ -93,4 +93,7 @@ Rails.application.routes.draw do
 
     end
   end
+
+  match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
+    lambda { |_request| Rails.application.config.consider_all_requests_local }
 end
