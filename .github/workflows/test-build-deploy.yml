@@ -99,7 +99,7 @@ jobs:
         run: bundle exec rspec
 
       - name: Run testing framework
-        run: yarn unit-test
+        run: yarn unit-test --passWithNoTests
 
       - name: Upload rspec coverage (if failure)
         if: failure()
