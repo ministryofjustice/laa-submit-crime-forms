@@ -24,7 +24,7 @@ RSpec.describe Tasks::WorkItems, type: :system do
 
       let(:number_of_work_items) { 0 }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/work_item/create_first") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/work_item/#{StartPage::NEW_RECORD}") }
     end
 
     context 'one work_item' do
