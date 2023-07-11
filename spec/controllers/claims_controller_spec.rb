@@ -14,10 +14,6 @@ RSpec.describe ClaimsController do
       expect(response).to render_template(:index)
       expect(response).to be_successful
     end
-
-    it 'retrieves valid claims' do
-      expect(Claim).to have_received(:where).with(claim_type: %w[non_standard_magistrate breach_of_injunction])
-    end
   end
 
   context 'create' do

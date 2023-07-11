@@ -3,30 +3,6 @@ require 'rails_helper'
 RSpec.describe Decisions::SimpleDecisionTree do
   let(:application) { build(:claim) }
 
-  ClaimType::SUPPORTED.each do |claim_type|
-    context 'when claim_type is supported' do
-      let(:form) { Steps::ClaimTypeForm.new(application:, claim_type:) }
-
-      it_behaves_like 'a generic decision', :claim_type, :start_page, nil, action_name: :show
-    end
-  end
-
-  (ClaimType::VALUES - ClaimType::SUPPORTED).each do |claim_type|
-    context 'when claim_type is not supported' do
-      let(:form) { Steps::ClaimTypeForm.new(application:, claim_type:) }
-
-      context 'when step is claim_type' do
-        it 'processes to the firm_details page' do
-          decision_tree = described_class.new(form, as: :claim_type)
-          expect(decision_tree.destination).to eq(
-            action: :index,
-            controller: '/claims',
-          )
-        end
-      end
-    end
-  end
-
   it_behaves_like 'a decision with nested object',
                   step_name: :firm_details, controller: :defendant_details, nested: :defendant,
                   summary_controller: :defendant_summary, form_class: Steps::FirmDetailsForm,

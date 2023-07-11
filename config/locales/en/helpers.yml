@@ -110,12 +110,10 @@ en:
 
     label:
       steps_claim_type_form:
-        ufn: For example 120223/001
         ufn: What is your unique file number?
         claim_type_options:
           non_standard_magistrate: Non-standard magistrates' court payment
           breach_of_injunction: Breach of injunction
-          something_else: Somethng else
         cntp_order: Clients CNTP(contempt) number
 
       steps_firm_details_form:
