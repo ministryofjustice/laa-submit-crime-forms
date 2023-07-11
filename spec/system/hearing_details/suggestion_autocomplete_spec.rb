@@ -10,8 +10,8 @@ RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type:
 
     click_on 'Save and continue'
 
-    fill_in 'Which court was the hearing held at?', with: 'Aldershot'
-    expect(page).to have_field('Which court was the hearing held at?', with: "Aldershot Magistrates' Court")
+    fill_in 'Which court was the last case hearing heard at?', with: 'Aldershot'
+    expect(page).to have_field('Which court was the last case hearing heard at?', with: "Aldershot Magistrates' Court")
 
     click_on 'Save and come back later'
 
@@ -27,7 +27,7 @@ RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type:
 
     click_on 'Save and continue'
 
-    fill_in 'Which court was the hearing held at?', with: 'Apples'
+    fill_in 'Which court was the last case hearing heard at?', with: 'Apples'
 
     click_on 'Save and come back later'
 
@@ -44,7 +44,7 @@ RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type:
 
       visit edit_steps_hearing_details_path(id: claim)
 
-      expect(page).to have_field('Which court was the hearing held at?', with: "Aldershot Magistrates' Court")
+      expect(page).to have_field('Which court was the last case hearing heard at?', with: "Aldershot Magistrates' Court")
     end
 
     it 'will correctly display custom values' do
@@ -54,7 +54,7 @@ RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type:
 
       visit edit_steps_hearing_details_path(id: claim)
 
-      expect(page).to have_field('Which court was the hearing held at?', with: 'Apples')
+      expect(page).to have_field('Which court was the last case hearing heard at?', with: 'Apples')
     end
   end
 end
