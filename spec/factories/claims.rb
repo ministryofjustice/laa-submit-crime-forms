@@ -14,6 +14,10 @@ FactoryBot.define do
       remitted_to_magistrate { 'no' }
     end
 
+    trait :with_uplift do
+      reasons_for_claim { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
+    end
+
     trait :case_disposal do
       plea { PleaOptions.values.reject(&:requires_date_field?).sample.to_s }
     end

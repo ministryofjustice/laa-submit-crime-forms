@@ -61,7 +61,8 @@ module Steps
     end
 
     def total_cost
-      if letters_after_uplift&.positive? || calls_after_uplift&.positive?
+      if letters_after_uplift&.positive? ||
+        calls_after_uplift&.positive?
         letters_after_uplift.to_f + calls_after_uplift.to_f
       else
         nil
