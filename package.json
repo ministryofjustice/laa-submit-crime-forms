@@ -4,7 +4,7 @@
   "dependencies": {
     "@ministryofjustice/frontend": "1.8.0",
     "accessible-autocomplete": "^2.0.4",
-    "govuk-frontend": "4.6.0",
+    "govuk-frontend": "4.7.0",
     "yarn": "^1.22.19"
   },
   "scripts": {
