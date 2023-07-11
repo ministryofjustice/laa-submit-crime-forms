@@ -51,7 +51,7 @@ module Steps
       @total_cost = if other_disbursement_type?
                       total_cost_without_vat
                     elsif miles
-                      miles.to_f * multiplier if miles
+                      miles.to_f * multiplier
                     end
     end
 

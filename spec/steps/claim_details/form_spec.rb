@@ -47,32 +47,40 @@ RSpec.describe Steps::ClaimDetailsForm do
   end
 
   describe '#save' do
-    let(:application) { Claim.create(office_code: 'AAA', time_spent: time_spent_in_db) }
+    let(:application) { create(:claim, time_spent: time_spent_in_db, work_before_date: work_before_date_in_db, work_after_date: work_after_date_in_db) }
     let(:time_spent_in_db) { nil }
+    let(:work_before_date_in_db) { nil }
+    let(:work_after_date_in_db) { nil }
 
-    context 'when preparation is yes' do
+    context 'when values are yes' do
       let(:preparation_time) { 'yes' }
+      let(:work_before) { 'yes' }
+      let(:work_after) { 'yes' }
 
-      context 'when time_spent is valid' do
-        it 'is updated the DB in minutes' do
-          expect(subject.save).to be_truthy
-          expect(application.reload).to have_attributes(
-            time_spent: 160
-          )
-        end
+      it 'is stores the values in the database' do
+        expect(subject.save).to be_truthy
+        expect(application.reload).to have_attributes(
+          time_spent: 160
+        )
       end
     end
 
-    context 'when preparation is no' do
+    context 'when values are no' do
       let(:preparation_time) { 'no' }
+      let(:work_before) { 'no' }
+      let(:work_after) { 'no' }
 
       context 'time_spent has a value in the database' do
         let(:time_spent_in_db) { 100 }
+        let(:work_before_date_in_db) { Date.yesterday }
+        let(:work_after_date_in_db) { Date.yesterday }
 
         it 'clears the database field' do
           expect(subject.save).to be_truthy
           expect(application.reload).to have_attributes(
-            time_spent: nil
+            time_spent: nil,
+            work_before_date: nil,
+            work_after_date: nil,
           )
         end
       end

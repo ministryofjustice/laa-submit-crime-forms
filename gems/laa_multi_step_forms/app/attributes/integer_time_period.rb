@@ -1,4 +1,6 @@
 class IntegerTimePeriod < SimpleDelegator
+  delegate :nil?, to: :__getobj__
+
   def hours
     return nil if __getobj__.nil?
 

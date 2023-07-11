@@ -47,7 +47,7 @@ module Steps
     def letters_after_uplift
       if apply_letters_uplift && letters_before_uplift
         letters_before_uplift * (1 + (letters_uplift.to_f / 100))
-      else
+      elsif letters_before_uplift&.positive?
         letters_before_uplift
       end
     end
@@ -55,13 +55,17 @@ module Steps
     def calls_after_uplift
       if apply_calls_uplift && calls_before_uplift
         calls_before_uplift * (1 + (calls_uplift.to_f / 100))
-      else
+      elsif calls_before_uplift&.positive?
         calls_before_uplift
       end
     end
 
     def total_cost
-      letters_after_uplift + calls_after_uplift
+      if letters_after_uplift&.positive? || calls_after_uplift&.positive?
+        letters_after_uplift.to_f + calls_after_uplift.to_f
+      else
+        nil
+      end
     end
 
     private

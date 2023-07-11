@@ -14,8 +14,8 @@ en:
         heading: Enter your details
         firm_details: Firm details
         solicitor_details: Solicitor details
-    case_details: 
-      edit: 
+    case_details:
+      edit:
         page_title: Case details
         heading: Case details
     case_disposal:
@@ -23,8 +23,8 @@ en:
         page_title: Case disposal
         heading: Select the case disposal
         subheading: You can select an option in either Category 1 or Category 2, but not both.
-    claim_details: 
-      edit: 
+    claim_details:
+      edit:
         page_title: Claim Details
         heading: Claim details
     hearing_details:
@@ -86,6 +86,7 @@ en:
         items: Items
         letters: Letters
         calls: Phone calls
+        calculation: Calculation
         before_uplift: Before uplift
         after_uplift: After uplift
     reason_for_claim:
@@ -97,6 +98,9 @@ en:
         page_title: What work item are you claiming for?
         heading: What work item are you claiming for?
         work_type_pricing: "%{price} per hour"
+        calculation: Calculation
+        before_uplift: Before uplift
+        after_uplift: After uplift
     work_items:
       edit:
         page_title: Work Items

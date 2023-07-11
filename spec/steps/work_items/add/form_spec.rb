@@ -62,7 +62,7 @@ RSpec.describe Steps::WorkItemForm do
       end
     end
 
-    describe '#letters_calls_uplift' do
+    describe '#uplift' do
       context 'when apply_uplift is true' do
         context 'is negative' do
           let(:uplift) { -1 }
@@ -313,6 +313,60 @@ RSpec.describe Steps::WorkItemForm do
                                                           [WorkTypes::PREPARATION, 52.15],
                                                           [WorkTypes::ADVOCACY, 65.42],
                                                         ])
+        end
+      end
+    end
+  end
+
+  describe 'calculation_rows' do
+    let(:work_type) { WorkTypes::ATTENDANCE_WITH_COUNSEL.to_s }
+
+    context 'when values are nil' do
+      let(:time_spent) { nil }
+
+      it 'returns 0 values' do
+        expect(subject.calculation_rows).to eq(
+          [['Before uplift', 'After uplift'],
+           [{ html_attributes: { id: 'without-uplift' }, text: '£' },
+            { html_attributes: { id: 'with-uplift' }, text: '£' }]]
+        )
+      end
+    end
+
+    context 'when values are non-nil' do
+      let(:time_spent) { { 1 => '1', 2 => '30' } }
+
+      context 'when uplift is not required' do
+        let(:apply_uplift) { 'false' }
+
+        it 'returns the values' do
+          expect(subject.calculation_rows).to eq(
+            [['Before uplift', 'After uplift'],
+             [{ html_attributes: { id: 'without-uplift' }, text: '£53.52' },
+              { html_attributes: { id: 'with-uplift' }, text: '£53.52' }]]
+          )
+        end
+      end
+
+      context 'when uplift is required but values are not set' do
+        let(:uplift) { nil }
+
+        it 'returns the values' do
+          expect(subject.calculation_rows).to eq(
+            [['Before uplift', 'After uplift'],
+             [{ html_attributes: { id: 'without-uplift' }, text: '£53.52' },
+              { html_attributes: { id: 'with-uplift' }, text: '£53.52' }]]
+          )
+        end
+      end
+
+      context 'when uplift is required and values are not set' do
+        it 'returns the values' do
+          expect(subject.calculation_rows).to eq(
+            [['Before uplift', 'After uplift'],
+             [{ html_attributes: { id: 'without-uplift' }, text: '£53.52' },
+              { html_attributes: { id: 'with-uplift' }, text: '£58.87' }]]
+          )
         end
       end
     end
