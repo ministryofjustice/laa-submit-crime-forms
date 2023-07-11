@@ -9,7 +9,7 @@ RSpec.describe 'User can fill in case details', type: :system do
 
   it 'can do green path' do
     visit edit_steps_case_details_path(claim.id)
-    select '1 - Assault (common)', from: 'Main offence'
+    select 'Assault (common)', from: 'Main offence'
     fill_in 'Day', with: '20'
     fill_in 'Month', with: '4'
     fill_in 'Year', with: '2023'
@@ -22,7 +22,7 @@ RSpec.describe 'User can fill in case details', type: :system do
     click_on 'Save and continue'
 
     expect(claim.reload).to have_attributes(
-      main_offence: '1',
+      main_offence: 'Assault (common)',
       main_offence_date: Date.new(2023, 4, 20),
       assigned_counsel: 'yes',
       unassigned_counsel: 'no',
