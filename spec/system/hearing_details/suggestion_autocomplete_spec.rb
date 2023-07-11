@@ -44,7 +44,8 @@ RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type:
 
       visit edit_steps_hearing_details_path(id: claim)
 
-      expect(page).to have_field('Which court was the last case hearing heard at?', with: "Aldershot Magistrates' Court")
+      expect(page).to have_field('Which court was the last case hearing heard at?',
+                                 with: "Aldershot Magistrates' Court")
     end
 
     it 'will correctly display custom values' do
