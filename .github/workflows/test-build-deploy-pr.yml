@@ -1,0 +1,219 @@
+name: PR Checks, Build and Deploy
+on:
+  pull_request_target:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.sha }}
+  cancel-in-progress: true
+
+jobs:
+  gem-test:
+    runs-on: ubuntu-latest
+
+    env:
+      RACK_ENV: test
+      RAILS_ENV: test
+    defaults:
+      run:
+        working-directory: ./gems/laa_multi_step_forms
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: ./gems/laa_multi_step_forms
+
+      - name: Run linters
+        run: bundle exec rubocop
+
+      - name: Run tests
+        run: bundle exec rspec
+
+      - name: Upload rspec coverage (if failure)
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: rspec-coverage
+          path: coverage/*
+
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      RACK_ENV: test
+      RAILS_ENV: test
+      DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/laa-claim-non-standard-magistrate-fee-test"
+
+    services:
+      postgres:
+        image: postgres:14.6-alpine
+        env:
+          POSTGRES_DB: laa-claim-non-standard-magistrate-fee-test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Find yarn cache location
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - name: JS package cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install packages with yarn
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Precompile assets
+        run: bin/rails dartsass:build
+
+      - name: Setup test database
+        run: bin/rails db:prepare
+
+      - name: Run linters
+        run: bundle exec rubocop
+
+      - name: Run tests
+        run: bundle exec rspec
+
+      - name: Run testing framework
+        run: yarn unit-test
+
+      - name: Upload rspec coverage (if failure)
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: rspec-coverage
+          path: coverage/*
+
+      - name: Upload JS System failure images
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: JS-System-failures
+          path: tmp/capybara/*
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [gem-test, test]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Store current date
+        run: echo "BUILD_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+
+      - name: Build
+        run: |
+          docker build \
+            --label build.git.sha=${{ github.sha }} \
+            --label build.git.branch=${{ github.ref }} \
+            --label build.date=${{ env.BUILD_DATE }} \
+            --build-arg APP_BUILD_DATE=${{ env.BUILD_DATE }} \
+            --build-arg APP_BUILD_TAG=${{ github.sha }} \
+            --build-arg APP_GIT_COMMIT=${{ github.sha }} \
+            --build-arg APP_BRANCH_NAME=${{ github.event.pull_request.head.ref }} \
+            -t app .
+
+      - name: Push to ECR
+        id: ecr
+        uses: jwalton/gh-ecr-push@b10a019116283fff10914554dfe85bfb1c21d41b
+        with:
+          access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID_DEV }}
+          secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY_DEV }}
+          region: eu-west-2
+          local-image: app
+          image: ${{ secrets.ECR_NAME_DEV }}:${{ github.sha }}, ${{ secrets.ECR_NAME_DEV }}:staging.latest
+
+  deploy-dev:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: development
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Authenticate to the cluster
+        env:
+          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER_DEV }}
+        run: |
+          echo "${{ secrets.KUBE_CERT_DEV }}" > ca.crt
+          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN_DEV }}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE_DEV}}
+          kubectl config use-context ${KUBE_CLUSTER}
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Deploy to Dev
+        run: |
+          helm upgrade laa-claim-non-standard-magistrate-fee-backend ./helm_deploy/. \
+              --install --wait --force \
+              --namespace=${{ secrets.KUBE_NAMESPACE_DEV}} \
+              --values ./helm_deploy/values-dev.yaml \
+              --set image.repository="${{ secrets.ECR_URL_DEV }}" \
+              --set image.tag="${{ github.sha }}" \
+              --atomic
+  deploy-uat:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: uat
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Authenticate to the cluster
+        env:
+          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+        run: |
+          echo "${{ secrets.KUBE_CERT }}" > ca.crt
+          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE}}
+          kubectl config use-context ${KUBE_CLUSTER}
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Deploy to UAT
+        run: |
+          helm upgrade laa-claim-non-standard-magistrate-fee-backend ./helm_deploy/. \
+              --install --wait --force \
+              --namespace=${{ secrets.KUBE_NAMESPACE}} \
+              --values ./helm_deploy/values-uat.yaml \
+              --set image.repository="${{ secrets.ECR_URL_DEV }}" \
+              --set image.tag="${{ github.sha }}" \
+              --atomic
