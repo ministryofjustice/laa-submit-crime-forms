@@ -169,6 +169,41 @@ en:
       show:
         page_title: Check your answers
         heading: Check your answers
+      groups:
+        about_you: 
+          heading: About you
+          your_details: 
+            title: Your Details
+        about_defendant: 
+          heading: About the defendant
+          defendant_details:
+            title: Defendant details
+        about_case:
+          heading: About the case
+          case_details:
+            title: Case Details
+          hearing_details: 
+            title: Hearing Details
+          case_disposal:
+            title: Case Disposal
+        about_claim:
+          heading: About the claim
+          claim_justification:
+            title: Claim justification
+          claim_details: 
+            title: Claim details
+          work_items:
+            title: Work Items
+          letters_calls: 
+            title: Letters and phone calls
+          disbursement_costs:
+            title: Disbursement costs
+          other_info: 
+            title: Other relevant information
+        supporting_evidence:
+          heading:  Supporting evidence
+          evidence_upload:
+            title: Upload supporting evidence
   laa_multi_step_forms:
     task_list:
       show:

@@ -4,6 +4,7 @@ module Steps
       @form_object = Steps::Shared::NoOpForm.build(
         current_application
       )
+      @report = CheckAnswers::Report.new(current_application)
     end
 
     private
