@@ -133,8 +133,9 @@ jobs:
             --label build.git.branch=${{ github.ref }} \
             --label build.date=${{ env.BUILD_DATE }} \
             --build-arg APP_BUILD_DATE=${{ env.BUILD_DATE }} \
-            --build-arg APP_BUILD_TAG=${{ github.ref }} \
+            --build-arg APP_BUILD_TAG=${{ github.sha }} \
             --build-arg APP_GIT_COMMIT=${{ github.sha }} \
+            --build-arg APP_BRANCH_NAME=${{ github.head_ref }} \
             -t app .
 
       - name: Push to ECR
