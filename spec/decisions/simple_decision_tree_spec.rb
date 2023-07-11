@@ -142,7 +142,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
 
   it_behaves_like 'a generic decision', :other_info, :check_answers, Steps::OtherInfoForm, action_name: :show
   it_behaves_like 'a generic decision', :check_answers, :start_page, Steps::Shared::NoOpForm, action_name: :show
-  
+
   context 'when step is unknown' do
     it 'moves to claim index' do
       decision_tree = described_class.new(double('form'), as: :unknown)
