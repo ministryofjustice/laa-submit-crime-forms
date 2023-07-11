@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_05_160405) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_06_142000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,8 +46,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_160405) do
     t.string "youth_count"
     t.string "hearing_outcome"
     t.string "matter_type"
-    t.string "prosecution_evidence"
-    t.string "defence_statement"
+    t.integer "prosecution_evidence"
+    t.integer "defence_statement"
     t.integer "number_of_witnesses"
     t.string "supplemental_claim"
     t.string "preparation_time"
