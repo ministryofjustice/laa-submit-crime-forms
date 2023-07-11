@@ -182,7 +182,7 @@ jobs:
               --namespace=${{ secrets.KUBE_NAMESPACE_DEV}} \
               --values ./helm_deploy/values-dev.yaml \
               --set image.repository="${{ secrets.ECR_URL_DEV }}" \
-              --set image.tag="${{ github.sha }}" \
+              --set image.tag="${{ github.event.pull_request.head.sha }}" \
               --atomic
   deploy-uat:
     runs-on: ubuntu-latest
@@ -215,5 +215,5 @@ jobs:
               --namespace=${{ secrets.KUBE_NAMESPACE}} \
               --values ./helm_deploy/values-uat.yaml \
               --set image.repository="${{ secrets.ECR_URL_DEV }}" \
-              --set image.tag="${{ github.sha }}" \
+              --set image.tag="${{ github.event.pull_request.head.sha }}" \
               --atomic
