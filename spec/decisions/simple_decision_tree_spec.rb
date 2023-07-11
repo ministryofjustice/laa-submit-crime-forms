@@ -128,8 +128,9 @@ RSpec.describe Decisions::SimpleDecisionTree do
                   step_name: :disbursement_delete, controller: :disbursement_type, nested: :disbursement,
                   summary_controller: :disbursements, form_class: Steps::DeleteForm
 
-  it_behaves_like 'a generic decision', :other_info, :start_page, Steps::OtherInfoForm, action_name: :show
-
+  it_behaves_like 'a generic decision', :other_info, :check_answers, Steps::OtherInfoForm, action_name: :show
+  it_behaves_like 'a generic decision', :check_answers, :start_page, Steps::Shared::NoOpForm, action_name: :show
+  
   context 'when step is unknown' do
     it 'moves to claim index' do
       decision_tree = described_class.new(double('form'), as: :unknown)
