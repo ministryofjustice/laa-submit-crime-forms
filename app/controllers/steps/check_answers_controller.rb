@@ -1,6 +1,10 @@
 module Steps
   class CheckAnswersController < Steps::BaseStepController
-    def show; end
+    def show
+      @form_object = Steps::Shared::NoOpForm.build(
+        current_application
+      )
+    end
 
     private
 
