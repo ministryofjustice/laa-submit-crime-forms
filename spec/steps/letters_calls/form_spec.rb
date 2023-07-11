@@ -447,7 +447,9 @@ RSpec.describe Steps::LettersCallsForm do
     context 'when uplift values exists in DB but apply_uplift is false in attributes' do
       let(:apply_letters_uplift) { 'false' }
       let(:apply_calls_uplift) { 'false' }
-      let(:application) { create(:claim, :with_uplift, letters_uplift: 10, calls_uplift: 10, letters: letters, calls: calls) }
+      let(:application) do
+        create(:claim, :with_uplift, letters_uplift: 10, calls_uplift: 10, letters: letters, calls: calls)
+      end
 
       it 'resets the letters_uplift and calls_uplift values' do
         subject.save!
@@ -463,7 +465,9 @@ RSpec.describe Steps::LettersCallsForm do
       let(:apply_calls_uplift) { 'true' }
       let(:calls_uplift) { 10 }
       let(:letters_uplift) { 10 }
-      let(:application) { create(:claim, :with_uplift, letters_uplift: nil, calls_uplift: nil, letters: letters, calls: calls) }
+      let(:application) do
+        create(:claim, :with_uplift, letters_uplift: nil, calls_uplift: nil, letters: letters, calls: calls)
+      end
 
       it 'sets the letters_uplift and calls_uplift values' do
         subject.save!

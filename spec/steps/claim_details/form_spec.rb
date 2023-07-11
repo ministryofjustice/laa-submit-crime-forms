@@ -47,7 +47,10 @@ RSpec.describe Steps::ClaimDetailsForm do
   end
 
   describe '#save' do
-    let(:application) { create(:claim, time_spent: time_spent_in_db, work_before_date: work_before_date_in_db, work_after_date: work_after_date_in_db) }
+    let(:application) do
+      create(:claim, time_spent: time_spent_in_db, work_before_date: work_before_date_in_db,
+     work_after_date: work_after_date_in_db)
+    end
     let(:time_spent_in_db) { nil }
     let(:work_before_date_in_db) { nil }
     let(:work_after_date_in_db) { nil }
