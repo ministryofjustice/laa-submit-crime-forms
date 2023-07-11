@@ -1,6 +1,7 @@
 name: CI and CD
 on:
   pull_request_target:
+    branches: [master]
   push:
     branches:
       - main
