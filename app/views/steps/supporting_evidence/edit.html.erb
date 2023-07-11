@@ -1,8 +1,8 @@
 <% title t('.page_title') %>
 <% step_header %>
 
-<%= tag.div class: "govuk-grid-row" do -%>
-  <%= tag.div class: "govuk-grid-column-three-quarters" do -%>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
     <%= govuk_error_summary(@form_object) %>
     <%= tag.h1 t('.heading'), class: "govuk-heading-xl govuk-!-margin-bottom-6" %>
     <%# Answers upload list %>
@@ -34,32 +34,26 @@
       <%= tag.li t('.para2.emails') %>
       <%= tag.li t('.para2.representation') %>
     <% end -%>
+
     <%= form_with model: @form_object do |form| %>
       <%# Postal address component %>
-      <%= tag.div class: "govuk-form-group" do -%>
-        <%= tag.fieldset class: "govuk-fieldset" %>
-        <%= tag.div class: "govuk-checkboxes", data: { module: "govuk-checkboxes"} do -%>
-          <%= tag.div class: "govuk-checkboxes__item" do -%>
-            <%= form.check_box "postal-field", class: "govuk-checkboxes__input", data: { "aria-controls": "postal-conditional" } %>
-            <%= form.label "postal-field", t('.supporting_evidence'), class: "govuk-label govuk-checkboxes__label" %>
-          <% end -%>
-          <%= tag.div class: "govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden", id: "postal-conditional" do -%>
-            <%= tag.div class: "govuk-warning-text" do -%>
-              <%= tag.span t('.post_warning.icon'), class: "govuk-warning-text__icon", aria: { hidden: true} %>
-              <%= tag.strong class: "govuk-warning-text__text" do -%>
-                <% tag.span t('.post_warning.assistive'), class:"govuk-warning-text__assistive" %>
-                <%= t('.post_warning.message') %>
-              <% end -%>
-            <% end -%>
-            <%= tag.div class: "govuk-form-group" do -%>
-              <%= tag.pre t('.postal_address'), class: "govuk-body govuk-!-margin-bottom-6" %>
+      <%= form.govuk_check_boxes_fieldset :postal_field, multiple: false, legend: nil do %>
+        <%= form.govuk_check_box t('.supporting_evidence'), 'true', 'false', multiple: false do %>
+          <%= tag.div class: "govuk-warning-text" do -%>
+            <%= tag.span t('.post_warning.icon'), class: "govuk-warning-text__icon", aria: { hidden: true} %>
+            <%= tag.strong class: "govuk-warning-text__text" do -%>
+              <% tag.span t('.post_warning.assistive'), class:"govuk-warning-text__assistive" %>
+              <%= t('.post_warning.message') %>
             <% end -%>
           <% end -%>
+          <div class="govuk-form-group">
+            <pre class="govuk-body govuk-!-margin-bottom-6"><%= t('.postal_address') %></pre>
+          </div>
         <% end -%>
       <% end -%>
 
       <%# Continue %>
       <%= form.continue_button %>
     <% end -%>
-  <% end -%>
-<% end -%>
+  </div>
+</div>
