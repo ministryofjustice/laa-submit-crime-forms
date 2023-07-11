@@ -34,6 +34,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'cuprite'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
