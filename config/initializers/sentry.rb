@@ -11,5 +11,9 @@ if ENV.fetch('SENTRY_DSN', nil).present?
     config.traces_sampler = lambda do |context|
       true
     end
+
+    # Opt in to new Rails error reporting API
+    # https://edgeguides.rubyonrails.org/error_reporting.html
+    config.rails.register_error_subscriber = true
   end
 end

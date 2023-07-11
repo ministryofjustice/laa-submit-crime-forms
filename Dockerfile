@@ -75,6 +75,9 @@ ENV RDS_COMBINED_CA_BUNDLE /usr/src/app/config/rds-combined-ca-bundle.pem
 ADD https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem $RDS_COMBINED_CA_BUNDLE
 RUN chmod +r $RDS_COMBINED_CA_BUNDLE
 
+ARG APP_BRANCH_NAME
+ENV APP_BRANCH_NAME ${APP_BRANCH_NAME}
+
 ARG APP_BUILD_DATE
 ENV APP_BUILD_DATE ${APP_BUILD_DATE}
 
