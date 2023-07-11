@@ -21,9 +21,9 @@ RSpec.describe Steps::ClaimDetailsForm do
 
   let(:application) { instance_double(Claim, update!: true) }
 
-  let(:prosecution_evidence) { 'prosection evidence' }
-  let(:defence_statement) { 'defence statement' }
-  let(:number_of_witnesses) { 1 }
+  let(:prosecution_evidence) { 1 }
+  let(:defence_statement) { 2 }
+  let(:number_of_witnesses) { 3 }
   let(:supplemental_claim) { 'yes' }
   let(:preparation_time) { 'yes' }
   let(:work_before) { 'yes' }
