@@ -7,9 +7,5 @@ module Tasks
     def path
       edit_steps_supporting_evidence_path(application)
     end
-
-    def completed?
-      Steps::SupportingEvidence.build(application).valid?
-    end
   end
 end
