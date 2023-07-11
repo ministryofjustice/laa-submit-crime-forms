@@ -98,8 +98,9 @@ jobs:
       - name: Run tests
         run: bundle exec rspec
 
-      - name: Run testing framework
-        run: yarn unit-test --passWithNoTests
+      # commented out as we currently don;t have any JS tests meaning this fails teh build
+      # - name: Run testing framework
+      #   run: yarn unit-test
 
       - name: Upload rspec coverage (if failure)
         if: failure()
