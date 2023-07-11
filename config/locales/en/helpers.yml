@@ -160,8 +160,8 @@ en:
           discontinuance: Discontinuance or withdrawal or bind over or no evidence offered after case fully prepared
           mixed: Mixed plea
       steps_hearing_details_form:
-        number_of_hearing: Number of hearing held
-        court: Which court was the hearing held at?
+        number_of_hearing: How many hearing were held for this case?
+        court: Which court was the last case hearing heard at?
         in_area_options:
           'yes': 'Yes'
           'no': 'No'
