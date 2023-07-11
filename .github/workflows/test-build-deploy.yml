@@ -1,7 +1,6 @@
 name: CI and CD
 on:
   pull_request_target:
-    branches: [main]
   push:
     branches:
       - main
@@ -214,7 +213,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment: production
-    if: github.head_ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout
