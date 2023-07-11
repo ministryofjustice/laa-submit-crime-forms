@@ -8,15 +8,15 @@ module Steps
 
     VIEW_BOOLEAN_FIELDS = %i[supplemental_claim preparation_time work_before work_after].freeze
 
-    attribute :prosecution_evidence, :string
-    attribute :defence_statement, :string
+    attribute :prosecution_evidence, :integer
+    attribute :defence_statement, :integer
     attribute :number_of_witnesses, :integer
     attribute :time_spent, :time_period
     attribute :work_before_date, :multiparam_date
     attribute :work_after_date, :multiparam_date
 
-    validates :prosecution_evidence, presence: true
-    validates :defence_statement, presence: true
+    validates :prosecution_evidence, presence: true, numericality: { only_integer: true, greater_than: 0 }
+    validates :defence_statement, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :number_of_witnesses, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :time_spent, numericality: { only_integer: true, greater_than: 0 }, time_period: true,
       if: :preparation_time

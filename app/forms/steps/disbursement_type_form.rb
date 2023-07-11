@@ -29,7 +29,7 @@ module Steps
     end
 
     def other_disbursement_type?
-      disbursement_type == DisbursementTypes::OTHER
+      disbursement_type&.other?
     end
   end
 end

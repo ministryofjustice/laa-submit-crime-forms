@@ -34,8 +34,6 @@ en:
         add_another: Do you want to add another defendant?
       steps_claim_details_form:
         claim_details: Claim Details
-        prosecution_evidence: Prosecution Evidence
-        defence_statement: Defence statement
         number_of_witnesses: Number of Defence witnesses
         supplemental_claim: Does this bill represent supplemental claim?
         preparation_time: Did you spend time watching or listening to recorded evidence?
@@ -72,20 +70,6 @@ en:
         main_offence_date: For example, 27 3 2007
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
       steps_case_disposal_form:
-        guilty_pleas_html: |
-          <p>You must claim £471.85 if the representation order date was before 30 September
-          2022. You must claim £542.63 if the representation order  date was on or after
-          the 30 September 2022.
-
-          <p>If you are claiming less than these amounts, your claim might be a Crime Lower
-          standard case and you should use CWA to claim your payment instead
-        not_guilty_pleas_html: |
-          <p>You must claim £779.64 if the representation order date was before 30 September
-          2022. You must claim £896.59 if the representation order date was before the 30
-          September 2022.
-
-          <p>If you are claiming less than these amounts, your claim might be a Crime Lower
-          standard case and you should use CWA to claim your payment instead
         arrest_warrent_date: For example, 27 3 2007
         cracked_trial_date: For example, 27 3 2007
       steps_hearing_details_form:
@@ -102,9 +86,7 @@ en:
           statements by the defendant and defence witnesses
         prosecution_evidence: Where applicable, give the approximate number of pages
         supplemental_claim_options:
-          'yes': We'll ask you to upload evidence of this before you submit this claim
-        preparation_time_options:
-          'yes': Running time of the recording
+          'yes': We'll ask you to upload evidence of this before you submit the claim
         time_spent: For example, 1 hour and 30 minutes
         work_before_date: For example, 27 3 2023
         work_after_date: For example, 27 3 2023
@@ -182,8 +164,8 @@ en:
           discontinuance: Discontinuance or withdrawal or bind over or no evidence offered after case fully prepared
           mixed: Mixed plea
       steps_hearing_details_form:
-        number_of_hearing: Number of hearing held
-        court: Which court was the hearing held at?
+        number_of_hearing: How many hearing were held for this case?
+        court: Which court was the last case hearing heard at?
         in_area_options:
           'yes': 'Yes'
           'no': 'No'
@@ -209,9 +191,9 @@ en:
           'yes': 'Yes'
           'no': 'No'
       steps_claim_details_form:
-        prosecution_evidence: Prosecution Evidence
-        defence_statement: Defence statement
-        number_of_witnesses: Number of Defence witnesses
+        prosecution_evidence: Number of pages of prosecution evidence
+        defence_statement: Number of pages of defence statements
+        number_of_witnesses: Number of witnesses
         supplemental_claim_options:
           'yes': 'Yes'
           'no': 'No'
@@ -251,7 +233,7 @@ en:
           missing: '*required'
           car: Car
           motorcycle: Motorcycle
-          bike: bike
+          bike: Bike
           other: Other disbursement type
       steps_disbursement_cost_form:
         miles: Number of miles
