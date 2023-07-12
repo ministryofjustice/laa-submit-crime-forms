@@ -1,11 +1,13 @@
 module CheckAnswers
   class CaseDetailsCard
+    attr_reader :case_details_form
+
     def initialize(claim)
-    
+      @case_details_form = Steps::CaseDetailsForm.build(claim)
     end
 
     def route_path
-      "case_details"
+      'case_details'
     end
 
     def title
