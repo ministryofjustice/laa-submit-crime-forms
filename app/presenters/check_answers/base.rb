@@ -7,5 +7,9 @@ module CheckAnswers
     def rows
       []
     end
+
+    def capitalize_sym(obj)
+      obj&.value.to_s.capitalize
+    end
   end
 end
