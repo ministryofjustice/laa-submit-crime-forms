@@ -4,8 +4,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
-    <% @report.sections.each do |section| %>
-      <h2 class="govuk-heading-m"><%= section[:heading] %></h2>
+    <% @report.section_groups.each do |section_group| %>
+      <h2 class="govuk-heading-m"><%= section_group[:heading] %></h2>
+      <% section_group[:sections].each do |section| %>   
+        <%= govuk_summary_list(**section) %>
+      <% end %>
     <% end %>
     <div class="govuk-button-group">
       <%= link_to steps_start_page_path(current_application), class: "govuk-button", data_module: "govuk-button", data_prevent_double_click: "true" do %>
