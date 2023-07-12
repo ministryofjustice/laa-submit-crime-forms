@@ -44,8 +44,8 @@ module Decisions
     end
 
     def after_equality
-      if form_object.add_another.yes?
-        show(:start_page)
+      if form_object.answer_equality.yes?
+        show(:start_page, answer: 'yes')
       else
         edit(:solicitor_declaration)
       end
