@@ -1,5 +1,5 @@
 module CheckAnswers
-  class CaseDisposalCard
+  class CaseDisposalCard < Base
     attr_reader :case_disposal_form
 
     def initialize(claim)

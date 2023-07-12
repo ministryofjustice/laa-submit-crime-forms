@@ -210,6 +210,20 @@ en:
       show:
         page_title: Check your answers
         heading: Check your answers
+        sections:
+          case_details:
+            main_offence:
+              key: Main offence name
+            main_offence_date:
+              key: Offence date
+            assigned_counsel:
+              key: Assigned counsel
+            unassigned_counsel: 
+              key: Unassigned counsel
+            agent_instructed:
+              key: Instructed Agent
+            remitted_to_magistrate:
+              key: Remittal
       groups:
         about_you: 
           heading: About you

@@ -1,5 +1,5 @@
 module CheckAnswers
-  class WorkItemsCard
+  class WorkItemsCard < Base
     attr_reader :work_item_form
 
     def initialize(claim)

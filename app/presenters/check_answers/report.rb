@@ -29,7 +29,8 @@ module CheckAnswers
           card: {
             title: data.title,
             actions: actions(data.route_path)
-          }
+          },
+          rows: [*data.rows]
         }
       end
     end

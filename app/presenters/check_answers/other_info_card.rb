@@ -1,5 +1,5 @@
 module CheckAnswers
-  class OtherInfoCard
+  class OtherInfoCard < Base
     attr_reader :other_info_form
 
     def initialize(claim)

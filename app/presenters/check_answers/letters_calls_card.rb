@@ -1,5 +1,5 @@
 module CheckAnswers
-  class LettersCallsCard
+  class LettersCallsCard < Base
     attr_reader :letters_calls_form
 
     def initialize(claim)
