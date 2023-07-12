@@ -1,5 +1,5 @@
 module CheckAnswers
-  class YourDetailsCard < Base
+  class YourDetailsCard
     def initialize(claim)
 
     end

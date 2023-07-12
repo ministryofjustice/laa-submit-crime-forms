@@ -1,5 +1,5 @@
 module CheckAnswers
-  class DisbursementCostsCard < Base
+  class DisbursementCostsCard
     def initialize(claim)
     
     end

@@ -1,5 +1,5 @@
 module CheckAnswers
-  class EvidenceUploadsCard < Base
+  class EvidenceUploadsCard
     def initialize(claim)
     
     end
