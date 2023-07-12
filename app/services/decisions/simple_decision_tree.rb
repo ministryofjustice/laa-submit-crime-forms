@@ -14,6 +14,7 @@ module Decisions
 
     SHOW_MAPPING = {
       other_info: :start_page,
+      claim_type: :start_page,
     }.freeze
 
     def destination
@@ -29,10 +30,6 @@ module Decisions
     end
 
     private
-
-    def after_claim_type
-      show(:start_page)
-    end
 
     def after_disbursement_type
       edit(:disbursement_cost, disbursement_id: form_object.record.id)
