@@ -3,7 +3,7 @@ module CheckAnswers
     attr_reader :disbursement_type_form
 
     def initialize(claim)
-      @disbursement_type_form = Steps::DisbursementTypeForm.build(claim)
+      # @disbursement_type_form = Steps::DisbursementTypeForm.build(claim)
     end
 
     def route_path
