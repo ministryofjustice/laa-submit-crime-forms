@@ -18,7 +18,8 @@
       <% end %>
 
       <%= f.fields_for :solicitor, as: :firm_details_form do |so| %>
-        <%= f.govuk_fieldset legend: { text: t(".solicitor_details"), size: 'm', is_page_heading: true } do %>
+        <%# used govuk_radio_buttons_fieldset instead of govuk_fieldset as it allows hints to be rendered %>
+        <%= f.govuk_radio_buttons_fieldset :solicitor_details, legend: { size: 'm', is_page_heading: true } do %>
           <%= so.govuk_text_field :full_name, width: 20 %>
           <%= so.govuk_text_field :reference_number, width: 10 %>
         <% end %>

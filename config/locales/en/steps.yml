@@ -13,9 +13,8 @@ en:
         page_title: Enter your details
         heading: Enter your details
         firm_details: Firm details
-        solicitor_details: Solicitor details
-    case_details: 
-      edit: 
+    case_details:
+      edit:
         page_title: Case details
         heading: Case details
     case_disposal:
@@ -23,8 +22,8 @@ en:
         page_title: Case disposal
         heading: Select the case disposal
         subheading: You can select an option in either Category 1 or Category 2, but not both.
-    claim_details: 
-      edit: 
+    claim_details:
+      edit:
         page_title: Claim Details
         heading: Claim details
     hearing_details:
