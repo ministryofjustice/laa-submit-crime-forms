@@ -3,7 +3,7 @@ module CheckAnswers
     attr_reader :defendant_details_form
 
     def initialize(claim)
-      @defendant_details_form = Steps::DefendantDetailsForm.build(claim)
+      # @defendant_details_form = Steps::DefendantDetailsForm.build(claim)
     end
 
     def route_path

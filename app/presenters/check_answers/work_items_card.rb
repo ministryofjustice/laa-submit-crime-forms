@@ -3,7 +3,7 @@ module CheckAnswers
     attr_reader :work_item_form
 
     def initialize(claim)
-      @work_item_form = Steps::WorkItemForm.build(claim)
+      # @work_item_form = Steps::WorkItemForm.build(claim)
     end
 
     def route_path
