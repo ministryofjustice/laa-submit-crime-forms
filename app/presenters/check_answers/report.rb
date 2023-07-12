@@ -1,10 +1,13 @@
 module CheckAnswers
   class Report < Base
-    attr_reader :claim, :sections
+    include GovukLinkHelper
+    include ActionView::Helpers::UrlHelper
+    
+    attr_reader :claim, :section_groups
 
     def initialize(claim)
       @claim = claim
-      @sections = [
+      @section_groups = [
         section_group("about_you", about_you_section),
         section_group("about_defendant", about_defendant_section ),
         section_group("about_case", about_case_section ),
@@ -15,39 +18,63 @@ module CheckAnswers
 
     def section_group(name, section_list)
       {
-        heading: group_heading(name)
+        heading: group_heading(name), 
+        sections: sections(section_list)
       }
     end
 
+    def sections(section_list)
+      section_list.map do |data|   
+        {
+          card: {
+            title: data.title,
+            actions: actions(data.route_path)
+          }
+        }
+      end
+    end
+
     def about_you_section
-      [{ your_details: YourDetailsCard.new(claim) }]
+      [ YourDetailsCard.new(claim) ]
     end
 
     def about_defendant_section
-      [{ defendant_details: DefendantDetailsCard.new(claim) }]
+      [ DefendantDetailsCard.new(claim) ]
     end
 
     def about_case_section
       [
-        { case_details: CaseDetailsCard.new(claim) },
-        { hearing_details: HearingDetailsCard.new(claim) },
-        { case_disposal: CaseDisposalCard.new(claim) }
+        CaseDetailsCard.new(claim),
+        HearingDetailsCard.new(claim),
+        CaseDisposalCard.new(claim)
       ]
     end
 
     def about_claim_section
       [
-        { claim_justification: ClaimJustificationCard.new(claim) },
-        { claim_details: ClaimDetailsCard.new(claim) },
-        { work_items: WorkItemsCard.new(claim) },
-        { letters_calls: LettersCallsCard.new(claim) },
-        { disbursement_costs: DisbursementCostsCard.new(claim) },
-        { other_info: OtherInfoCard.new(claim) }
+        ClaimJustificationCard.new(claim),
+        ClaimDetailsCard.new(claim),
+        WorkItemsCard.new(claim),
+        LettersCallsCard.new(claim),
+        DisbursementCostsCard.new(claim),
+        OtherInfoCard.new(claim)
       ]
     end
 
     def supporting_evidence_section
-      [{ evidence_upload: EvidenceUploadsCard.new(claim) }]
-    end 
+      [ EvidenceUploadsCard.new(claim) ]
+    end
+    
+    private 
+
+    def actions(key)
+      helper = Rails.application.routes.url_helpers
+      [
+        govuk_link_to(
+          "Change",
+          helper.url_for(controller: "steps/#{key}", action: :edit, id: claim.id, only_path: true)
+        ),
+      ]
+    end
   end
 end

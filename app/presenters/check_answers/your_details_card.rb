@@ -1,7 +1,11 @@
 module CheckAnswers
   class YourDetailsCard < Base
     def initialize(claim)
-      
+
+    end
+
+    def route_path
+      "firm_details"
     end
 
     def title
