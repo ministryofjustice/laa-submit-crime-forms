@@ -27,8 +27,8 @@
         <%= so.govuk_radio_buttons_fieldset :alternative_contact_details, legend: { size: 'm' } do %>
           <%= f.fields_for :solicitor, as: :firm_details_form do |so| %>
             <%= so.govuk_radio_button :alternative_contact_details, YesNoAnswer::YES.to_s do %>
-                <%= so.govuk_text_field :contact_full_name, width: 'full' %>
-                <%= so.govuk_text_field :contact_email, width: 10 %>
+                <%= so.govuk_text_field :contact_full_name, width: 20 %>
+                <%= so.govuk_text_field :contact_email, width: 20 %>
             <% end %>
           <% end %>
           <%= so.govuk_radio_button :alternative_contact_details, YesNoAnswer::NO.to_s %>
