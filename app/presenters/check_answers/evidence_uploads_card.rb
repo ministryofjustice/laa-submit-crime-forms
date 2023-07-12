@@ -1,5 +1,5 @@
 module CheckAnswers
-  class EvidenceUploadsCard
+  class EvidenceUploadsCard < Base
     def initialize(claim); end
 
     # TO DO: This should go to the evidence uploads page but it's not made yet

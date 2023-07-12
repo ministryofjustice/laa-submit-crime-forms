@@ -1,5 +1,5 @@
 module CheckAnswers
-  class DefendantDetailsCard
+  class DefendantDetailsCard < Base
     attr_reader :defendant_details_form
 
     def initialize(claim)

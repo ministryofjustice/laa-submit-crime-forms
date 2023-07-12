@@ -1,5 +1,5 @@
 module CheckAnswers
-  class DisbursementCostsCard
+  class DisbursementCostsCard < Base
     attr_reader :disbursement_type_form
 
     def initialize(claim)
