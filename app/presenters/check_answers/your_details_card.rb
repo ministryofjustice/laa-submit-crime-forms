@@ -1,11 +1,13 @@
 module CheckAnswers
   class YourDetailsCard
-    def initialize(claim)
+    attr_reader :firm_details_form
 
+    def initialize(claim)
+      @firm_details_form = Steps::FirmDetailsForm.build(claim)
     end
 
     def route_path
-      "firm_details"
+      'firm_details'
     end
 
     def title

@@ -2,29 +2,29 @@ module CheckAnswers
   class Report
     include GovukLinkHelper
     include ActionView::Helpers::UrlHelper
-    
+
     attr_reader :claim, :section_groups
 
     def initialize(claim)
       @claim = claim
       @section_groups = [
-        section_group("about_you", about_you_section),
-        section_group("about_defendant", about_defendant_section ),
-        section_group("about_case", about_case_section ),
-        section_group("about_claim", about_claim_section ),
-        section_group("supporting_evidence", supporting_evidence_section )
+        section_group('about_you', about_you_section),
+        section_group('about_defendant', about_defendant_section),
+        section_group('about_case', about_case_section),
+        section_group('about_claim', about_claim_section),
+        section_group('supporting_evidence', supporting_evidence_section)
       ]
     end
 
     def section_group(name, section_list)
       {
-        heading: group_heading(name), 
+        heading: group_heading(name),
         sections: sections(section_list)
       }
     end
 
     def sections(section_list)
-      section_list.map do |data|   
+      section_list.map do |data|
         {
           card: {
             title: data.title,
@@ -35,11 +35,11 @@ module CheckAnswers
     end
 
     def about_you_section
-      [ YourDetailsCard.new(claim) ]
+      [YourDetailsCard.new(claim)]
     end
 
     def about_defendant_section
-      [ DefendantDetailsCard.new(claim) ]
+      [DefendantDetailsCard.new(claim)]
     end
 
     def about_case_section
@@ -62,16 +62,16 @@ module CheckAnswers
     end
 
     def supporting_evidence_section
-      [ EvidenceUploadsCard.new(claim) ]
+      [EvidenceUploadsCard.new(claim)]
     end
-    
-    private 
+
+    private
 
     def actions(key)
       helper = Rails.application.routes.url_helpers
       [
         govuk_link_to(
-          "Change",
+          'Change',
           helper.url_for(controller: "steps/#{key}", action: :edit, id: claim.id, only_path: true)
         ),
       ]
