@@ -4,7 +4,6 @@ module Steps
   class WorkItemForm < Steps::BaseFormObject
     attr_writer :apply_uplift
 
-    attribute :id, :string
     attribute :work_type, :value_object, source: WorkTypes
     attribute :time_spent, :time_period
     attribute :completed_on, :multiparam_date
@@ -55,6 +54,7 @@ module Steps
     end
 
     def persist!
+      record.id = nil if record.id == StartPage::NEW_RECORD
       record.update!(attributes_with_resets)
     end
 
