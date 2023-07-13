@@ -11,5 +11,9 @@ module CheckAnswers
     def capitalize_sym(obj)
       obj&.value.to_s.capitalize
     end
+
+    def get_value_obj_desc(value_object, key)
+      value_object.all.find { |value| value.id == key }.description
+    end
   end
 end
