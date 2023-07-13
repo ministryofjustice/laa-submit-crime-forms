@@ -9,9 +9,5 @@ module CostSummary
         I18n.t("summary.#{self.class.to_s.underscore}.#{key}", **opt)
       end
     end
-
-    def in_pounds(value)
-      number_to_currency(value, unit: '£')
-    end
   end
 end

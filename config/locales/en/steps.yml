@@ -85,6 +85,7 @@ en:
         items: Items
         letters: Letters
         calls: Phone calls
+        calculation: Calculation
         before_uplift: Before uplift
         after_uplift: After uplift
     reason_for_claim:
@@ -96,6 +97,9 @@ en:
         page_title: What work item are you claiming for?
         heading: What work item are you claiming for?
         work_type_pricing: "%{price} per hour"
+        calculation: Calculation
+        before_uplift: Before uplift
+        after_uplift: After uplift
     work_items:
       edit:
         page_title: Work Items

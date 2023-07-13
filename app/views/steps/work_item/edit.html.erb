@@ -24,10 +24,9 @@
         <% end %>
       <% end %>
 
-      <section id="claim-items-total-section">
-        <span class="govuk-caption-l"><%= t('.total_cost') %></span>
-        <h1 class="govuk-heading-l" id="claim-items-total"><%= number_to_currency(@form_object.total_cost, unit: '£') %></h1>
-      </section>
+      <%= f.refresh_button %>
+
+      <%= govuk_table(rows: @form_object.calculation_rows, caption: t('.calculation')) %>
 
       <%= f.continue_button %>
     <% end %>
