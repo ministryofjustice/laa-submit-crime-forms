@@ -164,6 +164,19 @@ en:
       edit:
         page_title: Other Relevant information
         heading: Other Relevant information
+    solicitor_declaration:
+      edit:
+        page_title: Confirm the following
+        heading: Confirm the following
+        agreement_title: "You agree that:"
+        agreement_list_1: you've provided correct and complete information in this claim
+        agreement_list_2: the work you are claiming for has not been, and will not be, part of any other claim for remuneration from criminal legal aid
+        warning_title: Warning
+        warning_content: "If you provide wrong or incomplete information, or are found to have committed benefit fraud, you may:"
+        warning_list_1: be prosecuted
+        warning_list_2: have to pay a penalty
+        legend: Legal representative
+
   laa_multi_step_forms:
     task_list:
       show:

@@ -1,0 +1,34 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <div>
+      <p class="govuk-body"><%= t('.agreement_title') %></p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= t('.agreement_list_1') %></li>
+        <li><%= t('.agreement_list_2') %></li>
+      </ul>
+    </div>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive"><%= t('.warning_title') %></span>
+        <%= t('.warning_content') %>
+        <ul class="govuk-list govuk-list--bullet govuk-!-font-weight-bold">
+          <li><%= t('.warning_list_1') %></li>
+          <li><%= t('.warning_list_2') %></li>
+        </ul>
+      </strong>
+    </div>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_fieldset legend: { text: t('.legend'), size: 's', class:'govuk-!-margin-bottom-4'} do %>
+        <%= f.govuk_text_field :signatory_name, width: 'two-thirds', autocomplete: 'off'  %>
+      <% end %>
+      <%= f.continue_button(primary: :save_and_submit, secondary: false) %>
+    <% end %>
+  </div>
+</div>
