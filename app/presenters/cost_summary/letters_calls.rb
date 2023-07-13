@@ -10,11 +10,11 @@ module CostSummary
       [
         {
           key: { text: translate('letters'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: in_pounds(letters_calls_form.letters_after_uplift) },
+          value: { text: NumberTo.pounds(letters_calls_form.letters_after_uplift) },
         },
         {
           key: { text: translate('calls'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: in_pounds(letters_calls_form.calls_after_uplift) },
+          value: { text: NumberTo.pounds(letters_calls_form.calls_after_uplift) },
         }
       ]
     end
@@ -22,7 +22,7 @@ module CostSummary
     delegate :total_cost, to: :letters_calls_form
 
     def title
-      translate('letters_calls', total: in_pounds(total_cost))
+      translate('letters_calls', total: NumberTo.pounds(total_cost))
     end
   end
 end

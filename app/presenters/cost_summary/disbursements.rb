@@ -13,7 +13,7 @@ module CostSummary
       disbursement_forms.map do |form|
         {
           key: { text: translated_text(form), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: in_pounds(form.total_cost) },
+          value: { text: NumberTo.pounds(form.total_cost) },
         }
       end
     end
@@ -23,7 +23,7 @@ module CostSummary
     end
 
     def title
-      translate('disbursements', total: in_pounds(total_cost))
+      translate('disbursements', total: NumberTo.pounds(total_cost))
     end
 
     private
