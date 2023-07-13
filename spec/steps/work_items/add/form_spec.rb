@@ -7,7 +7,6 @@ RSpec.describe Steps::WorkItemForm do
     {
       application:,
       record:,
-      id:,
       work_type:,
       time_spent:,
       completed_on:,
@@ -22,7 +21,6 @@ RSpec.describe Steps::WorkItemForm do
    in_area: in_area, reasons_for_claim: reasons_for_claim)
   end
   let(:work_items) { [double(:record), record] }
-  let(:id) { record.id }
   let(:date) { Date.new(2023, 1, 1) }
   let(:record) { double(:record, id: SecureRandom.uuid) }
   let(:work_type) { WorkTypes.values.sample.to_s }
