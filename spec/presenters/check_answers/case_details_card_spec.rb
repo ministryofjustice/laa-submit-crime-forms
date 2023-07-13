@@ -39,6 +39,7 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
   end
 
   describe '#rows' do
+    # rubocop:disable RSpec/ExampleLength
     it 'generates case detail rows' do
       expect(subject.rows).to eq(
         [
@@ -69,5 +70,6 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
         ]
       )
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 end
