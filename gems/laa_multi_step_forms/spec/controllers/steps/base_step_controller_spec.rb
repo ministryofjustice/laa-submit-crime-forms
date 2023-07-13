@@ -1,46 +1,89 @@
 require 'rails_helper'
 
+class FakeApp < Steps::BaseFormObject
+  attribute :id
+  attribute :navigation_stack
+
+  def save!(*)
+    true
+  end
+end
+
 RSpec.describe DummyStepController, type: :controller do
+  let(:application_id) { SecureRandom.uuid }
+  let(:navigation_stack) { [] }
+  let!(:application) do
+    FakeApp.new(id: application_id, navigation_stack: navigation_stack)
+  end
+
   describe 'navigation stack' do
-    let(:application_id) { SecureRandom.uuid }
-    let!(:application) do
-      double(:claim, id: application_id, save!: true, 'navigation_stack=': true, navigation_stack: navigation_stack)
-    end
     let(:dummy_step_path) { "/dummy_step/#{application_id}" }
 
-    before do
-      allow(DummyStepImplementation).to receive(:current_application).and_return(application)
+    context 'for show endpoints' do
+      before do
+        allow(DummyStepImplementation).to receive(:current_application).and_return(application)
 
-      get :show, params: { id: application_id }
-    end
+        get :show, params: { id: application_id }
+      end
 
-    context 'when the stack is empty' do
-      let(:navigation_stack) { [] }
+      context 'when the stack is empty' do
+        it 'adds the page to the stack' do
+          expect(application.navigation_stack).to eq([dummy_step_path])
+        end
+      end
 
-      it 'adds the page to the stack' do
-        expect(application).to have_received(:navigation_stack=).with([dummy_step_path])
+      context 'when the current page is on the stack' do
+        let(:navigation_stack) { ['/foo', '/bar', dummy_step_path, '/baz'] }
+
+        it 'does not change the stack' do
+          expect(application.navigation_stack).to eq(['/foo', '/bar', dummy_step_path, '/baz'])
+        end
+      end
+
+      context 'when the current page is not on the stack' do
+        let(:navigation_stack) { %w[/foo /bar /baz] }
+
+        it 'adds it to the end of the stack' do
+          expect(application.navigation_stack).to eq(navigation_stack + [dummy_step_path])
+        end
       end
     end
 
-    context 'when the current page is on the stack' do
-      let(:navigation_stack) { ['/foo', '/bar', dummy_step_path, '/baz'] }
+    context 'for update endpoints' do
+      before do
+        allow(DummyStepImplementation).to receive(:current_application).and_return(application)
+        allow(DummyStepImplementation).to receive(:skip_update).and_return(true)
 
-      it 'rewinds the stack to the appropriate point' do
-        expect(application).to have_received(:navigation_stack=).with(['/foo', '/bar', dummy_step_path])
+        put :update, params: { id: application_id }
       end
-    end
 
-    context 'when the current page is not on the stack' do
-      let(:navigation_stack) { %w[/foo /bar /baz] }
+      context 'when the stack is empty' do
+        let(:navigation_stack) { [] }
 
-      it 'adds it to the end of the stack' do
-        expect(application).to have_received(:navigation_stack=).with(navigation_stack + [dummy_step_path])
+        it 'adds the page to the stack' do
+          expect(application.navigation_stack).to eq([dummy_step_path])
+        end
+      end
+
+      context 'when the current page is on the stack' do
+        let(:navigation_stack) { ['/foo', '/bar', dummy_step_path, '/baz'] }
+
+        it 'rewinds the stack to the appropriate point' do
+          expect(application.navigation_stack).to eq(['/foo', '/bar', dummy_step_path])
+        end
+      end
+
+      context 'when the current page is not on the stack' do
+        let(:navigation_stack) { %w[/foo /bar /baz] }
+
+        it 'adds it to the end of the stack' do
+          expect(application.navigation_stack).to eq(navigation_stack + [dummy_step_path])
+        end
       end
     end
   end
 
   describe '#update_and_advance' do
-    let(:application) { double(:application, id: SecureRandom.uuid) }
     let(:form_class) do
       class_double(Steps::BaseFormObject,
                    model_name: double(:model_name, singular: 'test_model'),
@@ -98,7 +141,7 @@ RSpec.describe DummyStepController, type: :controller do
       it 'redirects to the after_commit_path' do
         put(:update, params:)
 
-        expect(response).to redirect_to(after_commit_path(application))
+        expect(response).to redirect_to(after_commit_path(id: application.id))
       end
     end
 

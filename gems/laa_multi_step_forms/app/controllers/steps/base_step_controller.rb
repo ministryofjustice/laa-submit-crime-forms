@@ -1,7 +1,8 @@
 module Steps
   class BaseStepController < ::ApplicationController
     before_action :check_application_presence
-    before_action :update_navigation_stack, only: [:show, :edit]
+    before_action :prune_navigation_stack, only: [:update]
+    before_action :append_navigation_stack, only: [:show, :edit, :update]
 
     # :nocov:
     def show
@@ -35,7 +36,7 @@ module Steps
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
         @form_object.save!
-        redirect_to after_commit_path(current_application)
+        redirect_to after_commit_path(id: current_application.id)
       elsif params.key?(:save_and_refresh)
         @form_object.save!
         render opts.fetch(:render, :edit)
@@ -59,11 +60,14 @@ module Steps
       []
     end
 
-    def update_navigation_stack
-      stack_until_current_page = current_application
-                                 .navigation_stack.take_while { |path| path != request.fullpath }
+    def prune_navigation_stack
+      current_application.navigation_stack =
+        current_application.navigation_stack.take_while { |path| path != request.fullpath }
+      current_application.save!(touch: false)
+    end
 
-      current_application.navigation_stack = stack_until_current_page + [request.fullpath]
+    def append_navigation_stack
+      current_application.navigation_stack |= [request.fullpath]
       current_application.save!(touch: false)
     end
   end

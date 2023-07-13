@@ -3,7 +3,13 @@ class DummyStepController < Steps::BaseStepController
     head(:ok)
   end
 
+  def edit
+    head(:ok)
+  end
+
   def update
+    return if DummyStepImplementation.skip_update
+
     update_and_advance(DummyStepImplementation.form_class, DummyStepImplementation.options)
   end
 
