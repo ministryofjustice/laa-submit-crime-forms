@@ -1,52 +1,56 @@
 module CheckAnswers
   class HearingDetailsCard < Base
-    attr_reader :hearing_details_form
+    attr_reader :hearing_details_form, :other_info_form
 
     KEY = 'hearing_details'.freeze
 
     def initialize(claim)
       @hearing_details_form = Steps::HearingDetailsForm.build(claim)
+      @other_info_form = Steps::OtherInfoForm.build(claim)
     end
 
     def route_path
       KEY
     end
 
+    #TODO: Add row for proceedings concluded...
     def rows
       [
         {
           key: { text: translate_table_key(KEY, 'hearing_date'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: 'Test' }
+          value: { text: hearing_details_form.first_hearing_date }
         },
         {
-          key: { text: translate_table_key(KEY, 'no_of_hearings'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: 'Test' }
+          key: { text: translate_table_key(KEY, 'number_of_hearing'), classes: 'govuk-summary-list__value-width-50' },
+          value: { text: hearing_details_form.number_of_hearing }
         },
         {
-          key: { text: translate_table_key(KEY, 'proceedings_concluded'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: 'Test' }
+          key: { text: translate_table_key(KEY, 'youth_count'), classes: 'govuk-summary-list__value-width-50' },
+          value: { text: capitalize_sym(hearing_details_form.youth_count) }
         },
         {
-          key: { text: translate_table_key(KEY, 'youth_court'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: 'Test' }
-        },
-        {
-          key: { text: translate_table_key(KEY, 'mag_court'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: 'Test' }
+          key: { text: translate_table_key(KEY, 'in_area'), classes: 'govuk-summary-list__value-width-50' },
+          value: { text: in_area_text }
         },
         {
           key: { text: translate_table_key(KEY, 'hearing_outcome'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: 'Test' }
+          value: { text: hearing_details_form.hearing_outcome }
         },
         {
           key: { text: translate_table_key(KEY, 'matter_type'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: 'Test' }
+          value: { text: MatterType.all[hearing_details_form.matter_type.to_i].description }
         }
       ]
     end
 
     def title
       I18n.t('steps.check_answers.groups.about_case.hearing_details.title')
+    end
+
+    private 
+
+    def in_area_text
+      "#{capitalize_sym(hearing_details_form.in_area)} - #{hearing_details_form.court}"
     end
   end
 end

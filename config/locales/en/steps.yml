@@ -206,13 +206,13 @@ en:
           hearing_details:
             hearing_date:
               key: Date of first hearing
-            no_of_hearings:
+            number_of_hearing:
               key: Number of hearings
-            proceedings_concluded:
+            conclusion:
               key: Proceedings concluded more than 3 months ago
-            youth_cort:
+            youth_count:
               key: Youth Court
-            mag_court:
+            in_area:
               key: Magistrates Court in designated area
             hearing_outcome:
               key: Hearing coutcome
