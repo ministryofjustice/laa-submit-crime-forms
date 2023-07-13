@@ -13,6 +13,8 @@ en:
       status:
         pending: In progress
         submitted: Submitted
+        accessed: Accessed
       status_colour:
-        pending: govuk-tag--green
-        submitted: Submitted
+        pending: govuk-tag--grey
+        submitted: govuk-tag--blue
+        accessed: govuk-tag--green
