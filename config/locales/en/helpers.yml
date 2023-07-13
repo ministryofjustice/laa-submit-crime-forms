@@ -11,6 +11,7 @@ en:
       steps_firm_details_form:
         solicitor_attributes:
           alternative_contact_details: Do you want to add alternative contact details?
+        solicitor_details: Solicitor details
       steps_case_details_form:
         main_offence_date: Main offence date
         assigned_counsel: Was there an assigned counsel?
@@ -57,8 +58,8 @@ en:
         cntp_date: For example, 27 3 2007
         cntp_order: For example CNTP1234
       steps_firm_details_form:
+        solicitor_details: Enter the details of the solicitor managing this case
         solicitor_attributes:
-          full_name: Enter the details of the solicitor managing this case
           reference_number: For example, 2P341B
           alternative_contact_details: |
             We’ll use the contact details on your account if we need to ask you for
@@ -248,6 +249,9 @@ en:
           'yes': 'Yes'
           'no': 'No'
         conclusion: Tell us why you did not make this claim within 3 months of the conclusion of the proceedings
+
+      steps_solicitor_declaration_form:
+        signatory_name: Full name
 
     other_disbursement_type:
       accident_reconstruction_report: Accident Reconstruction Report

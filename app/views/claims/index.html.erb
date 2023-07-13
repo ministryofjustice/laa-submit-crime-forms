@@ -56,9 +56,11 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
     <%= button_to applications_path, class: "govuk-button govuk-button--start" do %>
-      Make a new claim
+      <%= t('.start_claim') %>
+      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+      </svg>
     <% end %>
   </div>
 
@@ -71,11 +73,11 @@
     <table class="govuk-table" data-module="moj-sortable-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header" aria-sort="ascending">Name</th>
-          <th scope="col" class="govuk-table__header" aria-sort="none">Start date</th>
-          <th scope="col" class="govuk-table__header" aria-sort="none">LAA reference</th>
-          <th scope="col" class="govuk-table__header" aria-sort="none">Status</th>
-          <th scope="col" class="govuk-table__header" aria-sort="none">Action</th>
+          <th scope="col" class="govuk-table__header" aria-sort="ascending"><%= t('.header.name') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.start_date') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.laa_reference') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.status') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.actions') %></th>
         </tr>
       </thead>
 
@@ -84,7 +86,8 @@
           <tr class="govuk-table__row app-task-list__item">
             <% if claim.status == 'completed' %>
               <td class="govuk-table__cell">
-                <a href="/application_certificate/<%= application.id %>"><%= claim.id %></a>
+                <%# TODO: Keeping it here as we do want to show a different URL for completed claims (TBC) %>
+                <%= link_to claim.short_id, steps_start_page_path(claim.id) %>
               </td>
             <% else %>
               <td class="govuk-table__cell">
@@ -93,31 +96,11 @@
             <% end %>
             <td class="govuk-table__cell"><%= claim.date %></td>
             <td class="govuk-table__cell"><%= claim.laa_reference %></td>
-            <% if claim.status == 'completed' %>
-              <td class="govuk-table__cell">
-                <strong class="govuk-tag govuk-tag--green">
-                  Submitted
-                </strong>
-              </td>
-            <% elsif claim.status == 'updated' %>
-              <td class="govuk-table__cell">
-                <strong class="govuk-tag">
-                  Amended
-                </strong>
-              </td>
-            <% elsif claim.status == 'abandoned' %>
-              <td class="govuk-table__cell">
-                <strong class="govuk-tag govuk-tag--red">
-                  Abandoned
-                </strong>
-              </td>
-            <% else %>
-              <td class="govuk-table__cell">
-                <strong class="govuk-tag govuk-tag--blue">
-                  In progress
-                </strong>
-              </td>
-            <% end %>
+            <td class="govuk-table__cell">
+              <strong class="govuk-tag <%= t(".status_colour.#{claim.status}") %>">
+                <%= t(".status.#{claim.status}") %>
+              </strong>
+            </td>
             <td class="govuk-table__cell">
               <a href="/confirm_delete?id=<%= claim.id %>&name=<%= claim.office_code %>&laa_reference=<%=  claim.laa_reference %>" class="govuk-button govuk-button--secondary">Delete</a>
             </td>

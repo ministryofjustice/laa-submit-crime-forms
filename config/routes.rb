@@ -91,6 +91,7 @@ Rails.application.routes.draw do
       show_step :cost_summary
       edit_step :other_info
       edit_step :supporting_evidence
+      edit_step :solicitor_declaration
 
     end
   end
