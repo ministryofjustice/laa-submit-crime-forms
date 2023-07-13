@@ -6,7 +6,7 @@
     <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_collection_select :main_offence, MainOffence.all, :id, :name,
+      <%= f.govuk_collection_select :main_offence, MainOffence.all, :name, :name,
                               data: { module: 'accessible-autocomplete' }, width: 20,
                               options: { include_blank: true }, label: { size: 'm' } %>
 
