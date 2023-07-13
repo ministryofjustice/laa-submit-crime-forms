@@ -80,7 +80,7 @@ RSpec.describe CheckAnswers::YourDetailsCard do
 
     context '1 line in address' do
       let(:firm_address_2) { nil }
-      
+
       it 'generates case detail rows with 1 line of address' do
         expect(subject.rows).to eq(
           [

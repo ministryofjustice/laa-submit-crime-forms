@@ -194,6 +194,15 @@ en:
               key: Solicitor full name
             solicitor_reference_number: 
               key: Solicitor reference number
+          defendant_summary:
+            main_defendant_full_name:
+              key: Main defendant full name
+            main_defendant_maat:
+              key: Main defendant MAAT ID
+            additional_defendant_full_name:
+              key: Additional defendant %{count} full name
+            additional_defendant_maat:
+              key: Additional defendant %{count} MAAT ID
       groups:
         about_you: 
           heading: About you
