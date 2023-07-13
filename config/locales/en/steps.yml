@@ -224,6 +224,17 @@ en:
               key: Instructed Agent
             remitted_to_magistrate:
               key: Remittal
+          firm_details:
+            firm_name:
+              key: Firm name
+            firm_account_number:
+              key: Firm account number
+            firm_address:
+              key: Firm address
+            solicitor_full_name:
+              key: Solicitor full name
+            solicitor_reference_number: 
+              key: Solicitor reference number
       groups:
         about_you: 
           heading: About you
