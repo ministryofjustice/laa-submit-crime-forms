@@ -249,6 +249,9 @@ en:
           'no': 'No'
         conclusion: Tell us why you did not make this claim within 3 months of the conclusion of the proceedings
 
+      steps_solicitor_declaration_form:
+        signatory_name: Full name
+
     other_disbursement_type:
       accident_reconstruction_report: Accident Reconstruction Report
       accident_emergency_report: Accident & Emergency Report

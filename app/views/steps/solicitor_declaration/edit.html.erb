@@ -1,0 +1,17 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <div><%= t '.subheading_html' %></div>
+    <div><%= t '.warning_html' %></div>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_fieldset legend: { text: t('.legend'), size: 's', class:'govuk-!-margin-bottom-4'} do %>
+        <%= f.govuk_text_field :signatory_name, width: 'two-thirds', autocomplete: 'off'  %>
+      <% end %>
+      <%= f.continue_button(primary: :save_and_submit, secondary: false) %>
+    <% end %>
+  </div>
+</div>

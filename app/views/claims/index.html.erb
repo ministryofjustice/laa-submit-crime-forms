@@ -84,7 +84,8 @@
           <tr class="govuk-table__row app-task-list__item">
             <% if claim.status == 'completed' %>
               <td class="govuk-table__cell">
-                <a href="/application_certificate/<%= application.id %>"><%= claim.id %></a>
+                <%# TODO: Keeping it here as we do want to show a different URL for completed claims (TBC) %>
+                <%= link_to claim.short_id, steps_start_page_path(claim.id) %>
               </td>
             <% else %>
               <td class="govuk-table__cell">
