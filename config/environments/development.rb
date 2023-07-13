@@ -63,4 +63,10 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  config.logstasher.enabled = true
+  config.logstasher.logger_path = 'log/logstasher_development.log'
+  config.logstasher.log_level = Logger::INFO
+  config.logstasher.suppress_app_log = false
+  config.logstasher.source = 'laa-claim-no-standard-magistrates-fee-backed-dev'
 end

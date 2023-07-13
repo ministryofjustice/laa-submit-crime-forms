@@ -90,6 +90,7 @@ Rails.application.routes.draw do
       edit_step :disbursements
       show_step :cost_summary
       edit_step :other_info
+      edit_step :solicitor_declaration
 
     end
   end
