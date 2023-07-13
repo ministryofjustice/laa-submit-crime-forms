@@ -4,7 +4,6 @@ module Steps
       @form_object = SolicitorDeclarationForm.build(
         current_application
       )
-      Rails.logger.info(current_application[:status].to_json)
     end
 
     def update
