@@ -10,13 +10,11 @@ module Decisions
       claim_details: :work_item,
       work_item: :work_items,
       disbursement_cost: :disbursements,
-      other_info: :solicitor_declaration,
+      check_answers: :solicitor_declaration
     }.freeze
 
     SHOW_MAPPING = {
-
       other_info: :check_answers,
-      check_answers: solicitor_declaration:,
       solicitor_declaration: :start_page
     }.freeze
 
