@@ -2,7 +2,7 @@ module Steps
   class BaseStepController < ::ApplicationController
     before_action :check_application_presence
     before_action :prune_navigation_stack, only: [:update]
-    before_action :append_navigation_stack, only: [:show, :edit, :update]
+    before_action :append_navigation_stack, only: [:show, :edit]
 
     # :nocov:
     def show
@@ -61,14 +61,26 @@ module Steps
     end
 
     def prune_navigation_stack
+      return if skip_stack
+
+      # filter out up to current location
       current_application.navigation_stack =
         current_application.navigation_stack.take_while { |path| path != request.fullpath }
+
+      current_application.navigation_stack |= [request.fullpath]
       current_application.save!(touch: false)
     end
 
     def append_navigation_stack
+      return if skip_stack
+
       current_application.navigation_stack |= [request.fullpath]
       current_application.save!(touch: false)
+    end
+
+    # Overwrite this when controller shouldn't be in the stack (i.e. delete endpoints)
+    def skip_stack
+      false
     end
   end
 end
