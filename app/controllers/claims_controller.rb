@@ -5,9 +5,7 @@ class ClaimsController < ApplicationController
     # TODO: delete old claims without a claim type or avoid creating
     # claim before we have a claim type - this breaks the pattern we
     # have used for the forms.
-    # debugger
-    # filtered_claims = Claim.where(claim_type: ClaimType::SUPPORTED.map(&:to_s)).order('updated_at DESC')
-    filtered_claims = Claim.all.order('updated_at DESC')
+    filtered_claims = Claim.where.not(ufn: nil).order('updated_at DESC')
     @claims = filtered_claims.page(current_page).per(page_size)
   end
 
