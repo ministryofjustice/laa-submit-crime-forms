@@ -83,4 +83,10 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.logstasher.enabled = true
+  config.logstasher.logger_path = 'log/logstasher.log'
+  config.logstasher.log_level = Logger::INFO
+  config.logstasher.suppress_app_log = false
+  config.logstasher.source = "laa-claim-no-standard-magistrates-fee-backed-#{ENV.fetch('ENV', nil)}"
 end
