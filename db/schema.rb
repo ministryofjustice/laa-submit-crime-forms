@@ -61,6 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_13_091036) do
     t.integer "letters_uplift"
     t.date "work_before_date"
     t.date "work_after_date"
+    t.string "signatory_name"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"

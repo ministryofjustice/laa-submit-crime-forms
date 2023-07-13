@@ -25,10 +25,10 @@ en:
       letters_calls: Letters and phone calls
       disbursements: Disbursements costs
       cost_summary: Review your claim
-      additional_info: Other relevant information
+      other_info: Other relevant information
       upload_evidence: Upload supporting evidence
       check_answers: Check your answers
-      declaration: Confirm declaration and submit claim
+      solicitor_declaration: Confirm declaration and submit claim
   laa_multi_step_forms:
     task_list:
       show:
