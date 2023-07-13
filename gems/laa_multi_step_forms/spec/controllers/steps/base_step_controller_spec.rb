@@ -17,9 +17,9 @@ RSpec.describe DummyStepController, type: :controller do
   end
   let(:form_class) do
     class_double(Steps::BaseFormObject,
-                  model_name: double(:model_name, singular: 'test_model'),
-                  attribute_names: %w[first second],
-                  new: form,)
+                 model_name: double(:model_name, singular: 'test_model'),
+                 attribute_names: %w[first second],
+                 new: form,)
   end
   let(:form) { instance_double(Steps::BaseFormObject, save!: true, save: save_form) }
   let(:save_form) { true }
