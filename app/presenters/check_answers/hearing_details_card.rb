@@ -13,6 +13,7 @@ module CheckAnswers
     end
 
     # TODO: Add row for proceedings concluded...
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def rows
       [
         {
@@ -41,6 +42,7 @@ module CheckAnswers
         }
       ]
     end
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
     def title
       I18n.t('steps.check_answers.groups.about_case.hearing_details.title')

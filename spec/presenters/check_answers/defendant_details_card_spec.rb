@@ -6,19 +6,19 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
   let(:claim) { instance_double(Claim) }
   let(:defendants) { [] }
   let(:main_defendant) { { main: true, full_name: main_defendant_name, maat: main_defendant_maat } }
-  let(:additional_defendant_1) do
-    { main: false, full_name: additional_defendant_1_name, maat: additional_defendant_1_maat }
+  let(:first_additional_defendant) do
+    { main: false, full_name: first_additional_defendant_name, maat: first_additional_defendant_maat }
   end
-  let(:additional_defendant_2) do
-    { main: false, full_name: additional_defendant_2_name, maat: additional_defendant_2_maat }
+  let(:second_additional_defendant) do
+    { main: false, full_name: second_additional_defendant_name, maat: second_additional_defendant_maat }
   end
 
   let(:main_defendant_name) { 'Tim Roy' }
   let(:main_defendant_maat) { '123ABC' }
-  let(:additional_defendant_1_name) { 'James Brown' }
-  let(:additional_defendant_1_maat) { '456EFG' }
-  let(:additional_defendant_2_name) { 'Timmy Turner' }
-  let(:additional_defendant_2_maat) { '789HIJ' }
+  let(:first_additional_defendant_name) { 'James Brown' }
+  let(:first_additional_defendant_maat) { '456EFG' }
+  let(:second_additional_defendant_name) { 'Timmy Turner' }
+  let(:second_additional_defendant_maat) { '789HIJ' }
 
   before do
     allow(claim).to receive(:defendants).and_return(defendants)
@@ -44,8 +44,9 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
   end
 
   describe '#rows' do
+    # rubocop:disable RSpec/ExampleLength
     context '1 main defendant and 2 additional defendants' do
-      let(:defendants) { [main_defendant, additional_defendant_1, additional_defendant_2] }
+      let(:defendants) { [main_defendant, first_additional_defendant, second_additional_defendant] }
 
       it 'generates full name and maat ref for 1 main defendant and 2 additional defendants' do
         expect(subject.rows).to eq(
@@ -97,5 +98,6 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
         )
       end
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 end

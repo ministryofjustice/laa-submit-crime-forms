@@ -18,8 +18,10 @@ RSpec.describe CheckAnswers::YourDetailsCard do
   end
   let(:firm_name) { 'Firm A' }
   let(:firm_account_number) { '123ABC' }
+  # rubocop:disable RSpec/IndexedLet
   let(:firm_address_1) { '2 Laywer Suite' }
   let(:firm_address_2) { 'Unit B' }
+  # rubocop:enable RSpec/IndexedLet
   let(:firm_town) { 'Lawyer Town' }
   let(:firm_postcode) { 'CR0 1RE' }
   let(:solicitor_full_name) { 'Richard Jenkins' }
@@ -49,6 +51,7 @@ RSpec.describe CheckAnswers::YourDetailsCard do
   end
 
   describe '#rows' do
+    # rubocop:disable RSpec/ExampleLength
     context '2 lines in address' do
       it 'generates case detail rows with 2 lines of address' do
         expect(subject.rows).to eq(
@@ -108,5 +111,6 @@ RSpec.describe CheckAnswers::YourDetailsCard do
         )
       end
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 end

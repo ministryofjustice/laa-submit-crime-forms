@@ -52,13 +52,12 @@ classes: 'govuk-summary-list__value-width-50' },
     def additional_defendant_rows(defendant, index)
       [
         {
-          key: { text: translate_table_key(KEY, 'additional_defendant_full_name', count: index),
+          key: { text: translate_table_key(KEY, 'additional_defendant_full_name', count: index ),
 classes: 'govuk-summary-list__value-width-50' },
           value: { text: defendant[:full_name] }
         },
         {
-          key: { text: translate_table_key(KEY, 'additional_defendant_maat', count: index),
-classes: 'govuk-summary-list__value-width-50' },
+          key: { text: translate_table_key(KEY, 'additional_defendant_maat', count: index ), classes: 'govuk-summary-list__value-width-50' },
           value: { text: defendant[:maat] }
         }
       ]
