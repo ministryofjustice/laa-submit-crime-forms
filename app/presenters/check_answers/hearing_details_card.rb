@@ -1,24 +1,23 @@
 module CheckAnswers
   class HearingDetailsCard < Base
-    attr_reader :hearing_details_form, :other_info_form
+    attr_reader :hearing_details_form
 
     KEY = 'hearing_details'.freeze
 
     def initialize(claim)
       @hearing_details_form = Steps::HearingDetailsForm.build(claim)
-      @other_info_form = Steps::OtherInfoForm.build(claim)
     end
 
     def route_path
       KEY
     end
 
-    #TODO: Add row for proceedings concluded...
+    # TODO: Add row for proceedings concluded...
     def rows
       [
         {
           key: { text: translate_table_key(KEY, 'hearing_date'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: hearing_details_form.first_hearing_date }
+          value: { text: hearing_details_form.first_hearing_date&.strftime('%d %B %Y') }
         },
         {
           key: { text: translate_table_key(KEY, 'number_of_hearing'), classes: 'govuk-summary-list__value-width-50' },
@@ -34,11 +33,11 @@ module CheckAnswers
         },
         {
           key: { text: translate_table_key(KEY, 'hearing_outcome'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: hearing_details_form.hearing_outcome }
+          value: { text: get_value_obj_desc(OutcomeCode, hearing_details_form.hearing_outcome) }
         },
         {
           key: { text: translate_table_key(KEY, 'matter_type'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: MatterType.all[hearing_details_form.matter_type.to_i].description }
+          value: { text: get_value_obj_desc(MatterType, hearing_details_form.matter_type) }
         }
       ]
     end
@@ -47,7 +46,7 @@ module CheckAnswers
       I18n.t('steps.check_answers.groups.about_case.hearing_details.title')
     end
 
-    private 
+    private
 
     def in_area_text
       "#{capitalize_sym(hearing_details_form.in_area)} - #{hearing_details_form.court}"

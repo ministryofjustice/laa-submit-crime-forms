@@ -252,13 +252,13 @@ en:
             conclusion:
               key: Proceedings concluded more than 3 months ago
             youth_count:
-              key: Youth Court
+              key: Youth court
             in_area:
-              key: Magistrates Court in designated area
+              key: Magistrates court in designated area
             hearing_outcome:
-              key: Hearing coutcome
+              key: Hearing outcome
             matter_type:
-              key: Matter Type
+              key: Matter type
       groups:
         about_you: 
           heading: About you
