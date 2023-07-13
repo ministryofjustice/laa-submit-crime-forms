@@ -1,44 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe 'User can see cost breakdowns', type: :system do
-  let(:claim) { Claim.create(office_code:, letters:, calls:, rep_order_date:) }
-
-  let(:office_code) { 'AAA' }
-  let(:letters) { 2 }
-  let(:calls) { 3 }
-  let(:rep_order_date) { Date.yesterday }
+  let(:claim) { create(:claim, :letters_calls, work_items:, disbursements:) }
   let(:work_items) do
     [
-      WorkItem.new(
-        work_type: WorkTypes::ATTENDANCE_WITHOUT_COUNSEL.to_s,
-        time_spent: 90,
-        completed_on: Date.yesterday,
-        fee_earner: 'aaa',
-        uplift: nil,
-      ),
-      WorkItem.new(
-        work_type: WorkTypes::ADVOCACY.to_s,
-        time_spent: 104,
-        completed_on: Date.yesterday,
-        fee_earner: 'aaa',
-        uplift: nil,
-      ),
-      WorkItem.new(
-        work_type: WorkTypes::ADVOCACY.to_s,
-        time_spent: 86,
-        completed_on: Date.yesterday,
-        fee_earner: 'aaa',
-        uplift: nil,
-      ),
+      build(:work_item, :attendance_without_counsel, time_spent: 90),
+      build(:work_item, :advocacy, time_spent: 104),
+      build(:work_item, :advocacy, time_spent: 86),
+    ]
+  end
+  let(:disbursements) do
+    [
+      build(:disbursement, :valid, :car, age: 5, miles: 200),
+      build(:disbursement, :valid_other, :dna_testing, age: 4, total_cost_without_vat: 30),
+      build(:disbursement, :valid_other, age: 3, other_type: 'Custom', total_cost_without_vat: 40),
+      build(:disbursement, :valid, :car, age: 2, miles: 150),
     ]
   end
 
   before do
-    work_items.each do |work_item|
-      claim.work_items << work_item
-    end
-
-    claim.update(navigation_stack: ["/applications/#{claim.id}/steps/letters_calls"])
     visit provider_saml_omniauth_callback_path
   end
 
@@ -53,7 +33,7 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
         'Work items total £260.68',
         'Items', 'Total per item',
         'Attendance without counsel', '£53.52', # 35.68 * 90 / 60
-        'Preparation', '£0.00',
+        'Preparation', '£',
         'Advocacy', '£207.16', # 65.42 * (104 + 86) / 60
         'Total', '£260.68',
 
@@ -62,6 +42,14 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
         'Letters', '£8.18', # 4.09 * 2
         'Phone calls', '£12.27', # 4.09 * 3
         'Total', '£20.45',
+
+        'Disbursements total £227.50',
+        'Items', 'Total per item',
+        'Car', '£90.00', # 200 * 0.45
+        'DNA Testing', '£30.00',
+        'Custom', '£40.00',
+        'Car', '£67.50', # 150 * 0.45
+        'Total', '£227.50'
       ]
     )
   end

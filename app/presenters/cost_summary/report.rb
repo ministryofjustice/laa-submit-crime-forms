@@ -10,6 +10,7 @@ module CostSummary
       @items = {
         work_items: WorkItems.new(claim.work_items, claim),
         letters_calls: LettersCalls.new(claim),
+        disbursements: Disbursements.new(claim.disbursements.by_age, claim)
       }
     end
 
@@ -26,7 +27,7 @@ module CostSummary
     end
 
     def total_cost
-      in_pounds(items.values.sum(&:total_cost))
+      NumberTo.pounds(items.values.sum(&:total_cost))
     end
 
     private
@@ -51,7 +52,7 @@ module CostSummary
     def footer_row(data)
       {
         key: { text: translate('.footer.total'), classes: 'govuk-summary-list__value-width-50' },
-        value: { text: in_pounds(data.total_cost), classes: 'govuk-summary-list__value-bold' },
+        value: { text: NumberTo.pounds(data.total_cost), classes: 'govuk-summary-list__value-bold' },
         classes: 'govuk-summary-list__row-double-border'
       }
     end

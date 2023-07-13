@@ -25,6 +25,8 @@ end
 Rails.application.routes.draw do
   extend RouteHelpers
 
+  get :ping, to: 'healthcheck#ping'
+
   # mount this at the route
   mount LaaMultiStepForms::Engine, at: '/'
 
@@ -89,7 +91,10 @@ Rails.application.routes.draw do
       show_step :cost_summary
       edit_step :other_info
       show_step :check_answers
-
+      edit_step :solicitor_declaration
     end
   end
+
+  match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
+    lambda { |_request| Rails.application.config.consider_all_requests_local }
 end

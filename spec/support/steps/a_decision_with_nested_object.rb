@@ -1,5 +1,5 @@
 RSpec.shared_examples 'a decision with nested object' do |step_name:, controller:, summary_controller:,
-    form_class:, nested: controller, edit_when_one: false, create_args: nil|
+    form_class:, nested: controller, edit_when_one: false|
   context "when step is #{step_name}" do
     let(:local_form) { form_class.new(application:) }
     let(:decision_tree) { described_class.new(local_form, as: step_name) }
@@ -8,21 +8,12 @@ RSpec.shared_examples 'a decision with nested object' do |step_name:, controller
     context "when no #{nested}s exist" do
       let(:nested_scope) { application.public_send("#{nested}s") }
 
-      before do
-        allow(nested_scope).to receive(:create).and_return(nested_instance)
-      end
-
-      it 'creates a new disbursement' do
-        decision_tree.destination
-        expect(nested_scope).to have_received(:create).with(create_args || no_args)
-      end
-
       it 'moves to the page for the disbursement' do
         expect(decision_tree.destination).to eq(
           action: :edit,
           controller: controller,
           id: application,
-          "#{nested}_id": nested_instance.id,
+          "#{nested}_id": StartPage::NEW_RECORD,
         )
       end
     end

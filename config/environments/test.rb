@@ -57,4 +57,10 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+
+  config.logstasher.enabled = true
+  config.logstasher.logger_path = 'log/logstasher_test.log'
+  config.logstasher.log_level = Logger::INFO
+  config.logstasher.suppress_app_log = false
+  config.logstasher.source = 'laa-claim-no-standard-magistrates-fee-backed-test'
 end

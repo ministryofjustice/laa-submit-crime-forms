@@ -2,7 +2,6 @@ require 'steps/base_form_object'
 
 module Steps
   class DisbursementCostForm < Steps::BaseFormObject
-    include ActionView::Helpers::NumberHelper
     attr_writer :apply_vat
 
     attribute :miles, :decimal, precision: 10, scale: 3
@@ -27,11 +26,11 @@ module Steps
       [
         [translate(:before_vat), translate(:after_vat)],
         [{
-          text: number_to_currency(total_cost || 0, unit: '£'),
+          text: NumberTo.pounds(total_cost),
           html_attributes: { id: 'total-without-vat' }
         },
          {
-           text: number_to_currency((total_cost || 0) + vat, unit: '£'),
+           text: NumberTo.pounds(total_cost, vat),
            html_attributes: { id: 'total-with-vat' },
          }],
       ]
@@ -44,6 +43,16 @@ module Steps
     # we return 1 here when no pricing data exists to simplify the FE
     def multiplier
       pricing[record.disbursement_type] || 1.0
+    end
+
+    def total_cost
+      return @total_cost if defined?(@total_cost)
+
+      @total_cost = if other_disbursement_type?
+                      total_cost_without_vat
+                    elsif miles
+                      miles.to_f * multiplier
+                    end
     end
 
     private
@@ -64,16 +73,10 @@ module Steps
       )
     end
 
-    def total_cost
-      @total_cost ||= if other_disbursement_type?
-                        total_cost_without_vat
-                      elsif miles
-                        miles.to_f * multiplier
-                      end
-    end
-
     def vat
-      apply_vat && total_cost ? total_cost * vat_rate : 0.0
+      return nil unless total_cost
+
+      apply_vat ? total_cost * vat_rate : 0.0
     end
 
     def auth_required?

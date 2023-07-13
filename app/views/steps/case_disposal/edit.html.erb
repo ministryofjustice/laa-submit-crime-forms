@@ -4,13 +4,13 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
-    <h2 class="govuk-heading-s govuk-!-margin-bottom-6"><%= t '.subheading' %></h2>
+    <p class="govuk-body govuk-!-margin-bottom-6"><%= t '.subheading' %></p>
 
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
       <% @form_object.choices.each do |name, pleas| %>
-        <%= f.govuk_radio_buttons_fieldset name, legend: { size: 'm' } do %>
+        <%= f.govuk_radio_buttons_fieldset name, legend: { size: 's', class: 'govuk-!-margin-bottom-6' } do %>
           <% pleas.each_with_index do |plea, index| %>
             <span id="<%= plea %>"></span>
             <%= f.govuk_radio_button :plea, plea.to_s, link_errors: index.zero? do %>

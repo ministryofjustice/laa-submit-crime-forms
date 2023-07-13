@@ -12,16 +12,24 @@ RSpec.describe Steps::ClaimDetailsForm do
       supplemental_claim:,
       preparation_time:,
       time_spent:,
+      work_before:,
+      work_after:,
+      work_before_date:,
+      work_after_date:,
     }
   end
 
   let(:application) { instance_double(Claim, update!: true) }
 
-  let(:prosecution_evidence) { 'prosection evidence' }
-  let(:defence_statement) { 'defence statement' }
-  let(:number_of_witnesses) { 1 }
+  let(:prosecution_evidence) { 1 }
+  let(:defence_statement) { 2 }
+  let(:number_of_witnesses) { 3 }
   let(:supplemental_claim) { 'yes' }
   let(:preparation_time) { 'yes' }
+  let(:work_before) { 'yes' }
+  let(:work_after) { 'yes' }
+  let(:work_before_date) { Date.yesterday }
+  let(:work_after_date) { Date.yesterday }
   let(:time_spent) { { 1 => hours, 2 => minutes } }
   let(:hours) { 2 }
   let(:minutes) { 40 }
@@ -29,8 +37,6 @@ RSpec.describe Steps::ClaimDetailsForm do
   describe '#save preparation time yes' do
     context 'when all fields are set and preparation_time set to yes' do
       let(:preparation_time) { 'yes' }
-      let(:time_spent_hours) { 2 }
-      let(:time_spent_mins) { 40 }
 
       it 'is valid' do
         expect(subject.save).to be_truthy
@@ -41,67 +47,105 @@ RSpec.describe Steps::ClaimDetailsForm do
   end
 
   describe '#save' do
-    let(:application) { Claim.create(office_code: 'AAA', time_spent: time_spent_in_db) }
+    let(:application) do
+      create(:claim, time_spent: time_spent_in_db, work_before_date: work_before_date_in_db,
+     work_after_date: work_after_date_in_db)
+    end
     let(:time_spent_in_db) { nil }
+    let(:work_before_date_in_db) { nil }
+    let(:work_after_date_in_db) { nil }
 
-    context 'when preparation is yes' do
+    context 'when values are yes' do
       let(:preparation_time) { 'yes' }
+      let(:work_before) { 'yes' }
+      let(:work_after) { 'yes' }
 
-      context 'when time_spent is valid' do
-        it 'is updated the DB in minutes' do
-          expect(subject.save).to be_truthy
-          expect(application.reload).to have_attributes(
-            time_spent: 160
-          )
-        end
+      it 'is stores the values in the database' do
+        expect(subject.save).to be_truthy
+        expect(application.reload).to have_attributes(
+          time_spent: 160
+        )
       end
     end
 
-    context 'when preparation is no' do
+    context 'when values are no' do
       let(:preparation_time) { 'no' }
+      let(:work_before) { 'no' }
+      let(:work_after) { 'no' }
 
       context 'time_spent has a value in the database' do
         let(:time_spent_in_db) { 100 }
+        let(:work_before_date_in_db) { Date.yesterday }
+        let(:work_after_date_in_db) { Date.yesterday }
 
         it 'clears the database field' do
           expect(subject.save).to be_truthy
           expect(application.reload).to have_attributes(
-            time_spent: nil
+            time_spent: nil,
+            work_before_date: nil,
+            work_after_date: nil,
           )
         end
       end
     end
   end
 
-  describe '#valid?' do
-    context 'when preparation is yes' do
-      let(:preparation_time) { 'yes' }
+  describe '#validations' do
+    context 'work_before_date' do
+      context 'and work_before is nil' do
+        let(:work_before) { nil }
 
-      context 'when all fields are set' do
+        it 'is valid' do
+          expect(subject).to be_valid
+        end
+      end
+
+      context 'when work before is valid' do
+        let(:work_before) { nil }
+
+        it 'is is valid' do
+          expect(subject.save).to be_truthy
+        end
+      end
+
+      context 'and work_before is no' do
+        let(:work_before) { 'no' }
+
         it { expect(subject).to be_valid }
       end
 
-      context 'when hours is blank' do
-        let(:hours) { nil }
+      context 'and work_before is yes' do
+        let(:work_before) { 'yes' }
+        let(:work_before_date) { nil }
 
-        it 'is invalid' do
+        it 'is not valid' do
           expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:time_spent, :blank_hours)).to be(true)
+          expect(subject.errors.of_kind?(:work_before_date, :blank)).to be(true)
         end
       end
     end
 
-    context 'when preparation is no' do
-      let(:preparation_time) { 'no' }
+    context 'work_after_date' do
+      context 'and work_after is nil' do
+        let(:work_after) { nil }
 
-      context 'when all fields are set' do
         it { expect(subject).to be_valid }
       end
 
-      context 'when hours is blank' do
-        let(:hours) { nil }
+      context 'and work_after is no' do
+        let(:work_after) { 'no' }
 
         it { expect(subject).to be_valid }
+      end
+
+      context 'and work_after is yes' do
+        let(:work_after) { 'yes' }
+        let(:work_after_date) { nil }
+
+        it 'is not valid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:work_after_date, :blank)).to be(true)
+        end
       end
     end
   end

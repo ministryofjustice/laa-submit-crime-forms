@@ -131,6 +131,11 @@ Style/HashEachMethods:
     - app/value_objects/value_object.rb
     - app/forms/steps/**/*
     - spec/steps/**/*
+    - spec/factories/*
+
+Performance/InefficientHashSearch:
+  Exclude:
+    - app/presenters/cost_summary/disbursements.rb
 
 Naming/PredicateName:
   AllowedMethods:
@@ -142,7 +147,9 @@ Naming/PredicateName:
 RSpec/MultipleMemoizedHelpers:
   Max: 12
   Exclude:
+    - spec/steps/claim_details/form_spec.rb
     - spec/steps/work_items/add/form_spec.rb
+    - spec/presenters/cost_summary/report_spec.rb
 
 RSpec/MultipleExpectations:
   Max: 7

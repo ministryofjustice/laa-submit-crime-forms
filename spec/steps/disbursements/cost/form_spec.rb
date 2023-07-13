@@ -20,7 +20,7 @@ RSpec.describe Steps::DisbursementCostForm do
   end
   let(:disbursements) { [double(:disbursement), record] }
   let(:record) { double(:record, id: SecureRandom.uuid, disbursement_type: disbursement_type, vat_amount: vat_amount) }
-  let(:disbursement_type) { (DisbursementTypes.values - [DisbursementTypes::OTHER]).sample.to_s }
+  let(:disbursement_type) { DisbursementTypes.values.reject(&:other?).sample.to_s }
   let(:miles) { 10 }
   let(:total_cost_without_vat) { nil }
   let(:details) { 'Some text' }
@@ -122,6 +122,35 @@ RSpec.describe Steps::DisbursementCostForm do
         let(:vat_amount) { nil }
 
         it { expect(subject.apply_vat).to be(false) }
+      end
+    end
+  end
+
+  describe '#total_cost' do
+    context 'when type is other' do
+      let(:disbursement_type) { DisbursementTypes::OTHER.to_s }
+      let(:total_cost_without_vat) { 150 }
+
+      it 'is equal to total_cost_witout_vat' do
+        expect(subject.total_cost).to eq(150.0)
+      end
+    end
+
+    context 'when type is not other' do
+      let(:disbursement_type) { DisbursementTypes::BIKE.to_s }
+
+      context 'when miles are nil' do
+        let(:miles) { nil }
+
+        it { expect(subject.total_cost).to be_nil }
+      end
+
+      context 'when miles are not nil' do
+        let(:miles) { 100 }
+
+        it 'equal to miles times rate/mile' do
+          expect(subject.total_cost).to eq(25.0)
+        end
       end
     end
   end

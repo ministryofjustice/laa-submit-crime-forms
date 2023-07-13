@@ -4,7 +4,6 @@ module Steps
   class WorkItemForm < Steps::BaseFormObject
     attr_writer :apply_uplift
 
-    attribute :id, :string
     attribute :work_type, :value_object, source: WorkTypes
     attribute :time_spent, :time_period
     attribute :completed_on, :multiparam_date
@@ -37,7 +36,7 @@ module Steps
     end
 
     def total_cost
-      return unless time_spent.is_a?(IntegerTimePeriod) && pricing[work_type]
+      return unless !time_spent.nil? && time_spent.is_a?(IntegerTimePeriod) && pricing[work_type]
 
       apply_uplift!(time_spent.to_f / 60) * pricing[work_type]
     end
@@ -48,6 +47,20 @@ module Steps
       end
     end
 
+    def calculation_rows
+      [
+        [translate(:before_uplift), translate(:after_uplift)],
+        [{
+          text: NumberTo.pounds(total_without_uplift),
+          html_attributes: { id: 'without-uplift' }
+        },
+         {
+           text: NumberTo.pounds(total_cost),
+           html_attributes: { id: 'with-uplift' },
+         }],
+      ]
+    end
+
     private
 
     def apply_uplift!(val)
@@ -55,11 +68,22 @@ module Steps
     end
 
     def persist!
+      record.id = nil if record.id == StartPage::NEW_RECORD
       record.update!(attributes_with_resets)
     end
 
     def attributes_with_resets
       attributes.merge('uplift' => apply_uplift ? uplift : nil)
+    end
+
+    def translate(key)
+      I18n.t("steps.work_item.edit.#{key}")
+    end
+
+    def total_without_uplift
+      return unless !time_spent.nil? && time_spent.is_a?(IntegerTimePeriod) && pricing[work_type]
+
+      time_spent.to_f / 60 * pricing[work_type]
     end
   end
 end

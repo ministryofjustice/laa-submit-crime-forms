@@ -135,8 +135,6 @@ RSpec.describe 'User can manage work items', type: :system do
 
     expect(claim.reload.work_items).not_to include(work_item)
 
-    # it redirects to the new work item page when the last record is
-    # deleted - this create a new work item record. :)
-    expect(claim.work_items.count).to eq(1)
+    expect(claim.work_items.count).to eq(0)
   end
 end

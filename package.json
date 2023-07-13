@@ -4,7 +4,7 @@
   "dependencies": {
     "@ministryofjustice/frontend": "1.8.0",
     "accessible-autocomplete": "^2.0.4",
-    "govuk-frontend": "4.6.0",
+    "govuk-frontend": "4.7.0",
     "yarn": "^1.22.19"
   },
   "scripts": {
@@ -12,9 +12,9 @@
     "unit-test": "jest"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.22.5",
-    "babel-jest": "^29.5.0",
-    "jest": "^29.5.0",
-    "jest-environment-jsdom": "^29.5.0"
+    "@babel/preset-env": "^7.22.9",
+    "babel-jest": "^29.6.1",
+    "jest": "^29.6.1",
+    "jest-environment-jsdom": "^29.6.1"
   }
 }

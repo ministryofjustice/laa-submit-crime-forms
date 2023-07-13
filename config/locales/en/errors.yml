@@ -141,11 +141,11 @@ en:
         steps/claim_details_form:
           attributes:
             prosecution_evidence:
-              blank: Enter Prosecution Evidence
+              blank: Enter number of pages of prosecution evidence
             defence_statement:
-              blank: Enter Defence statement
+              blank: Enter number of pages of defence statements
             number_of_witnesses:
-              blank: Enter number of defence witnesses
+              blank: Enter number of witnesses
             supplemental_claim:
               blank: Select yes or no for supplemental_claim
             preparation_time:
@@ -158,6 +158,8 @@ en:
               invalid_minutes: Minutes must be between 0 and 59
               invalid_period: Period must be greater than 0
               invalid: Period must be valid
+            work_before_date: *shared_date_errors
+            work_after_date: *shared_date_errors
         steps/work_item_form:
           attributes:
             completed_on: *shared_date_errors
@@ -181,8 +183,10 @@ en:
               blank: Please set the number of letters
             calls:
               blank: Please set the number of calls
-            letters_calls_uplift:
-              blank: Uplift amount must be set
+            letters_uplift:
+              blank: Letters uplift percentage must be set
+            calls_uplift:
+              blank: Calls uplift percentage must be set
         steps/disbursement_type_form:
           attributes:
             disbursement_date: *shared_date_errors
