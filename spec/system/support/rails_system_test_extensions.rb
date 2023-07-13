@@ -32,11 +32,8 @@ RSpec.configure do |config|
     Rails.application.default_url_options[:host] = was_host
   end
 
-  # we do this first as it is a prepend meaning this will run last and take priority
-  config.prepend_before(:each, javascript: true, type: :system) do
-    # Use JS driver always
+  config.before(:each, javascript: true, type: :system) do
+    # Use JS driver
     driven_by Capybara.javascript_driver
   end
-  # Use the faster rack test by default for system specs if possible
-  config.prepend_before(:each, type: :system) { driven_by :rack_test }
 end
