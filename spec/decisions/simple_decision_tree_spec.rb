@@ -136,7 +136,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
       let(:answer_equality) { 'no' }
 
       # TODO: update once pages exist
-      it "moves to start_page" do
+      it 'moves to start_page' do
         expect(decision_tree.destination).to eq(
           action: :edit,
           controller: :solicitor_declaration,
@@ -149,7 +149,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
       let(:answer_equality) { 'yes' }
 
       # TODO: update once pages exist
-      it "moves to start_page" do
+      it 'moves to start_page' do
         expect(decision_tree.destination).to eq(
           action: :show,
           controller: :start_page,
@@ -159,6 +159,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
       end
     end
   end
+
   it_behaves_like 'a generic decision', :solicitor_declaration, :start_page, Steps::SolicitorDeclarationForm,
                   action_name: :show
 
