@@ -100,6 +100,8 @@ en:
         calculation: Calculation
         before_uplift: Before uplift
         after_uplift: After uplift
+      duplicate:
+        duplicate: Work item successfully duplicated
     work_items:
       edit:
         page_title: Work Items
