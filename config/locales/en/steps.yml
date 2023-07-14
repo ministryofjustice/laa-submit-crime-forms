@@ -168,6 +168,17 @@ en:
       edit:
         page_title: Other Relevant information
         heading: Other Relevant information
+    equality:
+      edit:
+        page_title: Equality monitoring questions
+        heading: Equality monitoring questions
+        subheading: We’d like to ask some equality questions.
+        answer_equality: Do you want to answer the equality questions?
+        answer_equality_html: |
+          <p>These questions are optional. Your answers will be treated in the strictest confidence.
+          They will only be used to help us monitor and research access to LAA funded services,
+          in line with our duties under the Equality Act 2010.</p>
+          <p>Your answers will not affect your claim.</p>
     solicitor_declaration:
       edit:
         page_title: Confirm the following
