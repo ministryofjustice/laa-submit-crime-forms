@@ -1,0 +1,21 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-thirds">
+    <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.work_items.count) %></h1>
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-6"><%= t '.subheading' %></h2>
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :answer_equality, legend: { text: t('.answer_equality'), size: 'm' }, hint: { text: t('.answer_equality_html'), size: 'm' } do %>
+        <%= f.govuk_radio_button :answer_equality, YesNoAnswer::YES.to_s %>
+        <%= f.govuk_radio_button :answer_equality, YesNoAnswer::NO.to_s %>
+      <% end%>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
+
+

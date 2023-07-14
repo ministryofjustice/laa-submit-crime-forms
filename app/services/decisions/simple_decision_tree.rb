@@ -10,7 +10,7 @@ module Decisions
       claim_details: :work_item,
       work_item: :work_items,
       disbursement_cost: :disbursements,
-      other_info: :solicitor_declaration,
+      other_info: :equality,
     }.freeze
 
     SHOW_MAPPING = {
@@ -35,6 +35,14 @@ module Decisions
 
     def after_disbursement_type
       edit(:disbursement_cost, disbursement_id: form_object.record.id)
+    end
+
+    def after_equality
+      if form_object.answer_equality.yes?
+        show(:start_page, answer: 'yes')
+      else
+        edit(:solicitor_declaration)
+      end
     end
 
     def after_defendant_summary

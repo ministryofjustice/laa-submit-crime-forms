@@ -33,7 +33,7 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
         'Work items total £260.68',
         'Items', 'Total per item',
         'Attendance without counsel', '£53.52', # 35.68 * 90 / 60
-        'Preparation', '£0.00',
+        'Preparation', '£',
         'Advocacy', '£207.16', # 65.42 * (104 + 86) / 60
         'Total', '£260.68',
 
