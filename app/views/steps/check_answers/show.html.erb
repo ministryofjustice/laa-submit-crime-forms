@@ -11,10 +11,10 @@
       <% end %>
     <% end %>
     <div class="govuk-button-group">
-      <%= link_to steps_start_page_path(current_application), class: "govuk-button", data_module: "govuk-button", data_prevent_double_click: "true" do %>
+      <%= link_to edit_steps_solicitor_declaration_path(current_application), class: "govuk-button", data_module: "govuk-button", data_prevent_double_click: "true" do %>
         Save and continue
       <% end %>
-      <%= link_to steps_start_page_path(current_application), class: "govuk-button govuk-button--secondary", data_module: "govuk-button", data_prevent_double_click: "true" do %>
+      <%= link_to after_commit_path(current_application), class: "govuk-button govuk-button--secondary", data_module: "govuk-button", data_prevent_double_click: "true" do %>
         Save and come back later
       <% end %>
     </div>
