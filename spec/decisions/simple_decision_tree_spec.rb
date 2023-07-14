@@ -3,30 +3,6 @@ require 'rails_helper'
 RSpec.describe Decisions::SimpleDecisionTree do
   let(:application) { build(:claim) }
 
-  ClaimType::SUPPORTED.each do |claim_type|
-    context 'when claim_type is supported' do
-      let(:form) { Steps::ClaimTypeForm.new(application:, claim_type:) }
-
-      it_behaves_like 'a generic decision', :claim_type, :start_page, nil, action_name: :show
-    end
-  end
-
-  (ClaimType::VALUES - ClaimType::SUPPORTED).each do |claim_type|
-    context 'when claim_type is not supported' do
-      let(:form) { Steps::ClaimTypeForm.new(application:, claim_type:) }
-
-      context 'when step is claim_type' do
-        it 'processes to the firm_details page' do
-          decision_tree = described_class.new(form, as: :claim_type)
-          expect(decision_tree.destination).to eq(
-            action: :index,
-            controller: '/claims',
-          )
-        end
-      end
-    end
-  end
-
   it_behaves_like 'a decision with nested object',
                   step_name: :firm_details, controller: :defendant_details, nested: :defendant,
                   summary_controller: :defendant_summary, form_class: Steps::FirmDetailsForm
@@ -127,7 +103,39 @@ RSpec.describe Decisions::SimpleDecisionTree do
                   step_name: :disbursement_delete, controller: :disbursement_type, nested: :disbursement,
                   summary_controller: :disbursements, form_class: Steps::DeleteForm
 
-  it_behaves_like 'a generic decision', :other_info, :solicitor_declaration, Steps::OtherInfoForm
+  it_behaves_like 'a generic decision', :other_info, :equality, Steps::OtherInfoForm
+  describe 'equality' do
+    let(:form) { Steps::AnswerEqualityForm.new(application:, answer_equality:) }
+    let(:decision_tree) { described_class.new(form, as: :equality) }
+
+    context 'when then answer is no' do
+      let(:answer_equality) { 'no' }
+
+      # TODO: update once pages exist
+      it 'moves to start_page' do
+        expect(decision_tree.destination).to eq(
+          action: :edit,
+          controller: :solicitor_declaration,
+          id: application,
+        )
+      end
+    end
+
+    context 'when the answer is yes' do
+      let(:answer_equality) { 'yes' }
+
+      # TODO: update once pages exist
+      it 'moves to start_page' do
+        expect(decision_tree.destination).to eq(
+          action: :show,
+          controller: :start_page,
+          id: application,
+          answer: 'yes'
+        )
+      end
+    end
+  end
+
   it_behaves_like 'a generic decision', :solicitor_declaration, :start_page, Steps::SolicitorDeclarationForm,
                   action_name: :show
 

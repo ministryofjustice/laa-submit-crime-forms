@@ -10,10 +10,12 @@ module Decisions
       claim_details: :work_item,
       work_item: :work_items,
       disbursement_cost: :disbursements,
-      other_info: :solicitor_declaration,
+      other_info: :equality,
     }.freeze
 
     SHOW_MAPPING = {
+      other_info: :start_page,
+      claim_type: :start_page,
       solicitor_declaration: :start_page,
     }.freeze
 
@@ -31,16 +33,16 @@ module Decisions
 
     private
 
-    def after_claim_type
-      if form_object.claim_type.supported?
-        show(:start_page)
-      else
-        index('/claims')
-      end
-    end
-
     def after_disbursement_type
       edit(:disbursement_cost, disbursement_id: form_object.record.id)
+    end
+
+    def after_equality
+      if form_object.answer_equality.yes?
+        show(:start_page, answer: 'yes')
+      else
+        edit(:solicitor_declaration)
+      end
     end
 
     def after_defendant_summary
