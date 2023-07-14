@@ -14,6 +14,8 @@ module Decisions
     }.freeze
 
     SHOW_MAPPING = {
+      other_info: :start_page,
+      claim_type: :start_page,
       solicitor_declaration: :start_page,
     }.freeze
 
@@ -30,14 +32,6 @@ module Decisions
     end
 
     private
-
-    def after_claim_type
-      if form_object.claim_type.supported?
-        show(:start_page)
-      else
-        index('/claims')
-      end
-    end
 
     def after_disbursement_type
       edit(:disbursement_cost, disbursement_id: form_object.record.id)
