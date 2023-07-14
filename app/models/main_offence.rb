@@ -352,5 +352,4 @@ MainOffence = Struct.new(:id, :description) do
   def name
     description.to_s
   end
-
 end
