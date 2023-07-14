@@ -108,9 +108,9 @@ is easy to imagine the load times on this page being sub-standard.
 
 ## 3. Additional configuration
 
-### without section index numbering
+### without section index NumberTog
 
-It is possible to generate a tasklist without index numbering by passing
+It is possible to generate a tasklist without index NumberTog by passing
 in the `show_index` variable as false when initializing the tasklist.
 
 ```ruby

@@ -324,11 +324,11 @@ RSpec.describe Steps::LettersCallsForm do
         expect(subject.calculation_rows).to eq(
           [['Items', 'Before uplift', 'After uplift'],
            ['Letters',
-            { html_attributes: { id: 'letters-without-uplift' }, text: '£0.00' },
-            { html_attributes: { id: 'letters-with-uplift' }, text: '£0.00' }],
+            { html_attributes: { id: 'letters-without-uplift' }, text: '£' },
+            { html_attributes: { id: 'letters-with-uplift' }, text: '£' }],
            ['Phone calls',
-            { html_attributes: { id: 'calls-without-uplift' }, text: '£0.00' },
-            { html_attributes: { id: 'calls-with-uplift' }, text: '£0.00' }]]
+            { html_attributes: { id: 'calls-without-uplift' }, text: '£' },
+            { html_attributes: { id: 'calls-with-uplift' }, text: '£' }]]
         )
       end
     end
@@ -388,18 +388,92 @@ RSpec.describe Steps::LettersCallsForm do
     end
   end
 
+  describe '#total_cost' do
+    let(:letters) { 2 }
+    let(:calls) { 3 }
+
+    context 'letters is 0' do
+      let(:letters) { 0 }
+
+      it 'only returns calls total' do
+        expect(subject.total_cost).to eq(12.27)
+      end
+    end
+
+    context 'letters is nil' do
+      let(:letters) { nil }
+
+      it 'only returns calls total' do
+        expect(subject.total_cost).to eq(12.27)
+      end
+    end
+
+    context 'calls is 0' do
+      let(:calls) { 0 }
+
+      it 'only returns letters total' do
+        expect(subject.total_cost).to eq(8.18)
+      end
+    end
+
+    context 'calls is nil' do
+      let(:calls) { nil }
+
+      it 'only returns letters total' do
+        expect(subject.total_cost).to eq(8.18)
+      end
+    end
+
+    context 'letters and calls are 0' do
+      let(:letters) { 0 }
+      let(:calls) { 0 }
+
+      it 'only returns nil' do
+        expect(subject.total_cost).to be_nil
+      end
+    end
+
+    context 'letters and calls are nil' do
+      let(:letters) { nil }
+      let(:calls) { nil }
+
+      it 'only returns nil' do
+        expect(subject.total_cost).to be_nil
+      end
+    end
+  end
+
   describe 'save!' do
-    context 'when letters_calls_uplift exists in DB but apply_uplift is false in attributes' do
-      let(:apply_uplift) { 'false' }
+    context 'when uplift values exists in DB but apply_uplift is false in attributes' do
+      let(:apply_letters_uplift) { 'false' }
+      let(:apply_calls_uplift) { 'false' }
       let(:application) do
-        Claim.create(office_code: 'AAA', letters_uplift: 10, calls_uplift: 10, letters: letters, calls: calls)
+        create(:claim, :with_uplift, letters_uplift: 10, calls_uplift: 10, letters: letters, calls: calls)
       end
 
-      it 'resets the letters_uplift and calls_uplift value' do
+      it 'resets the letters_uplift and calls_uplift values' do
         subject.save!
         expect(application.reload).to have_attributes(
           letters_uplift: nil,
           calls_uplift: nil,
+        )
+      end
+    end
+
+    context 'when uplift values are set and apply_uplift is true' do
+      let(:apply_letters_uplift) { 'true' }
+      let(:apply_calls_uplift) { 'true' }
+      let(:calls_uplift) { 10 }
+      let(:letters_uplift) { 10 }
+      let(:application) do
+        create(:claim, :with_uplift, letters_uplift: nil, calls_uplift: nil, letters: letters, calls: calls)
+      end
+
+      it 'sets the letters_uplift and calls_uplift values' do
+        subject.save!
+        expect(application.reload).to have_attributes(
+          letters_uplift: 10,
+          calls_uplift: 10,
         )
       end
     end
