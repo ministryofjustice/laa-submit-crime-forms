@@ -3,3 +3,7 @@
 @import "./custom/govuk-summary-list";
 @import "./custom/task_list";
 @import "./custom/accessible-autocomplete";
+
+.govuk-button-group.confirmation-button-group > form {
+    display: inline-flex;
+}
