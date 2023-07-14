@@ -141,7 +141,8 @@ RSpec.describe Decisions::SimpleDecisionTree do
                   action_name: :show
 
   it_behaves_like 'a generic decision', :other_info, :check_answers, Steps::OtherInfoForm, action_name: :show
-  it_behaves_like 'a generic decision', :check_answers, :solicitor_declaration, Steps::Shared::NoOpForm, action_name: :edit
+  it_behaves_like 'a generic decision', :check_answers, :solicitor_declaration, Steps::Shared::NoOpForm,
+                  action_name: :edit
   it_behaves_like 'a generic decision', :solicitor_declaration, :start_page, Steps::SolicitorDeclarationForm,
                   action_name: :show
 
