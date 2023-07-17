@@ -11,6 +11,7 @@ module Decisions
       work_item: :work_items,
       disbursement_cost: :disbursements,
       other_info: :equality,
+      equality_questions: :solicitor_declaration
     }.freeze
 
     SHOW_MAPPING = {
@@ -39,7 +40,7 @@ module Decisions
 
     def after_equality
       if form_object.answer_equality.yes?
-        show(:start_page, answer: 'yes')
+        edit(:equality_questions)
       else
         edit(:solicitor_declaration)
       end
