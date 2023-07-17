@@ -5,12 +5,14 @@ en:
       delete_it: Yes, delete it
     legend:
       steps_claim_type_form:
-        claim_type: What are you claiming for?
+        claim_type: What you are claiming for
         rep_order_date: Representation order date
-        cntp_date: CNTP date
+        cntp_date: Date the CNTP rep order was issued
+        ufn: What is your unique file number?
       steps_firm_details_form:
         solicitor_attributes:
           alternative_contact_details: Do you want to add alternative contact details?
+        solicitor_details: Solicitor details
       steps_case_details_form:
         main_offence_date: Main offence date
         assigned_counsel: Was there an assigned counsel?
@@ -51,14 +53,16 @@ en:
         disbursement_type: Which disbursement type is this is for?
       steps_disbursement_cost_form:
         prior_authority: Have you been granted prior authority for this disbursement?
+
     hint:
       steps_claim_type_form:
+        ufn: For example 120223/001
         rep_order_date: For example, 27 3 2007
         cntp_date: For example, 27 3 2007
         cntp_order: For example CNTP1234
       steps_firm_details_form:
+        solicitor_details: Enter the details of the solicitor managing this case
         solicitor_attributes:
-          full_name: Enter the details of the solicitor managing this case
           reference_number: For example, 2P341B
           alternative_contact_details: |
             We’ll use the contact details on your account if we need to ask you for
@@ -109,11 +113,11 @@ en:
 
     label:
       steps_claim_type_form:
+        ufn: What is your unique file number?
         claim_type_options:
           non_standard_magistrate: Non-standard magistrates' court payment
           breach_of_injunction: Breach of injunction
-          something_else: Something else
-        cntp_order: CNTP number
+        cntp_order: Clients CNTP(contempt) number
 
       steps_firm_details_form:
         firm_office_attributes:
@@ -241,14 +245,18 @@ en:
           'no': 'No'
         apply_vat_options:
           'true': Apply 20% VAT to this work
-
-
       steps_other_info_form:
         other_info: For example, justification for the time spent on the case, or for any uplift claimed
         concluded_options:
           'yes': 'Yes'
           'no': 'No'
         conclusion: Tell us why you did not make this claim within 3 months of the conclusion of the proceedings
+      steps_answer_equality_form:
+        answer_equality_options:
+          'yes': Yes, answer the equality questions (takes 2 minutes)
+          'no': No, skip the equality questions
+      steps_solicitor_declaration_form:
+        signatory_name: Full name
 
     other_disbursement_type:
       accident_reconstruction_report: Accident Reconstruction Report

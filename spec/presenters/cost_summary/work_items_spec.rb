@@ -32,7 +32,7 @@ RSpec.describe CostSummary::WorkItems do
         [
           {
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Attendance without counsel' },
-            value: { text: '£0.00' }
+            value: { text: '£' }
           },
           {
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Preparation' },

@@ -6,7 +6,7 @@ RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type:
   it 'can select a value from the autocomplete' do
     visit provider_saml_omniauth_callback_path
 
-    visit edit_steps_hearing_details_path(id: claim)
+    visit edit_steps_case_details_path(id: claim)
 
     click_on 'Save and continue'
 
@@ -23,7 +23,7 @@ RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type:
   it 'can enter a value not found in the autocoplete' do
     visit provider_saml_omniauth_callback_path
 
-    visit edit_steps_hearing_details_path(id: claim)
+    visit edit_steps_case_details_path(id: claim)
 
     click_on 'Save and continue'
 
