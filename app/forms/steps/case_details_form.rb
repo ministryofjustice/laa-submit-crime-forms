@@ -20,6 +20,10 @@ module Steps
       self.class::BOOLEAN_FIELDS
     end
 
+    def main_offence_suggestion=(value)
+      self.main_offence = value
+    end
+
     private
 
     def persist!
