@@ -70,4 +70,50 @@ RSpec.describe Steps::WorkItemController, type: :controller do
       end
     end
   end
+
+  describe '#duplicate' do
+    let(:application) { create(:claim) }
+    let(:work_item) { nil }
+
+    before do
+      # initialize the data to ensure the tests work as expected
+      application
+      work_item
+    end
+
+    context 'when existing work_item_id is passed in' do
+      let(:work_item) { create(:work_item, claim: application) }
+
+      it 'creates a duplicate work item and redirects to the edit page' do
+        expect do
+          get :duplicate, params: { id: application, work_item_id: work_item.id }
+        end.to change(application.work_items, :count).by(1)
+
+        new_record_id = application.work_items.pluck(:id).detect { |id| id != work_item.id }
+        expect(response).to redirect_to(edit_steps_work_item_path(application, work_item_id: new_record_id))
+      end
+    end
+
+    context 'when existing work_item_id is NEW_RECORD' do
+      let(:work_item) { build(:work_item, id: StartPage::NEW_RECORD) }
+
+      it 'redirects to the NEW_RECORD page' do
+        expect do
+          get :duplicate, params: { id: application, work_item_id: work_item.id }
+        end.not_to change(application.work_items, :count)
+
+        expect(response).to redirect_to(edit_steps_work_item_path(application, work_item_id: StartPage::NEW_RECORD))
+      end
+    end
+
+    context 'when unknown work_item_id is passed in' do
+      it 'redirects to the summary page' do
+        expect do
+          get :duplicate, params: { id: application, work_item_id: SecureRandom.uuid }
+        end.not_to change(application.work_items, :count)
+
+        expect(response).to redirect_to(edit_steps_work_items_path(application))
+      end
+    end
+  end
 end
