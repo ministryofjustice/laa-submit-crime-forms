@@ -13,6 +13,17 @@ module Steps
       update_and_advance(WorkItemForm, as: :work_item, record: work_item)
     end
 
+    def duplicate
+      if work_item.id == StartPage::NEW_RECORD
+        redirect_to edit_steps_work_item_path(current_application, work_item_id: StartPage::NEW_RECORD)
+      else
+        new_work_item = work_item.dup
+        new_work_item.save!
+        redirect_to edit_steps_work_item_path(current_application, work_item_id: new_work_item.id),
+                    flash: { success: t('.duplicate') }
+      end
+    end
+
     private
 
     def decision_tree_class

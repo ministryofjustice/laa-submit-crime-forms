@@ -149,4 +149,4 @@ RSpec/NestedGroups:
 RSpec/ExampleLength:
   Max: 16
   Exclude:
-    - spec/presenters/summary/sections/*
+    - spec/lib/routes_helpers_spec.rb
