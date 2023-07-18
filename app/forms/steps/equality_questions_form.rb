@@ -8,9 +8,9 @@ module Steps
     attribute :ethnic_group, :value_object, source: EthnicGroups
     attribute :disability, :value_object, source: Disabilities
 
-    validates :gender, inclusion: { in: Genders.values }
-    validates :ethnic_group, inclusion: { in: EthnicGroups.values }
-    validates :disability, inclusion: { in: Disabilities.values }
+    validates :gender, inclusion: { in: Genders.values, allow_blank: true }
+    validates :ethnic_group, inclusion: { in: EthnicGroups.values, allow_blank: true }
+    validates :disability, inclusion: { in: Disabilities.values, allow_blank: true }
 
     private
 
