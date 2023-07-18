@@ -1,9 +1,6 @@
 module Steps
   class CheckAnswersController < Steps::BaseStepController
     def show
-      @form_object = Steps::Shared::NoOpForm.build(
-        current_application
-      )
       @report = CheckAnswers::Report.new(current_application)
     end
 
