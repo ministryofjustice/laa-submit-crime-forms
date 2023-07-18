@@ -9,7 +9,8 @@ module Decisions
       reason_for_claim: :claim_details,
       claim_details: :work_item,
       work_item: :work_items,
-      disbursement_cost: :disbursements
+      disbursement_cost: :disbursements,
+      equality: :solicitor_declaration
     }.freeze
 
     SHOW_MAPPING = {

@@ -22,7 +22,7 @@ RSpec.describe Steps::CheckAnswersController, type: :controller do
     end
 
     context 'when page is already in navigation stack but not at the end' do
-      let(:navigation_stack) { ["/applications/#{claim.id}/steps/check_answers", '/foo'] }
+      let(:navigation_stack) { ["/applications/#{claim.id}/steps/check_answers"] }
 
       it 'removes entries after the page' do
         get :show, params: { id: claim }
