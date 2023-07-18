@@ -17,8 +17,7 @@ module CheckAnswers
     end
 
     def rows
-      all_rows = []
-      all_rows.concat main_defendant_rows
+      all_rows = main_defendant_rows
       additional_defendants.each_with_index do |defendant, index|
         all_rows.concat additional_defendant_rows(defendant, index + 1)
       end
