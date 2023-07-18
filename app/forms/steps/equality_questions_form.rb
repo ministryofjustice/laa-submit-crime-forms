@@ -6,11 +6,11 @@ module Steps
   class EqualityQuestionsForm < Steps::BaseFormObject
     attribute :gender, :value_object, source: Genders
     attribute :ethnic_group, :value_object, source: EthnicGroups
-    attribute :disablities, :value_object, source: Disablities
+    attribute :disability, :value_object, source: Disabilities
 
     validates :gender, inclusion: { in: Genders.values }
     validates :ethnic_group, inclusion: { in: EthnicGroups.values }
-    validates :disablities, inclusion: { in: Disablities.values }
+    validates :disability, inclusion: { in: Disabilities.values }
 
     private
 

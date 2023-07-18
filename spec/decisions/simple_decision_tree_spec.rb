@@ -125,12 +125,11 @@ RSpec.describe Decisions::SimpleDecisionTree do
       let(:answer_equality) { 'yes' }
 
       # TODO: update once pages exist
-      it 'moves to start_page' do
+      it 'moves to equality_questions page' do
         expect(decision_tree.destination).to eq(
-          action: :show,
-          controller: :start_page,
+          action: :edit,
+          controller: :equality_questions,
           id: application,
-          answer: 'yes'
         )
       end
     end
