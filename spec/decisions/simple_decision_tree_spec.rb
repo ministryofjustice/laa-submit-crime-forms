@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Decisions::SimpleDecisionTree do
   let(:application) { build(:claim) }
 
+  it_behaves_like 'a generic decision', :claim_type, :start_page, Steps::ClaimTypeForm, action_name: :show
   it_behaves_like 'a decision with nested object',
                   step_name: :firm_details, controller: :defendant_details, nested: :defendant,
                   summary_controller: :defendant_summary, form_class: Steps::FirmDetailsForm
