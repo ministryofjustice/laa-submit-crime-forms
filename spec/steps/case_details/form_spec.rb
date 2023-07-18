@@ -57,8 +57,10 @@ RSpec.describe Steps::CaseDetailsForm do
   end
 
   context 'when main_offence_suggestion is not provided' do
+    subject { described_class.new(arguments.merge(main_offence:)) }
+
     it 'main_offence not provided' do
-      # expect(subject.main_offence).to eq(main_offence)
+      expect(subject.main_offence).to eq(main_offence)
     end
   end
 
