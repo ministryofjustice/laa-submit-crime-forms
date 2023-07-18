@@ -12,9 +12,9 @@ en:
         actions: Actions
       status:
         pending: In progress
-        submitted: Submitted
+        completed: Submitted
         accessed: Accessed
       status_colour:
         pending: govuk-tag--grey
-        submitted: govuk-tag--blue
+        completed: govuk-tag--primary
         accessed: govuk-tag--green

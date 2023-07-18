@@ -15,9 +15,7 @@ module Decisions
     }.freeze
 
     SHOW_MAPPING = {
-      other_info: :start_page,
-      claim_type: :start_page,
-      solicitor_declaration: :start_page,
+      solicitor_declaration: :claim_confirmation,
     }.freeze
 
     def destination

@@ -3,6 +3,10 @@ class DummyStepController < Steps::BaseStepController
     head(:ok)
   end
 
+  def edit
+    head(:ok)
+  end
+
   def update
     update_and_advance(DummyStepImplementation.form_class, DummyStepImplementation.options)
   end
@@ -23,5 +27,9 @@ class DummyStepController < Steps::BaseStepController
 
   def decision_tree_class
     DummyStepImplementation.decision_tree_class || super
+  end
+
+  def skip_stack
+    DummyStepImplementation.skip_stack || super
   end
 end

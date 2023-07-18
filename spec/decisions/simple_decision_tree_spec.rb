@@ -135,7 +135,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
     end
   end
 
-  it_behaves_like 'a generic decision', :solicitor_declaration, :start_page, Steps::SolicitorDeclarationForm,
+  it_behaves_like 'a generic decision', :solicitor_declaration, :claim_confirmation, Steps::SolicitorDeclarationForm,
                   action_name: :show
 
   context 'when step is unknown' do

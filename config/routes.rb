@@ -73,6 +73,8 @@ Rails.application.routes.draw do
       edit_step :equality
       edit_step :equality_questions
       edit_step :solicitor_declaration
+      show_step :claim_confirmation
+
     end
   end
 
