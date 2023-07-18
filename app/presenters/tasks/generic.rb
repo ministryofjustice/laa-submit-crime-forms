@@ -19,8 +19,6 @@ module Tasks
     end
 
     def associated_form
-      return unless defined? self.class::FORM
-
       self.class::FORM
     end
   end
