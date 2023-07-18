@@ -1,27 +1,3 @@
-module RouteHelpers
-  def edit_step(name, opts = {}, &block)
-  resource name,
-           only: opts.fetch(:only, [:edit, :update]),
-           controller: name,
-           path_names: { edit: '' } do; block.call if block_given?; end
-  end
-
-  def crud_step(name, opts = {})
-    edit_step name, only: [] do
-      resources only: [:edit, :update, :destroy],
-                except: opts.fetch(:except, []),
-                controller: name, param: opts.fetch(:param),
-                path_names: { edit: '' } do
-        get :confirm_destroy, on: :member if parent_resource.actions.include?(:destroy)
-      end
-    end
-  end
-
-  def show_step(name)
-    resource name, only: [:show], controller: name
-  end
-end
-
 Rails.application.routes.draw do
   extend RouteHelpers
 
@@ -81,7 +57,11 @@ Rails.application.routes.draw do
       edit_step :reason_for_claim
       edit_step :claim_details
       edit_step :letters_calls
-      crud_step :work_item, param: :work_item_id, except: [:destroy]
+      crud_step :work_item, param: :work_item_id, except: [:destroy] do
+        member do
+          get :duplicate
+        end
+      end
       edit_step :work_items
       crud_step :work_item_delete, param: :work_item_id, except: [:destroy]
       crud_step :disbursement_type, param: :disbursement_id, except: [:destroy]
@@ -91,7 +71,9 @@ Rails.application.routes.draw do
       show_step :cost_summary
       edit_step :other_info
       edit_step :supporting_evidence
+      edit_step :equality
       edit_step :solicitor_declaration
+      show_step :claim_confirmation
 
     end
   end

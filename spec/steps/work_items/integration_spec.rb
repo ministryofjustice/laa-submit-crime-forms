@@ -137,4 +137,28 @@ RSpec.describe 'User can manage work items', type: :system do
 
     expect(claim.work_items.count).to eq(0)
   end
+
+  it 'can duplicate a work item' do
+    claim.work_items.create(
+      work_type: 'advocacy',
+      time_spent: 122,
+      completed_on: Date.new(2022, 4, 20),
+      fee_earner: 'BJB',
+      uplift: nil,
+    )
+
+    visit edit_steps_work_items_path(claim.id)
+
+    expect(page).to have_content('Advocacy', count: 1)
+
+    find('.govuk-table__row', text: 'Advocacy').click_on 'Duplicate'
+
+    expect(claim.reload.work_items.count).to eq(2)
+
+    click_on 'Save and continue'
+
+    expect(claim.reload.work_items.count).to eq(2)
+
+    expect(page).to have_content('Advocacy', count: 2)
+  end
 end

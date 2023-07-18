@@ -12,10 +12,11 @@ module Decisions
       disbursement_cost: :disbursements,
       other_info: :supporting_evidence,
       supporting_evidence: :solicitor_declaration,
+      solicitor_declaration: :equality,
     }.freeze
 
     SHOW_MAPPING = {
-      solicitor_declaration: :start_page,
+      equality: :claim_confirmation,
     }.freeze
 
     def destination
@@ -32,16 +33,16 @@ module Decisions
 
     private
 
-    def after_claim_type
-      if form_object.claim_type.supported?
-        show(:start_page)
-      else
-        index('/claims')
-      end
-    end
-
     def after_disbursement_type
       edit(:disbursement_cost, disbursement_id: form_object.record.id)
+    end
+
+    def after_equality
+      if form_object.answer_equality.yes?
+        show(:start_page, answer: 'yes')
+      else
+        edit(:solicitor_declaration)
+      end
     end
 
     def after_defendant_summary

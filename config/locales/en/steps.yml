@@ -100,6 +100,8 @@ en:
         calculation: Calculation
         before_uplift: Before uplift
         after_uplift: After uplift
+      duplicate:
+        duplicate: Work item successfully duplicated
     work_items:
       edit:
         page_title: Work Items
@@ -212,6 +214,17 @@ en:
           Queensbridge Road
           Nottingham
           NG2 1AW
+    equality:
+      edit:
+        page_title: Equality monitoring questions
+        heading: Equality monitoring questions
+        subheading: We’d like to ask some equality questions.
+        answer_equality: Do you want to answer the equality questions?
+        answer_equality_html: |
+          <p>These questions are optional. Your answers will be treated in the strictest confidence.
+          They will only be used to help us monitor and research access to LAA funded services,
+          in line with our duties under the Equality Act 2010.</p>
+          <p>Your answers will not affect your claim.</p>
     solicitor_declaration:
       edit:
         page_title: Confirm the following
@@ -224,6 +237,19 @@ en:
         warning_list_1: be prosecuted
         warning_list_2: have to pay a penalty
         legend: Legal representative
+    claim_confirmation:
+      show:
+        page_title: Claim complete
+        panel_heading: Claim complete
+        panel_text: Your LAA reference number
+        confirmation_email_sent: "We have sent you a confirmation email."
+        next_steps:
+          title: What happens next
+          process_1: "We'll assess your claim."
+          process_2: "We’ll send you an email to either accept your claim or to ask for more information."
+        feedback:
+          link_text: What did you think of this service?
+          description: takes 30 seconds
 
   laa_multi_step_forms:
     task_list:

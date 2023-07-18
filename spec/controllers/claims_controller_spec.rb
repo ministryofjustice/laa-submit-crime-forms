@@ -5,7 +5,7 @@ RSpec.describe ClaimsController do
     let(:scope) { double(:scope, not: [instance_double(Claim)]) }
 
     before do
-      allow(Claim).to receive_message_chain(:where, :order).and_return(scope)
+      allow(Claim).to receive_message_chain(:where, :not, :order).and_return(scope)
       allow(scope).to receive_message_chain(:page, :per).and_return(scope)
       get :index
     end
@@ -13,10 +13,6 @@ RSpec.describe ClaimsController do
     it 'renders successfully with claims' do
       expect(response).to render_template(:index)
       expect(response).to be_successful
-    end
-
-    it 'retrieves valid claims' do
-      expect(Claim).to have_received(:where).with(claim_type: %w[non_standard_magistrate breach_of_injunction])
     end
   end
 
