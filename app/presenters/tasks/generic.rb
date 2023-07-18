@@ -9,7 +9,7 @@ module Tasks
     end
 
     def completed?(rec = record, form = associated_form)
-      form.build(rec, application:).valid? : true
+      form.build(rec, application:).valid?
     end
 
     private
