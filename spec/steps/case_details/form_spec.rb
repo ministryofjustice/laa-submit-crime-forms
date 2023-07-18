@@ -17,7 +17,7 @@ RSpec.describe Steps::CaseDetailsForm do
 
   let(:application) { instance_double(Claim, update!: true) }
 
-  let(:main_offence) { 'murder' }
+  let(:main_offence) { MainOffence.all.sample.name }
   let(:main_offence_date) { Date.new(2023, 4, 1) }
   let(:unassigned_counsel) { 'no' }
   let(:assigned_counsel) { 'yes' }
@@ -53,6 +53,22 @@ RSpec.describe Steps::CaseDetailsForm do
           expect(form.errors.of_kind?(field, :blank)).to be(true)
         end
       end
+    end
+  end
+
+  context 'when main_offence_suggestion is not provided' do
+    it 'main_offence not provided' do
+      # expect(subject.main_offence).to eq(main_offence)
+    end
+  end
+
+  context 'when main_offence_suggestion is provided' do
+    subject { described_class.new(arguments.merge(main_offence_suggestion:)) }
+
+    let(:main_offence_suggestion) { 'apples' }
+
+    it 'main_offence is provided' do
+      expect(subject.main_offence).to eq('apples')
     end
   end
 end

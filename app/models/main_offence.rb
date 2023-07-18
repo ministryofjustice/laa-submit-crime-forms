@@ -1,5 +1,5 @@
+# rubocop:disable all
 MainOffence = Struct.new(:description) do
-  # rubocop:disable Metrics/MethodLength
   def self.all
     @all ||= [
       new('Assault (common)'),
@@ -141,7 +141,7 @@ MainOffence = Struct.new(:description) do
       new('Procuring execution of a valuable security by deception'),
       new('Advertising rewards for return of goods stolen or lost'),
       new('Dishonestly retaining a wrongful credit'),
-      new('raudulent use of telecommunication system'),
+      new('Fraudulent use of telecommunication system'),
       new('Possession or supply of anything for fraudulent purpose in connection with use of telecommunication system'),
       new('Offences under the Companies Act 1985'),
       new('Insider dealing'),
@@ -341,7 +341,7 @@ MainOffence = Struct.new(:description) do
       new('Unauthorised campers'),
     ]
   end
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable all
 
   def name
     description.to_s
