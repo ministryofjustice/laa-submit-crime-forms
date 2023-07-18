@@ -1,9 +1,5 @@
 require 'rails_helper'
 
-# it shows LAA reference on the claim confirmation page
-# it can show all claims for a provider
-# it can start a new claim
-
 RSpec.describe 'User can see an application status', type: :system do
   let(:claim) { Claim.create!(office_code: 'AAA', laa_reference: 'ABC123', status: 'completed') }
 
@@ -26,11 +22,11 @@ RSpec.describe 'User can see an application status', type: :system do
   end
 
   it 'can start a new claim when clicking on start a new claim button' do
-    click_on 'Start a new claim'
-    # expect(page).to have_current_path edit_steps_claim_type_path(claim.id)
-    # expect(claim.reload).to have_attributes(
-    #   laa_reference: '',
-    #   status: 'pending',
-    # )
+    expect { click_on 'Start a new claim' }.to change(Claim, :count).by(1)
+    new_claim = Claim.order(:created_at).last
+    expect(page).to have_content('What you are claiming for')
+    expect(new_claim).to have_attributes(
+      status: 'pending',
+    )
   end
 end
