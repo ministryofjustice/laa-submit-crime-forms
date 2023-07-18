@@ -1,7 +1,13 @@
 module CheckAnswers
   class Base
+    attr_accessor :group, :section
+
     def translate_table_key(table, key, **opt)
       I18n.t("steps.check_answers.show.sections.#{table}.#{key}.key", **opt)
+    end
+
+    def title(**opt)
+      I18n.t("steps.check_answers.groups.#{group}.#{section}.title", **opt)
     end
 
     def rows

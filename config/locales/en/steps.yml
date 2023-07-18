@@ -224,11 +224,11 @@ en:
       groups:
         about_you: 
           heading: About you
-          your_details: 
+          firm_details: 
             title: Your Details
         about_defendant: 
           heading: About the defendant
-          defendant_details:
+          defendant_summary:
             title: Defendant details
         about_case:
           heading: About the case

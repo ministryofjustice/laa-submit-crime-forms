@@ -3,17 +3,16 @@ module CheckAnswers
     attr_reader :firm_details_form
 
     KEY = 'firm_details'.freeze
+    GROUP = 'about_you'.freeze
 
     def initialize(claim)
       @firm_details_form = Steps::FirmDetailsForm.build(claim)
+      @group = GROUP
+      @section = KEY
     end
 
     def route_path
       KEY
-    end
-
-    def title
-      I18n.t('steps.check_answers.groups.about_you.your_details.title')
     end
 
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

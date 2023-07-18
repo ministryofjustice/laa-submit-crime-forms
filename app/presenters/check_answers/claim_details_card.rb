@@ -2,16 +2,17 @@ module CheckAnswers
   class ClaimDetailsCard < Base
     attr_reader :claim_details_form
 
+    KEY = 'claim_details'.freeze
+    GROUP = 'about_claim'.freeze
+
     def initialize(claim)
       @claim_details_form = Steps::ClaimDetailsForm.build(claim)
+      @group = GROUP
+      @section = KEY
     end
 
     def route_path
       'claim_details'
-    end
-
-    def title
-      I18n.t('steps.check_answers.groups.about_claim.claim_details.title')
     end
   end
 end

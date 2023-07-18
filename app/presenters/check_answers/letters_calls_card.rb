@@ -2,16 +2,17 @@ module CheckAnswers
   class LettersCallsCard < Base
     attr_reader :letters_calls_form
 
+    KEY = 'letters_calls'.freeze
+    GROUP = 'about_claim'.freeze
+
     def initialize(claim)
       @letters_calls_form = Steps::LettersCallsForm.build(claim)
+      @group = GROUP
+      @section = KEY
     end
 
     def route_path
       'letters_calls'
-    end
-
-    def title
-      I18n.t('steps.check_answers.groups.about_claim.letters_calls.title')
     end
   end
 end

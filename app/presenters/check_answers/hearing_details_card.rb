@@ -3,9 +3,12 @@ module CheckAnswers
     attr_reader :hearing_details_form
 
     KEY = 'hearing_details'.freeze
+    GROUP = 'about_case'.freeze
 
     def initialize(claim)
       @hearing_details_form = Steps::HearingDetailsForm.build(claim)
+      @group = GROUP
+      @section = KEY
     end
 
     def route_path
@@ -43,10 +46,6 @@ module CheckAnswers
       ]
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
-
-    def title
-      I18n.t('steps.check_answers.groups.about_case.hearing_details.title')
-    end
 
     private
 

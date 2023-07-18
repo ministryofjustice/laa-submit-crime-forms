@@ -2,16 +2,17 @@ module CheckAnswers
   class DisbursementCostsCard < Base
     attr_reader :disbursement_type_form
 
-    def initialize(claim)
+    KEY = 'disbursement_costs'.freeze
+    GROUP = 'about_claim'.freeze
+
+    def initialize(_claim)
       # @disbursement_type_form = Steps::DisbursementTypeForm.build(claim)
+      @group = GROUP
+      @section = KEY
     end
 
     def route_path
       'disbursements'
-    end
-
-    def title
-      I18n.t('steps.check_answers.groups.about_claim.disbursement_costs.title')
     end
   end
 end
