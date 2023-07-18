@@ -33,5 +33,9 @@ module Steps
     def ensure_work_item
       work_item || redirect_to(edit_steps_work_items_path(current_application))
     end
+
+    def skip_stack
+      true
+    end
   end
 end

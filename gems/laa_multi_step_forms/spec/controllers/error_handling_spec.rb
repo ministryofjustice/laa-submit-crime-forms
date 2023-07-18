@@ -6,7 +6,7 @@ RSpec.describe DummyStepController, type: :controller do
   #       when Errors::ApplicationNotFound
 
   let(:application) do
-    double(:application, id: SecureRandom.uuid, navigation_stack: {}, 'navigation_stack=': true, save!: true)
+    double(:application, id: SecureRandom.uuid, navigation_stack: [], 'navigation_stack=': true, save!: true)
   end
   let(:error_class) { nil }
 
