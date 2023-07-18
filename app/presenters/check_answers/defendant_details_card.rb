@@ -3,17 +3,16 @@ module CheckAnswers
     attr_reader :defendant_details
 
     KEY = 'defendant_summary'.freeze
+    GROUP = 'about_defendant'.freeze
 
     def initialize(claim)
       @defendant_details = claim.defendants
+      @group = GROUP
+      @section = KEY
     end
 
     def route_path
       KEY
-    end
-
-    def title
-      I18n.t('steps.check_answers.groups.about_defendant.defendant_details.title')
     end
 
     def rows

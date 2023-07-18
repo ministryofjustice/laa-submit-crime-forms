@@ -2,16 +2,17 @@ module CheckAnswers
   class CaseDisposalCard < Base
     attr_reader :case_disposal_form
 
+    KEY = 'case_disposal'.freeze
+    GROUP = 'about_case'.freeze
+
     def initialize(claim)
-      @case_disposal_form = Steps::CaseDisposalForm.build(claim)
+      @case_disposal_form = Steps::CaseDisposalForm.build(claim),
+                            @group = GROUP
+      @section = KEY
     end
 
     def route_path
       'case_disposal'
-    end
-
-    def title
-      I18n.t('steps.check_answers.groups.about_case.case_disposal.title')
     end
   end
 end

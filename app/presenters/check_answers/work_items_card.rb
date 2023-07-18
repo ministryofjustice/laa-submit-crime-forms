@@ -2,16 +2,17 @@ module CheckAnswers
   class WorkItemsCard < Base
     attr_reader :work_item_form
 
-    def initialize(claim)
+    KEY = 'work_items'.freeze
+    GROUP = 'about_claim'.freeze
+
+    def initialize(_claim)
       # @work_item_form = Steps::WorkItemForm.build(claim)
+      @group = GROUP
+      @section = KEY
     end
 
     def route_path
       'work_items'
-    end
-
-    def title
-      I18n.t('steps.check_answers.groups.about_claim.work_items.title')
     end
   end
 end

@@ -3,17 +3,16 @@ module CheckAnswers
     attr_reader :case_details_form
 
     KEY = 'case_details'.freeze
+    GROUP = 'about_case'.freeze
 
     def initialize(claim)
       @case_details_form = Steps::CaseDetailsForm.build(claim)
+      @group = GROUP
+      @section = KEY
     end
 
     def route_path
       KEY
-    end
-
-    def title
-      I18n.t('steps.check_answers.groups.about_case.case_details.title')
     end
 
     # TO DO: update remittal to include date of remittal when CRM457-172 is done
