@@ -37,8 +37,29 @@
 
     <%= form_with model: @form_object do |form| %>
       <%# Postal address component %>
+      <div class="moj-multi-file-upload">
+        <div class="moj-multi-file-upload__upload">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label--m" for="documents">
+              Upload files
+            </label>
+            <div class="govuk-hint">
+              Files must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
+            </div>
+            <input class="govuk-file-upload moj-multi-file-upload__input" id="documents" name="documents" type="file" multiple="">
+          </div>
+          <button class="govuk-button govuk-button--secondary moj-multi-file-upload__button" data-module="govuk-button">
+            Upload file
+          </button>
+        </div>
+        <div class="moj-multi-file__uploaded-files hidden">
+          <h2 class="govuk-heading-m">Uploaded files</h2>
+          <div class="govuk-summary-list moj-multi-file-upload__list"></div>
+        </div>
+      </div>
+
       <%= form.govuk_check_boxes_fieldset :postal_field, multiple: false, legend: nil do %>
-        <%= form.govuk_check_box t('.supporting_evidence'), 'true', 'false', multiple: false do %>
+        <%= form.govuk_check_box :send_by_post, 'true', 'false', label: { text: t('.supporting_evidence')}, multiple: false do %>
           <%= tag.div class: "govuk-warning-text" do -%>
             <%= tag.span t('.post_warning.icon'), class: "govuk-warning-text__icon", aria: { hidden: true} %>
             <%= tag.strong class: "govuk-warning-text__text" do -%>
