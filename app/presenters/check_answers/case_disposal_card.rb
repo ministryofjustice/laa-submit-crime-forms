@@ -6,8 +6,8 @@ module CheckAnswers
     GROUP = 'about_case'.freeze
 
     def initialize(claim)
-      @case_disposal_form = Steps::CaseDisposalForm.build(claim),
-                            @group = GROUP
+      @case_disposal_form = Steps::CaseDisposalForm.build(claim)
+      @group = GROUP
       @section = KEY
     end
 
