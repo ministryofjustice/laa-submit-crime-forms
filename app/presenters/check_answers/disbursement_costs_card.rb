@@ -7,7 +7,6 @@ module CheckAnswers
     GROUP = 'about_claim'
 
     def initialize(_claim)
-      # @disbursement_type_form = Steps::DisbursementTypeForm.build(claim)
       @group = GROUP
       @section = KEY
     end
