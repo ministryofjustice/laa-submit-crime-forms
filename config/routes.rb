@@ -70,7 +70,7 @@ Rails.application.routes.draw do
       edit_step :disbursements
       show_step :cost_summary
       edit_step :other_info
-      edit_step :supporting_evidence
+      upload_step :supporting_evidence
       edit_step :equality
       edit_step :solicitor_declaration
       show_step :claim_confirmation

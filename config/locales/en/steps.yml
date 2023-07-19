@@ -206,7 +206,8 @@ en:
         file_name: File Name
         uploading_docs: Documents waiting to be saved
         upload_files: Upload files
-        upload_file: Upload files
+        uploaded_files: Uploaded files
+        upload_file: Upload file
         postal_address: |
           Post your evidence to:
           Legal Aid Agency

@@ -1,3 +1,5 @@
+<%= javascript_import_module_tag 'file-upload' %>
+
 <% title t('.page_title') %>
 <% step_header %>
 
@@ -36,28 +38,25 @@
     <% end -%>
 
     <%= form_with model: @form_object do |form| %>
-      <%# Postal address component %>
+      <%# File upload component %>
       <div class="moj-multi-file-upload">
         <div class="moj-multi-file-upload__upload">
           <div class="govuk-form-group">
-            <label class="govuk-label govuk-label--m" for="documents">
-              Upload files
-            </label>
-            <div class="govuk-hint">
-              Files must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
-            </div>
+            <%= tag.label t('.file_upload.heading'), class: "govuk-label govuk-label--m", for: "documents" %>
+            <%= tag.div t('.file_upload.caption'), class: "govuk-hint" %>
             <input class="govuk-file-upload moj-multi-file-upload__input" id="documents" name="documents" type="file" multiple="">
           </div>
           <button class="govuk-button govuk-button--secondary moj-multi-file-upload__button" data-module="govuk-button">
-            Upload file
+            <%= t('.upload_file') %>
           </button>
         </div>
         <div class="moj-multi-file__uploaded-files hidden">
-          <h2 class="govuk-heading-m">Uploaded files</h2>
+          <%= tag.h2 t('.uploaded_files'), class: "govuk-heading-m" %>
           <div class="govuk-summary-list moj-multi-file-upload__list"></div>
         </div>
       </div>
 
+      <%# Postal address component %>
       <%= form.govuk_check_boxes_fieldset :postal_field, multiple: false, legend: nil do %>
         <%= form.govuk_check_box :send_by_post, 'true', 'false', label: { text: t('.supporting_evidence')}, multiple: false do %>
           <%= tag.div class: "govuk-warning-text" do -%>
