@@ -13,7 +13,7 @@ RSpec.describe Steps::CheckAnswersController, type: :controller do
     context 'when page is already in navigation stack and at the end' do
       let(:navigation_stack) { ['/foo', "/applications/#{claim.id}/steps/check_answers"] }
 
-      it 'does not chnage the navigation stack' do
+      it 'does not change the navigation stack' do
         get :show, params: { id: claim }
         expect(claim.reload).to have_attributes(
           navigation_stack:
