@@ -43,6 +43,11 @@ module CheckAnswers
           key: { text: translate_table_key(KEY, 'solicitor_reference_number'),
 classes: 'govuk-summary-list__value-width-50' },
           value: { text: firm_details_form.solicitor.reference_number }
+        },
+        {
+          key: { text: translate_table_key(KEY, 'contact_full_name'),
+classes: 'govuk-summary-list__value-width-50' },
+          value: { text: firm_details_form.solicitor.contact_full_name }
         }
       ]
     end
