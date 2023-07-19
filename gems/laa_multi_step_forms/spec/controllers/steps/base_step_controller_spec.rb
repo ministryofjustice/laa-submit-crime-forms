@@ -168,7 +168,7 @@ RSpec.describe DummyStepController, type: :controller do
       it 'sets the paramters on the form' do
         expect(form_class).to receive(:new).with({
                                                    'application' => application,
-          'record' => nil,
+          'record' => application,
           'first' => '1',
           'second' => '2',
                                                  })
@@ -182,7 +182,7 @@ RSpec.describe DummyStepController, type: :controller do
         it 'ignore additional and skips missing params' do
           expect(form_class).to receive(:new).with({
                                                      'application' => application,
-            'record' => nil,
+            'record' => application,
             'first' => '1',
                                                    })
 
@@ -211,7 +211,7 @@ RSpec.describe DummyStepController, type: :controller do
       it 'sets the paramters on the form' do
         expect(form_class).to receive(:new).with({
                                                    'application' => application,
-          'record' => nil,
+          'record' => application,
           'first' => '1',
           'second' => '2',
                                                  })
@@ -225,7 +225,7 @@ RSpec.describe DummyStepController, type: :controller do
         it 'ignore additional and skips missing params' do
           expect(form_class).to receive(:new).with({
                                                      'application' => application,
-            'record' => nil,
+            'record' => application,
             'first' => '1',
                                                    })
 
@@ -262,7 +262,7 @@ RSpec.describe DummyStepController, type: :controller do
       it 'sets the paramters on the form' do
         expect(form_class).to receive(:new).with({
                                                    'application' => application,
-          'record' => nil,
+          'record' => application,
           'first' => '1',
           'second' => '2',
                                                  })
