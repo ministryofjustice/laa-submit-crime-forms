@@ -6,8 +6,9 @@
     <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :ufn, width: 'one-third', autocomplete: 'off' %>
-      <%= f.govuk_text_field :main_offence, width: 'one-third', autocomplete: 'off' %>
+      <%= suggestion_select f, :main_offence, MainOffence.all, :name, :name, width: 20,
+                              options: { include_blank: true }, label: { size: 's' } %>
+
       <%= f.govuk_date_field :main_offence_date, maxlength_enabled: true, legend: { size: 's' } %>
 
       <% @form_object.boolean_fields.each do |field| %>
