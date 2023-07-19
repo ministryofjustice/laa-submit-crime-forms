@@ -932,6 +932,7 @@
     "@babel/plugin-transform-unicode-sets-regex" "^7.22.5"
     "@babel/preset-modules" "^0.1.5"
     "@babel/types" "^7.22.5"
+    "@nicolo-ribaudo/semver-v6" "^6.3.3"
     babel-plugin-polyfill-corejs2 "^0.4.4"
     babel-plugin-polyfill-corejs3 "^0.8.2"
     babel-plugin-polyfill-regenerator "^0.5.1"

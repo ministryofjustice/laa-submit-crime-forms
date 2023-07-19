@@ -1,73 +1,174 @@
 require 'rails_helper'
 
+class FakeApp < Steps::BaseFormObject
+  attribute :id
+  attribute :navigation_stack
+
+  def save!(*)
+    true
+  end
+end
+
 RSpec.describe DummyStepController, type: :controller do
+  let(:application_id) { SecureRandom.uuid }
+  let(:navigation_stack) { [] }
+  let!(:application) do
+    FakeApp.new(id: application_id, navigation_stack: navigation_stack)
+  end
+  let(:form_class) do
+    class_double(Steps::BaseFormObject,
+                 model_name: double(:model_name, singular: 'test_model'),
+                 attribute_names: %w[first second],
+                 new: form,)
+  end
+  let(:form) { instance_double(Steps::BaseFormObject, save!: true, save: save_form) }
+  let(:save_form) { true }
+  let(:options) { { as: :claim_type } }
+  let(:decision_tree_class) { double(:decision_tree_class, new: decision_tree) }
+  let(:decision_tree) { double(:decision_tree, destination:) }
+  let(:destination) { { action: :show, id: application.id, controller: :dummy_step } }
+
+  before do
+    allow(DummyStepImplementation).to receive(:form_class).and_return(form_class)
+    allow(DummyStepImplementation).to receive(:current_application).and_return(application)
+    allow(DummyStepImplementation).to receive(:options).and_return(options)
+    allow(DummyStepImplementation).to receive(:decision_tree_class).and_return(decision_tree_class)
+  end
+
   describe 'navigation stack' do
-    let(:application_id) { SecureRandom.uuid }
-    let!(:application) do
-      double(:claim, id: application_id, save!: true, 'navigation_stack=': true, navigation_stack: navigation_stack)
-    end
     let(:dummy_step_path) { "/dummy_step/#{application_id}" }
 
-    before do
-      allow(DummyStepImplementation).to receive(:current_application).and_return(application)
+    context 'for show endpoints' do
+      context 'when the stack is empty' do
+        it 'adds the page to the stack' do
+          get :show, params: { id: application_id }
 
-      get :show, params: { id: application_id }
-    end
+          expect(application.navigation_stack).to eq([dummy_step_path])
+        end
 
-    context 'when the stack is empty' do
-      let(:navigation_stack) { [] }
+        context 'but skip_stack is true' do
+          before do
+            expect(DummyStepImplementation).to receive(:skip_stack).and_return(true)
+          end
 
-      it 'adds the page to the stack' do
-        expect(application).to have_received(:navigation_stack=).with([dummy_step_path])
+          it 'does not modify the stack' do
+            get :show, params: { id: application_id }
+
+            expect(application.navigation_stack).to eq([])
+          end
+        end
+      end
+
+      context 'when the current page is on the stack' do
+        let(:navigation_stack) { ['/foo', '/bar', dummy_step_path, '/baz'] }
+
+        it 'does not change the stack' do
+          get :show, params: { id: application_id }
+
+          expect(application.navigation_stack).to eq(['/foo', '/bar', dummy_step_path, '/baz'])
+        end
+
+        context 'but skip_stack is true' do
+          before do
+            expect(DummyStepImplementation).to receive(:skip_stack).and_return(true)
+          end
+
+          it 'does not modify the stack' do
+            get :show, params: { id: application_id }
+
+            expect(application.navigation_stack).to eq(['/foo', '/bar', dummy_step_path, '/baz'])
+          end
+        end
+      end
+
+      context 'when the current page is not on the stack' do
+        let(:navigation_stack) { %w[/foo /bar /baz] }
+
+        it 'adds it to the end of the stack' do
+          get :show, params: { id: application_id }
+
+          expect(application.navigation_stack).to eq(navigation_stack + [dummy_step_path])
+        end
+
+        context 'but skip_stack is true' do
+          before do
+            expect(DummyStepImplementation).to receive(:skip_stack).and_return(true)
+          end
+
+          it 'does not modify the stack' do
+            get :show, params: { id: application_id }
+
+            expect(application.navigation_stack).to eq(navigation_stack)
+          end
+        end
       end
     end
 
-    context 'when the current page is on the stack' do
-      let(:navigation_stack) { ['/foo', '/bar', dummy_step_path, '/baz'] }
+    context 'for update endpoints' do
+      context 'when the stack is empty' do
+        let(:navigation_stack) { [] }
 
-      it 'rewinds the stack to the appropriate point' do
-        expect(application).to have_received(:navigation_stack=).with(['/foo', '/bar', dummy_step_path])
+        it 'adds the page to the stack' do
+          put :update, params: { id: application_id }
+
+          expect(application.navigation_stack).to eq([dummy_step_path])
+        end
       end
-    end
 
-    context 'when the current page is not on the stack' do
-      let(:navigation_stack) { %w[/foo /bar /baz] }
+      context 'when the current page is on the stack' do
+        let(:navigation_stack) { ['/foo', '/bar', dummy_step_path, '/baz'] }
 
-      it 'adds it to the end of the stack' do
-        expect(application).to have_received(:navigation_stack=).with(navigation_stack + [dummy_step_path])
+        it 'rewinds the stack to the appropriate point' do
+          put :update, params: { id: application_id }
+
+          expect(application.navigation_stack).to eq(['/foo', '/bar', dummy_step_path])
+        end
+
+        context 'but skip_stack is true' do
+          before do
+            expect(DummyStepImplementation).to receive(:skip_stack).and_return(true)
+          end
+
+          it 'does not modify stack' do
+            put :update, params: { id: application_id }
+
+            expect(application.navigation_stack).to eq(['/foo', '/bar', dummy_step_path, '/baz'])
+          end
+        end
+      end
+
+      context 'when the current page is not on the stack' do
+        let(:navigation_stack) { %w[/foo /bar /baz] }
+
+        it 'adds it to the end of the stack' do
+          put :update, params: { id: application_id }
+
+          expect(application.navigation_stack).to eq(navigation_stack + [dummy_step_path])
+        end
+
+        context 'but skip_stack is true' do
+          before do
+            expect(DummyStepImplementation).to receive(:skip_stack).and_return(true)
+          end
+
+          it 'does not modify stack' do
+            put :update, params: { id: application_id }
+
+            expect(application.navigation_stack).to eq(navigation_stack)
+          end
+        end
       end
     end
   end
 
   describe '#update_and_advance' do
-    let(:application) { double(:application, id: SecureRandom.uuid) }
-    let(:form_class) do
-      class_double(Steps::BaseFormObject,
-                   model_name: double(:model_name, singular: 'test_model'),
-                   attribute_names: %w[first second],
-                   new: form,)
-    end
-    let(:form) { instance_double(Steps::BaseFormObject, save!: true, save: save_form) }
-    let(:save_form) { true }
-    let(:options) { { as: :claim_type } }
-    let(:decision_tree_class) { double(:decision_tree_class, new: decision_tree) }
-    let(:decision_tree) { double(:decision_tree, destination:) }
-    let(:destination) { { action: :show, id: application.id, controller: :dummy_step } }
-
-    before do
-      allow(DummyStepImplementation).to receive(:current_application).and_return(application)
-      allow(DummyStepImplementation).to receive(:form_class).and_return(form_class)
-      allow(DummyStepImplementation).to receive(:options).and_return(options)
-      allow(DummyStepImplementation).to receive(:decision_tree_class).and_return(decision_tree_class)
-    end
-
     context 'when saving as a draft' do
       let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, commit_draft: true } }
 
       it 'sets the paramters on the form' do
         expect(form_class).to receive(:new).with({
                                                    'application' => application,
-          'record' => nil,
+          'record' => application,
           'first' => '1',
           'second' => '2',
                                                  })
@@ -81,7 +182,7 @@ RSpec.describe DummyStepController, type: :controller do
         it 'ignore additional and skips missing params' do
           expect(form_class).to receive(:new).with({
                                                      'application' => application,
-            'record' => nil,
+            'record' => application,
             'first' => '1',
                                                    })
 
@@ -98,17 +199,19 @@ RSpec.describe DummyStepController, type: :controller do
       it 'redirects to the after_commit_path' do
         put(:update, params:)
 
-        expect(response).to redirect_to(after_commit_path(application))
+        expect(response).to redirect_to(after_commit_path(id: application.id))
       end
     end
 
     context 'when refreshing (with save)' do
+      let(:form) { instance_double(Steps::BaseFormObject, application: application, record: record, save!: true) }
+      let(:record) { application }
       let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, save_and_refresh: true } }
 
       it 'sets the paramters on the form' do
         expect(form_class).to receive(:new).with({
                                                    'application' => application,
-          'record' => nil,
+          'record' => application,
           'first' => '1',
           'second' => '2',
                                                  })
@@ -122,7 +225,7 @@ RSpec.describe DummyStepController, type: :controller do
         it 'ignore additional and skips missing params' do
           expect(form_class).to receive(:new).with({
                                                      'application' => application,
-            'record' => nil,
+            'record' => application,
             'first' => '1',
                                                    })
 
@@ -136,10 +239,20 @@ RSpec.describe DummyStepController, type: :controller do
         put :update, params:
       end
 
-      it 'renders the form' do
+      it 'redirects to the form' do
         put(:update, params:)
 
-        expect(response).to render_template(:edit)
+        expect(response).to redirect_to(id: application.id)
+      end
+
+      context 'when then application and record do not match' do
+        let(:record) { double(:record, id: SecureRandom.uuid, class: 'WorkItem') }
+
+        it 'redirects to the form and record' do
+          put(:update, params:)
+
+          expect(response).to redirect_to(id: application.id, work_item_id: record.id)
+        end
       end
     end
 
@@ -149,7 +262,7 @@ RSpec.describe DummyStepController, type: :controller do
       it 'sets the paramters on the form' do
         expect(form_class).to receive(:new).with({
                                                    'application' => application,
-          'record' => nil,
+          'record' => application,
           'first' => '1',
           'second' => '2',
                                                  })

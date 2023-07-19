@@ -16,6 +16,7 @@ module Decisions
     }.freeze
 
     SHOW_MAPPING = {
+      claim_type: :start_page,
       equality: :claim_confirmation,
     }.freeze
 

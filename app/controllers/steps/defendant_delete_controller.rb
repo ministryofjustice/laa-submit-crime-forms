@@ -30,5 +30,9 @@ module Steps
     def ensure_defendant
       defendant || redirect_to(edit_steps_defendant_summary_path(current_application))
     end
+
+    def skip_stack
+      true
+    end
   end
 end
