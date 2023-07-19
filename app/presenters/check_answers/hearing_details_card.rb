@@ -10,39 +10,17 @@ module CheckAnswers
       @section = 'hearing_details'
     end
 
-    # TODO: Add row for proceedings concluded...
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    def rows
-      [
-        {
-          key: { text: translate_table_key(section, 'hearing_date'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: hearing_details_form.first_hearing_date&.strftime('%d %B %Y') }
-        },
-        {
-          key: { text: translate_table_key(section, 'number_of_hearing'),
-classes: 'govuk-summary-list__value-width-50' },
-          value: { text: hearing_details_form.number_of_hearing }
-        },
-        {
-          key: { text: translate_table_key(section, 'youth_count'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: capitalize_sym(hearing_details_form.youth_count) }
-        },
-        {
-          key: { text: translate_table_key(section, 'in_area'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: in_area_text }
-        },
-        {
-          key: { text: translate_table_key(section, 'hearing_outcome'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: get_value_obj_desc(OutcomeCode, hearing_details_form.hearing_outcome) }
-        },
-        {
-          key: { text: translate_table_key(section, 'matter_type'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: get_value_obj_desc(MatterType, hearing_details_form.matter_type) }
-        }
-      ]
+    def row_data
+      {
+        hearing_date: { text: hearing_details_form.first_hearing_date&.strftime('%d %B %Y') },
+        number_of_hearing: { text: hearing_details_form.number_of_hearing },
+        youth_count:  { text: capitalize_sym(hearing_details_form.youth_count) },
+        in_area: { text: in_area_text },
+        hearing_outcome: { text: get_value_obj_desc(OutcomeCode, hearing_details_form.hearing_outcome) },
+        matter_type: { text: get_value_obj_desc(MatterType, hearing_details_form.matter_type) }
+      }
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
-
+    
     private
 
     def in_area_text

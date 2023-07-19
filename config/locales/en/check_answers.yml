@@ -7,55 +7,32 @@ en:
             heading: Check your answers
             sections:
               firm_details:
-                firm_name:
-                  key: Firm name
-                firm_account_number:
-                  key: Firm account number
-                firm_address:
-                  key: Firm address
-                solicitor_full_name:
-                  key: Solicitor full name
-                solicitor_reference_number: 
-                  key: Solicitor reference number
-                contact_full_name:
-                  key: Your full name
+                firm_name: Firm name
+                firm_account_number: Firm account number
+                firm_address: Firm address
+                solicitor_full_name: Solicitor full name
+                solicitor_reference_number: Solicitor reference number
+                contact_full_name: Your full name
               defendant_summary:
-                main_defendant_full_name:
-                  key: Main defendant full name
-                main_defendant_maat:
-                  key: Main defendant MAAT ID
-                additional_defendant_full_name:
-                  key: Additional defendant %{count} full name
-                additional_defendant_maat:
-                  key: Additional defendant %{count} MAAT ID
+                main_defendant_full_name: Main defendant full name
+                main_defendant_maat: Main defendant MAAT ID
+                additional_defendant_full_name: Additional defendant %{count} full name
+                additional_defendant_maat: Additional defendant %{count} MAAT ID
               case_details:
-                main_offence:
-                  key: Main offence name
-                main_offence_date:
-                  key: Offence date
-                assigned_counsel:
-                  key: Assigned counsel
-                unassigned_counsel: 
-                  key: Unassigned counsel
-                agent_instructed:
-                  key: Instructed Agent
-                remitted_to_magistrate:
-                  key: Remittal
+                main_offence: Main offence name
+                main_offence_date: Offence date
+                assigned_counsel: Assigned counsel
+                unassigned_counsel: Unassigned counsel
+                agent_instructed: Instructed Agent
+                remitted_to_magistrate: Remittal
               hearing_details:
-                hearing_date:
-                  key: Date of first hearing
-                number_of_hearing:
-                  key: Number of hearings
-                conclusion:
-                  key: Proceedings concluded more than 3 months ago
-                youth_count:
-                  key: Youth court
-                in_area:
-                  key: Magistrates court in designated area
-                hearing_outcome:
-                  key: Hearing outcome
-                matter_type:
-                  key: Matter type
+                hearing_date: Date of first hearing
+                number_of_hearing: Number of hearings
+                conclusion: Proceedings concluded more than 3 months ago
+                youth_count: Youth court
+                in_area: Magistrates court in designated area
+                hearing_outcome: Hearing outcome
+                matter_type: Matter type
           groups:
             about_you: 
               heading: About you
@@ -91,4 +68,4 @@ en:
               heading:  Supporting evidence
               evidence_upload:
                 title: Upload supporting evidence
-              
+  

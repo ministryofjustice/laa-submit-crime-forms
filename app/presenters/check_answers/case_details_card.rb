@@ -11,40 +11,15 @@ module CheckAnswers
     end
 
     # TO DO: update remittal to include date of remittal when CRM457-172 is done
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    def rows
-      [
-        {
-          key: { text: translate_table_key(section, 'main_offence'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: case_details_form.main_offence }
-        },
-        {
-          key: { text: translate_table_key(section, 'main_offence_date'),
-classes: 'govuk-summary-list__value-width-50' },
-          value: { text: case_details_form.main_offence_date&.strftime('%d %B %Y') }
-        },
-        {
-          key: { text: translate_table_key(section, 'assigned_counsel'),
-classes: 'govuk-summary-list__value-width-50' },
-          value: { text: capitalize_sym(case_details_form.assigned_counsel) }
-        },
-        {
-          key: { text: translate_table_key(section, 'unassigned_counsel'),
-classes: 'govuk-summary-list__value-width-50' },
-          value: { text: capitalize_sym(case_details_form.unassigned_counsel) }
-        },
-        {
-          key: { text: translate_table_key(section, 'agent_instructed'),
-classes: 'govuk-summary-list__value-width-50' },
-          value: { text: capitalize_sym(case_details_form.agent_instructed) }
-        },
-        {
-          key: { text: translate_table_key(section, 'remitted_to_magistrate'),
-classes: 'govuk-summary-list__value-width-50' },
-          value: { text: capitalize_sym(case_details_form.remitted_to_magistrate) }
-        }
-      ]
+    def row_data
+      {
+        main_offence: { text: case_details_form.main_offence },
+        main_offence_date: { text: case_details_form.main_offence_date&.strftime('%d %B %Y') },
+        assigned_counsel: { text: capitalize_sym(case_details_form.assigned_counsel) },
+        unassigned_counsel: { text: capitalize_sym(case_details_form.unassigned_counsel) },
+        agent_instructed: { text: capitalize_sym(case_details_form.agent_instructed) },
+        remitted_to_magistrate: { text: capitalize_sym(case_details_form.remitted_to_magistrate) },
+      }
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end
 end

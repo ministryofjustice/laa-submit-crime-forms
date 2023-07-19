@@ -10,13 +10,13 @@ module CheckAnswers
       @section = 'defendant_summary'
     end
 
-    def rows
-      all_rows = main_defendant_rows
-      additional_defendants.each_with_index do |defendant, index|
-        all_rows.concat additional_defendant_rows(defendant, index + 1)
-      end
-      all_rows
-    end
+    # def rows
+    #   all_rows = main_defendant_rows
+    #   additional_defendants.each_with_index do |defendant, index|
+    #     all_rows.concat additional_defendant_rows(defendant, index + 1)
+    #   end
+    #   all_rows
+    # end
 
     private
 
@@ -29,33 +29,19 @@ module CheckAnswers
     end
 
     def main_defendant_rows
-      [
-        {
-          key: { text: translate_table_key(section, 'main_defendant_full_name'),
-classes: 'govuk-summary-list__value-width-50' },
-          value: { text: main_defendant[:full_name] }
-        },
-        {
-          key: { text: translate_table_key(section, 'main_defendant_maat'),
-classes: 'govuk-summary-list__value-width-50' },
-          value: { text: main_defendant[:maat] }
-        }
-      ]
+      {
+
+      }
     end
 
     def additional_defendant_rows(defendant, index)
-      [
-        {
-          key: { text: translate_table_key(section, 'additional_defendant_full_name', count: index),
-classes: 'govuk-summary-list__value-width-50' },
-          value: { text: defendant[:full_name] }
-        },
-        {
-          key: { text: translate_table_key(section, 'additional_defendant_maat', count: index),
-classes: 'govuk-summary-list__value-width-50' },
-          value: { text: defendant[:maat] }
+      {
+        additional_defendant_full_name: { text: defendant[:full_name] },
+        additional_defendant_maat: { 
+          text: defendant[:maat],
+          head_opts: { count: index } 
         }
-      ]
+      }
     end
   end
 end
