@@ -4,13 +4,10 @@ module CheckAnswers
   class YourDetailsCard < Base
     attr_reader :firm_details_form
 
-    KEY = 'firm_details'
-    GROUP = 'about_you'
-
     def initialize(claim)
       @firm_details_form = Steps::FirmDetailsForm.build(claim)
-      @group = GROUP
-      @section = KEY
+      @group = 'about_you'
+      @section = 'firm_details'
     end
 
     def route_path

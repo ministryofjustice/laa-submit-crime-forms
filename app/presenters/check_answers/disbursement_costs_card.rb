@@ -4,12 +4,9 @@ module CheckAnswers
   class DisbursementCostsCard < Base
     attr_reader :disbursement_type_form
 
-    KEY = 'disbursement_costs'
-    GROUP = 'about_claim'
-
     def initialize(_claim)
-      @group = GROUP
-      @section = KEY
+      @group = 'about_claim'
+      @section = 'disbursement_costs'
     end
 
     def route_path

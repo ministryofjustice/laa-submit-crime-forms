@@ -4,13 +4,10 @@ module CheckAnswers
   class OtherInfoCard < Base
     attr_reader :other_info_form
 
-    KEY = 'other_info'
-    GROUP = 'about_claim'
-
     def initialize(claim)
       @other_info_form = Steps::OtherInfoForm.build(claim)
-      @group = GROUP
-      @section = KEY
+      @group = 'about_claim'
+      @section = 'other_info'
     end
 
     def route_path

@@ -4,13 +4,10 @@ module CheckAnswers
   class LettersCallsCard < Base
     attr_reader :letters_calls_form
 
-    KEY = 'letters_calls'
-    GROUP = 'about_claim'
-
     def initialize(claim)
       @letters_calls_form = Steps::LettersCallsForm.build(claim)
-      @group = GROUP
-      @section = KEY
+      @group = 'about_claim'
+      @section = 'letters_calls'
     end
 
     def route_path

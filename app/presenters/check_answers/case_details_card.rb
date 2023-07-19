@@ -4,13 +4,11 @@ module CheckAnswers
   class CaseDetailsCard < Base
     attr_reader :case_details_form
 
-    KEY = 'case_details'
-    GROUP = 'about_case'
-
     def initialize(claim)
       @case_details_form = Steps::CaseDetailsForm.build(claim)
-      @group = GROUP
-      @section = KEY
+      @group = 'about_case'
+
+      @section = 'case_details'
     end
 
     def route_path

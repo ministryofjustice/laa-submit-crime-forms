@@ -2,12 +2,9 @@
 
 module CheckAnswers
   class EvidenceUploadsCard < Base
-    KEY = 'evidence_upload'
-    GROUP = 'supporting_evidence'
-
     def initialize(_claim)
-      @group = GROUP
-      @section = KEY
+      @group = 'supporting_evidence'
+      @section = 'evidence_upload'
     end
 
     # TO DO: This should go to the evidence uploads page but it's not made yet

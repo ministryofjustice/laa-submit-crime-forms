@@ -4,13 +4,9 @@ module CheckAnswers
   class WorkItemsCard < Base
     attr_reader :work_item_form
 
-    KEY = 'work_items'
-    GROUP = 'about_claim'
-
     def initialize(_claim)
-      # @work_item_form = Steps::WorkItemForm.build(claim)
-      @group = GROUP
-      @section = KEY
+      @group = 'about_claim'
+      @section = 'work_items'
     end
 
     def route_path

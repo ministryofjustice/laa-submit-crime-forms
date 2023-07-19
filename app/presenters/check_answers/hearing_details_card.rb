@@ -4,13 +4,10 @@ module CheckAnswers
   class HearingDetailsCard < Base
     attr_reader :hearing_details_form
 
-    KEY = 'hearing_details'
-    GROUP = 'about_case'
-
     def initialize(claim)
       @hearing_details_form = Steps::HearingDetailsForm.build(claim)
-      @group = GROUP
-      @section = KEY
+      @group = 'about_case'
+      @section = 'hearing_details'
     end
 
     def route_path
