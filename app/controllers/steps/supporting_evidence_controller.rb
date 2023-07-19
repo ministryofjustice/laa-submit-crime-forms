@@ -2,13 +2,24 @@
 
 module Steps
   class SupportingEvidenceController < Steps::BaseStepController
+    include S3FileUploadHelper
     skip_before_action :verify_authenticity_token
     def edit
-      # @form_object = SupportingEvidenceForm.build(current_application)
+      # @form_object = SupportingEvidenceForm.build(
+      #   supporting_evidence,
+      #   application: current_application
+      # )
     end
 
     def create
-      logger.info "I made it maa"
+      evidence = SupportingEvidence.create(
+        file_name: params[:documents].original_filename,
+        file_type: params[:documents].content_type,
+        file_size: params[:documents].tempfile.size,
+        case_id: current_application.id
+      ).save
+
+      upload_evidence("#{current_application.id}/#{evidence.id}")
     end
 
     def update
@@ -21,8 +32,12 @@ module Steps
       Decisions::SimpleDecisionTree
     end
 
-    def additional_permitted_params
-      [:send_by_post]
+    def supporting_evidence
+      @supporting_evidence ||= latest_evidence.nil? ? SupportingEvidence.new : latest_evidence
+    end
+
+    def latest_evidence
+      SupportingEvidence.find_by claim_id: current_application.id
     end
   end
 end

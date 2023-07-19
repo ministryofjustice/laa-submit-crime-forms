@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_13_091036) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_19_215002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,10 +59,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_13_091036) do
     t.text "conclusion"
     t.string "concluded"
     t.string "laa_reference"
+    t.uuid "evidence_uploads"
     t.integer "letters_uplift"
     t.date "work_before_date"
     t.date "work_after_date"
     t.string "signatory_name"
+    t.boolean "send_by_post"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
@@ -139,6 +141,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_13_091036) do
     t.index ["previous_id"], name: "index_solicitors_on_previous_id"
   end
 
+  create_table "supporting_evidence", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "claim_id", null: false
+    t.string "file_name"
+    t.string "file_type"
+    t.integer "file_size"
+    t.string "case_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claim_id"], name: "index_supporting_evidence_on_claim_id"
+  end
+
   create_table "work_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "claim_id", null: false
     t.string "work_type"
@@ -157,5 +170,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_13_091036) do
   add_foreign_key "disbursements", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
   add_foreign_key "solicitors", "solicitors", column: "previous_id"
+  add_foreign_key "supporting_evidence", "claims"
   add_foreign_key "work_items", "claims"
 end

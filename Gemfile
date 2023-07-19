@@ -48,3 +48,5 @@ group :test do
   gem 'simplecov-rcov'
   gem 'super_diff'
 end
+
+gem "aws-sdk-s3", "~> 1.130"

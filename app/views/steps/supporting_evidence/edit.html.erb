@@ -10,7 +10,7 @@
     <%# Answers upload list %>
     <%= tag.p t('.para1.heading'), class: "govuk-body" do -%>
       <%= t('.para1.heading') %>
-      <%= tag.ul class: "govuk-list govuk-list--bullet govuk-!-margin-bottom-6 govuk-!-padding-left-6"  do -%>
+      <%= tag.ul class: "govuk-list govuk-list--bullet govuk-!-margin-bottom-6 govuk-!-padding-left-6" do -%>
         <%= tag.li t('.para1.crm8') %>
         <%= tag.li t('.para1.remittal') %>
         <%= tag.li t('.para1.supplemental') %>
@@ -19,15 +19,15 @@
     <% end -%>
     <%# Upload warning %>
     <%= tag.div class: "govuk-warning-text" do -%>
-      <%= tag.span t('.upload_warning.icon'), class: "govuk-warning-text__icon", aria: { hidden: true} %>
+      <%= tag.span t('.upload_warning.icon'), class: "govuk-warning-text__icon", aria: { hidden: true } %>
       <%= tag.strong class: "govuk-warning-text__text" do -%>
-        <% tag.span t('.upload_warning.assistive'), class:"govuk-warning-text__assistive" %>
+        <% tag.span t('.upload_warning.assistive'), class: "govuk-warning-text__assistive" %>
         <%= t('.upload_warning.message') %>
       <% end -%>
     <% end -%>
     <%# Additional upload list %>
     <%= tag.p t('.para2.heading'), class: "govuk-body" %>
-    <%= tag.ul class: "govuk-list govuk-list--bullet govuk-!-margin-bottom-6 govuk-!-padding-left-6"  do -%>
+    <%= tag.ul class: "govuk-list govuk-list--bullet govuk-!-margin-bottom-6 govuk-!-padding-left-6" do -%>
       <%= tag.li t('.para2.file') %>
       <%= tag.li t('.para2.attendance') %>
       <%= tag.li t('.para2.reading') %>
@@ -44,7 +44,7 @@
           <div class="govuk-form-group">
             <%= tag.label t('.file_upload.heading'), class: "govuk-label govuk-label--m", for: "documents" %>
             <%= tag.div t('.file_upload.caption'), class: "govuk-hint" %>
-            <input class="govuk-file-upload moj-multi-file-upload__input" id="documents" name="documents" type="file" multiple="">
+            <input class="govuk-file-upload moj-multi-file-upload__input" id="documents" name="documents" type="file" multiple="" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/rtf,image/jpeg,image/bmp,image/png,image/tiff,application/pdf">
           </div>
           <button class="govuk-button govuk-button--secondary moj-multi-file-upload__button" data-module="govuk-button">
             <%= t('.upload_file') %>
@@ -58,11 +58,11 @@
 
       <%# Postal address component %>
       <%= form.govuk_check_boxes_fieldset :postal_field, multiple: false, legend: nil do %>
-        <%= form.govuk_check_box :send_by_post, 'true', 'false', label: { text: t('.supporting_evidence')}, multiple: false do %>
+        <%= form.govuk_check_box :send_by_post, 'true', 'false', label: { text: t('.supporting_evidence') }, multiple: false do %>
           <%= tag.div class: "govuk-warning-text" do -%>
-            <%= tag.span t('.post_warning.icon'), class: "govuk-warning-text__icon", aria: { hidden: true} %>
+            <%= tag.span t('.post_warning.icon'), class: "govuk-warning-text__icon", aria: { hidden: true } %>
             <%= tag.strong class: "govuk-warning-text__text" do -%>
-              <% tag.span t('.post_warning.assistive'), class:"govuk-warning-text__assistive" %>
+              <% tag.span t('.post_warning.assistive'), class: "govuk-warning-text__assistive" %>
               <%= t('.post_warning.message') %>
             <% end -%>
           <% end -%>
