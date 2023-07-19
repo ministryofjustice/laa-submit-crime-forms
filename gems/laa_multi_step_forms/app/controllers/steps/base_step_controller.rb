@@ -38,7 +38,7 @@ module Steps
         redirect_to after_commit_path(current_application)
       elsif params.key?(:save_and_refresh)
         @form_object.save!
-        render opts.fetch(:render, :edit)
+        record_to_current_object
       elsif @form_object.save
         redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       else
@@ -46,6 +46,18 @@ module Steps
       end
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+    # This deals with the case when it is called from the NEW_RECORD endpoint
+    # to avoid creating a new record on each click
+    def record_to_current_object
+      path_params = { id: @form_object.application.id }
+      unless @form_object.application == @form_object.record
+        sub_id_name = :"#{@form_object.record.class.to_s.underscore}_id"
+        path_params[sub_id_name] = @form_object.record.id
+      end
+
+      redirect_to path_params
+    end
 
     def permitted_params(form_class)
       params
