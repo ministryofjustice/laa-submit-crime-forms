@@ -75,7 +75,7 @@ en:
                 title: Case Disposal
             about_claim:
               heading: About the claim
-              claim_justification:
+              reason_for_claim:
                 title: Claim justification
               claim_details: 
                 title: Claim details
@@ -83,7 +83,7 @@ en:
                 title: Work Items
               letters_calls: 
                 title: Letters and phone calls
-              disbursement_costs:
+              disbursements:
                 title: Disbursement costs
               other_info: 
                 title: Other relevant information

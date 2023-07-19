@@ -14,6 +14,10 @@ module CheckAnswers
       []
     end
 
+    def route_path
+      section
+    end
+
     def capitalize_sym(obj)
       obj&.value.to_s.capitalize
     end

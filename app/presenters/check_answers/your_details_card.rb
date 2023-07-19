@@ -10,39 +10,37 @@ module CheckAnswers
       @section = 'firm_details'
     end
 
-    def route_path
-      KEY
-    end
-
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def rows
       [
         {
-          key: { text: translate_table_key(KEY, 'firm_name'), classes: 'govuk-summary-list__value-width-50' },
+          key: { text: translate_table_key(section, 'firm_name'), classes: 'govuk-summary-list__value-width-50' },
           value: { text: firm_details_form.firm_office.name }
         },
         {
-          key: { text: translate_table_key(KEY, 'firm_account_number'), classes: 'govuk-summary-list__value-width-50' },
+          key: { text: translate_table_key(section, 'firm_account_number'),
+classes: 'govuk-summary-list__value-width-50' },
           value: { text: firm_details_form.firm_office.account_number }
         },
         {
-          key: { text: translate_table_key(KEY, 'firm_address'), classes: 'govuk-summary-list__value-width-50' },
+          key: { text: translate_table_key(section, 'firm_address'), classes: 'govuk-summary-list__value-width-50' },
           value: { text: format_address(firm_details_form.firm_office.address_line_1,
                                         firm_details_form.firm_office.town,
                                         firm_details_form.firm_office.postcode,
                                         firm_details_form.firm_office.address_line_2) }
         },
         {
-          key: { text: translate_table_key(KEY, 'solicitor_full_name'), classes: 'govuk-summary-list__value-width-50' },
+          key: { text: translate_table_key(section, 'solicitor_full_name'),
+classes: 'govuk-summary-list__value-width-50' },
           value: { text: firm_details_form.solicitor.full_name }
         },
         {
-          key: { text: translate_table_key(KEY, 'solicitor_reference_number'),
+          key: { text: translate_table_key(section, 'solicitor_reference_number'),
 classes: 'govuk-summary-list__value-width-50' },
           value: { text: firm_details_form.solicitor.reference_number }
         },
         {
-          key: { text: translate_table_key(KEY, 'contact_full_name'),
+          key: { text: translate_table_key(section, 'contact_full_name'),
 classes: 'govuk-summary-list__value-width-50' },
           value: { text: firm_details_form.solicitor.contact_full_name }
         }

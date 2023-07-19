@@ -9,9 +9,5 @@ module CheckAnswers
       @group = 'about_claim'
       @section = 'other_info'
     end
-
-    def route_path
-      'other_info'
-    end
   end
 end

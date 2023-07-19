@@ -9,9 +9,5 @@ module CheckAnswers
       @group = 'about_case'
       @section = 'case_disposal'
     end
-
-    def route_path
-      'case_disposal'
-    end
   end
 end

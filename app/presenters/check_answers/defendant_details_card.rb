@@ -10,10 +10,6 @@ module CheckAnswers
       @section = 'defendant_summary'
     end
 
-    def route_path
-      KEY
-    end
-
     def rows
       all_rows = main_defendant_rows
       additional_defendants.each_with_index do |defendant, index|
@@ -35,12 +31,13 @@ module CheckAnswers
     def main_defendant_rows
       [
         {
-          key: { text: translate_table_key(KEY, 'main_defendant_full_name'),
+          key: { text: translate_table_key(section, 'main_defendant_full_name'),
 classes: 'govuk-summary-list__value-width-50' },
           value: { text: main_defendant[:full_name] }
         },
         {
-          key: { text: translate_table_key(KEY, 'main_defendant_maat'), classes: 'govuk-summary-list__value-width-50' },
+          key: { text: translate_table_key(section, 'main_defendant_maat'),
+classes: 'govuk-summary-list__value-width-50' },
           value: { text: main_defendant[:maat] }
         }
       ]
@@ -49,12 +46,12 @@ classes: 'govuk-summary-list__value-width-50' },
     def additional_defendant_rows(defendant, index)
       [
         {
-          key: { text: translate_table_key(KEY, 'additional_defendant_full_name', count: index),
+          key: { text: translate_table_key(section, 'additional_defendant_full_name', count: index),
 classes: 'govuk-summary-list__value-width-50' },
           value: { text: defendant[:full_name] }
         },
         {
-          key: { text: translate_table_key(KEY, 'additional_defendant_maat', count: index),
+          key: { text: translate_table_key(section, 'additional_defendant_maat', count: index),
 classes: 'govuk-summary-list__value-width-50' },
           value: { text: defendant[:maat] }
         }

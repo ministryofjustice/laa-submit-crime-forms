@@ -6,11 +6,7 @@ module CheckAnswers
 
     def initialize(_claim)
       @group = 'about_claim'
-      @section = 'disbursement_costs'
-    end
-
-    def route_path
-      'disbursements'
+      @section = 'disbursements'
     end
   end
 end
