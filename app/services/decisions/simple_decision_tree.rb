@@ -14,6 +14,7 @@ module Decisions
     }.freeze
 
     SHOW_MAPPING = {
+      claim_type: :start_page,
       solicitor_declaration: :claim_confirmation,
     }.freeze
 
