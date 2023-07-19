@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 module CheckAnswers
   class EvidenceUploadsCard < Base
-    KEY = 'evidence_upload'.freeze
-    GROUP = 'supporting_evidence'.freeze
+    KEY = 'evidence_upload'
+    GROUP = 'supporting_evidence'
 
     def initialize(_claim)
       @group = GROUP

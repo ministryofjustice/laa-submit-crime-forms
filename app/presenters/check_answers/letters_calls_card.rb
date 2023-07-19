@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 module CheckAnswers
   class LettersCallsCard < Base
     attr_reader :letters_calls_form
 
-    KEY = 'letters_calls'.freeze
-    GROUP = 'about_claim'.freeze
+    KEY = 'letters_calls'
+    GROUP = 'about_claim'
 
     def initialize(claim)
       @letters_calls_form = Steps::LettersCallsForm.build(claim)

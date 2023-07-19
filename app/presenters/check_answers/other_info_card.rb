@@ -1,9 +1,11 @@
+
+# frozen_string_literal: true
 module CheckAnswers
   class OtherInfoCard < Base
     attr_reader :other_info_form
 
-    KEY = 'other_info'.freeze
-    GROUP = 'about_claim'.freeze
+    KEY = 'other_info'
+    GROUP = 'about_claim'
 
     def initialize(claim)
       @other_info_form = Steps::OtherInfoForm.build(claim)

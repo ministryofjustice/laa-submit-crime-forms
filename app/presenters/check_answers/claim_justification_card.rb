@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 module CheckAnswers
   class ClaimJustificationCard < Base
     attr_reader :reason_for_claim
 
-    KEY = 'claim_justification'.freeze
-    GROUP = 'about_claim'.freeze
+    KEY = 'claim_justification'
+    GROUP = 'about_claim'
 
     def initialize(claim)
       @reason_for_claim_form = Steps::ReasonForClaimForm.build(claim)

@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 module CheckAnswers
   class DisbursementCostsCard < Base
     attr_reader :disbursement_type_form
 
-    KEY = 'disbursement_costs'.freeze
-    GROUP = 'about_claim'.freeze
+    KEY = 'disbursement_costs'
+    GROUP = 'about_claim'
 
     def initialize(_claim)
       # @disbursement_type_form = Steps::DisbursementTypeForm.build(claim)

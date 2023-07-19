@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 module CheckAnswers
   class CaseDisposalCard < Base
     attr_reader :case_disposal_form
 
-    KEY = 'case_disposal'.freeze
-    GROUP = 'about_case'.freeze
+    KEY = 'case_disposal'
+    GROUP = 'about_case'
 
     def initialize(claim)
       @case_disposal_form = Steps::CaseDisposalForm.build(claim)

@@ -1,10 +1,10 @@
+# frozen_string_literal: true
 module CheckAnswers
   class DefendantDetailsCard < Base
     attr_reader :defendant_details
 
-    KEY = 'defendant_summary'.freeze
-    GROUP = 'about_defendant'.freeze
-
+    KEY = 'defendant_summary'
+    GROUP = 'about_defendant'
     def initialize(claim)
       @defendant_details = claim.defendants
       @group = GROUP

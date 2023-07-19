@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 module CheckAnswers
   class CaseDetailsCard < Base
     attr_reader :case_details_form
 
-    KEY = 'case_details'.freeze
-    GROUP = 'about_case'.freeze
+    KEY = 'case_details'
+    GROUP = 'about_case'
 
     def initialize(claim)
       @case_details_form = Steps::CaseDetailsForm.build(claim)
