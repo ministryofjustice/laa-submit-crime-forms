@@ -14,7 +14,7 @@ RSpec.describe CheckAnswers::YourDetailsCard do
   end
   let(:solicitor) do
     instance_double(Steps::FirmDetails::SolicitorForm, full_name: solicitor_full_name,
-    reference_number: solicitor_ref_number)
+    reference_number: solicitor_ref_number, contact_full_name: contact_full_name)
   end
   let(:firm_name) { 'Firm A' }
   let(:firm_account_number) { '123ABC' }
@@ -26,6 +26,7 @@ RSpec.describe CheckAnswers::YourDetailsCard do
   let(:firm_postcode) { 'CR0 1RE' }
   let(:solicitor_full_name) { 'Richard Jenkins' }
   let(:solicitor_ref_number) { '111222' }
+  let(:contact_full_name) { 'James Blake' }
 
   before do
     allow(Steps::FirmDetailsForm).to receive(:build).and_return(form)
@@ -75,6 +76,10 @@ RSpec.describe CheckAnswers::YourDetailsCard do
             {
               key: { text: 'Solicitor reference number', classes: 'govuk-summary-list__value-width-50' },
               value: { text: '111222' }
+            },
+            {
+              key: { text: 'Your full name', classes: 'govuk-summary-list__value-width-50' },
+              value: { text: 'James Blake' }
             }
           ]
         )
@@ -106,6 +111,10 @@ RSpec.describe CheckAnswers::YourDetailsCard do
             {
               key: { text: 'Solicitor reference number', classes: 'govuk-summary-list__value-width-50' },
               value: { text: '111222' }
+            },
+            {
+              key: { text: 'Your full name', classes: 'govuk-summary-list__value-width-50' },
+              value: { text: 'James Blake' }
             }
           ]
         )
