@@ -13,7 +13,7 @@ module Decisions
       raise 'implement this action, in subclasses'
     end
 
-    delegate :application, to: :form_object
+    delegate :application, :record, to: :form_object
 
     private
 
