@@ -103,7 +103,7 @@ RSpec.describe DummyStepController, type: :controller do
     end
 
     context 'when refreshing (with save)' do
-      let(:form) { instance_double(Steps::BaseFormObject, application:, record:, save!: true) }
+      let(:form) { instance_double(Steps::BaseFormObject, application: application, record: record, save!: true) }
       let(:record) { application }
       let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, save_and_refresh: true } }
 
