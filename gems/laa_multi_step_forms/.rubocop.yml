@@ -136,6 +136,7 @@ RSpec/MultipleMemoizedHelpers:
   Max: 10
   Exclude:
     - spec/lib/govuk_design_system_formbuilder/builder/period_spec.rb
+    - spec/controllers/steps/base_step_controller_spec.rb
 
 RSpec/MultipleExpectations:
   Max: 7
@@ -148,4 +149,4 @@ RSpec/NestedGroups:
 RSpec/ExampleLength:
   Max: 16
   Exclude:
-    - spec/presenters/summary/sections/*
+    - spec/lib/routes_helpers_spec.rb

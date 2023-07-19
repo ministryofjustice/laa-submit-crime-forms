@@ -100,6 +100,8 @@ en:
         calculation: Calculation
         before_uplift: Before uplift
         after_uplift: After uplift
+      duplicate:
+        duplicate: Work item successfully duplicated
     work_items:
       edit:
         page_title: Work Items
@@ -191,6 +193,19 @@ en:
         warning_list_1: be prosecuted
         warning_list_2: have to pay a penalty
         legend: Legal representative
+    claim_confirmation:
+      show:
+        page_title: Claim complete
+        panel_heading: Claim complete
+        panel_text: Your LAA reference number
+        confirmation_email_sent: "We have sent you a confirmation email."
+        next_steps:
+          title: What happens next
+          process_1: "We'll assess your claim."
+          process_2: "We’ll send you an email to either accept your claim or to ask for more information."
+        feedback:
+          link_text: What did you think of this service?
+          description: takes 30 seconds
 
   laa_multi_step_forms:
     task_list:
