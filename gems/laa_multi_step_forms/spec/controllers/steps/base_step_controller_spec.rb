@@ -204,6 +204,8 @@ RSpec.describe DummyStepController, type: :controller do
     end
 
     context 'when refreshing (with save)' do
+      let(:form) { instance_double(Steps::BaseFormObject, application: application, record: record, save!: true) }
+      let(:record) { application }
       let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, save_and_refresh: true } }
 
       it 'sets the paramters on the form' do
@@ -237,10 +239,20 @@ RSpec.describe DummyStepController, type: :controller do
         put :update, params:
       end
 
-      it 'renders the form' do
+      it 'redirects to the form' do
         put(:update, params:)
 
-        expect(response).to render_template(:edit)
+        expect(response).to redirect_to(id: application.id)
+      end
+
+      context 'when then application and record do not match' do
+        let(:record) { double(:record, id: SecureRandom.uuid, class: 'WorkItem') }
+
+        it 'redirects to the form and record' do
+          put(:update, params:)
+
+          expect(response).to redirect_to(id: application.id, work_item_id: record.id)
+        end
       end
     end
 
