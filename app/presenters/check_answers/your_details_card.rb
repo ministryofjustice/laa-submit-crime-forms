@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CheckAnswers
   class YourDetailsCard < Base
     attr_reader :firm_details_form

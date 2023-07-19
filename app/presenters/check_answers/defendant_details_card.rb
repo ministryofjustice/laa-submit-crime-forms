@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CheckAnswers
   class DefendantDetailsCard < Base
     attr_reader :defendant_details

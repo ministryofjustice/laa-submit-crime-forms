@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CheckAnswers
   class HearingDetailsCard < Base
     attr_reader :hearing_details_form

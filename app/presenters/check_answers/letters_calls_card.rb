@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CheckAnswers
   class LettersCallsCard < Base
     attr_reader :letters_calls_form

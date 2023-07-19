@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CheckAnswers
   class WorkItemsCard < Base
     attr_reader :work_item_form

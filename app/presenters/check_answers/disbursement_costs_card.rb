@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CheckAnswers
   class DisbursementCostsCard < Base
     attr_reader :disbursement_type_form

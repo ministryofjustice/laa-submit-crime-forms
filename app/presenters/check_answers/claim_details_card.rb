@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CheckAnswers
   class ClaimDetailsCard < Base
     attr_reader :claim_details_form

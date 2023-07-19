@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CheckAnswers
   class CaseDisposalCard < Base
     attr_reader :case_disposal_form

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CheckAnswers
   class EvidenceUploadsCard < Base
     KEY = 'evidence_upload'

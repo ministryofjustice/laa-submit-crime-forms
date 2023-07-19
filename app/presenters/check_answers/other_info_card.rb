@@ -1,5 +1,5 @@
-
 # frozen_string_literal: true
+
 module CheckAnswers
   class OtherInfoCard < Base
     attr_reader :other_info_form
