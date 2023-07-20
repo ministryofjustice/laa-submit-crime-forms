@@ -53,7 +53,8 @@ module Decisions
       .goto(edit: :disbursement_type, disbursement_id: StartPage::NEW_RECORD)
       .goto(show: :cost_summary)
 
-    from(:other_info).goto(edit: :equality)
+    from(:other_info).goto(show: :check_answers)
+    from(:check_answers).goto(edit: :equality)
     from(:equality)
       # .when(-> { answer_equality.yes? }).goto(edit: :equality_answers)
       .when(-> { answer_equality.yes? }).goto(show: :start_page, answer: 'yes')
