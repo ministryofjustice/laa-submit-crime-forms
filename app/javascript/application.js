@@ -2,9 +2,14 @@
 
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'
+import MOJFrontend from '@ministryofjustice/frontend'
+import initFileUpload from './file-upload';
 
-initAll()
-
+document.addEventListener("DOMContentLoaded", () => {
+  initAll()
+  MOJFrontend.initAll()
+  initFileUpload()
+});
 
 
 const $inputs = document.querySelectorAll('[data-module="govuk-input"]')

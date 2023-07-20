@@ -174,9 +174,22 @@ en:
       edit:
         page_title: Upload supporting evidence
         heading: Upload supporting evidence
+        file_upload:
+          heading: Upload files
+          caption: Files must be a DOC, DOCX, RTF, JPG, BMP, PNG, TIF or PDF.
+        supporting_evidence: I'll send the supporting evidence by post
+        action: Action
+        status: Status
+        file_name: File Name
+        uploading_docs: Documents waiting to be saved
+        upload_files: Upload files
+        uploaded_files: Uploaded files
+        upload_file: Upload file
+      content:
         para1:
           heading: "Based on your answers, you must upload:"
           crm8: CRM8 form
+          crm8_link: "https://www.gov.uk/government/publications/crm8-assigned-counsels-fee-note"
           remittal: evidence of remittal
           supplemental: evidence of supplemental claim
           authority: prior authority certification
@@ -193,28 +206,18 @@ en:
           icon: "!"
           assistive: Warning
           message: If you do not upload this evidence, it might take longer to assess your claim.
+      postal_address:
         post_warning:
           icon: "!"
           assistive: Warning
           message: If you post your evidence, it might take longer to assess your claim.
-        file_upload:
-          heading: Upload files
-          caption: Files must be a DOC, DOCX, RTF, JPG, BMP, PNG, TIF or PDF.
-        supporting_evidence: I'll send the supporting evidence by post
-        action: Action
-        status: Status
-        file_name: File Name
-        uploading_docs: Documents waiting to be saved
-        upload_files: Upload files
-        uploaded_files: Uploaded files
-        upload_file: Upload file
-        postal_address: |
-          Post your evidence to:
-          Legal Aid Agency
-          1 Unity Square
-          Queensbridge Road
-          Nottingham
-          NG2 1AW
+        postal_address:
+          heading: "Post your evidence to:"
+          name: Legal Aid Agency
+          line_1: 1 Unity Square
+          line_2: Queensbridge Road
+          city: Nottingham
+          postcode: NG2 1AW
     equality:
       edit:
         page_title: Equality monitoring questions

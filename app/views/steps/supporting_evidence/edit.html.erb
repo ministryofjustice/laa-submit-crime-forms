@@ -6,72 +6,45 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <%= govuk_error_summary(@form_object) %>
-    <%= tag.h1 t('.heading'), class: "govuk-heading-xl govuk-!-margin-bottom-6" %>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6"><%= t('.heading') %></h1>
     <%# Answers upload list %>
-    <%= tag.p t('.para1.heading'), class: "govuk-body" do -%>
-      <%= t('.para1.heading') %>
-      <%= tag.ul class: "govuk-list govuk-list--bullet govuk-!-margin-bottom-6 govuk-!-padding-left-6" do -%>
-        <%= tag.li t('.para1.crm8') %>
-        <%= tag.li t('.para1.remittal') %>
-        <%= tag.li t('.para1.supplemental') %>
-        <%= tag.li t('.para1.authority') %>
-      <% end -%>
-    <% end -%>
-    <%# Upload warning %>
-    <%= tag.div class: "govuk-warning-text" do -%>
-      <%= tag.span t('.upload_warning.icon'), class: "govuk-warning-text__icon", aria: { hidden: true } %>
-      <%= tag.strong class: "govuk-warning-text__text" do -%>
-        <% tag.span t('.upload_warning.assistive'), class: "govuk-warning-text__assistive" %>
-        <%= t('.upload_warning.message') %>
-      <% end -%>
-    <% end -%>
-    <%# Additional upload list %>
-    <%= tag.p t('.para2.heading'), class: "govuk-body" %>
-    <%= tag.ul class: "govuk-list govuk-list--bullet govuk-!-margin-bottom-6 govuk-!-padding-left-6" do -%>
-      <%= tag.li t('.para2.file') %>
-      <%= tag.li t('.para2.attendance') %>
-      <%= tag.li t('.para2.reading') %>
-      <%= tag.li t('.para2.documentation') %>
-      <%= tag.li t('.para2.prosecution') %>
-      <%= tag.li t('.para2.emails') %>
-      <%= tag.li t('.para2.representation') %>
-    <% end -%>
+    <%= render template: 'steps/supporting_evidence/_content' %>
 
-    <%= form_with model: @form_object do |form| %>
+    <%# Additional upload list %>
+    <%= form_with model: @form_object do |f| %>
       <%# File upload component %>
       <div class="moj-multi-file-upload">
         <div class="moj-multi-file-upload__upload">
-          <%= form.govuk_file_field :documents, label: { text: t('.file_upload.heading'), size: 'm' },
-                                    hint: { text: t('.file_upload.caption') }, class: 'moj-multi-file-upload__input',
-                                    multiple: true, accept: "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/rtf,image/jpeg,image/bmp,image/png,image/tiff,application/pdf" %>
+            <%= f.govuk_file_field :documents, label: { text: t('.file_upload.heading'), size: 'm' }, hint: {text:  t('.file_upload.caption'), class:'govuk-!-margin-bottom-6'}, class: 'moj-multi-file-upload__input', multiple: true, accept: "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/rtf,image/jpeg,image/bmp,image/png,image/tiff,application/pdf" %>
+
           <button class="govuk-button govuk-button--secondary moj-multi-file-upload__button" data-module="govuk-button">
             <%= t('.upload_file') %>
           </button>
         </div>
-        <div class="moj-multi-file__uploaded-files hidden">
-          <%= tag.h2 t('.uploaded_files'), class: "govuk-heading-m" %>
-          <div class="govuk-summary-list moj-multi-file-upload__list"></div>
+        <%# Uploaded files section %>
+        <div class="moj-multi-file__uploaded-files moj-hidden">
+          <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m">Uploaded files</caption>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">File name</th>
+                <th scope="col" class="govuk-table__header">Action</th>
+              </tr>
+            </thead>
+          <%# Uploaded file list   %>
+            <tbody class="govuk-table__body moj-multi-file-upload__list"></tbody>
+          </table>
         </div>
       </div>
 
       <%# Postal address component %>
-      <%= form.govuk_check_boxes_fieldset :postal_field, multiple: false, legend: nil do %>
-        <%= form.govuk_check_box :send_by_post, 'true', 'false', label: { text: t('.supporting_evidence') }, multiple: false do %>
-          <%= tag.div class: "govuk-warning-text" do -%>
-            <%= tag.span t('.post_warning.icon'), class: "govuk-warning-text__icon", aria: { hidden: true } %>
-            <%= tag.strong class: "govuk-warning-text__text" do -%>
-              <% tag.span t('.post_warning.assistive'), class: "govuk-warning-text__assistive" %>
-              <%= t('.post_warning.message') %>
-            <% end -%>
-          <% end -%>
-          <div class="govuk-form-group">
-            <pre class="govuk-body govuk-!-margin-bottom-6"><%= t('.postal_address') %></pre>
-          </div>
+      <%= f.govuk_check_boxes_fieldset :postal_field, multiple: false, legend: nil do %>
+        <%= f.govuk_check_box :send_by_post, 'true', 'false', label: { text: t('.supporting_evidence') }, multiple: false do %>
+          <%= render template: 'steps/supporting_evidence/_postal_address' %>
         <% end -%>
       <% end -%>
-
       <%# Continue %>
-      <%= form.continue_button %>
+      <%= f.continue_button %>
     <% end -%>
   </div>
 </div>

@@ -3,6 +3,8 @@
 @import "./custom/govuk-summary-list";
 @import "./custom/task_list";
 @import "./custom/accessible-autocomplete";
+@import "@ministryofjustice/frontend/moj/helpers/all";
+@import "@ministryofjustice/frontend/moj/utilities/hidden";
 @import "@ministryofjustice/frontend/moj/components/multi-file-upload/multi-file-upload";
 
 .govuk-button-group.confirmation-button-group > form {

@@ -23,6 +23,7 @@ gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', 
 group :development, :test do
   gem 'debug'
   gem 'dotenv-rails'
+  gem 'erb_lint', require: false
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec-rails'
@@ -49,4 +50,4 @@ group :test do
   gem 'super_diff'
 end
 
-gem "aws-sdk-s3", "~> 1.130"
+gem 'aws-sdk-s3', '~> 1.130'
