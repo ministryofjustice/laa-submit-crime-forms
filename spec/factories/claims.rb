@@ -3,9 +3,13 @@ FactoryBot.define do
     id { SecureRandom.uuid }
     office_code { 'AAA' }
 
+    trait :main_defendant do
+      defendants { [build(:defendant, :valid)] }
+    end
+
     trait :case_details do
       ufn { '20150612/001' }
-      main_offence { 'theft' }
+      main_offence { MainOffence.all.sample.name }
       main_offence_date { Date.yesterday }
 
       assigned_counsel { 'no' }

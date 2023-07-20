@@ -34,4 +34,24 @@ RSpec.describe 'User can fill in claim type details', type: :system do
       calls_uplift: 20,
     )
   end
+
+  it 'can do the calculation' do
+    visit edit_steps_letters_calls_path(claim.id)
+
+    fill_in 'Number of letters', with: 1
+    fill_in 'Number of phone calls', with: 2
+
+    click_on 'Update the calculation'
+
+    expect(claim.reload).to have_attributes(
+      letters: 1,
+      calls: 2,
+      letters_uplift: nil,
+      calls_uplift: nil,
+    )
+
+    within '.govuk-table__body' do
+      expect(page.text).to eq('Letters£4.09£4.09Phone calls£8.18£8.18')
+    end
+  end
 end

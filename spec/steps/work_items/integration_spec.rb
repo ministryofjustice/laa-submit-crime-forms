@@ -118,6 +118,18 @@ RSpec.describe 'User can manage work items', type: :system do
     )
   end
 
+  it 'can calculate the result without creating duplicate records' do
+    visit edit_steps_work_item_path(claim.id, work_item_id: StartPage::NEW_RECORD)
+
+    expect { click_on 'Update the calculation' }.to change(WorkItem, :count).by(1)
+    work_item_path = edit_steps_work_item_path(claim.id, work_item_id: WorkItem.last.id)
+
+    expect(page).to have_current_path(work_item_path)
+
+    # Second click just updates the record
+    expect { click_on 'Update the calculation' }.not_to change(WorkItem, :count)
+  end
+
   it 'can delete a work_item' do
     work_item = claim.work_items.create(
       work_type: 'advocacy',

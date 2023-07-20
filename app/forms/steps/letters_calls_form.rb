@@ -112,11 +112,11 @@ module Steps
     end
 
     def letters_before_uplift
-      letters.to_f * pricing.letters if letters
+      letters.to_f * pricing.letters if letters && !letters.zero?
     end
 
     def calls_before_uplift
-      calls.to_f * pricing.letters if calls
+      calls.to_f * pricing.letters if calls && !calls.zero?
     end
   end
 end
