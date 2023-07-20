@@ -16,10 +16,10 @@ module Steps
         file_name: params[:documents].original_filename,
         file_type: params[:documents].content_type,
         file_size: params[:documents].tempfile.size,
-        case_id: current_application.id
-      ).save
+        case_id: params[:id]
+      )
 
-      upload_evidence("#{current_application.id}/#{evidence.id}")
+      upload_evidence("#{params[:id]}/#{evidence.id}")
     end
 
     def update

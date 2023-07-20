@@ -41,11 +41,9 @@
       <%# File upload component %>
       <div class="moj-multi-file-upload">
         <div class="moj-multi-file-upload__upload">
-          <div class="govuk-form-group">
-            <%= tag.label t('.file_upload.heading'), class: "govuk-label govuk-label--m", for: "documents" %>
-            <%= tag.div t('.file_upload.caption'), class: "govuk-hint" %>
-            <input class="govuk-file-upload moj-multi-file-upload__input" id="documents" name="documents" type="file" multiple="" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/rtf,image/jpeg,image/bmp,image/png,image/tiff,application/pdf">
-          </div>
+          <%= form.govuk_file_field :documents, label: { text: t('.file_upload.heading'), size: 'm' },
+                                    hint: { text: t('.file_upload.caption') }, class: 'moj-multi-file-upload__input',
+                                    multiple: true, accept: "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/rtf,image/jpeg,image/bmp,image/png,image/tiff,application/pdf" %>
           <button class="govuk-button govuk-button--secondary moj-multi-file-upload__button" data-module="govuk-button">
             <%= t('.upload_file') %>
           </button>
