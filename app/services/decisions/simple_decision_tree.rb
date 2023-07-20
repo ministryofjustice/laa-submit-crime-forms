@@ -1,6 +1,6 @@
 module Decisions
   class SimpleDecisionTree < DslTree
-    # should be a subclass of the Rule class, but allow additional methods to be added
+    # used to add custom methods to filter/query the data
     WRAPPER_CLASS = CustomWrapper
 
     from(:claim_type).goto(show: :start_page)
@@ -14,8 +14,6 @@ module Decisions
     from(:defendant_summary)
       .when(-> { add_another.yes? })
       .goto(edit: :defendant_details, defendant_id: StartPage::NEW_RECORD)
-      .when(-> { first_invalid(application.defendants, Steps::DefendantDetailsForm) })
-      .goto(edit: :defendant_details, defendant_id: ->(response) { response.id })
       .goto(edit: :case_details)
     from(:case_details).goto(edit: :hearing_details)
     from(:hearing_details).goto(edit: :case_disposal)
@@ -34,7 +32,9 @@ module Decisions
       .when(-> { add_another.yes? })
       .goto(edit: :work_item, work_item_id: StartPage::NEW_RECORD)
       .when(-> { first_invalid(application.work_items, Steps::WorkItemForm) })
-      .goto(edit: :work_item, work_item_id: ->(response) { response.id }, flash: {:error=>"Can not continue until valid!"})
+      .goto(edit: :work_item, work_item_id: lambda { |response|
+                                              response.id
+                                            }, flash: { error: 'Can not continue until valid!' })
       .goto(edit: :letters_calls)
     from(:letters_calls)
       .when(-> { application.disbursements.none? })
@@ -52,8 +52,6 @@ module Decisions
     from(:disbursements)
       .when(-> { add_another.yes? })
       .goto(edit: :disbursement_type, disbursement_id: StartPage::NEW_RECORD)
-      .when(-> { first_invalid(application.disbursements, Steps::DisbursementTypeForm, Steps::DisbursementCostForm) })
-      .goto(edit: :disbursement_type, disbursement_id: ->(response) { response.id })
       .goto(show: :cost_summary)
 
     from(:other_info).goto(edit: :equality)

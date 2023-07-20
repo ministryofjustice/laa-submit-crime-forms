@@ -7,6 +7,7 @@ RSpec.describe Decisions::DslTree do
   let(:record) { double(:record, id: SecureRandom.uuid) }
   let(:form) { double(:form, application:, record:) }
   let(:wrapper_class) { SimpleDelegator }
+
   before do
     subject.class.const_set(:WRAPPER_CLASS, wrapper_class)
   end
@@ -175,6 +176,47 @@ RSpec.describe Decisions::DslTree do
         id: application,
         wrapper_type: 'Apple'
       )
+    end
+  end
+
+  describe 'from definitions' do
+    let(:as) { :tree }
+    let(:decision_tree) { Class.new(described_class) }
+
+    it 'raises an error if defined more than once for a single source' do
+      decision_tree.from('tree')
+      expect { decision_tree.from('tree') }.to raise_error('Rule already exists for tree')
+      expect { decision_tree.from('branch') }.not_to raise_error
+    end
+  end
+
+  describe 'no default goto for a source' do
+    let(:as) { :tree }
+    let(:decision_tree) do
+      Class.new(described_class) do
+        from(:tree)
+          .when(-> { false }).goto(edit: :success)
+      end
+    end
+
+    it 'resolves to claims#index when no conditions are met' do
+      expect(subject.destination).to eq(
+        controller: '/claims',
+        action: :index,
+      )
+    end
+  end
+
+  describe 'when no knonwn verbs are used in the goto' do
+    let(:as) { :tree }
+    let(:decision_tree) do
+      Class.new(described_class) do
+        from(:tree).goto(invalid: :fail)
+      end
+    end
+
+    it 'raises an error' do
+      expect { subject.destination }.to raise_error('No known verbs found in {:invalid=>:fail}')
     end
   end
 end

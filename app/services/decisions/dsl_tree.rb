@@ -14,9 +14,14 @@ module Decisions
       end
     end
 
-    def destination
-      rule = self.class.rules[step_name]
+    attr_reader :rule
 
+    def initialize(*, **)
+      super
+      @rule = self.class.rules[step_name]
+    end
+
+    def destination
       return to_route(index: '/claims') unless rule
 
       detected = nil
@@ -26,19 +31,21 @@ module Decisions
 
       return to_route(index: '/claims') unless destination
 
-      processed_hash = destination.transform_values do |value|
+      to_route(process_hash(destination, detected))
+    end
+
+    def wrapped_form_object
+      self.class::WRAPPER_CLASS.new(form_object)
+    end
+
+    def process_hash(hash, detected)
+      hash.transform_values do |value|
         if value.respond_to?(:call)
           value.arity.zero? ? wrapped_form_object.instance_exec(&value) : value.call(detected)
         else
           value
         end
       end
-
-      to_route(processed_hash)
-    end
-
-    def wrapped_form_object
-      self.class::WRAPPER_CLASS.new(form_object)
     end
 
     def to_route(hash)
@@ -49,7 +56,7 @@ module Decisions
       elsif hash[:index]
         { controller: hash.delete(:index), action: :index }.merge(hash)
       else
-        raise 'Invalid hash'
+        raise "No known verbs found in #{hash.inspect}"
       end
     end
   end
