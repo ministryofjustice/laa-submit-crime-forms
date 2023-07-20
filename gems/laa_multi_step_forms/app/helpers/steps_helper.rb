@@ -23,8 +23,18 @@ module StepsHelper
   end
 
   def previous_step_path
-    # Second to last element in the array, will be nil for arrays of size 0 or 1
-    current_application&.navigation_stack&.slice(-2) || root_path
+    # as we no longer trim the stack on view we need to determine the current posiiton
+    # and the get the previous location
+    if current_application&.navigation_stack
+      current_position = current_application.navigation_stack.index(request.fullpath)
+      if current_position && current_position > 0
+        current_application.navigation_stack.slice(current_position - 1)
+      else
+        root_path
+      end
+    else
+      root_path
+    end
   end
 
   def govuk_error_summary(form_object)
