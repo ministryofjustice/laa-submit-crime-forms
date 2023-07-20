@@ -11,9 +11,9 @@ module CheckAnswers
     end
 
     def rows
-      row_data.map do |key, value|
+      row_data.map do |_key, value|
         head_opts = value.key?(:head_opts) ? value[:head_opts] : {}
-        row_content(key, value[:text], head_opts)
+        row_content(value[:head_key], value[:text], head_opts)
       end
     end
 

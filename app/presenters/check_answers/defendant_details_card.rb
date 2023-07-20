@@ -10,13 +10,16 @@ module CheckAnswers
       @section = 'defendant_summary'
     end
 
-    # def rows
-    #   all_rows = main_defendant_rows
-    #   additional_defendants.each_with_index do |defendant, index|
-    #     all_rows.concat additional_defendant_rows(defendant, index + 1)
-    #   end
-    #   all_rows
-    # end
+    def row_data
+      data = main_defendant_row
+
+      additional_defendants.each_with_index do |defendant, index|
+        additional_row = additional_defendant_row(defendant, index)
+        data.merge!(additional_row)
+      end
+
+      data
+    end
 
     private
 
@@ -28,18 +31,30 @@ module CheckAnswers
       defendant_details.select { |defendant| defendant[:main] == false }
     end
 
-    def main_defendant_rows
+    def main_defendant_row
       {
-
+        main_defendant_full_name: {
+          head_key: 'main_defendant_full_name',
+          text: main_defendant[:full_name]
+        },
+        main_defendant_maat: {
+          head_key: 'main_defendant_maat',
+          text: main_defendant[:maat]
+        }
       }
     end
 
-    def additional_defendant_rows(defendant, index)
+    def additional_defendant_row(defendant, index)
       {
-        additional_defendant_full_name: { text: defendant[:full_name] },
-        additional_defendant_maat: { 
+        "additional_defendant_#{index}_full_name": {
+          head_key: 'additional_defendant_full_name',
+          text: defendant[:full_name],
+          head_opts: { count: index + 1 }
+        },
+        "additional_defendant_#{index}_maat": {
+          head_key: 'additional_defendant_maat',
           text: defendant[:maat],
-          head_opts: { count: index } 
+          head_opts: { count: index + 1 }
         }
       }
     end
