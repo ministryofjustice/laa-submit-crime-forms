@@ -43,40 +43,17 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
     end
   end
 
-  describe '#rows' do
-    # rubocop:disable RSpec/ExampleLength
+  describe '#row_data' do
     context '1 main defendant and 2 additional defendants' do
       let(:defendants) { [main_defendant, first_additional_defendant, second_additional_defendant] }
 
       it 'generates full name and maat ref for 1 main defendant and 2 additional defendants' do
-        expect(subject.rows).to eq(
-          [
-            {
-              key: { text: 'Main defendant full name', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: 'Tim Roy' }
-            },
-            {
-              key: { text: 'Main defendant MAAT ID', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: '123ABC' }
-            },
-            {
-              key: { text: 'Additional defendant 1 full name', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: 'James Brown' }
-            },
-            {
-              key: { text: 'Additional defendant 1 MAAT ID', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: '456EFG' }
-            },
-            {
-              key: { text: 'Additional defendant 2 full name', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: 'Timmy Turner' }
-            },
-            {
-              key: { text: 'Additional defendant 2 MAAT ID', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: '789HIJ' }
-            },
-          ]
-        )
+        expect(subject.row_data[:main_defendant_full_name][:text]).to eq('Tim Roy')
+        expect(subject.row_data[:main_defendant_maat][:text]).to eq('123ABC')
+        expect(subject.row_data[:additional_defendant_1_full_name][:text]).to eq('James Brown')
+        expect(subject.row_data[:additional_defendant_1_maat][:text]).to eq('456EFG')
+        expect(subject.row_data[:additional_defendant_2_full_name][:text]).to eq('Timmy Turner')
+        expect(subject.row_data[:additional_defendant_2_maat][:text]).to eq('789HIJ')
       end
     end
 
@@ -84,20 +61,9 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
       let(:defendants) { [main_defendant] }
 
       it 'generates full name and maat for 1 main defendant' do
-        expect(subject.rows).to eq(
-          [
-            {
-              key: { text: 'Main defendant full name', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: 'Tim Roy' }
-            },
-            {
-              key: { text: 'Main defendant MAAT ID', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: '123ABC' }
-            }
-          ]
-        )
+        expect(subject.row_data[:main_defendant_full_name][:text]).to eq('Tim Roy')
+        expect(subject.row_data[:main_defendant_maat][:text]).to eq('123ABC')
       end
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 end

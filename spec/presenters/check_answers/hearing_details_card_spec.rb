@@ -40,38 +40,14 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
     end
   end
 
-  describe '#rows' do
-    # rubocop:disable RSpec/ExampleLength
+  describe '#row_data' do
     it 'generates hearing details rows' do
-      expect(subject.rows).to eq(
-        [
-          {
-            key: { text: 'Date of first hearing', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: '01 March 2023' }
-          },
-          {
-            key: { text: 'Number of hearings', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: 1 }
-          },
-          {
-            key: { text: 'Youth court', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: 'No' }
-          },
-          {
-            key: { text: 'Magistrates court in designated area', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: 'Yes - A Court' }
-          },
-          {
-            key: { text: 'Hearing outcome', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: 'Arrest warrant issued/adjourned indefinitely' }
-          },
-          {
-            key: { text: 'Matter type', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: 'Offences against the person' }
-          }
-        ]
-      )
+      expect(subject.row_data[:hearing_date][:text]).to eq('01 March 2023')
+      expect(subject.row_data[:number_of_hearing][:text]).to eq(1)
+      expect(subject.row_data[:youth_count][:text]).to eq('No')
+      expect(subject.row_data[:in_area][:text]).to eq('Yes - A Court')
+      expect(subject.row_data[:hearing_outcome][:text]).to eq('Arrest warrant issued/adjourned indefinitely')
+      expect(subject.row_data[:matter_type][:text]).to eq('Offences against the person')
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 end

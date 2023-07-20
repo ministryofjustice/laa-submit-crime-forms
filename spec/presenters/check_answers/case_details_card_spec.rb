@@ -38,38 +38,14 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
     end
   end
 
-  describe '#rows' do
-    # rubocop:disable RSpec/ExampleLength
+  describe '#row_data' do
     it 'generates case detail rows' do
-      expect(subject.rows).to eq(
-        [
-          {
-            key: { text: 'Main offence name', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: 'Theft' }
-          },
-          {
-            key: { text: 'Offence date', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: '01 January 2023' }
-          },
-          {
-            key: { text: 'Assigned counsel', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: 'Yes' }
-          },
-          {
-            key: { text: 'Unassigned counsel', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: 'No' }
-          },
-          {
-            key: { text: 'Instructed Agent', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: 'No' }
-          },
-          {
-            key: { text: 'Remittal', classes: 'govuk-summary-list__value-width-50' },
-            value: { text: 'No' }
-          }
-        ]
-      )
+      expect(subject.row_data[:main_offence][:text]).to eq('Theft')
+      expect(subject.row_data[:main_offence_date][:text]).to eq('01 January 2023')
+      expect(subject.row_data[:assigned_counsel][:text]).to eq('Yes')
+      expect(subject.row_data[:unassigned_counsel][:text]).to eq('No')
+      expect(subject.row_data[:agent_instructed][:text]).to eq('No')
+      expect(subject.row_data[:remitted_to_magistrate][:text]).to eq('No')
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 end

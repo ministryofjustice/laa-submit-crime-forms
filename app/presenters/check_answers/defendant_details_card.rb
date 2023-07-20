@@ -46,12 +46,12 @@ module CheckAnswers
 
     def additional_defendant_row(defendant, index)
       {
-        "additional_defendant_#{index}_full_name": {
+        "additional_defendant_#{index + 1}_full_name": {
           head_key: 'additional_defendant_full_name',
           text: defendant[:full_name],
           head_opts: { count: index + 1 }
         },
-        "additional_defendant_#{index}_maat": {
+        "additional_defendant_#{index + 1}_maat": {
           head_key: 'additional_defendant_maat',
           text: defendant[:maat],
           head_opts: { count: index + 1 }

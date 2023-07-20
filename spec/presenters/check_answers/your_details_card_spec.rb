@@ -51,38 +51,15 @@ RSpec.describe CheckAnswers::YourDetailsCard do
     end
   end
 
-  describe '#rows' do
-    # rubocop:disable RSpec/ExampleLength
+  describe '#row_data' do
     context '2 lines in address' do
       it 'generates case detail rows with 2 lines of address' do
-        expect(subject.rows).to eq(
-          [
-            {
-              key: { text: 'Firm name', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: 'Firm A' }
-            },
-            {
-              key: { text: 'Firm account number', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: '123ABC' }
-            },
-            {
-              key: { text: 'Firm address', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: '2 Laywer Suite<br>Unit B<br>Lawyer Town<br>CR0 1RE' }
-            },
-            {
-              key: { text: 'Solicitor full name', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: 'Richard Jenkins' }
-            },
-            {
-              key: { text: 'Solicitor reference number', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: '111222' }
-            },
-            {
-              key: { text: 'Your full name', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: 'James Blake' }
-            }
-          ]
-        )
+        expect(subject.row_data[:firm_name][:text]).to eq('Firm A')
+        expect(subject.row_data[:firm_account_number][:text]).to eq('123ABC')
+        expect(subject.row_data[:firm_address][:text]).to eq('2 Laywer Suite<br>Unit B<br>Lawyer Town<br>CR0 1RE')
+        expect(subject.row_data[:solicitor_full_name][:text]).to eq('Richard Jenkins')
+        expect(subject.row_data[:solicitor_reference_number][:text]).to eq('111222')
+        expect(subject.row_data[:contact_full_name][:text]).to eq('James Blake')
       end
     end
 
@@ -90,36 +67,13 @@ RSpec.describe CheckAnswers::YourDetailsCard do
       let(:firm_address_2) { nil }
 
       it 'generates case detail rows with 1 line of address' do
-        expect(subject.rows).to eq(
-          [
-            {
-              key: { text: 'Firm name', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: 'Firm A' }
-            },
-            {
-              key: { text: 'Firm account number', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: '123ABC' }
-            },
-            {
-              key: { text: 'Firm address', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: '2 Laywer Suite<br>Lawyer Town<br>CR0 1RE' }
-            },
-            {
-              key: { text: 'Solicitor full name', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: 'Richard Jenkins' }
-            },
-            {
-              key: { text: 'Solicitor reference number', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: '111222' }
-            },
-            {
-              key: { text: 'Your full name', classes: 'govuk-summary-list__value-width-50' },
-              value: { text: 'James Blake' }
-            }
-          ]
-        )
+        expect(subject.row_data[:firm_name][:text]).to eq('Firm A')
+        expect(subject.row_data[:firm_account_number][:text]).to eq('123ABC')
+        expect(subject.row_data[:firm_address][:text]).to eq('2 Laywer Suite<br>Lawyer Town<br>CR0 1RE')
+        expect(subject.row_data[:solicitor_full_name][:text]).to eq('Richard Jenkins')
+        expect(subject.row_data[:solicitor_reference_number][:text]).to eq('111222')
+        expect(subject.row_data[:contact_full_name][:text]).to eq('James Blake')
       end
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 end
