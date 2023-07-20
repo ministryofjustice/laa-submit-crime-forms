@@ -26,6 +26,8 @@ unless ENV['NOCOVERAGE']
     add_filter 'gems/'
     add_filter 'config/'
 
+    # TODO: REMOVE ONCE EVIDENCE UPLOAD IS COMPLETE
+    add_filter 'app/presenters/check_answers/evidence_uploads_card.rb'
     add_filter 'app/jobs/application_job.rb'
     add_filter 'app/mailers/application_mailer.rb'
 

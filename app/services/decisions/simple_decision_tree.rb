@@ -4,7 +4,6 @@ module Decisions
     WRAPPER_CLASS = CustomWrapper
 
     from(:claim_type).goto(show: :start_page)
-
     from(:firm_details)
       .when(-> { application.defendants.none? })
       .goto(edit: :defendant_details, defendant_id: StartPage::NEW_RECORD)
@@ -54,7 +53,8 @@ module Decisions
       .goto(edit: :disbursement_type, disbursement_id: StartPage::NEW_RECORD)
       .goto(show: :cost_summary)
 
-    from(:other_info).goto(edit: :equality)
+    from(:other_info).goto(show: :check_answers)
+    from(:check_answers).goto(edit: :equality)
     from(:equality)
       .when(-> { answer_equality.yes? }).goto(edit: :equality_questions)
       .goto(edit: :solicitor_declaration)
