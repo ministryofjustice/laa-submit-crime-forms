@@ -27,7 +27,7 @@ module StepsHelper
     # and the get the previous location
     if current_application&.navigation_stack
       current_position = current_application.navigation_stack.index(request.fullpath)
-      if current_position && current_position > 0
+      if current_position&.positive?
         current_application.navigation_stack.slice(current_position - 1)
       else
         root_path
