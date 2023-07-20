@@ -21,11 +21,11 @@ module CheckAnswers
     private
 
     def main_defendant
-      defendant_details.find { |defendant| defendant[:main] == true }
+      defendant_details.find { |defendant| defendant[:main] }
     end
 
     def additional_defendants
-      defendant_details.select { |defendant| defendant[:main] == false }
+      defendant_details.reject { |defendant| defendant[:main] }
     end
 
     def main_defendant_row
