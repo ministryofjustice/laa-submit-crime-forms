@@ -4,11 +4,9 @@ module Steps
   class CaseDetailsForm < Steps::BaseFormObject
     BOOLEAN_FIELDS = %i[assigned_counsel unassigned_counsel agent_instructed remitted_to_magistrate].freeze
 
-    attribute :ufn, :string
     attribute :main_offence, :string
     attribute :main_offence_date, :multiparam_date
 
-    validates :ufn, presence: true
     validates :main_offence, presence: true
     validates :main_offence_date, presence: true,
          multiparam_date: { allow_past: true, allow_future: false }
@@ -20,6 +18,10 @@ module Steps
 
     def boolean_fields
       self.class::BOOLEAN_FIELDS
+    end
+
+    def main_offence_suggestion=(value)
+      self.main_offence = value
     end
 
     private
