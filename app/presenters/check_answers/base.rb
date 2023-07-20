@@ -12,8 +12,7 @@ module CheckAnswers
 
     def rows
       row_data.map do |_key, value|
-        head_opts = value.key?(:head_opts) ? value[:head_opts] : {}
-        row_content(value[:head_key], value[:text], head_opts)
+        row_content(value[:head_key], value[:text], value[:head_opts] || {})
       end
     end
 
@@ -21,7 +20,7 @@ module CheckAnswers
       {}
     end
 
-    def row_content(head_key, text, head_opts)
+    def row_content(head_key, text, head_opts = {})
       {
         key: {
           text: translate_table_key(section, head_key, **head_opts),
