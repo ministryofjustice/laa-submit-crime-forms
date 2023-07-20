@@ -11,7 +11,7 @@ RSpec.describe Steps::StartPageController, type: :controller do
     context 'when page is already in navigation stack' do
       let(:navigation_stack) { ["/applications/#{claim.id}/steps/start_page", '/foo'] }
 
-      it 'does not chnage the navigation stack' do
+      it 'does not change the navigation stack' do
         get :show, params: { id: claim }
         expect(claim.reload).to have_attributes(
           navigation_stack:
