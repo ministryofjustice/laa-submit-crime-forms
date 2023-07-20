@@ -62,6 +62,7 @@ RSpec.describe StepsHelper, type: :helper do
 
     before do
       allow(view).to receive(:current_application).and_return(current_application)
+      allow(view.request).to receive(:fullpath).and_return('/step3')
     end
 
     context 'there is a previous path in the stack' do
@@ -93,6 +94,7 @@ RSpec.describe StepsHelper, type: :helper do
 
     before do
       allow(view).to receive(:current_application).and_return(current_application)
+      allow(view.request).to receive(:fullpath).and_return('/rainbow')
     end
 
     context 'when the stack is empty' do
@@ -109,7 +111,26 @@ RSpec.describe StepsHelper, type: :helper do
       it 'returns the element before the last page' do
         expect(helper.previous_step_path).to eq('/the')
       end
+
+      context 'and current path is in the middle' do
+        let(:navigation_stack) { %w[/somewhere /rainbow /over /the ] }
+
+        it 'returns the element before the last page' do
+          expect(helper.previous_step_path).to eq('/somewhere')
+        end
+      end
+
+      # TODO: this is most likley wrong but is the best option at the moment
+      # there is a ticket to rethink this and work out the correct approach
+      context 'and current path is not in the list' do
+        let(:navigation_stack) { %w[/somewhere /over /the ] }
+
+        it 'returns the element before the last page' do
+          expect(helper.previous_step_path).to eq(root_path)
+        end
+      end
     end
+
 
     context 'no current_application' do
       let(:navigation_stack) { nil }
