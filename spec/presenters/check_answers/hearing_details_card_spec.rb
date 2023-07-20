@@ -42,12 +42,34 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
 
   describe '#row_data' do
     it 'generates hearing details rows' do
-      expect(subject.row_data[:hearing_date][:text]).to eq('01 March 2023')
-      expect(subject.row_data[:number_of_hearing][:text]).to eq(1)
-      expect(subject.row_data[:youth_count][:text]).to eq('No')
-      expect(subject.row_data[:in_area][:text]).to eq('Yes - A Court')
-      expect(subject.row_data[:hearing_outcome][:text]).to eq('Arrest warrant issued/adjourned indefinitely')
-      expect(subject.row_data[:matter_type][:text]).to eq('Offences against the person')
+      expect(subject.row_data).to eq(
+        [
+          {
+            head_key: 'hearing_date',
+            text: '01 March 2023'
+          },
+          {
+            head_key: 'number_of_hearing',
+            text: 1
+          },
+          {
+            head_key: 'youth_count',
+            text: 'No'
+          },
+          {
+            head_key: 'in_area',
+            text: 'Yes - A Court'
+          },
+          {
+            head_key: 'hearing_outcome',
+            text: 'Arrest warrant issued/adjourned indefinitely'
+          },
+          {
+            head_key: 'matter_type',
+            text: 'Offences against the person'
+          }
+        ]
+      )
     end
   end
 end

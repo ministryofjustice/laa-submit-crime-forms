@@ -12,12 +12,9 @@ module CheckAnswers
 
     def row_data
       data = main_defendant_row
-
       additional_defendants.each_with_index do |defendant, index|
-        additional_row = additional_defendant_row(defendant, index)
-        data.merge!(additional_row)
+        data += additional_defendant_row(defendant, index)
       end
-
       data
     end
 
@@ -32,31 +29,31 @@ module CheckAnswers
     end
 
     def main_defendant_row
-      {
-        main_defendant_full_name: {
+      [
+        {
           head_key: 'main_defendant_full_name',
           text: main_defendant[:full_name]
         },
-        main_defendant_maat: {
+        {
           head_key: 'main_defendant_maat',
           text: main_defendant[:maat]
         }
-      }
+      ]
     end
 
     def additional_defendant_row(defendant, index)
-      {
-        "additional_defendant_#{index + 1}_full_name": {
+      [
+        {
           head_key: 'additional_defendant_full_name',
           text: defendant[:full_name],
           head_opts: { count: index + 1 }
         },
-        "additional_defendant_#{index + 1}_maat": {
+        {
           head_key: 'additional_defendant_maat',
           text: defendant[:maat],
           head_opts: { count: index + 1 }
         }
-      }
+      ]
     end
   end
 end

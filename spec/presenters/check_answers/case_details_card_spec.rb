@@ -40,12 +40,34 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
 
   describe '#row_data' do
     it 'generates case detail rows' do
-      expect(subject.row_data[:main_offence][:text]).to eq('Theft')
-      expect(subject.row_data[:main_offence_date][:text]).to eq('01 January 2023')
-      expect(subject.row_data[:assigned_counsel][:text]).to eq('Yes')
-      expect(subject.row_data[:unassigned_counsel][:text]).to eq('No')
-      expect(subject.row_data[:agent_instructed][:text]).to eq('No')
-      expect(subject.row_data[:remitted_to_magistrate][:text]).to eq('No')
+      expect(subject.row_data).to eq(
+        [
+          {
+            head_key: 'main_offence',
+            text: 'Theft'
+          },
+          {
+            head_key: 'main_offence_date',
+            text: '01 January 2023'
+          },
+          {
+            head_key: 'assigned_counsel',
+            text: 'Yes'
+          },
+          {
+            head_key: 'unassigned_counsel',
+            text: 'No'
+          },
+          {
+            head_key: 'agent_instructed',
+            text: 'No'
+          },
+          {
+            head_key: 'remitted_to_magistrate',
+            text: 'No'
+          }
+        ]
+      )
     end
   end
 end

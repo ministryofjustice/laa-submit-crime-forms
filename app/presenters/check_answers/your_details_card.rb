@@ -12,35 +12,35 @@ module CheckAnswers
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def row_data
-      {
-        firm_name: {
+      [
+        {
           head_key: 'firm_name',
           text: firm_details_form.firm_office.name
         },
-        firm_account_number: {
+        {
           head_key: 'firm_account_number',
           text: firm_details_form.firm_office.account_number
         },
-        firm_address: {
+        {
           head_key: 'firm_address',
           text: format_address(firm_details_form.firm_office.address_line_1,
                                firm_details_form.firm_office.town,
                                firm_details_form.firm_office.postcode,
                                firm_details_form.firm_office.address_line_2)
         },
-        solicitor_full_name: {
+        {
           head_key: 'solicitor_full_name',
           text: firm_details_form.solicitor.full_name
         },
-        solicitor_reference_number: {
+        {
           head_key: 'solicitor_reference_number',
           text: firm_details_form.solicitor.reference_number
         },
-        contact_full_name: {
+        {
           head_key: 'contact_full_name',
           text: firm_details_form.solicitor.contact_full_name
         }
-      }
+      ]
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 

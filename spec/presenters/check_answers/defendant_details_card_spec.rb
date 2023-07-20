@@ -48,12 +48,38 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
       let(:defendants) { [main_defendant, first_additional_defendant, second_additional_defendant] }
 
       it 'generates full name and maat ref for 1 main defendant and 2 additional defendants' do
-        expect(subject.row_data[:main_defendant_full_name][:text]).to eq('Tim Roy')
-        expect(subject.row_data[:main_defendant_maat][:text]).to eq('123ABC')
-        expect(subject.row_data[:additional_defendant_1_full_name][:text]).to eq('James Brown')
-        expect(subject.row_data[:additional_defendant_1_maat][:text]).to eq('456EFG')
-        expect(subject.row_data[:additional_defendant_2_full_name][:text]).to eq('Timmy Turner')
-        expect(subject.row_data[:additional_defendant_2_maat][:text]).to eq('789HIJ')
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'main_defendant_full_name',
+              text: 'Tim Roy'
+            },
+            {
+              head_key: 'main_defendant_maat',
+              text: '123ABC'
+            },
+            {
+              head_key: 'additional_defendant_full_name',
+              text: 'James Brown',
+              head_opts: { count: 1}
+            },
+            {
+              head_key: 'additional_defendant_maat',
+              text: '456EFG',
+              head_opts: { count: 1}
+            },
+            {
+              head_key: 'additional_defendant_full_name',
+              text: 'Timmy Turner',
+              head_opts: { count: 2}
+            },
+            {
+              head_key: 'additional_defendant_maat',
+              text: '789HIJ',
+              head_opts: { count: 2}
+            }
+          ]
+        )
       end
     end
 
@@ -61,8 +87,18 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
       let(:defendants) { [main_defendant] }
 
       it 'generates full name and maat for 1 main defendant' do
-        expect(subject.row_data[:main_defendant_full_name][:text]).to eq('Tim Roy')
-        expect(subject.row_data[:main_defendant_maat][:text]).to eq('123ABC')
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'main_defendant_full_name',
+              text: 'Tim Roy'
+            },
+            {
+              head_key: 'main_defendant_maat',
+              text: '123ABC'
+            }
+          ]
+        )
       end
     end
   end
