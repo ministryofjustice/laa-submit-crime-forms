@@ -113,7 +113,7 @@ RSpec.describe StepsHelper, type: :helper do
       end
 
       context 'and current path is in the middle' do
-        let(:navigation_stack) { %w[/somewhere /rainbow /over /the ] }
+        let(:navigation_stack) { %w[/somewhere /rainbow /over /the] }
 
         it 'returns the element before the last page' do
           expect(helper.previous_step_path).to eq('/somewhere')
@@ -123,14 +123,13 @@ RSpec.describe StepsHelper, type: :helper do
       # TODO: this is most likley wrong but is the best option at the moment
       # there is a ticket to rethink this and work out the correct approach
       context 'and current path is not in the list' do
-        let(:navigation_stack) { %w[/somewhere /over /the ] }
+        let(:navigation_stack) { %w[/somewhere /over /the] }
 
         it 'returns the element before the last page' do
           expect(helper.previous_step_path).to eq(root_path)
         end
       end
     end
-
 
     context 'no current_application' do
       let(:navigation_stack) { nil }
