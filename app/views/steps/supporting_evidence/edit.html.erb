@@ -11,7 +11,7 @@
     <%= render template: 'steps/supporting_evidence/_content' %>
 
     <%# Additional upload list %>
-    <%= form_with model: @form_object do |f| %>
+    <%= step_form model: @form_object do |f| %>
       <%# File upload component %>
       <div class="moj-multi-file-upload">
         <div class="moj-multi-file-upload__upload">

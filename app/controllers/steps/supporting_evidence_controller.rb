@@ -5,10 +5,10 @@ module Steps
     include S3FileUploadHelper
     skip_before_action :verify_authenticity_token
     def edit
-      # @form_object = SupportingEvidenceForm.build(
-      #   supporting_evidence,
-      #   application: current_application
-      # )
+      @form_object = SupportingEvidenceForm.build(
+        supporting_evidence,
+        application: current_application
+      )
     end
 
     def create
@@ -16,7 +16,8 @@ module Steps
         file_name: params[:documents].original_filename,
         file_type: params[:documents].content_type,
         file_size: params[:documents].tempfile.size,
-        case_id: params[:id]
+        case_id: params[:id],
+        claim: current_application
       )
 
       upload_evidence("#{params[:id]}/#{evidence.id}")
