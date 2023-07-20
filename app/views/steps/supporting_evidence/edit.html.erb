@@ -37,7 +37,7 @@
       <%= tag.li t('.para2.representation') %>
     <% end -%>
 
-    <%= form_with model: @form_object do |form| %>
+    <%= step_form @form_object do |form| %>
       <%# File upload component %>
       <div class="moj-multi-file-upload">
         <div class="moj-multi-file-upload__upload">

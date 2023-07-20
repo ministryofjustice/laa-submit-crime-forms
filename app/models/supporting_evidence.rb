@@ -7,4 +7,5 @@ class SupportingEvidence < ApplicationRecord
   attribute :file_size
   attribute :case_id
   attribute :id
+  attribute :send_by_post
 end
