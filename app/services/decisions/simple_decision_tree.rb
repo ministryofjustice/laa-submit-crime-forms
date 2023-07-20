@@ -1,151 +1,63 @@
 module Decisions
-  class SimpleDecisionTree < BaseDecisionTree
-    EDIT_MAPPING = {
-      defendant_details: :defendant_summary,
-      defendant_delete: :defendant_summary,
-      case_details: :hearing_details,
-      hearing_details: :case_disposal,
-      case_disposal: :reason_for_claim,
-      reason_for_claim: :claim_details,
-      claim_details: :work_item,
-      work_item: :work_items,
-      disbursement_cost: :disbursements,
-      equality: :solicitor_declaration
-    }.freeze
+  class SimpleDecisionTree < DslTree
+    # used to add custom methods to filter/query the data
+    WRAPPER_CLASS = CustomWrapper
 
-    SHOW_MAPPING = {
-      claim_type: :start_page,
-      solicitor_declaration: :claim_confirmation,
-      other_info: :check_answers
-    }.freeze
+    from(:claim_type).goto(show: :start_page)
+    from(:firm_details)
+      .when(-> { application.defendants.none? })
+      .goto(edit: :defendant_details, defendant_id: StartPage::NEW_RECORD)
+      .goto(edit: :defendant_summary)
+    from(:defendant_details).goto(edit: :defendant_summary)
+    from(:defendant_delete).goto(edit: :defendant_summary)
+    from(:defendant_summary)
+      .when(-> { add_another.yes? })
+      .goto(edit: :defendant_details, defendant_id: StartPage::NEW_RECORD)
+      .goto(edit: :case_details)
+    from(:case_details).goto(edit: :hearing_details)
+    from(:hearing_details).goto(edit: :case_disposal)
+    from(:case_disposal).goto(edit: :reason_for_claim)
+    from(:reason_for_claim).goto(edit: :claim_details)
+    from(:claim_details)
+      .when(-> { application.work_items.none? })
+      .goto(edit: :work_item, work_item_id: StartPage::NEW_RECORD)
+      .goto(edit: :work_items)
+    from(:work_item).goto(edit: :work_items)
+    from(:work_item_delete)
+      .when(-> { application.work_items.none? })
+      .goto(edit: :work_item, work_item_id: StartPage::NEW_RECORD)
+      .goto(edit: :work_items)
+    from(:work_items)
+      .when(-> { add_another.yes? })
+      .goto(edit: :work_item, work_item_id: StartPage::NEW_RECORD)
+      .when(-> { first_invalid(application.work_items, Steps::WorkItemForm) })
+      .goto(edit: :work_item, work_item_id: lambda { |response|
+                                              response.id
+                                            }, flash: { error: 'Can not continue until valid!' })
+      .goto(edit: :letters_calls)
+    from(:letters_calls)
+      .when(-> { application.disbursements.none? })
+      .goto(edit: :disbursement_type, disbursement_id: StartPage::NEW_RECORD)
+      .when(-> { application.disbursements.count == 1 })
+      .goto(edit: :disbursement_type, disbursement_id: -> { application.disbursements.first.id })
+      .goto(edit: :disbursements)
+    from(:disbursement_cost).goto(edit: :disbursements)
+    from(:disbursement_type)
+      .goto(edit: :disbursement_cost, disbursement_id: -> { record.id })
+    from(:disbursement_delete)
+      .when(-> { application.disbursements.none? })
+      .goto(edit: :disbursement_type, disbursement_id: StartPage::NEW_RECORD)
+      .goto(edit: :disbursements)
+    from(:disbursements)
+      .when(-> { add_another.yes? })
+      .goto(edit: :disbursement_type, disbursement_id: StartPage::NEW_RECORD)
+      .goto(show: :cost_summary)
 
-    def destination
-      if respond_to?("after_#{step_name}", true)
-        send("after_#{step_name}")
-      elsif EDIT_MAPPING[step_name]
-        edit(EDIT_MAPPING[step_name])
-      elsif SHOW_MAPPING[step_name]
-        show(SHOW_MAPPING[step_name])
-      else
-        index('/claims')
-      end
-    end
-
-    private
-
-    def after_disbursement_type
-      edit(:disbursement_cost, disbursement_id: form_object.record.id)
-    end
-
-    def after_equality
-      if form_object.answer_equality.yes?
-        show(:start_page, answer: 'yes')
-      else
-        edit(:solicitor_declaration)
-      end
-    end
-
-    def after_defendant_summary
-      add_another(
-        scope: application.defendants,
-        add_view: :defendant_details,
-        sub_id: :defendant_id,
-        form: Steps::DefendantDetailsForm,
-        proceed_url: edit(:case_details),
-      )
-    end
-
-    def after_work_items
-      add_another(
-        scope: application.work_items,
-        add_view: :work_item,
-        sub_id: :work_item_id,
-        form: Steps::WorkItemForm,
-        proceed_url: edit(:letters_calls),
-      )
-    end
-
-    def after_disbursements
-      add_another(
-        scope: application.disbursements,
-        add_view: :disbursement_type,
-        sub_id: :disbursement_id,
-        form: [Steps::DisbursementTypeForm, Steps::DisbursementCostForm],
-        proceed_url: show(:cost_summary),
-      )
-    end
-
-    def after_firm_details
-      create_new_or_summary(
-        page: :defendant_details,
-        summary_page: :defendant_summary,
-        nested_id: :defendant_id,
-        scope: application.defendants,
-      )
-    end
-
-    def after_claim_details
-      create_new_or_summary(
-        page: :work_item,
-        summary_page: :work_items,
-        nested_id: :work_item_id,
-        scope: application.work_items,
-      )
-    end
-
-    def after_work_item_delete
-      create_new_or_summary(
-        page: :work_item,
-        summary_page: :work_items,
-        nested_id: :work_item_id,
-        scope: application.work_items,
-      )
-    end
-
-    def after_disbursement_delete
-      create_new_or_summary(
-        page: :disbursement_type,
-        summary_page: :disbursements,
-        nested_id: :disbursement_id,
-        scope: application.disbursements,
-      )
-    end
-
-    def after_letters_calls
-      create_new_or_summary(
-        page: :disbursement_type,
-        summary_page: :disbursements,
-        nested_id: :disbursement_id,
-        options: { edit_when_one: true },
-        scope: application.disbursements
-      )
-    end
-
-    def add_another(scope:, add_view:, sub_id:, form:, proceed_url:)
-      if form_object.add_another.yes?
-        edit(add_view, sub_id => StartPage::NEW_RECORD)
-      else
-        # we direct the user to any invalid forms when they choose next
-        forms = Array(form)
-        invalid_instance = scope.detect { |record| forms.any? { |f| !f.build(record, application:).valid? } }
-        if invalid_instance
-          edit(add_view, sub_id => invalid_instance.id, :flash => { error: 'Can not continue until valid!' })
-        else
-          proceed_url
-        end
-      end
-    end
-
-    def create_new_or_summary(page:, summary_page:, nested_id:, scope:, options: { edit_when_one: false })
-      count = scope.count
-      if count.zero?
-        edit(page, nested_id => StartPage::NEW_RECORD)
-      elsif count == 1 && options[:edit_when_one]
-        new_work_item = scope.first
-        edit(page, nested_id => new_work_item.id)
-      else
-        edit(summary_page)
-      end
-    end
+    from(:other_info).goto(edit: :equality)
+    from(:equality)
+      # .when(-> { answer_equality.yes? }).goto(edit: :equality_answers)
+      .when(-> { answer_equality.yes? }).goto(show: :start_page, answer: 'yes')
+      .goto(edit: :solicitor_declaration)
+    from(:solicitor_declaration).goto(show: :claim_confirmation)
   end
 end
