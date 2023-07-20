@@ -44,6 +44,7 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
   end
 
   describe '#row_data' do
+    # rubocop:disable RSpec/ExampleLength
     context '1 main defendant and 2 additional defendants' do
       let(:defendants) { [main_defendant, first_additional_defendant, second_additional_defendant] }
 
@@ -61,22 +62,22 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
             {
               head_key: 'additional_defendant_full_name',
               text: 'James Brown',
-              head_opts: { count: 1}
+              head_opts: { count: 1 }
             },
             {
               head_key: 'additional_defendant_maat',
               text: '456EFG',
-              head_opts: { count: 1}
+              head_opts: { count: 1 }
             },
             {
               head_key: 'additional_defendant_full_name',
               text: 'Timmy Turner',
-              head_opts: { count: 2}
+              head_opts: { count: 2 }
             },
             {
               head_key: 'additional_defendant_maat',
               text: '789HIJ',
-              head_opts: { count: 2}
+              head_opts: { count: 2 }
             }
           ]
         )
@@ -101,5 +102,6 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
         )
       end
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 end

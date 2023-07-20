@@ -51,6 +51,7 @@ RSpec.describe CheckAnswers::YourDetailsCard do
     end
   end
 
+  # rubocop:disable RSpec/ExampleLength
   describe '#row_data' do
     context '2 lines in address' do
       it 'generates case detail rows with 2 lines of address' do
@@ -87,7 +88,7 @@ RSpec.describe CheckAnswers::YourDetailsCard do
 
     context '1 line in address' do
       let(:firm_address_2) { nil }
-      
+
       it 'generates case detail rows with 1 line of address' do
         expect(subject.row_data).to eq(
           [
@@ -119,5 +120,6 @@ RSpec.describe CheckAnswers::YourDetailsCard do
         )
       end
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 end
