@@ -129,6 +129,10 @@ en:
         total_cost: Total cost
         completed_date_blank: Completed date not set
         deleted_flash: The work item was deleted
+    disbursement_add:
+      edit:
+        page_title: Do you need to claim a disbursement
+        heading: Do you need to claim a disbursement
     disbursement_type:
       edit:
         page_title: Disbursement type

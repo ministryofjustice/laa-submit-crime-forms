@@ -99,7 +99,7 @@ RSpec.describe Decisions::DecisionTree do
   end
 
   context 'no existing disbursements' do
-    it_behaves_like 'a generic decision', from: :letters_calls, goto: { action: :edit, controller: 'steps/disbursement_type', disbursement_id: StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: :letters_calls, goto: { action: :edit, controller: 'steps/disbursement_add' }
   end
 
   context 'existing invalid disbursements (type)' do
@@ -120,6 +120,16 @@ RSpec.describe Decisions::DecisionTree do
     let(:application) { build(:claim, disbursements: [build(:disbursement, :valid)]) }
 
     it_behaves_like 'a generic decision', from: :letters_calls, goto: { action: :edit, controller: 'steps/disbursements' }
+  end
+
+  context 'answer yes to add first disbursement' do
+    before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
+    it_behaves_like 'a generic decision', from: :disbursement_add, goto: { action: :edit, controller: 'steps/disbursement_type', disbursement_id: StartPage::NEW_RECORD }
+  end
+
+  context 'answer no to add first disbursement' do
+    before { allow(form).to receive(:add_another).and_return(YesNoAnswer::NO) }
+    it_behaves_like 'a generic decision', from: :disbursement_add, goto: { action: :show, controller: 'steps/cost_summary' }
   end
 
   context 'with a disbursement record' do
