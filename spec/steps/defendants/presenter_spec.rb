@@ -18,32 +18,38 @@ RSpec.describe Tasks::Defendants, type: :system do
 
   describe '#path' do
     context 'no defendants' do
-      it { expect(subject.path).to eq(
-        action: :edit,
-        controller: :defendant_details,
-        id: application,
-        defendant_id: StartPage::NEW_RECORD
-      ) }
+      it {
+        expect(subject.path).to eq(
+          action: :edit,
+          controller: :defendant_details,
+          id: application,
+          defendant_id: StartPage::NEW_RECORD
+        )
+      }
     end
 
     context 'one defendant' do
       let(:defendants) { [build(:defendant, :valid)] }
 
-      it { expect(subject.path).to eq(
-        action: :edit,
-        controller: :defendant_summary,
-        id: application,
-      ) }
+      it {
+        expect(subject.path).to eq(
+          action: :edit,
+          controller: :defendant_summary,
+          id: application,
+        )
+      }
     end
 
     context 'more than one defendants' do
       let(:defendants) { [build(:defendant, :valid), build(:defendant, :valid)] }
 
-      it { expect(subject.path).to eq(
-        action: :edit,
-        controller: :defendant_summary,
-        id: application,
-      ) }
+      it {
+        expect(subject.path).to eq(
+          action: :edit,
+          controller: :defendant_summary,
+          id: application,
+        )
+      }
     end
   end
 

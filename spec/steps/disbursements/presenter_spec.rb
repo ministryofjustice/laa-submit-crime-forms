@@ -21,22 +21,26 @@ RSpec.describe Tasks::Disbursements, type: :system do
     context 'no disbursements' do
       let(:disbursements) { [] }
 
-      it { expect(subject.path).to eq(
-        action: :edit,
-        controller: :disbursement_type,
-        id: application,
-        disbursement_id: StartPage::NEW_RECORD
-      ) }
+      it {
+        expect(subject.path).to eq(
+          action: :edit,
+          controller: :disbursement_type,
+          id: application,
+          disbursement_id: StartPage::NEW_RECORD
+        )
+      }
     end
 
     context 'any valid disbursements' do
       let(:disbursement) { build(:disbursement, :valid) }
 
-      it { expect(subject.path).to eq(
-        action: :edit,
-        controller: :disbursements,
-        id: application,
-      ) }
+      it {
+        expect(subject.path).to eq(
+          action: :edit,
+          controller: :disbursements,
+          id: application,
+        )
+      }
     end
   end
 

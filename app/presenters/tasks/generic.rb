@@ -7,7 +7,7 @@ module Tasks
     def path
       form_class = self.class::PREVIOUS_TASK::FORM
       Decisions::DecisionTree.new(
-        form_class.new(application: application, record: record),
+        form_class.new(application:, record:),
         as: self.class::PREVIOUS_STEP_NAME,
       ).destination
     end

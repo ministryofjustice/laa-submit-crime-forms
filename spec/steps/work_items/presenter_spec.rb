@@ -18,32 +18,38 @@ RSpec.describe Tasks::WorkItems, type: :system do
 
   describe '#path' do
     context 'no work_items' do
-      it { expect(subject.path).to eq(
-        action: :edit,
-        controller: :work_item,
-        id: application,
-        work_item_id: StartPage::NEW_RECORD
-      ) }
+      it {
+        expect(subject.path).to eq(
+          action: :edit,
+          controller: :work_item,
+          id: application,
+          work_item_id: StartPage::NEW_RECORD
+        )
+      }
     end
 
     context 'one work_item' do
       let(:work_items) { [build(:work_item, :valid)] }
 
-      it { expect(subject.path).to eq(
-        action: :edit,
-        controller: :work_items,
-        id: application,
-      ) }
+      it {
+        expect(subject.path).to eq(
+          action: :edit,
+          controller: :work_items,
+          id: application,
+        )
+      }
     end
 
     context 'more than one work_item' do
       let(:work_items) { [build(:work_item, :valid), build(:work_item, :valid)] }
 
-      it { expect(subject.path).to eq(
-        action: :edit,
-        controller: :work_items,
-        id: application,
-      ) }
+      it {
+        expect(subject.path).to eq(
+          action: :edit,
+          controller: :work_items,
+          id: application,
+        )
+      }
     end
   end
 
