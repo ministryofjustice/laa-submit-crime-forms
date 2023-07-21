@@ -97,9 +97,8 @@ RSpec.describe 'User can manage work items', type: :system do
     end
 
     fill_in 'Fee earner initials', with: 'JBJ'
-debugger
+
     click_on 'Save and continue'
-debugger
 
     expect(claim.reload.work_items).to contain_exactly(
       have_attributes(
