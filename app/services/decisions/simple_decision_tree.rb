@@ -54,7 +54,6 @@ module Decisions
       .goto(show: :cost_summary)
 
     from(:other_info).goto(show: :check_answers)
-    from(:check_answers).goto(edit: :equality)
     from(:equality)
       # .when(-> { answer_equality.yes? }).goto(edit: :equality_answers)
       .when(-> { answer_equality.yes? }).goto(show: :start_page, answer: 'yes')
