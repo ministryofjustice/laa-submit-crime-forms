@@ -19,7 +19,7 @@ module CostSummary
     end
 
     def total_cost
-      @total_cost ||= disbursement_forms.sum(&:total_cost)
+      @total_cost ||= disbursement_forms.filter_map(&:total_cost).sum
     end
 
     def title

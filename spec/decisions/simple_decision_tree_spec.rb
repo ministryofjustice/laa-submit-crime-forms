@@ -1,151 +1,165 @@
 require 'rails_helper'
 
 RSpec.describe Decisions::SimpleDecisionTree do
-  let(:application) { build(:claim) }
+  let(:id) { SecureRandom.uuid }
+  let(:application) { build(:claim, id: id) }
+  let(:record) { application }
+  let(:form) { double(:form, application: application, record: record) }
 
-  it_behaves_like 'a generic decision', :claim_type, :start_page, Steps::ClaimTypeForm, action_name: :show
-  it_behaves_like 'a decision with nested object',
-                  step_name: :firm_details, controller: :defendant_details, nested: :defendant,
-                  summary_controller: :defendant_summary, form_class: Steps::FirmDetailsForm
-  it_behaves_like 'a generic decision', :defendant_details, :defendant_summary, Steps::DefendantDetailsForm
-  it_behaves_like 'a generic decision', :defendant_delete, :defendant_summary, Steps::DefendantDeleteForm
-  context 'when defendant exists' do
-    let(:application) { create(:claim, defendants: [defendant]) }
-    let(:defendant) { build(:defendant, :valid) }
+  it_behaves_like 'a generic decision', from: :claim_type, goto: { action: :show, controller: :start_page }
 
-    it_behaves_like 'a generic decision', :firm_details, :defendant_summary, Steps::DefendantDetailsForm
-    it_behaves_like 'an add_another decision', :defendant_summary, :defendant_details, :case_details, :defendant_id,
-                    additional_yes_branch_tests: lambda {
-                      it 'builds a new defendant on the claim' do
-                        expect { decision_tree.destination }.not_to change(application.defendants, :count)
-                      end
-                    }
+  context 'no existing defendants' do
+    it_behaves_like 'a generic decision', from: :firm_details, goto: { action: :edit, controller: :defendant_details, defendant_id: StartPage::NEW_RECORD }
+  end
+  context 'existing invalid defendants' do
+    let(:defendant_id) { SecureRandom.uuid }
+    let(:application) { build(:claim, defendants: [build(:defendant, id: defendant_id)]) }
+    it_behaves_like 'a generic decision', from: :firm_details, goto: { action: :edit, controller: :defendant_details }, additional_param: :defendant_id
+  end
+  context 'existing valid defendants' do
+    let(:application) { build(:claim, defendants: [build(:defendant, :valid)]) }
+    it_behaves_like 'a generic decision', from: :firm_details, goto: { action: :edit, controller: :defendant_summary }
   end
 
-  it_behaves_like 'a generic decision', :case_details, :hearing_details, Steps::CaseDetailsForm
-  it_behaves_like 'a generic decision', :hearing_details, :case_disposal, Steps::HearingDetailsForm
-  it_behaves_like 'a generic decision', :case_disposal, :reason_for_claim, Steps::CaseDisposalForm
-  it_behaves_like 'a generic decision', :reason_for_claim, :claim_details, Steps::ReasonForClaimForm
+  it_behaves_like 'a generic decision', from: :defendant_details, goto: { action: :edit, controller: :defendant_summary }
+  it_behaves_like 'a generic decision', from: :defendant_delete, goto: { action: :edit, controller: :defendant_summary }
 
-  it_behaves_like 'a decision with nested object',
-                  step_name: :claim_details, controller: :work_item,
-                  summary_controller: :work_items, form_class: Steps::ClaimDetailsForm
-  it_behaves_like 'a generic decision', :work_item, :work_items, Steps::WorkItemForm
-
-  context 'when work_item exists' do
-    let(:application) { create(:claim, work_items: [work_item]) }
-    let(:work_item) { build(:work_item, :valid) }
-
-    it_behaves_like 'a generic decision', :work_item_delete, :work_items, Steps::DeleteForm
-    it_behaves_like 'an add_another decision', :work_items, :work_item, :letters_calls, :work_item_id,
-                    additional_yes_branch_tests: lambda {
-                      it 'builds a new work item on the claim' do
-                        expect { decision_tree.destination }.not_to change(application.work_items, :count)
-                      end
-                    }
-
-    context 'but is not valid' do
-      let(:work_item) { build(:work_item, :partial) }
-
-      no_controller_options = {
-        name: :work_items,
-        routing: proc {
-                   {
-                     controller: :work_item,
-                           work_item_id: application.work_items.first.id,
-                           flash: { error: 'Can not continue until valid!' }
-                   }
-                 }
-      }
-      it_behaves_like 'an add_another decision', :work_items, :work_item, no_controller_options, :work_item_id,
-                      additional_yes_branch_tests: lambda {
-                        it 'builds a new work item on the claim' do
-                          expect { decision_tree.destination }.not_to change(application.work_items, :count)
-                        end
-                      }
+  context 'answer yes to add_another' do
+    before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
+    context 'existing invalid defendant' do
+      let(:defendant_id) { SecureRandom.uuid}
+      let(:application) { build(:claim, defendants: [build(:defendant, id: defendant_id)]) }
+      it_behaves_like 'a generic decision', from: :defendant_summary, goto: { action: :edit, controller: :defendant_details }, additional_param: :defendant_id
     end
+    it_behaves_like 'a generic decision', from: :defendant_summary, goto: { action: :edit, controller: :defendant_details, defendant_id: StartPage::NEW_RECORD }
+  end
+  context 'answer no to add_another' do
+    before { allow(form).to receive(:add_another).and_return(YesNoAnswer::NO) }
+    context 'existing invalid defendant' do
+      let(:application) { build(:claim, defendants: [build(:defendant)]) }
+      it_behaves_like 'a generic decision', from: :defendant_summary, goto: { action: :edit, controller: :defendant_summary }
+    end
+    it_behaves_like 'a generic decision', from: :defendant_summary, goto: { action: :edit, controller: :case_details }
   end
 
-  it_behaves_like 'a decision with nested object',
-                  step_name: :work_item_delete, controller: :work_item,
-                  summary_controller: :work_items, form_class: Steps::DeleteForm
+  it_behaves_like 'a generic decision', from: :case_details, goto: { action: :edit, controller: :hearing_details }
+  it_behaves_like 'a generic decision', from: :hearing_details, goto: { action: :edit, controller: :case_disposal }
+  it_behaves_like 'a generic decision', from: :case_disposal, goto: { action: :edit, controller: :reason_for_claim }
+  it_behaves_like 'a generic decision', from: :reason_for_claim, goto: { action: :edit, controller: :claim_details }
 
-  it_behaves_like 'a decision with nested object',
-                  step_name: :letters_calls, controller: :disbursement_type, summary_controller: :disbursements,
-                  form_class: Steps::LettersCallsForm, edit_when_one: true, nested: :disbursement
-  it_behaves_like 'a generic decision', :disbursement_cost, :disbursements, Steps::DefendantDeleteForm
-  context 'when disbursements exists' do
-    let(:application) { create(:claim, disbursements: [disbursement]) }
-    let(:disbursement) { build(:disbursement, :valid) }
-
-    let(:local_form) { Steps::DisbursementTypeForm.build(disbursement, application:) }
-    let(:decision_tree) { described_class.new(local_form, as: :disbursement_type) }
-
-    context 'when step is disbursement_type' do
-      it 'moves to disbursement_cost#edit' do
-        expect(decision_tree.destination).to eq(
-          action: :edit,
-          controller: :disbursement_cost,
-          id: application,
-          disbursement_id: disbursement.id
-        )
-      end
-    end
-
-    it_behaves_like 'an add_another decision', :disbursements, :disbursement_type, :cost_summary, :disbursement_id,
-                    no_action_name: :show, additional_yes_branch_tests: lambda {
-                      it 'builds a new disbursement on the claim' do
-                        expect { decision_tree.destination }.not_to change(application.disbursements, :count)
-                      end
-                    }
+  context 'no existing work_items' do
+    it_behaves_like 'a generic decision', from: :claim_details, goto: { action: :edit, controller: :work_item, work_item_id: StartPage::NEW_RECORD }
+  end
+  context 'existing invalid defendants' do
+    let(:work_item_id) { SecureRandom.uuid }
+    let(:application) { build(:claim, work_items: [build(:work_item, id: work_item_id)]) }
+    it_behaves_like 'a generic decision', from: :claim_details, goto: { action: :edit, controller: :work_item }, additional_param: :work_item_id
+  end
+  context 'existing valid defendants' do
+    let(:application) { build(:claim, work_items: [build(:work_item, :valid)]) }
+    it_behaves_like 'a generic decision', from: :claim_details, goto: { action: :edit, controller: :work_items }
   end
 
-  it_behaves_like 'a decision with nested object',
-                  step_name: :disbursement_delete, controller: :disbursement_type, nested: :disbursement,
-                  summary_controller: :disbursements, form_class: Steps::DeleteForm
+  it_behaves_like 'a generic decision', from: :work_item, goto: { action: :edit, controller: :work_items }
 
-  it_behaves_like 'a generic decision', :other_info, :check_answers, Steps::OtherInfoForm, action_name: :show
-  describe 'equality' do
-    let(:form) { Steps::AnswerEqualityForm.new(application:, answer_equality:) }
-    let(:decision_tree) { described_class.new(form, as: :equality) }
-
-    context 'when then answer is no' do
-      let(:answer_equality) { 'no' }
-
-      # TODO: update once pages exist
-      it 'moves to start_page' do
-        expect(decision_tree.destination).to eq(
-          action: :edit,
-          controller: :solicitor_declaration,
-          id: application,
-        )
-      end
-    end
-
-    context 'when the answer is yes' do
-      let(:answer_equality) { 'yes' }
-
-      # TODO: update once pages exist
-      it 'moves to equality_questions page' do
-        expect(decision_tree.destination).to eq(
-          action: :edit,
-          controller: :equality_questions,
-          id: application,
-        )
-      end
-    end
+  context 'when no work items' do
+    it_behaves_like 'a generic decision', from: :work_item_delete, goto: { action: :edit, controller: :work_item, work_item_id: StartPage::NEW_RECORD }
+  end
+  context 'when work items' do
+    let(:application) { build(:claim, work_items: [build(:work_item, :valid)]) }
+    it_behaves_like 'a generic decision', from: :work_item_delete, goto: { action: :edit, controller: :work_items }
   end
 
-  it_behaves_like 'a generic decision', :solicitor_declaration, :claim_confirmation, Steps::SolicitorDeclarationForm,
-                  action_name: :show
-
-  context 'when step is unknown' do
-    it 'moves to claim index' do
-      decision_tree = described_class.new(double('form'), as: :unknown)
-      expect(decision_tree.destination).to eq(
-        action: :index,
-        controller: '/claims',
-      )
+  context 'answer yes to add_another' do
+    before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
+    context 'existing invalid work_items' do
+      let(:work_item_id) { SecureRandom.uuid}
+      let(:application) { build(:claim, work_items: [build(:work_item, id: work_item_id)]) }
+      it_behaves_like 'a generic decision', from: :work_items, goto: { action: :edit, controller: :work_item }, additional_param: :work_item_id
     end
+    it_behaves_like 'a generic decision', from: :work_items, goto: { action: :edit, controller: :work_item, work_item_id: StartPage::NEW_RECORD }
   end
+  context 'answer no to add_another' do
+    before { allow(form).to receive(:add_another).and_return(YesNoAnswer::NO) }
+    context 'existing invalid work_items' do
+      let(:application) { build(:claim, work_items: [build(:work_item)]) }
+      it_behaves_like 'a generic decision', from: :work_items, goto: { action: :edit, controller: :work_items }
+    end
+    it_behaves_like 'a generic decision', from: :work_items, goto: { action: :edit, controller: :letters_calls }
+  end
+
+  context 'no existing disbursements' do
+    it_behaves_like 'a generic decision', from: :letters_calls, goto: { action: :edit, controller: :disbursement_type, disbursement_id: StartPage::NEW_RECORD }
+  end
+  context 'existing invalid disbursements (type)' do
+    let(:disbursement_id) { SecureRandom.uuid }
+    let(:application) { build(:claim, disbursements: [build(:disbursement, id: disbursement_id)]) }
+    it_behaves_like 'a generic decision', from: :letters_calls, goto: { action: :edit, controller: :disbursement_type }, additional_param: :disbursement_id
+  end
+  context 'existing invalid disbursements (cost)' do
+    let(:disbursement_id) { SecureRandom.uuid }
+    let(:application) { build(:claim, disbursements: [build(:disbursement, :valid_type, id: disbursement_id)]) }
+    it_behaves_like 'a generic decision', from: :letters_calls, goto: { action: :edit, controller: :disbursement_cost }, additional_param: :disbursement_id
+  end
+  context 'existing valid defendants' do
+    let(:application) { build(:claim, disbursements: [build(:disbursement, :valid)]) }
+    it_behaves_like 'a generic decision', from: :letters_calls, goto: { action: :edit, controller: :disbursements }
+  end
+
+  context 'with a disbursement record' do
+    let(:disbursement_id) { SecureRandom.uuid }
+    let(:record) { double(:record, id: disbursement_id) }
+    it_behaves_like 'a generic decision', from: :disbursement_type, goto: { action: :edit, controller: :disbursement_cost }, additional_param: :disbursement_id
+  end
+
+  it_behaves_like 'a generic decision', from: :disbursement_cost, goto: { action: :edit, controller: :disbursements }
+
+  context 'when no disbursements' do
+    it_behaves_like 'a generic decision', from: :disbursement_delete, goto: { action: :edit, controller: :disbursement_type, disbursement_id: StartPage::NEW_RECORD }
+  end
+  context 'when disbursements' do
+    let(:application) { build(:claim, disbursements: [build(:disbursement, :valid)]) }
+    it_behaves_like 'a generic decision', from: :disbursement_delete, goto: { action: :edit, controller: :disbursements }
+  end
+
+  context 'answer yes to add_another' do
+    before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
+    context 'existing invalid disbursements (type)' do
+      let(:disbursement_id) { SecureRandom.uuid}
+      let(:application) { build(:claim, disbursements: [build(:disbursement, id: disbursement_id)]) }
+      it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: :disbursement_type }, additional_param: :disbursement_id
+    end
+    context 'existing invalid disbursements (cost)' do
+      let(:disbursement_id) { SecureRandom.uuid}
+      let(:application) { build(:claim, disbursements: [build(:disbursement, :valid_type, id: disbursement_id)]) }
+      it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: :disbursement_cost }, additional_param: :disbursement_id
+    end
+    it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: :disbursement_type, disbursement_id: StartPage::NEW_RECORD }
+  end
+  context 'answer no to add_another' do
+    before { allow(form).to receive(:add_another).and_return(YesNoAnswer::NO) }
+    context 'existing invalid disbursement (type)' do
+      let(:application) { build(:claim, disbursements: [build(:disbursement)]) }
+      it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: :disbursements }
+    end
+    context 'existing invalid disbursement (cost)' do
+      let(:application) { build(:claim, disbursements: [build(:disbursement, :valid_type)]) }
+      it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: :disbursements }
+    end
+    it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :show, controller: :cost_summary }
+  end
+
+  it_behaves_like 'a generic decision', from: :other_info, goto: { action: :show, controller: :check_answers }
+
+  context 'answer yes to answer_equality' do
+    before { allow(form).to receive(:answer_equality).and_return(YesNoAnswer::YES) }
+    it_behaves_like 'a generic decision', from: :equality, goto: { action: :edit, controller: :equality_questions }
+  end
+  context 'answer no to answer_equality' do
+    before { allow(form).to receive(:answer_equality).and_return(YesNoAnswer::NO) }
+    it_behaves_like 'a generic decision', from: :equality, goto: { action: :edit, controller: :solicitor_declaration }
+  end
+
+  it_behaves_like 'a generic decision', from: :equality_questions, goto: { action: :edit, controller: :solicitor_declaration }
+  it_behaves_like 'a generic decision', from: :solicitor_declaration, goto: { action: :show, controller: :claim_confirmation }
 end

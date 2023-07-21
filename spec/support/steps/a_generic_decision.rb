@@ -1,14 +1,13 @@
-RSpec.shared_examples 'a generic decision' do |step_name, controller_name, form_class = nil, action_name: :edit|
-  let(:local_form) { form_class&.new(application:) || form }
-  let(:decision_tree) { described_class.new(local_form, as: step_name) }
+RSpec.shared_examples 'a generic decision' do |from:, goto:, additional_param: nil|
+  subject { described_class.new(form, as: from) }
 
-  context "when step is #{step_name}" do
-    it "moves to #{controller_name}##{action_name}" do
-      expect(decision_tree.destination).to eq(
-        action: action_name,
-        controller: controller_name,
-        id: application,
-      )
+  context "when step is #{from}" do
+    it "moves to #{goto.inspect}" do
+      destination = goto
+      destination[additional_param] = public_send(additional_param) if additional_param
+      destination[:id] = application unless destination[:action] == :index
+
+      expect(subject.destination).to eq(destination)
     end
   end
 end
