@@ -14,8 +14,6 @@ module Decisions
     from(:defendant_details).goto(edit: :defendant_summary)
     from(:defendant_delete).goto(edit: :defendant_summary)
     from(:defendant_summary)
-      .when(-> { add_another.yes? && first_invalid(application.defendants, Steps::DefendantDetailsForm) })
-      .goto(edit: :defendant_details, defendant_id: ->(inst) { inst.id })
       .when(-> { add_another.yes? })
       .goto(edit: :defendant_details, defendant_id: StartPage::NEW_RECORD)
       .when(-> { first_invalid(application.defendants, Steps::DefendantDetailsForm) })

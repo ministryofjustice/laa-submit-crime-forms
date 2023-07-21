@@ -26,11 +26,6 @@ RSpec.describe Decisions::DecisionTree do
 
   context 'answer yes to add_another' do
     before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
-    context 'existing invalid defendant' do
-      let(:defendant_id) { SecureRandom.uuid}
-      let(:application) { build(:claim, defendants: [build(:defendant, id: defendant_id)]) }
-      it_behaves_like 'a generic decision', from: :defendant_summary, goto: { action: :edit, controller: :defendant_details }, additional_param: :defendant_id
-    end
     it_behaves_like 'a generic decision', from: :defendant_summary, goto: { action: :edit, controller: :defendant_details, defendant_id: StartPage::NEW_RECORD }
   end
   context 'answer no to add_another' do
