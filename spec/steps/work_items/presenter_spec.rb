@@ -17,26 +17,33 @@ RSpec.describe Tasks::WorkItems, type: :system do
   let(:navigation_stack) { [] }
 
   describe '#path' do
-    before { allow(application.work_items).to receive(:count).and_return(number_of_work_items) }
-
     context 'no work_items' do
-      before { application.save }
-
-      let(:number_of_work_items) { 0 }
-
-      it { expect(subject.path).to eq("/applications/#{id}/steps/work_item/#{StartPage::NEW_RECORD}") }
+      it { expect(subject.path).to eq(
+        action: :edit,
+        controller: :work_item,
+        id: application,
+        work_item_id: StartPage::NEW_RECORD
+      ) }
     end
 
     context 'one work_item' do
-      let(:number_of_work_items) { 1 }
+      let(:work_items) { [build(:work_item, :valid)] }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/work_items") }
+      it { expect(subject.path).to eq(
+        action: :edit,
+        controller: :work_items,
+        id: application,
+      ) }
     end
 
     context 'more than one work_item' do
-      let(:number_of_work_items) { 2 }
+      let(:work_items) { [build(:work_item, :valid), build(:work_item, :valid)] }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/work_items") }
+      it { expect(subject.path).to eq(
+        action: :edit,
+        controller: :work_items,
+        id: application,
+      ) }
     end
   end
 

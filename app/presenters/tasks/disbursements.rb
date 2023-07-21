@@ -1,19 +1,11 @@
 module Tasks
   class Disbursements < Generic
     PREVIOUS_TASK = LettersCalls
+    PREVIOUS_STEP_NAME = :letters_calls
     FORMS = [
       Steps::DisbursementTypeForm,
       Steps::DisbursementCostForm,
     ].freeze
-
-    def path
-
-      if application.disbursements.count.positive?
-        edit_steps_disbursements_path(id: application)
-      else
-        edit_steps_disbursement_type_path(id: application, disbursement_id: StartPage::NEW_RECORD)
-      end
-    end
 
     # TODO: is this inefficient? do we care?
     def in_progress?

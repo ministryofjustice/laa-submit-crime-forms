@@ -4,6 +4,14 @@ module Tasks
       false
     end
 
+    def path
+      form_class = self.class::PREVIOUS_TASK::FORM
+      Decisions::DecisionTree.new(
+        form_class.new(application: application, record: record),
+        as: self.class::PREVIOUS_STEP_NAME,
+      ).destination
+    end
+
     def can_start?
       fulfilled?(self.class::PREVIOUS_TASK)
     end

@@ -18,20 +18,25 @@ RSpec.describe Tasks::Disbursements, type: :system do
   let(:navigation_stack) { [] }
 
   describe '#path' do
-    before do
-      allow(application.disbursements).to receive(:count).and_return(number_of_disbursements)
-    end
-
     context 'no disbursements' do
-      let(:number_of_disbursements) { 0 }
+      let(:disbursements) { [] }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_type/#{StartPage::NEW_RECORD}") }
+      it { expect(subject.path).to eq(
+        action: :edit,
+        controller: :disbursement_type,
+        id: application,
+        disbursement_id: StartPage::NEW_RECORD
+      ) }
     end
 
-    context 'one disbursement' do
-      let(:number_of_disbursements) { 1 }
+    context 'any valid disbursements' do
+      let(:disbursement) { build(:disbursement, :valid) }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursements") }
+      it { expect(subject.path).to eq(
+        action: :edit,
+        controller: :disbursements,
+        id: application,
+      ) }
     end
   end
 
