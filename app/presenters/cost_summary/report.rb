@@ -27,7 +27,7 @@ module CostSummary
     end
 
     def total_cost
-      NumberTo.pounds(items.values.sum(&:total_cost))
+      NumberTo.pounds(items.values.map(&:total_cost).compact.sum)
     end
 
     private
