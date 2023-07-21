@@ -21,26 +21,13 @@ RSpec.describe Tasks::Disbursements, type: :system do
     context 'no disbursements' do
       let(:disbursements) { [] }
 
-      it {
-        expect(subject.path).to eq(
-          action: :edit,
-          controller: :disbursement_type,
-          id: application,
-          disbursement_id: StartPage::NEW_RECORD
-        )
-      }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_type/#{StartPage::NEW_RECORD}") }
     end
 
     context 'any valid disbursements' do
       let(:disbursement) { build(:disbursement, :valid) }
 
-      it {
-        expect(subject.path).to eq(
-          action: :edit,
-          controller: :disbursements,
-          id: application,
-        )
-      }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursements") }
     end
   end
 
@@ -56,12 +43,6 @@ RSpec.describe Tasks::Disbursements, type: :system do
 
       it { expect(subject).to be_in_progress }
     end
-
-    # context 'navigation_stack include edit disbursements path' do
-    #   before { navigation_stack << edit_steps_work_items_path(application) }
-
-    #   it { expect(subject).to be_in_progress }
-    # end
 
     context 'navigation_stack does not include disbursements paths' do
       it { expect(subject).not_to be_in_progress }
