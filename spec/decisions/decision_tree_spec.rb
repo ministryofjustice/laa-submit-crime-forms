@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Decisions::SimpleDecisionTree do
+RSpec.describe Decisions::DecisionTree do
   let(:id) { SecureRandom.uuid }
   let(:application) { build(:claim, id: id) }
   let(:record) { application }
@@ -72,11 +72,6 @@ RSpec.describe Decisions::SimpleDecisionTree do
 
   context 'answer yes to add_another' do
     before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
-    context 'existing invalid work_items' do
-      let(:work_item_id) { SecureRandom.uuid}
-      let(:application) { build(:claim, work_items: [build(:work_item, id: work_item_id)]) }
-      it_behaves_like 'a generic decision', from: :work_items, goto: { action: :edit, controller: :work_item }, additional_param: :work_item_id
-    end
     it_behaves_like 'a generic decision', from: :work_items, goto: { action: :edit, controller: :work_item, work_item_id: StartPage::NEW_RECORD }
   end
   context 'answer no to add_another' do
@@ -124,16 +119,6 @@ RSpec.describe Decisions::SimpleDecisionTree do
 
   context 'answer yes to add_another' do
     before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
-    context 'existing invalid disbursements (type)' do
-      let(:disbursement_id) { SecureRandom.uuid}
-      let(:application) { build(:claim, disbursements: [build(:disbursement, id: disbursement_id)]) }
-      it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: :disbursement_type }, additional_param: :disbursement_id
-    end
-    context 'existing invalid disbursements (cost)' do
-      let(:disbursement_id) { SecureRandom.uuid}
-      let(:application) { build(:claim, disbursements: [build(:disbursement, :valid_type, id: disbursement_id)]) }
-      it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: :disbursement_cost }, additional_param: :disbursement_id
-    end
     it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: :disbursement_type, disbursement_id: StartPage::NEW_RECORD }
   end
   context 'answer no to add_another' do

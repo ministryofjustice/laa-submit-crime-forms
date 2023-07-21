@@ -71,7 +71,7 @@ RSpec.describe 'User can manage work items', type: :system do
   end
 
   it 'can add additional work items' do
-    claim.work_items.create(
+    claim.work_items.create!(
       work_type: 'apples',
       time_spent: 122,
       completed_on: Date.new(2022, 4, 20),
@@ -97,8 +97,9 @@ RSpec.describe 'User can manage work items', type: :system do
     end
 
     fill_in 'Fee earner initials', with: 'JBJ'
-
+debugger
     click_on 'Save and continue'
+debugger
 
     expect(claim.reload.work_items).to contain_exactly(
       have_attributes(

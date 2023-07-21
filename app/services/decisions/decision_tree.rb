@@ -1,5 +1,5 @@
 module Decisions
-  class SimpleDecisionTree < DslTree
+  class DecisionTree < DslTree
     # used to add custom methods to filter/query the data
     WRAPPER_CLASS = CustomWrapper
 
@@ -37,9 +37,6 @@ module Decisions
       .goto(edit: :work_item, work_item_id: StartPage::NEW_RECORD)
       .goto(edit: :work_items)
     from(:work_items)
-      # check for invalid data and go there if add another is selected?
-      .when(-> { add_another.yes? && first_invalid(application.work_items, Steps::WorkItemForm) })
-      .goto(edit: :work_item, work_item_id: ->(inst) { inst.id })
       .when(-> { add_another.yes? })
       .goto(edit: :work_item, work_item_id: StartPage::NEW_RECORD)
       .when(-> { first_invalid(application.work_items, Steps::WorkItemForm) })
@@ -61,10 +58,6 @@ module Decisions
       .goto(edit: :disbursement_type, disbursement_id: StartPage::NEW_RECORD)
       .goto(edit: :disbursements)
     from(:disbursements)
-      .when(-> { add_another.yes? && first_invalid(application.disbursements, Steps::DisbursementTypeForm) })
-      .goto(edit: :disbursement_type, disbursement_id: ->(inst) { inst.id })
-      .when(-> { add_another.yes? && first_invalid(application.disbursements, Steps::DisbursementCostForm) })
-      .goto(edit: :disbursement_cost, disbursement_id: ->(inst) { inst.id })
       .when(-> { add_another.yes? })
       .goto(edit: :disbursement_type, disbursement_id: StartPage::NEW_RECORD)
       .when(-> { first_invalid(application.disbursements, Steps::DisbursementTypeForm, Steps::DisbursementCostForm) })
