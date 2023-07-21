@@ -53,7 +53,10 @@ en:
         disbursement_type: Which disbursement type is this is for?
       steps_disbursement_cost_form:
         prior_authority: Have you been granted prior authority for this disbursement?
-
+      steps_equality_questions_form:
+        gender: What does the defendant identify as? (optional)
+        ethnic_group: What is the defendants ethnic group? (optional)
+        disability: Does the defendant consider themselves as having a disability? (optional)
     hint:
       steps_claim_type_form:
         ufn: For example 120223/001
@@ -257,7 +260,33 @@ en:
           'no': No, skip the equality questions
       steps_solicitor_declaration_form:
         signatory_name: Full name
-
+      steps_equality_questions_form:
+        gender_options:
+          m: Male
+          f: Female
+          u: Other
+        ethnic_group_options:
+          00_other: Other
+          01_white_british: White British
+          02_white_irish: White Irish
+          03_black_or_black_british_african: Black (African)
+          04_black_or_black_british_caribbean: Black (Caribbean)
+          05_black_or_black_british_other: Black (Other)
+          06_asian_or_asian_british_indian: Indian
+          07_asian_or_asian_british_pakistani: Pakistani
+          08_asian_or_asian_british_bangladeshi: Bangladeshi
+          09_chinese: Chinese
+          10_mixed_white_black_caribbean: Mixed White & Black Caribbean
+          11_mixed_white_black_african: Mixed White & Black African
+          12_mixed_white_asian: Mixed White & Asian
+          13_mixed_other: Mixed Other
+          14_white_other: White Other
+          15_asian_or_asian_british_other: Asian or Asian British Other
+          99_unknown: Unknown
+        disability_options:
+          'y': 'Yes'
+          'n': 'No'
+          u: Unknown
     other_disbursement_type:
       accident_reconstruction_report: Accident Reconstruction Report
       accident_emergency_report: Accident & Emergency Report

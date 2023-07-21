@@ -181,6 +181,10 @@ en:
           They will only be used to help us monitor and research access to LAA funded services,
           in line with our duties under the Equality Act 2010.</p>
           <p>Your answers will not affect your claim.</p>
+    equality_questions:
+      edit:
+        page_title: Equality monitoring questions
+        heading: Equality monitoring questions
     solicitor_declaration:
       edit:
         page_title: Confirm the following
