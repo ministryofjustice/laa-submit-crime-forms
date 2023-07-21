@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'User can fill in other relevent information', type: :system do
   let(:claim) do
-    Claim.create(office_code: 'AAAA', defendants: [Defendant.new(main: true, full_name: 'Nigel', maat: '123')])
+    Claim.create!(office_code: 'AAA', defendants: [Defendant.new(main: true, full_name: 'Nigel', maat: '123')])
   end
 
   before do

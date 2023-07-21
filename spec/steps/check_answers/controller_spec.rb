@@ -1,13 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Steps::CheckAnswersController, type: :controller do
-  it_behaves_like 'a show step controller'
+  let(:claim) do
+    Claim.create!(office_code: 'AAA', defendants: [Defendant.new(main: true, full_name: 'Nigel', maat: '123')])
+  end
+
+  it_behaves_like 'a show step controller' do
+    let(:existing_case) { claim }
+  end
 
   describe '#show' do
-    let(:claim) do
-      Claim.create!(office_code: 'AAA', defendants: [Defendant.new(main: true, full_name: 'Nigel', maat: '123')])
-    end
-
     before { claim.update(navigation_stack:) }
 
     context 'when page is already in navigation stack and at the end' do

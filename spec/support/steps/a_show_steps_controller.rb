@@ -1,4 +1,8 @@
 RSpec.shared_examples 'a show step controller' do
+  let(:existing_case) do
+    Claim.create(office_code: 'AAA')
+  end
+
   describe '#show' do
     context 'when application is not found' do
       it 'redirects to the application not found error page' do
@@ -8,10 +12,6 @@ RSpec.shared_examples 'a show step controller' do
     end
 
     context 'when application is found' do
-      let(:existing_case) do
-        Claim.create(office_code: 'AAA', defendants: [Defendant.new(main: true, full_name: 'Nigel', maat: '123')])
-      end
-
       it 'responds with HTTP success' do
         get :show, params: { id: existing_case }
         expect(response).to be_successful
