@@ -2,18 +2,7 @@ module Tasks
   class Defendants < Generic
     PREVIOUS_TASK = FirmDetails
     FORM = Steps::DefendantDetailsForm
-
-    def path
-      scope = application.defendants
-      count = application.defendants.count
-
-      if count > 1
-        edit_steps_defendant_summary_path(application)
-      else
-        defendant_id = count.zero? ? StartPage::NEW_RECORD : scope.first.id
-        edit_steps_defendant_details_path(id: application.id, defendant_id: defendant_id)
-      end
-    end
+    PREVIOUS_STEP_NAME = :firm_details
 
     def in_progress?
       [

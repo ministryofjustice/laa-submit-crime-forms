@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Steps::DefendantDetailsController, type: :controller do
   let(:defendant) { existing_case.is_a?(Claim) ? existing_case.defendants.create : nil }
 
-  it_behaves_like 'a generic step controller', Steps::DefendantDetailsForm, Decisions::SimpleDecisionTree,
+  it_behaves_like 'a generic step controller', Steps::DefendantDetailsForm, Decisions::DecisionTree,
                   ->(scope) { { defendant_id: scope.defendant&.id || '4321' } }
   it_behaves_like 'a step that can be drafted', Steps::DefendantDetailsForm,
                   ->(scope) { { defendant_id: scope.defendant&.id || '4321' } }

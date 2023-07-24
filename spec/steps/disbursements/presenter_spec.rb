@@ -18,18 +18,14 @@ RSpec.describe Tasks::Disbursements, type: :system do
   let(:navigation_stack) { [] }
 
   describe '#path' do
-    before do
-      allow(application.disbursements).to receive(:count).and_return(number_of_disbursements)
-    end
-
     context 'no disbursements' do
-      let(:number_of_disbursements) { 0 }
+      let(:disbursements) { [] }
 
       it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_type/#{StartPage::NEW_RECORD}") }
     end
 
-    context 'one disbursement' do
-      let(:number_of_disbursements) { 1 }
+    context 'any valid disbursements' do
+      let(:disbursement) { build(:disbursement, :valid) }
 
       it { expect(subject.path).to eq("/applications/#{id}/steps/disbursements") }
     end
@@ -47,12 +43,6 @@ RSpec.describe Tasks::Disbursements, type: :system do
 
       it { expect(subject).to be_in_progress }
     end
-
-    # context 'navigation_stack include edit disbursements path' do
-    #   before { navigation_stack << edit_steps_work_items_path(application) }
-
-    #   it { expect(subject).to be_in_progress }
-    # end
 
     context 'navigation_stack does not include disbursements paths' do
       it { expect(subject).not_to be_in_progress }
