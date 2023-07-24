@@ -56,9 +56,10 @@ module Decisions
     from(:other_info).goto(show: :check_answers)
     from(:check_answers).goto(edit: :equality)
     from(:equality)
-      # .when(-> { answer_equality.yes? }).goto(edit: :equality_answers)
-      .when(-> { answer_equality.yes? }).goto(show: :start_page, answer: 'yes')
+      .when(-> { answer_equality.yes? }).goto(edit: :equality_questions)
       .goto(edit: :solicitor_declaration)
+    from(:equality_questions).goto(edit: :solicitor_declaration)
+
     from(:solicitor_declaration).goto(show: :claim_confirmation)
   end
 end
