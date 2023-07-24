@@ -50,7 +50,7 @@ module CheckAnswers
     def preparation_time
       if claim_details_form.preparation_time
         "#{capitalize_sym(claim_details_form.preparation_time)} -
-        #{claim_details_form.time_spent.to_s}"
+        #{claim_details_form.time_spent.formatted_string}"
       else
         capitalize_sym(claim_details_form.preparation_time)
       end

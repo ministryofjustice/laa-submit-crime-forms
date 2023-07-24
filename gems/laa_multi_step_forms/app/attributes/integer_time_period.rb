@@ -13,7 +13,7 @@ class IntegerTimePeriod < SimpleDelegator
     __getobj__ % 60
   end
 
-  def to_s
+  def formatted_string
     hour_text = if hours == 1
                   I18n.t('helpers.time_period.hours.one', count: hours)
                 else
