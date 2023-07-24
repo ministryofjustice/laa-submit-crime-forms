@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Tasks
   class SupportingEvidence < Generic
     PREVIOUS_TASK = OtherInfo

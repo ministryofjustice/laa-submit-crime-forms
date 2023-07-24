@@ -26,7 +26,7 @@ en:
       disbursements: Disbursements costs
       cost_summary: Review your claim
       other_info: Other relevant information
-      upload_evidence: Upload supporting evidence
+      supporting_evidence: Upload supporting evidence
       check_answers: Check your answers
       solicitor_declaration: Confirm declaration and submit claim
   laa_multi_step_forms:
