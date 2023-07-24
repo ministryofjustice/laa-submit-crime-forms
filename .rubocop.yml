@@ -111,6 +111,10 @@ Metrics/AbcSize:
 Metrics/ParameterLists:
   Max: 7
 
+Layout/LineLength:
+  Exclude:
+    - spec/decisions/decision_tree_spec.rb
+
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:
   EnforcedStyle: ruby19_no_mixed_keys

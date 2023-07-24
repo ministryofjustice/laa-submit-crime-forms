@@ -18,12 +18,12 @@ en:
         assigned_counsel: Was there an assigned counsel?
         unassigned_counsel: Was there an unassigned counsel?
         agent_instructed: Was there an instructed agent?
-        remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates court?
+        remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates' court?
       steps_case_disposal_form:
         guilty_pleas: Category 1
         not_guilty_pleas: Category 2
         arrest_warrent_date: Date of Issue
-        cracked_trial_date: Date guilty pldea indicated to solicitor
+        cracked_trial_date: Date guilty plea indicated to solicitor
       steps_hearing_details_form:
         first_hearing_date: Date of first hearing
         in_area: Is this court in a designated area of your firm?
@@ -72,7 +72,8 @@ en:
             more information to complete your claim. If you add alternative contact
             details we’ll use those instead.
       steps_case_details_form:
-        assigned_counsel: We'll ask you to upload your CRM8 form before you submit this claim
+        assigned_counsel_options:
+          'yes': We'll ask you to upload your CRM8 form before you submit this claim
         main_offence_date: For example, 27 3 2007
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
       steps_case_disposal_form:
@@ -141,7 +142,6 @@ en:
       steps_case_details_form:
         ufn: Your Unique File Number
         main_offence: Main offence
-        assigned_counsel: aaaaaaaaa
         assigned_counsel_options:
           'yes': 'Yes'
           'no': 'No'
@@ -168,7 +168,7 @@ en:
           discontinuance: Discontinuance or withdrawal or bind over or no evidence offered after case fully prepared
           mixed: Mixed plea
       steps_hearing_details_form:
-        number_of_hearing: How many hearing were held for this case?
+        number_of_hearing: How many hearings were held for this case?
         court: Which court was the last case hearing heard at?
         in_area_options:
           'yes': 'Yes'
