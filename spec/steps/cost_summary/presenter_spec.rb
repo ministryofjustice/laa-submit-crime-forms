@@ -8,11 +8,13 @@ RSpec.describe Tasks::CostSummary, type: :system do
     {
       id: id,
       office_code: 'AAA',
-      navigation_stack: navigation_stack
+      navigation_stack: navigation_stack,
+      disbursements: disbursements,
     }
   end
   let(:id) { SecureRandom.uuid }
   let(:navigation_stack) { [] }
+  let(:disbursements) { [] }
 
   describe '#path' do
     it { expect(subject.path).to eq("/applications/#{id}/steps/cost_summary") }
@@ -22,7 +24,27 @@ RSpec.describe Tasks::CostSummary, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  it_behaves_like 'a task with generic can_start?', Tasks::LettersCalls
+  context '#can_start?' do
+    context 'when disbursement_add page has not been visited' do
+      it { expect(subject).not_to be_can_start }
+    end
+
+    context 'when disbursement_add page has been visited' do
+      before do
+        navigation_stack << edit_steps_disbursement_add_path(application)
+      end
+
+      context 'when no disbursements exist' do
+        it { expect(subject).to be_can_start }
+      end
+
+      context 'when disbursements exist' do
+        let(:disbursements) { [build(:disbursement, :valid)] }
+
+        it_behaves_like 'a task with generic can_start?', Tasks::Disbursements
+      end
+    end
+  end
 
   describe '#completed?' do
     context 'cost_summary is last page in the navigation stack' do

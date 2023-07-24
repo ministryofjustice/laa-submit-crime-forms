@@ -1,6 +1,5 @@
 module Tasks
   class OtherInfo < Generic
-    PREVIOUS_TASK = LettersCalls
     FORM = Steps::OtherInfoForm
 
     def can_start?
