@@ -53,7 +53,7 @@ en:
           other: You added %{count} defendants
         main_defendant: Main defendant details
         additional_defendant: Additional defendant details
-        header:
+        headers:
           full_name: Full name
           maat: MAAT ID
           action: Action
