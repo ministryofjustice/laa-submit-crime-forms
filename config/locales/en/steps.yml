@@ -3,8 +3,8 @@ en:
   steps:
     claim_type:
       edit:
-        page_title: What are you claiming for?
-        heading: What are you claiming for?
+        page_title: What are you claiming for
+        heading: What are you claiming for
         other_details:
           line_1: This form can only be used to claim for a Non-standard magistrate or a Breach for injunction payment.
           line_2: To claim for a Crime Lower standard payment, please use CWA via the LAA online portal.
