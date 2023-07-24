@@ -72,7 +72,8 @@ en:
             more information to complete your claim. If you add alternative contact
             details we’ll use those instead.
       steps_case_details_form:
-        assigned_counsel: We'll ask you to upload your CRM8 form before you submit this claim
+        assigned_counsel_options:
+          'yes': We'll ask you to upload your CRM8 form before you submit this claim
         main_offence_date: For example, 27 3 2007
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
       steps_case_disposal_form:
@@ -141,7 +142,6 @@ en:
       steps_case_details_form:
         ufn: Your Unique File Number
         main_offence: Main offence
-        assigned_counsel: aaaaaaaaa
         assigned_counsel_options:
           'yes': 'Yes'
           'no': 'No'
