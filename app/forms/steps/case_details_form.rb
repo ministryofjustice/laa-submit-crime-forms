@@ -7,6 +7,9 @@ module Steps
     attribute :main_offence, :string
     attribute :main_offence_date, :multiparam_date
 
+    attribute :remitted_to_magistrate, :string
+    attribute :remitted_to_magistrate_date, :multiparam_date
+
     validates :main_offence, presence: true
     validates :main_offence_date, presence: true,
          multiparam_date: { allow_past: true, allow_future: false }

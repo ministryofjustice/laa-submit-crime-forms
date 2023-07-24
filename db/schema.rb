@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_13_133905) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_21_065151) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,7 +50,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_13_133905) do
     t.integer "defence_statement"
     t.integer "number_of_witnesses"
     t.string "supplemental_claim"
-    t.string "preparation_time"
     t.integer "time_spent"
     t.integer "letters"
     t.integer "calls"
@@ -63,6 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_13_133905) do
     t.date "work_before_date"
     t.date "work_after_date"
     t.string "signatory_name"
+    t.date "remitted_to_magistrate_date"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
