@@ -2,6 +2,7 @@ class ValueObject
   attr_reader :value
 
   delegate :to_s, :to_sym, to: :value
+  delegate :blank?, to: :to_s
 
   def initialize(raw_value)
     raise ArgumentError, 'Raw value must be symbol or implicitly convertible' unless raw_value.respond_to?(:to_sym)

@@ -104,7 +104,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
                   step_name: :disbursement_delete, controller: :disbursement_type, nested: :disbursement,
                   summary_controller: :disbursements, form_class: Steps::DeleteForm
 
-  it_behaves_like 'a generic decision', :other_info, :equality, Steps::OtherInfoForm
+  it_behaves_like 'a generic decision', :other_info, :check_answers, Steps::OtherInfoForm, action_name: :show
   describe 'equality' do
     let(:form) { Steps::AnswerEqualityForm.new(application:, answer_equality:) }
     let(:decision_tree) { described_class.new(form, as: :equality) }
@@ -126,12 +126,11 @@ RSpec.describe Decisions::SimpleDecisionTree do
       let(:answer_equality) { 'yes' }
 
       # TODO: update once pages exist
-      it 'moves to start_page' do
+      it 'moves to equality_questions page' do
         expect(decision_tree.destination).to eq(
-          action: :show,
-          controller: :start_page,
+          action: :edit,
+          controller: :equality_questions,
           id: application,
-          answer: 'yes'
         )
       end
     end

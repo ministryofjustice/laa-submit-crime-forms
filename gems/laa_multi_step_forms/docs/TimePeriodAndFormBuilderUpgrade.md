@@ -69,7 +69,7 @@ the matching `Date` component files from the gem in the current version
 to understand what changes have been made.
 
 The diff the versions of the `Date` component to see what if anything has
-chnaged as a result of the upgrade.
+changed as a result of the upgrade.
 
 From here it is down to the user to take the appropriate action and ensure
 the component continues to function.

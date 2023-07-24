@@ -11,7 +11,7 @@ RSpec.describe Steps::CostSummaryController, type: :controller do
     context 'when page is already in navigation stack and at the end' do
       let(:navigation_stack) { ['/foo', "/applications/#{claim.id}/steps/cost_summary"] }
 
-      it 'does not chnage the navigation stack' do
+      it 'does not change the navigation stack' do
         get :show, params: { id: claim }
         expect(claim.reload).to have_attributes(
           navigation_stack:
@@ -22,7 +22,7 @@ RSpec.describe Steps::CostSummaryController, type: :controller do
     context 'when page is already in navigation stack but not at the end' do
       let(:navigation_stack) { ["/applications/#{claim.id}/steps/cost_summary", '/foo'] }
 
-      it 'does not chnage the stack' do
+      it 'does not change the stack' do
         get :show, params: { id: claim }
         expect(claim.reload).to have_attributes(
           navigation_stack: ["/applications/#{claim.id}/steps/cost_summary", '/foo']
