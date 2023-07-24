@@ -5,7 +5,6 @@ class AddSupportingEvidence < ActiveRecord::Migration[7.0]
       t.string :file_name
       t.string :file_type
       t.integer :file_size
-      t.string :case_id
 
       t.timestamps
     end

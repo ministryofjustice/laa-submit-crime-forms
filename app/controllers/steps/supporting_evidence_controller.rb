@@ -4,10 +4,10 @@ module Steps
   class SupportingEvidenceController < Steps::BaseStepController
     include S3FileUploadHelper
     skip_before_action :verify_authenticity_token
+    before_action :supporting_evidence
     def edit
       @form_object = SupportingEvidenceForm.build(
-        supporting_evidence,
-        application: current_application
+        current_application
       )
     end
 
@@ -16,15 +16,18 @@ module Steps
         file_name: params[:documents].original_filename,
         file_type: params[:documents].content_type,
         file_size: params[:documents].tempfile.size,
-        case_id: params[:id],
         claim: current_application
       )
 
-      upload_evidence("#{params[:id]}/#{evidence.id}")
+      evidence.file.attach(params[:documents])
     end
 
     def update
-      update_and_advance(SupportingEvidenceForm)
+      update_and_advance(SupportingEvidenceForm, as: :supporting_evidence)
+    end
+
+    def destroy
+      SupportingEvidence.destroy(params[:resource_id])
     end
 
     private
@@ -38,7 +41,11 @@ module Steps
     end
 
     def latest_evidence
-      SupportingEvidence.find_by claim_id: current_application.id
+      SupportingEvidence.where(claim_id: current_application.id).map
+    end
+
+    def additional_params
+      [:resource_id]
     end
   end
 end

@@ -8,4 +8,6 @@ class SupportingEvidence < ApplicationRecord
   attribute :case_id
   attribute :id
   attribute :send_by_post
+
+  has_one_attached :file
 end
