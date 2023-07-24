@@ -4,7 +4,7 @@ RSpec.describe CheckAnswers::WorkItemsCard do
   subject { described_class.new(claim) }
 
   let(:claim) { instance_double(Claim, work_items:, assigned_counsel:, in_area:) }
-  let(:work_items) {[instance_double(WorkItem), instance_double(WorkItem), instance_double(WorkItem)]}
+  let(:work_items) { [instance_double(WorkItem), instance_double(WorkItem), instance_double(WorkItem)] }
   let(:form_advocacy) { instance_double(Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 100.0) }
   let(:form_advocacy2) { instance_double(Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 70.0) }
   let(:form_preparation) { instance_double(Steps::WorkItemForm, work_type: WorkTypes::PREPARATION, total_cost: 40.0) }
@@ -42,7 +42,7 @@ RSpec.describe CheckAnswers::WorkItemsCard do
           },
           {
             head_key: 'attendance_without_counsel',
-            text: '£' 
+            text: '£'
           },
           {
             head_key: 'preparation',
@@ -51,7 +51,7 @@ RSpec.describe CheckAnswers::WorkItemsCard do
           {
             head_key: 'advocacy',
             text: '£170.00'
-          }   
+          }
         ]
       )
     end

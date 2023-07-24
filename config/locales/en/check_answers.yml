@@ -33,6 +33,14 @@ en:
             in_area: Magistrates court in designated area
             hearing_outcome: Hearing outcome
             matter_type: Matter type
+          claim_details:
+            prosecution_evidence: Number of pages of prosecution evidence
+            defence_statement: Number of pages of defence statements
+            number_of_witnesses: Number of witnesses
+            supplemental_claim: Supplemental claim
+            preparation_time: Taped evidence
+            work_before: Work before order was granted
+            work_after: Work after last hearing
           letters_calls:
             letters: Number of letters
             calls: Number of calls

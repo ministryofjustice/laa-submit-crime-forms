@@ -33,7 +33,13 @@ module CheckAnswers
     end
 
     def capitalize_sym(obj)
-      obj&.value.to_s.capitalize
+      if obj.is_a?(TrueClass)
+        YesNoAnswer::YES.to_s.capitalize
+      elsif obj.is_a?(FalseClass)
+        YesNoAnswer::NO.to_s.capitalize
+      else
+        obj&.value.to_s.capitalize
+      end
     end
 
     def get_value_obj_desc(value_object, key)
