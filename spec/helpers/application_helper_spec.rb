@@ -38,4 +38,21 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe '#maat_required?' do
+    let(:form) { double(:form, application:) }
+    let(:application) { double(:application, claim_type:) }
+
+    context 'when claim type is not BREACH_OF_INJUNCTION' do
+      let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
+
+      it { expect(helper.maat_required?(form)).to be_truthy }
+    end
+
+    context 'when claim type is BREACH_OF_INJUNCTION' do
+      let(:claim_type) { ClaimType::BREACH_OF_INJUNCTION.to_s }
+
+      it { expect(helper.maat_required?(form)).to be_falsey }
+    end
+  end
 end
