@@ -46,13 +46,13 @@ RSpec.describe ApplicationHelper, type: :helper do
     context 'when claim type is not BREACH_OF_INJUNCTION' do
       let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
 
-      it { expect(helper.maat_required?(form)).to be_truthy }
+      it { expect(helper).to be_maat_required(form) }
     end
 
     context 'when claim type is BREACH_OF_INJUNCTION' do
       let(:claim_type) { ClaimType::BREACH_OF_INJUNCTION.to_s }
 
-      it { expect(helper.maat_required?(form)).to be_falsey }
+      it { expect(helper).not_to be_maat_required(form) }
     end
   end
 end
