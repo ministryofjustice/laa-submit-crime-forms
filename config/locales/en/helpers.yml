@@ -18,7 +18,7 @@ en:
         assigned_counsel: Was there an assigned counsel?
         unassigned_counsel: Was there an unassigned counsel?
         agent_instructed: Was there an instructed agent?
-        remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates court?
+        remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates' court?
       steps_case_disposal_form:
         guilty_pleas: Category 1
         not_guilty_pleas: Category 2
