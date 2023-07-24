@@ -36,6 +36,14 @@ en:
           letters_calls:
             letters: Number of letters
             calls: Number of calls
+          work_items:
+            items: Items
+            items_total: <strong>Total per item</strong>
+            attendance_without_counsel: Attendance without counsel
+            preparation: Preparation  
+            advocacy: Advocacy
+            travel: Travel
+            waiting: Waiting
       groups:
         about_you: 
           heading: About you
