@@ -16,7 +16,7 @@ RSpec.describe 'User can fill in claim type details', type: :system do
       fill_in 'Year', with: '2023'
     end
 
-    fill_in 'How many hearing were held for this case?', with: 2
+    fill_in 'How many hearings were held for this case?', with: 2
 
     select "Aberystwyth Magistrates' Court", from: 'Which court was the last case hearing heard at?'
 
