@@ -28,10 +28,11 @@ RSpec.describe CheckAnswers::WorkItemsCard do
 
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Work Items')
+      expect(subject.title).to eq('Work items')
     end
   end
 
+  # rubocop:disable RSpec/ExampleLength
   describe '#row_data' do
     it 'generates work items rows' do
       expect(subject.row_data).to eq(
@@ -56,4 +57,5 @@ RSpec.describe CheckAnswers::WorkItemsCard do
       )
     end
   end
+  # rubocop:enable RSpec/ExampleLength
 end

@@ -28,7 +28,7 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
 
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Case Details')
+      expect(subject.title).to eq('Case details')
     end
   end
 

@@ -27,6 +27,7 @@ RSpec.describe CostSummary::WorkItems do
   end
 
   describe '#rows' do
+    # rubocop:disable RSpec/ExampleLength
     it 'generates letters and calls rows' do
       expect(subject.rows).to eq(
         [
@@ -48,6 +49,7 @@ RSpec.describe CostSummary::WorkItems do
         ]
       )
     end
+    # rubocop:enable RSpec/ExampleLength
 
     context 'when assigned counsel is true' do
       let(:assigned_counsel) { 'yes' }

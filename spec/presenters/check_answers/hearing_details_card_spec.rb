@@ -30,7 +30,7 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
 
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Hearing Details')
+      expect(subject.title).to eq('Hearing details')
     end
   end
 

@@ -49,8 +49,7 @@ module CheckAnswers
 
     def preparation_time
       if claim_details_form.preparation_time
-        "#{capitalize_sym(claim_details_form.preparation_time)} -
-        #{claim_details_form.time_spent.formatted_string}"
+        "#{capitalize_sym(claim_details_form.preparation_time)} - #{claim_details_form.time_spent.formatted_string}"
       else
         capitalize_sym(claim_details_form.preparation_time)
       end
@@ -58,8 +57,9 @@ module CheckAnswers
 
     def work_before
       if claim_details_form.work_before
-        "#{capitalize_sym(claim_details_form.work_before)} -
-        #{claim_details_form.work_before_date&.strftime('%d %B %Y')}"
+        # rubocop:disable Layout/LineLength
+        "#{capitalize_sym(claim_details_form.work_before)} - #{claim_details_form.work_before_date&.strftime('%d %B %Y')}"
+        # rubocop:enable Layout/LineLength
       else
         capitalize_sym(claim_details_form.work_before)
       end
@@ -67,8 +67,7 @@ module CheckAnswers
 
     def work_after
       if claim_details_form.work_after
-        "#{capitalize_sym(claim_details_form.work_after)} -
-        #{claim_details_form.work_after_date&.strftime('%d %B %Y')}"
+        "#{capitalize_sym(claim_details_form.work_after)} - #{claim_details_form.work_after_date&.strftime('%d %B %Y')}"
       else
         capitalize_sym(claim_details_form.work_after)
       end

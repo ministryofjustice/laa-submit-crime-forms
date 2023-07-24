@@ -56,7 +56,7 @@ en:
         about_you: 
           heading: About you
           firm_details: 
-            title: Your Details
+            title: Your details
         about_defendant: 
           heading: About the defendant
           defendant_summary:
@@ -64,11 +64,11 @@ en:
         about_case:
           heading: About the case
           case_details:
-            title: Case Details
+            title: Case details
           hearing_details: 
-            title: Hearing Details
+            title: Hearing details
           case_disposal:
-            title: Case Disposal
+            title: Case disposal
         about_claim:
           heading: About the claim
           reason_for_claim:
@@ -76,7 +76,7 @@ en:
           claim_details: 
             title: Claim details
           work_items:
-            title: Work Items
+            title: Work items
           letters_calls: 
             title: Letters and phone calls
           disbursements:

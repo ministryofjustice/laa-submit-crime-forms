@@ -41,7 +41,7 @@ RSpec.describe CheckAnswers::YourDetailsCard do
 
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Your Details')
+      expect(subject.title).to eq('Your details')
     end
   end
 
