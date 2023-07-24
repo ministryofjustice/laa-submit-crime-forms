@@ -33,6 +33,9 @@ en:
             in_area: Magistrates court in designated area
             hearing_outcome: Hearing outcome
             matter_type: Matter type
+          letters_calls:
+            letters: Number of letters
+            calls: Number of calls
       groups:
         about_you: 
           heading: About you
