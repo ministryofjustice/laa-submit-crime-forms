@@ -24,7 +24,7 @@ RSpec.describe Tasks::CostSummary, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  context '#can_start?' do
+  describe '#can_start?' do
     context 'when disbursement_add page has not been visited' do
       it { expect(subject).not_to be_can_start }
     end

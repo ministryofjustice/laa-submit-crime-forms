@@ -25,5 +25,6 @@ RSpec.describe Tasks::OtherInfo, type: :system do
       it { expect(subject).to be_can_start }
     end
   end
+
   it_behaves_like 'a task with generic complete?', Steps::OtherInfoForm
 end

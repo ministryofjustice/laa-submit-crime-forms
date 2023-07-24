@@ -124,11 +124,13 @@ RSpec.describe Decisions::DecisionTree do
 
   context 'answer yes to add first disbursement' do
     before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
+
     it_behaves_like 'a generic decision', from: :disbursement_add, goto: { action: :edit, controller: 'steps/disbursement_type', disbursement_id: StartPage::NEW_RECORD }
   end
 
   context 'answer no to add first disbursement' do
     before { allow(form).to receive(:add_another).and_return(YesNoAnswer::NO) }
+
     it_behaves_like 'a generic decision', from: :disbursement_add, goto: { action: :show, controller: 'steps/cost_summary' }
   end
 
