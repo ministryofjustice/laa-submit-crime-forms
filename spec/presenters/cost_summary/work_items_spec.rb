@@ -31,14 +31,17 @@ RSpec.describe CostSummary::WorkItems do
       expect(subject.rows).to eq(
         [
           {
+            head_key: 'attendance_without_counsel',
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Attendance without counsel' },
             value: { text: '£' }
           },
           {
+            head_key: 'preparation',
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Preparation' },
             value: { text: '£40.00' }
           },
           {
+            head_key: 'advocacy',
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Advocacy' },
             value: { text: '£170.00' }
           }

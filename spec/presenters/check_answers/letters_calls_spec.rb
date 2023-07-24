@@ -28,12 +28,6 @@ RSpec.describe CheckAnswers::LettersCallsCard do
     end
   end
 
-  describe '#route_path' do
-    it 'is correct route' do
-      expect(subject.route_path).to eq('letters_calls')
-    end
-  end
-
   describe '#row_data' do
     it 'generates hearing details rows' do
       expect(subject.row_data).to eq(

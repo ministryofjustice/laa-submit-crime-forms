@@ -32,12 +32,6 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
     end
   end
 
-  describe '#route_path' do
-    it 'is correct route' do
-      expect(subject.route_path).to eq('case_details')
-    end
-  end
-
   describe '#row_data' do
     # rubocop:disable RSpec/ExampleLength
     it 'generates case detail rows' do

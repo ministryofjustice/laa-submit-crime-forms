@@ -45,12 +45,6 @@ RSpec.describe CheckAnswers::YourDetailsCard do
     end
   end
 
-  describe '#route_path' do
-    it 'is correct route' do
-      expect(subject.route_path).to eq('firm_details')
-    end
-  end
-
   # rubocop:disable RSpec/ExampleLength
   describe '#row_data' do
     context '2 lines in address' do
