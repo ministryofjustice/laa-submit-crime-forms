@@ -1,4 +1,5 @@
 from_start:
+  name: from_start
   # working types
   preparation: 45.35
   advocacy: 56.89
@@ -16,6 +17,7 @@ from_start:
   # disbursement cost
   vat: 0.2
 from_20220930:
+  name: from_20220930
   # working types
   preparation: 52.15
   advocacy: 65.42

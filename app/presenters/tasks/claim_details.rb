@@ -1,5 +1,7 @@
 module Tasks
-  class ClaimDetails < BaseTask
+  class ClaimDetails < Generic
+    FORM = Steps::ClaimDetailsForm
+
     def path
       edit_steps_claim_details_path(application)
     end
@@ -10,10 +12,6 @@ module Tasks
 
     def can_start?
       fulfilled?(ReasonForClaim)
-    end
-
-    def completed?
-      Steps::ClaimDetailsForm.build(application).valid?
     end
   end
 end

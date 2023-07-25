@@ -111,5 +111,14 @@ RSpec.describe CostSummary::Report do
     it 'sums the cost values' do
       expect(subject.total_cost).to eq('£230.00')
     end
+
+    context 'when a section has a nil total cost' do
+      let(:l_total_cost) { nil }
+
+      it 'does not raise an error' do
+        expect { subject.total_cost }.not_to raise_error
+        expect(subject.total_cost).to eq('£130.00')
+      end
+    end
   end
 end

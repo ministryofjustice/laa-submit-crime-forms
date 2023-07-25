@@ -17,24 +17,18 @@ RSpec.describe Tasks::Defendants, type: :system do
   let(:navigation_stack) { [] }
 
   describe '#path' do
-    before { allow(application.defendants).to receive(:count).and_return(number_of_defendants) }
-
     context 'no defendants' do
-      let(:number_of_defendants) { 0 }
-
       it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details/#{StartPage::NEW_RECORD}") }
     end
 
     context 'one defendant' do
-      let(:number_of_defendants) { 1 }
-      let(:defendants) { [Defendant.new(id: defendant_id)] }
-      let(:defendant_id) { SecureRandom.uuid }
+      let(:defendants) { [build(:defendant, :valid)] }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details/#{defendant_id}") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_summary") }
     end
 
     context 'more than one defendants' do
-      let(:number_of_defendants) { 2 }
+      let(:defendants) { [build(:defendant, :valid), build(:defendant, :valid)] }
 
       it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_summary") }
     end

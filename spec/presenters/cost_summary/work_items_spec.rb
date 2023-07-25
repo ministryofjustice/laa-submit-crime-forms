@@ -34,7 +34,7 @@ RSpec.describe CostSummary::WorkItems do
           {
             head_key: 'attendance_without_counsel',
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Attendance without counsel' },
-            value: { text: '£' }
+            value: { text: '£0.00' }
           },
           {
             head_key: 'preparation',

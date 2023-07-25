@@ -1,0 +1,36 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
+
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+
+      <%= f.govuk_radio_buttons_fieldset :ethnic_group, legend: { size: 's', class: 'govuk-!-margin-bottom-6' } do %>
+        <% EthnicGroups.values.each_with_index do |ethnic_group, index| %>
+          <span id="<%= ethnic_group %>"></span>
+          <%= f.govuk_radio_button :ethnic_group, ethnic_group.to_s, link_errors: index.zero? %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_radio_buttons_fieldset :gender, legend: { size: 's', class: 'govuk-!-margin-bottom-6' } do %>
+        <% Genders.values.each_with_index do |gender, index| %>
+          <span id="<%= gender %>"></span>
+          <%= f.govuk_radio_button :gender, gender.to_s, link_errors: index.zero? %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_radio_buttons_fieldset :disability, legend: { size: 's', class: 'govuk-!-margin-bottom-6' } do %>
+        <% Disabilities.values.each_with_index do |disability, index| %>
+          <span id="<%= disability %>"></span>
+          <%= f.govuk_radio_button :disability, disability.to_s, link_errors: index.zero? %>
+        <% end %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

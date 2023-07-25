@@ -8,11 +8,9 @@ RSpec.describe 'User can manage disbursements', type: :system do
   end
 
   it 'can add a simple disbursement' do
-    visit edit_steps_letters_calls_path(claim.id)
+    visit edit_steps_disbursement_add_path(claim.id)
 
-    # start on the letters and calls page to show flow
-    fill_in 'Number of letters', with: 1
-    fill_in 'Number of phone calls', with: 2
+    choose 'Yes'
     expect { click_on 'Save and continue' }.not_to change(Disbursement, :count)
 
     within('.govuk-fieldset', text: 'Date') do
@@ -107,5 +105,14 @@ RSpec.describe 'User can manage disbursements', type: :system do
     expect(page).to have_content('The disbursement was deleted')
 
     expect(Disbursement.find_by(id: disbursement.id)).to be_nil
+  end
+
+  it 'can skip adding disbursements' do
+    visit edit_steps_disbursement_add_path(claim.id)
+
+    choose 'No'
+    expect { click_on 'Save and continue' }.not_to change(Disbursement, :count)
+
+    expect(page).to have_content('Check your payment claim')
   end
 end
