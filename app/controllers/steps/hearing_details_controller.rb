@@ -13,7 +13,7 @@ module Steps
     private
 
     def decision_tree_class
-      Decisions::SimpleDecisionTree
+      Decisions::DecisionTree
     end
 
     def additional_permitted_params

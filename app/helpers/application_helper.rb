@@ -9,6 +9,6 @@ module ApplicationHelper
   end
 
   def maat_required?(form)
-    form.application.claim_type != ClaimType::NON_STANDARD_MAGISTRATE
+    form.application.claim_type != ClaimType::BREACH_OF_INJUNCTION.to_s
   end
 end

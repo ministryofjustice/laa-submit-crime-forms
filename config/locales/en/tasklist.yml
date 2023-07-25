@@ -18,13 +18,12 @@ en:
       case_details: Case details
       case_disposal: Case disposal
       hearing_details: Hearing details
-      reason_for_claim: Claim Justification
-      claim_justification: Claim justification
+      reason_for_claim: Claim justification
       claim_details: Claim details
       work_items: Work items
       letters_calls: Letters and phone calls
       disbursements: Disbursements costs
-      cost_summary: Review your claim
+      cost_summary: Check your payment claim
       other_info: Other relevant information
       supporting_evidence: Upload supporting evidence
       check_answers: Check your answers
