@@ -52,6 +52,9 @@ en:
             advocacy: Advocacy
             travel: Travel
             waiting: Waiting
+          other_info:
+            other_info: Other relevant information
+
       groups:
         about_you: 
           heading: About you
