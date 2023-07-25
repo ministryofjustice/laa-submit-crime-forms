@@ -43,7 +43,7 @@ RSpec.describe CheckAnswers::WorkItemsCard do
           },
           {
             head_key: 'attendance_without_counsel',
-            text: '£'
+            text: '£0.00'
           },
           {
             head_key: 'preparation',
