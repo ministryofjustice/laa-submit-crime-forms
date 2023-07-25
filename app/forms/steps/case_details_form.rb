@@ -13,10 +13,10 @@ module Steps
     validates :main_offence, presence: true
     validates :main_offence_date, presence: true,
          multiparam_date: { allow_past: true, allow_future: false }
- 
+
     validates :remitted_to_magistrate_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
       if: :remitted_to_magistrate?
-       
+
     BOOLEAN_FIELDS.each do |field|
       attribute field, :value_object, source: YesNoAnswer
       validates field, presence: true, inclusion: { in: YesNoAnswer.values }
@@ -31,7 +31,7 @@ module Steps
     end
 
     def remitted_to_magistrate?
-      self.remitted_to_magistrate== YesNoAnswer::YES
+      remitted_to_magistrate == YesNoAnswer::YES
     end
 
     private
