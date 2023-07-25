@@ -73,11 +73,11 @@
     <table class="govuk-table" data-module="moj-sortable-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" aria-sort="ascending"><%= t('.header.ufn') %></th> 
           <th scope="col" class="govuk-table__header" aria-sort="ascending"><%= t('.header.name') %></th>
           <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.start_date') %></th>
           <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.laa_reference') %></th>
           <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.status') %></th>
-          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.actions') %></th>
         </tr>
       </thead>
 
@@ -91,6 +91,9 @@
               </td>
             <% else %>
               <td class="govuk-table__cell">
+                <%= link_to claim.ufn, steps_start_page_path(claim.id) %>
+              </td>
+              <td class="govuk-table__cell">
                 <%= link_to claim.short_id, steps_start_page_path(claim.id) %>
               </td>
             <% end %>
@@ -100,9 +103,6 @@
               <strong class="govuk-tag <%= t(".status_colour.#{claim.status}") %>">
                 <%= t(".status.#{claim.status}") %>
               </strong>
-            </td>
-            <td class="govuk-table__cell">
-              <a href="/confirm_delete?id=<%= claim.id %>&name=<%= claim.office_code %>&laa_reference=<%=  claim.laa_reference %>" class="govuk-button govuk-button--secondary">Delete</a>
             </td>
           </tr>
         <% end %>

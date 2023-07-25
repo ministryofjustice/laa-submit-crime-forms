@@ -5,13 +5,14 @@ en:
       heading: Your claims
       start_claim: Start your new claim
       header:
-        name: Name
-        start_date: Start date
+        ufn: Your UFN
+        name: Defendant
+        start_date: Last updated
         laa_reference: LAA reference
         status: Status
         actions: Actions
       status:
-        pending: In progress
+        pending: In p:rogress
         completed: Submitted
         accessed: Accessed
       status_colour:
