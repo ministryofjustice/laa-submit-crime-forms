@@ -9,7 +9,7 @@ RSpec.describe 'Error pages' do
   end
 
   context 'application not found' do
-    xit 'renders the expected page and has expected status code' do
+    it 'renders the expected page and has expected status code' do
       get '/errors/application_not_found'
       expect(response).to have_http_status(:not_found)
     end

@@ -3,7 +3,8 @@ en:
   steps:
     claim_type:
       edit:
-        page_title: What are you claiming for?
+        page_title: What are you claiming for
+        heading: What are you claiming for
         other_details:
           line_1: This form can only be used to claim for a Non-standard magistrate or a Breach for injunction payment.
           line_2: To claim for a Crime Lower standard payment, please use CWA via the LAA online portal.
@@ -52,7 +53,7 @@ en:
           other: You added %{count} defendants
         main_defendant: Main defendant details
         additional_defendant: Additional defendant details
-        header:
+        headers:
           full_name: Full name
           maat: MAAT ID
           action: Action
@@ -129,6 +130,10 @@ en:
         total_cost: Total cost
         completed_date_blank: Completed date not set
         deleted_flash: The work item was deleted
+    disbursement_add:
+      edit:
+        page_title: Do you need to claim a disbursement
+        heading: Do you need to claim a disbursement
     disbursement_type:
       edit:
         page_title: Disbursement type
@@ -181,6 +186,10 @@ en:
           They will only be used to help us monitor and research access to LAA funded services,
           in line with our duties under the Equality Act 2010.</p>
           <p>Your answers will not affect your claim.</p>
+    equality_questions:
+      edit:
+        page_title: Equality monitoring questions
+        heading: Equality monitoring questions
     solicitor_declaration:
       edit:
         page_title: Confirm the following
@@ -206,7 +215,6 @@ en:
         feedback:
           link_text: What did you think of this service?
           description: takes 30 seconds
-
   laa_multi_step_forms:
     task_list:
       show:

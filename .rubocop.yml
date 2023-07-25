@@ -111,6 +111,10 @@ Metrics/AbcSize:
 Metrics/ParameterLists:
   Max: 7
 
+Layout/LineLength:
+  Exclude:
+    - spec/decisions/decision_tree_spec.rb
+
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:
   EnforcedStyle: ruby19_no_mixed_keys
@@ -150,6 +154,7 @@ RSpec/MultipleMemoizedHelpers:
     - spec/steps/claim_details/form_spec.rb
     - spec/steps/work_items/add/form_spec.rb
     - spec/presenters/cost_summary/report_spec.rb
+    - spec/presenters/check_answers/your_details_card_spec.rb
 
 RSpec/MultipleExpectations:
   Max: 7
@@ -167,3 +172,4 @@ RSpec/ExampleLength:
 Lint/MissingSuper:
   Exclude:
     - 'app/presenters/cost_summary/*'
+    - 'app/presenters/check_answers/*'
