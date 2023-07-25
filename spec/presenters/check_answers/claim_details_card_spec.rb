@@ -76,9 +76,11 @@ RSpec.describe CheckAnswers::ClaimDetailsCard do
         )
       end
     end
-    context 'No work before order or work last granted' do 
+
+    context 'No work before order or work last granted' do
       let(:work_before) { false }
-      let(:work_after) { false } 
+      let(:work_after) { false }
+
       it 'generates case detail rows' do
         expect(subject.row_data).to eq(
           [
