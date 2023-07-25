@@ -104,7 +104,7 @@ RSpec.describe Decisions::SimpleDecisionTree do
                   step_name: :disbursement_delete, controller: :disbursement_type, nested: :disbursement,
                   summary_controller: :disbursements, form_class: Steps::DeleteForm
 
-  it_behaves_like 'a generic decision', :other_info, :check_answers, Steps::OtherInfoForm, action_name: :show
+  it_behaves_like 'a generic decision', :other_info, :supporting_evidence, Steps::OtherInfoForm, action_name: :edit
   describe 'equality' do
     let(:form) { Steps::AnswerEqualityForm.new(application:, answer_equality:) }
     let(:decision_tree) { described_class.new(form, as: :equality) }
