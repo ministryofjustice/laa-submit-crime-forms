@@ -14,6 +14,8 @@ class Pricing
   end
 
   FIELDS = %w[
+    name
+
     preparation
     advocacy
     attendance_with_counsel
@@ -37,6 +39,7 @@ class Pricing
     FIELDS.each do |field|
       instance_variable_set("@#{field}", data.fetch(field, nil)&.to_f)
     end
+    @name = data.fetch('name', nil)
   end
 
   def [](key)

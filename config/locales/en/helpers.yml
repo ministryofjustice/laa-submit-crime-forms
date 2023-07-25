@@ -101,6 +101,13 @@ en:
         completed_on: For example, 27 3 2007
         fee_earner: For example, JMD
         period: For example, 1 hour and 30 minutes
+      steps_letters_calls_form:
+        letters_options:
+          from_start: You will get £3.56 for each letter
+          from_20220930: You will get £4.09 for each letter
+        calls_options:
+          from_start: You will get £3.56 for each call
+          from_20220930: You will get £4.09 for each call
       steps_disbursement_type_form:
         disbursement_date: For example, 27 3 2007
         disbursement_type_options:
@@ -224,8 +231,8 @@ en:
           'true': Apply an uplift to this work
         uplift: For example, from any percentage from 1 to 100
       steps_letters_calls_form:
-        letters: Number of letters
-        calls: Number of phone calls
+        letters: Number of letters (optional)
+        calls: Number of phone calls (optional)
         apply_letters_uplift_options:
           'true': Apply an uplift to this work
         apply_calls_uplift_options:

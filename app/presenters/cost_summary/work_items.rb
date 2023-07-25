@@ -16,7 +16,7 @@ module CostSummary
         total_cost = forms[work_type]&.sum(&:total_cost)
         {
           key: { text: translate(work_type.to_s), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: NumberTo.pounds(total_cost) },
+          value: { text: NumberTo.pounds(total_cost || 0) },
         }
       end
     end

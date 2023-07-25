@@ -75,12 +75,6 @@ en:
       edit:
         page_title: Letters and phone calls
         heading: Letters and phone calls
-        subheading_html: |
-          <p class="govuk-body">For each letter or telephone call you will get:</p>
-          <ul class="govuk-list govuk-list--bullet">
-              <li>£3.56 for representation orders before 30 September 2022</li>
-              <li>£4.09 for representation orders on or after 30 September 2022</li>
-          </ul>
         total_cost: Total cost
         summary: View by letters and phone calls
         items: Items
