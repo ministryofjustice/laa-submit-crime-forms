@@ -22,10 +22,21 @@ export default function initFileUpload() {
     MOJFrontend.MultiFileUpload.prototype.onFileDeleteClick = function (e) {
         e.preventDefault(); // if user refreshes page and then deletes
         var button = $(e.currentTarget);
-        button.parents('.moj-multi-file-upload__row').remove();
-        if (this.feedbackContainer.find('.moj-multi-file-upload__row').length === 0) {
-            this.feedbackContainer.addClass('moj-hidden');
-        }
+        $.ajax({
+            url: `${this.params.deleteUrl}?resource_id=${button[0].attributes[2].value}`,
+            type: 'delete',
+            success: $.proxy(function(response){
+                if(response.error) {
+                    // handle error
+                } else {
+                    button.parents('.moj-multi-file-upload__row').remove();
+                    if(this.feedbackContainer.find('.moj-multi-file-upload__row').length === 0) {
+                        this.feedbackContainer.addClass('moj-hidden');
+                    }
+                }
+                this.params.fileDeleteHook(this, response);
+            }, this)
+        });
     };
     MOJFrontend.MultiFileUpload.prototype.onDrop = function (e) {
         e.preventDefault();
