@@ -12,7 +12,7 @@ en:
         status: Status
         actions: Actions
       status:
-        pending: In p:rogress
+        pending: In progress
         completed: Submitted
         accessed: Accessed
       status_colour:
