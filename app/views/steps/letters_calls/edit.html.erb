@@ -4,11 +4,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
-    <h2 class="govuk-heading-s govuk-!-margin-bottom-6"><%= t '.subheading_html' %></h2>
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_number_field :letters, min: 1, step: 1, width: 3, data:{rate_letters: @form_object.pricing.letters} %>
+      <%= f.govuk_number_field :letters, min: 1, step: 1, width: 3, label: { size: 's' }, hint: { value: @form_object.pricing.name }, data: { rate_letters: @form_object.pricing.letters } %>
       <% if @form_object.allow_uplift? %>
         <%= f.govuk_check_boxes_fieldset :apply_letters_uplift, multiple: false, legend: nil, data: { cy: 'apply-letters-uplift' } do %>
           <%= f.govuk_check_box :apply_letters_uplift, 'true', 'false', multiple: false do %>
@@ -16,10 +15,10 @@
           <% end %>
         <% end %>
       <% end %>
-      <%= f.govuk_number_field :calls, min: 1, step: 1, width: 3, data:{rate_phone_calls: @form_object.pricing.calls} %>
+      <%= f.govuk_number_field :calls, min: 1, step: 1, width: 3, label: { size: 's' }, hint: { value: @form_object.pricing.name }, data: { rate_phone_calls: @form_object.pricing.calls } %>
       <% if @form_object.allow_uplift? %>
         <%= f.govuk_check_boxes_fieldset :apply_calls_uplift, multiple: false, legend: nil, data: { cy: 'apply-calls-uplift' } do %>
-          <%= f.govuk_check_box :apply_calls_uplift, 'true', 'false', multiple: false do %>
+          <%= f.govuk_check_box :apply_calls_uplift, 'true', 'false', multiple: false  do %>
             <%= f.govuk_number_field :calls_uplift, min: 1, step: 1, max: 100, width: 3, suffix_text: '%' %>
           <% end %>
         <% end %>

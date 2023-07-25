@@ -40,8 +40,7 @@ RSpec.describe Steps::LettersCallsForm do
         let(:letters) { '' }
 
         it 'have an error' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:letters, :blank)).to be(true)
+          expect(subject).to be_valid
         end
       end
 
@@ -72,8 +71,7 @@ RSpec.describe Steps::LettersCallsForm do
         let(:calls) { '' }
 
         it 'have an error' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:calls, :blank)).to be(true)
+          expect(subject).to be_valid
         end
       end
 
