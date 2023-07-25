@@ -139,6 +139,8 @@ RSpec.describe Decisions::SimpleDecisionTree do
   it_behaves_like 'a generic decision', :solicitor_declaration, :claim_confirmation, Steps::SolicitorDeclarationForm,
                   action_name: :show
 
+  it_behaves_like 'a generic decision', :supporting_evidence, :check_answers, Steps::SupportingEvidenceForm, action_name: :show
+
   context 'when step is unknown' do
     it 'moves to claim index' do
       decision_tree = described_class.new(double('form'), as: :unknown)

@@ -52,7 +52,7 @@ MainOffence = Struct.new(:description) do
       new('Use of firearm to resist arrest'),
       new('Possession of firearm with criminal intent'),
       new('Carrying loaded firearm in public place'),
-      new('Possession of firearm without certificate '),
+      new('Possession of firearm without certificate'),
       new('Trespassing with a firearm'),
       new('Possession of firearms by person convicted of crime'),
       new('Acquisition by or supply of firearms to person denied them'),

@@ -37,15 +37,11 @@ module Steps
     end
 
     def supporting_evidence
-      @supporting_evidence ||= latest_evidence.nil? ? SupportingEvidence.new : latest_evidence
+      @supporting_evidence = latest_evidence.nil? ? SupportingEvidence.new : latest_evidence
     end
 
     def latest_evidence
-      SupportingEvidence.where(claim_id: current_application.id).map
-    end
-
-    def additional_params
-      [:resource_id]
+      SupportingEvidence.where(claim_id: current_application.id)&.map
     end
   end
 end
