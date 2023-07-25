@@ -40,39 +40,79 @@ RSpec.describe CheckAnswers::ClaimDetailsCard do
 
   describe '#row_data' do
     # rubocop:disable RSpec/ExampleLength
-    it 'generates case detail rows' do
-      expect(subject.row_data).to eq(
-        [
-          {
-            head_key: 'prosecution_evidence',
-            text: 1
-          },
-          {
-            head_key: 'defence_statement',
-            text: 10
-          },
-          {
-            head_key: 'number_of_witnesses',
-            text: 2
-          },
-          {
-            head_key: 'supplemental_claim',
-            text: 'Yes'
-          },
-          {
-            head_key: 'preparation_time',
-            text: 'Yes - 2 Hrs 1 Min'
-          },
-          {
-            head_key: 'work_before',
-            text: 'Yes - 01 December 2020'
-          },
-          {
-            head_key: 'work_after',
-            text: 'Yes - 01 January 2020'
-          }
-        ]
-      )
+    context 'Work before order and work last granted' do
+      it 'generates case detail rows' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'prosecution_evidence',
+              text: 1
+            },
+            {
+              head_key: 'defence_statement',
+              text: 10
+            },
+            {
+              head_key: 'number_of_witnesses',
+              text: 2
+            },
+            {
+              head_key: 'supplemental_claim',
+              text: 'Yes'
+            },
+            {
+              head_key: 'preparation_time',
+              text: 'Yes - 2 Hrs 1 Min'
+            },
+            {
+              head_key: 'work_before',
+              text: 'Yes - 01 December 2020'
+            },
+            {
+              head_key: 'work_after',
+              text: 'Yes - 01 January 2020'
+            }
+          ]
+        )
+      end
+    end
+    context 'No work before order or work last granted' do 
+      let(:work_before) { false }
+      let(:work_after) { false } 
+      it 'generates case detail rows' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'prosecution_evidence',
+              text: 1
+            },
+            {
+              head_key: 'defence_statement',
+              text: 10
+            },
+            {
+              head_key: 'number_of_witnesses',
+              text: 2
+            },
+            {
+              head_key: 'supplemental_claim',
+              text: 'Yes'
+            },
+            {
+              head_key: 'preparation_time',
+              text: 'Yes - 2 Hrs 1 Min'
+            },
+            {
+              head_key: 'work_before',
+              text: 'No'
+            },
+            {
+              head_key: 'work_after',
+              text: 'No'
+            }
+          ]
+        )
+      end
     end
     # rubocop:enable RSpec/ExampleLength
   end
