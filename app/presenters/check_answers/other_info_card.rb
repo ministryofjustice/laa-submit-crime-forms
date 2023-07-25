@@ -22,7 +22,7 @@ module CheckAnswers
     private
 
     def formatted_info
-      other_info_form.other_info.gsub("\n", '<br>')
+      other_info_form.other_info&.gsub("\n", '<br>')
     end
   end
 end
