@@ -9,18 +9,19 @@ module Tasks
 
     # TODO: is this inefficient? do we care?
     def in_progress?
-      [
-        edit_steps_disbursement_type_path(id: application.id, disbursement_id: ''),
-        edit_steps_disbursement_cost_path(id: application.id, disbursement_id: ''),
-        edit_steps_disbursements_path(id: application.id),
-      ].any? do |path|
-        application.navigation_stack.any? { |stack| stack.start_with?(path) }
-      end
+      application.disbursements.any? &&
+        [
+          edit_steps_disbursement_type_path(id: application.id, disbursement_id: ''),
+          edit_steps_disbursement_cost_path(id: application.id, disbursement_id: ''),
+          edit_steps_disbursements_path(id: application.id),
+        ].any? do |path|
+          application.navigation_stack.any? { |stack| stack.start_with?(path) }
+        end
     end
 
     # TODO: is it possible to NOT have disbursements? do we need to flag this?
     def completed?
-      application.disbursements.any? && application.disbursements.all? do |record|
+      application.disbursements.all? do |record|
         FORMS.all? { |form| super(record, form) }
       end
     end

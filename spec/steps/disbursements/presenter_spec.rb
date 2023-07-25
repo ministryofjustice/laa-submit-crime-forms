@@ -18,10 +18,11 @@ RSpec.describe Tasks::Disbursements, type: :system do
   let(:navigation_stack) { [] }
 
   describe '#path' do
+    # This is calling the DecisionTree code so not full tested all options here
     context 'no disbursements' do
       let(:disbursements) { [] }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_type/#{StartPage::NEW_RECORD}") }
+      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_add") }
     end
 
     context 'any valid disbursements' do
@@ -53,7 +54,7 @@ RSpec.describe Tasks::Disbursements, type: :system do
     context 'when no disbursements exist' do
       let(:disbursements) { [] }
 
-      it { expect(subject).not_to be_completed }
+      it { expect(subject).to be_completed }
     end
 
     context 'when disbursement_type exist' do

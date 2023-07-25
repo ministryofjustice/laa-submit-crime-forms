@@ -1,13 +1,15 @@
 require 'system_helper'
 
 RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type: :system do
-  let(:claim) { create(:claim, :letters_calls) }
+  let(:claim) { create(:claim) }
   let(:other_type_field) { 'steps_disbursement_type_form[other_type_suggestion]' }
 
   it 'can select a value from the autocomplete' do
     visit provider_saml_omniauth_callback_path
 
-    visit edit_steps_letters_calls_path(id: claim)
+    visit edit_steps_disbursement_add_path(id: claim)
+
+    choose 'Yes', visible: :all
 
     click_on 'Save and continue'
     page.scroll_to(find('footer'))
@@ -28,8 +30,9 @@ RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type:
   it 'can enter a value not found in the autocoplete' do
     visit provider_saml_omniauth_callback_path
 
-    visit edit_steps_letters_calls_path(id: claim)
+    visit edit_steps_disbursement_add_path(id: claim)
 
+    choose 'Yes', visible: :all
     click_on 'Save and continue'
 
     # Not sure why but this item couldn't be cfound with visible: :all flag

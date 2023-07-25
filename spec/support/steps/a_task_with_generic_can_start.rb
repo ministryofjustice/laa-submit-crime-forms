@@ -6,13 +6,13 @@ RSpec.shared_examples 'a task with generic can_start?' do |previous_task_class|
       allow(previous_task_class).to receive(:new).and_return(task)
     end
 
-    context 'when case details are complete' do
+    context "when #{previous_task_class} are complete" do
       let(:status) { TaskStatus::COMPLETED }
 
       it { expect(subject).to be_can_start }
     end
 
-    context 'when case details are not complete' do
+    context "when #{previous_task_class} are not complete" do
       let(:status) { TaskStatus::IN_PROGRESS }
 
       it { expect(subject).not_to be_can_start }
