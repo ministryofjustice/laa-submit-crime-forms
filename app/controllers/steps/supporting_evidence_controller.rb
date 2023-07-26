@@ -2,7 +2,6 @@
 
 module Steps
   class SupportingEvidenceController < Steps::BaseStepController
-    include S3FileUploadHelper
     skip_before_action :verify_authenticity_token
     before_action :supporting_evidence
     def edit
@@ -33,7 +32,7 @@ module Steps
     private
 
     def decision_tree_class
-      Decisions::SimpleDecisionTree
+      Decisions::DslDecisionTree
     end
 
     def supporting_evidence

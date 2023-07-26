@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_21_081129) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_25_161003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,10 +92,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_081129) do
     t.date "work_before_date"
     t.date "work_after_date"
     t.string "signatory_name"
-    t.boolean "send_by_post"
     t.string "gender"
     t.string "ethnic_group"
     t.string "disability"
+    t.boolean "send_by_post"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
@@ -177,7 +177,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_081129) do
     t.string "file_name"
     t.string "file_type"
     t.integer "file_size"
-    t.string "case_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["claim_id"], name: "index_supporting_evidence_on_claim_id"
