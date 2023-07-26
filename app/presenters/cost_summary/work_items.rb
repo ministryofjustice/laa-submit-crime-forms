@@ -15,6 +15,7 @@ module CostSummary
       work_types.map do |work_type|
         total_cost = forms[work_type]&.sum(&:total_cost)
         {
+          head_key: work_type.to_s,
           key: { text: translate(work_type.to_s), classes: 'govuk-summary-list__value-width-50' },
           value: { text: NumberTo.pounds(total_cost || 0) },
         }

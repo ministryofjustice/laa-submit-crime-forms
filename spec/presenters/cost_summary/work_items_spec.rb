@@ -27,24 +27,29 @@ RSpec.describe CostSummary::WorkItems do
   end
 
   describe '#rows' do
+    # rubocop:disable RSpec/ExampleLength
     it 'generates letters and calls rows' do
       expect(subject.rows).to eq(
         [
           {
+            head_key: 'attendance_without_counsel',
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Attendance without counsel' },
             value: { text: '£0.00' }
           },
           {
+            head_key: 'preparation',
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Preparation' },
             value: { text: '£40.00' }
           },
           {
+            head_key: 'advocacy',
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Advocacy' },
             value: { text: '£170.00' }
           }
         ]
       )
     end
+    # rubocop:enable RSpec/ExampleLength
 
     context 'when assigned counsel is true' do
       let(:assigned_counsel) { 'yes' }
