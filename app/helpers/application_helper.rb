@@ -21,4 +21,8 @@ module ApplicationHelper
       obj&.value.to_s.capitalize
     end
   end
+
+  def multiline_text(string)
+    ActionController::Base.helpers.sanitize(string.gsub("\n", '<br>'), tags: %w[br])
+  end
 end
