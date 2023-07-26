@@ -50,7 +50,6 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
 
             expect(response).to be_successful
           end
-
         end
       end
     end

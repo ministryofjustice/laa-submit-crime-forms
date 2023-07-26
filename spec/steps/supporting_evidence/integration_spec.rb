@@ -9,9 +9,9 @@ RSpec.describe 'User can provide supporting evidence', javascript: true, type: :
     visit edit_steps_supporting_evidence_path(claim.id)
 
     doc = Nokogiri::HTML(page.html)
-    values = doc.xpath('//*[@id="steps-supporting-evidence-form-send-by-post-true-conditional"]').map { |node|
+    values = doc.xpath('//*[@id="steps-supporting-evidence-form-send-by-post-true-conditional"]').map do |node|
       node.attribute('class')
-    }
+    end
 
     expect(values[0].value).to eq 'govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden'
 
@@ -28,9 +28,9 @@ RSpec.describe 'User can provide supporting evidence', javascript: true, type: :
     check('steps-supporting-evidence-form-send-by-post-true-field', allow_label_click: true)
 
     doc = Nokogiri::HTML(page.html)
-    values = doc.xpath('//*[@id="steps-supporting-evidence-form-send-by-post-true-conditional"]').map { |node|
+    values = doc.xpath('//*[@id="steps-supporting-evidence-form-send-by-post-true-conditional"]').map do |node|
       node.attribute('class')
-    }
+    end
 
     expect(values[0].value).to eq 'govuk-checkboxes__conditional'
 
