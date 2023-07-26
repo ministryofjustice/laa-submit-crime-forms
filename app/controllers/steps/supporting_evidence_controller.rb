@@ -15,10 +15,13 @@ module Steps
         file_name: params[:documents].original_filename,
         file_type: params[:documents].content_type,
         file_size: params[:documents].tempfile.size,
-        claim: current_application
+        claim: current_application,
+        file: params[:documents]
       )
 
-      evidence.file.attach(params[:documents])
+      render json: {
+        fileId: evidence.id
+      }, status: :ok
     end
 
     def update
@@ -27,6 +30,9 @@ module Steps
 
     def destroy
       SupportingEvidence.destroy(params[:resource_id])
+    rescue StandardError => e
+      Sentry.capture_exception(e)
+      render json: {}, status: :bad_request
     end
 
     private
