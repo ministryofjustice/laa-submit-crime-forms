@@ -20,9 +20,9 @@ RSpec.describe 'User can fill in case details', type: :system do
     find('.govuk-form-group', text: 'Was there an unassigned counsel?').choose 'No'
     find('.govuk-form-group', text: 'Was there an instructed agent?').choose 'Yes'
     find('.govuk-form-group',
-         text: 'Has the case been remitted from the Crown Court to the magistrates court?').choose 'Yes'
+         text: 'Has the case been remitted from the Crown Court to the magistrates\' court?').choose 'Yes'
 
-    within('.govuk-form-group', text: 'Has the case been remitted from the Crown Court to the magistrates court?') do
+    within('.govuk-form-group', text: 'Has the case been remitted from the Crown Court to the magistrates\' court?') do
       fill_in 'Day', with: '02'
       fill_in 'Month', with: '07'
       fill_in 'Year', with: '2023'
