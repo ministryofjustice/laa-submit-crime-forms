@@ -11,8 +11,8 @@ module CheckAnswers
       @section = 'claim_details'
     end
 
-     # rubocop:disable Metrics/MethodLength
-     def row_data
+    # rubocop:disable Metrics/MethodLength
+    def row_data
       [
         {
           head_key: 'prosecution_evidence',
@@ -44,6 +44,7 @@ module CheckAnswers
         },
       ]
     end
+
     # rubocop:enable Metrics/MethodLength
     # rubocop:disable Layout/LineLength
     def preparation_time

@@ -12,9 +12,9 @@ module CheckAnswers
 
     def row_data
       main_defendant_row +
-      additional_defendants.flat_map.with_index do |defendant, index|
-        additional_defendant_row(defendant, index)
-      end
+        additional_defendants.flat_map.with_index do |defendant, index|
+          additional_defendant_row(defendant, index)
+        end
     end
 
     private

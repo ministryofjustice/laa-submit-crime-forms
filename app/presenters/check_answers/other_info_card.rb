@@ -2,7 +2,7 @@
 
 module CheckAnswers
   require 'application_controller'
-  
+
   class OtherInfoCard < Base
     attr_reader :other_info_form
 
