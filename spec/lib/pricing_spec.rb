@@ -12,6 +12,7 @@ RSpec.describe Pricing do
       it 'returns the current (post CLAIR) pricing' do
         expect(described_class).to receive(:new).with(
           {
+            'name' => 'from_20220930',
             'preparation' => 52.15,
             'advocacy' => 65.42,
             'attendance_with_counsel' => 35.68,
@@ -36,6 +37,7 @@ RSpec.describe Pricing do
       it 'returns the current (post CLAIR) pricing' do
         expect(described_class).to receive(:new).with(
           {
+            'name' => 'from_20220930',
             'preparation' => 52.15,
             'advocacy' => 65.42,
             'attendance_with_counsel' => 35.68,
@@ -60,6 +62,7 @@ RSpec.describe Pricing do
       it 'returns the old (pre CLAIR) pricing' do
         expect(described_class).to receive(:new).with(
           {
+            'name' => 'from_start',
             'preparation' => 45.35,
             'advocacy' => 56.89,
             'attendance_with_counsel' => 31.03,
@@ -89,7 +92,7 @@ RSpec.describe Pricing do
   end
 
   describe 'accessing field' do
-    Pricing::FIELDS.each do |field|
+    (Pricing::FIELDS - ['name']).each do |field|
       context "when #{field}" do
         it 'can be access via method call' do
           expect(subject.public_send(field).to_f).not_to eq(0.0)
@@ -102,6 +105,16 @@ RSpec.describe Pricing do
         it 'returns the same value regardless of access method' do
           expect(subject.public_send(field).to_f).to eq(subject[field].to_f)
         end
+      end
+    end
+
+    context 'when name' do
+      it 'can be access via method call' do
+        expect(subject.name).to eq('from_20220930')
+      end
+
+      it 'can be access via [] syntax' do
+        expect(subject[:name]).to eq('from_20220930')
       end
     end
   end
