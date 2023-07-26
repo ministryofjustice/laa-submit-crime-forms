@@ -9,7 +9,8 @@ RSpec.shared_examples 'a show step controller' do
 
     context 'when application is found' do
       let(:existing_case) do
-        Claim.create(office_code: 'AAA', defendants: [Defendant.new(main: true, full_name: 'Nigel', maat: '123')])
+        Claim.create(office_code: 'AAA', defendants: [Defendant.new(main: true, full_name: 'Nigel', maat: '123')],
+                     plea: PleaOptions.values)
       end
 
       it 'responds with HTTP success' do

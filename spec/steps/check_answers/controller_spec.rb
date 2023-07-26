@@ -5,7 +5,8 @@ RSpec.describe Steps::CheckAnswersController, type: :controller do
 
   describe '#show' do
     let(:claim) do
-      Claim.create!(office_code: 'AAA', defendants: [Defendant.new(main: true, full_name: 'Nigel', maat: '123')])
+      Claim.create!(office_code: 'AAA', defendants: [Defendant.new(main: true, full_name: 'Nigel', maat: '123')],
+                    plea: PleaOptions.values)
     end
 
     before { claim.update(navigation_stack:) }
