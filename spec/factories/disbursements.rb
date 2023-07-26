@@ -18,6 +18,11 @@ FactoryBot.define do
       apply_vat { 'no' }
     end
 
+    trait :valid_type do
+      disbursement_date { age.days.ago.to_date }
+      disbursement_type { DisbursementTypes.values.reject(&:other?).sample.to_s }
+    end
+
     trait :valid_other do
       disbursement_date { age.days.ago.to_date }
       disbursement_type { DisbursementTypes::OTHER.to_s }

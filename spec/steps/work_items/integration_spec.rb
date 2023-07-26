@@ -71,7 +71,7 @@ RSpec.describe 'User can manage work items', type: :system do
   end
 
   it 'can add additional work items' do
-    claim.work_items.create(
+    claim.work_items.create!(
       work_type: 'apples',
       time_spent: 122,
       completed_on: Date.new(2022, 4, 20),

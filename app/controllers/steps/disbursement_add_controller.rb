@@ -1,13 +1,13 @@
 module Steps
-  class ClaimDetailsController < Steps::BaseStepController
+  class DisbursementAddController < Steps::BaseStepController
     def edit
-      @form_object = ClaimDetailsForm.build(
+      @form_object = AddAnotherForm.build(
         current_application
       )
     end
 
     def update
-      update_and_advance(ClaimDetailsForm, as: :claim_details)
+      update_and_advance(AddAnotherForm, as: :disbursement_add)
     end
 
     private
@@ -17,7 +17,7 @@ module Steps
     end
 
     def additional_permitted_params
-      [:preparation_time, :work_before, :work_after]
+      [:add_another]
     end
   end
 end

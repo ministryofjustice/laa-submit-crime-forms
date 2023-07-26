@@ -3,7 +3,8 @@ en:
   steps:
     claim_type:
       edit:
-        page_title: What are you claiming for?
+        page_title: What are you claiming for
+        heading: What are you claiming for
         other_details:
           line_1: This form can only be used to claim for a Non-standard magistrate or a Breach for injunction payment.
           line_2: To claim for a Crime Lower standard payment, please use CWA via the LAA online portal.
@@ -52,7 +53,7 @@ en:
           other: You added %{count} defendants
         main_defendant: Main defendant details
         additional_defendant: Additional defendant details
-        header:
+        headers:
           full_name: Full name
           maat: MAAT ID
           action: Action
@@ -74,12 +75,6 @@ en:
       edit:
         page_title: Letters and phone calls
         heading: Letters and phone calls
-        subheading_html: |
-          <p class="govuk-body">For each letter or telephone call you will get:</p>
-          <ul class="govuk-list govuk-list--bullet">
-              <li>£3.56 for representation orders before 30 September 2022</li>
-              <li>£4.09 for representation orders on or after 30 September 2022</li>
-          </ul>
         total_cost: Total cost
         summary: View by letters and phone calls
         items: Items
@@ -129,6 +124,10 @@ en:
         total_cost: Total cost
         completed_date_blank: Completed date not set
         deleted_flash: The work item was deleted
+    disbursement_add:
+      edit:
+        page_title: Do you need to claim a disbursement
+        heading: Do you need to claim a disbursement
     disbursement_type:
       edit:
         page_title: Disbursement type

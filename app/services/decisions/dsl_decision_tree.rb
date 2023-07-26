@@ -1,5 +1,5 @@
 module Decisions
-  class DslTree < BaseDecisionTree
+  class DslDecisionTree < BaseDecisionTree
     WRAPPER_CLASS = SimpleDelegator
 
     class << self
