@@ -9,7 +9,7 @@ module Steps
     private
 
     def persist!
-      record.update!({ send_by_post: })
+      application.update!(attributes)
     end
   end
 end
