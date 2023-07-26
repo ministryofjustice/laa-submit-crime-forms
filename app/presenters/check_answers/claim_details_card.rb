@@ -56,7 +56,7 @@ module CheckAnswers
     def work_before
       if claim_details_form.work_before
         # rubocop:disable Layout/LineLength
-        "#{capitalize_sym(claim_details_form.work_before)} - #{claim_details_form.work_before_date&.strftime('%d %B %Y')}"
+        "#{capitalize_sym(claim_details_form.work_before)} - #{claim_details_form.work_before_date.strftime('%d %B %Y')}"
         # rubocop:enable Layout/LineLength
       else
         capitalize_sym(claim_details_form.work_before)
@@ -65,7 +65,7 @@ module CheckAnswers
 
     def work_after
       if claim_details_form.work_after
-        "#{capitalize_sym(claim_details_form.work_after)} - #{claim_details_form.work_after_date&.strftime('%d %B %Y')}"
+        "#{capitalize_sym(claim_details_form.work_after)} - #{claim_details_form.work_after_date.strftime('%d %B %Y')}"
       else
         capitalize_sym(claim_details_form.work_after)
       end
