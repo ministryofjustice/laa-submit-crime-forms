@@ -7,9 +7,15 @@ module Steps
     attribute :main_offence, :string
     attribute :main_offence_date, :multiparam_date
 
+    attribute :remitted_to_magistrate, :string
+    attribute :remitted_to_magistrate_date, :multiparam_date
+
     validates :main_offence, presence: true
     validates :main_offence_date, presence: true,
          multiparam_date: { allow_past: true, allow_future: false }
+
+    validates :remitted_to_magistrate_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
+      if: :remitted_to_magistrate?
 
     BOOLEAN_FIELDS.each do |field|
       attribute field, :value_object, source: YesNoAnswer
@@ -22,6 +28,10 @@ module Steps
 
     def main_offence_suggestion=(value)
       self.main_offence = value
+    end
+
+    def remitted_to_magistrate?
+      remitted_to_magistrate == YesNoAnswer::YES
     end
 
     private

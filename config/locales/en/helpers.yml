@@ -19,6 +19,7 @@ en:
         unassigned_counsel: Was there an unassigned counsel?
         agent_instructed: Was there an instructed agent?
         remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates' court?
+        remitted_to_magistrate_date: Remittal date      
       steps_case_disposal_form:
         guilty_pleas: Category 1
         not_guilty_pleas: Category 2
@@ -72,10 +73,13 @@ en:
             more information to complete your claim. If you add alternative contact
             details we’ll use those instead.
       steps_case_details_form:
+        remitted_to_magistrate_options:
+          'yes': We’ll ask you to upload evidence of this before you submit this claim
         assigned_counsel_options:
           'yes': We'll ask you to upload your CRM8 form before you submit this claim
         main_offence_date: For example, 27 3 2007
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
+      remitted_to_magistrate_date: For example, 27 3 2007
       steps_case_disposal_form:
         arrest_warrent_date: For example, 27 3 2007
         cracked_trial_date: For example, 27 3 2007
@@ -92,8 +96,6 @@ en:
         defence_statement: For example the total number of pages of defence evidence including any
           statements by the defendant and defence witnesses
         prosecution_evidence: Where applicable, give the approximate number of pages
-        supplemental_claim_options:
-          'yes': We'll ask you to upload evidence of this before you submit the claim
         time_spent: For example, 1 hour and 30 minutes
         work_before_date: For example, 27 3 2023
         work_after_date: For example, 27 3 2023
@@ -119,8 +121,6 @@ en:
         miles: For example, 2.5 miles
         total_cost_without_vat: Enter the cost, not including VAT, for example £301.55
         details: For example, why this disbursement was needed
-        prior_authority_options:
-          'yes': We’ll ask you to upload evidence of this before you submit this claim
 
     label:
       steps_claim_type_form:
@@ -161,6 +161,7 @@ en:
         remitted_to_magistrate_options:
           'yes': 'Yes'
           'no': 'No'
+      
       steps_case_disposal_form:
         plea_options:
           guilty: Guilty plea
