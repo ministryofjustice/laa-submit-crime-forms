@@ -51,7 +51,7 @@ module CheckAnswers
       if claim_details_form.preparation_time
         "#{ApplicationController.helpers.capitalize_sym(claim_details_form.preparation_time)} - #{formatted_preparation_time}"
       else
-        ApplicationControler.helpers.capitalize_sym(claim_details_form.preparation_time)
+        ApplicationController.helpers.capitalize_sym(claim_details_form.preparation_time)
       end
     end
 
