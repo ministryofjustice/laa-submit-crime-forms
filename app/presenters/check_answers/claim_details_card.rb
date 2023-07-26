@@ -44,6 +44,7 @@ module CheckAnswers
         },
       ]
     end
+
     # rubocop:enable Metrics/MethodLength
     def preparation_time
       if claim_details_form.preparation_time
@@ -71,7 +72,7 @@ module CheckAnswers
       end
     end
 
-    private 
+    private
 
     def formatted_preparation_time
       ApplicationController.helpers.format_period(claim_details_form.time_spent)
