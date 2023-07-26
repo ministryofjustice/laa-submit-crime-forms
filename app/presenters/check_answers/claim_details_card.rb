@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module CheckAnswers
+  require 'application_controller'
   class ClaimDetailsCard < Base
     attr_reader :claim_details_form
 
@@ -44,10 +45,9 @@ module CheckAnswers
       ]
     end
     # rubocop:enable Metrics/MethodLength
-
     def preparation_time
       if claim_details_form.preparation_time
-        "#{capitalize_sym(claim_details_form.preparation_time)} - #{claim_details_form.time_spent.formatted_string}"
+        "#{capitalize_sym(claim_details_form.preparation_time)} - #{formatted_preparation_time}"
       else
         capitalize_sym(claim_details_form.preparation_time)
       end
@@ -69,6 +69,12 @@ module CheckAnswers
       else
         capitalize_sym(claim_details_form.work_after)
       end
+    end
+
+    private 
+
+    def formatted_preparation_time
+      ApplicationController.helpers.format_period(claim_details_form.time_spent)
     end
   end
 end
