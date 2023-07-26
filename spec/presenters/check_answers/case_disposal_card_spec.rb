@@ -14,9 +14,9 @@ RSpec.describe CheckAnswers::CaseDisposalCard do
     instance_double(Steps::CaseDisposalForm, plea:, arrest_warrent_date:, cracked_trial_date:)
   end
 
-  let(:arrest_warrent_date) { Date.new(2023, 3, 1) }
+  let(:arrest_warrent_date) { nil }
   let(:cracked_trial_date) { nil }
-  let(:plea) { 'arrest_warrent' }
+  let(:plea) { nil }
 
   before do
     allow(Steps::CaseDisposalForm).to receive(:build).and_return(form)
@@ -41,17 +41,40 @@ RSpec.describe CheckAnswers::CaseDisposalCard do
     end
   end
 
-  describe 'when plea is guilty' do
+  context 'when plea is guilty' do
+    let(:arrest_warrent_date) { Date.new(2023, 3, 1) }
+    let(:plea) { PleaOptions::ARREST_WARRENT }
+
     it 'returns the correct row_data' do
       expect(subject.row_data).to eq(
         [
           {
             head_key: :guilty_pleas,
-            text: 'arrest_warrent'
+            text: 'Warrent of arrest'
           },
           {
-            head_key: :cracked_trial_date,
-            text: 'arrest_warrent'
+            head_key: 'arrest_warrent_date',
+            text: '01 March 2023'
+          }
+        ]
+      )
+    end
+  end
+
+  context 'when plea is not guilty' do
+    let(:cracked_trial_date) { Date.new(2023, 3, 1) }
+    let(:plea) { PleaOptions::CRACKED_TRIAL }
+
+    it 'returns the correct row_data' do
+      expect(subject.row_data).to eq(
+        [
+          {
+            head_key: :not_guilty_pleas,
+            text: 'Cracked trial'
+          },
+          {
+            head_key: 'cracked_trial_date',
+            text: '01 March 2023'
           }
         ]
       )
@@ -60,36 +83,13 @@ RSpec.describe CheckAnswers::CaseDisposalCard do
 
   describe '#find_key_by_value' do
     it 'returns the correct key for a valid value' do
-      key = find_key_by_value('arrest_warrent')
+      key = subject.find_key_by_value('arrest_warrent')
       expect(key).to eq(:guilty_pleas)
     end
 
     it 'returns nil for an invalid value' do
-      key = find_key_by_value('invalid_value')
+      key = subject.find_key_by_value('invalid_value')
       expect(key).to be_nil
-    end
-  end
-
-  describe '#transform_value' do
-    it 'transforms the value correctly' do
-      transformed_value = transform_value('arrest_warrent')
-
-      expect(transformed_value).to eq('Arrest warrant')
-    end
-
-    it 'transforms a single-word value correctly' do
-      transformed_value = transform_value('arrest_warrent')
-      expect(transformed_value).to eq('Arrest warrant')
-    end
-
-    it 'handles empty input correctly' do
-      transformed_value = transform_value('')
-      expect(transformed_value).to eq('')
-    end
-
-    it 'handles nil input correctly' do
-      transformed_value = transform_value(nil)
-      expect(transformed_value).to eq('')
     end
   end
 end
