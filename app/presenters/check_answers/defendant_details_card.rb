@@ -11,11 +11,10 @@ module CheckAnswers
     end
 
     def row_data
-      data = main_defendant_row
-      additional_defendants.each_with_index do |defendant, index|
-        data += additional_defendant_row(defendant, index)
+      main_defendant_row +
+      additional_defendants.flat_map.with_index do |defendant, index|
+        additional_defendant_row(defendant, index)
       end
-      data
     end
 
     private
