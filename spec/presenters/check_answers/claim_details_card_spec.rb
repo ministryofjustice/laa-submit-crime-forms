@@ -38,6 +38,24 @@ RSpec.describe CheckAnswers::ClaimDetailsCard do
     end
   end
 
+  describe '#work_before' do
+    context 'Work before set to No' do
+      let(:work_before) { false }
+
+      it 'generates text indicating No' do
+        expect(subject.work_before).to eq('No')
+      end
+    end
+
+    context 'Work before set to Yes' do
+      let(:work_before) { true }
+
+      it 'generates text indicating Yes with date' do
+        expect(subject.work_before).to eq('Yes - 01 December 2020')
+      end
+    end
+  end
+
   describe '#row_data' do
     # rubocop:disable RSpec/ExampleLength
     context 'Work before order and work last granted' do
