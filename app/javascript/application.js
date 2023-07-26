@@ -5,11 +5,9 @@ import { initAll } from 'govuk-frontend'
 import MOJFrontend from '@ministryofjustice/frontend'
 import initFileUpload from './file-upload';
 
-document.addEventListener("DOMContentLoaded", () => {
-  initAll()
-  MOJFrontend.initAll()
-  initFileUpload()
-});
+initAll()
+MOJFrontend.initAll()
+initFileUpload()
 
 
 const $inputs = document.querySelectorAll('[data-module="govuk-input"]')
