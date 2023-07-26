@@ -1,11 +1,52 @@
 import MOJFrontend from '@ministryofjustice/frontend'
 import $ from 'jquery'
+
 window.$ = $
 
 export default function initFileUpload() {
+    MOJFrontend.MultiFileUpload.prototype.uploadFile = function(file) {
+        this.params.uploadFileEntryHook(this, file);
+        var formData = new FormData();
+        formData.append('documents', file);
+        var item = $(this.getFileRowHtml(file));
+        this.feedbackContainer.find('.moj-multi-file-upload__list').append(item);
+
+        $.ajax({
+            url: this.params.uploadUrl,
+            type: 'post',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: $.proxy(function(response){
+                if(response.error) {
+                    item.find('.moj-multi-file-upload__message').html(this.getErrorHtml(response.error));
+                    this.status.html(response.error.message);
+                } else {
+                    item.find('.moj-multi-file-upload__message').html(this.getSuccessHtml(response.success));
+                    this.status.html(response.success.messageText);
+                }
+                item.find(`a.remove-link.moj-multi-file-upload__delete`).attr("value", response.success.fileId ?? file.name)
+                this.params.uploadFileExitHook(this, file, response);
+            }, this),
+            error: $.proxy(function(jqXHR, textStatus, errorThrown) {
+                this.params.uploadFileErrorHook(this, file, jqXHR, textStatus, errorThrown);
+            }, this),
+            xhr: function() {
+                var xhr = new XMLHttpRequest();
+                xhr.upload.addEventListener('progress', function(e) {
+                    if (e.lengthComputable) {
+                        var percentComplete = e.loaded / e.total;
+                        percentComplete = parseInt(percentComplete * 100, 10);
+                        item.find('.moj-multi-file-upload__progress').text(' ' + percentComplete + '%');
+                    }
+                }, false);
+                return xhr;
+            }
+        });
+    };
+
     MOJFrontend.MultiFileUpload.prototype.getFileRowHtml = function (file) {
-        var html =
-            `<tr class="govuk-table__row moj-multi-file-upload__row">
+        return `<tr class="govuk-table__row moj-multi-file-upload__row">
             <td class="govuk-table__cell moj-multi-file-upload__filename">
                 <span class="moj-multi-file-upload__filename"> ${file.name}</span>
                 <span class="moj-multi-file-upload__progress">(0%)</span></td>
@@ -14,9 +55,7 @@ export default function initFileUpload() {
                 <span class="govuk-visually-hidden">${file.name}</span>
                 </a>
             </td>
-        </tr>`
-
-        return html;
+        </tr>`;
     };
 
     MOJFrontend.MultiFileUpload.prototype.onFileDeleteClick = function (e) {

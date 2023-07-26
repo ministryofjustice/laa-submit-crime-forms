@@ -20,7 +20,9 @@ module Steps
       )
 
       render json: {
-        fileId: evidence.id
+        success: {
+          fileId: evidence.id
+        }
       }, status: :ok
     end
 
@@ -30,9 +32,14 @@ module Steps
 
     def destroy
       SupportingEvidence.destroy(params[:resource_id])
+      render json: {
+        success: true
+      }
     rescue StandardError => e
       Sentry.capture_exception(e)
-      render json: {}, status: :bad_request
+      render json: {
+        error: ''
+      }, status: :bad_request
     end
 
     private
