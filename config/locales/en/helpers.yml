@@ -97,8 +97,6 @@ en:
         defence_statement: For example the total number of pages of defence evidence including any
           statements by the defendant and defence witnesses
         prosecution_evidence: Where applicable, give the approximate number of pages
-        supplemental_claim_options:
-          'yes': B We'll ask you to upload evidence of this before you submit the claim
         time_spent: For example, 1 hour and 30 minutes
         work_before_date: For example, 27 3 2023
         work_after_date: For example, 27 3 2023
@@ -117,8 +115,6 @@ en:
         miles: For example, 2.5 miles
         total_cost_without_vat: Enter the cost, not including VAT, for example £301.55
         details: For example, why this disbursement was needed
-        prior_authority_options:
-          'yes': Mike We’ll ask you to upload evidence of this before you submit this claim
 
     label:
       steps_claim_type_form:
@@ -146,9 +142,7 @@ en:
             'no': 'No'
       steps_case_details_form:
         ufn: Your Unique File Number
-        remitted_to_magistrate_date: label remittal date
         main_offence: Main offence
-        assigned_counsel: aaaaaaaaa
         assigned_counsel_options:
           'yes': 'Yes'
           'no': 'No'

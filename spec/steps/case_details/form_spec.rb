@@ -24,7 +24,7 @@ RSpec.describe Steps::CaseDetailsForm do
   let(:assigned_counsel) { 'yes' }
   let(:agent_instructed) { 'yes' }
   let(:remitted_to_magistrate) { 'no' }
-  let(:remitted_to_magistrate_date) { Date.new(2023, 4, 1) }
+  let(:remitted_to_magistrate_date) { nil }
 
   describe '#save' do
     context 'when all fields are set' do
@@ -95,6 +95,7 @@ RSpec.describe Steps::CaseDetailsForm do
 
     it 'magistrate date is not provided' do
       expect(form).not_to be_valid
+      expect(form.errors.of_kind?(:remitted_to_magistrate_date, :blank)).to be(true)
     end
   end
 end
