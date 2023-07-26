@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module CheckAnswers
+  require 'application_controller'
   class HearingDetailsCard < Base
     attr_reader :hearing_details_form
 
@@ -23,7 +24,7 @@ module CheckAnswers
         },
         {
           head_key: 'youth_count',
-          text: capitalize_sym(hearing_details_form.youth_count)
+          text: ApplicationController.helpers.capitalize_sym(hearing_details_form.youth_count)
         },
         {
           head_key: 'in_area',
@@ -44,7 +45,7 @@ module CheckAnswers
     private
 
     def in_area_text
-      "#{capitalize_sym(hearing_details_form.in_area)} - #{hearing_details_form.court}"
+      "#{ApplicationController.helpers.capitalize_sym(hearing_details_form.in_area)} - #{hearing_details_form.court}"
     end
   end
 end
