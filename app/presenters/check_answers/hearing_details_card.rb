@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module CheckAnswers
-  require 'application_controller'
   class HearingDetailsCard < Base
     attr_reader :hearing_details_form
 

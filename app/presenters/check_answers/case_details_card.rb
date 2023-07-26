@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module CheckAnswers
-  require 'application_controller'
   class CaseDetailsCard < Base
     attr_reader :case_details_form
 

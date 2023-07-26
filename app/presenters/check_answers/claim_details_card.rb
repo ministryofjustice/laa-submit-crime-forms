@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module CheckAnswers
-  require 'application_controller'
   class ClaimDetailsCard < Base
     attr_reader :claim_details_form
 

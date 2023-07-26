@@ -2,11 +2,10 @@
 
 module CheckAnswers
   class WorkItemsCard < Base
-    include CostSummary
     attr_reader :work_items
 
     def initialize(claim)
-      @work_items = WorkItems.new(claim.work_items, claim)
+      @work_items = CostSummary::WorkItems.new(claim.work_items, claim)
       @group = 'about_claim'
       @section = 'work_items'
     end
