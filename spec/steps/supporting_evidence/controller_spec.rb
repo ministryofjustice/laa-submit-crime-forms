@@ -75,9 +75,8 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
 
   describe '#destroy' do
     let(:current_application) { build(:claim) }
-
-    before do
-      @evidence = SupportingEvidence.create(
+    let(:evidence) do
+      SupportingEvidence.create(
         file_name: 'test.png',
         file_type: 'image/png',
         file_size: '2857',
@@ -88,7 +87,7 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
 
     context 'when there are files present' do
       it 'deletes the file' do
-        delete :destroy, params: { id: '12345', resource_id: @evidence.id }
+        delete :destroy, params: { id: '12345', resource_id: evidence.id }
 
         expect(response).to be_successful
       end
