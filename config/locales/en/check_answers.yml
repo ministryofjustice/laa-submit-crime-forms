@@ -33,11 +33,32 @@ en:
             in_area: Magistrates court in designated area
             hearing_outcome: Hearing outcome
             matter_type: Matter type
+          claim_details:
+            prosecution_evidence: Number of pages of prosecution evidence
+            defence_statement: Number of pages of defence statements
+            number_of_witnesses: Number of witnesses
+            supplemental_claim: Supplemental claim
+            preparation_time: Taped evidence
+            work_before: Work before order was granted
+            work_after: Work after last hearing
+          letters_calls:
+            letters: Number of letters
+            calls: Number of calls
+          work_items:
+            items: Items
+            items_total: <strong>Total per item</strong>
+            attendance_without_counsel: Attendance without counsel
+            preparation: Preparation  
+            advocacy: Advocacy
+            travel: Travel
+            waiting: Waiting
+          other_info:
+            other_info: Other relevant information
       groups:
         about_you: 
           heading: About you
           firm_details: 
-            title: Your Details
+            title: Your details
         about_defendant: 
           heading: About the defendant
           defendant_summary:
@@ -45,11 +66,11 @@ en:
         about_case:
           heading: About the case
           case_details:
-            title: Case Details
+            title: Case details
           hearing_details: 
-            title: Hearing Details
+            title: Hearing details
           case_disposal:
-            title: Case Disposal
+            title: Case disposal
         about_claim:
           heading: About the claim
           reason_for_claim:
@@ -57,7 +78,7 @@ en:
           claim_details: 
             title: Claim details
           work_items:
-            title: Work Items
+            title: Work items
           letters_calls: 
             title: Letters and phone calls
           disbursements:
