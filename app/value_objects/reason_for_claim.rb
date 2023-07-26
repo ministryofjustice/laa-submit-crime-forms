@@ -24,4 +24,8 @@ class ReasonForClaim < ValueObject
   def text_field?
     text_field.present?
   end
+
+  def translated
+    I18n.t("helpers.label.steps_reason_for_claim_form.#{value}")
+  end
 end

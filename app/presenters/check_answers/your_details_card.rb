@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module CheckAnswers
+  require 'application_controller'
   class YourDetailsCard < Base
     attr_reader :firm_details_form
 
@@ -50,7 +51,7 @@ module CheckAnswers
       formatted_string = "#{address_line_1}<br>" \
                          "#{address_line_2.present? ? "#{address_line_2}<br>" : nil}" \
                          "#{town}<br>#{postcode}"
-      ActionController::Base.helpers.sanitize(formatted_string, tags: %w[br])
+      ApplicationController.helpers.sanitize(formatted_string, tags: %w[br])
     end
   end
 end
