@@ -77,7 +77,6 @@ en:
           'yes': We’ll ask you to upload evidence of this before you submit this claim
         assigned_counsel_options:
           'yes': We'll ask you to upload your CRM8 form before you submit this claim
-        assigned_counsel: We'll ask you to upload your CRM8 form before you submit this claim
         main_offence_date: For example, 27 3 2007
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
       remitted_to_magistrate_date: For example, 27 3 2007
