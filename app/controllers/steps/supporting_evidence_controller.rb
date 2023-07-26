@@ -49,11 +49,11 @@ module Steps
     end
 
     def supporting_evidence
-      @supporting_evidence = latest_evidence.nil? ? SupportingEvidence.new : latest_evidence
+      @supporting_evidence = latest_evidence
     end
 
     def latest_evidence
-      SupportingEvidence.where(claim_id: current_application.id)&.map
+      SupportingEvidence.where(claim_id: current_application.id)
     end
   end
 end

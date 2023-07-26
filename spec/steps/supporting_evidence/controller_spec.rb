@@ -69,7 +69,7 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
       end
 
       it 'returns the fileId' do
-        expect(JSON.parse(response.body)['fileId']).not_to be_empty
+        expect(JSON.parse(response.body)['success']['fileId']).not_to be_empty
       end
     end
   end
