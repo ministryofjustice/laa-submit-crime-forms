@@ -12,7 +12,7 @@ module CheckAnswers
 
     def rows
       row_data.map do |row|
-        row_content(row[:head_key], row[:text], row[:head_opts] || {})
+        row_content(row[:head_key], row[:text], row[:head_opts] || {}, footer: row[:footer])
       end
     end
 
@@ -20,10 +20,11 @@ module CheckAnswers
       {}
     end
 
-    def row_content(head_key, text, head_opts = {})
+    # rubocop:disable Metrics/MethodLength
+    def row_content(head_key, text, head_opts = {}, footer: false)
       translated_heading = translate_table_key(section, head_key, **head_opts)
       heading = translated_heading.start_with?('Translation missing:') ? head_key : translated_heading
-      {
+      row = {
         key: {
           text: heading,
           classes: 'govuk-summary-list__value-width-50'
@@ -32,7 +33,10 @@ module CheckAnswers
           text:
         }
       }
+      row[:classes] = 'govuk-summary-list__row-double-border' if footer
+      row
     end
+    # rubocop:enable Metrics/MethodLength
 
     def get_value_obj_desc(value_object, key)
       value_object.all.find { |value| value.id == key }&.description

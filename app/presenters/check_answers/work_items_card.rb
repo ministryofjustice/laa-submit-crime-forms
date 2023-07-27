@@ -25,7 +25,7 @@ module CheckAnswers
       [
         {
           head_key: 'items',
-          text: ActionController::Base.helpers.sanitize(translate_table_key(section, 'items_total'), tags: %w[strong])
+          text: ApplicationController.helpers.sanitize(translate_table_key(section, 'items_total'), tags: %w[strong])
         }
       ]
     end

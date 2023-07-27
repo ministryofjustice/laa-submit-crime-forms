@@ -42,8 +42,17 @@ en:
             work_before: Work before order was granted
             work_after: Work after last hearing
           letters_calls:
+            items: Items
+            items_total: <strong>Total per item</strong>
             letters: Number of letters
+            letters_uplift: Letters uplift applied
+            letters_payment: Letters payment
             calls: Number of calls
+            calls_uplift: Calls uplift applied
+            calls_payment: Calls payment
+            uplift_value: "%{value}%"
+            currency_value: "£%{value}"
+            total: Total
           work_items:
             items: Items
             items_total: <strong>Total per item</strong>

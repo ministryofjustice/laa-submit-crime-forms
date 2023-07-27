@@ -23,6 +23,6 @@ module ApplicationHelper
   end
 
   def multiline_text(string)
-    ActionController::Base.helpers.sanitize(string&.gsub("\n", '<br>'), tags: %w[br])
+    ApplicationController.helpers.sanitize(string&.gsub("\n", '<br>'), tags: %w[br])
   end
 end
