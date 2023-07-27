@@ -45,7 +45,7 @@ module Steps
     private
 
     def decision_tree_class
-      Decisions::DslDecisionTree
+      Decisions::DecisionTree
     end
 
     def supporting_evidence
