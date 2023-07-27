@@ -4,8 +4,6 @@ module Steps
   class ClaimDetailsForm < Steps::BaseFormObject
     attr_writer :preparation_time, :work_before, :work_after
 
-    BOOLEAN_FIELDS = %i[supplemental_claim].freeze
-
     VIEW_BOOLEAN_FIELDS = %i[supplemental_claim preparation_time work_before work_after].freeze
 
     attribute :prosecution_evidence, :integer
@@ -14,20 +12,20 @@ module Steps
     attribute :time_spent, :time_period
     attribute :work_before_date, :multiparam_date
     attribute :work_after_date, :multiparam_date
+    attribute :supplemental_claim, :value_object, source: YesNoAnswer
 
     validates :prosecution_evidence, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :defence_statement, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :number_of_witnesses, presence: true, numericality: { only_integer: true, greater_than: 0 }
-    validates :time_spent, numericality: { only_integer: true, greater_than: 0 }, time_period: true,
-      if: :preparation_time
+    validates :time_spent, presence: true, time_period: true,
+      if: -> { preparation_time == YesNoAnswer::YES }
     validates :work_before_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
-      if: :work_before
+      if: -> { work_before == YesNoAnswer::YES }
     validates :work_after_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
-      if: :work_after
+      if: -> { work_after == YesNoAnswer::YES }
 
-    BOOLEAN_FIELDS.each do |field|
+    VIEW_BOOLEAN_FIELDS.each do |field|
       validates field, presence: true, inclusion: { in: YesNoAnswer.values }
-      attribute field, :value_object, source: YesNoAnswer
     end
 
     def boolean_fields
@@ -35,15 +33,21 @@ module Steps
     end
 
     def preparation_time
-      @preparation_time.nil? ? time_spent.present? : @preparation_time == 'yes'
+      return YesNoAnswer.new(@preparation_time) if @preparation_time.present?
+
+      time_spent.present? ? YesNoAnswer::YES : nil
     end
 
     def work_before
-      @work_before.nil? ? work_before_date.present? : @work_before == 'yes'
+      return YesNoAnswer.new(@work_before) if @work_before.present?
+
+      work_before_date.present? ? YesNoAnswer::YES : nil
     end
 
     def work_after
-      @work_after.nil? ? work_after_date.present? : @work_after == 'yes'
+      return YesNoAnswer.new(@work_after) if @work_after.present?
+
+      work_after_date.present? ? YesNoAnswer::YES : nil
     end
 
     private

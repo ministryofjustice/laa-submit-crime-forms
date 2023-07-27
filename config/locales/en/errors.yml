@@ -147,9 +147,13 @@ en:
             number_of_witnesses:
               blank: Enter number of witnesses
             supplemental_claim:
-              blank: Select yes or no for supplemental_claim
+              blank: Select yes or no for supplemental claim
             preparation_time:
-              blank: Select yes or no for preparation_time
+              blank: Select yes or no for preparation time
+            work_before:
+              blank: Select yes or no for work before representation order date
+            work_after:
+              blank: Select yes or no for work after representation order date
             time_spent:
               blank: Time spent must be set
               blank_hours: Hours must be set
