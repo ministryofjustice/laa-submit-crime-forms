@@ -13,7 +13,7 @@ module CheckAnswers
     def row_data
       header_rows + work_items.rows.map do |row|
         {
-          head_key: row[:head_key],
+          head_key: row[:key][:text],
           text: row[:value][:text]
         }
       end

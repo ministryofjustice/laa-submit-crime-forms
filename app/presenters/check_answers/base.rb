@@ -21,9 +21,11 @@ module CheckAnswers
     end
 
     def row_content(head_key, text, head_opts = {})
+      translated_heading = translate_table_key(section, head_key, **head_opts)
+      heading = translated_heading.start_with?('Translation missing:') ? head_key : translated_heading
       {
         key: {
-          text: translate_table_key(section, head_key, **head_opts),
+          text: heading,
           classes: 'govuk-summary-list__value-width-50'
         },
         value: {

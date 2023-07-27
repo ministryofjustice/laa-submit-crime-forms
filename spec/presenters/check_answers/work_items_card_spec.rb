@@ -42,15 +42,15 @@ RSpec.describe CheckAnswers::WorkItemsCard do
             text: '<strong>Total per item</strong>'
           },
           {
-            head_key: 'attendance_without_counsel',
+            head_key: 'Attendance without counsel',
             text: '£0.00'
           },
           {
-            head_key: 'preparation',
+            head_key: 'Preparation',
             text: '£40.00'
           },
           {
-            head_key: 'advocacy',
+            head_key: 'Advocacy',
             text: '£170.00'
           }
         ]
