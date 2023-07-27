@@ -21,7 +21,7 @@ module Steps
 
       render json: {
         success: {
-          fileId: evidence.id
+          evidence_id: evidence.id
         }
       }, status: :ok
     end
@@ -31,7 +31,7 @@ module Steps
     end
 
     def destroy
-      SupportingEvidence.destroy(params[:resource_id])
+      SupportingEvidence.destroy(params[:evidence_id])
       render json: {
         success: true
       }
@@ -49,11 +49,7 @@ module Steps
     end
 
     def supporting_evidence
-      @supporting_evidence = latest_evidence
-    end
-
-    def latest_evidence
-      SupportingEvidence.where(claim_id: current_application.id)
+      @supporting_evidence = SupportingEvidence.where(claim_id: current_application.id)
     end
   end
 end

@@ -67,8 +67,8 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
         expect(response).to be_successful
       end
 
-      it 'returns the fileId' do
-        expect(JSON.parse(response.body)['success']['fileId']).not_to be_empty
+      it 'returns the evidence_id' do
+        expect(JSON.parse(response.body)['success']['evidence_id']).not_to be_empty
       end
     end
   end
@@ -87,7 +87,7 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
 
     context 'when there are files present' do
       it 'deletes the file' do
-        delete :destroy, params: { id: '12345', resource_id: evidence.id }
+        delete :destroy, params: { id: '12345', evidence_id: evidence.id }
 
         expect(response).to be_successful
       end
@@ -95,7 +95,7 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
 
     context 'when there are no files present' do
       it 'returns a 400' do
-        delete :destroy, params: { id: '12345', resource_id: SecureRandom.uuid }
+        delete :destroy, params: { id: '12345', evidence_id: SecureRandom.uuid }
 
         expect(response).to be_bad_request
       end

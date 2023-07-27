@@ -24,7 +24,7 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
                 item.find('.moj-multi-file-upload__message').html(this.getSuccessHtml(response.success));
                 this.status.html(response.success.messageText);
             }
-            item.find(`a.remove-link.moj-multi-file-upload__delete`).attr("value", response.success.fileId ?? file.name)
+            item.find(`a.remove-link.moj-multi-file-upload__delete`).attr("value", response.success.evidence_id ?? file.name)
             this.params.uploadFileExitHook(this, file, response);
         }, this),
         error: $.proxy(function (jqXHR, textStatus, errorThrown) {
@@ -61,7 +61,7 @@ MOJFrontend.MultiFileUpload.prototype.onFileDeleteClick = function (e) {
     e.preventDefault(); // if user refreshes page and then deletes
     var button = $(e.currentTarget);
     $.ajax({
-        url: `${this.params.deleteUrl}?resource_id=${button.attr('value')}`,
+        url: `${this.params.deleteUrl}?evidence_id=${button.attr('value')}`,
         type: 'delete',
         success: $.proxy(function (response) {
             if (response.error) {

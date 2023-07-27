@@ -5,6 +5,7 @@ ruby File.read('.ruby-version').strip
 
 gem 'bootsnap', require: false
 gem 'dartsass-rails', '~> 0.5.0'
+gem 'aws-sdk-s3', '~> 1.130'
 gem 'importmap-rails'
 gem 'kaminari'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
@@ -49,5 +50,3 @@ group :test do
   gem 'simplecov-rcov'
   gem 'super_diff'
 end
-
-gem 'aws-sdk-s3', '~> 1.130'
