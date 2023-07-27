@@ -5,7 +5,8 @@ RSpec.describe CheckAnswers::LettersCallsCard do
 
   let(:claim) { instance_double(Claim) }
   let(:letters_calls_form) do
-    instance_double(Steps::LettersCallsForm, letters:, calls:, letters_uplift:, letters_after_uplift:, calls_uplift:, calls_after_uplift:, total_cost:)
+    instance_double(Steps::LettersCallsForm, letters:, calls:, letters_uplift:, letters_after_uplift:, calls_uplift:,
+calls_after_uplift:, total_cost:)
   end
 
   let(:letters) { 20 }
@@ -33,9 +34,10 @@ RSpec.describe CheckAnswers::LettersCallsCard do
     end
   end
 
+  # rubocop:disable RSpec/ExampleLength
   describe '#row_data' do
     context 'letters and calls have uplift' do
-      it 'generates hearing details rows' do
+      it 'generates letters and calls rows' do
         expect(subject.row_data).to eq(
           [
             {
@@ -83,7 +85,7 @@ RSpec.describe CheckAnswers::LettersCallsCard do
       let(:calls_after_uplift) { 20.45 }
       let(:total_cost) { 102.25 }
 
-      it 'generates hearing details rows' do
+      it 'generates letters and calls rows' do
         expect(subject.row_data).to eq(
           [
             {
@@ -124,4 +126,5 @@ RSpec.describe CheckAnswers::LettersCallsCard do
       end
     end
   end
+  # rubocop:enable RSpec/ExampleLength
 end
