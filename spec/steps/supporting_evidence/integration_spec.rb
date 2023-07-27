@@ -1,19 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'User can provide supporting evidence', javascript: true, type: :system do
-  let(:claim) { Claim.create(office_code: 'AAAAA') }
+  let(:claim) { create(:claim, :main_defendant) }
 
   it 'does not show the mail address' do
     visit provider_saml_omniauth_callback_path
 
     visit edit_steps_supporting_evidence_path(claim.id)
 
-    doc = Nokogiri::HTML(page.html)
-    values = doc.xpath('//*[@id="steps-supporting-evidence-form-send-by-post-true-conditional"]').map do |node|
-      node.attribute('class')
-    end
+    element = find_by_id('steps-supporting-evidence-form-send-by-post-true-field', visible: false)
 
-    expect(values[0].value).to eq 'govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden'
+    expect(element).not_to be_checked
 
     click_on 'Save and continue'
 
@@ -25,14 +22,11 @@ RSpec.describe 'User can provide supporting evidence', javascript: true, type: :
 
     visit edit_steps_supporting_evidence_path(claim.id)
 
-    check('steps-supporting-evidence-form-send-by-post-true-field', allow_label_click: true)
+    element = find_by_id('steps-supporting-evidence-form-send-by-post-true-field', visible: false)
 
-    doc = Nokogiri::HTML(page.html)
-    values = doc.xpath('//*[@id="steps-supporting-evidence-form-send-by-post-true-conditional"]').map do |node|
-      node.attribute('class')
-    end
+    element.click
 
-    expect(values[0].value).to eq 'govuk-checkboxes__conditional'
+    expect(element).to be_checked
 
     click_on 'Save and continue'
 
