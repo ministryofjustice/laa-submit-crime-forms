@@ -2,7 +2,6 @@
 
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'
-
 initAll()
 
 const $inputs = document.querySelectorAll('[data-module="govuk-input"]')
