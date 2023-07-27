@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User can provide supporting evidence', javascript: true, type: :system do
-  let(:claim) { create(:claim, :main_defendant) }
+  let(:claim) { create(:claim, :complete) }
 
   it 'does not show the mail address' do
     visit provider_saml_omniauth_callback_path
