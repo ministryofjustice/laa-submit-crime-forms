@@ -2,6 +2,13 @@ FactoryBot.define do
   factory :claim do
     id { SecureRandom.uuid }
     office_code { 'AAA' }
+    trait :complete do
+      main_defendant
+      case_details
+      with_uplift
+      case_disposal
+      letters_calls
+    end
 
     trait :main_defendant do
       defendants { [build(:defendant, :valid)] }
@@ -36,6 +43,10 @@ FactoryBot.define do
       after(:build) do |claim, _context|
         claim.navigation_stack << "/applications/#{claim.id}/steps/letters_calls"
       end
+    end
+
+    trait :work_item do
+      work_items { [build(:work_item, :valid)] }
     end
   end
 end
