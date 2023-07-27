@@ -58,9 +58,9 @@ module Steps
 
     def attributes_to_reset
       attributes.merge(
-        time_spent: preparation_time  ? time_spent : nil,
-        work_before_date: work_before ? work_before_date : nil,
-        work_after_date: work_after ? work_after_date : nil,
+        time_spent: preparation_time == YesNoAnswer::YES  ? time_spent : nil,
+        work_before_date: work_before == YesNoAnswer::YES ? work_before_date : nil,
+        work_after_date: work_after == YesNoAnswer::YES ? work_after_date : nil,
       )
     end
   end
