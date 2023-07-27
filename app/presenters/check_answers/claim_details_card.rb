@@ -55,7 +55,7 @@ module CheckAnswers
     end
 
     def work_before
-      if claim_details_form.work_before && claim_details.work_before_date
+      if claim_details_form.work_before && claim_details_form.work_before_date
         "#{ApplicationController.helpers.capitalize_sym(claim_details_form.work_before)} - #{claim_details_form.work_before_date.strftime('%d %B %Y')}"
       else
         ApplicationController.helpers.capitalize_sym(claim_details_form.work_before)
@@ -63,7 +63,7 @@ module CheckAnswers
     end
 
     def work_after
-      if claim_details_form.work_after && claim_details.work_after_date
+      if claim_details_form.work_after && claim_details_form.work_after_date
         "#{ApplicationController.helpers.capitalize_sym(claim_details_form.work_after)} - #{claim_details_form.work_after_date.strftime('%d %B %Y')}"
       else
         ApplicationController.helpers.capitalize_sym(claim_details_form.work_after)
