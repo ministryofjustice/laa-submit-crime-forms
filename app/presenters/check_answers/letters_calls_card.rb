@@ -27,7 +27,7 @@ module CheckAnswers
         },
         {
           head_key: 'letters_payment',
-          text: NumberTo.pounds(letters_calls_form.letters_after_uplift || 0)
+          text: currency_value(letters_calls_form.letters_after_uplift)
         },
         {
           head_key: 'calls',
@@ -39,7 +39,7 @@ module CheckAnswers
         },
         {
           head_key: 'calls_payment',
-          text: NumberTo.pounds(letters_calls_form.calls_after_uplift || 0)
+          text: currency_value(letters_calls_form.calls_after_uplift)
         },
         {
           head_key: 'total',
@@ -57,8 +57,12 @@ module CheckAnswers
       translate_table_key(section, 'uplift_value', value: uplift)
     end
 
+    def currency_value(value)
+      NumberTo.pounds(value || 0)
+    end
+
     def total_cost
-      text = "<strong>#{NumberTo.pounds(letters_calls_form.total_cost || 0)}</strong>"
+      text = "<strong>#{currency_value(letters_calls_form.total_cost)}</strong>"
       ApplicationController.helpers.sanitize(text, tags: %w[strong])
     end
   end
