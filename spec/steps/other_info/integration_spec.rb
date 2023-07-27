@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User can fill in other relevent information', type: :system do
-  let(:claim) do
-    Claim.create(office_code: 'AAAA', defendants: [Defendant.new(main: true, full_name: 'Nigel', maat: '123')],
-                 plea: PleaOptions.values)
-  end
+  let(:claim) { create(:claim, :complete) }
 
   before do
     visit provider_saml_omniauth_callback_path

@@ -4,10 +4,7 @@ RSpec.describe Steps::CheckAnswersController, type: :controller do
   it_behaves_like 'a show step controller'
 
   describe '#show' do
-    let(:claim) do
-      Claim.create!(office_code: 'AAA', defendants: [Defendant.new(main: true, full_name: 'Nigel', maat: '123')],
-                    plea: PleaOptions.values)
-    end
+    let(:claim) { create(:claim, :complete) }
 
     before { claim.update(navigation_stack:) }
 
