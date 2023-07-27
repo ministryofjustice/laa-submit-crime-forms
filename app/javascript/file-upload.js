@@ -61,7 +61,7 @@ MOJFrontend.MultiFileUpload.prototype.onFileDeleteClick = function (e) {
     e.preventDefault(); // if user refreshes page and then deletes
     var button = $(e.currentTarget);
     $.ajax({
-        url: `${this.params.deleteUrl}?resource_id=${button[0].attributes[2].value}`,
+        url: `${this.params.deleteUrl}?resource_id=${button.attr('value')}`,
         type: 'delete',
         success: $.proxy(function (response) {
             if (response.error) {
