@@ -149,4 +149,88 @@ RSpec.describe Steps::ClaimDetailsForm do
       end
     end
   end
+
+  describe '#preparation_time' do
+    context 'when preparation_time is passed in as yes' do
+      it { expect(subject.preparation_time).to eq(YesNoAnswer::YES) }
+    end
+
+    context 'when preparation_time is passed in as no' do
+      let(:preparation_time) { 'no' }
+
+      it { expect(subject.preparation_time).to eq(YesNoAnswer::NO) }
+    end
+
+    context 'when preparation_time is not passed in' do
+      let(:preparation_time) { nil }
+
+      context 'when time_spent is set' do
+        let(:time_spent) { 100 }
+
+        it { expect(subject.preparation_time).to eq(YesNoAnswer::YES) }
+      end
+
+      context 'when time_spent is not set' do
+        let(:time_spent) { nil }
+
+        it { expect(subject.preparation_time).to be_nil }
+      end
+    end
+  end
+
+  describe '#work_before' do
+    context 'when work_before is passed in as yes' do
+      it { expect(subject.work_before).to eq(YesNoAnswer::YES) }
+    end
+
+    context 'when work_before is passed in as no' do
+      let(:work_before) { 'no' }
+
+      it { expect(subject.work_before).to eq(YesNoAnswer::NO) }
+    end
+
+    context 'when work_before is not passed in' do
+      let(:work_before) { nil }
+
+      context 'when work_before_date is set' do
+        let(:work_before_date) { Date.yesterday }
+
+        it { expect(subject.work_before).to eq(YesNoAnswer::YES) }
+      end
+
+      context 'when work_before_date is not set' do
+        let(:work_before_date) { nil }
+
+        it { expect(subject.work_before).to be_nil }
+      end
+    end
+  end
+
+  describe '#work_after' do
+    context 'when work_after is passed in as yes' do
+      it { expect(subject.work_after).to eq(YesNoAnswer::YES) }
+    end
+
+    context 'when work_after is passed in as no' do
+      let(:work_after) { 'no' }
+
+      it { expect(subject.work_after).to eq(YesNoAnswer::NO) }
+    end
+
+    context 'when work_after is not passed in' do
+      let(:work_after) { nil }
+
+      context 'when work_after_date is set' do
+        let(:work_after_date) { Date.yesterday }
+
+        it { expect(subject.work_after).to eq(YesNoAnswer::YES) }
+      end
+
+      context 'when work_after_date is not set' do
+        let(:work_after_date) { nil }
+
+        it { expect(subject.work_after).to be_nil }
+      end
+    end
+  end
 end
