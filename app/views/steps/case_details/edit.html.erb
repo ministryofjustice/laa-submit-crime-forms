@@ -13,7 +13,11 @@
 
       <% @form_object.boolean_fields.each do |field| %>
         <%= f.govuk_radio_buttons_fieldset field, legend: { size: 's' } do %>
-          <%= f.govuk_radio_button field, YesNoAnswer::YES.to_s %>
+          <%= f.govuk_radio_button field, YesNoAnswer::YES.to_s do %>
+           <% if field == :remitted_to_magistrate %>
+              <%= f.govuk_date_field "#{field}_date", width: 'one-third' %>
+            <% end %>
+          <% end %>
           <%= f.govuk_radio_button field, YesNoAnswer::NO.to_s %>
         <% end%>
       <% end%>
