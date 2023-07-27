@@ -96,7 +96,7 @@
               <td class="govuk-table__cell">
                 <%= link_to claim.ufn, steps_start_page_path(claim.id) %>
              </td>
-                <td class="govuk-table__cell"><%= Defendant.joins(:claim).pluck('full_name').join(', ') %></td>
+                <td class="govuk-table__cell"><%= Defendant.joins(:claim).where("laa_reference='#{claim.laa_reference}'").pluck('full_name').join(', ') %></td>
             <% end %>
             <td class="govuk-table__cell"><%= claim.updated_at.strftime('%d %B %Y') %></td>
             <td class="govuk-table__cell"><%= claim.laa_reference %></td>
