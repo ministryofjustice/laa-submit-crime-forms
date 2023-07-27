@@ -3,11 +3,6 @@ require 'rails_helper'
 RSpec.describe CheckAnswers::CaseDisposalCard do
   subject { described_class.new(claim) }
 
-  # let(:claim) do
-  #   Claim.create!(plea: 'arrest_warrant', cracked_trial_date: date.new(2019, 1, 1),
-  #                 arrest_warrent_date: date.new(2020, 1, 1))
-  # end
-
   let(:claim) { instance_double(Claim) }
 
   let(:form) do
