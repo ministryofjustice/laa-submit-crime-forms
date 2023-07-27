@@ -12,9 +12,7 @@ module RouteHelpers
     resource name,
              only: opts.fetch(:only, [:edit, :update, :create, :destroy]),
              controller: name,
-             path_names: { edit: '' } do
-      yield if block
-    end
+             path_names: { edit: '' }
   end
 
   def crud_step(name, opts = {}, &block)

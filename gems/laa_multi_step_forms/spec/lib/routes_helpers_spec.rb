@@ -54,6 +54,12 @@ RSpec.describe RouteHelpers, type: :routing do
     expect(post("/applications/#{id}/steps/supporting_evidence")).to route_to(
       'steps/supporting_evidence#create', id:
     )
+    expect(patch("/applications/#{id}/steps/supporting_evidence")).to route_to(
+      'steps/supporting_evidence#update', id:
+    )
+    expect(put("/applications/#{id}/steps/supporting_evidence")).to route_to(
+      'steps/supporting_evidence#update', id:
+    )
     expect(delete("/applications/#{id}/steps/supporting_evidence")).to route_to(
       'steps/supporting_evidence#destroy', id:
     )

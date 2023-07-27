@@ -1,6 +1,6 @@
 module Tasks
   class SolicitorDeclaration < Generic
-    PREVIOUS_TASK = SupportingEvidence
+    PREVIOUS_TASK = CheckAnswers
     FORM = Steps::SolicitorDeclarationForm
 
     def path
