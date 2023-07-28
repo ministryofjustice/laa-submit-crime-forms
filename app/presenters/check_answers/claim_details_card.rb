@@ -9,5 +9,72 @@ module CheckAnswers
       @group = 'about_claim'
       @section = 'claim_details'
     end
+
+    # rubocop:disable Metrics/MethodLength
+    def row_data
+      [
+        {
+          head_key: 'prosecution_evidence',
+          text: claim_details_form.prosecution_evidence
+        },
+        {
+          head_key: 'defence_statement',
+          text: claim_details_form.defence_statement
+        },
+        {
+          head_key: 'number_of_witnesses',
+          text: claim_details_form.number_of_witnesses
+        },
+        {
+          head_key: 'supplemental_claim',
+          text: ApplicationController.helpers.capitalize_sym(claim_details_form.supplemental_claim)
+        },
+        {
+          head_key: 'preparation_time',
+          text: preparation_time
+        },
+        {
+          head_key: 'work_before',
+          text: work_before
+        },
+        {
+          head_key: 'work_after',
+          text: work_after
+        },
+      ]
+    end
+    # rubocop:enable Metrics/MethodLength
+
+    # rubocop:disable Layout/LineLength
+    def preparation_time
+      if claim_details_form.preparation_time
+        "#{ApplicationController.helpers.capitalize_sym(claim_details_form.preparation_time)} - #{formatted_preparation_time}"
+      else
+        ApplicationController.helpers.capitalize_sym(claim_details_form.preparation_time)
+      end
+    end
+
+    def work_before
+      if claim_details_form.work_before && claim_details_form.work_before_date
+        "#{ApplicationController.helpers.capitalize_sym(claim_details_form.work_before)} - #{claim_details_form.work_before_date.strftime('%d %B %Y')}"
+      else
+        ApplicationController.helpers.capitalize_sym(claim_details_form.work_before)
+      end
+    end
+
+    def work_after
+      if claim_details_form.work_after && claim_details_form.work_after_date
+        "#{ApplicationController.helpers.capitalize_sym(claim_details_form.work_after)} - #{claim_details_form.work_after_date.strftime('%d %B %Y')}"
+      else
+        ApplicationController.helpers.capitalize_sym(claim_details_form.work_after)
+      end
+    end
+
+    private
+
+    def formatted_preparation_time
+      ApplicationController.helpers.format_period(claim_details_form.time_spent)
+    end
+    # rubocop:enable Layout/LineLength
   end
 end

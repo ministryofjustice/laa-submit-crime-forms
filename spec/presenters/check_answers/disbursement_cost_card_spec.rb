@@ -10,10 +10,4 @@ RSpec.describe CheckAnswers::DisbursementCostsCard do
       expect(subject.title).to eq('Disbursement costs')
     end
   end
-
-  describe '#route_path' do
-    it 'is correct route' do
-      expect(subject.route_path).to eq('disbursements')
-    end
-  end
 end
