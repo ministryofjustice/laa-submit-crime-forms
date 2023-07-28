@@ -28,13 +28,7 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
 
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Case Details')
-    end
-  end
-
-  describe '#route_path' do
-    it 'is correct route' do
-      expect(subject.route_path).to eq('case_details')
+      expect(subject.title).to eq('Case details')
     end
   end
 

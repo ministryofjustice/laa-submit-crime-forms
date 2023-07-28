@@ -8,6 +8,8 @@ FactoryBot.define do
       with_uplift
       case_disposal
       letters_calls
+      one_work_item
+      one_disbursement
     end
 
     trait :main_defendant do
@@ -45,8 +47,12 @@ FactoryBot.define do
       end
     end
 
-    trait :work_item do
+    trait :one_work_item do
       work_items { [build(:work_item, :valid)] }
+    end
+
+    trait :one_disbursement do
+      disbursements { [build(:disbursement, :valid)] }
     end
   end
 end

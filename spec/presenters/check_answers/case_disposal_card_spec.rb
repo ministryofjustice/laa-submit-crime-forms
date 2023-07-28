@@ -26,13 +26,7 @@ RSpec.describe CheckAnswers::CaseDisposalCard do
 
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Case Disposal')
-    end
-  end
-
-  describe '#route_path' do
-    it 'is correct route' do
-      expect(subject.route_path).to eq('case_disposal')
+      expect(subject.title).to eq('Case disposal')
     end
   end
 

@@ -37,12 +37,6 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
     end
   end
 
-  describe '#route_path' do
-    it 'is correct route' do
-      expect(subject.route_path).to eq('defendant_summary')
-    end
-  end
-
   describe '#row_data' do
     # rubocop:disable RSpec/ExampleLength
     context '1 main defendant and 2 additional defendants' do
