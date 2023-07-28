@@ -1,0 +1,30 @@
+<div class="govuk-!-margin-bottom-7">
+  <p class="govuk-body"><%= t('.para1.heading') %></p>
+  <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6 govuk-!-padding-left-6">
+      <li><%= link_to t('.para1.crm8'), t('.para1.crm8_link'), class: "govuk-link", target: "_blank" %></li>
+      <li> <%= t('.para1.remittal') %> </li>
+      <li> <%= t('.para1.supplemental') %> </li>
+      <li> <%= t('.para1.authority') %> </li>
+  </ul>
+
+  <%# Upload warning %>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true"><%= t('.upload_warning.icon') %></span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive"><%= t('.upload_warning.assistive') %> </span>
+      <%= t('.upload_warning.message') %>
+    </strong>
+  </div>
+
+  <%# Additional upload list %>
+  <p class="govuk-body"><%= t('.para2.heading') %></p>
+  <ul class="govuk-list govuk-list--bullet govuk-!-padding-left-6">
+    <li><%= t('.para2.file') %></li>
+    <li><%= t('.para2.attendance') %></li>
+    <li><%= t('.para2.reading') %></li>
+    <li><%= t('.para2.documentation') %></li>
+    <li><%= t('.para2.prosecution') %></li>
+    <li><%= t('.para2.emails') %></li>
+    <li><%= t('.para2.representation') %></li>
+  </ul>
+</div>
