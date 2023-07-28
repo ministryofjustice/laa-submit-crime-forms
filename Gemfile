@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
+gem 'aws-sdk-s3', '~> 1.130'
 gem 'bootsnap', require: false
 gem 'dartsass-rails', '~> 0.5.0'
 gem 'importmap-rails'
@@ -23,6 +24,7 @@ gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', 
 group :development, :test do
   gem 'debug'
   gem 'dotenv-rails'
+  gem 'erb_lint', require: false
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec-rails'

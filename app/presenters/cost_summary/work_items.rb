@@ -1,5 +1,6 @@
 module CostSummary
   class WorkItems < Base
+    TRANSLATION_KEY = self
     attr_reader :work_item_forms, :claim
 
     def initialize(work_items, claim)

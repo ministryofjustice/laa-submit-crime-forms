@@ -1,12 +1,20 @@
 # frozen_string_literal: true
 
 module CheckAnswers
-  class DisbursementCostsCard < Base
-    attr_reader :disbursement_type_form
+  class DisbursementCostsCard < CostSummary::Disbursements
+    attr_reader :section
 
-    def initialize(_claim)
-      @group = 'about_claim'
+    def title(**_opt)
+      I18n.t('steps.check_answers.groups.about_claim.disbursements.title')
+    end
+
+    def initialize(claim)
+      super(claim.disbursements, claim)
       @section = 'disbursements'
+    end
+
+    def route_path
+      section
     end
   end
 end
