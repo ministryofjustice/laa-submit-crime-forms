@@ -70,6 +70,8 @@ en:
             not_guilty_pleas: Category 2
             arrest_warrent_date: Date of warrant issued
             cracked_trial_date: Date guilty plea indicated to solicitor
+          supporting_evidence:
+            supporting_evidence: Evidence %{count}
       groups:
         about_you: 
           heading: About you
