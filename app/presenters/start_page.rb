@@ -15,7 +15,7 @@ module StartPage
       [:claim,
        [:reason_for_claim, :claim_details, :work_items, :letters_calls, :disbursements, :cost_summary,
         :other_info]],
-      [:evidence, [:upload_evidence]],
+      [:evidence, [:supporting_evidence]],
       [:review,
        [:check_answers, :solicitor_declaration]],
     ].freeze

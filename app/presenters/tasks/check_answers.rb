@@ -1,6 +1,6 @@
 module Tasks
   class CheckAnswers < Generic
-    PREVIOUS_TASK = OtherInfo
+    PREVIOUS_TASK = SupportingEvidence
 
     def path
       steps_check_answers_path(application)

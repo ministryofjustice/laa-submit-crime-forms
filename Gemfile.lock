@@ -92,7 +92,30 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     attr_extras (7.1.0)
+    aws-eventstream (1.2.0)
+    aws-partitions (1.789.0)
+    aws-sdk-core (3.178.0)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.651.0)
+      aws-sigv4 (~> 1.5)
+      jmespath (~> 1, >= 1.6.1)
+    aws-sdk-kms (1.71.0)
+      aws-sdk-core (~> 3, >= 3.177.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.130.0)
+      aws-sdk-core (~> 3, >= 3.177.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.6)
+    aws-sigv4 (1.6.0)
+      aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.18)
+    better_html (2.0.2)
+      actionview (>= 6.0)
+      activesupport (>= 6.0)
+      ast (~> 2.0)
+      erubi (~> 1.4)
+      parser (>= 2.4)
+      smart_properties
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -130,6 +153,13 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    erb_lint (0.4.0)
+      activesupport
+      better_html (>= 2.0.1)
+      parser (>= 2.7.1.4)
+      rainbow
+      rubocop
+      smart_properties
     erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -164,6 +194,7 @@ GEM
     io-console (0.6.0)
     irb (1.7.0)
       reline (>= 0.3.0)
+    jmespath (1.6.2)
     json (2.6.3)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -357,6 +388,7 @@ GEM
     simplecov-rcov (0.3.1)
       simplecov (>= 0.4.1)
     simplecov_json_formatter (0.1.4)
+    smart_properties (1.17.0)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -394,12 +426,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk-s3 (~> 1.130)
   bootsnap
   capybara
   cuprite
   dartsass-rails (~> 0.5.0)
   debug
   dotenv-rails
+  erb_lint
   factory_bot_rails
   hmcts_common_platform!
   importmap-rails

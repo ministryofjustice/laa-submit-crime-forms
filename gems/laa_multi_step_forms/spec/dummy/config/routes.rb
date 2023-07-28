@@ -19,6 +19,7 @@ Rails.application.routes.draw do
           get :duplicate
         end
       end
+      upload_step :supporting_evidence
     end
   end
 end

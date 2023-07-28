@@ -26,7 +26,7 @@ RSpec.describe RouteHelpers, type: :routing do
     )
   end
 
-  it 'creates crud routes - with deelete adnd custom' do
+  it 'creates crud routes - with delete and custom' do
     expect(get("/applications/#{id}/steps/work_item/#{secondary_id}/duplicate")).to route_to(
       'steps/work_item#duplicate', id: id, work_item_id: secondary_id
     )
@@ -44,6 +44,24 @@ RSpec.describe RouteHelpers, type: :routing do
     )
     expect(delete("/applications/#{id}/steps/work_item/#{secondary_id}")).to route_to(
       'steps/work_item#destroy', id: id, work_item_id: secondary_id
+    )
+  end
+
+  it 'creates upload step routes' do
+    expect(get("/applications/#{id}/steps/supporting_evidence")).to route_to(
+      'steps/supporting_evidence#edit', id:
+    )
+    expect(post("/applications/#{id}/steps/supporting_evidence")).to route_to(
+      'steps/supporting_evidence#create', id:
+    )
+    expect(patch("/applications/#{id}/steps/supporting_evidence")).to route_to(
+      'steps/supporting_evidence#update', id:
+    )
+    expect(put("/applications/#{id}/steps/supporting_evidence")).to route_to(
+      'steps/supporting_evidence#update', id:
+    )
+    expect(delete("/applications/#{id}/steps/supporting_evidence")).to route_to(
+      'steps/supporting_evidence#destroy', id:
     )
   end
 end
