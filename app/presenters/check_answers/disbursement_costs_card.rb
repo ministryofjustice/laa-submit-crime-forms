@@ -12,9 +12,5 @@ module CheckAnswers
       super(claim.disbursements, claim)
       @section = 'disbursements'
     end
-
-    def route_path
-      section
-    end
   end
 end
