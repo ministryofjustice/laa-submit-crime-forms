@@ -73,9 +73,9 @@
     <table class="govuk-table" data-module="moj-sortable-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header" aria-sort="ascending"><%= t('.header.ufn') %></th> 
-          <th scope="col" class="govuk-table__header" aria-sort="ascending"><%= t('.header.name') %></th>
-          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.start_date') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.ufn') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.defendant') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.last_updated') %></th>
           <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.laa_reference') %></th>
           <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.status') %></th>
         </tr>
@@ -84,20 +84,19 @@
       <tbody class="govuk-table__body app-task-list__items">
         <% @claims.each do |claim| %>
           <tr class="govuk-table__row app-task-list__item">
-            <% if claim.status == 'completed' %>
-              <td class="govuk-table__cell">
+            <td class="govuk-table__cell">
+              <% if claim.status == 'completed' %>
                 <%# TODO: Keeping it here as we do want to show a different URL for completed claims (TBC) %>
-                <td class="govuk-table__cell"><%= claim.short_id %></td>
-              <td class="govuk-table__cell">
-                <%= link_to claim.ufn, steps_start_page_path(claim.id) %>
-              </td>
-              </td>
-            <% else %>
-              <td class="govuk-table__cell">
-                <%= link_to claim.ufn, steps_start_page_path(claim.id) %>
-             </td>
-                <td class="govuk-table__cell"><%= Defendant.joins(:claim).where("laa_reference='#{claim.laa_reference}'").pluck('full_name').join(', ') %></td>
-            <% end %>
+                <%= link_to steps_start_page_path(claim.id) do %>
+                  <%= claim.ufn %>
+                <% end %>
+              <% else %>
+                <%= link_to steps_start_page_path(claim.id) do %>
+                  <%= claim.ufn %>
+                <% end %>
+              <% end %>
+            </td>
+            <td class="govuk-table__cell"><%= claim.main_defendant&.full_name %></td>
             <td class="govuk-table__cell"><%= claim.updated_at.strftime('%d %B %Y') %></td>
             <td class="govuk-table__cell"><%= claim.laa_reference %></td>
             <td class="govuk-table__cell">

@@ -5,10 +5,9 @@ en:
       delete_it: Yes, delete it
     legend:
       steps_claim_type_form:
-        claim_type: What you are claiming for
+        claim_type: What are you claiming for?
         rep_order_date: Representation order date
         cntp_date: Date the CNTP rep order was issued
-        ufn: What is your unique file number?
       steps_firm_details_form:
         solicitor_attributes:
           alternative_contact_details: Do you want to add alternative contact details?
@@ -19,7 +18,7 @@ en:
         unassigned_counsel: Was there an unassigned counsel?
         agent_instructed: Was there an instructed agent?
         remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates' court?
-        remitted_to_magistrate_date: Remittal date      
+        remitted_to_magistrate_date: Remittal date
       steps_case_disposal_form:
         guilty_pleas: Category 1
         not_guilty_pleas: Category 2
@@ -147,7 +146,6 @@ en:
             'yes': 'Yes'
             'no': 'No'
       steps_case_details_form:
-        ufn: Your Unique File Number
         main_offence: Main offence
         assigned_counsel_options:
           'yes': 'Yes'
@@ -161,7 +159,7 @@ en:
         remitted_to_magistrate_options:
           'yes': 'Yes'
           'no': 'No'
-      
+
       steps_case_disposal_form:
         plea_options:
           guilty: Guilty plea

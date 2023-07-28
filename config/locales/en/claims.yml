@@ -6,8 +6,8 @@ en:
       start_claim: Start a new claim
       header:
         ufn: Your UFN
-        name: Defendant
-        start_date: Last updated
+        defendant: Defendant
+        last_updated: Last updated
         laa_reference: LAA reference
         status: Status
         actions: Actions
