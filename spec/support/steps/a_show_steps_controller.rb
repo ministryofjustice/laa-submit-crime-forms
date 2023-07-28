@@ -8,7 +8,9 @@ RSpec.shared_examples 'a show step controller' do
     end
 
     context 'when application is found' do
-      let(:existing_case) { create(:claim, :complete) }
+      let(:existing_case) do
+        create(:claim, :complete)
+      end
 
       it 'responds with HTTP success' do
         get :show, params: { id: existing_case }
