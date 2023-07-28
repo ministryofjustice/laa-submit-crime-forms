@@ -33,6 +33,8 @@ en:
             in_area: Magistrates court in designated area
             hearing_outcome: Hearing outcome
             matter_type: Matter type
+          reason_for_claim:
+            reasons_for_claim: Why are you claiming a non-standard magistrate fee?
           claim_details:
             prosecution_evidence: Number of pages of prosecution evidence
             defence_statement: Number of pages of defence statements
