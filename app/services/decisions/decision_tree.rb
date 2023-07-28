@@ -66,7 +66,8 @@ module Decisions
       .goto(edit: 'steps/disbursements')
       .goto(show: 'steps/cost_summary')
     # cost_summary to other_info is a hard coded link as show page
-    from(:other_info).goto(show: 'steps/check_answers')
+    from(:other_info).goto(edit: 'steps/supporting_evidence')
+    from(:supporting_evidence).goto(show: 'steps/check_answers')
     # check_answers to equality is a hard coded link as show page
     from(:equality)
       .when(-> { answer_equality.yes? }).goto(edit: 'steps/equality_questions')

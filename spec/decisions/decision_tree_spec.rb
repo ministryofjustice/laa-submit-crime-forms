@@ -177,7 +177,9 @@ RSpec.describe Decisions::DecisionTree do
     it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :show, controller: 'steps/cost_summary' }
   end
 
-  it_behaves_like 'a generic decision', from: :other_info, goto: { action: :show, controller: 'steps/check_answers' }
+  it_behaves_like 'a generic decision', from: :other_info, goto: { action: :edit, controller: 'steps/supporting_evidence' }
+
+  it_behaves_like 'a generic decision', from: :supporting_evidence, goto: { action: :show, controller: 'steps/check_answers' }
 
   context 'answer yes to answer_equality' do
     before { allow(form).to receive(:answer_equality).and_return(YesNoAnswer::YES) }
