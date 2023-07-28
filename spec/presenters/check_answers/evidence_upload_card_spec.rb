@@ -15,7 +15,7 @@ RSpec.describe CheckAnswers::EvidenceUploadsCard do
 
   before do
     allow(claim).to receive(:id).and_return(claim_id)
-    allow(SupportingEvidence).to receive(:where).with({ claim_id: claim_id }).and_return(evidence_list)
+    allow(SupportingEvidence).to receive(:where).with({ claim_id: }).and_return(evidence_list)
   end
 
   describe '#initialize' do
