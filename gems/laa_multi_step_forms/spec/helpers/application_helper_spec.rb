@@ -85,6 +85,7 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
           expect(helper.check_missing('apples')).to eq('apples')
         end
       end
+
       context 'and ablock is passed in' do
         it 'renders block' do
           response = helper.check_missing('apples') do
