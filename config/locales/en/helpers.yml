@@ -161,7 +161,6 @@ en:
         remitted_to_magistrate_options:
           'yes': 'Yes'
           'no': 'No'
-
       steps_case_disposal_form:
         plea_options:
           guilty: Guilty plea
@@ -241,7 +240,7 @@ en:
         letters_uplift: For example, from any percentage from 1 to 100
         calls_uplift: For example, from any percentage from 1 to 100
       steps_disbursement_type_form:
-        disbursement_type_options: &disbursement_type_options
+        disbursement_type_options:
           missing: '*required'
           car: Car
           motorcycle: Motorcycle
@@ -295,7 +294,7 @@ en:
           'y': 'Yes'
           'n': 'No'
           u: Unknown
-    other_disbursement_type: &other_disbursement_type
+    other_disbursement_type:
       accident_reconstruction_report: Accident Reconstruction Report
       accident_emergency_report: Accident & Emergency Report
       accountants: Accountants
