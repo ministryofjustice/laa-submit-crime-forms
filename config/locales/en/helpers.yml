@@ -161,7 +161,6 @@ en:
         remitted_to_magistrate_options:
           'yes': 'Yes'
           'no': 'No'
-      
       steps_case_disposal_form:
         plea_options:
           guilty: Guilty plea
