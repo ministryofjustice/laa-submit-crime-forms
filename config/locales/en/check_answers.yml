@@ -63,6 +63,11 @@ en:
             waiting: Waiting
           other_info:
             other_info: Other relevant information
+          case_disposal:
+            guilty_pleas: Category 1
+            not_guilty_pleas: Category 2
+            arrest_warrent_date: Date of warrant issued
+            cracked_trial_date: Date guilty plea indicated to solicitor
       groups:
         about_you: 
           heading: About you

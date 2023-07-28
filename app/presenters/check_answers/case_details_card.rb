@@ -20,7 +20,7 @@ module CheckAnswers
         },
         {
           head_key: 'main_offence_date',
-          text: case_details_form.main_offence_date&.strftime('%d %B %Y')
+          text: case_details_form.main_offence_date.strftime('%d %B %Y')
         },
         {
           head_key: 'assigned_counsel',
