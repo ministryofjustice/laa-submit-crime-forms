@@ -14,7 +14,7 @@ module CheckAnswers
       evidence_list.map.with_index do |evidence, index|
         {
           head_key: 'supporting_evidence',
-          text: evidence.file_name,
+          text: evidence[:file_name],
           head_opts: { count: index + 1 }
         }
       end
