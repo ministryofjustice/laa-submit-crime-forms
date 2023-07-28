@@ -11,7 +11,8 @@ module CheckAnswers
         section_group('about_you', about_you_section),
         section_group('about_defendant', about_defendant_section),
         section_group('about_case', about_case_section),
-        section_group('about_claim', about_claim_section)
+        section_group('about_claim', about_claim_section),
+        section_group('supporting_evidence', supporting_evidence_section)
       ]
     end
 
@@ -58,6 +59,12 @@ module CheckAnswers
         LettersCallsCard.new(claim),
         DisbursementCostsCard.new(claim),
         OtherInfoCard.new(claim)
+      ]
+    end
+
+    def supporting_evidence_section
+      [
+        EvidenceUploadsCard.new(claim)
       ]
     end
 
