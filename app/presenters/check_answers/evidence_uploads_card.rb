@@ -7,7 +7,7 @@ module CheckAnswers
     def initialize(claim)
       @group = 'supporting_evidence'
       @section = 'supporting_evidence'
-      @evidence_list = SupportingEvidence.where(claim_id: claim.id)
+      @evidence_list = claim.supporting_evidence
     end
 
     def row_data
