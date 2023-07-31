@@ -8,13 +8,13 @@ module Tasks
       @application = application
     end
 
-    def self.build(name, **kwargs)
+    def self.build(name, **)
       class_name = "Tasks::#{name.to_s.split('.').first.camelize}"
 
       if const_defined?(class_name)
-        class_name.constantize.new(**kwargs)
+        class_name.constantize.new(**)
       else
-        new(**kwargs)
+        new(**)
       end
     end
 
