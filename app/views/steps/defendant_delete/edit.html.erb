@@ -18,9 +18,9 @@
       </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell"><%= @form_object.record.full_name %></td>
+          <td class="govuk-table__cell"><%= check_missing(@form_object.record.full_name) %></td>
           <% if maat_required?(@form_object) %>
-            <td class="govuk-table__cell"><%= @form_object.record.maat %></td>
+            <td class="govuk-table__cell"><%= check_missing(@form_object.record.maat) %></td>
           <% end %>
         </tr>
       </tbody>

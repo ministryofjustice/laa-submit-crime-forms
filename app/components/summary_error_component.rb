@@ -1,14 +1,20 @@
 class SummaryErrorComponent < ViewComponent::Base
   def initialize(records:, form:)
-    @form = form
+    @forms = Array(form)
     @records = records
   end
 
-  def forms
-    @forms ||= @records.map { |record| @form.build(record, application: helpers.current_application) }
+  def render?
+    ! valid?
   end
 
-  def render?
-    !forms.all?(&:valid?)
+  private
+
+  def valid?
+    @records.all? do |record|
+      @forms.all? do |form|
+        form.build(record, application: helpers.current_application).valid?
+      end
+    end
   end
 end
