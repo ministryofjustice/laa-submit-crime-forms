@@ -21,8 +21,7 @@ RSpec.describe PaginationHelpers, type: :helper do
   let(:scope) { double(:recordset) }
 
   before do
-    allow(scope).to receive(:page).and_return(scope)
-    allow(scope).to receive(:per).and_return(scope)
+    allow(scope).to receive_messages(page: scope, per: scope)
   end
 
   describe '#current_page' do

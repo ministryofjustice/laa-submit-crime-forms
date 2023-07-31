@@ -29,10 +29,8 @@ RSpec.describe DummyStepController, type: :controller do
   let(:destination) { { action: :show, id: application.id, controller: :dummy_step } }
 
   before do
-    allow(DummyStepImplementation).to receive(:form_class).and_return(form_class)
-    allow(DummyStepImplementation).to receive(:current_application).and_return(application)
-    allow(DummyStepImplementation).to receive(:options).and_return(options)
-    allow(DummyStepImplementation).to receive(:decision_tree_class).and_return(decision_tree_class)
+    allow(DummyStepImplementation).to receive_messages(form_class: form_class, current_application: application,
+                                                       options: options, decision_tree_class: decision_tree_class)
   end
 
   describe 'navigation stack' do
