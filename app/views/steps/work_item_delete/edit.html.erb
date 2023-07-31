@@ -7,7 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m"><%= @form_object.record.completed_on&.to_fs(:long) || t('.completed_date_blank') %></caption>
+      <caption class="govuk-table__caption govuk-table__caption--m"><%= check_missing(@form_object.record.completed_on) { @form_object.record.completed_on.to_fs(:long) } %></caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.work_type') %></th>
@@ -17,9 +17,9 @@
       </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell"><%= t("helper.steps_work_item_form.work_type_options.#{@form_object.record.work_type}") %></td>
-          <td class="govuk-table__cell"><%= format_period(@form_object.record.time_spent)  %></td>
-          <td class="govuk-table__cell"><%= @form_object.record.fee_earner %></td>
+          <td class="govuk-table__cell"><%= check_missing(@form_object.record.work_type) { t("helpers.label.steps_work_item_form.work_type_options.#{@form_object.record.work_type}") } %></td>
+          <td class="govuk-table__cell"><%= check_missing(format_period(@form_object.record.time_spent))  %></td>
+          <td class="govuk-table__cell"><%= check_missing(@form_object.record.fee_earner) %></td>
         </tr>
       </tbody>
     </table>

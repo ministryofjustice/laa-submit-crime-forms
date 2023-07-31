@@ -25,6 +25,7 @@ RSpec.configure do |config|
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
 
+  config.include ViewComponent::TestHelpers, type: :component
   config.include(ActiveSupport::Testing::TimeHelpers)
   config.include(Devise::Test::ControllerHelpers, type: :controller)
   config.include(AuthenticationHelpers, type: :controller)

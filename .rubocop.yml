@@ -171,5 +171,6 @@ RSpec/ExampleLength:
 
 Lint/MissingSuper:
   Exclude:
+    - 'app/components/*'
     - 'app/presenters/cost_summary/*'
     - 'app/presenters/check_answers/*'
