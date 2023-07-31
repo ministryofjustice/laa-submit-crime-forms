@@ -26,6 +26,16 @@ module LaaMultiStepForms
       "app-environment-#{ENV.fetch('ENV', 'local')}"
     end
 
+    def check_missing(check_value)
+      if check_value.present?
+        return yield if block_given?
+
+        check_value
+      else
+        content_tag(:strong, t('helpers.missing_data'), class: 'govuk-tag govuk-tag--red')
+      end
+    end
+
     def format_period(period)
       return t('helpers.time_period.missing') if period.nil?
 
