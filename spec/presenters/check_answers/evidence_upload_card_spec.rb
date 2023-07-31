@@ -11,17 +11,15 @@ RSpec.describe CheckAnswers::EvidenceUploadsCard do
   let(:second_evidence) do
     { file_name: 'Offences.pdf' }
   end
-  let(:claim_id) { '529fc1bf-6f42-46b5-bfbc-01a4d27a7553' }
 
   before do
-    allow(claim).to receive(:id).and_return(claim_id)
-    allow(SupportingEvidence).to receive(:where).with({ claim_id: }).and_return(evidence_list)
+    allow(claim).to receive(:supporting_evidence).and_return(evidence_list)
   end
 
   describe '#initialize' do
     it 'creates the data instance' do
       subject
-      expect(SupportingEvidence).to have_received(:where)
+      expect(claim).to have_received(:supporting_evidence)
     end
   end
 
