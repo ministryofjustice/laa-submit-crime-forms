@@ -1,6 +1,7 @@
 class AddYesNoFields < ActiveRecord::Migration[7.0]
   def change
     # claim details
+    add_column :claims, :preparation_time, :string
     add_column :claims, :work_before, :string
     add_column :claims, :work_after, :string
 
