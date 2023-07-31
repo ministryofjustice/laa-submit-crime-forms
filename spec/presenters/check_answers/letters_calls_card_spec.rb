@@ -125,6 +125,56 @@ calls_after_uplift:, total_cost:)
         )
       end
     end
+
+    context 'no letters or calls requested' do
+      let(:letters_uplift) { nil }
+      let(:calls_uplift) { nil }
+      let(:letters_after_uplift) { nil }
+      let(:calls_after_uplift) { nil }
+      let(:total_cost) { 0 }
+      let(:letters) { nil }
+      let(:calls) { nil }
+
+      it 'generates letters and calls rows' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'items',
+              text: '<strong>Total per item</strong>'
+            },
+            {
+              head_key: 'letters',
+              text: 0
+            },
+            {
+              head_key: 'letters_uplift',
+              text: '0%'
+            },
+            {
+              head_key: 'letters_payment',
+              text: '£0.00'
+            },
+            {
+              head_key: 'calls',
+              text: 0
+            },
+            {
+              head_key: 'calls_uplift',
+              text: '0%'
+            },
+            {
+              head_key: 'calls_payment',
+              text: '£0.00'
+            },
+            {
+              head_key: 'total',
+              text: '<strong>£0.00</strong>',
+              footer: true
+            }
+          ]
+        )
+      end
+    end
   end
   # rubocop:enable RSpec/ExampleLength
 end
