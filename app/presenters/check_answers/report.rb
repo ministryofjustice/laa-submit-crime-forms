@@ -73,8 +73,8 @@ module CheckAnswers
       ]
     end
 
-    def group_heading(group_key, **opt)
-      I18n.t("steps.check_answers.groups.#{group_key}.heading", **opt)
+    def group_heading(group_key, **)
+      I18n.t("steps.check_answers.groups.#{group_key}.heading", **)
     end
   end
 end
