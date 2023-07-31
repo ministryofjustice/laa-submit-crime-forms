@@ -9,7 +9,7 @@
 
     <% @disbursements_by_date.each do |date, disbursements| %>
       <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m"><%= date&.to_fs(:long) || t('.disbursement_date_blank') %></caption>
+        <caption class="govuk-table__caption govuk-table__caption--m"><%= check_missing(date) { date.to_fs(:long) } %></caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.type') %></th>
@@ -34,7 +34,7 @@
               </td>
               <td class="govuk-table__cell"><%= check_missing(disbursement.total_cost) { NumberTo.pounds(disbursement.total_cost) } %></td>
               <td class="govuk-table__cell"><%= check_missing(disbursement.details)  %></td>
-              <td class="govuk-table__cell">
+              <td class="govuk-table__cell govuk-table__nowrap">
                 <%= link_to t('.change'), edit_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id) %>
                 <%= link_to t('.delete'), edit_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id) %>
               </td>
