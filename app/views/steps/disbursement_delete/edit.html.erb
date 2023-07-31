@@ -7,7 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m"><%= @form_object.record.disbursement_date&.to_fs(:long) || t('.disbursement_date_blank') %></caption>
+      <caption class="govuk-table__caption govuk-table__caption--m"><%= check_missing(@form_object.record.disbursement_date) { @form_object.record.disbursement_date.to_fs(:long) } %></caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.type') %></th>
@@ -17,9 +17,19 @@
       </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell"><%= t("helpers.label.steps_disbursement_type_form.disbursement_type_options.#{@form_object.record.disbursement_type || 'missing'}") %></td>
-          <td class="govuk-table__cell"><%= number_to_currency(@form_object.record.total_cost, unit: '£') %></td>
-          <td class="govuk-table__cell"><%= @form_object.record.details  %></td>
+          <td class="govuk-table__cell">
+            <% if @form_object.record.disbursement_type == DisbursementTypes::OTHER.to_s %>
+              <% if OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(@form_object.record.other_type)) %>
+                <%= t("helpers.other_disbursement_type.#{@form_object.record.other_type}") %>
+              <% else %>
+                <%= check_missing(@form_object.record.other_type)  %>
+              <% end %>
+            <% else %>
+              <%= check_missing(@form_object.record.disbursement_type) { t("helpers.label.steps_disbursement_type_form.disbursement_type_options.#{@form_object.record.disbursement_type}") } %>
+            <% end %>
+          </td>
+          <td class="govuk-table__cell"><%= check_missing(@form_object.record.total_cost) { NumberTo.pounds(@form_object.record.total_cost) } %></td>
+          <td class="govuk-table__cell"><%= check_missing(@form_object.record.details)  %></td>
         </tr>
       </tbody>
     </table>
@@ -27,7 +37,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.submit_button('delete_it') do %>
         <%= f.hidden_field :id %>
-        <%= link_to 'Cancel', edit_steps_work_items_path(@form_object.application), class: 'govuk-button__secondary' %>
+        <%= link_to 'Cancel', edit_steps_disbursements_path(@form_object.application), class: 'govuk-button__secondary' %>
       <% end %>
     <% end %>
   </div>

@@ -4,14 +4,15 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-thirds">
     <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.work_items.count) %></h1>
+    <%= render(SummaryErrorComponent.new(records: @form_object.application.work_items, form: Steps::WorkItemForm)) %>
     <%= govuk_error_summary(@form_object) %>
 
     <% @work_items_by_date.each do |date, work_items| %>
       <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m"><%= date&.to_fs(:long) || t('.completed_date_blank') %></caption>
+        <caption class="govuk-table__caption govuk-table__caption--m"><%= check_missing(date) { date.to_fs(:long) } %></caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.work_type') %></th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.work_type') %></th>
             <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.period') %></th>
             <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.fee_earner') %></th>
             <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.actions') %></th>
@@ -20,10 +21,10 @@
         <tbody class="govuk-table__body">
           <% work_items.each do |work_item| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= t("helpers.label.steps_work_item_form.work_type_options.#{work_item.work_type || 'missing'}") %></td>
-              <td class="govuk-table__cell"><%= format_period(work_item.time_spent)  %></td>
-              <td class="govuk-table__cell"><%= work_item.fee_earner %></td>
-              <td class="govuk-table__cell">
+              <td class="govuk-table__cell"><%= check_missing(work_item.work_type) { t("helpers.label.steps_work_item_form.work_type_options.#{work_item.work_type}") } %></td>
+              <td class="govuk-table__cell"><%= check_missing(format_period(work_item.time_spent))  %></td>
+              <td class="govuk-table__cell"><%= check_missing(work_item.fee_earner) %></td>
+              <td class="govuk-table__cell govuk-table__nowrap">
                 <%= link_to t('.change'), edit_steps_work_item_path(@form_object.application, work_item_id: work_item.id) %>
                 <%= link_to t('.duplicate'), duplicate_steps_work_item_path(@form_object.application, work_item_id: work_item.id) %>
                 <%= link_to t('.delete'), edit_steps_work_item_delete_path(@form_object.application, work_item_id: work_item.id) %>

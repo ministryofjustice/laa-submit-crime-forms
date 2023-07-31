@@ -19,7 +19,6 @@ en:
       apply_in_eforms: Apply in eForms
       update_calculation: Update the calculation
     time_period: &period
-      missing: '*required'
       hours:
         one: '%{count} Hr '
         other: '%{count} Hrs '
