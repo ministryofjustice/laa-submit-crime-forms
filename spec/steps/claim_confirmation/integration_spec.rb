@@ -24,7 +24,7 @@ RSpec.describe 'User can see an application status', type: :system do
   it 'can start a new claim when clicking on start a new claim button' do
     expect { click_on 'Start a new claim' }.to change(Claim, :count).by(1)
     new_claim = Claim.order(:created_at).last
-    expect(page).to have_content('What you are claiming for')
+    expect(page).to have_content('What are you claiming for')
     expect(new_claim).to have_attributes(
       status: 'pending',
     )
