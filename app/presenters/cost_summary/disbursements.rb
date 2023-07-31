@@ -1,5 +1,6 @@
 module CostSummary
   class Disbursements < Base
+    TRANSLATION_KEY = self
     attr_reader :disbursement_forms, :claim
 
     def initialize(disbursements, claim)

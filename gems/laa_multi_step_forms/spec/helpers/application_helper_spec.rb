@@ -29,8 +29,7 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
 
   describe '#fallback_title' do
     before do
-      allow(helper).to receive(:controller_name).and_return('my_controller')
-      allow(helper).to receive(:action_name).and_return('an_action')
+      allow(helper).to receive_messages(controller_name: 'my_controller', action_name: 'an_action')
 
       # So we can simulate what would happen on production
       allow(
@@ -68,6 +67,31 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
     context 'when ENV is not set' do
       it 'returns based with local' do
         expect(helper.app_environment).to eq('app-environment-local')
+      end
+    end
+  end
+
+  describe '#check_missing' do
+    context 'when value is false' do
+      it 'renders the missing tag' do
+        expect(helper.check_missing(false)).to eq('<strong class="govuk-tag govuk-tag--red">Incomplete</strong>')
+      end
+    end
+
+    context 'when value is truthy' do
+      context 'and no block is passed in' do
+        it 'renders the value' do
+          expect(helper.check_missing('apples')).to eq('apples')
+        end
+      end
+
+      context 'and ablock is passed in' do
+        it 'renders block' do
+          response = helper.check_missing('apples') do
+            'pears'
+          end
+          expect(response).to eq('pears')
+        end
       end
     end
   end

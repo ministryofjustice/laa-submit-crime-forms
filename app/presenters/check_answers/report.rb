@@ -11,7 +11,8 @@ module CheckAnswers
         section_group('about_you', about_you_section),
         section_group('about_defendant', about_defendant_section),
         section_group('about_case', about_case_section),
-        section_group('about_claim', about_claim_section)
+        section_group('about_claim', about_claim_section),
+        section_group('supporting_evidence', supporting_evidence_section)
       ]
     end
 
@@ -27,7 +28,7 @@ module CheckAnswers
         {
           card: {
             title: data.title,
-            actions: actions(data.route_path)
+            actions: actions(data.section)
           },
           rows: [*data.rows]
         }
@@ -61,6 +62,12 @@ module CheckAnswers
       ]
     end
 
+    def supporting_evidence_section
+      [
+        EvidenceUploadsCard.new(claim)
+      ]
+    end
+
     private
 
     def actions(key)
@@ -73,8 +80,8 @@ module CheckAnswers
       ]
     end
 
-    def group_heading(group_key, **opt)
-      I18n.t("steps.check_answers.groups.#{group_key}.heading", **opt)
+    def group_heading(group_key, **)
+      I18n.t("steps.check_answers.groups.#{group_key}.heading", **)
     end
   end
 end

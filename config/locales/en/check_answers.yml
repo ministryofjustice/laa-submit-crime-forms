@@ -33,16 +33,50 @@ en:
             in_area: Magistrates court in designated area
             hearing_outcome: Hearing outcome
             matter_type: Matter type
+          reason_for_claim:
+            reasons_for_claim: Why are you claiming a non-standard magistrate fee?
+          claim_details:
+            prosecution_evidence: Number of pages of prosecution evidence
+            defence_statement: Number of pages of defence statements
+            number_of_witnesses: Number of witnesses
+            supplemental_claim: Supplemental claim
+            preparation_time: Taped evidence
+            work_before: Work before order was granted
+            work_after: Work after last hearing
+          letters_calls:
+            items: Items
+            items_total: <strong>Total per item</strong>
+            letters: Number of letters
+            letters_uplift: Letters uplift applied
+            letters_payment: Letters payment
+            calls: Number of calls
+            calls_uplift: Calls uplift applied
+            calls_payment: Calls payment
+            uplift_value: "%{value}%"
+            currency_value: "£%{value}"
+            total: Total
+          work_items:
+            items: Items
+            items_total: <strong>Total per item</strong>
+            attendance_without_counsel: Attendance without counsel
+            preparation: Preparation  
+            advocacy: Advocacy
+            travel: Travel
+            waiting: Waiting
+          other_info:
+            other_info: Other relevant information
           case_disposal:
             guilty_pleas: Category 1
             not_guilty_pleas: Category 2
             arrest_warrent_date: Date of warrant issued
             cracked_trial_date: Date guilty plea indicated to solicitor
+          supporting_evidence:
+            supporting_evidence: Evidence %{count}
       groups:
         about_you: 
           heading: About you
           firm_details: 
-            title: Your Details
+            title: Your details
         about_defendant: 
           heading: About the defendant
           defendant_summary:
@@ -50,11 +84,11 @@ en:
         about_case:
           heading: About the case
           case_details:
-            title: Case Details
+            title: Case details
           hearing_details: 
-            title: Hearing Details
+            title: Hearing details
           case_disposal:
-            title: Case Disposal
+            title: Case disposal
         about_claim:
           heading: About the claim
           reason_for_claim:
@@ -62,7 +96,7 @@ en:
           claim_details: 
             title: Claim details
           work_items:
-            title: Work Items
+            title: Work items
           letters_calls: 
             title: Letters and phone calls
           disbursements:
@@ -71,6 +105,6 @@ en:
             title: Other relevant information
         supporting_evidence:
           heading:  Supporting evidence
-          evidence_upload:
+          supporting_evidence:
             title: Upload supporting evidence
   
