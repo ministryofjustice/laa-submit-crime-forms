@@ -19,7 +19,7 @@ module CheckAnswers
         },
         {
           head_key: 'letters',
-          text: letters_calls_form.letters
+          text: letters
         },
         {
           head_key: 'letters_uplift',
@@ -31,7 +31,7 @@ module CheckAnswers
         },
         {
           head_key: 'calls',
-          text: letters_calls_form.calls
+          text: calls
         },
         {
           head_key: 'calls_uplift',
@@ -64,6 +64,14 @@ module CheckAnswers
     def total_cost
       text = "<strong>#{currency_value(letters_calls_form.total_cost)}</strong>"
       ApplicationController.helpers.sanitize(text, tags: %w[strong])
+    end
+
+    def letters
+      letters_calls_form.letters || 0
+    end
+
+    def calls
+      letters_calls_form.calls || 0
     end
   end
 end
