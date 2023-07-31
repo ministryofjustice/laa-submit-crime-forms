@@ -9,6 +9,6 @@ class SummaryErrorComponent < ViewComponent::Base
   end
 
   def render?
-    ! forms.all?(&:valid?)
+    !forms.all?(&:valid?)
   end
 end

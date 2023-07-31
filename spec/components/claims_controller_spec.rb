@@ -19,6 +19,7 @@ RSpec.describe SummaryErrorComponent, type: :component do
   context 'when any records are valid' do
     let(:valid) { false }
 
+    # rubocop:disable RSpec/ExampleLength
     it 'renders the warning banner' do
       render_inline(component)
 
@@ -43,5 +44,6 @@ RSpec.describe SummaryErrorComponent, type: :component do
 
       expect(rendered_content).to eq(expected_content)
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 end
