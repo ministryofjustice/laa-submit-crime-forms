@@ -49,9 +49,9 @@
           <% @additional_defendants.each do |defendant| %>
 
             <tr class="govuk-table__row">
-                <td class="govuk-table__cell"><%= defendant.full_name %></td>
+                <td class="govuk-table__cell"><%= check_missing(defendant.full_name) %></td>
                 <% if maat_required?(@form_object) %>
-                  <td class="govuk-table__cell"><%= defendant.maat %></td>
+                  <td class="govuk-table__cell"><%= check_missing(defendant.maat) %></td>
                 <% end %>
                 <td class="govuk-table__cell">
                   <%= link_to t('.change'), edit_steps_defendant_details_path(@form_object.application, defendant_id: defendant.id) %>

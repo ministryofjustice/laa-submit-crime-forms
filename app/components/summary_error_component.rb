@@ -5,7 +5,7 @@ class SummaryErrorComponent < ViewComponent::Base
   end
 
   def render?
-    ! valid?
+    !valid?
   end
 
   private
