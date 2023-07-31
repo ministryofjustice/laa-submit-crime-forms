@@ -17,7 +17,7 @@ module CheckAnswers
     end
 
     def row_data
-      {}
+      []
     end
 
     # rubocop:disable Metrics/MethodLength

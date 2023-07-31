@@ -33,6 +33,8 @@ en:
             in_area: Magistrates court in designated area
             hearing_outcome: Hearing outcome
             matter_type: Matter type
+          reason_for_claim:
+            reasons_for_claim: Why are you claiming a non-standard magistrate fee?
           claim_details:
             prosecution_evidence: Number of pages of prosecution evidence
             defence_statement: Number of pages of defence statements
@@ -68,6 +70,8 @@ en:
             not_guilty_pleas: Category 2
             arrest_warrent_date: Date of warrant issued
             cracked_trial_date: Date guilty plea indicated to solicitor
+          supporting_evidence:
+            supporting_evidence: Evidence %{count}
       groups:
         about_you: 
           heading: About you
@@ -101,6 +105,6 @@ en:
             title: Other relevant information
         supporting_evidence:
           heading:  Supporting evidence
-          evidence_upload:
+          supporting_evidence:
             title: Upload supporting evidence
   
