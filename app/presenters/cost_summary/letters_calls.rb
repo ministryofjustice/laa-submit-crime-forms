@@ -1,5 +1,6 @@
 module CostSummary
   class LettersCalls < Base
+    TRANSLATION_KEY = self
     attr_reader :letters_calls_form
 
     def initialize(claim)

@@ -6,7 +6,7 @@ module CostSummary
       if key[0] == ('.')
         I18n.t("summary.#{key}", **)
       else
-        I18n.t("summary.#{self.class.to_s.underscore}.#{key}", **)
+        I18n.t("summary.#{self.class::TRANSLATION_KEY.to_s.underscore}.#{key}", **)
       end
     end
   end

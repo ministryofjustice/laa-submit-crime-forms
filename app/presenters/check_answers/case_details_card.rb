@@ -11,7 +11,7 @@ module CheckAnswers
     end
 
     # TO DO: update remittal to include date of remittal when CRM457-172 is done
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def row_data
       [
         {
@@ -24,22 +24,22 @@ module CheckAnswers
         },
         {
           head_key: 'assigned_counsel',
-          text: capitalize_sym(case_details_form.assigned_counsel)
+          text: ApplicationController.helpers.capitalize_sym(case_details_form.assigned_counsel)
         },
         {
           head_key: 'unassigned_counsel',
-          text: capitalize_sym(case_details_form.unassigned_counsel)
+          text: ApplicationController.helpers.capitalize_sym(case_details_form.unassigned_counsel)
         },
         {
           head_key: 'agent_instructed',
-          text: capitalize_sym(case_details_form.agent_instructed)
+          text: ApplicationController.helpers.capitalize_sym(case_details_form.agent_instructed)
         },
         {
           head_key: 'remitted_to_magistrate',
-          text: capitalize_sym(case_details_form.remitted_to_magistrate)
+          text: ApplicationController.helpers.capitalize_sym(case_details_form.remitted_to_magistrate)
         },
       ]
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   end
 end
