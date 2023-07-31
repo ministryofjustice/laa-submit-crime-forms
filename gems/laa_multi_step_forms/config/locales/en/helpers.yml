@@ -26,3 +26,4 @@ en:
       minutes:
         one: '%{count} Min'
         other: '%{count} Mins'
+    missing_data: Incomplete
