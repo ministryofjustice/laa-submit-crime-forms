@@ -2,12 +2,12 @@ module CheckAnswers
   class Base
     attr_accessor :group, :section
 
-    def translate_table_key(table, key, **opt)
-      I18n.t("steps.check_answers.show.sections.#{table}.#{key}", **opt)
+    def translate_table_key(table, key, **)
+      I18n.t("steps.check_answers.show.sections.#{table}.#{key}", **)
     end
 
-    def title(**opt)
-      I18n.t("steps.check_answers.groups.#{group}.#{section}.title", **opt)
+    def title(**)
+      I18n.t("steps.check_answers.groups.#{group}.#{section}.title", **)
     end
 
     def rows
