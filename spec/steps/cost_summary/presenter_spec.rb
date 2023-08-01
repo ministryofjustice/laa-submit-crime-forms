@@ -10,11 +10,13 @@ RSpec.describe Tasks::CostSummary, type: :system do
       office_code: 'AAA',
       navigation_stack: navigation_stack,
       disbursements: disbursements,
+      has_disbursements: has_disbursements
     }
   end
   let(:id) { SecureRandom.uuid }
   let(:navigation_stack) { [] }
   let(:disbursements) { [] }
+  let(:has_disbursements) { nil }
 
   describe '#path' do
     it { expect(subject.path).to eq("/applications/#{id}/steps/cost_summary") }
@@ -25,24 +27,20 @@ RSpec.describe Tasks::CostSummary, type: :system do
   end
 
   describe '#can_start?' do
-    context 'when disbursement_add page has not been visited' do
+    context 'when has_disbursements is no' do
+      let(:has_disbursements) { 'no' }
+
+      it { expect(subject).to be_can_start }
+    end
+
+    context 'when has_disbursements is nil' do
       it { expect(subject).not_to be_can_start }
     end
 
-    context 'when disbursement_add page has been visited' do
-      before do
-        navigation_stack << edit_steps_disbursement_add_path(application)
-      end
+    context 'when has_disbursements is yes' do
+      let(:has_disbursements) { 'yes' }
 
-      context 'when no disbursements exist' do
-        it { expect(subject).to be_can_start }
-      end
-
-      context 'when disbursements exist' do
-        let(:disbursements) { [build(:disbursement, :valid)] }
-
-        it_behaves_like 'a task with generic can_start?', Tasks::Disbursements
-      end
+      it_behaves_like 'a task with generic can_start?', Tasks::Disbursements
     end
   end
 
