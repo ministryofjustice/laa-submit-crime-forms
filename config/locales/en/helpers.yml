@@ -170,7 +170,7 @@ en:
           not_guilty: Not guilty plea
           cracked_trial: Cracked trial
           contested: Contested breach
-          discontinuance: Discontinuance or withdrawal or bind over or no evidence offered after case fully prepared
+          discontinuance: Discontinuance or withdrawal
           mixed: Mixed plea
       steps_hearing_details_form:
         number_of_hearing: How many hearings were held for this case?
