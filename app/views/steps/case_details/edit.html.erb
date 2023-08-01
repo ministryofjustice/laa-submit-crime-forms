@@ -15,7 +15,7 @@
         <%= f.govuk_radio_buttons_fieldset field, legend: { size: 's' } do %>
           <%= f.govuk_radio_button field, YesNoAnswer::YES.to_s do %>
            <% if field == :remitted_to_magistrate %>
-              <%= f.govuk_date_field "#{field}_date", width: 'one-third' %>
+              <%= f.govuk_date_field "#{field}_date", width: 'one-third', legend: { size: 's', class: 'govuk-date-legend-non-bold' } %>
             <% end %>
           <% end %>
           <%= f.govuk_radio_button field, YesNoAnswer::NO.to_s %>

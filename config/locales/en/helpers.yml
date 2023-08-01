@@ -46,6 +46,7 @@ en:
       steps_other_info_form:
         concluded: Did the proceedings conclude over 3 months ago?
       steps_work_item_form:
+        time_spent: Time spent
         work_type: Type of work
         completed_on: Completion date
       steps_disbursement_type_form:
@@ -78,7 +79,7 @@ en:
           'yes': We'll ask you to upload your CRM8 form before you submit this claim
         main_offence_date: For example, 27 3 2007
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
-      remitted_to_magistrate_date: For example, 27 3 2007
+        remitted_to_magistrate_date: For example, 27 3 2007
       steps_case_disposal_form:
         arrest_warrent_date: For example, 27 3 2007
         cracked_trial_date: For example, 27 3 2007
@@ -170,7 +171,7 @@ en:
           not_guilty: Not guilty plea
           cracked_trial: Cracked trial
           contested: Contested breach
-          discontinuance: Discontinuance or withdrawal or bind over or no evidence offered after case fully prepared
+          discontinuance: Discontinuance or withdrawal
           mixed: Mixed plea
       steps_hearing_details_form:
         number_of_hearing: How many hearings were held for this case?
