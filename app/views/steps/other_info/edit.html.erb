@@ -8,7 +8,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_area :other_info  %>
       <% @form_object.boolean_fields.each do |field| %>
-        <%= f.govuk_radio_buttons_fieldset field, legend: { size: 'm' } do %>
+        <%= f.govuk_radio_buttons_fieldset field, legend: { size: 's' } do %>
           <%= f.govuk_radio_button field, YesNoAnswer::YES.to_s do%>
             <% if field == :concluded %>
               <%= f.govuk_text_area :conclusion %>

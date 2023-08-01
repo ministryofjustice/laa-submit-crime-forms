@@ -6,15 +6,15 @@
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :work_type do %>
+      <%= f.govuk_radio_buttons_fieldset :work_type, legend: { size: 's' } do %>
         <% @form_object.work_types_with_pricing.each do |work_type, price| %>
           <%= f.govuk_radio_button :work_type, work_type, hint: { text: t('.work_type_pricing', price: number_to_currency(price, unit: '£')) }, data: { rate_per_hour: price } %>
         <% end %>
       <% end %>
 
-      <%= f.govuk_period_field :time_spent, width: 'one-third' %>
+      <%= f.govuk_period_field :time_spent, width: 'one-third', legend: { size: 's' } %>
       <%= f.govuk_date_field :completed_on, maxlength_enabled: true, legend: { size: 's' } %>
-      <%= f.govuk_text_field :fee_earner, width: 3 %>
+      <%= f.govuk_text_field :fee_earner, width: 3, label: { size: 's' } %>
 
       <% if @form_object.allow_uplift? %>
         <%= f.govuk_check_boxes_fieldset :apply_uplift, multiple: false, legend: nil do %>

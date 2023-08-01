@@ -46,6 +46,7 @@ en:
       steps_other_info_form:
         concluded: Did the proceedings conclude over 3 months ago?
       steps_work_item_form:
+        time_spent: Time spent
         work_type: Type of work
         completed_on: Completion date
       steps_disbursement_type_form:

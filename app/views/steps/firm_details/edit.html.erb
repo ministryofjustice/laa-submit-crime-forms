@@ -8,20 +8,20 @@
     <%= step_form @form_object do |f| %>
       <%= f.fields_for :firm_office, as: :firm_details_form do |fo| %>
         <%= f.govuk_fieldset legend: { text: t(".firm_details"), size: 'm', is_page_heading: true } do %>
-          <%= fo.govuk_text_field :name, width: 20 %>
-          <%= fo.govuk_text_field :account_number, width: 20 %>
-          <%= fo.govuk_text_field :address_line_1, width: 20 %>
-          <%= fo.govuk_text_field :address_line_2, width: 20 %>
-          <%= fo.govuk_text_field :town, width: 10 %>
-          <%= fo.govuk_text_field :postcode, width: 10 %>
+          <%= fo.govuk_text_field :name, width: 20, label: { size: 's' } %>
+          <%= fo.govuk_text_field :account_number, width: 20, label: { size: 's' } %>
+          <%= fo.govuk_text_field :address_line_1, width: 20, label: { size: 's' } %>
+          <%= fo.govuk_text_field :address_line_2, width: 20, label: { size: 's' } %>
+          <%= fo.govuk_text_field :town, width: 10, label: { size: 's' } %>
+          <%= fo.govuk_text_field :postcode, width: 10, label: { size: 's' } %>
         <% end %>
       <% end %>
 
       <%= f.fields_for :solicitor, as: :firm_details_form do |so| %>
         <%# used govuk_radio_buttons_fieldset instead of govuk_fieldset as it allows hints to be rendered %>
         <%= f.govuk_radio_buttons_fieldset :solicitor_details, legend: { size: 'm', is_page_heading: true } do %>
-          <%= so.govuk_text_field :full_name, width: 20 %>
-          <%= so.govuk_text_field :reference_number, width: 10 %>
+          <%= so.govuk_text_field :full_name, width: 20, label: { size: 's' } %>
+          <%= so.govuk_text_field :reference_number, width: 10, label: { size: 's' } %>
         <% end %>
 
         <%= so.govuk_radio_buttons_fieldset :alternative_contact_details, legend: { size: 'm' } do %>
