@@ -3,12 +3,13 @@ module Tasks
     PREVIOUS_TASK = Disbursements
 
     def can_start?
-      return false unless application.navigation_stack.include?(edit_steps_disbursement_add_path)
-
-      if application.disbursements.none?
+      case application.has_disbursements
+      when YesNoAnswer::NO.to_s
         true
-      else
+      when YesNoAnswer::YES.to_s
         super
+      else
+        false
       end
     end
 

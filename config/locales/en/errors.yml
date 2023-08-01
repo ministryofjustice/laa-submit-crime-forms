@@ -47,6 +47,7 @@ en:
           attributes:
             ufn:
               blank: "Enter a unique file number"
+              invalid: UFN must be a 9-digit number
             claim_type:
               inclusion: Please select what you are claiming for
             rep_order_date: *shared_date_errors

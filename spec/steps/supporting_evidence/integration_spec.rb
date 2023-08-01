@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'User can provide supporting evidence', javascript: true, type: :system do
+RSpec.describe 'User can provide supporting evidence', type: :system do
   let(:claim) { create(:claim, :complete) }
 
   it 'does not show the mail address' do
