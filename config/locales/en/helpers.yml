@@ -78,7 +78,7 @@ en:
           'yes': We'll ask you to upload your CRM8 form before you submit this claim
         main_offence_date: For example, 27 3 2007
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
-      remitted_to_magistrate_date: For example, 27 3 2007
+        remitted_to_magistrate_date: For example, 27 3 2007
       steps_case_disposal_form:
         arrest_warrent_date: For example, 27 3 2007
         cracked_trial_date: For example, 27 3 2007
