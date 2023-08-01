@@ -49,7 +49,7 @@ module Decisions
       .goto(edit: 'steps/disbursement_cost', disbursement_id: ->(inst) { inst.id })
       .goto(edit: 'steps/disbursements')
     from(:disbursement_add)
-      .when(-> { add_another.yes? })
+      .when(-> { has_disbursements.yes? })
       .goto(edit: 'steps/disbursement_type', disbursement_id: StartPage::NEW_RECORD)
       .goto(show: 'steps/cost_summary')
     from(:disbursement_type)

@@ -21,7 +21,9 @@ module Tasks
 
     # TODO: is it possible to NOT have disbursements? do we need to flag this?
     def completed?
-      application.disbursements.all? do |record|
+      return true if application.has_disbursements == YesNoAnswer::NO.to_s
+
+      application.disbursements.any? && application.disbursements.all? do |record|
         FORMS.all? { |form| super(record, form) }
       end
     end

@@ -1,13 +1,13 @@
 module Steps
   class DisbursementAddController < Steps::BaseStepController
     def edit
-      @form_object = AddAnotherForm.build(
+      @form_object = DisbursementAddForm.build(
         current_application
       )
     end
 
     def update
-      update_and_advance(AddAnotherForm, as: :disbursement_add)
+      update_and_advance(DisbursementAddForm, as: :disbursement_add)
     end
 
     private

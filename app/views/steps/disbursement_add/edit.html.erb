@@ -7,9 +7,9 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :add_another, legend: nil do %>
-        <%= f.govuk_radio_button :add_another, YesNoAnswer::YES.to_s %>
-        <%= f.govuk_radio_button :add_another, YesNoAnswer::NO.to_s %>
+      <%= f.govuk_radio_buttons_fieldset :has_disbursements, legend: nil do %>
+      <%= f.govuk_radio_button :has_disbursements, YesNoAnswer::YES.to_s %>
+        <%= f.govuk_radio_button :has_disbursements, YesNoAnswer::NO.to_s %>
       <% end%>
 
       <%= f.continue_button %>
