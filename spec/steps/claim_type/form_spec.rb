@@ -15,9 +15,9 @@ RSpec.describe Steps::ClaimTypeForm do
   end
 
   let(:application) { instance_double(Claim) }
-  let(:ufn) { nil }
-  let(:claim_type) { nil }
-  let(:rep_order_date) { nil }
+  let(:ufn) { '230801/001' }
+  let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
+  let(:rep_order_date) { Date.new(2023, 4, 1) }
   let(:cntp_date) { nil }
   let(:cntp_order) { nil }
 
@@ -27,6 +27,16 @@ RSpec.describe Steps::ClaimTypeForm do
 
       it 'has is a validation error on the field' do
         expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:ufn, :blank)).to be(true)
+      end
+    end
+
+    context 'when `ufn` is incorrect fomrat' do
+      let(:ufn) { '111' }
+
+      it 'has is a validation error on the field' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:ufn, :invalid)).to be(true)
       end
     end
 
@@ -49,12 +59,11 @@ RSpec.describe Steps::ClaimTypeForm do
     end
 
     context 'when non-standard magistrate claim_type' do
-      let(:ufn) { 'UFN123' }
       let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
 
       context 'with a rep order date' do
         let(:rep_order_date) { Date.new(2023, 4, 1) }
-        let(:cntp_datee) { Date.new(2023, 4, 1) }
+        let(:cntp_datee) { Date.new(2022, 10, 1) }
         let(:cntp_order) { 'AAAA' }
 
         it { is_expected.to be_valid }
@@ -70,6 +79,8 @@ RSpec.describe Steps::ClaimTypeForm do
       end
 
       context 'without a rep order date' do
+        let(:rep_order_date) { nil }
+
         it 'is invalid' do
           expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:rep_order_date, :blank)).to be(true)
@@ -78,12 +89,11 @@ RSpec.describe Steps::ClaimTypeForm do
     end
 
     context 'when breach of injunction claim type' do
-      let(:ufn) { 'UFN123' }
       let(:claim_type) { ClaimType::BREACH_OF_INJUNCTION.to_s }
 
       context 'with a CNTP fields being set' do
         let(:rep_order_date) { Date.new(2023, 4, 1) }
-        let(:cntp_date) { Date.new(2023, 4, 1) }
+        let(:cntp_date) { Date.new(2022, 10, 1) }
         let(:cntp_order) { 'AAAA' }
 
         it 'is valid' do
