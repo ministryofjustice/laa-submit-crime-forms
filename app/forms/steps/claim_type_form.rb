@@ -9,7 +9,7 @@ module Steps
     attribute :cntp_order, :string
     attribute :cntp_date, :multiparam_date
 
-    validates :ufn, presence: true
+    validates :ufn, presence: true, format: { with: %r{\A\d{6}/\d{3}\z} }
     validates_inclusion_of :claim_type, in: :choices
     validates :rep_order_date, presence: true,
             multiparam_date: { allow_past: true, allow_future: false },
