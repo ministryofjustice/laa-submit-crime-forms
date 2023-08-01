@@ -10,12 +10,14 @@ RSpec.describe Tasks::Disbursements, type: :system do
       office_code: 'AAA',
       disbursements: disbursements,
       navigation_stack: navigation_stack,
+      has_disbursements: has_disbursements
     }
   end
   let(:id) { SecureRandom.uuid }
   let(:disbursements) { [disbursement] }
   let(:disbursement) { Disbursement.new(id: SecureRandom.uuid) }
   let(:navigation_stack) { [] }
+  let(:has_disbursements) { nil }
 
   describe '#path' do
     # This is calling the DecisionTree code so not full tested all options here
@@ -51,40 +53,50 @@ RSpec.describe Tasks::Disbursements, type: :system do
   end
 
   describe '#completed?' do
-    context 'when no disbursements exist' do
-      let(:disbursements) { [] }
+    context 'when has_disbursements is no' do
+      let(:has_disbursements) { 'no' }
 
       it { expect(subject).to be_completed }
     end
 
-    context 'when disbursement_type exist' do
-      let(:disbursement_type_form) { double(:disbursement_type_form, valid?: types_valid) }
-      let(:disbursement_cost_form) { double(:disbursement_type_form, valid?: costs_valid) }
+    context 'when has_disbursements is not no (yes or nil)' do
+      let(:has_disbursements) { 'yes' }
 
-      before do
-        allow(Steps::DisbursementTypeForm).to receive(:build).and_return(disbursement_type_form)
-        allow(Steps::DisbursementCostForm).to receive(:build).and_return(disbursement_cost_form)
-      end
-
-      context 'when types are not valid' do
-        let(:types_valid) { false }
-        let(:costs_valid) { true }
+      context 'when no disbursements exist' do
+        let(:disbursements) { [] }
 
         it { expect(subject).not_to be_completed }
       end
 
-      context 'when costs are not valid' do
-        let(:types_valid) { false }
-        let(:costs_valid) { false }
+      context 'when disbursement_type exist' do
+        let(:disbursement_type_form) { double(:disbursement_type_form, valid?: types_valid) }
+        let(:disbursement_cost_form) { double(:disbursement_type_form, valid?: costs_valid) }
 
-        it { expect(subject).not_to be_completed }
-      end
+        before do
+          allow(Steps::DisbursementTypeForm).to receive(:build).and_return(disbursement_type_form)
+          allow(Steps::DisbursementCostForm).to receive(:build).and_return(disbursement_cost_form)
+        end
 
-      context 'when they are all valid' do
-        let(:types_valid) { true }
-        let(:costs_valid) { true }
+        context 'when types are not valid' do
+          let(:types_valid) { false }
+          let(:costs_valid) { true }
 
-        it { expect(subject).to be_completed }
+          it { expect(subject).not_to be_completed }
+        end
+
+        context 'when costs are not valid' do
+          let(:types_valid) { false }
+          let(:costs_valid) { false }
+
+          it { expect(subject).not_to be_completed }
+        end
+
+        context 'when they are all valid' do
+          let(:types_valid) { true }
+          let(:costs_valid) { true }
+
+          it { expect(subject).to be_completed }
+        end
       end
     end
   end
