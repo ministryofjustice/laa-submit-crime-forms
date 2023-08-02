@@ -155,6 +155,17 @@ RSpec.describe Steps::DisbursementCostForm do
     end
   end
 
+  describe '#vat' do
+    context 'when there is not a pre-vat cost' do
+      let(:disbursement_type) { DisbursementTypes::OTHER.to_s }
+      let(:total_cost_without_vat) { nil }
+
+      it 'returns a nil total cost' do
+        expect(subject.send(:vat)).to be_nil
+      end
+    end
+  end
+
   describe 'save!' do
     let(:application) { Claim.create!(office_code: 'AAA') }
     let(:record) { Disbursement.create!(disbursement_type: disbursement_type, claim: application) }
