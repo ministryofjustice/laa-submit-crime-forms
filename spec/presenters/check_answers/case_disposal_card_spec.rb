@@ -6,10 +6,10 @@ RSpec.describe CheckAnswers::CaseDisposalCard do
   let(:claim) { instance_double(Claim) }
 
   let(:form) do
-    instance_double(Steps::CaseDisposalForm, plea:, arrest_warrent_date:, cracked_trial_date:)
+    instance_double(Steps::CaseDisposalForm, plea:, arrest_warrant_date:, cracked_trial_date:)
   end
 
-  let(:arrest_warrent_date) { nil }
+  let(:arrest_warrant_date) { nil }
   let(:cracked_trial_date) { nil }
   let(:plea) { nil }
 
@@ -31,18 +31,18 @@ RSpec.describe CheckAnswers::CaseDisposalCard do
   end
 
   context 'when plea is guilty' do
-    let(:arrest_warrent_date) { Date.new(2023, 3, 1) }
-    let(:plea) { PleaOptions::ARREST_WARRENT }
+    let(:arrest_warrant_date) { Date.new(2023, 3, 1) }
+    let(:plea) { PleaOptions::ARREST_WARRANT }
 
     it 'returns the correct row_data' do
       expect(subject.row_data).to eq(
         [
           {
             head_key: :guilty_pleas,
-            text: 'Warrent of arrest'
+            text: 'Warrant of arrest'
           },
           {
-            head_key: 'arrest_warrent_date',
+            head_key: 'arrest_warrant_date',
             text: '01 March 2023'
           }
         ]
@@ -72,7 +72,7 @@ RSpec.describe CheckAnswers::CaseDisposalCard do
 
   describe '#find_key_by_value' do
     it 'returns the correct key for a valid value' do
-      key = subject.find_key_by_value('arrest_warrent')
+      key = subject.find_key_by_value('arrest_warrant')
       expect(key).to eq(:guilty_pleas)
     end
 

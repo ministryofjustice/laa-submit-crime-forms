@@ -12,7 +12,8 @@ module Steps
       validates :reference_number, presence: true
 
       validates :contact_full_name, presence: true, if: ->(form) { form.alternative_contact_details? }
-      validates :contact_email, presence: true, if: ->(form) { form.alternative_contact_details? }
+      validates :contact_email, presence: true, format: { with: /\A.*@.*\..*\z/ },
+                                                if: ->(form) { form.alternative_contact_details? }
 
       def alternative_contact_details
         return @alternative_contact_details unless @alternative_contact_details.nil?

@@ -6,7 +6,7 @@ class PleaOptions < ValueObject
     BIND_OVER = new(:bind_over),
     DEFERRED_SENTENCE = new(:deferred_sentence),
     CHANGE_SOLICITOR = new(:change_solicitor),
-    ARREST_WARRENT = new(:arrest_warrent),
+    ARREST_WARRANT = new(:arrest_warrant),
   ].freeze
 
   NOT_GUILTY_OPTIONS = [
@@ -20,7 +20,7 @@ class PleaOptions < ValueObject
   VALUES = GUILTY_OPTIONS + NOT_GUILTY_OPTIONS
 
   HAS_DATE_FIELD = [
-    ARREST_WARRENT,
+    ARREST_WARRANT,
     CRACKED_TRIAL,
   ].freeze
 

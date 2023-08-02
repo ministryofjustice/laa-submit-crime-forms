@@ -26,11 +26,11 @@ module Steps
       [
         [translate(:before_vat), translate(:after_vat)],
         [{
-          text: NumberTo.pounds(total_cost),
+          text: NumberTo.pounds(total_cost_pre_vat),
           html_attributes: { id: 'total-without-vat' }
         },
          {
-           text: NumberTo.pounds(total_cost, vat),
+           text: NumberTo.pounds(total_cost),
            html_attributes: { id: 'total-with-vat' },
          }],
       ]
@@ -45,13 +45,23 @@ module Steps
       pricing[record.disbursement_type] || 1.0
     end
 
+    def total_cost_pre_vat
+      return @total_cost_pre_vat if defined?(@total_cost_pre_vat)
+
+      @total_cost_pre_vat = if other_disbursement_type?
+                              total_cost_without_vat
+                            elsif miles
+                              miles.to_f * multiplier
+                            end
+    end
+
     def total_cost
       return @total_cost if defined?(@total_cost)
 
-      @total_cost = if other_disbursement_type?
-                      total_cost_without_vat
-                    elsif miles
-                      miles.to_f * multiplier
+      @total_cost = if apply_vat && total_cost_pre_vat
+                      total_cost_pre_vat + vat
+                    else
+                      total_cost_pre_vat
                     end
     end
 
@@ -68,19 +78,19 @@ module Steps
     def attributes_with_resets
       attributes.merge(
         'miles' => other_disbursement_type? ? nil : miles,
-        'total_cost_without_vat' => total_cost,
+        'total_cost_without_vat' => total_cost_pre_vat,
         'vat_amount' => vat,
       )
     end
 
     def vat
-      return nil unless total_cost
+      return nil unless total_cost_pre_vat
 
-      apply_vat ? total_cost * vat_rate : 0.0
+      apply_vat ? total_cost_pre_vat * vat_rate : 0.0
     end
 
     def auth_required?
-      total_cost && total_cost >= 100
+      total_cost_pre_vat && total_cost_pre_vat >= 100
     end
 
     def pricing
