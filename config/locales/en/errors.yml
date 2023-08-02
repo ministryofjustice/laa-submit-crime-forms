@@ -113,7 +113,7 @@ en:
             plea:
               blank: Please select a case disposal
             cracked_trial_date: *shared_date_errors
-            arrest_warrent_date: *shared_date_errors
+            arrest_warrant_date: *shared_date_errors
         steps/hearing_details_form:
           attributes:
             first_hearing_date: *shared_date_errors

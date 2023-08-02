@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_31_151858) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_02_135602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,7 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_151858) do
     t.string "agent_instructed"
     t.string "remitted_to_magistrate"
     t.string "plea"
-    t.date "arrest_warrent_date"
+    t.date "arrest_warrant_date"
     t.date "cracked_trial_date"
     t.date "first_hearing_date"
     t.integer "number_of_hearing"

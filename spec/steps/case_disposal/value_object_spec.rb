@@ -15,7 +15,7 @@ RSpec.describe PleaOptions do
           bind_over
           deferred_sentence
           change_solicitor
-          arrest_warrent
+          arrest_warrant
           not_guilty
           cracked_trial
           contested
@@ -36,7 +36,7 @@ RSpec.describe PleaOptions do
           bind_over
           deferred_sentence
           change_solicitor
-          arrest_warrent
+          arrest_warrant
         ]
       )
     end
@@ -60,7 +60,7 @@ RSpec.describe PleaOptions do
     it 'returns date stampable values' do
       expect(described_class::HAS_DATE_FIELD.map(&:to_s)).to eq(
         %w[
-          arrest_warrent
+          arrest_warrant
           cracked_trial
         ]
       )

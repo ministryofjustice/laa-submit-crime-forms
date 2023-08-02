@@ -30,7 +30,7 @@ module CheckAnswers
         }
       ]
       add_date_object(row_data_array, 'cracked_trial_date', case_disposal_form.cracked_trial_date)
-      add_date_object(row_data_array, 'arrest_warrent_date', case_disposal_form.arrest_warrent_date)
+      add_date_object(row_data_array, 'arrest_warrant_date', case_disposal_form.arrest_warrant_date)
       row_data_array
     end
 
