@@ -116,11 +116,25 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
     needs: [gem-test, test]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+    # Assume role in Cloud Platform
+      - uses: aws-actions/configure-aws-credentials@v2
+        id: credentials
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
+
+      # Login to container repository
+      - uses: aws-actions/amazon-ecr-login@v1
+        id: login-ecr
 
       - name: Store current date
         run: echo "BUILD_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
@@ -136,16 +150,16 @@ jobs:
             --build-arg APP_GIT_COMMIT=${{ github.sha }} \
             --build-arg APP_BRANCH_NAME=${{ github.ref }} \
             -t app .
-
+      
+      # Build and push a Docker image to the container repository
       - name: Push to ECR
-        id: ecr
-        uses: jwalton/gh-ecr-push@b10a019116283fff10914554dfe85bfb1c21d41b
-        with:
-          access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID_DEV }}
-          secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY_DEV }}
-          region: eu-west-2
-          local-image: app
-          image: ${{ secrets.ECR_NAME_DEV }}:${{ github.sha }}, ${{ secrets.ECR_NAME_DEV }}:staging.latest
+        run: |
+          docker tag app $REGISTRY/$REPOSITORY:$IMAGE_TAG-latest
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG-latest
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ github.sha }}
 
   deploy-dev:
     runs-on: ubuntu-latest
@@ -176,7 +190,7 @@ jobs:
               --namespace=${{ secrets.KUBE_NAMESPACE_DEV}} \
               --values ./helm_deploy/values-dev.yaml \
               --set image.repository="${{ secrets.ECR_URL_DEV }}" \
-              --set image.tag="${{ github.sha }}" \
+              --set image.tag="${{ github.sha }}-latest" \
               --atomic
   deploy-uat:
     runs-on: ubuntu-latest
