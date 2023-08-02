@@ -172,12 +172,12 @@ jobs:
 
       - name: Authenticate to the cluster
         env:
-          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER_DEV }}
+          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
         run: |
-          echo "${{ secrets.KUBE_CERT_DEV }}" > ca.crt
+          echo "${{ secrets.KUBE_CERT }}" > ca.crt
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
-          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN_DEV }}
-          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE_DEV}}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE }}
           kubectl config use-context ${KUBE_CLUSTER}
 
       - name: Install Helm
@@ -187,9 +187,9 @@ jobs:
         run: |
           helm upgrade laa-claim-non-standard-magistrate-fee-backend ./helm_deploy/. \
               --install --wait --force \
-              --namespace=${{ secrets.KUBE_NAMESPACE_DEV}} \
+              --namespace=${{ secrets.KUBE_NAMESPACE }} \
               --values ./helm_deploy/values-dev.yaml \
-              --set image.repository="${{ secrets.ECR_URL_DEV }}" \
+              --set image.repository="${{ secrets.ECR_URL }}" \
               --set image.tag="${{ github.sha }}-latest" \
               --atomic
   deploy-uat:
@@ -220,7 +220,7 @@ jobs:
               --install --wait --force \
               --namespace=${{ secrets.KUBE_NAMESPACE}} \
               --values ./helm_deploy/values-uat.yaml \
-              --set image.repository="${{ secrets.ECR_URL_DEV }}" \
+              --set image.repository="${{ secrets.ECR_URL }}" \
               --set image.tag="${{ github.sha }}-latest" \
               --atomic
   deploy-prod:
@@ -251,6 +251,6 @@ jobs:
               --install --wait --force \
               --namespace=${{ secrets.KUBE_NAMESPACE}} \
               --values ./helm_deploy/values-prod.yaml \
-              --set image.repository="${{ secrets.ECR_URL_DEV }}" \
+              --set image.repository="${{ secrets.ECR_URL }}" \
               --set image.tag="${{ github.sha }}-latest" \
               --atomic
