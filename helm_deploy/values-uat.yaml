@@ -70,3 +70,6 @@ autoscaling:
 
 secrets:
   environment: uat
+
+service_account:
+  name: laa-claim-non-standard-magistrate-fee-uat-irsa

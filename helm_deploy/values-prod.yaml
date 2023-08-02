@@ -70,3 +70,6 @@ autoscaling:
 
 secrets:
   environment: production
+
+service_account:
+  name: laa-claim-non-standard-magistrate-fee-prod-irsa
