@@ -22,7 +22,7 @@ en:
       steps_case_disposal_form:
         guilty_pleas: Category 1
         not_guilty_pleas: Category 2
-        arrest_warrent_date: Date of Issue
+        arrest_warrant_date: Date of Issue
         cracked_trial_date: Date guilty plea indicated to solicitor
       steps_hearing_details_form:
         first_hearing_date: Date of first hearing
@@ -81,7 +81,7 @@ en:
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
         remitted_to_magistrate_date: For example, 27 3 2007
       steps_case_disposal_form:
-        arrest_warrent_date: For example, 27 3 2007
+        arrest_warrant_date: For example, 27 3 2007
         cracked_trial_date: For example, 27 3 2007
       steps_hearing_details_form:
         first_hearing_date: For example, 27 3 2007
@@ -167,7 +167,7 @@ en:
           bind_over: Bind over
           deferred_sentence: Deferred sentence hearing
           change_solicitor: Change of solicitor
-          arrest_warrent: Warrent of arrest
+          arrest_warrant: Warrant of arrest
           not_guilty: Not guilty plea
           cracked_trial: Cracked trial
           contested: Contested breach
