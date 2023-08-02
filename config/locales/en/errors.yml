@@ -63,7 +63,7 @@ en:
             contact:
               invalid: "Contact details has missing/invalid details"
         steps/firm_details/firm_office_form:
-          summary:
+          summary: &firm_office_form
             name:
               blank: "Enter a firm name"
             account_number:
@@ -75,8 +75,9 @@ en:
             postcode:
               blank: "Enter a postcode"
               invalid: "Enter a valid UK postcode"
+          attributes: *firm_office_form
         steps/firm_details/solicitor_form:
-          summary:
+          summary: &solicitor_form
             full_name:
               blank: "Enter the solicitor's full name"
             reference_number:
@@ -84,7 +85,9 @@ en:
             contact_full_name:
               blank: "Enter a contacts name"
             contact_email:
-              blank: "Enter a contacts email"
+              blank: "Enter a contacts email address"
+              invalid: "Enter a valid email address"
+          attributes: *solicitor_form
         steps/defendant_details_form:
           attributes:
             full_name:
