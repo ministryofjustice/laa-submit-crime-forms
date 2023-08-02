@@ -59,7 +59,7 @@ en:
             items: Items
             items_total: <strong>Total per item</strong>
             attendance_without_counsel: Attendance without counsel
-            preparation: Preparation  
+            preparation: Preparation
             advocacy: Advocacy
             travel: Travel
             waiting: Waiting
@@ -68,16 +68,16 @@ en:
           case_disposal:
             guilty_pleas: Category 1
             not_guilty_pleas: Category 2
-            arrest_warrent_date: Date of warrant issued
+            arrest_warrant_date: Date of warrant issued
             cracked_trial_date: Date guilty plea indicated to solicitor
           supporting_evidence:
             supporting_evidence: Evidence %{count}
       groups:
-        about_you: 
+        about_you:
           heading: About you
-          firm_details: 
+          firm_details:
             title: Your details
-        about_defendant: 
+        about_defendant:
           heading: About the defendant
           defendant_summary:
             title: Defendant details
@@ -85,7 +85,7 @@ en:
           heading: About the case
           case_details:
             title: Case details
-          hearing_details: 
+          hearing_details:
             title: Hearing details
           case_disposal:
             title: Case disposal
@@ -93,18 +93,17 @@ en:
           heading: About the claim
           reason_for_claim:
             title: Claim justification
-          claim_details: 
+          claim_details:
             title: Claim details
           work_items:
             title: Work items
-          letters_calls: 
+          letters_calls:
             title: Letters and phone calls
           disbursements:
             title: Disbursement costs
-          other_info: 
+          other_info:
             title: Other relevant information
         supporting_evidence:
           heading:  Supporting evidence
           supporting_evidence:
             title: Upload supporting evidence
-  

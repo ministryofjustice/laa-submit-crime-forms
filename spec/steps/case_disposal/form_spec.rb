@@ -7,14 +7,14 @@ RSpec.describe Steps::CaseDisposalForm do
     {
       application:,
       plea:,
-      arrest_warrent_date:,
+      arrest_warrant_date:,
       cracked_trial_date:,
     }
   end
 
   let(:application) { instance_double(Claim, update!: true) }
   let(:plea) { nil }
-  let(:arrest_warrent_date) { nil }
+  let(:arrest_warrant_date) { nil }
   let(:cracked_trial_date) { nil }
 
   describe '#choices' do
@@ -60,19 +60,19 @@ RSpec.describe Steps::CaseDisposalForm do
             expect(subject.save).to be_truthy
             expect(application).to have_received(:update!).with(
               'plea' => plea_inst,
-              'arrest_warrent_date' => nil,
+              'arrest_warrant_date' => nil,
               'cracked_trial_date' => nil,
             )
           end
 
           context 'but date field passed in anyway' do
-            let(:arrest_warrent_date) { Date.yesterday }
+            let(:arrest_warrant_date) { Date.yesterday }
 
             it 'will ignore date field' do
               expect(subject.save).to be_truthy
               expect(application).to have_received(:update!).with(
                 'plea' => plea_inst,
-                'arrest_warrent_date' => nil,
+                'arrest_warrant_date' => nil,
                 'cracked_trial_date' => nil,
               )
             end
@@ -105,7 +105,7 @@ RSpec.describe Steps::CaseDisposalForm do
               expect(subject.save).to be_truthy
               expect(application).to have_received(:update!).with(
                 'plea' => plea,
-                'arrest_warrent_date' => arrest_warrent_date,
+                'arrest_warrant_date' => arrest_warrant_date,
                 'cracked_trial_date' => cracked_trial_date
               )
             end
@@ -118,7 +118,7 @@ RSpec.describe Steps::CaseDisposalForm do
               expect(subject.save).to be_truthy
               expect(application).to have_received(:update!).with(
                 'plea' => plea,
-                'arrest_warrent_date' => arrest_warrent_date,
+                'arrest_warrant_date' => arrest_warrant_date,
                 'cracked_trial_date' => cracked_trial_date
               )
             end
