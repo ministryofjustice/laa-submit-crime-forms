@@ -8,10 +8,11 @@ module Steps
       attribute :contact_full_name, :string
       attribute :contact_email, :string
 
-      validates :full_name, presence: true
+      validates :full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
       validates :reference_number, presence: true
 
-      validates :contact_full_name, presence: true, if: ->(form) { form.alternative_contact_details? }
+      validates :contact_full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i },
+                                                    if: ->(form) { form.alternative_contact_details? }
       validates :contact_email, presence: true, format: { with: /\A.*@.*\..*\z/ },
                                                 if: ->(form) { form.alternative_contact_details? }
 

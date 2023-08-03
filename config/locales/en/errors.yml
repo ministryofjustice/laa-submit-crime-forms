@@ -80,10 +80,12 @@ en:
           summary: &solicitor_form
             full_name:
               blank: "Enter the solicitor's full name"
+              invalid: Solicitor's full name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes
             reference_number:
               blank: "Enter the solicitor's reference number"
             contact_full_name:
               blank: "Enter a contacts name"
+              invalid: Contacts name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes
             contact_email:
               blank: "Enter a contacts email address"
               invalid: "Enter a valid email address"
@@ -212,3 +214,8 @@ en:
               blank: Please provdie details of disbursement
             prior_authority:
               blank: Please confirm if you have prior authority
+        steps/solicitor_declaration_form:
+          attributes:
+            signatory_name:
+              blank: Name must be set
+              invalid: Name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes
