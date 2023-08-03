@@ -20,6 +20,7 @@ spec:
       labels:
         {{- include "laa-claim-non-standard-magistrate-fee-backend.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ .Values.service_account.name }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}

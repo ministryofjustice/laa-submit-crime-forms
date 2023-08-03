@@ -70,3 +70,6 @@ autoscaling:
 
 secrets:
   environment: development
+
+service_account:
+  name: laa-claim-non-standard-magistrate-fee-dev-irsa
