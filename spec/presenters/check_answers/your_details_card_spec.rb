@@ -49,8 +49,8 @@ RSpec.describe CheckAnswers::YourDetailsCard do
               text: 'James Blake'
             },
             {
-              head_key: "contact_email",
-              text: "james@email.com"
+              head_key: 'contact_email',
+              text: 'james@email.com'
             }
           ]
         )
@@ -119,11 +119,11 @@ RSpec.describe CheckAnswers::YourDetailsCard do
       end
     end
 
-    context 'with partial address' do
+    context 'with partial address - end' do
       let(:firm_office) { build(:firm_office, :valid, town: nil, postcode: nil) }
       let(:claim) { build(:claim, :firm_details, firm_office:) }
 
-       it 'only includes the missing data tag once in the address' do
+      it 'only includes the missing data tag once in the address' do
         expect(subject.row_data).to eq(
           [
             {
@@ -137,6 +137,38 @@ RSpec.describe CheckAnswers::YourDetailsCard do
             {
               head_key: 'firm_address',
               text: '2 Laywer Suite<br><strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'solicitor_full_name',
+              text: 'Richard Jenkins'
+            },
+            {
+              head_key: 'solicitor_reference_number',
+              text: '111222'
+            },
+          ]
+        )
+      end
+    end
+
+    context 'with partial address - middle' do
+      let(:firm_office) { build(:firm_office, :valid, town: nil) }
+      let(:claim) { build(:claim, :firm_details, firm_office:) }
+
+      it 'only includes the missing data tag once in the address' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'firm_name',
+              text: 'Firm A'
+            },
+            {
+              head_key: 'firm_account_number',
+              text: '123ABC'
+            },
+            {
+              head_key: 'firm_address',
+              text: '2 Laywer Suite<br><strong class="govuk-tag govuk-tag--red">Incomplete</strong><br>CR0 1RE'
             },
             {
               head_key: 'solicitor_full_name',

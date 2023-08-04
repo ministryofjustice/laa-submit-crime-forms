@@ -46,12 +46,12 @@ RSpec.describe CheckAnswers::DefendantCard do
             {
               head_key: 'main_defendant_full_name',
               text: 'Tim Roy',
-              head_opts: {:count=>1},
+              head_opts: { count: 1 },
             },
             {
               head_key: 'main_defendant_maat',
               text: '123ABC',
-              head_opts: {:count=>1},
+              head_opts: { count: 1 },
             },
             {
               head_key: 'additional_defendant_full_name',
@@ -87,7 +87,7 @@ RSpec.describe CheckAnswers::DefendantCard do
               {
                 head_key: 'main_defendant_full_name',
                 text: 'Tim Roy',
-                head_opts: {:count=>1},
+                head_opts: { count: 1 },
               },
               {
                 head_key: 'additional_defendant_full_name',
@@ -105,6 +105,27 @@ RSpec.describe CheckAnswers::DefendantCard do
       end
     end
 
+    context 'no defendants' do
+      let(:defendants) { [] }
+
+      it 'generates full name and maat for 1 main defendant' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'main_defendant_full_name',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
+              head_opts: { count: 1 },
+            },
+            {
+              head_key: 'main_defendant_maat',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
+              head_opts: { count: 1 },
+            }
+          ]
+        )
+      end
+    end
+
     context '1 main defendant' do
       let(:defendants) { [main_defendant] }
 
@@ -114,12 +135,12 @@ RSpec.describe CheckAnswers::DefendantCard do
             {
               head_key: 'main_defendant_full_name',
               text: 'Tim Roy',
-              head_opts: {:count=>1},
+              head_opts: { count: 1 },
             },
             {
               head_key: 'main_defendant_maat',
               text: '123ABC',
-              head_opts: {:count=>1},
+              head_opts: { count: 1 },
             }
           ]
         )
@@ -134,12 +155,12 @@ RSpec.describe CheckAnswers::DefendantCard do
               {
                 head_key: 'main_defendant_full_name',
                 text: 'Tim Roy',
-                head_opts: {:count=>1},
+                head_opts: { count: 1 },
               },
               {
                 head_key: 'main_defendant_maat',
-                text: "<strong class=\"govuk-tag govuk-tag--red\">Incomplete</strong>",
-                head_opts: {:count=>1},
+                text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
+                head_opts: { count: 1 },
               }
             ]
           )

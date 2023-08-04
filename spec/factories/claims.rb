@@ -16,13 +16,13 @@ FactoryBot.define do
     end
 
     trait :firm_details do
-      association :firm_office, :valid
-      association :solicitor, :valid
+      firm_office factory: %i[firm_office valid]
+      solicitor factory: %i[solicitor valid]
     end
 
     trait :full_firm_details do
-      association :firm_office, :full
-      association :solicitor, :full
+      firm_office factory: %i[firm_office full]
+      solicitor factory: %i[solicitor full]
     end
 
     trait :main_defendant do

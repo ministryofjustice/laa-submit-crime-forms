@@ -23,7 +23,7 @@ module CheckAnswers
         },
         {
           head_key: 'firm_address',
-          text: check_missing(firm_details_form.firm_office) { format_address(firm_details_form.firm_office) }
+          text: format_address(firm_details_form.firm_office)
         },
         {
           head_key: 'solicitor_full_name',
@@ -57,7 +57,7 @@ module CheckAnswers
     def format_address(firm_office)
       address = []
       valid = add_field(address, firm_office.address_line_1, true)
-      address << firm_office.address_line_2
+      address << firm_office.address_line_2.presence
       valid = add_field(address, firm_office.town, valid)
       add_field(address, firm_office.postcode, valid)
 
@@ -72,7 +72,7 @@ module CheckAnswers
     # block return value is ignored unless it is valid
     def add_field(address, field, valid)
       address << check_missing(!valid || field) do
-        valid ? field : nil
+        field.presence
       end
       valid && field.present?
     end
