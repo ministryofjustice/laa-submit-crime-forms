@@ -1,5 +1,8 @@
 module CheckAnswers
   class Base
+    include LaaMultiStepForms::CheckMissingHelper
+    include ActionView::Helpers::TagHelper
+
     attr_accessor :group, :section
 
     def translate_table_key(table, key, **)
