@@ -10,8 +10,6 @@ class OffencesController < ApplicationController
   private
 
   def offences
-    return MainOffence.all.map do |offence|
-      offence.as_json
-    end
+    MainOffence.all.map(&:as_json)
   end
 end
