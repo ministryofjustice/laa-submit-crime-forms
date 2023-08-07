@@ -26,14 +26,12 @@ module CheckAnswers
         {
           head_key: 'youth_count',
           text: check_missing(hearing_details_form.youth_count.present?) do
-            capitalize_sym(hearing_details_form.youth_count)
+            hearing_details_form.youth_count.to_s.capitalize
           end
         },
         {
           head_key: 'in_area',
-          text: check_missing(hearing_details_form.in_area.present? && hearing_details_form.court.present?) do
-            "#{capitalize_sym(hearing_details_form.in_area)} - #{hearing_details_form.court}"
-          end
+          text: in_area_text
         },
         {
           head_key: 'hearing_outcome',
@@ -50,5 +48,14 @@ module CheckAnswers
       ]
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+    def in_area_text
+      check_missing(hearing_details_form.in_area.present? || hearing_details_form.court.present?) do
+        [
+          check_missing(hearing_details_form.in_area.present?) { hearing_details_form.in_area.to_s.capitalize },
+          check_missing(hearing_details_form.court.present?) { hearing_details_form.court },
+        ].join(' - ')
+      end
+    end
   end
 end

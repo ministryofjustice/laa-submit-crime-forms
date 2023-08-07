@@ -21,10 +21,9 @@ module CheckAnswers
           head_key: 'letters',
           text: letters
         },
-        {
-          head_key: 'letters_uplift',
-          text: percent_value(letters_calls_form.letters_uplift)
-        },
+      ] +
+      letters_uplift_fields +
+      [
         {
           head_key: 'letters_payment',
           text: currency_value(letters_calls_form.letters_after_uplift)
@@ -33,10 +32,9 @@ module CheckAnswers
           head_key: 'calls',
           text: calls
         },
-        {
-          head_key: 'calls_uplift',
-          text: percent_value(letters_calls_form.calls_uplift)
-        },
+      ] +
+      calls_uplift_fields +
+      [
         {
           head_key: 'calls_payment',
           text: currency_value(letters_calls_form.calls_after_uplift)
@@ -51,6 +49,28 @@ module CheckAnswers
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     private
+
+    def letters_uplift_fields
+      return [] unless letters_calls_form.allow_uplift?
+
+      [
+        {
+          head_key: 'letters_uplift',
+          text: percent_value(letters_calls_form.letters_uplift)
+        },
+      ]
+    end
+
+    def calls_uplift_fields
+      return [] unless letters_calls_form.allow_uplift?
+
+      [
+        {
+          head_key: 'calls_uplift',
+          text: percent_value(letters_calls_form.calls_uplift)
+        },
+      ]
+    end
 
     def percent_value(value)
       uplift = value || 0

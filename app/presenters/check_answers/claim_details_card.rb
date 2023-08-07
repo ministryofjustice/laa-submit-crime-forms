@@ -27,8 +27,8 @@ module CheckAnswers
         },
         {
           head_key: 'supplemental_claim',
-          text: check_missing(claim.supplemental_claim) do
-            capitalize_sym(claim.supplemental_claim)
+          text: check_missing(claim.supplemental_claim.present?) do
+            claim.supplemental_claim.capitalize
           end
         },
         {
@@ -54,13 +54,15 @@ module CheckAnswers
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     def process_field(boolean_field:, value_field:, &value_formatter)
-      check_missing(boolean_field) do
-        values = [capitalize_sym(boolean_field)]
+      result = check_missing(boolean_field.present?) do
+        values = [boolean_field.capitalize]
 
         values << check_missing(value_field, &value_formatter) if boolean_field == YesNoAnswer::YES.to_s
 
         values.compact.join(' - ')
       end
+
+      ApplicationController.helpers.sanitize(result, tags: %w[strong])
     end
   end
 end

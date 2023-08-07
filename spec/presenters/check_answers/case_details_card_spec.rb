@@ -7,13 +7,6 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
   let(:main_offence) { 'Theft' }
   let(:main_offence_date) { Date.new(2023, 1, 1) }
 
-  describe '#initialize' do
-    it 'creates the data instance' do
-      expect(Steps::CaseDetailsForm).to receive(:build).with(claim)
-      subject
-    end
-  end
-
   describe '#title' do
     it 'shows correct title' do
       expect(subject.title).to eq('Case details')

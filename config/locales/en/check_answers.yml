@@ -35,9 +35,9 @@ en:
             hearing_outcome: Hearing outcome
             matter_type: Matter type
           reason_for_claim:
-            reasons_for_claim: Why are you claiming a non-standard magistrate fee?
+            reasons_for_claim: Why are you claiming a non-standard magistrates' court payment?
             representation_order_withdrawn_date: Representation order withdrawn date
-            reason_for_claim_other_details: Other details
+            reason_for_claim_other_details: Other details about why a non-standard magistrates' court payment is being claimed
           claim_details:
             prosecution_evidence: Number of pages of prosecution evidence
             defence_statement: Number of pages of defence statements
