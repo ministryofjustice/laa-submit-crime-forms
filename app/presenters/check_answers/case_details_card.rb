@@ -24,19 +24,19 @@ module CheckAnswers
         },
         {
           head_key: 'assigned_counsel',
-          text: ApplicationController.helpers.capitalize_sym(case_details_form.assigned_counsel)
+          text: capitalize_sym(case_details_form.assigned_counsel)
         },
         {
           head_key: 'unassigned_counsel',
-          text: ApplicationController.helpers.capitalize_sym(case_details_form.unassigned_counsel)
+          text: capitalize_sym(case_details_form.unassigned_counsel)
         },
         {
           head_key: 'agent_instructed',
-          text: ApplicationController.helpers.capitalize_sym(case_details_form.agent_instructed)
+          text: capitalize_sym(case_details_form.agent_instructed)
         },
         {
           head_key: 'remitted_to_magistrate',
-          text: ApplicationController.helpers.capitalize_sym(case_details_form.remitted_to_magistrate)
+          text: capitalize_sym(case_details_form.remitted_to_magistrate)
         },
       ]
     end
