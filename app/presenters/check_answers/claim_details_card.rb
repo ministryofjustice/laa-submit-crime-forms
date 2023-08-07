@@ -2,79 +2,65 @@
 
 module CheckAnswers
   class ClaimDetailsCard < Base
-    attr_reader :claim_details_form
+    attr_reader :claim
 
     def initialize(claim)
-      @claim_details_form = Steps::ClaimDetailsForm.build(claim)
+      @claim = claim
       @group = 'about_claim'
       @section = 'claim_details'
     end
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def row_data
       [
         {
           head_key: 'prosecution_evidence',
-          text: claim_details_form.prosecution_evidence
+          text: check_missing(claim.prosecution_evidence)
         },
         {
           head_key: 'defence_statement',
-          text: claim_details_form.defence_statement
+          text: check_missing(claim.defence_statement)
         },
         {
           head_key: 'number_of_witnesses',
-          text: claim_details_form.number_of_witnesses
+          text: check_missing(claim.number_of_witnesses)
         },
         {
           head_key: 'supplemental_claim',
-          text: capitalize_sym(claim_details_form.supplemental_claim)
+          text: check_missing(claim.supplemental_claim) do
+            capitalize_sym(claim.supplemental_claim)
+          end
         },
         {
           head_key: 'preparation_time',
-          text: preparation_time
+          text: process_field(boolean_field: claim.preparation_time, value_field: claim.time_spent) do
+            ApplicationController.helpers.format_period(claim.time_spent)
+          end
         },
         {
           head_key: 'work_before',
-          text: work_before
+          text: process_field(boolean_field: claim.work_before, value_field: claim.work_before_date) do
+            claim.work_before_date.strftime('%d %B %Y')
+          end
         },
         {
           head_key: 'work_after',
-          text: work_after
+          text: process_field(boolean_field: claim.work_after, value_field: claim.work_after_date) do
+            claim.work_after_date.strftime('%d %B %Y')
+          end
         },
       ]
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-    # rubocop:disable Layout/LineLength
-    def preparation_time
-      if claim_details_form.preparation_time
-        "#{capitalize_sym(claim_details_form.preparation_time)} - #{formatted_preparation_time}"
-      else
-        capitalize_sym(claim_details_form.preparation_time)
+    def process_field(boolean_field:, value_field:, &value_formatter)
+      check_missing(boolean_field) do
+        values = [capitalize_sym(boolean_field)]
+
+        values << check_missing(value_field, &value_formatter) if boolean_field == YesNoAnswer::YES.to_s
+
+        values.compact.join(' - ')
       end
     end
-
-    def work_before
-      if claim_details_form.work_before && claim_details_form.work_before_date
-        "#{capitalize_sym(claim_details_form.work_before)} - #{claim_details_form.work_before_date.strftime('%d %B %Y')}"
-      else
-        capitalize_sym(claim_details_form.work_before)
-      end
-    end
-
-    def work_after
-      if claim_details_form.work_after && claim_details_form.work_after_date
-        "#{capitalize_sym(claim_details_form.work_after)} - #{claim_details_form.work_after_date.strftime('%d %B %Y')}"
-      else
-        capitalize_sym(claim_details_form.work_after)
-      end
-    end
-
-    private
-
-    def formatted_preparation_time
-      ApplicationController.helpers.format_period(claim_details_form.time_spent)
-    end
-    # rubocop:enable Layout/LineLength
   end
 end

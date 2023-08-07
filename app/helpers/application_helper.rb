@@ -18,7 +18,7 @@ module ApplicationHelper
     elsif obj.is_a?(FalseClass)
       YesNoAnswer::NO.to_s.capitalize
     else
-      obj&.value.to_s.capitalize
+      obj.to_s.capitalize
     end
   end
 
