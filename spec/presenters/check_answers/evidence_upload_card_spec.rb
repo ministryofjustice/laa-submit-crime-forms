@@ -3,24 +3,14 @@ require 'rails_helper'
 RSpec.describe CheckAnswers::EvidenceUploadsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { instance_double(Claim) }
-  let(:evidence_list) { [first_evidence, second_evidence] }
+  let(:claim) { instance_double(Claim, supporting_evidence:, send_by_post:) }
+  let(:supporting_evidence) { [first_evidence, second_evidence] }
+  let(:send_by_post) { false }
   let(:first_evidence) do
     { file_name: 'Defendant Report.pdf' }
   end
   let(:second_evidence) do
     { file_name: 'Offences.pdf' }
-  end
-
-  before do
-    allow(claim).to receive(:supporting_evidence).and_return(evidence_list)
-  end
-
-  describe '#initialize' do
-    it 'creates the data instance' do
-      subject
-      expect(claim).to have_received(:supporting_evidence)
-    end
   end
 
   describe '#title' do
@@ -34,6 +24,10 @@ RSpec.describe CheckAnswers::EvidenceUploadsCard do
       it 'generates section with 2 indexed filenames' do
         expect(subject.row_data).to eq(
           [
+            {
+              head_key: 'send_by_post',
+              text: 'No',
+            },
             {
               head_key: 'supporting_evidence',
               text: 'Defendant Report.pdf',
@@ -49,12 +43,34 @@ RSpec.describe CheckAnswers::EvidenceUploadsCard do
       end
     end
 
-    context 'No evidence files' do
-      let(:evidence_list) { [] }
+    context 'No evidence files and send by post true' do
+      let(:supporting_evidence) { [] }
+      let(:send_by_post) { true }
 
       it 'generates section without any information inside' do
         expect(subject.row_data).to eq(
-          []
+          [
+            {
+              head_key: 'send_by_post',
+              text: 'Yes',
+            }
+          ]
+        )
+      end
+    end
+
+    context 'No evidence files and send by post not set' do
+      let(:supporting_evidence) { [] }
+      let(:send_by_post) { nil }
+
+      it 'generates section without any information inside' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'send_by_post',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
+            }
+          ]
         )
       end
     end

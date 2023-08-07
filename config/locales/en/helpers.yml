@@ -264,6 +264,9 @@ en:
           'yes': 'Yes'
           'no': 'No'
         conclusion: Tell us why you did not make this claim within 3 months of the conclusion of the proceedings
+      steps_supporting_evidence_form:
+        send_by_post_options:
+          'true': I'll send the supporting evidence by post
       steps_answer_equality_form:
         answer_equality_options:
           'yes': Yes, answer the equality questions (takes 2 minutes)

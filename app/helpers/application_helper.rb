@@ -13,6 +13,6 @@ module ApplicationHelper
   end
 
   def multiline_text(string)
-    ApplicationController.helpers.sanitize(string&.gsub("\n", '<br>'), tags: %w[br])
+    ApplicationController.helpers.sanitize(string.gsub("\n", '<br>'), tags: %w[br])
   end
 end
