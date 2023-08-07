@@ -36,6 +36,8 @@ en:
             matter_type: Matter type
           reason_for_claim:
             reasons_for_claim: Why are you claiming a non-standard magistrate fee?
+            representation_order_withdrawn_date: Representation Order withdrawn date
+            reason_for_claim_other_details: Other details
           claim_details:
             prosecution_evidence: Number of pages of prosecution evidence
             defence_statement: Number of pages of defence statements

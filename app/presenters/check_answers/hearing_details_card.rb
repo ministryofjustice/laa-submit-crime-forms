@@ -10,7 +10,7 @@ module CheckAnswers
       @section = 'hearing_details'
     end
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def row_data
       [
         {
@@ -49,6 +49,6 @@ module CheckAnswers
         }
       ]
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   end
 end

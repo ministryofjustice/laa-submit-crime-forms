@@ -42,7 +42,7 @@ module CheckAnswers
     # rubocop:enable Metrics/MethodLength
 
     def get_value_obj_desc(value_object, key)
-      value_object.all.find { |value| value.id == key }&.description
+      value_object.all.find { |value| value.id == key }.description
     end
 
     def capitalize_sym(obj)
