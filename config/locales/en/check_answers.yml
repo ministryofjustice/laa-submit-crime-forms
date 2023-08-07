@@ -67,6 +67,7 @@ en:
           other_info:
             other_info: Other relevant information
           case_disposal:
+            pending: Category
             guilty_pleas: Category 1
             not_guilty_pleas: Category 2
             arrest_warrant_date: Date of warrant issued

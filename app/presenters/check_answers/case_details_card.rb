@@ -16,27 +16,37 @@ module CheckAnswers
       [
         {
           head_key: 'main_offence',
-          text: case_details_form.main_offence
+          text: check_missing(case_details_form.main_offence)
         },
         {
           head_key: 'main_offence_date',
-          text: case_details_form.main_offence_date.strftime('%d %B %Y')
+          text: check_missing(case_details_form.main_offence_date) do
+                  case_details_form.main_offence_date.strftime('%d %B %Y')
+                end
         },
         {
           head_key: 'assigned_counsel',
-          text: capitalize_sym(case_details_form.assigned_counsel)
+          text: check_missing(case_details_form.assigned_counsel.present?) do
+                  capitalize_sym(case_details_form.assigned_counsel)
+                end
         },
         {
           head_key: 'unassigned_counsel',
-          text: capitalize_sym(case_details_form.unassigned_counsel)
+          text: check_missing(case_details_form.unassigned_counsel.present?) do
+                  capitalize_sym(case_details_form.unassigned_counsel)
+                end
         },
         {
           head_key: 'agent_instructed',
-          text: capitalize_sym(case_details_form.agent_instructed)
+          text: check_missing(case_details_form.agent_instructed.present?) do
+                  capitalize_sym(case_details_form.agent_instructed)
+                end
         },
         {
           head_key: 'remitted_to_magistrate',
-          text: capitalize_sym(case_details_form.remitted_to_magistrate)
+          text: check_missing(case_details_form.remitted_to_magistrate.present?) do
+                  capitalize_sym(case_details_form.remitted_to_magistrate)
+                end
         },
       ]
     end
