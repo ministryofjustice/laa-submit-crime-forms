@@ -3,39 +3,12 @@ require 'rails_helper'
 RSpec.describe CheckAnswers::YourDetailsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { instance_double(Claim) }
-  let(:form) do
-    instance_double(Steps::FirmDetailsForm, firm_office:, solicitor:)
-  end
-  let(:firm_office) do
-    instance_double(Steps::FirmDetails::FirmOfficeForm, name: firm_name,
-    account_number: firm_account_number, address_line_1: firm_address_1, address_line_2: firm_address_2,
-    town: firm_town, postcode: firm_postcode)
-  end
-  let(:solicitor) do
-    instance_double(Steps::FirmDetails::SolicitorForm, full_name: solicitor_full_name,
-    reference_number: solicitor_ref_number, contact_full_name: contact_full_name)
-  end
-  let(:firm_name) { 'Firm A' }
-  let(:firm_account_number) { '123ABC' }
-  # rubocop:disable RSpec/IndexedLet
-  let(:firm_address_1) { '2 Laywer Suite' }
-  let(:firm_address_2) { 'Unit B' }
-  # rubocop:enable RSpec/IndexedLet
-  let(:firm_town) { 'Lawyer Town' }
-  let(:firm_postcode) { 'CR0 1RE' }
-  let(:solicitor_full_name) { 'Richard Jenkins' }
-  let(:solicitor_ref_number) { '111222' }
-  let(:contact_full_name) { 'James Blake' }
-
-  before do
-    allow(Steps::FirmDetailsForm).to receive(:build).and_return(form)
-  end
+  let(:claim) { build(:claim, :full_firm_details) }
 
   describe '#initialize' do
     it 'creates the data instance' do
+      expect(Steps::FirmDetailsForm).to receive(:build).with(claim)
       subject
-      expect(Steps::FirmDetailsForm).to have_received(:build).with(claim)
     end
   end
 
@@ -74,16 +47,20 @@ RSpec.describe CheckAnswers::YourDetailsCard do
             {
               head_key: 'contact_full_name',
               text: 'James Blake'
+            },
+            {
+              head_key: 'contact_email',
+              text: 'james@email.com'
             }
           ]
         )
       end
     end
 
-    context '1 line in address' do
-      let(:firm_address_2) { nil }
+    context 'without optional infomation' do
+      let(:claim) { build(:claim, :firm_details) }
 
-      it 'generates case detail rows with 1 line of address' do
+      it 'generates case detail rows for required fields' do
         expect(subject.row_data).to eq(
           [
             {
@@ -106,10 +83,101 @@ RSpec.describe CheckAnswers::YourDetailsCard do
               head_key: 'solicitor_reference_number',
               text: '111222'
             },
+          ]
+        )
+      end
+    end
+
+    context 'with no data' do
+      let(:claim) { build(:claim) }
+
+      it 'generates missing data rows for required fields' do
+        expect(subject.row_data).to eq(
+          [
             {
-              head_key: 'contact_full_name',
-              text: 'James Blake'
-            }
+              head_key: 'firm_name',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'firm_account_number',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'firm_address',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'solicitor_full_name',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'solicitor_reference_number',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+          ]
+        )
+      end
+    end
+
+    context 'with partial address - end' do
+      let(:firm_office) { build(:firm_office, :valid, town: nil, postcode: nil) }
+      let(:claim) { build(:claim, :firm_details, firm_office:) }
+
+      it 'only includes the missing data tag once in the address' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'firm_name',
+              text: 'Firm A'
+            },
+            {
+              head_key: 'firm_account_number',
+              text: '123ABC'
+            },
+            {
+              head_key: 'firm_address',
+              text: '2 Laywer Suite<br><strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'solicitor_full_name',
+              text: 'Richard Jenkins'
+            },
+            {
+              head_key: 'solicitor_reference_number',
+              text: '111222'
+            },
+          ]
+        )
+      end
+    end
+
+    context 'with partial address - middle' do
+      let(:firm_office) { build(:firm_office, :valid, town: nil) }
+      let(:claim) { build(:claim, :firm_details, firm_office:) }
+
+      it 'only includes the missing data tag once in the address' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'firm_name',
+              text: 'Firm A'
+            },
+            {
+              head_key: 'firm_account_number',
+              text: '123ABC'
+            },
+            {
+              head_key: 'firm_address',
+              text: '2 Laywer Suite<br><strong class="govuk-tag govuk-tag--red">Incomplete</strong><br>CR0 1RE'
+            },
+            {
+              head_key: 'solicitor_full_name',
+              text: 'Richard Jenkins'
+            },
+            {
+              head_key: 'solicitor_reference_number',
+              text: '111222'
+            },
           ]
         )
       end

@@ -1,8 +1,11 @@
 FactoryBot.define do
   factory :claim do
     id { SecureRandom.uuid }
+
     office_code { 'AAA' }
+
     trait :complete do
+      firm_details
       main_defendant
       case_details
       with_uplift
@@ -10,6 +13,16 @@ FactoryBot.define do
       letters_calls
       one_work_item
       one_disbursement
+    end
+
+    trait :firm_details do
+      firm_office factory: %i[firm_office valid]
+      solicitor factory: %i[solicitor valid]
+    end
+
+    trait :full_firm_details do
+      firm_office factory: %i[firm_office full]
+      solicitor factory: %i[solicitor full]
     end
 
     trait :main_defendant do
