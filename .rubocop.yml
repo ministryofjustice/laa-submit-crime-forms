@@ -99,7 +99,7 @@ RSpec/FilePath:
 
 Metrics/ClassLength:
   Exclude:
-    - app/services/decisions/simple_decision_tree.rb
+    - app/services/decisions/**/*
 # To be tweaked until we find the right balance
 Metrics/MethodLength:
   Max: 12
@@ -113,7 +113,7 @@ Metrics/ParameterLists:
 
 Layout/LineLength:
   Exclude:
-    - spec/decisions/decision_tree_spec.rb
+    - spec/decisions/**/*
 
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:
