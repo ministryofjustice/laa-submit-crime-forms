@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_03_142650) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_02_135602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,7 +78,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_142650) do
     t.integer "defence_statement"
     t.integer "number_of_witnesses"
     t.string "supplemental_claim"
-    t.string "preparation_time"
     t.integer "time_spent"
     t.integer "letters"
     t.integer "calls"
@@ -94,8 +93,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_142650) do
     t.string "gender"
     t.string "ethnic_group"
     t.string "disability"
-    t.date "remitted_to_magistrate_date"
     t.boolean "send_by_post"
+    t.date "remitted_to_magistrate_date"
+    t.string "preparation_time"
     t.string "work_before"
     t.string "work_after"
     t.string "has_disbursements"
@@ -142,13 +142,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_142650) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["previous_id"], name: "index_firm_offices_on_previous_id"
-  end
-
-  create_table "offences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "description"
-    t.string "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
