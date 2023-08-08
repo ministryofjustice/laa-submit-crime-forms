@@ -30,13 +30,17 @@ module CostSummary
     private
 
     def translated_text(form)
-      # other_type is only populated for the `other` disbursement typer
-      return translate("standard.#{form.record.disbursement_type}") unless form.record.other_type
+      # other_type is only populated for the `other` disbursement type
+      if form.record.other_type.present?
+        known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(form.record.other_type))
+        return translate("other.#{form.record.other_type}") if known_other
 
-      known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(form.record.other_type))
-      return translate("other.#{form.record.other_type}") if known_other
-
-      form.record.other_type
+        check_missing(form.record.other_type)
+      else
+        check_missing(form.record.disbursement_type.present?) do
+          translate("standard.#{form.record.disbursement_type}")
+        end
+      end
     end
   end
 end
