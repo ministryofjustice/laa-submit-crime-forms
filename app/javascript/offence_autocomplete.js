@@ -17,7 +17,7 @@ async function customSuggest(query, syncResults){
 
   syncResults(query
     ? results.filter((result) => {
-        let resultContains = result.description.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        var resultContains = result.description.toLowerCase().indexOf(query.toLowerCase()) !== -1
         return resultContains
       })
     : []
