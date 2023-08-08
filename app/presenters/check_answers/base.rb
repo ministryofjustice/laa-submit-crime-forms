@@ -1,5 +1,8 @@
 module CheckAnswers
   class Base
+    include LaaMultiStepForms::CheckMissingHelper
+    include ActionView::Helpers::TagHelper
+
     attr_accessor :group, :section
 
     def translate_table_key(table, key, **)
@@ -39,7 +42,11 @@ module CheckAnswers
     # rubocop:enable Metrics/MethodLength
 
     def get_value_obj_desc(value_object, key)
-      value_object.all.find { |value| value.id == key }&.description
+      value_object.all.find { |value| value.id == key }.description
+    end
+
+    def capitalize_sym(obj)
+      ApplicationController.helpers.capitalize_sym(obj)
     end
   end
 end
