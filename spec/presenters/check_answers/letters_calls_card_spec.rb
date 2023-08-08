@@ -24,9 +24,8 @@ RSpec.describe CheckAnswers::LettersCallsCard do
     end
   end
 
-  # rubocop:disable RSpec/ExampleLength
   describe '#row_data' do
-      context 'when claim justification includes enhanced rate' do
+    context 'when claim justification includes enhanced rate' do
       it 'generates letters and calls rows' do
         expect(subject.row_data).to eq(
           [
@@ -148,5 +147,4 @@ RSpec.describe CheckAnswers::LettersCallsCard do
       end
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 end

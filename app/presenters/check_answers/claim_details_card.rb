@@ -10,7 +10,7 @@ module CheckAnswers
       @section = 'claim_details'
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize
     def row_data
       [
         {
@@ -51,7 +51,7 @@ module CheckAnswers
         },
       ]
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize
 
     def process_field(boolean_field:, value_field:, &value_formatter)
       result = check_missing(boolean_field.present?) do

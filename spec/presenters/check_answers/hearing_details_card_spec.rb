@@ -19,7 +19,6 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
   end
 
   describe '#row_data' do
-    # rubocop:disable RSpec/ExampleLength
     it 'generates hearing details rows' do
       expect(subject.row_data).to eq(
         [
@@ -115,6 +114,5 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
         )
       end
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 end

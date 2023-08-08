@@ -10,7 +10,7 @@ module CheckAnswers
       @section = 'letters_calls'
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize
     def row_data
       [
         {
@@ -22,31 +22,31 @@ module CheckAnswers
           text: letters
         },
       ] +
-      letters_uplift_fields +
-      [
-        {
-          head_key: 'letters_payment',
-          text: currency_value(letters_calls_form.letters_after_uplift)
-        },
-        {
-          head_key: 'calls',
-          text: calls
-        },
-      ] +
-      calls_uplift_fields +
-      [
-        {
-          head_key: 'calls_payment',
-          text: currency_value(letters_calls_form.calls_after_uplift)
-        },
-        {
-          head_key: 'total',
-          text: total_cost,
-          footer: true
-        }
-      ]
+        letters_uplift_fields +
+        [
+          {
+            head_key: 'letters_payment',
+            text: currency_value(letters_calls_form.letters_after_uplift)
+          },
+          {
+            head_key: 'calls',
+            text: calls
+          },
+        ] +
+        calls_uplift_fields +
+        [
+          {
+            head_key: 'calls_payment',
+            text: currency_value(letters_calls_form.calls_after_uplift)
+          },
+          {
+            head_key: 'total',
+            text: total_cost,
+            footer: true
+          }
+        ]
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize
 
     private
 

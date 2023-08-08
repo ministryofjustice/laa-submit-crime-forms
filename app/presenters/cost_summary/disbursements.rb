@@ -29,9 +29,9 @@ module CostSummary
 
     private
 
+    # rubocop:disable Metrics/AbcSize
     def translated_text(form)
-      # other_type is only populated for the `other` disbursement type
-      if form.record.other_type.present?
+      if form.record.disbursement_type == DisbursementTypes::OTHER.to_s
         known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(form.record.other_type))
         return translate("other.#{form.record.other_type}") if known_other
 
@@ -42,5 +42,6 @@ module CostSummary
         end
       end
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end

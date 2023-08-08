@@ -10,7 +10,7 @@ module CheckAnswers
       @section = 'hearing_details'
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize
     def row_data
       [
         {
@@ -47,7 +47,6 @@ module CheckAnswers
         }
       ]
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     def in_area_text
       check_missing(hearing_details_form.in_area.present? || hearing_details_form.court.present?) do
@@ -57,5 +56,6 @@ module CheckAnswers
         ].join(' - ')
       end
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end

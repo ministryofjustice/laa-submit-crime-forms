@@ -23,7 +23,6 @@ module CheckAnswers
       []
     end
 
-    # rubocop:disable Metrics/MethodLength
     def row_content(head_key, text, head_opts = {}, footer: false)
       translated_heading = translate_table_key(section, head_key, **head_opts)
       heading = translated_heading.start_with?('Translation missing:') ? head_key : translated_heading
@@ -39,7 +38,6 @@ module CheckAnswers
       row[:classes] = 'govuk-summary-list__row-double-border' if footer
       row
     end
-    # rubocop:enable Metrics/MethodLength
 
     def get_value_obj_desc(value_object, key)
       value_object.all.find { |value| value.id == key }.description

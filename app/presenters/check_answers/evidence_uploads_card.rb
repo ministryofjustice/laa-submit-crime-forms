@@ -18,7 +18,12 @@ module CheckAnswers
             (claim.send_by_post ? YesNoAnswer::YES : YesNoAnswer::NO).to_s.capitalize
           end,
         }
-      ] +
+      ] + supporting_evidence_rows
+    end
+
+    private
+
+    def supporting_evidence_rows
       claim.supporting_evidence.map.with_index do |evidence, index|
         {
           head_key: 'supporting_evidence',

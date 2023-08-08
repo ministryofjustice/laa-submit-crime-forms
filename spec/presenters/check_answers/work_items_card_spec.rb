@@ -28,13 +28,13 @@ RSpec.describe CheckAnswers::WorkItemsCard do
 
     context 'when no work items' do
       let(:work_items) { [] }
+
       it 'shows title with the missing data tag' do
         expect(subject.title).to eq('Work items <strong class="govuk-tag govuk-tag--red">Incomplete</strong>')
       end
     end
   end
 
-  # rubocop:disable RSpec/ExampleLength
   describe '#row_data' do
     it 'generates work items rows' do
       expect(subject.row_data).to eq(
@@ -59,5 +59,4 @@ RSpec.describe CheckAnswers::WorkItemsCard do
       )
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 end

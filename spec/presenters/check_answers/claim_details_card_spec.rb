@@ -12,7 +12,6 @@ RSpec.describe CheckAnswers::ClaimDetailsCard do
   end
 
   describe '#row_data' do
-    # rubocop:disable RSpec/ExampleLength
     context 'all boolean field with yes values and additional fields' do
       it 'generates case detail rows' do
         expect(subject.row_data).to eq(
@@ -166,6 +165,5 @@ RSpec.describe CheckAnswers::ClaimDetailsCard do
         )
       end
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 end

@@ -11,7 +11,7 @@ module CheckAnswers
     end
 
     # TO DO: update remittal to include date of remittal when CRM457-172 is done
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize
     def row_data
       [
         {
@@ -50,6 +50,6 @@ module CheckAnswers
         },
       ]
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize
   end
 end
