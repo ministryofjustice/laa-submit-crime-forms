@@ -14,15 +14,14 @@ async function fetchOffences(){
 
 async function customSuggest(query, syncResults, results){
   var results = await fetchOffences()
-  if(results){
-    syncResults(query
-      ? results.filter((result) => {
-          var resultContains = result.description.toLowerCase().indexOf(query.toLowerCase()) !== -1
-          return resultContains
-        })
-      : []
-    )
-  }
+
+  syncResults(query
+    ? results.filter((result) => {
+        var resultContains = result.description.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        return resultContains
+      })
+    : []
+  )
 }
 
 function inputValueTemplate(result){
@@ -35,9 +34,14 @@ function suggestionTemplate(result){
 
 function initAutocomplete(elementId){
   let elements = $(`#${elementId}`)
+  
   if(elements.length > 0){
+    let element = elements[0]
+    let name = element.getAttribute("data-name")
+   
     accessibleAutocomplete.enhanceSelectElement({
-      selectElement: elements[0],
+      selectElement: element,
+      name: name,
       source: customSuggest,
       templates: { 
         inputValue: inputValueTemplate,
@@ -47,9 +51,22 @@ function initAutocomplete(elementId){
   }
 }
 
+function clearUndefinedSuggestions(){
+  let autocompleteElement = $(".autocomplete__wrapper")
+  if(autocompleteElement){
+    let undefinedListItem = autocompleteElement.find("li:contains(undefined)")
+    undefinedListItem.remove()
+  }
+}
+
 $("document").ready(() => {
   offenceElementIds.forEach((elementId) => {
+    //enhance offence select tags
     initAutocomplete(elementId)
+
+    //clear undefined options in accessible-autocomplete
+    $(`#${elementId}`).on("click focus", () => {
+      clearUndefinedSuggestions()
+    })
   })
 })
-
