@@ -8,6 +8,7 @@ FactoryBot.define do
       firm_details
       main_defendant
       case_details
+      hearing_details
       with_uplift
       case_disposal
       letters_calls
@@ -38,6 +39,16 @@ FactoryBot.define do
       unassigned_counsel { 'no' }
       agent_instructed { 'no' }
       remitted_to_magistrate { 'no' }
+    end
+
+    trait :hearing_details do
+      first_hearing_date { Date.new(2023, 3, 1) }
+      number_of_hearing { 1 }
+      youth_count { 'no' }
+      in_area { 'yes' }
+      court { 'A Court' }
+      hearing_outcome { 'CP01' }
+      matter_type { '1' }
     end
 
     trait :with_uplift do

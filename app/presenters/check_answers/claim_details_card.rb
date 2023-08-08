@@ -27,7 +27,7 @@ module CheckAnswers
         },
         {
           head_key: 'supplemental_claim',
-          text: ApplicationController.helpers.capitalize_sym(claim_details_form.supplemental_claim)
+          text: capitalize_sym(claim_details_form.supplemental_claim)
         },
         {
           head_key: 'preparation_time',
@@ -48,25 +48,25 @@ module CheckAnswers
     # rubocop:disable Layout/LineLength
     def preparation_time
       if claim_details_form.preparation_time
-        "#{ApplicationController.helpers.capitalize_sym(claim_details_form.preparation_time)} - #{formatted_preparation_time}"
+        "#{capitalize_sym(claim_details_form.preparation_time)} - #{formatted_preparation_time}"
       else
-        ApplicationController.helpers.capitalize_sym(claim_details_form.preparation_time)
+        capitalize_sym(claim_details_form.preparation_time)
       end
     end
 
     def work_before
       if claim_details_form.work_before && claim_details_form.work_before_date
-        "#{ApplicationController.helpers.capitalize_sym(claim_details_form.work_before)} - #{claim_details_form.work_before_date.strftime('%d %B %Y')}"
+        "#{capitalize_sym(claim_details_form.work_before)} - #{claim_details_form.work_before_date.strftime('%d %B %Y')}"
       else
-        ApplicationController.helpers.capitalize_sym(claim_details_form.work_before)
+        capitalize_sym(claim_details_form.work_before)
       end
     end
 
     def work_after
       if claim_details_form.work_after && claim_details_form.work_after_date
-        "#{ApplicationController.helpers.capitalize_sym(claim_details_form.work_after)} - #{claim_details_form.work_after_date.strftime('%d %B %Y')}"
+        "#{capitalize_sym(claim_details_form.work_after)} - #{claim_details_form.work_after_date.strftime('%d %B %Y')}"
       else
-        ApplicationController.helpers.capitalize_sym(claim_details_form.work_after)
+        capitalize_sym(claim_details_form.work_after)
       end
     end
 
