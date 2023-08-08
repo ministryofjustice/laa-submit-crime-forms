@@ -2,6 +2,9 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 import $ from 'jquery'
 
 window.$ = $
+const offenceSelect = "steps-case-details-form-main-offence-field"
+const offenceSelectError = "steps-case-details-form-main-offence-field-error"
+const offenceElementIds = [offenceSelect, offenceSelectError]
 
 async function fetchOffences(){
   const response = await fetch("/offences")
@@ -9,29 +12,44 @@ async function fetchOffences(){
   return offences
 }
 
-function customSuggestion(offence, offenceType){
-  return `<span class="govuk-body">${offence}</span><br><span class="govuk-caption-m">${offenceType}</span>`
-}
-
-function getOffenceType(offence, offence_list){
-  let offence_filter = offence_list.filter((item) => {
-    return item.description == offence
-  })
-  if(offence_filter.length === 0){
-    return false
-  }
-  else{
-    let target_offence = offence_filter[0]
-    return target_offence.type
+async function customSuggest(query, syncResults, results){
+  var results = await fetchOffences()
+  if(results){
+    syncResults(query
+      ? results.filter((result) => {
+          var resultContains = result.description.toLowerCase().indexOf(query.toLowerCase()) !== -1
+          return resultContains
+        })
+      : []
+    )
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetchOffences().then((results) => {
-    results.forEach((offence) => {
-      let offenceType = getOffenceType(offence.description, results)
-      let htmlString = customSuggestion(offence.description, offenceType)
-      $("body").append(htmlString)
+function inputValueTemplate(result){
+  return result && result.description
+}
+
+function suggestionTemplate(result){
+  return result && `<span class="govuk-body">${result.description}</span><br><span class="govuk-caption-m">${result.type}</span>`
+}
+
+function initAutocomplete(elementId){
+  let elements = $(`#${elementId}`)
+  if(elements.length > 0){
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: elements[0],
+      source: customSuggest,
+      templates: { 
+        inputValue: inputValueTemplate,
+        suggestion: suggestionTemplate 
+      }
     })
+  }
+}
+
+$("document").ready(() => {
+  offenceElementIds.forEach((elementId) => {
+    initAutocomplete(elementId)
   })
-}, false)
+})
+
