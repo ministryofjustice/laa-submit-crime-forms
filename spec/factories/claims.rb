@@ -1,15 +1,29 @@
 FactoryBot.define do
   factory :claim do
     id { SecureRandom.uuid }
+
     office_code { 'AAA' }
+
     trait :complete do
+      firm_details
       main_defendant
       case_details
+      hearing_details
       with_uplift
       case_disposal
       letters_calls
       one_work_item
       one_disbursement
+    end
+
+    trait :firm_details do
+      firm_office factory: %i[firm_office valid]
+      solicitor factory: %i[solicitor valid]
+    end
+
+    trait :full_firm_details do
+      firm_office factory: %i[firm_office full]
+      solicitor factory: %i[solicitor full]
     end
 
     trait :main_defendant do
@@ -25,6 +39,16 @@ FactoryBot.define do
       unassigned_counsel { 'no' }
       agent_instructed { 'no' }
       remitted_to_magistrate { 'no' }
+    end
+
+    trait :hearing_details do
+      first_hearing_date { Date.new(2023, 3, 1) }
+      number_of_hearing { 1 }
+      youth_count { 'no' }
+      in_area { 'yes' }
+      court { 'A Court' }
+      hearing_outcome { 'CP01' }
+      matter_type { '1' }
     end
 
     trait :with_uplift do

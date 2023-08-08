@@ -40,7 +40,7 @@ module CheckAnswers
     end
 
     def about_defendant_section
-      [DefendantDetailsCard.new(claim)]
+      [DefendantCard.new(claim)]
     end
 
     def about_case_section

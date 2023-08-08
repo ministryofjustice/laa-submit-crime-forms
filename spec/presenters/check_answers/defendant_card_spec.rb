@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::DefendantDetailsCard do
+RSpec.describe CheckAnswers::DefendantCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { instance_double(Claim) }
+  let(:claim) { instance_double(Claim, claim_type:, defendants:) }
   let(:defendants) { [] }
   let(:main_defendant) { { main: true, full_name: main_defendant_name, maat: main_defendant_maat } }
   let(:first_additional_defendant) do
@@ -20,9 +20,7 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
   let(:second_additional_defendant_name) { 'Timmy Turner' }
   let(:second_additional_defendant_maat) { '789HIJ' }
 
-  before do
-    allow(claim).to receive(:defendants).and_return(defendants)
-  end
+  let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
 
   describe '#initialize' do
     it 'creates the data instance' do
@@ -47,11 +45,13 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
           [
             {
               head_key: 'main_defendant_full_name',
-              text: 'Tim Roy'
+              text: 'Tim Roy',
+              head_opts: { count: 1 },
             },
             {
               head_key: 'main_defendant_maat',
-              text: '123ABC'
+              text: '123ABC',
+              head_opts: { count: 1 },
             },
             {
               head_key: 'additional_defendant_full_name',
@@ -76,6 +76,54 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
           ]
         )
       end
+
+      context 'when claim_type is BREACH_OF_INJUNCTION' do
+        let(:defendants) { [main_defendant, first_additional_defendant, second_additional_defendant] }
+        let(:claim_type) { ClaimType::BREACH_OF_INJUNCTION.to_s }
+
+        it 'does not include maat data' do
+          expect(subject.row_data).to eq(
+            [
+              {
+                head_key: 'main_defendant_full_name',
+                text: 'Tim Roy',
+                head_opts: { count: 1 },
+              },
+              {
+                head_key: 'additional_defendant_full_name',
+                text: 'James Brown',
+                head_opts: { count: 1 }
+              },
+              {
+                head_key: 'additional_defendant_full_name',
+                text: 'Timmy Turner',
+                head_opts: { count: 2 }
+              },
+            ]
+          )
+        end
+      end
+    end
+
+    context 'no defendants' do
+      let(:defendants) { [] }
+
+      it 'generates full name and maat for 1 main defendant' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'main_defendant_full_name',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
+              head_opts: { count: 1 },
+            },
+            {
+              head_key: 'main_defendant_maat',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
+              head_opts: { count: 1 },
+            }
+          ]
+        )
+      end
     end
 
     context '1 main defendant' do
@@ -86,14 +134,37 @@ RSpec.describe CheckAnswers::DefendantDetailsCard do
           [
             {
               head_key: 'main_defendant_full_name',
-              text: 'Tim Roy'
+              text: 'Tim Roy',
+              head_opts: { count: 1 },
             },
             {
               head_key: 'main_defendant_maat',
-              text: '123ABC'
+              text: '123ABC',
+              head_opts: { count: 1 },
             }
           ]
         )
+      end
+
+      context 'when values are missing' do
+        let(:main_defendant_maat) { nil }
+
+        it 'marks them as missing' do
+          expect(subject.row_data).to eq(
+            [
+              {
+                head_key: 'main_defendant_full_name',
+                text: 'Tim Roy',
+                head_opts: { count: 1 },
+              },
+              {
+                head_key: 'main_defendant_maat',
+                text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
+                head_opts: { count: 1 },
+              }
+            ]
+          )
+        end
       end
     end
     # rubocop:enable RSpec/ExampleLength
