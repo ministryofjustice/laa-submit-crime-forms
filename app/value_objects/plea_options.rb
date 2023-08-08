@@ -27,4 +27,12 @@ class PleaOptions < ValueObject
   def requires_date_field?
     HAS_DATE_FIELD.include?(self)
   end
+
+  def category
+    return :guilty_pleas if GUILTY_OPTIONS.include?(self)
+
+    return :not_guilty_pleas if NOT_GUILTY_OPTIONS.include?(self)
+
+    nil
+  end
 end
