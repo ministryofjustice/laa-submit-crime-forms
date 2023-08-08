@@ -3,28 +3,12 @@ require 'rails_helper'
 RSpec.describe CheckAnswers::HearingDetailsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { instance_double(Claim) }
-  let(:hearing_details_form) do
-    instance_double(Steps::HearingDetailsForm, first_hearing_date:, court:,
-       number_of_hearing:, youth_count:, in_area:, hearing_outcome:, matter_type:)
-  end
-
-  let(:first_hearing_date) { Date.new(2023, 3, 1) }
-  let(:number_of_hearing) { 1 }
-  let(:youth_count) { YesNoAnswer::NO }
-  let(:in_area) { YesNoAnswer::YES }
-  let(:court) { 'A Court' }
-  let(:hearing_outcome) { 'CP01' }
-  let(:matter_type) { '1' }
-
-  before do
-    allow(Steps::HearingDetailsForm).to receive(:build).and_return(hearing_details_form)
-  end
+  let(:claim) { build(:claim, :hearing_details) }
 
   describe '#initialize' do
     it 'creates the data instance' do
+      expect(Steps::HearingDetailsForm).to receive(:build).with(claim)
       subject
-      expect(Steps::HearingDetailsForm).to have_received(:build).with(claim)
     end
   end
 
@@ -65,6 +49,41 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
           }
         ]
       )
+    end
+
+    context 'when no data exists' do
+      let(:claim) { build(:claim) }
+
+      it 'generates missing data elements for hearing detail rows' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'hearing_date',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'number_of_hearing',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'youth_count',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'in_area',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'hearing_outcome',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'matter_type',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            }
+          ]
+        )
+      end
     end
     # rubocop:enable RSpec/ExampleLength
   end
