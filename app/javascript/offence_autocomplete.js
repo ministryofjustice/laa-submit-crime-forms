@@ -12,12 +12,12 @@ async function fetchOffences(){
   return offences
 }
 
-async function customSuggest(query, syncResults, results){
-  var results = await fetchOffences()
+async function customSuggest(query, syncResults){
+  let results = await fetchOffences()
 
   syncResults(query
     ? results.filter((result) => {
-        var resultContains = result.description.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        let resultContains = result.description.toLowerCase().indexOf(query.toLowerCase()) !== -1
         return resultContains
       })
     : []
@@ -65,7 +65,7 @@ $("document").ready(() => {
     initAutocomplete(elementId)
 
     //clear undefined options in accessible-autocomplete
-    $(`#${elementId}`).on("click focus", () => {
+    $(`#${elementId}`).on("click focus hover", () => {
       clearUndefinedSuggestions()
     })
   })
