@@ -7,9 +7,14 @@ const offenceSelectError = "steps-case-details-form-main-offence-field-error"
 const offenceElementIds = [offenceSelect, offenceSelectError]
 
 async function fetchOffences(){
-  const response = await fetch("/offences")
-  const offences = await response.json()
-  return offences
+  try{
+    const response = await fetch("/offences")
+    const offences = await response.json()
+    return offences
+  }
+  catch{
+    return [{type: "", description: "No entries found"}]
+  }
 }
 
 async function customSuggest(query, syncResults){
