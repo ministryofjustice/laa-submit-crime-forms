@@ -16,7 +16,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', javascript: true
     find_field('Main offence').native.send_keys(:return)
 
     expect(page).to have_field(
-      'Main offence', 
+      'Main offence',
       with: 'Wounding or causing grievous bodily harm with intent'
     )
 
