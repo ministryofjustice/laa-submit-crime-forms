@@ -59,6 +59,29 @@ FactoryBot.define do
       plea { PleaOptions.values.reject(&:requires_date_field?).sample.to_s }
     end
 
+    trait :claim_details do
+      prosecution_evidence { 1 }
+      defence_statement { 10 }
+      number_of_witnesses { 2 }
+      supplemental_claim { 'yes' }
+      preparation_time { 'yes' }
+      time_spent { 121 }
+      work_before { 'yes' }
+      work_before_date { Date.new(2020, 12, 1) }
+      work_after { 'yes' }
+      work_after_date { Date.new(2020, 1, 1) }
+    end
+
+    trait :claim_details_no do
+      supplemental_claim { 'no' }
+      preparation_time { 'no' }
+      time_spent { nil }
+      work_before { 'no' }
+      work_before_date { nil }
+      work_after { 'no' }
+      work_after_date { nil }
+    end
+
     trait :letters_calls do
       rep_order_date { Date.yesterday }
       letters { 2 }

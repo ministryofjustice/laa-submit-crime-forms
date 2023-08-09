@@ -3,22 +3,10 @@ require 'rails_helper'
 RSpec.describe CheckAnswers::OtherInfoCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { instance_double(Claim) }
-  let(:form) do
-    instance_double(Steps::OtherInfoForm, other_info:)
-  end
+  let(:claim) { build(:claim, other_info:, concluded:, conclusion:) }
   let(:other_info) { 'Line 1' }
-
-  before do
-    allow(Steps::OtherInfoForm).to receive(:build).and_return(form)
-  end
-
-  describe '#initialize' do
-    it 'creates the data instance' do
-      subject
-      expect(Steps::OtherInfoForm).to have_received(:build).with(claim)
-    end
-  end
+  let(:concluded) { 'no' }
+  let(:conclusion) { nil }
 
   describe '#title' do
     it 'shows correct title' do
@@ -34,6 +22,10 @@ RSpec.describe CheckAnswers::OtherInfoCard do
             {
               head_key: 'other_info',
               text: 'Line 1'
+            },
+            {
+              head_key: 'concluded',
+              text: 'No'
             }
           ]
         )
@@ -44,11 +36,77 @@ RSpec.describe CheckAnswers::OtherInfoCard do
       let(:other_info) { "Line 1\nLine 2" }
 
       it 'generates case detail rows with 1 line of address' do
-        expect(subject.row_data).to eq(
+        expect(filter_rows(subject.row_data, 'other_info')).to eq(
           [
             {
               head_key: 'other_info',
               text: 'Line 1<br>Line 2'
+            }
+          ]
+        )
+      end
+    end
+
+    context 'no information' do
+      let(:claim) { build(:claim) }
+
+      it 'generates a row with one line of relevant information' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'other_info',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'concluded',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            }
+          ]
+        )
+      end
+    end
+
+    context 'with conclusion' do
+      let(:concluded) { 'yes' }
+      let(:conclusion) { 'I was late' }
+
+      it 'generates a row with one line of relevant information' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'other_info',
+              text: 'Line 1'
+            },
+            {
+              head_key: 'concluded',
+              text: 'Yes'
+            },
+            {
+              head_key: 'conclusion',
+              text: 'I was late'
+            }
+          ]
+        )
+      end
+    end
+
+    context 'missing conclusion' do
+      let(:concluded) { 'yes' }
+
+      it 'generates a row with one line of relevant information' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'other_info',
+              text: 'Line 1'
+            },
+            {
+              head_key: 'concluded',
+              text: 'Yes'
+            },
+            {
+              head_key: 'conclusion',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             }
           ]
         )

@@ -29,7 +29,7 @@ module CheckAnswers
       end
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable  Metrics/AbcSize
     def additional_fields
       additional_fields = []
 
@@ -51,6 +51,6 @@ module CheckAnswers
 
       additional_fields
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize
   end
 end
