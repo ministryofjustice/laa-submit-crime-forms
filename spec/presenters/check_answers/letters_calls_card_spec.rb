@@ -3,28 +3,18 @@ require 'rails_helper'
 RSpec.describe CheckAnswers::LettersCallsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { instance_double(Claim) }
-  let(:letters_calls_form) do
-    instance_double(Steps::LettersCallsForm, letters:, calls:, letters_uplift:, letters_after_uplift:, calls_uplift:,
-calls_after_uplift:, total_cost:)
-  end
+  let(:claim) { build(:claim, letters:, calls:, letters_uplift:, calls_uplift:, reasons_for_claim:) }
 
   let(:letters) { 20 }
   let(:calls) { 5 }
   let(:letters_uplift) { 20 }
   let(:calls_uplift) { 15 }
-  let(:letters_after_uplift) { 98.16 }
-  let(:calls_after_uplift) { 23.52 }
-  let(:total_cost) { 121.68 }
-
-  before do
-    allow(Steps::LettersCallsForm).to receive(:build).and_return(letters_calls_form)
-  end
+  let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
 
   describe '#initialize' do
     it 'creates the data instance' do
+      expect(Steps::LettersCallsForm).to receive(:build).with(claim)
       subject
-      expect(Steps::LettersCallsForm).to have_received(:build).with(claim)
     end
   end
 
@@ -34,9 +24,8 @@ calls_after_uplift:, total_cost:)
     end
   end
 
-  # rubocop:disable RSpec/ExampleLength
   describe '#row_data' do
-    context 'letters and calls have uplift' do
+    context 'when claim justification includes enhanced rate' do
       it 'generates letters and calls rows' do
         expect(subject.row_data).to eq(
           [
@@ -78,14 +67,10 @@ calls_after_uplift:, total_cost:)
       end
     end
 
-    context 'letters and calls have no uplift' do
-      let(:letters_uplift) { nil }
-      let(:calls_uplift) { nil }
-      let(:letters_after_uplift) { 81.80 }
-      let(:calls_after_uplift) { 20.45 }
-      let(:total_cost) { 102.25 }
+    context 'when claim justification does not include enhanced rate' do
+      let(:reasons_for_claim) { [ReasonForClaim::COUNCEL_OR_AGENT_ASSIGNED.to_s] }
 
-      it 'generates letters and calls rows' do
+      it 'does not include the uplift rows' do
         expect(subject.row_data).to eq(
           [
             {
@@ -97,20 +82,12 @@ calls_after_uplift:, total_cost:)
               text: 20
             },
             {
-              head_key: 'letters_uplift',
-              text: '0%'
-            },
-            {
               head_key: 'letters_payment',
               text: '£81.80'
             },
             {
               head_key: 'calls',
               text: 5
-            },
-            {
-              head_key: 'calls_uplift',
-              text: '0%'
             },
             {
               head_key: 'calls_payment',
@@ -127,13 +104,7 @@ calls_after_uplift:, total_cost:)
     end
 
     context 'no letters or calls requested' do
-      let(:letters_uplift) { nil }
-      let(:calls_uplift) { nil }
-      let(:letters_after_uplift) { nil }
-      let(:calls_after_uplift) { nil }
-      let(:total_cost) { 0 }
-      let(:letters) { nil }
-      let(:calls) { nil }
+      let(:claim) { build(:claim, reasons_for_claim:) }
 
       it 'generates letters and calls rows' do
         expect(subject.row_data).to eq(
@@ -176,5 +147,4 @@ calls_after_uplift:, total_cost:)
       end
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 end
