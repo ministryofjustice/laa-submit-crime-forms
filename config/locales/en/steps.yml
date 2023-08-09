@@ -178,7 +178,6 @@ en:
         file_upload:
           heading: Upload files
           caption: Files must be a DOC, DOCX, RTF, JPG, BMP, PNG, TIF or PDF.
-        supporting_evidence: I'll send the supporting evidence by post
         action: Action
         status: Status
         file_name: File Name

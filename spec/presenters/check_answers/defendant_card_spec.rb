@@ -36,7 +36,6 @@ RSpec.describe CheckAnswers::DefendantCard do
   end
 
   describe '#row_data' do
-    # rubocop:disable RSpec/ExampleLength
     context '1 main defendant and 2 additional defendants' do
       let(:defendants) { [main_defendant, first_additional_defendant, second_additional_defendant] }
 
@@ -167,6 +166,5 @@ RSpec.describe CheckAnswers::DefendantCard do
         end
       end
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 end

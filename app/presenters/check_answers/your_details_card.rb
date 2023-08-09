@@ -10,7 +10,7 @@ module CheckAnswers
       @section = 'firm_details'
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize
     def row_data
       data = [
         {
@@ -50,7 +50,7 @@ module CheckAnswers
 
       data
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize
 
     private
 

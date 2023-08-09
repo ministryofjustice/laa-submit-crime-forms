@@ -35,9 +35,9 @@ en:
             hearing_outcome: Hearing outcome
             matter_type: Matter type
           reason_for_claim:
-            reasons_for_claim: Why are you claiming a non-standard magistrate fee?
+            reasons_for_claim: Why are you claiming a non-standard magistrates' court payment?
             representation_order_withdrawn_date: Representation order withdrawn date
-            reason_for_claim_other_details: Other details
+            reason_for_claim_other_details: Other details about why a non-standard magistrates' court payment is being claimed
           claim_details:
             prosecution_evidence: Number of pages of prosecution evidence
             defence_statement: Number of pages of defence statements
@@ -68,6 +68,8 @@ en:
             waiting: Waiting
           other_info:
             other_info: Other relevant information
+            concluded: Proceedings concluded over 3 months ago
+            conclusion: Reason for not claiming within 3 months
           case_disposal:
             pending: Category
             guilty_pleas: Category 1
@@ -75,6 +77,7 @@ en:
             arrest_warrant_date: Date of warrant issued
             cracked_trial_date: Date guilty plea indicated to solicitor
           supporting_evidence:
+            send_by_post: Sending supporting evidence by post
             supporting_evidence: Evidence %{count}
       groups:
         about_you:

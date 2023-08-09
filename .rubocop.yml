@@ -103,6 +103,8 @@ Metrics/ClassLength:
 # To be tweaked until we find the right balance
 Metrics/MethodLength:
   Max: 12
+  Exclude:
+    - app/presenters/check_answers/**/*
 
 # To be tweaked until we find the right balance
 Metrics/AbcSize:
@@ -168,6 +170,7 @@ RSpec/ExampleLength:
   Max: 16
   Exclude:
     - spec/steps/**/integration_spec.rb
+    - spec/presenters/check_answers/**/*
 
 Lint/MissingSuper:
   Exclude:

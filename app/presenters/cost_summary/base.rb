@@ -1,6 +1,7 @@
 module CostSummary
   class Base
     include ActionView::Helpers::NumberHelper
+    include LaaMultiStepForms::CheckMissingHelper
 
     def translate(key, **)
       if key[0] == ('.')
