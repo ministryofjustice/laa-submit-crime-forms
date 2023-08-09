@@ -9,6 +9,7 @@ RSpec.describe Decisions::BackDecisionTree do
   let(:work_items) { [] }
   let(:disbursements) { [] }
 
+  it_behaves_like 'a generic decision', from: 'steps/start_page', goto: { action: :edit, controller: 'steps/claim_type' }
   it_behaves_like 'a generic decision', from: 'steps/firm_details', goto: { action: :show, controller: 'steps/start_page' }
 
   context 'when no defendants' do
@@ -16,7 +17,7 @@ RSpec.describe Decisions::BackDecisionTree do
   end
 
   context 'when any defendants' do
-    let(:defendants) { [build(:defendant)] }
+    before { allow(application.defendants).to receive(:exists?).and_return(true) }
 
     it_behaves_like 'a generic decision', from: 'steps/defendant_details', goto: { action: :edit, controller: 'steps/defendant_summary' }
   end
@@ -31,17 +32,18 @@ RSpec.describe Decisions::BackDecisionTree do
 
   context 'when no work items' do
     it_behaves_like 'a generic decision', from: 'steps/work_item', goto: { action: :edit, controller: 'steps/claim_details' }
+    it_behaves_like 'a generic decision', from: 'steps/letters_calls', goto: { action: :edit, controller: 'steps/work_item', work_item_id: StartPage::NEW_RECORD }
   end
 
   context 'when any work items' do
-    let(:work_items) { [build(:work_item)] }
+    before { allow(application.work_items).to receive(:exists?).and_return(true) }
 
     it_behaves_like 'a generic decision', from: 'steps/work_item', goto: { action: :edit, controller: 'steps/work_items' }
+    it_behaves_like 'a generic decision', from: 'steps/letters_calls', goto: { action: :edit, controller: 'steps/work_items' }
   end
 
   it_behaves_like 'a generic decision', from: 'steps/work_items', goto: { action: :edit, controller: 'steps/claim_details' }
   it_behaves_like 'a generic decision', from: 'steps/work_item_delete', goto: { action: :edit, controller: 'steps/work_items' }
-  it_behaves_like 'a generic decision', from: 'steps/letters_calls', goto: { action: :edit, controller: 'steps/work_items' }
   it_behaves_like 'a generic decision', from: 'steps/disbursement_add', goto: { action: :edit, controller: 'steps/letters_calls' }
 
   context 'when no disbursements' do
@@ -50,7 +52,7 @@ RSpec.describe Decisions::BackDecisionTree do
   end
 
   context 'when any disbursements' do
-    let(:disbursements) { [build(:disbursement)] }
+    before { allow(application.disbursements).to receive(:exists?).and_return(true) }
 
     it_behaves_like 'a generic decision', from: 'steps/disbursement_type', goto: { action: :edit, controller: 'steps/disbursements' }
     it_behaves_like 'a generic decision', from: 'steps/cost_summary', goto: { action: :edit, controller: 'steps/disbursements' }
