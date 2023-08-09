@@ -2,12 +2,23 @@
 
 module CheckAnswers
   class WorkItemsCard < Base
-    attr_reader :work_items
+    attr_reader :claim, :work_items
 
     def initialize(claim)
+      @claim = claim
       @work_items = CostSummary::WorkItems.new(claim.work_items, claim)
       @group = 'about_claim'
       @section = 'work_items'
+    end
+
+    def title(**)
+      ApplicationController.helpers.sanitize(
+        [
+          I18n.t("steps.check_answers.groups.#{group}.#{section}.title", **),
+          check_missing(claim.work_items.any?) { nil },
+        ].compact.join(' '),
+        tags: %w[strong]
+      )
     end
 
     def row_data

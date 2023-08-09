@@ -19,7 +19,6 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
   end
 
   describe '#row_data' do
-    # rubocop:disable RSpec/ExampleLength
     it 'generates hearing details rows' do
       expect(subject.row_data).to eq(
         [
@@ -85,6 +84,35 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
         )
       end
     end
-    # rubocop:enable RSpec/ExampleLength
+
+    context 'when court is set, but in area is blank' do
+      let(:claim) { build(:claim, court: 'Apples') }
+
+      it 'generates missing data elements for hearing detail rows' do
+        expect(filter_rows(subject.row_data, 'in_area')).to eq(
+          [
+            {
+              head_key: 'in_area',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong> - Apples'
+            },
+          ]
+        )
+      end
+    end
+
+    context 'when in area is set, but in court is blank' do
+      let(:claim) { build(:claim, in_area: 'yes') }
+
+      it 'generates missing data elements for hearing detail rows' do
+        expect(filter_rows(subject.row_data, 'in_area')).to eq(
+          [
+            {
+              head_key: 'in_area',
+              text: 'Yes - <strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+          ]
+        )
+      end
+    end
   end
 end

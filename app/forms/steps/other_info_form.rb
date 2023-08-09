@@ -12,8 +12,8 @@ module Steps
       if: ->(form) { form.concluded == YesNoAnswer::YES }
 
     BOOLEAN_FIELDS.each do |field|
-      validates field, presence: true, inclusion: { in: YesNoAnswer.values }
       attribute field, :value_object, source: YesNoAnswer
+      validates field, presence: true, inclusion: { in: YesNoAnswer.values }
     end
 
     def boolean_fields

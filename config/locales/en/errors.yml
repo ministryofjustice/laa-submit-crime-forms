@@ -177,8 +177,8 @@ en:
               blank: Fee earner must be set
             time_spent:
               blank: Time spent must be set
-              blank_hour: Hours must be set
-              invalid_hour: Hours must be greater than 0
+              blank_hours: Hours must be set
+              invalid_hours: Hours must be greater than 0
               blank_minutes: Minutes must be set
               invalid_minutes: Minutes must be between 0 and 59
               invalid_period: Period must be greater than 0
