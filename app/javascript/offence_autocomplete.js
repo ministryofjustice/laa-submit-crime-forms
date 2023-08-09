@@ -13,16 +13,15 @@ async function fetchOffences(){
     return offences
   }
   catch{
-    return [{type: "", description: "No entries found"}]
+    return [{type: "", name: "No entries found"}]
   }
 }
 
 async function customSuggest(query, syncResults){
-  let results = await fetchOffences()
-
+  let results = await fetchOffences();
   syncResults(query
     ? results.filter((result) => {
-        var resultContains = result.description.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        var resultContains = result.search_value.indexOf(query.toLowerCase()) !== -1
         return resultContains
       })
     : []
@@ -30,16 +29,21 @@ async function customSuggest(query, syncResults){
 }
 
 function inputValueTemplate(result){
-  return result?.description
+  return result?.name
 }
 
 function suggestionTemplate(result){
-  return result && `${result.description}<br><span class="autocomplete__caption">${result.type}</span>`
+  if(result){
+    return `${result.name}<br><span class="autocomplete__caption">${result.type}</span>`
+  }
+  else{
+    return ""
+  }
+  
 }
 
 function initAutocomplete(elementId){
   let elements = $(`#${elementId}`)
-  
   if(elements.length > 0){
     let element = elements[0]
     let name = element.getAttribute("data-name")

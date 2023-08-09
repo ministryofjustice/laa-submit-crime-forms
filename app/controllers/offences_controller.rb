@@ -5,6 +5,8 @@ class OffencesController < ApplicationController
     respond_to do |format|
       format.json { render json: offences }
     end
+
+    expires_in 60.minutes
   end
 
   private

@@ -361,4 +361,12 @@ MainOffence = Struct.new(:type, :description) do
   def name
     description.to_s
   end
+
+  def as_json(*)
+    {
+      type: type,
+      name: description,
+      search_value: "#{type} #{description}".downcase,
+    }
+  end
 end
