@@ -29,7 +29,7 @@ function inputValueTemplate(result){
 }
 
 function suggestionTemplate(result){
-  return result && `<span class="govuk-body">${result.description}</span><br><span class="govuk-caption-m">${result.type}</span>`
+  return result && `${result.description}<br><span class="autocomplete__caption">${result.type}</span>`
 }
 
 function initAutocomplete(elementId){
