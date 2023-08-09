@@ -25,7 +25,7 @@ async function customSuggest(query, syncResults){
 }
 
 function inputValueTemplate(result){
-  return result && result.description
+  return result?.description
 }
 
 function suggestionTemplate(result){
