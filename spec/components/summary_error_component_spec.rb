@@ -26,6 +26,12 @@ RSpec.describe SummaryErrorComponent, type: :component do
     CONTENT
   end
 
+  let(:helpers) { double(:helpers, current_application: double(:application)) }
+
+  before do
+    allow(component).to receive(:helpers).and_return(helpers)
+  end
+
   context 'when all records are valid' do
     let(:valid) { true }
 

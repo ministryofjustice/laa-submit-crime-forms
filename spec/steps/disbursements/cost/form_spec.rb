@@ -167,7 +167,7 @@ RSpec.describe Steps::DisbursementCostForm do
   end
 
   describe 'save!' do
-    let(:application) { Claim.create!(office_code: 'AAA') }
+    let(:application) { create(:claim) }
     let(:record) { Disbursement.create!(disbursement_type: disbursement_type, claim: application) }
     let(:disbursement_type) { DisbursementTypes::Car.to_s }
 

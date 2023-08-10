@@ -22,7 +22,7 @@ RSpec.describe Steps::WorkItemDeleteController, type: :controller do
     # to the shared examples, or to also create the partner associated record.
     #
     context 'when application is found' do
-      let(:existing_case) { Claim.create(office_code: 'AAA') }
+      let(:existing_case) { create(:claim) }
       let(:current_application) do
         instance_double(Claim, work_items: work_items, navigation_stack: [], 'navigation_stack=': true, save!: true)
       end
@@ -82,7 +82,7 @@ RSpec.describe Steps::WorkItemDeleteController, type: :controller do
     end
 
     context 'when application is found' do
-      let(:existing_case) { Claim.create(office_code: 'AAA') }
+      let(:existing_case) { create(:claim) }
       let(:current_application) do
         instance_double(Claim, work_items: work_items, navigation_stack: [], 'navigation_stack=': true, save!: true)
       end
@@ -96,7 +96,7 @@ RSpec.describe Steps::WorkItemDeleteController, type: :controller do
         let(:work_item) { instance_double(WorkItem) }
 
         context 'and work_item exists' do
-          let(:existing_case) { Claim.create!(office_code: 'AAA') }
+          let(:existing_case) { create(:claim) }
 
           before do
             allow(Steps::DeleteForm).to receive(:new).and_return(form_object)

@@ -38,11 +38,13 @@ class Provider < ApplicationRecord
     def ensure_default_office(record)
       return if record.office_codes.include?(record.selected_office_code)
 
-      record.update(
-        selected_office_code: (
-          record.office_codes.first unless record.multiple_offices?
-        )
-      )
+      # TODO: add code to handle multiple office codes
+      # record.update(
+      #   selected_office_code: (
+      #     record.office_codes.first unless record.multiple_offices?
+      #   )
+      # )
+      record.update(selected_office_code: record.office_codes.first)
     end
   end
 end
