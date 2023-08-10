@@ -121,6 +121,9 @@ en:
         miles: For example, 2.5 miles
         total_cost_without_vat: Enter the cost, not including VAT, for example £301.55
         details: For example, why this disbursement was needed
+      steps_other_info_form:
+        other_info: For example, justification for the time spent on the case, or for any uplift claimed
+
 
     label:
       steps_claim_type_form:
@@ -259,7 +262,7 @@ en:
         apply_vat_options:
           'true': Apply 20% VAT to this work
       steps_other_info_form:
-        other_info: For example, justification for the time spent on the case, or for any uplift claimed
+        other_info: Add other information
         concluded_options:
           'yes': 'Yes'
           'no': 'No'
