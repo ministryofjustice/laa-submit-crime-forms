@@ -2,9 +2,6 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 import $ from 'jquery'
 
 window.$ = $
-const offenceSelect = "steps-case-details-form-main-offence-field"
-const offenceSelectError = "steps-case-details-form-main-offence-field-error"
-const offenceElementIds = [offenceSelect, offenceSelectError]
 
 async function fetchOffences(){
   try{
@@ -39,7 +36,6 @@ function suggestionTemplate(result){
   else{
     return ""
   }
-  
 }
 
 function initAutocomplete(elementId){
@@ -69,7 +65,11 @@ function clearUndefinedSuggestions(){
 }
 
 $("document").ready(() => {
-  offenceElementIds.forEach((elementId) => {
+  let selectElements = $("*[data-module='offence-autocomplete']")
+
+  selectElements.each((index, element) => {
+    let elementId = element.id
+    
     //enhance offence select tags
     initAutocomplete(elementId)
 
