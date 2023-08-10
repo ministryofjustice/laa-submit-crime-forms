@@ -4,7 +4,7 @@ RSpec.describe Steps::ClaimConfirmationController, type: :controller do
   it_behaves_like 'a show step controller'
 
   describe '#show' do
-    let(:claim) { Claim.create!(office_code: 'AAA') }
+    let(:claim) { create(:claim) }
     let(:application) { instance_double(Claim, laa_reference: 'ABC123') }
 
     it 'assigns the correct application reference' do

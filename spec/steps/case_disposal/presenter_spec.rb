@@ -3,12 +3,11 @@ require 'rails_helper'
 RSpec.describe Tasks::CaseDisposal, type: :system do
   subject { described_class.new(application:) }
 
-  let(:application) { Claim.new(attributes) }
+  let(:application) { build(:claim, attributes) }
   let(:attributes) do
     {
-      id: id,
-      office_code: 'AAA',
-      plea: plea
+      id:,
+      plea:
     }
   end
   let(:id) { SecureRandom.uuid }

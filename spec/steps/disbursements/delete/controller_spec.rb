@@ -22,7 +22,7 @@ RSpec.describe Steps::DisbursementDeleteController, type: :controller do
     # to the shared examples, or to also create the partner associated record.
     #
     context 'when application is found' do
-      let(:existing_case) { Claim.create(office_code: 'AAA') }
+      let(:existing_case) { create(:claim) }
       let(:current_application) do
         instance_double(Claim, disbursements: disbursements, navigation_stack: [], 'navigation_stack=': true,
 save!: true)
@@ -83,7 +83,7 @@ save!: true)
     end
 
     context 'when application is found' do
-      let(:existing_case) { Claim.create(office_code: 'AAA') }
+      let(:existing_case) { create(:claim) }
       let(:current_application) do
         instance_double(Claim, disbursements: disbursements, navigation_stack: [], 'navigation_stack=': true,
 save!: true)
@@ -98,7 +98,7 @@ save!: true)
         let(:disbursement) { instance_double(Disbursement) }
 
         context 'and disbursement exists' do
-          let(:existing_case) { Claim.create!(office_code: 'AAA') }
+          let(:existing_case) { create(:claim) }
 
           before do
             allow(Steps::DeleteForm).to receive(:new).and_return(form_object)

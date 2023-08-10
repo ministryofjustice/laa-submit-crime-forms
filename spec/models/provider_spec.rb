@@ -41,9 +41,18 @@ RSpec.describe Provider, type: :model do
           expect { described_class.from_omniauth(auth) }.to change(described_class, :count).by(1)
         end
 
-        it 'does not set the selected_office_code' do
+        # TODO: Fully implement multiple offices functionality. We are currently
+        # setting the selected office to the first in the list to ensure it is always
+        # set, however we will need to pull over the office selection code at some
+        # point at which stage this test should be re-endabled
+        xit 'does not set the selected_office_code' do
           described_class.from_omniauth(auth)
           expect(described_class.last.selected_office_code).to be_nil
+        end
+
+        it 'sets the selected_office_code as the first office code' do
+          described_class.from_omniauth(auth)
+          expect(described_class.last.selected_office_code).to eq('A1')
         end
       end
 
