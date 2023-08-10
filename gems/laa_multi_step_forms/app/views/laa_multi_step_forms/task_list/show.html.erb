@@ -1,5 +1,12 @@
 <% title t('.page_title') %>
-<% step_header(path: :back) %>
+<%
+  # hack to allow the back function here to be overwritten from the controller
+  if local_assigns[:header]
+    instance_exec(&local_assigns[:header])
+  else
+    step_header(path: :back)
+  end
+%>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
