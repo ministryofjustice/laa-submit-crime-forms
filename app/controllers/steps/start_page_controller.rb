@@ -10,7 +10,7 @@ module Steps
       # passed in separately to current_application to
       # allow it to be wrapped in a presenter in the future
       @application = current_application
-      render 'laa_multi_step_forms/task_list/show', locals: { header: -> { decision_step_header }}
+      render 'laa_multi_step_forms/task_list/show', locals: { header: -> { decision_step_header } }
     end
   end
 end
