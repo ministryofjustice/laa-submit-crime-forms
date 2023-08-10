@@ -30,7 +30,7 @@ export function inputValueTemplate(result){
 }
 
 export function suggestionTemplate(result){
-  if(result.name && result.type){
+  if(result?.name && result?.type){
     return `${result.name}<br><span class="autocomplete__caption">${result.type}</span>`
   }
   else{
