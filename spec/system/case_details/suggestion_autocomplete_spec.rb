@@ -14,9 +14,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', javascript: true
 
     offence_field = find_field('Main offence')
     offence_field.fill_in with: 'Wounding or causing'
-    page.all('li', text: 'Wounding or causing grievous bodily harm with intent') do |item|
-      item.click
-    end
+    page.all('li', text: 'Wounding or causing grievous bodily harm with intent', &:click)
 
     expect(page).to have_field(
       'Main offence',
