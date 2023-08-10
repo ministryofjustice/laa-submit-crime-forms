@@ -41,9 +41,14 @@ RSpec.describe Provider, type: :model do
           expect { described_class.from_omniauth(auth) }.to change(described_class, :count).by(1)
         end
 
-        it 'does not set the selected_office_code' do
+        xit 'does not set the selected_office_code' do
           described_class.from_omniauth(auth)
           expect(described_class.last.selected_office_code).to be_nil
+        end
+
+        it 'sets the selected_office_code as the first office code' do
+          described_class.from_omniauth(auth)
+          expect(described_class.last.selected_office_code).to eq('A1')
         end
       end
 

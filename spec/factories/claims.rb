@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :claim do
     id { SecureRandom.uuid }
     submitter { Provider.find_by(uid: 'test-user') || create(:provider) }
-    office_code { 'AAA' }
+    office_code { '1A123B' }
 
     trait :complete do
       firm_details
