@@ -1,4 +1,5 @@
 class Claim < ApplicationRecord
+  belongs_to :submitter, class_name: 'Provider'
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
   has_many :defendants, -> { order(:position) }, dependent: :destroy, inverse_of: :claim
@@ -8,6 +9,8 @@ class Claim < ApplicationRecord
                              order(:disbursement_date, :disbursement_type, :id)
                            }, dependent: :destroy, inverse_of: :claim
   has_many :supporting_evidence, -> { order(:created_at, :file_name) }, dependent: :destroy, inverse_of: :claim
+
+  scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
 
   def date
     rep_order_date || cntp_date

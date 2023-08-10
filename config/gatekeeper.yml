@@ -8,6 +8,7 @@ localhost:
   office_codes:
     - 1A123B # samlmock and tests
     - 1K022G # temporarily, portal stg
+    - AAA
 
 staging:
   office_codes:

@@ -23,7 +23,7 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class, additional_pa
     end
 
     context 'when an application in progress is found' do
-      let(:existing_case) { Claim.create(office_code: 'AAA') }
+      let(:existing_case) { create(:claim) }
 
       before do
         allow(form_class).to receive(:new).and_return(form_object)

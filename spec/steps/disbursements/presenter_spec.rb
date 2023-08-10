@@ -3,14 +3,13 @@ require 'rails_helper'
 RSpec.describe Tasks::Disbursements, type: :system do
   subject { described_class.new(application:) }
 
-  let(:application) { Claim.new(attributes) }
+  let(:application) { build(:claim, attributes) }
   let(:attributes) do
     {
-      id: id,
-      office_code: 'AAA',
-      disbursements: disbursements,
-      navigation_stack: navigation_stack,
-      has_disbursements: has_disbursements
+      id:,
+      disbursements:,
+      navigation_stack:,
+      has_disbursements:
     }
   end
   let(:id) { SecureRandom.uuid }

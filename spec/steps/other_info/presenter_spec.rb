@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Tasks::OtherInfo, type: :system do
   subject { described_class.new(application:) }
 
-  let(:application) { Claim.new(attributes) }
-  let(:attributes) { { id: id, office_code: 'AAA', navigation_stack: navigation_stack } }
+  let(:application) { build(:claim, attributes) }
+  let(:attributes) { { id:, navigation_stack: } }
   let(:id) { SecureRandom.uuid }
   let(:navigation_stack) { [] }
 

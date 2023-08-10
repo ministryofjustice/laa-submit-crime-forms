@@ -22,7 +22,7 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
     # to the shared examples, or to also create the partner associated record.
     #
     context 'when application is found' do
-      let(:existing_case) { Claim.create(office_code: 'AAA') }
+      let(:existing_case) { create(:claim) }
       let(:current_application) do
         instance_double(Claim, defendants: defendants, navigation_stack: [], 'navigation_stack=': true, save!: true)
       end
@@ -85,7 +85,7 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
     end
 
     context 'when application is found' do
-      let(:existing_case) { Claim.create(office_code: 'AAA') }
+      let(:existing_case) { create(:claim) }
       let(:current_application) do
         instance_double(Claim, defendants: defendants, navigation_stack: [], 'navigation_stack=': true, save!: true)
       end
@@ -100,7 +100,7 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
         let(:defendant) { instance_double(Defendant) }
 
         context 'and defendant exists' do
-          let(:existing_case) { Claim.create!(office_code: 'AAA') }
+          let(:existing_case) { create(:claim) }
 
           before do
             allow(Steps::DefendantDeleteForm).to receive(:new).and_return(form_object)

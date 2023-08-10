@@ -372,7 +372,7 @@ RSpec.describe Steps::WorkItemForm do
 
   describe 'save!' do
     let(:application) do
-      Claim.create!(office_code: 'AAA', reasons_for_claim: [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s])
+      create(:claim, reasons_for_claim: [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s])
     end
     let(:record) { WorkItem.create!(uplift: 40, claim: application) }
 

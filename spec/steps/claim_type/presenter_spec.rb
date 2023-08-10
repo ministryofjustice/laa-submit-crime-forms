@@ -3,13 +3,12 @@ require 'rails_helper'
 RSpec.describe Tasks::ClaimType, type: :system do
   subject { described_class.new(application:) }
 
-  let(:application) { Claim.new(attributes) }
+  let(:application) { build(:claim, attributes) }
   let(:attributes) do
     {
-      id: id,
-      office_code: 'AAA',
-      firm_office: firm_office,
-      solicitor: solicitor,
+      id:,
+      firm_office:,
+      solicitor:,
     }
   end
   let(:id) { SecureRandom.uuid }

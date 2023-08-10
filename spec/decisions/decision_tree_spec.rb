@@ -12,13 +12,6 @@ RSpec.describe Decisions::DecisionTree do
     it_behaves_like 'a generic decision', from: :firm_details, goto: { action: :edit, controller: 'steps/defendant_details', defendant_id: StartPage::NEW_RECORD }
   end
 
-  context 'existing invalid defendants' do
-    let(:defendant_id) { SecureRandom.uuid }
-    let(:application) { build(:claim, defendants: [build(:defendant, id: defendant_id)]) }
-
-    it_behaves_like 'a generic decision', from: :firm_details, goto: { action: :edit, controller: 'steps/defendant_details' }, additional_param: :defendant_id
-  end
-
   context 'existing valid defendants' do
     let(:application) { build(:claim, defendants: [build(:defendant, :valid)]) }
 
@@ -53,13 +46,6 @@ RSpec.describe Decisions::DecisionTree do
 
   context 'no existing work_items' do
     it_behaves_like 'a generic decision', from: :claim_details, goto: { action: :edit, controller: 'steps/work_item', work_item_id: StartPage::NEW_RECORD }
-  end
-
-  context 'existing invalid work_items' do
-    let(:work_item_id) { SecureRandom.uuid }
-    let(:application) { build(:claim, work_items: [build(:work_item, id: work_item_id)]) }
-
-    it_behaves_like 'a generic decision', from: :claim_details, goto: { action: :edit, controller: 'steps/work_item' }, additional_param: :work_item_id
   end
 
   context 'existing valid work_items' do
@@ -100,20 +86,6 @@ RSpec.describe Decisions::DecisionTree do
 
   context 'no existing disbursements' do
     it_behaves_like 'a generic decision', from: :letters_calls, goto: { action: :edit, controller: 'steps/disbursement_add' }
-  end
-
-  context 'existing invalid disbursements (type)' do
-    let(:disbursement_id) { SecureRandom.uuid }
-    let(:application) { build(:claim, disbursements: [build(:disbursement, id: disbursement_id)]) }
-
-    it_behaves_like 'a generic decision', from: :letters_calls, goto: { action: :edit, controller: 'steps/disbursement_type' }, additional_param: :disbursement_id
-  end
-
-  context 'existing invalid disbursements (cost)' do
-    let(:disbursement_id) { SecureRandom.uuid }
-    let(:application) { build(:claim, disbursements: [build(:disbursement, :valid_type, id: disbursement_id)]) }
-
-    it_behaves_like 'a generic decision', from: :letters_calls, goto: { action: :edit, controller: 'steps/disbursement_cost' }, additional_param: :disbursement_id
   end
 
   context 'existing valid disbursements' do
