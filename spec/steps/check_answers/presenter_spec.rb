@@ -6,8 +6,8 @@ RSpec.describe Tasks::CheckAnswers, type: :system do
   let(:application) { Claim.new(attributes) }
   let(:attributes) do
     {
-      id: id,
-      navigation_stack: navigation_stack
+      id:,
+      navigation_stack:
     }
   end
   let(:id) { SecureRandom.uuid }

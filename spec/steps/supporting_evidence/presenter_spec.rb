@@ -4,7 +4,7 @@ RSpec.describe Tasks::SupportingEvidence, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { create(:claim, attributes) }
-  let(:attributes) { { id: id } }
+  let(:attributes) { { id: } }
   let(:id) { SecureRandom.uuid }
 
   describe '#path' do

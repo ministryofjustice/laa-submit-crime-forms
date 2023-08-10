@@ -10,11 +10,11 @@ class Claim < ApplicationRecord
                            }, dependent: :destroy, inverse_of: :claim
   has_many :supporting_evidence, -> { order(:created_at, :file_name) }, dependent: :destroy, inverse_of: :claim
 
-  scope :for, ->(provider) do
+  scope :for, lambda { |provider|
     joins('JOIN providers on 1=1')
       .where(providers: { id: provider.id })
       .where("claims.office_code=providers.settings->>'selected_office_code'")
-  end
+  }
 
   def date
     rep_order_date || cntp_date

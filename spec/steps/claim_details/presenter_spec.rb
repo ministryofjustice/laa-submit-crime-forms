@@ -6,8 +6,8 @@ RSpec.describe Tasks::ClaimDetails, type: :system do
   let(:application) { create(:claim, attributes) }
   let(:attributes) do
     {
-      id: id,
-      plea: plea
+      id:,
+      plea:
     }
   end
   let(:id) { SecureRandom.uuid }

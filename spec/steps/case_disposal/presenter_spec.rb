@@ -6,8 +6,8 @@ RSpec.describe Tasks::CaseDisposal, type: :system do
   let(:application) { Claim.new(attributes) }
   let(:attributes) do
     {
-      id: id,
-      plea: plea
+      id:,
+      plea:
     }
   end
   let(:id) { SecureRandom.uuid }

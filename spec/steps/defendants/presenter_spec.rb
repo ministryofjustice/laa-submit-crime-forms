@@ -6,9 +6,9 @@ RSpec.describe Tasks::Defendants, type: :system do
   let(:application) { Claim.new(attributes) }
   let(:attributes) do
     {
-      id: id,
-      defendants: defendants,
-      navigation_stack: navigation_stack,
+      id:,
+      defendants:,
+      navigation_stack:,
     }
   end
   let(:id) { SecureRandom.uuid }

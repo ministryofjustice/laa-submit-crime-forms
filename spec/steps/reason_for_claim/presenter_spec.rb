@@ -6,8 +6,8 @@ RSpec.describe Tasks::ReasonForClaim, type: :system do
   let(:application) { Claim.new(attributes) }
   let(:attributes) do
     {
-      id: id,
-      reasons_for_claim: reasons_for_claim,
+      id:,
+      reasons_for_claim:,
     }
   end
   let(:id) { SecureRandom.uuid }

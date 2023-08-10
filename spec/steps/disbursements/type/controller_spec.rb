@@ -9,7 +9,7 @@ RSpec.describe Steps::DisbursementTypeController, type: :controller do
                   ->(scope) { { disbursement_id: scope.disbursement&.id || '4321' } }
 
   describe '#edit' do
-    let(:application) { create(:claim, disbursements: disbursements) }
+    let(:application) { create(:claim, disbursements:) }
     let(:disbursements) { [] }
 
     context 'and disbursement exists' do

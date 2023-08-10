@@ -6,9 +6,9 @@ RSpec.describe Tasks::FirmDetails, type: :system do
   let(:application) { Claim.new(attributes) }
   let(:attributes) do
     {
-      id: id,
-      firm_office: firm_office,
-      solicitor: solicitor,
+      id:,
+      firm_office:,
+      solicitor:,
     }
   end
   let(:id) { SecureRandom.uuid }

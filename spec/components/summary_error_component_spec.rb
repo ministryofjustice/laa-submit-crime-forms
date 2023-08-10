@@ -27,6 +27,7 @@ RSpec.describe SummaryErrorComponent, type: :component do
   end
 
   let(:helpers) { double(:helpers, current_application: double(:application)) }
+
   before do
     allow(component).to receive(:helpers).and_return(helpers)
   end

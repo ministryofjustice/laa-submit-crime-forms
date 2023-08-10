@@ -9,7 +9,7 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
                   ->(scope) { { defendant_id: scope.defendant&.id || '4321' } }
 
   describe '#edit' do
-    let(:application) { create(:claim, defendants: defendants) }
+    let(:application) { create(:claim, defendants:) }
     let(:defendants) { [] }
 
     context 'when defendant_id NEW_RECORD flag passed as id' do

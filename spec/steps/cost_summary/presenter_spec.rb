@@ -6,10 +6,10 @@ RSpec.describe Tasks::CostSummary, type: :system do
   let(:application) { Claim.new(attributes) }
   let(:attributes) do
     {
-      id: id,
-      navigation_stack: navigation_stack,
-      disbursements: disbursements,
-      has_disbursements: has_disbursements
+      id:,
+      navigation_stack:,
+      disbursements:,
+      has_disbursements:
     }
   end
   let(:id) { SecureRandom.uuid }
