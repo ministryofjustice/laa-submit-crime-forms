@@ -58,6 +58,9 @@ en:
             uplift_value: "%{value}%"
             currency_value: "£%{value}"
             total: Total
+          disbursements:
+            items: Items
+            items_total: <strong>Total per item</strong>
           work_items:
             items: Items
             items_total: <strong>Total per item</strong>
