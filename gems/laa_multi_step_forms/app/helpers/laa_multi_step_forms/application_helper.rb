@@ -33,7 +33,8 @@ module LaaMultiStepForms
         t('helpers.time_period.minutes', count: period % 60)
     end
 
-    def suggestion_select(form, field, values, id_field, value_field, data_module = 'accessible-autocomplete', *, data: {}, **)
+    def suggestion_select(form, field, values, id_field, value_field, data_module = 'accessible-autocomplete', *,
+                          data: {}, **)
       data[:module] = data_module
       data[:name] = "#{form.object_name}[#{field}_suggestion]"
 
