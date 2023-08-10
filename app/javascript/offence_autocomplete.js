@@ -3,7 +3,7 @@ import $ from 'jquery'
 
 window.$ = $
 
-async function fetchOffences(){
+export async function fetchOffences(){
   try{
     const response = await fetch("/offences")
     const offences = await response.json()
@@ -14,7 +14,7 @@ async function fetchOffences(){
   }
 }
 
-async function customSuggest(query, syncResults){
+export async function customSuggest(query, syncResults){
   let results = await fetchOffences();
   syncResults(query
     ? results.filter((result) => {
@@ -25,12 +25,12 @@ async function customSuggest(query, syncResults){
   )
 }
 
-function inputValueTemplate(result){
+export function inputValueTemplate(result){
   return result?.name
 }
 
-function suggestionTemplate(result){
-  if(result){
+export function suggestionTemplate(result){
+  if(result.name && result.type){
     return `${result.name}<br><span class="autocomplete__caption">${result.type}</span>`
   }
   else{
@@ -38,7 +38,7 @@ function suggestionTemplate(result){
   }
 }
 
-function initAutocomplete(elementId){
+export function initAutocomplete(elementId){
   let elements = $(`#${elementId}`)
   if(elements.length > 0){
     let element = elements[0]
