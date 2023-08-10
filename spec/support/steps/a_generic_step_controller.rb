@@ -22,7 +22,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
     # to the shared examples, or to also create the partner associated record.
     #
     context 'when application is found' do
-      let(:existing_case) { Claim.create(office_code: 'AAA') }
+      let(:existing_case) { create(:claim, submitter: auth_provider) }
 
       it 'responds with HTTP success' do
         get :edit, params: { id: existing_case, **additional_params }
@@ -52,7 +52,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
     end
 
     context 'when an application in progress is found' do
-      let(:existing_case) { Claim.create!(office_code: 'AAA') }
+      let(:existing_case) { create(:claim, submitter: auth_provider) }
 
       before do
         allow(form_class).to receive(:new).and_return(form_object)

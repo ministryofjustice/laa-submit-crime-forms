@@ -82,9 +82,7 @@ RSpec.describe Steps::DisbursementTypeForm do
   end
 
   describe 'save!' do
-    let(:application) do
-      Claim.create!(office_code: 'AAA')
-    end
+    let(:application) { create(:claim) }
     let(:record) { Disbursement.create!(other_type: OtherDisbursementTypes::ACCOUNTANTS.to_s, claim: application) }
 
     context 'when disbursement_type is not other' do

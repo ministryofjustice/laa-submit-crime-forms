@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_02_135602) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_09_170910) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_135602) do
     t.string "work_before"
     t.string "work_after"
     t.string "has_disbursements"
+    t.uuid "submitter_id"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
@@ -200,6 +201,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_135602) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "claims", "firm_offices"
+  add_foreign_key "claims", "providers", column: "submitter_id"
   add_foreign_key "claims", "solicitors"
   add_foreign_key "defendants", "claims"
   add_foreign_key "disbursements", "claims"
