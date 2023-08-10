@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User can fill in solicitor declaration', type: :system do
-  let(:claim) { Claim.create(office_code: 'AAAA') }
+  let(:claim) { create(:claim) }
 
   before do
     visit provider_saml_omniauth_callback_path

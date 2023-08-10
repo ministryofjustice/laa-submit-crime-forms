@@ -7,7 +7,6 @@ RSpec.describe Tasks::ReasonForClaim, type: :system do
   let(:attributes) do
     {
       id: id,
-      office_code: 'AAA',
       reasons_for_claim: reasons_for_claim,
     }
   end

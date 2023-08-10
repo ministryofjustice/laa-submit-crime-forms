@@ -7,7 +7,6 @@ RSpec.describe Tasks::Disbursements, type: :system do
   let(:attributes) do
     {
       id: id,
-      office_code: 'AAA',
       disbursements: disbursements,
       navigation_stack: navigation_stack,
       has_disbursements: has_disbursements

@@ -7,7 +7,6 @@ RSpec.describe Tasks::CostSummary, type: :system do
   let(:attributes) do
     {
       id: id,
-      office_code: 'AAA',
       navigation_stack: navigation_stack,
       disbursements: disbursements,
       has_disbursements: has_disbursements

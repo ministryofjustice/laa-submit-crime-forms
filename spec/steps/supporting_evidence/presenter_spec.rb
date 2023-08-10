@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Tasks::SupportingEvidence, type: :system do
   subject { described_class.new(application:) }
 
-  let(:application) { Claim.create(attributes) }
-  let(:attributes) { { id: id, office_code: 'AAA' } }
+  let(:application) { create(:claim, attributes) }
+  let(:attributes) { { id: id } }
   let(:id) { SecureRandom.uuid }
 
   describe '#path' do

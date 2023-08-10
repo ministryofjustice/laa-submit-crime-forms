@@ -7,7 +7,6 @@ RSpec.describe Tasks::WorkItems, type: :system do
   let(:attributes) do
     {
       id: id,
-      office_code: 'AAA',
       work_items: work_items,
       navigation_stack: navigation_stack,
     }

@@ -64,7 +64,7 @@ RSpec.describe Steps::FirmDetails::FirmOfficeForm do
   end
 
   describe 'save!' do
-    let!(:application) { Claim.create!(office_code: 'AAA', firm_office: firm_office) }
+    let!(:application) { create(:claim, firm_office: firm_office) }
     let(:firm_office) { nil }
 
     context 'when application has an existing firm_office' do

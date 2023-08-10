@@ -1,4 +1,5 @@
 class Claim < ApplicationRecord
+  belongs_to :submitter, class_name: 'Provider'
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
   has_many :defendants, -> { order(:position) }, dependent: :destroy, inverse_of: :claim

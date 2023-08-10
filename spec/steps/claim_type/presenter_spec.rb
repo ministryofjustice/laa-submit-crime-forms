@@ -7,7 +7,6 @@ RSpec.describe Tasks::ClaimType, type: :system do
   let(:attributes) do
     {
       id: id,
-      office_code: 'AAA',
       firm_office: firm_office,
       solicitor: solicitor,
     }

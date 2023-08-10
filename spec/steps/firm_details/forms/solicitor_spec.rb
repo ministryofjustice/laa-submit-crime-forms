@@ -133,7 +133,7 @@ RSpec.describe Steps::FirmDetails::SolicitorForm do
   end
 
   describe 'save!' do
-    let!(:application) { Claim.create!(office_code: 'AAA', solicitor: solicitor) }
+    let!(:application) { create(:claim, solicitor: solicitor) }
     let(:alternative_contact_details) { 'yes' }
     let(:solicitor) { nil }
 

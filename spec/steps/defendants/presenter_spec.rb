@@ -7,7 +7,6 @@ RSpec.describe Tasks::Defendants, type: :system do
   let(:attributes) do
     {
       id: id,
-      office_code: 'AAA',
       defendants: defendants,
       navigation_stack: navigation_stack,
     }

@@ -7,7 +7,6 @@ RSpec.describe Tasks::CaseDisposal, type: :system do
   let(:attributes) do
     {
       id: id,
-      office_code: 'AAA',
       plea: plea
     }
   end

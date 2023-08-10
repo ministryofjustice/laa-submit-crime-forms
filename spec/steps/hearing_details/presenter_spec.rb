@@ -3,11 +3,10 @@ require 'rails_helper'
 RSpec.describe Tasks::HearingDetails, type: :system do
   subject { described_class.new(application:) }
 
-  let(:application) { Claim.create(attributes) }
+  let(:application) { create(:claim, attributes) }
   let(:attributes) do
     {
       id: id,
-      office_code: 'AAA',
       plea: plea
     }
   end

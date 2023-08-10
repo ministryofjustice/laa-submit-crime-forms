@@ -19,6 +19,7 @@ class ClaimsController < ApplicationController
 
   def initialize_application(attributes = {}, &block)
     attributes[:office_code] = current_office_code
+    attributes[:submitter] = current_provider
     attributes[:laa_reference] = generate_laa_reference
     Claim.create!(attributes).tap(&block)
   end
