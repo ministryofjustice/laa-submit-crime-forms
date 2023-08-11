@@ -2,6 +2,7 @@
 
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'
+import accessibleAutocomplete from 'accessible-autocomplete'
 initAll()
 
 const $inputs = document.querySelectorAll('[data-module="govuk-input"]')
@@ -11,8 +12,7 @@ if ($inputs) {
   }
 }
 
-import accessibleAutocomplete from 'accessible-autocomplete'
-
+//enhance all tagged select elements to be accessible-autocomplete elements
 const $acElements = document.querySelectorAll('[data-module="accessible-autocomplete"]')
 if ($acElements) {
   for (let i = 0; i < $acElements.length; i++) {

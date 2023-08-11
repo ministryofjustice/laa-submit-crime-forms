@@ -1,3 +1,12 @@
 .autocomplete__hint, .autocomplete__input, .autocomplete__option {
   @include govuk-font($size: 19);
 }
+
+.autocomplete__option--focused .autocomplete__caption,
+.autocomplete__option:hover .autocomplete__caption {
+  color: white;
+}
+
+.autocomplete__caption {
+  color: $govuk-secondary-text-colour;
+}
