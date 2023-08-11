@@ -47,7 +47,9 @@ en:
             preparation_time: Taped evidence
             time_spent: Taped evidence time
             work_before: Work before order was granted
+            work_before_date: Date of work before order was granted
             work_after: Work after last hearing
+            work_after_date: Date of work after order was granted
           letters_calls:
             items: Items
             items_total: <strong>Total per item</strong>
