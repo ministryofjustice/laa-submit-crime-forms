@@ -12,7 +12,7 @@ module CheckAnswers
 
     # rubocop:disable Metrics/AbcSize
     def row_data
-      data = [
+      [
         {
           head_key: 'prosecution_evidence',
           text: check_missing(claim.prosecution_evidence)
@@ -31,13 +31,16 @@ module CheckAnswers
             claim.supplemental_claim.capitalize
           end
         },
-        process_boolean_value(boolean_field: claim.preparation_time, value_field: claim.time_spent, boolean_key: 'preparation_time', value_key: 'time_spent') do
+        process_boolean_value(boolean_field: claim.preparation_time, value_field: claim.time_spent,
+                              boolean_key: 'preparation_time', value_key: 'time_spent') do
           ApplicationController.helpers.format_period(claim.time_spent)
         end,
-        process_boolean_value(boolean_field: claim.work_before, value_field: claim.work_before_date, boolean_key: 'work_before', value_key: 'work_before_date') do
+        process_boolean_value(boolean_field: claim.work_before, value_field: claim.work_before_date,
+                              boolean_key: 'work_before', value_key: 'work_before_date') do
           claim.work_before_date.strftime('%d %B %Y')
         end,
-        process_boolean_value(boolean_field: claim.work_after, value_field: claim.work_after_date, boolean_key: 'work_after', value_key: 'work_after_date') do
+        process_boolean_value(boolean_field: claim.work_after, value_field: claim.work_after_date,
+                              boolean_key: 'work_after', value_key: 'work_after_date') do
           claim.work_after_date.strftime('%d %B %Y')
         end
       ].flatten

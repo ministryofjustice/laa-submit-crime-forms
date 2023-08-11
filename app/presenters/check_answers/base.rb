@@ -50,11 +50,12 @@ module CheckAnswers
           boolean_field.capitalize
         end
       },
-      ({
-        head_key: value_key, 
-        text: check_missing(value_field.present?, &value_formatter)
-      } if boolean_field == YesNoAnswer::YES.to_s)
-      ].compact
+       (if boolean_field == YesNoAnswer::YES.to_s
+          {
+            head_key: value_key,
+           text: check_missing(value_field.present?, &value_formatter)
+          }
+        end)].compact
     end
   end
 end

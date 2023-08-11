@@ -42,7 +42,7 @@ module CheckAnswers
           head_key: row[:key][:text],
           text: row[:value][:text]
         }
-      end 
+      end
     end
 
     def total_rows

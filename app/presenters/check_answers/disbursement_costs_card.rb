@@ -38,7 +38,7 @@ module CheckAnswers
     def total_rows
       [
         {
-          head_key: 'total', 
+          head_key: 'total',
           text: disbursement_total,
           footer: true
         }

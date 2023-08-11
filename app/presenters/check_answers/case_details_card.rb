@@ -42,7 +42,10 @@ module CheckAnswers
                   claim.agent_instructed.capitalize
                 end
         },
-        process_boolean_value(boolean_field: claim.remitted_to_magistrate, value_field: claim.remitted_to_magistrate_date, boolean_key: 'remitted_to_magistrate', value_key: 'remitted_to_magistrate_date') do
+        process_boolean_value(boolean_field: claim.remitted_to_magistrate,
+                              value_field: claim.remitted_to_magistrate_date,
+                              boolean_key: 'remitted_to_magistrate',
+                              value_key: 'remitted_to_magistrate_date') do
           claim.remitted_to_magistrate_date.strftime('%d %B %Y')
         end
       ].flatten
