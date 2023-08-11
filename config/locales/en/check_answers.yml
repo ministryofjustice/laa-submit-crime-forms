@@ -78,7 +78,7 @@ en:
           other_info:
             other_info: Other relevant information
             concluded: Proceedings concluded over 3 months ago
-            conclusion: Reason for not claiming within 3 months
+            conclusion: Why claim was not made within 3 months of conclusion
           case_disposal:
             pending: Category
             guilty_pleas: Category 1
