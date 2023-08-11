@@ -14,7 +14,7 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
   end
 
   describe '#row_data' do
-    it 'generates case detail rows' do
+    it 'generates case detail rows with no remittal' do
       expect(subject.row_data).to eq(
         [
           {
@@ -45,6 +45,45 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
       )
     end
 
+    context 'when remitted to magistrate is yes' do
+      let(:claim) { build(:claim, :case_details_with_remittal, main_offence:, main_offence_date:) }
+
+      it 'generates case detail rows with remittal' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'main_offence',
+              text: 'Theft'
+            },
+            {
+              head_key: 'main_offence_date',
+              text: '01 January 2023'
+            },
+            {
+              head_key: 'assigned_counsel',
+              text: 'No'
+            },
+            {
+              head_key: 'unassigned_counsel',
+              text: 'No'
+            },
+            {
+              head_key: 'agent_instructed',
+              text: 'No'
+            },
+            {
+              head_key: 'remitted_to_magistrate',
+              text: 'Yes'
+            },
+            {
+              head_key: 'remitted_to_magistrate_date',
+              text: '01 March 2023'
+            }
+          ]
+        )
+      end
+    end
+
     context 'when no data exists' do
       let(:claim) { build(:claim) }
 
@@ -73,6 +112,10 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
             },
             {
               head_key: 'remitted_to_magistrate',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'remitted_to_magistrate_date',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             }
           ]
