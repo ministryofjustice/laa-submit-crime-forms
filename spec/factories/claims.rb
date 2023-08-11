@@ -101,5 +101,9 @@ FactoryBot.define do
     trait :one_disbursement do
       disbursements { [build(:disbursement, :valid)] }
     end
+
+    trait :one_other_disbursement do
+      disbursements { [build(:disbursement, :valid_other_specific)] }
+    end
   end
 end
