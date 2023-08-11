@@ -24,14 +24,22 @@ module CheckAnswers
           text: check_missing(hearing_details_form.number_of_hearing)
         },
         {
-          head_key: 'youth_count',
-          text: check_missing(hearing_details_form.youth_count.present?) do
-            hearing_details_form.youth_count.to_s.capitalize
+          head_key: 'court',
+          text: check_missing(hearing_details_form.court.present?) do
+            hearing_details_form.court
           end
         },
         {
           head_key: 'in_area',
-          text: in_area_text
+          text: check_missing(hearing_details_form.in_area.present?) do
+            hearing_details_form.in_area.to_s.capitalize
+          end
+        },
+        {
+          head_key: 'youth_count',
+          text: check_missing(hearing_details_form.youth_count.present?) do
+            hearing_details_form.youth_count.to_s.capitalize
+          end
         },
         {
           head_key: 'hearing_outcome',

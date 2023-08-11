@@ -31,8 +31,9 @@ en:
             hearing_date: Date of first hearing
             number_of_hearing: Number of hearings
             conclusion: Proceedings concluded more than 3 months ago
+            court: Magistrates court
             youth_count: Youth court
-            in_area: Magistrates court in designated area
+            in_area: Court in designated area
             hearing_outcome: Hearing outcome
             matter_type: Matter type
           reason_for_claim:
