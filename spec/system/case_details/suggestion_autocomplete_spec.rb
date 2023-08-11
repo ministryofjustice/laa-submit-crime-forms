@@ -12,8 +12,14 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', javascript: true
     choose 'No', visible: false
     click_on 'Save and continue'
 
-    fill_in 'Main offence', with: 'Wounding or causing'
-    expect(page).to have_field('Main offence', with: 'Wounding or causing grievous bodily harm with intent')
+    offence_field = find_field('Main offence')
+    offence_field.fill_in with: 'Wounding or causing'
+    page.all('li', text: 'Wounding or causing grievous bodily harm with intent', &:click)
+
+    expect(page).to have_field(
+      'Main offence',
+      with: 'Wounding or causing grievous bodily harm with intent'
+    )
 
     click_on 'Save and come back later'
 
@@ -22,7 +28,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', javascript: true
     )
   end
 
-  it 'can enter a value not found in the autocoplete' do
+  it 'can enter a value not found in the autocomplete' do
     visit provider_saml_omniauth_callback_path
 
     visit edit_steps_defendant_summary_path(id: claim)
