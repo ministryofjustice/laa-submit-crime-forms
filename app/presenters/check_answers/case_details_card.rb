@@ -48,7 +48,13 @@ module CheckAnswers
                   claim.remitted_to_magistrate.capitalize
                 end
         },
-      ]
+        ({
+          head_key: 'remitted_to_magistrate_date',
+          text: check_missing(claim.remitted_to_magistrate_date.present?) do
+                  claim.remitted_to_magistrate_date.strftime('%d %B %Y')
+                end
+        } unless claim.remitted_to_magistrate == 'no')
+      ].compact
     end
     # rubocop:enable Metrics/AbcSize
   end

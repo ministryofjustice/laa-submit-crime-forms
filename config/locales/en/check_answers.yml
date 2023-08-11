@@ -25,7 +25,8 @@ en:
             assigned_counsel: Assigned counsel
             unassigned_counsel: Unassigned counsel
             agent_instructed: Instructed Agent
-            remitted_to_magistrate: Remittal
+            remitted_to_magistrate: Case has been remitted from Crown Court to magistrates
+            remitted_to_magistrate_date: Remittal date 
           hearing_details:
             hearing_date: Date of first hearing
             number_of_hearing: Number of hearings
