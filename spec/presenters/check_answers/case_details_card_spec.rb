@@ -113,10 +113,6 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
             {
               head_key: 'remitted_to_magistrate',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
-            },
-            {
-              head_key: 'remitted_to_magistrate_date',
-              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             }
           ]
         )

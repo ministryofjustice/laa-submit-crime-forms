@@ -31,12 +31,16 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
             text: 1
           },
           {
-            head_key: 'youth_count',
-            text: 'No'
+            head_key: 'court',
+            text: 'A Court'
           },
           {
             head_key: 'in_area',
-            text: 'Yes - A Court'
+            text: 'Yes'
+          },
+          {
+            head_key: 'youth_count',
+            text: 'No'
           },
           {
             head_key: 'hearing_outcome',
@@ -65,11 +69,15 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
-              head_key: 'youth_count',
+              head_key: 'court',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
               head_key: 'in_area',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'youth_count',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
@@ -80,36 +88,6 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
               head_key: 'matter_type',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             }
-          ]
-        )
-      end
-    end
-
-    context 'when court is set, but in area is blank' do
-      let(:claim) { build(:claim, court: 'Apples') }
-
-      it 'generates missing data elements for hearing detail rows' do
-        expect(filter_rows(subject.row_data, 'in_area')).to eq(
-          [
-            {
-              head_key: 'in_area',
-              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong> - Apples'
-            },
-          ]
-        )
-      end
-    end
-
-    context 'when in area is set, but in court is blank' do
-      let(:claim) { build(:claim, in_area: 'yes') }
-
-      it 'generates missing data elements for hearing detail rows' do
-        expect(filter_rows(subject.row_data, 'in_area')).to eq(
-          [
-            {
-              head_key: 'in_area',
-              text: 'Yes - <strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
-            },
           ]
         )
       end

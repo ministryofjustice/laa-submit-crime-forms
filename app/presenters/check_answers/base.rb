@@ -53,7 +53,7 @@ module CheckAnswers
        (if boolean_field == YesNoAnswer::YES.to_s
           {
             head_key: value_key,
-           text: check_missing(value_field.present?, &value_formatter)
+            text: check_missing(value_field.present?, &value_formatter)
           }
         end)].compact
     end

@@ -55,15 +55,6 @@ module CheckAnswers
         }
       ]
     end
-
-    def in_area_text
-      check_missing(hearing_details_form.in_area.present? || hearing_details_form.court.present?) do
-        [
-          check_missing(hearing_details_form.in_area.present?) { hearing_details_form.in_area.to_s.capitalize },
-          check_missing(hearing_details_form.court.present?) { hearing_details_form.court },
-        ].join(' - ')
-      end
-    end
     # rubocop:enable Metrics/AbcSize
   end
 end
