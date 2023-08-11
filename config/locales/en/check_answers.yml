@@ -45,6 +45,7 @@ en:
             number_of_witnesses: Number of witnesses
             supplemental_claim: Supplemental claim
             preparation_time: Taped evidence
+            time_spent: Taped evidence time
             work_before: Work before order was granted
             work_after: Work after last hearing
           letters_calls:

@@ -42,5 +42,19 @@ module CheckAnswers
     def get_value_obj_desc(value_object, key)
       value_object.all.find { |value| value.id == key }.description
     end
+
+    def process_boolean_value(boolean_field:, value_field:, boolean_key:, value_key:, &value_formatter)
+      [{
+        head_key: boolean_key,
+        text: check_missing(boolean_field.present?) do
+          boolean_field.capitalize
+        end
+      },
+      ({
+        head_key: value_key, 
+        text: check_missing(value_field.present?, &value_formatter)
+      } if boolean_field == YesNoAnswer::YES.to_s)
+      ].compact
+    end
   end
 end
