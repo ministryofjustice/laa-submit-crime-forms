@@ -45,6 +45,7 @@ en:
         work_after: Did you do any further work after the last court hearing?
       steps_other_info_form:
         concluded: Did the proceedings conclude over 3 months ago?
+        is_other_info: Do you want to add any other information?
       steps_work_item_form:
         time_spent: Time spent
         work_type: Type of work
@@ -263,6 +264,9 @@ en:
           'true': Apply 20% VAT to this work
       steps_other_info_form:
         other_info: Add other information
+        is_other_info_options:
+          'yes': 'Yes'
+          'no': 'No'
         concluded_options:
           'yes': 'Yes'
           'no': 'No'
