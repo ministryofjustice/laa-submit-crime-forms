@@ -12,13 +12,13 @@ module CheckAnswers
 
     def row_data
       [
-        other_info_row,
         {
-          head_key: 'other_info',
-          text: check_missing(claim.other_info.present?) do
-            ApplicationController.helpers.multiline_text(claim.other_info)
+          head_key: 'is_other_info',
+          text: check_missing(claim.is_other_info.present?) do
+            claim.is_other_info.capitalize
           end
         },
+        other_info_row,
         {
           head_key: 'concluded',
           text: check_missing(claim.concluded.present?) do
@@ -35,9 +35,9 @@ module CheckAnswers
       return nil unless claim.is_other_info == YesNoAnswer::YES.to_s
 
       {
-        head_key: 'is_other_info',
-        text: check_missing(claim.is_other_info.present?) do 
-          claim.is_other_info.capitalize
+        head_key: 'other_info',
+        text: check_missing(claim.other_info.present?) do 
+          ApplicationController.helpers.multiline_text(claim.other_info)
         end
       }  
     end
