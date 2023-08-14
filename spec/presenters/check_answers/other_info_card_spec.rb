@@ -20,7 +20,7 @@ RSpec.describe CheckAnswers::OtherInfoCard do
       it 'generates a row with one line of relevant information' do
         expect(subject.row_data).to eq(
           [
-            
+
             {
               head_key: 'is_other_info',
               text: 'Yes'

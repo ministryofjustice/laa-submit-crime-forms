@@ -116,12 +116,12 @@ RSpec.describe Steps::OtherInfoForm do
   end
 
   describe '#save dont save other_info when is_other_info no' do
-    context ' when all fields are set' do
+    context 'when all fields are set' do
       let(:concluded) { 'no' }
       let(:is_other_info) { 'no' }
       let(:conclusion) { '' }
       let(:other_info) { 'this is a value' }
-      
+
       it 'is valid' do
         expect(form.save).to be_truthy
         expect(subject).to have_attributes(other_info: nil)

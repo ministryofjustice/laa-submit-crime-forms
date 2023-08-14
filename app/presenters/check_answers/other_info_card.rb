@@ -30,21 +30,21 @@ module CheckAnswers
     end
 
     private
-    
+
     def other_info_row
       return nil unless claim.is_other_info == YesNoAnswer::YES.to_s
 
       {
         head_key: 'other_info',
-        text: check_missing(claim.other_info.present?) do 
+        text: check_missing(claim.other_info.present?) do
           ApplicationController.helpers.multiline_text(claim.other_info)
         end
-      }  
+      }
     end
 
     def conclusion_row
       return nil unless claim.concluded == YesNoAnswer::YES.to_s
- 
+
       {
         head_key: 'conclusion',
         text: check_missing(claim.conclusion.present?) do
