@@ -76,7 +76,8 @@ en:
             waiting: Waiting
             total: Total
           other_info:
-            other_info: Other relevant information
+            is_other_info: Any other information
+            other_info: Other information
             concluded: Proceedings concluded over 3 months ago
             conclusion: Why claim was not made within 3 months of conclusion
           case_disposal:

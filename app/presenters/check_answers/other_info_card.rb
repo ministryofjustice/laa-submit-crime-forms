@@ -12,6 +12,7 @@ module CheckAnswers
 
     def row_data
       [
+        other_info_row,
         {
           head_key: 'other_info',
           text: check_missing(claim.other_info.present?) do
@@ -24,22 +25,32 @@ module CheckAnswers
             claim.concluded.capitalize
           end
         },
-      ] + conclusion_row
+        conclusion_row
+      ].compact
     end
 
     private
+    
+    def other_info_row
+      return nil unless claim.is_other_info == YesNoAnswer::YES.to_s
+
+      {
+        head_key: 'is_other_info',
+        text: check_missing(claim.is_other_info.present?) do 
+          claim.is_other_info.capitalize
+        end
+      }  
+    end
 
     def conclusion_row
-      return [] unless claim.concluded == YesNoAnswer::YES.to_s
-
-      [
-        {
-          head_key: 'conclusion',
-          text: check_missing(claim.conclusion.present?) do
-            ApplicationController.helpers.multiline_text(claim.conclusion)
-          end
-        }
-      ]
+      return nil unless claim.concluded == YesNoAnswer::YES.to_s
+ 
+      {
+        head_key: 'conclusion',
+        text: check_missing(claim.conclusion.present?) do
+          ApplicationController.helpers.multiline_text(claim.conclusion)
+        end
+      }
     end
   end
 end
