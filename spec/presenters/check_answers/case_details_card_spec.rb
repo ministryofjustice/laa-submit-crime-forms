@@ -46,7 +46,7 @@ RSpec.describe CheckAnswers::CaseDetailsCard do
     end
 
     context 'when remitted to magistrate is yes' do
-      let(:claim) { build(:claim, :case_details_with_remittal, main_offence:, main_offence_date:) }
+      let(:claim) { build(:claim, :case_details, :with_remittal, main_offence:, main_offence_date:) }
 
       it 'generates case detail rows with remittal' do
         expect(subject.row_data).to eq(

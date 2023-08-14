@@ -41,14 +41,7 @@ FactoryBot.define do
       remitted_to_magistrate { 'no' }
     end
 
-    trait :case_details_with_remittal do
-      ufn { '20150612/001' }
-      main_offence { MainOffence.all.sample.name }
-      main_offence_date { Date.yesterday }
-
-      assigned_counsel { 'no' }
-      unassigned_counsel { 'no' }
-      agent_instructed { 'no' }
+    trait :with_remittal do
       remitted_to_magistrate { 'yes' }
       remitted_to_magistrate_date { Date.new(2023, 3, 1) }
     end
