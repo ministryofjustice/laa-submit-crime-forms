@@ -41,6 +41,11 @@ FactoryBot.define do
       remitted_to_magistrate { 'no' }
     end
 
+    trait :with_remittal do
+      remitted_to_magistrate { 'yes' }
+      remitted_to_magistrate_date { Date.new(2023, 3, 1) }
+    end
+
     trait :hearing_details do
       first_hearing_date { Date.new(2023, 3, 1) }
       number_of_hearing { 1 }
@@ -100,6 +105,10 @@ FactoryBot.define do
 
     trait :one_disbursement do
       disbursements { [build(:disbursement, :valid)] }
+    end
+
+    trait :one_other_disbursement do
+      disbursements { [build(:disbursement, :valid_other_specific)] }
     end
   end
 end

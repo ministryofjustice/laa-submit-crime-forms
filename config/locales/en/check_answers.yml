@@ -25,13 +25,15 @@ en:
             assigned_counsel: Assigned counsel
             unassigned_counsel: Unassigned counsel
             agent_instructed: Instructed Agent
-            remitted_to_magistrate: Remittal
+            remitted_to_magistrate: Case has been remitted from Crown Court to magistrates
+            remitted_to_magistrate_date: Remittal date 
           hearing_details:
             hearing_date: Date of first hearing
             number_of_hearing: Number of hearings
             conclusion: Proceedings concluded more than 3 months ago
+            court: Magistrates court
             youth_count: Youth court
-            in_area: Magistrates court in designated area
+            in_area: Court in designated area
             hearing_outcome: Hearing outcome
             matter_type: Matter type
           reason_for_claim:
@@ -44,8 +46,11 @@ en:
             number_of_witnesses: Number of witnesses
             supplemental_claim: Supplemental claim
             preparation_time: Taped evidence
+            time_spent: Taped evidence time
             work_before: Work before order was granted
+            work_before_date: Date of work before order was granted
             work_after: Work after last hearing
+            work_after_date: Date of work after order was granted
           letters_calls:
             items: Items
             items_total: <strong>Total per item</strong>
@@ -58,6 +63,9 @@ en:
             uplift_value: "%{value}%"
             currency_value: "£%{value}"
             total: Total
+          disbursements:
+            items: Items
+            items_total: <strong>Total per item</strong>
           work_items:
             items: Items
             items_total: <strong>Total per item</strong>
@@ -66,10 +74,12 @@ en:
             advocacy: Advocacy
             travel: Travel
             waiting: Waiting
+            total: Total
           other_info:
-            other_info: Other relevant information
+            is_other_info: Any other information
+            other_info: Other information
             concluded: Proceedings concluded over 3 months ago
-            conclusion: Reason for not claiming within 3 months
+            conclusion: Why claim was not made within 3 months of conclusion
           case_disposal:
             pending: Category
             guilty_pleas: Category 1
