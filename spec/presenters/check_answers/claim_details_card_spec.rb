@@ -34,15 +34,27 @@ RSpec.describe CheckAnswers::ClaimDetailsCard do
             },
             {
               head_key: 'preparation_time',
-              text: 'Yes - 2 Hrs 1 Min'
+              text: 'Yes'
+            },
+            {
+              head_key: 'time_spent',
+              text: '2 Hrs 1 Min'
             },
             {
               head_key: 'work_before',
-              text: 'Yes - 01 December 2020'
+              text: 'Yes'
+            },
+            {
+              head_key: 'work_before_date',
+              text: '01 December 2020'
             },
             {
               head_key: 'work_after',
-              text: 'Yes - 01 January 2020'
+              text: 'Yes'
+            },
+            {
+              head_key: 'work_after_date',
+              text: '01 January 2020'
             }
           ]
         )
@@ -151,15 +163,27 @@ RSpec.describe CheckAnswers::ClaimDetailsCard do
             },
             {
               head_key: 'preparation_time',
-              text: 'Yes - <strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+              text: 'Yes'
+            },
+            {
+              head_key: 'time_spent',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
               head_key: 'work_before',
-              text: 'Yes - <strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+              text: 'Yes'
+            },
+            {
+              head_key: 'work_before_date',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
               head_key: 'work_after',
-              text: 'Yes - <strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+              text: 'Yes'
+            },
+            {
+              head_key: 'work_after_date',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             }
           ]
         )

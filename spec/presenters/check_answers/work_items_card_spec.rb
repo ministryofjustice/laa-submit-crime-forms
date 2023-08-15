@@ -54,6 +54,11 @@ RSpec.describe CheckAnswers::WorkItemsCard do
           {
             head_key: 'Advocacy',
             text: '£392.52'
+          },
+          {
+            footer: true,
+            head_key: 'total',
+            text: '£496.82',
           }
         ]
       )
