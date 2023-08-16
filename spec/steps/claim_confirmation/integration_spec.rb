@@ -26,7 +26,7 @@ RSpec.describe 'User can see an application status', type: :system do
     new_claim = Claim.order(:created_at).last
     expect(page).to have_content('What are you claiming for')
     expect(new_claim).to have_attributes(
-      status: 'pending',
+      status: 'draft',
     )
   end
 end

@@ -12,10 +12,10 @@ en:
         status: Status
         actions: Actions
       status:
-        pending: In progress
+        draft: Draft
         completed: Submitted
         accessed: Accessed
       status_colour:
-        pending: govuk-tag--grey
+        draft: govuk-tag--grey
         completed: govuk-tag--primary
         accessed: govuk-tag--green
