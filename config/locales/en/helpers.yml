@@ -132,14 +132,14 @@ en:
         claim_type_options:
           non_standard_magistrate: Non-standard magistrates' court payment
           breach_of_injunction: Breach of injunction
-        cntp_order: Clients CNTP(contempt) number
+        cntp_order: Clients CNTP (contempt) number
 
       steps_firm_details_form:
         firm_office_attributes:
           name: Firm name
           account_number: Firm account number
           address_line_1: Address line 1
-          address_line_2: Address line 2 (Optional)
+          address_line_2: Address line 2 (optional)
           town: Town or city
           postcode: Postcode
         solicitor_attributes:
