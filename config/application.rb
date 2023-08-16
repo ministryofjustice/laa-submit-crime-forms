@@ -22,6 +22,5 @@ module Crm7restbackend
     config.x.gatekeeper= config_for(
       :gatekeeper, env: ENV.fetch('ENV_NAME', 'localhost')
     )
-    config.railties_order = [:main_app, :all, LaaMultiStepForms::Engine, ]
   end
 end
