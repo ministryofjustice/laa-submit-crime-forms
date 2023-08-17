@@ -19,13 +19,19 @@ module CheckAnswers
       end
     end
 
+    def as_json(*)
+      row_data.each_with_object({}) do |row, hash|
+        hash[row[:head_key]] = row[:text]
+      end
+    end
+
     def row_data
       []
     end
 
     def row_content(head_key, text, head_opts = {}, footer: false)
-      translated_heading = translate_table_key(section, head_key, **head_opts)
-      heading = translated_heading.start_with?('Translation missing:') ? head_key : translated_heading
+      heading = translated_heading = translate_table_key(section, head_key, **head_opts)
+      # heading = translated_heading.start_with?('Translation missing:') ? head_key : translated_heading
       row = {
         key: {
           text: heading,

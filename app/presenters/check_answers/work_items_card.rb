@@ -25,6 +25,12 @@ module CheckAnswers
       header_rows + work_item_rows + total_rows
     end
 
+    def as_json(*)
+      claim.work_items.map do |work_item|
+        work_item.attributes
+      end
+    end
+
     private
 
     def header_rows

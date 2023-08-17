@@ -2,18 +2,33 @@ module CheckAnswers
   class Report
     include GovukLinkHelper
     include ActionView::Helpers::UrlHelper
+    GROUPS = %w[
+      about_you
+      about_defendant
+      about_case
+      about_claim
+      supporting_evidence
+    ].freeze
 
-    attr_reader :claim, :section_groups
+    attr_reader :claim
 
     def initialize(claim)
       @claim = claim
-      @section_groups = [
-        section_group('about_you', about_you_section),
-        section_group('about_defendant', about_defendant_section),
-        section_group('about_case', about_case_section),
-        section_group('about_claim', about_claim_section),
-        section_group('supporting_evidence', supporting_evidence_section)
-      ]
+    end
+
+    def section_groups
+      GROUPS.map do |group_name|
+        section_group(group_name, public_send("#{group_name}_section"))
+      end
+    end
+
+    def as_json(*)
+      GROUPS.each_with_object({}) do |group_name, hash|
+        group_data = public_send("#{group_name}_section")
+        hash[group_name] = group_data.each_with_object({}) do |section, group_hash|
+          group_hash[section.section] = section.as_json
+        end
+      end
     end
 
     def section_group(name, section_list)
@@ -30,7 +45,7 @@ module CheckAnswers
             title: data.title,
             actions: actions(data.section)
           },
-          rows: [*data.rows]
+          rows: data.rows
         }
       end
     end
