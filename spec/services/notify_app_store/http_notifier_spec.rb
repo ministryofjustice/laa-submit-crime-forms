@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe NotifyAppStore::HttpNotifier do
   let(:message) { { application_id: SecureRandom.uuid } }
-  let(:response) { double(:response, code: code) }
+  let(:response) { double(:response, code:) }
   let(:code) { 201 }
+
   before do
     allow(described_class).to receive(:post)
       .and_return(response)
@@ -44,7 +45,9 @@ RSpec.describe NotifyAppStore::HttpNotifier do
     end
 
     it 'sends a Sentry message' do
-      expect(Sentry).to receive(:capture_message).with("Application ID already exists in AppStore for '#{message[:application_id]}'")
+      expect(Sentry).to receive(:capture_message).with(
+        "Application ID already exists in AppStore for '#{message[:application_id]}'"
+      )
 
       subject.post(message)
     end

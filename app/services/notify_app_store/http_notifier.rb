@@ -4,10 +4,7 @@ class NotifyAppStore
     headers 'Content-Type' => 'application/json'
 
     def post(message)
-      response = self.class.post(
-        "#{host}/application/",
-        body: message.to_json,
-      )
+      response = self.class.post("#{host}/application/", body: message.to_json)
       case response.code
       when 201
         :success
