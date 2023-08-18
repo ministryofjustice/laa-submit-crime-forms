@@ -27,7 +27,9 @@ module CheckAnswers
 
     def as_json(*)
       claim.work_items.map do |work_item|
-        work_item.attributes
+        data = work_item.attributes.slice!('claim_id', 'created_at', 'updated_at')
+        data['completed_on'] = data['completed_on'].to_s
+        data
       end
     end
 

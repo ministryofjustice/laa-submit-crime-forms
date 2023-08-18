@@ -15,6 +15,14 @@ module CheckAnswers
       header_rows + disbursement_rows + total_rows
     end
 
+    def as_json(*)
+      claim.disbursements.map do |disbursement|
+        data = disbursement.attributes.slice!('claim_id', 'created_at', 'updated_at')
+        data['completed_on'] = data['completed_on'].to_s
+        data
+      end
+    end
+
     private
 
     def header_rows
