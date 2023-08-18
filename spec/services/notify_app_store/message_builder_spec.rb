@@ -99,7 +99,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'previous_id' => nil,
             'reference_number' => '111222'
           },
-          'status' => 'pending',
+          'status' => 'draft',
           'submiter' => { 'description' => nil, 'email' => 'provider@example.com' },
           'supplemental_claim' => nil,
           'time_spent' => nil,
