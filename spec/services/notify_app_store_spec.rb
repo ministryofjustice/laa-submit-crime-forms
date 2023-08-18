@@ -19,33 +19,87 @@ RSpec.describe NotifyAppStore do
     subject
   end
 
-  context 'when no SNS_URL is present' do
-    let(:http_notifier) { instance_double(described_class::HttpNotifier, post: true) }
-    before do
-      expect(described_class::HttpNotifier).to receive(:new)
-        .and_return(http_notifier)
+  describe '#process' do
+    context 'when REDIS_URL is not present' do
+      let(:http_notifier) { instance_double(described_class::HttpNotifier, post: true) }
+      before do
+        expect(described_class::HttpNotifier).to receive(:new)
+          .and_return(http_notifier)
+      end
+
+      it 'does not raise any errors' do
+        expect { subject.process }.not_to raise_error
+      end
+
+      it 'sends a HTTP message' do
+        expect(http_notifier).to receive(:post).with(message_builder.message)
+
+        subject.process
+      end
+
+      describe 'when error during notify process' do
+        before do
+          allow(http_notifier).to receive(:post).and_raise('annoying_error')
+        end
+
+        it 'sends the error to sentry and ignores it' do
+          expect(Sentry).to receive(:capture_exception)
+
+          expect { subject.process }.not_to raise_error
+        end
+      end
     end
 
-    it 'creates a new HttpNotifier instance' do
-      expect(described_class::MessageBuilder).to receive(:new)
+    context 'when REDIS_URL is present' do
+      before do
+        allow(ENV).to receive(:key?).with('REDIS_URL').and_return(double)
+      end
 
-      subject.notify
-    end
-
-    it 'sends a HTTP message' do
-      expect(http_notifier).to receive(:post).with(message_builder.message)
-
-      subject.notify
+      it 'raises an error' do
+        expect { subject.process }.to raise_error('Sidekiq workers is not yet enabled')
+      end
     end
   end
 
-  context 'when SNS_URL is present' do
-    before do
-      allow(ENV).to receive(:key?).with('SNS_URL').and_return(double)
+  describe '#notify' do
+    context 'when SNS_URL is not present' do
+      let(:http_notifier) { instance_double(described_class::HttpNotifier, post: true) }
+      before do
+        allow(described_class::HttpNotifier).to receive(:new)
+          .and_return(http_notifier)
+      end
+
+      it 'creates a new HttpNotifier instance' do
+        expect(described_class::HttpNotifier).to receive(:new)
+
+        subject.notify
+      end
+
+      it 'sends a HTTP message' do
+        expect(http_notifier).to receive(:post).with(message_builder.message)
+
+        subject.notify
+      end
+
+      describe 'when error during notify process' do
+        before do
+          allow(http_notifier).to receive(:post).and_raise('annoying_error')
+        end
+
+        it 'allows the error to be raised - should reset the sidekiq job' do
+          expect { subject.notify }.to raise_error('annoying_error')
+        end
+      end
     end
 
-    it 'raises an error' do
-      expect { subject.notify }.to raise_error('SNS notification is not yet enabled')
+    context 'when SNS_URL is present' do
+      before do
+        allow(ENV).to receive(:key?).with('SNS_URL').and_return(double)
+      end
+
+      it 'raises an error' do
+        expect { subject.notify }.to raise_error('SNS notification is not yet enabled')
+      end
     end
   end
 end

@@ -10,6 +10,8 @@ module Steps
     def persist!
       application.status = 'completed'
       application.update!(attributes)
+
+      NotifyAppStore.new(claim: application).process
     end
   end
 end
