@@ -21,6 +21,7 @@ class NotifyAppStore
 
     private
 
+    # rubocop:disable Metrics/AbcSize
     # NOTE: slice! returns as hash with the other fields
     def data
       data = claim.as_json.slice!('navigation_stack', 'firm_office_id', 'solicitor_id', 'submitter_id')
@@ -33,6 +34,7 @@ class NotifyAppStore
         'submiter' => claim.submitter.attributes.slice('email', 'description'),
       )
     end
+    # rubocop:enable Metrics/AbcSize
 
     def disbursement_data
       claim.disbursements.map do |disbursement|

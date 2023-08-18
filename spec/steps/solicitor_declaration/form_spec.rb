@@ -14,6 +14,7 @@ RSpec.describe Steps::SolicitorDeclarationForm do
 
   describe '#save the form' do
     let(:app_store_notifier) { instance_double(NotifyAppStore, process: true) }
+
     before do
       allow(NotifyAppStore).to receive(:new).and_return(app_store_notifier)
     end

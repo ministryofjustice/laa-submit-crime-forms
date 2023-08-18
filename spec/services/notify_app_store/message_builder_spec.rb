@@ -10,8 +10,8 @@ RSpec.describe NotifyAppStore::MessageBuilder do
   let(:work_item) { claim.work_items.first }
   let(:tester) { double(:tester, process: true) }
   let(:pricing) { Pricing.for(claim) }
-  it 'will generate and send the data message for a claim' do
 
+  it 'will generate and send the data message for a claim' do
     travel_to(Time.zone.local(2023, 8, 17, 12, 13, 14)) do
       tester.process(subject.message)
 
@@ -29,7 +29,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'conclusion' => nil,
           'court' => 'A Court',
           'cracked_trial_date' => nil,
-          'created_at' => "2023-08-17T12:13:14.000Z",
+          'created_at' => '2023-08-17T12:13:14.000Z',
           'defence_statement' => nil,
           'defendants' => [{
             'full_name' => 'bobjim',
@@ -46,7 +46,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'disbursement_date' => '2023-08-16',
             'disbursement_type' => disbursement.disbursement_type,
             'id' => disbursement.id,
-            'miles' => 0.1e3,
+            'miles' => 100,
             'other_type' => nil,
             'pricing' => pricing[disbursement.disbursement_type],
             'prior_authority' => nil,
@@ -105,7 +105,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'time_spent' => nil,
           'ufn' => '20150612/001',
           'unassigned_counsel' => 'no',
-          'updated_at' => "2023-08-17T12:13:14.000Z",
+          'updated_at' => '2023-08-17T12:13:14.000Z',
           'work_after' => nil,
           'work_after_date' => nil,
           'work_before' => nil,

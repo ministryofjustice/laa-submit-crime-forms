@@ -22,6 +22,7 @@ RSpec.describe NotifyAppStore do
   describe '#process' do
     context 'when REDIS_URL is not present' do
       let(:http_notifier) { instance_double(described_class::HttpNotifier, post: true) }
+
       before do
         expect(described_class::HttpNotifier).to receive(:new)
           .and_return(http_notifier)
@@ -64,6 +65,7 @@ RSpec.describe NotifyAppStore do
   describe '#notify' do
     context 'when SNS_URL is not present' do
       let(:http_notifier) { instance_double(described_class::HttpNotifier, post: true) }
+
       before do
         allow(described_class::HttpNotifier).to receive(:new)
           .and_return(http_notifier)

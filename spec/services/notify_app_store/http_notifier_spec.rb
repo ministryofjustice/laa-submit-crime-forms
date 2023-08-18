@@ -1,15 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe NotifyAppStore::HttpNotifier do
-  let(:message) { double(:message)}
+  let(:message) { double(:message) }
+
   before do
     allow(described_class).to receive(:post)
-      .and_return(double(:response, parsed_response: {some: 'message'}))
+      .and_return(double(:response, parsed_response: { some: 'message' }))
   end
+
   context 'when APP_STORE_URL is present' do
     before do
-      allow(ENV).to receive(:fetch).with('APP_STORE_URL', "http://localhost:8000")
-        .and_return('http://some.url')
+      allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000')
+                                   .and_return('http://some.url')
     end
 
     it 'posts the message to the specified URL' do
