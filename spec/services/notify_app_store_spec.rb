@@ -13,7 +13,7 @@ RSpec.describe NotifyAppStore do
   it 'will generate and send the data message for a claim' do
     subject.notify
 
-    travel_to(Time.new(2023, 8, 17, 12, 13, 14)) do
+    travel_to(Time.zone.local(2023, 8, 17, 12, 13, 14)) do
       expect(notifier).to have_received(:send).with(
         message: {
           application: {
@@ -29,14 +29,14 @@ RSpec.describe NotifyAppStore do
             'conclusion' => nil,
             'court' => 'A Court',
             'cracked_trial_date' => nil,
-            'created_at' => "2023-08-17T16:31:12.011Z",
+            'created_at' => '2023-08-17T16:31:12.011Z',
             'defence_statement' => nil,
-            "defendants"=>[{
-              "full_name"=>"bobjim",
-              "id"=>defendant.id,
-              "maat"=>"AA1",
-              "main"=>true,
-              "position"=>1
+            'defendants' => [{
+              'full_name' => 'bobjim',
+              'id' => defendant.id,
+              'maat' => 'AA1',
+              'main' => true,
+              'position' => 1
             }],
             'disability' => nil,
             'disbursements' =>
@@ -105,7 +105,7 @@ RSpec.describe NotifyAppStore do
             'time_spent' => nil,
             'ufn' => '20150612/001',
             'unassigned_counsel' => 'no',
-            'updated_at' => "2023-08-17T16:31:12.011Z",
+            'updated_at' => '2023-08-17T16:31:12.011Z',
             'work_after' => nil,
             'work_after_date' => nil,
             'work_before' => nil,
