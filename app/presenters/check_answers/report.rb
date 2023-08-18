@@ -22,15 +22,6 @@ module CheckAnswers
       end
     end
 
-    def as_json(*)
-      GROUPS.each_with_object({}) do |group_name, hash|
-        group_data = public_send("#{group_name}_section")
-        hash[group_name] = group_data.each_with_object({}) do |section, group_hash|
-          group_hash[section.section] = section.as_json
-        end
-      end
-    end
-
     def section_group(name, section_list)
       {
         heading: group_heading(name),

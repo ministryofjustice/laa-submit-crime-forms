@@ -19,12 +19,6 @@ module CheckAnswers
       end
     end
 
-    def as_json(*)
-      row_data.each_with_object({}) do |row, hash|
-        hash[row[:head_key]] = row[:text]
-      end
-    end
-
     def row_data
       []
     end

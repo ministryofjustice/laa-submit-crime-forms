@@ -6,6 +6,7 @@ ruby File.read('.ruby-version').strip
 gem 'aws-sdk-s3', '~> 1.132'
 gem 'bootsnap', require: false
 gem 'dartsass-rails', '~> 0.5.0'
+gem 'httparty'
 gem 'importmap-rails'
 gem 'kaminari'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
