@@ -7,7 +7,7 @@ class NotifyAppStore
   end
 
   def process
-    raise 'Sidekiq workers is not yet enabled' if ENV.key?('REDIS_URL')
+    raise 'Sidekiq workers is not yet enabled' if ENV.key?('REDIS_HOST')
 
     # implement and call Sidekiq job
 

@@ -20,7 +20,7 @@ RSpec.describe NotifyAppStore do
   end
 
   describe '#process' do
-    context 'when REDIS_URL is not present' do
+    context 'when REDIS_HOST is not present' do
       let(:http_notifier) { instance_double(described_class::HttpNotifier, post: true) }
 
       before do
@@ -51,9 +51,9 @@ RSpec.describe NotifyAppStore do
       end
     end
 
-    context 'when REDIS_URL is present' do
+    context 'when REDIS_HOST is present' do
       before do
-        allow(ENV).to receive(:key?).with('REDIS_URL').and_return(double)
+        allow(ENV).to receive(:key?).with('REDIS_HOST').and_return(double)
       end
 
       it 'raises an error' do
