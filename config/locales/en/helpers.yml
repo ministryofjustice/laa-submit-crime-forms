@@ -30,7 +30,6 @@ en:
         youth_count: Is this court a youth court?
       steps_reason_for_claim_form:
         representation_order_withdrawn_date: Withdrawn date
-        reasons_for_claim: Select all that apply.
       steps_add_another_form:
         add_another: Do you want to add another defendant?
       steps_claim_details_form:
@@ -92,6 +91,7 @@ en:
         hearing_outcome: Select a hearing outcome from the suggestions that appear when you start to enter it, for example, Change of solicitor (CP02)
         matter_type: Select a matter type from the suggestions that appear when you start to enter it, for example, offences against the person
       steps_reason_for_claim_form:
+        reasons_for_claim: Select all that apply
         representation_order_withdrawn_date: For example, 27 3 2007
       steps_claim_details_form:
         defence_statement: For example the total number of pages of defence evidence including any
@@ -132,14 +132,14 @@ en:
         claim_type_options:
           non_standard_magistrate: Non-standard magistrates' court payment
           breach_of_injunction: Breach of injunction
-        cntp_order: Clients CNTP(contempt) number
+        cntp_order: Clients CNTP (contempt) number
 
       steps_firm_details_form:
         firm_office_attributes:
           name: Firm name
           account_number: Firm account number
           address_line_1: Address line 1
-          address_line_2: Address line 2 (Optional)
+          address_line_2: Address line 2 (optional)
           town: Town or city
           postcode: Postcode
         solicitor_attributes:
