@@ -4,7 +4,8 @@ class NotifyAppStore
     headers 'Content-Type' => 'application/json'
 
     def post(message)
-      response = self.class.post("#{host}/application/", body: message.to_json)
+      response = self.class.post("#{host}/application/", **options(message))
+
       case response.code
       when 201
         :success
@@ -18,6 +19,18 @@ class NotifyAppStore
     end
 
     private
+
+    def options(message)
+      options = { body: message.to_json }
+      return options unless ENV['APP_STORE_USERNAME'].present?
+
+      options.merge(
+        basic_auth: {
+          username: ENV['APP_STORE_USERNAME'],
+          password: ENV.fetch('APP_STORE_PASSWORD')
+        }
+      )
+    end
 
     def host
       ENV.fetch('APP_STORE_URL', 'http://localhost:8000')

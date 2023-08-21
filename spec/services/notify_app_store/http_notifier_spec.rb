@@ -31,6 +31,26 @@ RSpec.describe NotifyAppStore::HttpNotifier do
     end
   end
 
+  context 'when APP_STORE_USERNAME is present' do
+    before do
+      allow(ENV).to receive(:[]).and_call_original
+      allow(ENV).to receive(:[]).with('APP_STORE_USERNAME')
+                                   .and_return('jimbob')
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with('APP_STORE_PASSWORD')
+                                   .and_return('kimbob')
+    end
+
+    it 'add basic auth creditals' do
+      expect(described_class).to receive(:post).with('http://localhost:8000/application/',
+        body: message.to_json,
+        basic_auth: { username: 'jimbob', password: 'kimbob'},
+      )
+
+      subject.post(message)
+    end
+  end
+
   context 'when response code is 201 - created' do
     it 'returns a created status' do
       expect(subject.post(message)).to eq(:success)
