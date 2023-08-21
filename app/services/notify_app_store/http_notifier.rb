@@ -22,11 +22,11 @@ class NotifyAppStore
 
     def options(message)
       options = { body: message.to_json }
-      return options unless ENV['APP_STORE_USERNAME'].present?
+      return options if ENV['APP_STORE_USERNAME'].blank?
 
       options.merge(
         basic_auth: {
-          username: ENV['APP_STORE_USERNAME'],
+          username: ENV.fetch('APP_STORE_USERNAME', nil),
           password: ENV.fetch('APP_STORE_PASSWORD')
         }
       )

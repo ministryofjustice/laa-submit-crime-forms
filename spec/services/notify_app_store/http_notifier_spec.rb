@@ -35,7 +35,7 @@ RSpec.describe NotifyAppStore::HttpNotifier do
     before do
       allow(ENV).to receive(:[]).and_call_original
       allow(ENV).to receive(:[]).with('APP_STORE_USERNAME')
-                                   .and_return('jimbob')
+                                .and_return('jimbob')
       allow(ENV).to receive(:fetch).and_call_original
       allow(ENV).to receive(:fetch).with('APP_STORE_PASSWORD')
                                    .and_return('kimbob')
@@ -43,9 +43,8 @@ RSpec.describe NotifyAppStore::HttpNotifier do
 
     it 'add basic auth creditals' do
       expect(described_class).to receive(:post).with('http://localhost:8000/application/',
-        body: message.to_json,
-        basic_auth: { username: 'jimbob', password: 'kimbob'},
-      )
+                                                     body: message.to_json,
+                                                     basic_auth: { username: 'jimbob', password: 'kimbob' },)
 
       subject.post(message)
     end
