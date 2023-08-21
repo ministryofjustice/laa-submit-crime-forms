@@ -4,10 +4,14 @@ RSpec.describe NotifyAppStore::HttpNotifier do
   let(:message) { { application_id: SecureRandom.uuid } }
   let(:response) { double(:response, code:) }
   let(:code) { 201 }
+  let(:username) { nil }
 
   before do
     allow(described_class).to receive(:post)
       .and_return(response)
+    allow(ENV).to receive(:fetch).and_call_original
+    allow(ENV).to receive(:fetch).with('APP_STORE_USERNAME', nil)
+                                 .and_return(username)
   end
 
   context 'when APP_STORE_URL is present' do
@@ -32,11 +36,9 @@ RSpec.describe NotifyAppStore::HttpNotifier do
   end
 
   context 'when APP_STORE_USERNAME is present' do
+    let(:username) { 'jimbob' }
+
     before do
-      allow(ENV).to receive(:[]).and_call_original
-      allow(ENV).to receive(:[]).with('APP_STORE_USERNAME')
-                                .and_return('jimbob')
-      allow(ENV).to receive(:fetch).and_call_original
       allow(ENV).to receive(:fetch).with('APP_STORE_PASSWORD')
                                    .and_return('kimbob')
     end
