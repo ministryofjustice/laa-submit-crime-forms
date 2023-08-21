@@ -48,6 +48,16 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: nsm-elasticache
+                  key: primary_endpoint_address
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nsm-elasticache
+                  key: auth_token
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:

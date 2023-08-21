@@ -15,6 +15,7 @@ gem 'puma', '~> 6.3'
 gem 'rails', '~> 7.0.7'
 gem 'sentry-rails'
 gem 'sentry-ruby'
+gem 'sidekiq', '~> 7.1'
 gem 'sprockets-rails'
 gem 'tzinfo-data'
 
