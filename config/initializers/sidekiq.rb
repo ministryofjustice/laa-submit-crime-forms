@@ -25,6 +25,8 @@ if ENV['REDIS_HOST'].present? && ENV['REDIS_PASSWORD'].present?
   redis_url = "rediss://:#{ENV.fetch('REDIS_PASSWORD',
                                      nil)}@#{ENV.fetch('REDIS_HOST',
                                                        nil)}:6379"
+elsif ENV['REDIS_HOST'].present? && ENV['CI'] # for running on CI as no password
+  redis_url = "rediss://#{ENV.fetch('REDIS_HOST', nil)}:6379"
 end
 
 module Dashboard; end
