@@ -17,14 +17,11 @@ RSpec.describe NotifyAppStore do
       before do
         allow(ENV).to receive(:key?).and_call_original
         allow(ENV).to receive(:key?).with('REDIS_HOST').and_return(false)
-      end
-
-      let(:http_notifier) { instance_double(described_class::HttpNotifier, post: true) }
-
-      before do
         expect(described_class::HttpNotifier).to receive(:new)
           .and_return(http_notifier)
       end
+
+      let(:http_notifier) { instance_double(described_class::HttpNotifier, post: true) }
 
       it 'does not raise any errors' do
         expect { subject.process(claim:, scorer:) }.not_to raise_error
@@ -64,6 +61,7 @@ RSpec.describe NotifyAppStore do
 
   describe '#perform' do
     let(:http_notifier) { instance_double(described_class::HttpNotifier, post: true) }
+
     before do
       allow(described_class::HttpNotifier).to receive(:new)
         .and_return(http_notifier)
