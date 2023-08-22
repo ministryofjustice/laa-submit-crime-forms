@@ -31,8 +31,8 @@ RSpec.describe Steps::SolicitorDeclarationForm do
       it 'notifies the app store' do
         form.save
 
-        expect(NotifyAppStore).to have_received(:new).with(claim: application)
-        expect(app_store_notifier).to have_received(:process)
+        expect(NotifyAppStore).to have_received(:new)
+        expect(app_store_notifier).to have_received(:process).with(claim: application)
       end
     end
   end

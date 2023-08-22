@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NotifyAppStore do
-  subject { described_class.new(claim:, scorer:) }
+  subject { described_class.new }
 
   let(:scorer) { double(:scorer) }
   let(:claim) { instance_double(Claim) }
@@ -12,15 +12,13 @@ RSpec.describe NotifyAppStore do
       .and_return(message_builder)
   end
 
-  it 'creates a new MessageBuilder instance' do
-    expect(described_class::MessageBuilder).to receive(:new)
-      .with(claim:, scorer:)
-
-    subject
-  end
-
   describe '#process' do
     context 'when REDIS_HOST is not present' do
+      before do
+        allow(ENV).to receive(:key?).and_call_original
+        allow(ENV).to receive(:key?).with('REDIS_HOST').and_return(false)
+      end
+
       let(:http_notifier) { instance_double(described_class::HttpNotifier, post: true) }
 
       before do
@@ -29,13 +27,13 @@ RSpec.describe NotifyAppStore do
       end
 
       it 'does not raise any errors' do
-        expect { subject.process }.not_to raise_error
+        expect { subject.process(claim:, scorer:) }.not_to raise_error
       end
 
       it 'sends a HTTP message' do
         expect(http_notifier).to receive(:post).with(message_builder.message)
 
-        subject.process
+        subject.process(claim:, scorer:)
       end
 
       describe 'when error during notify process' do
@@ -46,19 +44,36 @@ RSpec.describe NotifyAppStore do
         it 'sends the error to sentry and ignores it' do
           expect(Sentry).to receive(:capture_exception)
 
-          expect { subject.process }.not_to raise_error
+          expect { subject.process(claim:, scorer:) }.not_to raise_error
         end
       end
     end
 
     context 'when REDIS_HOST is present' do
       before do
-        allow(ENV).to receive(:key?).with('REDIS_HOST').and_return(double)
+        allow(ENV).to receive(:key?).with('REDIS_HOST').and_return(true)
       end
 
-      it 'raises an error' do
-        expect { subject.process }.to raise_error('Sidekiq workers is not yet enabled')
+      it 'schedules the job' do
+        expect(described_class).to receive(:perform_later).with(claim)
+
+        subject.process(claim:, scorer:)
       end
+    end
+  end
+
+  describe '#perform' do
+    let(:http_notifier) { instance_double(described_class::HttpNotifier, post: true) }
+    before do
+      allow(described_class::HttpNotifier).to receive(:new)
+        .and_return(http_notifier)
+    end
+
+    it 'creates a new MessageBuilder' do
+      expect(described_class::MessageBuilder).to receive(:new)
+        .with(claim: claim, scorer: NotifyAppStore::Scorer)
+
+      subject.perform(claim)
     end
   end
 
@@ -74,13 +89,13 @@ RSpec.describe NotifyAppStore do
       it 'creates a new HttpNotifier instance' do
         expect(described_class::HttpNotifier).to receive(:new)
 
-        subject.notify
+        subject.notify(message_builder)
       end
 
       it 'sends a HTTP message' do
         expect(http_notifier).to receive(:post).with(message_builder.message)
 
-        subject.notify
+        subject.notify(message_builder)
       end
 
       describe 'when error during notify process' do
@@ -89,18 +104,18 @@ RSpec.describe NotifyAppStore do
         end
 
         it 'allows the error to be raised - should reset the sidekiq job' do
-          expect { subject.notify }.to raise_error('annoying_error')
+          expect { subject.notify(message_builder) }.to raise_error('annoying_error')
         end
       end
     end
 
     context 'when SNS_URL is present' do
       before do
-        allow(ENV).to receive(:key?).with('SNS_URL').and_return(double)
+        allow(ENV).to receive(:key?).with('SNS_URL').and_return(true)
       end
 
       it 'raises an error' do
-        expect { subject.notify }.to raise_error('SNS notification is not yet enabled')
+        expect { subject.notify(message_builder) }.to raise_error('SNS notification is not yet enabled')
       end
     end
   end

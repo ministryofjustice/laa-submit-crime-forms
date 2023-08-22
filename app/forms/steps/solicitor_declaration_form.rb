@@ -11,7 +11,7 @@ module Steps
       application.status = 'completed'
       application.update!(attributes)
 
-      NotifyAppStore.new(claim: application).process
+      NotifyAppStore.new.process(claim: application)
     end
   end
 end
