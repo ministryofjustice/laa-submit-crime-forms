@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'User can fill in solicitor declaration', type: :system do
   let(:claim) { create(:claim) }
+  let(:app_store_notifier) { instance_double(NotifyAppStore, process: true) }
 
   before do
+    allow(NotifyAppStore).to receive(:new).and_return(app_store_notifier)
     visit provider_saml_omniauth_callback_path
   end
 
@@ -18,5 +20,7 @@ RSpec.describe 'User can fill in solicitor declaration', type: :system do
       signatory_name: 'John Doe',
       status: 'completed'
     )
+    expect(NotifyAppStore).to have_received(:new)
+    expect(app_store_notifier).to have_received(:process)
   end
 end

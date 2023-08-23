@@ -96,6 +96,18 @@ spec:
               value: 'production'
             - name: RAILS_LOG_TO_STDOUT
               value: enabled
+            - name: APP_STORE_URL
+              value: laa-crime-application-store-dev.apps.live.cloud-platform.service.justice.gov.uk
+            - name: APP_STORE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-store-auth
+                  key: username
+            - name: APP_STORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-store-auth
+                  key: password
             - name: ENV
               value: {{ .Values.secrets.environment}}
       {{- with .Values.nodeSelector }}
