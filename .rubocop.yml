@@ -171,6 +171,7 @@ RSpec/ExampleLength:
   Exclude:
     - spec/steps/**/integration_spec.rb
     - spec/presenters/check_answers/**/*
+    - spec/services/notify_app_store/message_builder_spec.rb
 
 Lint/MissingSuper:
   Exclude:
