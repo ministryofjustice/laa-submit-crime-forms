@@ -11,7 +11,7 @@ RSpec.describe PleaOptions do
         %w[
           guilty
           uncontested_breach
-          discontinuance
+          discontinuance_cat1
           bind_over
           deferred_sentence
           change_solicitor
@@ -19,7 +19,7 @@ RSpec.describe PleaOptions do
           not_guilty
           cracked_trial
           contested
-          discontinuance
+          discontinuance_cat2
           mixed
         ]
       )
@@ -32,7 +32,7 @@ RSpec.describe PleaOptions do
         %w[
           guilty
           uncontested_breach
-          discontinuance
+          discontinuance_cat1
           bind_over
           deferred_sentence
           change_solicitor
@@ -49,7 +49,7 @@ RSpec.describe PleaOptions do
           not_guilty
           cracked_trial
           contested
-          discontinuance
+          discontinuance_cat2
           mixed
         ]
       )
