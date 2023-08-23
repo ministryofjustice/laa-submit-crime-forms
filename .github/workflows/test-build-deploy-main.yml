@@ -100,6 +100,7 @@ jobs:
       - name: Run testing framework
         run: yarn unit-test --passWithNoTests
 
+
       - name: Upload rspec coverage (if failure)
         if: failure()
         uses: actions/upload-artifact@v3
@@ -150,7 +151,7 @@ jobs:
             --build-arg APP_GIT_COMMIT=${{ github.sha }} \
             --build-arg APP_BRANCH_NAME=${{ github.ref }} \
             -t app .
-      
+
       # Build and push a Docker image to the container repository
       - name: Push to ECR
         run: |

@@ -13,6 +13,12 @@ RSpec.describe Steps::SolicitorDeclarationForm do
   let(:application) { instance_double(Claim, update!: true, 'status=': true) }
 
   describe '#save the form' do
+    let(:app_store_notifier) { instance_double(NotifyAppStore, process: true) }
+
+    before do
+      allow(NotifyAppStore).to receive(:new).and_return(app_store_notifier)
+    end
+
     context 'when all fields are set' do
       let(:signatory_name) { 'John Doe' }
 
@@ -20,7 +26,13 @@ RSpec.describe Steps::SolicitorDeclarationForm do
         expect(form.save).to be_truthy
         expect(application).to have_received(:status=).with('completed')
         expect(application).to have_received(:update!)
-        expect(form).to be_valid
+      end
+
+      it 'notifies the app store' do
+        form.save
+
+        expect(NotifyAppStore).to have_received(:new)
+        expect(app_store_notifier).to have_received(:process).with(claim: application)
       end
     end
   end

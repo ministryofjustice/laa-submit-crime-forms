@@ -25,6 +25,8 @@ module CheckAnswers
 
     def row_content(head_key, text, head_opts = {}, footer: false)
       translated_heading = translate_table_key(section, head_key, **head_opts)
+      # TODO: remove the below line once we understand why it was added as this is a smell
+      # as all keys should have a translation.
       heading = translated_heading.start_with?('Translation missing:') ? head_key : translated_heading
       row = {
         key: {
