@@ -2,7 +2,7 @@ class PleaOptions < ValueObject
   GUILTY_OPTIONS = [
     GUILTY = new(:guilty),
     BREACH = new(:uncontested_breach),
-    DISCONTINUANCE = new(:discontinuance),
+    DISCONTINUANCE_CAT1 = new(:discontinuance_cat1),
     BIND_OVER = new(:bind_over),
     DEFERRED_SENTENCE = new(:deferred_sentence),
     CHANGE_SOLICITOR = new(:change_solicitor),
@@ -13,7 +13,7 @@ class PleaOptions < ValueObject
     NOT_GUILTY = new(:not_guilty),
     CRACKED_TRIAL = new(:cracked_trial),
     CONTESTED = new(:contested),
-    DISCONTINUANCE = new(:discontinuance),
+    DISCONTINUANCE_CAT2 = new(:discontinuance_cat2),
     MIXED = new(:mixed),
   ].freeze
 
