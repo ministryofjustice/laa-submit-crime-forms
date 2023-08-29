@@ -81,11 +81,15 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
         file_type: 'image/png',
         file_size: '2857',
         claim: current_application,
-        file: fixture_file_upload('test.png')
+        file_path: Rails.root.join('spec/fixtures/files/12345').to_s
       )
     end
 
     context 'when there are files present' do
+      before do
+        FileUtils.cp Rails.root.join('spec/fixtures/files/test.png'), Rails.root.join('spec/fixtures/files/12345')
+      end
+
       it 'deletes the file' do
         delete :destroy, params: { id: '12345', evidence_id: evidence.id }
 
