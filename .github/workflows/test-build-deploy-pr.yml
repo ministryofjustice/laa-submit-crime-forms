@@ -131,7 +131,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
     # Assume role in Cloud Platform
-      - uses: aws-actions/configure-aws-credentials@v2
+      - uses: aws-actions/configure-aws-credentials@v3
         id: credentials
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
