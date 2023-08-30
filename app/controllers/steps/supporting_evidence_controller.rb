@@ -12,11 +12,10 @@ module Steps
 
     def create
       file_path = @file_uploader.upload(params[:documents])
-      evidence = save_evidence_data(params[:documents].original_filename, params[:documents].content_type,
-                                    params[:documents].tempfile.size, file_path)
-      return_success({ evidence_id: evidence.id })
+      evidence = save_evidence_data(params[:documents], file_path)
+      return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
     rescue StandardError => e
-      return_error(e)
+      return_error(e, { message: 'Unable to upload file at this time' })
     end
 
     def update
@@ -24,12 +23,13 @@ module Steps
     end
 
     def destroy
-      @file_uploader.destroy(SupportingEvidence.find_by(id: params[:evidence_id]).file_path)
-      SupportingEvidence.destroy(params[:evidence_id])
+      evidence = SupportingEvidence.find_by(id: params[:evidence_id])
+      @file_uploader.destroy(evidence.file_path)
+      evidence.destroy
 
       return_success({ deleted: true })
     rescue StandardError => e
-      return_error(e)
+      return_error(e, { message: 'Unable to delete file at this time' })
     end
 
     private
@@ -46,11 +46,11 @@ module Steps
       @file_uploader ||= FileUpload::FileUploader.new
     end
 
-    def save_evidence_data(original_filename, content_type, size, file_path)
+    def save_evidence_data(params, file_path)
       SupportingEvidence.create(
-        file_name: original_filename,
-        file_type: content_type,
-        file_size: size,
+        file_name: params.original_filename,
+        file_type: params.content_type,
+        file_size: params.tempfile.size,
         claim: current_application,
         file_path: file_path
       )
@@ -62,10 +62,10 @@ module Steps
       }, status: :ok
     end
 
-    def return_error(exception)
+    def return_error(exception, dict)
       Sentry.capture_exception(exception)
       render json: {
-        error: ''
+        error: dict
       }, status: :bad_request
     end
   end

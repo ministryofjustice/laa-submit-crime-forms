@@ -6,6 +6,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
+    <div class="moj-multi-file-upload__message"></div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-6"><%= t('.heading') %></h1>
     <%# Answers upload list %>
     <%= render template: 'steps/supporting_evidence/_content' %>
