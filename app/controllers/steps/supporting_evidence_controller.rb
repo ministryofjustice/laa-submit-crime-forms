@@ -4,6 +4,10 @@ module Steps
   class SupportingEvidenceController < Steps::BaseStepController
     skip_before_action :verify_authenticity_token
     before_action :supporting_evidence, :file_uploader
+
+    SUPPORTED_FILE_TYPES = %w[application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                              application/rtf image/jpeg image/bmp image/png image/tiff application/pdf].freeze
+
     def edit
       @form_object = SupportingEvidenceForm.build(
         current_application
@@ -11,9 +15,14 @@ module Steps
     end
 
     def create
+      unless SUPPORTED_FILE_TYPES.include? params[:documents].content_type
+        return return_error(nil, { message: 'Incorrect file type provided' })
+      end
+
       file_path = @file_uploader.upload(params[:documents])
       evidence = save_evidence_data(params[:documents], file_path)
       return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
+
     rescue StandardError => e
       return_error(e, { message: 'Unable to upload file at this time' })
     end
