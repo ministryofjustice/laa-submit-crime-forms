@@ -60,7 +60,8 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
       let(:current_application) { build(:claim) }
 
       before do
-        post :create, params: { id: '12345', documents: fixture_file_upload('test.png') }
+        request.env['CONTENT_TYPE'] = 'image/png'
+        post :create, params: { id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
       end
 
       it 'uploads and returns a success' do
@@ -69,6 +70,22 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
 
       it 'returns the evidence_id' do
         expect(JSON.parse(response.body)['success']['evidence_id']).not_to be_empty
+      end
+    end
+
+    context 'when an incorrect file is uploaded' do
+      let(:current_application) { build(:claim) }
+
+      before do
+        post :create, params: { id: '12345', documents: fixture_file_upload('test.json', 'application/json') }
+      end
+
+      it 'returns a bad request' do
+        expect(response).to be_bad_request
+      end
+
+      it 'returns an error message' do
+        expect(JSON.parse(response.body)['error']['message']).to eq 'Incorrect file type provided'
       end
     end
   end
