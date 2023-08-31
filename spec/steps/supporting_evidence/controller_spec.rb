@@ -64,6 +64,10 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
         post :create, params: { id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
       end
 
+      after do
+        FileUtils.rm SupportingEvidence.find(JSON.parse(response.body)['success']['evidence_id']).file_path
+      end
+
       it 'uploads and returns a success' do
         expect(response).to be_successful
       end

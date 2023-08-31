@@ -22,7 +22,6 @@ module Steps
       file_path = @file_uploader.upload(params[:documents])
       evidence = save_evidence_data(params[:documents], file_path)
       return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
-
     rescue StandardError => e
       return_error(e, { message: 'Unable to upload file at this time' })
     end

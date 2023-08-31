@@ -10,11 +10,11 @@ module FileUpload
 
     protected
 
-    def perform_save
+    def perform_save(_file)
       raise 'Implement perform_save in sub class'
     end
 
-    def perform_destroy
+    def perform_destroy(_file_path)
       raise 'Implement perform_destroy in sub class'
     end
 
