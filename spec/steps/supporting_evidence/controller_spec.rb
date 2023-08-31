@@ -77,6 +77,23 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
       end
     end
 
+    context 'when a file fails to upload' do
+      let(:current_application) { build(:claim) }
+
+      before do
+        request.env['CONTENT_TYPE'] = 'image/png'
+        post :create, params: { id: '12345', documents: nil }
+      end
+
+      it 'returns a bad request' do
+        expect(response).to be_bad_request
+      end
+
+      it 'returns an error message' do
+        expect(JSON.parse(response.body)['error']['message']).to eq 'Unable to upload file at this time'
+      end
+    end
+
     context 'when an incorrect file is uploaded' do
       let(:current_application) { build(:claim) }
 
