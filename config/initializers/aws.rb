@@ -6,3 +6,8 @@ if Rails.env.production?
 
   S3_BUCKET = Aws::S3::Resource.new.bucket(ENV['S3_BUCKET'])
 end
+
+if Rails.env.test?
+  Aws.config.update(stub_responses: true)
+  S3_BUCKET = Aws::S3::Resource.new.bucket('test')
+end
