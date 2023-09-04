@@ -31,7 +31,7 @@ module Steps
     end
 
     def destroy
-      evidence = SupportingEvidence.find_by(id: params[:evidence_id])
+      evidence = current_application.supporting_evidence.find_by(id: params[:evidence_id])
       @file_uploader.destroy(evidence.file_path)
       evidence.destroy
 
