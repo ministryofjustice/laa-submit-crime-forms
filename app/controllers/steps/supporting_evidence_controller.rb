@@ -15,7 +15,7 @@ module Steps
     end
 
     def create
-      unless SUPPORTED_FILE_TYPES.include? params[:documents].content_type
+      unless supported_filetype(params.content_type)
         return return_error(nil, { message: 'Incorrect file type provided' })
       end
 
@@ -62,6 +62,10 @@ module Steps
         claim: current_application,
         file_path: file_path
       )
+    end
+
+    def supported_filetype(content_type)
+      SUPPORTED_FILE_TYPES.include? content_type
     end
 
     def return_success(dict)
