@@ -5,6 +5,11 @@ RSpec.describe FileUpload::LocalFileUploader do
     context 'saves file' do
       let(:output) { subject.save(fixture_file_upload('test.json', 'application/json')) }
 
+      before do
+        allow(File).to receive(:directory?).and_call_original
+        allow(File).to receive(:directory?).with(Rails.root.join('tmp/uploaded/').to_s).and_return(false)
+      end
+
       after do
         FileUtils.rm output
       end
