@@ -3,7 +3,7 @@
 module Steps
   class SupportingEvidenceController < Steps::BaseStepController
     skip_before_action :verify_authenticity_token
-    before_action :supporting_evidence, :file_uploader
+    before_action :supporting_evidence
 
     SUPPORTED_FILE_TYPES = %w[application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document
                               application/rtf image/jpeg image/bmp image/png image/tiff application/pdf].freeze
@@ -19,7 +19,7 @@ module Steps
         return return_error(nil, { message: 'Incorrect file type provided' })
       end
 
-      file_path = @file_uploader.upload(params[:documents])
+      file_path = file_uploader.upload(params[:documents])
       evidence = save_evidence_data(params[:documents], file_path)
       return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
     rescue StandardError => e
@@ -32,7 +32,7 @@ module Steps
 
     def destroy
       evidence = current_application.supporting_evidence.find_by(id: params[:evidence_id])
-      @file_uploader.destroy(evidence.file_path)
+      file_uploader.destroy(evidence.file_path)
       evidence.destroy
 
       return_success({ deleted: true })
