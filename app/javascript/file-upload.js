@@ -7,7 +7,8 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
     this.params.uploadFileEntryHook(this, file);
     let formData = new FormData();
     formData.append('documents', file);
-    let item = $(this.getFileRowHtml(file));
+    let fileListLength = this.feedbackContainer.find('.govuk-table__row.moj-multi-file-upload__row').length
+    let item = $(this.getFileRowHtml(file, fileListLength));
     let feedback = $(".moj-multi-file-upload__message");
     this.feedbackContainer.find('.moj-multi-file-upload__list').append(item);
 
@@ -26,7 +27,7 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
         error: $.proxy(function (jqXHR, textStatus, errorThrown) {
             feedback.html(this.getErrorHtml(jqXHR.responseJSON.error.message));
             this.status.html(jqXHR.responseJSON.error.message);
-            this.feedbackContainer.find('.govuk-table__row.moj-multi-file-upload__row').last().remove();
+            this.feedbackContainer.find(`#${fileListLength}`).remove();
             this.params.uploadFileErrorHook(this, file, jqXHR, textStatus, errorThrown);
         }, this),
         xhr: function () {
@@ -43,8 +44,8 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
     });
 };
 
-MOJFrontend.MultiFileUpload.prototype.getFileRowHtml = function (file) {
-    return `<tr class="govuk-table__row moj-multi-file-upload__row" id="${file.name}">
+MOJFrontend.MultiFileUpload.prototype.getFileRowHtml = function (file, fileListLength) {
+    return `<tr class="govuk-table__row moj-multi-file-upload__row" id="${fileListLength}">
             <td class="govuk-table__cell moj-multi-file-upload__filename">
                 <span class="moj-multi-file-upload__filename"> ${file.name}</span>
                 <span class="moj-multi-file-upload__progress">(0%)</span></td>

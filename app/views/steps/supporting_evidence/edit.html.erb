@@ -34,8 +34,8 @@
             </thead>
             <%# Uploaded file list   %>
             <tbody class="govuk-table__body moj-multi-file-upload__list">
-            <% @supporting_evidence.each do |record| %>
-              <tr class="govuk-table__row moj-multi-file-upload__row" id="<%= record.file_name %>" >
+            <% @supporting_evidence.each_with_index do |record, index| %>
+              <tr class="govuk-table__row moj-multi-file-upload__row" id="<%= index %>" >
                 <td class="govuk-table__cell moj-multi-file-upload__filename">
                   <span class="moj-multi-file-upload__filename"><%= record.file_name %></span>
                   <span class="moj-multi-file-upload__progress">100%</span></td>
