@@ -26,7 +26,7 @@ en:
             unassigned_counsel: Unassigned counsel
             agent_instructed: Instructed Agent
             remitted_to_magistrate: Case has been remitted from Crown Court to magistrates
-            remitted_to_magistrate_date: Remittal date 
+            remitted_to_magistrate_date: Remittal date
           hearing_details:
             hearing_date: Date of first hearing
             number_of_hearing: Number of hearings
@@ -69,6 +69,7 @@ en:
           work_items:
             items: Items
             items_total: <strong>Total per item</strong>
+            attendance_with_counsel: Attendance with counsel
             attendance_without_counsel: Attendance without counsel
             preparation: Preparation
             advocacy: Advocacy
