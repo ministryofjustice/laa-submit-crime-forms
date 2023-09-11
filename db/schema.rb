@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_23_104539) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_24_105533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -184,6 +184,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_104539) do
     t.integer "file_size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "file_path"
     t.index ["claim_id"], name: "index_supporting_evidence_on_claim_id"
   end
 

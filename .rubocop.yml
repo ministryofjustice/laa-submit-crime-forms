@@ -15,6 +15,7 @@ AllCops:
     - 'lib/generators/**/*'
     - 'features/**/*'
     - 'vendor/**/*'
+    - 'gems/laa_multi_step_forms/spec/dummy/**/*'
 
 ####################################
 ## Customization for this project ##
