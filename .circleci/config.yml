@@ -124,21 +124,6 @@ commands:
     steps:
       - install-gems
       - install-compile-assets
-      - install-codeclimate-tt
-
-  install-codeclimate-tt:
-      steps:
-        - run:
-            name: Install codeclimate test reporter
-            command: |
-              mkdir -p tmp/
-              mkdir -p tmp/coverage/
-              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > tmp/cc-test-reporter
-              chmod +x tmp/cc-test-reporter
-        - persist_to_workspace:
-            root: tmp
-            paths:
-              - cc-test-reporter
   
   rubocop:
     steps:
@@ -170,19 +155,11 @@ commands:
              --format progress \
              --out /tmp/test-results/rspec.xml \
               $TESTFILES
-            tmp/cc-test-reporter format-coverage -t simplecov -o "tmp/coverage/codeclimate.$CIRCLE_NODE_INDEX.json"
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
-
-  upload-coverage:
-      steps:
-        - run:
-            name: Upload coverage results to Code Climate
-            command: |
-              tmp/cc-test-reporter sum-coverage --output - tmp/coverage/codeclimate.*.json | tmp/cc-test-reporter upload-coverage --input -
 
   build-docker-image:
       steps:
@@ -252,18 +229,6 @@ jobs:
       - *attach-tmp-workspace
       - browser-tools/install-browser-tools
       - rspec
-      - persist_to_workspace:
-          root: tmp
-          paths:
-            - coverage/codeclimate.*.json
-      - store_artifacts:
-          path: tmp/coverage
-
-  upload-test-coverage:
-    executor: test-executor
-    steps:
-      - *attach-tmp-workspace
-      - upload-coverage
 
   scan-docker-image:
     executor: test-executor
@@ -353,12 +318,9 @@ workflows:
       - rspec-tests:
           requires:
             - build-test-container
-      - upload-test-coverage:
-          requires:
-            - rspec-tests
       - scan-docker-image:
           requires:
-            - upload-test-coverage
+            - rspec-tests
 
   build-push-branch:
     jobs:
