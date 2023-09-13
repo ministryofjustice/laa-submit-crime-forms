@@ -4,6 +4,8 @@ import $ from 'jquery'
 window.$ = $
 
 MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
+    // Setting max file size to 10MB
+    const maxFileSize = 1024 * 1024 * 10;
     this.params.uploadFileEntryHook(this, file);
     let formData = new FormData();
     formData.append('documents', file);
@@ -11,6 +13,12 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
     let item = $(this.getFileRowHtml(file, fileListLength));
     let feedback = $(".moj-multi-file-upload__message");
     this.feedbackContainer.find('.moj-multi-file-upload__list').append(item);
+
+    if (file.size > maxFileSize) {
+        this.feedbackContainer.find(`#${fileListLength}`).remove();
+        feedback.html(this.getErrorHtml('File size is too big. Unable to upload.'));
+        return;
+    }
 
     $.ajax({
         url: this.params.uploadUrl,
