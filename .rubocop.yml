@@ -179,3 +179,8 @@ Lint/MissingSuper:
     - 'app/components/*'
     - 'app/presenters/cost_summary/*'
     - 'app/presenters/check_answers/*'
+
+Rails/RedundantActiveRecordAllMethod:
+  Exclude:
+    - 'spec/steps/**/*'
+    - 'app/presenters/**/*'
