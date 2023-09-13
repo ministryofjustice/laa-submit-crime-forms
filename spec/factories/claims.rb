@@ -16,6 +16,19 @@ FactoryBot.define do
       one_disbursement
     end
 
+    trait :case_type_magistrates do
+      ufn { '123456/001' }
+      claim_type { 'non_standard_magistrate' }
+      rep_order_date { '2023-01-01' }
+    end
+
+    trait :case_type_breach do
+      ufn { '123456/002' }
+      claim_type { 'breach_of_injunction' }
+      cntp_order { 'CNTP12345' }
+      cntp_date { '2023-02-01' }
+    end
+
     trait :firm_details do
       firm_office factory: %i[firm_office valid]
       solicitor factory: %i[solicitor valid]

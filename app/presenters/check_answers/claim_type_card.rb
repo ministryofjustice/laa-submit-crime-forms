@@ -11,7 +11,7 @@ module CheckAnswers
     end
 
     def row_data
-      claim_rows = is_magistrates_claim ? magistrates_claim : breach_claim
+      claim_rows = magistrates_claim? ? magistrates_rows : breach_rows
 
       base_rows + claim_rows
     end
@@ -29,16 +29,16 @@ module CheckAnswers
       ]
     end
 
-    def magistrates_claim
+    def magistrates_rows
       [
         {
           head_key: 'rep_order_date',
-          text: claim.rep_order_date&.strftime('%d %B %Y')
+          text: claim.rep_order_date.try(:strftime, '%d %B %Y')
         }
       ]
     end
 
-    def breach_claim
+    def breach_rows
       [
         {
           head_key: 'cntp_number',
@@ -46,14 +46,13 @@ module CheckAnswers
         },
         {
           head_key: 'cntp_rep_order',
-          text: claim.cntp_date&.strftime('%d %B %Y')
+          text: claim.cntp_date.try(:strftime, '%d %B %Y')
         }
       ]
     end
 
-    def is_magistrates_claim
+    def magistrates_claim?
       claim.claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s
     end
   end
 end
-
