@@ -15,6 +15,7 @@ AllCops:
     - 'lib/generators/**/*'
     - 'features/**/*'
     - 'vendor/**/*'
+    - 'gems/laa_multi_step_forms/spec/dummy/**/*'
 
 ####################################
 ## Customization for this project ##
@@ -178,3 +179,8 @@ Lint/MissingSuper:
     - 'app/components/*'
     - 'app/presenters/cost_summary/*'
     - 'app/presenters/check_answers/*'
+
+Rails/RedundantActiveRecordAllMethod:
+  Exclude:
+    - 'spec/steps/**/*'
+    - 'app/presenters/**/*'

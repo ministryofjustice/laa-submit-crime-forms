@@ -1,0 +1,380 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/configuration-reference
+version: 2.1
+
+# ------------------
+# ORBS
+# ------------------
+orbs:
+  ruby: circleci/ruby@2.1.0
+  browser-tools: circleci/browser-tools@1.4.5
+  snyk: snyk/snyk@1.1.2
+  aws-cli: circleci/aws-cli@4.0.0
+  aws-ecr: circleci/aws-ecr@8.2.1
+
+# ------------------
+# EXECUTORS
+# ------------------
+executors:
+  test-executor:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/ruby:3.2.2-browsers
+        environment:
+          RACK_ENV: test
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:circleci@127.0.0.1:5432/laa_claim_non_standard_magistrate_fee_test
+      - image: cimg/postgres:13.12
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: laa_claim_non_standard_magistrate_fee_test
+
+  cloud-platform-executor:
+    resource_class: small
+    docker:
+      - image: ministryofjustice/cloud-platform-tools
+
+# ------------------
+# REFERENCES
+# ------------------
+references:
+  _main-only: &main-only
+    filters:
+      branches:
+        only: main
+
+  _restore-bundle: &restore-bundle
+    restore_cache:
+      keys:
+        - v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-bundle-
+
+  _install-bundle: &install-bundle
+    run:
+      name: Install gems
+      command: |
+        bundler_version=$(cat Gemfile.lock | tail -1 | tr -d " ")
+        gem install bundler -v $bundler_version
+        bundle config set path 'vendor/bundle'
+        bundle check || bundle install --jobs=4 --retry=3
+        bundle clean --force
+
+  _save-bundle: &save-bundle
+    save_cache:
+      key: v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      paths:
+        - ~/.bundle
+        - vendor/bundle
+
+  _restore-assets: &restore-assets
+    restore_cache:
+      keys:
+        - v4-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        # fallback to using the latest asset cache if no exact match is found
+        - v4-yarn-
+
+  _install-assets: &install-assets
+    run:
+      name: Install and compile assets
+      command: |
+        RUBYOPT=-W:no-deprecated \
+        yarn install && bin/rails dartsass:build
+
+  _save-assets: &save-assets
+    save_cache:
+      key: v4-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      paths:
+        - node_modules
+        - app/assets/builds
+
+  _attach-tmp-workspace: &attach-tmp-workspace
+    attach_workspace:
+      at: ~/repo/tmp
+
+  _authenticate-kubectl: &authenticate-kubectl
+    run:
+      name: Authenticate K8s
+      command: |
+          echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+          kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_URL}
+          kubectl config set-credentials circleci --token=${K8S_TOKEN}
+          kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
+          kubectl config use-context ${K8S_CLUSTER_NAME}
+          kubectl --namespace=${K8S_NAMESPACE} get pods
+
+# ------------------
+# COMMANDS
+# ------------------
+commands:
+  install-gems:
+    steps:
+      - *restore-bundle
+      - *install-bundle
+      - *save-bundle
+
+  install-compile-assets:
+    steps:
+      - *restore-assets
+      - *install-assets
+      - *save-assets
+
+  build-base:
+    steps:
+      - install-gems
+      - install-compile-assets
+  
+  rubocop:
+    steps:
+      - run:
+          name: Run rubocop
+          command: bundle exec rubocop
+
+  db-setup:
+    steps:
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: |
+            bundle exec rails db:prepare
+
+  rspec:
+    steps:
+      - db-setup
+      - run:
+          name: Run rspec tests
+          command: |
+            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+            RUBYOPT=-W:no-deprecated \
+            bundle exec rspec \
+             --format progress \
+             --out /tmp/test-results/rspec.xml \
+              $TESTFILES
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
+
+  build-docker-image:
+      steps:
+        - run:
+            name: Build docker image for app
+            command: |
+              docker build \
+              --label build.git.sha=${CIRCLE_SHA1} \
+              --label build.git.branch=${CIRCLE_BRANCH} \
+              --label build.date=$(date +%Y-%m-%dT%H:%M:%S%z) \
+              --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
+              --build-arg APP_BUILD_TAG=${CIRCLE_SHA1} \
+              --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1} \
+              --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH} \
+              --pull \
+              --tag app \
+              --file Dockerfile .\
+
+  deploy-to-environment:
+      description: Deploy image to the specified environment
+      parameters:
+        environment:
+          description: Name of environment to deploy to
+          type: string
+        registry:
+          description: Location of ECR images
+          type: string
+      steps:
+        - checkout
+        - *authenticate-kubectl
+        - run:
+            name: Deploy to namespace
+            command: |
+                helm upgrade laa-claim-non-standard-magistrate-fee-backend \
+                  ./helm_deploy/. \
+                    --install --wait --force \
+                    --namespace=${K8S_NAMESPACE} \
+                    --values ./helm_deploy/values-<< parameters.environment >>.yaml \
+                    --set image.repository="<< parameters.registry >>/${ECR_REPOSITORY}" \
+                    --set image.tag="${CIRCLE_SHA1}" \
+                    --debug \
+                    --atomic
+
+# ------------------
+# JOBS
+# ------------------
+jobs:
+  build-test-container:
+    executor: test-executor
+    steps:
+      - checkout
+      - build-base
+
+  linter-tests:
+    executor: test-executor
+    steps:
+      - checkout
+      - install-gems
+      - rubocop
+
+  rspec-tests:
+    executor: test-executor
+    steps:
+      - checkout
+      - install-gems
+      - install-compile-assets
+      - *attach-tmp-workspace
+      - browser-tools/install-browser-tools
+      - rspec
+
+  scan-docker-image:
+    executor: test-executor
+    parallelism: 1
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - build-docker-image
+      - snyk/scan:
+          token-variable: SNYK_TOKEN
+          docker-image-name: app
+          target-file: ./Dockerfile
+          organization: 'legal-aid-agency'
+          project: ministryofjustice/laa-assess-non-magistrate-fee
+          severity-threshold: "high"
+          fail-on-issues: true
+
+  build-to-ecr:
+    executor: aws-ecr/default
+    steps:
+      - checkout 
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - run:
+          name: Login to ECR
+          command: |
+            aws ecr get-login-password --region $ECR_REGION | docker login \
+            --username AWS --password-stdin \
+            ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+      - aws-ecr/build-image:
+          push-image: true
+          tag: ${CIRCLE_SHA1}
+          region: $ECR_REGION
+          repo: $ECR_REPOSITORY 
+          extra-build-args: |
+            --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
+            --build-arg APP_BUILD_TAG=${CIRCLE_SHA1} \
+            --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1} \
+            --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH} \
+
+  deploy-dev:
+    executor: cloud-platform-executor
+    steps:
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - deploy-to-environment:
+          environment: dev
+          registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+
+  deploy-uat:
+    executor: cloud-platform-executor
+    steps:
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - deploy-to-environment:
+          environment: uat
+          registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+
+  deploy-prod:
+    executor: cloud-platform-executor
+    steps:
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - deploy-to-environment:
+          environment: prod
+          registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+
+# ------------------
+# WORKFLOWS
+# ------------------
+workflows:
+  test:
+    jobs:
+      - build-test-container:
+          filters:
+            branches:
+              ignore:
+                - main
+      - linter-tests:
+          requires:
+            - build-test-container
+      - rspec-tests:
+          requires:
+            - build-test-container
+      - scan-docker-image:
+          requires:
+            - rspec-tests
+
+  build-push-branch:
+    jobs:
+      - branch-build-approval:
+          type: approval
+          filters:
+            branches:
+              ignore:
+                - main
+      - build-to-ecr:
+          context: laa-claim-non-standard-magistrates-fee-dev
+          requires:
+            - branch-build-approval
+      - hold-dev:
+          type: approval
+          requires:
+            - build-to-ecr
+      - deploy-dev:
+          context: laa-claim-non-standard-magistrates-fee-dev
+          requires:
+            - hold-dev
+      - hold-uat:
+          type: approval
+          requires:
+            - build-to-ecr
+      - deploy-uat:
+          context: laa-claim-non-standard-magistrates-fee-uat
+          requires:
+            - hold-uat
+
+  build-deploy-main:
+    jobs:
+      - build-to-ecr:
+          <<: *main-only
+          context: laa-claim-non-standard-magistrates-fee-dev
+      - hold-dev:
+          type: approval
+          requires:
+            - build-to-ecr
+      - deploy-dev:
+          context: laa-claim-non-standard-magistrates-fee-dev
+          requires:
+            - hold-dev
+      - hold-uat:
+          type: approval
+          requires:
+            - build-to-ecr
+      - deploy-uat:
+          context: laa-claim-non-standard-magistrates-fee-uat
+          requires:
+            - hold-uat
+      - hold-prod:
+          type: approval
+          requires:
+            - build-to-ecr
+      - deploy-prod:
+          context: laa-claim-non-standard-magistrates-fee-prod
+          requires:
+            - hold-prod
