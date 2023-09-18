@@ -42,10 +42,10 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'apply_vat' => 'no',
             'details' => 'Details',
             'disbursement_date' => '2023-08-16',
-            "disbursement_type"=>{:en=>an_instance_of(String), :value=>disbursement.disbursement_type},
+            'disbursement_type' => { en: an_instance_of(String), value: disbursement.disbursement_type },
             'id' => disbursement.id,
             'miles' => '100.0',
-            "other_type"=>{:en=>nil, :value=>nil},
+            'other_type' => { en: nil, value: nil },
             'pricing' => pricing[disbursement.disbursement_type],
             'prior_authority' => nil,
             'total_cost_without_vat' => disbursement.total_cost_without_vat.to_s,
@@ -70,9 +70,9 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'in_area' => 'yes',
           'is_other_info' => nil,
           'laa_reference' => nil,
-          letters_and_calls: [
-            {:count=>2, :pricing=>4.09, :type=>:letters, :uplift=>nil},
-            {:count=>3, :pricing=>4.09, :type=>:calls, :uplift=>nil}
+          'letters_and_calls' => [
+            { 'count' => 2, 'pricing' => 4.09, 'type' => 'letters', 'uplift' => nil },
+            { 'count' => 3, 'pricing' => 4.09, 'type' => 'calls', 'uplift' => nil }
           ],
           'main_offence' => claim.main_offence,
           'main_offence_date' => '2023-08-16',
@@ -118,7 +118,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'pricing' => pricing[work_item.work_type],
             'time_spent' => 100,
             'uplift' => nil,
-            "work_type" =>{:en=>an_instance_of(String), :value=>work_item.work_type},
+            'work_type' => { en: an_instance_of(String), value: work_item.work_type },
           }],
           'youth_count' => 'no'
         },

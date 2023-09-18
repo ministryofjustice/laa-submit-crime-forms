@@ -13,7 +13,8 @@ class Disbursement < ApplicationRecord
 
   def as_json(*)
     super.merge(
-      'disbursement_type' => translations(disbursement_type, 'helpers.label.steps_disbursement_type_form.disbursement_type_options'),
+      'disbursement_type' => translations(disbursement_type,
+                                          'helpers.label.steps_disbursement_type_form.disbursement_type_options'),
       'other_type' => translations(other_type, 'helpers.other_disbursement_type')
     )
   end
