@@ -15,7 +15,7 @@ class NotifyAppStore < ApplicationJob
     end
   end
 
-  def perform(claim, scorer: NotifyAppStore::Scorer)
+  def perform(claim, scorer: RiskAssessment::RiskAssessmentScorer)
     notify(MessageBuilder.new(claim:, scorer:))
   end
 
