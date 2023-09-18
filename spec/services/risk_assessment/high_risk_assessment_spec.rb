@@ -6,7 +6,7 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
   describe '#assess' do
     context 'returns true' do
       context 'when cost is over £5000' do
-        let(:high_cost_claim) { build(:claim, :high_cost_disbursement) }
+        let(:high_cost_claim) { create(:claim, :high_cost_disbursement) }
 
         it do
           expect(described_class.new(high_cost_claim)).to be_high_cost
