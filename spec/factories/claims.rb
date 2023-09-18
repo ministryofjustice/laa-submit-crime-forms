@@ -132,6 +132,11 @@ FactoryBot.define do
       work_items { [build(:work_item, :with_uplift)] }
     end
 
+    trait :medium_risk_work_item do
+      prosecution_evidence { 10 }
+      work_items { [build(:work_item, :medium_risk_values)] }
+    end
+
     trait :one_disbursement do
       disbursements { [build(:disbursement, :valid)] }
     end

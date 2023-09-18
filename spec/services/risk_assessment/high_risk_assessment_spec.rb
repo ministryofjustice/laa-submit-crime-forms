@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe RiskAssessment::HighRiskAssessment do
@@ -9,6 +10,7 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
 
         it do
           expect(described_class.new(high_cost_claim)).to be_high_cost
+          expect(described_class.new(high_cost_claim).assess).to be_truthy
         end
       end
 
@@ -17,6 +19,7 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
 
         it do
           expect(described_class.new(assigned_council_claim)).to be_assigned_counsel
+          expect(described_class.new(assigned_council_claim).assess).to be_truthy
         end
       end
 
@@ -25,6 +28,7 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
 
         it do
           expect(described_class.new(enhanced_rates_claim)).to be_enhancement_applied
+          expect(described_class.new(enhanced_rates_claim).assess).to be_truthy
         end
       end
 
@@ -33,6 +37,7 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
 
         it do
           expect(described_class.new(uplifted_claim)).to be_uplift_applied
+          expect(described_class.new(uplifted_claim).assess).to be_truthy
         end
       end
 
@@ -41,6 +46,7 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
 
         it do
           expect(described_class.new(extradition_claim)).to be_extradition
+          expect(described_class.new(extradition_claim).assess).to be_truthy
         end
       end
 
@@ -49,6 +55,7 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
 
         it do
           expect(described_class.new(withdrawn_reporder_claim)).to be_rep_order_withdrawn
+          expect(described_class.new(withdrawn_reporder_claim).assess).to be_truthy
         end
       end
     end
@@ -72,7 +79,7 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
         expect(described_class.new(claim)).not_to be_uplift_applied
       end
 
-      it 'when there is not an extradition'do
+      it 'when there is not an extradition' do
         expect(described_class.new(claim)).not_to be_extradition
       end
 
@@ -81,5 +88,4 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
       end
     end
   end
-
 end
