@@ -141,7 +141,7 @@ FactoryBot.define do
     end
 
     trait :high_cost_disbursement do
-      disbursements { [build(:disbursement, :valid_other_specific)] }
+      disbursements { [build(:disbursement, :valid_high_cost)] }
     end
   end
 end
