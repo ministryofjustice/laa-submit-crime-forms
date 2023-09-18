@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe NotifyAppStore::MessageBuilder do
   subject { described_class.new(claim:, scorer:) }
 
-  let(:scorer) { double(:scorer, calculate: 'high') }
+  let(:scorer) { double(:risk_assessment_scorer, calculate: 'high') }
   let(:claim) { create(:claim, :complete) }
   let(:defendant) { claim.defendants.first }
   let(:disbursement) { claim.disbursements.first }
