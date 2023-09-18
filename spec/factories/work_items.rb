@@ -14,6 +14,11 @@ FactoryBot.define do
       time_spent { 100 }
     end
 
+    trait :with_uplift do
+      valid
+      uplift { '100' }
+    end
+
     WorkTypes.values.each do |value|
       trait value.to_s.to_sym do
         work_type { value.to_s }

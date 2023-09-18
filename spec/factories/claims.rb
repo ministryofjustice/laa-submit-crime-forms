@@ -69,8 +69,20 @@ FactoryBot.define do
       matter_type { '1' }
     end
 
-    trait :with_uplift do
+    trait :with_enhanced_rates do
       reasons_for_claim { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
+    end
+
+    trait :with_rep_order_withdrawn do
+      reasons_for_claim { [ReasonForClaim::REPRESENTATION_ORDER_WITHDRAWN.to_s] }
+    end
+
+    trait :with_extradition do
+      reasons_for_claim { [ReasonForClaim::EXTRADITION.to_s] }
+    end
+
+    trait :with_assigned_council do
+      assigned_counsel { 'yes' }
     end
 
     trait :case_disposal do
@@ -116,11 +128,19 @@ FactoryBot.define do
       work_items { [build(:work_item, :valid)] }
     end
 
+    trait :uplifted_work_item do
+      work_items { [build(:work_item, :with_uplift)] }
+    end
+
     trait :one_disbursement do
       disbursements { [build(:disbursement, :valid)] }
     end
 
     trait :one_other_disbursement do
+      disbursements { [build(:disbursement, :valid_other_specific)] }
+    end
+
+    trait :high_cost_disbursement do
       disbursements { [build(:disbursement, :valid_other_specific)] }
     end
   end
