@@ -9,7 +9,7 @@ FactoryBot.define do
       main_defendant
       case_details
       hearing_details
-      with_uplift
+      with_enhanced_rates
       case_disposal
       letters_calls
       one_work_item

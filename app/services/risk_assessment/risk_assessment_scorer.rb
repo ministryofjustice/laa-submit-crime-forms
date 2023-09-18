@@ -2,20 +2,20 @@
 
 module RiskAssessment
   class RiskAssessmentScorer
-    def self.calculate(_claim)
-      return 'high' if high_risk?
+    def self.calculate(claim)
+      return 'high' if high_risk? claim
 
-      return 'low' if low_risk?
+      return 'low' if low_risk? claim
 
       'medium'
     end
 
-    def high_risk?(claim)
-      HighRiskAssessment.assess(claim)
+    def self.high_risk?(claim)
+      HighRiskAssessment.new(claim).assess
     end
 
-    def low_risk?(claim)
-      LowRiskAssessment.assess(claim)
+    def self.low_risk?(claim)
+      LowRiskAssessment.new(claim).assess
     end
   end
 end
