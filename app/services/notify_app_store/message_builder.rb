@@ -38,7 +38,7 @@ class NotifyAppStore
 
     def disbursement_data
       claim.disbursements.map do |disbursement|
-        data = disbursement.attributes.slice!(*DEFAULT_IGNORE)
+        data = disbursement.as_json.slice!(*DEFAULT_IGNORE)
         data['disbursement_date'] = data['disbursement_date'].to_s
         data['pricing'] = pricing[disbursement.disbursement_type] || 1.0
         data['vat_rate'] = pricing[:vat]
@@ -48,7 +48,7 @@ class NotifyAppStore
 
     def work_item_data
       claim.work_items.map do |work_item|
-        data = work_item.attributes.slice!(*DEFAULT_IGNORE)
+        data = work_item.as_json.slice!(*DEFAULT_IGNORE)
         data['completed_on'] = data['completed_on'].to_s
         data['pricing'] = pricing[work_item.work_type]
         data
@@ -57,7 +57,7 @@ class NotifyAppStore
 
     def defendant_data
       claim.defendants.map do |defendant|
-        defendant.attributes.slice!(*DEFAULT_IGNORE)
+        defendant.as_json.slice!(*DEFAULT_IGNORE)
       end
     end
 
