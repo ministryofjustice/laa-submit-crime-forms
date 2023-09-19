@@ -129,6 +129,7 @@ FactoryBot.define do
     end
 
     trait :uplifted_work_item do
+      with_enhanced_rates
       work_items { [build(:work_item, :with_uplift)] }
     end
 
