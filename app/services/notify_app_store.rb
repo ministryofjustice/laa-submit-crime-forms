@@ -1,7 +1,7 @@
 class NotifyAppStore < ApplicationJob
   queue_as :default
 
-  def process(claim:, scorer: NotifyAppStore::Scorer)
+  def process(claim:, scorer: RiskAssessment::RiskAssessmentScorer)
     if ENV.key?('REDIS_HOST')
       self.class.perform_later(claim)
     else
@@ -15,7 +15,7 @@ class NotifyAppStore < ApplicationJob
     end
   end
 
-  def perform(claim, scorer: NotifyAppStore::Scorer)
+  def perform(claim, scorer: RiskAssessment::RiskAssessmentScorer)
     notify(MessageBuilder.new(claim:, scorer:))
   end
 

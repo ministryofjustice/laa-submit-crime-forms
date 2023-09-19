@@ -446,7 +446,7 @@ RSpec.describe Steps::LettersCallsForm do
       let(:apply_letters_uplift) { 'false' }
       let(:apply_calls_uplift) { 'false' }
       let(:application) do
-        create(:claim, :with_uplift, letters_uplift: 10, calls_uplift: 10, letters: letters, calls: calls)
+        create(:claim, :with_enhanced_rates, letters_uplift: 10, calls_uplift: 10, letters: letters, calls: calls)
       end
 
       it 'resets the letters_uplift and calls_uplift values' do
@@ -464,7 +464,7 @@ RSpec.describe Steps::LettersCallsForm do
       let(:calls_uplift) { 10 }
       let(:letters_uplift) { 10 }
       let(:application) do
-        create(:claim, :with_uplift, letters_uplift: nil, calls_uplift: nil, letters: letters, calls: calls)
+        create(:claim, :with_enhanced_rates, letters_uplift: nil, calls_uplift: nil, letters: letters, calls: calls)
       end
 
       it 'sets the letters_uplift and calls_uplift values' do
