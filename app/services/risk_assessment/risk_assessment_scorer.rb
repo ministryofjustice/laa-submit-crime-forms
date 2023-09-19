@@ -2,12 +2,17 @@
 
 module RiskAssessment
   class RiskAssessmentScorer
+    RISK_LEVELS = {
+      high: { id: 1, level: 'high' },
+      medium: { id: 2, level: 'medium' },
+      low: { id: 3, level: 'low' }
+    }.freeze
     def self.calculate(claim)
-      return 'high' if high_risk? claim
+      return RISK_LEVELS[:high] if high_risk? claim
 
-      return 'low' if low_risk? claim
+      return RISK_LEVELS[:low] if low_risk? claim
 
-      'medium'
+      RISK_LEVELS[:medium]
     end
 
     def self.high_risk?(claim)
