@@ -25,8 +25,10 @@ class Claim < ApplicationRecord
     super
       .merge(
         'letters_and_calls' => [
-          { 'type' => 'letters', 'count' => letters, 'pricing' => pricing.letters, 'uplift' => letters_uplift },
-          { 'type' => 'calls', 'count' => calls, 'pricing' => pricing.calls, 'uplift' => calls_uplift },
+          { 'type' => translations('letters', 'helpers.label.steps_letters_calls_form.type_options'),
+            'count' => letters, 'pricing' => pricing.letters, 'uplift' => letters_uplift },
+          { 'type' => translations('calls', 'helpers.label.steps_letters_calls_form.type_options'),
+            'count' => calls, 'pricing' => pricing.calls, 'uplift' => calls_uplift },
         ]
       )
       .slice!('letters', 'letters_uplift', 'calls', 'calls_uplift')
