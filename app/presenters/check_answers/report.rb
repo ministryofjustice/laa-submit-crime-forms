@@ -13,8 +13,9 @@ module CheckAnswers
 
     attr_reader :claim
 
-    def initialize(claim)
+    def initialize(claim, read_only: false)
       @claim = claim
+      @readonly = read_only
     end
 
     def section_groups
@@ -82,6 +83,8 @@ module CheckAnswers
     private
 
     def actions(key)
+      return [] if @readonly
+
       helper = Rails.application.routes.url_helpers
       [
         govuk_link_to(

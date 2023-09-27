@@ -79,7 +79,7 @@ Rails.application.routes.draw do
       edit_step :solicitor_declaration
       show_step :claim_confirmation
       show_step :check_answers
-
+      show_step :view_claim
     end
   end
 
