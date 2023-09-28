@@ -1,6 +1,8 @@
 module Steps
   class StartPageController < Steps::BaseStepController
     def show
+      return redirect_to steps_view_claim_path(current_application.id) if current_application.status == 'completed'
+
       @pre_tasklist = StartPage::PreTaskList.new(
         view_context, application: current_application, show_index: false
       )

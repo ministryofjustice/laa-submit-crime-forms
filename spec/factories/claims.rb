@@ -149,5 +149,9 @@ FactoryBot.define do
     trait :high_cost_disbursement do
       disbursements { [build(:disbursement, :valid_high_cost)] }
     end
+
+    trait :completed_status do
+      status { 'complete' }
+    end
   end
 end

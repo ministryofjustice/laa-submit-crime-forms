@@ -79,15 +79,8 @@
         <% @claims.each do |claim| %>
           <tr class="govuk-table__row app-task-list__item">
             <td class="govuk-table__cell">
-              <% if claim.status == 'completed' %>
-                <%# TODO: Keeping it here as we do want to show a different URL for completed claims (TBC) %>
-                <%= link_to steps_start_page_path(claim.id) do %>
-                  <%= claim.ufn %>
-                <% end %>
-              <% else %>
-                <%= link_to steps_start_page_path(claim.id) do %>
-                  <%= claim.ufn %>
-                <% end %>
+              <%= link_to steps_start_page_path(claim.id) do %>
+                <%= claim.ufn %>
               <% end %>
             </td>
             <td class="govuk-table__cell"><%= check_missing(claim.main_defendant&.full_name) %></td>
