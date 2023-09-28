@@ -25,14 +25,14 @@ RSpec.configure do |config|
   config.include RailsSystemTestExtensions, type: :system
 
   # Make urls in mailers contain the correct server host
-  config.around(:each, javascript: true, type: :system) do |ex|
+  config.around(:each, :javascript, type: :system) do |ex|
     was_host = Rails.application.default_url_options[:host]
     Rails.application.default_url_options[:host] = Capybara.server_host
     ex.run
     Rails.application.default_url_options[:host] = was_host
   end
 
-  config.before(:each, javascript: true, type: :system) do
+  config.before(:each, :javascript, type: :system) do
     # Use JS driver
     driven_by Capybara.javascript_driver
   end

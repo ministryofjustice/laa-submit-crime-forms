@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Test suggestion autocomplete for court', javascript: true, type: :system do
+RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :system do
   let(:claim) { create(:claim, :case_details) }
 
   it 'can select a value from the autocomplete' do
