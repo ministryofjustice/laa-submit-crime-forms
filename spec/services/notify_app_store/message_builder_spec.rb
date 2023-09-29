@@ -72,8 +72,8 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'is_other_info' => nil,
           'laa_reference' => nil,
           'letters_and_calls' => [
-            { 'count' => 2, 'pricing' => 4.09, 'type' => 'letters', 'uplift' => nil },
-            { 'count' => 3, 'pricing' => 4.09, 'type' => 'calls', 'uplift' => nil }
+            { 'count' => 2, 'pricing' => 4.09, 'type' => { en: 'Letters', value: 'letters' }, 'uplift' => nil },
+            { 'count' => 3, 'pricing' => 4.09, 'type' => { en: 'Calls', value: 'calls' }, 'uplift' => nil }
           ],
           'main_offence' => claim.main_offence,
           'main_offence_date' => '2023-08-16',
