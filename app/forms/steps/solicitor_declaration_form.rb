@@ -8,7 +8,7 @@ module Steps
     private
 
     def persist!
-      application.status = 'completed'
+      application.status = :submitted
       application.update!(attributes)
 
       NotifyAppStore.new.process(claim: application)

@@ -24,7 +24,7 @@ RSpec.describe Steps::SolicitorDeclarationForm do
 
       it 'is valid' do
         expect(form.save).to be_truthy
-        expect(application).to have_received(:status=).with('completed')
+        expect(application).to have_received(:status=).with(:submitted)
         expect(application).to have_received(:update!)
       end
 

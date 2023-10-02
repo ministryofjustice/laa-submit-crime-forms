@@ -12,6 +12,8 @@ class Claim < ApplicationRecord
 
   scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
 
+  enum status: { draft: 'draft', submitted: 'completed', accessed: 'accessed' }
+
   def date
     rep_order_date || cntp_date
   end
