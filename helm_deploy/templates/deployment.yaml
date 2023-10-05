@@ -112,6 +112,8 @@ spec:
                   key: tls.key
             - name: LAA_PORTAL_IDP_METADATA_FILE
               value: {{ .Values.secrets.portalIDPMetadataFile }}
+            - name: OMNIAUTH_TEST_MODE
+              value: {{ .Values.secrets.omniauthTestMode }}
               
       {{- with .Values.nodeSelector }}
       nodeSelector:
