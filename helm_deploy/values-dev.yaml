@@ -71,6 +71,7 @@ autoscaling:
 secrets:
   environment: development
   sp-certificate-key: portal-sp-certificate-dev
+  portal-idp-metadata-file: config/laa_portal/metadata/dev.xml
 
 service_account:
   name: laa-claim-non-standard-magistrate-fee-dev-irsa

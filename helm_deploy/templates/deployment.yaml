@@ -110,6 +110,10 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.secrets.portal-sp-certificate-dev }}
                   key: tls.key
+            - name: LAA_PORTAL_IDP_METADATA_FILE
+              value: {{ .Values.secrets.portal-idp-metadata-file }}
+            - name: OMNIAUTH_TEST_MODE
+              value: false
               
       {{- with .Values.nodeSelector }}
       nodeSelector:
