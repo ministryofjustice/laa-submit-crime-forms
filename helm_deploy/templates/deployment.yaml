@@ -103,17 +103,17 @@ spec:
             - name: LAA_PORTAL_SP_CERT
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.secrets.portal-sp-certificate-dev }}
+                  name: {{ .Values.secrets.portalSPCertificateKey }}
                   key: tls.crt
             - name: LAA_PORTAL_SP_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.secrets.portal-sp-certificate-dev }}
+                  name: {{ .Values.secrets.portalSPCertificateKey }}
                   key: tls.key
             - name: LAA_PORTAL_IDP_METADATA_FILE
-              value: {{ .Values.secrets.portal-idp-metadata-file }}
+              value: {{ .Values.secrets.portalIDPMetadataFile }}
             - name: OMNIAUTH_TEST_MODE
-              value: {{ .Values.secrets.omniauth_test_mode }}
+              value: {{ .Values.secrets.omniauthTestMode }}
               
       {{- with .Values.nodeSelector }}
       nodeSelector:
