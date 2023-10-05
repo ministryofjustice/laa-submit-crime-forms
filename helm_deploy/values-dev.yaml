@@ -72,7 +72,7 @@ secrets:
   environment: development
   portalSPCertificateKey: portal-sp-certificate-dev
   portalIDPMetadataFile: config/laa_portal/metadata/dev.xml
-  omniauthTestMode: "false" 
+  omniauthTestMode: false
 
 service_account:
   name: laa-claim-non-standard-magistrate-fee-dev-irsa

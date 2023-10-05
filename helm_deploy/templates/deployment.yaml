@@ -113,7 +113,7 @@ spec:
             - name: LAA_PORTAL_IDP_METADATA_FILE
               value: {{ .Values.secrets.portalIDPMetadataFile }}
             - name: OMNIAUTH_TEST_MODE
-              value: {{ .Values.secrets.omniauthTestMode }}
+              value: {{ .Values.secrets.omniauthTestMode | quote }}
               
       {{- with .Values.nodeSelector }}
       nodeSelector:
