@@ -100,6 +100,17 @@ spec:
                   key: password
             - name: ENV
               value: {{ .Values.secrets.environment}}
+            - name: LAA_PORTAL_SP_CERT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.portal-sp-certificate-dev }}
+                  key: tls.crt
+            - name: LAA_PORTAL_SP_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.portal-sp-certificate-dev }}
+                  key: tls.key
+              
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
