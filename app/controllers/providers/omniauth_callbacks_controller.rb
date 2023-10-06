@@ -31,7 +31,7 @@ module Providers
 
       Rails.logger.warn "Not enrolled provider access attempt, UID: #{auth_hash.uid}"
       #TO DO: REMOVE ONCE TESTED
-      Rails.logger.warn "#{auth_hash.inspect}"
+      Rails.logger.warn "#{auth_hash.to_s}"
       redirect_to laa_msf.not_enrolled_errors_path
     end
   end
