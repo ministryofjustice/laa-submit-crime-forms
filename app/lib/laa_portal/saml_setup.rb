@@ -1,6 +1,5 @@
 module LaaPortal
   class SamlSetup
-    # change to our own identity
     SP_ENTITY_ID = ENV.fetch('SP_ENTITY_ID', nil)
     NAME_ID_FORMAT = 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified'.freeze
 
