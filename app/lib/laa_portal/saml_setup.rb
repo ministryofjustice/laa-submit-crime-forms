@@ -1,6 +1,6 @@
 module LaaPortal
   class SamlSetup
-    SP_ENTITY_ID = ENV.fetch('SP_ENTITY_ID', nil)
+    SP_ENTITY_ID = ENV.fetch('SP_ENTITY_ID', 'LAA_Portal_CRM7')
     NAME_ID_FORMAT = 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified'.freeze
 
     def initialize(env)

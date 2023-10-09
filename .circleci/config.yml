@@ -24,7 +24,7 @@ executors:
           RACK_ENV: test
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:circleci@127.0.0.1:5432/laa_claim_non_standard_magistrate_fee_test
-          OMNIAUTH_TEST_MODE: false
+          OMNIAUTH_TEST_MODE: true
       - image: cimg/postgres:13.12
         environment:
           POSTGRES_USER: postgres

@@ -102,7 +102,7 @@ describe LaaPortal::SamlSetup do
         ).to eq(
           {
             foo: 'bar',
-            sp_entity_id: 'crime-apply',
+            sp_entity_id: 'LAA_Portal_CRM7',
             name_identifier_format: 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
             certificate: nil,
             private_key: nil,
