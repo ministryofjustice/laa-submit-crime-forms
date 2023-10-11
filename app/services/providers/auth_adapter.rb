@@ -1,3 +1,4 @@
+@@ -1,47 +1,48 @@
 module Providers
   class AuthAdapter
     ROLES_TOKEN_PATTERN = ','.freeze
@@ -16,6 +17,7 @@ module Providers
     private_class_method :new
 
     def transform
+      Rails.logger.warn auth_info
       @auth_hash.merge(
         info: {
           email:,
@@ -23,7 +25,6 @@ module Providers
           office_codes:
         }
       )
-      Rails.logger.warn auth_info
     end
 
     private
