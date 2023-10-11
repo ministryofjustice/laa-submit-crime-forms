@@ -16,8 +16,8 @@ module Providers
     private_class_method :new
 
     def transform
-      Rails.logger.warn "auth_info #{auth_info}"
-      Rails.logger.warn "auth_hash pre merge #{auth_hash}"
+      Rails.logger.warn auth_info
+      Rails.logger.warn auth_hash
       @auth_hash.merge(
         info: {
           email:,
@@ -25,7 +25,7 @@ module Providers
           office_codes:
         }
       )
-      Rails.logger.warn "auth_hash post merge #{auth_hash}"
+      Rails.logger.warn auth_hash
     end
 
     private
