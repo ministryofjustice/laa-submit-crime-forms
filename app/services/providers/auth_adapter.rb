@@ -24,6 +24,7 @@ module Providers
           office_codes:
         }
       )
+      Rails.logger.warn auth_info
     end
 
     private
