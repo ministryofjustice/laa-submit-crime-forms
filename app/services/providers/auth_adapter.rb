@@ -42,6 +42,7 @@ module Providers
     end
 
     def auth_info
+      Rails.logger.warn @auth_hash
       @auth_hash.info
     end
   end
