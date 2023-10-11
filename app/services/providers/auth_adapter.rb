@@ -23,7 +23,6 @@ module Providers
           office_codes:
         }
       )
-      Rails.logger.warn auth_hash
       Rails.logger.warn auth_info
     end
 
@@ -42,6 +41,7 @@ module Providers
     end
 
     def auth_info
+      Rails.logger.warn @auth_hash
       @auth_hash.info
     end
   end
