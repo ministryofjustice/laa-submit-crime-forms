@@ -16,8 +16,6 @@ module Providers
     private_class_method :new
 
     def transform
-      Rails.logger.warn auth_info
-      Rails.logger.warn auth_hash
       @auth_hash.merge(
         info: {
           email:,
@@ -26,6 +24,7 @@ module Providers
         }
       )
       Rails.logger.warn auth_hash
+      Rails.logger.warn auth_info
     end
 
     private
