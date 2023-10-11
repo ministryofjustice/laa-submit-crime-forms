@@ -19,9 +19,9 @@ module Providers
       Rails.logger.warn auth_info
       @auth_hash.merge(
         info: {
-          email:,
-          roles:,
-          office_codes:
+          email:"test@example.com",
+          roles:"TEST",
+          office_codes:"AAAA:AAAA"
         }
       )
     end
