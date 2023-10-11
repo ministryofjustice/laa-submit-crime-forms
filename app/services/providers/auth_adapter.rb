@@ -3,6 +3,9 @@ module Providers
     ROLES_TOKEN_PATTERN = ','.freeze
     OFFICE_CODES_TOKEN_PATTERN = ':'.freeze
 
+    # SAMLmock lacks email
+    FALLBACK_EMAIL = 'provider@example.com'.freeze
+
     def self.call(auth_hash)
       new(auth_hash).transform
     end
@@ -25,7 +28,7 @@ module Providers
     private
 
     def email
-      auth_info.email
+      auth_info.email.presence || FALLBACK_EMAIL
     end
 
     def roles
