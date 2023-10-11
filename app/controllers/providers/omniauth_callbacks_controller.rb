@@ -25,6 +25,7 @@ module Providers
       request.env['omniauth.auth']
     end
 
+    # rubocop:disable Metrics/AbcSize
     def check_provider_is_enrolled
       gatekeeper = Providers::Gatekeeper.new(auth_hash.info)
       return if gatekeeper.provider_enrolled?
@@ -35,4 +36,5 @@ module Providers
       redirect_to laa_msf.not_enrolled_errors_path
     end
   end
+  # rubocop:enable Metrics/AbcSize
 end
