@@ -1,4 +1,3 @@
-@@ -1,47 +1,48 @@
 module Providers
   class AuthAdapter
     ROLES_TOKEN_PATTERN = ','.freeze
