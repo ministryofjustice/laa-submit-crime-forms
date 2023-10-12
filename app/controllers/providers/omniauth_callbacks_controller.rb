@@ -29,7 +29,11 @@ module Providers
       gatekeeper = Providers::Gatekeeper.new(auth_hash.info)
       return if gatekeeper.provider_enrolled?
 
-      Rails.logger.warn "Not enrolled provider access attempt, UID: #{auth_hash.uid}, accounts: #{auth_hash.info.office_codes}"
+      Rails.logger.warn "Not enrolled provider access attempt, UID: #{auth_hash.uid}, " \
+                        "accounts: #{auth_hash.info.office_codes}, " \
+                        "email: #{auth_hash.info.email}, " \
+                        "roles: #{auth_hash.info.roles}"
+
       redirect_to laa_msf.not_enrolled_errors_path
     end
   end
