@@ -1,6 +1,6 @@
 module LaaPortal
   class SamlSetup
-    SP_ENTITY_ID = ENV.fetch('SP_ENTITY_ID', 'LAA_Portal_CRM7')
+    SP_ENTITY_ID = ENV.fetch('SP_ENTITY_ID', 'LAA_PORTAL_CRM7')
     NAME_ID_FORMAT = 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified'.freeze
 
     def initialize(env)
@@ -26,8 +26,8 @@ module LaaPortal
         idp_slo_service_binding: :redirect,
         single_logout_service_url: sp_single_logout_url,
         security: {
-          digest_method: XMLSecurity::Document::SHA256,
-          signature_method: XMLSecurity::Document::RSA_SHA256,
+          digest_method: XMLSecurity::Document::SHA1,
+          signature_method: XMLSecurity::Document::RSA_SHA1,
           authn_requests_signed: true,
           logout_responses_signed: true,
           want_assertions_signed: true,
