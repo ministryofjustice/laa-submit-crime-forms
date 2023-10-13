@@ -110,8 +110,8 @@ describe LaaPortal::SamlSetup do
             idp_slo_service_binding: :redirect,
             single_logout_service_url: 'http://example.com/providers/auth/saml/slo',
             security: {
-              digest_method: XMLSecurity::Document::SHA256,
-              signature_method: XMLSecurity::Document::RSA_SHA256,
+              digest_method: XMLSecurity::Document::SHA1,
+              signature_method: XMLSecurity::Document::RSA_SHA1,
               authn_requests_signed: true,
               logout_responses_signed: true,
               want_assertions_signed: true,
