@@ -30,10 +30,7 @@ module Providers
       return if gatekeeper.provider_enrolled?
 
       Rails.logger.warn "Not enrolled provider access attempt, UID: #{auth_hash.uid}, " \
-                        "accounts: #{auth_hash.info.office_codes}, " \
-                        "email: #{auth_hash.info.email}, " \
-                        "roles: #{auth_hash.info.roles}, " \
-                        "omniauth auth object: #{request.env['omniauth.auth']}"
+                        "accounts: #{auth_hash.info.office_codes}, "
 
       redirect_to laa_msf.not_enrolled_errors_path
     end
