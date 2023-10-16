@@ -126,7 +126,8 @@ RSpec.describe NotifyAppStore::MessageBuilder do
         application_id: claim.id,
         application_state: 'submitted',
         application_risk: 'high',
-        json_schema_version: 1
+        json_schema_version: 1,
+        application_type: 'crm7'
       )
     end
   end

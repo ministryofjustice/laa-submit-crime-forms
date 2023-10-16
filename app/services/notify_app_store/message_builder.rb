@@ -16,6 +16,7 @@ class NotifyAppStore
         application_state: 'submitted',
         application: data,
         application_risk: scorer.calculate(claim),
+        application_type: 'crm7'
       }
     end
 
