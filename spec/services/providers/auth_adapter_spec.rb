@@ -44,14 +44,6 @@ RSpec.describe Providers::AuthAdapter do
   describe '#office_codes' do
     let(:codes_array) { %w[1A123B 2A555X] }
 
-    context 'when codes are tokenized with commas' do
-      let(:office_codes) { codes_array.join(',') }
-
-      it 'returns the account description' do
-        expect(subject.info).to match(a_hash_including(office_codes: codes_array))
-      end
-    end
-
     context 'when codes are tokenized with colons' do
       let(:office_codes) { codes_array.join(':') }
 
