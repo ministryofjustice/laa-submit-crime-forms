@@ -1,9 +1,8 @@
 module Providers
   class AuthAdapter
     ROLES_TOKEN_PATTERN = ','.freeze
-    # SAMLmock returns comma-separated values, however other
-    # Portal envs (dev, staging, production) use colons
-    OFFICE_CODES_TOKEN_PATTERN = /[:,]/
+    OFFICE_CODES_TOKEN_PATTERN = ':'.freeze
+
     # SAMLmock lacks email
     FALLBACK_EMAIL = 'provider@example.com'.freeze
 
