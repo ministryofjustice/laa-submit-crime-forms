@@ -102,7 +102,7 @@ describe LaaPortal::SamlSetup do
         ).to eq(
           {
             foo: 'bar',
-            sp_entity_id: 'crime-apply',
+            sp_entity_id: 'LAA_PORTAL_CRM7',
             name_identifier_format: 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
             certificate: nil,
             private_key: nil,
@@ -110,8 +110,8 @@ describe LaaPortal::SamlSetup do
             idp_slo_service_binding: :redirect,
             single_logout_service_url: 'http://example.com/providers/auth/saml/slo',
             security: {
-              digest_method: XMLSecurity::Document::SHA256,
-              signature_method: XMLSecurity::Document::RSA_SHA256,
+              digest_method: XMLSecurity::Document::SHA1,
+              signature_method: XMLSecurity::Document::RSA_SHA1,
               authn_requests_signed: true,
               logout_responses_signed: true,
               want_assertions_signed: true,

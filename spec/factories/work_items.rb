@@ -14,6 +14,18 @@ FactoryBot.define do
       time_spent { 100 }
     end
 
+    trait :with_uplift do
+      valid
+      uplift { '100' }
+    end
+
+    trait :medium_risk_values do
+      work_type { WorkTypes::PREPARATION }
+      time_spent { '100' }
+      completed_on { Time.zone.today }
+      fee_earner { 'test' }
+    end
+
     WorkTypes.values.each do |value|
       trait value.to_s.to_sym do
         work_type { value.to_s }

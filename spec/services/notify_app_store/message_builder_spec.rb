@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe NotifyAppStore::MessageBuilder do
   subject { described_class.new(claim:, scorer:) }
 
-  let(:scorer) { double(:scorer, calculate: 'high') }
+  let(:scorer) { double(:risk_assessment_scorer, calculate: 'high') }
   let(:claim) { create(:claim, :complete) }
   let(:defendant) { claim.defendants.first }
   let(:disbursement) { claim.disbursements.first }
@@ -18,10 +18,9 @@ RSpec.describe NotifyAppStore::MessageBuilder do
       expect(tester).to have_received(:process).with(
         application: {
           'agent_instructed' => 'no',
+          'answer_equality' => nil,
           'arrest_warrant_date' => nil,
           'assigned_counsel' => 'no',
-          'calls' => 3,
-          'calls_uplift' => nil,
           'claim_type' => nil,
           'cntp_date' => nil,
           'cntp_order' => nil,
@@ -44,13 +43,13 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'apply_vat' => 'no',
             'details' => 'Details',
             'disbursement_date' => '2023-08-16',
-            'disbursement_type' => disbursement.disbursement_type,
+            'disbursement_type' => { en: an_instance_of(String), value: disbursement.disbursement_type },
             'id' => disbursement.id,
-            'miles' => 100,
-            'other_type' => nil,
+            'miles' => '100.0',
+            'other_type' => { en: nil, value: nil },
             'pricing' => pricing[disbursement.disbursement_type],
             'prior_authority' => nil,
-            'total_cost_without_vat' => disbursement.total_cost_without_vat,
+            'total_cost_without_vat' => disbursement.total_cost_without_vat.to_s,
             'vat_amount' => nil,
             'vat_rate' => 0.2
           }],
@@ -72,8 +71,10 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'in_area' => 'yes',
           'is_other_info' => nil,
           'laa_reference' => nil,
-          'letters' => 2,
-          'letters_uplift' => nil,
+          'letters_and_calls' => [
+            { 'count' => 2, 'pricing' => 4.09, 'type' => { en: 'Letters', value: 'letters' }, 'uplift' => nil },
+            { 'count' => 3, 'pricing' => 4.09, 'type' => { en: 'Calls', value: 'calls' }, 'uplift' => nil }
+          ],
           'main_offence' => claim.main_offence,
           'main_offence_date' => '2023-08-16',
           'matter_type' => '1',
@@ -118,14 +119,15 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'pricing' => pricing[work_item.work_type],
             'time_spent' => 100,
             'uplift' => nil,
-            'work_type' => work_item.work_type
+            'work_type' => { en: an_instance_of(String), value: work_item.work_type },
           }],
           'youth_count' => 'no'
         },
         application_id: claim.id,
         application_state: 'submitted',
         application_risk: 'high',
-        json_schema_version: 1
+        json_schema_version: 1,
+        application_type: 'crm7'
       )
     end
   end

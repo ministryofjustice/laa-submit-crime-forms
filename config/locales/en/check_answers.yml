@@ -6,6 +6,14 @@ en:
         page_title: Check your answers
         heading: Check your answers
         sections:
+          claim_type:
+            file_ufn: Unique file number
+            type_of_claim: Type of claim
+            rep_order_date: Representation order date
+            cntp_number: Client's CNTP number
+            cntp_rep_order: Date CNTP representation order was issued
+            non_standard_magistrate: Non-standard magistrates' court payment
+            breach_of_injunction: Breach of injunction
           firm_details:
             firm_name: Firm name
             firm_account_number: Firm account number
@@ -26,7 +34,7 @@ en:
             unassigned_counsel: Unassigned counsel
             agent_instructed: Instructed Agent
             remitted_to_magistrate: Case has been remitted from Crown Court to magistrates
-            remitted_to_magistrate_date: Remittal date 
+            remitted_to_magistrate_date: Remittal date
           hearing_details:
             hearing_date: Date of first hearing
             number_of_hearing: Number of hearings
@@ -69,6 +77,7 @@ en:
           work_items:
             items: Items
             items_total: <strong>Total per item</strong>
+            attendance_with_counsel: Attendance with counsel
             attendance_without_counsel: Attendance without counsel
             preparation: Preparation
             advocacy: Advocacy
@@ -90,6 +99,10 @@ en:
             send_by_post: Sending supporting evidence by post
             supporting_evidence: Evidence %{count}
       groups:
+        claim_type:
+          heading: What you are claiming for
+          claim_type:
+            title: What you are claiming for
         about_you:
           heading: About you
           firm_details:

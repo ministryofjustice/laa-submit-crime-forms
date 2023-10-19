@@ -10,7 +10,7 @@ RSpec.describe Steps::AnswerEqualityForm do
     }
   end
 
-  let(:application) { double(:application) }
+  let(:application) { instance_double(Claim, update!: true) }
   let(:answer_equality) { nil }
 
   describe '#choices' do
@@ -43,8 +43,12 @@ RSpec.describe Steps::AnswerEqualityForm do
   describe '#save' do
     let(:answer_equality) { 'yes' }
 
-    it 'does not persist anything' do
-      expect(subject.save).to be_truthy
+    it 'is valid' do
+      expect(subject).to be_valid
+    end
+
+    it 'saves the form' do
+      expect(form.save).to be_truthy
     end
   end
 end

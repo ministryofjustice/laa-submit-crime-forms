@@ -6,10 +6,11 @@ RSpec.describe Steps::StartPageController, type: :controller do
   describe '#show' do
     let(:claim) { create(:claim) }
 
-    before { claim.update(navigation_stack:) }
+    before { claim.update(navigation_stack:, status:) }
 
     context 'when page is already in navigation stack' do
       let(:navigation_stack) { ["/applications/#{claim.id}/steps/start_page", '/foo'] }
+      let(:status) { 'draft' }
 
       it 'does not change the navigation stack' do
         get :show, params: { id: claim }
@@ -21,12 +22,24 @@ RSpec.describe Steps::StartPageController, type: :controller do
 
     context 'when page is not in the navigation stack' do
       let(:navigation_stack) { ['/foo'] }
+      let(:status) { 'draft' }
 
       it 'adds the page to the navigation stack' do
         get :show, params: { id: claim }
         expect(claim.reload).to have_attributes(
           navigation_stack: ['/foo', "/applications/#{claim.id}/steps/start_page"]
         )
+      end
+    end
+
+    context 'when claim is in a completed state' do
+      let(:navigation_stack) { ['/foo'] }
+      let(:status) { 'completed' }
+
+      it 'redirects to the read only view' do
+        get :show, params: { id: claim }
+
+        expect(response).should redirect_to("/applications/#{claim.id}/steps/view_claim")
       end
     end
   end

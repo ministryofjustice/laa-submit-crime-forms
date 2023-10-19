@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 require:
   - rubocop-rails
   - rubocop-performance
@@ -179,3 +181,8 @@ Lint/MissingSuper:
     - 'app/components/*'
     - 'app/presenters/cost_summary/*'
     - 'app/presenters/check_answers/*'
+
+Rails/RedundantActiveRecordAllMethod:
+  Exclude:
+    - 'spec/steps/**/*'
+    - 'app/presenters/**/*'

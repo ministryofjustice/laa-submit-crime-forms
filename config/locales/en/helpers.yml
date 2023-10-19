@@ -235,6 +235,9 @@ en:
           'true': Apply an uplift to this work
         uplift: For example, from any percentage from 1 to 100
       steps_letters_calls_form:
+        type_options:
+          letters: Letters
+          calls: Calls
         letters: Number of letters (optional)
         calls: Number of phone calls (optional)
         apply_letters_uplift_options:

@@ -69,7 +69,7 @@ RSpec.describe NotifyAppStore do
 
     it 'creates a new MessageBuilder' do
       expect(described_class::MessageBuilder).to receive(:new)
-        .with(claim: claim, scorer: NotifyAppStore::Scorer)
+        .with(claim: claim, scorer: RiskAssessment::RiskAssessmentScorer)
 
       subject.perform(claim)
     end

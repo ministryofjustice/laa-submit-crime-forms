@@ -100,6 +100,23 @@ spec:
                   key: password
             - name: ENV
               value: {{ .Values.secrets.environment}}
+            - name: LAA_PORTAL_SP_CERT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.portalSPCertificateKey }}
+                  key: tls.crt
+            - name: LAA_PORTAL_SP_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.portalSPCertificateKey }}
+                  key: tls.key
+            - name: LAA_PORTAL_IDP_METADATA_FILE
+              value: {{ .Values.secrets.portalIDPMetadataFile }}
+            - name: OMNIAUTH_TEST_MODE
+              value: {{ .Values.secrets.omniauthTestMode | quote }}
+            - name: SP_ENTITY_ID
+              value: {{ .Values.secrets.spEntityId }}
+              
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

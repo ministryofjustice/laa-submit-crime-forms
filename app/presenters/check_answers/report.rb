@@ -3,6 +3,7 @@ module CheckAnswers
     include GovukLinkHelper
     include ActionView::Helpers::UrlHelper
     GROUPS = %w[
+      claim_type
       about_you
       about_defendant
       about_case
@@ -12,8 +13,9 @@ module CheckAnswers
 
     attr_reader :claim
 
-    def initialize(claim)
+    def initialize(claim, read_only: false)
       @claim = claim
+      @readonly = read_only
     end
 
     def section_groups
@@ -39,6 +41,10 @@ module CheckAnswers
           rows: data.rows
         }
       end
+    end
+
+    def claim_type_section
+      [ClaimTypeCard.new(claim)]
     end
 
     def about_you_section
@@ -77,6 +83,8 @@ module CheckAnswers
     private
 
     def actions(key)
+      return [] if @readonly
+
       helper = Rails.application.routes.url_helpers
       [
         govuk_link_to(

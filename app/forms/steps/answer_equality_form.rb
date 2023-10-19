@@ -4,13 +4,9 @@ require 'steps/base_form_object'
 # or skip them, as such it does not persist anything to DB
 module Steps
   class AnswerEqualityForm < Steps::BaseFormObject
-    attr_reader :answer_equality
+    attribute :answer_equality, :value_object, source: YesNoAnswer
 
     validates :answer_equality, presence: true, inclusion: { in: YesNoAnswer.values }
-
-    def answer_equality=(value)
-      @answer_equality = value.present? ? YesNoAnswer.new(value) : nil
-    end
 
     def choices
       YesNoAnswer.values
@@ -19,7 +15,7 @@ module Steps
     private
 
     def persist!
-      true
+      application.update!(attributes)
     end
   end
 end
