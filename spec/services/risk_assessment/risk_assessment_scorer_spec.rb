@@ -8,7 +8,7 @@ RSpec.describe RiskAssessment::RiskAssessmentScorer do
       let(:claim) { build(:claim, :with_assigned_council) }
 
       it do
-        expect(described_class.calculate(claim)).to eq({ id: 1, level: 'high' })
+        expect(described_class.calculate(claim)).to eq('high')
       end
     end
 
@@ -16,7 +16,7 @@ RSpec.describe RiskAssessment::RiskAssessmentScorer do
       let(:claim) { build(:claim, :medium_risk_work_item) }
 
       it do
-        expect(described_class.calculate(claim)).to eq({ id: 2, level: 'medium' })
+        expect(described_class.calculate(claim)).to eq('medium')
       end
     end
 
@@ -24,7 +24,7 @@ RSpec.describe RiskAssessment::RiskAssessmentScorer do
       let(:claim) { build(:claim) }
 
       it do
-        expect(described_class.calculate(claim)).to eq({ id: 3, level: 'low' })
+        expect(described_class.calculate(claim)).to eq('low')
       end
     end
   end
