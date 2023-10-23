@@ -71,8 +71,8 @@ autoscaling:
 secrets:
   environment: uat
   portalSPCertificateKey: portal-sp-certificate-uat
-  portalIDPMetadataFile: config/laa_portal/metadata/placeholder.xml
-  omniauthTestMode: true
+  portalIDPMetadataFile: config/laa_portal/metadata/uat.xml
+  omniauthTestMode: false
   spEntityId: LAA_Portal_CRM7_UAT
 
 
