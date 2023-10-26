@@ -20,6 +20,12 @@ class Claim < ApplicationRecord
     id.first(8)
   end
 
+  # rubocop:disable Rails/RedundantActiveRecordAllMethod
+  def matter_type_name
+    MatterType.all.first { |item| item.id == matter_type }.name
+  end
+  # rubocop:enable Rails/RedundantActiveRecordAllMethod
+
   def as_json(*)
     pricing = Pricing.for(self)
     super
@@ -29,8 +35,9 @@ class Claim < ApplicationRecord
             'count' => letters, 'pricing' => pricing.letters, 'uplift' => letters_uplift },
           { 'type' => translations('calls', 'helpers.label.steps_letters_calls_form.type_options'),
             'count' => calls, 'pricing' => pricing.calls, 'uplift' => calls_uplift },
-        ]
-      )
-      .slice!('letters', 'letters_uplift', 'calls', 'calls_uplift')
+        ],
+        'claim_type' => translations(claim_type, 'helpers.label.steps_claim_type_form.claim_type_options'),
+        'matter_type' => matter_type_name
+      ).slice!('letters', 'letters_uplift', 'calls', 'calls_uplift')
   end
 end
