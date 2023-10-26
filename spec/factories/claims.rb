@@ -63,7 +63,7 @@ FactoryBot.define do
     trait :hearing_details do
       first_hearing_date { Date.new(2023, 3, 1) }
       number_of_hearing { 1 }
-      youth_count { 'no' }
+      youth_court { 'no' }
       in_area { 'yes' }
       court { 'A Court' }
       hearing_outcome { 'CP01' }

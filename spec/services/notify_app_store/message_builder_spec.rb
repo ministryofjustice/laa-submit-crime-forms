@@ -121,7 +121,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'uplift' => nil,
             'work_type' => { en: an_instance_of(String), value: work_item.work_type },
           }],
-          'youth_count' => 'no',
+          'youth_court' => 'no',
           'supporting_evidences' =>
             [{
               'created_at' => '2023-03-01T00:00:00.000Z',

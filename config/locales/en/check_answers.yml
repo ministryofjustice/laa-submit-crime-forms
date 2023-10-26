@@ -40,7 +40,7 @@ en:
             number_of_hearing: Number of hearings
             conclusion: Proceedings concluded more than 3 months ago
             court: Magistrates court
-            youth_count: Youth court
+            youth_court: Youth court
             in_area: Court in designated area
             hearing_outcome: Hearing outcome
             matter_type: Matter type

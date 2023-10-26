@@ -125,7 +125,7 @@ en:
               blank: Count cannot be blank
             in_area:
               blank: Is this court in a designated area cannot be blank
-            youth_count:
+            youth_court:
               blank: Is it a youth court cannot be blank
             hearing_outcome:
               blank: Hearing outcome cannot be blank
