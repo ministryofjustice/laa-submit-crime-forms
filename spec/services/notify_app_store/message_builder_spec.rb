@@ -101,7 +101,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'reference_number' => '111222'
           },
           'status' => 'draft',
-          'submiter' => { 'description' => nil, 'email' => 'provider@example.com' },
+          'submitter' => { 'description' => nil, 'email' => 'provider@example.com' },
           'supplemental_claim' => nil,
           'time_spent' => nil,
           'ufn' => '20150612/001',
@@ -121,7 +121,17 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'uplift' => nil,
             'work_type' => { en: an_instance_of(String), value: work_item.work_type },
           }],
-          'youth_count' => 'no'
+          'youth_count' => 'no',
+          'supporting_evidences' =>
+            [{
+              'created_at' => '2023-03-01T00:00:00.000Z',
+               'file_name' => 'test.png',
+               'file_path' => 'test_path',
+               'file_size' => 1234,
+               'file_type' => 'image/png',
+               'id' => '9abe1541-00d7-43d1-ad10-4d3ee5a012bb',
+               'updated_at' => '2023-03-01T00:00:00.000Z'
+            }]
         },
         application_id: claim.id,
         application_state: 'submitted',

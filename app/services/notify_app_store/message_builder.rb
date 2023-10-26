@@ -32,7 +32,8 @@ class NotifyAppStore
         'defendants' => defendant_data,
         'firm_office' => claim.firm_office.attributes.slice!('id', *DEFAULT_IGNORE),
         'solicitor' => claim.solicitor.attributes.slice!('id', *DEFAULT_IGNORE),
-        'submiter' => claim.submitter.attributes.slice('email', 'description'),
+        'submitter' => claim.submitter.attributes.slice('email', 'description'),
+        'supporting_evidences' => supporting_evidence
       )
     end
     # rubocop:enable Metrics/AbcSize
@@ -64,6 +65,12 @@ class NotifyAppStore
 
     def pricing
       @pricing ||= Pricing.for(claim)
+    end
+
+    def supporting_evidence
+      claim.supporting_evidence.map do |evidence|
+        evidence.as_json.slice!('claim_id')
+      end
     end
   end
 end
