@@ -10,7 +10,7 @@ RSpec.describe Steps::HearingDetailsForm do
       number_of_hearing:,
       court:,
       in_area:,
-      youth_count:,
+      youth_court:,
       hearing_outcome:,
       matter_type:,
     }
@@ -21,7 +21,7 @@ RSpec.describe Steps::HearingDetailsForm do
   let(:number_of_hearing) { 1 }
   let(:court) { LaaMultiStepForms::Court.all.sample.name }
   let(:in_area) { 'yes' }
-  let(:youth_count) { 'no' }
+  let(:youth_court) { 'no' }
   let(:hearing_outcome) { OutcomeCode.all.sample.id }
   let(:matter_type) { MatterType.all.sample.id }
 
@@ -37,7 +37,7 @@ RSpec.describe Steps::HearingDetailsForm do
       number_of_hearing
       court
       in_area
-      youth_count
+      youth_court
       hearing_outcome
       matter_type
     ].each do |field|
