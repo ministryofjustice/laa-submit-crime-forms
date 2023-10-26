@@ -14,6 +14,7 @@ FactoryBot.define do
       letters_calls
       one_work_item
       one_disbursement
+      with_evidence
     end
 
     trait :case_type_magistrates do
@@ -152,6 +153,10 @@ FactoryBot.define do
 
     trait :completed_status do
       status { 'complete' }
+    end
+
+    trait :with_evidence do
+      supporting_evidence { [build(:supporting_evidence)] }
     end
   end
 end
