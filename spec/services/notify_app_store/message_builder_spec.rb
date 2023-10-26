@@ -4,7 +4,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
   subject { described_class.new(claim:, scorer:) }
 
   let(:scorer) { double(:risk_assessment_scorer, calculate: 'high') }
-  let(:claim) { create(:claim, :complete) }
+  let(:claim) { create(:claim, :complete, :case_type_magistrates) }
   let(:defendant) { claim.defendants.first }
   let(:disbursement) { claim.disbursements.first }
   let(:work_item) { claim.work_items.first }
@@ -21,7 +21,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'answer_equality' => nil,
           'arrest_warrant_date' => nil,
           'assigned_counsel' => 'no',
-          'claim_type' => nil,
+          'claim_type' => { en: 'Non-standard magistrates\' court payment', value: 'non_standard_magistrate' },
           'cntp_date' => nil,
           'cntp_order' => nil,
           'concluded' => nil,
@@ -77,7 +77,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           ],
           'main_offence' => claim.main_offence,
           'main_offence_date' => '2023-08-16',
-          'matter_type' => '1',
+          'matter_type' => '1 - Offences against the person',
           'number_of_hearing' => 1,
           'number_of_witnesses' => nil,
           'office_code' => '1A123B',
@@ -89,7 +89,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'reasons_for_claim' => ['enhanced_rates_claimed'],
           'remitted_to_magistrate' => 'no',
           'remitted_to_magistrate_date' => nil,
-          'rep_order_date' => '2023-08-16',
+          'rep_order_date' => '2023-01-01',
           'representation_order_withdrawn_date' => nil,
           'send_by_post' => nil,
           'signatory_name' => nil,
@@ -104,7 +104,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'submitter' => { 'description' => nil, 'email' => 'provider@example.com' },
           'supplemental_claim' => nil,
           'time_spent' => nil,
-          'ufn' => '20150612/001',
+          'ufn' => '123456/001',
           'unassigned_counsel' => 'no',
           'updated_at' => '2023-08-17T12:13:14.000Z',
           'work_after' => nil,
