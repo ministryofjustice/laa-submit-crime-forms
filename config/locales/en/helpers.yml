@@ -27,7 +27,7 @@ en:
       steps_hearing_details_form:
         first_hearing_date: Date of first hearing
         in_area: Is this court in a designated area of your firm?
-        youth_count: Is this court a youth court?
+        youth_court: Is this court a youth court?
       steps_reason_for_claim_form:
         representation_order_withdrawn_date: Withdrawn date
       steps_add_another_form:
@@ -184,7 +184,7 @@ en:
         in_area_options:
           'yes': 'Yes'
           'no': 'No'
-        youth_count_options:
+        youth_court_options:
           'yes': 'Yes'
           'no': 'No'
         hearing_outcome: Hearing outcome

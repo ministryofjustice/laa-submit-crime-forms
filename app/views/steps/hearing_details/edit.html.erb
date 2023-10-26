@@ -16,9 +16,9 @@
         <%= f.govuk_radio_button :in_area, YesNoAnswer::YES.to_s %>
         <%= f.govuk_radio_button :in_area, YesNoAnswer::NO.to_s %>
       <% end%>
-      <%= f.govuk_radio_buttons_fieldset :youth_count, legend: { size: 's' } do %>
-        <%= f.govuk_radio_button :youth_count, YesNoAnswer::YES.to_s %>
-        <%= f.govuk_radio_button :youth_count, YesNoAnswer::NO.to_s %>
+      <%= f.govuk_radio_buttons_fieldset :youth_court, legend: { size: 's' } do %>
+        <%= f.govuk_radio_button :youth_court, YesNoAnswer::YES.to_s %>
+        <%= f.govuk_radio_button :youth_court, YesNoAnswer::NO.to_s %>
       <% end%>
 
       <%= f.govuk_collection_select :hearing_outcome, OutcomeCode.all, :id, :name,

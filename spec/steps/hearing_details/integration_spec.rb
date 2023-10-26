@@ -34,7 +34,7 @@ RSpec.describe 'User can fill in claim type details', type: :system do
       number_of_hearing: 2,
       court: "Aberystwyth Magistrates' Court",
       in_area: 'yes',
-      youth_count: 'no',
+      youth_court: 'no',
       hearing_outcome: 'CP03',
       matter_type: '1',
     )
