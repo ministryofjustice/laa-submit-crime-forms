@@ -66,7 +66,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'first_hearing_date' => '2023-03-01',
           'gender' => nil,
           'has_disbursements' => nil,
-          'hearing_outcome' => 'CP01',
+          'hearing_outcome' => 'CP01 - Arrest warrant issued/adjourned indefinitely',
           'id' => claim.id,
           'in_area' => 'yes',
           'is_other_info' => nil,
