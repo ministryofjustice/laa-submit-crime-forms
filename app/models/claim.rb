@@ -26,6 +26,12 @@ class Claim < ApplicationRecord
   end
   # rubocop:enable Rails/RedundantActiveRecordAllMethod
 
+  # rubocop:disable Rails/RedundantActiveRecordAllMethod
+  def hearing_outcome_name
+    OutcomeCode.all.first { |item| item.id == hearing_outcome }.name
+  end
+  # rubocop:enable Rails/RedundantActiveRecordAllMethod
+
   def translated_reasons_for_claim
     reasons_for_claim.map do |reason|
       translations(reason, 'helpers.label.steps_reason_for_claim_form.reasons_for_claim_options')
@@ -48,7 +54,8 @@ class Claim < ApplicationRecord
         'letters_and_calls' => translated_letters_and_calls,
         'claim_type' => translations(claim_type, 'helpers.label.steps_claim_type_form.claim_type_options'),
         'matter_type' => matter_type_name,
-        'reasons_for_claim' => translated_reasons_for_claim
+        'reasons_for_claim' => translated_reasons_for_claim,
+        'hearing_outcome' => hearing_outcome_name
       ).slice!('letters', 'letters_uplift', 'calls', 'calls_uplift')
   end
 end
