@@ -86,7 +86,12 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'preparation_time' => nil,
           'prosecution_evidence' => nil,
           'reason_for_claim_other_details' => nil,
-          'reasons_for_claim' => ['enhanced_rates_claimed'],
+          'reasons_for_claim' => [
+            {
+              en: 'Enhanced rates claimed',
+              value: 'enhanced_rates_claimed'
+            }
+          ],
           'remitted_to_magistrate' => 'no',
           'remitted_to_magistrate_date' => nil,
           'rep_order_date' => '2023-01-01',
