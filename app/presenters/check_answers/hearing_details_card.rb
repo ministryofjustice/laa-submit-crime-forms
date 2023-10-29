@@ -36,9 +36,9 @@ module CheckAnswers
           end
         },
         {
-          head_key: 'youth_count',
-          text: check_missing(hearing_details_form.youth_count.present?) do
-            hearing_details_form.youth_count.to_s.capitalize
+          head_key: 'youth_court',
+          text: check_missing(hearing_details_form.youth_court.present?) do
+            hearing_details_form.youth_court.to_s.capitalize
           end
         },
         {

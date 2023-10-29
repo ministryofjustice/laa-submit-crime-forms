@@ -4,7 +4,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
   subject { described_class.new(claim:, scorer:) }
 
   let(:scorer) { double(:risk_assessment_scorer, calculate: 'high') }
-  let(:claim) { create(:claim, :complete) }
+  let(:claim) { create(:claim, :complete, :case_type_magistrates) }
   let(:defendant) { claim.defendants.first }
   let(:disbursement) { claim.disbursements.first }
   let(:work_item) { claim.work_items.first }
@@ -21,7 +21,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'answer_equality' => nil,
           'arrest_warrant_date' => nil,
           'assigned_counsel' => 'no',
-          'claim_type' => nil,
+          'claim_type' => { en: 'Non-standard magistrates\' court payment', value: 'non_standard_magistrate' },
           'cntp_date' => nil,
           'cntp_order' => nil,
           'concluded' => nil,
@@ -66,7 +66,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'first_hearing_date' => '2023-03-01',
           'gender' => nil,
           'has_disbursements' => nil,
-          'hearing_outcome' => 'CP01',
+          'hearing_outcome' => 'CP01 - Arrest warrant issued/adjourned indefinitely',
           'id' => claim.id,
           'in_area' => 'yes',
           'is_other_info' => nil,
@@ -77,7 +77,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           ],
           'main_offence' => claim.main_offence,
           'main_offence_date' => '2023-08-16',
-          'matter_type' => '1',
+          'matter_type' => '1 - Offences against the person',
           'number_of_hearing' => 1,
           'number_of_witnesses' => nil,
           'office_code' => '1A123B',
@@ -86,10 +86,15 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'preparation_time' => nil,
           'prosecution_evidence' => nil,
           'reason_for_claim_other_details' => nil,
-          'reasons_for_claim' => ['enhanced_rates_claimed'],
+          'reasons_for_claim' => [
+            {
+              en: 'Enhanced rates claimed',
+              value: 'enhanced_rates_claimed'
+            }
+          ],
           'remitted_to_magistrate' => 'no',
           'remitted_to_magistrate_date' => nil,
-          'rep_order_date' => '2023-08-16',
+          'rep_order_date' => '2023-01-01',
           'representation_order_withdrawn_date' => nil,
           'send_by_post' => nil,
           'signatory_name' => nil,
@@ -101,10 +106,10 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'reference_number' => '111222'
           },
           'status' => 'draft',
-          'submiter' => { 'description' => nil, 'email' => 'provider@example.com' },
+          'submitter' => { 'description' => nil, 'email' => 'provider@example.com' },
           'supplemental_claim' => nil,
           'time_spent' => nil,
-          'ufn' => '20150612/001',
+          'ufn' => '123456/001',
           'unassigned_counsel' => 'no',
           'updated_at' => '2023-08-17T12:13:14.000Z',
           'work_after' => nil,
@@ -121,12 +126,23 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'uplift' => nil,
             'work_type' => { en: an_instance_of(String), value: work_item.work_type },
           }],
-          'youth_count' => 'no'
+          'youth_court' => 'no',
+          'supporting_evidences' =>
+            [{
+              'created_at' => '2023-03-01T00:00:00.000Z',
+               'file_name' => 'test.png',
+               'file_path' => 'test_path',
+               'file_size' => 1234,
+               'file_type' => 'image/png',
+               'id' => '9abe1541-00d7-43d1-ad10-4d3ee5a012bb',
+               'updated_at' => '2023-03-01T00:00:00.000Z'
+            }]
         },
         application_id: claim.id,
         application_state: 'submitted',
         application_risk: 'high',
-        json_schema_version: 1
+        json_schema_version: 1,
+        application_type: 'crm7'
       )
     end
   end

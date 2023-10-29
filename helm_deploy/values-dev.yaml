@@ -70,6 +70,10 @@ autoscaling:
 
 secrets:
   environment: development
+  portalSPCertificateKey: portal-sp-certificate-dev
+  portalIDPMetadataFile: config/laa_portal/metadata/dev.xml
+  omniauthTestMode: false
+  spEntityId: LAA_Portal_CRM7_Dev
 
 service_account:
   name: laa-claim-non-standard-magistrate-fee-dev-irsa

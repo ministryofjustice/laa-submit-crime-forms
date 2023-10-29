@@ -6,15 +6,27 @@
 #
 localhost:
   office_codes:
-    - 1A123B # samlmock and tests
-    - 1K022G # temporarily, portal stg
+    - 1A123B
+    - 1K022G 
     - AAA
+    - 0A719G
+    - 1K022G
 
-staging:
+dev:
   office_codes:
-    - 1A123B # samlmock and tests
+    - 1A123B
+    - 1K022G 
+    - AAA
+    - 0A719G
+    - 1K022G
+
+uat:
+  office_codes:
+    - 1A123B
     - 1K022G
     - 0Z981E
+    - 0A719G
+    - 1K022G
 
 production:
   office_codes: []

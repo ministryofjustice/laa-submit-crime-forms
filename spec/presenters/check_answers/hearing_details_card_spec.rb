@@ -39,7 +39,7 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
             text: 'Yes'
           },
           {
-            head_key: 'youth_count',
+            head_key: 'youth_court',
             text: 'No'
           },
           {
@@ -77,7 +77,7 @@ RSpec.describe CheckAnswers::HearingDetailsCard do
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
-              head_key: 'youth_count',
+              head_key: 'youth_court',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
