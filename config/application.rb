@@ -24,5 +24,8 @@ module Crm7restbackend
     )
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.x.contact.case_enquiries_tel = '0300 200 2020'
+    config.x.contact.support_email = 'CRM457@digital.justice.gov.uk'
   end
 end
