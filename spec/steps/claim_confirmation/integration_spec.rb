@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User can see an application status', type: :system do
-  let(:claim) { create(:claim, laa_reference: 'ABC123', status: 'completed') }
+  let(:claim) { create(:claim, laa_reference: 'ABC123', status: :submitted) }
 
   before do
     visit provider_saml_omniauth_callback_path
@@ -17,7 +17,7 @@ RSpec.describe 'User can see an application status', type: :system do
     expect(page).to have_current_path(applications_path)
     expect(claim.reload).to have_attributes(
       laa_reference: 'ABC123',
-      status: 'completed',
+      status: 'submitted',
     )
   end
 
