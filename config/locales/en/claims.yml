@@ -13,9 +13,9 @@ en:
         actions: Actions
       status:
         draft: Draft
-        completed: Submitted
+        submitted: Submitted
         accessed: Accessed
       status_colour:
         draft: govuk-tag--grey
-        completed: govuk-tag--primary
+        submitted: govuk-tag--primary
         accessed: govuk-tag--green

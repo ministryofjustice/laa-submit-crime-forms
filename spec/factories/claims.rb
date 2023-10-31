@@ -152,7 +152,7 @@ FactoryBot.define do
     end
 
     trait :completed_status do
-      status { 'complete' }
+      status { :submitted }
     end
 
     trait :with_evidence do
