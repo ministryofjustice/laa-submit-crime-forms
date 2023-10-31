@@ -138,6 +138,12 @@ en:
               invalid: Unknown reason selected
             representation_order_withdrawn_date:
               blank: Withdrawn date must be set
+              invalid: Enter a valid withdrawn date
+              invalid_day: Enter a valid withdrawn day
+              invalid_month: Enter a valid withdrawn month
+              invalid_year: Enter a valid withdrawn year
+              year_too_early: Withdrawn date is too far in the past
+              future_not_allowed: Withdrawn date cannot be in the future
             reason_for_claim_other_details:
               blank: Details must be given
         steps/add_another_form:
