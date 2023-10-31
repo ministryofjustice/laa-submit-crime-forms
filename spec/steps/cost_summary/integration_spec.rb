@@ -30,12 +30,12 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
 
     expect(values).to eq(
       [
-        'Work items total £260.68',
+        'Work items total £285.39',
         'Items', 'Total per item',
-        'Attendance without counsel', '£53.52', # 35.68 * 90 / 60
+        'Attendance without counsel', '£78.23', # 52.15 * 90 / 60
         'Preparation', '£0.00',
         'Advocacy', '£207.16', # 65.42 * (104 + 86) / 60
-        'Total', '£260.68',
+        'Total', '£285.39',
 
         'Letters and phone calls total £20.45',
         'Items', 'Total per item',
