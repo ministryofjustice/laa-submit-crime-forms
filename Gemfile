@@ -6,6 +6,7 @@ ruby File.read('.ruby-version').strip
 gem 'aws-sdk-s3', '~> 1.136'
 gem 'bootsnap', require: false
 gem 'dartsass-rails', '~> 0.5.0'
+gem 'govuk_notify_rails', '~> 2.2.0'
 gem 'httparty'
 gem 'importmap-rails'
 gem 'kaminari'

@@ -1,0 +1,14 @@
+<% title 'Help us improve this service' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Help us improve this service</h1>
+      <%= form_with model: @feedback, url: about_feedback_index_path do |f| %>
+        <%= f.govuk_error_summary %>
+        <%= f.govuk_email_field :user_email, label: { text: t('feedback.email_label') }, hint: { text: t('feedback.email_hint') } %>
+        <%= f.govuk_text_area :user_feedback ,label: { text: t('feedback.comment_label') }, hint: { text: t('feedback.comment_hint') },rows: 5 %>
+        <%= f.govuk_collection_radio_buttons :user_rating, Feedback::RATINGS, :first, :last, legend: { text: t('feedback.ratings_label'), size: 's' } %>
+        <%= f.govuk_submit( t('feedback.continue') ) %>
+      <% end %>
+  </div>
+</div>
