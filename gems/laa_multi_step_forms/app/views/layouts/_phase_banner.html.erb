@@ -8,7 +8,7 @@
       <% end %>
     </strong>
     <span class="govuk-phase-banner__text">
-      <%= t('.phase_description') %>
+      <%= t('.phase_description', feedback: main_app.about_feedback_index_path).html_safe %>
     </span>
   </p>
 </div>

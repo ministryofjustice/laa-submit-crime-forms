@@ -31,4 +31,4 @@ en:
       sign_out: Sign out
     phase_banner:
       phase: BETA
-      phase_description: This is a functional prototype of the new proposed CRM7 eForm replacement.
+      phase_description: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us to improve it.
