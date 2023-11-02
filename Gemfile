@@ -18,6 +18,7 @@ gem 'rails', '~> 7.1.1'
 gem 'sentry-rails'
 gem 'sentry-ruby'
 gem 'sidekiq', '~> 7.1'
+gem 'sidekiq_alive', '~> 2.3'
 gem 'sprockets-rails'
 gem 'tzinfo-data'
 
