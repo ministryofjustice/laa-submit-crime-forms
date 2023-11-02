@@ -26,9 +26,9 @@ Rails.application.routes.draw do
   end
 
   namespace :about do
+    resources :feedback, only: [:index, :create]
     get :privacy
     get :contact
-    get :feedback
     get :accessibility
   end
 

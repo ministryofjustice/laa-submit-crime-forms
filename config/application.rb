@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require 'action_mailer/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -24,6 +25,9 @@ module Crm7restbackend
     )
 
     config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.deliver_later_queue_name = :mailers
+
+    config.x.application.name = 'Claim a non-standard magistrates\' court payment'
 
     config.x.contact.case_enquiries_tel = '0300 200 2020'
     config.x.contact.support_email = 'CRM457@digital.justice.gov.uk'
