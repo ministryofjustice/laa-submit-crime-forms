@@ -239,7 +239,7 @@ RSpec.describe Steps::WorkItemForm do
       it 'uses the old prices' do
         expect(subject.work_types_with_pricing).to eq([
                                                         [WorkTypes::ATTENDANCE_WITH_COUNSEL, 31.03],
-                                                        [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 31.03],
+                                                        [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 45.35],
                                                         [WorkTypes::PREPARATION, 45.35],
                                                         [WorkTypes::ADVOCACY, 56.89],
                                                         [WorkTypes::TRAVEL, 24.0],
@@ -252,7 +252,7 @@ RSpec.describe Steps::WorkItemForm do
 
         it 'does not include ATTENDANCE_WITH_COUNSEL' do
           expect(subject.work_types_with_pricing).to eq([
-                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 31.03],
+                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 45.35],
                                                           [WorkTypes::PREPARATION, 45.35],
                                                           [WorkTypes::ADVOCACY, 56.89],
                                                           [WorkTypes::TRAVEL, 24.0],
@@ -267,7 +267,7 @@ RSpec.describe Steps::WorkItemForm do
         it 'does not include TRAVEL or WAITING' do
           expect(subject.work_types_with_pricing).to eq([
                                                           [WorkTypes::ATTENDANCE_WITH_COUNSEL, 31.03],
-                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 31.03],
+                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 45.35],
                                                           [WorkTypes::PREPARATION, 45.35],
                                                           [WorkTypes::ADVOCACY, 56.89],
                                                         ])
@@ -279,7 +279,7 @@ RSpec.describe Steps::WorkItemForm do
       it 'uses the new prices' do
         expect(subject.work_types_with_pricing).to eq([
                                                         [WorkTypes::ATTENDANCE_WITH_COUNSEL, 35.68],
-                                                        [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 35.68],
+                                                        [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 52.15],
                                                         [WorkTypes::PREPARATION, 52.15],
                                                         [WorkTypes::ADVOCACY, 65.42],
                                                         [WorkTypes::TRAVEL, 27.6],
@@ -292,7 +292,7 @@ RSpec.describe Steps::WorkItemForm do
 
         it 'does not include ATTENDANCE_WITH_COUNSEL' do
           expect(subject.work_types_with_pricing).to eq([
-                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 35.68],
+                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 52.15],
                                                           [WorkTypes::PREPARATION, 52.15],
                                                           [WorkTypes::ADVOCACY, 65.42],
                                                           [WorkTypes::TRAVEL, 27.6],
@@ -307,7 +307,7 @@ RSpec.describe Steps::WorkItemForm do
         it 'does not include TRAVEL or WAITING' do
           expect(subject.work_types_with_pricing).to eq([
                                                           [WorkTypes::ATTENDANCE_WITH_COUNSEL, 35.68],
-                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 35.68],
+                                                          [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, 52.15],
                                                           [WorkTypes::PREPARATION, 52.15],
                                                           [WorkTypes::ADVOCACY, 65.42],
                                                         ])
