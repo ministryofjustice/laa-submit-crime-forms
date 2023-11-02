@@ -10,3 +10,10 @@ en:
     ratings_label: Overall, how satisfied were you with this service?
     submitted:
       success: Your feedback has been submitted
+  activemodel:
+    errors:
+      models:
+        feedback:
+          attributes:
+            user_rating:
+              inclusion: Choose a rating

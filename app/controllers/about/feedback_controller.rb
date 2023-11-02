@@ -10,9 +10,9 @@ module About
       @feedback = Feedback.new feedback_params
       if @feedback.valid?
         submit_feedback
-        redirect_to provider_signed_in? ? applications_path : root_path, notice: I18n.t('feedback.submitted.success')
+        redirect_to applications_path, notice: I18n.t('feedback.submitted.success')
       else
-        render about_feedback_index_path
+        render 'index'
       end
     end
 
