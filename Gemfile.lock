@@ -417,6 +417,9 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.14.0)
+    sidekiq_alive (2.1.7)
+      sidekiq
+      webrick
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -495,6 +498,7 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   sidekiq (~> 7.1)
+  sidekiq_alive (~> 2.1)
   simplecov
   simplecov-lcov
   simplecov-rcov

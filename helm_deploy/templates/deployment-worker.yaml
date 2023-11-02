@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "laa-claim-non-standard-magistrate-fee-backend.fullname" . }}-worker
+  labels:
+    {{- include "laa-claim-non-standard-magistrate-fee-backend.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "laa-claim-non-standard-magistrate-fee-backend.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "laa-claim-non-standard-magistrate-fee-backend.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.service_account.name }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-worker
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - bundle
+            - exec
+            - sidekiq
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.workerPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.workerPort }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.workerPort }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: nsm-elasticache
+                  key: primary_endpoint_address
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nsm-elasticache
+                  key: auth_token
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: rds-postgresql-instance-output
+                  key: url
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: secret_key_base
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: sentry-dsn
+                  key: url
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: s3-bucket-output
+                  key: bucket_name
+            - name: GOVUK_NOTIFY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: notify-key
+                  key: notify_key
+            - name: AWS_REGION
+              value: 'eu-west-2'
+            - name: RACK_ENV
+              value: 'production'
+            - name: RAILS_ENV
+              value: 'production'
+            - name: RAILS_LOG_TO_STDOUT
+              value: enabled
+            - name: APP_STORE_URL
+              value: laa-crime-application-store-dev.apps.live.cloud-platform.service.justice.gov.uk
+            - name: APP_STORE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-store-auth
+                  key: username
+            - name: APP_STORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-store-auth
+                  key: password
+            - name: ENV
+              value: {{ .Values.secrets.environment}}
+            - name: LAA_PORTAL_SP_CERT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.portalSPCertificateKey }}
+                  key: tls.crt
+            - name: LAA_PORTAL_SP_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.portalSPCertificateKey }}
+                  key: tls.key
+            - name: LAA_PORTAL_IDP_METADATA_FILE
+              value: {{ .Values.secrets.portalIDPMetadataFile }}
+            - name: OMNIAUTH_TEST_MODE
+              value: {{ .Values.secrets.omniauthTestMode | quote }}
+            - name: SP_ENTITY_ID
+              value: {{ .Values.secrets.spEntityId }}
+              
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
