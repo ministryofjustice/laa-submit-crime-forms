@@ -78,6 +78,11 @@ spec:
                 secretKeyRef:
                   name: s3-bucket-output
                   key: bucket_name
+            - name: GOVUK_NOTIFY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: notify-key
+                  key: notify_key
             - name: AWS_REGION
               value: 'eu-west-2'
             - name: RACK_ENV
