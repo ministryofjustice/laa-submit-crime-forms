@@ -1,0 +1,9 @@
+---
+en:
+  cookie_settings:
+    form:
+      cookies_off: 'Off'
+      cookies_on: 'On'
+      heading: Turn Google Analytics cookies on or off
+      hint: This is the same setting as set in the cookie banner
+      save_changes: Save changes
