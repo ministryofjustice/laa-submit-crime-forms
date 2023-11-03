@@ -3,6 +3,11 @@
 <% content_for(:head) do %>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+  <%= render partial: 'layouts/analytics' if @analytics_cookies_accepted %>
+<% end %>
+
+<% content_for(:cookie_banner) do %>
+  <% render partial: 'layouts/cookie_banner/main', locals: { cookies_preferences_set: @cookies_preferences_set } %>
 <% end %>
 
 <% content_for(:service_name) do %>

@@ -1,0 +1,23 @@
+<turbo-frame id="removeable">
+  <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on <%=Rails.configuration.x.application.name %>">
+    <div class="govuk-cookie-banner__message govuk-width-container">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <div class="govuk-cookie-banner__content">
+            <%= if @analytics_cookies_accepted %>
+              <p class="govuk-body">You’ve accepted additional cookies. You can <%= govuk_link_to 'change your cookie settings', main_app.about_cookies_path %> at any time.</p>
+            <%= else %>
+              <p class="govuk-body">You’ve rejected additional cookies. You can <%= govuk_link_to 'change your cookie settings', main_app.about_cookies_path %> at any time.</p>
+            <%= end %>
+          </div>
+        </div>
+      </div>
+      <div class="govuk-button-group">
+        <%= govuk_link_to 'Hide this message', 'data-module': 'govuk-button', type: 'button', draggable: 'false', 'href': main_app.about_update_cookies_path(hide_banner: true) %>
+        <button value="yes" type="submit" name="cookies[hide]" class="govuk-button" data-module="govuk-button">
+          Hide cookie message
+        </button>
+      </div>
+    </div>
+  </div>
+</turbo-frame>

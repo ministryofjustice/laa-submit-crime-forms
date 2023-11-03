@@ -98,7 +98,7 @@
       Change your cookie settings
     </h3>
 
-    <%= form_with model: @cookie, url: about_cookies_path, method: :put do |f| %>
+    <%= form_with model: @cookie, url: about_cookies_path, method: :post do |f| %>
       <%= f.govuk_collection_radio_buttons :analytics,
                                            [['true', t('cookie_settings.form.cookies_on')],
                                             ['false', t('cookie_settings.form.cookies_off')]], :first,
