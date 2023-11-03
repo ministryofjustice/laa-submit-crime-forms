@@ -1,5 +1,5 @@
 <% unless cookies_preferences_set -%>
-  <turbo-frame id="removeable">
+  <%= turbo_frame_tag :removable do %>
     <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on <%=Rails.configuration.x.application.name %>">
       <div class="govuk-cookie-banner__message govuk-width-container">
         <div class="govuk-grid-row">
@@ -18,5 +18,5 @@
         </div>
       </div>
     </div>
-  </turbo-frame>
+  <% end %>
 <% end %>

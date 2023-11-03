@@ -32,4 +32,4 @@ if ($acElements) {
 const $headerNavigation = document.querySelector('ul.app-header-menu-hidden-on-load')
 if ($headerNavigation) {
   $headerNavigation.classList.remove("app-header-menu-hidden-on-load")
-}
+}import "@hotwired/turbo-rails"

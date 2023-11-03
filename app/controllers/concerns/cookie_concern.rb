@@ -18,7 +18,7 @@ module CookieConcern
     return set_default_analytics_cookies unless cookies[:cookies_preferences_set]
 
     @analytics_cookies_accepted = ActiveModel::Type::Boolean.new.cast(cookies[:analytics_cookies_set])
-    show_hide_cookie_banners
+    @cookie_preferences_set = show_hide_cookie_banners
   end
 
   private
@@ -31,6 +31,7 @@ module CookieConcern
     else
       set_cookie(:analytics_cookies_set, value: false)
       remove_analytics_cookies
+      @analytics_cookies_accepted = false
     end
 
     set_cookie(:cookies_preferences_set, value: true)
@@ -55,6 +56,6 @@ module CookieConcern
   end
 
   def show_hide_cookie_banners
-    @cookie_preferences_set = cookies[:cookies_preferences_set]
+    cookies[:cookies_preferences_set]
   end
 end

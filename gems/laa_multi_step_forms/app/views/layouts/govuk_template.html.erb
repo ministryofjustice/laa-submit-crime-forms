@@ -22,6 +22,7 @@
   <%= javascript_importmap_tags %>
 
   <%= yield :head %>
+  <%= yield :analytics if @analytics_cookies_accepted %>
 </head>
 
 <body class="govuk-template__body <%= app_environment %>">

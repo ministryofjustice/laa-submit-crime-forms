@@ -20,6 +20,7 @@ gem 'sentry-ruby'
 gem 'sidekiq', '~> 7.1'
 gem 'sidekiq_alive', '~> 2.3'
 gem 'sprockets-rails'
+gem 'turbo-rails', '~> 1.4.0'
 gem 'tzinfo-data'
 
 # required as can't specify github in gemspe for laa_multi_step_form
