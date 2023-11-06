@@ -12,6 +12,7 @@ en:
       heading: Essential cookies (strictly necessary)
       info: We use these cookies to remember your progress on this device and your cookie consent settings.
       table:
+        caption: Cookies tracked by this application
         name: Name
         purpose: Purpose
         expires: Expires
