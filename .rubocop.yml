@@ -186,3 +186,7 @@ Rails/RedundantActiveRecordAllMethod:
   Exclude:
     - 'spec/steps/**/*'
     - 'app/presenters/**/*'
+
+# Causing false positives when implemented in methods
+Rails/ActionControllerFlashBeforeRender:
+  Enabled: false

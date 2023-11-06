@@ -44,7 +44,8 @@ RSpec.describe About::CookiesController do
         end
 
         it 'flashes notice' do
-          expect(flash.now[:success]).to match("You've set your cookie preferences. <a class=\"govuk-notification-banner__link\" href=\"\">Go back to the page you were looking at</a>.")
+          expect(flash.now[:success]).to match("You've set your cookie preferences.
+<a class=\"govuk-notification-banner__link\" href=\"\">Go back to the page you were looking at</a>.")
         end
       end
 
@@ -62,7 +63,8 @@ RSpec.describe About::CookiesController do
         end
 
         it 'flashes notice' do
-          expect(flash.now[:success]).to match("You've set your cookie preferences. <a class=\"govuk-notification-banner__link\" href=\"\">Go back to the page you were looking at</a>.")
+          expect(flash.now[:success]).to match("You've set your cookie preferences.
+<a class=\"govuk-notification-banner__link\" href=\"\">Go back to the page you were looking at</a>.")
         end
       end
 

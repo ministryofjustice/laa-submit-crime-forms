@@ -12,7 +12,7 @@ RSpec.describe About::CookiesController, type: :request do
           expect(response).to render_template(partial: 'layouts/cookie_banner/_success')
         end
 
-        it 'renders success partial' do
+        it 'renders success message' do
           expect(response.body).to match(/You’ve accepted additional cookies./)
         end
       end
@@ -26,7 +26,7 @@ RSpec.describe About::CookiesController, type: :request do
           expect(response).to render_template(partial: 'layouts/cookie_banner/_success')
         end
 
-        it 'renders success partial' do
+        it 'renders reject message' do
           expect(response.body).to match(/You’ve rejected additional cookies./)
         end
       end
@@ -37,7 +37,7 @@ RSpec.describe About::CookiesController, type: :request do
         get '/about/update_cookies', params: { hide_banner: true }
       end
 
-      it 'renders success partial' do
+      it 'renders hide partial' do
         expect(response).to render_template(partial: 'layouts/cookie_banner/_hide')
       end
     end
