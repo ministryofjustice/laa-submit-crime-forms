@@ -3,7 +3,11 @@
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'
 import accessibleAutocomplete from 'accessible-autocomplete'
+import '@hotwired/turbo-rails'
+
 initAll()
+
+Turbo.setFormMode('optin')
 
 const $inputs = document.querySelectorAll('[data-module="govuk-input"]')
 if ($inputs) {
@@ -32,4 +36,4 @@ if ($acElements) {
 const $headerNavigation = document.querySelector('ul.app-header-menu-hidden-on-load')
 if ($headerNavigation) {
   $headerNavigation.classList.remove("app-header-menu-hidden-on-load")
-}import "@hotwired/turbo-rails"
+}

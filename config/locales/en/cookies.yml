@@ -7,3 +7,15 @@ en:
       heading: Turn Google Analytics cookies on or off
       hint: This is the same setting as set in the cookie banner
       save_changes: Save changes
+  layouts:
+    application:
+      cookies:
+        title: "Cookies on %{application}"
+        essential_cookies: We use some essential cookies to make this service work.
+        analytic_cookies: We’d also like to use analytics cookies so we can understand how you use the service and make improvements.
+        accept: Accept analytics cookies
+        reject: Reject analytics cookies
+        view: View cookies
+        confirmation_accepted: You’ve accepted additional cookies.
+        confirmation_rejected: You’ve rejected additional cookies.
+        link_to_settings: You can <a class="govuk-link" href="%{href}" data-turbo="false">change your cookie settings</a> at any time.

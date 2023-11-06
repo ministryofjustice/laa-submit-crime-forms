@@ -4,16 +4,10 @@
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
           <div class="govuk-cookie-banner__content">
-            <%= @analytics_cookies_accepted ? 'Accepted' : 'Rejected' %>
-<!--              <p>Accepted</p>-->
-<!--              <p class="govuk-body">You’ve accepted additional cookies. You-->
-<!--                can <%= govuk_link_to 'change your cookie settings', main_app.about_cookies_path %> at any time.</p>-->
-            <%#= end %>
-            <%#= unless @analytics_cookies_accepted %>
-<!--              <p>Rejected</p>-->
-<!--            <p class="govuk-body">You’ve rejected additional cookies. You-->
-<!--              can <%= govuk_link_to 'change your cookie settings', main_app.about_cookies_path %> at any time.</p>-->
-            <%#= end %>
+            <p class="govuk-body">
+              <%= @analytics_cookies_accepted ? t('layouts.application.cookies.confirmation_accepted') : t('layouts.application.cookies.confirmation_rejected') %>
+              <%= t('layouts.application.cookies.link_to_settings', href: main_app.about_cookies_path).html_safe %>
+            </p>
           </div>
         </div>
       </div>
