@@ -1,4 +1,4 @@
-<% title 'Cookies' %>
+<% title t('cookie_settings.title') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
@@ -7,42 +7,38 @@
                  flash: { success: t(".settings_updated.#{flash['cookies_consent_updated']}") }
                } if flash['cookies_consent_updated'] %>
 
-    <h1 class="govuk-heading-xl">Cookies</h1>
+    <h1 class="govuk-heading-xl"><%= t('cookie_settings.heading') %></h1>
 
-    <p class="govuk-body">The ‘<%= service_name %>’ service puts small files (known as ‘cookies’) onto your device to collect
-      information about how you use the service.</p>
+    <p class="govuk-body"><%= t('cookie_settings.paragraph_1', service: service_name) %></p>
 
-    <p class="govuk-body">You’ll normally see a message on the site before we set a cookie on your device.</p>
+    <p class="govuk-body"><%= t('cookie_settings.paragraph_2') %></p>
 
-    <p class="govuk-body">Cookies are not used to identify you personally.</p>
+    <p class="govuk-body"><%= t('cookie_settings.paragraph_3') %></p>
 
-    <p class="govuk-body">Find out
-      <a class="govuk-link" rel="external" target="_blank" href="https://ico.org.uk/for-the-public/online/cookies">how
-        to manage cookies</a> from the Information Commissioner’s Office.</p>
+    <p class="govuk-body"><%= t('cookie_settings.paragraph_4').html_safe %></p>
 
-    <h2 class="govuk-heading-l">Essential cookies (strictly necessary)</h2>
+    <h2 class="govuk-heading-l"><%= t('cookie_settings.essential_cookies.heading')%></h2>
 
-    <p class="govuk-body">We use these cookies to remember your progress on this device and your cookie consent
-      settings.</p>
+    <p class="govuk-body"><%= t('cookie_settings.essential_cookies.info')%></p>
 
     <table class="govuk-table">
       <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th class="govuk-table__header">Name</th>
-        <th class="govuk-table__header">Purpose</th>
-        <th class="govuk-table__header">Expires</th>
+        <th class="govuk-table__header"><%= t('cookie_settings.essential_cookies.table.name')%></th>
+        <th class="govuk-table__header"><%= t('cookie_settings.essential_cookies.table.purpose')%></th>
+        <th class="govuk-table__header"><%= t('cookie_settings.essential_cookies.table.expires')%></th>
       </tr>
       </thead>
       <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
         <th class="govuk-table__header">
-          _crm7restbackend_session
+          <%= t('cookie_settings.essential_cookies.table.row.name_1')%>
         </th>
         <td class="govuk-table__cell">
-          Saves your current progress on this device and tracks inactivity periods
+          <%= t('cookie_settings.essential_cookies.table.row.purpose_1')%>
         </td>
         <td class="govuk-table__cell">
-          When you close your browser
+          <%= t('cookie_settings.essential_cookies.table.row.expires_1')%>
         </td>
       </tr>
       <tr class="govuk-table__row">
@@ -50,7 +46,7 @@
           <%= Rails.configuration.x.analytics.cookies_consent_name %>
         </th>
         <td class="govuk-table__cell">
-          Saves your cookie consent settings
+          <%= t('cookie_settings.essential_cookies.table.row.purpose_2')%>
         </td>
         <td class="govuk-table__cell">
           After <%= Rails.configuration.x.analytics.cookies_consent_expiration.inspect %>
@@ -61,7 +57,7 @@
           <%= Rails.configuration.x.analytics.analytics_consent_name %>
         </th>
         <td class="govuk-table__cell">
-          Saves your analytics consent settings
+          <%= t('cookie_settings.essential_cookies.table.row.purpose_3')%>
         </td>
         <td class="govuk-table__cell">
           After <%= Rails.configuration.x.analytics.analytics_consent_expiration.inspect %>
@@ -70,32 +66,28 @@
       </tbody>
     </table>
 
-    <h2 class="govuk-heading-l">Analytics cookies (optional)</h2>
-    <p class="govuk-body">
-      We use Google Analytics software to collect information about how you use this service. We do this to help make sure
-      this service is meeting the needs of its users and to help us make improvements. Google Analytics stores information
-      about:
-    </p>
+    <h2 class="govuk-heading-l"><%= t('cookie_settings.analytics_cookies.heading') %></h2>
+    <p class="govuk-body"><%= t('cookie_settings.analytics_cookies.info') %></p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>the pages you visit</li>
-      <li>how long you spend on each page</li>
-      <li>the device and browser you use</li>
-      <li>what you click on while you’re visiting the site</li>
+      <li><%= t('cookie_settings.analytics_cookies.list_1.item_1') %></li>
+      <li><%= t('cookie_settings.analytics_cookies.list_1.item_2') %></li>
+      <li><%= t('cookie_settings.analytics_cookies.list_1.item_3') %></li>
+      <li><%= t('cookie_settings.analytics_cookies.list_1.item_4') %></li>
     </ul>
 
-    <p class="govuk-body">We do not allow Google to use or share our analytics data.</p>
+    <p class="govuk-body"><%= t('cookie_settings.analytics_cookies.paragraph_1') %></p>
 
-    <p class="govuk-body">We only set analytics cookies when:</p>
+    <p class="govuk-body"><%= t('cookie_settings.analytics_cookies.paragraph_2') %></p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>you’ve accepted them</li>
-      <li>JavaScript is running in your browser</li>
+      <li><%= t('cookie_settings.analytics_cookies.list_2.item_1') %></li>
+      <li><%= t('cookie_settings.analytics_cookies.list_2.item_2') %></li>
     </ul>
 
-    <p class="govuk-body"> If you choose not to run JavaScript we will only set essential cookies.</p>
+    <p class="govuk-body"><%= t('cookie_settings.analytics_cookies.paragraph_3') %></p>
 
     <h3 class="govuk-heading-m govuk-!-margin-top-8">
-      Change your cookie settings
+      <%= t('cookie_settings.analytics_cookies.change_settings_heading') %>
     </h3>
 
     <%= form_with model: @cookie, url: about_cookies_path, method: :post do |f| %>
