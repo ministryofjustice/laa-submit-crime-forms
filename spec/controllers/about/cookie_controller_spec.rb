@@ -32,15 +32,15 @@ RSpec.describe About::CookiesController do
 
       context 'accept analytics' do
         let(:cookie_params) do
-          { cookie: {'analytics' => 'true' } }
+          { cookie: { 'analytics' => 'true' } }
         end
 
         it 'has a 200 response code' do
           expect(response).to redirect_to(about_cookies_path)
         end
 
-        it 'should return the cookie set to true' do
-          expect(response.cookies).to include { 'analytics_cookies_set' => 'true' }
+        it 'returns the cookie set to true' do
+          expect(response.cookies).to(include { 'analytics_cookies_set' => 'true' })
         end
 
         it 'flashes notice' do
@@ -50,15 +50,15 @@ RSpec.describe About::CookiesController do
 
       context 'reject analytics' do
         let(:cookie_params) do
-          { cookie: {'analytics' => 'false' } }
+          { cookie: { 'analytics' => 'false' } }
         end
 
         it 'has a 200 response code' do
           expect(response).to redirect_to(about_cookies_path)
         end
 
-        it 'should return the cookie set to false' do
-          expect(response.cookies).to include { 'analytics_cookies_set' => 'false' }
+        it 'returns the cookie set to false' do
+          expect(response.cookies).to(include { 'analytics_cookies_set' => 'false' })
         end
 
         it 'flashes notice' do
@@ -68,7 +68,7 @@ RSpec.describe About::CookiesController do
 
       context 'bad value' do
         let(:cookie_params) do
-          { cookie: {'analytics' => ';-- select * from users;' } }
+          { cookie: { 'analytics' => ';-- select * from users;' } }
         end
 
         it 'redirect to cookies path' do
