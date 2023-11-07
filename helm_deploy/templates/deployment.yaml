@@ -121,6 +121,11 @@ spec:
               value: {{ .Values.secrets.omniauthTestMode | quote }}
             - name: SP_ENTITY_ID
               value: {{ .Values.secrets.spEntityId }}
+            - name: ANALYTICS_TRACKING_ID
+              valueFrom:
+                secretKeyRef:
+                  name: google-analytics
+                  key: tracking_key
               
       {{- with .Values.nodeSelector }}
       nodeSelector:
