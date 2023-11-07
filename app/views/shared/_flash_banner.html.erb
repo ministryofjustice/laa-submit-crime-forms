@@ -10,7 +10,7 @@
     </div>
     <div class="govuk-notification-banner__content">
       <p class="govuk-notification-banner__heading">
-        <%= msg.html_safe %>
+        <%= sanitize(msg, tags: %w[a]) %>
       </p>
     </div>
   </div>

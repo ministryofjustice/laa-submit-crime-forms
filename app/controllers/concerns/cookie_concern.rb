@@ -8,7 +8,7 @@ module CookieConcern
 
     render(partial: 'layouts/cookie_banner/hide') && return if params['hide_banner'] == 'true'
 
-    update_analytics_cookies(cookie_params[:cookies_preference])
+    update_analytics_cookies(ActiveModel::Type::Boolean.new.cast(cookie_params[:cookies_preference]))
 
     render(partial: 'layouts/cookie_banner/success',
            locals: { analytics_cookies_accepted: cookies[:analytics_cookies_set] })
@@ -24,15 +24,10 @@ module CookieConcern
   private
 
   def update_analytics_cookies(preference)
-    case preference
-    when 'true'
-      set_cookie(:analytics_cookies_set, value: true)
-      @analytics_cookies_accepted = true
-    else
-      set_cookie(:analytics_cookies_set, value: false)
-      remove_analytics_cookies
-      @analytics_cookies_accepted = false
-    end
+    set_cookie(:analytics_cookies_set, value: preference)
+    @analytics_cookies_accepted = preference
+
+    remove_analytics_cookies unless preference
 
     set_cookie(:cookies_preferences_set, value: true)
   end
