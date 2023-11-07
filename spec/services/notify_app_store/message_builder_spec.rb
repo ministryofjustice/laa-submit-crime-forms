@@ -40,7 +40,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'disability' => nil,
           'disbursements' =>
           [{
-            'apply_vat' => 'no',
+            'apply_vat' => 'true',
             'details' => 'Details',
             'disbursement_date' => '2023-08-16',
             'disbursement_type' => { en: an_instance_of(String), value: disbursement.disbursement_type },
@@ -49,8 +49,8 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'other_type' => { en: nil, value: nil },
             'pricing' => pricing[disbursement.disbursement_type],
             'prior_authority' => nil,
-            'total_cost_without_vat' => disbursement.total_cost_without_vat.to_s,
-            'vat_amount' => nil,
+            'total_cost_without_vat' => disbursement.total_cost_without_vat.to_f,
+            'vat_amount' => disbursement.vat_amount.to_f,
             'vat_rate' => 0.2
           }],
           'ethnic_group' => nil,

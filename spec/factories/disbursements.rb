@@ -14,8 +14,9 @@ FactoryBot.define do
       total_cost_without_vat do |disb|
         Pricing.for(Claim.new)[disb.disbursement_type] * disb.miles
       end
+      vat_amount { total_cost_without_vat * 0.2 }
       details { 'Details' }
-      apply_vat { 'no' }
+      apply_vat { 'true' }
     end
 
     trait :valid_type do
@@ -29,7 +30,7 @@ FactoryBot.define do
       other_type { OtherDisbursementTypes.values.sample }
       total_cost_without_vat { 90.0 }
       details { 'Details' }
-      apply_vat { 'yes' }
+      apply_vat { 'true' }
     end
 
     trait :valid_other_specific do
@@ -38,7 +39,7 @@ FactoryBot.define do
       other_type { OtherDisbursementTypes.values[0] }
       total_cost_without_vat { 90.0 }
       details { 'Details' }
-      apply_vat { 'yes' }
+      apply_vat { 'true' }
     end
 
     trait :valid_high_cost do
@@ -47,13 +48,13 @@ FactoryBot.define do
       other_type { OtherDisbursementTypes.values[0] }
       total_cost_without_vat { 5000.1 }
       details { 'Details' }
-      apply_vat { 'yes' }
+      apply_vat { 'true' }
     end
 
     trait :authed do
       total_cost_without_vat { 100.0 }
       details { 'Details' }
-      prior_authority { 'yes' }
+      prior_authority { 'true' }
     end
 
     trait :partial do

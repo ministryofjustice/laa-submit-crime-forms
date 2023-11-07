@@ -44,6 +44,8 @@ class NotifyAppStore
         data['disbursement_date'] = data['disbursement_date'].to_s
         data['pricing'] = pricing[disbursement.disbursement_type] || 1.0
         data['vat_rate'] = pricing[:vat]
+        data['vat_amount'] = data['vat_amount'].to_f
+        data['total_cost_without_vat'] = data['total_cost_without_vat'].to_f
         data
       end
     end

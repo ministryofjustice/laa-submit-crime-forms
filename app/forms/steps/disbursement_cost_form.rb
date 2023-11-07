@@ -80,6 +80,7 @@ module Steps
         'miles' => other_disbursement_type? ? nil : miles,
         'total_cost_without_vat' => total_cost_pre_vat,
         'vat_amount' => vat,
+        'apply_vat' => apply_vat ? 'true' : 'false'
       )
     end
 
