@@ -36,7 +36,6 @@ class NotifyAppStore
         'supporting_evidences' => supporting_evidence
       )
     end
-    # rubocop:enable Metrics/AbcSize
 
     def disbursement_data
       claim.disbursements.map do |disbursement|
@@ -49,6 +48,7 @@ class NotifyAppStore
         data
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def work_item_data
       claim.work_items.map do |work_item|
