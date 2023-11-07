@@ -4,9 +4,12 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
   let(:claim) { create(:claim) }
   let(:other_type_field) { 'steps_disbursement_type_form[other_type_suggestion]' }
 
-  it 'can select a value from the autocomplete' do
+  before do
     visit provider_saml_omniauth_callback_path
+    click_link 'Accept analytics cookies'
+  end
 
+  it 'can select a value from the autocomplete' do
     visit edit_steps_disbursement_add_path(id: claim)
 
     choose 'Yes', visible: :all
@@ -28,8 +31,6 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
   end
 
   it 'can enter a value not found in the autocoplete' do
-    visit provider_saml_omniauth_callback_path
-
     visit edit_steps_disbursement_add_path(id: claim)
 
     choose 'Yes', visible: :all

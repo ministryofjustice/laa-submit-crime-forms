@@ -445,6 +445,10 @@ GEM
       patience_diff
     thor (1.2.2)
     timeout (0.4.0)
+    turbo-rails (1.4.0)
+      actionpack (>= 6.0.0)
+      activejob (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2023.3)
@@ -506,6 +510,7 @@ DEPENDENCIES
   simplecov-rcov
   sprockets-rails
   super_diff
+  turbo-rails (~> 1.4.0)
   tzinfo-data
 
 RUBY VERSION

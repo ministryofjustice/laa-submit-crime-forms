@@ -1,0 +1,26 @@
+<% unless cookies_preferences_set -%>
+  <%= turbo_frame_tag :removable do %>
+    <div class="govuk-cookie-banner " data-nosnippet role="region"
+         aria-label="<%= t('layouts.application.cookies.title', application: Rails.configuration.x.application.name) %>">
+      <div class="govuk-cookie-banner__message govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+              <%= t('layouts.application.cookies.title', application: Rails.configuration.x.application.name) %></h2>
+            <div class="govuk-cookie-banner__content">
+              <p class="govuk-body"><%= t('layouts.application.cookies.essential_cookies') %></p>
+              <p class="govuk-body"><%= t('layouts.application.cookies.analytic_cookies') %></p>
+            </div>
+          </div>
+        </div>
+        <div class="govuk-button-group">
+          <%= govuk_link_to t('layouts.application.cookies.accept'), main_app.about_update_cookies_path(cookies_preference:true),
+                            class: 'govuk-button', 'data-module': 'govuk-button', 'data-accept-cookies': 'true' %>
+          <%= govuk_link_to t('layouts.application.cookies.reject'), main_app.about_update_cookies_path(cookies_preference:false),
+                            class: 'govuk-button', 'data-module': 'govuk-button', 'data-reject-cookies': 'true' %>
+          <%= govuk_link_to t('layouts.application.cookies.view'), main_app.about_cookies_path %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

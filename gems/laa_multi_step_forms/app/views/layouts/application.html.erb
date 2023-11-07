@@ -5,6 +5,14 @@
   <%= csp_meta_tag %>
 <% end %>
 
+<% content_for(:analytics) do %>
+  <%= render partial: 'layouts/analytics' %>
+<% end %>
+
+<% content_for(:cookie_banner) do %>
+  <% render partial: 'layouts/cookie_banner/main', locals: { cookies_preferences_set: @cookie_preferences_set } %>
+<% end %>
+
 <% content_for(:service_name) do %>
   <%= link_to service_name, provider_signed_in? ? main_app.applications_path : main_app.root_path,
               class: 'govuk-header__link govuk-header__service-name', id: 'header-service-name' %>

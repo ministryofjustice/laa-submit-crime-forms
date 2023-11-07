@@ -1,0 +1,106 @@
+<% title t('cookie_settings.title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <%= render partial: 'shared/flash_banner',
+               locals: {
+                 flash: { success: t(".settings_updated.#{flash['cookies_consent_updated']}") }
+               } if flash['cookies_consent_updated'] %>
+
+    <h1 class="govuk-heading-xl"><%= t('cookie_settings.heading') %></h1>
+
+    <p class="govuk-body"><%= t('cookie_settings.paragraph_1', service: service_name) %></p>
+
+    <p class="govuk-body"><%= t('cookie_settings.paragraph_2') %></p>
+
+    <p class="govuk-body"><%= t('cookie_settings.paragraph_3') %></p>
+
+    <p class="govuk-body"><%= t('cookie_settings.paragraph_4').html_safe %></p>
+
+    <h2 class="govuk-heading-l"><%= t('cookie_settings.essential_cookies.heading')%></h2>
+
+    <p class="govuk-body"><%= t('cookie_settings.essential_cookies.info')%></p>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-visually-hidden">
+        <%= t('cookie_settings.essential_cookies.table.caption')%>
+      </caption>
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="col"><%= t('cookie_settings.essential_cookies.table.name')%></th>
+        <th class="govuk-table__header" scope="col"><%= t('cookie_settings.essential_cookies.table.purpose')%></th>
+        <th class="govuk-table__header" scope="col"><%= t('cookie_settings.essential_cookies.table.expires')%></th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="col">
+          <%= t('cookie_settings.essential_cookies.table.row.name_1')%>
+        </th>
+        <td class="govuk-table__cell">
+          <%= t('cookie_settings.essential_cookies.table.row.purpose_1')%>
+        </td>
+        <td class="govuk-table__cell">
+          <%= t('cookie_settings.essential_cookies.table.row.expires_1')%>
+        </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="col">
+          <%= Rails.configuration.x.analytics.cookies_consent_name %>
+        </th>
+        <td class="govuk-table__cell">
+          <%= t('cookie_settings.essential_cookies.table.row.purpose_2')%>
+        </td>
+        <td class="govuk-table__cell">
+          After <%= Rails.configuration.x.analytics.cookies_consent_expiration.inspect %>
+        </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="col">
+          <%= Rails.configuration.x.analytics.analytics_consent_name %>
+        </th>
+        <td class="govuk-table__cell">
+          <%= t('cookie_settings.essential_cookies.table.row.purpose_3')%>
+        </td>
+        <td class="govuk-table__cell">
+          After <%= Rails.configuration.x.analytics.analytics_consent_expiration.inspect %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <h2 class="govuk-heading-l"><%= t('cookie_settings.analytics_cookies.heading') %></h2>
+    <p class="govuk-body"><%= t('cookie_settings.analytics_cookies.info') %></p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t('cookie_settings.analytics_cookies.list_1.item_1') %></li>
+      <li><%= t('cookie_settings.analytics_cookies.list_1.item_2') %></li>
+      <li><%= t('cookie_settings.analytics_cookies.list_1.item_3') %></li>
+      <li><%= t('cookie_settings.analytics_cookies.list_1.item_4') %></li>
+    </ul>
+
+    <p class="govuk-body"><%= t('cookie_settings.analytics_cookies.paragraph_1') %></p>
+
+    <p class="govuk-body"><%= t('cookie_settings.analytics_cookies.paragraph_2') %></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t('cookie_settings.analytics_cookies.list_2.item_1') %></li>
+      <li><%= t('cookie_settings.analytics_cookies.list_2.item_2') %></li>
+    </ul>
+
+    <p class="govuk-body"><%= t('cookie_settings.analytics_cookies.paragraph_3') %></p>
+
+    <h3 class="govuk-heading-m govuk-!-margin-top-8">
+      <%= t('cookie_settings.analytics_cookies.change_settings_heading') %>
+    </h3>
+
+    <%= form_with model: @cookie, url: about_cookies_path, method: :post do |f| %>
+      <%= f.govuk_collection_radio_buttons :analytics,
+                                           [['true', t('cookie_settings.form.cookies_on')],
+                                            ['false', t('cookie_settings.form.cookies_off')]], :first,
+                                           :last,
+                                           legend: { text: t('cookie_settings.form.heading') },
+                                           hint: { text: t('cookie_settings.form.hint') } %>
+      <%= f.govuk_submit(t('cookie_settings.form.save_changes')) %>
+    <% end %>
+  </div>
+</div>

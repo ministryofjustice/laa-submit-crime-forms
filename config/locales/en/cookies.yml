@@ -1,0 +1,61 @@
+---
+en:
+  cookie_settings:
+    title: Cookies
+    heading: Cookies
+    paragraph_1: "The ‘%{service}’ service puts small files (known as ‘cookies’) onto your device to collect
+      information about how you use the service."
+    paragraph_2: You’ll normally see a message on the site before we set a cookie on your device.
+    paragraph_3: Cookies are not used to identify you personally.
+    paragraph_4: Find out <a class="govuk-link" rel="external" target="_blank" href="https://ico.org.uk/for-the-public/online/cookies">how to manage cookies</a> from the Information Commissioner’s Office.
+    essential_cookies:
+      heading: Essential cookies (strictly necessary)
+      info: We use these cookies to remember your progress on this device and your cookie consent settings.
+      table:
+        caption: Cookies tracked by this application
+        name: Name
+        purpose: Purpose
+        expires: Expires
+        row:
+          name_1: _crm7restbackend_session
+          purpose_1: Saves your current progress on this device and tracks inactivity periods
+          expires_1: When you close your browser
+          purpose_2: Saves your cookie consent settings
+          purpose_3: Saves your analytics consent settings
+    analytics_cookies:
+      heading: Analytics cookies (optional)
+      info: "We use Google Analytics software to collect information about how you use this service. We do this to help make sure
+      this service is meeting the needs of its users and to help us make improvements. Google Analytics stores information about:"
+      list_1:
+        item_1: the pages you visit
+        item_2: how long you spend on each page
+        item_3: the device and browser you use
+        item_4: what you click on while you’re visiting the site
+      paragraph_1: We do not allow Google to use or share our analytics data.
+      paragraph_2: "We only set analytics cookies when:"
+      list_2:
+        item_1: you’ve accepted them
+        item_2: JavaScript is running in your browser
+      paragraph_3: If you choose not to run JavaScript we will only set essential cookies.
+      change_settings_heading: Change your cookie settings
+
+    form:
+      cookies_off: 'Off'
+      cookies_on: 'On'
+      heading: Turn Google Analytics cookies on or off
+      hint: This is the same setting as set in the cookie banner
+      save_changes: Save changes
+    notification_banner:
+      preferences_set_html: You've set your cookie preferences. <a class="govuk-notification-banner__link" href="%{href}">Go back to the page you were looking at</a>.
+  layouts:
+    application:
+      cookies:
+        title: "Cookies on %{application}"
+        essential_cookies: We use some essential cookies to make this service work.
+        analytic_cookies: We’d also like to use analytics cookies so we can understand how you use the service and make improvements.
+        accept: Accept analytics cookies
+        reject: Reject analytics cookies
+        view: View cookies
+        confirmation_accepted: You’ve accepted additional cookies.
+        confirmation_rejected: You’ve rejected additional cookies.
+        link_to_settings: You can <a class="govuk-link" href="%{href}" data-turbo="false">change your cookie settings</a> at any time.
