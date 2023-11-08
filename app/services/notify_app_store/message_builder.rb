@@ -36,7 +36,6 @@ class NotifyAppStore
         'supporting_evidences' => supporting_evidence
       )
     end
-    # rubocop:enable Metrics/AbcSize
 
     def disbursement_data
       claim.disbursements.map do |disbursement|
@@ -44,9 +43,12 @@ class NotifyAppStore
         data['disbursement_date'] = data['disbursement_date'].to_s
         data['pricing'] = pricing[disbursement.disbursement_type] || 1.0
         data['vat_rate'] = pricing[:vat]
+        data['vat_amount'] = data['vat_amount'].to_f
+        data['total_cost_without_vat'] = data['total_cost_without_vat'].to_f
         data
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def work_item_data
       claim.work_items.map do |work_item|
