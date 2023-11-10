@@ -18,8 +18,7 @@ RSpec.describe PullUpdates do
   let(:claim) { instance_double(Claim, update!: true) }
 
   before do
-    allow(Claim).to receive(:maximum).and_return(last_update)
-    allow(Claim).to receive(:find_by).and_return(claim)
+    allow(Claim).to receive_messages(maximum: last_update, find_by: claim)
     allow(HttpPuller).to receive(:new).and_return(http_puller)
   end
 
@@ -45,6 +44,7 @@ RSpec.describe PullUpdates do
 
     context 'when claim does not exist' do
       let(:claim) { nil }
+
       it 'skips the update' do
         expect { subject.perform }.not_to raise_error
       end
