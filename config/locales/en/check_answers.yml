@@ -53,8 +53,8 @@ en:
             defence_statement: Number of pages of defence statements
             number_of_witnesses: Number of witnesses
             supplemental_claim: Supplemental claim
-            preparation_time: Taped evidence
-            time_spent: Taped evidence time
+            preparation_time: Recorded evidence used
+            time_spent: Recorded evidence time
             work_before: Work before order was granted
             work_before_date: Date of work before order was granted
             work_after: Work after last hearing
@@ -98,6 +98,12 @@ en:
           supporting_evidence:
             send_by_post: Sending supporting evidence by post
             supporting_evidence: Evidence %{count}
+          equal_monitoring:
+            equality_questions: Equality Questions
+            defendants_ethnicity: Defendants ethnic group
+            defendant_identification: Defendant identification
+            defendant_disabled: Defendant disability
+            
       groups:
         claim_type:
           heading: What you are claiming for
@@ -137,3 +143,8 @@ en:
           heading:  Supporting evidence
           supporting_evidence:
             title: Upload supporting evidence
+        equality_answers:
+          heading: Equal Monitoring
+          equal_monitoring:
+            title: Equality Monitoring
+
