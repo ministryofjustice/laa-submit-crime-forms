@@ -73,7 +73,7 @@ secrets:
   environment: uat
   portalSPCertificateKey: portal-sp-certificate-uat
   portalIDPMetadataFile: config/laa_portal/metadata/uat.xml
-  omniauthTestMode: false
+  omniauthTestMode: true
   spEntityId: LAA_Portal_CRM7_UAT
   appStore: https://laa-crime-application-store-uat.apps.live.cloud-platform.service.justice.gov.uk
 
