@@ -127,7 +127,7 @@ en:
     disbursement_add:
       edit:
         page_title: Do you need to claim a disbursement
-        heading: Do you need to claim a disbursement
+        heading: Do you need to claim a disbursement?
     disbursement_type:
       edit:
         page_title: Disbursement type
