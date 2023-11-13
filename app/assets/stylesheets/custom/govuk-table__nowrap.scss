@@ -22,6 +22,16 @@
   }
 }
 
+.govuk-table__space-20 {
+  width: 100% !important
+}
+
+@media(min-width: 40.0625em) {
+  .govuk-table__space-20 {
+    width: 20% !important
+  }
+}
+
 .govuk-table__space-15 {
   width: 100% !important
 }
@@ -29,5 +39,15 @@
 @media(min-width: 40.0625em) {
   .govuk-table__space-15 {
     width: 15% !important
+  }
+}
+
+.govuk-table__space-10 {
+  width: 100% !important
+}
+
+@media(min-width: 40.0625em) {
+  .govuk-table__space-10 {
+    width: 10% !important
   }
 }
