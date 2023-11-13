@@ -39,7 +39,7 @@ RSpec.describe Steps::StartPageController, type: :controller do
       it 'redirects to the read only view' do
         get :show, params: { id: claim }
 
-        expect(response).should redirect_to("/applications/#{claim.id}/steps/view_claim")
+        expect(response).to redirect_to("/applications/#{claim.id}/steps/view_claim")
       end
     end
   end
