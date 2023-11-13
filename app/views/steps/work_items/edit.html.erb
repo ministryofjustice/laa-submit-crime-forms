@@ -2,7 +2,7 @@
 <% decision_step_header %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.work_items.count) %></h1>
     <%= render(SummaryErrorComponent.new(records: @form_object.application.work_items, form: Steps::WorkItemForm)) %>
     <%= govuk_error_summary(@form_object) %>
@@ -12,10 +12,12 @@
         <caption class="govuk-table__caption govuk-table__caption--m"><%= check_missing(date) { date.to_fs(:long) } %></caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.work_type') %></th>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.period') %></th>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.fee_earner') %></th>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.actions') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.work_type') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-20"><%= t('.headers.period') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-20"><%= t('.headers.fee_earner') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-10"><%= t('.headers.headers.change') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-10"><%= t('.headers.headers.duplicate') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-10"><%= t('.headers.headers.delete') %></th>
           </tr>
         </thead>
         <tbody class="govuk-table__body">
@@ -26,7 +28,11 @@
               <td class="govuk-table__cell"><%= check_missing(work_item.fee_earner) %></td>
               <td class="govuk-table__cell govuk-table__nowrap">
                 <%= link_to t('.change'), edit_steps_work_item_path(@form_object.application, work_item_id: work_item.id) %>
+              </td>
+              <td class="govuk-table__cell govuk-table__nowrap">
                 <%= link_to t('.duplicate'), duplicate_steps_work_item_path(@form_object.application, work_item_id: work_item.id) %>
+              </td>
+              <td class="govuk-table__cell govuk-table__nowrap">
                 <%= link_to t('.delete'), edit_steps_work_item_delete_path(@form_object.application, work_item_id: work_item.id) %>
               </td>
             </tr>
