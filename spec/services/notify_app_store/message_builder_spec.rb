@@ -18,7 +18,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
       expect(tester).to have_received(:process).with(
         application: {
           'agent_instructed' => 'no',
-          'answer_equality' => nil,
+          'answer_equality' => 'yes',
           'arrest_warrant_date' => nil,
           'assigned_counsel' => 'no',
           'claim_type' => { en: 'Non-standard magistrates\' court payment', value: 'non_standard_magistrate' },

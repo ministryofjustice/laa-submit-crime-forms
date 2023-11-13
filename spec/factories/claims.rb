@@ -160,7 +160,12 @@ FactoryBot.define do
       supporting_evidence { [build(:supporting_evidence)] }
     end
 
+    trait :without_equality do
+      answer_equality { 'no' }
+    end
+
     trait :with_equality do
+      answer_equality { 'yes' }
       disability { 'n' }
       gender { 'm' }
       ethnic_group { '01_white_british' }
