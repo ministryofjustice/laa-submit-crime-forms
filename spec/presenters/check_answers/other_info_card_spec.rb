@@ -11,7 +11,7 @@ RSpec.describe CheckAnswers::OtherInfoCard do
 
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Other relevant information')
+      expect(subject.title).to eq('Other information')
     end
   end
 

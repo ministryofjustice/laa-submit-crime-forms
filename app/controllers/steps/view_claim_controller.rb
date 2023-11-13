@@ -3,7 +3,7 @@
 module Steps
   class ViewClaimController < Steps::BaseStepController
     def show
-      @report = CheckAnswers::Report.new(current_application, read_only: true)
+      @report = CheckAnswers::ReadOnlyReport.new(current_application)
     end
   end
 end

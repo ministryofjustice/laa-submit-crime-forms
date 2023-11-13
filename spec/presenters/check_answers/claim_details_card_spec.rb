@@ -38,7 +38,7 @@ RSpec.describe CheckAnswers::ClaimDetailsCard do
             },
             {
               head_key: 'time_spent',
-              text: '2 Hrs 1 Min'
+              text: '2 Hours 1 Min'
             },
             {
               head_key: 'work_before',

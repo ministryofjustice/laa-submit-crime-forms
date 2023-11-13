@@ -20,8 +20,8 @@ en:
       update_calculation: Update the calculation
     time_period: &period
       hours:
-        one: '%{count} Hr '
-        other: '%{count} Hrs '
+        one: '%{count} Hour '
+        other: '%{count} Hours '
       minutes:
         one: '%{count} Min'
         other: '%{count} Mins'
