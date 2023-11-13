@@ -56,9 +56,8 @@ en:
         headers:
           full_name: Full name
           maat: MAAT ID
-          action: Action
-        change: Change
-        delete: Delete
+          change: Change
+          delete: Delete
         add_another: Do you want to add another defendant?
     defendant_delete:
       edit:
