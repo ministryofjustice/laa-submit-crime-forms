@@ -56,9 +56,8 @@ en:
         headers:
           full_name: Full name
           maat: MAAT ID
-          action: Action
-        change: Change
-        delete: Delete
+          change: Change
+          delete: Delete
         add_another: Do you want to add another defendant?
     defendant_delete:
       edit:
@@ -69,7 +68,6 @@ en:
         headers:
           full_name: Full name
           maat: MAAT ID
-          actions: Actions
         deleted_flash: The defendant was deleted
     letters_calls:
       edit:
@@ -111,7 +109,9 @@ en:
           work_type: Type of work
           period: Time spent
           fee_earner: Fee earner
-          actions: Actions
+          change: Change
+          duplicate: Duplicate
+          delete: Delete
         completed_date_blank: Completed date not set
     work_item_delete:
       edit:
@@ -148,7 +148,8 @@ en:
           type: Type
           cost: Cost
           details: Details
-          actions: Actions
+          change: Change
+          delete: Delete
         disbursement_date_blank: '*required'
         add_another: Do you want to add another disbursement?
         change: Change

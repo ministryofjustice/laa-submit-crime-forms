@@ -12,11 +12,11 @@
       <caption class="govuk-table__caption govuk-table__caption--m"><%=  t('.main_defendant') %></caption>
       <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.full_name') %></th>
+        <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.full_name') %></th>
         <% if maat_required?(@form_object) %>
-          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.maat') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__space-25"><%= t('.headers.maat') %></th>
         <% end %>
-        <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.action') %></th>
+        <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.change') %></th>
       </tr>
       </thead>
       <tbody class="govuk-table__body">
@@ -38,11 +38,12 @@
         <caption class="govuk-table__caption govuk-table__caption--m"><%=  t('.additional_defendant') %></caption>
         <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.full_name') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.full_name') %></th>
           <% if maat_required?(@form_object) %>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.maat') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-25"><%= t('.headers.maat') %></th>
           <% end %>
-          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.actions') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.change') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.delete') %></th>
         </tr>
         </thead>
         <tbody class="govuk-table__body">
@@ -53,8 +54,10 @@
                 <% if maat_required?(@form_object) %>
                   <td class="govuk-table__cell"><%= check_missing(defendant.maat) %></td>
                 <% end %>
-                <td class="govuk-table__cell govuk-table__nowrap">
+                <td class="govuk-table__cell">
                   <%= link_to t('.change'), edit_steps_defendant_details_path(@form_object.application, defendant_id: defendant.id) %>
+                </td>
+                <td class="govuk-table__cell">
                   <%= link_to t('.delete'), edit_steps_defendant_delete_path(@form_object.application, defendant_id: defendant.id) %>
                 </td>
             </tr>
