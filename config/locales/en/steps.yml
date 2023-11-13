@@ -148,7 +148,8 @@ en:
           type: Type
           cost: Cost
           details: Details
-          actions: Actions
+          change: Change
+          delete: Delete
         disbursement_date_blank: '*required'
         add_another: Do you want to add another disbursement?
         change: Change

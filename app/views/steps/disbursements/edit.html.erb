@@ -12,10 +12,11 @@
         <caption class="govuk-table__caption govuk-table__caption--m"><%= check_missing(date) { date.to_fs(:long) } %></caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.type') %></th>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.cost') %></th>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.details') %></th>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.actions') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.type') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.cost') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-40"><%= t('.headers.details') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.change') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.delete') %></th>
           </tr>
         </thead>
         <tbody class="govuk-table__body">
@@ -36,6 +37,8 @@
               <td class="govuk-table__cell"><%= check_missing(disbursement.details)  %></td>
               <td class="govuk-table__cell govuk-table__nowrap">
                 <%= link_to t('.change'), edit_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id) %>
+              </td>
+              <td class="govuk-table__cell govuk-table__nowrap">
                 <%= link_to t('.delete'), edit_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id) %>
               </td>
             </tr>
