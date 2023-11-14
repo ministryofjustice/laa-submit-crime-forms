@@ -15,6 +15,7 @@ FactoryBot.define do
       one_work_item
       one_disbursement
       with_evidence
+      with_equality
     end
 
     trait :case_type_magistrates do
@@ -157,6 +158,17 @@ FactoryBot.define do
 
     trait :with_evidence do
       supporting_evidence { [build(:supporting_evidence)] }
+    end
+
+    trait :without_equality do
+      answer_equality { 'no' }
+    end
+
+    trait :with_equality do
+      answer_equality { 'yes' }
+      disability { 'n' }
+      gender { 'm' }
+      ethnic_group { '01_white_british' }
     end
   end
 end

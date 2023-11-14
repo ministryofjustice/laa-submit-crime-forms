@@ -18,7 +18,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
       expect(tester).to have_received(:process).with(
         application: {
           'agent_instructed' => 'no',
-          'answer_equality' => nil,
+          'answer_equality' => 'yes',
           'arrest_warrant_date' => nil,
           'assigned_counsel' => 'no',
           'claim_type' => { en: 'Non-standard magistrates\' court payment', value: 'non_standard_magistrate' },
@@ -37,7 +37,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'main' => true,
             'position' => 1
           }],
-          'disability' => nil,
+          'disability' => 'n',
           'disbursements' =>
           [{
             'apply_vat' => 'true',
@@ -53,7 +53,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'vat_amount' => disbursement.vat_amount.to_f,
             'vat_rate' => 0.2
           }],
-          'ethnic_group' => nil,
+          'ethnic_group' => '01_white_british',
           'firm_office' => {
             'account_number' => '123ABC',
             'address_line_1' => '2 Laywer Suite',
@@ -64,7 +64,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'town' => 'Lawyer Town'
           },
           'first_hearing_date' => '2023-03-01',
-          'gender' => nil,
+          'gender' => 'm',
           'has_disbursements' => nil,
           'hearing_outcome' => 'CP01 - Arrest warrant issued/adjourned indefinitely',
           'id' => claim.id,

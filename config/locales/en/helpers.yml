@@ -122,6 +122,8 @@ en:
         miles: For example, 2.5 miles
         total_cost_without_vat: Enter the cost, not including VAT, for example £301.55
         details: For example, why this disbursement was needed
+        prior_authority_options:
+          'yes': We’ll ask you to upload evidence of this before you submit this claim
       steps_other_info_form:
         other_info: For example, justification for the time spent on the case, or for any uplift claimed
 

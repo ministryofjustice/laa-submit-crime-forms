@@ -56,9 +56,8 @@ en:
         headers:
           full_name: Full name
           maat: MAAT ID
-          action: Action
-        change: Change
-        delete: Delete
+          change: Change
+          delete: Delete
         add_another: Do you want to add another defendant?
     defendant_delete:
       edit:
@@ -69,7 +68,6 @@ en:
         headers:
           full_name: Full name
           maat: MAAT ID
-          actions: Actions
         deleted_flash: The defendant was deleted
     letters_calls:
       edit:
@@ -111,7 +109,9 @@ en:
           work_type: Type of work
           period: Time spent
           fee_earner: Fee earner
-          actions: Actions
+          change: Change
+          duplicate: Duplicate
+          delete: Delete
         completed_date_blank: Completed date not set
     work_item_delete:
       edit:
@@ -127,7 +127,7 @@ en:
     disbursement_add:
       edit:
         page_title: Do you need to claim a disbursement
-        heading: Do you need to claim a disbursement
+        heading: Do you need to claim a disbursement?
     disbursement_type:
       edit:
         page_title: Disbursement type
@@ -141,6 +141,7 @@ en:
         after_vat: After VAT
     disbursements:
       edit:
+        page_title: Disbursements
         heading:
           one: You added %{count} disbursement
           other: You added %{count} disbursements
@@ -148,7 +149,8 @@ en:
           type: Type
           cost: Cost
           details: Details
-          actions: Actions
+          change: Change
+          delete: Delete
         disbursement_date_blank: '*required'
         add_another: Do you want to add another disbursement?
         change: Change
@@ -225,10 +227,10 @@ en:
         subheading: We’d like to ask some equality questions.
         answer_equality: Do you want to answer the equality questions?
         answer_equality_html: |
-          <p>These questions are optional. Your answers will be treated in the strictest confidence.
+          <p class="govuk-body">These questions are optional. Your answers will be treated in the strictest confidence.
           They will only be used to help us monitor and research access to LAA funded services,
           in line with our duties under the Equality Act 2010.</p>
-          <p>Your answers will not affect your claim.</p>
+          <p class="govuk-hint govuk-!-margin-bottom-6">Your answers will not affect your claim.</p>
     equality_questions:
       edit:
         page_title: Equality monitoring questions
