@@ -21,7 +21,7 @@ gem 'sidekiq', '~> 7.2'
 gem 'sidekiq_alive', '~> 2.3'
 gem 'sidekiq-cron'
 gem 'sprockets-rails'
-gem 'turbo-rails', '~> 1.4.0'
+gem 'turbo-rails', '~> 1.5.0'
 gem 'tzinfo-data'
 
 # required as can't specify github in gemspe for laa_multi_step_form
