@@ -51,6 +51,16 @@ class Claim < ApplicationRecord
     ]
   end
 
+  def translated_equality_answers
+    {
+      'answer_equality' => translations(answer_equality,
+                                        'helpers.label.steps_answer_equality_form.answer_equality_options'),
+      'disability' => translations(disability, 'helpers.label.steps_equality_questions_form.disability_options'),
+      'ethnic_group' => translations(ethnic_group, 'helpers.label.steps_equality_questions_form.ethnic_group_options'),
+      'gender' => translations(gender, 'helpers.label.steps_equality_questions_form.gender_options')
+    }
+  end
+
   def as_json(*)
     super
       .merge(
@@ -58,7 +68,8 @@ class Claim < ApplicationRecord
         'claim_type' => translations(claim_type, 'helpers.label.steps_claim_type_form.claim_type_options'),
         'matter_type' => matter_type_name,
         'reasons_for_claim' => translated_reasons_for_claim,
-        'hearing_outcome' => hearing_outcome_name
+        'hearing_outcome' => hearing_outcome_name,
+        **translated_equality_answers
       ).slice!('letters', 'letters_uplift', 'calls', 'calls_uplift', 'app_store_updated_at')
   end
 end
