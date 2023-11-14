@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby File.read('.ruby-version').strip
 
 gem 'aws-sdk-s3', '~> 1.136'
-gem 'bootsnap', require: false
+gem 'bootsnap', '~> 1.17.0', require: false
 gem 'dartsass-rails', '~> 0.5.0'
 gem 'govuk_notify_rails', '~> 2.2.0'
 gem 'httparty'
@@ -14,10 +14,10 @@ gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'logstasher', '~> 2.1'
 gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.4'
-gem 'rails', '~> 7.1.1'
-gem 'sentry-rails'
-gem 'sentry-ruby'
-gem 'sidekiq', '~> 7.1'
+gem 'rails', '~> 7.1.2'
+gem 'sentry-rails', '~> 5.13.0'
+gem 'sentry-ruby', '~> 5.13.0'
+gem 'sidekiq', '~> 7.2'
 gem 'sidekiq_alive', '~> 2.3'
 gem 'sidekiq-cron'
 gem 'sprockets-rails'
@@ -43,7 +43,7 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'cuprite'
+  gem 'cuprite', '~> 0.15'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
