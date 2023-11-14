@@ -8,7 +8,7 @@ RSpec.describe PullUpdates do
       'applications' => [{
         'application_id' => id,
         'version' => 2,
-        'application_state' => 'submitted',
+        'application_state' => 'granted',
         'application_risk' => 'high',
         'updated_at' => 10
       }]
@@ -37,7 +37,7 @@ RSpec.describe PullUpdates do
 
       expect(Claim).to have_received(:find_by).with(id:)
       expect(claim).to have_received(:update!).with(
-        state: 'submitted',
+        status: 'granted',
         app_store_updated_at: 10
       )
     end
@@ -48,6 +48,19 @@ RSpec.describe PullUpdates do
       it 'skips the update' do
         expect { subject.perform }.not_to raise_error
       end
+    end
+  end
+
+  context 'when it is not mocked' do
+    let(:id) { claim.id }
+    let(:claim) { create(:claim) }
+
+    it 'the claim is updated' do
+      expect { subject.perform }.not_to raise_error
+
+      expect(claim.reload).to have_attributes(
+        status: 'granted'
+      )
     end
   end
 end
