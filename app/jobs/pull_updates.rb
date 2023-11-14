@@ -22,7 +22,7 @@ class PullUpdates < ApplicationJob
   end
 
   def save(claim_id, params)
-    claim = Claim.find_by(claim_id)
+    claim = Claim.find_by(id: claim_id)
 
     claim&.update!(params)
   end
