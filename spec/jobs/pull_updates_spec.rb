@@ -35,7 +35,7 @@ RSpec.describe PullUpdates do
     it 'updates the claim' do
       subject.perform
 
-      expect(Claim).to have_received(:find_by).with(id)
+      expect(Claim).to have_received(:find_by).with(id:)
       expect(claim).to have_received(:update!).with(
         state: 'submitted',
         app_store_updated_at: 10
