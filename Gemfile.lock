@@ -117,7 +117,7 @@ GEM
       aws-sigv4 (~> 1.6)
     aws-sigv4 (1.6.0)
       aws-eventstream (~> 1, >= 1.0.2)
-    base64 (0.1.1)
+    base64 (0.2.0)
     bcrypt (3.1.19)
     better_html (2.0.2)
       actionview (>= 6.0)
@@ -165,7 +165,7 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
-    drb (2.1.1)
+    drb (2.2.0)
       ruby2_keywords
     erb_lint (0.5.0)
       activesupport
@@ -218,8 +218,9 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.6.0)
-    irb (1.7.0)
-      reline (>= 0.3.0)
+    irb (1.9.0)
+      rdoc
+      reline (>= 0.3.8)
     jmespath (1.6.2)
     json (2.6.3)
     jwt (2.7.1)
@@ -239,7 +240,7 @@ GEM
     logstasher (2.1.5)
       activesupport (>= 5.2)
       request_store
-    loofah (2.21.4)
+    loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
@@ -251,11 +252,11 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.4)
+    mini_portile2 (2.8.5)
     minitest (5.20.0)
     msgpack (1.7.2)
     multi_xml (0.6.0)
-    mutex_m (0.1.2)
+    mutex_m (0.2.0)
     net-imap (0.4.5)
       date
       net-protocol
@@ -294,6 +295,8 @@ GEM
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    psych (5.1.1.1)
+      stringio
     public_suffix (5.0.1)
     puma (6.4.0)
       nio4r (~> 2.0)
@@ -343,11 +346,13 @@ GEM
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
-    rake (13.0.6)
+    rake (13.1.0)
+    rdoc (6.6.0)
+      psych (>= 4.0.0)
     redis-client (0.18.0)
       connection_pool
     regexp_parser (2.8.2)
-    reline (0.3.5)
+    reline (0.4.0)
       io-console (~> 0.5)
     request_store (1.5.1)
       rack (>= 1.4)
@@ -450,13 +455,14 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    stringio (3.0.9)
     super_diff (0.10.0)
       attr_extras (>= 6.2.4)
       diff-lcs
       patience_diff
-    thor (1.2.2)
+    thor (1.3.0)
     timeout (0.4.0)
-    turbo-rails (1.4.0)
+    turbo-rails (1.5.0)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
@@ -522,7 +528,7 @@ DEPENDENCIES
   simplecov-rcov
   sprockets-rails
   super_diff
-  turbo-rails (~> 1.4.0)
+  turbo-rails (~> 1.5.0)
   tzinfo-data
 
 RUBY VERSION
