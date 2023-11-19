@@ -3,6 +3,7 @@ module CheckAnswers
     include GovukLinkHelper
     include ActionView::Helpers::UrlHelper
     GROUPS = %w[
+      application_status
       claim_type
       about_you
       about_defendant
@@ -41,6 +42,10 @@ module CheckAnswers
           rows: data.rows
         }
       end
+    end
+
+    def application_status_section
+      [ApplicationStatusCard.new(claim)]
     end
 
     def claim_type_section
