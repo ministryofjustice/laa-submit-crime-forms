@@ -26,4 +26,4 @@ en:
         granted: govuk-tag--green
         part_grant: govuk-tag--blue
         rejected: govuk-tag--red
-        review: govuk-tag--pink
+        review: govuk-tag--yellow

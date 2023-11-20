@@ -14,8 +14,8 @@ module CheckAnswers
       [
         {
           head_key: 'application_status',
-          text: "<strong class=\"govuk-tag #{I18n.t("claims.index.status_colour.#{claim.status}")}\">
-                  #{I18n.t("claims.index.status.#{claim.status}")}</strong>".html_safe
+          text: "<strong class=\"govuk-tag #{I18n.t("claims.index.status_colour.#{claim.status}")}\">" \
+                "#{I18n.t("claims.index.status.#{claim.status}")}</strong>".html_safe
         },
         date_actioned_row
       ].compact

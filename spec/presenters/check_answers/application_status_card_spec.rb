@@ -22,8 +22,7 @@ RSpec.describe CheckAnswers::ApplicationStatusCard do
           [
             {
               head_key: 'application_status',
-              text: '<strong class="govuk-tag govuk-tag--primary">
-                  Submitted</strong>'
+              text: '<strong class="govuk-tag govuk-tag--primary">Submitted</strong>'
             },
             {
               head_key: 'Date Submitted',
@@ -42,8 +41,7 @@ RSpec.describe CheckAnswers::ApplicationStatusCard do
           [
             {
               head_key: 'application_status',
-              text: '<strong class="govuk-tag govuk-tag--green">
-                  Granted</strong>'
+              text: '<strong class="govuk-tag govuk-tag--green">Granted</strong>'
             },
             {
               head_key: 'Date Assessed',
@@ -62,8 +60,7 @@ RSpec.describe CheckAnswers::ApplicationStatusCard do
           [
             {
               head_key: 'application_status',
-              text: '<strong class="govuk-tag govuk-tag--blue">
-                  Part Granted</strong>'
+              text: '<strong class="govuk-tag govuk-tag--blue">Part Granted</strong>'
             },
             {
               head_key: 'Date Assessed',
@@ -82,8 +79,7 @@ RSpec.describe CheckAnswers::ApplicationStatusCard do
           [
             {
               head_key: 'application_status',
-              text: '<strong class="govuk-tag govuk-tag--pink">
-                  Further Information Requested</strong>'
+              text: '<strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong>'
             },
             {
               head_key: 'Date Returned',
@@ -102,8 +98,7 @@ RSpec.describe CheckAnswers::ApplicationStatusCard do
           [
             {
               head_key: 'application_status',
-              text: '<strong class="govuk-tag govuk-tag--red">
-                  Rejected</strong>'
+              text: '<strong class="govuk-tag govuk-tag--red">Rejected</strong>'
             },
             {
               head_key: 'Date Returned',
