@@ -41,6 +41,12 @@ class Claim < ApplicationRecord
     end
   end
 
+  def translate_plea
+    {
+      'plea' => translations(plea, 'helpers.label.steps_case_disposal_form.plea_options')
+    }
+  end
+
   def translated_letters_and_calls
     pricing = Pricing.for(self)
     [
@@ -69,6 +75,7 @@ class Claim < ApplicationRecord
         'matter_type' => matter_type_name,
         'reasons_for_claim' => translated_reasons_for_claim,
         'hearing_outcome' => hearing_outcome_name,
+        **translate_plea,
         **translated_equality_answers
       ).slice!('letters', 'letters_uplift', 'calls', 'calls_uplift', 'app_store_updated_at')
   end
