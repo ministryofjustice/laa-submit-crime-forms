@@ -82,7 +82,10 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'number_of_witnesses' => nil,
           'office_code' => '1A123B',
           'other_info' => nil,
-          'plea' => claim.plea,
+          'plea' => {
+            value: claim.plea,
+            en: an_instance_of(String)
+          },
           'preparation_time' => nil,
           'prosecution_evidence' => nil,
           'reason_for_claim_other_details' => nil,

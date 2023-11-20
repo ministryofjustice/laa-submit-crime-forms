@@ -15,7 +15,15 @@ en:
         draft: Draft
         submitted: Submitted
         accessed: Accessed
+        granted: Granted
+        part_grant: Part Granted
+        rejected: Rejected
+        review: Further Information Requested
       status_colour:
         draft: govuk-tag--grey
         submitted: govuk-tag--primary
         accessed: govuk-tag--green
+        granted: govuk-tag--green
+        part_grant: govuk-tag--blue
+        rejected: govuk-tag--red
+        review: govuk-tag--yellow
