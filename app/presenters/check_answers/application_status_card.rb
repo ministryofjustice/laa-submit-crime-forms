@@ -36,7 +36,7 @@ module CheckAnswers
         I18n.t('steps.check_answers.show.sections.application_status.submitted')
       when 'granted'
         I18n.t('steps.check_answers.show.sections.application_status.granted')
-      when 'part_granted'
+      when 'part_grant'
         I18n.t('steps.check_answers.show.sections.application_status.part_granted')
       else
         I18n.t('steps.check_answers.show.sections.application_status.returned')

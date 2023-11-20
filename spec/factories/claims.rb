@@ -156,6 +156,26 @@ FactoryBot.define do
       status { :submitted }
     end
 
+    trait :granted_status do
+      status { :granted }
+    end
+
+    trait :part_granted_status do
+      status { :part_grant }
+    end
+
+    trait :review_status do
+      status { :review }
+    end
+
+    trait :rejected_status do
+      status { :rejected }
+    end
+
+    trait :updated_at do
+      updated_at { Date.new(2023, 12, 1) }
+    end
+
     trait :with_evidence do
       supporting_evidence { [build(:supporting_evidence)] }
     end
