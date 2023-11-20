@@ -14,7 +14,8 @@ module CheckAnswers
       [
         {
           head_key: 'application_status',
-          text: "<strong class=\"govuk-tag .status_colour.#{claim.status}\">#{I18n.t("claims.index.status.#{claim.status}")}</strong>".html_safe
+          text: "<strong class=\"govuk-tag #{I18n.t("claims.index.status_colour.#{claim.status}")}\">
+                  #{I18n.t("claims.index.status.#{claim.status}")}</strong>".html_safe
         },
         date_actioned_row
       ].compact
@@ -24,17 +25,19 @@ module CheckAnswers
 
     def date_actioned_row
       {
-        head_key: get_date_actioned_head,
-        text: claim.updated_at.strftime('%d %B %Y')
+        head_key: date_actioned_head,
+        text: claim.updated_at&.strftime('%d %B %Y')
       }
     end
 
-    def get_date_actioned_head
+    def date_actioned_head
       case claim.status
       when 'submitted'
         I18n.t('steps.check_answers.show.sections.application_status.submitted')
-      when 'granted' || 'part_granted'
-        I18n.t('steps.check_answers.show.sections.application_status.assessed')
+      when 'granted'
+        I18n.t('steps.check_answers.show.sections.application_status.granted')
+      when 'part_granted'
+        I18n.t('steps.check_answers.show.sections.application_status.part_granted')
       else
         I18n.t('steps.check_answers.show.sections.application_status.returned')
       end

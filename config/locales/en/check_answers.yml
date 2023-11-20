@@ -10,7 +10,8 @@ en:
             application_status: Status
             status: Status
             submitted: Date Submitted
-            assessed: Date Assessed
+            granted: Date Assessed
+            part_granted: Date Assessed
             returned: Date Returned
           claim_type:
             file_ufn: Unique file number

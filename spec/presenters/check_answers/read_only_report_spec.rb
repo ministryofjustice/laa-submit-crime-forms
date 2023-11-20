@@ -12,7 +12,7 @@ RSpec.describe CheckAnswers::ReadOnlyReport do
       context 'section groups' do
         it 'returns multiple groups' do
           expect(subject.section_groups).to be_an_instance_of Array
-          expect(subject.section_groups.count).to eq 7
+          expect(subject.section_groups.count).to eq 8
         end
       end
 
@@ -33,20 +33,26 @@ RSpec.describe CheckAnswers::ReadOnlyReport do
         end
       end
 
+      context 'application status section' do
+        it 'returns single elements' do
+          expect(subject.application_status_section.count).to eq 1
+        end
+      end
+
       context 'claim type section' do
-        it 'returns multiple elements' do
+        it 'returns single elements' do
           expect(subject.claim_type_section.count).to eq 1
         end
       end
 
       context 'about you section' do
-        it 'returns multiple elements' do
+        it 'returns single elements' do
           expect(subject.about_you_section.count).to eq 1
         end
       end
 
       context 'about defendants section' do
-        it 'returns multiple elements' do
+        it 'returns single elements' do
           expect(subject.about_defendant_section.count).to eq 1
         end
       end
@@ -78,7 +84,7 @@ RSpec.describe CheckAnswers::ReadOnlyReport do
       context 'section groups' do
         it 'returns multiple groups' do
           expect(subject.section_groups).to be_an_instance_of Array
-          expect(subject.section_groups.count).to eq 7
+          expect(subject.section_groups.count).to eq 8
         end
       end
 
@@ -103,20 +109,26 @@ RSpec.describe CheckAnswers::ReadOnlyReport do
         end
       end
 
+      context 'application status section' do
+        it 'returns single elements' do
+          expect(subject.application_status_section.count).to eq 1
+        end
+      end
+
       context 'claim type section' do
-        it 'returns multiple elements' do
+        it 'returns single elements' do
           expect(subject.claim_type_section.count).to eq 1
         end
       end
 
       context 'about you section' do
-        it 'returns multiple elements' do
+        it 'returns single elements' do
           expect(subject.about_you_section.count).to eq 1
         end
       end
 
       context 'about defendants section' do
-        it 'returns multiple elements' do
+        it 'returns single elements' do
           expect(subject.about_defendant_section.count).to eq 1
         end
       end
