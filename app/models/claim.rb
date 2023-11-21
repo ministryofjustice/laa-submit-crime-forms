@@ -26,14 +26,14 @@ class Claim < ApplicationRecord
   def translated_matter_type
     {
       value: matter_type,
-      en: MatterType.name_by_id(matter_type)
+      en: MatterType.description_by_id(matter_type)
     }
   end
 
   def translated_hearing_outcome
     {
       value: hearing_outcome,
-      en: OutcomeCode.name_by_id(hearing_outcome)
+      en: OutcomeCode.description_by_id(hearing_outcome)
     }
   end
 
