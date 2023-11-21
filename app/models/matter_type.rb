@@ -22,8 +22,8 @@ MatterType = Struct.new(:id, :description) do
   end
   # rubocop:enable Metrics/MethodLength
 
-  def self.name_by_id(matter_id)
-    @all.first { |item| item.id == matter_id }.name
+  def self.description_by_id(matter_id)
+    @all.find { |item| item.id == matter_id }.description
   end
 
   def name
