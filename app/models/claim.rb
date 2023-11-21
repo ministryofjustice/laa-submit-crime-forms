@@ -23,17 +23,19 @@ class Claim < ApplicationRecord
     id.first(8)
   end
 
-  # rubocop:disable Rails/RedundantActiveRecordAllMethod
-  def matter_type_name
-    MatterType.all.first { |item| item.id == matter_type }.name
+  def translated_matter_type
+    {
+      value: matter_type,
+      en: MatterType.name_by_id(matter_type)
+    }
   end
-  # rubocop:enable Rails/RedundantActiveRecordAllMethod
 
-  # rubocop:disable Rails/RedundantActiveRecordAllMethod
-  def hearing_outcome_name
-    OutcomeCode.all.first { |item| item.id == hearing_outcome }.name
+  def translated_hearing_outcome
+    {
+      value: hearing_outcome,
+      en: OutcomeCode.name_by_id(hearing_outcome)
+    }
   end
-  # rubocop:enable Rails/RedundantActiveRecordAllMethod
 
   def translated_reasons_for_claim
     reasons_for_claim.map do |reason|
@@ -72,9 +74,9 @@ class Claim < ApplicationRecord
       .merge(
         'letters_and_calls' => translated_letters_and_calls,
         'claim_type' => translations(claim_type, 'helpers.label.steps_claim_type_form.claim_type_options'),
-        'matter_type' => matter_type_name,
+        'matter_type' => translated_matter_type,
         'reasons_for_claim' => translated_reasons_for_claim,
-        'hearing_outcome' => hearing_outcome_name,
+        'hearing_outcome' => translated_hearing_outcome,
         **translate_plea,
         **translated_equality_answers
       ).slice!('letters', 'letters_uplift', 'calls', 'calls_uplift', 'app_store_updated_at')

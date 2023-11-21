@@ -66,7 +66,10 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'first_hearing_date' => '2023-03-01',
           'gender' => { en: 'Male', value: 'm' },
           'has_disbursements' => nil,
-          'hearing_outcome' => 'CP01 - Arrest warrant issued/adjourned indefinitely',
+          'hearing_outcome' => {
+            value: 'CP01',
+            en: 'CP01 - Arrest warrant issued/adjourned indefinitely'
+          },
           'id' => claim.id,
           'in_area' => 'yes',
           'is_other_info' => nil,
@@ -77,7 +80,10 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           ],
           'main_offence' => claim.main_offence,
           'main_offence_date' => '2023-08-16',
-          'matter_type' => '1 - Offences against the person',
+          'matter_type' => {
+            value: '1',
+            en: '1 - Offences against the person'
+          },
           'number_of_hearing' => 1,
           'number_of_witnesses' => nil,
           'office_code' => '1A123B',
