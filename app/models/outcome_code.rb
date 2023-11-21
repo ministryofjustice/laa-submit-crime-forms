@@ -28,6 +28,10 @@ OutcomeCode = Struct.new(:id, :description) do
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
+  def self.name_by_id(outcome_id)
+    @all.first { |item| item.id == outcome_id }.name
+  end
+
   def name
     "#{id} - #{description}"
   end
