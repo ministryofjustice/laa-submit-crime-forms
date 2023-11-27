@@ -18,6 +18,8 @@ en:
         granted: Granted
         part_grant: Part Granted
         rejected: Rejected
+        further_info: Further Information Requested
+        provider_requested: Further Information Requested
         review: Further Information Requested
       status_colour:
         draft: govuk-tag--grey
@@ -26,4 +28,6 @@ en:
         granted: govuk-tag--green
         part_grant: govuk-tag--blue
         rejected: govuk-tag--red
+        further_info: govuk-tag--yellow
+        provider_requested: govuk-tag--yellow
         review: govuk-tag--yellow

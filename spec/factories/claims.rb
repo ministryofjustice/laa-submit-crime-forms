@@ -168,6 +168,14 @@ FactoryBot.define do
       status { :review }
     end
 
+    trait :further_info_status do
+      status { :further_info }
+    end
+
+    trait :provider_requested_status do
+      status { :provider_requested }
+    end
+
     trait :rejected_status do
       status { :rejected }
     end
