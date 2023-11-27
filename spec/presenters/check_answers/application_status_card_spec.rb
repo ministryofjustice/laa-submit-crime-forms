@@ -90,6 +90,44 @@ RSpec.describe CheckAnswers::ApplicationStatusCard do
       end
     end
 
+    context 'further info' do
+      let(:claim) { build(:claim, :further_info) }
+
+      it 'generates further info rows' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'application_status',
+              text: '<strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong>'
+            },
+            {
+              head_key: 'Date Returned',
+              text: nil
+            }
+          ]
+        )
+      end
+    end
+
+    context 'provider requested' do
+      let(:claim) { build(:claim, :provider_requested) }
+
+      it 'generates provider requested rows' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'application_status',
+              text: '<strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong>'
+            },
+            {
+              head_key: 'Date Returned',
+              text: nil
+            }
+          ]
+        )
+      end
+    end
+
     context 'rejected' do
       let(:claim) { build(:claim, :rejected_status) }
 
