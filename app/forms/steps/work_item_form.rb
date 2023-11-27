@@ -73,7 +73,7 @@ module Steps
     end
 
     def attributes_with_resets
-      attributes.merge('uplift' => apply_uplift ? uplift : nil)
+      attributes.merge('uplift' => apply_uplift ? uplift : 0)
     end
 
     def translate(key)
