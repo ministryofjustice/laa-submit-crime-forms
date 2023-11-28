@@ -20,8 +20,9 @@ module Crm7restbackend
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.x.gatekeeper= config_for(
-      :gatekeeper, env: ENV.fetch('ENV_NAME', 'localhost')
+    config.x.gatekeeper = config_for(
+      :gatekeeper, env: ENV.fetch('ENV', 'localhost')
+    )
     )
 
     config.active_job.queue_adapter = :sidekiq
