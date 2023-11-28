@@ -55,6 +55,7 @@ RSpec.describe Steps::CaseDisposalForm do
           next if plea_inst.requires_date_field?
 
           let(:plea) { plea_inst }
+          let(:plea_category) { PleaOptions.new(plea).category }
 
           it "updates the record for #{plea_inst}" do
             expect(subject.save).to be_truthy
@@ -62,6 +63,7 @@ RSpec.describe Steps::CaseDisposalForm do
               'plea' => plea_inst,
               'arrest_warrant_date' => nil,
               'cracked_trial_date' => nil,
+              'plea_category' => plea_category
             )
           end
 
@@ -74,6 +76,7 @@ RSpec.describe Steps::CaseDisposalForm do
                 'plea' => plea_inst,
                 'arrest_warrant_date' => nil,
                 'cracked_trial_date' => nil,
+                'plea_category' => plea_category
               )
             end
           end
@@ -83,6 +86,7 @@ RSpec.describe Steps::CaseDisposalForm do
           next unless plea_inst.requires_date_field?
 
           let(:plea) { plea_inst }
+          let(:plea_category) { PleaOptions.new(plea).category }
           let(:date_field) { "#{plea.value}_date" }
 
           context 'when date is in the future' do
@@ -106,7 +110,8 @@ RSpec.describe Steps::CaseDisposalForm do
               expect(application).to have_received(:update!).with(
                 'plea' => plea,
                 'arrest_warrant_date' => arrest_warrant_date,
-                'cracked_trial_date' => cracked_trial_date
+                'cracked_trial_date' => cracked_trial_date,
+                'plea_category' => plea_category
               )
             end
           end
@@ -119,7 +124,8 @@ RSpec.describe Steps::CaseDisposalForm do
               expect(application).to have_received(:update!).with(
                 'plea' => plea,
                 'arrest_warrant_date' => arrest_warrant_date,
-                'cracked_trial_date' => cracked_trial_date
+                'cracked_trial_date' => cracked_trial_date,
+                'plea_category' => plea_category
               )
             end
           end

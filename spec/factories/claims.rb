@@ -89,6 +89,7 @@ FactoryBot.define do
 
     trait :case_disposal do
       plea { PleaOptions.values.reject(&:requires_date_field?).sample.to_s }
+      plea_category { PleaOptions.new(plea).category }
     end
 
     trait :claim_details do

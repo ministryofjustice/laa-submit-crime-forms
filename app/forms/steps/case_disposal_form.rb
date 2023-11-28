@@ -3,6 +3,7 @@ require 'steps/base_form_object'
 module Steps
   class CaseDisposalForm < Steps::BaseFormObject
     attribute :plea, :value_object, source: PleaOptions
+    attribute :plea_category
     validates :plea, presence: true, inclusion: { in: PleaOptions.values }
 
     PleaOptions.values.each do |plea|
@@ -34,6 +35,7 @@ module Steps
         next if plea_inst == plea
 
         result["#{plea_inst.value}_date"] = nil
+        result['plea_category'] = PleaOptions.new(result['plea']).category
       end
     end
   end
