@@ -13,16 +13,13 @@ module Providers
     end
 
     def path
-      applications_path
-
-      # TODO: add this back in once the office selection is re-enabled
-      # if provider.selected_office_code.blank?
-      #   edit_steps_provider_select_office_path
-      # elsif provider.multiple_offices?
-      #   edit_steps_provider_confirm_office_path
-      # else
-      #   crime_applications_path
-      # end
+      if provider.selected_office_code.blank?
+        edit_steps_office_select_path
+      elsif provider.multiple_offices?
+        edit_steps_office_confirm_path
+      else
+        applications_path
+      end
     end
   end
 end

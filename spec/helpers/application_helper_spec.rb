@@ -26,7 +26,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       let(:provider) { instance_double(Provider, selected_office_code: nil, office_codes: %w[A2 A3]) }
 
       it 'returns the first office code' do
-        expect(helper.current_office_code).to eq('A2')
+        expect(helper.current_office_code).to be_nil
       end
     end
 
