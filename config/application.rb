@@ -23,7 +23,6 @@ module Crm7restbackend
     config.x.gatekeeper = config_for(
       :gatekeeper, env: ENV.fetch('ENV', 'localhost')
     )
-    )
 
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = :mailers
