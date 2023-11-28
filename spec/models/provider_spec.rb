@@ -45,14 +45,9 @@ RSpec.describe Provider, type: :model do
         # setting the selected office to the first in the list to ensure it is always
         # set, however we will need to pull over the office selection code at some
         # point at which stage this test should be re-endabled
-        xit 'does not set the selected_office_code' do
+        it 'does not set the selected_office_code' do
           described_class.from_omniauth(auth)
           expect(described_class.last.selected_office_code).to be_nil
-        end
-
-        it 'sets the selected_office_code as the first office code' do
-          described_class.from_omniauth(auth)
-          expect(described_class.last.selected_office_code).to eq('A1')
         end
       end
 
@@ -83,7 +78,7 @@ RSpec.describe Provider, type: :model do
 
         context 'that is not in the list of office codes' do
           context 'when multiple office codes' do
-            let(:office_codes) { %(A2 A3) }
+            let(:office_codes) { %w[A2 A3] }
 
             it 'clears the office code' do
               described_class.from_omniauth(auth)

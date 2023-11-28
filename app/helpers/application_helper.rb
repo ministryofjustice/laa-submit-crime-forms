@@ -5,7 +5,7 @@ module ApplicationHelper
   end
 
   def current_office_code
-    @current_office_code ||= current_provider&.selected_office_code || current_provider&.office_codes&.first
+    @current_office_code ||= current_provider&.selected_office_code
   end
 
   def maat_required?(form)
