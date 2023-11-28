@@ -32,7 +32,7 @@ RSpec.describe 'User can manage work items', type: :system do
         time_spent: 61,
         completed_on: Date.new(2023, 4, 20),
         fee_earner: 'JBJ',
-        uplift: nil,
+        uplift: 0,
       )
     )
   end
@@ -76,7 +76,7 @@ RSpec.describe 'User can manage work items', type: :system do
       time_spent: 122,
       completed_on: Date.new(2022, 4, 20),
       fee_earner: 'BJB',
-      uplift: nil,
+      uplift: 0,
     )
 
     visit edit_steps_work_items_path(claim.id)
@@ -106,14 +106,14 @@ RSpec.describe 'User can manage work items', type: :system do
         time_spent: 122,
         completed_on: Date.new(2022, 4, 20),
         fee_earner: 'BJB',
-        uplift: nil,
+        uplift: 0,
       ),
       have_attributes(
         work_type: 'advocacy',
         time_spent: 61,
         completed_on: Date.new(2023, 4, 20),
         fee_earner: 'JBJ',
-        uplift: nil,
+        uplift: 0,
       ),
     )
   end
@@ -136,7 +136,7 @@ RSpec.describe 'User can manage work items', type: :system do
       time_spent: 122,
       completed_on: Date.new(2022, 4, 20),
       fee_earner: 'BJB',
-      uplift: nil,
+      uplift: 0,
     )
 
     visit edit_steps_work_items_path(claim.id)
@@ -156,7 +156,7 @@ RSpec.describe 'User can manage work items', type: :system do
       time_spent: 122,
       completed_on: Date.new(2022, 4, 20),
       fee_earner: 'BJB',
-      uplift: nil,
+      uplift: 0,
     )
 
     visit edit_steps_work_items_path(claim.id)

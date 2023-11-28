@@ -382,7 +382,7 @@ RSpec.describe Steps::WorkItemForm do
       it 'resets the uplift value' do
         subject.save!
         expect(record.reload).to have_attributes(
-          uplift: nil
+          uplift: 0
         )
       end
     end
