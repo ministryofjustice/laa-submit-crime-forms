@@ -7,26 +7,24 @@
 localhost:
   office_codes:
     - 1A123B
-    - 1K022G 
-    - AAA
-    - 0A719G
     - 1K022G
+    - AAAAAA
+    - 0A719G
 
-dev:
+development:
   office_codes:
     - 1A123B
-    - 1K022G 
-    - AAA
-    - 0A719G
     - 1K022G
+    - AAAAAA
+    - 0A719G
 
 uat:
   office_codes:
     - 1A123B
     - 1K022G
+    - AAAAAA
     - 0Z981E
     - 0A719G
-    - 1K022G
 
 production:
   office_codes: []

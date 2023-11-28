@@ -15,7 +15,7 @@ module LaaPortal
             info: {
               email: 'provider@example.com',
               roles: 'EFORMS,EFORMS_eFormsAuthor,CRIMEAPPLY',
-              office_codes: '1A123B:2A555X',
+              office_codes: '1A123B',
             }
           )
         )

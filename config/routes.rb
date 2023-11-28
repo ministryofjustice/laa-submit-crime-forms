@@ -47,6 +47,14 @@ Rails.application.routes.draw do
 
   resources :offences, only: [:index], format: :js
 
+  namespace :steps do
+    namespace :office do
+      edit_step :confirm
+      edit_step :select
+    end
+  end
+
+
   scope 'applications/:id' do
     # This is used as a generic redirect once a draft has been commited
     # The idea is that this can be custom to the implementation without
