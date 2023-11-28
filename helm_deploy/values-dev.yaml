@@ -33,7 +33,7 @@ ingress:
   enabled: true
   namespace: laa-claim-non-standard-magistrate-fee-dev
   className: modsec
-  annotations: 
+  annotations:
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
@@ -73,7 +73,7 @@ secrets:
   environment: development
   portalSPCertificateKey: portal-sp-certificate-dev
   portalIDPMetadataFile: config/laa_portal/metadata/dev.xml
-  omniauthTestMode: false
+  omniauthTestMode: true
   spEntityId: LAA_Portal_CRM7_Dev
   appStore: https://laa-crime-application-store-dev.apps.live.cloud-platform.service.justice.gov.uk
 
