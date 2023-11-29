@@ -4,6 +4,7 @@
 import { initAll } from 'govuk-frontend'
 import accessibleAutocomplete from 'accessible-autocomplete'
 import '@hotwired/turbo-rails'
+import $ from 'jquery'
 
 initAll()
 
@@ -37,3 +38,7 @@ const $headerNavigation = document.querySelector('ul.app-header-menu-hidden-on-l
 if ($headerNavigation) {
   $headerNavigation.classList.remove("app-header-menu-hidden-on-load")
 }
+
+$(document).on('turbo:render', function () {
+  initAll()
+})
