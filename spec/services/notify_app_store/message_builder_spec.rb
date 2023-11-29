@@ -92,6 +92,10 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             value: claim.plea,
             en: an_instance_of(String)
           },
+          'plea_category' => {
+            value: claim.plea_category,
+            en: an_instance_of(String)
+          },
           'preparation_time' => nil,
           'prosecution_evidence' => nil,
           'reason_for_claim_other_details' => nil,
