@@ -19,7 +19,7 @@ class ClaimSubmissionMailer < GovukNotifyRails::Mailer
   private
 
   def email_recipient
-    'email@email.com'
+    Provider.find(@claim.submitter_id).email
   end
 
   def case_reference
