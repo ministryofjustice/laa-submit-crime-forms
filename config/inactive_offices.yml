@@ -19,10 +19,8 @@ localhost:
 development:
   inactive_office_codes: []
 
-staging:
-  inactive_office_codes:
-    # Uncomment to test feature on staging
-    # - 0A719G
+uat:
+  inactive_office_codes: []
 
 production:
   inactive_office_codes:
