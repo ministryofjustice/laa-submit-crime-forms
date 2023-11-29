@@ -24,6 +24,9 @@ staging:
     # Uncomment to test feature on staging
     # - 0A719G
 
+uat:
+  inactive_office_codes:
+
 production:
   inactive_office_codes:
     # Inactive codes up to sixth onboarding tranche - 07/09/23
