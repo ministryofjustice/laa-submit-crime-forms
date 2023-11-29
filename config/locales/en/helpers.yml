@@ -186,6 +186,9 @@ en:
           discontinuance_cat1: Discontinuance or withdrawal
           discontinuance_cat2: Discontinuance or withdrawal
           mixed: Mixed plea
+        plea_category:
+          guilty_pleas: Category 1
+          not_guilty_pleas: Category 2
       steps_hearing_details_form:
         number_of_hearing: How many hearings were held for this case?
         court: Which court was the last case hearing heard at?
