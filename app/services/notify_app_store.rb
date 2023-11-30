@@ -7,6 +7,7 @@ class NotifyAppStore < ApplicationJob
     else
       begin
         notify(MessageBuilder.new(claim:, scorer:))
+        ClaimSubmissionMailer.notify(claim).deliver_later!
       rescue StandardError => e
         # we only get errors here when processing inline, which we don't want
         # to be visible to the end user, so swallow errors
@@ -17,6 +18,7 @@ class NotifyAppStore < ApplicationJob
 
   def perform(claim, scorer: RiskAssessment::RiskAssessmentScorer)
     notify(MessageBuilder.new(claim:, scorer:))
+    ClaimSubmissionMailer.notify(claim).deliver_later!
   end
 
   def notify(message_builder)
