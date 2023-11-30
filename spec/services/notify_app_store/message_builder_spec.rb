@@ -73,7 +73,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'id' => claim.id,
           'in_area' => 'yes',
           'is_other_info' => nil,
-          'laa_reference' => nil,
+          'laa_reference' => 'LAA-n4AohV',
           'letters_and_calls' => [
             { 'count' => 2, 'pricing' => 4.09, 'type' => { en: 'Letters', value: 'letters' }, 'uplift' => nil },
             { 'count' => 3, 'pricing' => 4.09, 'type' => { en: 'Calls', value: 'calls' }, 'uplift' => nil }

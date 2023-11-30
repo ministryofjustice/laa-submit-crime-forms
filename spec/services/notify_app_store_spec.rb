@@ -10,6 +10,7 @@ RSpec.describe NotifyAppStore do
   before do
     allow(described_class::MessageBuilder).to receive(:new)
       .and_return(message_builder)
+    allow(ClaimSubmissionMailer).to receive_message_chain(:notify, :deliver_later!)
   end
 
   describe '#process' do
