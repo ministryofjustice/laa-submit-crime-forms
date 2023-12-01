@@ -22,8 +22,27 @@ development:
 uat:
   inactive_office_codes: []
 
+
+
+
+
+
 production:
   inactive_office_codes:
+    # CRM7 codes
+    - 2F741Q # TUCKERS SOLICITORS LLP
+    - 2Q524M # TUCKERS SOLICITORS LLP
+    - 2L554X # DUNCAN LEWIS SOLICITORS  LTD
+    - 2L555Y # DUNCAN LEWIS SOLICITORS  LTD
+    - 2M404W # DUNCAN LEWIS SOLICITORS  LTD
+    - 2M406Y # DUNCAN LEWIS SOLICITORS  LTD
+    - 2N298T # DUNCAN LEWIS SOLICITORS  LTD
+    - 2P542V # DUNCAN LEWIS SOLICITORS  LTD
+    - 2P543W # DUNCAN LEWIS SOLICITORS  LTD
+    - 2M123Q # G T STEWART LTD
+    - 2M124R # G T STEWART LTD
+    - 2M126U # G T STEWART LTD
+    - 2P538Q # G T STEWART LTD
     # Inactive codes up to sixth onboarding tranche - 07/09/23
     - 0R918C
     - 2M353Q

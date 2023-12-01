@@ -28,3 +28,114 @@ uat:
 
 production:
   office_codes: []
+
+production-ready:
+  office_codes:
+    # TUCKERS SOLICITORS LLP
+    - 0M058V
+    - 0V774G
+    - 1K905R
+    - 2L669X
+    - 2L705L
+    - 2M411D
+    - 2M413F
+    - 2N826R
+    - 2N829V
+    - 2N915N
+    - 2P048H
+    - 2P208G
+    - 2P417J
+    - 2P418K
+    - 2P419L
+    - 2P420M
+    - 2Q226N
+    - 2Q229R
+    - 2Q525N
+    - 2Q528R
+    - 2Q530U
+    - 2Q531V
+    - 2Q534Y
+    - 2Q535Z
+    - 2Q536A
+    # HODGE JONES & ALLEN SOLICITORS LTD
+    - 0G267M
+    - 2P304L
+    # DUNCAN LEWIS SOLICITORS  LTD
+    - 0W953N
+    - 1W341Y
+    - 2L556Z
+    - 2L829W
+    - 2L831Y
+    - 2M402U
+    - 2M403V
+    - 2M405X
+    - 2M407Z
+    - 2M408A
+    - 2M409B
+    - 2M603M
+    - 2N128H
+    - 2N169C
+    - 2N300V
+    - 2N822M
+    - 2N868M
+    - 2N869N
+    - 2P544X
+    - 2P545Y
+    - 2Q621T
+    - 2Q622U
+    - 2Q623V
+    # THE JOHNSON PARTNERSHIP
+    - 0R225Z
+    - 2C101J
+    - 2F801F
+    - 2M030P
+    - 2N823N
+    - 2N824P
+    - 2N842J
+    - 2P169P
+    - 2P287T
+    - 2P288U
+    - 2Q419Y
+    - 2Q422B
+    # BIRDS SOLICITORS LTD
+    - 1K746U
+    # REEDS SOLICITORS LLP
+    - 0W160B
+    - 2M075N
+    - 2M847C
+    - 2N327Z
+    - 2N330C
+    - 2N849R
+    - 2P181C
+    - 2P203B
+    - 2P328M
+    - 2P475X
+    - 2P476Y
+    - 2P478A
+    - 2P479B
+    - 2P480C
+    - 2P481D
+    - 2Q202M
+    - 2Q203N
+    - 2Q267H
+    - 2Q268J
+    - 2Q269K
+    - 2Q413R
+    - 2Q414T
+    - 2Q613J
+    # G T STEWART LTD	1U002F
+    - 2M121N
+    - 2M122P
+    - 2M129X
+    - 2M132A
+    - 2M926N
+    - 2P533K
+    - 2P534L
+    - 2P535M
+    - 2P536N
+    - 2P537P
+    - 2Q241E
+    - 2Q258Y
+    - 2Q510X
+    - 2Q511Y
+    - 2Q512Z
