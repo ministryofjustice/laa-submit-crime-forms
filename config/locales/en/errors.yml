@@ -43,6 +43,14 @@ en:
   activemodel:
     errors:
       models:
+        steps/office/confirm_form:
+          attributes:
+            is_current_office:
+              inclusion: Confirm this is your current office account number
+        steps/office/select_form:
+          attributes:
+            office_code:
+              inclusion: Select your current office account number
         steps/claim_type_form:
           attributes:
             ufn:
