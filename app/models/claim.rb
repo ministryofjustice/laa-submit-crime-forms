@@ -47,7 +47,7 @@ class Claim < ApplicationRecord
   def translate_plea
     {
       'plea' => translations(plea, 'helpers.label.steps_case_disposal_form.plea_options'),
-      'plea_category' => translations(plea_category, 'helpers.label.steps_case_disposal_form.plea_options')
+      'plea_category' => translations(plea_category, 'helpers.label.steps_case_disposal_form.plea_category')
     }
   end
 
