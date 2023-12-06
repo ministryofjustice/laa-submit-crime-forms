@@ -18,6 +18,8 @@ RSpec.describe NotifyAppStore::MessageBuilder do
       expect(tester).to have_received(:process).with(
         application: {
           'agent_instructed' => 'no',
+          'adjusted_total' => nil,
+          'adjusted_total_inc_vat' => nil,
           'answer_equality' => { en: 'Yes, answer the equality questions (takes 2 minutes)', value: 'yes' },
           'arrest_warrant_date' => nil,
           'assigned_counsel' => 'no',
@@ -119,6 +121,8 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'reference_number' => '111222'
           },
           'status' => 'draft',
+          'submitted_total' => nil,
+          'submitted_total_inc_vat' => nil,
           'submitter' => { 'description' => nil, 'email' => 'provider@example.com' },
           'supplemental_claim' => nil,
           'time_spent' => nil,
