@@ -150,7 +150,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_171902) do
     t.uuid "previous_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "vat_registered"
+    t.string "vat_registered"
     t.index ["previous_id"], name: "index_firm_offices_on_previous_id"
   end
 

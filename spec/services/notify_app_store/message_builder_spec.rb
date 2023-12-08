@@ -64,7 +64,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'postcode' => 'CR0 1RE',
             'previous_id' => nil,
             'town' => 'Lawyer Town',
-            'vat_registered' => true
+            'vat_registered' => 'yes'
           },
           'first_hearing_date' => '2023-03-01',
           'gender' => { en: 'Male', value: 'm' },
