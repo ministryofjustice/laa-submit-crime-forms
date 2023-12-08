@@ -39,7 +39,7 @@ RSpec.describe 'User can fill in firm details', type: :system do
       address_line_1: 'home',
       town: 'hometown',
       postcode: 'AA1 1AA',
-      vat_registered: true
+      vat_registered: 'yes'
     )
 
     expect(claim.solicitor).to have_attributes(
