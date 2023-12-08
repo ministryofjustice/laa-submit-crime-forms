@@ -82,6 +82,7 @@ en:
       edit:
         page_title: Letters and phone calls
         heading: Letters and phone calls
+        vat_info: VAT is not included in any of these items. We'll show you totals including VAT before you submit your claim.
         total_cost: Total cost
         summary: View by letters and phone calls
         items: Items
@@ -98,6 +99,7 @@ en:
       edit:
         page_title: What work item are you claiming for?
         heading: What work item are you claiming for?
+        vat_info: VAT is not included in any of these items. We'll show you totals including VAT before you submit your claim.
         work_type_pricing: "%{price} per hour"
         calculation: Calculation
         before_uplift: Before uplift

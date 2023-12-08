@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User can manage work items', type: :system do
-  let(:claim) { create(:claim, claim_type: ClaimType::NON_STANDARD_MAGISTRATE) }
+  let(:claim) { create(:claim, :firm_details, claim_type: ClaimType::NON_STANDARD_MAGISTRATE) }
 
   before do
     visit provider_saml_omniauth_callback_path

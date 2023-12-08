@@ -4,6 +4,7 @@ module Steps
       @form_object = LettersCallsForm.build(
         current_application
       )
+      @vat_included = current_application.firm_office.vat_registered == YesNoAnswer::YES.to_s
     end
 
     def update
