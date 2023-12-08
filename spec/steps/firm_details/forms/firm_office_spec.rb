@@ -11,6 +11,7 @@ RSpec.describe Steps::FirmDetails::FirmOfficeForm do
       address_line_2:,
       town:,
       postcode:,
+      vat_registered:
     }
   end
 
@@ -26,6 +27,7 @@ RSpec.describe Steps::FirmDetails::FirmOfficeForm do
   # rubocop:enable RSpec/IndexedLet
   let(:town) { 'hometown' }
   let(:postcode) { 'AA1 1AA' }
+  let(:vat_registered) { 'yes' }
 
   describe '#valid?' do
     context 'when all fields are set' do
@@ -34,7 +36,7 @@ RSpec.describe Steps::FirmDetails::FirmOfficeForm do
       end
     end
 
-    %i[name account_number address_line_1 town postcode].each do |field|
+    %i[name account_number address_line_1 town postcode vat_registered].each do |field|
       context "when #{field} is missing" do
         let(field) { nil }
 
