@@ -9,12 +9,14 @@ module Steps
       attribute :address_line_2, :string
       attribute :town, :string
       attribute :postcode, :string
+      attribute :vat_registered, :value_object, source: YesNoAnswer
 
       validates :name, presence: true
       validates :account_number, presence: true
       validates :address_line_1, presence: true
       validates :town, presence: true
       validates :postcode, presence: true, uk_postcode: true
+      validates :vat_registered, presence: true, inclusion: { in: YesNoAnswer.values }
 
       private
 

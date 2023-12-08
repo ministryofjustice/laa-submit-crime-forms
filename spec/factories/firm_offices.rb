@@ -8,6 +8,7 @@ FactoryBot.define do
       address_line_1 { '2 Laywer Suite' }
       town { 'Lawyer Town' }
       postcode { 'CR0 1RE' }
+      vat_registered { true }
     end
 
     trait :full do

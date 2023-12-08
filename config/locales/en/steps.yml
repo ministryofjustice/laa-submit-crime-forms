@@ -22,6 +22,7 @@ en:
         page_title: Your details
         heading: Your details
         firm_details: Firm details
+        vat_registered: Is your firm VAT registered?
     case_details:
       edit:
         page_title: Case details

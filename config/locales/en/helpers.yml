@@ -150,6 +150,11 @@ en:
           address_line_2: Address line 2 (optional)
           town: Town or city
           postcode: Postcode
+          vat_registered_info: We will add VAT to your work items, letters and calls if your firm is registered for VAT.
+          vat_registered_disbursements: You can also add VAT to any disbursements you claim.
+          vat_registered_options:
+            'yes': 'Yes'
+            'no': 'No'
         solicitor_attributes:
           full_name: Solicitor full name
           reference_number: Solicitor reference number
