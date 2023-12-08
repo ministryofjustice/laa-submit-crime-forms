@@ -36,6 +36,10 @@ RSpec.describe CheckAnswers::YourDetailsCard do
               text: '2 Laywer Suite<br>Unit B<br>Lawyer Town<br>CR0 1RE'
             },
             {
+              head_key: 'vat_registered',
+              text: 'Yes'
+            },
+            {
               head_key: 'solicitor_full_name',
               text: 'Richard Jenkins'
             },
@@ -75,6 +79,10 @@ RSpec.describe CheckAnswers::YourDetailsCard do
               text: '2 Laywer Suite<br>Lawyer Town<br>CR0 1RE'
             },
             {
+              head_key: 'vat_registered',
+              text: 'Yes'
+            },
+            {
               head_key: 'solicitor_full_name',
               text: 'Richard Jenkins'
             },
@@ -103,6 +111,10 @@ RSpec.describe CheckAnswers::YourDetailsCard do
             },
             {
               head_key: 'firm_address',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'vat_registered',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
@@ -138,6 +150,10 @@ RSpec.describe CheckAnswers::YourDetailsCard do
               text: '2 Laywer Suite<br><strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
+              head_key: 'vat_registered',
+              text: 'Yes'
+            },
+            {
               head_key: 'solicitor_full_name',
               text: 'Richard Jenkins'
             },
@@ -168,6 +184,10 @@ RSpec.describe CheckAnswers::YourDetailsCard do
             {
               head_key: 'firm_address',
               text: '2 Laywer Suite<br><strong class="govuk-tag govuk-tag--red">Incomplete</strong><br>CR0 1RE'
+            },
+            {
+              head_key: 'vat_registered',
+              text: 'Yes'
             },
             {
               head_key: 'solicitor_full_name',
