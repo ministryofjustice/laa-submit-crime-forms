@@ -155,11 +155,14 @@ en:
         steps/claim_details_form:
           attributes:
             prosecution_evidence:
-              blank: Enter number of pages of prosecution evidence
+              blank: Number of pages of prosecution evidence cannot be blank
+              greater_than:  Number of pages of prosecution evidence cannot be less than 0
             defence_statement:
-              blank: Enter number of pages of defence statements
+              blank:  Number of pages of defence statements cannot be blank
+              greater_than: Number of pages of defence statements cannot be less than 0
             number_of_witnesses:
-              blank: Enter number of witnesses
+              blank: Number of witnesses cannot be blank
+              greater_than: Number of witnesses cannot be less than 0
             supplemental_claim:
               blank: Select yes or no for supplemental claim
             preparation_time:
