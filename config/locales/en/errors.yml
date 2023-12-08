@@ -82,12 +82,17 @@ en:
           summary: &solicitor_form
             full_name:
               blank: "Enter the solicitor's full name"
-              invalid: Solicitor's full name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes
+              invalid: |
+                Solicitor's full name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
+                The solicitor's full name must be 2 words or more.
+
             reference_number:
               blank: "Enter the solicitor's reference number"
             contact_full_name:
               blank: "Enter a contacts name"
-              invalid: Contacts name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes
+              invalid: |
+                Contact's name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
+                The contact's full name must be 2 words or more.
             contact_email:
               blank: "Enter a contacts email address"
               invalid: "Enter a valid email address"
@@ -229,4 +234,6 @@ en:
           attributes:
             signatory_name:
               blank: Name must be set
-              invalid: Name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes
+              invalid: |
+                Name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
+                Name must be 2 words or more.
