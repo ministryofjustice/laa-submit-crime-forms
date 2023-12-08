@@ -106,6 +106,8 @@ module Steps
 
     def attributes_with_resets
       attributes.merge(
+        'letters' => (letters.presence || 0),
+        'calls' => (calls.presence || 0),
         'letters_uplift' => apply_letters_uplift ? letters_uplift : nil,
         'calls_uplift' => apply_calls_uplift ? calls_uplift : nil,
       )
