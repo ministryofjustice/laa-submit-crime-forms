@@ -4,6 +4,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
+    <% if @vat_included %>
+      <p><%= t('.vat_info') %></p>
+    <% end %>
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>

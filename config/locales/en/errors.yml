@@ -76,7 +76,7 @@ en:
               blank: "Enter a postcode"
               invalid: "Enter a valid UK postcode"
             vat_registered:
-              blank: "Select if VAT registered"
+              blank: "Select yat if you firm is VAT registered"
           attributes: *firm_office_form
         steps/firm_details/solicitor_form:
           summary: &solicitor_form

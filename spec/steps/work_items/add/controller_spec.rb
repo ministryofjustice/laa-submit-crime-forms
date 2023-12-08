@@ -9,7 +9,7 @@ RSpec.describe Steps::WorkItemController, type: :controller do
                   ->(scope) { { work_item_id: scope.work_item&.id || '4321' } }
 
   describe '#edit' do
-    let(:application) { create(:claim, work_items:) }
+    let(:application) { create(:claim, :firm_details, work_items:) }
     let(:work_items) { [] }
 
     context 'when work_item_id is not passed in' do
