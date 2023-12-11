@@ -26,6 +26,10 @@ module CheckAnswers
           text: format_address(firm_details_form.firm_office)
         },
         {
+          head_key: 'vat_registered',
+          text: check_missing(firm_details_form.firm_office.vat_registered.to_s.capitalize)
+        },
+        {
           head_key: 'solicitor_full_name',
           text: check_missing(firm_details_form.solicitor.full_name)
         },

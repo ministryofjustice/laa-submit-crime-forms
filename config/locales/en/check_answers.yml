@@ -25,6 +25,7 @@ en:
             firm_name: Firm name
             firm_account_number: Firm account number
             firm_address: Firm address
+            vat_registered: Firm VAT registered
             solicitor_full_name: Solicitor full name
             solicitor_reference_number: Solicitor reference number
             contact_full_name: Contact full name
