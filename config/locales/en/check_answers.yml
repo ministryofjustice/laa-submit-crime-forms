@@ -79,6 +79,7 @@ en:
             uplift_value: "%{value}%"
             currency_value: "£%{value}"
             total: Total
+            total_inc_vat: Total (including VAT)
           disbursements:
             items: Items
             items_total: <strong>Total per item</strong>
@@ -92,6 +93,7 @@ en:
             travel: Travel
             waiting: Waiting
             total: Total
+            total_inc_vat: Total (including VAT)
           other_info:
             is_other_info: Any other information
             other_info: Other information

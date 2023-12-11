@@ -37,7 +37,7 @@ RSpec.describe CheckAnswers::YourDetailsCard do
             },
             {
               head_key: 'vat_registered',
-              text: 'Yes'
+              text: 'No'
             },
             {
               head_key: 'solicitor_full_name',
