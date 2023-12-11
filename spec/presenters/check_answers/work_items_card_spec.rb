@@ -59,11 +59,11 @@ RSpec.describe CheckAnswers::WorkItemsCard do
             {
               footer: true,
               head_key: 'total',
-              text: '£496.82',
+              text: '<strong>£496.82</strong>',
             },
             {
               head_key: 'total_inc_vat',
-              text: '£596.18'
+              text: '<strong>£596.18</strong>'
             }
           ]
         )
@@ -95,7 +95,7 @@ RSpec.describe CheckAnswers::WorkItemsCard do
             {
               footer: true,
               head_key: 'total',
-              text: '£496.82',
+              text: '<strong>£496.82</strong>',
             }
           ]
         )

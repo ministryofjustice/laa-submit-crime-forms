@@ -71,11 +71,20 @@ module CheckAnswers
     end
 
     def work_item_total
-      NumberTo.pounds(work_items.total_cost)
+      format_total(work_items.total_cost)
     end
 
     def work_item_total_inc_vat
-      NumberTo.pounds(work_items.work_item_forms.sum { |item| item_plus_vat(item) })
+      format_total(work_items.work_item_forms.sum { |item| item_plus_vat(item) })
+    end
+
+    def format_total(value)
+      text = "<strong>#{currency_value(value)}</strong>"
+      ApplicationController.helpers.sanitize(text, tags: %w[strong])
+    end
+
+    def currency_value(value)
+      NumberTo.pounds(value || 0)
     end
 
     def item_plus_vat(item)
