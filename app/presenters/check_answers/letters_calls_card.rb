@@ -5,6 +5,7 @@ module CheckAnswers
     attr_reader :letters_calls_form
 
     def initialize(claim)
+      @claim = claim
       @letters_calls_form = Steps::LettersCallsForm.build(claim)
       @group = 'about_claim'
       @section = 'letters_calls'
@@ -44,7 +45,7 @@ module CheckAnswers
             text: total_cost,
             footer: true
           }
-        ]
+        ] + total_inc_vat_fields
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -72,6 +73,17 @@ module CheckAnswers
       ]
     end
 
+    def total_inc_vat_fields
+      return [] unless @claim.firm_office.vat_registered == YesNoAnswer::YES.to_s
+
+      [
+        {
+          head_key: 'total_inc_vat',
+          text: total_cost_inc_vat,
+        }
+      ]
+    end
+
     def percent_value(value)
       uplift = value || 0
       translate_table_key(section, 'uplift_value', value: uplift)
@@ -82,8 +94,24 @@ module CheckAnswers
     end
 
     def total_cost
-      text = "<strong>#{currency_value(letters_calls_form.total_cost)}</strong>"
+      format_total(letters_calls_form.total_cost)
+    end
+
+    def total_cost_inc_vat
+      format_total(calculate_vat)
+    end
+
+    def calculate_vat
+      (letters_calls_form.total_cost * vat_rate) + letters_calls_form.total_cost
+    end
+
+    def format_total(value)
+      text = "<strong>#{currency_value(value)}</strong>"
       ApplicationController.helpers.sanitize(text, tags: %w[strong])
+    end
+
+    def vat_rate
+      Pricing.for(@claim)[:vat]
     end
 
     def letters
