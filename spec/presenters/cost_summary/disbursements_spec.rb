@@ -47,19 +47,19 @@ RSpec.describe CostSummary::Disbursements do
         [
           {
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Car' },
-            value: { text: '£100.00' }
+            value: { text: '£90.00' }
           },
           {
             key: { classes: 'govuk-summary-list__value-width-50', text: 'DNA Testing' },
-            value: { text: '£70.00' }
+            value: { text: '£60.00' }
           },
           {
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Custom' },
-            value: { text: '£40.00' }
+            value: { text: '£30.00' }
           },
           {
             key: { classes: 'govuk-summary-list__value-width-50', text: 'Car' },
-            value: { text: '£90.00' }
+            value: { text: '£80.00' }
           }
         ]
       )
@@ -69,7 +69,7 @@ RSpec.describe CostSummary::Disbursements do
 
   describe '#total_cost' do
     it 'delegates to the form' do
-      expect(subject.total_cost).to eq(300.00)
+      expect(subject.total_cost).to eq(260.00)
     end
   end
 

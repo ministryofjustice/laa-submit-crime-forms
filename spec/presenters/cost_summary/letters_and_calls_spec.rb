@@ -4,10 +4,11 @@ RSpec.describe CostSummary::LettersCalls do
   subject { described_class.new(claim) }
 
   let(:claim) { instance_double(Claim) }
-  let(:form) { instance_double(Steps::LettersCallsForm, letters_after_uplift:, calls_after_uplift:, total_cost:) }
+  let(:form) { instance_double(Steps::LettersCallsForm, letters_after_uplift:, calls_after_uplift:, total_cost:, total_cost_inc_vat:) }
   let(:letters_after_uplift) { 25.0 }
   let(:calls_after_uplift) { 75.0 }
   let(:total_cost) { 100.00 }
+  let(:total_cost_inc_vat) { 120.00 }
 
   before do
     allow(Steps::LettersCallsForm).to receive(:build).and_return(form)
@@ -45,7 +46,7 @@ RSpec.describe CostSummary::LettersCalls do
 
   describe '#title' do
     it 'translates with total cost' do
-      expect(subject.title).to eq('Letters and phone calls total £100.00')
+      expect(subject.title).to eq('Letters and phone calls total £120.00')
     end
   end
 end
