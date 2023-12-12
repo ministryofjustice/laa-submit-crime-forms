@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe CheckAnswers::LettersCallsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { build(:claim, letters:, calls:, letters_uplift:, calls_uplift:, reasons_for_claim:) }
+  let(:claim) { build(:claim, :firm_details, letters:, calls:, letters_uplift:, calls_uplift:, reasons_for_claim:) }
 
   let(:letters) { 20 }
   let(:calls) { 5 }
@@ -61,6 +61,10 @@ RSpec.describe CheckAnswers::LettersCallsCard do
               head_key: 'total',
               text: '<strong>£121.68</strong>',
               footer: true
+            },
+            {
+              head_key: 'total_inc_vat',
+              text: '<strong>£146.01</strong>'
             }
           ]
         )
@@ -97,6 +101,10 @@ RSpec.describe CheckAnswers::LettersCallsCard do
               head_key: 'total',
               text: '<strong>£102.25</strong>',
               footer: true
+            },
+            {
+              head_key: 'total_inc_vat',
+              text: '<strong>£122.70</strong>'
             }
           ]
         )
@@ -104,7 +112,7 @@ RSpec.describe CheckAnswers::LettersCallsCard do
     end
 
     context 'no letters or calls requested' do
-      let(:claim) { build(:claim, reasons_for_claim:) }
+      let(:claim) { build(:claim, :full_firm_details, reasons_for_claim:) }
 
       it 'generates letters and calls rows' do
         expect(subject.row_data).to eq(
