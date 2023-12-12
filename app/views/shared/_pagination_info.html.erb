@@ -1,0 +1,5 @@
+<% if local_assigns[:pagy] %>
+  <div class="govuk-body">
+    <%== pagy_info(pagy, item_name: item.downcase.pluralize(pagy.count)) %>
+  </div>
+<% end %>
