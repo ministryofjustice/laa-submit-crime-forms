@@ -89,12 +89,12 @@ en:
             reference_number:
               blank: "Enter the solicitor's reference number"
             contact_full_name:
-              blank: "Enter a contacts name"
+              blank: "Enter the full name of the alternative contact"
               invalid: |
                 Contact's name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
                 The contact's full name must be 2 words or more.
             contact_email:
-              blank: "Enter a contacts email address"
+              blank: "Enter the email address of the alternative contact"
               invalid: "Enter a valid email address"
           attributes: *solicitor_form
         steps/defendant_details_form:
