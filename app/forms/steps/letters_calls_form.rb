@@ -1,6 +1,7 @@
 require 'steps/base_form_object'
 
 module Steps
+  # rubocop:disable Metrics/ClassLength
   class LettersCallsForm < Steps::BaseFormObject
     attr_writer :apply_calls_uplift, :apply_letters_uplift
 
@@ -74,6 +75,7 @@ module Steps
 
     private
 
+    # rubocop:disable Metricts/MethodLength
     def letters_row
       [
         translate(:letters),
@@ -109,6 +111,7 @@ module Steps
         )
       ]
     end
+    # rubocop:enable Metricts/MethodLength
 
     def translate(key)
       I18n.t("steps.letters_calls.edit.#{key}")
@@ -135,4 +138,5 @@ module Steps
       calls.to_f * pricing.letters if calls && !calls.zero?
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

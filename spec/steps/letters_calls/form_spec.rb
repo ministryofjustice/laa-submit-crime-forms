@@ -343,7 +343,7 @@ RSpec.describe Steps::LettersCallsForm do
           expect(subject.calculation_rows).to eq(
             [['Items', 'Total'],
              ['Letters',
-              { html_attributes: { id: 'letters-without-uplift' }, text: '£8.18' },nil],
+              { html_attributes: { id: 'letters-without-uplift' }, text: '£8.18' }, nil],
              ['Phone calls',
               { html_attributes: { id: 'calls-without-uplift' }, text: '£4.09' }, nil]]
           )
