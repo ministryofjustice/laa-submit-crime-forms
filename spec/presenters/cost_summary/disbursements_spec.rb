@@ -14,10 +14,10 @@ RSpec.describe CostSummary::Disbursements do
       instance_double(Disbursement, disbursement_type: 'car', other_type: nil)
     ]
   end
-  let(:form_car) { instance_double(Steps::DisbursementCostForm, record: disbursements[0], total_cost: 100.0) }
-  let(:form_dna) { instance_double(Steps::DisbursementCostForm, record: disbursements[1], total_cost: 70.0) }
-  let(:form_custom) { instance_double(Steps::DisbursementCostForm, record: disbursements[2], total_cost: 40.0) }
-  let(:form_car2) { instance_double(Steps::DisbursementCostForm, record: disbursements[3], total_cost: 90.0) }
+  let(:form_car) { instance_double(Steps::DisbursementCostForm, record: disbursements[0], total_cost: 100.0, total_cost_pre_vat: 90.0) }
+  let(:form_dna) { instance_double(Steps::DisbursementCostForm, record: disbursements[1], total_cost: 70.0, total_cost_pre_vat: 60.0) }
+  let(:form_custom) { instance_double(Steps::DisbursementCostForm, record: disbursements[2], total_cost: 40.0, total_cost_pre_vat: 30.0) }
+  let(:form_car2) { instance_double(Steps::DisbursementCostForm, record: disbursements[3], total_cost: 90.0, total_cost_pre_vat: 80.0) }
 
   before do
     allow(Steps::DisbursementCostForm).to receive(:build).with(disbursements[0],

@@ -21,13 +21,17 @@ module CostSummary
             title: data.title,
             actions: actions(name)
           },
-          rows: [header_row, *data.rows, footer_row(data)],
+          rows: [header_row, *data.rows, *footer_row(data)],
         }
       end
     end
 
     def total_cost
       NumberTo.pounds(items.values.filter_map(&:total_cost).sum)
+    end
+
+    def total_cost_inc_vat
+      NumberTo.pounds(items.values.filter_map(&:total_cost_inc_vat).sum)
     end
 
     private
@@ -50,11 +54,24 @@ module CostSummary
     end
 
     def footer_row(data)
-      {
-        key: { text: translate('.footer.total'), classes: 'govuk-summary-list__value-width-50' },
-        value: { text: NumberTo.pounds(data.total_cost), classes: 'govuk-summary-list__value-bold' },
-        classes: 'govuk-summary-list__row-double-border'
-      }
+      [
+        {
+          key: { text: translate('.footer.total'), classes: 'govuk-summary-list__value-width-50' },
+          value: { text: NumberTo.pounds(data.total_cost), classes: 'govuk-summary-list__value-bold' },
+          classes: 'govuk-summary-list__row-double-border'
+        }
+      ] + footer_vat_row(data)
+    end
+
+    def footer_vat_row(data)
+      return [] if data.total_cost_inc_vat.zero?
+
+      [
+        {
+          key: { text: translate('.footer.total_inc_vat'), classes: 'govuk-summary-list__value-width-50' },
+          value: { text: NumberTo.pounds(data.total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
+        }
+      ]
     end
   end
 end
