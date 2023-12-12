@@ -104,6 +104,7 @@ en:
         calculation: Calculation
         before_uplift: Before uplift
         after_uplift: After uplift
+        total: Total
       duplicate:
         duplicate: Work item successfully duplicated
     work_items:
