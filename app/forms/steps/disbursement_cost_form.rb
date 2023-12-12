@@ -46,23 +46,19 @@ module Steps
     end
 
     def total_cost_pre_vat
-      return @total_cost_pre_vat if defined?(@total_cost_pre_vat)
-
-      @total_cost_pre_vat = if other_disbursement_type?
-                              total_cost_without_vat
-                            elsif miles
-                              miles.to_f * multiplier
-                            end
+      @total_cost_pre_vat ||= if other_disbursement_type?
+                                total_cost_without_vat
+                              elsif miles
+                                miles.to_f * multiplier
+                              end
     end
 
     def total_cost
-      return @total_cost if defined?(@total_cost)
-
-      @total_cost = if apply_vat && total_cost_pre_vat
-                      total_cost_pre_vat + vat
-                    else
-                      total_cost_pre_vat
-                    end
+      @total_cost ||= if apply_vat && total_cost_pre_vat
+                        total_cost_pre_vat + vat
+                      else
+                        total_cost_pre_vat
+                      end
     end
 
     private
