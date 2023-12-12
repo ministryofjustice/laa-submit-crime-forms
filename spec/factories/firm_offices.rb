@@ -14,6 +14,7 @@ FactoryBot.define do
     trait :full do
       valid
       address_line_2 { 'Unit B' }
+      vat_registered { 'no' }
     end
   end
 end

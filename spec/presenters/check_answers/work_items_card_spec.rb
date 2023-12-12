@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe CheckAnswers::WorkItemsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { build(:claim, work_items:) }
+  let(:claim) { build(:claim, :firm_details, work_items:) }
   let(:work_items) do
     [
       build(:work_item, work_type: WorkTypes::ADVOCACY.to_s, time_spent: 180),
@@ -36,32 +36,70 @@ RSpec.describe CheckAnswers::WorkItemsCard do
   end
 
   describe '#row_data' do
-    it 'generates work items rows' do
-      expect(subject.row_data).to eq(
-        [
-          {
-            head_key: 'items',
-            text: '<strong>Total per item</strong>'
-          },
-          {
-            head_key: 'Attendance without counsel',
-            text: '£0.00'
-          },
-          {
-            head_key: 'Preparation',
-            text: '£104.30'
-          },
-          {
-            head_key: 'Advocacy',
-            text: '£392.52'
-          },
-          {
-            footer: true,
-            head_key: 'total',
-            text: '£496.82',
-          }
-        ]
-      )
+    context 'when vat registered' do
+      it 'generates work items rows' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'items',
+              text: '<strong>Total per item</strong>'
+            },
+            {
+              head_key: 'Attendance without counsel',
+              text: '£0.00'
+            },
+            {
+              head_key: 'Preparation',
+              text: '£104.30'
+            },
+            {
+              head_key: 'Advocacy',
+              text: '£392.52'
+            },
+            {
+              footer: true,
+              head_key: 'total',
+              text: '<strong>£496.82</strong>',
+            },
+            {
+              head_key: 'total_inc_vat',
+              text: '<strong>£596.18</strong>'
+            }
+          ]
+        )
+      end
+    end
+
+    context 'when not vat registered' do
+      let(:claim) { build(:claim, :full_firm_details, work_items:) }
+
+      it 'generates work items rows' do
+        expect(subject.row_data).to eq(
+          [
+            {
+              head_key: 'items',
+              text: '<strong>Total per item</strong>'
+            },
+            {
+              head_key: 'Attendance without counsel',
+              text: '£0.00'
+            },
+            {
+              head_key: 'Preparation',
+              text: '£104.30'
+            },
+            {
+              head_key: 'Advocacy',
+              text: '£392.52'
+            },
+            {
+              footer: true,
+              head_key: 'total',
+              text: '<strong>£496.82</strong>',
+            }
+          ]
+        )
+      end
     end
   end
 end
