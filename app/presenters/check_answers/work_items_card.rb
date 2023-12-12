@@ -75,7 +75,7 @@ module CheckAnswers
     end
 
     def work_item_total_inc_vat
-      format_total(work_items.work_item_forms.sum { |item| item_plus_vat(item) })
+      format_total(item_plus_vat(work_items))
     end
 
     def format_total(value)
@@ -88,8 +88,7 @@ module CheckAnswers
     end
 
     def item_plus_vat(item)
-      value = (item.total_cost * @vat_rate) + item.total_cost
-      value.round(2)
+      (item.total_cost * @vat_rate) + item.total_cost
     end
 
     def vat_rate(claim)

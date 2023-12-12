@@ -102,8 +102,7 @@ module CheckAnswers
     end
 
     def calculate_vat
-      value = (letters_calls_form.total_cost * vat_rate) + letters_calls_form.total_cost
-      value.round(2)
+      (letters_calls_form.total_cost * vat_rate) + letters_calls_form.total_cost
     end
 
     def format_total(value)
