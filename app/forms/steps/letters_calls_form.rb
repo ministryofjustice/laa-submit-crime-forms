@@ -37,8 +37,14 @@ module Steps
     end
 
     def calculation_rows
+      header_rows = if allow_uplift?
+                      [translate(:items), translate(:before_uplift),
+                       translate(:after_uplift)]
+                    else
+                      [translate(:items), translate(:total)]
+                    end
       [
-        [translate(:items), translate(:before_uplift), translate(:after_uplift)],
+        header_rows,
         letters_row,
         calls_row,
       ]
@@ -75,10 +81,14 @@ module Steps
           text: NumberTo.pounds(letters_before_uplift),
           html_attributes: { id: 'letters-without-uplift' }
         },
-        {
-          text: NumberTo.pounds(letters_after_uplift),
-          html_attributes: { id: 'letters-with-uplift' },
-        }
+        (
+          if allow_uplift?
+            {
+              text: NumberTo.pounds(letters_after_uplift),
+              html_attributes: { id: 'letters-with-uplift' },
+            }
+          end
+        )
       ]
     end
 
@@ -89,10 +99,14 @@ module Steps
           text: NumberTo.pounds(calls_before_uplift),
           html_attributes: { id: 'calls-without-uplift' }
         },
-        {
-          text: NumberTo.pounds(calls_after_uplift),
-          html_attributes: { id: 'calls-with-uplift' },
-        }
+        (
+          if allow_uplift?
+            {
+              text: NumberTo.pounds(calls_after_uplift),
+              html_attributes: { id: 'calls-with-uplift' },
+            }
+          end
+        )
       ]
     end
 

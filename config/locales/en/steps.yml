@@ -91,6 +91,7 @@ en:
         calculation: Calculation
         before_uplift: Before uplift
         after_uplift: After uplift
+        total: Total
     reason_for_claim:
       edit:
         page_title: Why are you claiming a non-standard magistrates' court payment?
