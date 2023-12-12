@@ -38,17 +38,7 @@ module Steps
     end
 
     def calculation_rows
-      header_rows = if allow_uplift?
-                      [translate(:items), translate(:before_uplift),
-                       translate(:after_uplift)]
-                    else
-                      [translate(:items), translate(:total)]
-                    end
-      [
-        header_rows,
-        letters_row,
-        calls_row,
-      ]
+      [header_row, letters_row, calls_row]
     end
 
     def letters_after_uplift
@@ -74,6 +64,15 @@ module Steps
     end
 
     private
+
+    def header_row
+      if allow_uplift?
+        [translate(:items), translate(:before_uplift),
+         translate(:after_uplift)]
+      else
+        [translate(:items), translate(:total)]
+      end
+    end
 
     # rubocop:disable Metricts/MethodLength
     def letters_row
