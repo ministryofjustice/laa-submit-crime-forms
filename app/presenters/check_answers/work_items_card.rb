@@ -88,11 +88,12 @@ module CheckAnswers
     end
 
     def item_plus_vat(item)
-      (item.total_cost * @vat_rate) + item.total_cost
+      value = (item.total_cost * @vat_rate) + item.total_cost
+      value.round(2)
     end
 
     def vat_rate(claim)
-      Pricing.for(claim)[:vat]
+      Pricing.for(claim).vat
     end
   end
 end
