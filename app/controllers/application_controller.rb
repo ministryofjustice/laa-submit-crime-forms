@@ -1,4 +1,5 @@
 class ApplicationController < LaaMultiStepForms::ApplicationController
+  include Pagy::Backend
   include ApplicationHelper
   include CookieConcern
 

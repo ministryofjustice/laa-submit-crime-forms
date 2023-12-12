@@ -95,6 +95,6 @@
         <% end %>
       </tbody>
     </table>
-    <%= paginate @claims %>
+    <%= render "shared/pagination",  { pagy: @pagy, item: t('.table_info_item') } %>
   </div>
 </div>

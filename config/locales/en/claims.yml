@@ -4,6 +4,7 @@ en:
       page_title: Your claims
       heading: Your claims
       start_claim: Start a new claim
+      table_info_item: claims
       header:
         ufn: Your UFN
         defendant: Defendant
