@@ -47,6 +47,7 @@ module Steps
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def calculation_rows
       if allow_uplift?
         [
@@ -74,6 +75,7 @@ module Steps
         ]
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
