@@ -51,7 +51,7 @@ RSpec.describe 'User can fill in claim type details', type: :system do
     )
 
     within '.govuk-table__body' do
-      expect(page.text).to eq('Letters£4.09£4.09Phone calls£8.18£8.18')
+      expect(page.text).to eq('Letters£4.09Phone calls£8.18')
     end
   end
 end
