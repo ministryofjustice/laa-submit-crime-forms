@@ -10,5 +10,9 @@ module CostSummary
         I18n.t("summary.#{self.class::TRANSLATION_KEY.to_s.underscore}.#{key}", **)
       end
     end
+
+    def vat_rate
+      Pricing.for(@claim).vat
+    end
   end
 end

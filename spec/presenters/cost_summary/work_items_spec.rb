@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe CostSummary::WorkItems do
   subject { described_class.new(work_items, claim) }
 
-  let(:claim) { instance_double(Claim, assigned_counsel:, in_area:) }
+  let(:claim) { instance_double(Claim, assigned_counsel:, in_area:, date:) }
   let(:assigned_counsel) { 'no' }
   let(:in_area) { 'yes' }
+  let(:date) { Date.new(2008, 11, 22) }
   let(:work_items) { [instance_double(WorkItem), instance_double(WorkItem), instance_double(WorkItem)] }
   let(:form_advocacy) { instance_double(Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 100.0) }
   let(:form_advocacy2) { instance_double(Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 70.0) }
@@ -77,7 +78,7 @@ RSpec.describe CostSummary::WorkItems do
 
   describe '#title' do
     it 'translates with total cost' do
-      expect(subject.title).to eq('Work items total £210.00')
+      expect(subject.title).to eq('Work items total £252.00')
     end
   end
 end

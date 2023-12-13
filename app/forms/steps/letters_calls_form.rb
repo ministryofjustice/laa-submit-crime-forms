@@ -1,6 +1,7 @@
 require 'steps/base_form_object'
 
 module Steps
+  # rubocop:disable Metrics/ClassLength
   class LettersCallsForm < Steps::BaseFormObject
     attr_writer :apply_calls_uplift, :apply_letters_uplift
 
@@ -66,6 +67,16 @@ module Steps
       letters_after_uplift.to_f + calls_after_uplift.to_f
     end
 
+    def total_cost_inc_vat
+      calculate_vat
+    end
+
+    def calculate_vat
+      return 0 unless total_cost
+
+      (total_cost * pricing.vat) + total_cost
+    end
+
     private
 
     def letters_row
@@ -121,4 +132,5 @@ module Steps
       calls.to_f * pricing.letters if calls && !calls.zero?
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

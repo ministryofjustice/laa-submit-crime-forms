@@ -7,7 +7,6 @@ module CheckAnswers
     def initialize(claim)
       @claim = claim
       @work_items = CostSummary::WorkItems.new(claim.work_items, claim)
-      @vat_rate = vat_rate(claim)
       @group = 'about_claim'
       @section = 'work_items'
     end
@@ -75,7 +74,7 @@ module CheckAnswers
     end
 
     def work_item_total_inc_vat
-      format_total(item_plus_vat(work_items))
+      format_total(work_items.total_cost_inc_vat)
     end
 
     def format_total(value)
@@ -85,14 +84,6 @@ module CheckAnswers
 
     def currency_value(value)
       NumberTo.pounds(value || 0)
-    end
-
-    def item_plus_vat(item)
-      (item.total_cost * @vat_rate) + item.total_cost
-    end
-
-    def vat_rate(claim)
-      Pricing.for(claim).vat
     end
   end
 end

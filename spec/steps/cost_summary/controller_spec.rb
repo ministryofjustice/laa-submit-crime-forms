@@ -4,7 +4,7 @@ RSpec.describe Steps::CostSummaryController, type: :controller do
   it_behaves_like 'a show step controller'
 
   describe '#show' do
-    let(:claim) { create(:claim) }
+    let(:claim) { create(:claim, :firm_details) }
 
     before { claim.update(navigation_stack:) }
 

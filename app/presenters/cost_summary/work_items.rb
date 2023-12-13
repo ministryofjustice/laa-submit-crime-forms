@@ -26,8 +26,16 @@ module CostSummary
       @total_cost ||= work_item_forms.sum(&:total_cost)
     end
 
+    def total_cost_inc_vat
+      @total_cost_inc_vat ||= calculate_vat
+    end
+
+    def calculate_vat
+      (total_cost * vat_rate) + total_cost
+    end
+
     def title
-      translate('work_items', total: NumberTo.pounds(total_cost))
+      translate('work_items', total: NumberTo.pounds(total_cost_inc_vat))
     end
   end
 end

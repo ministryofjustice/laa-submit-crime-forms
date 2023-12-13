@@ -98,20 +98,12 @@ module CheckAnswers
     end
 
     def total_cost_inc_vat
-      format_total(calculate_vat)
-    end
-
-    def calculate_vat
-      (letters_calls_form.total_cost * vat_rate) + letters_calls_form.total_cost
+      format_total(letters_calls_form.total_cost_inc_vat)
     end
 
     def format_total(value)
       text = "<strong>#{currency_value(value)}</strong>"
       ApplicationController.helpers.sanitize(text, tags: %w[strong])
-    end
-
-    def vat_rate
-      Pricing.for(@claim).vat
     end
 
     def letters
