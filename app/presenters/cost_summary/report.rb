@@ -30,6 +30,10 @@ module CostSummary
       NumberTo.pounds(items.values.filter_map(&:total_cost).sum)
     end
 
+    def total_cost_inc_vat
+      NumberTo.pounds(items.values.filter_map(&:total_cost_inc_vat).sum)
+    end
+
     private
 
     def actions(key)

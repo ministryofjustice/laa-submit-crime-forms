@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User can see cost breakdowns', type: :system do
-  let(:claim) { create(:claim, :letters_calls, work_items:, disbursements:) }
+  let(:claim) { create(:claim, :firm_details, :letters_calls, work_items:, disbursements:) }
   let(:work_items) do
     [
       build(:work_item, :attendance_without_counsel, time_spent: 90),
