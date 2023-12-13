@@ -33,7 +33,8 @@ class NotifyAppStore
         'firm_office' => claim.firm_office.attributes.slice!('id', *DEFAULT_IGNORE),
         'solicitor' => claim.solicitor.attributes.slice!('id', *DEFAULT_IGNORE),
         'submitter' => claim.submitter.attributes.slice('email', 'description'),
-        'supporting_evidences' => supporting_evidence
+        'supporting_evidences' => supporting_evidence,
+        'vat_rate' => pricing[:vat]
       )
     end
 

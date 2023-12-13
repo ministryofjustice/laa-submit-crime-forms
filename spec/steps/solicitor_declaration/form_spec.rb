@@ -14,9 +14,11 @@ RSpec.describe Steps::SolicitorDeclarationForm do
 
   describe '#save the form' do
     let(:app_store_notifier) { instance_double(NotifyAppStore, process: true) }
+    let(:claim_calculator) { instance_double(ClaimCalculator, save_totals: true)}
 
     before do
       allow(NotifyAppStore).to receive(:new).and_return(app_store_notifier)
+      allow(ClaimCalculator).to receive(:new).and_return(claim_calculator)
     end
 
     context 'when all fields are set' do

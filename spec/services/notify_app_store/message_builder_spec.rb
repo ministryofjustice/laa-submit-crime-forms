@@ -10,9 +10,11 @@ RSpec.describe NotifyAppStore::MessageBuilder do
   let(:work_item) { claim.work_items.first }
   let(:tester) { double(:tester, process: true) }
   let(:pricing) { Pricing.for(claim) }
+  let(:claim_calculator) { ClaimCalculator.new(claim:) }
 
   it 'will generate and send the data message for a claim' do
     travel_to(Time.zone.local(2023, 8, 17, 12, 13, 14)) do
+      claim_calculator.save_totals
       tester.process(subject.message)
 
       expect(tester).to have_received(:process).with(
@@ -122,14 +124,15 @@ RSpec.describe NotifyAppStore::MessageBuilder do
             'reference_number' => '111222'
           },
           'status' => 'draft',
-          'submitted_total' => nil,
-          'submitted_total_inc_vat' => nil,
+          'submitted_total' => claim_calculator.total.round(2),
+          'submitted_total_inc_vat' => claim_calculator.total_inc_vat.round(2),
           'submitter' => { 'description' => nil, 'email' => 'provider@example.com' },
           'supplemental_claim' => nil,
           'time_spent' => nil,
           'ufn' => '123456/001',
           'unassigned_counsel' => 'no',
           'updated_at' => '2023-08-17T12:13:14.000Z',
+          'vat_rate' => 0.2,
           'work_after' => nil,
           'work_after_date' => nil,
           'work_before' => nil,
