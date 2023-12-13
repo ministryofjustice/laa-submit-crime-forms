@@ -7,6 +7,7 @@ en:
       total: Total per item
     footer:
       total: Total
+      total_inc_vat: Total (including VAT)
     cost_summary/work_items:
       work_items: Work items total %{total}
       preparation: Preparation

@@ -63,6 +63,16 @@ module Steps
       letters_after_uplift.to_f + calls_after_uplift.to_f
     end
 
+    def total_cost_inc_vat
+      calculate_vat
+    end
+
+    def calculate_vat
+      return 0 unless total_cost
+
+      (total_cost * pricing.vat) + total_cost
+    end
+
     private
 
     def header_row

@@ -4,6 +4,7 @@ module CostSummary
     attr_reader :letters_calls_form
 
     def initialize(claim)
+      @claim = claim
       @letters_calls_form = Steps::LettersCallsForm.build(claim)
     end
 
@@ -24,8 +25,12 @@ module CostSummary
       letters_calls_form.total_cost || 0
     end
 
+    def total_cost_inc_vat
+      letters_calls_form.total_cost_inc_vat || 0
+    end
+
     def title
-      translate('letters_calls', total: NumberTo.pounds(total_cost || 0))
+      translate('letters_calls', total: NumberTo.pounds(total_cost_inc_vat || 0))
     end
   end
 end

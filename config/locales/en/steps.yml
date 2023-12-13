@@ -180,6 +180,9 @@ en:
     cost_summary:
       show:
         page_title: Check your payment claim
+        payment_claim: Payment Claim
+        total: Cost
+        total_inc_vat: Cost (including VAT)
         heading: Check your payment claim
         estimate: 'Total estimated:'
     other_info:

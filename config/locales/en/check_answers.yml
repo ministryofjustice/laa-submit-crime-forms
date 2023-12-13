@@ -83,6 +83,8 @@ en:
           disbursements:
             items: Items
             items_total: <strong>Total per item</strong>
+            total: Total
+            total_inc_vat: Total (including VAT)
           work_items:
             items: Items
             items_total: <strong>Total per item</strong>
