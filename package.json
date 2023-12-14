@@ -6,7 +6,7 @@
     "accessible-autocomplete": "^2.0.4",
     "govuk-frontend": "4.7.0",
     "jquery": "^3.7.1",
-    "yarn": "^1.22.19"
+    "yarn": "^1.22.21"
   },
   "scripts": {
     "postinstall": "bin/importmap pin govuk-frontend@4.5.0",
