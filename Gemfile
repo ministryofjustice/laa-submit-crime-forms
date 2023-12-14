@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.140'
+gem 'aws-sdk-s3', '~> 1.141'
 gem 'bootsnap', '~> 1.17.0', require: false
 gem 'dartsass-rails', '~> 0.5.0'
 gem 'govuk_notify_rails', '~> 2.2.0'
@@ -11,15 +11,15 @@ gem 'httparty'
 gem 'importmap-rails'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'logstasher', '~> 2.1'
-gem 'pagy'
+gem 'pagy', '~> 6.2.0'
 gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.4'
 gem 'rails', '~> 7.1.2'
-gem 'sentry-rails', '~> 5.14.0'
-gem 'sentry-ruby', '~> 5.14.0'
+gem 'sentry-rails', '~> 5.15.0'
+gem 'sentry-ruby', '~> 5.15.0'
 gem 'sidekiq', '~> 7.2'
 gem 'sidekiq_alive', '~> 2.3'
-gem 'sidekiq-cron'
+gem 'sidekiq-cron', '~> 1.12.0'
 gem 'sprockets-rails'
 gem 'turbo-rails', '~> 1.5.0'
 gem 'tzinfo-data'
@@ -28,12 +28,12 @@ gem 'tzinfo-data'
 gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
 
 group :development, :test do
-  gem 'debug'
+  gem 'debug', '~> 1.9.0'
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
   gem 'pry'
   gem 'rspec-expectations'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 6.1.0'
 end
 
 group :development do
