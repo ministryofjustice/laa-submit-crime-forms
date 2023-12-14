@@ -59,5 +59,14 @@ module CheckAnswers
           }
         end)].compact
     end
+
+    def format_total(value)
+      text = "<strong>#{currency_value(value)}</strong>"
+      ApplicationController.helpers.sanitize(text, tags: %w[strong])
+    end
+
+    def currency_value(value)
+      NumberTo.pounds(value || 0)
+    end
   end
 end

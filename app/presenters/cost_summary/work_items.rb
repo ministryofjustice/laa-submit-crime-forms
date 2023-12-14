@@ -31,11 +31,13 @@ module CostSummary
     end
 
     def calculate_vat
+      return 0 if @claim.firm_office.vat_registered == YesNoAnswer::NO.to_s
+
       (total_cost * vat_rate) + total_cost
     end
 
     def title
-      translate('work_items', total: NumberTo.pounds(total_cost_inc_vat))
+      translate('work_items', total: NumberTo.pounds(vat_registered ? total_cost_inc_vat : total_cost || 0))
     end
   end
 end

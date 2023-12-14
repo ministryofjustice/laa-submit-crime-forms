@@ -76,14 +76,5 @@ module CheckAnswers
     def work_item_total_inc_vat
       format_total(work_items.total_cost_inc_vat)
     end
-
-    def format_total(value)
-      text = "<strong>#{currency_value(value)}</strong>"
-      ApplicationController.helpers.sanitize(text, tags: %w[strong])
-    end
-
-    def currency_value(value)
-      NumberTo.pounds(value || 0)
-    end
   end
 end

@@ -39,22 +39,22 @@ module CheckAnswers
       [
         {
           head_key: 'total',
-          text: disbursement_total,
+          text: format_total(disbursement_total),
           footer: true
         },
         {
           head_key: 'total_inc_vat',
-          text: disbursement_total_inc_vat
+          text: format_total(disbursement_total_inc_vat)
         },
       ]
     end
 
     def disbursement_total_inc_vat
-      NumberTo.pounds(disbursements.total_cost)
+      disbursements.total_cost
     end
 
     def disbursement_total
-      NumberTo.pounds(disbursements.disbursement_forms.filter_map(&:total_cost_pre_vat).sum)
+      disbursements.disbursement_forms.filter_map(&:total_cost_pre_vat).sum
     end
   end
 end

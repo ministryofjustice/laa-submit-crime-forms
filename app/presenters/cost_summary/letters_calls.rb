@@ -30,7 +30,7 @@ module CostSummary
     end
 
     def title
-      translate('letters_calls', total: NumberTo.pounds(total_cost_inc_vat || 0))
+      translate('letters_calls', total: NumberTo.pounds(vat_registered ? total_cost_inc_vat : total_cost || 0))
     end
   end
 end

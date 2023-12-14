@@ -3,11 +3,12 @@ require 'rails_helper'
 RSpec.describe CostSummary::LettersCalls do
   subject { described_class.new(claim) }
 
-  let(:claim) { instance_double(Claim) }
+  let(:claim) { instance_double(Claim, firm_office:) }
   let(:form) do
     instance_double(Steps::LettersCallsForm, letters_after_uplift:, calls_after_uplift:, total_cost:,
    total_cost_inc_vat:)
   end
+  let(:firm_office) { build(:firm_office, :valid) }
   let(:letters_after_uplift) { 25.0 }
   let(:calls_after_uplift) { 75.0 }
   let(:total_cost) { 100.00 }
@@ -41,15 +42,47 @@ RSpec.describe CostSummary::LettersCalls do
     end
   end
 
-  describe '#total_cost' do
-    it 'delegates to the form' do
-      expect(subject.total_cost).to eq(100.00)
+  context 'vat registered' do
+    describe '#total_cost' do
+      it 'delegates to the form' do
+        expect(subject.total_cost).to eq(100.00)
+      end
+    end
+
+    describe '#total_cost_inc_vat' do
+      it 'delegates to the form' do
+        expect(subject.total_cost_inc_vat).to eq(120.00)
+      end
+    end
+
+    describe '#title' do
+      it 'translates with total cost' do
+        expect(subject.title).to eq('Letters and phone calls total £120.00')
+      end
     end
   end
 
-  describe '#title' do
-    it 'translates with total cost' do
-      expect(subject.title).to eq('Letters and phone calls total £120.00')
+  context 'not vat registered' do
+    let(:firm_office) { build(:firm_office, :full) }
+    let(:total_cost_inc_vat) { 0.00 }
+
+    describe '#total_cost' do
+      it 'delegates to the form' do
+        expect(subject.total_cost).to eq(100.00)
+      end
+    end
+
+    describe '#total_cost_inc_vat' do
+      it 'delegates to the form' do
+        expect(subject.total_cost_inc_vat).to eq(0)
+      end
+    end
+
+    describe '#title' do
+      it 'translates with total cost' do
+        expect(subject.title).to eq('Letters and phone calls total £100.00')
+      end
     end
   end
+
 end
