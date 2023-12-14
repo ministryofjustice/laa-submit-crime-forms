@@ -89,21 +89,12 @@ module CheckAnswers
       translate_table_key(section, 'uplift_value', value: uplift)
     end
 
-    def currency_value(value)
-      NumberTo.pounds(value || 0)
-    end
-
     def total_cost
       format_total(letters_calls_form.total_cost)
     end
 
     def total_cost_inc_vat
       format_total(letters_calls_form.total_cost_inc_vat)
-    end
-
-    def format_total(value)
-      text = "<strong>#{currency_value(value)}</strong>"
-      ApplicationController.helpers.sanitize(text, tags: %w[strong])
     end
 
     def letters

@@ -68,7 +68,7 @@ module Steps
     end
 
     def calculate_vat
-      return 0 unless total_cost
+      return 0 unless total_cost && application.firm_office.vat_registered == YesNoAnswer::YES.to_s
 
       (total_cost * pricing.vat) + total_cost
     end

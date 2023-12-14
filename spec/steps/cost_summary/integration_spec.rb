@@ -52,7 +52,7 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
         'Custom', '£40.00',
         'Car', '£67.50',
         'Total', '£227.50',
-        'Total (including VAT)', '£259.00'
+        'Total (including any VAT)', '£259.00'
       ]
     )
   end

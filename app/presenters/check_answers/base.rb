@@ -59,5 +59,13 @@ module CheckAnswers
           }
         end)].compact
     end
+
+    def format_total(value)
+      tag.strong(currency_value(value))
+    end
+
+    def currency_value(value)
+      NumberTo.pounds(value || 0)
+    end
   end
 end

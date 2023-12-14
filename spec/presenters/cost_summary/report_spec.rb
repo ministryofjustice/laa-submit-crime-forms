@@ -10,15 +10,15 @@ RSpec.describe CostSummary::Report do
   let(:id) { SecureRandom.uuid }
   let(:letters_calls) do
     instance_double(CostSummary::LettersCalls, title: l_title, rows: l_rows, total_cost: l_total_cost,
-total_cost_inc_vat: l_total_cost_inc_vat)
+total_cost_inc_vat: l_total_cost_inc_vat, footer_vat_row: l_footer_row)
   end
   let(:work_items) do
     instance_double(CostSummary::WorkItems, title: wi_title, rows: wi_rows, total_cost: wi_total_cost,
-total_cost_inc_vat: wi_total_cost_inc_vat)
+total_cost_inc_vat: wi_total_cost_inc_vat, footer_vat_row: wi_footer_row)
   end
   let(:disbursements) do
     instance_double(CostSummary::Disbursements, title: d_title, rows: d_rows, total_cost: d_total_cost,
-total_cost_inc_vat: d_total_cost_inc_vat)
+total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
   end
   let(:l_title) { 'Letters and Calls Total £100.00' }
   let(:l_rows) { [double(:row_data)] }
@@ -32,6 +32,30 @@ total_cost_inc_vat: d_total_cost_inc_vat)
   let(:d_rows) { [double(:row_data)] }
   let(:d_total_cost) { 55.00 }
   let(:d_total_cost_inc_vat) { 65.00 }
+  let(:l_footer_row) do
+    [
+      {
+        key: { text: 'Total (including VAT)', classes: 'govuk-summary-list__value-width-50' },
+        value: { text: NumberTo.pounds(l_total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
+      }
+    ]
+  end
+  let(:wi_footer_row) do
+    [
+      {
+        key: { text: 'Total (including VAT)', classes: 'govuk-summary-list__value-width-50' },
+        value: { text: NumberTo.pounds(wi_total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
+      }
+    ]
+  end
+  let(:d_footer_row) do
+    [
+      {
+        key: { text: 'Total (including any VAT)', classes: 'govuk-summary-list__value-width-50' },
+        value: { text: NumberTo.pounds(d_total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
+      }
+    ]
+  end
 
   before do
     allow(CostSummary::WorkItems).to receive(:new).and_return(work_items)
@@ -114,7 +138,7 @@ total_cost_inc_vat: d_total_cost_inc_vat)
                 value: { classes: 'govuk-summary-list__value-bold', text: '£55.00' }
               },
               {
-                key: { classes: 'govuk-summary-list__value-width-50', text: 'Total (including VAT)' },
+                key: { classes: 'govuk-summary-list__value-width-50', text: 'Total (including any VAT)' },
                 value: { classes: 'govuk-summary-list__value-bold', text: '£65.00' }
               }
             ]

@@ -12,7 +12,7 @@
         <%= govuk_details(summary_text: t('.payment_claim')) do %>
           <%=
             head = [t('.total'), t('.total_inc_vat')]
-            rows = [[@report.total_cost, @report.total_cost_inc_vat]]
+            rows = [[@report.total_cost, @vat_registered ? @report.total_cost_inc_vat : @report.total_cost]]
             govuk_table(head:, rows:)
           %>
         <% end %>
