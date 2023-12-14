@@ -84,5 +84,4 @@ RSpec.describe CostSummary::LettersCalls do
       end
     end
   end
-
 end

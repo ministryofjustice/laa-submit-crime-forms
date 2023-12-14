@@ -60,18 +60,18 @@ module CostSummary
           value: { text: NumberTo.pounds(data.total_cost), classes: 'govuk-summary-list__value-bold' },
           classes: 'govuk-summary-list__row-double-border'
         }
-      ] + footer_vat_row(data)
+      ] + data.footer_vat_row
     end
 
-    def footer_vat_row(data)
-      return [] if data.total_cost_inc_vat.zero?
-
-      [
-        {
-          key: { text: translate('.footer.total_inc_vat'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: NumberTo.pounds(data.total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
-        }
-      ]
-    end
+    # def footer_vat_row(data)
+    #   return [] if data.total_cost_inc_vat.zero?
+    #
+    #   [
+    #     {
+    #       key: { text: translate('.footer.total_inc_vat'), classes: 'govuk-summary-list__value-width-50' },
+    #       value: { text: NumberTo.pounds(data.total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
+    #     }
+    #   ]
+    # end
   end
 end

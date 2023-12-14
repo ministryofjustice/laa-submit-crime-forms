@@ -21,6 +21,17 @@ module CostSummary
       ]
     end
 
+    def footer_vat_row
+      return [] if total_cost_inc_vat.zero?
+
+      [
+        {
+          key: { text: translate('.footer.total_inc_vat'), classes: 'govuk-summary-list__value-width-50' },
+          value: { text: NumberTo.pounds(total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
+        }
+      ]
+    end
+
     def total_cost
       letters_calls_form.total_cost || 0
     end
