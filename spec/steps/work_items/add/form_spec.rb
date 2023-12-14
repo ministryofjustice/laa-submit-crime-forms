@@ -192,7 +192,7 @@ RSpec.describe Steps::WorkItemForm do
     end
 
     context 'when apply uplift is no' do
-      let(:apply_uplift) { 'false' }
+      let(:apply_uplift) { false }
 
       it 'is equal to hours and minutes * the price for the work type' do
         expect(subject.total_cost).to be_within(0.0001).of(61.0 * price / 60)
@@ -335,13 +335,12 @@ RSpec.describe Steps::WorkItemForm do
       let(:time_spent) { { 1 => '1', 2 => '30' } }
 
       context 'when uplift is not required' do
-        let(:apply_uplift) { 'false' }
+        let(:reasons_for_claim) { [ReasonForClaim::REPRESENTATION_ORDER_WITHDRAWN.to_s] }
 
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
-            [['Before uplift', 'After uplift'],
-             [{ html_attributes: { id: 'without-uplift' }, text: '£53.52' },
-              { html_attributes: { id: 'with-uplift' }, text: '£53.52' }]]
+            [['Total'],
+             [{ html_attributes: { id: 'without-uplift' }, text: '£53.52' }]]
           )
         end
       end
@@ -358,7 +357,7 @@ RSpec.describe Steps::WorkItemForm do
         end
       end
 
-      context 'when uplift is required and values are not set' do
+      context 'when uplift is required and values are set' do
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
             [['Before uplift', 'After uplift'],

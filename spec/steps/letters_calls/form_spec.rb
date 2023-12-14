@@ -337,18 +337,15 @@ RSpec.describe Steps::LettersCallsForm do
       let(:calls_uplift) { 20 }
 
       context 'when uplift is not required' do
-        let(:apply_letters_uplift) { 'false' }
-        let(:apply_calls_uplift) { 'false' }
+        let(:reasons_for_claim) { [ReasonForClaim::REPRESENTATION_ORDER_WITHDRAWN.to_s] }
 
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
-            [['Items', 'Before uplift', 'After uplift'],
+            [['Items', 'Total'],
              ['Letters',
-              { html_attributes: { id: 'letters-without-uplift' }, text: '£8.18' },
-              { html_attributes: { id: 'letters-with-uplift' }, text: '£8.18' }],
+              { html_attributes: { id: 'letters-without-uplift' }, text: '£8.18' }, nil],
              ['Phone calls',
-              { html_attributes: { id: 'calls-without-uplift' }, text: '£4.09' },
-              { html_attributes: { id: 'calls-with-uplift' }, text: '£4.09' }]]
+              { html_attributes: { id: 'calls-without-uplift' }, text: '£4.09' }, nil]]
           )
         end
       end
@@ -370,7 +367,7 @@ RSpec.describe Steps::LettersCallsForm do
         end
       end
 
-      context 'when uplift is required and values are not set' do
+      context 'when uplift is required and values are set' do
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
             [['Items', 'Before uplift', 'After uplift'],

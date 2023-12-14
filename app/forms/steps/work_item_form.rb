@@ -47,19 +47,35 @@ module Steps
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def calculation_rows
-      [
-        [translate(:before_uplift), translate(:after_uplift)],
-        [{
-          text: NumberTo.pounds(total_without_uplift),
-          html_attributes: { id: 'without-uplift' }
-        },
-         {
-           text: NumberTo.pounds(total_cost),
-           html_attributes: { id: 'with-uplift' },
-         }],
-      ]
+      if allow_uplift?
+        [
+          [translate(:before_uplift), translate(:after_uplift)],
+          [
+            {
+              text: NumberTo.pounds(total_without_uplift),
+              html_attributes: { id: 'without-uplift' }
+            },
+            {
+              text: NumberTo.pounds(total_cost),
+              html_attributes: { id: 'with-uplift' },
+            }
+          ]
+        ]
+      else
+        [
+          [translate(:total)],
+          [
+            {
+              text: NumberTo.pounds(total_without_uplift),
+              html_attributes: { id: 'without-uplift' }
+            }
+          ]
+        ]
+      end
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 

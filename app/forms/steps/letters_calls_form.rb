@@ -38,11 +38,7 @@ module Steps
     end
 
     def calculation_rows
-      [
-        [translate(:items), translate(:before_uplift), translate(:after_uplift)],
-        letters_row,
-        calls_row,
-      ]
+      [header_row, letters_row, calls_row]
     end
 
     def letters_after_uplift
@@ -79,6 +75,16 @@ module Steps
 
     private
 
+    def header_row
+      if allow_uplift?
+        [translate(:items), translate(:before_uplift),
+         translate(:after_uplift)]
+      else
+        [translate(:items), translate(:total)]
+      end
+    end
+
+    # rubocop:disable Metricts/MethodLength
     def letters_row
       [
         translate(:letters),
@@ -86,10 +92,14 @@ module Steps
           text: NumberTo.pounds(letters_before_uplift),
           html_attributes: { id: 'letters-without-uplift' }
         },
-        {
-          text: NumberTo.pounds(letters_after_uplift),
-          html_attributes: { id: 'letters-with-uplift' },
-        }
+        (
+          if allow_uplift?
+            {
+              text: NumberTo.pounds(letters_after_uplift),
+              html_attributes: { id: 'letters-with-uplift' },
+            }
+          end
+        )
       ]
     end
 
@@ -100,12 +110,17 @@ module Steps
           text: NumberTo.pounds(calls_before_uplift),
           html_attributes: { id: 'calls-without-uplift' }
         },
-        {
-          text: NumberTo.pounds(calls_after_uplift),
-          html_attributes: { id: 'calls-with-uplift' },
-        }
+        (
+          if allow_uplift?
+            {
+              text: NumberTo.pounds(calls_after_uplift),
+              html_attributes: { id: 'calls-with-uplift' },
+            }
+          end
+        )
       ]
     end
+    # rubocop:enable Metricts/MethodLength
 
     def translate(key)
       I18n.t("steps.letters_calls.edit.#{key}")
