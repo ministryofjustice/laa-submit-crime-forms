@@ -29,6 +29,11 @@ tmp/*
 /node_modules
 /yarn-error.log
 
+yarn-debug.log*
+.yarn-integrity
+package-lock.json
+Brewfile.lock.json
+
 /public/assets
 .byebug_history
 
