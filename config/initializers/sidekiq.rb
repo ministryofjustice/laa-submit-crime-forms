@@ -30,6 +30,7 @@ end
 module Dashboard; end
 
 Sidekiq.configure_client do |config|
+  config.logger.level = Logger::WARN if Rails.env.test?
   config.redis = { url: redis_url } if redis_url
 end
 
