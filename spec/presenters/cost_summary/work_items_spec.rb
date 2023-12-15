@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe CostSummary::WorkItems do
   subject { described_class.new(work_items, claim) }
 
-  let(:claim) { instance_double(Claim, assigned_counsel:, in_area:, date:) }
+  let(:claim) { instance_double(Claim, assigned_counsel:, in_area:, date:, firm_office:) }
+  let(:firm_office) { build(:firm_office, :valid) }
   let(:assigned_counsel) { 'no' }
   let(:in_area) { 'yes' }
   let(:date) { Date.new(2008, 11, 22) }
@@ -70,15 +71,45 @@ RSpec.describe CostSummary::WorkItems do
     end
   end
 
-  describe '#total_cost' do
-    it 'delegates to the form' do
-      expect(subject.total_cost).to eq(210.00)
+  context 'vat registered' do
+    describe '#total_cost' do
+      it 'delegates to the form' do
+        expect(subject.total_cost).to eq(210.00)
+      end
+    end
+
+    describe '#total_cost_inc_vat' do
+      it 'delegates to the form' do
+        expect(subject.total_cost_inc_vat).to eq(252.00)
+      end
+    end
+
+    describe '#title' do
+      it 'translates with total cost' do
+        expect(subject.title).to eq('Work items total £252.00')
+      end
     end
   end
 
-  describe '#title' do
-    it 'translates with total cost' do
-      expect(subject.title).to eq('Work items total £252.00')
+  context 'not vat registered' do
+    let(:firm_office) { build(:firm_office, :full) }
+
+    describe '#total_cost' do
+      it 'delegates to the form' do
+        expect(subject.total_cost).to eq(210.00)
+      end
+    end
+
+    describe '#total_cost_inc_vat' do
+      it 'delegates to the form' do
+        expect(subject.total_cost_inc_vat).to eq(0)
+      end
+    end
+
+    describe '#title' do
+      it 'translates with total cost' do
+        expect(subject.title).to eq('Work items total £210.00')
+      end
     end
   end
 end

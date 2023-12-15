@@ -25,12 +25,12 @@ RSpec.describe CheckAnswers::DisbursementCostsCard do
           },
           {
             head_key: 'total',
-            text: '£90.00',
+            text: '<strong>£90.00</strong>',
             footer: true
           },
           {
             head_key: 'total_inc_vat',
-            text: '£90.00'
+            text: '<strong>£90.00</strong>'
           }
         ]
       )

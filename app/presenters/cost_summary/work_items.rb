@@ -22,6 +22,17 @@ module CostSummary
       end
     end
 
+    def footer_vat_row
+      return [] if total_cost_inc_vat.zero?
+
+      [
+        {
+          key: { text: translate('.footer.total_inc_vat'), classes: 'govuk-summary-list__value-width-50' },
+          value: { text: NumberTo.pounds(total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
+        }
+      ]
+    end
+
     def total_cost
       @total_cost ||= work_item_forms.sum(&:total_cost)
     end
@@ -31,11 +42,13 @@ module CostSummary
     end
 
     def calculate_vat
+      return 0 if @claim.firm_office.vat_registered == YesNoAnswer::NO.to_s
+
       (total_cost * vat_rate) + total_cost
     end
 
     def title
-      translate('work_items', total: NumberTo.pounds(total_cost_inc_vat))
+      translate('work_items', total: NumberTo.pounds(vat_registered ? total_cost_inc_vat : total_cost || 0))
     end
   end
 end
