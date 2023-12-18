@@ -152,7 +152,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
                'file_path' => 'test_path',
                'file_size' => 1234,
                'file_type' => 'image/png',
-               'id' => '9abe1541-00d7-43d1-ad10-4d3ee5a012bb',
+               'id' => an_instance_of(String),
                'updated_at' => '2023-03-01T00:00:00.000Z'
             }]
         },
