@@ -35,7 +35,7 @@ RSpec.describe MultiparamDateValidator do
     let(:attribute_name) { options[:attribute_name] }
 
     before do
-      subject.public_send("#{attribute_name}=", date)
+      subject.public_send(:"#{attribute_name}=", date)
     end
 
     context 'when day is invalid' do

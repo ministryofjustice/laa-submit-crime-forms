@@ -65,7 +65,7 @@ module Steps
     end
 
     def []=(attr_name, value)
-      public_send("#{attr_name}=", value)
+      public_send(:"#{attr_name}=", value)
     end
 
     private

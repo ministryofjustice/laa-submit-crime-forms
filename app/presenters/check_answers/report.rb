@@ -20,7 +20,7 @@ module CheckAnswers
 
     def section_groups
       GROUPS.map do |group_name|
-        section_group(group_name, public_send("#{group_name}_section"))
+        section_group(group_name, public_send(:"#{group_name}_section"))
       end
     end
 
