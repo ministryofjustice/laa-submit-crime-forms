@@ -11,7 +11,7 @@ PATH
     laa_multi_step_forms (0.1.0)
       devise (~> 4.8)
       govuk-components
-      govuk_design_system_formbuilder (>= 4.0, < 4.2)
+      govuk_design_system_formbuilder (>= 4.0, < 5.1)
       hmcts_common_platform
       omniauth-rails_csrf_protection (~> 1.0.1)
       omniauth-saml (~> 2.1.0)
@@ -197,7 +197,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (~> 6.0)
       view_component (>= 3.3, < 3.6)
-    govuk_design_system_formbuilder (4.1.1)
+    govuk_design_system_formbuilder (5.0.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
