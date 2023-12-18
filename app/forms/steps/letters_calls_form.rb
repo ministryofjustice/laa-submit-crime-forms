@@ -84,7 +84,7 @@ module Steps
       end
     end
 
-    # rubocop:disable Metricts/MethodLength
+    # rubocop:disable Metrics/MethodLength
     def letters_row
       [
         translate(:letters),
@@ -120,7 +120,7 @@ module Steps
         )
       ]
     end
-    # rubocop:enable Metricts/MethodLength
+    # rubocop:enable Metrics/MethodLength
 
     def translate(key)
       I18n.t("steps.letters_calls.edit.#{key}")
