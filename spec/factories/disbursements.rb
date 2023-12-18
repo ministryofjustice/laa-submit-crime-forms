@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :disbursement do
-    id { SecureRandom.uuid }
-
     # using age as a shorthane  to set the disbursement date
     transient do
       age { 1 }

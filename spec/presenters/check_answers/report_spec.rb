@@ -7,7 +7,7 @@ RSpec.describe CheckAnswers::Report do
     context 'not in a complete state' do
       subject { described_class.new(claim) }
 
-      let(:claim) { build(:claim, :complete) }
+      let(:claim) { build_stubbed(:claim, :complete) }
 
       context 'section groups' do
         it 'returns multiple groups' do

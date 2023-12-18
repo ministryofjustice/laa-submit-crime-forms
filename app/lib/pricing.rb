@@ -37,7 +37,7 @@ class Pricing
 
   def initialize(data = {})
     FIELDS.each do |field|
-      instance_variable_set("@#{field}", data.fetch(field, nil)&.to_f)
+      instance_variable_set(:"@#{field}", data.fetch(field, nil)&.to_f)
     end
     @name = data.fetch('name', nil)
   end
@@ -45,6 +45,6 @@ class Pricing
   def [](key)
     return unless FIELDS.include?(key.to_s)
 
-    instance_variable_get("@#{key}")
+    instance_variable_get(:"@#{key}")
   end
 end

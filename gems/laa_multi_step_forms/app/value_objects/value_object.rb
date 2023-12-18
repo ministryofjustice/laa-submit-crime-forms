@@ -33,7 +33,7 @@ class ValueObject
           )
 
           subclass.values.each do |value|
-            subclass.define_method("#{value}?") { value.eql?(self) }
+            subclass.define_method(:"#{value}?") { value.eql?(self) }
           end
         end
         # :nocov:

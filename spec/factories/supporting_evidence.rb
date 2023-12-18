@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :supporting_evidence do
-    id { '9abe1541-00d7-43d1-ad10-4d3ee5a012bb' }
-    claim_id { SecureRandom.uuid }
     file_name { 'test.png' }
     file_type { 'image/png' }
     file_size { '1234' }
