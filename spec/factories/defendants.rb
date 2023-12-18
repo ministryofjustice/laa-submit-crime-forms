@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :defendant do
-    id { SecureRandom.uuid }
-
     trait :valid do
       full_name { 'bobjim' }
       maat { 'AA1' }

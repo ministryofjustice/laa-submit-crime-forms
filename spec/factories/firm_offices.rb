@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :firm_office do
-    id { SecureRandom.uuid }
-
     trait :valid do
       name { 'Firm A' }
       account_number { '123ABC' }

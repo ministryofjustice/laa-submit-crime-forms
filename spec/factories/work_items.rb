@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :work_item do
-    id { SecureRandom.uuid }
-
     trait :valid do
       work_type { WorkTypes.values.sample.to_s }
       time_spent { 100 }

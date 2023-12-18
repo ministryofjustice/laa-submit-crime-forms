@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :solicitor do
-    id { SecureRandom.uuid }
-
     trait :valid do
       full_name { 'Richard Jenkins' }
       reference_number { '111222' }

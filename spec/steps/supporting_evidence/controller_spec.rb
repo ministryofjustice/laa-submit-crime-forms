@@ -16,7 +16,7 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
     end
 
     context 'when application is found' do
-      let(:current_application) { build(:claim) }
+      let(:current_application) { create(:claim) }
       let(:form) { instance_double(Steps::SupportingEvidenceForm) }
 
       before do
