@@ -2,7 +2,7 @@
   "name": "laa-apply-for-criminal-legal-aid",
   "private": "true",
   "dependencies": {
-    "@ministryofjustice/frontend": "1.8.0",
+    "@ministryofjustice/frontend": "1.8.1",
     "accessible-autocomplete": "^2.0.4",
     "govuk-frontend": "4.7.0",
     "jquery": "^3.7.1",
@@ -13,7 +13,7 @@
     "unit-test": "jest"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.23.3",
+    "@babel/preset-env": "^7.23.6",
     "babel-jest": "^29.6.4",
     "jest": "^29.6.4",
     "jest-environment-jsdom": "^29.6.4"
