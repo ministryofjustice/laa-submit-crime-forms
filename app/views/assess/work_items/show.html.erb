@@ -1,0 +1,52 @@
+<% assess_title t('.page_title') %>
+
+<% content_for(:back_link) do %>
+  <%= link_to t('assess.helpers.back_link'), assess_claim_adjustments_path(claim, anchor: 'work-items-tab'), class: 'govuk-back-link', data: { turbo: 'false' } %>
+<% end %>
+
+<div class="govuk-grid-row" id="work-items-adjustment-container">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+        <%= t('.heading', count: item.adjustments.count) %>
+    </h1>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-l"><%= t('.provider_submission') %></h2>
+
+    <%=
+      rows = [
+        [{ text: t('.date'), width: 'govuk-!-width-one-half' }, format_in_zone(item.completed_on)],
+        [t('.time_spent'), format_period(item.provider_requested_time_spent)],
+        [t('.fee_earner'), item.fee_earner.to_s],
+        [t('.uplift_claimed'), "#{item.provider_requested_uplift}%"],
+        [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]
+      ]
+      govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
+        tab.with_caption(text: item.work_type.to_s, size: 'm')
+      end
+    %>
+
+    <% if item.adjustments.any? %>
+      <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
+
+      <%=
+        work_type_row = if item.attendance?
+                          [[t('.work_type'), item.work_type.to_s]]
+                        else
+                          []
+                        end
+        rows = [
+          [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift}%"],
+          *work_type_row,
+          [t('.time_spent_changed'), format_period(item.time_spent)],
+          [t('.caseworker_allowed'), NumberTo.pounds(item.caseworker_amount)],
+          [t('.explanation'), item.previous_explanation.to_s],
+        ]
+
+        govuk_table(head: '', first_cell_is_header: true, rows:)
+      %>
+    <% end %>
+
+    <%= link_to t('shared.cancel'), assess_claim_adjustments_path(claim, anchor: 'work-items-tab'), class: 'govuk-link', data: { turbo: 'false' } %>
+  </div>
+</div>

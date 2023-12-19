@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_07_171902) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_19_141605) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -40,6 +41,15 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_171902) do
     t.uuid "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "submitted_claim_id", null: false
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["submitted_claim_id"], name: "index_assignments_on_submitted_claim_id", unique: true
+    t.index ["user_id"], name: "index_assignments_on_user_id"
   end
 
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -140,6 +150,23 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_171902) do
     t.index ["claim_id"], name: "index_disbursements_on_claim_id"
   end
 
+  create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "submitted_claim_id", null: false
+    t.integer "claim_version"
+    t.string "event_type"
+    t.uuid "primary_user_id"
+    t.uuid "secondary_user_id"
+    t.string "linked_type"
+    t.string "linked_id"
+    t.jsonb "details", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["linked_type", "linked_id"], name: "index_events_on_linked_type_and_linked_id"
+    t.index ["primary_user_id"], name: "index_events_on_primary_user_id"
+    t.index ["secondary_user_id"], name: "index_events_on_secondary_user_id"
+    t.index ["submitted_claim_id"], name: "index_events_on_submitted_claim_id"
+  end
+
   create_table "firm_offices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "account_number"
@@ -154,11 +181,46 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_171902) do
     t.index ["previous_id"], name: "index_firm_offices_on_previous_id"
   end
 
-  create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "solicitors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "full_name"
+    t.string "reference_number"
+    t.string "contact_full_name"
+    t.string "contact_email"
+    t.uuid "previous_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["previous_id"], name: "index_solicitors_on_previous_id"
+  end
+
+  create_table "submitted_claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "state"
+    t.string "risk"
+    t.integer "current_version"
+    t.date "received_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "json_schema_version"
+    t.jsonb "data"
+    t.datetime "app_store_updated_at"
+    t.string "application_type"
+  end
+
+  create_table "supporting_evidence", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "claim_id", null: false
+    t.string "file_name"
+    t.string "file_type"
+    t.integer "file_size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "file_path"
+    t.index ["claim_id"], name: "index_supporting_evidence_on_claim_id"
+  end
+
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "auth_provider", null: false
-    t.string "uid", null: false
+    t.string "auth_uid", null: false
     t.string "email"
     t.string "description"
     t.string "roles", default: [], null: false, array: true
@@ -171,29 +233,25 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_171902) do
     t.string "last_sign_in_ip"
     t.integer "failed_attempts", default: 0, null: false
     t.datetime "locked_at"
-    t.index ["auth_provider", "uid"], name: "index_providers_on_auth_provider_and_uid", unique: true
+    t.string "first_name"
+    t.string "last_name"
+    t.string "role"
+    t.datetime "last_auth_at"
+    t.datetime "first_auth_at"
+    t.datetime "deactivated_at"
+    t.datetime "invitation_expires_at"
+    t.index ["auth_provider", "auth_uid"], name: "index_users_on_auth_provider_and_auth_uid", unique: true
   end
 
-  create_table "solicitors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "full_name"
-    t.string "reference_number"
-    t.string "contact_full_name"
-    t.string "contact_email"
-    t.uuid "previous_id"
+  create_table "versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "submitted_claim_id"
+    t.integer "version"
+    t.integer "json_schema_version"
+    t.string "state"
+    t.jsonb "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["previous_id"], name: "index_solicitors_on_previous_id"
-  end
-
-  create_table "supporting_evidence", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "claim_id", null: false
-    t.string "file_name"
-    t.string "file_type"
-    t.integer "file_size"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "file_path"
-    t.index ["claim_id"], name: "index_supporting_evidence_on_claim_id"
+    t.index ["submitted_claim_id"], name: "index_versions_on_submitted_claim_id"
   end
 
   create_table "work_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -210,11 +268,16 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_171902) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "assignments", "submitted_claims"
+  add_foreign_key "assignments", "users"
   add_foreign_key "claims", "firm_offices"
-  add_foreign_key "claims", "providers", column: "submitter_id"
   add_foreign_key "claims", "solicitors"
+  add_foreign_key "claims", "users", column: "submitter_id"
   add_foreign_key "defendants", "claims"
   add_foreign_key "disbursements", "claims"
+  add_foreign_key "events", "submitted_claims"
+  add_foreign_key "events", "users", column: "primary_user_id"
+  add_foreign_key "events", "users", column: "secondary_user_id"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
   add_foreign_key "solicitors", "solicitors", column: "previous_id"
   add_foreign_key "supporting_evidence", "claims"

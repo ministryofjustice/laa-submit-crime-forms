@@ -1,0 +1,21 @@
+<% if controller.controller_name != 'landing' %>
+  <div class="moj-primary-navigation">
+    <div class="moj-primary-navigation__container">
+      <div class="moj-primary-navigation__nav">
+          <nav class="moj-primary-navigation" aria-label="Primary navigation">
+            <ul class="moj-primary-navigation__list">
+                <li class="moj-primary-navigation__item">
+                  <%= link_to t('.your_claims'), assess_your_claims_path, class: 'moj-primary-navigation__link', 'aria-current': (controller.controller_name == 'your_claims' ? 'page' : nil) %>
+                </li>
+                <li class="moj-primary-navigation__item">
+                  <%= link_to t('.all_claims'), assess_claims_path, class: 'moj-primary-navigation__link', 'aria-current': (controller.controller_name == 'claims' ? 'page' : nil) %>
+                </li>
+                <li class="moj-primary-navigation__item">
+                  <%= link_to t('.assessed_claims'), assess_assessed_claims_path, class: 'moj-primary-navigation__link', 'aria-current': (controller.controller_name == 'assessed_claims' ? 'page' : nil) %>
+                </li>
+            </ul>
+          </nav>
+      </div>
+    </div>
+  </div>
+<% end %>

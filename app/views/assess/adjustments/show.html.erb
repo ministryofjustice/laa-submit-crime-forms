@@ -1,0 +1,69 @@
+<% content_for(:page_title) do %>
+  &nbsp;
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
+
+    <%= render partial: 'assess/claims/claim_summary', locals: { claim:, claim_summary: } %>
+    <%= render partial: 'assess/claims/claim_nav', locals: { claim: claim, current_page: 'review_and_adjust' } %>
+
+    <div class="govuk-tabs" data-module="govuk-tabs">
+      <h2 class="govuk-heading-l">
+        <%= t('.review_and_adjust') %>
+      </h2>
+
+      <div class="govuk-body-m">
+        <%= t('.core_cost') %>
+        <div class="govuk-heading-l">
+          <%= core_cost_summary.summed_fields.first %>
+        </div>
+      </div>
+
+      <%= govuk_details(summary_text: t('.check_totals')) do %>
+        <%=
+          head = [t('.items'), t('.total_cost'), t('.total_time')]
+          rows = core_cost_summary.table_fields
+          foot = [t('.total'), *core_cost_summary.summed_fields]
+          govuk_table(first_cell_is_header: true, head:, rows:, foot:)
+        %>
+      <% end %>
+
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="govuk-tabs__tab" href="#work-items-tab">
+            <%= t('.work_items') %>
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#letters-and-calls-tab">
+            <%= t('.letters_and_calls') %>
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#disbursements-tab">
+            <%= t('.disbursements') %>
+          </a>
+        </li>
+      </ul>
+
+      <div class="govuk-tabs__panel" id="work-items-tab">
+        <%= turbo_frame_tag 'work_items', src: assess_claim_work_items_path(claim), loading: :lazy do %>
+          Loading
+        <% end %>
+      </div>
+      <div class="govuk-tabs__panel" id="letters-and-calls-tab">
+        <%= turbo_frame_tag 'letters_and_calls', src: assess_claim_letters_and_calls_path(claim), loading: :lazy do %>
+          Loading
+        <% end %>
+      </div>
+      <div class="govuk-tabs__panel" id="disbursements-tab">
+        <%= turbo_frame_tag 'disbursements', src: assess_claim_disbursements_path(claim), loading: :lazy do %>
+          Loading
+        <% end %>
+      </div>
+    </div>
+    <%= render partial: 'assess/shared/claim_button_group', locals: { claim: claim } %>
+  </div>
+</div>

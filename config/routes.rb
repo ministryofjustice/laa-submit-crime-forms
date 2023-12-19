@@ -15,20 +15,29 @@ Rails.application.routes.draw do
 
   root "home#index"
 
-  devise_for :providers,
+  devise_for :users,
              skip: [:all],
              controllers: {
-               omniauth_callbacks: 'providers/omniauth_callbacks'
+               omniauth_callbacks: 'users/omniauth_callbacks'
              }
 
-  devise_scope :provider do
-    get 'login', to: 'laa_multi_step_forms/errors#unauthorized', as: :new_provider_session
+  devise_scope :user do
+    get 'login', to: 'laa_multi_step_forms/errors#unauthorized', as: :new_user_session
 
-    namespace :providers do
+    namespace :users do
       delete 'logout', to: 'sessions#destroy', as: :logout
       get 'logout', to: 'sessions#destroy'
     end
+
+    unauthenticated :user do
+      root 'users/sessions#new', as: :unauthenticated_root
+    end
+
+    authenticated :user do
+      get 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
+    end
   end
+
 
   namespace :about do
     resources :feedback, only: [:index, :create]
@@ -95,6 +104,44 @@ Rails.application.routes.draw do
       show_step :claim_confirmation
       show_step :check_answers
       show_step :view_claim
+    end
+  end
+
+  namespace :assess do
+    root "landing#index"
+
+    resources :landing, only: [:index]
+    resources :claims, only: [:new, :index] do
+      resource :claim_details, only: [:show]
+      resource :adjustments, only: [:show]
+      namespace :letters_and_calls do
+        resource :uplift, only: [:edit, :update], path_names: { edit: '' }
+      end
+      namespace :work_items do
+        resource :uplift, only: [:edit, :update], path_names: { edit: '' }
+      end
+      resources :work_items, only: [:index, :show, :edit, :update]
+      resources :letters_and_calls, only: [:index, :show, :edit, :update], constraints: { id: /(letters|calls)/ }
+      resources :disbursements, only: [:index, :show, :edit, :update]
+      resource :supporting_evidences, only: [:show]
+      resource :history, only: [:show, :create]
+      resource :change_risk, only: [:edit, :update], path_names: { edit: '' }
+      resource :make_decision, only: [:edit, :update], path_names: { edit: '' }
+      resource :send_back, only: [:edit, :update], path_names: { edit: '' }
+      resource :unassignment, only: [:edit, :update], path_names: { edit: '' }
+    end
+
+    get 'claims/:claim', to: redirect('claims/%{claim}/claim_details')
+
+    resources :your_claims, only: [:index]
+    resources :assessed_claims, only: [:index]
+
+    namespace :about do
+      resources :feedback, only: [:index, :create]
+      resources :cookies, only: [:index, :create]
+      get :update_cookies, to: '/assess/about/cookies#update_cookies'
+      get :privacy
+      get :accessibility
     end
   end
 

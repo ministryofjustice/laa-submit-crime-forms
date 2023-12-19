@@ -4,7 +4,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
   let(:claim) { create(:claim, :main_defendant) }
 
   it 'can select a value from the autocomplete' do
-    visit provider_saml_omniauth_callback_path
+    visit user_saml_omniauth_callback_path
 
     visit edit_steps_defendant_summary_path(id: claim)
 
@@ -29,7 +29,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
   end
 
   it 'can enter a value not found in the autocomplete' do
-    visit provider_saml_omniauth_callback_path
+    visit user_saml_omniauth_callback_path
 
     visit edit_steps_defendant_summary_path(id: claim)
 
@@ -50,7 +50,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
     it 'will correctly display values selected from the autocomplete list' do
       claim.update(main_offence: 'Wounding or causing grievous bodily harm with intent')
 
-      visit provider_saml_omniauth_callback_path
+      visit user_saml_omniauth_callback_path
 
       visit edit_steps_case_details_path(id: claim)
 
@@ -61,7 +61,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
     it 'will correctly display custom values' do
       claim.update(main_offence: 'Apples')
 
-      visit provider_saml_omniauth_callback_path
+      visit user_saml_omniauth_callback_path
 
       visit edit_steps_case_details_path(id: claim)
 

@@ -1,0 +1,34 @@
+<% assess_title t('.page_title') %>
+
+<turbo-frame id="letters_and_calls">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-m">
+      <%= t('.heading') %>
+    </h1>
+    <% if claim.editable? && letters_and_calls.uplift? %>
+      <%= govuk_button_link_to(t(".remove_uplift_all"), edit_assess_claim_letters_and_calls_uplift_path(claim), { secondary: true, data: { turbo: 'false' } }) %>
+    <% end %>
+  </div>
+  <div class="govuk-grid-column-full">
+    <%=
+    head = [t('.items'), t('.number'),t('.uplift_requested'), t('.provider_requested'),t('.uplift_allowed'), t('.caseworker_allowed'), t('.action')]
+
+    rows = letters_and_calls.rows.map do |letter_and_call|
+      link = if claim.editable?
+                link_to(t('.change'), edit_assess_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value), data: { turbo: 'false' })
+              else
+                link_to(t('.view'), assess_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value), data: { turbo: 'false' })
+              end
+
+      [
+        *letter_and_call.table_fields,
+        link
+      ]
+    end
+    foot = [t('.total'), *letters_and_calls.summary_row]
+    govuk_table(head:, rows:, foot:)
+    %>
+  </div>
+</div>
+</turbo-frame>

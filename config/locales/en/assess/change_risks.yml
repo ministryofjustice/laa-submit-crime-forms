@@ -1,0 +1,34 @@
+---
+en:
+  assess:
+    change_risks:
+      edit:
+        page_title: Change the risk of the claim
+        heading: Change the risk of the claim
+        current_risk: 'Current risk: %{level} risk'
+        legend: What do you want to change the risk to?
+        save_changes: Change risk
+      update:
+        success: You changed the claim risk to %{level}
+
+  helpers:
+    label:
+      assess_change_risk_form:
+        explanation: Explain your decision
+    hint:
+      assess_change_risk_form:
+        explanation: This information is for LAA only. It will not be shared with the provider.
+
+  activemodel:
+    errors:
+      models:
+        assess/change_risk_form:
+          attributes:
+            risk_level:
+              blank: Select what you want to change the risk to
+              inclusion: Select what you want to change the risk to
+              unchanged: You have not changed the risk, select the risk you want to change to
+            explanation:
+              blank: Explain why you are changing the risk
+
+

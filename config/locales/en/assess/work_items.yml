@@ -1,0 +1,93 @@
+---
+en:
+  assess:
+    work_items:
+      index:
+        work_items: Work items
+        core_cost: Core costs
+        remove_uplift_all: Remove uplifts for all items
+        page_title: "Review criminal legal aid applications"
+        type_of_work: Type of Work
+        uplift_request: Uplift requested
+        requested: Provider requested
+        uplift_allowed: Uplift allowed
+        allowed: Caseworker allowed
+        action: Action
+        change: Change
+        view: View
+        travel_and_waiting: Travel and waiting
+      edit:
+        page_title: "Your claims"
+        heading: "Adjust a work item"
+        provider_submission: Provider submission
+        date: Date
+        time_spent: Time spent
+        fee_earner: Fee earner initials
+        uplift_claimed: Uplift claimed
+        total_claimed: Claim cost
+        laa_adjustments: LAA Adjustments
+        calculate_button_text: Calculate my changes
+        claim_cost_table:
+          title: "Claim cost"
+          header_one: "Provider requested"
+          header_two: "Caseworker allowed"
+          header_three: "Uplift allowed"
+      show:
+        page_title: "Your claims"
+        heading:
+          zero: 'Work item'
+          one: 'Adjusted work item'
+          other: 'Adjusted work item'
+        provider_submission: Provider submission
+        date: Date
+        time_spent: Time spent
+        fee_earner: Fee earner initials
+        uplift_claimed: Uplift claimed
+        total_claimed: Claim cost
+        laa_adjustments: LAA Adjustments
+        uplift_allowed: Uplift allowed
+        work_type: Work type
+        time_spent_changed: Time spent changed
+        caseworker_allowed: Caseworker allowed
+        explanation: Adjustment reason
+      uplifts:
+        update:
+          uplift_removed: All uplifts have been removed
+  helpers:
+    legend:
+      assess_work_item_form:
+        uplift: Remove the uplift for this item
+        time_spent: Change time spent (optional)
+    label:
+      assess_work_item_form:
+        uplift_options:
+          'yes': Yes, remove uplift
+          'no': No, do not remove uplift
+        partial_comment: Explain your decision
+        reject_comment: Explain your decision
+        explanation: Explain your decision
+    hint:
+      assess_work_item_form:
+        time_spent: For example, 1 hour and 30 minutes
+        uplift: You must explain your decision
+        explanation: |
+          For example, why you made adjustments to the work type rate, removed an uplift or changed the time spent.
+          We'll share this explanation with the provider.
+
+  activemodel:
+    errors:
+      models:
+        assess/work_item_form:
+          attributes:
+            base:
+              no_change: The new time cannot be the same as the cost submitted by the provider
+            uplift:
+              inclusion: Select to include uplift or not
+            time_spent:
+              blank_minutes: Enter number of minutes
+              blank_hours: Enter number of hours
+              positive_minutes: Number of minutes must be 0 or more
+              positive_hours: Number of hours must be 0 or more
+              invalid: Something went wrong
+            explanation:
+              blank: Add an explanaion for your decision

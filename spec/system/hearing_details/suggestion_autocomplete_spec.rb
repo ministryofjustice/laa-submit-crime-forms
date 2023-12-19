@@ -4,7 +4,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
   let(:claim) { create(:claim, :case_details) }
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit user_saml_omniauth_callback_path
     click_link 'Accept analytics cookies'
   end
 
@@ -41,7 +41,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
     it 'will correctly display values selected from the autocomplete list' do
       claim.update(court: "Aldershot Magistrates' Court")
 
-      visit provider_saml_omniauth_callback_path
+      visit user_saml_omniauth_callback_path
 
       visit edit_steps_hearing_details_path(id: claim)
 
@@ -52,7 +52,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
     it 'will correctly display custom values' do
       claim.update(court: 'Apples')
 
-      visit provider_saml_omniauth_callback_path
+      visit user_saml_omniauth_callback_path
 
       visit edit_steps_hearing_details_path(id: claim)
 

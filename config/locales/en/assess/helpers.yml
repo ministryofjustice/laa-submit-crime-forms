@@ -1,0 +1,12 @@
+---
+en:
+  assess:
+    helpers:
+      back_link: Back
+      time_period:
+        hours:
+          one: '%{count} Hr '
+          other: '%{count} Hrs '
+        minutes:
+          one: '%{count} Min'
+          other: '%{count} Mins'

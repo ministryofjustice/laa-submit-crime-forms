@@ -1,0 +1,129 @@
+---
+en:
+  assess:
+    letters_and_calls:
+      index:
+        page_title: "Your claims"
+        heading: "Letters and calls"
+        items: "Items"
+        number: "Number"
+        uplift_requested: "Uplift requested"
+        provider_requested: "Provider requested"
+        uplift_allowed: "Uplift allowed"
+        caseworker_allowed: "Caseworker allowed"
+        action: "Action"
+        view_costs: "View core costs"
+        total_cost: "Cost"
+        total: "Total"
+        remove_uplift_all: "Remove uplifts for all items"
+        change: Change
+        view: View
+      edit:
+        page_title: "Your claims"
+        heading: "Adjust %{type} total"
+        provider_submission: "Provider submission"
+        number: "Number of %{type}"
+        rate: Item rate
+        uplift_requested: "Uplift requested"
+        total_claimed: Total claimed
+        laa_adjustments: LAA adjustments
+        calculate_button_text: Calculate my changes
+        claim_cost_table:
+          title: "Claim cost"
+          header_one: "Provider requested"
+          header_two: "Caseworker allowed"
+          header_three: "Uplift allowed"
+        count_label: Change number of %{type}
+      show:
+        page_title: "Your claims"
+        heading:
+          zero: "%{type}"
+          one: "Adjusted %{type} total"
+          other: "Adjusted %{type} total"
+        provider_submission: "Provider submission"
+        number: "Number of %{type}"
+        rate: Item rate
+        uplift_requested: "Uplift requested"
+        total_claimed: Total claimed
+        laa_adjustments: LAA adjustments
+        uplift_allowed: Uplift allowed
+        number_allowed: "Number of %{type}"
+        caseworker_allowed: Caseworker allowed
+        explanation: Adjustment reason
+
+
+        calculate_button_text: Calculate my changes
+        claim_cost_table:
+          title: "Claim cost"
+          header_one: "Provider requested"
+          header_two: "Caseworker allowed"
+          header_three: "Uplift allowed"
+        count_label: Change number of %{type}
+      update:
+        page_title: "Your claims"
+        heading: "Adjust %{type} total"
+      uplifts:
+        update:
+          uplift_removed: All uplifts have been removed
+
+  helpers:
+    legend:
+      assess_letters_calls_form_letters:
+        uplift: Remove the uplift for this item
+      letters_calls_form_calls:
+        uplift: Remove the uplift for this item
+    label:
+      assess_letters_calls_form_letters:
+        uplift_options:
+          'yes': Yes, remove uplift
+          'no': No, do not remove uplift
+        partial_comment: Explain your decision
+        reject_comment: Explain your decision
+        explanation: Explain your decision
+      assess_letters_calls_form_calls:
+        uplift_options:
+          'yes': Yes, remove uplift
+          'no': No, do not remove uplift
+        partial_comment: Explain your decision
+        reject_comment: Explain your decision
+        explanation: Explain your decision
+    hint:
+      assess_letters_calls_form_letters:
+        uplift: You must explain your decision
+        explanation: |
+          For example, why you made adjustments to the number of calls and removed an uplift.
+          We'll share this explanation with the provider.
+      assess_letters_calls_form_calls:
+        uplift: You must explain your decision
+        explanation: |
+          For example, why you made adjustments to the number of calls and removed an uplift.
+            We'll share this explanation with the provider.
+
+  activemodel:
+    errors:
+      models:
+        assess/letters_calls_form:
+          attributes:
+            uplift:
+              inclusion: Select to include uplift or not
+            explanation:
+              blank: Add an explanation for your decision
+        assess/letters_calls_form/letters:
+          attributes:
+            base:
+              no_change: The new number of letters cannot be the same as the number submitted by the provider
+            count:
+              blank: Enter the number of letters you want to change the total to
+              greater_than_or_equal_to: The number of letters must be 0 or more
+              not_a_number: The number of letters must be a number
+              not_an_integer: The number of letters must be a whole number
+        assess/letters_calls_form/calls:
+          attributes:
+            base:
+              no_change: The new number of calls cannot be the same as the number submitted by the provider
+            count:
+              blank: Enter the number of calls you want to change the total to
+              greater_than_or_equal_to: The number of calls must be 0 or more
+              not_a_number: The number of calls must be a number
+              not_an_integer: The number of calls must be a whole number
+

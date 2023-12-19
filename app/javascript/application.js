@@ -5,6 +5,9 @@ import { initAll } from 'govuk-frontend'
 import accessibleAutocomplete from 'accessible-autocomplete'
 import '@hotwired/turbo-rails'
 import $ from 'jquery'
+import "./component/sortable_table"
+import "./component/letters_calls_adjustment"
+import "./component/work_item_adjustment"
 
 initAll()
 

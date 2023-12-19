@@ -21,7 +21,7 @@ class DummyStepController < Steps::BaseStepController
     DummyStepImplementation.current_application
   end
 
-  def authenticate_provider!
+  def authenticate_user!
     true
   end
 

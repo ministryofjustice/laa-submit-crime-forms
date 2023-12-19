@@ -1,6 +1,6 @@
 class ClaimsController < ApplicationController
   def index
-    filtered_claims = Claim.for(current_provider).where.not(ufn: nil).order('updated_at DESC')
+    filtered_claims = Claim.for(current_user).where.not(ufn: nil).order('updated_at DESC')
     @pagy, @claims = pagy(filtered_claims)
   end
 
@@ -15,7 +15,7 @@ class ClaimsController < ApplicationController
   def initialize_application(attributes = {}, &block)
     attributes.merge!(
       office_code: current_office_code,
-      submitter: current_provider,
+      submitter: current_user,
       laa_reference: generate_laa_reference
     )
     Claim.create!(attributes).tap(&block)

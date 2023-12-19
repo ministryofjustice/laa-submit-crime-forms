@@ -1,0 +1,17 @@
+<% assess_title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <p class="govuk-body"> <%= t('.current_risk', level: claim.risk) %></p>
+    <%= form_with model: risk, url: edit_assess_claim_change_risk_path(claim.id), method: :put do |f| %>
+      <%= govuk_error_summary(risk) %>
+      <%= f.govuk_collection_radio_buttons :risk_level, risk.available_risks, :id, :level, legend: { text: t('.legend') } %>
+      <%= f.govuk_text_area :explanation, label: { size: 'm' }, rows: 5 %>
+      <%= f.govuk_submit t('.save_changes') do %>
+        <%= f.hidden_field :id %>
+        <%= link_to t('shared.cancel'), assess_claim_claim_details_path(claim), class: 'govuk-link' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

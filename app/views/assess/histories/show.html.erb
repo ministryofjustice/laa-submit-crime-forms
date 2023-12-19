@@ -1,0 +1,59 @@
+<% content_for(:page_title) do %>
+  &nbsp;
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-padding-right-0">
+
+    <%= render partial: 'assess/claims/claim_summary', locals: { claim:, claim_summary: } %>
+    <%= render partial: 'assess/claims/claim_nav', locals: { claim: claim, current_page: 'history' } %>
+
+    <h2 class="govuk-heading-m">
+      <%= t('.history') %>
+    </h2>
+
+    <%=
+      govuk_table do |table|
+        history_events.each do |event|
+          table.with_head do |head|
+            head.with_row do |row|
+              row.with_cell(text: t('.when'))
+              row.with_cell(text: t('.caseworker'))
+              row.with_cell(text: t('.what'))
+            end
+          end
+          table.with_body do |body|
+            body.with_row do |row|
+              row.with_cell(text: format_in_zone(event.created_at, format: '%A<br>%d %b %Y<br>%I:%M%P').html_safe)
+              row.with_cell(text: event.primary_user&.display_name || '')
+              row.with_cell do
+    %>
+                <p class="govuk-!-font-weight-bold"><%= event.title %></p>
+                <p class="govuk-!-margin-bottom-0"><%= event.body %></p>
+              <% end
+            end
+          end
+        end
+      end %>
+    <%= render "assess/shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
+
+  </div>
+</div>
+
+<% if claim.editable? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-!-padding-right-0">
+      <div class='history-input'>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
+            <%= form_with model: claim_note, url: assess_claim_history_path(claim.id) do |f| %>
+              <%= f.govuk_text_area :note, label: { size: 'm' }, rows: 5 %>
+              <%= f.govuk_submit t('.add-note') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

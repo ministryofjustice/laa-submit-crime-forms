@@ -4,7 +4,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
   let(:claim) { create(:claim, :firm_details) }
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit user_saml_omniauth_callback_path
   end
 
   it 'can add a simple disbursement' do

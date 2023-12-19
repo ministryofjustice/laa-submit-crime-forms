@@ -1,0 +1,31 @@
+# Additional translations at https://github.com/heartcombo/devise/wiki/I18n
+
+en:
+  devise:
+    failure:
+      user:
+        reauthenticate:
+          - For your security, we signed you out
+          - This is because you were signed in for more than 12 hours.
+          - Sign in again to continue using the service.
+        timeout:
+          - For your security, we signed you out
+          - This is because you were inactive for 30 minutes.
+          - Sign in again to continue using the service.
+        unauthenticated:
+          - Sign in to access the service
+        dormant:
+          - You cannot access this service
+          - This is because you have not signed in to the service for more than 90&nbsp;days.
+          - Contact ONBOARDING_EMAIL_LINK to reactivate your account.
+        invitation_expired:
+          - You cannot access this service
+          - Your invitation to access this service has expired.
+          - Contact ONBOARDING_EMAIL_LINK for a new invitation.
+        forbidden:
+          - You cannot access this service
+
+    sessions:
+      user:
+        signed_in: ""
+        signed_out: You have signed out

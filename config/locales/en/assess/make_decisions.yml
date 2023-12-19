@@ -1,0 +1,42 @@
+---
+en:
+  assess:
+    make_decisions:
+      edit:
+        page_title: Make a decision
+        heading: Make a decision
+        submit: Submit decision
+      update:
+        decision:
+          granted: You granted this claim <a class="govuk-link" href="%{url}">%{ref}</a>
+          part_grant: You part granted this claim <a class="govuk-link" href="%{url}">%{ref}</a>
+          rejected: You rejected this claim <a class="govuk-link" href="%{url}">%{ref}</a>
+  helpers:
+    legend:
+      assess_make_decision_form:
+        state: What do you want to do with this claim?
+    label:
+      assess_make_decision_form:
+        state_options:
+          granted: Grant it
+          part_grant: Part grant it
+          rejected: Reject it
+        partial_comment: Explain your decision
+        reject_comment: Explain your decision
+    hint:
+      assess_make_decision_form:
+        partial_comment: We’ll share this information with the provider
+        reject_comment: We’ll share this information with the provider
+
+  activemodel:
+    errors:
+      models:
+        assess/make_decision_form:
+          attributes:
+            state:
+              blank: Select what you want to do with this claim
+              inclusion: Select what you want to do with this claim
+            partial_comment:
+              blank: Add an explanation for your decision
+            reject_comment:
+              blank: Add an explanation for your decision

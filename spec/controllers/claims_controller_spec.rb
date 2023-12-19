@@ -17,12 +17,12 @@ RSpec.describe ClaimsController do
   end
 
   context 'create' do
-    let(:provider) { instance_double(Provider, selected_office_code: 'AAA') }
+    let(:provider) { instance_double(User, selected_office_code: 'AAA', role: 'provider') }
     let(:claim) { instance_double(Claim, id: SecureRandom.uuid) }
 
     before do
       allow(Claim).to receive(:create!).and_return(claim)
-      allow(controller).to receive(:current_provider).and_return(provider)
+      allow(controller).to receive(:current_user).and_return(provider)
     end
 
     it 'create a new Claim application with the users office_code' do

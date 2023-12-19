@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Office::SelectController, type: :controller do
-  let(:provider) { Provider.new }
+  let(:provider) { User.new(role: 'provider', office_codes: ['1A123B']) }
 
   before do
-    allow(controller).to receive(:current_provider).and_return(provider)
+    allow(controller).to receive(:current_user).and_return(provider)
   end
 
   describe '#edit' do

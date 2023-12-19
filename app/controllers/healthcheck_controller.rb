@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class HealthcheckController < ApplicationController
-  skip_before_action :authenticate_provider!
+  skip_before_action :authenticate_user!, :authorize_user!
 
   def ping
     render json: build_args, status: :ok

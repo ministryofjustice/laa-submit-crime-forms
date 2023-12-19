@@ -12,7 +12,7 @@ RSpec.describe Steps::Office::SelectForm do
 
   let(:office_code) { nil }
   let(:provider_record) do
-    instance_double(Provider, office_codes: %w[1A123B 2A555X])
+    instance_double(User, office_codes: %w[1A123B 2A555X])
   end
 
   describe '#choices' do

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :claim do
-    submitter { Provider.find_by(uid: 'test-user') || create(:provider) }
+    submitter { User.find_by(auth_uid: 'test-user') || create(:provider) }
     office_code { '1A123B' }
     laa_reference { 'LAA-n4AohV' }
 

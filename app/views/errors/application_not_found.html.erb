@@ -1,0 +1,11 @@
+<% assess_title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+    <p class="govuk-body-l"><%=t '.body_1' %></p>
+    <p class="govuk-body-l"><%=t '.body_2' %></p>
+    <% url = link_to t('.link_text'), assess_open_crime_applications_path %>
+    <p class="govuk-body-l"><%= sanitize t('.body_3', url:) %></p>
+  </div>
+</div>

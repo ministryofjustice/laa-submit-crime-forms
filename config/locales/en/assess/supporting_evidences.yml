@@ -1,0 +1,21 @@
+---
+en:
+  assess:
+    supporting_evidences:
+      show:
+        page_title: "Supporting evidence"
+        heading: "Supporting evidence"
+      supporting_evidence_table:
+        caption: "Supporting evidence"
+        file_name: "File name"
+        date_received: "Date received"
+      send_by_post:
+        info: "The provider has chosen to post the evidence to:"
+        address: |
+          <p>Legal Aid Agency<br>
+          1 Unity Square<br>
+          Queensbridge Road<br>
+          Nottingham<br>
+          NG2 1AW</p>
+
+

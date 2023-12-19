@@ -11,7 +11,7 @@ module Steps
       application.status = :submitted
       application.update!(attributes)
 
-      NotifyAppStore.new.process(claim: application)
+      SubmitClaim.new.process(claim: application)
     end
   end
 end

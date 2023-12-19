@@ -1,0 +1,9 @@
+<% assess_title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <%= render 'assessed_claims_table', { claims: @claims} %>
+    <%= render "assess/shared/pagination",  { pagy: @pagy, item: t('.table_info_item') } %>
+  </div>
+</div>

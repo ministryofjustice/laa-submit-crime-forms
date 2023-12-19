@@ -1,4 +1,0 @@
-polling_job:
-  cron: "*/10 * * * *"
-  class: "PullUpdates"
-  queue: polling

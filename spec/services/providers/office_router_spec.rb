@@ -5,7 +5,7 @@ RSpec.describe Providers::OfficeRouter do
 
   subject { described_class.call(provider) }
 
-  let(:provider) { Provider.new(office_codes:, selected_office_code:) }
+  let(:provider) { User.new(office_codes:, selected_office_code:) }
   let(:office_codes) { %w[ABC XYZ] }
   let(:selected_office_code) { nil }
 

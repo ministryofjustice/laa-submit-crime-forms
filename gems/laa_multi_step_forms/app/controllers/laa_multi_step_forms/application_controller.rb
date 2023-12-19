@@ -4,6 +4,6 @@ module LaaMultiStepForms
     helper StepsHelper
     include ApplicationHelper
 
-    prepend_before_action :authenticate_provider!
+    prepend_before_action :authenticate_user!
   end
 end

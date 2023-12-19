@@ -1,0 +1,9 @@
+<%= govuk_details(summary_text: t('.link_title')) do %>
+  <%=
+    with_vat_total= NumberTo.pounds(disbursements.flat_map(&:last).sum(&:caseworker_total_cost))
+    without_vat_total= NumberTo.pounds(disbursements.flat_map(&:last).sum(&:total_cost_without_vat))
+    head = [t('.without_vat'), t('.with_vat')]
+    rows = [[without_vat_total, with_vat_total ]]
+    govuk_table( head:, rows:)
+  %>
+<% end %>

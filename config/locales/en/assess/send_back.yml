@@ -1,0 +1,35 @@
+---
+en:
+  assess:
+    send_backs:
+      edit:
+        page_title: Send back to provider
+        heading: Send back %{defendant_name}’s claim
+        submit: Send back to provider
+      update:
+        decision: You send back this claim <a class="govuk-link" href="%{url}">%{ref}</a>
+
+  helpers:
+    legend:
+      assess_send_back_form:
+        state: Why are you sending this claim back?
+    label:
+      assess_send_back_form:
+        comment: Explain your decision
+        state_options:
+          further_info: Further information request
+          provider_requested: Provider request
+    hint:
+      assess_send_back_form:
+        comment: We’ll share this information with the provider
+
+  activemodel:
+    errors:
+      models:
+        assess/send_back_form:
+          attributes:
+            state:
+              blank: Select why you are sending this claim back
+              inclusion: Select why you are sending this claim back
+            comment:
+              blank: Add an explanation for your decision

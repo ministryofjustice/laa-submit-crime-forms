@@ -4,7 +4,7 @@ RSpec.describe 'User can manage defendants', type: :system do
   let(:claim) { create(:claim, claim_type: ClaimType::NON_STANDARD_MAGISTRATE) }
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit user_saml_omniauth_callback_path
   end
 
   it 'can add a defendant' do

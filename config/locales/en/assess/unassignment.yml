@@ -1,0 +1,33 @@
+---
+en:
+  assess:
+    unassignments:
+      edit:
+        page_title:
+          assigned: Are you sure you want to remove this claim from your list?
+          other: Are you sure you want to remove this claim from %{caseworker}'s list?
+        heading:
+          assigned: Are you sure you want to remove this claim from your list?
+          other: Are you sure you want to remove this claim from %{caseworker}'s list?
+        hint: The claim will go into the list of unallocated claims.
+        submit: Yes, remove from list
+      update:
+        unassignment:
+          assigned: <a class="govuk-link" href="%{url}">%{ref}</a> has been removed from your list
+          other: Claim <a class="govuk-link" href="%{url}">%{ref}</a> has been removed from %{caseworker}'s list
+
+  helpers:
+    label:
+      assess_unassignment_form:
+        comment: Explain your decision
+    hint:
+      assess_unassignment_form:
+        comment: This information will be shared internally. This information will not be shared with the provider.
+
+  activemodel:
+    errors:
+      models:
+        assess/unassignment_form:
+          attributes:
+            comment:
+              blank: Add an explanation for your decision

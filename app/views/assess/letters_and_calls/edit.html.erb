@@ -1,0 +1,69 @@
+<% assess_title t('.page_title') %>
+
+<% content_for(:back_link) do %>
+  <%= link_to t('assess.helpers.back_link'), assess_claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'), class: 'govuk-back-link', data: { turbo: 'false' } %>
+<% end %>
+
+<div class="govuk-grid-row" id="letters-and-calls-adjustment-container">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+        <%= t('.heading', type: item.type_name) %>
+    </h1>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <%=
+      rows = [
+        [{ text: t('.number', type: item.type_name), width: 'govuk-!-width-one-half' },item.provider_requested_count.to_s],
+        [t('.rate'), item.pricing.to_s],
+        [t('.uplift_requested'), "#{item.provider_requested_uplift.to_i}%"],
+        [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]
+      ]
+      govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
+        tab.with_caption(text: t('.provider_submission'), size: 'l')
+      end
+    %>
+
+    <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
+    <%= form_with model: form, url: assess_claim_letters_and_call_path(claim.id, item.type.value), method: :put do |f| %>
+      <%= govuk_error_summary(form) %>
+      <% if item.uplift? %>
+        <%= f.govuk_radio_buttons_fieldset(:uplift, legend: { size: 's' }) do %>
+          <%= f.govuk_radio_button :uplift, 'yes' %>
+          <%= f.govuk_radio_button :uplift, 'no' %>
+        <% end %>
+      <% end %>
+      <%= f.govuk_text_field :count, label: { text: t('.count_label', type: item.type_name), size: 's' }, width: 10 %>
+      <%=
+        govuk_button_link_to(
+          t('.calculate_button_text'), '#',
+          secondary: true,
+          id:'calculate_change_button',
+          data: { 'unit-price': item.pricing, 'uplift-amount': item.uplift, page: item.type.value }
+        ) %>
+      <div id='claim-cost-table'>
+        <%= govuk_table do |table| %>
+          <%= table.with_caption(size: 'm', text: t('.claim_cost_table.title')) %>
+          <%= table.with_head do |head| %>
+            <%= head.with_row do |row| %>
+              <%= row.with_cell(text: t('.claim_cost_table.header_one')) %>
+              <%= row.with_cell(text: t('.claim_cost_table.header_two')) %>
+              <%= row.with_cell(text: t('.claim_cost_table.header_three')) %>
+            <% end %>
+          <% end %>
+
+          <%= table.with_body do |body| %>
+            <%= body.with_row do |row| %>
+              <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_amount),html_attributes: { id: 'letters_calls_provider_requested_amount' }) %>
+              <%= row.with_cell(text: '--',html_attributes: { id: 'letters_calls_caseworker_allowed_amount' }) %>
+              <%= row.with_cell(text: "#{item.uplift ? item.uplift : '0' }%",html_attributes: { id: 'letters_calls_uplift_allowed_amount' }) %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+      <%= f.govuk_text_area :explanation, label: { size: 's' }, rows: 5 %>
+      <%= f.govuk_submit t('assess.shared.save_changes') do %>
+        <%= link_to t('assess.shared.cancel'), assess_claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'), class: 'govuk-link', data: { turbo: 'false' } %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

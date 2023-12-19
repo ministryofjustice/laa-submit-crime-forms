@@ -1,0 +1,31 @@
+<% assess_title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl"><%= t '.heading' %></h1>
+    <p class="govuk-body"><%= t '.content_line_1' %></p>
+    <p class="govuk-body"><%= t '.content_line_2' %></p>
+    <p class="govuk-body"><%= t '.content_line_3' %>
+      <%= link_to t('.content_link'), "https://lsconlinesso.legalservices.gov.uk/",
+            class: 'govuk-link',
+            role: 'link',
+            target: '_blank' %>
+    </p>
+  </div>
+  <div class="govuk-grid-column-three-quarters govuk-!-margin-top-9">
+    <% if ENV.fetch('OMNIAUTH_TEST_MODE', 'false').inquiry.true? %>
+      <% (User.assessors.to_a +  [User.new(email: 'not-registered-email@example.com')]).each do |user| %>
+        <%= link_button nil, user_azure_ad_omniauth_callback_path(uid: user.auth_uid, info: { email: user.email}), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+          Login to Warden (<%= user.email %>)
+          <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+          </svg>
+        <% end %>
+      <% end %>
+    <% else %>
+      <br>
+      <%= govuk_start_button(text: 'Start now', href: user_azure_ad_omniauth_authorize_path, as_button: true, html_attributes: { data: { turbo: "false"}}) %>
+    <% end %>
+  </div>
+</div>
+

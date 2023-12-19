@@ -32,3 +32,44 @@ en:
     phase_banner:
       phase: BETA
       phase_description: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us to improve it.
+    assess:
+      header_navigation:
+        menu_button: Menu
+        nav_aria_label: Menu
+        button_aria_label: Show or hide menu
+        manage_users: Manage users
+        sign_in: Sign in
+        sign_out: Sign out
+      primary_navigation:
+        your_claims: Your claims
+        all_claims: All claims
+        assessed_claims: Assessed claims
+      phase_banner:
+        phase: BETA
+        phase_description_html: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us to improve it.
+
+
+  assess:
+    service:
+      name: Assess a non-standard magistrates’ court payment
+
+    shared:
+      save_changes: Save changes
+      cancel: Cancel
+      claim_button_group:
+        make_decision: Make a decision
+        send_back: Send back to provider
+        save_and_come_back: Save and comeback later
+
+  errors:
+    page_title_prefix: "Error: "
+
+    error_summary:
+      heading: There is a problem on this page
+  users:
+      dev_auth:
+        new:
+          page_title: Dev Auth for testing
+
+  calls_to_action:
+    sign_in: Sign in

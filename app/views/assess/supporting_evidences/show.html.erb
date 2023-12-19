@@ -1,0 +1,23 @@
+<% content_for(:page_title) do %>
+  <%= t('.page_title') %>
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <%= render 'assess/claims/claim_summary', { claim:, claim_summary: } %>
+    <%= render 'assess/claims/claim_nav', { claim: claim, current_page: 'supporting_evidences' } %>
+    <h2 class="govuk-heading-m">
+      <%= t('.heading') %>
+    </h2>
+    <% unless @supporting_evidence.empty? %>
+      <%= render 'supporting_evidence_table', { supporting_evidence: @supporting_evidence } %>
+    <% end %>
+    <% if claim_summary.send_by_post %>
+      <%= render 'send_by_post' %>
+    <% end %>
+    <% unless @supporting_evidence.empty? %>
+      <%= render "assess/shared/pagination", { pagy: @pagy, item: t('.heading') } %>
+    <% end %>
+  </div>
+</div>

@@ -40,5 +40,17 @@ module Crm7restbackend
     config.x.analytics.analytics_consent_name = 'analytics_preferences_set'
     config.x.analytics.analytics_consent_expiration = 1.year
 
+    # The maximum time since a users was last authenticated on DOM1 before
+    # they are automatically signed out.
+    config.x.auth.reauthenticate_in = 12.hours
+
+    # The maximum period of inactivity before a user is
+    # automatically signed out.
+    config.x.auth.timeout_in = 30.minutes
+
+    config.exceptions_app = ->(env) {
+      ErrorsController.action(:show).call(env)
+    }
+
   end
 end

@@ -1,0 +1,24 @@
+---
+en:
+  assess:
+    event/assignment:
+      title: Claim allocated to caseworker
+    event/change_risk:
+      title: Claim risk changed to %{risk} risk
+    event/decision:
+      title:
+        granted: Decision made to grant claim
+        part_grant: Decision made to part grant claim
+        rejected: Decision made to reject claim
+    event/new_version:
+      title: New claim received
+    event/note:
+      title: Caseworker note
+    event/send_back:
+      title:
+        further_info: Claim sent back to provider
+        provider_requested: Claim sent back to provider
+    event/unassignment:
+      title:
+        self: Caseworker removed self from claim
+        secondary: Caseworker removed from claim by %{display_name}

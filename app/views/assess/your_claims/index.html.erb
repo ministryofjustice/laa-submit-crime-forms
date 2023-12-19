@@ -1,0 +1,18 @@
+<% assess_title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <% if your_claims.none? %>
+      <h2 class="govuk-body-l"><%= t('.no_claims') %></h2>
+    <% end %>
+    <div class="govuk-button-group">
+      <%= govuk_button_link_to(t('.next_claim'), new_assess_claim_path) %>
+      <%= govuk_link_to(t('.all_claims'), assess_claims_path, { no_visited_state: true }) %>
+    </div>
+    <% if your_claims.any? %>
+      <%= render 'your_claims_table', { your_claims: } %>
+      <%= render "assess/shared/pagination", { pagy: pagy, item: t('.table_info_item')} %>
+    <% end %>
+  </div>
+</div>

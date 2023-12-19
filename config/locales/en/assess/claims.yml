@@ -1,0 +1,54 @@
+---
+en:
+  assess:
+    claims:
+      new:
+        no_pending_claims: There are no claims waiting to be allocated.
+      index:
+        page_title: Assess a non-standard magistrates’ court payment
+        heading: "All claims"
+        table_info_item: "claim"
+        unassigned: Unassigned
+      claims_table:
+        table_heading: "All Claims"
+        laa_reference: "LAA reference"
+        firm_name: "Firm name"
+        defendant_name: "Defendant"
+        date_received: "Date received"
+        caseworker_name: "Caseworker"
+      claim_nav:
+        claim_details: Claim details
+        review_and_adjust: Adjustments
+        supporting_evidence: Supporting evidence
+        claim_history: Claim history
+      claim_summary:
+        status_list:
+          granted: "Granted"
+          part_grant: "Part granted"
+          rejected: "Rejected"
+          further_info: Further information requested
+          provider_requested: Provider requested
+        risk:
+          high: High risk
+          medium: Medium risk
+          low: Low risk
+          change: Change risk
+        assigned_to: "Assigned to:"
+        date_received: "Date received:"
+        date_assessed: Date accessed
+        remove_from_list: Remove from list
+        remove_from_yourlist: Remove from your list
+      review_and_adjust_nav:
+        page_title: Assess a non-standard magistrates’ court payment
+        review_and_adjust: Adjustments
+        work_items: Work items
+        letters_and_calls: Letters and calls
+        disbursements: Disbursements
+    adjustments:
+      show:
+        check_totals: View core costs
+        items: Items
+        total_time: Time total
+        total_cost: Cost total
+        total: Total
+        review_and_adjust: Adjustments

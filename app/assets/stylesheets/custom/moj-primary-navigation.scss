@@ -1,0 +1,12 @@
+/* override due to nesting govuk-width-container result in no visible margin */
+@media (min-width: 1020px) {
+  .moj-primary-navigation__container {
+    margin: 0 10px;
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .moj-primary-navigation__container {
+    margin: 0 10px;
+  }
+}

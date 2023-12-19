@@ -19,7 +19,7 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
   end
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit user_saml_omniauth_callback_path
   end
 
   it 'can do green path' do

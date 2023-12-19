@@ -1,0 +1,21 @@
+<% assess_title t(".page_title.#{unassignment.unassignment_user}", caseworker: unassignment.user.display_name) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t(".heading.#{unassignment.unassignment_user}", caseworker: unassignment.user.display_name) %></h1>
+    <p class="govuk-body-m"><%= t('.hint') %></p>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: unassignment, url: assess_claim_unassignment_path(claim_id: claim.id), method: :put do |f| %>
+      <%= govuk_error_summary(unassignment) %>
+      <%= f.govuk_text_area :comment, width: 'one-third', autocomplete: 'off', label: { size: 'm' } %>
+
+      <%= f.govuk_submit(t('.submit')) do %>
+        <%= f.hidden_field :id %>
+        <%= link_to 'Cancel', assess_claim_claim_details_path(claim), class: 'govuk-button__secondary' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

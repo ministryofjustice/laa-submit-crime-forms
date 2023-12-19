@@ -1,0 +1,13 @@
+<% if @analytics_cookies_accepted %>
+  <%= javascript_include_tag "https://www.googletagmanager.com/gtag/js?id=#{@analytics_cookies_accepted ?
+                                                                              ENV.fetch('ANALYTICS_TRACKING_ID', nil)
+                                                                              : nil}", async: true, nonce: true %>
+
+  <%= javascript_tag nonce: true do %>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', <%== @analytics_cookies_accepted ? ENV.fetch('ANALYTICS_TRACKING_ID', nil).to_json : nil %>,
+    { 'anonymize_ip': true, 'allow_google_signals': false });
+  <% end %>
+<% end %>

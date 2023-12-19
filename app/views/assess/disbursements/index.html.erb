@@ -1,0 +1,34 @@
+<% assess_title t('.page_title') %>
+
+<turbo-frame id="disbursements">
+  <h3 class="govuk-heading-m">
+    <%= t('.disbursements') %>
+  </h3>
+
+  <div class="govuk-body-m">
+    <%= t('.disbursement_total') %>
+    <div class="govuk-heading-l">
+      <%= NumberTo.pounds(disbursements.flat_map(&:last).sum(&:caseworker_total_cost)) %>
+    </div>
+    <%= render "disbursements_total",  { disbursements: disbursements } %>
+  </div>
+
+  <% disbursements.each do |disbursement_date, disbursements_for_date| %>
+    <%=
+      head = [t('.disbursement'), t('.requested'),t('.vat_applied'), t('.adjusted'), t('.action')]
+      rows = disbursements_for_date.map do |disbursement|
+        link = if claim.editable?
+                link_to(t('.change'), edit_assess_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })
+              else
+                link_to(t('.view'), assess_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })
+              end
+
+        [
+          *disbursement.table_fields,
+          link
+        ]
+      end
+      govuk_table(caption: disbursement_date.strftime('%-d %B %Y'), head:, rows:)
+    %>
+  <% end %>
+</turbo-frame>

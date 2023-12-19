@@ -1,0 +1,7 @@
+<% if claim.editable? %>
+  <div class="govuk-button-group">
+    <%= govuk_button_link_to( t('.make_decision'), edit_assess_claim_make_decision_path(claim), { primary: true, data: { turbo: "false"}}) %>
+    <%= govuk_button_link_to(t('.send_back'), edit_assess_claim_send_back_path(claim), { warning: true }) %>
+    <%= govuk_button_link_to(t('.save_and_come_back'), assess_your_claims_path, { secondary: true }) %>
+  </div>
+<% end %>

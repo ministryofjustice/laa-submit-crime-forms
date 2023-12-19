@@ -1,0 +1,48 @@
+---
+en:
+  assess:
+    work_items:
+      uplifts:
+        edit:
+          page_title: "Your claims"
+          heading: "Are you sure you want to remove all uplifts?"
+          warning: You can reinstate these individually if you change your mind
+          remove_uplift: Yes, remove all uplifts
+        update:
+          page_title: "Your claims"
+          heading: "Are you sure you want to remove all uplifts?"
+    letters_and_calls:
+      uplifts:
+        edit:
+          page_title: "Your claims"
+          heading: "Are you sure you want to remove all uplifts?"
+          warning: You can reinstate these individually if you change your mind
+          remove_uplift: Yes, remove all uplifts
+        update:
+          page_title: "Your claims"
+          heading: "Are you sure you want to remove all uplifts?"
+
+  helpers:
+    label:
+      assess_uplift_letters_and_calls_form:
+        explanation: Explain your decision
+      assess_uplift_work_items_form:
+        explanation: Explain your decision
+    hint:
+      assess_uplift_letters_and_calls_form:
+        explanation: This information will be shared with the provider.
+      assess_uplift_work_items_form:
+        explanation: This information will be shared with the provider.
+
+  activemodel:
+    errors:
+      models:
+        assess/uplift/work_items_form:
+          attributes:
+            explanation:
+              blank: Add an explanation for your decision
+        assess/uplift/letters_and_calls_form:
+          attributes:
+            explanation:
+              blank: Add an explanation for your decision
+

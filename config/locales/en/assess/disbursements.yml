@@ -1,0 +1,76 @@
+---
+en:
+  assess:
+    disbursements:
+      index:
+        disbursements: Disbursements
+        disbursement_total: Disbursement total
+        disbursement: Disbursement
+        requested: Provider requested
+        vat_applied: VAT applied
+        adjusted: Caseworker allowed
+        action: Action
+        change: Change
+        view: View
+      disbursements_total:
+        link_title: View disbursement total
+        without_vat: Without VAT
+        with_vat: With VAT
+      edit:
+        page_title: Adjust a disbursement
+        heading: Adjust a disbursement
+        summary_table:
+          caption: Provider submission
+          date: Date
+          type: Disbursement type
+          cost: Disbursement cost
+          details: Details of disbursement
+          prior_authority: Prior authority granted
+          vat: VAT
+          total: Total
+      show:
+        page_title: Adjust a disbursement
+        heading:
+          zero: Disbursement
+          one: Adjusted disbursement
+          other: Adjusted disbursement
+        summary_table:
+          caption: Provider submission
+          date: Date
+          type: Disbursement type
+          cost: Disbursement cost
+          details: Details of disbursement
+          prior_authority: Prior authority granted
+          vat: VAT
+          total: Total
+        refuse: Refuse disbursement
+        explanation: Adjustment reason
+        refuse_status:
+          'true': 'Yes'
+          'false': 'No'
+  helpers:
+    legend:
+      assess_disbursements_form:
+          total_cost_without_vat: Do you want to refuse this disbursement?
+    label:
+      assess_disbursements_form:
+        total_cost_without_vat_options:
+          'yes': 'Yes'
+          'no': 'No'
+        explanation: Explain your decision
+    hint:
+      assess_disbursements_form:
+        explanation: |
+          For example, why you are refusing this disbursement and changing the cost to £0.
+          We'll share this explanation with the provider.
+  activemodel:
+    errors:
+      models:
+        assess/disbursements_form:
+          attributes:
+            base:
+              no_change: There are no changes to save. Select cancel if you do not want to make any changes.
+            total_cost_without_vat:
+              inclusion: Select an option
+            explanation:
+              blank: Add an explanation for your decision

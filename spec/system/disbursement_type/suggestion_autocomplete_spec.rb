@@ -5,7 +5,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
   let(:other_type_field) { 'steps_disbursement_type_form[other_type_suggestion]' }
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit user_saml_omniauth_callback_path
     click_link 'Accept analytics cookies'
   end
 
@@ -53,7 +53,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
     it 'will correctly display values selected from the autocomplete list' do
       disbursement.update(other_type: 'accident_emergency_report')
 
-      visit provider_saml_omniauth_callback_path
+      visit user_saml_omniauth_callback_path
 
       visit edit_steps_disbursement_type_path(id: claim, disbursement_id: disbursement.id)
 
@@ -63,7 +63,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
     it 'will correctly display custom values' do
       disbursement.update(other_type: 'Apples')
 
-      visit provider_saml_omniauth_callback_path
+      visit user_saml_omniauth_callback_path
 
       visit edit_steps_disbursement_type_path(id: claim, disbursement_id: disbursement.id)
 

@@ -10,7 +10,7 @@ RSpec.describe 'User can see an application status', type: :system do
 
   before do
     claim.update(navigation_stack: ["/applications/#{claim.id}/steps/firm_details"])
-    visit provider_saml_omniauth_callback_path
+    visit user_saml_omniauth_callback_path
   end
 
   it 'can do green path' do

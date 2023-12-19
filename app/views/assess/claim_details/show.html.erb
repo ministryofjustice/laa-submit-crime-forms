@@ -1,0 +1,28 @@
+<% content_for(:page_title) do %>
+  &nbsp;
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <%= render partial: 'assess/claims/claim_summary', locals: { claim:, claim_summary: } %>
+    <%= render partial: 'assess/claims/claim_nav', locals: { claim: claim, current_page: 'claim_details' } %>
+
+  <% claim_details.table.each do |section| %>
+    <%= govuk_table do |table|
+          table.with_caption( text: section[:title] )
+
+          table.with_body do |body|
+            section[:data].each do | field |
+              body.with_row do |row|
+                row.with_cell(html_attributes: { class: "govuk-table__header govuk-!-width-one-quarter" }, text: field[:title])
+                row.with_cell(text: field[:value])
+              end
+            end
+          end
+    end %>
+  <% end %>
+    <%= render partial: 'assess/shared/claim_button_group', locals: { claim: claim } %>
+  </div>
+</div>

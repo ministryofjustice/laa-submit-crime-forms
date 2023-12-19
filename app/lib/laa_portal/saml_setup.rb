@@ -48,7 +48,7 @@ module LaaPortal
     private
 
     def sp_single_logout_url
-      "#{@request.base_url}/providers/auth/saml/slo"
+      "#{@request.base_url}/users/auth/saml/slo"
     end
 
     def metadata_url

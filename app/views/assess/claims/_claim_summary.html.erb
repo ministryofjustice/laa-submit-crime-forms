@@ -1,0 +1,53 @@
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <% if claim.display_state?  %>
+        <p class="govuk-!-margin-bottom-2">
+          <%= govuk_tag(text: t(".status_list.#{claim.state}"), colour: accessed_colour(claim.state)) %>
+        </p>
+      <% end %>
+      <p class="govuk-body-l govuk-!-margin-bottom-2">
+        <%= claim_summary.laa_reference %>
+      </p>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+        <%= claim_summary.main_defendant_name %>
+      </h1>
+      <p class="govuk-body-l govuk-!-margin-bottom-2"><%= claim_summary.total %></p>
+      <p class="govuk-body-l">
+        <%= t(".risk.#{claim.risk}") %>
+        <% if claim.editable? %>
+          <%= link_to t('.risk.change'), edit_assess_claim_change_risk_path(claim), class: 'govuk-!-font-size-19 govuk-!-margin-left-2' %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row govuk-!-margin-bottom-6">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body-l govuk-!-margin-bottom-2">
+        <span class="govuk-!-font-weight-bold"><%= t(".assigned_to") %></span>
+        <%= claim_summary.assigned_to&.display_name %>
+      </p>
+      <p class="govuk-body-l govuk-!-margin-bottom-2">
+        <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
+        <%= format_in_zone(claim.received_on, format:'%d %b %Y') %>
+      </p>
+      <% unless claim.editable? %>
+        <p class="govuk-body-l govuk-!-margin-bottom-2">
+          <span class="govuk-!-font-weight-bold"><%= t(".date_assessed") %></span>
+          <%= format_in_zone(claim_summary.assessed_on, format:'%d %b %Y') %>
+        </p>
+      <% end %>
+    </div>
+    <div class="govuk-grid-column-one-thirds govuk-!-padding-top-2">
+      <% if claim.editable? && claim_summary.assigned_to %>
+        <%=
+          govuk_link_to(
+            t(claim_summary.assigned_to.user == current_user ? ".remove_from_yourlist" : ".remove_from_list"),
+            assess_claim_unassignment_path(claim),
+            class: "govuk-button govuk-button--secondary",
+            data_module: "govuk-button"
+          )
+        %>
+      <% end%>
+    </div>
+  </div>

@@ -1,0 +1,29 @@
+<% assess_title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: decision, url: assess_claim_make_decision_path(claim_id: claim.id), method: :put, id: dom_id(decision) do |f| %>
+      <%= govuk_error_summary(decision) %>
+      <%= f.govuk_radio_buttons_fieldset :state, legend: { size: 's' } do %>
+        <%= f.govuk_radio_button :state, Assess::MakeDecisionForm::GRANTED %>
+        <%= f.govuk_radio_button :state, Assess::MakeDecisionForm::PART_GRANT do %>
+          <%= f.govuk_text_area :partial_comment, width: 'one-third', autocomplete: 'off', label: { size: 'm' } %>
+        <% end %>
+        <%= f.govuk_radio_button :state, Assess::MakeDecisionForm::REJECTED do %>
+          <%= f.govuk_text_area :reject_comment, width: 'one-third', autocomplete: 'off', label: { size: 'm' } %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit(t('.submit')) do %>
+        <%= f.hidden_field :id %>
+        <%= link_to 'Cancel', assess_claim_claim_details_path(claim), class: 'govuk-button__secondary' %>
+      <% end %>
+
+    <% end %>
+  </div>
+</div>

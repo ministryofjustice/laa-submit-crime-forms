@@ -4,11 +4,11 @@ RSpec.describe 'Sign in user journey' do
   # Do not leave left overs, as this test will persist
   # a mock provider to the database
   before(:all) do
-    Provider.destroy_all
+    User.destroy_all
   end
 
   after(:all) do
-    Provider.destroy_all
+    User.destroy_all
   end
 
   before do
@@ -47,7 +47,7 @@ RSpec.describe 'Sign in user journey' do
   context 'user is signed in, only has one account' do
     before do
       allow_any_instance_of(
-        Provider
+        User
       ).to receive(:office_codes).and_return(['A1'])
 
       click_button 'Sign in with LAA Portal'

@@ -5,13 +5,13 @@ module Steps
 
       def edit
         @form_object = SelectForm.new(
-          record: current_provider
+          record: current_user
         )
       end
 
       def update
         update_and_advance(
-          SelectForm, record: current_provider, as: :select_office
+          SelectForm, record: current_user, as: :select_office
         )
       end
 

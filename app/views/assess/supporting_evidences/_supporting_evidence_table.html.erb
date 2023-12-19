@@ -1,0 +1,21 @@
+<%= govuk_table do |table|
+      table.with_caption(html_attributes: { class: "govuk-visually-hidden" }, text: t(".caption"))
+
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(text: t('.file_name'))
+          row.with_cell(text: t('.date_received'))
+        end
+      end
+
+      table.with_body do |body|
+        supporting_evidence.each do |item|
+          body.with_row do |row|
+            row.with_cell do
+                    govuk_link_to(item.file_name, item.download_url)
+                  end
+            row.with_cell(text: format_in_zone(item.updated_at, format: '%A<br>%-d %B %Y').html_safe)
+          end
+        end
+      end
+end %>

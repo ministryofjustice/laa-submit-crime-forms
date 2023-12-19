@@ -1,5 +1,5 @@
 class Claim < ApplicationRecord
-  belongs_to :submitter, class_name: 'Provider'
+  belongs_to :submitter, class_name: 'User'
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
   has_many :defendants, -> { order(:position) }, dependent: :destroy, inverse_of: :claim
@@ -10,7 +10,7 @@ class Claim < ApplicationRecord
                            }, dependent: :destroy, inverse_of: :claim
   has_many :supporting_evidence, -> { order(:created_at, :file_name) }, dependent: :destroy, inverse_of: :claim
 
-  scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
+  scope :for, ->(user) { where(office_code: user.selected_office_code) }
 
   enum status: { draft: 'draft', submitted: 'completed', granted: 'granted', part_grant: 'part-granted',
                  review: 'review', further_info: 'further_info', provider_requested: 'provider_requested',

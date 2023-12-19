@@ -1,0 +1,37 @@
+<%=
+  govuk_table(html_attributes: {'data-module': 'moj-sortable-table'}) do |table|
+    table.with_caption(html_attributes: { class: "govuk-visually-hidden" }, text: t(".table_heading"))
+
+    table.with_head do |head|
+      head.with_row do |row|
+        row.with_cell(text: t('.laa_reference'))
+        row.with_cell(text: t('.firm_name'))
+        row.with_cell(text: t('.defendant_name'))
+        row.with_cell(html_attributes: { 'aria-sort': 'ascending' }, text: t('.date_received'))
+        row.with_cell(html_attributes: { 'aria-sort': 'ascending' }, text: t('.risk.heading'))
+        row.with_cell(html_attributes: { 'aria-sort': 'ascending' }, text: t('.status.heading'))
+      end
+    end
+
+    table.with_body do |body|
+      your_claims.each do |your_claim|
+        body.with_row do |row|
+          row.with_cell do
+            govuk_link_to(your_claim.laa_reference, assess_claim_claim_details_path(your_claim.claim.id))
+          end
+          row.with_cell(text: your_claim.firm_name)
+          row.with_cell(text: your_claim.main_defendant_name)
+          row.with_cell(text: your_claim.date_created_str, html_attributes: { 'data-sort-value': your_claim.date_created_sort })
+          row.with_cell(text: t(".risk.#{your_claim.risk}"), html_attributes: { 'data-sort-value': your_claim.risk_sort })
+          row.with_cell do
+            if your_claim.claim.display_state?
+              govuk_tag(text: t(".status.#{your_claim.claim.state}"), html_attributes: { class: 'govuk-pre-line', }, colour: 'yellow')
+            else
+              ''
+            end
+          end
+        end
+      end
+    end
+  end
+%>

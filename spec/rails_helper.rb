@@ -31,6 +31,7 @@ RSpec.configure do |config|
   config.include(ActiveSupport::Testing::TimeHelpers)
   config.include(Devise::Test::ControllerHelpers, type: :controller)
   config.include(AuthenticationHelpers, type: :controller)
+  config.include Devise::Test::IntegrationHelpers, type: :system
   config.include RSpecHtmlMatchers
   config.include FactoryBot::Syntax::Methods
 
