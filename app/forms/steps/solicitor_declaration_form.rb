@@ -20,6 +20,7 @@ module Steps
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def cost_totals(application)
       [
         {
@@ -39,5 +40,6 @@ module Steps
         }
       ]
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end
