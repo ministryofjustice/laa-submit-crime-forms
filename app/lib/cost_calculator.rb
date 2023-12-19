@@ -14,7 +14,7 @@ module CostCalculator
       vat_rate = pricing.vat
       total_without_vat = get_work_total(WorkItem.where(claim_id: object[:id], work_type: %w[travel waiting]), pricing)
       total = vat ? total_without_vat * (1 + vat_rate) : total_without_vat
-      (total).round(2)
+      total.round(2)
     end
 
     def get_work_total(items, pricing)
