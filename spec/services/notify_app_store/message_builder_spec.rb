@@ -130,6 +130,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'ufn' => '123456/001',
           'unassigned_counsel' => 'no',
           'updated_at' => '2023-08-17T12:13:14.000Z',
+          'vat_rate' => 0.2,
           'work_after' => nil,
           'work_after_date' => nil,
           'work_before' => nil,
