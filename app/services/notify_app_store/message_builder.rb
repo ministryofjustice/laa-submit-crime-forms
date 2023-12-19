@@ -34,8 +34,15 @@ class NotifyAppStore
         'solicitor' => claim.solicitor.attributes.slice!('id', *DEFAULT_IGNORE),
         'submitter' => claim.submitter.attributes.slice('email', 'description'),
         'supporting_evidences' => supporting_evidence,
+        'costs' => costs_data,
         'vat_rate' => pricing[:vat],
       )
+    end
+
+    def costs_data
+      claim.costs.map do |cost|
+        cost.as_json.slice!(*DEFAULT_IGNORE)
+      end
     end
 
     def disbursement_data
