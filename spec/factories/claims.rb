@@ -142,6 +142,10 @@ FactoryBot.define do
       work_items { [build(:work_item, :medium_risk_values)] }
     end
 
+    trait :travel_and_waiting do
+      work_items { [build(:work_item, :travel), build(:work_item, :waiting)] }
+    end
+
     trait :one_disbursement do
       disbursements { [build(:disbursement, :valid)] }
     end
