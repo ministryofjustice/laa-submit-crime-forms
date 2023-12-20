@@ -32,7 +32,7 @@ module CostCalculator
       if vat == true
         disbursments.sum { |i| (i.total_cost_without_vat * (1 + pricing.vat)).floor(2) }.round(2)
       else
-        disbursments.sum { |i| i.total_cost_without_vat }.round(2)
+        disbursments.sum(&:total_cost_without_vat).round(2)
       end
     end
 
