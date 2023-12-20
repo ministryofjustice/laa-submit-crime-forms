@@ -8,10 +8,12 @@ module Steps
     private
 
     def persist!
-      application.status = :submitted
-      build_costs
-      application.update!(attributes)
-      NotifyAppStore.new.process(claim: application)
+      Claim.transaction do
+        application.status = :submitted
+        build_costs
+        application.update!(attributes)
+        NotifyAppStore.new.process(claim: application)
+      end
     end
 
     def build_costs
@@ -35,8 +37,8 @@ module Steps
         },
         {
           'cost_type' => 'disbursements',
-          'amount_with_vat' => 0,
-          'amount' => 0
+          'amount_with_vat' => CostCalculator.cost(:disbursement_total, application, true),
+          'amount' => CostCalculator.cost(:disbursement_total, application, false)
         }
       ]
     end
