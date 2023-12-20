@@ -16,6 +16,7 @@ FactoryBot.define do
       one_disbursement
       with_evidence
       with_equality
+      one_cost
     end
 
     trait :case_type_magistrates do
@@ -141,6 +142,10 @@ FactoryBot.define do
       work_items { [build(:work_item, :medium_risk_values)] }
     end
 
+    trait :travel_and_waiting do
+      work_items { [build(:work_item, :travel), build(:work_item, :waiting)] }
+    end
+
     trait :one_disbursement do
       disbursements { [build(:disbursement, :valid)] }
     end
@@ -151,6 +156,10 @@ FactoryBot.define do
 
     trait :high_cost_disbursement do
       disbursements { [build(:disbursement, :valid_high_cost)] }
+    end
+
+    trait :one_cost do
+      cost_totals { [build(:cost_total, :travel_and_waiting)] }
     end
 
     trait :completed_status do

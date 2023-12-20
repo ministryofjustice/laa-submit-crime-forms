@@ -8,6 +8,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
   let(:defendant) { claim.defendants.first }
   let(:disbursement) { claim.disbursements.first }
   let(:work_item) { claim.work_items.first }
+  let(:cost_total) { claim.cost_totals.first }
   let(:tester) { double(:tester, process: true) }
   let(:pricing) { Pricing.for(claim) }
 
@@ -155,7 +156,16 @@ RSpec.describe NotifyAppStore::MessageBuilder do
                'file_type' => 'image/png',
                'id' => an_instance_of(String),
                'updated_at' => '2023-03-01T00:00:00.000Z'
-            }]
+            }],
+          'cost_totals' =>
+          [
+            {
+              'id' => cost_total.id,
+              'cost_type' => 'travel_and_waiting',
+              'amount' => 100.0,
+              'amount_with_vat' => 110.0
+            }
+          ]
         },
         application_id: claim.id,
         application_state: 'submitted',
