@@ -4,6 +4,8 @@ module CostCalculator
       case type
       when :travel_and_waiting_total
         travel_and_waiting_total(vat, object)
+      when :disbursement_total
+        disbursement_total(vat, object)
       end
     end
 
@@ -25,8 +27,21 @@ module CostCalculator
       rounded_cost
     end
 
+    def disbursements_total(vat, object)
+      pricing = Pricing.for(object)
+      if vat == true
+        disbursments.sum { |i| (i.total_cost_without_vat * (1 + pricing.vat)).floor(2) }.round(2)
+      else
+        disbursments.sum { |i| i.total_cost_without_vat }.round(2)
+      end
+    end
+
     def work_items(object)
       WorkItem.where(claim_id: object[:id], work_type: %w[travel waiting])
+    end
+
+    def disbursements(object)
+      Disbursments.where(claim_id: object[:id])
     end
   end
 end
