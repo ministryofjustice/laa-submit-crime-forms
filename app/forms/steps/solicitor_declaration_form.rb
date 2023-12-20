@@ -16,7 +16,7 @@ module Steps
 
     def build_costs
       cost_totals(application).map do |record|
-        application.costs.create(record)
+        application.cost_totals.create(record)
       end
     end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_19_122845) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_20_134618) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -113,12 +113,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_19_122845) do
     t.index ["ufn"], name: "index_claims_on_ufn"
   end
 
-  create_table "costs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "cost_totals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "claim_id", null: false
     t.string "cost_type", null: false
     t.float "amount", null: false
     t.float "amount_with_vat"
-    t.index ["claim_id"], name: "index_costs_on_claim_id"
+    t.index ["claim_id"], name: "index_cost_totals_on_claim_id"
   end
 
   create_table "defendants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -221,7 +221,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_19_122845) do
   add_foreign_key "claims", "firm_offices"
   add_foreign_key "claims", "providers", column: "submitter_id"
   add_foreign_key "claims", "solicitors"
-  add_foreign_key "costs", "claims"
+  add_foreign_key "cost_totals", "claims"
   add_foreign_key "defendants", "claims"
   add_foreign_key "disbursements", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"

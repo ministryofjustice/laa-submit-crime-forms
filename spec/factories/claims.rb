@@ -159,7 +159,7 @@ FactoryBot.define do
     end
 
     trait :one_cost do
-      costs { [build(:cost, :travel_and_waiting)] }
+      cost_totals { [build(:cost_total, :travel_and_waiting)] }
     end
 
     trait :completed_status do

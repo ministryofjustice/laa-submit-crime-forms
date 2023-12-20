@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :cost do
+  factory :cost_total do
     trait :travel_and_waiting do
       cost_type { 'travel_and_waiting' }
       amount { 100 }
