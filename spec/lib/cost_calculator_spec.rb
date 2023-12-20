@@ -24,7 +24,7 @@ RSpec.describe CostCalculator do
 
     context 'when vat is true' do
       it 'calculates the sum total cost for each travel and waiting work item with vat' do
-        expect(subject).to eq(1.98)
+        expect(subject).to eq(1.97)
       end
     end
 

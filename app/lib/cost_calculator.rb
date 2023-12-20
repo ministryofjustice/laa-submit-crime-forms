@@ -11,18 +11,20 @@ module CostCalculator
 
     def travel_and_waiting_total(vat, object)
       pricing = Pricing.for(object)
-      vat_rate = pricing.vat
       total_without_vat = work_items_total(work_items(object), pricing)
-      total = vat ? total_without_vat * (1 + vat_rate) : total_without_vat
-      total.round(2)
+
+      return total_without_vat unless vat
+
+      total_with_vat = total_without_vat * (1 + pricing.vat)
+      total_with_vat.floor(2)
     end
 
     def work_items_total(items, pricing)
-      items.sum { |i| work_item_total(i, pricing) }
+      items.sum { |i| work_item_total(i, pricing) }.round(2)
     end
 
     def work_item_total(item, pricing)
-      (item.time_spent / 60.to_f) * pricing[item.work_type] * (1 + (item[:uplift] / 100.to_f))
+      (item.time_spent.to_f / 60) * pricing[item.work_type] * (1 + (item[:uplift].to_f / 100)).round(2)
     end
 
     def work_items(object)
