@@ -5,7 +5,7 @@ module CostCalculator
       when :travel_and_waiting_total
         travel_and_waiting_total(vat, object)
       when :disbursement_total
-        disbursement_total(vat, object)
+        disbursements_total(vat, object)
       end
     end
 
@@ -30,9 +30,9 @@ module CostCalculator
     def disbursements_total(vat, object)
       pricing = Pricing.for(object)
       if vat == true
-        disbursments.sum { |i| (i.total_cost_without_vat * (1 + pricing.vat)).floor(2) }.round(2)
+        disbursements(object).sum { |i| (i.total_cost_without_vat * (1 + pricing.vat)).floor(2) }.round(2)
       else
-        disbursments.sum(&:total_cost_without_vat).round(2)
+        disbursements(object).sum(&:total_cost_without_vat).round(2)
       end
     end
 
@@ -41,7 +41,7 @@ module CostCalculator
     end
 
     def disbursements(object)
-      Disbursments.where(claim_id: object[:id])
+      Disbursement.where(claim_id: object[:id])
     end
   end
 end
