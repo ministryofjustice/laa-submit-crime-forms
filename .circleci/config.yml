@@ -125,7 +125,7 @@ commands:
     steps:
       - install-gems
       - install-compile-assets
-  
+
   rubocop:
     steps:
       - run:
@@ -249,7 +249,7 @@ jobs:
   build-to-ecr:
     executor: aws-ecr/default
     steps:
-      - checkout 
+      - checkout
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
@@ -263,7 +263,7 @@ jobs:
           push-image: true
           tag: ${CIRCLE_SHA1}
           region: $ECR_REGION
-          repo: $ECR_REPOSITORY 
+          repo: $ECR_REPOSITORY
           extra-build-args: |
             --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
             --build-arg APP_BUILD_TAG=${CIRCLE_SHA1} \
@@ -278,6 +278,16 @@ jobs:
           region: $ECR_REGION
       - deploy-to-environment:
           environment: dev
+          registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+
+  deploy-dev-crm4:
+    executor: cloud-platform-executor
+    steps:
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - deploy-to-environment:
+          environment: dev-crm4
           registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
 
   deploy-uat:
@@ -341,6 +351,14 @@ workflows:
           context: laa-claim-non-standard-magistrates-fee-dev
           requires:
             - hold-dev
+      - hold-dev-crm4:
+          type: approval
+          requires:
+            - build-to-ecr
+      - deploy-dev-crm4:
+          context: laa-claim-non-standard-magistrates-fee-dev-crm4
+          requires:
+            - hold-dev-crm4
       - hold-uat:
           type: approval
           requires:
@@ -363,6 +381,14 @@ workflows:
           context: laa-claim-non-standard-magistrates-fee-dev
           requires:
             - hold-dev
+      - hold-dev-crm4:
+          type: approval
+          requires:
+            - build-to-ecr
+      - deploy-dev-crm4:
+          context: laa-claim-non-standard-magistrates-fee-dev-crm4
+          requires:
+            - hold-dev-crm4
       - hold-uat:
           type: approval
           requires:
