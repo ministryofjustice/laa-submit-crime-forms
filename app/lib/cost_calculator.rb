@@ -22,14 +22,14 @@ module CostCalculator
 
     def work_item_total(item, pricing, vat)
       rounded_cost = (item.time_spent.to_f / 60) * pricing[item.work_type] * (1 + (item[:uplift].to_f / 100)).round(2)
-      return (rounded_cost * (1 + pricing.vat)).floor(2) if vat == true
+      return (rounded_cost * (1 + pricing.vat)).floor(2) if vat
 
       rounded_cost
     end
 
     def disbursements_total(vat, object)
       pricing = Pricing.for(object)
-      if vat == true
+      if vat
         total = disbursements(object).sum do |i|
           vat_multiplier = i.apply_vat == 'true' ? pricing.vat : 0
           (i.total_cost_without_vat * (1 + vat_multiplier)).floor(2)
