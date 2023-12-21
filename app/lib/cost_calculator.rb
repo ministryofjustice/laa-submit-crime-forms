@@ -30,13 +30,16 @@ module CostCalculator
     def disbursements_total(vat, object)
       pricing = Pricing.for(object)
       if vat
-        total = disbursements(object).sum do |i|
-          vat_multiplier = i.apply_vat == 'true' ? pricing.vat : 0
-          (i.total_cost_without_vat * (1 + vat_multiplier)).floor(2)
-        end
-        total.round(2)
+        disbursements_total_cost_with_vat(object, pricing).round(2)
       else
         disbursements(object).sum(&:total_cost_without_vat).round(2)
+      end
+    end
+
+    def disbursements_total_cost_with_vat(object, pricing)
+      disbursements(object).sum do |i|
+        vat_multiplier = i.apply_vat == 'true' ? pricing.vat : 0
+        (i.total_cost_without_vat * (1 + vat_multiplier)).floor(2)
       end
     end
 
