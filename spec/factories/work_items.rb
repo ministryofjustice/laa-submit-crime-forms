@@ -24,6 +24,22 @@ FactoryBot.define do
       fee_earner { 'test' }
     end
 
+    trait :travel do
+      work_type { WorkTypes::TRAVEL }
+      time_spent { '100' }
+      uplift { 10 }
+      completed_on { Time.zone.today }
+      fee_earner { 'test' }
+    end
+
+    trait :waiting do
+      work_type { WorkTypes::WAITING }
+      time_spent { '100' }
+      uplift { 10 }
+      completed_on { Time.zone.today }
+      fee_earner { 'test' }
+    end
+
     WorkTypes.values.each do |value|
       trait value.to_s.to_sym do
         work_type { value.to_s }
