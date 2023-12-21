@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AppStoreTokenProvider
+  include Singleton
+
   def initialize
     oauth_client
   end
@@ -20,17 +22,13 @@ class AppStoreTokenProvider
   end
 
   def bearer_token
-    Rails.env.test? ? fake_bearer_token : access_token.token
+    access_token.token
   end
 
   private
 
   def new_access_token
     oauth_client.client_credentials.get_token(scope: "api://#{client_id}/.default")
-  end
-
-  def fake_bearer_token
-    'fake-laa-crime-application-store-bearer-token'
   end
 
   def client_id

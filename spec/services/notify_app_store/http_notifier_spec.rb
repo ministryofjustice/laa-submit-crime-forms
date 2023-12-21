@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NotifyAppStore::HttpNotifier do
+RSpec.describe NotifyAppStore::HttpNotifier, :stub_oauth_token do
   let(:message) { { application_id: SecureRandom.uuid } }
   let(:response) { double(:response, code:) }
   let(:code) { 201 }
@@ -24,7 +24,7 @@ RSpec.describe NotifyAppStore::HttpNotifier do
       expect(described_class).to receive(:post)
         .with('http://some.url/v1/application/',
               body: message.to_json,
-              headers: { authorization: 'Bearer fake-laa-crime-application-store-bearer-token' })
+              headers: { authorization: 'Bearer test-bearer-token' })
 
       subject.post(message)
     end
@@ -35,7 +35,7 @@ RSpec.describe NotifyAppStore::HttpNotifier do
       expect(described_class).to receive(:post)
         .with('http://localhost:8000/v1/application/',
               body: message.to_json,
-              headers: { authorization: 'Bearer fake-laa-crime-application-store-bearer-token' })
+              headers: { authorization: 'Bearer test-bearer-token' })
 
       subject.post(message)
     end
@@ -53,7 +53,7 @@ RSpec.describe NotifyAppStore::HttpNotifier do
       expect(described_class).to receive(:post)
         .with('http://localhost:8000/v1/application/',
               body: message.to_json,
-              headers: { authorization: 'Bearer fake-laa-crime-application-store-bearer-token' })
+              headers: { authorization: 'Bearer test-bearer-token' })
 
       subject.post(message)
     end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe HttpPuller do
+RSpec.describe HttpPuller, :stub_oauth_token do
   let(:response) { double(:response, code:, body:) }
   let(:code) { 200 }
   let(:body) { { some: :data }.to_json }
@@ -25,7 +25,7 @@ RSpec.describe HttpPuller do
       it 'get the claims to the specified URL' do
         expect(described_class).to receive(:get)
           .with('http://some.url/v1/applications?since=1',
-                headers: { authorization: 'Bearer fake-laa-crime-application-store-bearer-token' })
+                headers: { authorization: 'Bearer test-bearer-token' })
 
         subject.get_all(1)
       end
@@ -35,7 +35,7 @@ RSpec.describe HttpPuller do
       it 'get the claims to default localhost url' do
         expect(described_class).to receive(:get)
           .with('http://localhost:8000/v1/applications?since=1',
-                headers: { authorization: 'Bearer fake-laa-crime-application-store-bearer-token' })
+                headers: { authorization: 'Bearer test-bearer-token' })
 
         subject.get_all(1)
       end
@@ -52,7 +52,7 @@ RSpec.describe HttpPuller do
       it 'add basic auth credentials' do
         expect(described_class).to receive(:get)
           .with('http://localhost:8000/v1/applications?since=1',
-                headers: { authorization: 'Bearer fake-laa-crime-application-store-bearer-token' })
+                headers: { authorization: 'Bearer test-bearer-token' })
 
         subject.get_all(1)
       end

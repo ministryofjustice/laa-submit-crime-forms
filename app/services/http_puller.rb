@@ -22,7 +22,7 @@ class HttpPuller
   def options
     options = {}
 
-    token = AppStoreTokenProvider.new.bearer_token
+    token = AppStoreTokenProvider.instance.bearer_token
 
     options.merge(
       headers: {

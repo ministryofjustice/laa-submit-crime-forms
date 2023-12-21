@@ -23,7 +23,7 @@ class NotifyAppStore
     def options(message)
       options = { body: message.to_json }
 
-      token = AppStoreTokenProvider.new.bearer_token
+      token = AppStoreTokenProvider.instance.bearer_token
 
       options.merge(
         headers: {
