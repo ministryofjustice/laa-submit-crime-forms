@@ -15,6 +15,29 @@ RSpec.describe CostCalculator do
     it { expect(subject).to be_nil }
   end
 
+  context 'when type is disbursement_total' do
+    before do
+      allow(Pricing).to receive(:for).and_return(pricing)
+    end
+
+    let(:type) { :disbursement_total }
+    let(:object) { create(:claim, :mixed_vat_disbursement) }
+
+    context 'when vat is true' do
+      it 'calculates the sum total cost for each travel and waiting work item with vat' do
+        expect(subject).to eq(198)
+      end
+    end
+
+    context 'when vat is false' do
+      let(:vat) { false }
+
+      it 'calculates the sum total cost for each travel and waiting work item' do
+        expect(subject).to eq(180)
+      end
+    end
+  end
+
   context 'when type is travel_and_waiting_total' do
     before do
       allow(Pricing).to receive(:for).and_return(pricing)
