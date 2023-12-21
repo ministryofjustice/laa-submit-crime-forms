@@ -21,7 +21,10 @@ RSpec.describe NotifyAppStore::HttpNotifier do
     end
 
     it 'posts the message to the specified URL' do
-      expect(described_class).to receive(:post).with('http://some.url/v1/application/', body: message.to_json)
+      expect(described_class).to receive(:post)
+        .with('http://some.url/v1/application/',
+              body: message.to_json,
+              headers: { authorization: 'Bearer fake-laa-crime-application-store-bearer-token' })
 
       subject.post(message)
     end
@@ -29,7 +32,10 @@ RSpec.describe NotifyAppStore::HttpNotifier do
 
   context 'when APP_STORE_URL is not present' do
     it 'posts the message to default localhost url' do
-      expect(described_class).to receive(:post).with('http://localhost:8000/v1/application/', body: message.to_json)
+      expect(described_class).to receive(:post)
+        .with('http://localhost:8000/v1/application/',
+              body: message.to_json,
+              headers: { authorization: 'Bearer fake-laa-crime-application-store-bearer-token' })
 
       subject.post(message)
     end
@@ -44,9 +50,10 @@ RSpec.describe NotifyAppStore::HttpNotifier do
     end
 
     it 'add basic auth creditals' do
-      expect(described_class).to receive(:post).with('http://localhost:8000/v1/application/',
-                                                     body: message.to_json,
-                                                     basic_auth: { username: 'jimbob', password: 'kimbob' },)
+      expect(described_class).to receive(:post)
+        .with('http://localhost:8000/v1/application/',
+              body: message.to_json,
+              headers: { authorization: 'Bearer fake-laa-crime-application-store-bearer-token' })
 
       subject.post(message)
     end
