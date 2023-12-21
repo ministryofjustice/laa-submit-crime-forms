@@ -154,6 +154,10 @@ FactoryBot.define do
       disbursements { [build(:disbursement, :valid_other_specific)] }
     end
 
+    trait :mixed_vat_disbursement do
+      disbursements { [build(:disbursement, :valid_other), build(:disbursement, :no_vat)] }
+    end
+
     trait :high_cost_disbursement do
       disbursements { [build(:disbursement, :valid_high_cost)] }
     end

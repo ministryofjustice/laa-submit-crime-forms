@@ -31,7 +31,7 @@ module CostCalculator
       pricing = Pricing.for(object)
       if vat == true
         total = disbursements(object).sum do |i|
-          vat_multiplier = i.apply_vat ? pricing.vat : 0
+          vat_multiplier = i.apply_vat == 'true' ? pricing.vat : 0
           (i.total_cost_without_vat * (1 + vat_multiplier)).floor(2)
         end
         total.round(2)
