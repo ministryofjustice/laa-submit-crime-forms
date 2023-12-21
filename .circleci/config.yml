@@ -94,17 +94,6 @@ references:
     attach_workspace:
       at: ~/repo/tmp
 
-  _authenticate-kubectl: &authenticate-kubectl
-    run:
-      name: Authenticate K8s
-      command: |
-          echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
-          kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_URL}
-          kubectl config set-credentials circleci --token=${K8S_TOKEN}
-          kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
-          kubectl config use-context ${K8S_CLUSTER_NAME}
-          kubectl --namespace=${K8S_NAMESPACE} get pods
-
 # ------------------
 # COMMANDS
 # ------------------
@@ -125,7 +114,7 @@ commands:
     steps:
       - install-gems
       - install-compile-assets
-  
+
   rubocop:
     steps:
       - run:
@@ -186,9 +175,21 @@ commands:
         registry:
           description: Location of ECR images
           type: string
+          default: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
       steps:
+        - aws-cli/setup:
+            role_arn: $ECR_ROLE_TO_ASSUME
+            region: $ECR_REGION
         - checkout
-        - *authenticate-kubectl
+        - run:
+            name: Authenticate K8s
+            command: |
+                echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+                kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_URL}
+                kubectl config set-credentials circleci --token=${K8S_TOKEN}
+                kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
+                kubectl config use-context ${K8S_CLUSTER_NAME}
+                kubectl --namespace=${K8S_NAMESPACE} get pods
         - run:
             name: Deploy to namespace
             command: |
@@ -249,7 +250,7 @@ jobs:
   build-to-ecr:
     executor: aws-ecr/default
     steps:
-      - checkout 
+      - checkout
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
@@ -263,7 +264,7 @@ jobs:
           push-image: true
           tag: ${CIRCLE_SHA1}
           region: $ECR_REGION
-          repo: $ECR_REPOSITORY 
+          repo: $ECR_REPOSITORY
           extra-build-args: |
             --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
             --build-arg APP_BUILD_TAG=${CIRCLE_SHA1} \
@@ -273,32 +274,26 @@ jobs:
   deploy-dev:
     executor: cloud-platform-executor
     steps:
-      - aws-cli/setup:
-          role_arn: $ECR_ROLE_TO_ASSUME
-          region: $ECR_REGION
       - deploy-to-environment:
           environment: dev
-          registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+
+  deploy-dev-crm4:
+    executor: cloud-platform-executor
+    steps:
+      - deploy-to-environment:
+          environment: dev-crm4
 
   deploy-uat:
     executor: cloud-platform-executor
     steps:
-      - aws-cli/setup:
-          role_arn: $ECR_ROLE_TO_ASSUME
-          region: $ECR_REGION
       - deploy-to-environment:
           environment: uat
-          registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
 
   deploy-prod:
     executor: cloud-platform-executor
     steps:
-      - aws-cli/setup:
-          role_arn: $ECR_ROLE_TO_ASSUME
-          region: $ECR_REGION
       - deploy-to-environment:
           environment: prod
-          registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
 
 # ------------------
 # WORKFLOWS
@@ -341,6 +336,14 @@ workflows:
           context: laa-claim-non-standard-magistrates-fee-dev
           requires:
             - hold-dev
+      - hold-dev-crm4:
+          type: approval
+          requires:
+            - build-to-ecr
+      - deploy-dev-crm4:
+          context: laa-claim-non-standard-magistrates-fee-dev-crm4
+          requires:
+            - hold-dev-crm4
       - hold-uat:
           type: approval
           requires:
@@ -363,6 +366,14 @@ workflows:
           context: laa-claim-non-standard-magistrates-fee-dev
           requires:
             - hold-dev
+      - hold-dev-crm4:
+          type: approval
+          requires:
+            - build-to-ecr
+      - deploy-dev-crm4:
+          context: laa-claim-non-standard-magistrates-fee-dev-crm4
+          requires:
+            - hold-dev-crm4
       - hold-uat:
           type: approval
           requires:
