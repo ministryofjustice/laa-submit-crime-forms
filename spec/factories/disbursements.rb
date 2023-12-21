@@ -40,6 +40,15 @@ FactoryBot.define do
       apply_vat { 'true' }
     end
 
+    trait :no_vat do
+      disbursement_date { age.days.ago.to_date }
+      disbursement_type { DisbursementTypes::OTHER.to_s }
+      other_type { OtherDisbursementTypes.values[0] }
+      total_cost_without_vat { 90.0 }
+      details { 'Details' }
+      apply_vat { 'false' }
+    end
+
     trait :valid_high_cost do
       disbursement_date { age.days.ago.to_date }
       disbursement_type { DisbursementTypes::OTHER.to_s }
