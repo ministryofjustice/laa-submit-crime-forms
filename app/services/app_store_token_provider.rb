@@ -8,10 +8,9 @@ class AppStoreTokenProvider
   end
 
   def oauth_client
-    tenant_id = ENV.fetch('APP_STORE_TENANT_ID', nil)
     @oauth_client ||= OAuth2::Client.new(
       client_id,
-      ENV.fetch('APP_STORE_CLIENT_SECRET', nil),
+      client_secret,
       token_url: "https://login.microsoftonline.com/#{tenant_id}/oauth2/v2.0/token"
     )
   end
@@ -33,5 +32,13 @@ class AppStoreTokenProvider
 
   def client_id
     ENV.fetch('APP_STORE_CLIENT_ID', nil)
+  end
+
+  def tenant_id
+    ENV.fetch('APP_STORE_TENANT_ID', nil)
+  end
+
+  def client_secret
+    ENV.fetch('APP_STORE_CLIENT_SECRET', nil)
   end
 end
