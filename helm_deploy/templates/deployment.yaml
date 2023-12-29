@@ -28,6 +28,22 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
+        containers:
+          # https://github.com/ministryofjustice/hmpps-utility-container-images
+        - name: clamav
+          image: ghcr.io/ministryofjustice/hmpps-clamav:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: clamav
+              containerPort: 3310
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 3Gi
+            requests:
+              cpu: 10m
+              memory: 1Gi
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -126,7 +142,7 @@ spec:
                 secretKeyRef:
                   name: google-analytics
                   key: tracking_key
-              
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
