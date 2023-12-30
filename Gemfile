@@ -45,7 +45,7 @@ end
 group :test do
   gem 'capybara'
   gem 'cuprite', '~> 0.15'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '>= 6.4.3'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
