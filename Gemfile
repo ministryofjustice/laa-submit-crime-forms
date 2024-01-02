@@ -29,7 +29,7 @@ gem 'tzinfo-data'
 gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
 
 group :development, :test do
-  gem 'debug', '~> 1.9.0'
+  gem 'debug', '~> 1.9.1'
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
   gem 'pry'
