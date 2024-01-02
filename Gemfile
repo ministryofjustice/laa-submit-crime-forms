@@ -11,6 +11,7 @@ gem 'httparty'
 gem 'importmap-rails'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'logstasher', '~> 2.1'
+gem 'oauth2', '~> 2.0'
 gem 'pagy', '~> 6.2.0'
 gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.4'
@@ -55,4 +56,5 @@ group :test do
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'
   gem 'super_diff'
+  gem 'webmock', '~> 3.19'
 end
