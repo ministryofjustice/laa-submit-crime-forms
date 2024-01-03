@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.141'
+gem 'aws-sdk-s3', '~> 1.142'
 gem 'bootsnap', '~> 1.17.0', require: false
 gem 'dartsass-rails', '~> 0.5.0'
 gem 'govuk_notify_rails', '~> 2.2.0'
