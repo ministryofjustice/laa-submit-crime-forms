@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  clamav:
+    image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed
+    ports:
+      - "3310:3310"
+    volumes:
+      - type: bind
+        source: ./tmp/clamav/
+        target: /var/lib/clamav
+    command: ['/bin/sh', '-c', 'freshclam && clamd && touch startup.txt && clamdscan startup.txt']
