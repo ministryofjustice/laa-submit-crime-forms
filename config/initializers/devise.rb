@@ -2,8 +2,8 @@
 
 Devise.setup do |config|
   require 'devise/orm/active_record'
-  require 'laa_portal/saml_strategy'
-  require 'laa_portal/saml_setup'
+  require Rails.root.join('app/lib/laa_portal/saml_strategy')
+  require Rails.root.join('app/lib/laa_portal/saml_setup')
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
