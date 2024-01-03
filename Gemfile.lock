@@ -510,7 +510,7 @@ DEPENDENCIES
   debug (~> 1.9.1)
   dotenv-rails
   erb_lint
-  factory_bot_rails
+  factory_bot_rails (>= 6.4.3)
   govuk_notify_rails (~> 2.2.0)
   hmcts_common_platform!
   httparty
