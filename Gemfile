@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.141'
+gem 'aws-sdk-s3', '~> 1.142'
 gem 'bootsnap', '~> 1.17.0', require: false
 gem 'clamby', '~> 1.6'
 gem 'dartsass-rails', '~> 0.5.0'
@@ -12,6 +12,7 @@ gem 'httparty'
 gem 'importmap-rails'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'logstasher', '~> 2.1'
+gem 'oauth2', '~> 2.0'
 gem 'pagy', '~> 6.2.0'
 gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.4'
@@ -29,7 +30,7 @@ gem 'tzinfo-data'
 gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
 
 group :development, :test do
-  gem 'debug', '~> 1.9.0'
+  gem 'debug', '~> 1.9.1'
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
   gem 'pry'
@@ -45,7 +46,7 @@ end
 group :test do
   gem 'capybara'
   gem 'cuprite', '~> 0.15'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '>= 6.4.3'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
@@ -56,4 +57,5 @@ group :test do
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'
   gem 'super_diff'
+  gem 'webmock', '~> 3.19'
 end

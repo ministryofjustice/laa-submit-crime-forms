@@ -22,13 +22,11 @@ class HttpPuller
   def options
     options = {}
 
-    username = ENV.fetch('APP_STORE_USERNAME', nil)
-    return options if username.blank?
+    token = AppStoreTokenProvider.instance.bearer_token
 
     options.merge(
-      basic_auth: {
-        username: username,
-        password: ENV.fetch('APP_STORE_PASSWORD')
+      headers: {
+        authorization: "Bearer #{token}"
       }
     )
   end
