@@ -1,4 +1,4 @@
-# DSL Desicion Tree
+# DSL Decision Tree
 
 This documentation refers to the code implemented (here)[https://github.com/ministryofjustice/laa-claim-non-standard-magistrate-fee-backend/blob/main/app/services/decisions/dsl_decision_tree.rb].
 
@@ -131,7 +131,7 @@ class CustomWrapperClass < SimpleDelegator
   end
 end
 
-class MyDesicionTree < DslDesicionTree
+class MyDecisionTree < DslDecisionTree
   WRAPPER_CLASS = CustomWrapperClass
 
   from('A)

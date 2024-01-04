@@ -1,5 +1,5 @@
 module Decisions
-  class   BaseDecisionTree
+  class BaseDecisionTree
     class InvalidStep < RuntimeError; end
 
     attr_reader :form_object, :step_name
