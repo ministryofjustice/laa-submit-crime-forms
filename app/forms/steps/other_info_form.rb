@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class OtherInfoForm < Steps::BaseFormObject
     BOOLEAN_FIELDS = %i[is_other_info concluded].freeze

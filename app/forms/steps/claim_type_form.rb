@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class ClaimTypeForm < Steps::BaseFormObject
     attribute :ufn, :string

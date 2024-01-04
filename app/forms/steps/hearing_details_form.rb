@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class HearingDetailsForm < Steps::BaseFormObject
     attribute :first_hearing_date, :multiparam_date

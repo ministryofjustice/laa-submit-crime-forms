@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class CaseDisposalForm < Steps::BaseFormObject
     attribute :plea, :value_object, source: PleaOptions
