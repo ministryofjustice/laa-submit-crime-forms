@@ -9,7 +9,6 @@
     "yarn": "^1.22.21"
   },
   "scripts": {
-    "postinstall": "bin/importmap pin govuk-frontend@4.5.0",
     "unit-test": "jest"
   },
   "devDependencies": {
