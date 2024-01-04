@@ -5,3 +5,12 @@ $govuk-global-styles: true;
 $govuk-assets-path: 'govuk-frontend/govuk/assets/';
 
 @import "govuk-frontend/govuk/all";
+
+$govuk-is-ie8: false;
+$govuk-ie8-breakpoint: ('desktop');
+@mixin govuk-if-ie8 {
+  @if false {
+    @content;
+  }
+}
+@mixin govuk-not-ie8 {@content}
