@@ -1,23 +1,28 @@
 # DSL Desicion Tree
 
+This documentation refers to the code implemented (here)[https://github.com/ministryofjustice/laa-claim-non-standard-magistrate-fee-backend/blob/main/app/services/decisions/dsl_decision_tree.rb].
+
+Look (here)[https://github.com/ministryofjustice/laa-claim-non-standard-magistrate-fee-backend/commit/82a50d76dad2bf6ee8e9c32edbbcce7fe03731f6#diff-603684f9e79565b6842d793e2bfaebf72f76ca1e2a45208d49d02ef7feb0df90] to review against the previous implementation.
+
 ## What?
 
-This is a simple DSL that layers on top of the existing DecisonTree code that was used in crime apply. Due to
+This is a simple DSL that implements the same interface as the previous DecisionTree code implementation and as such it
+the implementation can easiler be swapped out without requiring changes to otehr aspects of the codebase. It currently layers on top of the existing DecisonTree code that was used in crime apply. Due to
 this it is fully backwards compatable with the previous implementation.
 
 ## Why?
 
-This was created to simplify the expression of the logical flow of the system. Basically make it easiler to
+This was created to simplify the expression of the logical flow of the system. Making it easier to
 read, understand and update the flow compared to the previous implementation. This has been coupled with an update to
-the testing helper to again try and make the tests easy to read, understand and update.
+the testing helper to try and make the tests easy to read, understand and update.
 
 ## How does it work?
 
 The basic concept of the descison tree is that given the user has come from some location `A` they are redirected
 to a new location `B`, this can then be complicated by adding logic such that they would instead be redirected to
-a different location `C` if a specificed condition is `X` met.
+a different location `C` if a specified condition is `X` met.
 
-Hense the basic syntax of the DSl is for the previous example is:
+Hence the basic syntax of the DSl for the previous example would be:
 
 ```
 from(A)
@@ -25,18 +30,18 @@ from(A)
   .goto(show: B)
 ```
 
-The below could be written on a single line, however breaking it done in `when` and `goto` pairs makes it easier
+The above could be written on a single line, however breaking it down into `when` and `goto` pairs makes it easier
 to parse, the logic will return the result of the first `goto` after a `when` condition has been met - notice the
 final `goto` does not require a `when` condition as it catches all remaining choices.
 
 ## Downsides
 
 The main downside of this approach is that the DSL is loaded within the Class object - this means we only need to
-create a single instance of it on boot, but that dos result in slower boot times which may be a concern as the
+create a single instance of it on boot, but that does result in slower boot. This may become a concern as the
 ruleset grows in the future - or multiple large rulesets exist.
 
 It would be possible to move the rule definition into a instance, however this would have the downside of
-needing to be load the ruleset into memory each time it was used, thus slowing down response times.
+needing to load the ruleset into memory each time it was used, slowing response times.
 
 ## Examples (with tests)
 
@@ -113,10 +118,11 @@ end
 
 ### Additional logic functionality
 
-Sometime is may be helpful to have addition or conplex logic that is used in multiple `when` checks into the
-tree. This is possible by overwriting the `WRAPPER_CLASS` constant in the custom DesicionTree class. This is
-then used to wrap the form object and allow additional feature to be shared without populting the form object
-or desicion tree with the logic.
+By default the `WRAPPER_CLASS` is set to the `SimpleDelegator` library, with the idea that this can be
+overwritten with a custom class (inheriting from SimpleDelegator) which adding reusable methods that can
+be called in the `when` and `goto` blocks.
+
+This class is used to avoid adding methods to the form objects that are only used in the decision tree checks.
 
 ```
 class CustomWrapperClass < SimpleDelegator
@@ -132,5 +138,3 @@ class MyDesicionTree < DslDesicionTree
     .when(-> { check?('apples) }).goto('B')
 end
 ```
-
-As the form object is still wrapped by this teh methods have access to all methods/objects on the wrapped form.
