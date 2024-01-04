@@ -28,7 +28,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
-  # Raise exceptions instead of rendering exception templates.
+  # Render exception templates for rescuable exceptions and raise for other exceptions.
   config.action_dispatch.show_exceptions = :rescuable
 
   # Disable request forgery protection in test environment.
@@ -38,9 +38,6 @@ Rails.application.configure do
   config.active_storage.service = :test
 
   config.action_mailer.perform_caching = false
-
-  # Set default mailer host to allow url helpers to generate urls in mailers.
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
