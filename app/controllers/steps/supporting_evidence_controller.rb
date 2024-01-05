@@ -19,9 +19,11 @@ module Steps
         return return_error(nil, { message: 'Incorrect file type provided' })
       end
 
-      file_path = file_uploader.upload(params[:documents])
-      evidence = save_evidence_data(params[:documents], file_path)
+      evidence = upload_file(params)
       return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
+    rescue FileUpload::FileUploader::PotentialMalwareError => e
+      return_error(e, { message: 'File potentially contains malware so cannot be uploaded. ' \
+                                 'Please contact your administrator' })
     rescue StandardError => e
       return_error(e, { message: 'Unable to upload file at this time' })
     end
@@ -52,6 +54,11 @@ module Steps
 
     def file_uploader
       @file_uploader ||= FileUpload::FileUploader.new
+    end
+
+    def upload_file(params)
+      file_path = file_uploader.upload(params[:documents])
+      save_evidence_data(params[:documents], file_path)
     end
 
     def save_evidence_data(params, file_path)

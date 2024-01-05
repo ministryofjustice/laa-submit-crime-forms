@@ -10,7 +10,9 @@ RUN apk add --update \
   postgresql-dev \
   gcompat \
   tzdata \
-  yarn
+  yarn \
+  clamav-clamdscan && \
+  apk del clamav-daemon freshclam
 
 # Alpine does not have a glibc, and this is needed for dart-sass
 # Refer to: https://github.com/sgerrand/alpine-pkg-glibc
