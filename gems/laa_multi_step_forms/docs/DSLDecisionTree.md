@@ -7,8 +7,8 @@ Look (here)[https://github.com/ministryofjustice/laa-claim-non-standard-magistra
 ## What?
 
 This is a simple DSL that implements the same interface as the previous DecisionTree code implementation and as such it
-the implementation can easiler be swapped out without requiring changes to otehr aspects of the codebase. It currently layers on top of the existing DecisonTree code that was used in crime apply. Due to
-this it is fully backwards compatable with the previous implementation.
+the implementation can easily be swapped out without requiring changes to other aspects of the codebase. It currently layers on top of the existing DecisonTree code that was used in crime apply. Due to
+this it is fully backwards compatible with the previous implementation.
 
 ## Why?
 
@@ -18,7 +18,7 @@ the testing helper to try and make the tests easy to read, understand and update
 
 ## How does it work?
 
-The basic concept of the descison tree is that given the user has come from some location `A` they are redirected
+The basic concept of the decision tree is that given the user has come from some location `A` they are redirected
 to a new location `B`, this can then be complicated by adding logic such that they would instead be redirected to
 a different location `C` if a specified condition is `X` met.
 
@@ -90,7 +90,7 @@ end
 ### Additional parameters in the goto location
 
 Additional parameters can be set in 3 ways:
-1. static value -> this just adds the addiitonal paramas in the hash
+1. static value -> this just adds the additional params in the hash
 2. dynamic value (block without params) -> this executes on the block form object allowing the value to be set
 3. dynamic value (block with params) -> this passes the result of the `when` block into the `goto` block
 
