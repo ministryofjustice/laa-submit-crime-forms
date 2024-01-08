@@ -72,16 +72,16 @@ Also, some functionality in the dashboard will make use of this datastore.
 For active development, and to debug or diagnose issues, running the datastore locally along the Apply application is
 the recommended way. Follow the instructions in the above repository to setup and run the datastore locally.
 
-**5. Documentation
+**5. Documentation**
 
 Documentation related to the below components is avaible in the `gems/laa_multi_step_forms/docs/` folder on the following items:
 
-* (DSLDecisionTree)[gems/laa_multi_step_forms/docs/DSLDecisionTree.md]
-* (Setup)[gems/laa_multi_step_forms/docs/Setup.md]
-* (Steps)[gems/laa_multi_step_forms/docs/Steps.md]
-* (TaskList)[gems/laa_multi_step_forms/docs/TaskList.md]
-* (Validations)[gems/laa_multi_step_forms/docs/Validations.md]
-* (Javascript_Test)[gems/laa_multi_step_forms/docs/Javascript_Test.md]
-* (SharedForms)[gems/laa_multi_step_forms/docs/SharedForms.md]
-* (Suggestion)[gems/laa_multi_step_forms/docs/Suggestion.md]
-* (TimePeriodAndFormBuilderUpgrade)[gems/laa_multi_step_forms/docs/TimePeriodAndFormBuilderUpgrade.md]
+* [DSLDecisionTree](gems/laa_multi_step_forms/docs/DSLDecisionTree.md)
+* [Setup](gems/laa_multi_step_forms/docs/Setup.md)
+* [Steps](gems/laa_multi_step_forms/docs/Steps.md)
+* [TaskList](gems/laa_multi_step_forms/docs/TaskList.md)
+* [Validations](gems/laa_multi_step_forms/docs/Validations.md)
+* [Javascript_Test](gems/laa_multi_step_forms/docs/Javascript_Test.md)
+* [SharedForms](gems/laa_multi_step_forms/docs/SharedForms.md)
+* [Suggestion](gems/laa_multi_step_forms/docs/Suggestion.md)
+* [TimePeriodAndFormBuilderUpgrade](gems/laa_multi_step_forms/docs/TimePeriodAndFormBuilderUpgrade.md)
