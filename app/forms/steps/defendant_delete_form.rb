@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class DefendantDeleteForm < Steps::BaseFormObject
     attribute :id

@@ -1,5 +1,5 @@
 require 'omniauth'
-require 'laa_portal/saml_strategy'
+require Rails.root.join('app/lib/laa_portal/saml_strategy')
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   configure do |config|

@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class DefendantDetailsForm < Steps::BaseFormObject
     attribute :full_name, :string

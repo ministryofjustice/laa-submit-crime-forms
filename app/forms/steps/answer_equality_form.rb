@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 # this is a form to determine where to move to the equality questions
 # or skip them, as such it does not persist anything to DB
 module Steps

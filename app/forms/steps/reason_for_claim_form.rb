@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class ReasonForClaimForm < Steps::BaseFormObject
     attribute :reasons_for_claim, array: true, default: []
