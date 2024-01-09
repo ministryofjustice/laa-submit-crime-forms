@@ -156,12 +156,12 @@ spec:
                 secretKeyRef:
                   name: azure-secret
                   key: app_client_secret
-            - name: SIDEKIQ_USERNAME
+            - name: SIDEKIQ_WEB_UI_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: sidekiq-auth
                   key: username
-            - name: SIDEKIQ_PASSWORD
+            - name: SIDEKIQ_WEB_UI_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: sidekiq-auth
