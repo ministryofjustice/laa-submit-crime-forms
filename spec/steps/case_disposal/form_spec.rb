@@ -70,7 +70,7 @@ RSpec.describe Steps::CaseDisposalForm do
           context 'but date field passed in anyway' do
             let(:arrest_warrant_date) { Date.yesterday }
 
-            it 'will ignore date field' do
+            it 'ignores date field' do
               expect(subject.save).to be_truthy
               expect(application).to have_received(:update!).with(
                 'plea' => plea_inst,
