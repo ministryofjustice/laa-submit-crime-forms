@@ -38,7 +38,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
   end
 
   context 'when revisiting the page' do
-    it 'will correctly display values selected from the autocomplete list' do
+    it 'correctly displays values selected from the autocomplete list' do
       claim.update(court: "Aldershot Magistrates' Court")
 
       visit provider_saml_omniauth_callback_path
@@ -49,7 +49,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
                                  with: "Aldershot Magistrates' Court")
     end
 
-    it 'will correctly display custom values' do
+    it 'correctly displays custom values' do
       claim.update(court: 'Apples')
 
       visit provider_saml_omniauth_callback_path

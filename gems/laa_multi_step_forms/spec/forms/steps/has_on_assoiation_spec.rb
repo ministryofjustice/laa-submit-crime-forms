@@ -84,7 +84,7 @@ RSpec.describe Steps::HasOneAssociation do
       let(:associate_name) { :case }
       let(:meal) { double(:meal, case: associate) }
 
-      it 'will prefix method name with an underscore' do
+      it 'prefixes method name with an underscore' do
         expect(subject._case).to eq(associate)
       end
     end

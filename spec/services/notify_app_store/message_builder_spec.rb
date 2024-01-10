@@ -12,7 +12,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
   let(:tester) { double(:tester, process: true) }
   let(:pricing) { Pricing.for(claim) }
 
-  it 'will generate and send the data message for a claim' do
+  it 'generates and send the data message for a claim' do
     travel_to(Time.zone.local(2023, 8, 17, 12, 13, 14)) do
       tester.process(subject.message)
 
