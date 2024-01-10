@@ -156,7 +156,16 @@ spec:
                 secretKeyRef:
                   name: azure-secret
                   key: app_client_secret
-
+            - name: SIDEKIQ_WEB_UI_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: sidekiq-auth
+                  key: username
+            - name: SIDEKIQ_WEB_UI_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sidekiq-auth
+                  key: password
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

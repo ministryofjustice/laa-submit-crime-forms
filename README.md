@@ -72,7 +72,25 @@ Also, some functionality in the dashboard will make use of this datastore.
 For active development, and to debug or diagnose issues, running the datastore locally along the Apply application is
 the recommended way. Follow the instructions in the above repository to setup and run the datastore locally.
 
-**5. Documentation**
+**6. Sidekiq Auth**
+
+We currently protect the sidekiq UI on production servers (Dev, UAT, Prod, Dev-CRM4) with basic auth.
+
+In order to extract the password from the k8 files run the following commands:
+
+> NOTE: this requires your kubectl to be setup and [authenticated](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/getting-started/kubectl-config.html#authenticating-with-the-cloud-platform-39-s-kubernetes-cluster) as well as having [`jq`](https://jqlang.github.io/jq/download/) installed.
+
+```bash
+NAMESPACE=laa-claim-non-standard-magistrate-fee-dev
+
+kubectl config use-context live.cloud-platform.service.justice.gov.uk
+# username
+kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | jq -r '.username' | base64 --decode && echo " "
+# password
+kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | jq -r '.password' | base64 --decode && echo " "
+``````
+
+**7. Documentation**
 
 Documentation related to the below components is available in the `gems/laa_multi_step_forms/docs/` folder on the following items:
 
@@ -85,3 +103,4 @@ Documentation related to the below components is available in the `gems/laa_mult
 * [SharedForms](gems/laa_multi_step_forms/docs/SharedForms.md)
 * [Suggestion](gems/laa_multi_step_forms/docs/Suggestion.md)
 * [TimePeriodAndFormBuilderUpgrade](gems/laa_multi_step_forms/docs/TimePeriodAndFormBuilderUpgrade.md)
+
