@@ -227,9 +227,9 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.7.1)
-    irb (1.11.0)
+    irb (1.11.1)
       rdoc
-      reline (>= 0.3.8)
+      reline (>= 0.4.2)
     jmespath (1.6.2)
     json (2.7.1)
     jwt (2.7.1)
@@ -356,7 +356,7 @@ GEM
     redis-client (0.18.0)
       connection_pool
     regexp_parser (2.9.0)
-    reline (0.4.1)
+    reline (0.4.2)
       io-console (~> 0.5)
     request_store (1.5.1)
       rack (>= 1.4)
@@ -425,10 +425,10 @@ GEM
     sass-embedded (1.63.5)
       google-protobuf (~> 3.23)
       rake (>= 13.0.0)
-    sentry-rails (5.15.2)
+    sentry-rails (5.16.1)
       railties (>= 5.0)
-      sentry-ruby (~> 5.15.2)
-    sentry-ruby (5.15.2)
+      sentry-ruby (~> 5.16.1)
+    sentry-ruby (5.16.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
     sidekiq (7.2.0)
       concurrent-ruby (< 2)
@@ -533,8 +533,8 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  sentry-rails (~> 5.15.2)
-  sentry-ruby (~> 5.15.2)
+  sentry-rails (~> 5.16.1)
+  sentry-ruby (~> 5.16.1)
   sidekiq (~> 7.2)
   sidekiq-cron (~> 1.12.0)
   sidekiq_alive (~> 2.3)
