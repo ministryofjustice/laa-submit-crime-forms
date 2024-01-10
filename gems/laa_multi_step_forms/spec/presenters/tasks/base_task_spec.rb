@@ -8,11 +8,13 @@ RSpec.describe Tasks::BaseTask do
 
   describe '.build' do
     context 'for a task with an implementation class' do
+      # rubocop:disable RSpec/RemoveConst
       around do |spec|
         Tasks.const_set(:Details, details_klass)
         spec.run
         Tasks.send(:remove_const, :Details)
       end
+      # rubocop:enable RSpec/RemoveConst
 
       it 'instantiate the implementation' do
         task = described_class.build(:details, application:)
