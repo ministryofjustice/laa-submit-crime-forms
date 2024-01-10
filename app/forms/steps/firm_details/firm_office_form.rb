@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   module FirmDetails
     class FirmOfficeForm < Steps::BaseFormObject

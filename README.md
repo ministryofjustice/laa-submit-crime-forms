@@ -39,7 +39,22 @@ After you've defined your DB configuration in the above files, run the following
 
 * `yarn`
 
-**4. Run the app locally**
+**4. ClamAV Virus Scanning**
+
+We utilise [ClamAV](https://www.clamav.net/) and [Clamby](https://github.com/kobaltz/clamby) within this application to scan files before saving them to ensure that they are clear of
+malware where possible. The brewfile above will install ClamAV on your system but before you can use this there is some
+minor setup you will need to do first:
+
+```shell
+cd /usr/local/etc/clamav/
+cp freshclam.conf.sample freshclam.conf
+cp clamd.conf.sample clamd.conf
+```
+
+Then you will need to open the 2 created files and comment out the line `example` and save. To confirm this is working
+you can run the command `freshclam` and this should download the latest definitions to your system.
+
+**5. Run the app locally**
 
 Once all the above is done, you should be able to run the application as follows:
 

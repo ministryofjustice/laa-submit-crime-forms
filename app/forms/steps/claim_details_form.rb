@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class ClaimDetailsForm < Steps::BaseFormObject
     BOOLEAN_FIELDS = %i[supplemental_claim preparation_time work_before work_after].freeze

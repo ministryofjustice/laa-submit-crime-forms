@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class CaseDetailsForm < Steps::BaseFormObject
     BOOLEAN_FIELDS = %i[assigned_counsel unassigned_counsel agent_instructed remitted_to_magistrate].freeze

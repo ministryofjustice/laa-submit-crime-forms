@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class DisbursementTypeForm < Steps::BaseFormObject
     attribute :disbursement_date, :multiparam_date

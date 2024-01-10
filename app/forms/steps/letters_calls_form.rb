@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   # rubocop:disable Metrics/ClassLength
   class LettersCallsForm < Steps::BaseFormObject

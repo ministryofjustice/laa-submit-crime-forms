@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class DisbursementCostForm < Steps::BaseFormObject
     attr_writer :apply_vat

@@ -5,6 +5,7 @@ ruby File.read('.ruby-version').strip
 
 gem 'aws-sdk-s3', '~> 1.142'
 gem 'bootsnap', '~> 1.17.0', require: false
+gem 'clamby', '~> 1.6'
 gem 'dartsass-rails', '~> 0.5.0'
 gem 'govuk_notify_rails', '~> 2.2.0'
 gem 'httparty'
@@ -12,12 +13,12 @@ gem 'importmap-rails'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'logstasher', '~> 2.1'
 gem 'oauth2', '~> 2.0'
-gem 'pagy', '~> 6.2.0'
+gem 'pagy', '~> 6.3.0'
 gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.4'
 gem 'rails', '~> 7.1.2'
-gem 'sentry-rails', '~> 5.15.2'
-gem 'sentry-ruby', '~> 5.15.2'
+gem 'sentry-rails', '~> 5.16.1'
+gem 'sentry-ruby', '~> 5.16.1'
 gem 'sidekiq', '~> 7.2'
 gem 'sidekiq_alive', '~> 2.3'
 gem 'sidekiq-cron', '~> 1.12.0'
@@ -29,7 +30,7 @@ gem 'tzinfo-data'
 gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
 
 group :development, :test do
-  gem 'debug', '~> 1.9.1'
+  gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
   gem 'pry'

@@ -1,5 +1,3 @@
-require 'steps/base_form_object'
-
 module Steps
   class FirmDetailsForm < Steps::BaseFormObject
     attr_accessor :firm_office_attributes, :solicitor_attributes

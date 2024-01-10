@@ -61,6 +61,7 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
 
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
+        expect(Clamby).to receive(:safe?).and_return(true)
         post :create, params: { id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
       end
 
@@ -107,6 +108,25 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
 
       it 'returns an error message' do
         expect(JSON.parse(response.body)['error']['message']).to eq 'Incorrect file type provided'
+      end
+    end
+
+    context 'when an vulnerable file is uploaded' do
+      let(:current_application) { build(:claim) }
+
+      before do
+        request.env['CONTENT_TYPE'] = 'image/png'
+        expect(Clamby).to receive(:safe?).and_return(false)
+        post :create, params: { id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
+      end
+
+      it 'returns a bad request' do
+        expect(response).to be_bad_request
+      end
+
+      it 'returns an error message' do
+        expect(JSON.parse(response.body)['error']['message']).to eq('File potentially contains malware so cannot be ' \
+                                                                    'uploaded. Please contact your administrator')
       end
     end
   end
