@@ -23,7 +23,7 @@
 
     <%= govuk_tabs(title: t(".page_title")) do |c|
       c.with_tab(label: t(".tabs.drafts")) do %>
-        <table class="govuk-table" data-module="moj-sortable-table">
+        <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="tab_drafts">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.ufn') %></th>
