@@ -190,3 +190,7 @@ Rails/RedundantActiveRecordAllMethod:
 # Causing false positives when implemented in methods
 Rails/ActionControllerFlashBeforeRender:
   Enabled: false
+
+# Our ApplicationController inherits from MultiStepForms, but PriorAuthority controllers shouldn't
+Rails/ApplicationController:
+  Enabled: false

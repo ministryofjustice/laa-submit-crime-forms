@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_20_134618) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_11_093801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -160,6 +160,23 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_20_134618) do
     t.datetime "updated_at", null: false
     t.string "vat_registered"
     t.index ["previous_id"], name: "index_firm_offices_on_previous_id"
+  end
+
+  create_table "prior_authority_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "prison_law"
+    t.string "ufn"
+    t.string "contact_name"
+    t.string "contact_email"
+    t.string "firm_name"
+    t.string "firm_account_number"
+    t.string "laa_reference"
+    t.string "ufn_form_status", default: "not_started"
+    t.string "case_contact_form_status", default: "not_started"
+    t.string "status", default: "pre_draft"
+    t.uuid "provider_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
