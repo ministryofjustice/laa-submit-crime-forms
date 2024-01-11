@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_20_134618) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_11_093801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -162,6 +162,27 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_20_134618) do
     t.index ["previous_id"], name: "index_firm_offices_on_previous_id"
   end
 
+  create_table "prior_authority_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "provider_id"
+    t.uuid "firm_office_id"
+    t.uuid "solicitor_id"
+    t.string "office_code", null: false
+    t.boolean "prison_law"
+    t.boolean "authority_value"
+    t.string "ufn"
+    t.string "laa_reference"
+    t.string "status", default: "pre_draft"
+    t.string "client_first_name"
+    t.string "client_last_name"
+    t.date "client_date_of_birth"
+    t.jsonb "navigation_stack", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
+    t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
+    t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
+  end
+
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -225,6 +246,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_20_134618) do
   add_foreign_key "defendants", "claims"
   add_foreign_key "disbursements", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
+  add_foreign_key "prior_authority_applications", "firm_offices"
+  add_foreign_key "prior_authority_applications", "solicitors"
   add_foreign_key "solicitors", "solicitors", column: "previous_id"
   add_foreign_key "supporting_evidence", "claims"
   add_foreign_key "work_items", "claims"

@@ -66,5 +66,14 @@ module Decisions
       .goto(edit: 'steps/solicitor_declaration')
     from(:equality_questions).goto(edit: 'steps/solicitor_declaration')
     from(:solicitor_declaration).goto(show: 'steps/claim_confirmation')
+
+    # prior authority pre-draft application steps
+    from(:prison_law).goto(edit: 'prior_authority/steps/authority_value')
+    from(:authority_value).goto(edit: 'prior_authority/steps/ufn')
+    from(:ufn).goto(show: 'prior_authority/steps/start_page')
+
+    # prior authority draft application steps
+    from(:case_contact).goto(edit: 'prior_authority/steps/client_detail')
+    from(:client_detail).goto(show: 'prior_authority/steps/start_page') # TODO: move to case and hearing details
   end
 end

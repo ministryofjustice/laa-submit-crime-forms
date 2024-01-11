@@ -36,7 +36,12 @@ module Steps
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
         @form_object.save!
-        redirect_to after_commit_path(id: current_application.id)
+
+        if @form_object.application.is_a?(PriorAuthorityApplication)
+          redirect_to prior_authority_after_commit_path(id: current_application.id)
+        else
+          redirect_to after_commit_path(id: current_application.id)
+        end
       elsif params.key?(:save_and_refresh)
         @form_object.save!
         redirect_to_current_object

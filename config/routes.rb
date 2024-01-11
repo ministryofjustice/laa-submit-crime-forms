@@ -111,6 +111,30 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :prior_authority, path: 'prior-authority' do
+    scope 'applications/:id' do
+      get '/steps/start_page', to: 'steps/start_page#show', as: 'after_commit'
+
+      namespace :steps do
+        edit_step :prison_law
+        edit_step :authority_value
+        show_step :start_page
+        edit_step :ufn
+        edit_step :case_contact
+        edit_step :client_detail
+      end
+    end
+
+    resources :applications, only: %i[index show create destroy] do
+      member do
+        get 'offboard'
+        get :confirm_delete, path: 'confirm-delete'
+      end
+    end
+
+    root to: 'applications#index'
+  end
+
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
     lambda { |_request| Rails.application.config.consider_all_requests_local }
 end
