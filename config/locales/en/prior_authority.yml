@@ -1,0 +1,99 @@
+en:
+  prior_authority:
+    service_name: 'Apply for prior authority to incur disbursements'
+    generic:
+      yes_choice: 'Yes'
+      no_choice: 'No'
+      save_and_continue: 'Save and continue'
+      save_and_come_back_later: 'Save and come back later'
+    applications:
+      index:
+        page_title: Your prior authority applications
+        start_application: Start an application
+        tabs:
+          drafts: Drafts
+        header:
+          ufn: UFN
+          laa_reference: LAA reference
+          last_updated: Last updated
+          action: Action
+        status_colour:
+          draft: govuk-tag--grey
+        status:
+          draft: Draft
+        delete: Delete
+      confirm_delete:
+        page_title: Are you sure you want to delete this draft application?
+        laa_reference: "LAA reference:"
+        ufn_reference: "UFN reference:"
+        yes_delete: "Yes, delete it"
+        no_delete: "No, do not delete it"
+      offboard:
+        page_title: You do not need to apply
+        explanation: You do not need to apply for prior authority to incur disbursements for a Prison Law matter if the total authority is less than £500.
+        finish: 'Finish'
+      show:
+        page_title: 'Your application progress'
+        introduction: 'If you leave this page before submitting, you can return later to complete the application.'
+        headings:
+          application_details: 'Application details'
+          case_contact: '1. Case contact'
+        sections:
+          ufn: 'Unique file number'
+          case_contact: 'Case contact'
+        statuses:
+          complete: 'Complete'
+          not_started: 'Not started'
+          incomplete: 'Incomplete'
+        status_colour:
+          not_started: govuk-tag--grey
+          incomplete: govuk-tag--grey
+          complete: ""
+        back_to_applications: 'Back to applications'
+        unique_file_number: Unique file number
+        laa_reference: "LAA reference"
+        under_prison_law: "Under Prison Law"
+    prison_law_forms:
+      show:
+        page_title: Is this a Prison Law matter?
+    authority_value_forms:
+      show:
+        page_title: Are you applying for a total authority of less than £500?
+    ufn_forms:
+      show:
+        page_title: What is your unique file number?
+        hint: For example 310223/001
+    case_contact_forms:
+      show:
+        page_title: Case contact
+        contact_name: Full name
+        contact_email: Email address
+        firm_name: Firm name
+        firm_account_number: Firm account number
+        hint: For example, 1A234B
+
+  activerecord:
+    errors:
+      models:
+        prior_authority/prison_law_form:
+          attributes:
+            prison_law:
+              inclusion: Select if this is a Prison Law matter
+        prior_authority/authority_value_form:
+          attributes:
+            less_than_five_hundred:
+              inclusion: Select if you are applying for a total authority of less than £500
+        prior_authority/ufn_form:
+          attributes:
+            ufn:
+              blank: Enter your unique file number for this claim
+        prior_authority/case_contact_form:
+          attributes:
+            contact_name:
+              blank: Enter the full contact name
+            contact_email:
+              blank: Enter the contact email address
+            firm_name:
+              blank: Enter the firm name
+            firm_account_number:
+              blank: Enter the firm account number

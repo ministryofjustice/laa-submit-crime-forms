@@ -1,0 +1,71 @@
+<% title t('.page_title') %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
+
+    <p class="govuk-text"><%= t('.introduction') %></p>
+
+    <h2 class="govuk-heading-m"></h2>
+
+    <ol class="moj-task-list">
+      <li>
+        <h2 class="moj-task-list__section"><%= t('.headings.application_details') %></h2>
+        <ul class="moj-task-list__items">
+          <li class="moj-task-list__item">
+            <span class="app-task-list__task-name">
+              <%= link_to t('.sections.ufn'), prior_authority_application_ufn_form_path(@model) %>
+            </span>
+            <strong id="claim_type.non_standard_magistrate-status" class="govuk-tag app-task-list__tag <%= t(".status_colour.#{@model.ufn_form_status}") %>">
+            <%= t("statuses.#{@model.ufn_form_status}") %></strong>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h2 class="moj-task-list__section"><%= t('.headings.case_contact') %></h2>
+        <ul class="moj-task-list__items">
+          <li class="moj-task-list__item">
+            <span class="app-task-list__task-name">
+              <%= link_to t('.sections.case_contact'), prior_authority_application_case_contact_form_path(@model) %>
+            </span>
+            <strong id="claim_type.non_standard_magistrate-status" class="govuk-tag app-task-list__tag <%= t(".status_colour.#{@model.case_contact_form_status}") %>"><%= t("statuses.#{@model.case_contact_form_status}") %></strong>
+          </li>
+        </ul>
+      </li>
+    </ol>
+
+    <%= link_button t('.back_to_applications'), prior_authority_applications_path, class: 'govuk-button--secondary' %>
+  </div>
+
+  <div class="govuk-grid-column-one-third app-grid-column--sticky">
+    <aside class="app-aside__bar--blue aside-task-list" role="complementary">
+      <h3 class="govuk-heading-s govuk-!-margin-0">
+        <%= t('.application_reference') %>
+      </h3>
+      <p class="govuk-body govuk-!-margin-top-4 govuk-!-margin-bottom-0">
+        <strong>
+          <%= t('.unique_file_number') %>
+        </strong>
+      </p>
+      <p class="govuk-body">
+        <%= @model.ufn %>
+      </p>
+      <p class="govuk-body govuk-!-margin-top-4 govuk-!-margin-bottom-0">
+        <strong>
+          <%= t('.laa_reference') %>
+        </strong>
+      </p>
+      <p class="govuk-body">
+        <%= @model.laa_reference %>
+      </p>
+      <p class="govuk-body govuk-!-margin-top-4 govuk-!-margin-bottom-0">
+        <strong>
+          <%= t('.under_prison_law') %>
+        </strong>
+      </p>
+      <p class="govuk-body">
+        <%= t(@model.prison_law ? 'prior_authority.generic.yes_choice' : 'prior_authority.generic.no_choice') %>
+      </p>
+    </aside>
+  </div>
+</div>
+

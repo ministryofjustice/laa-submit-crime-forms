@@ -1,0 +1,59 @@
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6"><%= t('.page_title') %></h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= button_to prior_authority_applications_path, class: "govuk-button govuk-button--start govuk-!-margin-bottom-6" do %>
+      <%= t('.start_application') %>
+      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+      </svg>
+    <% end %>
+  </div>
+
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <%= govuk_tabs(title: t(".page_title")) do |c|
+      c.with_tab(label: t(".tabs.drafts")) do %>
+        <table class="govuk-table" data-module="moj-sortable-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.ufn') %></th>
+            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.laa_reference') %></th>
+            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.last_updated') %></th>
+            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.action') %></th>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body app-task-list__items">
+          <% @model.each do |application| %>
+            <tr class="govuk-table__row app-task-list__item">
+              <td class="govuk-table__cell">
+                <%= link_to prior_authority_application_path(application) do %>
+                  <%= application.ufn %>
+                <% end %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= application.laa_reference %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= application.updated_at.strftime('%d %B %Y') %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= link_to t(".delete"), confirm_delete_prior_authority_application_path(application) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end; end %>
+  </div>
+</div>

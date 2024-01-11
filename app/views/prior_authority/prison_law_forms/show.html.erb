@@ -1,0 +1,12 @@
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@model) %>
+    <%= form_with(model: @model, url: prior_authority_application_prison_law_form_path(@model)) do |form| %>
+      <%= form.govuk_collection_radio_buttons :prison_law, yes_no_options, :first, :last,
+                                          legend: { text: t(".page_title"), size: "xl", tag: "h1" } %>
+      <%= form.govuk_submit t("prior_authority.generic.save_and_continue") %>
+    <% end %>
+  </div>
+</div>
