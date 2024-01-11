@@ -31,6 +31,7 @@ RSpec.configure do |config|
   config.include(ActiveSupport::Testing::TimeHelpers)
   config.include(Devise::Test::ControllerHelpers, type: :controller)
   config.include(AuthenticationHelpers, type: :controller)
+  config.include(AuthenticationHelpers, type: :system)
   config.include RSpecHtmlMatchers
   config.include FactoryBot::Syntax::Methods
 
@@ -43,4 +44,11 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.max_formatted_output_length = nil
   end
+end
+
+Capybara.configure do |config|
+  # Allow us to use the `choose(label_text)` method in browser tests
+  # even when the radio button element attached to the label is hidden
+  # (as it is using the standard govuk radio element)
+  config.automatic_label_click = true
 end

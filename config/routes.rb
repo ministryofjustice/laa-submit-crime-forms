@@ -98,6 +98,21 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :prior_authority, path: 'prior-authority' do
+    resources :applications, only: %i[index create show destroy] do
+      resource :prison_law_form, path: 'prison-law', only: %i[show update]
+      resource :authority_value_form, path: 'authority-value', only: %i[show update]
+      resource :ufn_form, path: 'ufn', only: %i[show update]
+      resource :case_contact_form, path: 'case-contact', only: %i[show update]
+      member do
+        get 'offboard'
+        get :confirm_delete, path: 'confirm-delete'
+      end
+    end
+
+    root to: 'applications#index'
+  end
+
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
     lambda { |_request| Rails.application.config.consider_all_requests_local }
 end
