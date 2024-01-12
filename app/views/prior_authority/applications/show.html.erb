@@ -31,6 +31,17 @@
           </li>
         </ul>
       </li>
+      <li>
+        <h2 class="moj-task-list__section"><%= t('.headings.client_details') %></h2>
+        <ul class="moj-task-list__items">
+          <li class="moj-task-list__item">
+            <span class="app-task-list__task-name">
+              <%= link_to t('.sections.client_detail'), prior_authority_application_client_detail_form_path(@model) %>
+            </span>
+            <strong id="claim_type.non_standard_magistrate-status" class="govuk-tag app-task-list__tag <%= t(".status_colour.#{@model.client_detail_form_status}") %>"><%= t("statuses.#{@model.client_detail_form_status}") %></strong>
+          </li>
+        </ul>
+      </li>
     </ol>
 
     <%= link_button t('.back_to_applications'), prior_authority_applications_path, class: 'govuk-button--secondary' %>

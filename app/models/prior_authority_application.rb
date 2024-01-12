@@ -9,6 +9,7 @@ class PriorAuthorityApplication < ApplicationRecord
   attribute :firm_account_number, :string
   attribute :ufn_form_status, :string
   attribute :case_contact_form_status, :string
+  attribute :client_detail_contact_form_status, :string
   enum :status, { pre_draft: 'pre_draft', draft: 'draft', submitted: 'submitted' }
   attribute :created_at, :datetime
   attribute :updated_at, :datetime
