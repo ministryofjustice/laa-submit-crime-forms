@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_11_093801) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_12_140218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_11_093801) do
     t.integer "defence_statement"
     t.integer "number_of_witnesses"
     t.string "supplemental_claim"
+    t.string "preparation_time"
     t.integer "time_spent"
     t.integer "letters"
     t.integer "calls"
@@ -95,7 +96,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_11_093801) do
     t.string "disability"
     t.boolean "send_by_post"
     t.date "remitted_to_magistrate_date"
-    t.string "preparation_time"
     t.string "work_before"
     t.string "work_after"
     t.string "has_disbursements"
@@ -176,6 +176,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_11_093801) do
     t.uuid "provider_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "client_first_name"
+    t.string "client_last_name"
+    t.date "client_date_of_birth"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
   end
 
