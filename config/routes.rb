@@ -100,6 +100,7 @@ Rails.application.routes.draw do
 
   namespace :prior_authority, path: 'prior-authority' do
     resources :applications, only: %i[index create show destroy] do
+      edit_step :client_details
       resource :prison_law_form, path: 'prison-law', only: %i[show update]
       resource :authority_value_form, path: 'authority-value', only: %i[show update]
       resource :ufn_form, path: 'ufn', only: %i[show update]
