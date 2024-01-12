@@ -66,5 +66,8 @@ module Decisions
       .goto(edit: 'steps/solicitor_declaration')
     from(:equality_questions).goto(edit: 'steps/solicitor_declaration')
     from(:solicitor_declaration).goto(show: 'steps/claim_confirmation')
+
+    #prior authority steps
+    from(:client_details).goto(show: 'prior_authority/applications')
   end
 end
