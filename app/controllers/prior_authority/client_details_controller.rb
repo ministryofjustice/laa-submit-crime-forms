@@ -1,4 +1,4 @@
-module PriorAuthoritySteps
+module PriorAuthority
   class ClientDetailsController < Steps::BaseStepController
     def edit
       @form_object = ClientDetailsForm.build(
