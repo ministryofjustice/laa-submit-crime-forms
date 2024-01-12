@@ -4,6 +4,8 @@ module ApplicationHelper
     @current_application ||= Claim.for(current_provider).find_by(id: params[:id])
   end
 
+  def current_prior_auth_application ||= PriorAuthority.for(current_provider).find_by(id: params[:id])
+
   def current_office_code
     @current_office_code ||= current_provider&.selected_office_code
   end
