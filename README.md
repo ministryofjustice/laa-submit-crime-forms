@@ -89,3 +89,17 @@ kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | j
 # password
 kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | jq -r '.password' | base64 --decode && echo " "
 ``````
+
+**7. Documentation**
+
+Documentation related to the below components is available in the `gems/laa_multi_step_forms/docs/` folder on the following items:
+
+* [DSLDecisionTree](gems/laa_multi_step_forms/docs/DSLDecisionTree.md)
+* [Setup](gems/laa_multi_step_forms/docs/Setup.md)
+* [Steps](gems/laa_multi_step_forms/docs/Steps.md)
+* [TaskList](gems/laa_multi_step_forms/docs/TaskList.md)
+* [Validations](gems/laa_multi_step_forms/docs/Validations.md)
+* [Javascript_Test](gems/laa_multi_step_forms/docs/Javascript_Test.md)
+* [SharedForms](gems/laa_multi_step_forms/docs/SharedForms.md)
+* [Suggestion](gems/laa_multi_step_forms/docs/Suggestion.md)
+* [TimePeriodAndFormBuilderUpgrade](gems/laa_multi_step_forms/docs/TimePeriodAndFormBuilderUpgrade.md)

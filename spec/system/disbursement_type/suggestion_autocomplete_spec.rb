@@ -50,7 +50,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
   context 'when revisiting the page' do
     let(:disbursement) { create(:disbursement, claim: claim, disbursement_type: DisbursementTypes::OTHER) }
 
-    it 'will correctly display values selected from the autocomplete list' do
+    it 'correctly displays values selected from the autocomplete list' do
       disbursement.update(other_type: 'accident_emergency_report')
 
       visit provider_saml_omniauth_callback_path
@@ -60,7 +60,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
       expect(page).to have_field(other_type_field, with: 'Accident & Emergency Report')
     end
 
-    it 'will correctly display custom values' do
+    it 'correctly displays custom values' do
       disbursement.update(other_type: 'Apples')
 
       visit provider_saml_omniauth_callback_path

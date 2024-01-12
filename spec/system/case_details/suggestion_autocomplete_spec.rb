@@ -47,7 +47,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
   end
 
   context 'when revisiting the page' do
-    it 'will correctly display values selected from the autocomplete list' do
+    it 'correctly displays values selected from the autocomplete list' do
       claim.update(main_offence: 'Wounding or causing grievous bodily harm with intent')
 
       visit provider_saml_omniauth_callback_path
@@ -58,7 +58,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
                                  with: 'Wounding or causing grievous bodily harm with intent')
     end
 
-    it 'will correctly display custom values' do
+    it 'correctly displays custom values' do
       claim.update(main_offence: 'Apples')
 
       visit provider_saml_omniauth_callback_path
