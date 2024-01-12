@@ -117,6 +117,7 @@ Rails.application.routes.draw do
       resource :authority_value_form, path: 'authority-value', only: %i[show update]
       resource :ufn_form, path: 'ufn', only: %i[show update]
       resource :case_contact_form, path: 'case-contact', only: %i[show update]
+      resource :client_detail_form, path: 'client-detail', only: %i[show update]
       member do
         get 'offboard'
         get :confirm_delete, path: 'confirm-delete'

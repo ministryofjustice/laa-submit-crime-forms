@@ -71,6 +71,13 @@ en:
         firm_name: Firm name
         firm_account_number: Firm account number
         hint: For example, 1A234B
+    client_detail_forms:
+      show:
+        page_title: Client details
+        client_first_name: First name
+        client_last_name: Last name
+        client_date_of_birth: Date of birth
+        client_date_of_birth_hint: For example, 27 3 2007
 
   activerecord:
     errors:
