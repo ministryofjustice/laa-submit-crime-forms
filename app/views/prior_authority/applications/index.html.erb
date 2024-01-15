@@ -15,7 +15,6 @@
       </svg>
     <% end %>
   </div>
-
 </div>
 
 <div class="govuk-grid-row">
@@ -37,7 +36,7 @@
           <% @model.each do |application| %>
             <tr class="govuk-table__row app-task-list__item">
               <td class="govuk-table__cell">
-                <%= link_to prior_authority_application_path(application) do %>
+                <%= link_to prior_authority_steps_start_page_path(application) do %>
                   <%= application.ufn %>
                 <% end %>
               </td>

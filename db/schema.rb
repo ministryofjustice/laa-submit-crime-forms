@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_12_131917) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_14_110738) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -180,6 +180,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_12_131917) do
     t.string "client_last_name"
     t.date "client_date_of_birth"
     t.string "client_detail_form_status", default: "not_started"
+    t.string "office_code", null: false
+    t.jsonb "navigation_stack", default: [], array: true
+    t.boolean "authority_value"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
   end
 

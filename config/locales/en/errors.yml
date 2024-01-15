@@ -43,6 +43,35 @@ en:
   activemodel:
     errors:
       models:
+        prior_authority/steps/authority_value_form:
+          attributes:
+            authority_value:
+              inclusion: Select if you are applying for a total authority of less than £500
+        prior_authority/steps/case_contact_form:
+          attributes:
+            contact_name:
+              blank: Enter the full contact name
+            contact_email:
+              blank: Enter the contact email address
+            firm_name:
+              blank: Enter the firm name
+            firm_account_number:
+              blank: Enter the firm account number
+        prior_authority/steps/client_detail_form:
+          attributes:
+            client_first_name:
+              blank: Enter the client's first name
+            client_last_name:
+              blank: Enter the client's last name
+            client_date_of_birth: *shared_date_errors
+        prior_authority/steps/prison_law_form:
+          attributes:
+            prison_law:
+              inclusion: Select if this is a Prison Law matter
+        prior_authority/steps/ufn_form:
+          attributes:
+            ufn:
+              blank: Enter your unique file number for this claim
         steps/claim_type_form:
           attributes:
             ufn:

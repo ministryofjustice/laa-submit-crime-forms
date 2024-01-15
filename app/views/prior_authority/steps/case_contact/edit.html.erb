@@ -1,21 +1,18 @@
 <% title t('.page_title') %>
+<% decision_step_header %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= govuk_error_summary(@model) %>
+    <%= govuk_error_summary(@form_object) %>
+    <span class="govuk-caption-xl"><%= t(".caption") %></span>
     <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
-    <%= form_with(model: @model, url: prior_authority_application_case_contact_form_path(@model)) do |form| %>
+
+    <%= step_form @form_object do |form| %>
       <%= form.govuk_text_field :contact_name, label: { text: t(".contact_name"), size: 'm' } %>
       <%= form.govuk_text_field :contact_email, label: { text: t(".contact_email"), size: 'm' } %>
       <%= form.govuk_text_field :firm_name, label: { text: t(".firm_name"), size: 'm' } %>
       <%= form.govuk_text_field :firm_account_number, label: { text: t(".firm_account_number"), size: 'm' }, hint: { text: t(".hint") }  %>
-      <%= form.govuk_submit t("prior_authority.generic.save_and_continue") %>
-      <button type="submit"
-              formnovalidate="formnovalidate"
-              class="govuk-button govuk-button--secondary"
-              data-module="govuk-button"
-              data-prevent-double-click="true"
-              name="commit_draft"><%= t("prior_authority.generic.save_and_come_back_later") %></button>
+      <%= form.continue_button %>
     <% end %>
   </div>
 </div>

@@ -112,12 +112,23 @@ Rails.application.routes.draw do
   end
 
   namespace :prior_authority, path: 'prior-authority' do
-    resources :applications, only: %i[index create show destroy] do
-      resource :prison_law_form, path: 'prison-law', only: %i[show update]
-      resource :authority_value_form, path: 'authority-value', only: %i[show update]
-      resource :ufn_form, path: 'ufn', only: %i[show update]
-      resource :case_contact_form, path: 'case-contact', only: %i[show update]
-      resource :client_detail_form, path: 'client-detail', only: %i[show update]
+    scope 'applications/:id' do
+      # This is used as a generic redirect once a draft has been commited
+      # The idea is that this can be custom to the implementation without
+      # requiring an additional method to store the path.
+      get '/steps/start_page', to: 'steps/start_page#show', as: 'after_commit'
+
+      namespace :steps do
+        edit_step :prison_law
+        edit_step :authority_value
+        show_step :start_page
+        edit_step :ufn
+        edit_step :case_contact
+        edit_step :client_detail
+      end
+    end
+
+    resources :applications, only: %i[index show create destroy] do
       member do
         get 'offboard'
         get :confirm_delete, path: 'confirm-delete'
