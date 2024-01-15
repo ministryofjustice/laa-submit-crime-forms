@@ -3,7 +3,7 @@ class Claim < ApplicationRecord
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
   has_many :cost_totals, -> { order(:id) }, dependent: :destroy, inverse_of: :claim
-  has_many :defendants, -> { order(:position) }, dependent: :destroy, as: :defendants_included, inverse_of: :claim
+  has_many :defendants, -> { order(:position) }, dependent: :destroy, inverse_of: :claim
   has_one :main_defendant, -> { where(main: true) }, class_name: 'Defendant', dependent: nil, inverse_of: :claim
   has_many :work_items, -> { order(:completed_on, :work_type, :id) }, dependent: :destroy, inverse_of: :claim
   has_many :disbursements, lambda {
