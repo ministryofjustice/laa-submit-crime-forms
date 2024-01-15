@@ -8,7 +8,7 @@ en:
       save_and_come_back_later: 'Save and come back later'
     applications:
       index:
-        page_title: Your prior authority applications
+        page_title: Your applications
         start_application: Start an application
         tabs:
           drafts: Drafts
@@ -33,14 +33,17 @@ en:
         explanation: You do not need to apply for prior authority to incur disbursements for a Prison Law matter if the total authority is less than £500.
         finish: 'Finish'
       show:
+        application_reference: Application reference
         page_title: 'Your application progress'
         introduction: 'If you leave this page before submitting, you can return later to complete the application.'
         headings:
           application_details: 'Application details'
           case_contact: '1. Case contact'
+          client_detail: 2. About the case
         sections:
           ufn: 'Unique file number'
           case_contact: 'Case contact'
+          client_detail: Client details
         statuses:
           complete: 'Complete'
           not_started: 'Not started'
@@ -78,29 +81,3 @@ en:
         client_last_name: Last name
         client_date_of_birth: Date of birth
         client_date_of_birth_hint: For example, 27 3 2007
-
-  activerecord:
-    errors:
-      models:
-        prior_authority/prison_law_form:
-          attributes:
-            prison_law:
-              inclusion: Select if this is a Prison Law matter
-        prior_authority/authority_value_form:
-          attributes:
-            less_than_five_hundred:
-              inclusion: Select if you are applying for a total authority of less than £500
-        prior_authority/ufn_form:
-          attributes:
-            ufn:
-              blank: Enter your unique file number for this claim
-        prior_authority/case_contact_form:
-          attributes:
-            contact_name:
-              blank: Enter the full contact name
-            contact_email:
-              blank: Enter the contact email address
-            firm_name:
-              blank: Enter the firm name
-            firm_account_number:
-              blank: Enter the firm account number

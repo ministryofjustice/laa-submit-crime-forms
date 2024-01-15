@@ -108,12 +108,25 @@ Rails.application.routes.draw do
   end
 
   namespace :prior_authority, path: 'prior-authority' do
-    resources :applications, only: %i[index create show destroy] do
-      resource :prison_law_form, path: 'prison-law', only: %i[show update]
-      resource :authority_value_form, path: 'authority-value', only: %i[show update]
-      resource :ufn_form, path: 'ufn', only: %i[show update]
-      resource :case_contact_form, path: 'case-contact', only: %i[show update]
-      resource :client_detail_form, path: 'client-detail', only: %i[show update]
+    # multiformstep pattern below this line
+    scope 'applications/:id' do
+      namespace :steps do
+        edit_step :prison_law
+        edit_step :authority_value
+        edit_step :ufn
+        edit_step :case_contact
+        edit_step :client_detail
+      end
+    end
+
+    resources :applications, only: %i[index show create destroy] do
+    # resources :applications, only: %i[index create show destroy] do
+      # simple pattern below this
+      # resource :prison_law_form, path: 'prison-law', only: %i[show update]
+      # resource :authority_value_form, path: 'authority-value', only: %i[show update]
+      # resource :ufn_form, path: 'ufn', only: %i[show update]
+      # resource :case_contact_form, path: 'case-contact', only: %i[show update]
+      # resource :client_detail_form, path: 'client-detail', only: %i[show update]
       member do
         get 'offboard'
         get :confirm_delete, path: 'confirm-delete'

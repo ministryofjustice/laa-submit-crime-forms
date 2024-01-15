@@ -1,0 +1,18 @@
+<% title t('.page_title') %>
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |form| %>
+      <%= form.govuk_text_field :ufn,
+                                label: { text: t('.label'), size: 'xl' },
+                                hint: { text: t('.hint') },
+                                width: 'one-third',
+                                autocomplete: 'off' %>
+      <%= form.continue_button(secondary: false) %>
+    <% end %>
+  </div>
+</div>
+
+
