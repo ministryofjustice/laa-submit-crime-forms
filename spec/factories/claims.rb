@@ -46,6 +46,10 @@ FactoryBot.define do
       defendants { [build(:defendant, :valid)] }
     end
 
+    trait :breach_defendant do
+      defendants { [build(:defendant, :partial)] }
+    end
+
     trait :case_details do
       ufn { '20150612/001' }
       main_offence { MainOffence.all.sample.name }
