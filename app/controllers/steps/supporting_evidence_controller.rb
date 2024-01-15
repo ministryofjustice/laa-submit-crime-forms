@@ -42,6 +42,10 @@ module Steps
       return_error(e, { message: 'Unable to delete file at this time' })
     end
 
+    def download
+      render layout: false
+    end
+
     private
 
     def decision_tree_class

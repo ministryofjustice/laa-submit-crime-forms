@@ -163,4 +163,14 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
       end
     end
   end
+
+  describe '#downlaod' do
+    let(:current_application) { create(:claim) }
+
+    it 'renders with success' do
+      get :download, params: { id: current_application }
+
+      expect(response).to be_successful
+    end
+  end
 end

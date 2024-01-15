@@ -97,7 +97,11 @@ Rails.application.routes.draw do
       edit_step :disbursements
       show_step :cost_summary
       edit_step :other_info
-      upload_step :supporting_evidence
+      upload_step :supporting_evidence do
+        collection {
+          get :download
+        }
+      end
       edit_step :equality
       edit_step :equality_questions
       edit_step :solicitor_declaration

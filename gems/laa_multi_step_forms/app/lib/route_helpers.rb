@@ -8,11 +8,13 @@ module RouteHelpers
     end
   end
 
-  def upload_step(name, opts = {})
+  def upload_step(name, opts = {}, &block)
     resource name,
              only: opts.fetch(:only, [:edit, :update, :create, :destroy]),
              controller: name,
-             path_names: { edit: '' }
+             path_names: { edit: '' } do
+      yield if block
+    end
   end
 
   def crud_step(name, opts = {}, &block)
