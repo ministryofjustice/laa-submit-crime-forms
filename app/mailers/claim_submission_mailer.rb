@@ -8,7 +8,7 @@ class ClaimSubmissionMailer < GovukNotifyRails::Mailer
       LAA_case_reference: case_reference,
       UFN: unique_file_number,
       main_defendant_name: defendant_name,
-      defendant_id: defendant_id_string,
+      defendant_reference: defendant_reference_string,
       claim_total: claim_total,
       date: submission_date,
       feedback_url: feedback_url
@@ -47,7 +47,7 @@ class ClaimSubmissionMailer < GovukNotifyRails::Mailer
   end
 
   # Markdown conditionals do not allow to format the string nicely so formatting here.
-  def defendant_id_string
+  def defendant_reference_string
     if maat_id.nil?
       "Client's CNTP number: #{cntp_order}"
     else
