@@ -23,7 +23,7 @@ RSpec.describe ClaimSubmissionMailer, type: :mailer do
       ).to eq feedback_template
     end
 
-    context 'with personalisation' do
+    context 'defendant with maat id' do
       it 'sets personalisation from args' do
         expect(
           mail.govuk_notify_personalisation
@@ -31,11 +31,28 @@ RSpec.describe ClaimSubmissionMailer, type: :mailer do
           LAA_case_reference: 'LAA-n4AohV',
           UFN: '123456/001',
           main_defendant_name: 'bobjim',
-          maat_id: 'AA1',
+          defendant_id: 'MAAT ID: AA1',
           claim_total: '£20.45',
           date: DateTime.now.strftime('%d %B %Y'),
           feedback_url: 'tbc'
         )
+      end
+    end
+
+    context 'defendant with cntp id' do
+      let(:claim) { build(:claim, :case_type_breach, :breach_defendant, :letters_calls) }
+      it 'sets personalisation from args' do
+        expect(
+          mail.govuk_notify_personalisation
+        ).to include(
+               LAA_case_reference: 'LAA-n4AohV',
+               UFN: '123456/002',
+               main_defendant_name: 'bobjim',
+               defendant_id: "Client's CNTP number: CNTP12345",
+               claim_total: '£20.45',
+               date: DateTime.now.strftime('%d %B %Y'),
+               feedback_url: 'tbc'
+             )
       end
     end
   end
