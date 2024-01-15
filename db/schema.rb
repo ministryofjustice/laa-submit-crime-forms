@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_14_110738) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_15_141332) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -130,6 +130,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_14_110738) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["claim_id"], name: "index_defendants_on_claim_id"
+  end
+
+  create_table "defendants_claims", force: :cascade do |t|
+    t.string "defendant_id"
+    t.string "claim_id"
+    t.index ["defendant_id"], name: "index_defendants_claims_on_defendant_id", unique: true
+  end
+
+  create_table "defendants_prior_authority_applications", force: :cascade do |t|
+    t.string "defendant_id"
+    t.string "prior_authority_application_id"
+    t.index ["defendant_id"], name: "index_defendants_prior_authority_applications_on_defendant_id", unique: true
   end
 
   create_table "disbursements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
