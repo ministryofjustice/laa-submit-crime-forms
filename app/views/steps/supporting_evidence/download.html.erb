@@ -1,1 +1,63 @@
-TBC - https://dsdmoj.atlassian.net/browse/CRM457-769
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dummy</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application" %>
+  </head>
+
+  <body>
+    <div id="postal-evidence">
+      <div class="page">
+        <div class="subpage">
+          <%= image_tag 'Ministry-of-Justice.svg', width: '100px' %>
+          <h2 class="govuk-!-margin-bottom-2"><%= t('.title') %></h2>
+          <h1 class="govuk-!-margin-bottom-2"><%= t('.heading') %></h1>
+          <div class="govuk-!-margin-bottom-2"><%= t('.subheading') %></div>
+          <div class="govuk-body-s govuk-!-font-weight-bold">
+            <%= t('.case_reference') %>
+            <div class="input-box"><%= current_application.laa_reference %></div>
+          </div>
+          <div class="govuk-body-s govuk-!-font-weight-bold">
+            <%= t('.ufn') %>
+            <div class="input-box"><%= current_application.ufn %></div>
+          </div>
+          <div class="govuk-body-s govuk-!-font-weight-bold">
+            <%= t('.firm') %>
+            <div class="input-box"><%= current_application.firm_office.name %></div>
+          </div>
+          <div class="govuk-body-s">
+            <span class="govuk-!-font-weight-bold"><%= t('.evidence.title') %></span>
+            <%= t('.evidence.body') %>
+          </div>
+          <div class="govuk-body-s"><%= t('.evidence.missing') %></div>
+          <div class="govuk-body-s">
+            <%= t('.includes.title') %>
+            <ul>
+              <li><%= t('.includes.file_notes') %></li>
+              <li><%= t('.includes.attendance') %></li>
+              <li><%= t('.includes.case') %></li>
+              <li><%= t('.includes.documentation') %></li>
+              <li><%= t('.includes.evidence') %></li>
+              <li><%= t('.includes.emails') %></li>
+            </ul>
+          </div>
+          <div class="govuk-body-s govuk-!-font-weight-bold"><%= t('.address.title') %></div>
+          <div class="govuk-body-s govuk-!-font-weight-bold">
+            <div><%= t('.address.name') %></div>
+            <div><%= t('.address.line_1') %></div>
+            <div><%= t('.address.line_2') %></div>
+            <div><%= t('.address.city') %></div>
+            <div><%= t('.address.postcode') %></div>
+          </div>
+          <div class="govuk-body-s govuk-!-font-weight-bold"><%= t('.address.dx_address') %></div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
