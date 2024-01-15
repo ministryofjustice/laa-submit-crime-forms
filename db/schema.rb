@@ -170,8 +170,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_14_110738) do
     t.string "firm_name"
     t.string "firm_account_number"
     t.string "laa_reference"
-    t.string "ufn_form_status", default: "not_started"
-    t.string "case_contact_form_status", default: "not_started"
     t.string "status", default: "pre_draft"
     t.uuid "provider_id"
     t.datetime "created_at", null: false
@@ -179,7 +177,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_14_110738) do
     t.string "client_first_name"
     t.string "client_last_name"
     t.date "client_date_of_birth"
-    t.string "client_detail_form_status", default: "not_started"
     t.string "office_code", null: false
     t.jsonb "navigation_stack", default: [], array: true
     t.boolean "authority_value"

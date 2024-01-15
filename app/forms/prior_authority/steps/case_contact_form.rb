@@ -14,11 +14,7 @@ module PriorAuthority
       private
 
       def persist!
-        application.update!(extended_attributes)
-      end
-
-      def extended_attributes
-        attributes.merge(case_contact_form_status: :complete)
+        application.update!(attributes)
       end
     end
   end

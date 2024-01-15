@@ -283,12 +283,4 @@ en:
       show:
         page_title: View your claim
         heading: View your claim
-  laa_multi_step_forms:
-    task_list:
-      show:
-        page_title: Your claim progress
-        heading: Your claim progress
-        subheading: Claim incomplete
-        progress_counter: You have completed %{completed} of %{total} sections.
-        aside:
-          reference: LAA Reference number
+
