@@ -31,7 +31,7 @@ RSpec.describe ClaimSubmissionMailer, type: :mailer do
           LAA_case_reference: 'LAA-n4AohV',
           UFN: '123456/001',
           main_defendant_name: 'bobjim',
-          defendant_id: 'MAAT ID: AA1',
+          defendant_reference: 'MAAT ID: AA1',
           claim_total: '£20.45',
           date: DateTime.now.strftime('%d %B %Y'),
           feedback_url: 'tbc'
@@ -49,7 +49,7 @@ RSpec.describe ClaimSubmissionMailer, type: :mailer do
           LAA_case_reference: 'LAA-n4AohV',
           UFN: '123456/002',
           main_defendant_name: 'bobjim',
-          defendant_id: "Client's CNTP number: CNTP12345",
+          defendant_reference: "Client's CNTP number: CNTP12345",
           claim_total: '£20.45',
           date: DateTime.now.strftime('%d %B %Y'),
           feedback_url: 'tbc'
