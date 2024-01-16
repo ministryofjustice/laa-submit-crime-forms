@@ -53,10 +53,6 @@ en:
               blank: Enter the full contact name
             contact_email:
               blank: Enter the contact email address
-            firm_name:
-              blank: Enter the firm name
-            firm_account_number:
-              blank: Enter the firm account number
         prior_authority/steps/client_detail_form:
           attributes:
             client_first_name:
@@ -64,6 +60,17 @@ en:
             client_last_name:
               blank: Enter the client's last name
             client_date_of_birth: *shared_date_errors
+        prior_authority/steps/case_contact/firm_detail_form:
+          attributes:
+            name:
+              blank: Enter a firm name
+            account_number:
+              blank: Enter an account number
+          summary:
+            name:
+              blank: Enter a firm name
+            account_number:
+              blank: Enter an account number
         prior_authority/steps/prison_law_form:
           attributes:
             prison_law:

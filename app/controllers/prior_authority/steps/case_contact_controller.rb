@@ -16,6 +16,12 @@ module PriorAuthority
       def decision_tree_class
         Decisions::DecisionTree
       end
+
+      def additional_permitted_params
+        [
+          firm_office_attributes: PriorAuthority::Steps::CaseContact::FirmDetailForm.attribute_names,
+        ]
+      end
     end
   end
 end

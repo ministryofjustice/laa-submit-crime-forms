@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_14_110738) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_16_190917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -167,8 +167,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_14_110738) do
     t.string "ufn"
     t.string "contact_name"
     t.string "contact_email"
-    t.string "firm_name"
-    t.string "firm_account_number"
     t.string "laa_reference"
     t.string "status", default: "pre_draft"
     t.uuid "provider_id"
@@ -180,6 +178,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_14_110738) do
     t.string "office_code", null: false
     t.jsonb "navigation_stack", default: [], array: true
     t.boolean "authority_value"
+    t.uuid "firm_office_id"
+    t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
   end
 
@@ -246,6 +246,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_14_110738) do
   add_foreign_key "defendants", "claims"
   add_foreign_key "disbursements", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
+  add_foreign_key "prior_authority_applications", "firm_offices"
   add_foreign_key "solicitors", "solicitors", column: "previous_id"
   add_foreign_key "supporting_evidence", "claims"
   add_foreign_key "work_items", "claims"
