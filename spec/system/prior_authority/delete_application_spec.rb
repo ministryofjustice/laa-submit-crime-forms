@@ -14,7 +14,7 @@ RSpec.describe 'Prior authority application deletion' do
     fill_in 'What is your unique file number?', with: '000000/123'
     click_on 'Save and continue'
 
-    click_on 'Back to applications'
+    click_on 'Back to your applications'
   end
 
   it 'allows the user to delete an application' do

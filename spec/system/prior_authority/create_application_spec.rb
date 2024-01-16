@@ -21,7 +21,7 @@ RSpec.describe 'Prior authority application creation' do
     click_on 'Save and continue'
 
     expect(page).to have_content 'Your application progress'
-    click_on 'Back to applications'
+    click_on 'Back to your applications'
 
     expect(page).to have_content '000000/123'
   end
@@ -40,7 +40,7 @@ RSpec.describe 'Prior authority application creation' do
     click_on 'Save and continue'
 
     click_on 'Save and continue'
-    expect(page).to have_content 'Enter your unique file number for this claim'
+    expect(page).to have_content 'Enter your unique file number for this application'
   end
 
   it 'offboards the user for small-value authorities' do

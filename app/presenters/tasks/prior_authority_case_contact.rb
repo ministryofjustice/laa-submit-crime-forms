@@ -11,10 +11,6 @@ module Tasks
       false
     end
 
-    def in_progress?
-      true
-    end
-
     def can_start?
       true
     end
