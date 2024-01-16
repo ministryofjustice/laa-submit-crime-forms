@@ -13,10 +13,14 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%=t('.heading', app_type: local_assigns[:app_type]) %></h1>
 
+    <p class="govuk-body govuk-!-margin-bottom-8">
+      <%= t('.page_advisory', app_type: local_assigns[:app_type]) %>
+    </p>
+
     <%= @pre_tasklist&.render %>
 
     <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
-      <%= t '.subheading' %>
+      <%= t('.subheading', app_type: local_assigns[:app_type]).humanize %>
     </h2>
 
     <p class="govuk-body govuk-!-margin-bottom-7">
@@ -34,26 +38,26 @@
 
   <div class="govuk-grid-column-one-third app-grid-column--sticky">
     <aside class="app-aside__bar--blue aside-task-list" role="complementary">
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-6">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-4">
         <%= t('.aside.title') %>
       </h3>
       <h3 class="govuk-heading-s govuk-!-margin-0">
         <%= t('.aside.ufn') %>
       </h3>
-      <p class="govuk-body">
+      <p class="govuk-body govuk-!-margin-0">
         <%= @application.ufn %>
       </p>
       <h3 class="govuk-heading-s govuk-!-margin-0">
         <%= t('.aside.reference') %>
       </h3>
-      <p class="govuk-body">
+      <p class="govuk-body govuk-!-margin-0">
         <%= @application.laa_reference %>
       </p>
       <% if @application.respond_to?(:prison_law) %>
         <h3 class="govuk-heading-s govuk-!-margin-0">
           <%= t('.aside.prison_law') %>
         </h3>
-        <p class="govuk-body">
+        <p class="govuk-body govuk-!-margin-0">
           <%= t("generic.#{@application.prison_law}") %>
         </p>
       <% end %>

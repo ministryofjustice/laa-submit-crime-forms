@@ -43,11 +43,12 @@ en:
           claim: Back to your claims
           application: Back to your applications
         page_title: Your %{app_type} progress
+        page_advisory: If you leave this page before submitting, you can return later to complete the %{app_type}.
         heading: Your %{app_type} progress
-        subheading: Claim incomplete
+        subheading: "%{app_type} incomplete"
         progress_counter: You have completed %{completed} of %{total} sections.
         aside:
-          reference: LAA Reference number
+          reference: LAA reference
           title: Application reference
-          prison_law: Under prison law
+          prison_law: Under Prison Law
           ufn: Unique file number
