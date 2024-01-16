@@ -2,7 +2,7 @@ module PriorAuthority
   module Steps
     class UfnForm < ::Steps::BaseFormObject
       attribute :ufn, :string
-      validates :ufn, presence: true
+      validates :ufn, presence: true, format: { with: %r{\A\d{6}/\d{3}\z} }
 
       private
 
