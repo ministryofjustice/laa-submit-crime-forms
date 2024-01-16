@@ -29,7 +29,11 @@ RSpec.describe 'Prior authority applications - add case contact' do
     fill_in 'Firm account number', with: 'A12345'
     click_on 'Save and come back later'
 
-    expect(page).to have_content 'Case contactComplete'
+    expect(page).to have_content 'Case contactCompleted'
+
+    click_on 'Case contact'
+    click_on 'Save and continue'
+    expect(page).to have_title 'Client details'
   end
 
   it 'does validations' do
