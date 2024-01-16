@@ -231,7 +231,7 @@ en:
           message: If you post your evidence, it might take longer to assess your claim.
         postal_address:
           download_html:  |
-            <a class="govuk-notification-banner__link" href="%{href}">Download a cover sheet</a>,
+            <a class="govuk-notification-banner__link" href="%{href}" target="_blank">Download a cover sheet</a>,
             add the required details and post with your evidence to:
           name: Legal Aid Agency
           line_1: 1 Unity Square
