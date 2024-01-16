@@ -18,7 +18,7 @@ RSpec.describe PriorAuthority::Steps::UfnForm do
       let(:ufn) { '' }
 
       it 'has is a validation error on the field' do
-        expect(form).to be_invalid
+        expect(form).not_to be_valid
         expect(form.errors.of_kind?(:ufn, :blank)).to be(true)
         expect(form.errors.messages[:ufn]).to include('Enter your unique file number for this application')
       end

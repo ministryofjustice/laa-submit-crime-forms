@@ -48,7 +48,7 @@ module Decisions
     # TODO: we should be storing the answer to the ask equality question and use that in the decision
     from('steps/solicitor_declaration').goto(edit: 'steps/equality')
 
-    #prior authority steps
+    # prior authority steps
     from('prior_authority/steps/prison_law').goto(edit: 'prior_authority/applications')
     from('prior_authority/steps/authority_value').goto(edit: 'prior_authority/steps/prison_law')
     from('prior_authority/steps/ufn').goto(edit: 'prior_authority/steps/authority_value')
