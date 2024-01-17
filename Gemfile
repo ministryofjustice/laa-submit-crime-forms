@@ -35,6 +35,7 @@ group :development, :test do
   gem 'erb_lint', require: false
   gem 'pry'
   gem 'rspec-expectations'
+  gem 'rspec_junit_formatter'
   gem 'rspec-rails', '~> 6.1.0'
 end
 
