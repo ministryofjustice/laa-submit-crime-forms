@@ -5,11 +5,11 @@ class Defendant < ApplicationRecord
   belongs_to :prior_authority_application, optional: true
 
   validates :id, exclusion: { in: [StartPage::NEW_RECORD] }
-  validates :has_parent
+  validate :has_parent
 
   def has_parent
-    if claim_id + prior_authority_application_id.nil?
-      errors.add "needs at least one parent"
+    if claim_id.nil? && prior_authority_application_id.nil?
+      errors.add(:claim_id, "needs at least one parent")
     end
   end
 end
