@@ -26,7 +26,7 @@ module PriorAuthority
 
       def client
         @client ||=
-          if current_application.client == nil
+          if current_application.client.nil?
             current_application.build_client(id: SecureRandom.uuid)
           else
             current_application.client

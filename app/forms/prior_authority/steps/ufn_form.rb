@@ -16,8 +16,8 @@ module PriorAuthority
 
       def extended_attributes
         attributes.merge(status: PriorAuthorityApplication.statuses[:draft],
-                        ufn_form_status: :complete,
-                        laa_reference: generate_laa_reference)
+                         ufn_form_status: :complete,
+                         laa_reference: generate_laa_reference)
       end
 
       def generate_laa_reference

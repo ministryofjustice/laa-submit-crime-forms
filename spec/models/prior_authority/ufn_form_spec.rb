@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PriorAuthority::UfnForm do
   describe '#extended_update' do
-    it 'will not regenerate an existing laa reference if the record is already a draft' do
+    it 'does not regenerate an existing laa reference if the record is already a draft' do
       provider = create(:provider)
       record = described_class.create provider: provider, status: 'draft', laa_reference: 'AAA123'
 
