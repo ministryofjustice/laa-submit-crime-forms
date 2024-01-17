@@ -17,7 +17,7 @@ module PriorAuthority
 
       def generate_laa_reference
         loop do
-          proposed_reference = "LAA-#{SecureRandom.base58(6)}"
+          proposed_reference = "LAA-#{SecureRandom.alphanumeric(6)}"
           break proposed_reference unless PriorAuthorityApplication.exists?(laa_reference: proposed_reference)
         end
       end

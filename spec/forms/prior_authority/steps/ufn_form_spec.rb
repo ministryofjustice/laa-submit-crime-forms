@@ -38,7 +38,7 @@ RSpec.describe PriorAuthority::Steps::UfnForm do
   describe '#save' do
     subject(:save) { form.save }
 
-    let(:application) { create(:prior_authority_application) }
+    let(:application) { create(:prior_authority_application, laa_reference: nil) }
 
     context 'with a valid UFN' do
       let(:ufn) { '230801/001' }
@@ -53,6 +53,20 @@ RSpec.describe PriorAuthority::Steps::UfnForm do
 
       it 'does not persists the UFN' do
         expect { save }.not_to change { application.reload.ufn }.from(nil)
+      end
+    end
+
+    context 'when laa_reference already exsits' do
+      let(:ufn) { '230801/001' }
+
+      before do
+        allow(SecureRandom).to receive(:alphanumeric).and_return('AAAAAA', 'BBBBBB')
+        allow(PriorAuthorityApplication).to receive(:exists?).with(laa_reference: 'LAA-AAAAAA').and_return(true)
+        allow(PriorAuthorityApplication).to receive(:exists?).with(laa_reference: 'LAA-BBBBBB').and_return(false)
+      end
+
+      it 'still generates a unique ID' do
+        expect { save }.to change { application.reload.laa_reference }.from(nil).to('LAA-BBBBBB')
       end
     end
   end
