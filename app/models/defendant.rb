@@ -8,8 +8,8 @@ class Defendant < ApplicationRecord
   validates :has_parent
 
   def has_parent
-    return false if claim_id + prior_authority_application_id.nil?
-
-    true
+    if claim_id + prior_authority_application_id.nil?
+      errors.add "needs at least one parent"
+    end
   end
 end
