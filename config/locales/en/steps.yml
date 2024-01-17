@@ -57,6 +57,8 @@ en:
     defendant_summary:
       edit:
         page_title: Defendant summary
+        change: Change
+        delete: Delete
         heading:
           one: You added 1 defendant
           other: You added %{count} defendants

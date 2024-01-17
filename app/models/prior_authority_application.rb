@@ -1,6 +1,8 @@
 class PriorAuthorityApplication < ApplicationRecord
   belongs_to :provider
 
+  has_one :client, class_name: 'Defendant', dependent: :destroy, inverse_of: :prior_authority_application
+
   attribute :prison_law, :boolean
   attribute :ufn, :string
   attribute :office_code, :string
