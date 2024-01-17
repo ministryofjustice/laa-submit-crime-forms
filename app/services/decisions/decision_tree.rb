@@ -72,6 +72,6 @@ module Decisions
     from(:authority_value).goto(edit: 'prior_authority/steps/ufn')
     from(:ufn).goto(edit: 'prior_authority/steps/case_contact')
     from(:case_contact).goto(edit: 'prior_authority/steps/client_detail')
-    from(:client_detail).goto(edit: 'prior_authority/steps/case_and_hearing_detail')
+    from(:client_detail).goto(show: "prior_authority/steps/start_page")
   end
 end

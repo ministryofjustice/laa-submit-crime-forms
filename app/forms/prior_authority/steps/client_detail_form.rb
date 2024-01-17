@@ -12,14 +12,8 @@ module PriorAuthority
       private
 
       def persist!
-        Rails.logger.debug record
-        Rails.logger.debug application
         record.update!(attributes)
-        application.update!(extended_attributes)
-      end
-
-      def extended_attributes
-        attributes.merge(client_detail_form_status: :complete)
+        application.update!(client_detail_form_status: :complete)
       end
     end
   end

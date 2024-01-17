@@ -111,6 +111,7 @@ Rails.application.routes.draw do
     # multiformstep pattern below this line
     scope 'applications/:id' do
       namespace :steps do
+        show_step :start_page
         edit_step :prison_law
         edit_step :authority_value
         edit_step :ufn
