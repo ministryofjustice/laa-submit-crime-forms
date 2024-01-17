@@ -32,26 +32,6 @@ en:
         page_title: You do not need to apply
         explanation: You do not need to apply for prior authority to incur disbursements for a Prison Law matter if the total authority is less than £500.
         finish: 'Finish'
-      show:
-        application_reference: Application reference
-        page_title: 'Your application progress'
-        introduction: 'If you leave this page before submitting, you can return later to complete the application.'
-        headings:
-          application_details: 'Application details'
-          case_contact: '1. Case contact'
-          client_detail: 2. About the case
-        sections:
-          ufn: 'Unique file number'
-          case_contact: 'Case contact'
-          client_detail: Client details
-        statuses:
-          complete: 'Complete'
-          not_started: 'Not started'
-          incomplete: 'Incomplete'
-        status_colour:
-          not_started: govuk-tag--grey
-          incomplete: govuk-tag--grey
-          complete: ""
         back_to_applications: 'Back to applications'
         unique_file_number: Unique file number
         laa_reference: "LAA reference"

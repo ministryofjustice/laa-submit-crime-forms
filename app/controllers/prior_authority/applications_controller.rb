@@ -7,10 +7,6 @@ module PriorAuthority
       @model = current_provider.prior_authority_applications.draft
     end
 
-    def show
-      @model = current_provider.prior_authority_applications.find(params[:id])
-    end
-
     def create
       initialize_application do |paa|
         redirect_to edit_prior_authority_steps_prison_law_path(paa)
