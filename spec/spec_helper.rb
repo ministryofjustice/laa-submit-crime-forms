@@ -33,6 +33,11 @@ unless ENV['NOCOVERAGE']
     add_filter 'app/jobs/application_job.rb'
     add_filter 'app/mailers/application_mailer.rb'
 
+    add_group 'Forms', '/app/forms'
+    add_group 'Presenters', '/app/presenters'
+    add_group 'Services', '/app/services'
+    add_group 'Value objects', '/app/value_objects'
+
     enable_coverage :branch
     primary_coverage :branch
     minimum_coverage branch: 100, line: 100
