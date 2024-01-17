@@ -135,7 +135,7 @@ commands:
       - save_cache:
           key: nsmf-claim-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - ~/project
+            - ~/repo
       - db-setup
       - run:
           name: Run rspec tests
@@ -162,8 +162,12 @@ commands:
           at: .
       - restore_cache:
           key: nsmf-claim-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Process coverage
+          command: |
+            bundle exec rake simplecov:process_coverage
       - store_artifacts:
-          path: ~/project/coverage
+          path: ~/repo/coverage
           destination: coverage
 
   build-docker-image:
