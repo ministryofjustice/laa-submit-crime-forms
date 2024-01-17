@@ -139,7 +139,7 @@ commands:
             TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
             RUBYOPT=-W:no-deprecated \
             bundle exec rspec \
-             --format progress \
+             --format RspecJunitFormatter \
              --out /tmp/test-results/rspec.xml \
             -- $TESTFILES
       - store_test_results:
