@@ -232,12 +232,15 @@ en:
           assistive: Warning
           message: If you post your evidence, it might take longer to assess your claim.
         postal_address:
-          heading: "Post your evidence to:"
+          download_html:  |
+            <a class="govuk-notification-banner__link" href="%{href}">Download a cover sheet</a>,
+            add the required details and post with your evidence to:
           name: Legal Aid Agency
           line_1: 1 Unity Square
           line_2: Queensbridge Road
           city: Nottingham
           postcode: NG2 1AW
+          dx_address: DX 10035 Nottingham 1
     equality:
       edit:
         page_title: Equality monitoring questions
