@@ -43,7 +43,7 @@ module Steps
     end
 
     def download
-      render layout: false
+      render layout: 'printing'
     end
 
     private

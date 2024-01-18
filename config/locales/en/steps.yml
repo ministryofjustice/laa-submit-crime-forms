@@ -231,8 +231,35 @@ en:
           message: If you post your evidence, it might take longer to assess your claim.
         postal_address:
           download_html:  |
-            <a class="govuk-notification-banner__link" href="%{href}">Download a cover sheet</a>,
+            <a class="govuk-notification-banner__link" href="%{href}" target="_blank">Download a cover sheet</a>,
             add the required details and post with your evidence to:
+          name: Legal Aid Agency
+          line_1: 1 Unity Square
+          line_2: Queensbridge Road
+          city: Nottingham
+          postcode: NG2 1AW
+          dx_address: DX 10035 Nottingham 1
+      download:
+        title: Claim a non-standard magistrates’ court payment (previously CRM7)
+        heading: Cover sheet for claim evidence
+        subheading: Complete this form, print it and attach it to the front of the paper evidence you are submitting via post.
+        case_reference: "LAA case reference number:"
+        ufn: "Your unique file number (UFN):"
+        firm: "Firm name:"
+        evidence:
+          title: "Evidence:"
+          body: include the evidence specified on the 'upload supporting evidence' page.
+          missing: If you do not include this evidence, it might take longer to assess your claim.
+        includes:
+          title: "You might also want to include:"
+          file_notes: file notes
+          attendance: attendance notes
+          case law: reading case law
+          documentation: documentation
+          evidence: prosecution evidence review
+          emails: emails
+        address:
+          title: Send you evidence to
           name: Legal Aid Agency
           line_1: 1 Unity Square
           line_2: Queensbridge Road
