@@ -8,8 +8,11 @@
     <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
 
     <%= step_form @form_object do |form| %>
-      <%= form.govuk_text_field :contact_name, label: { text: t(".contact_name"), size: 'm' } %>
-      <%= form.govuk_text_field :contact_email, label: { text: t(".contact_email"), size: 'm' } %>
+
+      <%= form.fields_for :solicitor, as: :firm_detail_form do |solicitor_object| %>
+        <%= solicitor_object.govuk_text_field :contact_full_name, label: { text: t(".contact_full_name"), size: 'm' } %>
+        <%= solicitor_object.govuk_text_field :contact_email, label: { text: t(".contact_email"), size: 'm' } %>
+      <% end%>
 
       <%= form.fields_for :firm_office, as: :firm_detail_form do |firm_office_object| %>
         <%= firm_office_object.govuk_text_field :name, label: { text: t(".firm_name"), size: 'm' } %>

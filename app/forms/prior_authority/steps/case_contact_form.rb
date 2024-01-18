@@ -1,17 +1,17 @@
 module PriorAuthority
   module Steps
     class CaseContactForm < ::Steps::BaseFormObject
-      attribute :contact_name, :string
-      attribute :contact_email, :string
-
       attr_accessor :firm_office_attributes, :solicitor_attributes
 
       validates :firm_office, presence: true, nested: true
-      validates :contact_name, presence: true
-      validates :contact_email, presence: true
+      validates :solicitor, presence: true, nested: true
 
       def firm_office
         @firm_office ||= PriorAuthority::Steps::CaseContact::FirmDetailForm.new(firm_office_fields.merge(application:))
+      end
+
+      def solicitor
+        @solicitor ||= PriorAuthority::Steps::CaseContact::SolicitorForm.new(solicitor_fields.merge(application:))
       end
 
       private
@@ -24,9 +24,14 @@ module PriorAuthority
           .slice(*PriorAuthority::Steps::CaseContact::FirmDetailForm.attribute_names)
       end
 
+      def solicitor_fields
+        (solicitor_attributes || application.solicitor&.attributes || {})
+          .slice(*PriorAuthority::Steps::CaseContact::SolicitorForm.attribute_names)
+      end
+
       def persist!
         firm_office.save!
-        application.update!(attributes)
+        solicitor.save!
       end
     end
   end

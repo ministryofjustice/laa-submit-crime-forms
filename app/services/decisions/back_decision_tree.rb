@@ -52,7 +52,7 @@ module Decisions
     from('prior_authority/steps/prison_law').goto(edit: 'prior_authority/applications')
     from('prior_authority/steps/authority_value').goto(edit: 'prior_authority/steps/prison_law')
     from('prior_authority/steps/ufn').goto(edit: 'prior_authority/steps/authority_value')
-    from('prior_authority/steps/case_contact').goto(edit: 'prior_authority/steps/ufn')
+    from('prior_authority/steps/case_contact').goto(show: 'prior_authority/steps/start_page')
     from('prior_authority/steps/client_detail').goto(edit: 'prior_authority/steps/case_contact')
   end
 end

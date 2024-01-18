@@ -71,6 +71,17 @@ en:
               blank: Enter a firm name
             account_number:
               blank: Enter an account number
+        prior_authority/steps/case_contact/solicitor_form:
+          attributes: &contact_form
+            contact_full_name:
+              blank: Enter the full name of the contact
+              invalid: |
+                Contact's name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
+                The contact's full name must be 2 words or more.
+            contact_email:
+              blank: Enter the email address of the contact
+              invalid: Enter a valid email address
+          summary: *contact_form
         prior_authority/steps/prison_law_form:
           attributes:
             prison_law:

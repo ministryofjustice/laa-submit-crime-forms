@@ -1,6 +1,7 @@
 class PriorAuthorityApplication < ApplicationRecord
   belongs_to :provider
   belongs_to :firm_office, optional: true
+  belongs_to :solicitor, optional: true
 
   attribute :prison_law, :boolean
   attribute :ufn, :string

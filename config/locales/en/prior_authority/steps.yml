@@ -9,7 +9,7 @@ en:
       case_contact:
         edit:
           caption: 1. Contact details
-          contact_name: Full name
+          contact_full_name: Full name
           contact_email: Email address
           firm_name: Firm name
           firm_account_number: Firm account number
