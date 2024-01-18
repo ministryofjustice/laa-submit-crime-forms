@@ -13,10 +13,10 @@ gem 'importmap-rails'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'logstasher', '~> 2.1'
 gem 'oauth2', '~> 2.0'
-gem 'pagy', '~> 6.3.0'
+gem 'pagy', '~> 6.4.1'
 gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.4'
-gem 'rails', '~> 7.1.2'
+gem 'rails', '~> 7.1.3'
 gem 'sentry-rails', '~> 5.16.1'
 gem 'sentry-ruby', '~> 5.16.1'
 gem 'sidekiq', '~> 7.2'
@@ -35,6 +35,7 @@ group :development, :test do
   gem 'erb_lint', require: false
   gem 'pry'
   gem 'rspec-expectations'
+  gem 'rspec_junit_formatter'
   gem 'rspec-rails', '~> 6.1.0'
 end
 
