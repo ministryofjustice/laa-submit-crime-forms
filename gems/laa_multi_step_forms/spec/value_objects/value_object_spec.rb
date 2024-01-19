@@ -85,7 +85,7 @@ RSpec.describe ValueObject do
     it 'has a constant with the inquiry methods' do
       expect(
         YesNoAnswer::INQUIRY_METHODS
-      ).to match_array(%i[yes? no?])
+      ).to match_array(%w[yes? no?])
     end
 
     it 'defines inquiry methods for each of the values' do
