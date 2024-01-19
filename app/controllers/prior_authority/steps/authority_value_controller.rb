@@ -15,7 +15,7 @@ module PriorAuthority
           if @form_object.authority_value
             redirect_to offboard_prior_authority_application_path(current_application)
           else
-            update_and_advance(AuthorityValueForm, as: :authority_value)
+            update_and_advance(AuthorityValueForm, as:, after_commit_redirect_path:)
           end
         else
           render :edit
@@ -28,8 +28,8 @@ module PriorAuthority
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
+      def as
+        :authority_value
       end
     end
   end

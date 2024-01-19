@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   put '/dummy_step/:id/after_commit', to: 'home#index', as: :after_commit
   get '/dummy_step/:id', to: 'dummy_step#show'
   put '/dummy_step/:id', to: 'dummy_step#update'
+  get '/dummy_application/:id/wherever', to: 'start_page#show', as: :wherever
 
   root 'home#index'
 

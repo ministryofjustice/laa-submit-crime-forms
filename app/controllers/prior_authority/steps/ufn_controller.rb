@@ -8,13 +8,13 @@ module PriorAuthority
       end
 
       def update
-        update_and_advance(UfnForm, as: :ufn)
+        update_and_advance(UfnForm, as:, after_commit_redirect_path:)
       end
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
+      def as
+        :ufn
       end
     end
   end

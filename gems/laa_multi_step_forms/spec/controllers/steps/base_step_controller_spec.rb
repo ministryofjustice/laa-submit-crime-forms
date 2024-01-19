@@ -194,10 +194,27 @@ RSpec.describe DummyStepController, type: :controller do
         put :update, params:
       end
 
-      it 'redirects to the after_commit_path' do
-        put(:update, params:)
+      context 'with no after_commit_redirect_path specified' do
+        it 'redirects to the after_commit_path' do
+          put(:update, params:)
 
-        expect(response).to redirect_to(after_commit_path(id: application.id))
+          expect(response).to redirect_to(after_commit_path(id: application.id))
+        end
+      end
+
+      context 'with an after_commit_redirect_path specified' do
+        let(:options) do
+          {
+            as: :claim_type,
+            after_commit_redirect_path: wherever_path(id: application.id)
+          }
+        end
+
+        it 'redirects to the specified path' do
+          put(:update, params:)
+
+          expect(response).to redirect_to(wherever_path(id: application.id))
+        end
       end
     end
 

@@ -8,13 +8,13 @@ module PriorAuthority
       end
 
       def update
-        update_and_advance(PrisonLawForm, as: :prison_law)
+        update_and_advance(PrisonLawForm, as:, after_commit_redirect_path:)
       end
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
+      def as
+        :prison_law
       end
     end
   end

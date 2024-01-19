@@ -1,11 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe YesNoAnswer do
-  subject { described_class.new(value) }
-
   describe '.values' do
+    subject(:values) { described_class.values }
+
     it 'returns all possible values' do
-      expect(described_class.values.map(&:to_s)).to eq(%w[yes no])
+      expect(values.map(&:to_s)).to eq(%w[yes no])
+    end
+  end
+
+  describe '.radio_options' do
+    subject(:radio_options) { described_class.radio_options }
+
+    it 'returns array of values an labels' do
+      expect(radio_options.map(&:label)).to match_array(%w[Yes No])
     end
   end
 end
