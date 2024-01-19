@@ -17,6 +17,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'pg', '~> 1.5'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false

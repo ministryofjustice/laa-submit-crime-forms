@@ -156,6 +156,13 @@ commands:
           path: ~/repo/coverage
           destination: coverage
 
+  rspec-gem-specs:
+    steps:
+      - run:
+          name: Run rspec tests
+          command: |
+            bundle exec rspec
+
   build-docker-image:
       steps:
         - run:
@@ -237,6 +244,15 @@ jobs:
       - browser-tools/install-browser-tools
       - rspec
 
+  rspec-gem-tests:
+    executor: test-executor
+    working_directory: ~/repo/gems/laa_multi_step_forms
+    steps:
+      - checkout:
+          path: ~/repo
+      - install-gems
+      - rspec-gem-specs
+
   scan-docker-image:
     executor: test-executor
     parallelism: 1
@@ -317,6 +333,9 @@ workflows:
           requires:
             - build-test-container
       - rspec-tests:
+          requires:
+            - build-test-container
+      - rspec-gem-tests:
           requires:
             - build-test-container
       - scan-docker-image:
