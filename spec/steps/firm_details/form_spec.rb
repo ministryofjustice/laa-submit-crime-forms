@@ -67,9 +67,6 @@ RSpec.describe Steps::FirmDetailsForm do
         end
 
         context 'without an existing address in DB' do
-          # TODO: make this lookup work betterer
-          xit 'can be built from the previous claim by from the user/office'
-
           it 'leaves the fields blank' do
             expect(subject.firm_office).to have_attributes(
               name: nil,
