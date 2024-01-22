@@ -1,6 +1,7 @@
 module CostSummary
   class Report < Base
     include GovukLinkHelper
+    include GovukVisuallyHiddenHelper
     include ActionView::Helpers::UrlHelper
 
     attr_reader :claim, :items

@@ -4,7 +4,7 @@
       <% if ENV.fetch('ENV', 'local') == 'production' %>
         <%= t('.phase') %>
       <% else %>
-        <%= ENV.fetch('ENV', 'local') %>
+        <%= ENV.fetch('ENV', 'local').capitalize %>
       <% end %>
     </strong>
     <span class="govuk-phase-banner__text">

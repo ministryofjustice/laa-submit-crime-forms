@@ -1,6 +1,7 @@
 module CheckAnswers
   class Report
     include GovukLinkHelper
+    include GovukVisuallyHiddenHelper
     include ActionView::Helpers::UrlHelper
     GROUPS = %w[
       claim_type

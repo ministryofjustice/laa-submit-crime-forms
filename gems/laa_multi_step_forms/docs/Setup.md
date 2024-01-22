@@ -25,7 +25,7 @@ The following Node modules are required - simply add them to the Package.json
 
 ```
 "@ministryofjustice/frontend": "1.6.4",
-"govuk-frontend": "4.5.0",
+"govuk-frontend": "5.0.0",
 "accessible-autocomplete": "^2.0.4",
 ```
 
