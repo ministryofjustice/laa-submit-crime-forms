@@ -3,6 +3,7 @@ require Rails.root.join('app/lib/laa_portal/saml_strategy')
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   configure do |config|
+    config.logger = Rails.logger
     config.logger.level = Logger::WARN if Rails.env.test?
     config.add_mock(:saml, LaaPortal::SamlStrategy.mock_auth)
     config.test_mode = Rails.env.test? || ENV.fetch('OMNIAUTH_TEST_MODE', 'false').inquiry.true?
