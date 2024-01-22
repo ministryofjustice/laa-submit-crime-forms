@@ -1,14 +1,2 @@
-<div class="govuk-phase-banner" role="complementary">
-  <p class="govuk-phase-banner__content">
-    <strong class="govuk-tag govuk-phase-banner__content__tag">
-      <% if ENV.fetch('ENV', 'local') == 'production' %>
-        <%= t('.phase') %>
-      <% else %>
-        <%= ENV.fetch('ENV', 'local').capitalize %>
-      <% end %>
-    </strong>
-    <span class="govuk-phase-banner__text">
-      <%= t('.phase_description', feedback: main_app.about_feedback_index_path).html_safe %>
-    </span>
-  </p>
-</div>
+<%= govuk_phase_banner(tag: { text: phase_name },
+                       text: t('.phase_description_html', feedback: main_app.about_feedback_index_path)) %>
