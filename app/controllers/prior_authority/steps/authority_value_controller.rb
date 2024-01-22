@@ -2,6 +2,8 @@ module PriorAuthority
   module Steps
     class AuthorityValueController < BaseController
       def edit
+        @authority_threshold = current_application.prison_law? ? 500 : 100
+
         @form_object = AuthorityValueForm.build(
           current_application
         )

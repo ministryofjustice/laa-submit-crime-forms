@@ -4,7 +4,7 @@ en:
     steps:
       authority_value:
         edit:
-          legend: Are you applying for a total authority of less than £500?
+          legend: Are you applying for a total authority of less than £%{authority_threshold}?
           page_title: Authority value
       case_contact:
         edit:
