@@ -20,6 +20,9 @@ Rails.application.routes.draw do
         end
       end
       upload_step :supporting_evidence
+      upload_step :downloadable_entity do
+        collection { get :download }
+      end
     end
   end
 end

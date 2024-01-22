@@ -63,5 +63,8 @@ RSpec.describe RouteHelpers, type: :routing do
     expect(delete("/applications/#{id}/steps/supporting_evidence")).to route_to(
       'steps/supporting_evidence#destroy', id:
     )
+    expect(get("/applications/#{id}/steps/downloadable_entity/download")).to route_to(
+      'steps/downloadable_entity#download', id:
+    )
   end
 end
