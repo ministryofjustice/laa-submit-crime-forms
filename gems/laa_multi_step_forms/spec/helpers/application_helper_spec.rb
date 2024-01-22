@@ -51,22 +51,49 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
   end
 
   describe '#app_environment' do
-    context 'when ENV is set' do
-      around do |spec|
-        env = ENV.fetch('ENV', nil)
-        ENV['ENV'] = 'test'
-        spec.run
-        ENV['ENV'] = env
+    context 'when ENV var "ENV" is set' do
+      before do
+        allow(ENV).to receive(:fetch).with('ENV', 'local').and_return 'test'
       end
 
-      it 'returns based on ENV variable' do
+      it 'returns based on ENV var "ENV" variable' do
         expect(helper.app_environment).to eq('app-environment-test')
       end
     end
 
-    context 'when ENV is not set' do
-      it 'returns based with local' do
+    context 'when ENV var "ENV" is not set' do
+      it 'returns based on local' do
         expect(helper.app_environment).to eq('app-environment-local')
+      end
+    end
+  end
+
+  describe '#phase_name' do
+    subject(:phase_name) { helper.phase_name }
+
+    context 'when ENV var "ENV" is production' do
+      before do
+        allow(ENV).to receive(:fetch).with('ENV', 'local').and_return 'production'
+      end
+
+      it 'returns Beta' do
+        expect(phase_name).to eql 'Beta'
+      end
+    end
+
+    context 'when ENV var "ENV" returns something other than production' do
+      before do
+        allow(ENV).to receive(:fetch).with('ENV', 'local').and_return 'uat'
+      end
+
+      it 'returns the ENV var value' do
+        expect(phase_name).to eql 'Uat'
+      end
+    end
+
+    context 'when ENV var "ENV" is not set' do
+      it 'returns "local"' do
+        expect(phase_name).to eql 'Local'
       end
     end
   end

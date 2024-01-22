@@ -26,6 +26,12 @@ module LaaMultiStepForms
       "app-environment-#{ENV.fetch('ENV', 'local')}"
     end
 
+    def phase_name
+      return t('layouts.phase_banner.phase') if ENV.fetch('ENV', 'local') == 'production'
+
+      ENV.fetch('ENV', 'local').capitalize
+    end
+
     def format_period(period)
       return if period.nil?
 
