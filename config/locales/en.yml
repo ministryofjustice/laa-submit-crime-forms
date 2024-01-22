@@ -30,5 +30,5 @@ en:
       sign_in: Sign in
       sign_out: Sign out
     phase_banner:
-      phase: BETA
+      phase: Beta
       phase_description: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us to improve it.

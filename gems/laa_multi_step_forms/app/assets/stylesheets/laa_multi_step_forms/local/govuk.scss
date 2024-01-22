@@ -2,9 +2,9 @@
 //
 $govuk-new-link-styles: true;
 $govuk-global-styles: true;
-$govuk-assets-path: 'govuk-frontend/govuk/assets/';
+$govuk-assets-path: 'govuk-frontend/dist/govuk/assets/';
 
-@import "govuk-frontend/govuk/all";
+@import "govuk-frontend/dist/govuk/all";
 
 $govuk-is-ie8: false;
 $govuk-ie8-breakpoint: ('desktop');
