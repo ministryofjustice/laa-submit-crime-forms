@@ -6,11 +6,27 @@ updates:
     interval: daily
     time: "03:00"
     timezone: Europe/London
-  open-pull-requests-limit: 15
+  groups:
+    aws-gems:
+      patterns:
+        - "aws-*"
+  open-pull-requests-limit: 10
+  reviewers:
+    - "ministryofjustice/crm7team"
 - package-ecosystem: npm
   directory: "/"
   schedule:
     interval: daily
     time: "03:00"
     timezone: Europe/London
-  open-pull-requests-limit: 15
+  groups:
+    npm-babel:
+      patterns:
+        - "*babel*"
+    npm-jest:
+      patterns:
+        - "jest*"
+  open-pull-requests-limit: 10
+  reviewers:
+    - "ministryofjustice/crm7team"
+
