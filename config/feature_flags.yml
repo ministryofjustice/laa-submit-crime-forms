@@ -1,0 +1,4 @@
+feature_flags:
+  omniauth_test_mode:
+    author: Ivan Yohuno
+    description: Use mocked SAML login instead of logging into Portal
