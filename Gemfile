@@ -7,6 +7,7 @@ gem 'aws-sdk-s3', '~> 1.142'
 gem 'bootsnap', '~> 1.17.1', require: false
 gem 'clamby', '~> 1.6'
 gem 'dartsass-rails', '~> 0.5.0'
+gem 'govuk_feature_flags', path: './gems/govuk_feature_flags'
 gem 'govuk_notify_rails', '~> 2.2.0'
 gem 'httparty'
 gem 'importmap-rails'

@@ -6,6 +6,12 @@ GIT
     hmcts_common_platform (0.1.0)
 
 PATH
+  remote: gems/govuk_feature_flags
+  specs:
+    govuk_feature_flags (0.1.0)
+      rails (>= 7.0.4)
+
+PATH
   remote: gems/laa_multi_step_forms
   specs:
     laa_multi_step_forms (0.1.0)
@@ -521,6 +527,7 @@ DEPENDENCIES
   dotenv-rails
   erb_lint
   factory_bot_rails (>= 6.4.3)
+  govuk_feature_flags!
   govuk_notify_rails (~> 2.2.0)
   hmcts_common_platform!
   httparty
