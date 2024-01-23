@@ -35,7 +35,7 @@ RSpec.describe 'Prior authority application creation' do
     click_on 'Save and continue'
 
     click_on 'Save and continue'
-    expect(page).to have_content 'Select if you are applying for a total authority of less than £500'
+    expect(page).to have_content 'Select yes if you are applying for a total authority of less than £500'
     choose 'No'
     click_on 'Save and continue'
 

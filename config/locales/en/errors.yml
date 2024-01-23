@@ -46,7 +46,9 @@ en:
         prior_authority/steps/authority_value_form:
           attributes:
             authority_value:
-              inclusion: Select if you are applying for a total authority of less than £500
+              inclusion:
+                less_than_five_hundred: Select yes if you are applying for a total authority of less than £500
+                less_than_one_hundred: Select yes if you are applying for a total authority of less than £100
         prior_authority/steps/case_contact_form:
           attributes:
             contact_name:
