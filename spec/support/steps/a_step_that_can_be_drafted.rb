@@ -27,6 +27,7 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class, additional_pa
 
       before do
         allow(form_class).to receive(:new).and_return(form_object)
+        allow(form_object).to receive_message_chain(:application, :is_a?).and_return(false)
       end
 
       context 'when the form saves successfully' do

@@ -1,7 +1,9 @@
 module ApplicationHelper
   # moved here to allow view specs to work
   def current_application
-    @current_application ||= Claim.for(current_provider).find_by(id: params[:id])
+    @current_application ||=
+      Claim.for(current_provider).find_by(id: params[:id]) ||
+      PriorAuthorityApplication.for(current_provider).find_by(id: params[:id])
   end
 
   def current_office_code

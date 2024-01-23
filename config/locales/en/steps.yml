@@ -68,6 +68,8 @@ en:
           change: Change
           delete: Delete
         add_another: Do you want to add another defendant?
+        change: Change
+        delete: Delete
     defendant_delete:
       edit:
         page_title: Are you sure you want to delete this defendant?
@@ -310,12 +312,4 @@ en:
       show:
         page_title: View your claim
         heading: View your claim
-  laa_multi_step_forms:
-    task_list:
-      show:
-        page_title: Your claim progress
-        heading: Your claim progress
-        subheading: Claim incomplete
-        progress_counter: You have completed %{completed} of %{total} sections.
-        aside:
-          reference: LAA Reference number
+

@@ -16,6 +16,8 @@ class Provider < ApplicationRecord
     office_codes.size > 1
   end
 
+  has_many :prior_authority_applications, dependent: :destroy
+
   class << self
     def from_omniauth(auth)
       find_or_initialize_by(auth_provider: auth.provider, uid: auth.uid).tap do |record|

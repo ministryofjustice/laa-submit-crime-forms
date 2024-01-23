@@ -2,6 +2,9 @@
 en:
   tasklist:
     heading:
+      application_detail: Application details
+      about_case: About the case
+      case_contact: Case contact
       what: What you are claiming
       about_you: About you
       case: About the case
@@ -10,6 +13,11 @@ en:
       evidence: Supporting evidence
       review: Review and confirm
     task:
+      prior_authority_ufn: Unique file number
+      prior_authority_case_contact: Case contact
+      prior_authority_case_hearing_detail: Case and hearing details
+      prior_authority_client_detail: Client details
+      case_hearing_detail: Case and hearing details
       claim_type:
         non_standard_magistrate: Non-standard magistrates’ court payment
         breach_of_injunction: Breach of injunction court payment
@@ -31,4 +39,16 @@ en:
   laa_multi_step_forms:
     task_list:
       show:
-        back_to_applications: Back to your claims
+        back_to_applications:
+          claim: Back to your claims
+          application: Back to your applications
+        page_title: Your %{app_type} progress
+        page_advisory: If you leave this page before submitting, you can return later to complete the %{app_type}.
+        heading: Your %{app_type} progress
+        subheading: "%{app_type} incomplete"
+        progress_counter: You have completed %{completed} of %{total} sections.
+        aside:
+          reference: LAA reference
+          title: Application reference
+          prison_law: Under Prison Law
+          ufn: Unique file number

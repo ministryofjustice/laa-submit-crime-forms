@@ -164,12 +164,11 @@ RSpec.describe DummyStepController, type: :controller do
       let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, commit_draft: true } }
 
       it 'sets the paramters on the form' do
-        expect(form_class).to receive(:new).with({
-                                                   'application' => application,
-          'record' => application,
-          'first' => '1',
-          'second' => '2',
-                                                 })
+        expect(form_class).to receive(:new)
+          .with({ 'application' => application,
+                  'record' => application,
+                  'first' => '1',
+                  'second' => '2' })
 
         put :update, params:
       end
@@ -178,11 +177,10 @@ RSpec.describe DummyStepController, type: :controller do
         let(:params) { { id: application.id, test_model: { first: 1, third: 3 }, commit_draft: true } }
 
         it 'ignore additional and skips missing params' do
-          expect(form_class).to receive(:new).with({
-                                                     'application' => application,
-            'record' => application,
-            'first' => '1',
-                                                   })
+          expect(form_class).to receive(:new)
+            .with({ 'application' => application,
+                    'record' => application,
+                    'first' => '1' })
 
           put :update, params:
         end
@@ -194,10 +192,27 @@ RSpec.describe DummyStepController, type: :controller do
         put :update, params:
       end
 
-      it 'redirects to the after_commit_path' do
-        put(:update, params:)
+      context 'with no after_commit_redirect_path specified' do
+        it 'redirects to the after_commit_path' do
+          put(:update, params:)
 
-        expect(response).to redirect_to(after_commit_path(id: application.id))
+          expect(response).to redirect_to(after_commit_path(id: application.id))
+        end
+      end
+
+      context 'with an after_commit_redirect_path specified' do
+        let(:options) do
+          {
+            as: :claim_type,
+            after_commit_redirect_path: wherever_path(id: application.id)
+          }
+        end
+
+        it 'redirects to the specified path' do
+          put(:update, params:)
+
+          expect(response).to redirect_to(wherever_path(id: application.id))
+        end
       end
     end
 
@@ -207,12 +222,11 @@ RSpec.describe DummyStepController, type: :controller do
       let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, save_and_refresh: true } }
 
       it 'sets the paramters on the form' do
-        expect(form_class).to receive(:new).with({
-                                                   'application' => application,
-          'record' => application,
-          'first' => '1',
-          'second' => '2',
-                                                 })
+        expect(form_class).to receive(:new)
+          .with({ 'application' => application,
+                  'record' => application,
+                  'first' => '1',
+                  'second' => '2' })
 
         put :update, params:
       end
@@ -221,11 +235,10 @@ RSpec.describe DummyStepController, type: :controller do
         let(:params) { { id: application.id, test_model: { first: 1, third: 3 }, commit_draft: true } }
 
         it 'ignore additional and skips missing params' do
-          expect(form_class).to receive(:new).with({
-                                                     'application' => application,
-            'record' => application,
-            'first' => '1',
-                                                   })
+          expect(form_class).to receive(:new)
+            .with({ 'application' => application,
+                    'record' => application,
+                    'first' => '1' })
 
           put :update, params:
         end
@@ -258,12 +271,11 @@ RSpec.describe DummyStepController, type: :controller do
       let(:params) { { id: application.id, test_model: { first: 1, second: 2 } } }
 
       it 'sets the paramters on the form' do
-        expect(form_class).to receive(:new).with({
-                                                   'application' => application,
-          'record' => application,
-          'first' => '1',
-          'second' => '2',
-                                                 })
+        expect(form_class).to receive(:new)
+          .with({ 'application' => application,
+                  'record' => application,
+                  'first' => '1',
+                  'second' => '2' })
 
         put :update, params:
       end

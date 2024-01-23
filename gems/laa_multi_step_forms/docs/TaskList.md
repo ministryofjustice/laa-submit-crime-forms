@@ -23,13 +23,13 @@ end
 
 ### Name and translation
 
-To provide flexibility on on tasks, the task name can be determined by
-a proc instead of a sttaic symbol, the proc should take the application
+To provide flexibility on tasks, the task name can be determined by
+a proc instead of a static symbol, the proc should take the application
 as the input and return a string that is used as the translation key
 (said key will be nested under `tasklist.task` when translated).
 
 If the key contains a `.`, then only the part prior to the dot is used
-to in the subtask selection process defined below.
+in the subtask selection process defined below.
 
 ```ruby
 SECTIONS = [
@@ -43,7 +43,7 @@ SECTIONS = [
 Each task in the above defined tasklist should have a presenter that
 is used to determine the state of the defined task.
 
-`Task::BaseTask` is provides a template for the available methods each
+`Task::BaseTask` provides a template for the available methods each
 presenter needs to expose.
 
 The specific base subclass selected using the `Tasks::BaseTask.build`

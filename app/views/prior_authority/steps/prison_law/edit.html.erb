@@ -1,0 +1,22 @@
+<% title t('.page_title') %>
+<% step_header(path: prior_authority_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |form| %>
+     <%= form.govuk_collection_radio_buttons(
+            :prison_law,
+            YesNoAnswer.radio_options,
+            :value,
+            :label,
+            legend: { text: t('.legend'), size: 'xl' }
+          ) %>
+
+      <%= form.continue_button(secondary: false) %>
+    <% end %>
+  </div>
+</div>
+
+

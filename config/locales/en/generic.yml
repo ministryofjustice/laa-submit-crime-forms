@@ -1,0 +1,7 @@
+---
+en:
+  generic:
+    'yes': 'Yes'
+    'no': 'No'
+    'true': "Yes"
+    'false': "No"
