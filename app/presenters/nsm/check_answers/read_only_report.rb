@@ -94,7 +94,7 @@ module Nsm
 
       private
 
-      def actions(_key)
+      def actions(*)
         []
       end
 

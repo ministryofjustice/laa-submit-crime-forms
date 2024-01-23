@@ -2,6 +2,7 @@ module Nsm
   module CostSummary
     class LettersCalls < Base
       TRANSLATION_KEY = self
+      HALF_WIDTH = 'govuk-summary-list__value-width-50'.freeze
       attr_reader :letters_calls_form
 
       def initialize(claim)
@@ -12,11 +13,11 @@ module Nsm
       def rows
         [
           {
-            key: { text: translate('letters'), classes: 'govuk-summary-list__value-width-50' },
+            key: { text: translate('letters'), classes: HALF_WIDTH },
             value: { text: NumberTo.pounds(letters_calls_form.letters_after_uplift || 0) },
           },
           {
-            key: { text: translate('calls'), classes: 'govuk-summary-list__value-width-50' },
+            key: { text: translate('calls'), classes: HALF_WIDTH },
             value: { text: NumberTo.pounds(letters_calls_form.calls_after_uplift || 0) },
           }
         ]
@@ -27,7 +28,7 @@ module Nsm
 
         [
           {
-            key: { text: translate('.footer.total_inc_vat'), classes: 'govuk-summary-list__value-width-50' },
+            key: { text: translate('.footer.total_inc_vat'), classes: HALF_WIDTH },
             value: { text: NumberTo.pounds(total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
           }
         ]
