@@ -88,6 +88,7 @@ module Decisions
 
     # prior authority draft application steps
     from(:case_contact).goto(edit: 'prior_authority/steps/client_detail')
-    from(:client_detail).goto(show: 'prior_authority/steps/start_page') # TODO: move to case and hearing details
+    from(:client_detail).goto(edit: 'prior_authority/steps/case_detail')
+    from(:case_detail).goto(show: 'prior_authority/steps/start_page') # TODO: move to hearing details
   end
 end

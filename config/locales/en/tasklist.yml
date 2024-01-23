@@ -15,7 +15,7 @@ en:
     task:
       prior_authority/ufn: Unique file number
       prior_authority/case_contact: Case contact
-      prior_authority/case_hearing_detail: Case and hearing details
+      prior_authority/case_and_hearing_detail: Case and hearing details
       prior_authority/client_detail: Client details
       nsm/claim_type:
         non_standard_magistrate: Non-standard magistrates’ court payment

@@ -15,6 +15,19 @@ en:
           firm_account_number: Firm account number
           hint: For example, 1A234B
           page_title: Case contact
+      case_detail:
+        edit:
+          caption: 2. About the case
+          client_detained: Is your client detained?
+          client_detained_prison: Where is your client detained?
+          client_detained_prison_hint: Enter the name of prison, or select one from the suggestions that appear when you start to enter the name.
+          client_maat_number: MAAT number
+          main_offence: What was the main offence?
+          main_offence_hint: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name.
+          page_title: Case details
+          rep_order_date: Date of representation order
+          rep_order_date_hint: For example, 27 3 2007
+          subject_to_poca: Is this case subject to POCA (Proceeds of Crime Act 2002)?
       client_detail:
         edit:
           caption: 2. About the case

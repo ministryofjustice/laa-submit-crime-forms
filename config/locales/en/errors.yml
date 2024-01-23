@@ -55,6 +55,19 @@ en:
               blank: Enter the full contact name
             contact_email:
               blank: Enter the contact email address
+        prior_authority/steps/case_detail_form:
+          attributes:
+            main_offence:
+              blank: Enter the main offence
+            rep_order_date: *shared_date_errors
+            client_maat_number:
+              blank: Enter the MAAT number
+            client_detained:
+              inclusion: Select yes if your client is detained
+            client_detained_prison:
+              blank: Enter the name of the prison
+            subject_to_poca:
+              inclusion: Select yes if this case is subject to POCA (Proceeds of Crime Act 2002)?
         prior_authority/steps/client_detail_form:
           attributes:
             first_name:
