@@ -14,15 +14,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_23_113415) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "action_mailbox_inbound_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "status", default: 0, null: false
-    t.string "message_id", null: false
-    t.string "message_checksum", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
-  end
-
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -87,6 +78,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_23_113415) do
     t.integer "defence_statement"
     t.integer "number_of_witnesses"
     t.string "supplemental_claim"
+    t.string "preparation_time"
     t.integer "time_spent"
     t.integer "letters"
     t.integer "calls"
@@ -104,7 +96,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_23_113415) do
     t.string "disability"
     t.boolean "send_by_post"
     t.date "remitted_to_magistrate_date"
-    t.string "preparation_time"
     t.string "work_before"
     t.string "work_after"
     t.string "has_disbursements"
@@ -131,17 +122,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_23_113415) do
   end
 
   create_table "defendants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "claim_id"
+    t.uuid "claim_id", null: false
     t.string "full_name"
     t.string "maat"
     t.integer "position"
     t.boolean "main", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "date_of_birth"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "prior_authority_application_id"
     t.index ["claim_id"], name: "index_defendants_on_claim_id"
   end
 
@@ -184,27 +171,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_23_113415) do
   end
 
   create_table "prior_authority_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.boolean "prison_law"
-    t.string "ufn"
-    t.string "contact_name"
-    t.string "contact_email"
-    t.string "firm_name"
-    t.string "firm_account_number"
-    t.string "laa_reference"
-    t.string "ufn_form_status", default: "not_started"
-    t.string "case_contact_form_status", default: "not_started"
-    t.string "status", default: "pre_draft"
     t.uuid "provider_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.uuid "firm_office_id"
+    t.uuid "solicitor_id"
+    t.string "office_code", null: false
+    t.boolean "prison_law"
+    t.boolean "authority_value"
+    t.string "ufn"
+    t.string "laa_reference"
+    t.string "status", default: "pre_draft"
     t.string "client_first_name"
     t.string "client_last_name"
     t.date "client_date_of_birth"
-    t.string "client_detail_form_status", default: "not_started"
-    t.string "office_code", null: false
     t.jsonb "navigation_stack", default: [], array: true
-    t.boolean "authority_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
+    t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -270,6 +254,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_23_113415) do
   add_foreign_key "defendants", "claims"
   add_foreign_key "disbursements", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
+  add_foreign_key "prior_authority_applications", "firm_offices"
+  add_foreign_key "prior_authority_applications", "solicitors"
   add_foreign_key "solicitors", "solicitors", column: "previous_id"
   add_foreign_key "supporting_evidence", "claims"
   add_foreign_key "work_items", "claims"
