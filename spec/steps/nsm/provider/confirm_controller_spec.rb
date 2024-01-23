@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Office::ConfirmController, type: :controller do
+RSpec.describe Nsm::Steps::Office::ConfirmController, type: :controller do
   describe '#edit' do
     it 'responds with HTTP success' do
       get :edit
@@ -9,7 +9,7 @@ RSpec.describe Steps::Office::ConfirmController, type: :controller do
   end
 
   describe '#update' do
-    let(:form_class) { Steps::Office::ConfirmForm }
+    let(:form_class) { Nsm::Steps::Office::ConfirmForm }
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
     let(:form_class_params_name) { form_class.name.underscore }
     let(:expected_params) { { form_class_params_name => { foo: 'bar' } } }

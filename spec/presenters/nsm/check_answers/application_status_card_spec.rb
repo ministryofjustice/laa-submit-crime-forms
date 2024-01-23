@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::ApplicationStatusCard do
+RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
   subject { described_class.new(claim) }
 
   describe '#title' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::FirmDetailsForm do
+RSpec.describe Nsm::Steps::FirmDetailsForm do
   subject { described_class.new(params) }
 
   let(:params) do
@@ -130,8 +130,8 @@ RSpec.describe Steps::FirmDetailsForm do
     let(:solicitor_form) { double(:solicitor, save!: true) }
 
     it 'call persist on the nested firm_office and solicitor objects' do
-      allow(Steps::FirmDetails::FirmOfficeForm).to receive(:new).and_return(firm_office_form)
-      allow(Steps::FirmDetails::SolicitorForm).to receive(:new).and_return(solicitor_form)
+      allow(Nsm::Steps::FirmDetails::FirmOfficeForm).to receive(:new).and_return(firm_office_form)
+      allow(Nsm::Steps::FirmDetails::SolicitorForm).to receive(:new).and_return(solicitor_form)
 
       subject.save!
 

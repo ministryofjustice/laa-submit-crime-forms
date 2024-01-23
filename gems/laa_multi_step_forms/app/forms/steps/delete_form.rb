@@ -1,5 +1,5 @@
 module Steps
-  class DeleteForm < Steps::BaseFormObject
+  class DeleteForm < ::Steps::BaseFormObject
     attribute :id
 
     private

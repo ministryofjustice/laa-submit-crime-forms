@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::ReasonForClaimForm do
+RSpec.describe Nsm::Steps::ReasonForClaimForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do

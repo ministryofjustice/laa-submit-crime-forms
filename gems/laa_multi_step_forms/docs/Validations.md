@@ -35,7 +35,7 @@ of the object in the array. It is possible to overwrite this value to instead ca
 message on the underlying object.
 
 ```ruby
-class MyForm < Steps::BaseFormObject
+class MyForm < ::Steps::BaseFormObject
   attribute :single_nested_object
   attribute :array_of_nested_objects
 

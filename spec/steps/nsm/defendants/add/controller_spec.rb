@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe Steps::DefendantDetailsController, type: :controller do
+RSpec.describe Nsm::Steps::DefendantDetailsController, type: :controller do
   let(:defendant) { existing_case.is_a?(Claim) ? existing_case.defendants.create : nil }
 
-  it_behaves_like 'a generic step controller', Steps::DefendantDetailsForm, Decisions::DecisionTree,
+  it_behaves_like 'a generic step controller', Nsm::Steps::DefendantDetailsForm, Decisions::DecisionTree,
                   ->(scope) { { defendant_id: scope.defendant&.id || '4321' } }
-  it_behaves_like 'a step that can be drafted', Steps::DefendantDetailsForm,
+  it_behaves_like 'a step that can be drafted', Nsm::Steps::DefendantDetailsForm,
                   ->(scope) { { defendant_id: scope.defendant&.id || '4321' } }
 
   describe '#edit' do
@@ -14,11 +14,11 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
 
     context 'when defendant_id NEW_RECORD flag passed as id' do
       it 'does not save the new defendant it passes to the form' do
-        allow(Steps::DefendantDetailsForm).to receive(:build)
+        allow(Nsm::Steps::DefendantDetailsForm).to receive(:build)
         expect { get :edit, params: { id: application, defendant_id: StartPage::NEW_RECORD } }
           .not_to change(application.defendants, :count)
 
-        expect(Steps::DefendantDetailsForm).to have_received(:build) do |defend, **kwargs|
+        expect(Nsm::Steps::DefendantDetailsForm).to have_received(:build) do |defend, **kwargs|
           expect(defend).to be_a(Defendant)
           expect(defend).to be_new_record
           expect(kwargs).to eq(application:)
@@ -31,13 +31,13 @@ RSpec.describe Steps::DefendantDetailsController, type: :controller do
         let(:defendants) { [Defendant.new(full_name: 'Jim', maat: 'AA1', main: true, position: 1)] }
 
         it 'passes the existing defendant to the form' do
-          allow(Steps::DefendantDetailsForm).to receive(:build)
+          allow(Nsm::Steps::DefendantDetailsForm).to receive(:build)
           expect do
             get :edit,
                 params: { id: application, defendant_id: application.defendants.first.id }
           end.not_to change(application.defendants, :count)
 
-          expect(Steps::DefendantDetailsForm).to have_received(:build).with(defendants.first, application:)
+          expect(Nsm::Steps::DefendantDetailsForm).to have_received(:build).with(defendants.first, application:)
         end
       end
 

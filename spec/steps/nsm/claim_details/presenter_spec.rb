@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::ClaimDetails, type: :system do
+RSpec.describe Nsm::Tasks::ClaimDetails, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { create(:claim, attributes) }
@@ -42,10 +42,10 @@ RSpec.describe Tasks::ClaimDetails, type: :system do
   end
 
   describe '#completed?' do
-    let(:form) { instance_double(Steps::ClaimDetailsForm, valid?: valid) }
+    let(:form) { instance_double(Nsm::Steps::ClaimDetailsForm, valid?: valid) }
 
     before do
-      allow(Steps::ClaimDetailsForm).to receive(:new).and_return(form)
+      allow(Nsm::Steps::ClaimDetailsForm).to receive(:new).and_return(form)
     end
 
     context 'when status is valid' do

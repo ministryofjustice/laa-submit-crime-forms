@@ -1,11 +1,13 @@
-module Steps
-  class DisbursementAddForm < Steps::BaseFormObject
-    attribute :has_disbursements, :value_object, source: YesNoAnswer
+module Nsm
+  module Steps
+    class DisbursementAddForm < ::Steps::BaseFormObject
+      attribute :has_disbursements, :value_object, source: YesNoAnswer
 
-    private
+      private
 
-    def persist!
-      record.update!(attributes)
+      def persist!
+        record.update!(attributes)
+      end
     end
   end
 end

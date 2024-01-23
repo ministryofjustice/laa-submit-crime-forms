@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::EqualityAnswersCard do
+RSpec.describe Nsm::CheckAnswers::EqualityAnswersCard do
   subject { described_class.new(claim) }
 
   describe '#title' do

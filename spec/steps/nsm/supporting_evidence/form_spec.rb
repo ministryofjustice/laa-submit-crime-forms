@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::SupportingEvidenceForm do
+RSpec.describe Nsm::Steps::SupportingEvidenceForm do
   let(:form) { described_class.new(application:, **arguments) }
 
   let(:arguments) do

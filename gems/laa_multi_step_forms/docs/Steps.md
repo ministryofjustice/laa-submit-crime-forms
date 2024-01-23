@@ -118,7 +118,7 @@ any validations by design, with all updates being done via the form object.
 The below example is the simpliest implementation of a form object:
 
 ```
-class ClaimTypeForm < Steps::BaseFormObject
+class ClaimTypeForm < ::Steps::BaseFormObject
   attribute :name, :string
 
   private

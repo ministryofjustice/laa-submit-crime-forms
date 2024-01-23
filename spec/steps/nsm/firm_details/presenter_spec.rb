@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::FirmDetails, type: :system do
+RSpec.describe Nsm::Tasks::FirmDetails, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { build(:claim, attributes) }
@@ -23,6 +23,6 @@ RSpec.describe Tasks::FirmDetails, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  it_behaves_like 'a task with generic can_start?', Tasks::ClaimType
-  it_behaves_like 'a task with generic complete?', Steps::FirmDetailsForm
+  it_behaves_like 'a task with generic can_start?', Nsm::Tasks::ClaimType
+  it_behaves_like 'a task with generic complete?', Nsm::Steps::FirmDetailsForm
 end

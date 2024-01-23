@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CostSummary::WorkItems do
+RSpec.describe Nsm::CostSummary::WorkItems do
   subject { described_class.new(work_items, claim) }
 
   let(:claim) { instance_double(Claim, assigned_counsel:, in_area:, date:, firm_office:) }
@@ -9,22 +9,26 @@ RSpec.describe CostSummary::WorkItems do
   let(:in_area) { 'yes' }
   let(:date) { Date.new(2008, 11, 22) }
   let(:work_items) { [instance_double(WorkItem), instance_double(WorkItem), instance_double(WorkItem)] }
-  let(:form_advocacy) { instance_double(Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 100.0) }
-  let(:form_advocacy2) { instance_double(Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 70.0) }
-  let(:form_preparation) { instance_double(Steps::WorkItemForm, work_type: WorkTypes::PREPARATION, total_cost: 40.0) }
+  let(:form_advocacy) { instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 100.0) }
+  let(:form_advocacy2) { instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 70.0) }
+  let(:form_preparation) do
+    instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::PREPARATION, total_cost: 40.0)
+  end
 
   before do
-    allow(Steps::WorkItemForm).to receive(:build).with(work_items[0], application: claim).and_return(form_advocacy)
-    allow(Steps::WorkItemForm).to receive(:build).with(work_items[1], application: claim).and_return(form_advocacy2)
-    allow(Steps::WorkItemForm).to receive(:build).with(work_items[2], application: claim).and_return(form_preparation)
+    allow(Nsm::Steps::WorkItemForm).to receive(:build).with(work_items[0], application: claim).and_return(form_advocacy)
+    allow(Nsm::Steps::WorkItemForm).to receive(:build).with(work_items[1],
+                                                            application: claim).and_return(form_advocacy2)
+    allow(Nsm::Steps::WorkItemForm).to receive(:build).with(work_items[2],
+                                                            application: claim).and_return(form_preparation)
   end
 
   describe '#initialize' do
     it 'creates the data instance' do
       subject
-      expect(Steps::WorkItemForm).to have_received(:build).with(work_items[0], application: claim)
-      expect(Steps::WorkItemForm).to have_received(:build).with(work_items[1], application: claim)
-      expect(Steps::WorkItemForm).to have_received(:build).with(work_items[2], application: claim)
+      expect(Nsm::Steps::WorkItemForm).to have_received(:build).with(work_items[0], application: claim)
+      expect(Nsm::Steps::WorkItemForm).to have_received(:build).with(work_items[1], application: claim)
+      expect(Nsm::Steps::WorkItemForm).to have_received(:build).with(work_items[2], application: claim)
     end
   end
 

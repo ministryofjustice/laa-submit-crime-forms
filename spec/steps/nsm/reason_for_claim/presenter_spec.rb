@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::ReasonForClaim, type: :system do
+RSpec.describe Nsm::Tasks::ReasonForClaim, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { build(:claim, attributes) }
@@ -21,14 +21,14 @@ RSpec.describe Tasks::ReasonForClaim, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  it_behaves_like 'a task with generic can_start?', Tasks::CaseDisposal
+  it_behaves_like 'a task with generic can_start?', Nsm::Tasks::CaseDisposal
 
   describe '#completed?' do
-    let(:form) { instance_double(Steps::ReasonForClaimForm, valid?: valid) }
+    let(:form) { instance_double(Nsm::Steps::ReasonForClaimForm, valid?: valid) }
     let(:valid) { true }
 
     before do
-      allow(Steps::ReasonForClaimForm).to receive(:build).and_return(form)
+      allow(Nsm::Steps::ReasonForClaimForm).to receive(:build).and_return(form)
     end
 
     context 'when reasons_for_claim has any values' do

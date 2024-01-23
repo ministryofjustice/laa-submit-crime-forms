@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::DisbursementCostForm do
+RSpec.describe Nsm::Steps::DisbursementCostForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do

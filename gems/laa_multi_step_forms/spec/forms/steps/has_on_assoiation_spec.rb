@@ -1,9 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Steps::HasOneAssociation do
+RSpec.describe Nsm::Steps::HasOneAssociation do
   let(:favourite_meal_form) do
     Class.new(Steps::BaseFormObject) do
-      include Steps::HasOneAssociation
       has_one_association :child
       attribute :favourite_meal, :string
     end
@@ -64,7 +63,6 @@ RSpec.describe Steps::HasOneAssociation do
     let(:form) do
       name = associate_name
       Class.new(Steps::BaseFormObject) do
-        include Steps::HasOneAssociation
         has_one_association name
       end
     end

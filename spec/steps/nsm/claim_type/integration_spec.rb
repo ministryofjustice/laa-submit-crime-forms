@@ -8,7 +8,7 @@ RSpec.describe 'User can fill in claim type details', type: :system do
   end
 
   it 'can do green path' do
-    visit edit_steps_claim_type_path(claim.id)
+    visit edit_nsm_steps_claim_type_path(claim.id)
 
     fill_in 'What is your unique file number?', with: '120223/001'
     choose "Non-standard magistrates' court payment"

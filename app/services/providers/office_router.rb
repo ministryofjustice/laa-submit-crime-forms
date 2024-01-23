@@ -18,7 +18,7 @@ module Providers
       elsif provider.multiple_offices?
         edit_steps_office_confirm_path
       else
-        applications_path
+        nsm_applications_path
       end
     end
   end

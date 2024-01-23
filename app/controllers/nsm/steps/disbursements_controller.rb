@@ -1,25 +1,27 @@
-module Steps
-  class DisbursementsController < Steps::BaseStepController
-    def edit
-      @disbursements_by_date = current_application.disbursements.by_age.group_by(&:disbursement_date)
-      @form_object = AddAnotherForm.build(
-        current_application
-      )
-    end
+module Nsm
+  module Steps
+    class DisbursementsController < ::Steps::BaseStepController
+      def edit
+        @disbursements_by_date = current_application.disbursements.by_age.group_by(&:disbursement_date)
+        @form_object = AddAnotherForm.build(
+          current_application
+        )
+      end
 
-    def update
-      @disbursements_by_date = current_application.disbursements.by_age.group_by(&:disbursement_date)
-      update_and_advance(AddAnotherForm, as: :disbursements)
-    end
+      def update
+        @disbursements_by_date = current_application.disbursements.by_age.group_by(&:disbursement_date)
+        update_and_advance(AddAnotherForm, as: :disbursements)
+      end
 
-    private
+      private
 
-    def decision_tree_class
-      Decisions::DecisionTree
-    end
+      def decision_tree_class
+        Decisions::DecisionTree
+      end
 
-    def additional_permitted_params
-      [:add_another]
+      def additional_permitted_params
+        [:add_another]
+      end
     end
   end
 end

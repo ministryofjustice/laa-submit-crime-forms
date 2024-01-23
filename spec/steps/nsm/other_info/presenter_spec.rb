@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::OtherInfo, type: :system do
+RSpec.describe Nsm::Tasks::OtherInfo, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { build(:claim, attributes) }
@@ -26,5 +26,5 @@ RSpec.describe Tasks::OtherInfo, type: :system do
     end
   end
 
-  it_behaves_like 'a task with generic complete?', Steps::OtherInfoForm
+  it_behaves_like 'a task with generic complete?', Nsm::Steps::OtherInfoForm
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ClaimsController do
+RSpec.describe Nsm::ClaimsController do
   context 'index' do
     let(:scope) { double(:scope, not: [instance_double(Claim)]) }
 
@@ -38,7 +38,7 @@ RSpec.describe ClaimsController do
 
     it 'redirects to the edit claim type step' do
       post :create
-      expect(response).to redirect_to(edit_steps_claim_type_path(claim.id))
+      expect(response).to redirect_to(edit_nsm_steps_claim_type_path(claim.id))
     end
   end
 

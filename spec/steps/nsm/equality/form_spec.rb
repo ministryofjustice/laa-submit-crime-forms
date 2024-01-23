@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::AnswerEqualityForm do
+RSpec.describe Nsm::Steps::AnswerEqualityForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do

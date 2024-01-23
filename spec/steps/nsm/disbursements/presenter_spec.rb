@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::Disbursements, type: :system do
+RSpec.describe Nsm::Tasks::Disbursements, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { build(:claim, attributes) }
@@ -37,7 +37,7 @@ RSpec.describe Tasks::Disbursements, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  it_behaves_like 'a task with generic can_start?', Tasks::LettersCalls
+  it_behaves_like 'a task with generic can_start?', Nsm::Tasks::LettersCalls
 
   describe 'in_progress?' do
     context 'navigation_stack include edit disbursement_type path' do
@@ -72,8 +72,8 @@ RSpec.describe Tasks::Disbursements, type: :system do
         let(:disbursement_cost_form) { double(:disbursement_type_form, valid?: costs_valid) }
 
         before do
-          allow(Steps::DisbursementTypeForm).to receive(:build).and_return(disbursement_type_form)
-          allow(Steps::DisbursementCostForm).to receive(:build).and_return(disbursement_cost_form)
+          allow(Nsm::Steps::DisbursementTypeForm).to receive(:build).and_return(disbursement_type_form)
+          allow(Nsm::Steps::DisbursementCostForm).to receive(:build).and_return(disbursement_cost_form)
         end
 
         context 'when types are not valid' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::HearingDetailsForm do
+RSpec.describe Nsm::Steps::HearingDetailsForm do
   subject { described_class.new(arguments) }
 
   let(:arguments) do

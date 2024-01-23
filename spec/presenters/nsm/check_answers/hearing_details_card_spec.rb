@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::HearingDetailsCard do
+RSpec.describe Nsm::CheckAnswers::HearingDetailsCard do
   subject { described_class.new(claim) }
 
   let(:claim) { build(:claim, :hearing_details) }
 
   describe '#initialize' do
     it 'creates the data instance' do
-      expect(Steps::HearingDetailsForm).to receive(:build).with(claim)
+      expect(Nsm::Steps::HearingDetailsForm).to receive(:build).with(claim)
       subject
     end
   end

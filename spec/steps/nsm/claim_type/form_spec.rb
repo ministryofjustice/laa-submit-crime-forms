@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::ClaimTypeForm do
+RSpec.describe Nsm::Steps::ClaimTypeForm do
   subject { described_class.new(arguments) }
 
   let(:arguments) do

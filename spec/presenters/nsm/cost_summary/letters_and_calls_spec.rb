@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe CostSummary::LettersCalls do
+RSpec.describe Nsm::CostSummary::LettersCalls do
   subject { described_class.new(claim) }
 
   let(:claim) { instance_double(Claim, firm_office:) }
   let(:form) do
-    instance_double(Steps::LettersCallsForm, letters_after_uplift:, calls_after_uplift:, total_cost:,
+    instance_double(Nsm::Steps::LettersCallsForm, letters_after_uplift:, calls_after_uplift:, total_cost:,
    total_cost_inc_vat:)
   end
   let(:firm_office) { build(:firm_office, :valid) }
@@ -15,13 +15,13 @@ RSpec.describe CostSummary::LettersCalls do
   let(:total_cost_inc_vat) { 120.00 }
 
   before do
-    allow(Steps::LettersCallsForm).to receive(:build).and_return(form)
+    allow(Nsm::Steps::LettersCallsForm).to receive(:build).and_return(form)
   end
 
   describe '#initialize' do
     it 'creates the data instance' do
       subject
-      expect(Steps::LettersCallsForm).to have_received(:build).with(claim)
+      expect(Nsm::Steps::LettersCallsForm).to have_received(:build).with(claim)
     end
   end
 

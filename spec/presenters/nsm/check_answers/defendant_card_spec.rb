@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::DefendantCard do
+RSpec.describe Nsm::CheckAnswers::DefendantCard do
   subject { described_class.new(claim) }
 
   let(:claim) { instance_double(Claim, claim_type:, defendants:) }

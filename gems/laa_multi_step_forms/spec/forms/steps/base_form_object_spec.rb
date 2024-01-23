@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::BaseFormObject do
+RSpec.describe Nsm::Steps::BaseFormObject do
   describe '.build' do
     let(:favourite_meal_form) do
       Class.new(Steps::BaseFormObject) do

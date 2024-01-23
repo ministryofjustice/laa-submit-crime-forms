@@ -1,23 +1,25 @@
-module Steps
-  class HearingDetailsController < Steps::BaseStepController
-    def edit
-      @form_object = HearingDetailsForm.build(
-        current_application
-      )
-    end
+module Nsm
+  module Steps
+    class HearingDetailsController < ::Steps::BaseStepController
+      def edit
+        @form_object = HearingDetailsForm.build(
+          current_application
+        )
+      end
 
-    def update
-      update_and_advance(HearingDetailsForm, as: :hearing_details)
-    end
+      def update
+        update_and_advance(HearingDetailsForm, as: :hearing_details)
+      end
 
-    private
+      private
 
-    def decision_tree_class
-      Decisions::DecisionTree
-    end
+      def decision_tree_class
+        Decisions::DecisionTree
+      end
 
-    def additional_permitted_params
-      [:court_suggestion]
+      def additional_permitted_params
+        [:court_suggestion]
+      end
     end
   end
 end

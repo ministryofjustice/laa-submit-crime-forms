@@ -32,7 +32,7 @@
     <% if @application.is_a?(PriorAuthorityApplication) %>
       <%= link_button t('.back_to_applications.application'), prior_authority_applications_path, class: 'govuk-button--secondary' %>
     <% else %>
-      <%= link_button t('.back_to_applications.claim'), applications_path, class: 'govuk-button--secondary' %>
+      <%= link_button t('.back_to_applications.claim'), nsm_applications_path, class: 'govuk-button--secondary' %>
     <% end %>
   </div>
 

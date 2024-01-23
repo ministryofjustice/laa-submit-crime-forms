@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::ClaimConfirmation, type: :system do
+RSpec.describe Nsm::Tasks::ClaimConfirmation, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { build(:claim, attributes) }

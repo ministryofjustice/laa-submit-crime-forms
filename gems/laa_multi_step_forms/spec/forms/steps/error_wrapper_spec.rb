@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::ErrorWrapper do
+RSpec.describe Nsm::Steps::ErrorWrapper do
   subject { described_class.new(form, fields) }
 
   let(:nested_object) { double(:nested_error, errors: double(messages: { nested_field: :error })) }

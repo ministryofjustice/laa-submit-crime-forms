@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::PriorAuthorityUfn, type: :presenter do
+RSpec.describe Nsm::Tasks::PriorAuthorityUfn, type: :presenter do
   subject(:presenter) { described_class.new(application:) }
 
   let(:application) { build_stubbed(:prior_authority_application) }

@@ -9,7 +9,7 @@ en:
       total: Total
       total_inc_vat: Total (including VAT)
       total_inc_any_vat: Total (including any VAT)
-    cost_summary/work_items:
+    nsm/cost_summary/work_items:
       work_items: Work items total %{total}
       preparation: Preparation
       advocacy: Advocacy
@@ -17,11 +17,11 @@ en:
       attendance_without_counsel: Attendance without counsel
       travel: Travel
       waiting: Waiting
-    cost_summary/letters_calls:
+    nsm/cost_summary/letters_calls:
       letters_calls: Letters and phone calls total %{total}
       letters: Letters
       calls: Phone calls
-    cost_summary/disbursements:
+    nsm/cost_summary/disbursements:
       disbursements: Disbursements total %{total}
       standard:
         car: Car

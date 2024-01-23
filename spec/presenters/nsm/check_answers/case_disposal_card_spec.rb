@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::CaseDisposalCard do
+RSpec.describe Nsm::CheckAnswers::CaseDisposalCard do
   subject { described_class.new(claim) }
 
   let(:claim) { build(:claim, plea:, arrest_warrant_date:, cracked_trial_date:) }
@@ -11,7 +11,7 @@ RSpec.describe CheckAnswers::CaseDisposalCard do
 
   describe '#initialize' do
     it 'creates the data instance' do
-      expect(Steps::CaseDisposalForm).to receive(:build).with(claim)
+      expect(Nsm::Steps::CaseDisposalForm).to receive(:build).with(claim)
       subject
     end
   end

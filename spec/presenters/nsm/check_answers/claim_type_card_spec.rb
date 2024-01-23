@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::ClaimTypeCard do
+RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
   subject { described_class.new(claim) }
 
   describe '#title' do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::Report do
+RSpec.describe Nsm::CheckAnswers::Report do
   describe '#section_groups' do
     context 'not in a complete state' do
       subject { described_class.new(claim) }
@@ -34,7 +34,8 @@ RSpec.describe CheckAnswers::Report do
 
         it 'has option to change' do
           expect(section[0][:card][:actions]).to include(
-            "<a class=\"govuk-link\" href=\"/applications/#{claim.id}/steps/claim_type\">Change</a>"
+            '<a class="govuk-link" ' \
+            "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/claim_type\">Change</a>"
           )
         end
       end

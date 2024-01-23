@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::SolicitorDeclarationForm do
+RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
   let(:form) { described_class.new(application:, **arguments) }
 
   let(:arguments) do

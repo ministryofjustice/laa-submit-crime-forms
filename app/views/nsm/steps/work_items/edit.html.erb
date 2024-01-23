@@ -4,7 +4,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.work_items.count) %></h1>
-    <%= render(SummaryErrorComponent.new(records: @form_object.application.work_items, form: Steps::WorkItemForm)) %>
+    <%= render(SummaryErrorComponent.new(records: @form_object.application.work_items, form:Nsm::Steps::WorkItemForm)) %>
     <%= govuk_error_summary(@form_object) %>
 
     <% @work_items_by_date.each do |date, work_items| %>

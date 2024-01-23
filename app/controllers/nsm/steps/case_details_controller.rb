@@ -1,23 +1,25 @@
-module Steps
-  class CaseDetailsController < Steps::BaseStepController
-    def edit
-      @form_object = CaseDetailsForm.build(
-        current_application
-      )
-    end
+module Nsm
+  module Steps
+    class CaseDetailsController < ::Steps::BaseStepController
+      def edit
+        @form_object = CaseDetailsForm.build(
+          current_application
+        )
+      end
 
-    def update
-      update_and_advance(CaseDetailsForm, as: :case_details)
-    end
+      def update
+        update_and_advance(CaseDetailsForm, as: :case_details)
+      end
 
-    private
+      private
 
-    def decision_tree_class
-      Decisions::DecisionTree
-    end
+      def decision_tree_class
+        Decisions::DecisionTree
+      end
 
-    def additional_permitted_params
-      [:main_offence_suggestion]
+      def additional_permitted_params
+        [:main_offence_suggestion]
+      end
     end
   end
 end

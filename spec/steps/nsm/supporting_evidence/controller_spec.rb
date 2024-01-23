@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::SupportingEvidenceController, type: :controller do
+RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
   before do
     allow(controller).to receive(:current_application).and_return(current_application)
   end
@@ -17,10 +17,10 @@ RSpec.describe Steps::SupportingEvidenceController, type: :controller do
 
     context 'when application is found' do
       let(:current_application) { create(:claim) }
-      let(:form) { instance_double(Steps::SupportingEvidenceForm) }
+      let(:form) { instance_double(Nsm::Steps::SupportingEvidenceForm) }
 
       before do
-        allow(Steps::SupportingEvidenceForm).to receive(:build).and_return(form)
+        allow(Nsm::Steps::SupportingEvidenceForm).to receive(:build).and_return(form)
       end
 
       context 'when we navigate to the controller' do

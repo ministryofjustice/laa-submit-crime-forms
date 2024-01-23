@@ -1,23 +1,25 @@
-module Steps
-  class EqualityController < Steps::BaseStepController
-    def edit
-      @form_object = AnswerEqualityForm.build(
-        current_application
-      )
-    end
+module Nsm
+  module Steps
+    class EqualityController < ::Steps::BaseStepController
+      def edit
+        @form_object = AnswerEqualityForm.build(
+          current_application
+        )
+      end
 
-    def update
-      update_and_advance(AnswerEqualityForm, as: :equality)
-    end
+      def update
+        update_and_advance(AnswerEqualityForm, as: :equality)
+      end
 
-    private
+      private
 
-    def decision_tree_class
-      Decisions::DecisionTree
-    end
+      def decision_tree_class
+        Decisions::DecisionTree
+      end
 
-    def additional_permitted_params
-      [:answer_equality]
+      def additional_permitted_params
+        [:answer_equality]
+      end
     end
   end
 end

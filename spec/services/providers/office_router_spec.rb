@@ -24,7 +24,7 @@ RSpec.describe Providers::OfficeRouter do
       context 'and there is only one office' do
         let(:office_codes) { %w[ABC] }
 
-        it { expect(subject).to eq(applications_path) }
+        it { expect(subject).to eq(nsm_applications_path) }
       end
     end
   end

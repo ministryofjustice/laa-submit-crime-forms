@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::SolicitorDeclaration, type: :system do
+RSpec.describe Nsm::Tasks::SolicitorDeclaration, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { create(:claim, attributes) }
@@ -11,7 +11,7 @@ RSpec.describe Tasks::SolicitorDeclaration, type: :system do
     it { expect(subject.path).to eq("/applications/#{id}/steps/solicitor_declaration") }
   end
 
-  it_behaves_like 'a task with generic complete?', Steps::SolicitorDeclarationForm
+  it_behaves_like 'a task with generic complete?', Nsm::Steps::SolicitorDeclarationForm
 
   describe '#status and its enabled? flag' do
     context 'when status is NOT_APPLICABLE' do

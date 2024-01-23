@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::ReadOnlyReport do
+RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
   describe '#section_groups' do
     context 'not in a complete state' do
       subject { described_class.new(claim) }

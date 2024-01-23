@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::DefendantDetailsForm do
+RSpec.describe Nsm::Steps::DefendantDetailsForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do

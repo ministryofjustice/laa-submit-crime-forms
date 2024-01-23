@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::DefendantDeleteController, type: :controller do
+RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
   before do
     # Needed because some specs that include these examples stub current_application,
     # which is undesirable for this particular test
@@ -27,10 +27,10 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
         instance_double(Claim, defendants: defendants, navigation_stack: [], 'navigation_stack=': true, save!: true)
       end
       let(:defendants) { double(:defendants, find_by: defendant) }
-      let(:form) { instance_double(Steps::DefendantDeleteForm) }
+      let(:form) { instance_double(Nsm::Steps::DefendantDeleteForm) }
 
       before do
-        allow(Steps::DefendantDeleteForm).to receive(:build).and_return(form)
+        allow(Nsm::Steps::DefendantDeleteForm).to receive(:build).and_return(form)
       end
 
       context 'when defendant id is passes in' do
@@ -59,8 +59,8 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
   end
 
   describe '#update' do
-    let(:form_object) { instance_double(Steps::DefendantDeleteForm, attributes: { foo: double }) }
-    let(:form_object_params_name) { Steps::DefendantDeleteForm.name.underscore }
+    let(:form_object) { instance_double(Nsm::Steps::DefendantDeleteForm, attributes: { foo: double }) }
+    let(:form_object_params_name) { Nsm::Steps::DefendantDeleteForm.name.underscore }
     let(:expected_params) do
       { :id => existing_case, :defendant_id => defendant_id, form_object_params_name => { foo: 'bar' } }
     end
@@ -89,10 +89,10 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
       let(:current_application) do
         instance_double(Claim, defendants: defendants, navigation_stack: [], 'navigation_stack=': true, save!: true)
       end
-      let(:form) { instance_double(Steps::DefendantDeleteForm) }
+      let(:form) { instance_double(Nsm::Steps::DefendantDeleteForm) }
 
       before do
-        allow(Steps::DefendantDeleteForm).to receive(:build).and_return(form)
+        allow(Nsm::Steps::DefendantDeleteForm).to receive(:build).and_return(form)
       end
 
       context 'when defendant id is passes in' do
@@ -103,7 +103,7 @@ RSpec.describe Steps::DefendantDeleteController, type: :controller do
           let(:existing_case) { create(:claim) }
 
           before do
-            allow(Steps::DefendantDeleteForm).to receive(:new).and_return(form_object)
+            allow(Nsm::Steps::DefendantDeleteForm).to receive(:new).and_return(form_object)
           end
 
           context 'when the form saves successfully' do

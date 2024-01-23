@@ -1,23 +1,25 @@
-module Steps
-  class DisbursementAddController < Steps::BaseStepController
-    def edit
-      @form_object = DisbursementAddForm.build(
-        current_application
-      )
-    end
+module Nsm
+  module Steps
+    class DisbursementAddController < ::Steps::BaseStepController
+      def edit
+        @form_object = DisbursementAddForm.build(
+          current_application
+        )
+      end
 
-    def update
-      update_and_advance(DisbursementAddForm, as: :disbursement_add)
-    end
+      def update
+        update_and_advance(DisbursementAddForm, as: :disbursement_add)
+      end
 
-    private
+      private
 
-    def decision_tree_class
-      Decisions::DecisionTree
-    end
+      def decision_tree_class
+        Decisions::DecisionTree
+      end
 
-    def additional_permitted_params
-      [:add_another]
+      def additional_permitted_params
+        [:add_another]
+      end
     end
   end
 end

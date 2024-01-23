@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::CaseDetailsCard do
+RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
   subject { described_class.new(claim) }
 
   let(:claim) { build(:claim, :case_details, main_offence:, main_offence_date:) }

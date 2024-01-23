@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::WorkItemForm do
+RSpec.describe Nsm::Steps::WorkItemForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do

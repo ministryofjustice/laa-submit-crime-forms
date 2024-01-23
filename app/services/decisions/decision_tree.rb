@@ -14,7 +14,7 @@ module Decisions
     from(:defendant_summary)
       .when(-> { add_another.yes? })
       .goto(edit: 'steps/defendant_details', defendant_id: StartPage::NEW_RECORD)
-      .when(-> { any_invalid?(application.defendants, Steps::DefendantDetailsForm) })
+      .when(-> { any_invalid?(application.defendants, Nsm::Steps::DefendantDetailsForm) })
       .goto(edit: 'steps/defendant_summary')
       .goto(edit: 'steps/case_details')
     from(:case_details).goto(edit: 'steps/hearing_details')
@@ -33,7 +33,7 @@ module Decisions
     from(:work_items)
       .when(-> { add_another.yes? })
       .goto(edit: 'steps/work_item', work_item_id: StartPage::NEW_RECORD)
-      .when(-> { any_invalid?(application.work_items, Steps::WorkItemForm) })
+      .when(-> { any_invalid?(application.work_items, Nsm::Steps::WorkItemForm) })
       .goto(edit: 'steps/work_items')
       .goto(edit: 'steps/letters_calls')
     from(:letters_calls)
@@ -54,7 +54,10 @@ module Decisions
     from(:disbursements)
       .when(-> { add_another.yes? })
       .goto(edit: 'steps/disbursement_type', disbursement_id: StartPage::NEW_RECORD)
-      .when(-> { any_invalid?(application.disbursements, Steps::DisbursementTypeForm, Steps::DisbursementCostForm) })
+      .when(lambda {
+              any_invalid?(application.disbursements, Nsm::Steps::DisbursementTypeForm,
+                           Nsm::Steps::DisbursementCostForm)
+            })
       .goto(edit: 'steps/disbursements')
       .goto(show: 'steps/cost_summary')
     # cost_summary to other_info is a hard coded link as show page

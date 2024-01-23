@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::DisbursementCostsCard do
+RSpec.describe Nsm::CheckAnswers::DisbursementCostsCard do
   subject { described_class.new(claim) }
 
   let(:claim) { create(:claim, :one_other_disbursement) }

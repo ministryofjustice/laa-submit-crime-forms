@@ -1,19 +1,21 @@
-module Steps
-  class DefendantDeleteForm < Steps::BaseFormObject
-    attribute :id
+module Nsm
+  module Steps
+    class DefendantDeleteForm < ::Steps::BaseFormObject
+      attribute :id
 
-    def caption_key
-      if record.main
-        '.main_defendant'
-      else
-        '.additional_defendant'
+      def caption_key
+        if record.main
+          '.main_defendant'
+        else
+          '.additional_defendant'
+        end
       end
-    end
 
-    private
+      private
 
-    def persist!
-      record.destroy
+      def persist!
+        record.destroy
+      end
     end
   end
 end

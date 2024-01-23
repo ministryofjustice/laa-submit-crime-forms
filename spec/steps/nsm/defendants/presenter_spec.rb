@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::Defendants, type: :system do
+RSpec.describe Nsm::Tasks::Defendants, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { build(:claim, attributes) }
@@ -37,7 +37,7 @@ RSpec.describe Tasks::Defendants, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  it_behaves_like 'a task with generic can_start?', Tasks::FirmDetails
+  it_behaves_like 'a task with generic can_start?', Nsm::Tasks::FirmDetails
 
   describe 'in_progress?' do
     context 'navigation_stack include edit defentant_details path' do
@@ -67,7 +67,7 @@ RSpec.describe Tasks::Defendants, type: :system do
       let(:defendant_form) { double(:defendant_form, valid?: valid) }
 
       before do
-        allow(Steps::DefendantDetailsForm).to receive(:build).and_return(defendant_form)
+        allow(Nsm::Steps::DefendantDetailsForm).to receive(:build).and_return(defendant_form)
       end
 
       context 'when they are not valid' do

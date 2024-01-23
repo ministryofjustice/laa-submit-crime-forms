@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CostSummary::Report do
+RSpec.describe Nsm::CostSummary::Report do
   subject { described_class.new(claim) }
 
   let(:claim) do

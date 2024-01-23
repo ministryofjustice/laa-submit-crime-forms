@@ -151,7 +151,7 @@ RSpec.describe StepsHelper, type: :helper do
     end
 
     context 'when a form object without errors is given' do
-      let(:form_object) { Steps::BaseFormObject.new }
+      let(:form_object) { Nsm::Steps::BaseFormObject.new }
 
       it 'returns nil' do
         expect(helper.govuk_error_summary(form_object)).to be_nil
@@ -159,7 +159,7 @@ RSpec.describe StepsHelper, type: :helper do
     end
 
     context 'when a form object with errors is given' do
-      let(:form_object) { Steps::BaseFormObject.new }
+      let(:form_object) { Nsm::Steps::BaseFormObject.new }
       let(:title) { helper.content_for(:page_title) }
 
       before do

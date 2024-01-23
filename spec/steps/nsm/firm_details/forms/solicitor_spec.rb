@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::FirmDetails::SolicitorForm do
+RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
   subject(:form) { described_class.new(application:, alternative_contact_details:, **arguments) }
 
   let(:arguments) do

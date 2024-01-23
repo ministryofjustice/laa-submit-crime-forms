@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::ViewClaimController, type: :controller do
+RSpec.describe Nsm::Steps::ViewClaimController, type: :controller do
   it_behaves_like 'a show step controller'
 
   describe '#show' do

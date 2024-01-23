@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::LettersCallsForm do
+RSpec.describe Nsm::Steps::LettersCallsForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do

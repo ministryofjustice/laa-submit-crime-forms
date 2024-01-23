@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
-module Tasks
-  class SupportingEvidence < Generic
-    PREVIOUS_TASK = OtherInfo
-    FORM = Steps::SupportingEvidenceForm
+module Nsm
+  module Tasks
+    class SupportingEvidence < Generic
+      PREVIOUS_TASK = OtherInfo
+      FORM = Nsm::Steps::SupportingEvidenceForm
 
-    def path
-      edit_steps_supporting_evidence_path(application)
+      def path
+        edit_steps_supporting_evidence_path(application)
+      end
     end
   end
 end

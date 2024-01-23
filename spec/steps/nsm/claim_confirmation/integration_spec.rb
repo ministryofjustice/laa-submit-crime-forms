@@ -14,7 +14,7 @@ RSpec.describe 'User can see an application status', type: :system do
 
   it 'can show all claims for a provider when clicking on view my claims button' do
     click_on 'View my claims'
-    expect(page).to have_current_path(applications_path)
+    expect(page).to have_current_path(nsm_applications_path)
     expect(claim.reload).to have_attributes(
       laa_reference: 'ABC123',
       status: 'submitted',

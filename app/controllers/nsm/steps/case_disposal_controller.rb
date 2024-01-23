@@ -1,19 +1,21 @@
-module Steps
-  class CaseDisposalController < Steps::BaseStepController
-    def edit
-      @form_object = CaseDisposalForm.build(
-        current_application
-      )
-    end
+module Nsm
+  module Steps
+    class CaseDisposalController < ::Steps::BaseStepController
+      def edit
+        @form_object = CaseDisposalForm.build(
+          current_application
+        )
+      end
 
-    def update
-      update_and_advance(CaseDisposalForm, as: :case_disposal)
-    end
+      def update
+        update_and_advance(CaseDisposalForm, as: :case_disposal)
+      end
 
-    private
+      private
 
-    def decision_tree_class
-      Decisions::DecisionTree
+      def decision_tree_class
+        Decisions::DecisionTree
+      end
     end
   end
 end

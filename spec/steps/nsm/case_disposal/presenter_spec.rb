@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::CaseDisposal, type: :system do
+RSpec.describe Nsm::Tasks::CaseDisposal, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { build(:claim, attributes) }
@@ -21,8 +21,8 @@ RSpec.describe Tasks::CaseDisposal, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  it_behaves_like 'a task with generic can_start?', Tasks::HearingDetails
-  it_behaves_like 'a task with generic complete?', Steps::CaseDisposalForm
+  it_behaves_like 'a task with generic can_start?', Nsm::Tasks::HearingDetails
+  it_behaves_like 'a task with generic complete?', Nsm::Steps::CaseDisposalForm
 
   describe '#in_progress?' do
     it { expect(subject).not_to be_in_progress }

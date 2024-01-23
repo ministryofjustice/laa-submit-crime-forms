@@ -6,7 +6,7 @@ module DecisionStepHeaderHelper
   end
 
   def previous_decision_step_path(record:)
-    form = Steps::BaseFormObject.new(application: current_application, record: record)
+    form = Nsm::Steps::BaseFormObject.new(application: current_application, record: record)
 
     Decisions::BackDecisionTree.new(
       form,

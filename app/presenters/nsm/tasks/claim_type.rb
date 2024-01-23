@@ -1,17 +1,19 @@
-module Tasks
-  class ClaimType < Generic
-    FORM = Steps::ClaimTypeForm
+module Nsm
+  module Tasks
+    class ClaimType < Generic
+      FORM = Nsm::Steps::ClaimTypeForm
 
-    def path
-      edit_steps_claim_type_path(application)
-    end
+      def path
+        edit_nsm_steps_claim_type_path(application)
+      end
 
-    def in_progress?
-      true
-    end
+      def in_progress?
+        true
+      end
 
-    def can_start?
-      true
+      def can_start?
+        true
+      end
     end
   end
 end

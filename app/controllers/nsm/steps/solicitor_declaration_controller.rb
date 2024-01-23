@@ -1,19 +1,21 @@
-module Steps
-  class SolicitorDeclarationController < Steps::BaseStepController
-    def edit
-      @form_object = SolicitorDeclarationForm.build(
-        current_application
-      )
-    end
+module Nsm
+  module Steps
+    class SolicitorDeclarationController < ::Steps::BaseStepController
+      def edit
+        @form_object = SolicitorDeclarationForm.build(
+          current_application
+        )
+      end
 
-    def update
-      update_and_advance(SolicitorDeclarationForm, as: :solicitor_declaration)
-    end
+      def update
+        update_and_advance(SolicitorDeclarationForm, as: :solicitor_declaration)
+      end
 
-    private
+      private
 
-    def decision_tree_class
-      Decisions::DecisionTree
+      def decision_tree_class
+        Decisions::DecisionTree
+      end
     end
   end
 end

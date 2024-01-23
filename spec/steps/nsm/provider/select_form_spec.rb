@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Office::SelectForm do
+RSpec.describe Nsm::Steps::Office::SelectForm do
   subject { described_class.new(arguments) }
 
   let(:arguments) do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::EvidenceUploadsCard do
+RSpec.describe Nsm::CheckAnswers::EvidenceUploadsCard do
   subject { described_class.new(claim) }
 
   let(:claim) { instance_double(Claim, supporting_evidence:, send_by_post:) }

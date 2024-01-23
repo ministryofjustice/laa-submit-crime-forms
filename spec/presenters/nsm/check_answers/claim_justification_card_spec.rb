@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CheckAnswers::ClaimJustificationCard do
+RSpec.describe Nsm::CheckAnswers::ClaimJustificationCard do
   subject { described_class.new(claim) }
 
   let(:claim) do

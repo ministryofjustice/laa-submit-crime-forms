@@ -1,5 +1,5 @@
 module Steps
-  class DownloadableEntityController < Steps::BaseStepController
+  class DownloadableEntityController < ::Steps::BaseStepController
     def download; end
 
     private

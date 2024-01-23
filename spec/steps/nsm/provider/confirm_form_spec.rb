@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Office::ConfirmForm do
+RSpec.describe Nsm::Steps::Office::ConfirmForm do
   subject { described_class.new(arguments) }
 
   let(:arguments) do

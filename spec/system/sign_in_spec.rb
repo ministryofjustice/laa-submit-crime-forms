@@ -54,7 +54,7 @@ RSpec.describe 'Sign in user journey' do
     end
 
     it 'authenticates the user and redirects to the dashboard' do
-      expect(current_url).to match(applications_path)
+      expect(current_url).to match(nsm_applications_path)
     end
   end
 end

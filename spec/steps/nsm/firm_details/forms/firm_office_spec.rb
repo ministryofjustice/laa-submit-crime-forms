@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::FirmDetails::FirmOfficeForm do
+RSpec.describe Nsm::Steps::FirmDetails::FirmOfficeForm do
   subject(:form) { described_class.new(application:, **arguments) }
 
   let(:arguments) do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::OtherInfoForm do
+RSpec.describe Nsm::Steps::OtherInfoForm do
   let(:form) { described_class.new(application:, **arguments) }
 
   let(:arguments) do
