@@ -9,7 +9,7 @@
     <div class="moj-multi-file-upload__message"></div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-6"><%= t('.heading') %></h1>
     <%# Answers upload list %>
-    <%= render template: 'steps/supporting_evidence/_content' %>
+    <%= render template: 'nsm/steps/supporting_evidence/_content' %>
 
     <%# Additional upload list %>
     <%= step_form @form_object do |f| %>
@@ -54,7 +54,7 @@
       <%# Postal address component %>
       <%= f.govuk_check_boxes_fieldset :send_by_post, multiple: false, legend: nil do %>
         <%= f.govuk_check_box :send_by_post, 'true', 'false', multiple: false do %>
-          <%= render template: 'steps/supporting_evidence/_postal_address' %>
+          <%= render template: 'nsm/steps/supporting_evidence/_postal_address' %>
         <% end -%>
       <% end -%>
       <%# Continue %>

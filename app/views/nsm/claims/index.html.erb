@@ -79,7 +79,7 @@
         <% @claims.each do |claim| %>
           <tr class="govuk-table__row app-task-list__item">
             <td class="govuk-table__cell">
-              <%= link_to steps_start_page_path(claim.id) do %>
+              <%= link_to nsm_steps_start_page_path(claim.id) do %>
                 <%= claim.ufn %>
               <% end %>
             </td>

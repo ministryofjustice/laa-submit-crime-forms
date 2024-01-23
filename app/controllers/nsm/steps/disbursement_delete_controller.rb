@@ -4,14 +4,14 @@ module Nsm
       before_action :ensure_disbursement
 
       def edit
-        @form_object = DeleteForm.build(
+        @form_object = ::Steps::DeleteForm.build(
           disbursement,
           application: current_application,
         )
       end
 
       def update
-        update_and_advance(DeleteForm, as: :disbursement_delete, record: disbursement, flash: flash_msg)
+        update_and_advance(::Steps::DeleteForm, as: :disbursement_delete, record: disbursement, flash: flash_msg)
       end
 
       private

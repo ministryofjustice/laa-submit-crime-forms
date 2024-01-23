@@ -10,7 +10,7 @@ module Nsm
 
       def update
         @main_defendant, *@additional_defendants = current_application.defendants
-        update_and_advance(AddAnotherForm, as: :defendant_summary)
+        update_and_advance(::Steps::AddAnotherForm, as: :defendant_summary)
       end
 
       private
