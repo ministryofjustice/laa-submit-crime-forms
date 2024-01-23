@@ -18,6 +18,7 @@ AllCops:
     - 'features/**/*'
     - 'vendor/**/*'
     - 'gems/laa_multi_step_forms/spec/dummy/**/*'
+    - 'gems/govuk_feature_flags/**/*'
 
 ####################################
 ## Customization for this project ##
