@@ -4,7 +4,7 @@ module Nsm
       PREVIOUS_TASK = SupportingEvidence
 
       def path
-        steps_check_answers_path(application)
+        nsm_steps_check_answers_path(application)
       end
 
       # completed once user has moved to the next page

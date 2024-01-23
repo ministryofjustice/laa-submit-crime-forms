@@ -17,19 +17,19 @@ RSpec.describe Nsm::Tasks::Defendants, type: :system do
 
   describe '#path' do
     context 'no defendants' do
-      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_details/#{StartPage::NEW_RECORD}") }
+      it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/defendant_details/#{StartPage::NEW_RECORD}") }
     end
 
     context 'one defendant' do
       let(:defendants) { [build(:defendant, :valid)] }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_summary") }
+      it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/defendant_summary") }
     end
 
     context 'more than one defendants' do
       let(:defendants) { [build(:defendant, :valid), build(:defendant, :valid)] }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/defendant_summary") }
+      it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/defendant_summary") }
     end
   end
 
@@ -41,13 +41,13 @@ RSpec.describe Nsm::Tasks::Defendants, type: :system do
 
   describe 'in_progress?' do
     context 'navigation_stack include edit defentant_details path' do
-      before { navigation_stack << edit_steps_defendant_details_path(application, defendant_id: '345') }
+      before { navigation_stack << edit_nsm_steps_defendant_details_path(application, defendant_id: '345') }
 
       it { expect(subject).to be_in_progress }
     end
 
     context 'navigation_stack include edit defentant_summary path' do
-      before { navigation_stack << edit_steps_defendant_summary_path(application) }
+      before { navigation_stack << edit_nsm_steps_defendant_summary_path(application) }
 
       it { expect(subject).to be_in_progress }
     end

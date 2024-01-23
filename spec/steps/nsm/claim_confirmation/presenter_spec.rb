@@ -14,6 +14,6 @@ RSpec.describe Nsm::Tasks::ClaimConfirmation, type: :system do
   let(:navigation_stack) { [] }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/applications/#{id}/steps/claim_confirmation") }
+    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/claim_confirmation") }
   end
 end

@@ -14,7 +14,7 @@ RSpec.describe Nsm::Tasks::ReasonForClaim, type: :system do
   let(:reasons_for_claim) { [] }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/applications/#{id}/steps/reason_for_claim") }
+    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/reason_for_claim") }
   end
 
   describe '#not_applicable?' do

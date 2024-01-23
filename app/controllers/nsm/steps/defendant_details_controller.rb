@@ -30,7 +30,7 @@ module Nsm
       end
 
       def ensure_defendant
-        defendant || redirect_to(edit_steps_defendant_summary_path(current_application))
+        defendant || redirect_to(edit_nsm_steps_defendant_summary_path(current_application))
       end
     end
   end

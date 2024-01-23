@@ -5,7 +5,7 @@ module Nsm
       FORM = Nsm::Steps::LettersCallsForm
 
       def path
-        edit_steps_letters_calls_path(application)
+        edit_nsm_steps_letters_calls_path(application)
       end
     end
   end

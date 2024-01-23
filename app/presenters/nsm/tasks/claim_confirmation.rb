@@ -4,7 +4,7 @@ module Nsm
       PREVIOUS_TASK = SolicitorDeclaration
 
       def path
-        steps_claim_confirmation_path(application)
+        nsm_steps_claim_confirmation_path(application)
       end
     end
   end

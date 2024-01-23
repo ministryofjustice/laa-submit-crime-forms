@@ -9,7 +9,7 @@ RSpec.describe Nsm::Steps::CheckAnswersController, type: :controller do
     before { claim.update(navigation_stack:) }
 
     context 'when page is already in navigation stack and at the end' do
-      let(:navigation_stack) { ['/foo', "/applications/#{claim.id}/steps/check_answers"] }
+      let(:navigation_stack) { ['/foo', "/non-standard-magistrates/applications/#{claim.id}/steps/check_answers"] }
 
       it 'does not change the navigation stack' do
         get :show, params: { id: claim }
@@ -20,12 +20,12 @@ RSpec.describe Nsm::Steps::CheckAnswersController, type: :controller do
     end
 
     context 'when page is already in navigation stack but not at the end' do
-      let(:navigation_stack) { ["/applications/#{claim.id}/steps/check_answers"] }
+      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{claim.id}/steps/check_answers"] }
 
       it 'removes entries after the page' do
         get :show, params: { id: claim }
         expect(claim.reload).to have_attributes(
-          navigation_stack: ["/applications/#{claim.id}/steps/check_answers"]
+          navigation_stack: ["/non-standard-magistrates/applications/#{claim.id}/steps/check_answers"]
         )
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe Nsm::Steps::CheckAnswersController, type: :controller do
       it 'adds the page to the navigation stack' do
         get :show, params: { id: claim }
         expect(claim.reload).to have_attributes(
-          navigation_stack: ['/foo', "/applications/#{claim.id}/steps/check_answers"]
+          navigation_stack: ['/foo', "/non-standard-magistrates/applications/#{claim.id}/steps/check_answers"]
         )
       end
     end

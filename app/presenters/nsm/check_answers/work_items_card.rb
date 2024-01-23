@@ -7,7 +7,7 @@ module Nsm
 
       def initialize(claim)
         @claim = claim
-        @work_items = CostSummary::WorkItems.new(claim.work_items, claim)
+        @work_items = Nsm::CostSummary::WorkItems.new(claim.work_items, claim)
         @group = 'about_claim'
         @section = 'work_items'
       end

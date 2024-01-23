@@ -14,9 +14,9 @@ module Providers
 
     def path
       if provider.selected_office_code.blank?
-        edit_steps_office_select_path
+        edit_nsm_steps_office_select_path
       elsif provider.multiple_offices?
-        edit_steps_office_confirm_path
+        edit_nsm_steps_office_confirm_path
       else
         nsm_applications_path
       end

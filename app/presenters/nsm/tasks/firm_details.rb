@@ -5,7 +5,7 @@ module Nsm
       FORM = Nsm::Steps::FirmDetailsForm
 
       def path
-        edit_steps_firm_details_path(application)
+        edit_nsm_steps_firm_details_path(application)
       end
     end
   end

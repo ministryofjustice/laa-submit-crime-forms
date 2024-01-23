@@ -8,7 +8,7 @@ RSpec.describe 'User can fill in reason for claim', type: :system do
   end
 
   it 'can do green path' do
-    visit edit_steps_reason_for_claim_path(claim.id)
+    visit edit_nsm_steps_reason_for_claim_path(claim.id)
 
     check 'Enhanced rates claimed'
     check 'Extradition'

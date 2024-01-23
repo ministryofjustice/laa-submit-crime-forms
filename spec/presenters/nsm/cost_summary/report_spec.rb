@@ -9,15 +9,15 @@ RSpec.describe Nsm::CostSummary::Report do
   let(:disbursements_scope) { double(:scope, by_age: [instance_double(Disbursement)]) }
   let(:id) { SecureRandom.uuid }
   let(:letters_calls) do
-    instance_double(CostSummary::LettersCalls, title: l_title, rows: l_rows, total_cost: l_total_cost,
+    instance_double(Nsm::CostSummary::LettersCalls, title: l_title, rows: l_rows, total_cost: l_total_cost,
 total_cost_inc_vat: l_total_cost_inc_vat, footer_vat_row: l_footer_row)
   end
   let(:work_items) do
-    instance_double(CostSummary::WorkItems, title: wi_title, rows: wi_rows, total_cost: wi_total_cost,
+    instance_double(Nsm::CostSummary::WorkItems, title: wi_title, rows: wi_rows, total_cost: wi_total_cost,
 total_cost_inc_vat: wi_total_cost_inc_vat, footer_vat_row: wi_footer_row)
   end
   let(:disbursements) do
-    instance_double(CostSummary::Disbursements, title: d_title, rows: d_rows, total_cost: d_total_cost,
+    instance_double(Nsm::CostSummary::Disbursements, title: d_title, rows: d_rows, total_cost: d_total_cost,
 total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
   end
   let(:l_title) { 'Letters and Calls Total £100.00' }
@@ -58,17 +58,17 @@ total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
   end
 
   before do
-    allow(CostSummary::WorkItems).to receive(:new).and_return(work_items)
-    allow(CostSummary::LettersCalls).to receive(:new).and_return(letters_calls)
-    allow(CostSummary::Disbursements).to receive(:new).and_return(disbursements)
+    allow(Nsm::CostSummary::WorkItems).to receive(:new).and_return(work_items)
+    allow(Nsm::CostSummary::LettersCalls).to receive(:new).and_return(letters_calls)
+    allow(Nsm::CostSummary::Disbursements).to receive(:new).and_return(disbursements)
   end
 
   describe '#initialize' do
     it 'creates the data instance' do
       subject
-      expect(CostSummary::WorkItems).to have_received(:new).with(claim.work_items, claim)
-      expect(CostSummary::LettersCalls).to have_received(:new).with(claim)
-      expect(CostSummary::Disbursements).to have_received(:new).with(disbursements_scope.by_age, claim)
+      expect(Nsm::CostSummary::WorkItems).to have_received(:new).with(claim.work_items, claim)
+      expect(Nsm::CostSummary::LettersCalls).to have_received(:new).with(claim)
+      expect(Nsm::CostSummary::Disbursements).to have_received(:new).with(disbursements_scope.by_age, claim)
     end
   end
 
@@ -79,7 +79,7 @@ total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
         [
           {
             card: {
-              actions: ["<a class=\"govuk-link\" href=\"/applications/#{id}/steps/work_items\">Change</a>"],
+              actions: ["<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"],
               title: 'Work Items Total £75.00'
             },
             rows: [
@@ -101,7 +101,7 @@ total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
           },
           {
             card: {
-              actions: ["<a class=\"govuk-link\" href=\"/applications/#{id}/steps/letters_calls\">Change</a>"],
+              actions: ["<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/letters_calls\">Change</a>"],
               title: 'Letters and Calls Total £100.00'
             },
             rows: [
@@ -123,7 +123,7 @@ total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
           },
           {
             card: {
-              actions: ["<a class=\"govuk-link\" href=\"/applications/#{id}/steps/disbursements\">Change</a>"],
+              actions: ["<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/disbursements\">Change</a>"],
               title: 'Disbursements Total £55.00'
             },
             rows: [

@@ -12,9 +12,9 @@ module Nsm
       def in_progress?
         application.disbursements.any? &&
           [
-            edit_steps_disbursement_type_path(id: application.id, disbursement_id: ''),
-            edit_steps_disbursement_cost_path(id: application.id, disbursement_id: ''),
-            edit_steps_disbursements_path(id: application.id),
+            edit_nsm_steps_disbursement_type_path(id: application.id, disbursement_id: ''),
+            edit_nsm_steps_disbursement_cost_path(id: application.id, disbursement_id: ''),
+            edit_nsm_steps_disbursements_path(id: application.id),
           ].any? do |path|
             application.navigation_stack.any? { |stack| stack.start_with?(path) }
           end

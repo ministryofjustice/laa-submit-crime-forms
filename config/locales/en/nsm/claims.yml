@@ -1,0 +1,35 @@
+en:
+  nsm:
+    claims:
+      index:
+        page_title: Your claims
+        heading: Your claims
+        start_claim: Start a new claim
+        table_info_item: claims
+        header:
+          ufn: Your UFN
+          defendant: Defendant
+          last_updated: Last updated
+          laa_reference: LAA reference
+          status: Status
+          actions: Actions
+        status:
+          draft: Draft
+          submitted: Submitted
+          accessed: Accessed
+          granted: Granted
+          part_grant: Part Granted
+          rejected: Rejected
+          further_info: Further Information Requested
+          provider_requested: Further Information Requested
+          review: Further Information Requested
+        status_colour:
+          draft: govuk-tag--grey
+          submitted: govuk-tag--primary
+          accessed: govuk-tag--green
+          granted: govuk-tag--green
+          part_grant: govuk-tag--blue
+          rejected: govuk-tag--red
+          further_info: govuk-tag--yellow
+          provider_requested: govuk-tag--yellow
+          review: govuk-tag--yellow

@@ -29,7 +29,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.submit_button('delete_it') do %>
         <%= f.hidden_field :id %>
-        <%= link_to 'Cancel', edit_steps_defendant_summary_path(@form_object.application), class: 'govuk-button__secondary' %>
+        <%= link_to 'Cancel', edit_nsm_steps_defendant_summary_path(@form_object.application), class: 'govuk-button__secondary' %>
       <% end %>
     <% end %>
   </div>

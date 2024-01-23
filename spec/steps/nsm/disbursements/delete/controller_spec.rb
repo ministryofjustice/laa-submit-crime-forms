@@ -50,7 +50,7 @@ save!: true)
           it 'redirects to the summary page' do
             get :edit, params: { id: existing_case, disbursement_id: SecureRandom }
 
-            expect(response).to redirect_to(edit_steps_disbursements_path(current_application))
+            expect(response).to redirect_to(edit_nsm_steps_disbursements_path(current_application))
           end
         end
       end
@@ -137,7 +137,7 @@ save!: true)
           it 'redirects to the summary page' do
             get :edit, params: { id: existing_case, disbursement_id: SecureRandom.uuid }
 
-            expect(response).to redirect_to(edit_steps_disbursements_path(current_application))
+            expect(response).to redirect_to(edit_nsm_steps_disbursements_path(current_application))
           end
         end
       end

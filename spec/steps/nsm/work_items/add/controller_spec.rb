@@ -65,7 +65,7 @@ RSpec.describe Nsm::Steps::WorkItemController, type: :controller do
             get :edit, params: { id: application, work_item_id: SecureRandom.uuid }
           end.not_to change(application.work_items, :count)
 
-          expect(response).to redirect_to(edit_steps_work_items_path(application))
+          expect(response).to redirect_to(edit_nsm_steps_work_items_path(application))
         end
       end
     end
@@ -90,7 +90,7 @@ RSpec.describe Nsm::Steps::WorkItemController, type: :controller do
         end.to change(application.work_items, :count).by(1)
 
         new_record_id = application.work_items.pluck(:id).detect { |id| id != work_item.id }
-        expect(response).to redirect_to(edit_steps_work_item_path(application, work_item_id: new_record_id))
+        expect(response).to redirect_to(edit_nsm_steps_work_item_path(application, work_item_id: new_record_id))
       end
     end
 
@@ -102,7 +102,7 @@ RSpec.describe Nsm::Steps::WorkItemController, type: :controller do
           get :duplicate, params: { id: application, work_item_id: work_item.id }
         end.not_to change(application.work_items, :count)
 
-        expect(response).to redirect_to(edit_steps_work_item_path(application, work_item_id: StartPage::NEW_RECORD))
+        expect(response).to redirect_to(edit_nsm_steps_work_item_path(application, work_item_id: StartPage::NEW_RECORD))
       end
     end
 
@@ -112,7 +112,7 @@ RSpec.describe Nsm::Steps::WorkItemController, type: :controller do
           get :duplicate, params: { id: application, work_item_id: SecureRandom.uuid }
         end.not_to change(application.work_items, :count)
 
-        expect(response).to redirect_to(edit_steps_work_items_path(application))
+        expect(response).to redirect_to(edit_nsm_steps_work_items_path(application))
       end
     end
   end

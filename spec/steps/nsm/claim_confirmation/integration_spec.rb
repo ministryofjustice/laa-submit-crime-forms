@@ -5,7 +5,7 @@ RSpec.describe 'User can see an application status', type: :system do
 
   before do
     visit provider_saml_omniauth_callback_path
-    visit steps_claim_confirmation_path(claim.id)
+    visit nsm_steps_claim_confirmation_path(claim.id)
   end
 
   it 'shows LAA reference on the claim confirmation page' do

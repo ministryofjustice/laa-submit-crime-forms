@@ -6,7 +6,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
   it 'does not show the mail address' do
     visit provider_saml_omniauth_callback_path
 
-    visit edit_steps_supporting_evidence_path(claim.id)
+    visit edit_nsm_steps_supporting_evidence_path(claim.id)
 
     element = find_by_id('steps-supporting-evidence-form-send-by-post-true-field', visible: :all)
 
@@ -20,7 +20,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
   it 'does shows the mail address' do
     visit provider_saml_omniauth_callback_path
 
-    visit edit_steps_supporting_evidence_path(claim.id)
+    visit edit_nsm_steps_supporting_evidence_path(claim.id)
 
     element = find_by_id('steps-supporting-evidence-form-send-by-post-true-field', visible: :all)
 

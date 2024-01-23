@@ -125,10 +125,10 @@ FactoryBot.define do
       letters { 2 }
       calls { 3 }
 
-      navigation_stack { |claim| ["/applications/#{claim.id}/steps/letters_calls"] }
+      navigation_stack { |claim| ["/non-standard-magistrates/applications/#{claim.id}/steps/letters_calls"] }
 
       after(:build) do |claim, _context|
-        claim.navigation_stack << "/applications/#{claim.id}/steps/letters_calls"
+        claim.navigation_stack << "/non-standard-magistrates/applications/#{claim.id}/steps/letters_calls"
       end
     end
 

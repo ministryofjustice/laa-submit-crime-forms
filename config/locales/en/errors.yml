@@ -100,7 +100,7 @@ en:
             ufn:
               blank: Enter your unique file number for this application
               invalid: UFN must be a 9-digit number
-        steps/claim_type_form:
+        nsm/steps/claim_type_form:
           attributes:
             ufn:
               blank: "Enter a unique file number"
@@ -111,7 +111,7 @@ en:
             cntp_order:
               blank: Enter a CNTP number
             cntp_date: *shared_date_errors
-        steps/firm_details_form:
+        nsm/steps/firm_details_form:
           attributes:
             firm_office:
               invalid: "Firm office has missing/invalid details"
@@ -119,7 +119,7 @@ en:
               invalid: "Solicitor has missing/invalid details"
             contact:
               invalid: "Contact details has missing/invalid details"
-        steps/firm_details/firm_office_form:
+        nsm/steps/firm_details/firm_office_form:
           summary: &firm_office_form
             name:
               blank: "Enter a firm name"
@@ -135,7 +135,7 @@ en:
             vat_registered:
               blank: "Select yes if your firm is VAT registered"
           attributes: *firm_office_form
-        steps/firm_details/solicitor_form:
+        nsm/steps/firm_details/solicitor_form:
           summary: &solicitor_form
             full_name:
               blank: "Enter the solicitor's full name"
@@ -154,13 +154,13 @@ en:
               blank: "Enter the email address of the alternative contact"
               invalid: "Enter a valid email address"
           attributes: *solicitor_form
-        steps/defendant_details_form:
+        nsm/steps/defendant_details_form:
           attributes:
             full_name:
               blank: Full name cannot be blank
             maat:
               blank: MAAT ID cannot be blank
-        steps/case_details_form:
+        nsm/steps/case_details_form:
           attributes:
             main_offence:
               blank: "Enter the name of the offence"
@@ -174,13 +174,13 @@ en:
             remitted_to_magistrate:
               blank: "Remitted to magistrate cannot be blank"
             invalid: You must select at least one option
-        steps/case_disposal_form:
+        nsm/steps/case_disposal_form:
           attributes:
             plea:
               blank: Please select a case disposal
             cracked_trial_date: *shared_date_errors
             arrest_warrant_date: *shared_date_errors
-        steps/hearing_details_form:
+        nsm/steps/hearing_details_form:
           attributes:
             first_hearing_date: *shared_date_errors
             number_of_hearing:
@@ -195,7 +195,7 @@ en:
               blank: Hearing outcome cannot be blank
             matter_type:
               blank: Matter type cannot be blank
-        steps/reason_for_claim_form:
+        nsm/steps/reason_for_claim_form:
           attributes:
             reasons_for_claim:
               blank: Must select at least one reason
@@ -210,11 +210,11 @@ en:
               future_not_allowed: Withdrawn date cannot be in the future
             reason_for_claim_other_details:
               blank: Details must be given
-        steps/add_another_form:
+        nsm/steps/add_another_form:
           attributes:
             add_another:
               blank: Please choose yes or no to add another record
-        steps/claim_details_form:
+        nsm/steps/claim_details_form:
           attributes:
             prosecution_evidence:
               blank: Number of pages of prosecution evidence cannot be blank
@@ -243,7 +243,7 @@ en:
               invalid: Period must be valid
             work_before_date: *shared_date_errors
             work_after_date: *shared_date_errors
-        steps/work_item_form:
+        nsm/steps/work_item_form:
           attributes:
             completed_on: *shared_date_errors
             fee_earner:
@@ -260,7 +260,7 @@ en:
               blank: Type of work must be choosen
             uplift:
               blank: Uplift amount must be set
-        steps/letters_calls_form:
+        nsm/steps/letters_calls_form:
           attributes:
             letters:
               blank: Please set the number of letters
@@ -270,14 +270,14 @@ en:
               blank: Letters uplift percentage must be set
             calls_uplift:
               blank: Calls uplift percentage must be set
-        steps/disbursement_type_form:
+        nsm/steps/disbursement_type_form:
           attributes:
             disbursement_date: *shared_date_errors
             disbursement_type:
               blank: Please set disbursement type
             other_type:
               blank: Please set other disbursement type
-        steps/disbursement_cost_form:
+        nsm/steps/disbursement_cost_form:
           attributes:
             miles:
               blank: Please enter the number of miles travels
@@ -287,7 +287,7 @@ en:
               blank: Please provdie details of disbursement
             prior_authority:
               blank: Please confirm if you have prior authority
-        steps/solicitor_declaration_form:
+        nsm/steps/solicitor_declaration_form:
           attributes:
             signatory_name:
               blank: Name must be set

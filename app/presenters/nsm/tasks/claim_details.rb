@@ -4,7 +4,7 @@ module Nsm
       FORM = Nsm::Steps::ClaimDetailsForm
 
       def path
-        edit_steps_claim_details_path(application)
+        edit_nsm_steps_claim_details_path(application)
       end
 
       def not_applicable?

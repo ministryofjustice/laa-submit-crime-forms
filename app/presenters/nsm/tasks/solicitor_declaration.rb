@@ -5,7 +5,7 @@ module Nsm
       FORM = Nsm::Steps::SolicitorDeclarationForm
 
       def path
-        edit_steps_solicitor_declaration_path(application)
+        edit_nsm_steps_solicitor_declaration_path(application)
       end
 
       def status

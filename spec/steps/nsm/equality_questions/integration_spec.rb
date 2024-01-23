@@ -8,7 +8,7 @@ RSpec.describe 'User can manage work items', type: :system do
   end
 
   it 'can add a work item' do
-    visit edit_steps_equality_path(claim.id)
+    visit edit_nsm_steps_equality_path(claim.id)
 
     choose 'Yes, answer the equality questions (takes 2 minutes)'
 

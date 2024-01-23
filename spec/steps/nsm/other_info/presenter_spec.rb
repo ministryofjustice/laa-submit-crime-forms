@@ -9,7 +9,7 @@ RSpec.describe Nsm::Tasks::OtherInfo, type: :system do
   let(:navigation_stack) { [] }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/applications/#{id}/steps/other_info") }
+    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/other_info") }
   end
 
   describe '#can_start?' do

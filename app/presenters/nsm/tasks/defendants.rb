@@ -7,8 +7,8 @@ module Nsm
 
       def in_progress?
         [
-          edit_steps_defendant_summary_path(application),
-          edit_steps_defendant_details_path(id: application.id, defendant_id: '')
+          edit_nsm_steps_defendant_summary_path(application),
+          edit_nsm_steps_defendant_details_path(id: application.id, defendant_id: '')
         ].any? do |path|
           application.navigation_stack.any? { |stack| stack.start_with?(path) }
         end

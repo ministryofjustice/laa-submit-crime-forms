@@ -24,10 +24,10 @@
     <% end %>
 
     <div class="govuk-button-group">
-      <%= link_to edit_steps_other_info_path(current_application), class: "govuk-button", data_module: "govuk-button", data_prevent_double_click: "true" do %>
+      <%= link_to edit_nsm_steps_other_info_path(current_application), class: "govuk-button", data_module: "govuk-button", data_prevent_double_click: "true" do %>
         Save and continue
       <% end %>
-      <%= link_to after_commit_path(current_application), class: "govuk-button govuk-button--secondary", data_module: "govuk-button", data_prevent_double_click: "true" do %>
+      <%= link_to nsm_after_commit_path(current_application), class: "govuk-button govuk-button--secondary", data_module: "govuk-button", data_prevent_double_click: "true" do %>
         Save and come back later
       <% end %>
     </div>

@@ -6,7 +6,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
   it 'can select a value from the autocomplete' do
     visit provider_saml_omniauth_callback_path
 
-    visit edit_steps_defendant_summary_path(id: claim)
+    visit edit_nsm_steps_defendant_summary_path(id: claim)
 
     # TODO: investigate why the browser thinks this field is not visible?
     choose 'No', visible: false
@@ -31,7 +31,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
   it 'can enter a value not found in the autocomplete' do
     visit provider_saml_omniauth_callback_path
 
-    visit edit_steps_defendant_summary_path(id: claim)
+    visit edit_nsm_steps_defendant_summary_path(id: claim)
 
     # TODO: investigate why the browser thinks this field is not visible?
     choose 'No', visible: false
@@ -52,7 +52,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
 
       visit provider_saml_omniauth_callback_path
 
-      visit edit_steps_case_details_path(id: claim)
+      visit edit_nsm_steps_case_details_path(id: claim)
 
       expect(page).to have_field('Main offence',
                                  with: 'Wounding or causing grievous bodily harm with intent')
@@ -63,7 +63,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
 
       visit provider_saml_omniauth_callback_path
 
-      visit edit_steps_case_details_path(id: claim)
+      visit edit_nsm_steps_case_details_path(id: claim)
 
       expect(page).to have_field('Main offence', with: 'Apples')
     end

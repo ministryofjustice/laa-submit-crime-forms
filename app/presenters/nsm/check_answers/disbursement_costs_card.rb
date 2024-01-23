@@ -7,7 +7,7 @@ module Nsm
 
       def initialize(claim)
         @claim = claim
-        @disbursements = CostSummary::Disbursements.new(claim.disbursements.by_age, claim)
+        @disbursements = Nsm::CostSummary::Disbursements.new(claim.disbursements.by_age, claim)
         @section = 'disbursements'
         @group = 'about_claim'
       end

@@ -14,7 +14,7 @@ RSpec.describe Nsm::Tasks::CheckAnswers, type: :system do
   let(:navigation_stack) { [] }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/applications/#{id}/steps/check_answers") }
+    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/check_answers") }
   end
 
   describe '#not_applicable?' do
@@ -23,19 +23,19 @@ RSpec.describe Nsm::Tasks::CheckAnswers, type: :system do
 
   describe '#completed?' do
     context 'check_answers is last page in the navigation stack' do
-      let(:navigation_stack) { ["/applications/#{id}/steps/check_answers"] }
+      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/check_answers"] }
 
       it { expect(subject).not_to be_completed }
     end
 
     context 'check_answers is not in the navigation stack' do
-      let(:navigation_stack) { ["/applications/#{id}/steps/apples"] }
+      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/apples"] }
 
       it { expect(subject).not_to be_completed }
     end
 
     context 'check_answers is not the last page in the navigation stack' do
-      let(:navigation_stack) { ["/applications/#{id}/steps/check_answers", '/foo'] }
+      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/check_answers", '/foo'] }
 
       it { expect(subject).to be_completed }
     end

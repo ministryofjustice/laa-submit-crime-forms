@@ -17,19 +17,19 @@ RSpec.describe Nsm::Tasks::WorkItems, type: :system do
 
   describe '#path' do
     context 'no work_items' do
-      it { expect(subject.path).to eq("/applications/#{id}/steps/work_item/#{StartPage::NEW_RECORD}") }
+      it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/work_item/#{StartPage::NEW_RECORD}") }
     end
 
     context 'one work_item' do
       let(:work_items) { [build(:work_item, :valid)] }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/work_items") }
+      it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/work_items") }
     end
 
     context 'more than one work_item' do
       let(:work_items) { [build(:work_item, :valid), build(:work_item, :valid)] }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/work_items") }
+      it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/work_items") }
     end
   end
 
@@ -41,13 +41,13 @@ RSpec.describe Nsm::Tasks::WorkItems, type: :system do
 
   describe 'in_progress?' do
     context 'navigation_stack include edit work_item path' do
-      before { navigation_stack << edit_steps_work_item_path(application, work_item_id: '111') }
+      before { navigation_stack << edit_nsm_steps_work_item_path(application, work_item_id: '111') }
 
       it { expect(subject).to be_in_progress }
     end
 
     context 'navigation_stack include edit work_items path' do
-      before { navigation_stack << edit_steps_work_items_path(application) }
+      before { navigation_stack << edit_nsm_steps_work_items_path(application) }
 
       it { expect(subject).to be_in_progress }
     end

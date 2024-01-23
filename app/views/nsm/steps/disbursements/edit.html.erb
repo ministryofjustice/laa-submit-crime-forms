@@ -36,10 +36,10 @@
               <td class="govuk-table__cell"><%= check_missing(disbursement.total_cost) { NumberTo.pounds(disbursement.total_cost) } %></td>
               <td class="govuk-table__cell"><%= check_missing(disbursement.details)  %></td>
               <td class="govuk-table__cell govuk-table__nowrap">
-                <%= link_to t('.change'), edit_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id) %>
+                <%= link_to t('.change'), edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id) %>
               </td>
               <td class="govuk-table__cell govuk-table__nowrap">
-                <%= link_to t('.delete'), edit_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id) %>
+                <%= link_to t('.delete'), edit_nsm_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id) %>
               </td>
             </tr>
           <% end %>

@@ -8,7 +8,7 @@ RSpec.describe 'User can fill in case details', type: :system do
   end
 
   it 'can do green path' do
-    visit edit_steps_case_details_path(claim.id)
+    visit edit_nsm_steps_case_details_path(claim.id)
     select 'Assault (common)', from: 'Main offence'
     within('.govuk-form-group', text: 'Main offence date') do
       fill_in 'Day', with: '20'

@@ -14,7 +14,7 @@ RSpec.describe Nsm::Tasks::CaseDisposal, type: :system do
   let(:plea) { nil }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/applications/#{id}/steps/case_disposal") }
+    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/case_disposal") }
   end
 
   describe '#not_applicable?' do

@@ -10,7 +10,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
   end
 
   it 'can select a value from the autocomplete' do
-    visit edit_steps_disbursement_add_path(id: claim)
+    visit edit_nsm_steps_disbursement_add_path(id: claim)
 
     choose 'Yes', visible: :all
 
@@ -31,7 +31,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
   end
 
   it 'can enter a value not found in the autocoplete' do
-    visit edit_steps_disbursement_add_path(id: claim)
+    visit edit_nsm_steps_disbursement_add_path(id: claim)
 
     choose 'Yes', visible: :all
     click_on 'Save and continue'
@@ -55,7 +55,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
 
       visit provider_saml_omniauth_callback_path
 
-      visit edit_steps_disbursement_type_path(id: claim, disbursement_id: disbursement.id)
+      visit edit_nsm_steps_disbursement_type_path(id: claim, disbursement_id: disbursement.id)
 
       expect(page).to have_field(other_type_field, with: 'Accident & Emergency Report')
     end
@@ -65,7 +65,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
 
       visit provider_saml_omniauth_callback_path
 
-      visit edit_steps_disbursement_type_path(id: claim, disbursement_id: disbursement.id)
+      visit edit_nsm_steps_disbursement_type_path(id: claim, disbursement_id: disbursement.id)
 
       expect(page).to have_field(other_type_field, with: 'Apples')
     end

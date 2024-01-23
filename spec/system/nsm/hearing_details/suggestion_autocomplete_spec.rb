@@ -9,7 +9,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
   end
 
   it 'can select a value from the autocomplete' do
-    visit edit_steps_case_details_path(id: claim)
+    visit edit_nsm_steps_case_details_path(id: claim)
 
     click_on 'Save and continue'
 
@@ -24,7 +24,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
   end
 
   it 'can enter a value not found in the autocoplete' do
-    visit edit_steps_case_details_path(id: claim)
+    visit edit_nsm_steps_case_details_path(id: claim)
 
     click_on 'Save and continue'
 
@@ -43,7 +43,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
 
       visit provider_saml_omniauth_callback_path
 
-      visit edit_steps_hearing_details_path(id: claim)
+      visit edit_nsm_steps_hearing_details_path(id: claim)
 
       expect(page).to have_field('Which court was the last case hearing heard at?',
                                  with: "Aldershot Magistrates' Court")
@@ -54,7 +54,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
 
       visit provider_saml_omniauth_callback_path
 
-      visit edit_steps_hearing_details_path(id: claim)
+      visit edit_nsm_steps_hearing_details_path(id: claim)
 
       expect(page).to have_field('Which court was the last case hearing heard at?', with: 'Apples')
     end

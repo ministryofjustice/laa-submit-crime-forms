@@ -34,7 +34,7 @@ RSpec.describe Nsm::Steps::DisbursementCostController, type: :controller do
           get :edit, params: { id: application, disbursement_id: SecureRandom.uuid }
         end.not_to change(application.disbursements, :count)
 
-        expect(response).to redirect_to(edit_steps_work_items_path(application))
+        expect(response).to redirect_to(edit_nsm_steps_work_items_path(application))
       end
     end
   end

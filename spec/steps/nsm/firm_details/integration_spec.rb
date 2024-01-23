@@ -8,7 +8,7 @@ RSpec.describe 'User can fill in firm details', type: :system do
   end
 
   it 'can do green path' do
-    visit edit_steps_firm_details_path(claim.id)
+    visit edit_nsm_steps_firm_details_path(claim.id)
 
     fill_in 'Firm name', with: 'Lawyers'
     fill_in 'Firm account number', with: '1111'

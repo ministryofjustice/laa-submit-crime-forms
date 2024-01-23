@@ -51,7 +51,7 @@ RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
           it 'redirects to the summary page' do
             get :edit, params: { id: existing_case, defendant_id: SecureRandom }
 
-            expect(response).to redirect_to(edit_steps_defendant_summary_path(current_application))
+            expect(response).to redirect_to(edit_nsm_steps_defendant_summary_path(current_application))
           end
         end
       end
@@ -139,7 +139,7 @@ RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
           it 'redirects to the summary page' do
             get :edit, params: { id: existing_case, defendant_id: SecureRandom }
 
-            expect(response).to redirect_to(edit_steps_defendant_summary_path(current_application))
+            expect(response).to redirect_to(edit_nsm_steps_defendant_summary_path(current_application))
           end
         end
       end

@@ -23,7 +23,7 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
   end
 
   it 'can do green path' do
-    visit steps_cost_summary_path(claim.id)
+    visit nsm_steps_cost_summary_path(claim.id)
 
     doc = Nokogiri::HTML(page.html)
     values = doc.css('.govuk-summary-card h2, dd, dt').map(&:text)

@@ -8,7 +8,7 @@ RSpec.describe 'User can fill in other relevent information', type: :system do
   end
 
   it 'can do green path' do
-    visit edit_steps_other_info_path(claim.id)
+    visit edit_nsm_steps_other_info_path(claim.id)
 
     find('.govuk-form-group', text: 'Do you want to add any other information?').choose 'Yes'
     fill_in 'Add other information',

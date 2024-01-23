@@ -16,7 +16,7 @@ RSpec.describe Nsm::Tasks::ClaimType, type: :system do
   let(:solicitor) { nil }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/applications/#{id}/steps/claim_type") }
+    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/claim_type") }
   end
 
   describe '#not_applicable?' do

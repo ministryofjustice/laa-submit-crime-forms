@@ -49,7 +49,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsController, type: :controller do
             get :edit, params: { id: application, defendant_id: SecureRandom.uuid }
           end.not_to change(application.defendants, :count)
 
-          expect(response).to redirect_to(edit_steps_defendant_summary_path(application))
+          expect(response).to redirect_to(edit_nsm_steps_defendant_summary_path(application))
         end
       end
     end

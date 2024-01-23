@@ -18,7 +18,7 @@ RSpec.describe Nsm::Tasks::CostSummary, type: :system do
   let(:has_disbursements) { nil }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/applications/#{id}/steps/cost_summary") }
+    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/cost_summary") }
   end
 
   describe '#not_applicable?' do
@@ -45,19 +45,19 @@ RSpec.describe Nsm::Tasks::CostSummary, type: :system do
 
   describe '#completed?' do
     context 'cost_summary is last page in the navigation stack' do
-      let(:navigation_stack) { ["/applications/#{id}/steps/cost_summary"] }
+      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/cost_summary"] }
 
       it { expect(subject).not_to be_completed }
     end
 
     context 'cost_summary is not in the navigation stack' do
-      let(:navigation_stack) { ["/applications/#{id}/steps/apples"] }
+      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/apples"] }
 
       it { expect(subject).not_to be_completed }
     end
 
     context 'cost_summary is not the last page in the navigation stack' do
-      let(:navigation_stack) { ["/applications/#{id}/steps/cost_summary", '/foo'] }
+      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/cost_summary", '/foo'] }
 
       it { expect(subject).to be_completed }
     end

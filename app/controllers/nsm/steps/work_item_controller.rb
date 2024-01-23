@@ -17,11 +17,11 @@ module Nsm
 
       def duplicate
         if work_item.id == StartPage::NEW_RECORD
-          redirect_to edit_steps_work_item_path(current_application, work_item_id: StartPage::NEW_RECORD)
+          redirect_to edit_nsm_steps_work_item_path(current_application, work_item_id: StartPage::NEW_RECORD)
         else
           new_work_item = work_item.dup
           new_work_item.save!
-          redirect_to edit_steps_work_item_path(current_application, work_item_id: new_work_item.id),
+          redirect_to edit_nsm_steps_work_item_path(current_application, work_item_id: new_work_item.id),
                       flash: { success: t('.duplicate') }
         end
       end
@@ -42,7 +42,7 @@ module Nsm
       end
 
       def ensure_work_item
-        work_item || redirect_to(edit_steps_work_items_path(current_application))
+        work_item || redirect_to(edit_nsm_steps_work_items_path(current_application))
       end
 
       def additional_permitted_params

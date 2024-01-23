@@ -8,7 +8,7 @@ RSpec.describe 'User can fill in claim type details', type: :system do
   end
 
   it 'can do green path' do
-    visit edit_steps_hearing_details_path(claim.id)
+    visit edit_nsm_steps_hearing_details_path(claim.id)
 
     within '#steps-hearing_details-form-first-hearing-date' do
       fill_in 'Day', with: '20'

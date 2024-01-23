@@ -15,7 +15,7 @@ module Nsm
       end
 
       def path
-        steps_cost_summary_path(application)
+        nsm_steps_cost_summary_path(application)
       end
 
       # completed once user has moved to the next page

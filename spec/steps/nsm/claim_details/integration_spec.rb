@@ -8,7 +8,7 @@ RSpec.describe 'User can fill in claim details', type: :system do
   end
 
   it 'can do green path' do
-    visit edit_steps_claim_details_path(claim.id)
+    visit edit_nsm_steps_claim_details_path(claim.id)
 
     fill_in 'Number of pages of prosecution evidence', with: '1'
     fill_in 'Number of pages of defence statements', with: '2'

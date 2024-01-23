@@ -8,7 +8,7 @@ RSpec.describe Nsm::Tasks::SupportingEvidence, type: :system do
   let(:id) { SecureRandom.uuid }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/applications/#{id}/steps/supporting_evidence") }
+    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/supporting_evidence") }
   end
 
   it_behaves_like 'a task with generic complete?', Nsm::Steps::SupportingEvidenceForm

@@ -8,7 +8,7 @@ module Nsm
       end
 
       def path
-        edit_steps_other_info_path(application)
+        edit_nsm_steps_other_info_path(application)
       end
     end
   end

@@ -36,7 +36,7 @@ module Steps
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
         @form_object.save!
-        redirect_to opts[:after_commit_redirect_path] || after_commit_path(id: current_application.id)
+        redirect_to opts[:after_commit_redirect_path] || nsm_after_commit_path(id: current_application.id)
       elsif params.key?(:save_and_refresh)
         @form_object.save!
         redirect_to_current_object

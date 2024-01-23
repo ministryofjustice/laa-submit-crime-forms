@@ -8,7 +8,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
   end
 
   it 'can add a simple disbursement' do
-    visit edit_steps_disbursement_add_path(claim.id)
+    visit edit_nsm_steps_disbursement_add_path(claim.id)
 
     choose 'Yes'
     expect { click_on 'Save and continue' }.not_to change(Disbursement, :count)
@@ -52,7 +52,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
   it 'can add a other disbursement' do
     disbursement = claim.disbursements.create
-    visit edit_steps_disbursement_type_path(claim.id, disbursement_id: disbursement.id)
+    visit edit_nsm_steps_disbursement_type_path(claim.id, disbursement_id: disbursement.id)
 
     within('.govuk-fieldset', text: 'Date') do
       fill_in 'Day', with: '20'
@@ -96,7 +96,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
     claim = create(:claim)
     disbursement = create(:disbursement, :valid, claim:)
 
-    visit edit_steps_disbursements_path(claim.id, disbursement_id: disbursement.id)
+    visit edit_nsm_steps_disbursements_path(claim.id, disbursement_id: disbursement.id)
 
     click_on 'Delete'
 
@@ -108,7 +108,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
   end
 
   it 'can skip adding disbursements' do
-    visit edit_steps_disbursement_add_path(claim.id)
+    visit edit_nsm_steps_disbursement_add_path(claim.id)
 
     choose 'No'
     expect { click_on 'Save and continue' }.not_to change(Disbursement, :count)

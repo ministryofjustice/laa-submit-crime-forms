@@ -8,7 +8,7 @@ RSpec.describe Nsm::Tasks::LettersCalls, type: :system do
   let(:id) { SecureRandom.uuid }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/applications/#{id}/steps/letters_calls") }
+    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/letters_calls") }
   end
 
   it_behaves_like 'a task with generic can_start?', Nsm::Tasks::WorkItems

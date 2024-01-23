@@ -23,13 +23,13 @@ RSpec.describe Nsm::Tasks::Disbursements, type: :system do
     context 'no disbursements' do
       let(:disbursements) { [] }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursement_add") }
+      it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/disbursement_add") }
     end
 
     context 'any valid disbursements' do
       let(:disbursement) { build(:disbursement, :valid) }
 
-      it { expect(subject.path).to eq("/applications/#{id}/steps/disbursements") }
+      it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/disbursements") }
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe Nsm::Tasks::Disbursements, type: :system do
 
   describe 'in_progress?' do
     context 'navigation_stack include edit disbursement_type path' do
-      before { navigation_stack << edit_steps_disbursement_type_path(application, disbursement_id: disbursement.id) }
+      before { navigation_stack << edit_nsm_steps_disbursement_type_path(application, disbursement_id: disbursement.id) }
 
       it { expect(subject).to be_in_progress }
     end

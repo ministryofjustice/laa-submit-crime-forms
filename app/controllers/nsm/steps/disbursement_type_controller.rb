@@ -30,7 +30,7 @@ module Nsm
       end
 
       def ensure_disbursement
-        disbursement || redirect_to(edit_steps_disbursements_path(current_application))
+        disbursement || redirect_to(edit_nsm_steps_disbursements_path(current_application))
       end
 
       def additional_permitted_params

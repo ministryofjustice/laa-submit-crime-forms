@@ -5,7 +5,7 @@ module Nsm
       FORM = Nsm::Steps::ReasonForClaimForm
 
       def path
-        edit_steps_reason_for_claim_path(application)
+        edit_nsm_steps_reason_for_claim_path(application)
       end
 
       def completed?

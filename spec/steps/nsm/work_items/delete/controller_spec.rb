@@ -49,7 +49,7 @@ RSpec.describe Nsm::Steps::WorkItemDeleteController, type: :controller do
           it 'redirects to the summary page' do
             get :edit, params: { id: existing_case, work_item_id: SecureRandom }
 
-            expect(response).to redirect_to(edit_steps_work_items_path(current_application))
+            expect(response).to redirect_to(edit_nsm_steps_work_items_path(current_application))
           end
         end
       end
@@ -135,7 +135,7 @@ RSpec.describe Nsm::Steps::WorkItemDeleteController, type: :controller do
           it 'redirects to the summary page' do
             get :edit, params: { id: existing_case, work_item_id: SecureRandom.uuid }
 
-            expect(response).to redirect_to(edit_steps_work_items_path(current_application))
+            expect(response).to redirect_to(edit_nsm_steps_work_items_path(current_application))
           end
         end
       end

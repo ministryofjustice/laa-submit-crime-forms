@@ -8,7 +8,7 @@ RSpec.describe Nsm::Tasks::SolicitorDeclaration, type: :system do
   let(:id) { SecureRandom.uuid }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/applications/#{id}/steps/solicitor_declaration") }
+    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/solicitor_declaration") }
   end
 
   it_behaves_like 'a task with generic complete?', Nsm::Steps::SolicitorDeclarationForm
