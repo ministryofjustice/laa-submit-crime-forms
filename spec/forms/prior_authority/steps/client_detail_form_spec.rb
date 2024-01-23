@@ -15,7 +15,7 @@ RSpec.describe PriorAuthority::Steps::ClientDetailForm do
   describe '#validate' do
     let(:application) { instance_double(PriorAuthorityApplication) }
 
-    context 'with valid format of ufn' do
+    context 'with valid client details' do
       let(:client_first_name) { 'Joe' }
       let(:client_last_name) { 'Bloggs' }
       let(:client_date_of_birth) { 20.years.ago.to_date }
@@ -28,14 +28,15 @@ RSpec.describe PriorAuthority::Steps::ClientDetailForm do
       let(:client_last_name) { '' }
       let(:client_date_of_birth) { '' }
 
-      it 'has a validation error on the field' do
+      it 'has a validation errors on the fields' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:client_first_name, :blank)).to be(true)
         expect(form.errors.of_kind?(:client_last_name, :blank)).to be(true)
         expect(form.errors.of_kind?(:client_date_of_birth, :blank)).to be(true)
-        expect(form.errors.messages.values.flatten).to include("Enter the client's first name",
-                                                               "Enter the client's first name",
-                                                               'Date cannot be blank')
+        expect(form.errors.messages.values.flatten)
+          .to include("Enter the client's first name",
+                      "Enter the client's last name",
+                      "Enter the client's date of birth")
       end
     end
   end
