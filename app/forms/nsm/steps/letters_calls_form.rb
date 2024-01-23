@@ -122,7 +122,7 @@ module Nsm
       # rubocop:enable Metrics/MethodLength
 
       def translate(key)
-        I18n.t("steps.letters_calls.edit.#{key}")
+        I18n.t("nsm.steps.letters_calls.edit.#{key}")
       end
 
       def persist!

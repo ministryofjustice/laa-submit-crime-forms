@@ -64,7 +64,7 @@ if: :other_disbursement_type?
       private
 
       def translate(key)
-        I18n.t("steps.disbursement_cost.edit.#{key}")
+        I18n.t("nsm.steps.disbursement_cost.edit.#{key}")
       end
 
       def persist!

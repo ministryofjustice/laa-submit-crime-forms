@@ -22,7 +22,7 @@ module Nsm
           {
             head_key: find_key_by_value(case_disposal_form.plea),
             text: check_missing(case_disposal_form.plea) do
-                    I18n.t("helpers.label.steps_case_disposal_form.plea_options.#{case_disposal_form.plea}")
+                    I18n.t("helpers.label.nsm_steps_case_disposal_form.plea_options.#{case_disposal_form.plea}")
                   end
           }
         ]

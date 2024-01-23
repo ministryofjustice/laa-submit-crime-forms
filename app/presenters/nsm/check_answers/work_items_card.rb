@@ -15,7 +15,7 @@ module Nsm
       def title(**)
         ApplicationController.helpers.sanitize(
           [
-            I18n.t("steps.check_answers.groups.#{group}.#{section}.title", **),
+            I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.title", **),
             check_missing(claim.work_items.any?) { nil },
           ].compact.join(' '),
           tags: %w[strong]

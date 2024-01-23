@@ -99,7 +99,7 @@ module Nsm
       end
 
       def group_heading(group_key, **)
-        I18n.t("steps.check_answers.groups.#{group_key}.heading", **)
+        I18n.t("nsm.steps.check_answers.groups.#{group_key}.heading", **)
       end
     end
   end

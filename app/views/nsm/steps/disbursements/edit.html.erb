@@ -30,7 +30,7 @@
                     <%= check_missing(disbursement.other_type)  %>
                   <% end %>
                 <% else %>
-                  <%= check_missing(disbursement.disbursement_type) { t("helpers.label.steps_disbursement_type_form.disbursement_type_options.#{disbursement.disbursement_type}") } %>
+                  <%= check_missing(disbursement.disbursement_type) { t("helpers.label.nsm_steps_disbursement_type_form.disbursement_type_options.#{disbursement.disbursement_type}") } %>
                 <% end %>
               </td>
               <td class="govuk-table__cell"><%= check_missing(disbursement.total_cost) { NumberTo.pounds(disbursement.total_cost) } %></td>

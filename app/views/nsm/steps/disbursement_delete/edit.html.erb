@@ -25,7 +25,7 @@
                 <%= check_missing(@form_object.record.other_type)  %>
               <% end %>
             <% else %>
-              <%= check_missing(@form_object.record.disbursement_type) { t("helpers.label.steps_disbursement_type_form.disbursement_type_options.#{@form_object.record.disbursement_type}") } %>
+              <%= check_missing(@form_object.record.disbursement_type) { t("helpers.label.nsm_steps_disbursement_type_form.disbursement_type_options.#{@form_object.record.disbursement_type}") } %>
             <% end %>
           </td>
           <td class="govuk-table__cell"><%= check_missing(@form_object.record.total_cost) { NumberTo.pounds(@form_object.record.total_cost) } %></td>

@@ -92,7 +92,7 @@ module Nsm
       end
 
       def translate(key)
-        I18n.t("steps.work_item.edit.#{key}")
+        I18n.t("nsm.steps.work_item.edit.#{key}")
       end
 
       def total_without_uplift

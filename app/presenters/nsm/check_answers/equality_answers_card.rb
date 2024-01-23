@@ -17,9 +17,9 @@ module Nsm
             head_key: 'equality_questions',
             text: check_missing(claim.answer_equality?) do
               if claim.answer_equality == YesNoAnswer::YES.to_s
-                I18n.t('helpers.label.steps_answer_equality_form.answer_equality_options.yes')
+                I18n.t('helpers.label.nsm_steps_answer_equality_form.answer_equality_options.yes')
               else
-                I18n.t('helpers.label.steps_answer_equality_form.answer_equality_options.no')
+                I18n.t('helpers.label.nsm_steps_answer_equality_form.answer_equality_options.no')
               end
             end
           },
@@ -37,7 +37,7 @@ module Nsm
         {
           head_key: 'defendants_ethnicity',
           text: check_missing(claim.ethnic_group.present?) do
-            I18n.t("helpers.label.steps_equality_questions_form.ethnic_group_options.#{claim.ethnic_group}")
+            I18n.t("helpers.label.nsm_steps_equality_questions_form.ethnic_group_options.#{claim.ethnic_group}")
           end
         }
       end
@@ -48,7 +48,7 @@ module Nsm
         {
           head_key: 'defendant_identification',
           text: check_missing(claim.gender.present?) do
-            I18n.t("helpers.label.steps_equality_questions_form.gender_options.#{claim.gender}")
+            I18n.t("helpers.label.nsm_steps_equality_questions_form.gender_options.#{claim.gender}")
           end
         }
       end
@@ -59,7 +59,7 @@ module Nsm
         {
           head_key: 'defendant_disabled',
           text: check_missing(claim.disability.present?) do
-            I18n.t("helpers.label.steps_equality_questions_form.disability_options.#{claim.disability}")
+            I18n.t("helpers.label.nsm_steps_equality_questions_form.disability_options.#{claim.disability}")
           end
         }
       end

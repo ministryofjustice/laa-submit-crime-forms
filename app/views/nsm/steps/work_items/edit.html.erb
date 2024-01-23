@@ -23,7 +23,7 @@
         <tbody class="govuk-table__body">
           <% work_items.each do |work_item| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= check_missing(work_item.work_type) { t("helpers.label.steps_work_item_form.work_type_options.#{work_item.work_type}") } %></td>
+              <td class="govuk-table__cell"><%= check_missing(work_item.work_type) { t("helpers.label.nsm_steps_work_item_form.work_type_options.#{work_item.work_type}") } %></td>
               <td class="govuk-table__cell"><%= check_missing(format_period(work_item.time_spent))  %></td>
               <td class="govuk-table__cell"><%= check_missing(work_item.fee_earner) %></td>
               <td class="govuk-table__cell govuk-table__nowrap">

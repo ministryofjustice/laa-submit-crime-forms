@@ -3,7 +3,7 @@ module Nsm
     class DefendantSummaryController < ::Steps::BaseStepController
       def edit
         @main_defendant, *@additional_defendants = current_application.defendants
-        @form_object = AddAnotherForm.build(
+        @form_object = ::Steps::AddAnotherForm.build(
           current_application
         )
       end

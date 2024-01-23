@@ -22,10 +22,10 @@ RSpec.describe Nsm::Tasks::ClaimDetails, type: :system do
   end
 
   describe '#can_start?' do
-    let(:reason_for_claim) { instance_double(Tasks::ReasonForClaim, status:) }
+    let(:reason_for_claim) { instance_double(Nsm::Tasks::ReasonForClaim, status:) }
 
     before do
-      allow(Tasks::ReasonForClaim).to receive(:new).and_return(reason_for_claim)
+      allow(Nsm::Tasks::ReasonForClaim).to receive(:new).and_return(reason_for_claim)
     end
 
     context 'when claim details are complete' do

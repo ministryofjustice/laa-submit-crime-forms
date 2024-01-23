@@ -36,7 +36,7 @@ RSpec.describe Decisions::DslDecisionTree do
 
       it 'matches defined steps' do
         expect(subject.destination).to eq(
-          controller: '/claims',
+          controller: '/nsm/claims',
           action: :index,
         )
       end
@@ -127,7 +127,7 @@ RSpec.describe Decisions::DslDecisionTree do
 
       it 'matches defined steps' do
         expect(subject.destination).to eq(
-          controller: '/claims',
+          controller: '/nsm/claims',
           action: :index,
         )
       end
@@ -201,7 +201,7 @@ RSpec.describe Decisions::DslDecisionTree do
 
     it 'resolves to claims#index when no conditions are met' do
       expect(subject.destination).to eq(
-        controller: '/claims',
+        controller: '/nsm/claims',
         action: :index,
       )
     end

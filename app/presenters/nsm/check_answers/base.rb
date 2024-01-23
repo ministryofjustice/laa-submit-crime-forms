@@ -7,11 +7,11 @@ module Nsm
       attr_accessor :group, :section
 
       def translate_table_key(table, key, **)
-        I18n.t("steps.check_answers.show.sections.#{table}.#{key}", **)
+        I18n.t("nsm.steps.check_answers.show.sections.#{table}.#{key}", **)
       end
 
       def title(**)
-        I18n.t("steps.check_answers.groups.#{group}.#{section}.title", **)
+        I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.title", **)
       end
 
       def rows
