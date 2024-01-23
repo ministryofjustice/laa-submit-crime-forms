@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Nsm::Tasks::PriorAuthorityCaseContact, type: :presenter do
+RSpec.describe PriorAuthority::Tasks::CaseContact, type: :presenter do
   subject(:presenter) { described_class.new(application:) }
 
   let(:application) { create(:prior_authority_application) }

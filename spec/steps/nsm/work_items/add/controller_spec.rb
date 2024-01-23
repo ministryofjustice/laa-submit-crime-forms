@@ -30,7 +30,7 @@ RSpec.describe Nsm::Steps::WorkItemController, type: :controller do
       context 'when NEW_RECORD passed as id' do
         it 'does not save the new work_item it passes to the form' do
           allow(Nsm::Steps::WorkItemForm).to receive(:build)
-          expect { get :edit, params: { id: application, work_item_id: StartPage::NEW_RECORD } }
+          expect { get :edit, params: { id: application, work_item_id: Nsm::StartPage::NEW_RECORD } }
             .not_to change(application.work_items, :count)
 
           expect(Nsm::Steps::WorkItemForm).to have_received(:build) do |wi, **kwargs|
@@ -95,14 +95,15 @@ RSpec.describe Nsm::Steps::WorkItemController, type: :controller do
     end
 
     context 'when existing work_item_id is NEW_RECORD' do
-      let(:work_item) { build(:work_item, id: StartPage::NEW_RECORD) }
+      let(:work_item) { build(:work_item, id: Nsm::StartPage::NEW_RECORD) }
 
       it 'redirects to the NEW_RECORD page' do
         expect do
           get :duplicate, params: { id: application, work_item_id: work_item.id }
         end.not_to change(application.work_items, :count)
 
-        expect(response).to redirect_to(edit_nsm_steps_work_item_path(application, work_item_id: StartPage::NEW_RECORD))
+        expect(response).to redirect_to(edit_nsm_steps_work_item_path(application,
+                                                                      work_item_id: Nsm::StartPage::NEW_RECORD))
       end
     end
 

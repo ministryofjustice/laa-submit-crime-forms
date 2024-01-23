@@ -94,7 +94,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
 
   describe '#save' do
     let(:application) { create(:claim) }
-    let(:record) { Defendant.new(claim: application, id: StartPage::NEW_RECORD) }
+    let(:record) { Defendant.new(claim: application, id: Nsm::StartPage::NEW_RECORD) }
 
     context 'when no defendants exist' do
       it 'created with position 1 and main true' do
@@ -106,7 +106,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
           main: true
         )
         expect(application.defendants.first).not_to have_attributes(
-          id: StartPage::NEW_RECORD
+          id: Nsm::StartPage::NEW_RECORD
         )
       end
     end
@@ -126,7 +126,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
           main: false
         )
         expect(defendant).not_to have_attributes(
-          id: StartPage::NEW_RECORD
+          id: Nsm::StartPage::NEW_RECORD
         )
       end
     end

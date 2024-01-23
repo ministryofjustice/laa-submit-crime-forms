@@ -1,10 +1,10 @@
 module Nsm
   module Tasks
-    class OtherInfo < Generic
+    class OtherInfo < ::Tasks::Generic
       FORM = Nsm::Steps::OtherInfoForm
 
       def can_start?
-        application.navigation_stack.include?(steps_cost_summary_path(application))
+        application.navigation_stack.include?(nsm_steps_cost_summary_path(application))
       end
 
       def path

@@ -26,7 +26,7 @@ module Decisions
     from('nsm/steps/letters_calls')
       .when(-> { application.work_items.exists? })
       .goto(edit: 'nsm/steps/work_items')
-      .goto(edit: 'nsm/steps/work_item', work_item_id: StartPage::NEW_RECORD)
+      .goto(edit: 'nsm/steps/work_item', work_item_id: Nsm::StartPage::NEW_RECORD)
     from('nsm/steps/disbursement_add').goto(edit: 'nsm/steps/letters_calls')
     from('nsm/steps/disbursement_type')
       .when(-> { application.disbursements.exists? })

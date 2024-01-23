@@ -17,7 +17,11 @@ RSpec.describe Nsm::Tasks::Defendants, type: :system do
 
   describe '#path' do
     context 'no defendants' do
-      it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/defendant_details/#{StartPage::NEW_RECORD}") }
+      it {
+        expect(subject.path).to eq(
+          "/non-standard-magistrates/applications/#{id}/steps/defendant_details/#{Nsm::StartPage::NEW_RECORD}"
+        )
+      }
     end
 
     context 'one defendant' do

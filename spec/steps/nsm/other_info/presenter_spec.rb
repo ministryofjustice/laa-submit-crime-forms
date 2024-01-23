@@ -19,7 +19,7 @@ RSpec.describe Nsm::Tasks::OtherInfo, type: :system do
 
     context 'cost summary page has been visited' do
       before do
-        navigation_stack << steps_cost_summary_path(application)
+        navigation_stack << nsm_steps_cost_summary_path(application)
       end
 
       it { expect(subject).to be_can_start }

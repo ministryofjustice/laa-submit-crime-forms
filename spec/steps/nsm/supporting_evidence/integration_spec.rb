@@ -8,7 +8,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
 
     visit edit_nsm_steps_supporting_evidence_path(claim.id)
 
-    element = find_by_id('steps-supporting-evidence-form-send-by-post-true-field', visible: :all)
+    element = find_by_id('nsm-steps-supporting-evidence-form-send-by-post-true-field', visible: :all)
 
     expect(element).not_to be_checked
 
@@ -22,7 +22,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
 
     visit edit_nsm_steps_supporting_evidence_path(claim.id)
 
-    element = find_by_id('steps-supporting-evidence-form-send-by-post-true-field', visible: :all)
+    element = find_by_id('nsm-steps-supporting-evidence-form-send-by-post-true-field', visible: :all)
 
     element.click
 

@@ -16,12 +16,12 @@ RSpec.describe 'User can fill in firm details', type: :system do
     fill_in 'Town or city', with: 'hometown'
     fill_in 'Postcode', with: 'AA1 1AA'
 
-    choose 'steps-firm-details-form-firm-office-attributes-vat-registered-yes-field'
+    choose 'nsm-steps-firm-details-form-firm-office-attributes-vat-registered-yes-field'
 
     fill_in 'Solicitor full name', with: 'James Robert'
     fill_in 'Solicitor reference number', with: '2222'
 
-    choose 'steps-firm-details-form-solicitor-attributes-alternative-contact-details-yes-field'
+    choose 'nsm-steps-firm-details-form-solicitor-attributes-alternative-contact-details-yes-field'
 
     fill_in 'Full name of alternative contact', with: 'Jim Bob'
     fill_in 'Email address of alternative contact', with: 'jim@bob.com'

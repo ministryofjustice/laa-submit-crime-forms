@@ -8,7 +8,7 @@ RSpec.describe 'User can manage defendants', type: :system do
   end
 
   it 'can add a defendant' do
-    visit edit_nsm_steps_defendant_details_path(claim.id, defendant_id: StartPage::NEW_RECORD)
+    visit edit_nsm_steps_defendant_details_path(claim.id, defendant_id: Nsm::StartPage::NEW_RECORD)
 
     within('.govuk-fieldset', text: 'Main defendant') do
       fill_in 'Full name', with: 'Jim Bob'
@@ -31,7 +31,6 @@ RSpec.describe 'User can manage defendants', type: :system do
     claim.defendants.create(full_name: 'Jim Bob', maat: 'AA1', position: 1, main: true)
 
     visit edit_nsm_steps_defendant_summary_path(claim.id)
-
     choose 'Yes'
 
     click_on 'Save and continue'

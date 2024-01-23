@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Nsm::Steps::DeleteForm do
+RSpec.describe Steps::DeleteForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do

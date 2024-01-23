@@ -32,7 +32,7 @@ en:
         youth_court: Is this court a youth court?
       nsm_steps_reason_for_claim_form:
         representation_order_withdrawn_date: Withdrawn date
-      nsm_steps_add_another_form:
+      steps_add_another_form:
         add_another: Do you want to add another defendant?
       nsm_steps_claim_details_form:
         claim_details: Claim Details
@@ -217,7 +217,7 @@ en:
           extradition: Extradition
           other: Other
         reason_for_claim_other_details: Enter details
-      nsm_steps_add_another_form:
+      steps_add_another_form:
         add_another_options:
           'yes': 'Yes'
           'no': 'No'

@@ -196,7 +196,7 @@ RSpec.describe DummyStepController, type: :controller do
         it 'redirects to the after_commit_path' do
           put(:update, params:)
 
-          expect(response).to redirect_to(after_commit_path(id: application.id))
+          expect(response).to redirect_to(nsm_after_commit_path(id: application.id))
         end
       end
 

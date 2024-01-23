@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class ClaimConfirmation < Generic
+    class ClaimConfirmation < ::Tasks::Generic
       PREVIOUS_TASK = SolicitorDeclaration
 
       def path

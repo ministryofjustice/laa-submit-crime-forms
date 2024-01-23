@@ -32,7 +32,7 @@ RSpec.describe Decisions::BackDecisionTree do
 
   context 'when no work items' do
     it_behaves_like 'a generic decision', from: 'nsm/steps/work_item', goto: { action: :edit, controller: 'nsm/steps/claim_details' }
-    it_behaves_like 'a generic decision', from: 'nsm/steps/letters_calls', goto: { action: :edit, controller: 'nsm/steps/work_item', work_item_id: StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: 'nsm/steps/letters_calls', goto: { action: :edit, controller: 'nsm/steps/work_item', work_item_id: Nsm::StartPage::NEW_RECORD }
   end
 
   context 'when any work items' do

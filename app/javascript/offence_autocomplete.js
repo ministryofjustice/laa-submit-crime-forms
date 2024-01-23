@@ -5,7 +5,7 @@ window.$ = $
 
 export async function fetchOffences(){
   try{
-    const response = await fetch("/offences")
+    const response = await fetch("/non-standard-magistrates/offences")
     const offences = await response.json()
     return offences
   }

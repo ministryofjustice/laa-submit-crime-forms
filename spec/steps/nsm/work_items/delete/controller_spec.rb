@@ -27,10 +27,10 @@ RSpec.describe Nsm::Steps::WorkItemDeleteController, type: :controller do
         instance_double(Claim, work_items: work_items, navigation_stack: [], 'navigation_stack=': true, save!: true)
       end
       let(:work_items) { double(:work_items, find_by: work_item) }
-      let(:form) { instance_double(Nsm::Steps::DeleteForm) }
+      let(:form) { instance_double(Steps::DeleteForm) }
 
       before do
-        allow(Nsm::Steps::DeleteForm).to receive(:build).and_return(form)
+        allow(Steps::DeleteForm).to receive(:build).and_return(form)
       end
 
       context 'when work_item id is passes in' do
@@ -57,8 +57,8 @@ RSpec.describe Nsm::Steps::WorkItemDeleteController, type: :controller do
   end
 
   describe '#update' do
-    let(:form_object) { instance_double(Nsm::Steps::DeleteForm, attributes: { foo: double }) }
-    let(:form_object_params_name) { Nsm::Steps::DeleteForm.name.underscore }
+    let(:form_object) { instance_double(Steps::DeleteForm, attributes: { foo: double }) }
+    let(:form_object_params_name) { Steps::DeleteForm.name.underscore }
     let(:expected_params) do
       { :id => existing_case, form_object_params_name => { foo: 'bar' }, :work_item_id => SecureRandom.uuid }
     end
@@ -86,10 +86,10 @@ RSpec.describe Nsm::Steps::WorkItemDeleteController, type: :controller do
       let(:current_application) do
         instance_double(Claim, work_items: work_items, navigation_stack: [], 'navigation_stack=': true, save!: true)
       end
-      let(:form) { instance_double(Nsm::Steps::DeleteForm) }
+      let(:form) { instance_double(Steps::DeleteForm) }
 
       before do
-        allow(Nsm::Steps::DeleteForm).to receive(:build).and_return(form)
+        allow(Steps::DeleteForm).to receive(:build).and_return(form)
       end
 
       context 'when work_item id is passes in' do
@@ -99,7 +99,7 @@ RSpec.describe Nsm::Steps::WorkItemDeleteController, type: :controller do
           let(:existing_case) { create(:claim) }
 
           before do
-            allow(Nsm::Steps::DeleteForm).to receive(:new).and_return(form_object)
+            allow(Steps::DeleteForm).to receive(:new).and_return(form_object)
           end
 
           context 'when the form saves successfully' do

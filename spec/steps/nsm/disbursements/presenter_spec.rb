@@ -41,7 +41,9 @@ RSpec.describe Nsm::Tasks::Disbursements, type: :system do
 
   describe 'in_progress?' do
     context 'navigation_stack include edit disbursement_type path' do
-      before { navigation_stack << edit_nsm_steps_disbursement_type_path(application, disbursement_id: disbursement.id) }
+      before do
+        navigation_stack << edit_nsm_steps_disbursement_type_path(application, disbursement_id: disbursement.id)
+      end
 
       it { expect(subject).to be_in_progress }
     end

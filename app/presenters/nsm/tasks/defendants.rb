@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class Defendants < Generic
+    class Defendants < ::Tasks::Generic
       PREVIOUS_TASK = FirmDetails
       FORM = Nsm::Steps::DefendantDetailsForm
       PREVIOUS_STEP_NAME = :firm_details

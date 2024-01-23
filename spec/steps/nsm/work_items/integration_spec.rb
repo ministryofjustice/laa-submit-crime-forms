@@ -119,7 +119,7 @@ RSpec.describe 'User can manage work items', type: :system do
   end
 
   it 'can calculate the result without creating duplicate records' do
-    visit edit_nsm_steps_work_item_path(claim.id, work_item_id: StartPage::NEW_RECORD)
+    visit edit_nsm_steps_work_item_path(claim.id, work_item_id: Nsm::StartPage::NEW_RECORD)
 
     expect { click_on 'Update the calculation' }.to change(WorkItem, :count).by(1)
     work_item_path = edit_nsm_steps_work_item_path(claim.id, work_item_id: WorkItem.last.id)

@@ -9,7 +9,7 @@ RSpec.describe Decisions::DecisionTree do
   it_behaves_like 'a generic decision', from: :claim_type, goto: { action: :show, controller: 'nsm/steps/start_page' }
 
   context 'no existing defendants' do
-    it_behaves_like 'a generic decision', from: :firm_details, goto: { action: :edit, controller: 'nsm/steps/defendant_details', defendant_id: StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: :firm_details, goto: { action: :edit, controller: 'nsm/steps/defendant_details', defendant_id: Nsm::StartPage::NEW_RECORD }
   end
 
   context 'existing valid defendants' do
@@ -24,7 +24,7 @@ RSpec.describe Decisions::DecisionTree do
   context 'answer yes to add_another for defendants' do
     before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
 
-    it_behaves_like 'a generic decision', from: :defendant_summary, goto: { action: :edit, controller: 'nsm/steps/defendant_details', defendant_id: StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: :defendant_summary, goto: { action: :edit, controller: 'nsm/steps/defendant_details', defendant_id: Nsm::StartPage::NEW_RECORD }
   end
 
   context 'answer no to add_another for defendants' do
@@ -45,7 +45,7 @@ RSpec.describe Decisions::DecisionTree do
   it_behaves_like 'a generic decision', from: :reason_for_claim, goto: { action: :edit, controller: 'nsm/steps/claim_details' }
 
   context 'no existing work_items' do
-    it_behaves_like 'a generic decision', from: :claim_details, goto: { action: :edit, controller: 'nsm/steps/work_item', work_item_id: StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: :claim_details, goto: { action: :edit, controller: 'nsm/steps/work_item', work_item_id: Nsm::StartPage::NEW_RECORD }
   end
 
   context 'existing valid work_items' do
@@ -57,7 +57,7 @@ RSpec.describe Decisions::DecisionTree do
   it_behaves_like 'a generic decision', from: :work_item, goto: { action: :edit, controller: 'nsm/steps/work_items' }
 
   context 'when no work items' do
-    it_behaves_like 'a generic decision', from: :work_item_delete, goto: { action: :edit, controller: 'nsm/steps/work_item', work_item_id: StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: :work_item_delete, goto: { action: :edit, controller: 'nsm/steps/work_item', work_item_id: Nsm::StartPage::NEW_RECORD }
   end
 
   context 'when work items' do
@@ -69,7 +69,7 @@ RSpec.describe Decisions::DecisionTree do
   context 'answer yes to add_another for work_items' do
     before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
 
-    it_behaves_like 'a generic decision', from: :work_items, goto: { action: :edit, controller: 'nsm/steps/work_item', work_item_id: StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: :work_items, goto: { action: :edit, controller: 'nsm/steps/work_item', work_item_id: Nsm::StartPage::NEW_RECORD }
   end
 
   context 'answer no to add_another for work_items' do
@@ -97,7 +97,7 @@ RSpec.describe Decisions::DecisionTree do
   context 'answer yes to has_disbursement' do
     before { allow(form).to receive(:has_disbursements).and_return(YesNoAnswer::YES) }
 
-    it_behaves_like 'a generic decision', from: :disbursement_add, goto: { action: :edit, controller: 'nsm/steps/disbursement_type', disbursement_id: StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: :disbursement_add, goto: { action: :edit, controller: 'nsm/steps/disbursement_type', disbursement_id: Nsm::StartPage::NEW_RECORD }
   end
 
   context 'answer no to has_disbursement' do
@@ -116,7 +116,7 @@ RSpec.describe Decisions::DecisionTree do
   it_behaves_like 'a generic decision', from: :disbursement_cost, goto: { action: :edit, controller: 'nsm/steps/disbursements' }
 
   context 'when no disbursements' do
-    it_behaves_like 'a generic decision', from: :disbursement_delete, goto: { action: :edit, controller: 'nsm/steps/disbursement_type', disbursement_id: StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: :disbursement_delete, goto: { action: :edit, controller: 'nsm/steps/disbursement_type', disbursement_id: Nsm::StartPage::NEW_RECORD }
   end
 
   context 'when disbursements' do
@@ -128,7 +128,7 @@ RSpec.describe Decisions::DecisionTree do
   context 'answer yes to add_another for disbursements' do
     before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
 
-    it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: 'nsm/steps/disbursement_type', disbursement_id: StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: 'nsm/steps/disbursement_type', disbursement_id: Nsm::StartPage::NEW_RECORD }
   end
 
   context 'answer no to add_another for disbursements' do

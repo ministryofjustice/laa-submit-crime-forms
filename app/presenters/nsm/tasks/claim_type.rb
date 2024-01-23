@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class ClaimType < Generic
+    class ClaimType < ::Tasks::Generic
       FORM = Nsm::Steps::ClaimTypeForm
 
       def path

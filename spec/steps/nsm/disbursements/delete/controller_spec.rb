@@ -28,10 +28,10 @@ RSpec.describe Nsm::Steps::DisbursementDeleteController, type: :controller do
 save!: true)
       end
       let(:disbursements) { double(:disbursements, find_by: disbursement) }
-      let(:form) { instance_double(Nsm::Steps::DeleteForm) }
+      let(:form) { instance_double(Steps::DeleteForm) }
 
       before do
-        allow(Nsm::Steps::DeleteForm).to receive(:build).and_return(form)
+        allow(Steps::DeleteForm).to receive(:build).and_return(form)
       end
 
       context 'when disbursement id is passes in' do
@@ -58,8 +58,8 @@ save!: true)
   end
 
   describe '#update' do
-    let(:form_object) { instance_double(Nsm::Steps::DeleteForm, attributes: { foo: double }) }
-    let(:form_object_params_name) { Nsm::Steps::DeleteForm.name.underscore }
+    let(:form_object) { instance_double(Steps::DeleteForm, attributes: { foo: double }) }
+    let(:form_object_params_name) { Steps::DeleteForm.name.underscore }
     let(:expected_params) do
       { :id => existing_case, form_object_params_name => { foo: 'bar' }, :disbursement_id => SecureRandom.uuid }
     end
@@ -88,10 +88,10 @@ save!: true)
         instance_double(Claim, disbursements: disbursements, navigation_stack: [], 'navigation_stack=': true,
 save!: true)
       end
-      let(:form) { instance_double(Nsm::Steps::DeleteForm) }
+      let(:form) { instance_double(Steps::DeleteForm) }
 
       before do
-        allow(Nsm::Steps::DeleteForm).to receive(:build).and_return(form)
+        allow(Steps::DeleteForm).to receive(:build).and_return(form)
       end
 
       context 'when disbursement id is passes in' do
@@ -101,7 +101,7 @@ save!: true)
           let(:existing_case) { create(:claim) }
 
           before do
-            allow(Nsm::Steps::DeleteForm).to receive(:new).and_return(form_object)
+            allow(Steps::DeleteForm).to receive(:new).and_return(form_object)
           end
 
           context 'when the form saves successfully' do

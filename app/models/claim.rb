@@ -67,7 +67,8 @@ class Claim < ApplicationRecord
       'answer_equality' => translations(answer_equality,
                                         'helpers.label.nsm_steps_answer_equality_form.answer_equality_options'),
       'disability' => translations(disability, 'helpers.label.nsm_steps_equality_questions_form.disability_options'),
-      'ethnic_group' => translations(ethnic_group, 'helpers.label.nsm_steps_equality_questions_form.ethnic_group_options'),
+      'ethnic_group' => translations(ethnic_group,
+                                     'helpers.label.nsm_steps_equality_questions_form.ethnic_group_options'),
       'gender' => translations(gender, 'helpers.label.nsm_steps_equality_questions_form.gender_options')
     }
   end

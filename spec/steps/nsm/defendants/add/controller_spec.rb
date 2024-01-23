@@ -15,7 +15,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsController, type: :controller do
     context 'when defendant_id NEW_RECORD flag passed as id' do
       it 'does not save the new defendant it passes to the form' do
         allow(Nsm::Steps::DefendantDetailsForm).to receive(:build)
-        expect { get :edit, params: { id: application, defendant_id: StartPage::NEW_RECORD } }
+        expect { get :edit, params: { id: application, defendant_id: Nsm::StartPage::NEW_RECORD } }
           .not_to change(application.defendants, :count)
 
         expect(Nsm::Steps::DefendantDetailsForm).to have_received(:build) do |defend, **kwargs|

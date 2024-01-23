@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class LettersCalls < Generic
+    class LettersCalls < ::Tasks::Generic
       PREVIOUS_TASK = WorkItems
       FORM = Nsm::Steps::LettersCallsForm
 

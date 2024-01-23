@@ -1,6 +1,6 @@
-module Nsm
+module PriorAuthority
   module Tasks
-    class PriorAuthorityUfn < Nsm::Tasks::Generic
+    class Ufn < ::Tasks::Generic
       FORM = ::PriorAuthority::Steps::UfnForm
 
       def path

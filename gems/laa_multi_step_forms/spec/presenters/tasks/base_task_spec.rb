@@ -1,5 +1,11 @@
 require 'rails_helper'
 
+module TestModule
+  module Tasks
+    class TestSubclass < ::Tasks::BaseTask; end
+  end
+end
+
 RSpec.describe Tasks::BaseTask do
   subject { described_class.new(application:) }
 
@@ -20,6 +26,13 @@ RSpec.describe Tasks::BaseTask do
         task = described_class.build(:details, application:)
 
         expect(task).to be_a(details_klass)
+        expect(task.application).to eq(application)
+      end
+
+      it 'instantiates the implementation when it is namespaced' do
+        task = described_class.build('test_module/test_subclass', application:)
+
+        expect(task).to be_a(TestModule::Tasks::TestSubclass)
         expect(task.application).to eq(application)
       end
     end

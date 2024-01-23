@@ -41,7 +41,7 @@ RSpec.describe Nsm::Steps::DisbursementTypeController, type: :controller do
     context 'when disbursement_id is NEW_RECORD flag' do
       it 'does not save the new work_item passed to the form' do
         allow(Nsm::Steps::DisbursementTypeForm).to receive(:build)
-        expect { get :edit, params: { id: application, disbursement_id: StartPage::NEW_RECORD } }
+        expect { get :edit, params: { id: application, disbursement_id: Nsm::StartPage::NEW_RECORD } }
           .not_to change(application.disbursements, :count)
 
         expect(Nsm::Steps::DisbursementTypeForm).to have_received(:build) do |disb, **kwargs|

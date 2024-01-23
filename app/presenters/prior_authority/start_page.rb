@@ -2,7 +2,7 @@ module PriorAuthority
   module StartPage
     class PreTaskList < TaskList::Collection
       SECTIONS = [
-        [:application_detail, [:prior_authority_ufn]],
+        [:application_detail, ['prior_authority/ufn']],
       ].freeze
     end
 
@@ -10,13 +10,13 @@ module PriorAuthority
       SECTIONS = [
         [
           :case_contact, [
-            :prior_authority_case_contact
+            'prior_authority/case_contact'
           ],
         ],
         [
           :about_case, [
-            :prior_authority_client_detail,
-            :prior_authority_case_hearing_detail
+            'prior_authority/client_detail',
+            'prior_authority/case_hearing_detail'
           ],
         ],
       ].freeze

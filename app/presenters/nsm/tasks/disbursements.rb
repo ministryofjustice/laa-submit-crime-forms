@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class Disbursements < Generic
+    class Disbursements < ::Tasks::Generic
       PREVIOUS_TASK = LettersCalls
       PREVIOUS_STEP_NAME = :letters_calls
       FORMS = [

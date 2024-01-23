@@ -79,7 +79,8 @@ total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
         [
           {
             card: {
-              actions: ["<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"],
+              actions: ['<a class="govuk-link" ' \
+                        "href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"],
               title: 'Work Items Total £75.00'
             },
             rows: [
@@ -101,7 +102,8 @@ total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
           },
           {
             card: {
-              actions: ["<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/letters_calls\">Change</a>"],
+              actions: ['<a class="govuk-link" ' \
+                        "href=\"/non-standard-magistrates/applications/#{id}/steps/letters_calls\">Change</a>"],
               title: 'Letters and Calls Total £100.00'
             },
             rows: [
@@ -123,7 +125,8 @@ total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
           },
           {
             card: {
-              actions: ["<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/disbursements\">Change</a>"],
+              actions: ['<a class="govuk-link" ' \
+                        "href=\"/non-standard-magistrates/applications/#{id}/steps/disbursements\">Change</a>"],
               title: 'Disbursements Total £55.00'
             },
             rows: [
