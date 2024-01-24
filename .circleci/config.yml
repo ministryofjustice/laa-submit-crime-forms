@@ -96,7 +96,7 @@ references:
   _prepare-db: &prepare-db
     run:
       name: Prepare db
-      command: bin/rails db:prepare
+      command: bundle exec rails db:prepare
 
 # ------------------
 # COMMANDS
