@@ -36,9 +36,9 @@ rescue ActiveRecord::StatementInvalid
  false
 end
 
-def database_exists?
+def database_connected?
   ActiveRecord::Base.connection
-rescue ActiveRecord::NoDatabaseError
+rescue ActiveRecord::ConnectionNotEstablished
   false
 else
   true
