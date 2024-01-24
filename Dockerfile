@@ -61,6 +61,9 @@ COPY --from=dependencies /node_modules/ node_modules/
 # copy over the remaning files and code
 COPY . .
 
+# prepare rails database
+RUN rails db:prepare
+
 # Some ENV variables need to be present by the time
 # the assets pipeline run, but doesn't matter their value.
 RUN SECRET_KEY_BASE=needed_for_assets_precompile \

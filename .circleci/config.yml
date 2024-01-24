@@ -273,7 +273,6 @@ jobs:
     executor: aws-ecr/default
     steps:
       - checkout
-      - db-setup
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
