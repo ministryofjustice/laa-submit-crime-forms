@@ -93,6 +93,11 @@ references:
     attach_workspace:
       at: ~/repo/tmp
 
+  _prepare-db: &prepare-db
+    run:
+      name: Prepare db
+      command: bin/rails db:prepare
+
 # ------------------
 # COMMANDS
 # ------------------
@@ -112,6 +117,7 @@ commands:
   build-base:
     steps:
       - install-gems
+      - *prepare-db
       - install-compile-assets
 
   rubocop:
