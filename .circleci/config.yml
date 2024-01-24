@@ -112,7 +112,6 @@ commands:
   build-base:
     steps:
       - install-gems
-      -
       - install-compile-assets
 
   rubocop:
