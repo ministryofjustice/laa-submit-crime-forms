@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::PriorAuthorityCaseAndHearingDetail, type: :presenter do
+RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
   subject(:presenter) { described_class.new(application:) }
 
   let(:application) { create(:prior_authority_application) }
@@ -39,5 +39,26 @@ RSpec.describe Tasks::PriorAuthorityCaseAndHearingDetail, type: :presenter do
     end
   end
 
-  it_behaves_like 'a task with generic complete?', PriorAuthority::Steps::CaseDetailForm
+  describe '#completed?' do
+    before do
+      klass = PriorAuthority::Steps::CaseDetailForm
+      allow(klass).to receive(:build).and_return(instance_double(klass, valid?: case_detail_valid))
+      klass = PriorAuthority::Steps::HearingDetailForm
+      allow(klass).to receive(:build).and_return(instance_double(klass, valid?: hearing_detail_valid))
+    end
+
+    context 'when all requisite forms are valid' do
+      let(:case_detail_valid) { true }
+      let(:hearing_detail_valid) { true }
+
+      it { is_expected.to be_completed }
+    end
+
+    context 'when one or more requisite forms are invalid' do
+      let(:case_detail_valid) { false }
+      let(:hearing_detail_valid) { true }
+
+      it { is_expected.not_to be_completed }
+    end
+  end
 end

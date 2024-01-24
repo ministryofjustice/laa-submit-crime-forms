@@ -89,6 +89,8 @@ module Decisions
     # prior authority draft application steps
     from(:case_contact).goto(edit: 'prior_authority/steps/client_detail')
     from(:client_detail).goto(edit: 'prior_authority/steps/case_detail')
-    from(:case_detail).goto(show: 'prior_authority/steps/start_page') # TODO: move to hearing details
+    from(:case_detail).goto(edit: 'prior_authority/steps/hearing_detail')
+    from(:hearing_detail).goto(show: 'prior_authority/steps/start_page')
+    # TODO: move to conditional Youth Court or Psyc liason question
   end
 end

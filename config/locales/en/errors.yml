@@ -93,6 +93,13 @@ en:
               blank: Enter a firm name
             account_number:
               blank: Enter an account number
+        prior_authority/steps/hearing_detail_form:
+          attributes:
+            next_hearing_date: *shared_date_errors
+            plea:
+              inclusion: Select the likely or actual plea
+            court_type:
+              inclusion: Select the type of court
         prior_authority/steps/case_contact/solicitor_form:
           attributes: &contact_form
             contact_full_name:

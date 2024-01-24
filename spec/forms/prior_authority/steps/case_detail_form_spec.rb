@@ -10,9 +10,6 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
     }
   end
 
-  let(:firm_office_attributes) { nil }
-  let(:solicitor_attributes) { nil }
-
   describe '#validate' do
     let(:application) { instance_double(PriorAuthorityApplication) }
 
