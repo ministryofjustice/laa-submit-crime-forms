@@ -93,13 +93,6 @@ references:
     attach_workspace:
       at: ~/repo/tmp
 
-  _setup_db: &setup-db
-    run:
-      name: Setup database
-      command: |
-        dockerize -wait tcp://localhost:5432 -timeout 1m
-        bundle exec rails db:prepare
-
 # ------------------
 # COMMANDS
 # ------------------
@@ -119,7 +112,6 @@ commands:
   build-base:
     steps:
       - install-gems
-      - *setup-db
       - install-compile-assets
 
   rubocop:
@@ -128,12 +120,23 @@ commands:
           name: Run rubocop
           command: bundle exec rubocop
 
+  db-setup:
+    steps:
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: |
+            bundle exec rails db:prepare
+
   rspec:
     steps:
       - save_cache:
           key: nsmf-claim-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/repo
+      - db-setup
       - run:
           name: Run rspec tests
           command: |
