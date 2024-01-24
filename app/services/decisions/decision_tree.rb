@@ -3,6 +3,17 @@ module Decisions
     # used to add custom methods to filter/query the data
     WRAPPER_CLASS = CustomWrapper
 
+    NSM_FIRM_DETAILS = 'nsm/steps/firm_details'.freeze
+    NSM_WORK_ITEMS = 'nsm/steps/work_items'.freeze
+    NSM_WORK_ITEM = 'nsm/steps/work_item'.freeze
+    NSM_DEFENDANT_SUMMARY = 'nsm/steps/defendant_summary'.freeze
+    NSM_DISBURSEMENTS = 'nsm/steps/disbursements'.freeze
+    NSM_DISBURSEMENT_TYPE = 'nsm/steps/disbursement_type'.freeze
+    NSM_CLAIM_DETAILS = 'nsm/steps/claim_details'.freeze
+    NSM_LETTERS_CALLS = 'nsm/steps/letters_calls'.freeze
+    NSM_DISBURSEMENT_ADD = 'nsm/steps/disbursement_add'.freeze
+    NSM_EQUALITY = 'nsm/steps/equality'.freeze
+
     from(:claim_type).goto(show: 'nsm/steps/start_page')
     # start_page to firm_details is a hard coded link as show page
     from(:firm_details)

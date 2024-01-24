@@ -4,7 +4,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.defendants.count) %></h1>
-    <%= render(SummaryErrorComponent.new(records: @form_object.application.defendants, form:Nsm::Steps::DefendantDetailsForm)) %>
+    <%= render(SummaryErrorComponent.new(records: @form_object.application.defendants, form: Nsm::Steps::DefendantDetailsForm)) %>
 
     <%= govuk_error_summary(@form_object) %>
 
