@@ -6,7 +6,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     config.logger = Rails.logger
     config.logger.level = Logger::WARN if Rails.env.test?
     config.add_mock(:saml, LaaPortal::SamlStrategy.mock_auth)
-    if ActiveRecord::Base.connection.table_exists? 'feature_flag_features'
+    if in_test_mode?
       config.test_mode = Rails.env.test? || FeatureFlags::FeatureFlag.active?(:omniauth_test_mode)
 
       # This allow us to overwrite the fake auth settings and pretend to be different users for testing
@@ -24,4 +24,12 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       end
     end
   end
+end
+
+private
+
+def in_test_mode?
+  FeatureFlags::FeatureFlag.active?(:omniauth_test_mode)
+rescue ActiveRecord::StatementInvalid
+ false
 end
