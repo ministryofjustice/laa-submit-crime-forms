@@ -14,7 +14,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     # * info[name] => "Example User"
     # * info[email] => "provider@example.com"
     # * info[office_codes] => ["1A123B", "2A555X"]
-    if FeatureFlags::FeatureFlag.active?(:omniauth_test_mode)
+    if ENV.fetch('OMNIAUTH_TEST_MODE', 'false').inquiry.true?
       config.before_callback_phase do |env|
         env['omniauth.auth'].merge!(
           Rack::Utils.parse_nested_query(env['QUERY_STRING'])
