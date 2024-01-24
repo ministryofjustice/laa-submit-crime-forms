@@ -156,8 +156,10 @@ en:
           attributes: *solicitor_form
         nsm/steps/defendant_details_form:
           attributes:
-            full_name:
-              blank: Full name cannot be blank
+            first_name:
+              blank: First name cannot be blank
+            last_name:
+              blank: Last name cannot be blank
             maat:
               blank: MAAT ID cannot be blank
         nsm/steps/case_details_form:

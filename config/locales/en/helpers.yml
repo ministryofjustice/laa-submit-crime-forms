@@ -206,7 +206,8 @@ en:
         hearing_outcome: Hearing outcome
         matter_type: Matter type
       nsm_steps_defendant_details_form:
-        full_name: Full name
+        first_name: First name
+        last_name: Last name
         maat: MAAT ID
       nsm_steps_reason_for_claim_form:
         reasons_for_claim_options:
