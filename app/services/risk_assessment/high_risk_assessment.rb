@@ -6,9 +6,9 @@ module RiskAssessment
       @claim = claim
 
       @items = {
-        work_items: CostSummary::WorkItems.new(@claim.work_items, @claim),
-        letters_calls: CostSummary::LettersCalls.new(@claim),
-        disbursements: CostSummary::Disbursements.new(@claim.disbursements.by_age, @claim)
+        work_items: Nsm::CostSummary::WorkItems.new(@claim.work_items, @claim),
+        letters_calls: Nsm::CostSummary::LettersCalls.new(@claim),
+        disbursements: Nsm::CostSummary::Disbursements.new(@claim.disbursements.by_age, @claim)
       }
     end
 

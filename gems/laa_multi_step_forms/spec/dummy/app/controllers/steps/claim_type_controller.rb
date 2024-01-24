@@ -1,5 +1,5 @@
 module Steps
-  class ClaimTypeController < Steps::BaseStepController
+  class ClaimTypeController < ::Steps::BaseStepController
     def edit; end
 
     def update; end

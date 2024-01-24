@@ -10,7 +10,7 @@ module About
       @feedback = Feedback.new feedback_params
       if @feedback.valid?
         submit_feedback
-        redirect_to applications_path, notice: I18n.t('feedback.submitted.success')
+        redirect_to nsm_applications_path, notice: I18n.t('feedback.submitted.success')
       else
         render 'index'
       end

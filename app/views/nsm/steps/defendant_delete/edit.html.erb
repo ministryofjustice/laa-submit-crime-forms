@@ -1,0 +1,38 @@
+<% title t('.page_title') %>
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
+    <%= govuk_error_summary(@form_object) %>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m"><%=  t(@form_object.caption_key) %></caption>
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.full_name') %></th>
+        <% if maat_required?(@form_object) %>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.maat') %></th>
+        <% end %>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= check_missing(@form_object.record.full_name) %></td>
+          <% if maat_required?(@form_object) %>
+            <td class="govuk-table__cell"><%= check_missing(@form_object.record.maat) %></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.submit_button('delete_it') do %>
+        <%= f.hidden_field :id %>
+        <%= link_to 'Cancel', edit_nsm_steps_defendant_summary_path(@form_object.application), class: 'govuk-button__secondary' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+

@@ -22,14 +22,14 @@ module Decisions
     end
 
     def destination
-      return to_route(index: '/claims') unless rule
+      return to_route(index: '/nsm/claims') unless rule
 
       detected = nil
       _, destination = rule.destinations.detect do |(condition, _)|
         detected = condition.nil? || wrapped_form_object.instance_exec(&condition.to_proc)
       end
 
-      return to_route(index: '/claims') unless destination
+      return to_route(index: '/nsm/claims') unless destination
 
       to_route(process_hash(destination, detected))
     end

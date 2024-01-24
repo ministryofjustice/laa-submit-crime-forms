@@ -4,37 +4,37 @@ en:
     submit:
       delete_it: Yes, delete it
     legend:
-      steps_office_select_form:
+      nsm_steps_office_select_form:
         office_code: Select your office account number
-      steps_claim_type_form:
+      nsm_steps_claim_type_form:
         claim_type: What are you claiming for?
         rep_order_date: Representation order date
         cntp_date: Date the CNTP rep order was issued
-      steps_firm_details_form:
+      nsm_steps_firm_details_form:
         solicitor_attributes:
           alternative_contact_details: Do you want to add alternative contact details?
         solicitor_details: Solicitor details
-      steps_case_details_form:
+      nsm_steps_case_details_form:
         main_offence_date: Main offence date
         assigned_counsel: Was there an assigned counsel?
         unassigned_counsel: Was there an unassigned counsel?
         agent_instructed: Was there an instructed agent?
         remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates' court?
         remitted_to_magistrate_date: Remittal date
-      steps_case_disposal_form:
+      nsm_steps_case_disposal_form:
         guilty_pleas: Category 1
         not_guilty_pleas: Category 2
         arrest_warrant_date: Date of Issue
         cracked_trial_date: Date guilty plea indicated to solicitor
-      steps_hearing_details_form:
+      nsm_steps_hearing_details_form:
         first_hearing_date: Date of first hearing
         in_area: Is this court in a designated area of your firm?
         youth_court: Is this court a youth court?
-      steps_reason_for_claim_form:
+      nsm_steps_reason_for_claim_form:
         representation_order_withdrawn_date: Withdrawn date
       steps_add_another_form:
         add_another: Do you want to add another defendant?
-      steps_claim_details_form:
+      nsm_steps_claim_details_form:
         claim_details: Claim Details
         number_of_witnesses: Number of Defence witnesses
         supplemental_claim: Does this bill represent a supplemental claim?
@@ -44,29 +44,29 @@ en:
         work_after_date: Date of last court hearing
         work_before: Did you do any work before the representation order date?
         work_after: Did you do any further work after the last court hearing?
-      steps_other_info_form:
+      nsm_steps_other_info_form:
         concluded: Did the proceedings conclude over 3 months ago?
         is_other_info: Do you want to add any other information?
-      steps_work_item_form:
+      nsm_steps_work_item_form:
         time_spent: Time spent
         work_type: Type of work
         completed_on: Completion date
-      steps_disbursement_type_form:
+      nsm_steps_disbursement_type_form:
         disbursement_date: Date
         disbursement_type: Which disbursement type is this is for?
-      steps_disbursement_cost_form:
+      nsm_steps_disbursement_cost_form:
         prior_authority: Have you been granted prior authority for this disbursement?
-      steps_equality_questions_form:
+      nsm_steps_equality_questions_form:
         gender: What does the defendant identify as? (optional)
         ethnic_group: What is the defendants ethnic group? (optional)
         disability: Does the defendant consider themselves as having a disability? (optional)
     hint:
-      steps_claim_type_form:
+      nsm_steps_claim_type_form:
         ufn: For example 120223/001
         rep_order_date: For example, 27 3 2007
         cntp_date: For example, 27 3 2007
         cntp_order: For example CNTP1234
-      steps_firm_details_form:
+      nsm_steps_firm_details_form:
         solicitor_details: Enter the details of the solicitor managing this case
         solicitor_attributes:
           reference_number: For example, 2P341B
@@ -74,7 +74,7 @@ en:
             We’ll use the contact details on your account if we need to ask you for
             more information to complete your claim. If you add alternative contact
             details we’ll use those instead.
-      steps_case_details_form:
+      nsm_steps_case_details_form:
         remitted_to_magistrate_options:
           'yes': We’ll ask you to upload evidence of this before you submit this claim
         assigned_counsel_options:
@@ -82,67 +82,67 @@ en:
         main_offence_date: For example, 27 3 2007
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
         remitted_to_magistrate_date: For example, 27 3 2007
-      steps_case_disposal_form:
+      nsm_steps_case_disposal_form:
         arrest_warrant_date: For example, 27 3 2007
         cracked_trial_date: For example, 27 3 2007
-      steps_hearing_details_form:
+      nsm_steps_hearing_details_form:
         first_hearing_date: For example, 27 3 2007
         court: Enter the name of a court, or select one from the suggestions that appear when you start to enter the name.
         in_area_options:
           'yes': You will not be able to claim for travel expenses and waiting time
         hearing_outcome: Select a hearing outcome from the suggestions that appear when you start to enter it, for example, Change of solicitor (CP02)
         matter_type: Select a matter type from the suggestions that appear when you start to enter it, for example, offences against the person
-      steps_reason_for_claim_form:
+      nsm_steps_reason_for_claim_form:
         reasons_for_claim: Select all that apply
         representation_order_withdrawn_date: For example, 27 3 2007
-      steps_claim_details_form:
+      nsm_steps_claim_details_form:
         defence_statement: For example the total number of pages of defence evidence including any
           statements by the defendant and defence witnesses
         prosecution_evidence: Where applicable, give the approximate number of pages
         time_spent: For example, 1 hour and 30 minutes
         work_before_date: For example, 27 3 2023
         work_after_date: For example, 27 3 2023
-      steps_work_item_form:
+      nsm_steps_work_item_form:
         completed_on: For example, 27 3 2007
         fee_earner: For example, JMD
         period: For example, 1 hour and 30 minutes
-      steps_letters_calls_form:
+      nsm_steps_letters_calls_form:
         letters_options:
           from_start: You will get £3.56 for each letter
           from_20220930: You will get £4.09 for each letter
         calls_options:
           from_start: You will get £3.56 for each call
           from_20220930: You will get £4.09 for each call
-      steps_disbursement_type_form:
+      nsm_steps_disbursement_type_form:
         disbursement_date: For example, 27 3 2007
         disbursement_type_options:
           car: '%{rate} per mile'
           motorcycle: '%{rate} per mile'
           bike: '%{rate} per mile'
         other_type: Enter the name of disbursement type, or select one from the suggestions that appear when you start to enter the name.
-      steps_disbursement_cost_form:
+      nsm_steps_disbursement_cost_form:
         miles: For example, 2.5 miles
         total_cost_without_vat: Enter the cost, not including VAT, for example £301.55
         details: For example, why this disbursement was needed
         prior_authority_options:
           'yes': We’ll ask you to upload evidence of this before you submit this claim
-      steps_other_info_form:
+      nsm_steps_other_info_form:
         other_info: For example, justification for the time spent on the case, or for any uplift claimed
 
 
     label:
-      steps_office_confirm_form:
+      nsm_steps_office_confirm_form:
         is_current_office_options:
           'yes': 'Yes'
           'no': 'No, another office is handling this application'
-      steps_claim_type_form:
+      nsm_steps_claim_type_form:
         ufn: What is your unique file number?
         claim_type_options:
           non_standard_magistrate: Non-standard magistrates' court payment
           breach_of_injunction: Breach of injunction
         cntp_order: Clients CNTP (contempt) number
 
-      steps_firm_details_form:
+      nsm_steps_firm_details_form:
         firm_office_attributes:
           name: Firm name
           account_number: Firm account number
@@ -163,7 +163,7 @@ en:
           alternative_contact_details_options:
             'yes': 'Yes'
             'no': 'No'
-      steps_case_details_form:
+      nsm_steps_case_details_form:
         main_offence: Main offence
         assigned_counsel_options:
           'yes': 'Yes'
@@ -177,7 +177,7 @@ en:
         remitted_to_magistrate_options:
           'yes': 'Yes'
           'no': 'No'
-      steps_case_disposal_form:
+      nsm_steps_case_disposal_form:
         plea_options:
           guilty: Guilty plea
           uncontested_breach: Uncontested breach
@@ -194,7 +194,7 @@ en:
         plea_category:
           guilty_pleas: Category 1
           not_guilty_pleas: Category 2
-      steps_hearing_details_form:
+      nsm_steps_hearing_details_form:
         number_of_hearing: How many hearings were held for this case?
         court: Which court was the last case hearing heard at?
         in_area_options:
@@ -205,10 +205,10 @@ en:
           'no': 'No'
         hearing_outcome: Hearing outcome
         matter_type: Matter type
-      steps_defendant_details_form:
+      nsm_steps_defendant_details_form:
         full_name: Full name
         maat: MAAT ID
-      steps_reason_for_claim_form:
+      nsm_steps_reason_for_claim_form:
         reasons_for_claim_options:
           core_costs_exceed_higher_limit: Core costs exceed higher limit
           enhanced_rates_claimed: Enhanced rates claimed
@@ -221,7 +221,7 @@ en:
         add_another_options:
           'yes': 'Yes'
           'no': 'No'
-      steps_claim_details_form:
+      nsm_steps_claim_details_form:
         prosecution_evidence: Number of pages of prosecution evidence
         defence_statement: Number of pages of defence statements
         number_of_witnesses: Number of witnesses
@@ -237,7 +237,7 @@ en:
         work_after_options:
           'yes': 'Yes'
           'no': 'No'
-      steps_work_item_form:
+      nsm_steps_work_item_form:
         work_type_options:
           missing: '*required'
           preparation: Preparation
@@ -250,7 +250,7 @@ en:
         apply_uplift_options:
           'true': Apply an uplift to this work
         uplift: For example, from any percentage from 1 to 100
-      steps_letters_calls_form:
+      nsm_steps_letters_calls_form:
         type_options:
           letters: Letters
           calls: Calls
@@ -262,18 +262,18 @@ en:
           'true': Apply an uplift to this work
         letters_uplift: For example, from any percentage from 1 to 100
         calls_uplift: For example, from any percentage from 1 to 100
-      steps_disbursement_add_form:
+      nsm_steps_disbursement_add_form:
         has_disbursements_options:
           'yes': 'Yes'
           'no': 'No'
-      steps_disbursement_type_form:
+      nsm_steps_disbursement_type_form:
         disbursement_type_options:
           missing: '*required'
           car: Car
           motorcycle: Motorcycle
           bike: Bike
           other: Other disbursement type
-      steps_disbursement_cost_form:
+      nsm_steps_disbursement_cost_form:
         miles: Number of miles
         total_cost_without_vat: Disbursement cost
         details: Enter details of this disbursement
@@ -282,7 +282,7 @@ en:
           'no': 'No'
         apply_vat_options:
           'true': Apply 20% VAT to this work
-      steps_other_info_form:
+      nsm_steps_other_info_form:
         other_info: Add other information
         is_other_info_options:
           'yes': 'Yes'
@@ -291,16 +291,16 @@ en:
           'yes': 'Yes'
           'no': 'No'
         conclusion: Tell us why you did not make this claim within 3 months of the conclusion of the proceedings
-      steps_supporting_evidence_form:
+      nsm_steps_supporting_evidence_form:
         send_by_post_options:
           'true': I'll send the supporting evidence by post
-      steps_answer_equality_form:
+      nsm_steps_answer_equality_form:
         answer_equality_options:
           'yes': Yes, answer the equality questions (takes 2 minutes)
           'no': No, skip the equality questions
-      steps_solicitor_declaration_form:
+      nsm_steps_solicitor_declaration_form:
         signatory_name: Full name
-      steps_equality_questions_form:
+      nsm_steps_equality_questions_form:
         gender_options:
           m: Male
           f: Female

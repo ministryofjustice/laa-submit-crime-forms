@@ -1,0 +1,67 @@
+---
+en:
+  summary:
+    change: Change
+    header:
+      items: Items
+      total: Total per item
+    footer:
+      total: Total
+      total_inc_vat: Total (including VAT)
+      total_inc_any_vat: Total (including any VAT)
+    nsm/cost_summary/work_items:
+      work_items: Work items total %{total}
+      preparation: Preparation
+      advocacy: Advocacy
+      attendance_with_counsel: Attendance with counsel
+      attendance_without_counsel: Attendance without counsel
+      travel: Travel
+      waiting: Waiting
+    nsm/cost_summary/letters_calls:
+      letters_calls: Letters and phone calls total %{total}
+      letters: Letters
+      calls: Phone calls
+    nsm/cost_summary/disbursements:
+      disbursements: Disbursements total %{total}
+      standard:
+        car: Car
+        motorcycle: Motorcycle
+        bike: Bike
+        other: Other
+      other:
+        accident_reconstruction_report: Accident Reconstruction Report
+        accident_emergency_report: Accident & Emergency Report
+        accountants: Accountants
+        architects_surveyor: Architects/Surveyor
+        back_calculations: Back Calculations
+        car_travel: Car Travel
+        cell_phone_site_analysis: Cell Phone Site Analysis
+        computer_experts: Computer Experts
+        consultant_medical_reports: Consultant Medical Reports
+        dna_testing: DNA Testing
+        drug_expert_report: Drug Expert Report
+        engineer_mechanical_engineer: Engineer/Mechanical Engineer
+        enquiry_agents: Enquiry Agents
+        facial_mapping_experts: Facial Mapping Experts
+        fingerprint_experts: Fingerprint Experts
+        fire_investigation_report: Fire Investigation Report
+        forensic_scientists: Forensic Scientists
+        general_practitioners: General Practitioners
+        handwriting_experts: Handwriting experts
+        interpreters: Interpreters
+        lip_readers: Lip Readers
+        medical_report: Medical Report
+        meteorologist: Meteorologist
+        overnight_expenses: Overnight Expenses
+        paediatricians_report: Paediatricians Report
+        pathologists: Pathologists
+        photocopying: Photocopying
+        plans_photographs: Plans & Photographs
+        psychiatric_reports: Psychiatric Reports
+        psychological_reports: Psychological Reports
+        telecommunications_expert: Telecommunications Expert
+        transcripts: Transcripts
+        translators: Translators
+        travel_expenses_excl_car: Travel expenses (excl car)
+        veterinarian_report: Veterinarian Report
+        voice_recognition_experts: Voice Recognition

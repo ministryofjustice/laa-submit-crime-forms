@@ -13,29 +13,28 @@ en:
       evidence: Supporting evidence
       review: Review and confirm
     task:
-      prior_authority_ufn: Unique file number
-      prior_authority_case_contact: Case contact
-      prior_authority_case_hearing_detail: Case and hearing details
-      prior_authority_client_detail: Client details
-      case_hearing_detail: Case and hearing details
-      claim_type:
+      prior_authority/ufn: Unique file number
+      prior_authority/case_contact: Case contact
+      prior_authority/case_hearing_detail: Case and hearing details
+      prior_authority/client_detail: Client details
+      nsm/claim_type:
         non_standard_magistrate: Non-standard magistrates’ court payment
         breach_of_injunction: Breach of injunction court payment
-      firm_details: Your details
-      defendants: Defendant details
-      case_details: Case details
-      case_disposal: Case disposal
-      hearing_details: Hearing details
-      reason_for_claim: Claim justification
-      claim_details: Claim details
-      work_items: Work items
-      letters_calls: Letters and phone calls
-      disbursements: Disbursements costs
-      cost_summary: Check your payment claim
-      other_info: Other relevant information
-      supporting_evidence: Upload supporting evidence
-      check_answers: Check your answers
-      solicitor_declaration: Confirm declaration and submit claim
+      nsm/firm_details: Your details
+      nsm/defendants: Defendant details
+      nsm/case_details: Case details
+      nsm/case_disposal: Case disposal
+      nsm/hearing_details: Hearing details
+      nsm/reason_for_claim: Claim justification
+      nsm/claim_details: Claim details
+      nsm/work_items: Work items
+      nsm/letters_calls: Letters and phone calls
+      nsm/disbursements: Disbursements costs
+      nsm/cost_summary: Check your payment claim
+      nsm/other_info: Other relevant information
+      nsm/supporting_evidence: Upload supporting evidence
+      nsm/check_answers: Check your answers
+      nsm/solicitor_declaration: Confirm declaration and submit claim
   laa_multi_step_forms:
     task_list:
       show:

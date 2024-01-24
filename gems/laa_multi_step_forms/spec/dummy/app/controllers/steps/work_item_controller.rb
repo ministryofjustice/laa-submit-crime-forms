@@ -1,5 +1,5 @@
 module Steps
-  class WorkItemController < Steps::BaseStepController
+  class WorkItemController < ::Steps::BaseStepController
     def edit; end
 
     def update; end

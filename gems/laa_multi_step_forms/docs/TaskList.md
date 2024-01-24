@@ -91,7 +91,7 @@ example
 
 ```ruby
 def completed?
-  Steps::ComplexStep.new(application:).valid?
+ Nsm::Steps::ComplexStep.new(application:).valid?
 end
 ```
 

@@ -107,7 +107,7 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 12
   Exclude:
-    - app/presenters/check_answers/**/*
+    - app/presenters/nsm/check_answers/**/*
 
 # To be tweaked until we find the right balance
 Metrics/AbcSize:
@@ -138,13 +138,13 @@ Naming/MethodParameterName:
 Style/HashEachMethods:
   Exclude:
     - app/value_objects/value_object.rb
-    - app/forms/steps/**/*
+    - app/forms/nsm/steps/**/*
     - spec/steps/**/*
     - spec/factories/*
 
 Performance/InefficientHashSearch:
   Exclude:
-    - app/presenters/cost_summary/disbursements.rb
+    - app/presenters/nsm/cost_summary/disbursements.rb
 
 Naming/PredicateName:
   AllowedMethods:
@@ -156,15 +156,15 @@ Naming/PredicateName:
 RSpec/MultipleMemoizedHelpers:
   Max: 12
   Exclude:
-    - spec/steps/claim_details/form_spec.rb
-    - spec/steps/work_items/add/form_spec.rb
-    - spec/presenters/cost_summary/report_spec.rb
-    - spec/presenters/check_answers/your_details_card_spec.rb
+    - spec/steps/nsm/claim_details/form_spec.rb
+    - spec/steps/nsm/work_items/add/form_spec.rb
+    - spec/presenters/nsm/cost_summary/report_spec.rb
+    - spec/presenters/nsm/check_answers/your_details_card_spec.rb
 
 RSpec/MultipleExpectations:
   Max: 7
   Exclude:
-    - spec/presenters/summary/sections/*
+    - spec/presenters/nsm/summary/sections/*
 
 RSpec/NestedGroups:
   Max: 6
@@ -173,14 +173,14 @@ RSpec/ExampleLength:
   Max: 16
   Exclude:
     - spec/steps/**/integration_spec.rb
-    - spec/presenters/check_answers/**/*
+    - spec/presenters/nsm/check_answers/**/*
     - spec/services/notify_app_store/message_builder_spec.rb
 
 Lint/MissingSuper:
   Exclude:
     - 'app/components/*'
-    - 'app/presenters/cost_summary/*'
-    - 'app/presenters/check_answers/*'
+    - 'app/presenters/nsm/cost_summary/*'
+    - 'app/presenters/nsm/check_answers/*'
 
 Rails/RedundantActiveRecordAllMethod:
   Exclude:

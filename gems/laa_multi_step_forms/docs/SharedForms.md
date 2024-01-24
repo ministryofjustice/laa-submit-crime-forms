@@ -22,7 +22,7 @@ example:
 
 ```ruby
 module Steps
-  class ItemsController < Steps::BaseStepController
+  class ItemsController < ::Steps::BaseStepController
     def edit
       @data_for_view = current_application.data_for_view
       @form_object = AddAnotherForm.build(
@@ -66,7 +66,7 @@ page (for the set fo objects)
 example:
 ```ruby
 module Steps
-  class ItemDeleteController < Steps::BaseStepController
+  class ItemDeleteController < ::Steps::BaseStepController
     before_action :ensure_item
 
     def edit

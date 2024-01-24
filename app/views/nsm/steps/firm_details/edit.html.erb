@@ -1,0 +1,49 @@
+<% title t('.page_title') %>
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= f.fields_for :firm_office, as: :firm_details_form do |fo| %>
+        <%= f.govuk_fieldset legend: { text: t(".firm_details"), size: 'm', is_page_heading: true } do %>
+          <%= fo.govuk_text_field :name, width: 20, label: { size: 's' } %>
+          <%= fo.govuk_text_field :account_number, width: 20, label: { size: 's' } %>
+          <%= fo.govuk_text_field :address_line_1, width: 20, label: { size: 's' } %>
+          <%= fo.govuk_text_field :address_line_2, width: 20, label: { size: 's' } %>
+          <%= fo.govuk_text_field :town, width: 10, label: { size: 's' } %>
+          <%= fo.govuk_text_field :postcode, width: 10, label: { size: 's' } %>
+          <%= fo.govuk_radio_buttons_fieldset :vat_registered, legend: { text: t(".vat_registered"), size: 's', is_page_heading: false } do %>
+            <p><%= t("helpers.label.nsm_steps_firm_details_form.firm_office_attributes.vat_registered_info") %></p>
+            <p><%= t("helpers.label.nsm_steps_firm_details_form.firm_office_attributes.vat_registered_disbursements") %></p>
+            <%= fo.govuk_radio_button :vat_registered, YesNoAnswer::YES.to_s%>
+            <%= fo.govuk_radio_button :vat_registered, YesNoAnswer::NO.to_s %>
+          <% end%>
+        <% end %>
+      <% end %>
+
+      <%= f.fields_for :solicitor, as: :firm_details_form do |so| %>
+        <%# used govuk_radio_buttons_fieldset instead of govuk_fieldset as it allows hints to be rendered %>
+        <%= f.govuk_radio_buttons_fieldset :solicitor_details, legend: { size: 'm', is_page_heading: true } do %>
+          <%= so.govuk_text_field :full_name, width: 20, label: { size: 's' } %>
+          <%= so.govuk_text_field :reference_number, width: 10, label: { size: 's' } %>
+        <% end %>
+
+        <%= so.govuk_radio_buttons_fieldset :alternative_contact_details, legend: { size: 'm' } do %>
+          <%= f.fields_for :solicitor, as: :firm_details_form do |so| %>
+            <%= so.govuk_radio_button :alternative_contact_details, YesNoAnswer::YES.to_s do %>
+                <%= so.govuk_text_field :contact_full_name, width: 20 %>
+                <%= so.govuk_text_field :contact_email, width: 20 %>
+            <% end %>
+          <% end %>
+          <%= so.govuk_radio_button :alternative_contact_details, YesNoAnswer::NO.to_s %>
+        <% end%>
+      <% end%>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
+
+

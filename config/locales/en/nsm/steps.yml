@@ -1,0 +1,316 @@
+---
+en:
+  nsm:
+    steps:
+      office:
+        confirm:
+          edit:
+            page_title: Confirm office account number
+            current_office_legend: Is %{office_code} your office account number?
+        select:
+          edit:
+            page_title: Select office account number
+      claim_type:
+        edit:
+          page_title: What you are claiming for
+          heading: What you are claiming for
+          other_details:
+            line_1: This form can only be used to claim for a Non-standard magistrate or a Breach for injunction payment.
+            line_2: To claim for a Crime Lower standard payment, please use CWA via the LAA online portal.
+            line_3: To claim for a Crime Higher payment, please use CCCD via the CCCD portal.
+      firm_details:
+        edit:
+          page_title: Your details
+          heading: Your details
+          firm_details: Firm details
+          vat_registered: Is your firm VAT registered?
+      case_details:
+        edit:
+          page_title: Case details
+          heading: Case details
+      case_disposal:
+        edit:
+          page_title: Case disposal
+          heading: Select the case disposal
+          subheading: You can select an option in either Category 1 or Category 2, but not both.
+      claim_details:
+        edit:
+          page_title: Claim Details
+          heading: Claim details
+      hearing_details:
+        edit:
+          page_title: Hearing details
+          heading: Hearing details
+      defendant_details:
+        edit:
+          page_title: Defendant details
+          heading: Defendant details
+          main_defendant_field_set: Main defendant
+          defendant_field_set: Additional defendant %{index}
+      defendant_details:
+        edit:
+          page_title: Defendant details
+          heading: Defendant details
+          main_defendant_field_set: Main defendant
+          defendant_field_set: Additional defendant %{index}
+          main_defendant: main
+          defendant: additional %{index}
+      defendant_summary:
+        edit:
+          page_title: Defendant summary
+          heading:
+            one: You added 1 defendant
+            other: You added %{count} defendants
+          main_defendant: Main defendant details
+          additional_defendant: Additional defendant details
+          headers:
+            full_name: Full name
+            maat: MAAT ID
+            change: Change
+            delete: Delete
+          add_another: Do you want to add another defendant?
+          change: Change
+          delete: Delete
+      defendant_delete:
+        edit:
+          page_title: Are you sure you want to delete this defendant?
+          heading: Are you sure you want to delete this defendant?
+          main_defendant: Main defendant details
+          additional_defendant: Additional defendant details
+          headers:
+            full_name: Full name
+            maat: MAAT ID
+          deleted_flash: The defendant was deleted
+      letters_calls:
+        edit:
+          page_title: Letters and phone calls
+          heading: Letters and phone calls
+          vat_info: VAT is not included in any of these items. We'll show you totals including VAT before you submit your claim.
+          total_cost: Total cost
+          summary: View by letters and phone calls
+          items: Items
+          letters: Letters
+          calls: Phone calls
+          calculation: Calculation
+          before_uplift: Before uplift
+          after_uplift: After uplift
+          total: Total
+      reason_for_claim:
+        edit:
+          page_title: Why are you claiming a non-standard magistrates' court payment?
+          heading: Why are you claiming a non-standard magistrates' court payment?
+      work_item:
+        edit:
+          page_title: What work item are you claiming for?
+          heading: What work item are you claiming for?
+          vat_info: VAT is not included in any of these items. We'll show you totals including VAT before you submit your claim.
+          work_type_pricing: "%{price} per hour"
+          calculation: Calculation
+          before_uplift: Before uplift
+          after_uplift: After uplift
+          total: Total
+        duplicate:
+          duplicate: Work item successfully duplicated
+      work_items:
+        edit:
+          page_title: Work Items
+          heading:
+            one: You added %{count} work item
+            other: You added %{count} work items
+          change: Change
+          duplicate: Duplicate
+          delete: Delete
+          add_another: Do you want to add another work item?
+          headers:
+            work_type: Type of work
+            period: Time spent
+            fee_earner: Fee earner
+            change: Change
+            duplicate: Duplicate
+            delete: Delete
+          completed_date_blank: Completed date not set
+      work_item_delete:
+        edit:
+          page_title: Are you sure you want to delete this work item?
+          heading: Are you sure you want to delete this work item?
+          headers:
+            work_type: Type of work
+            period: Time spent
+            fee_earner: Fee earner
+          total_cost: Total cost
+          completed_date_blank: Completed date not set
+          deleted_flash: The work item was deleted
+      disbursement_add:
+        edit:
+          page_title: Do you need to claim a disbursement
+          heading: Do you need to claim a disbursement?
+      disbursement_type:
+        edit:
+          page_title: Disbursement type
+          heading: Disbursement type
+      disbursement_cost:
+        edit:
+          page_title: Disbursement cost
+          heading: Disbursement cost
+          calculation: Calculation
+          before_vat: Before VAT
+          after_vat: After VAT
+      disbursements:
+        edit:
+          page_title: Disbursements
+          heading:
+            one: You added %{count} disbursement
+            other: You added %{count} disbursements
+          headers:
+            type: Type
+            cost: Cost
+            details: Details
+            change: Change
+            delete: Delete
+          disbursement_date_blank: '*required'
+          add_another: Do you want to add another disbursement?
+          change: Change
+          delete: Delete
+      disbursement_delete:
+        edit:
+          heading: Are you sure you want to delete this disbursement?
+          headers:
+            type: Type
+            cost: Cost
+            details: Details
+          disbursement_date_blank: '*required'
+          deleted_flash: The disbursement was deleted
+      cost_summary:
+        show:
+          page_title: Check your payment claim
+          payment_claim: Payment Claim
+          total: Cost
+          total_inc_vat: Cost (including VAT)
+          heading: Check your payment claim
+          estimate: 'Total estimated:'
+      other_info:
+        edit:
+          page_title: Other Relevant information
+          heading: Other Relevant information
+      supporting_evidence:
+        edit:
+          page_title: Upload supporting evidence
+          heading: Upload supporting evidence
+          file_upload:
+            heading: Upload files
+            caption: Files must be a DOC, DOCX, RTF, JPG, BMP, PNG, TIF or PDF.
+          action: Action
+          status: Status
+          file_name: File Name
+          uploading_docs: Documents waiting to be saved
+          upload_files: Upload files
+          uploaded_files: Uploaded files
+          upload_file: Upload file
+        content:
+          para1:
+            heading: "Based on your answers, you must upload:"
+            crm8: CRM8 form
+            crm8_link: "https://www.gov.uk/government/publications/crm8-assigned-counsels-fee-note"
+            remittal: evidence of remittal
+            supplemental: evidence of supplemental claim
+            authority: prior authority certification
+          para2:
+            heading: "You might also want to upload:"
+            file: file notes
+            attendance: attendance notes
+            reading: reading case law
+            documentation: documentation
+            prosecution: prosecution evidence review
+            emails: emails
+            representation: representation order
+          upload_warning:
+            icon: "!"
+            assistive: Warning
+            message: If you do not upload this evidence, it might take longer to assess your claim.
+        postal_address:
+          post_warning:
+            icon: "!"
+            assistive: Warning
+            message: If you post your evidence, it might take longer to assess your claim.
+          postal_address:
+            download_html:  |
+              <a class="govuk-notification-banner__link" href="%{href}" target="_blank">Download a cover sheet</a>,
+              add the required details and post with your evidence to:
+            name: Legal Aid Agency
+            line_1: 1 Unity Square
+            line_2: Queensbridge Road
+            city: Nottingham
+            postcode: NG2 1AW
+            dx_address: DX 10035 Nottingham 1
+        download:
+          title: Claim a non-standard magistrates’ court payment (previously CRM7)
+          heading: Cover sheet for claim evidence
+          subheading: Complete this form, print it and attach it to the front of the paper evidence you are submitting via post.
+          case_reference: "LAA case reference number:"
+          ufn: "Your unique file number (UFN):"
+          firm: "Firm name:"
+          evidence:
+            title: "Evidence:"
+            body: include the evidence specified on the 'upload supporting evidence' page.
+            missing: If you do not include this evidence, it might take longer to assess your claim.
+          includes:
+            title: "You might also want to include:"
+            file_notes: file notes
+            attendance: attendance notes
+            case law: reading case law
+            documentation: documentation
+            evidence: prosecution evidence review
+            emails: emails
+          address:
+            title: Send you evidence to
+            name: Legal Aid Agency
+            line_1: 1 Unity Square
+            line_2: Queensbridge Road
+            city: Nottingham
+            postcode: NG2 1AW
+            dx_address: DX 10035 Nottingham 1
+      equality:
+        edit:
+          page_title: Equality monitoring questions
+          heading: Equality monitoring questions
+          subheading: We’d like to ask some equality questions.
+          answer_equality: Do you want to answer the equality questions?
+          answer_equality_html: |
+            <p class="govuk-body">These questions are optional. Your answers will be treated in the strictest confidence.
+            They will only be used to help us monitor and research access to LAA funded services,
+            in line with our duties under the Equality Act 2010.</p>
+            <p class="govuk-hint govuk-!-margin-bottom-6">Your answers will not affect your claim.</p>
+      equality_questions:
+        edit:
+          page_title: Equality monitoring questions
+          heading: Equality monitoring questions
+      solicitor_declaration:
+        edit:
+          page_title: Confirm the following
+          heading: Confirm the following
+          agreement_title: "You agree that:"
+          agreement_list_1: you've provided correct and complete information in this claim
+          agreement_list_2: the work you are claiming for has not been, and will not be, part of any other claim for remuneration from criminal legal aid
+          warning_title: Warning
+          warning_content: "If you provide wrong or incomplete information, or are found to have committed benefit fraud, you may:"
+          warning_list_1: be prosecuted
+          warning_list_2: have to pay a penalty
+          legend: Legal representative
+      claim_confirmation:
+        show:
+          page_title: Claim complete
+          panel_heading: Claim complete
+          panel_text: Your LAA reference number
+          confirmation_email_sent: "We have sent you a confirmation email."
+          next_steps:
+            title: What happens next
+            process_1: "We'll assess your claim."
+            process_2: "We’ll send you an email to either accept your claim or to ask for more information."
+          feedback:
+            link_text: What did you think of this service?
+            description: takes 30 seconds
+      view_claim:
+        show:
+          page_title: View your claim
+          heading: View your claim
+

@@ -17,7 +17,7 @@ class DisbursementTypes < ValueObject
     [
       'helpers',
       'hint',
-      'steps_disbursement_type_form',
+      'nsm_steps_disbursement_type_form',
       'disbursement_type_options',
       value
     ].join('.')

@@ -9,8 +9,9 @@ module Tasks
     end
 
     def self.build(name, **)
-      class_name = "Tasks::#{name.to_s.split('.').first.camelize}"
-
+      parts = name.to_s.split('/')
+      namespace = parts.first.camelize if parts.count == 2
+      class_name = "#{namespace}::Tasks::#{parts.last.split('.').first.camelize}"
       if const_defined?(class_name)
         class_name.constantize.new(**)
       else

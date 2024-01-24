@@ -1,7 +1,7 @@
 class Disbursement < ApplicationRecord
   belongs_to :claim
 
-  validates :id, exclusion: { in: [StartPage::NEW_RECORD] }
+  validates :id, exclusion: { in: [Nsm::StartPage::NEW_RECORD] }
 
   scope :by_age, -> { order(:disbursement_date, :created_at) }
 
@@ -14,7 +14,7 @@ class Disbursement < ApplicationRecord
   def as_json(*)
     super.merge(
       'disbursement_type' => translations(disbursement_type,
-                                          'helpers.label.steps_disbursement_type_form.disbursement_type_options'),
+                                          'helpers.label.nsm_steps_disbursement_type_form.disbursement_type_options'),
       'other_type' => translations(other_type, 'helpers.other_disbursement_type')
     )
   end

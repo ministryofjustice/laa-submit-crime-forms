@@ -37,7 +37,7 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class, additional_pa
 
         it 'redirects to the application task list' do
           put :update, params: expected_params
-          expect(subject).to redirect_to(after_commit_path(existing_case))
+          expect(subject).to redirect_to(nsm_after_commit_path(existing_case))
         end
       end
 
@@ -48,7 +48,7 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class, additional_pa
 
         it 'redirects to the application task list' do
           put :update, params: expected_params
-          expect(subject).to redirect_to(after_commit_path(existing_case))
+          expect(subject).to redirect_to(nsm_after_commit_path(existing_case))
         end
       end
     end

@@ -1,4 +1,4 @@
-class DummyStepController < Steps::BaseStepController
+class DummyStepController < ::Steps::BaseStepController
   def show
     head(:ok)
   end

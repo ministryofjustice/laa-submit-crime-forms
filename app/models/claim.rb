@@ -41,23 +41,23 @@ class Claim < ApplicationRecord
 
   def translated_reasons_for_claim
     reasons_for_claim.map do |reason|
-      translations(reason, 'helpers.label.steps_reason_for_claim_form.reasons_for_claim_options')
+      translations(reason, 'helpers.label.nsm_steps_reason_for_claim_form.reasons_for_claim_options')
     end
   end
 
   def translate_plea
     {
-      'plea' => translations(plea, 'helpers.label.steps_case_disposal_form.plea_options'),
-      'plea_category' => translations(plea_category, 'helpers.label.steps_case_disposal_form.plea_category')
+      'plea' => translations(plea, 'helpers.label.nsm_steps_case_disposal_form.plea_options'),
+      'plea_category' => translations(plea_category, 'helpers.label.nsm_steps_case_disposal_form.plea_category')
     }
   end
 
   def translated_letters_and_calls
     pricing = Pricing.for(self)
     [
-      { 'type' => translations('letters', 'helpers.label.steps_letters_calls_form.type_options'),
+      { 'type' => translations('letters', 'helpers.label.nsm_steps_letters_calls_form.type_options'),
         'count' => letters, 'pricing' => pricing.letters, 'uplift' => letters_uplift },
-      { 'type' => translations('calls', 'helpers.label.steps_letters_calls_form.type_options'),
+      { 'type' => translations('calls', 'helpers.label.nsm_steps_letters_calls_form.type_options'),
         'count' => calls, 'pricing' => pricing.calls, 'uplift' => calls_uplift },
     ]
   end
@@ -65,10 +65,11 @@ class Claim < ApplicationRecord
   def translated_equality_answers
     {
       'answer_equality' => translations(answer_equality,
-                                        'helpers.label.steps_answer_equality_form.answer_equality_options'),
-      'disability' => translations(disability, 'helpers.label.steps_equality_questions_form.disability_options'),
-      'ethnic_group' => translations(ethnic_group, 'helpers.label.steps_equality_questions_form.ethnic_group_options'),
-      'gender' => translations(gender, 'helpers.label.steps_equality_questions_form.gender_options')
+                                        'helpers.label.nsm_steps_answer_equality_form.answer_equality_options'),
+      'disability' => translations(disability, 'helpers.label.nsm_steps_equality_questions_form.disability_options'),
+      'ethnic_group' => translations(ethnic_group,
+                                     'helpers.label.nsm_steps_equality_questions_form.ethnic_group_options'),
+      'gender' => translations(gender, 'helpers.label.nsm_steps_equality_questions_form.gender_options')
     }
   end
 
@@ -76,7 +77,7 @@ class Claim < ApplicationRecord
     super
       .merge(
         'letters_and_calls' => translated_letters_and_calls,
-        'claim_type' => translations(claim_type, 'helpers.label.steps_claim_type_form.claim_type_options'),
+        'claim_type' => translations(claim_type, 'helpers.label.nsm_steps_claim_type_form.claim_type_options'),
         'matter_type' => translated_matter_type,
         'reasons_for_claim' => translated_reasons_for_claim,
         'hearing_outcome' => translated_hearing_outcome,

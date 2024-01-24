@@ -1,5 +1,5 @@
 module Steps
-  class SupportingEvidenceController < Steps::BaseStepController
+  class SupportingEvidenceController < ::Steps::BaseStepController
     def edit; end
 
     def create; end

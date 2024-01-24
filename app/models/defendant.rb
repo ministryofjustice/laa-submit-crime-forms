@@ -3,5 +3,5 @@
 class Defendant < ApplicationRecord
   belongs_to :claim
 
-  validates :id, exclusion: { in: [StartPage::NEW_RECORD] }
+  validates :id, exclusion: { in: [Nsm::StartPage::NEW_RECORD] }
 end

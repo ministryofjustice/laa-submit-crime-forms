@@ -1,5 +1,5 @@
 module Tasks
-  class Generic < BaseTask
+  class Generic < ::Tasks::BaseTask
     def not_applicable?
       false
     end

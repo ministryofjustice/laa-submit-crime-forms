@@ -1,0 +1,103 @@
+<style>
+  .app-task-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    @include govuk-media-query($from: tablet) {
+      min-width: 550px;
+    }
+  }
+
+  .app-task-list__section {
+    display: table;
+    @include govuk-font($size:24, $weight: bold);
+  }
+
+  .app-task-list__section-number {
+    display: table-cell;
+
+    @include govuk-media-query($from: tablet) {
+      min-width: govuk-spacing(6);
+      padding-right: 0;
+    }
+  }
+
+  .app-task-list__items {
+    @include govuk-font($size: 19);
+    @include govuk-responsive-margin(9, "bottom");
+    list-style: none;
+    padding-left: 0;
+    @include govuk-media-query($from: tablet) {
+      padding-left: govuk-spacing(6);
+    }
+  }
+
+  .app-task-list__item {
+    border-bottom: 1px solid $govuk-border-colour;
+    margin-bottom: 0 !important;
+    padding-top: govuk-spacing(2);
+    padding-bottom: govuk-spacing(2);
+    @include govuk-clearfix;
+  }
+</style>
+
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6"><%= t('.heading') %></h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= button_to nsm_applications_path, class: "govuk-button govuk-button--start govuk-!-margin-bottom-6" do %>
+      <%= t('.start_claim') %>
+      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+      </svg>
+    <% end %>
+  </div>
+
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table" data-module="moj-sortable-table">
+      <caption class="govuk-table__caption govuk-visually-hidden">
+        <%= t('.heading') %>
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.ufn') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.defendant') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.last_updated') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.laa_reference') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.status') %></th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body app-task-list__items">
+        <% @claims.each do |claim| %>
+          <tr class="govuk-table__row app-task-list__item">
+            <td class="govuk-table__cell">
+              <%= link_to nsm_steps_start_page_path(claim.id) do %>
+                <%= claim.ufn %>
+              <% end %>
+            </td>
+            <td class="govuk-table__cell"><%= check_missing(claim.main_defendant&.full_name) %></td>
+            <td class="govuk-table__cell"><%= claim.updated_at.strftime('%d %B %Y') %></td>
+            <td class="govuk-table__cell"><%= claim.laa_reference %></td>
+            <td class="govuk-table__cell">
+              <strong class="govuk-tag <%= t(".status_colour.#{claim.status}") %>">
+                <%= t(".status.#{claim.status}") %>
+              </strong>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= render "shared/pagination",  { pagy: @pagy, item: t('.table_info_item') } %>
+  </div>
+</div>

@@ -1,10 +1,10 @@
 module Decisions
   class OfficeDecisionTree < DslDecisionTree
     from(:select_office)
-      .goto(index: '/claims')
+      .goto(index: '/nsm/claims')
     from(:confirm_office)
       .when(-> { is_current_office.yes? })
-      .goto(index: '/claims')
-      .goto(edit: 'steps/office/select')
+      .goto(index: '/nsm/claims')
+      .goto(edit: '/nsm/steps/office/select')
   end
 end
