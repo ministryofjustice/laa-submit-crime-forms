@@ -43,7 +43,7 @@ RSpec.describe 'Prior authority application creation' do
     expect(page).to have_content 'Enter your unique file number for this application'
   end
 
-  it 'offboards the user for small-value authorities' do
+  it 'offboards the user for authority request of less than £500' do
     click_on 'Start an application'
 
     choose 'Yes'
@@ -52,7 +52,22 @@ RSpec.describe 'Prior authority application creation' do
     expect(page).to have_content 'Are you applying for a total authority of less than £500?'
     choose 'Yes'
     click_on 'Save and continue'
+    expect(page).to have_title 'You do not need to apply'
+    expect(page)
+      .to have_content 'to incur disbursements for a Prison Law matter if the total authority is less than £500.'
+  end
 
-    expect(page).to have_content 'You do not need to apply'
+  it 'offboards the user for authority request of less than £100' do
+    click_on 'Start an application'
+
+    choose 'No'
+    click_on 'Save and continue'
+
+    expect(page).to have_content 'Are you applying for a total authority of less than £100?'
+    choose 'Yes'
+    click_on 'Save and continue'
+    expect(page).to have_title 'You do not need to apply'
+    expect(page)
+      .to have_content 'to incur disbursements if the total authority is less than £100.'
   end
 end

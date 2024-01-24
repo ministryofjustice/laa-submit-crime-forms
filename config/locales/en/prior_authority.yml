@@ -30,7 +30,10 @@ en:
         no_delete: "No, do not delete it"
       offboard:
         page_title: You do not need to apply
-        explanation: You do not need to apply for prior authority to incur disbursements for a Prison Law matter if the total authority is less than £500.
+        explanation:
+          prison_law:
+            'no': You do not need to apply for prior authority to incur disbursements if the total authority is less than £100.
+            'yes': You do not need to apply for prior authority to incur disbursements for a Prison Law matter if the total authority is less than £500.
         finish: 'Finish'
     steps:
       start_page:
