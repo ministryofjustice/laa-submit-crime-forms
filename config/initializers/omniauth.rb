@@ -29,7 +29,7 @@ end
 private
 
 def in_test_mode?
-  if database_exists?
+  if database_connected?
     FeatureFlags::FeatureFlag.active?(:omniauth_test_mode)
   end
 rescue ActiveRecord::StatementInvalid
