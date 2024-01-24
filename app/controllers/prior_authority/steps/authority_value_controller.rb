@@ -1,16 +1,16 @@
 module PriorAuthority
   module Steps
     class AuthorityValueController < BaseController
-      def edit
-        @authority_threshold = current_application.prison_law? ? 500 : 100
+      before_action :set_authority_threshold
 
+      def edit
         @form_object = AuthorityValueForm.build(
           current_application
         )
       end
 
       def update
-        @form_object = current_application.becomes(AuthorityValueForm)
+        @form_object = AuthorityValueForm.build(current_application)
         @form_object.assign_attributes(allowed_params)
 
         if @form_object.valid?
@@ -32,6 +32,10 @@ module PriorAuthority
 
       def as
         :authority_value
+      end
+
+      def set_authority_threshold
+        @authority_threshold = current_application.prison_law? ? 500 : 100
       end
     end
   end

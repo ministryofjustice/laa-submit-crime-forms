@@ -30,16 +30,18 @@ RSpec.describe 'Prior authority applications - add client details' do
 
     fill_in 'First name', with: 'John'
     fill_in 'Last name', with: 'Doe'
-    fill_in 'prior_authority_steps_client_detail_form_client_date_of_birth_3i', with: '27'
-    fill_in 'prior_authority_steps_client_detail_form_client_date_of_birth_2i', with: '12'
-    fill_in 'prior_authority_steps_client_detail_form_client_date_of_birth_1i', with: '2000'
+    within('.govuk-form-group', text: 'Date of birth') do
+      fill_in 'Day', with: '27'
+      fill_in 'Month', with: '12'
+      fill_in 'Year', with: '2000'
+    end
+
     click_on 'Save and come back later'
 
     expect(page).to have_content 'Client detailsCompleted'
 
     click_on 'Client details'
     click_on 'Save and continue'
-    # TODO: expect(page).to have_title 'Case details'
   end
 
   it 'validates client detail fields' do
@@ -49,7 +51,7 @@ RSpec.describe 'Prior authority applications - add client details' do
     click_on 'Save and continue'
     expect(page).to have_content "Enter the client's first name"
     expect(page).to have_content "Enter the client's last name"
-    expect(page).to have_content 'Date cannot be blank'
+    expect(page).to have_content "Enter the client's date of birth"
   end
 
   it 'allows save and come back later' do

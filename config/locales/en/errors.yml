@@ -46,7 +46,9 @@ en:
         prior_authority/steps/authority_value_form:
           attributes:
             authority_value:
-              inclusion: Select if you are applying for a total authority of less than £500
+              inclusion:
+                less_than_five_hundred: Select yes if you are applying for a total authority of less than £500
+                less_than_one_hundred: Select yes if you are applying for a total authority of less than £100
         prior_authority/steps/case_contact_form:
           attributes:
             contact_name:
@@ -59,7 +61,14 @@ en:
               blank: Enter the client's first name
             client_last_name:
               blank: Enter the client's last name
-            client_date_of_birth: *shared_date_errors
+            client_date_of_birth:
+              blank: Enter the client's date of birth
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Client's date of birth is too far in the past
+              future_not_allowed: Client's date of birth cannot be in the future
         prior_authority/steps/case_contact/firm_detail_form:
           attributes:
             name:

@@ -25,14 +25,29 @@ RSpec.describe PriorAuthority::Steps::AuthorityValueForm do
       it { is_expected.to be_valid }
     end
 
-    context 'with blank authority value value ufn' do
+    context 'with blank authority value for prison law matter' do
       let(:authority_value) { '' }
+
+      before { allow(application).to receive(:prison_law?).and_return true }
 
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:authority_value, :inclusion)).to be(true)
+        expect(form.errors.of_kind?(:authority_value, :'inclusion.less_than_five_hundred')).to be(true)
         expect(form.errors.messages[:authority_value])
-          .to include('Select if you are applying for a total authority of less than £500')
+          .to include('Select yes if you are applying for a total authority of less than £500')
+      end
+    end
+
+    context 'with blank authority value but not prison law matter' do
+      let(:authority_value) { '' }
+
+      before { allow(application).to receive(:prison_law?).and_return false }
+
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:authority_value, :'inclusion.less_than_one_hundred')).to be(true)
+        expect(form.errors.messages[:authority_value])
+          .to include('Select yes if you are applying for a total authority of less than £100')
       end
     end
   end
