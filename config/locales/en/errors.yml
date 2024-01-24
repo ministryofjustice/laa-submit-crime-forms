@@ -57,11 +57,11 @@ en:
               blank: Enter the contact email address
         prior_authority/steps/client_detail_form:
           attributes:
-            client_first_name:
+            first_name:
               blank: Enter the client's first name
-            client_last_name:
+            last_name:
               blank: Enter the client's last name
-            client_date_of_birth:
+            date_of_birth:
               blank: Enter the client's date of birth
               invalid: Enter a valid date
               invalid_day: Enter a valid day

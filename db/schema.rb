@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_24_143046) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_24_153117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -174,9 +174,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_24_143046) do
     t.string "ufn"
     t.string "laa_reference"
     t.string "status", default: "pre_draft"
-    t.string "client_first_name"
-    t.string "client_last_name"
-    t.date "client_date_of_birth"
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
