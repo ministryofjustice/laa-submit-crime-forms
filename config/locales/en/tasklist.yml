@@ -17,8 +17,7 @@ en:
       prior_authority/case_contact: Case contact
       prior_authority/case_hearing_detail: Case and hearing details
       prior_authority/client_detail: Client details
-      case_hearing_detail: Case and hearing details
-      claim_type:
+      nsm/claim_type:
         non_standard_magistrate: Non-standard magistrates’ court payment
         breach_of_injunction: Breach of injunction court payment
       nsm/firm_details: Your details
