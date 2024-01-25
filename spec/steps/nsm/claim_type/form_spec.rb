@@ -25,7 +25,7 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
     context 'when `ufn` is blank' do
       let(:ufn) { '' }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:ufn, :blank)).to be(true)
       end
@@ -34,7 +34,7 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
     context 'when `ufn` is incorrect fomrat' do
       let(:ufn) { '111' }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:ufn, :invalid)).to be(true)
       end
@@ -43,7 +43,7 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
     context 'when `claim_type` is blank' do
       let(:claim_type) { '' }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:claim_type, :inclusion)).to be(true)
       end

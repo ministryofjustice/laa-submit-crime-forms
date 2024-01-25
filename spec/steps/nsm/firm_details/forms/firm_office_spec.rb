@@ -40,7 +40,7 @@ RSpec.describe Nsm::Steps::FirmDetails::FirmOfficeForm do
       context "when #{field} is missing" do
         let(field) { nil }
 
-        it 'has is a validation error on the field' do
+        it 'has a validation error on the field' do
           expect(form).not_to be_valid
           expect(form.errors.of_kind?(field, :blank)).to be(true)
         end
@@ -50,7 +50,7 @@ RSpec.describe Nsm::Steps::FirmDetails::FirmOfficeForm do
     context 'when postcode is invalid' do
       let(:postcode) { 'AAA' }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:postcode, :invalid)).to be(true)
       end

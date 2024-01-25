@@ -40,7 +40,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         }
       end
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.messages.values.flatten)
           .to include('Enter the main offence',

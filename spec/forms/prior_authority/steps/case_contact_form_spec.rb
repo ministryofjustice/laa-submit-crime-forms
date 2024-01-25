@@ -30,7 +30,7 @@ RSpec.describe PriorAuthority::Steps::CaseContactForm do
       let(:firm_office_attributes) { { 'name' => '', 'account_number' => '' } }
       let(:solicitor_attributes) { { 'contact_full_name' => '', 'contact_email' => '' } }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:'firm_office-attributes.name', :blank)).to be(true)
         expect(form.errors.of_kind?(:'firm_office-attributes.account_number', :blank)).to be(true)

@@ -33,7 +33,7 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
       context "when #{field} is missing" do
         let(field) { nil }
 
-        it 'has is a validation error on the field' do
+        it 'has a validation error on the field' do
           expect(form).not_to be_valid
           expect(form.errors.of_kind?(field, :blank)).to be(true)
         end
@@ -53,7 +53,7 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
         let(field) { nil }
         let(:alternative_contact_details) { 'yes' }
 
-        it 'has is a validation error on the field' do
+        it 'has a validation error on the field' do
           expect(form).not_to be_valid
           expect(form.errors.of_kind?(field, :blank)).to be(true)
         end
