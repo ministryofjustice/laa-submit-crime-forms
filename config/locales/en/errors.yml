@@ -57,18 +57,18 @@ en:
               blank: Enter the contact email address
         prior_authority/steps/client_detail_form:
           attributes:
-            client_first_name:
+            first_name:
               blank: Enter the client's first name
-            client_last_name:
+            last_name:
               blank: Enter the client's last name
-            client_date_of_birth:
+            date_of_birth:
               blank: Enter the client's date of birth
-              invalid: Enter a valid date
+              invalid: The client's date of birth must be a real date
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
-              invalid_year: Enter a valid year
+              invalid_year: The year must include 4 numbers
               year_too_early: Client's date of birth is too far in the past
-              future_not_allowed: Client's date of birth cannot be in the future
+              future_not_allowed: Client's date of birth must be in the past
         prior_authority/steps/case_contact/firm_detail_form:
           attributes:
             name:
@@ -156,8 +156,10 @@ en:
           attributes: *solicitor_form
         nsm/steps/defendant_details_form:
           attributes:
-            full_name:
-              blank: Full name cannot be blank
+            first_name:
+              blank: First name cannot be blank
+            last_name:
+              blank: Last name cannot be blank
             maat:
               blank: MAAT ID cannot be blank
         nsm/steps/case_details_form:

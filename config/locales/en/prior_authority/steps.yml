@@ -18,10 +18,10 @@ en:
       client_detail:
         edit:
           caption: 2. About the case
-          client_first_name: First name
-          client_last_name: Last name
-          client_date_of_birth: Date of birth
-          client_date_of_birth_hint: For example, 27 3 2007
+          first_name: First name
+          last_name: Last name
+          date_of_birth: Date of birth
+          date_of_birth_hint: For example, 27 3 2007
           page_title: Client details
       ufn:
         edit:

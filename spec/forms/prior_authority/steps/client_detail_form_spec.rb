@@ -5,34 +5,34 @@ RSpec.describe PriorAuthority::Steps::ClientDetailForm do
 
   let(:arguments) do
     {
-      application:,
-      client_first_name:,
-      client_last_name:,
-      client_date_of_birth:,
+      record:,
+      first_name:,
+      last_name:,
+      date_of_birth:,
     }
   end
 
   describe '#validate' do
-    let(:application) { instance_double(PriorAuthorityApplication) }
+    let(:record) { instance_double(Defendant) }
 
     context 'with valid client details' do
-      let(:client_first_name) { 'Joe' }
-      let(:client_last_name) { 'Bloggs' }
-      let(:client_date_of_birth) { 20.years.ago.to_date }
+      let(:first_name) { 'Joe' }
+      let(:last_name) { 'Bloggs' }
+      let(:date_of_birth) { 20.years.ago.to_date }
 
       it { is_expected.to be_valid }
     end
 
     context 'with blank client details' do
-      let(:client_first_name) { '' }
-      let(:client_last_name) { '' }
-      let(:client_date_of_birth) { '' }
+      let(:first_name) { '' }
+      let(:last_name) { '' }
+      let(:date_of_birth) { '' }
 
       it 'has a validation errors on the fields' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:client_first_name, :blank)).to be(true)
-        expect(form.errors.of_kind?(:client_last_name, :blank)).to be(true)
-        expect(form.errors.of_kind?(:client_date_of_birth, :blank)).to be(true)
+        expect(form.errors.of_kind?(:first_name, :blank)).to be(true)
+        expect(form.errors.of_kind?(:last_name, :blank)).to be(true)
+        expect(form.errors.of_kind?(:date_of_birth, :blank)).to be(true)
         expect(form.errors.messages.values.flatten)
           .to include("Enter the client's first name",
                       "Enter the client's last name",
@@ -44,44 +44,44 @@ RSpec.describe PriorAuthority::Steps::ClientDetailForm do
   describe '#save' do
     subject(:save) { form.save }
 
-    let(:application) { create(:prior_authority_application) }
+    let(:record) { create(:defendant, defendable: create(:prior_authority_application)) }
 
     context 'with valid client details' do
-      let(:client_first_name) { 'Joe' }
-      let(:client_last_name) { 'Bloggs' }
-      let(:client_date_of_birth) { 20.years.ago.to_date }
+      let(:first_name) { 'Joe' }
+      let(:last_name) { 'Bloggs' }
+      let(:date_of_birth) { 20.years.ago.to_date }
 
       it 'persists the client details' do
-        expect { save }.to change { application.reload.attributes }
+        expect { save }.to change { record.reload.attributes }
           .from(
             hash_including(
-              'client_first_name' => nil,
-              'client_last_name' => nil,
-              'client_date_of_birth' => nil
+              'first_name' => nil,
+              'last_name' => nil,
+              'date_of_birth' => nil
             )
           )
           .to(
             hash_including(
-              'client_first_name' => 'Joe',
-              'client_last_name' => 'Bloggs',
-              'client_date_of_birth' => 20.years.ago.to_date
+              'first_name' => 'Joe',
+              'last_name' => 'Bloggs',
+              'date_of_birth' => 20.years.ago.to_date
             )
           )
       end
     end
 
     context 'with incomplete client details' do
-      let(:client_first_name) { 'Joe' }
-      let(:client_last_name) { '' }
-      let(:client_date_of_birth) { '' }
+      let(:first_name) { 'Joe' }
+      let(:last_name) { '' }
+      let(:date_of_birth) { '' }
 
       it 'does not persist the client details' do
-        expect { save }.not_to change { application.reload.attributes }
+        expect { save }.not_to change { record.reload.attributes }
           .from(
             hash_including(
-              'client_first_name' => nil,
-              'client_last_name' => nil,
-              'client_date_of_birth' => nil
+              'first_name' => nil,
+              'last_name' => nil,
+              'date_of_birth' => nil
             )
           )
       end

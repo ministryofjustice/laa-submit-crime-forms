@@ -7,7 +7,8 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object, url: nsm_steps_defendant_details_path(@form_object.application, defendant_id: @form_object.record.id) do |f| %>
       <%= f.govuk_fieldset legend: { text: t(@form_object.label_key, index: @form_object.index) }, class: 'moj-add-another__item' do %>
-        <%= f.govuk_text_field :full_name, maxlength_enabled: true %>
+        <%= f.govuk_text_field :first_name, maxlength_enabled: true %>
+        <%= f.govuk_text_field :last_name, maxlength_enabled: true %>
         <% if @form_object.maat_required? %>
           <%= f.govuk_text_field :maat, maxlength_enabled: true %>
         <% end %>

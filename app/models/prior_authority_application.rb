@@ -2,6 +2,7 @@ class PriorAuthorityApplication < ApplicationRecord
   belongs_to :provider
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
+  has_one :defendant, dependent: :destroy, as: :defendable
 
   attribute :prison_law, :boolean
   attribute :ufn, :string

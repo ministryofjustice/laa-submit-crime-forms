@@ -69,7 +69,7 @@ class NotifyAppStore
 
     def defendant_data
       claim.defendants.map do |defendant|
-        defendant.as_json.slice!(*DEFAULT_IGNORE)
+        defendant.as_json(only: %i[id maat main position]).merge('full_name' => defendant.full_name)
       end
     end
 
