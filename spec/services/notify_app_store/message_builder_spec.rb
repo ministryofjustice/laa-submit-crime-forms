@@ -34,7 +34,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'created_at' => '2023-08-17T12:13:14.000Z',
           'defence_statement' => nil,
           'defendants' => [{
-            'full_name' => 'bobjim',
+            'full_name' => 'bob jim',
             'id' => defendant.id,
             'maat' => 'AA1',
             'main' => true,

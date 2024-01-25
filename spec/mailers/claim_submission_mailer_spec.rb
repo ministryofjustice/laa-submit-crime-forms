@@ -30,7 +30,7 @@ RSpec.describe ClaimSubmissionMailer, type: :mailer do
         ).to include(
           LAA_case_reference: 'LAA-n4AohV',
           UFN: '123456/001',
-          main_defendant_name: 'bobjim',
+          main_defendant_name: 'bob jim',
           defendant_reference: 'MAAT ID: AA1',
           claim_total: '£20.45',
           date: DateTime.now.strftime('%d %B %Y'),
@@ -48,7 +48,7 @@ RSpec.describe ClaimSubmissionMailer, type: :mailer do
         ).to include(
           LAA_case_reference: 'LAA-n4AohV',
           UFN: '123456/002',
-          main_defendant_name: 'bobjim',
+          main_defendant_name: 'bob jim',
           defendant_reference: "Client's CNTP number: CNTP12345",
           claim_total: '£20.45',
           date: DateTime.now.strftime('%d %B %Y'),

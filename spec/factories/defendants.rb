@@ -1,15 +1,16 @@
 FactoryBot.define do
   factory :defendant do
     trait :valid do
-      full_name { 'bobjim' }
+      first_name { 'bob' }
+      last_name { 'jim' }
       maat { 'AA1' }
       position { 1 }
       main { true }
     end
 
     trait :partial do
-      full_name { 'bobjim' }
-      position { 1 }
+      first_name { 'bob' }
+      last_name { 'jim' }
       main { true }
     end
   end

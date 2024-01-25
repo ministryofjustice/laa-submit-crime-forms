@@ -39,5 +39,29 @@ RSpec.describe PriorAuthority::Tasks::ClientDetail, type: :presenter do
     end
   end
 
-  it_behaves_like 'a task with generic complete?', PriorAuthority::Steps::ClientDetailForm
+  describe '#completed?' do
+    context 'when the defendant details are valid' do
+      before do
+        create(:defendant,
+               defendable: application,
+               first_name: 'Jane',
+               last_name: 'Bloggs',
+               date_of_birth: 20.years.ago)
+      end
+
+      it { is_expected.to be_completed }
+    end
+
+    context 'when the defendant details are invalid' do
+      before do
+        create(:defendant,
+               defendable: application,
+               first_name: nil,
+               last_name: 'Bloggs',
+               date_of_birth: 20.years.ago)
+      end
+
+      it { is_expected.not_to be_completed }
+    end
+  end
 end

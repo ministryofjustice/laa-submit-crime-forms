@@ -9,6 +9,10 @@ module PriorAuthority
       def path
         edit_prior_authority_steps_client_detail_path(application)
       end
+
+      def completed?
+        application.defendant && super(application.defendant)
+      end
     end
   end
 end
