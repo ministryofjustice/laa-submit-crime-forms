@@ -8,7 +8,7 @@ module PriorAuthority
       private
 
       def persist!
-        record.update!(attributes)
+        application.update!(attributes)
       end
     end
   end
