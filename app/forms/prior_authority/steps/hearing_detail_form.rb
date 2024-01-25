@@ -20,7 +20,24 @@ module PriorAuthority
       private
 
       def persist!
-        application.update!(attributes)
+        application.update!(attributes_with_resets)
+      end
+
+      def attributes_with_resets
+        attributes.merge(reset_attributes)
+      end
+
+      def reset_attributes
+        if court_type.magistrates_court?
+          { psychiatric_liaison: nil,
+            psychiatric_liaison_reason_not: nil }
+        elsif court_type.central_criminal_court?
+          { youth_court: nil }
+        else
+          { youth_court: nil,
+            psychiatric_liaison: nil,
+            psychiatric_liaison_reason_not: nil }
+        end
       end
     end
   end

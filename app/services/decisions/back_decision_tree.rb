@@ -56,5 +56,7 @@ module Decisions
     from('prior_authority/steps/client_detail').goto(edit: 'prior_authority/steps/case_contact')
     from('prior_authority/steps/case_detail').goto(edit: 'prior_authority/steps/client_detail')
     from('prior_authority/steps/hearing_detail').goto(edit: 'prior_authority/steps/case_detail')
+    from('prior_authority/steps/youth_court').goto(edit: 'prior_authority/steps/hearing_detail')
+    from('prior_authority/steps/psychiatric_liaison').goto(edit: 'prior_authority/steps/hearing_detail')
   end
 end

@@ -8,5 +8,19 @@ FactoryBot.define do
       firm_office factory: %i[firm_office valid]
       solicitor factory: %i[solicitor valid]
     end
+
+    trait :with_psychiatric_liaison do
+      court_type { 'central_criminal_court' }
+      youth_court { nil }
+      psychiatric_liaison { false }
+      psychiatric_liaison_reason_not { 'whatever you like' }
+    end
+
+    trait :with_youth_court do
+      court_type { 'magistrates_court' }
+      youth_court { true }
+      psychiatric_liaison { nil }
+      psychiatric_liaison_reason_not { nil }
+    end
   end
 end

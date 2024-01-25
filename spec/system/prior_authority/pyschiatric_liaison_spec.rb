@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Prior authority applications - add hearing details' do
+RSpec.describe 'Prior authority applications - add psychiatric liaison' do
   before do
     visit provider_saml_omniauth_callback_path
     visit prior_authority_root_path
@@ -48,10 +48,6 @@ RSpec.describe 'Prior authority applications - add hearing details' do
     end
 
     click_on 'Save and continue'
-  end
-
-  it 'allows hearing detail creation' do
-    expect(page).to have_title 'Hearing details'
 
     within('.govuk-form-group', text: 'Date of next hearing') do
       dt = Date.tomorrow
@@ -62,61 +58,38 @@ RSpec.describe 'Prior authority applications - add hearing details' do
 
     choose 'Not guilty'
     choose 'Central Criminal Court'
-
     click_on 'Save and continue'
-    expect(page).to have_title 'Have you accessed the psychiatric liaison service?'
   end
 
-  context 'when navigating to next page' do
-    before do
-      within('.govuk-form-group', text: 'Date of next hearing') do
-        dt = Date.tomorrow
-        fill_in 'Day', with: dt.day
-        fill_in 'Month', with: dt.month
-        fill_in 'Year', with: dt.year
-      end
-
-      choose 'Not guilty'
-    end
-
-    context "with magistrate's court chosen" do
-      it 'moves to Youth court page' do
-        choose  "Magistrate's court"
-
-        click_on 'Save and continue'
-        expect(page).to have_title 'Is this a youth court matter?'
-      end
-    end
-
-    context 'with Central criminal court chosen' do
-      it 'moves to Psychiatric liaison page' do
-        choose  'Central Criminal Court'
-
-        click_on 'Save and continue'
-        expect(page).to have_title 'Have you accessed the psychiatric liaison service?'
-      end
-    end
-
-    context 'with Crown Court (excluding Central Criminal Court) chosen' do
-      it 'moves to Your application progress page' do
-        choose  'Crown Court (excluding Central Criminal Court)'
-
-        click_on 'Save and continue'
-        expect(page).to have_title 'Your application progress'
-      end
+  context 'when psychiatric liaison service has been used' do
+    it 'navigates to Your application page' do
+      choose 'Yes'
+      click_on 'Save and continue'
+      expect(page).to have_title 'Your application progress'
     end
   end
 
-  it 'validates hearing detail fields' do
-    click_on 'Save and continue'
-    expect(page)
-      .to have_content('Date cannot be blank')
-      .and have_content('Select the likely or actual plea')
-      .and have_content('Select the type of court')
+  context 'when psychiatric liaison service has not been used and reason given' do
+    it 'navigates to Your application page' do
+      choose 'No'
+      fill_in 'Explain why you did not access this service', with: 'whatever'
+      click_on 'Save and continue'
+      expect(page).to have_title 'Your application progress'
+    end
   end
 
-  it 'allows save and come back later' do
-    click_on 'Save and come back later'
-    expect(page).to have_content('Case and hearing detailsIn progress')
+  context 'when psychiatric liaison service question not answered' do
+    it 'displays expected error' do
+      click_on 'Save and continue'
+      expect(page).to have_content 'Select yes if you have accessed the psychiatric liason service'
+    end
+  end
+
+  context 'when psychiatric liaison service has not been used BUT no reason given' do
+    it 'displays expected error' do
+      choose 'No'
+      click_on 'Save and continue'
+      expect(page).to have_content 'Explain why you did not access the psychiatric liaison service'
+    end
   end
 end

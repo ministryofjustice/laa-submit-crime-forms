@@ -1,0 +1,23 @@
+<% title t('.page_title') %>
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <span class="govuk-caption-xl"><%= t(".caption") %></span>
+
+    <%= step_form @form_object do |form| %>
+      <%= form.govuk_radio_buttons_fieldset :psychiatric_liaison, legend: { text: t('.legend'), size: 'xl' } do %>
+        <%= form.govuk_radio_button :psychiatric_liaison, true, label: { text: t('generic.yes') } %>
+          <%= form.govuk_radio_button :psychiatric_liaison, false, label: { text: t('generic.no') }, link_errors: true do %>
+            <%= form.govuk_text_area :psychiatric_liaison_reason_not,
+                                     label: { text: t('.psychiatric_liaison_reason_not'), size: 's' } %>
+        <% end %>
+      <% end%>
+
+      <%= form.continue_button %>
+    <% end %>
+  </div>
+</div>
+
+

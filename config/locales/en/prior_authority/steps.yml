@@ -62,3 +62,14 @@ en:
         edit:
           legend: Is this a Prison Law matter?
           page_title: Prison law
+      psychiatric_liaison:
+        edit:
+          caption: 2. About the case
+          legend: Have you accessed the psychiatric liaison service?
+          page_title: Have you accessed the psychiatric liaison service?
+          psychiatric_liaison_reason_not: Explain why you did not access this service
+      youth_court:
+        edit:
+          caption: 2. About the case
+          legend: Is this a youth court matter?
+          page_title: Is this a youth court matter?
