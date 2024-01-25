@@ -25,7 +25,7 @@ RSpec.describe PriorAuthority::Steps::UfnForm do
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:ufn, :blank)).to be(true)
-        expect(form.errors.messages[:ufn]).to include('Enter the unique reference number')
+        expect(form.errors.messages[:ufn]).to include('Enter the unique file number')
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe PriorAuthority::Steps::UfnForm do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:ufn, :invalid)).to be(true)
         expect(form.errors.messages[:ufn]).to include(
-          'Unique reference number must be in the correct format, for example 310224/001'
+          'Unique file number must be in the correct format, for example 310224/001'
         )
       end
     end

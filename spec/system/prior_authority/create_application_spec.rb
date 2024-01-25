@@ -40,7 +40,7 @@ RSpec.describe 'Prior authority application creation' do
     click_on 'Save and continue'
 
     click_on 'Save and continue'
-    expect(page).to have_content 'Enter the unique reference number'
+    expect(page).to have_content 'Enter the unique file number'
   end
 
   it 'offboards the user for authority request of less than £500' do

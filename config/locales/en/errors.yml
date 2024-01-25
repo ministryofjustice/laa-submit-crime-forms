@@ -129,8 +129,8 @@ en:
         prior_authority/steps/ufn_form:
           attributes:
             ufn:
-              blank: Enter the unique reference number
-              invalid: Unique reference number must be in the correct format, for example 310224/001
+              blank: Enter the unique file number
+              invalid: Unique file number must be in the correct format, for example 310224/001
         prior_authority/steps/youth_court_form:
           attributes:
             youth_court:
