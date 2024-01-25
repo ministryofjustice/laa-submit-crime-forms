@@ -20,7 +20,7 @@ module PriorAuthority
           ],
         ],
         [
-          :primary_quote, [
+          :about_request, [
             'prior_authority/primary_quote'
           ],
         ],
