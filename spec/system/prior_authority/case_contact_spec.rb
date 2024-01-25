@@ -1,22 +1,8 @@
-require 'rails_helper'
+require 'system_helper'
 
 RSpec.describe 'Prior authority applications - add case contact' do
   before do
-    visit provider_saml_omniauth_callback_path
-    visit prior_authority_root_path
-    click_on 'Start an application'
-
-    expect(page).to have_content 'Is this a Prison Law matter?'
-    choose 'Yes'
-    click_on 'Save and continue'
-
-    expect(page).to have_content 'Are you applying for a total authority of less than £500?'
-
-    choose 'No'
-    click_on 'Save and continue'
-
-    fill_in 'What is your unique file number?', with: '000000/123'
-    click_on 'Save and continue'
+    fill_in_until_step(:case_contact)
   end
 
   it 'allows contact detail creation' do

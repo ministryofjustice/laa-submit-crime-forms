@@ -108,6 +108,7 @@ Metrics/MethodLength:
   Max: 12
   Exclude:
     - app/presenters/nsm/check_answers/**/*
+    - spec/system/support/prior_authority/step_helpers.rb
 
 # To be tweaked until we find the right balance
 Metrics/AbcSize:
