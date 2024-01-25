@@ -32,3 +32,7 @@ en:
         edit:
           legend: Is this a Prison Law matter?
           page_title: Prison law
+      primary_quote:
+        edit:
+          page_title: Primary quote
+          caption: 3. About the request
