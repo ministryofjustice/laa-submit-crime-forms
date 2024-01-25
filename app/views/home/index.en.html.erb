@@ -29,7 +29,7 @@
       </li>
     </ul>
 
-    <% if ENV.fetch('OMNIAUTH_TEST_MODE', 'false').inquiry.true? %>
+    <% if FeatureFlags.omniauth_test_mode.enabled? %>
 
       <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'test-user', info: { name: 'Test User', email: 'provider@example.com', office_codes: ['1A123B', '2A555X'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
         Login to Warden (Primary test user)

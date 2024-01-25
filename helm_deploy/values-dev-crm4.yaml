@@ -73,7 +73,6 @@ secrets:
   environment: development
   portalSPCertificateKey: portal-sp-certificate-dev-crm4
   portalIDPMetadataFile: config/laa_portal/metadata/dev-crm4.xml
-  omniauthTestMode: true
   spEntityId: LAA_Portal_CRM7_Dev
   appStore: https://laa-crime-application-store-dev-crm4.apps.live.cloud-platform.service.justice.gov.uk
 
