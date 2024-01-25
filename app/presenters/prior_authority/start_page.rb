@@ -19,6 +19,11 @@ module PriorAuthority
             'prior_authority/case_and_hearing_detail',
           ],
         ],
+        [
+          :about_request, [
+            :why_prior_authority
+          ]
+        ]
       ].freeze
     end
   end

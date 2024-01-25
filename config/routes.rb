@@ -129,6 +129,7 @@ Rails.application.routes.draw do
         edit_step :hearing_detail
         edit_step :youth_court
         edit_step :psychiatric_liaison
+        edit_step :why_prior_authority
       end
     end
 
