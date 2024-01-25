@@ -3,12 +3,23 @@ require 'rails_helper'
 RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
   subject(:presenter) { described_class.new(application:) }
 
-  let(:application) { create(:prior_authority_application) }
+  let(:application) { create(:prior_authority_application, prison_law:) }
+  let(:prison_law) { false }
 
   describe '#path' do
     subject(:path) { presenter.path }
 
-    it { is_expected.to eq("/prior-authority/applications/#{application.id}/steps/case_detail") }
+    context 'when application is a prison law matter' do
+      let(:prison_law) { true }
+
+      it { is_expected.to eq("/prior-authority/applications/#{application.id}/steps/next_hearing") }
+    end
+
+    context 'when application is not prison law matter' do
+      let(:prison_law) { false }
+
+      it { is_expected.to eq("/prior-authority/applications/#{application.id}/steps/case_detail") }
+    end
   end
 
   describe '#not_applicable?' do
@@ -41,6 +52,8 @@ RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
 
   describe '#completed?' do
     before do
+      klass = PriorAuthority::Steps::NextHearingForm
+      allow(klass).to receive(:build).and_return(instance_double(klass, valid?: next_hearing_valid))
       klass = PriorAuthority::Steps::CaseDetailForm
       allow(klass).to receive(:build).and_return(instance_double(klass, valid?: case_detail_valid))
       klass = PriorAuthority::Steps::HearingDetailForm
@@ -51,9 +64,21 @@ RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
       allow(klass).to receive(:build).and_return(instance_double(klass, valid?: youth_court_valid))
     end
 
+    context 'when all requisite forms are valid for prison law flow' do
+      let(:prison_law) { true }
+      let(:next_hearing_valid) { true }
+      let(:case_detail_valid) { false }
+      let(:hearing_detail_valid) { false }
+      let(:youth_court_valid) { false }
+      let(:psychiatric_liaison_valid) { false }
+
+      it { is_expected.to be_completed }
+    end
+
     context 'when all requisite forms are valid for magistrates court' do
       before { allow(application).to receive(:court_type).and_return('magistrates_court') }
 
+      let(:next_hearing_valid) { false }
       let(:case_detail_valid) { true }
       let(:hearing_detail_valid) { true }
       let(:youth_court_valid) { true }
@@ -65,6 +90,7 @@ RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
     context 'when all requisite forms are valid for central criminal court' do
       before { allow(application).to receive(:court_type).and_return('central_criminal_court') }
 
+      let(:next_hearing_valid) { false }
       let(:case_detail_valid) { true }
       let(:hearing_detail_valid) { true }
       let(:youth_court_valid) { false }
@@ -76,6 +102,7 @@ RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
     context 'when all requisite forms are valid for crown court' do
       before { allow(application).to receive(:court_type).and_return('crown_court') }
 
+      let(:next_hearing_valid) { false }
       let(:case_detail_valid) { true }
       let(:hearing_detail_valid) { true }
       let(:youth_court_valid) { false }
@@ -85,6 +112,7 @@ RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
     end
 
     context 'when one or more requisite forms are invalid' do
+      let(:next_hearing_valid) { false }
       let(:case_detail_valid) { true }
       let(:hearing_detail_valid) { false }
       let(:youth_court_valid) { false }
@@ -96,6 +124,7 @@ RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
     context 'when psychiatric liaison not complete for a central criminal court matter' do
       before { allow(application).to receive(:court_type).and_return('central_criminal_court') }
 
+      let(:next_hearing_valid) { false }
       let(:case_detail_valid) { true }
       let(:hearing_detail_valid) { true }
       let(:youth_court_valid) { false }
@@ -107,6 +136,7 @@ RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
     context 'when youth court not complete for a magistrates court matter' do
       before { allow(application).to receive(:court_type).and_return('magistrates_court') }
 
+      let(:next_hearing_valid) { false }
       let(:case_detail_valid) { true }
       let(:hearing_detail_valid) { true }
       let(:youth_court_valid) { false }

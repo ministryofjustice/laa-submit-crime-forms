@@ -25,7 +25,7 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
       it { is_expected.to be_valid }
     end
 
-    context 'with invalid solicitor and firm details' do
+    context 'with invalid hearing details' do
       let(:hearing_detail_attributes) do
         {
           next_hearing_date: nil,
@@ -34,7 +34,7 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
         }
       end
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.messages.values.flatten)
           .to include('Date cannot be blank',

@@ -48,12 +48,19 @@ module Decisions
     # TODO: we should be storing the answer to the ask equality question and use that in the decision
     from('nsm/steps/solicitor_declaration').goto(edit: DecisionTree::NSM_EQUALITY)
 
-    # prior authority steps
+    # ---------------------------------
+    # prior authority application steps
+    # ---------------------------------
     from('prior_authority/steps/prison_law').goto(edit: 'prior_authority/applications')
     from('prior_authority/steps/authority_value').goto(edit: 'prior_authority/steps/prison_law')
     from('prior_authority/steps/ufn').goto(edit: 'prior_authority/steps/authority_value')
     from('prior_authority/steps/case_contact').goto(show: 'prior_authority/steps/start_page')
     from('prior_authority/steps/client_detail').goto(edit: 'prior_authority/steps/case_contact')
+
+    # prison law flow
+    from('prior_authority/steps/next_hearing').goto(show: 'prior_authority/steps/start_page')
+
+    # non-prison law flow
     from('prior_authority/steps/case_detail').goto(edit: 'prior_authority/steps/client_detail')
     from('prior_authority/steps/hearing_detail').goto(edit: 'prior_authority/steps/case_detail')
     from('prior_authority/steps/youth_court').goto(edit: 'prior_authority/steps/hearing_detail')
