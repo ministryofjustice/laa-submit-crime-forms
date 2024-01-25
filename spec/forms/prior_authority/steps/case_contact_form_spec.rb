@@ -42,41 +42,41 @@ RSpec.describe PriorAuthority::Steps::CaseContactForm do
                                                                'Enter the email address of the contact')
       end
     end
+  end
 
-    describe '#save' do
-      subject(:save) { form.save }
+  describe '#save' do
+    subject(:save) { form.save }
 
-      let(:application) { create(:prior_authority_application) }
+    let(:application) { create(:prior_authority_application) }
 
-      context 'with valid solicitor and firm details' do
-        let(:firm_office_attributes) { { 'name' => 'anything', 'account_number' => 'anything' } }
-        let(:solicitor_attributes) do
-          { 'contact_full_name' => 'Joe Bloggs', 'contact_email' => 'joe.bloggs@legalcorp.com' }
-        end
-
-        it 'persists the firm details' do
-          expect { save }.to change { application.reload.firm_office }.from(nil).to(be_a(FirmOffice))
-          expect(application.firm_office).to have_attributes(name: 'anything', account_number: 'anything')
-        end
-
-        it 'persists the solicitor details' do
-          expect { save }.to change { application.reload.solicitor }.from(nil).to(be_a(Solicitor))
-          expect(application.solicitor).to have_attributes(contact_full_name: 'Joe Bloggs',
-                                                           contact_email: 'joe.bloggs@legalcorp.com')
-        end
+    context 'with valid solicitor and firm details' do
+      let(:firm_office_attributes) { { 'name' => 'anything', 'account_number' => 'anything' } }
+      let(:solicitor_attributes) do
+        { 'contact_full_name' => 'Joe Bloggs', 'contact_email' => 'joe.bloggs@legalcorp.com' }
       end
 
-      context 'with invalid solicitor and firm details' do
-        let(:firm_office_attributes) { { 'name' => '', 'account_number' => '' } }
-        let(:solicitor_attributes) { { 'contact_full_name' => '', 'contact_email' => '' } }
+      it 'persists the firm details' do
+        expect { save }.to change { application.reload.firm_office }.from(nil).to(be_a(FirmOffice))
+        expect(application.firm_office).to have_attributes(name: 'anything', account_number: 'anything')
+      end
 
-        it 'does not persists the solicitor details' do
-          expect { save }.not_to change { application.reload.solicitor }.from(nil)
-        end
+      it 'persists the solicitor details' do
+        expect { save }.to change { application.reload.solicitor }.from(nil).to(be_a(Solicitor))
+        expect(application.solicitor).to have_attributes(contact_full_name: 'Joe Bloggs',
+                                                         contact_email: 'joe.bloggs@legalcorp.com')
+      end
+    end
 
-        it 'does not persists the firm details' do
-          expect { save }.not_to change { application.reload.firm_office }.from(nil)
-        end
+    context 'with invalid solicitor and firm details' do
+      let(:firm_office_attributes) { { 'name' => '', 'account_number' => '' } }
+      let(:solicitor_attributes) { { 'contact_full_name' => '', 'contact_email' => '' } }
+
+      it 'does not persists the solicitor details' do
+        expect { save }.not_to change { application.reload.solicitor }.from(nil)
+      end
+
+      it 'does not persists the firm details' do
+        expect { save }.not_to change { application.reload.firm_office }.from(nil)
       end
     end
   end
