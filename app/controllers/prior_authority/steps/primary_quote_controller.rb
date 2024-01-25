@@ -3,7 +3,7 @@ module PriorAuthority
     class PrimaryQuoteController < BaseController
       def edit
         @form_object = PrimaryQuoteForm.build(
-          application: current_application
+          current_application
         )
       end
 
