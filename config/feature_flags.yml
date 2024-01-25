@@ -1,0 +1,6 @@
+feature_flags:
+  omniauth_test_mode:
+    local: <%= ENV.fetch("OMNIAUTH_TEST_MODE", false) %>
+    development: true
+    uat: false
+    production: false # must never be enabled in the live service
