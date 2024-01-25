@@ -7,7 +7,8 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
     {
       application:,
       record:,
-      full_name:,
+      first_name:,
+      last_name:,
       maat:,
     }
   end
@@ -16,7 +17,8 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
   let(:defendants) { [double(:record), record] }
   let(:record) { double(:record, main:) }
   let(:main) { true }
-  let(:full_name) { 'James' }
+  let(:first_name) { 'James' }
+  let(:last_name) { 'Smith' }
   let(:maat) { 'AA1' }
   let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
 
@@ -65,12 +67,21 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
   describe '#validations' do
     it { expect(subject).to be_valid }
 
-    context 'when full name is not set' do
-      let(:full_name) { nil }
+    context 'when first name is not set' do
+      let(:first_name) { nil }
 
       it 'has the appropriate error messages' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:full_name, :blank)).to be(true)
+        expect(subject.errors.of_kind?(:first_name, :blank)).to be(true)
+      end
+    end
+
+    context 'when last name is not set' do
+      let(:last_name) { nil }
+
+      it 'has the appropriate error messages' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:last_name, :blank)).to be(true)
       end
     end
 
@@ -94,13 +105,14 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
 
   describe '#save' do
     let(:application) { create(:claim) }
-    let(:record) { Defendant.new(claim: application, id: Nsm::StartPage::NEW_RECORD) }
+    let(:record) { Defendant.new(defendable: application, id: Nsm::StartPage::NEW_RECORD) }
 
     context 'when no defendants exist' do
       it 'created with position 1 and main true' do
         expect(subject.save).to be_truthy
         expect(application.defendants.first).to have_attributes(
-          full_name: full_name,
+          first_name: first_name,
+          last_name: last_name,
           maat: maat,
           position: 1,
           main: true
@@ -113,14 +125,15 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
 
     context 'when defendants already exist' do
       before do
-        create(:defendant, :valid, claim: application)
+        create(:defendant, :valid, defendable: application)
       end
 
       it 'created with position incremented and main false' do
         expect(subject.save).to be_truthy
         defendant = application.defendants.order(:created_at).last
         expect(defendant).to have_attributes(
-          full_name: full_name,
+          first_name: first_name,
+          last_name: last_name,
           maat: maat,
           position: 2,
           main: false
@@ -132,12 +145,13 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
     end
 
     context 'when editing an existing defendnant' do
-      let(:record) { create(:defendant, :valid, claim: application) }
+      let(:record) { create(:defendant, :valid, defendable: application) }
 
       it 'created with position incremented and main false' do
         expect(subject.save).to be_truthy
         expect(record.reload).to have_attributes(
-          full_name: full_name,
+          first_name: first_name,
+          last_name: last_name,
           maat: maat,
           position: 1,
           main: true

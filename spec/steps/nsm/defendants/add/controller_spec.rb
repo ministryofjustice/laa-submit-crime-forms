@@ -28,7 +28,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsController, type: :controller do
 
     context 'when defendant_id is passed in' do
       context 'and defendant exists' do
-        let(:defendants) { [Defendant.new(full_name: 'Jim', maat: 'AA1', main: true, position: 1)] }
+        let(:defendants) { [Defendant.new(first_name: 'Jim', last_name: 'S', maat: 'AA1', main: true, position: 1)] }
 
         it 'passes the existing defendant to the form' do
           allow(Nsm::Steps::DefendantDetailsForm).to receive(:build)
@@ -42,7 +42,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsController, type: :controller do
       end
 
       context 'and defendant does not exists' do
-        let(:defendants) { [Defendant.new(full_name: 'Jim', maat: 'AA1', main: true, position: 1)] }
+        let(:defendants) { [Defendant.new(first_name: 'Jim', last_name: 'S', maat: 'AA1', main: true, position: 1)] }
 
         it 'redirect to the summary screen' do
           expect do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_11_093801) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_24_153117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -122,14 +122,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_11_093801) do
   end
 
   create_table "defendants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "claim_id", null: false
-    t.string "full_name"
     t.string "maat"
     t.integer "position"
     t.boolean "main", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["claim_id"], name: "index_defendants_on_claim_id"
+    t.uuid "defendable_id", null: false
+    t.string "defendable_type", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.date "date_of_birth"
   end
 
   create_table "disbursements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -172,9 +174,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_11_093801) do
     t.string "ufn"
     t.string "laa_reference"
     t.string "status", default: "pre_draft"
-    t.string "client_first_name"
-    t.string "client_last_name"
-    t.date "client_date_of_birth"
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -243,7 +242,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_11_093801) do
   add_foreign_key "claims", "providers", column: "submitter_id"
   add_foreign_key "claims", "solicitors"
   add_foreign_key "cost_totals", "claims"
-  add_foreign_key "defendants", "claims"
   add_foreign_key "disbursements", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
   add_foreign_key "prior_authority_applications", "firm_offices"

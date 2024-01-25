@@ -1,10 +1,12 @@
 module Nsm
   module Steps
     class DefendantDetailsForm < ::Steps::BaseFormObject
-      attribute :full_name, :string
+      attribute :first_name, :string
+      attribute :last_name, :string
       attribute :maat, :string
 
-      validates :full_name, presence: true
+      validates :first_name, presence: true
+      validates :last_name, presence: true
       validates :maat, presence: true, if: :maat_required?
 
       def maat_required?
