@@ -4,7 +4,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
   before do
     visit provider_saml_omniauth_callback_path
     visit prior_authority_root_path
-    click_on 'Start an application'
+    click_on 'New application'
   end
 
   context 'when application relates to a prison law matter' do
