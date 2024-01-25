@@ -54,5 +54,7 @@ module Decisions
     from('prior_authority/steps/ufn').goto(edit: 'prior_authority/steps/authority_value')
     from('prior_authority/steps/case_contact').goto(show: 'prior_authority/steps/start_page')
     from('prior_authority/steps/client_detail').goto(edit: 'prior_authority/steps/case_contact')
+    from('prior_authority/steps/prior_authority').goto(edit: 'prior_authority/steps/start_page')
+
   end
 end
