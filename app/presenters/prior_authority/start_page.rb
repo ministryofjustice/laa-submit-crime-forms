@@ -16,7 +16,7 @@ module PriorAuthority
         [
           :about_case, [
             'prior_authority/client_detail',
-            'prior_authority/case_hearing_detail'
+            'prior_authority/case_and_hearing_detail',
           ],
         ],
       ].freeze

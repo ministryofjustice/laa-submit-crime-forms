@@ -124,6 +124,10 @@ Rails.application.routes.draw do
         edit_step :ufn
         edit_step :case_contact
         edit_step :client_detail
+        edit_step :case_detail
+        edit_step :hearing_detail
+        edit_step :youth_court
+        edit_step :psychiatric_liaison
       end
     end
 

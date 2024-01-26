@@ -1,26 +1,8 @@
-require 'rails_helper'
+require 'system_helper'
 
 RSpec.describe 'Prior authority applications - add client details' do
   before do
-    visit provider_saml_omniauth_callback_path
-    visit prior_authority_root_path
-
-    click_on 'Start an application'
-    choose 'Yes'
-    click_on 'Save and continue'
-
-    choose 'No'
-    click_on 'Save and continue'
-
-    fill_in 'What is your unique file number?', with: '000000/123'
-    click_on 'Save and continue'
-
-    click_on 'Case contact'
-    fill_in 'Full name', with: 'John Doe'
-    fill_in 'Email address', with: 'john@does.com'
-    fill_in 'Firm name', with: 'LegalCorp Ltd'
-    fill_in 'Firm account number', with: 'A12345'
-    click_on 'Save and come back later'
+    fill_in_until_step(:your_application_progress)
   end
 
   it 'allows client detail creation' do

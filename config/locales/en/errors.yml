@@ -55,6 +55,19 @@ en:
               blank: Enter the full contact name
             contact_email:
               blank: Enter the contact email address
+        prior_authority/steps/case_detail_form:
+          attributes:
+            main_offence:
+              blank: Enter the main offence
+            rep_order_date: *shared_date_errors
+            client_maat_number:
+              blank: Enter the MAAT number
+            client_detained:
+              inclusion: Select yes if your client is detained
+            client_detained_prison:
+              blank: Enter the name of the prison
+            subject_to_poca:
+              inclusion: Select yes if this case is subject to POCA (Proceeds of Crime Act 2002)?
         prior_authority/steps/client_detail_form:
           attributes:
             first_name:
@@ -80,6 +93,13 @@ en:
               blank: Enter a firm name
             account_number:
               blank: Enter an account number
+        prior_authority/steps/hearing_detail_form:
+          attributes:
+            next_hearing_date: *shared_date_errors
+            plea:
+              inclusion: Select the likely or actual plea
+            court_type:
+              inclusion: Select the type of court
         prior_authority/steps/case_contact/solicitor_form:
           attributes: &contact_form
             contact_full_name:
@@ -95,11 +115,21 @@ en:
           attributes:
             prison_law:
               inclusion: Select yes if this is a Prison Law matter
+        prior_authority/steps/psychiatric_liaison_form:
+          attributes:
+            psychiatric_liaison:
+              inclusion: Select yes if you have accessed the psychiatric liason service
+            psychiatric_liaison_reason_not:
+              blank: Explain why you did not access the psychiatric liaison service
         prior_authority/steps/ufn_form:
           attributes:
             ufn:
               blank: Enter your unique file number for this application
               invalid: UFN must be a 9-digit number
+        prior_authority/steps/youth_court_form:
+          attributes:
+            youth_court:
+              inclusion: Select yes if this is a youth court matter
         nsm/steps/claim_type_form:
           attributes:
             ufn:
