@@ -15,6 +15,7 @@ module Decisions
     NSM_EQUALITY = 'nsm/steps/equality'.freeze
 
     PRIOR_AUTHORITY_START_PAGE = 'prior_authority/steps/start_page'.freeze
+    PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY = 'prior_authority/steps/primary_quote_summary'.freeze
 
     from(:claim_type).goto(show: 'nsm/steps/start_page')
     # start_page to firm_details is a hard coded link as show page
@@ -113,7 +114,9 @@ module Decisions
 
     # about the request
     from(:primary_quote).goto(edit: 'prior_authority/steps/service_cost')
-    from(:service_cost).goto(show: 'prior_authority/steps/primary_quote_summary')
+    from(:service_cost).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
     from(:reason_why).goto(show: PRIOR_AUTHORITY_START_PAGE)
+    from(:travel_detail).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
+    from(:delete_travel).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
   end
 end

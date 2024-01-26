@@ -134,6 +134,8 @@ Rails.application.routes.draw do
         edit_step :primary_quote
         edit_step :service_cost
         show_step :primary_quote_summary
+        edit_step :travel_detail
+        edit_step :delete_travel
         upload_step :reason_why
       end
     end

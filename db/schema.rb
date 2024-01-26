@@ -192,6 +192,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_095033) do
     t.string "psychiatric_liaison_reason_not"
     t.boolean "next_hearing"
     t.boolean "prior_authority_granted"
+    t.integer "travel_time"
+    t.decimal "travel_cost_per_hour", precision: 10, scale: 2
+    t.text "travel_cost_reason"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
