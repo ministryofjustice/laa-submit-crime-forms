@@ -111,6 +111,11 @@ en:
               blank: Enter the email address of the contact
               invalid: Enter a valid email address
           summary: *contact_form
+        prior_authority/steps/next_hearing_form:
+          attributes:
+            next_hearing:
+              inclusion: Select yes if you know the date of the next hearing
+            next_hearing_date: *shared_date_errors
         prior_authority/steps/prison_law_form:
           attributes:
             prison_law:

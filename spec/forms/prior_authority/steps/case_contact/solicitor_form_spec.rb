@@ -25,7 +25,7 @@ RSpec.describe PriorAuthority::Steps::CaseContact::SolicitorForm do
       let(:contact_full_name) { '' }
       let(:contact_email) { 'joe.bloggs@legalcorp.com' }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:contact_full_name, :blank)).to be(true)
         expect(form.errors.messages[:contact_full_name]).to include('Enter the full name of the contact')
@@ -36,7 +36,7 @@ RSpec.describe PriorAuthority::Steps::CaseContact::SolicitorForm do
       let(:contact_full_name) { 'Joe' }
       let(:contact_email) { 'joe.bloggs@legalcorp.com' }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:contact_full_name, :invalid)).to be(true)
         expect(form.errors.messages[:contact_full_name])
@@ -48,7 +48,7 @@ RSpec.describe PriorAuthority::Steps::CaseContact::SolicitorForm do
       let(:contact_full_name) { 'Joe Bloggs' }
       let(:contact_email) { '' }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:contact_email, :blank)).to be(true)
         expect(form.errors.messages[:contact_email]).to include('Enter the email address of the contact')
@@ -59,7 +59,7 @@ RSpec.describe PriorAuthority::Steps::CaseContact::SolicitorForm do
       let(:contact_full_name) { 'Joe' }
       let(:contact_email) { 'joe.bloggsatlegalcorp.com' }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:contact_email, :invalid)).to be(true)
         expect(form.errors.messages[:contact_email]).to include('Enter a valid email address')

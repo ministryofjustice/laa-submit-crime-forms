@@ -53,6 +53,13 @@ en:
             central_criminal_court: Central Criminal Court
             crown_court: Crown Court (excluding Central Criminal Court)
           page_title: Hearing details
+      next_hearing:
+        edit:
+          caption: 2. About the case
+          next_hearing: Do you know the date of the next hearing?
+          next_hearing_date: Date of next hearing
+          next_hearing_date_hint: For example, 27 3 2024
+          page_title: Case and hearing details
       ufn:
         edit:
           hint: For example 310223/001

@@ -43,7 +43,7 @@ en:
           introduction: 'If you leave this page before submitting, you can return later to complete the application.'
           headings:
             application_details: 'Application details'
-            case_contact: '1. Case contact'
+            case_contact: '1. Contact details'
             client_detail: 2. About the case
           sections:
             ufn: 'Unique file number'

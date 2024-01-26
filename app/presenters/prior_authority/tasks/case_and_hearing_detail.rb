@@ -4,7 +4,11 @@ module PriorAuthority
       PREVIOUS_TASK = Ufn
 
       def path
-        edit_prior_authority_steps_case_detail_path(application)
+        if application.prison_law?
+          edit_prior_authority_steps_next_hearing_path(application)
+        else
+          edit_prior_authority_steps_case_detail_path(application)
+        end
       end
 
       def completed?
@@ -18,10 +22,12 @@ module PriorAuthority
 
       def forms_for_completion_hash
         {
+          nh: { form: ::PriorAuthority::Steps::NextHearingForm,
+                required: application.prison_law? },
           cd: { form: ::PriorAuthority::Steps::CaseDetailForm,
-                required: true },
+                required: !application.prison_law? },
           hd: { form: ::PriorAuthority::Steps::HearingDetailForm,
-                required: true },
+                required: !application.prison_law? },
           yc: { form: ::PriorAuthority::Steps::YouthCourtForm,
                 required: youth_court_applicable? },
           pl: { form: ::PriorAuthority::Steps::PsychiatricLiaisonForm,
