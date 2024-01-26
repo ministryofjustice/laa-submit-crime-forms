@@ -37,7 +37,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec_junit_formatter'
-  gem 'rspec-rails', '~> 6.1.0'
+  gem 'rspec-rails', '~> 6.1.1'
 end
 
 group :development do
