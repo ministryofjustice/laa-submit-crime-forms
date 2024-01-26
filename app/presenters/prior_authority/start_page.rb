@@ -9,7 +9,7 @@ module PriorAuthority
     class TaskList < TaskList::Collection
       SECTIONS = [
         [
-          :case_contact, [
+          :contact_details, [
             'prior_authority/case_contact'
           ],
         ],
