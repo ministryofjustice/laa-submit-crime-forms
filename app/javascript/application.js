@@ -22,12 +22,13 @@ const $acElements = document.querySelectorAll('[data-module="accessible-autocomp
 if ($acElements) {
   for (let i = 0; i < $acElements.length; i++) {
     const name = $acElements[i].getAttribute('data-name')
-
+    const autoselect = trueFalseToBoolean($acElements[i].getAttribute('data-autoselect'))
     accessibleAutocomplete.enhanceSelectElement({
       selectElement: $acElements[i],
       defaultValue: '',
       showNoOptionsFound: name === null,
-      name: name
+      name: name,
+      autoselect: autoselect
     })
   }
 }
@@ -42,3 +43,15 @@ if ($headerNavigation) {
 $(document).on('turbo:render', function () {
   initAll()
 })
+
+function trueFalseToBoolean(string){
+  if(string === "true"){
+    return true
+  }
+  else if( string === "false" ){
+    return false
+  }
+  else{
+    return false
+  }
+}
