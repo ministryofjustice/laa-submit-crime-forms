@@ -8,6 +8,10 @@
     <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
 
     <%= step_form @form_object do |form| %>
+      <%= form.govuk_collection_select :primary_service, QuoteService.all, :id, :description,
+                              data: { module: 'accessible-autocomplete' }, width: 20,
+                              options: { include_blank: true }, label: { size: 's' } %>
+
       <%= form.continue_button(secondary: false) %>
     <% end %>
   </div>

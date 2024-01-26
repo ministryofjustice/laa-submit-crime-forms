@@ -1,9 +1,9 @@
 module PriorAuthority
   module Steps
     class PrimaryQuoteForm < ::Steps::BaseFormObject
-      attribute :primary_service, :value_object, source: PriorAuthorityServices
+      attribute :primary_service, :string
 
-      validates :primary_service, inclusionL { in: PriorAuthorityServices.values }
+      validates :primary_service, inclusion: { in: QuoteService.all }
 
       private
 
