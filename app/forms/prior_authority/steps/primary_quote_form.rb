@@ -3,7 +3,7 @@ module PriorAuthority
     class PrimaryQuoteForm < ::Steps::BaseFormObject
       attribute :primary_service, :string
 
-      validates :primary_service, presence: true, inclusion: { in: QuoteService.all }
+      validates :primary_service, presence: true
 
       private
 
