@@ -7,7 +7,7 @@ module PriorAuthority
       attribute :postcode, :string
 
       validates :service_name, presence: true
-      validates :contact_full_name, presence: true
+      validates :contact_full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
       validates :organisation, presence: true
       validates :postcode, presence: true, uk_postcode: true
 
