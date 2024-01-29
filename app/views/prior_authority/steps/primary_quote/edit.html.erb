@@ -10,7 +10,7 @@
     <%= step_form @form_object do |form| %>
       <%= form.govuk_collection_select :primary_service, QuoteService.all, :description, :description,
                               data: { module: 'accessible-autocomplete', autoselect: false }, width: 20,
-                              options: { include_blank: true, autoselect: false }, label: { size: 's' } %>
+                              options: { include_blank: true, autoselect: false }, label: { size: 'm' }, hint: { size: 's', text: t('.primary_service_hint')} %>
 
       <%= form.continue_button(secondary: false) %>
     <% end %>

@@ -36,3 +36,6 @@ en:
         edit:
           page_title: Primary quote
           caption: 3. About the request
+          primary_service_hint: |
+           Enter the name of the service you require,
+           or select one from the suggestions that appear when you start to enter the name.
