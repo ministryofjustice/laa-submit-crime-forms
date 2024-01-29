@@ -7,7 +7,7 @@
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
     <%= step_form @form_object do |f| %>
       <%= suggestion_select f, :main_offence, MainOffence.all, :name, :name, 'offence-autocomplete', width: 20,
-                              options: { include_blank: true }, label: { size: 's' } %>
+                              options: { include_blank: true }, data: { autoselect: false }, label: { size: 's' } %>
       <%= f.govuk_date_field :main_offence_date, maxlength_enabled: true, legend: { size: 's' } %>
 
       <% @form_object.boolean_fields.each do |field| %>

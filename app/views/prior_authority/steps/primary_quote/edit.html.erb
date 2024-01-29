@@ -10,7 +10,7 @@
     <%= step_form @form_object do |form| %>
       <%= form.govuk_collection_select :service_name, QuoteService.all, :description, :description,
                               data: { module: 'accessible-autocomplete', autoselect: false }, width: 20,
-                              options: { include_blank: true, autoselect: false }, label: { size: 'm' }, hint: { size: 's', text: t('.service_name_hint')} %>
+                              options: { include_blank: true }, label: { size: 'm' }, hint: { size: 's', text: t('.service_name_hint')} %>
       <h2 class="govuk-heading-m"><%= t(".service_details") %></h2>
       <%= form.govuk_text_field :contact_full_name, label: { text: t(".contact_full_name"), size: 's' } %>
       <%= form.govuk_text_field :organisation, label: { text: t(".organisation"), size: 's' } %>
