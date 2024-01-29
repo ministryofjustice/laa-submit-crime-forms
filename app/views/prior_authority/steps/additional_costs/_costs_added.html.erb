@@ -1,0 +1,20 @@
+<% title_string = t('.page_title',
+                    number: @form_object.costs_added,
+                    cost: t('.cost').pluralize(@form_object.costs_added)) %>
+<% title title_string %>
+<h1 class="govuk-heading-xl"><%= title_string %></h1>
+
+<% @form_object.additional_costs.each do |additional_cost| %>
+  <%= render 'cost_summary', additional_cost: additional_cost, links: true %>
+<% end %>
+
+<%= govuk_error_summary(@form_object) %>
+<%= form.govuk_collection_radio_buttons(
+  :additional_costs_still_to_add,
+  YesNoAnswer.radio_options,
+  :value,
+  :label,
+  value: nil,
+  inline: true,
+  legend: { text: t('.question'), size: 's' }
+) %>

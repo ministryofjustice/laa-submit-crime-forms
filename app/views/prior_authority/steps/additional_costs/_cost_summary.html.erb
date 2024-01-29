@@ -1,0 +1,55 @@
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title"><%= t('.additional_cost') %></h2>
+    <% if links %>
+      <ul class="govuk-summary-card__actions">
+        <li class="govuk-summary-card__action">
+          <%= govuk_link_to(t('.change'), edit_prior_authority_steps_additional_cost_detail_path(current_application, additional_cost.id)) %>
+          <span class="govuk-visually-hidden"> (<%= t('.additional_cost') %>)</span>
+        </li>
+        <li class="govuk-summary-card__action">
+          <%= govuk_link_to(t('.delete'), confirm_delete_prior_authority_steps_additional_cost_detail_path(current_application, additional_cost.id)) %>
+          <span class="govuk-visually-hidden"> (<%= t('.additional_cost') %>)</span>
+        </li>
+      </ul>
+    <% end %>
+  </div>
+  <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= t('.name') %></dt>
+        <dd class="govuk-summary-list__value"><%= additional_cost.name %></dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= t('.description') %></dt>
+        <dd class="govuk-summary-list__value"><%= additional_cost.description %></dd>
+      </div>
+    </dl>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <% if additional_cost.per_item? %>
+            <th scope="col" class="govuk-table__header"><%= t('.items') %></th>
+            <th scope="col" class="govuk-table__header"><%= t('.cost_per_item') %></th>
+          <% else %>
+            <th scope="col" class="govuk-table__header"><%= t('.period') %></th>
+            <th scope="col" class="govuk-table__header"><%= t('.cost_per_hour') %></th>
+          <% end %>
+          <th scope="col" class="govuk-table__header"><%= t('.total') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <% if additional_cost.per_item? %>
+            <td class="govuk-table__cell"><%= additional_cost.items %></td>
+            <td class="govuk-table__cell"><%= NumberTo.pounds(additional_cost.cost_per_item) %></td>
+          <% else %>
+             <td class="govuk-table__cell"><%= format_period(additional_cost.period) %></td>
+             <td class="govuk-table__cell"><%= NumberTo.pounds(additional_cost.cost_per_hour) %></td>
+          <% end %>
+          <td class="govuk-table__cell"><%= additional_cost.formatted_total_cost %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

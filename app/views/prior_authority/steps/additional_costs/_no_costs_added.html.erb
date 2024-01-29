@@ -1,0 +1,11 @@
+<% title t('.page_title') %>
+
+<%= govuk_error_summary(@form_object) %>
+<%= form.govuk_collection_radio_buttons(
+  :additional_costs_still_to_add,
+  YesNoAnswer.radio_options,
+  :value,
+  :label,
+  legend: { text: t('.page_title'), size: 'xl' },
+  hint: { text: t('.hint') }
+) %>

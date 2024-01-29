@@ -1,0 +1,11 @@
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= step_form @form_object do |form| %>
+      <span class="govuk-caption-xl"><%= t(".caption") %></span>
+      <%= render(@form_object.any_costs_added? ? 'costs_added' : 'no_costs_added', form:) %>
+      <%= form.continue_button %>
+    <% end %>
+  </div>
+</div>

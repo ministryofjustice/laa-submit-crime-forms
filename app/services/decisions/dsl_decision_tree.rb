@@ -55,6 +55,8 @@ module Decisions
         { controller: hash.delete(:show), action: :show, id: application }.merge(hash)
       elsif hash[:index]
         { controller: hash.delete(:index), action: :index }.merge(hash)
+      elsif hash[:new]
+        { controller: hash.delete(:new), action: :new }.merge(hash)
       else
         raise "No known verbs found in #{hash.inspect}"
       end

@@ -175,3 +175,45 @@ en:
           total: Total
           yes_delete: Yes, delete it
           no_delete: No, do not delete it
+      additional_costs:
+        edit:
+          caption: 3. About the request
+        no_costs_added:
+          page_title: Do you want to add additional costs?
+          hint: For example, other costs such as extra fees, travel mileage, parking charges or travel fares.
+        costs_added:
+          page_title: You've added %{number} additional %{cost}
+          cost: cost
+          question: Do you want to add another additional cost?
+        cost_summary:
+          additional_cost: Additional cost
+          change: Change
+          delete: Delete
+          name: Description
+          description: Why required
+          items: Items
+          cost_per_item: Cost per hour
+          period: Time
+          cost_per_hour: Rate per hour
+          total: Total
+      additional_cost_details:
+        edit:
+          caption: 3. About the request
+          page_title: Additional cost
+          name: What is the additional cost for?
+          name_hint: Only add one type of cost. Further costs can be added later.
+          description: Why is the additional cost required?
+          unit_type: How are you being charged
+          per_item: Charged per item
+          per_hour: Charged by the hour
+          items: Number of items
+          cost_per_item: What is the cost per item?
+          cost_per_item_hint: Costs should be exclusive of VAT
+          period: Time
+          cost_per_hour: What is the hourly cost?
+          cost_per_hour_hint: Costs should be exclusive of VAT
+          total_cost: Total cost
+        confirm_delete:
+          page_title: Are you sure you want to delete this additional cost?
+          yes_delete: Yes, delete it
+          no_delete: No, do not delete it
