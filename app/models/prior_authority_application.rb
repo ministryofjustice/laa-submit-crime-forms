@@ -5,8 +5,8 @@ class PriorAuthorityApplication < ApplicationRecord
   has_one :defendant, dependent: :destroy, as: :defendable
   has_many :quote, dependent: :destroy
   has_one :primary_quote, lambda {
-                             where(primary: true)
-                           }, class_name: 'Quote', dependent: :destroy
+                            where(primary: true)
+                          }, class_name: 'Quote', dependent: :destroy, inverse_of: :prior_authority_application
 
   attribute :prison_law, :boolean
   attribute :ufn, :string

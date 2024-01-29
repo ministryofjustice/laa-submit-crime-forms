@@ -1,5 +1,6 @@
+# rubocop:disable Metrics/ClassLength
 QuoteService = Struct.new(:id, :description) do
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def self.all
     @all ||= [
       new('SVCACC', 'Accountant'),
@@ -110,7 +111,7 @@ QuoteService = Struct.new(:id, :description) do
       new('SVCINT042022', 'Intermediary submitted after 1st April 2022'),
     ]
   end
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   def self.description_by_id(matter_id)
     all.find { |item| item.id == matter_id }.description
@@ -120,3 +121,4 @@ QuoteService = Struct.new(:id, :description) do
     "#{id} - #{description}"
   end
 end
+# rubocop:enable Metrics/ClassLength
