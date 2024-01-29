@@ -87,8 +87,8 @@ module Decisions
     from(:ufn).goto(show: 'prior_authority/steps/start_page')
 
     # prior authority draft application steps
-    from(:case_contact).goto(edit: 'prior_authority/steps/client_detail')
-    from(:client_detail).goto(edit: 'prior_authority/steps/primary_quote') # TODO: move to case and hearing details
+    from(:case_contact).goto(show: 'prior_authority/steps/start_page')
+    from(:client_detail).goto(show: 'prior_authority/steps/start_page') # TODO: move to case and hearing details
     from(:primary_quote).goto(show: 'prior_authority/steps/start_page')
   end
 end
