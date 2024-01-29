@@ -94,6 +94,7 @@ module Decisions
       .when(-> { application.prison_law? })
       .goto(edit: 'prior_authority/steps/next_hearing')
       .goto(edit: 'prior_authority/steps/case_detail')
+    from(:primary_quote).goto(show: 'prior_authority/steps/start_page')
 
     # prison law flow
     from(:next_hearing).goto(show: 'prior_authority/steps/start_page')
