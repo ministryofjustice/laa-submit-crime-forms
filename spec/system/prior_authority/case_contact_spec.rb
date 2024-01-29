@@ -19,7 +19,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
 
     click_on 'Case contact'
     click_on 'Save and continue'
-    expect(page).to have_title 'Your application progress'
+    expect(page).to have_title 'Client details'
   end
 
   it 'does validations' do
