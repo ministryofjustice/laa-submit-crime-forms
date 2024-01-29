@@ -39,3 +39,4 @@ en:
           primary_service_hint: |
            Enter the name of the service you require,
            or select one from the suggestions that appear when you start to enter the name.
+          service_details: Service details

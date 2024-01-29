@@ -11,7 +11,7 @@
       <%= form.govuk_collection_select :primary_service, QuoteService.all, :description, :description,
                               data: { module: 'accessible-autocomplete', autoselect: false }, width: 20,
                               options: { include_blank: true, autoselect: false }, label: { size: 'm' }, hint: { size: 's', text: t('.primary_service_hint')} %>
-
+      <h2 class="govuk-heading-m"><%= t(".service_details") %></h2>
       <%= form.continue_button(secondary: false) %>
     <% end %>
   </div>
