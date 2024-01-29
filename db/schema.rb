@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_25_164046) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -177,7 +177,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_25_164046) do
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "primary_service"
+    t.string "main_offence"
+    t.date "rep_order_date"
+    t.string "client_maat_number"
+    t.boolean "client_detained"
+    t.string "client_detained_prison"
+    t.boolean "subject_to_poca"
+    t.date "next_hearing_date"
+    t.string "plea"
+    t.string "court_type"
+    t.boolean "youth_court"
+    t.boolean "psychiatric_liaison"
+    t.string "psychiatric_liaison_reason_not"
+    t.boolean "next_hearing"
+    t.boolean "hourly_travel_costs"
+    t.integer "travel_time"
+    t.decimal "travel_cost_per_hour", precision: 10, scale: 2
+    t.text "travel_cost_reason"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
@@ -201,6 +217,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_25_164046) do
     t.integer "failed_attempts", default: 0, null: false
     t.datetime "locked_at"
     t.index ["auth_provider", "uid"], name: "index_providers_on_auth_provider_and_uid", unique: true
+  end
+
+  create_table "quotes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "service_name"
+    t.string "contact_full_name"
+    t.string "organisation"
+    t.string "postcode"
+    t.boolean "primary", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "prior_authority_application_id", null: false
+    t.index ["prior_authority_application_id"], name: "index_quotes_on_prior_authority_application_id"
   end
 
   create_table "solicitors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -247,6 +275,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_25_164046) do
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
   add_foreign_key "prior_authority_applications", "firm_offices"
   add_foreign_key "prior_authority_applications", "solicitors"
+  add_foreign_key "quotes", "prior_authority_applications"
   add_foreign_key "solicitors", "solicitors", column: "previous_id"
   add_foreign_key "supporting_evidence", "claims"
   add_foreign_key "work_items", "claims"

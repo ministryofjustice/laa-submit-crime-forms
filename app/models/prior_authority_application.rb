@@ -3,6 +3,10 @@ class PriorAuthorityApplication < ApplicationRecord
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
   has_one :defendant, dependent: :destroy, as: :defendable
+  has_many :quote, dependent: :destroy
+  has_one :primary_quote, lambda {
+                             where(primary: true)
+                           }, class_name: 'Quote', dependent: :destroy
 
   attribute :prison_law, :boolean
   attribute :ufn, :string
