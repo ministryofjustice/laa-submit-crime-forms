@@ -25,7 +25,7 @@ RSpec.describe PriorAuthority::Steps::CaseContact::FirmDetailForm do
       let(:name) { '' }
       let(:account_number) { 'anything' }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:name, :blank)).to be(true)
         expect(form.errors.messages[:name]).to include('Enter a firm name')
@@ -36,7 +36,7 @@ RSpec.describe PriorAuthority::Steps::CaseContact::FirmDetailForm do
       let(:name) { 'anything' }
       let(:account_number) { '' }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:account_number, :blank)).to be(true)
         expect(form.errors.messages[:account_number]).to include('Enter an account number')

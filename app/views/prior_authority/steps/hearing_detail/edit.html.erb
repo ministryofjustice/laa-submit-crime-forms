@@ -1,0 +1,28 @@
+<% title t('.page_title') %>
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <span class="govuk-caption-xl"><%= t(".caption") %></span>
+    <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
+
+    <%= step_form @form_object do |form| %>
+      <%= form.govuk_date_field :next_hearing_date, legend: { text: t(".next_hearing_date"), size: 's' }, hint: { text: t(".next_hearing_date_hint") } %>
+
+      <%= form.govuk_radio_buttons_fieldset :plea, legend: { text: t('.plea'), size: 's', class: 'govuk-!-margin-bottom-6' } do %>
+        <% form.object.pleas.each_with_index do |plea, index| %>
+          <%= form.govuk_radio_button :plea, plea.to_s, label: { text: t(".plea_description.#{plea}") }, link_errors: index.zero? %>
+        <% end %>
+      <% end %>
+
+      <%= form.govuk_radio_buttons_fieldset :court_type, legend: { text: t('.court_type'), size: 's', class: 'govuk-!-margin-bottom-6' } do %>
+        <% form.object.court_types.each_with_index do |court_type, index| %>
+          <%= form.govuk_radio_button :court_type, court_type.to_s, label: { text: t(".court_type_description.#{court_type}") }, link_errors: index.zero? %>
+        <% end %>
+      <% end %>
+
+      <%= form.continue_button %>
+    <% end %>
+  </div>
+</div>

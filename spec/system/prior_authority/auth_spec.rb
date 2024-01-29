@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'system_helper'
 
 RSpec.describe 'Prior authority authentication' do
   context 'when user is not signed in' do

@@ -193,7 +193,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
     t.boolean "hourly_travel_costs"
     t.integer "travel_time"
     t.decimal "travel_cost_per_hour", precision: 10, scale: 2
-    t.text "travel_cost_reason"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"

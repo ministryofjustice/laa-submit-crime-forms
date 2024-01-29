@@ -86,9 +86,27 @@ module Decisions
     from(:authority_value).goto(edit: 'prior_authority/steps/ufn')
     from(:ufn).goto(show: 'prior_authority/steps/start_page')
 
-    # prior authority draft application steps
-    from(:case_contact).goto(show: 'prior_authority/steps/start_page')
-    from(:client_detail).goto(show: 'prior_authority/steps/start_page') # TODO: move to case and hearing details
-    from(:primary_quote).goto(show: 'prior_authority/steps/start_page')
+    # ---------------------------------
+    # prior authority application steps
+    # ---------------------------------
+    from(:case_contact).goto(edit: 'prior_authority/steps/client_detail')
+    from(:client_detail)
+      .when(-> { application.prison_law? })
+      .goto(edit: 'prior_authority/steps/next_hearing')
+      .goto(edit: 'prior_authority/steps/case_detail')
+
+    # prison law flow
+    from(:next_hearing).goto(show: 'prior_authority/steps/start_page')
+
+    # non-prison law flow
+    from(:case_detail).goto(edit: 'prior_authority/steps/hearing_detail')
+    from(:hearing_detail)
+      .when(-> { application.court_type == PriorAuthority::CourtTypeOptions::MAGISTRATE.to_s })
+      .goto(edit: 'prior_authority/steps/youth_court')
+      .when(-> { application.court_type == PriorAuthority::CourtTypeOptions::CENTRAL_CRIMINAL.to_s })
+      .goto(edit: 'prior_authority/steps/psychiatric_liaison')
+      .goto(show: 'prior_authority/steps/start_page')
+    from(:youth_court).goto(show: 'prior_authority/steps/start_page')
+    from(:psychiatric_liaison).goto(show: 'prior_authority/steps/start_page')
   end
 end

@@ -4,7 +4,7 @@ en:
     heading:
       application_detail: Application details
       about_case: About the case
-      case_contact: Case contact
+      contact_details: Contact details
       what: What you are claiming
       about_you: About you
       case: About the case
@@ -16,7 +16,7 @@ en:
     task:
       prior_authority/ufn: Unique file number
       prior_authority/case_contact: Case contact
-      prior_authority/case_hearing_detail: Case and hearing details
+      prior_authority/case_and_hearing_detail: Case and hearing details
       prior_authority/client_detail: Client details
       prior_authority/primary_quote: Primary quote
       nsm/claim_type:
