@@ -1,6 +1,6 @@
 module PriorAuthority
   module Steps
-    class WhyPriorAuthorityForm < ::Steps::BaseFormObject
+    class ReasonWhyForm < ::Steps::BaseFormObject
       attribute :reason_why, :string
       validates :reason_why, presence: true
 

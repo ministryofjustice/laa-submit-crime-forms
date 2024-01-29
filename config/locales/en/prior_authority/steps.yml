@@ -80,3 +80,26 @@ en:
           caption: 2. About the case
           legend: Is this a youth court matter?
           page_title: Is this a youth court matter?
+      reason_why:
+        edit:
+          caption: 2. About the request
+          page_title: Why is prior authority required?
+          reason_why_hint_html: |
+            <p>Provide a summary of:</p>
+            <ul>
+            <li>Why you are requesting this authority</li>
+            <li>Details of the prosecution case</li>
+            <li>The defence or mitigation</li>
+            </ul>
+            <p>If you do not include these, we may have to return your application to request more information, which will delay our decision.</p>
+          file_upload:
+            heading: Upload files
+          action: Action
+          status: Status
+          file_name: File Name
+          uploading_docs: Documents waiting to be saved
+          upload_files: Upload files
+          uploaded_files: Uploaded files
+          upload_file: Upload file
+          supporting_documentation: Supporting documentation (optional)
+          supporting_documentation_caption: Attach copies of any supporting documentation. The maximum file size is 70MB. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.

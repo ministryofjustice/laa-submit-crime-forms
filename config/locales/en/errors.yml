@@ -135,6 +135,10 @@ en:
           attributes:
             youth_court:
               inclusion: Select yes if this is a youth court matter
+        prior_authority/steps/reason_why_form:
+          attributes:
+            reason_why:
+              blank: Enter why prior authority is required
         nsm/steps/claim_type_form:
           attributes:
             ufn:

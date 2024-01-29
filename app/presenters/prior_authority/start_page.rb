@@ -21,7 +21,7 @@ module PriorAuthority
         ],
         [
           :about_request, [
-            :why_prior_authority
+            'prior_authority/reason_why'
           ]
         ]
       ].freeze

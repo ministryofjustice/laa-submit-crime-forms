@@ -1,0 +1,56 @@
+<%= javascript_import_module_tag 'file-upload' %>
+
+<% title t('.page_title') %>
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <span class="govuk-caption-xl"><%= t(".caption") %></span>
+    <%= step_form @form_object do |form| %>
+      <%= form.govuk_text_area :reason_why,  max_chars: 2000, rows: 16, label: { size: 'xl', text: t(".page_title") }, hint: { text: t('.reason_why_hint_html')}  %>
+
+      <h1 class="govuk-heading-m"><%= t(".supporting_documentation") %></h1>
+      <span class="govuk-caption-m govuk-!-margin-bottom-8"><%= t(".supporting_documentation_caption") %></span>
+
+      <div class="moj-multi-file-upload">
+        <div class="moj-multi-file-upload__upload">
+          <%= form.govuk_file_field :documents, label: { text: t('.file_upload.heading'), size: 'm' }, class: 'moj-multi-file-upload__input', multiple: true, accept: "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/rtf,image/jpeg,image/bmp,image/png,image/tiff,application/pdf" %>
+
+          <button class="govuk-button govuk-button--secondary moj-multi-file-upload__button" data-module="govuk-button">
+            <%= t('.upload_file') %>
+          </button>
+        </div>
+        <%# Uploaded files section %>
+        <div class="moj-multi-file__uploaded-files <%= 'moj-hidden' unless @supporting_documents.count > 0 %>">
+          <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m">Uploaded files</caption>
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">File name</th>
+              <th scope="col" class="govuk-table__header">Action</th>
+            </tr>
+            </thead>
+            <%# Uploaded file list   %>
+            <tbody class="govuk-table__body moj-multi-file-upload__list">
+            <% @supporting_documents.each_with_index do |record, index| %>
+              <tr class="govuk-table__row moj-multi-file-upload__row" id="<%= index %>" >
+                <td class="govuk-table__cell moj-multi-file-upload__filename">
+                  <span class="moj-multi-file-upload__filename"><%= record.file_name %></span>
+                  <span class="moj-multi-file-upload__progress">100%</span></td>
+                <td class="govuk-table__cell moj-multi-file-upload__actions">
+                  <a class="remove-link moj-multi-file-upload__delete" href="#0" value="<%= record.id %>">Delete
+                    <span class="govuk-visually-hidden"><%= record.id %></span>
+                  </a>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <%= form.continue_button %>
+    <% end %>
+  </div>
+</div>

@@ -11,7 +11,11 @@ class Claim < ApplicationRecord
   has_many :disbursements, lambda {
                              order(:disbursement_date, :disbursement_type, :id)
                            }, dependent: :destroy, inverse_of: :claim
-  has_many :supporting_evidence, -> { order(:created_at, :file_name) }, dependent: :destroy, inverse_of: :claim
+  has_many :supporting_evidence, -> { order(:created_at, :file_name) },
+           dependent: :destroy,
+           inverse_of: :documentable,
+           class_name: 'SupportingDocument',
+           as: :documentable
 
   scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
 
