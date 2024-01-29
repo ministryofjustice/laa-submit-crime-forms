@@ -15,11 +15,8 @@ module Decisions
     NSM_EQUALITY = 'nsm/steps/equality'.freeze
 
     PRIOR_AUTHORITY_START_PAGE = 'prior_authority/steps/start_page'.freeze
-<<<<<<< HEAD
     PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY = 'prior_authority/steps/primary_quote_summary'.freeze
-=======
     PRIOR_AUTHORITY_ADDITIONAL_COSTS = 'prior_authority/steps/additional_costs'.freeze
->>>>>>> 13405ea8 (Additional cost screens)
 
     from(:claim_type).goto(show: 'nsm/steps/start_page')
     # start_page to firm_details is a hard coded link as show page
