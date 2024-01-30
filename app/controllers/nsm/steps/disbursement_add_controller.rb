@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class DisbursementAddController < ::Steps::BaseStepController
+    class DisbursementAddController < Nsm::Steps::BaseController
       def edit
         @form_object = DisbursementAddForm.build(
           current_application

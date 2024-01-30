@@ -2,6 +2,8 @@
 module Providers
   class Gatekeeper
     ANY_SERVICE = :any
+    PAA = :crm4
+    NSM = :crm7
 
     attr_reader :auth_info
 
@@ -15,9 +17,9 @@ module Providers
 
     def office_enrolled?(service: ANY_SERVICE)
       if service == ANY_SERVICE
-        auth_info.office_codes.any? { allowed_office_codes[_1] }
+        auth_info.office_codes.any? { allowed_office_codes[_1.to_sym] }
       else
-        auth_info.office_codes.any? { allowed_office_codes[_1]&.include?(service.to_s) }
+        auth_info.office_codes.any? { allowed_office_codes[_1.to_sym].include?(service.to_s) }
       end
     end
 

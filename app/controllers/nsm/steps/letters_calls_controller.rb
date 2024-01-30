@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class LettersCallsController < ::Steps::BaseStepController
+    class LettersCallsController < Nsm::Steps::BaseController
       def edit
         @form_object = LettersCallsForm.build(
           current_application

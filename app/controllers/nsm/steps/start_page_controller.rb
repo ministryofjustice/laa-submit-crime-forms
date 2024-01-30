@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class StartPageController < ::Steps::BaseStepController
+    class StartPageController < Nsm::Steps::BaseController
       def show
         return redirect_to nsm_steps_view_claim_path(current_application.id) unless current_application.draft?
 
