@@ -1,7 +1,8 @@
 require 'omniauth'
 require Rails.root.join('app/lib/laa_portal/saml_strategy')
 
-module Memory
+# This is used to avoid the default auth hash being cached between test cases
+module AuthMemory
   def self.put(val)
     @val = val
   end
@@ -26,8 +27,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     # * info[office_codes] => ["1A123B", "2A555X"]
     if FeatureFlags.omniauth_test_mode.enabled?
       config.before_callback_phase do |env|
-        Memory.put(env['omniauth.auth'].dup)
-        env['omniauth.auth'] = Memory.get.merge(
+        AuthMemory.put(env['omniauth.auth'].dup)
+        env['omniauth.auth'] = AuthMemory.get.merge(
           Rack::Utils.parse_nested_query(env['QUERY_STRING'])
         )
       end
