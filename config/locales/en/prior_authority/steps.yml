@@ -178,10 +178,6 @@ en:
       additional_costs:
         edit:
           caption: 3. About the request
-        no_costs_added:
-          page_title: Do you want to add additional costs?
-          hint: For example, other costs such as extra fees, travel mileage, parking charges or travel fares.
-        costs_added:
           page_title: You've added %{number} additional %{cost}
           cost: cost
           question: Do you want to add another additional cost?

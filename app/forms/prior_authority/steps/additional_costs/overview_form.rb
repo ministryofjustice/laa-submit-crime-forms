@@ -13,10 +13,6 @@ module PriorAuthority
           additional_costs.count
         end
 
-        def any_costs_added?
-          costs_added.positive?
-        end
-
         private
 
         def persist!

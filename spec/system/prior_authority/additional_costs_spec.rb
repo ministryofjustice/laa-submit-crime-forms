@@ -7,7 +7,11 @@ RSpec.describe 'Prior authority applications - additional costs' do
       # TODO: When there is a UI path to this screen, remove this:
       visit current_path.gsub('/youth_court', '/additional_costs')
 
-      expect(page).to have_title 'Do you want to add additional costs?'
+      # N.B: ultimately this screen will never have this title as we'll never
+      # in practice link to it until a cost has already been added. It's
+      # only due to the above-mentioned lack of a UI path that we're
+      # starting the journey here
+      expect(page).to have_title "You've added 0 additional costs"
     end
 
     it 'allows me to add an additional cost' do
@@ -67,7 +71,7 @@ RSpec.describe 'Prior authority applications - additional costs' do
         click_on 'Delete'
         expect(page).to have_content 'Are you sure you want to delete this additional cost?'
         click_on 'Yes, delete it'
-        expect(page).to have_content 'Do you want to add additional costs?'
+        expect(page).to have_content 'Do you want to add another additional cost?'
       end
     end
 
@@ -79,7 +83,7 @@ RSpec.describe 'Prior authority applications - additional costs' do
 
     it 'validates if forms left blank' do
       click_on 'Save and continue'
-      expect(page).to have_title 'Do you want to add additional costs?'
+      expect(page).to have_title 'Error'
       expect(page).to have_content 'Select yes if you want to add additional costs'
 
       choose 'Yes'
@@ -105,7 +109,6 @@ RSpec.describe 'Prior authority applications - additional costs' do
       fill_in 'Minutes', with: 30
       fill_in 'Hourly cost', with: 3.21
       click_on 'Save and continue'
-      expect(page).to have_title 'Do you want to add additional costs?'
     end
 
     it 'handles the back button' do
