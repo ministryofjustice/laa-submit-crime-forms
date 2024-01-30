@@ -15,9 +15,8 @@ module PriorAuthority
         # # passed in separately to current_application to
         # # allow it to be wrapped in a presenter in the future
         @application = current_application
-        render 'laa_multi_step_forms/task_list/show', locals: { header: lambda {
-                                                                          decision_step_header
-                                                                        }, app_type: 'application' }
+        render 'laa_multi_step_forms/task_list/show',
+               locals: { header: -> {}, skip_progress: true, app_type: 'application' }
       end
     end
   end
