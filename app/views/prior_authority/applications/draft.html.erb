@@ -1,0 +1,44 @@
+<turbo-frame id="draft_applications">
+  <% if @model.none? %>
+    <p><%= t('prior_authority.applications.tabs.no_drafts') %></p>
+  <% else %>
+    <h2 class="govuk-heading-m"><%= t('prior_authority.applications.tabs.drafts') %></h2>
+    <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="tab_drafts">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <% ['ufn', 'client', 'last_updated', 'laa_reference'].each_with_index do |key, index| %>
+            <%= table_header(key, 'prior_authority.applications.tabs.header', index, draft_prior_authority_applications_path) %>
+          <% end %>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('prior_authority.applications.tabs.header.action') %></th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body app-task-list__items">
+        <% @model.each do |application| %>
+          <tr class="govuk-table__row app-task-list__item">
+            <td class="govuk-table__cell">
+              <%= link_to prior_authority_steps_start_page_path(application), data: { 'turbo-frame': '_top' } do %>
+                <%= application.ufn %>
+              <% end %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= application.defendant&.full_name %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= application.updated_at.strftime('%d %B %Y') %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= application.laa_reference %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= link_to t("prior_authority.applications.tabs.delete"),
+                          confirm_delete_prior_authority_application_path(application),
+                          data: { 'turbo-frame': '_top' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= render 'shared/pagination', pagy: @pagy, item: t('prior_authority.applications.tabs.application') %>
+  <% end %>
+</turbo-frame>

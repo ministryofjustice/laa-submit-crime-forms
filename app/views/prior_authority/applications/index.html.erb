@@ -6,48 +6,41 @@
   </div>
 </div>
 
+<% if @empty %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-text"><%= t('.none') %></p>
+    </div>
+  </div>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_button_to t('.start_application'), prior_authority_applications_path %>
   </div>
 </div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
+<% unless @empty %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
 
-    <%= govuk_tabs(title: t(".page_title")) do |c|
-      c.with_tab(label: t(".tabs.drafts")) do %>
-        <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="tab_drafts">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.ufn') %></th>
-            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.laa_reference') %></th>
-            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.last_updated') %></th>
-            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.action') %></th>
-          </tr>
-        </thead>
-
-        <tbody class="govuk-table__body app-task-list__items">
-          <% @model.each do |application| %>
-            <tr class="govuk-table__row app-task-list__item">
-              <td class="govuk-table__cell">
-                <%= link_to prior_authority_steps_start_page_path(application) do %>
-                  <%= application.ufn %>
-                <% end %>
-              </td>
-              <td class="govuk-table__cell">
-                <%= application.laa_reference %>
-              </td>
-              <td class="govuk-table__cell">
-                <%= application.updated_at.strftime('%d %B %Y') %>
-              </td>
-              <td class="govuk-table__cell">
-                <%= link_to t(".delete"), confirm_delete_prior_authority_application_path(application) %>
-              </td>
-            </tr>
+      <%= govuk_tabs(title: t(".page_title")) do |c| %>
+        <% c.with_tab(label: t(".tabs.assessed")) do %>
+          <%= turbo_frame_tag 'assessed_applications', src: assessed_prior_authority_applications_path do %>
+            Loading
           <% end %>
-        </tbody>
-      </table>
-    <% end; end %>
+        <% end %>
+        <% c.with_tab(label: t(".tabs.submitted")) do %>
+          <%= turbo_frame_tag 'submitted_applications', src: submitted_prior_authority_applications_path, loading: :lazy do %>
+            Loading
+          <% end %>
+        <% end %>
+        <% c.with_tab(label: t(".tabs.drafts")) do %>
+          <%= turbo_frame_tag 'draft_applications', src: draft_prior_authority_applications_path, loading: :lazy do %>
+            Loading
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>

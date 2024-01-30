@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority application creation' do
+RSpec.describe 'Prior authority application creation', :javascript do
   before do
     visit provider_saml_omniauth_callback_path
     visit prior_authority_root_path
@@ -22,7 +22,7 @@ RSpec.describe 'Prior authority application creation' do
 
     expect(page).to have_content 'Your application progress'
     click_on 'Back to your applications'
-
+    click_on 'Drafts'
     expect(page).to have_content '000000/123'
   end
 
