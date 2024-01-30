@@ -9,18 +9,35 @@ en:
     applications:
       index:
         page_title: Your applications
+        none: You have not started any applications.
         start_application: New application
         tabs:
           drafts: Drafts
+          submitted: Submitted
+          assessed: Assessed
+      tabs:
+        drafts: Drafts
+        submitted: Submitted
+        assessed: Assessed
+        no_drafts: You do not have any draft applications.
+        no_submitted: You do not have any applications waiting to be assessed.
+        no_assessed: You do not have any applications that have been assessed.
+        application: application
         header:
           ufn: UFN
           laa_reference: LAA reference
           last_updated: Last updated
           action: Action
+          client: Client
+          status: Status
         status_colour:
-          draft: govuk-tag--grey
+          granted: govuk-tag--green
+          part_granted: govuk-tag--blue
+          rejected: govuk-tag--red
         status:
-          draft: Draft
+          granted: Granted
+          part_granted: Part granted
+          rejected: Rejected
         delete: Delete
       confirm_delete:
         page_title: Are you sure you want to delete this draft application?
