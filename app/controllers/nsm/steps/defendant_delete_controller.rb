@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class DefendantDeleteController < ::Steps::BaseStepController
+    class DefendantDeleteController < Nsm::Steps::BaseController
       before_action :ensure_defendant
 
       def edit

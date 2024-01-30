@@ -10,6 +10,8 @@ localhost:
     1K022G: ['crm7', 'crm4']
     AAAAAA: ['crm7', 'crm4']
     0A719G: ['crm7', 'crm4']
+    AAAAAA: ['crm7']
+    BBBBBB: ['crm4']
 
 development:
   office_codes:

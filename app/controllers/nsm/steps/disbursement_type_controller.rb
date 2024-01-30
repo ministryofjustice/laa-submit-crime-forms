@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class DisbursementTypeController < ::Steps::BaseStepController
+    class DisbursementTypeController < Nsm::Steps::BaseController
       before_action :ensure_disbursement
 
       def edit

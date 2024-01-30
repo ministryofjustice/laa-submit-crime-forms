@@ -6,17 +6,19 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
   before_action :set_default_cookies
   before_action :can_access_service
 
-  def cas_access_service
-    return if Provider::Gatekeeper.provider_enrolled?(service:)
+  private
 
-    Rails.logger.warn "Not enrolled provider access attempt, UID: #{auth_hash.uid}, " \
-                      "accounts: #{auth_hash.info.office_codes}, service: #{service}"
+  def can_access_service
+    return unless current_provider
+    return if Providers::Gatekeeper.new(current_provider).provider_enrolled?(service:)
 
-    redirect_to laa_msf.not_enrolled_errors_path, flash: { notice: 'You do not have access to that srevice'}
+    Rails.logger.warn "Not enrolled provider access attempt, UID: #{current_provider.id}, " \
+                      "accounts: #{current_provider.office_codes}, service: #{service}"
 
+    redirect_to root_path
   end
 
   def service
-    Provider::Gatekeeper::ANY
+    Providers::Gatekeeper::ANY_SERVICE
   end
 end

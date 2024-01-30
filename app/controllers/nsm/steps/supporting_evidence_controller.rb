@@ -2,7 +2,7 @@
 
 module Nsm
   module Steps
-    class SupportingEvidenceController < ::Steps::BaseStepController
+    class SupportingEvidenceController < Nsm::Steps::BaseController
       skip_before_action :verify_authenticity_token
       before_action :supporting_evidence
 

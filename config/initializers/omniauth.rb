@@ -1,6 +1,16 @@
 require 'omniauth'
 require Rails.root.join('app/lib/laa_portal/saml_strategy')
 
+module Memory
+  def self.put(val)
+    @val = val
+  end
+
+  def self.get
+    @val
+  end
+end
+
 Rails.application.config.middleware.use OmniAuth::Builder do
   configure do |config|
     config.logger = Rails.logger
@@ -16,7 +26,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     # * info[office_codes] => ["1A123B", "2A555X"]
     if FeatureFlags.omniauth_test_mode.enabled?
       config.before_callback_phase do |env|
-        env['omniauth.auth'].merge!(
+        Memory.put(env['omniauth.auth'].dup)
+        env['omniauth.auth'] = Memory.get.merge(
           Rack::Utils.parse_nested_query(env['QUERY_STRING'])
         )
       end

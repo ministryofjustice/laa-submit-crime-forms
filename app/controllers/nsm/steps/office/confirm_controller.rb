@@ -1,7 +1,7 @@
 module Nsm
   module Steps
     module Office
-      class ConfirmController < ::Steps::BaseStepController
+      class ConfirmController < Nsm::Steps::BaseController
         skip_before_action :check_application_presence
 
         def edit
