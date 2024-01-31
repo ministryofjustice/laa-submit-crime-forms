@@ -3,11 +3,6 @@ module PriorAuthority
     class ReasonWhyController < BaseController
       skip_before_action :verify_authenticity_token, only: [:create, :destroy]
 
-      SUPPORTED_FILE_TYPES = %w[
-        application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document
-        application/rtf image/jpeg image/bmp image/png image/tiff application/pdf
-      ].freeze
-
       def edit
         @form_object = ReasonWhyForm.build(
           current_application
@@ -71,7 +66,7 @@ module PriorAuthority
       end
 
       def supported_filetype(params)
-        SUPPORTED_FILE_TYPES.include? params.content_type
+        SupportedFileTypes::REASON_WHY.include? params.content_type
       end
 
       def return_success(dict)

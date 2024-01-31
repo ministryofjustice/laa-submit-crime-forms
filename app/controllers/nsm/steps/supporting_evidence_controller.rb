@@ -6,11 +6,6 @@ module Nsm
       skip_before_action :verify_authenticity_token
       before_action :supporting_evidence
 
-      SUPPORTED_FILE_TYPES = %w[
-        application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document
-        application/rtf image/jpeg image/bmp image/png image/tiff application/pdf
-      ].freeze
-
       def edit
         @form_object = SupportingEvidenceForm.build(
           current_application
@@ -78,7 +73,7 @@ module Nsm
       end
 
       def supported_filetype(params)
-        SUPPORTED_FILE_TYPES.include? params.content_type
+        SupportedFileTypes::SUPPORTING_EVIDENCE.include? params.content_type
       end
 
       def return_success(dict)
