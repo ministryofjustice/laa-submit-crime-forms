@@ -1,7 +1,7 @@
 module PriorAuthority
   module Steps
     class PrimaryQuoteForm < ::Steps::BaseFormObject
-      attribute :service_name, :string
+      attribute :service_name, :value_object, source: QuoteServices
       attribute :contact_full_name, :string
       attribute :organisation, :string
       attribute :postcode, :string

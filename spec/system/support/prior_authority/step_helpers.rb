@@ -27,6 +27,12 @@ module PriorAuthority
 
       return if step.in?(%i[psychiatric_liaison youth_court])
 
+      fill_in_youth_court
+
+      return if step == :primary_quote
+
+      fill_in_primary_quote
+
       :end
     end
 
@@ -100,6 +106,24 @@ module PriorAuthority
       choose plea
       choose court_type
       click_on 'Save and continue'
+    end
+
+    def fill_in_youth_court
+      within('.govuk-form-group', text: 'Is this a youth court matter') do
+        choose 'No'
+      end
+      click_on 'Save and continue'
+    end
+
+    def fill_in_primary_quote
+      click_on 'Primary quote'
+
+      fill_in 'Service required', with: 'Forensics'
+      fill_in 'Contact full name', with: 'Joe Bloggs'
+      fill_in 'Organisation', with: 'LAA'
+      fill_in 'Postcode', with: 'CR0 1RE'
+
+      click_on 'Save and come back later'
     end
   end
 end

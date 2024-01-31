@@ -8,14 +8,14 @@
     <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
 
     <%= step_form @form_object do |form| %>
-      <%= form.govuk_collection_select :service_name, QuoteService.all, :description, :description,
-                              data: { module: 'accessible-autocomplete', autoselect: false }, width: 20,
-                              options: { include_blank: true }, label: { size: 'm' }, hint: { size: 's', text: t('.service_name_hint')} %>
+      <%= suggestion_select form, :service_name, PriorAuthority::QuoteServices.values, :to_sym, :translated, width: 20,
+                            options: { include_blank: true }, label: { size: 'm' }, hint: { size: 's', text: t('.service_name_hint')},
+                            data: { autoselect: false } %>
       <h2 class="govuk-heading-m"><%= t(".service_details") %></h2>
       <%= form.govuk_text_field :contact_full_name, label: { text: t(".contact_full_name"), size: 's' } %>
       <%= form.govuk_text_field :organisation, label: { text: t(".organisation"), size: 's' } %>
       <%= form.govuk_text_field :postcode, label: { text: t(".postcode"), size: 's' } %>
-      <%= form.continue_button(secondary: false) %>
+      <%= form.continue_button %>
     <% end %>
   </div>
 </div>
