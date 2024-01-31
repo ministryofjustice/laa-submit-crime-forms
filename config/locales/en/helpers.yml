@@ -367,7 +367,7 @@ en:
       travel_expenses_excl_car: Travel expenses (excl car)
       veterinarian_report: Veterinarian Report
       voice_recognition_experts: Voice Recognition
-    prior_authority_services:
+    quote_services:
       ae_consultant: A&E Consultant
       accident_reconstruction: Accident Reconstruction
       accountant: Accountant
@@ -379,7 +379,7 @@ en:
       culture_expert: Culture expert
       cardiologist: Cardiologist
       cell_site_analysis: Cell site analysis
-      child_pshychiatrist: Child Pshychiatrist
+      child_psychiatrist: Child Psychiatrist
       child_psychologist: Child Psychologist
       computer_experts: Computer Experts
       consultant_engineer: Consultant Engineer
