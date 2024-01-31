@@ -24,21 +24,22 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     expect(page).to have_content 'Primary quote Completed'
   end
 
-  # it 'validates client detail fields' do
-  #   expect(page).to have_content 'Client detailsNot started'
-  #   click_on 'Client details'
+  it 'validates primary quote fields fields' do
+    fill_in_until_step(:primary_quote)
+    click_on 'Primary quote'
 
-  #   click_on 'Save and continue'
-  #   expect(page).to have_content "Enter the client's first name"
-  #   expect(page).to have_content "Enter the client's last name"
-  #   expect(page).to have_content "Enter the client's date of birth"
-  # end
+    click_on 'Save and continue'
+    expect(page).to have_content "Enter the service required"
+    expect(page).to have_content "Enter the contact's full name"
+    expect(page).to have_content "Enter the organisation name"
+    expect(page).to have_content "Enter the postcode"
+  end
 
-  # it 'allows save and come back later' do
-  #   expect(page).to have_content 'Client detailsNot started'
-  #   click_on 'Client details'
+  it 'allows save and come back later' do
+    fill_in_until_step(:primary_quote)
+    click_on 'Primary quote'
 
-  #   click_on 'Save and come back later'
-  #   expect(page).to have_content 'Client detailsIn progress'
-  # end
+    click_on 'Save and come back later'
+    expect(page).to have_content 'Primary quoteIn progress'
+  end
 end
