@@ -18,10 +18,10 @@ module PriorAuthority
       private
 
       def persist!
-        record.update!(attributes.merge(attributes_to_reset))
+        record.update!(attributes.merge(default_attributes))
       end
 
-      def attributes_to_reset
+      def default_attributes
         {
           'primary' => true
         }
