@@ -163,7 +163,7 @@ commands:
           command: |
             bundle exec rspec
 
-  build-docker-image:
+  build-docker-image-for-test:
       steps:
         - run:
             name: Build docker image for app
@@ -260,7 +260,7 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - build-docker-image
+      - build-docker-image-for-test
       - snyk/scan:
           token-variable: SNYK_TOKEN
           docker-image-name: app
@@ -274,6 +274,13 @@ jobs:
     executor: aws-ecr/default
     steps:
       - checkout
+      - run:
+          name: Create target tags
+          command: |
+            source .circleci/define_build_environment_variables
+            echo "Created tags $TARGET_TAGS"
+            echo "export BUILD_TAGS=$TARGET_TAGS" >> $BASH_ENV
+            echo "export IMAGE_TAG=$IMAGE_TAG" >> $BASH_ENV
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
@@ -285,7 +292,7 @@ jobs:
             ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
       - aws-ecr/build-image:
           push-image: true
-          tag: ${CIRCLE_SHA1}
+          tag: $BUILD_TAGS
           region: $ECR_REGION
           repo: $ECR_REPOSITORY
           extra-build-args: |
