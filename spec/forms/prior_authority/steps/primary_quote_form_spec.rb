@@ -65,7 +65,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   describe '#save' do
     subject(:save) { form.save }
 
-    let(:record) { create(:quote) }
+    let(:record) { create(:quote, :blank, prior_authority_application: create(:prior_authority_application)) }
 
     context 'with valid quote details' do
       let(:service_name) { 'Forensics Expert' }

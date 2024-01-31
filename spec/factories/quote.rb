@@ -6,6 +6,14 @@ FactoryBot.define do
     postcode { 'CR0 1RE' }
   end
 
+  trait :blank do
+    service_name { nil }
+    contact_full_name { nil }
+    organisation { nil }
+    postcode { nil }
+    primary { nil }
+  end
+
   trait :primary do
     primary { true }
   end
