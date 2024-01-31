@@ -9,7 +9,7 @@ ENVIRONMENT=$2
 deploy_branch() {
 # Set the deployment host, this will add the prefix of the branch name e.g el-257-deploy-with-circleci or just main
   RELEASE_HOST="${BRANCH_RELEASE_NAME}-${HOST}"
-  IDENTIFIER="$BRANCH_RELEASE_NAME-laa-claim-non-standard-magistrate-fee-$K8S_NAMESPACE-green"
+  IDENTIFIER="$BRANCH_RELEASE_NAME-laa-claim-non-standard-magistrate-fee-app-$K8S_NAMESPACE-green"
   echo "Release Host is: $RELEASE_HOST"
   echo "Deploying CIRCLE_SHA1: $CIRCLE_SHA1 under release name: '$BRANCH_RELEASE_NAME'..."
   echo "Identifier: $IDENTIFIER..."

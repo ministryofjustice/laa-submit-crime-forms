@@ -301,30 +301,6 @@ jobs:
             ./bin/deploy << parameters.registry >> << parameters.environment >>
 
 
-#  deploy-dev:
-#    executor: cloud-platform-executor
-#    steps:
-#      - deploy-to-environment:
-#          environment: dev
-#
-#  deploy-dev-crm4:
-#    executor: cloud-platform-executor
-#    steps:
-#      - deploy-to-environment:
-#          environment: dev-crm4
-#
-#  deploy-uat:
-#    executor: cloud-platform-executor
-#    steps:
-#      - deploy-to-environment:
-#          environment: uat
-#
-#  deploy-prod:
-#    executor: cloud-platform-executor
-#    steps:
-#      - deploy-to-environment:
-#          environment: prod
-
 # ------------------
 # WORKFLOWS
 # ------------------
@@ -351,16 +327,8 @@ workflows:
 
   build-push-branch:
     jobs:
-      - branch-build-approval:
-          type: approval
-          filters:
-            branches:
-              ignore:
-                - main
       - build-to-ecr:
           context: laa-claim-non-standard-magistrates-fee-dev
-          requires:
-            - branch-build-approval
       - hold-dev:
           type: approval
           requires:
