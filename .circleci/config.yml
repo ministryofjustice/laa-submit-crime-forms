@@ -341,17 +341,19 @@ workflows:
           context: laa-claim-non-standard-magistrates-fee-dev
           requires:
             - hold-dev
-      - hold-dev-crm4:
-          type: approval
-          requires:
-            - build-to-ecr
+#      - hold-dev-crm4:
+#          type: approval
+#          requires:
+#            - build-to-ecr
       - deploy-to-environment:
           name: deploy_dev_crm4
           environment: dev-crm4
           dynamic_hostname: true
           context: laa-claim-non-standard-magistrates-fee-dev-crm4
           requires:
-            - hold-dev-crm4
+            - build-to-ecr
+#          requires:
+#            - hold-dev-crm4
       - hold-uat:
           type: approval
           requires:
