@@ -25,10 +25,6 @@
   @include govuk-responsive-padding(5, "top", $adjustment: 0);
 }
 
-.moj-task-list__item:first-child {
-  border-top: none;
-}
-
 .moj-task-list__items {
   padding-left: 0;
 }

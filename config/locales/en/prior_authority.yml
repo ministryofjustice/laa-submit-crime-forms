@@ -9,7 +9,7 @@ en:
     applications:
       index:
         page_title: Your applications
-        start_application: Start an application
+        start_application: New application
         tabs:
           drafts: Drafts
         header:

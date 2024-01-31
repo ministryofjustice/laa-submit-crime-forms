@@ -129,8 +129,8 @@ en:
         prior_authority/steps/ufn_form:
           attributes:
             ufn:
-              blank: Enter your unique file number for this application
-              invalid: UFN must be a 9-digit number
+              blank: Enter the unique file number
+              invalid: Unique file number must be in the correct format, for example 310224/001
         prior_authority/steps/primary_quote_form:
           attributes:
             service_name:
