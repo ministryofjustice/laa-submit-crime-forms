@@ -13,7 +13,7 @@ module PriorAuthority
     private
 
     def service_types
-      QuoteServices.values.map { |value| {  value: value.value, en: value.translated } }
+      QuoteServices.values.map { |value| { value: value.value, en: value.translated } }
     end
   end
 end
