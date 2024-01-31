@@ -216,7 +216,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
   end
 
   create_table "quotes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "service_name"
+    t.string "service_type"
+    t.string "custom_service_name"
     t.string "contact_full_name"
     t.string "organisation"
     t.string "postcode"

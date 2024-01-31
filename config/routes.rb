@@ -114,6 +114,8 @@ Rails.application.routes.draw do
   end
 
   namespace :prior_authority, path: 'prior-authority' do
+    resources :service_types, only: [:index], format: :js
+
     scope 'applications/:id' do
       get '/steps/start_page', to: 'steps/start_page#show', as: 'after_commit'
 

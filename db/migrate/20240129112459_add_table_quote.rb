@@ -1,7 +1,8 @@
 class AddTableQuote < ActiveRecord::Migration[7.1]
   def change
     create_table :quotes, id: :uuid do |t|
-      t.string :service_name
+      t.string :service_type
+      t.string :custom_service_name
       t.string :contact_full_name
       t.string :organisation
       t.string :postcode

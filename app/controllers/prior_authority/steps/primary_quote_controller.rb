@@ -24,7 +24,7 @@ module PriorAuthority
       end
 
       def additional_permitted_params
-        [:service_name_suggestion]
+        [:service_type_suggestion]
       end
     end
   end
