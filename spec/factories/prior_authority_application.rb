@@ -22,9 +22,5 @@ FactoryBot.define do
       psychiatric_liaison { nil }
       psychiatric_liaison_reason_not { nil }
     end
-
-    trait :with_primary_quote do
-      primary_quote { build(:quote) }
-    end
   end
 end

@@ -1,4 +1,5 @@
 module PriorAuthority
+  # rubocop:disable Metrics/ClassLength
   class QuoteServices < ValueObject
     VALUES = [
       ACCOUNTANT = new(:accountant),
@@ -113,4 +114,5 @@ module PriorAuthority
       I18n.t("helpers.quote_services.#{value}")
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

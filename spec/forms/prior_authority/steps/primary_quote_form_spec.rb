@@ -38,10 +38,10 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         expect(form.errors.of_kind?(:organisation, :blank)).to be(true)
         expect(form.errors.of_kind?(:postcode, :blank)).to be(true)
         expect(form.errors.messages.values.flatten)
-          .to include("Enter the service required",
+          .to include('Enter the service required',
                       "Enter the contact's full name",
-                      "Enter the organisation name",
-                      "Enter the postcode")
+                      'Enter the organisation name',
+                      'Enter the postcode')
       end
     end
 
@@ -56,8 +56,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         expect(form.errors.of_kind?(:contact_full_name, :invalid)).to be(true)
         expect(form.errors.of_kind?(:postcode, :invalid)).to be(true)
         expect(form.errors.messages.values.flatten)
-          .to include("Enter a valid full name",
-                      "Enter a real postcode")
+          .to include('Enter a valid full name',
+                      'Enter a real postcode')
       end
     end
   end
@@ -73,6 +73,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       let(:organisation) { 'LAA' }
       let(:postcode) { 'CR0 1RE' }
 
+      # rubocop:disable RSpec/ExampleLength
       it 'persists the quote' do
         expect { save }.to change { record.reload.attributes }
           .from(
@@ -94,6 +95,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
             )
           )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'with incomplete quote details' do
