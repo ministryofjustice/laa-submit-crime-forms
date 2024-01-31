@@ -39,7 +39,7 @@ function convertSelectToAutocomplete(){
       var convertedToAutocomplete = $acElements[i].getAttribute('data-converted')
       if(!convertedToAutocomplete){
         const name = $acElements[i].getAttribute('data-name')
-        const autoselect = trueFalseToBoolean($acElements[i].getAttribute('data-autoselect'))
+        const autoselect = $acElements[i].getAttribute('data-autoselect') === "true"
         accessibleAutocomplete.enhanceSelectElement({
           selectElement: $acElements[i],
           defaultValue: '',
@@ -50,17 +50,5 @@ function convertSelectToAutocomplete(){
         $acElements[i].setAttribute('data-converted', true)
       }
     }
-  }
-}
-
-function trueFalseToBoolean(string){
-  if(string === "true"){
-    return true
-  }
-  else if( string === "false" ){
-    return false
-  }
-  else{
-    return false
   }
 }
