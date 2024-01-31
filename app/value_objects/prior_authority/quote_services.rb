@@ -108,9 +108,9 @@ module PriorAuthority
       VOICE_RECOGNITION = new(:voice_recognition),
       INTERMEDIARY_AFTER_APR_2022 = new(:intermediary_after_apr_2022),
     ].freeze
-  end
 
-  def translated
-    I18n.t("helpers.quote_services.#{value}")
+    def translated
+      I18n.t("helpers.quote_services.#{value}")
+    end
   end
 end
