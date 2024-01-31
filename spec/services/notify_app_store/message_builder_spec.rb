@@ -149,6 +149,9 @@ RSpec.describe NotifyAppStore::MessageBuilder do
           'youth_court' => 'no',
           'supporting_evidences' =>
             [{
+              'document_type' => 'supporting_evidence',
+              'documentable_id' => an_instance_of(String),
+              'documentable_type' => 'Claim',
               'created_at' => '2023-03-01T00:00:00.000Z',
                'file_name' => 'test.png',
                'file_path' => 'test_path',

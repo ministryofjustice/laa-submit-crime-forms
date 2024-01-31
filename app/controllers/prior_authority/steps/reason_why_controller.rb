@@ -1,15 +1,14 @@
-# frozen_string_literal: true
-
-module Nsm
+module PriorAuthority
   module Steps
-    class SupportingEvidenceController < ::Steps::BaseStepController
-      skip_before_action :verify_authenticity_token
-      before_action :supporting_evidence
+    class ReasonWhyController < BaseController
+      skip_before_action :verify_authenticity_token, only: [:create, :destroy]
 
       def edit
-        @form_object = SupportingEvidenceForm.build(
+        @form_object = ReasonWhyForm.build(
           current_application
         )
+
+        @supporting_documents = current_application.supporting_documents
       end
 
       def create
@@ -27,11 +26,12 @@ module Nsm
       end
 
       def update
-        update_and_advance(SupportingEvidenceForm, as: :supporting_evidence)
+        @supporting_documents = current_application.supporting_documents
+        update_and_advance(ReasonWhyForm, as:, after_commit_redirect_path:)
       end
 
       def destroy
-        evidence = current_application.supporting_evidence.find_by(id: params[:evidence_id])
+        evidence = current_application.supporting_documents.find_by(id: params[:evidence_id])
         file_uploader.destroy(evidence.file_path)
         evidence.destroy
 
@@ -40,18 +40,10 @@ module Nsm
         return_error(e, { message: 'Unable to delete file at this time' })
       end
 
-      def download
-        render layout: 'printing'
-      end
-
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
-      def supporting_evidence
-        @supporting_evidence = current_application.supporting_evidence
+      def as
+        :reason_why
       end
 
       def file_uploader
@@ -60,11 +52,12 @@ module Nsm
 
       def upload_file(params)
         file_path = file_uploader.upload(params[:documents])
-        save_evidence_data(params[:documents], file_path)
+        save_file(params[:documents], file_path)
       end
 
-      def save_evidence_data(params, file_path)
-        current_application.supporting_evidence.create(
+      def save_file(params, file_path)
+        current_application.supporting_documents.create(
+          document_type: SupportingDocument::SUPPORTING_DOCUMENT,
           file_name: params.original_filename,
           file_type: params.content_type,
           file_size: params.tempfile.size,
@@ -73,7 +66,7 @@ module Nsm
       end
 
       def supported_filetype(params)
-        SupportedFileTypes::SUPPORTING_EVIDENCE.include? params.content_type
+        SupportedFileTypes::REASON_WHY.include? params.content_type
       end
 
       def return_success(dict)
