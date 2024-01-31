@@ -268,7 +268,6 @@ jobs:
   deploy-to-environment:
     description: Deploy image to the specified environment
     executor: cloud-platform-executor
-    name: Deploy to << parameters.environment >>
     parameters:
       environment:
         description: Name of environment to deploy to
@@ -294,7 +293,7 @@ jobs:
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl --namespace=${K8S_NAMESPACE} get pods
       - run:
-          name: Deploy to namespace
+          name: Deploy to << parameters.environment >>
           command: |
             helm upgrade laa-claim-non-standard-magistrate-fee-backend \
               ./helm_deploy/. \
