@@ -22,6 +22,10 @@ module PriorAuthority
       def as
         :primary_quote
       end
+
+      def additional_permitted_params
+        [:service_name_suggestion]
+      end
     end
   end
 end

@@ -11,6 +11,10 @@ module PriorAuthority
       validates :organisation, presence: true
       validates :postcode, presence: true, uk_postcode: true
 
+      def service_name_suggestion=(value)
+        self.service_name = value
+      end
+
       private
 
       def persist!
