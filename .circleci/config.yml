@@ -180,42 +180,6 @@ commands:
               --tag app \
               --file Dockerfile .\
 
-  deploy-to-environment:
-      description: Deploy image to the specified environment
-      parameters:
-        environment:
-          description: Name of environment to deploy to
-          type: string
-        registry:
-          description: Location of ECR images
-          type: string
-          default: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
-      steps:
-        - aws-cli/setup:
-            role_arn: $ECR_ROLE_TO_ASSUME
-            region: $ECR_REGION
-        - checkout
-        - run:
-            name: Authenticate K8s
-            command: |
-                echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
-                kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_URL}
-                kubectl config set-credentials circleci --token=${K8S_TOKEN}
-                kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
-                kubectl config use-context ${K8S_CLUSTER_NAME}
-                kubectl --namespace=${K8S_NAMESPACE} get pods
-        - run:
-            name: Deploy to namespace
-            command: |
-                helm upgrade laa-claim-non-standard-magistrate-fee-backend \
-                  ./helm_deploy/. \
-                    --install --wait --force \
-                    --namespace=${K8S_NAMESPACE} \
-                    --values ./helm_deploy/values-<< parameters.environment >>.yaml \
-                    --set image.repository="<< parameters.registry >>/${ECR_REPOSITORY}" \
-                    --set image.tag="${CIRCLE_SHA1}" \
-                    --debug \
-                    --atomic
 
 # ------------------
 # JOBS
@@ -301,29 +265,70 @@ jobs:
             --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1} \
             --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH} \
 
-  deploy-dev:
+  deploy-to-environment:
+    description: Deploy image to the specified environment
     executor: cloud-platform-executor
+    name: Deploy to << parameters.environment >>
+    parameters:
+      environment:
+        description: Name of environment to deploy to
+        type: string
+      registry:
+        description: Location of ECR images
+        type: string
+        default: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+      dynamic_hostname:
+        type: boolean
     steps:
-      - deploy-to-environment:
-          environment: dev
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - checkout
+      - run:
+          name: Authenticate K8s
+          command: |
+            echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+            kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_URL}
+            kubectl config set-credentials circleci --token=${K8S_TOKEN}
+            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
+            kubectl config use-context ${K8S_CLUSTER_NAME}
+            kubectl --namespace=${K8S_NAMESPACE} get pods
+      - run:
+          name: Deploy to namespace
+          command: |
+            helm upgrade laa-claim-non-standard-magistrate-fee-backend \
+              ./helm_deploy/. \
+                --install --wait --force \
+                --namespace=${K8S_NAMESPACE} \
+                --values ./helm_deploy/values-<< parameters.environment >>.yaml \
+                --set image.repository="<< parameters.registry >>/${ECR_REPOSITORY}" \
+                --set image.tag="${CIRCLE_SHA1}" \
+                --debug \
+                --atomic
 
-  deploy-dev-crm4:
-    executor: cloud-platform-executor
-    steps:
-      - deploy-to-environment:
-          environment: dev-crm4
-
-  deploy-uat:
-    executor: cloud-platform-executor
-    steps:
-      - deploy-to-environment:
-          environment: uat
-
-  deploy-prod:
-    executor: cloud-platform-executor
-    steps:
-      - deploy-to-environment:
-          environment: prod
+#  deploy-dev:
+#    executor: cloud-platform-executor
+#    steps:
+#      - deploy-to-environment:
+#          environment: dev
+#
+#  deploy-dev-crm4:
+#    executor: cloud-platform-executor
+#    steps:
+#      - deploy-to-environment:
+#          environment: dev-crm4
+#
+#  deploy-uat:
+#    executor: cloud-platform-executor
+#    steps:
+#      - deploy-to-environment:
+#          environment: uat
+#
+#  deploy-prod:
+#    executor: cloud-platform-executor
+#    steps:
+#      - deploy-to-environment:
+#          environment: prod
 
 # ------------------
 # WORKFLOWS
@@ -365,7 +370,10 @@ workflows:
           type: approval
           requires:
             - build-to-ecr
-      - deploy-dev:
+      - deploy-to-environment:
+          name: deploy_dev
+          environment: dev
+          dynamic_hostname: false
           context: laa-claim-non-standard-magistrates-fee-dev
           requires:
             - hold-dev
@@ -373,7 +381,10 @@ workflows:
           type: approval
           requires:
             - build-to-ecr
-      - deploy-dev-crm4:
+      - deploy-to-environment:
+          name: deploy_dev_crm4
+          environment: dev-crm4
+          dynamic_hostname: false
           context: laa-claim-non-standard-magistrates-fee-dev-crm4
           requires:
             - hold-dev-crm4
@@ -381,7 +392,10 @@ workflows:
           type: approval
           requires:
             - build-to-ecr
-      - deploy-uat:
+      - deploy-to-environment:
+          name: deploy_uat
+          environment: uat
+          dynamic_hostname: false
           context: laa-claim-non-standard-magistrates-fee-uat
           requires:
             - hold-uat
@@ -395,7 +409,10 @@ workflows:
           type: approval
           requires:
             - build-to-ecr
-      - deploy-dev:
+      - deploy-to-environment:
+          name: deploy_dev_main
+          environment: dev
+          dynamic_hostname: false
           context: laa-claim-non-standard-magistrates-fee-dev
           requires:
             - hold-dev
@@ -403,7 +420,10 @@ workflows:
           type: approval
           requires:
             - build-to-ecr
-      - deploy-dev-crm4:
+      - deploy-to-environment:
+          name: deploy_dev_crm4_main
+          environment: dev-crm4
+          dynamic_hostname: false
           context: laa-claim-non-standard-magistrates-fee-dev-crm4
           requires:
             - hold-dev-crm4
@@ -411,7 +431,10 @@ workflows:
           type: approval
           requires:
             - build-to-ecr
-      - deploy-uat:
+      - deploy-to-environment:
+          name: deploy_uat_main
+          environment: uat
+          dynamic_hostname: false
           context: laa-claim-non-standard-magistrates-fee-uat
           requires:
             - hold-uat
@@ -419,7 +442,10 @@ workflows:
           type: approval
           requires:
             - build-to-ecr
-      - deploy-prod:
+      - deploy-to-environment:
+          name: deploy_prod
+          environment: prod
+          dynamic_hostname: false
           context: laa-claim-non-standard-magistrates-fee-prod
           requires:
             - hold-prod
