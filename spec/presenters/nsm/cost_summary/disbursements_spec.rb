@@ -52,7 +52,6 @@ total_cost_pre_vat: 80.0)
     end
   end
 
-  # rubocop:disable RSpec/ExampleLength
   describe '#rows' do
     it 'generates letters and calls rows' do
       expect(subject.rows).to eq(
@@ -77,7 +76,6 @@ total_cost_pre_vat: 80.0)
       )
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 
   describe '#total_cost' do
     it 'delegates to the form' do

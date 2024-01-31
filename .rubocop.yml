@@ -171,7 +171,7 @@ RSpec/NestedGroups:
   Max: 6
 
 RSpec/ExampleLength:
-  Max: 16
+  Max: 30
   Exclude:
     - spec/steps/**/integration_spec.rb
     - spec/presenters/nsm/check_answers/**/*

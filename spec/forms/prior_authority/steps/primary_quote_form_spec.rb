@@ -73,7 +73,6 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       let(:organisation) { 'LAA' }
       let(:postcode) { 'CR0 1RE' }
 
-      # rubocop:disable RSpec/ExampleLength
       it 'persists the quote' do
         expect { save }.to change { record.reload.attributes }
           .from(
@@ -95,7 +94,6 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
             )
           )
       end
-      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'with incomplete quote details' do
