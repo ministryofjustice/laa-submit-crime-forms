@@ -2,21 +2,20 @@
 REGISTRY=$1
 ENVIRONMENT=$2
 # Convert the branch name into a string that can be turned into a valid URL
-  BRANCH_RELEASE_NAME=$(echo $CIRCLE_BRANCH | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
+  #BRANCH_RELEASE_NAME=$(echo $CIRCLE_BRANCH | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
   ECR_ENDPOINT=${REGISTRY}/${ECR_REPOSITORY}
-  HOST="crm4dev.apps.live.cloud-platform.service.justice.gov.uk"
+  #HOST="crm4dev.apps.live.cloud-platform.service.justice.gov.uk"
 
 deploy_branch() {
 # Set the deployment host, this will add the prefix of the branch name e.g el-257-deploy-with-circleci or just main
-  RELEASE_HOST="${BRANCH_RELEASE_NAME}-${HOST}"
-  IDENTIFIER="$BRANCH_RELEASE_NAME-laa-claim-non-standard-magistrate-fee-app-$K8S_NAMESPACE-green"
+  IDENTIFIER="$RELEASE_NAME-$K8S_NAMESPACE-green"
   echo "Release Host is: $RELEASE_HOST"
-  echo "Deploying CIRCLE_SHA1: $CIRCLE_SHA1 under release name: '$BRANCH_RELEASE_NAME'..."
+  echo "Deploying CIRCLE_SHA1: $CIRCLE_SHA1 under release name: '$RELEASE_NAME'..."
   echo "Identifier: $IDENTIFIER..."
   echo "ECR_ENDPOINT: $ECR_ENDPOINT..."
   echo "IMAGE_TAG: $IMAGE_TAG..."
 
-  helm upgrade ${BRANCH_RELEASE_NAME} \
+  helm upgrade ${RELEASE_NAME} \
                 ./helm_deploy/. \
                 --install --wait \
                 --namespace=${K8S_NAMESPACE} \

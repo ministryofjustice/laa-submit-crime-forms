@@ -295,6 +295,7 @@ jobs:
             source .circleci/define_build_environment_variables << parameters.dynamic_hostname >>
             echo "export IMAGE_TAG=$IMAGE_TAG" >> $BASH_ENV
             echo "export RELEASE_HOST=$RELEASE_HOST" >> $BASH_ENV
+            echo "export RELEASE_NAME=$RELEASE_NAME" >> $BASH_ENV
       - run:
           name: Deploy to << parameters.environment >>
           command: |
