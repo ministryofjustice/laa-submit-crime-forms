@@ -29,10 +29,10 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     click_on 'Primary quote'
 
     click_on 'Save and continue'
-    expect(page).to have_content "Enter the service required"
+    expect(page).to have_content 'Enter the service required'
     expect(page).to have_content "Enter the contact's full name"
-    expect(page).to have_content "Enter the organisation name"
-    expect(page).to have_content "Enter the postcode"
+    expect(page).to have_content 'Enter the organisation name'
+    expect(page).to have_content 'Enter the postcode'
   end
 
   it 'allows save and come back later' do
