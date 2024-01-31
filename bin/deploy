@@ -6,6 +6,10 @@ ENVIRONMENT=$2
   ECR_ENDPOINT=${REGISTRY}/${ECR_REPOSITORY}
   HOST="crm4dev.apps.live.cloud-platform.service.justice.gov.uk"
 
+safe_git_branch=${CIRCLE_BRANCH//\//-}
+short_sha="$(git rev-parse --short=7 $CIRCLE_SHA1)"
+IMAGE_TAG="$safe_git_branch.$short_sha"
+
 deploy_branch() {
 # Set the deployment host, this will add the prefix of the branch name e.g el-257-deploy-with-circleci or just main
   RELEASE_HOST="${BRANCH_RELEASE_NAME}-${HOST}"
@@ -16,17 +20,17 @@ deploy_branch() {
   echo "ECR_ENDPOINT: $ECR_ENDPOINT..."
   echo "IMAGE_TAG: $IMAGE_TAG..."
 
-#  helm upgrade ${BRANCH_RELEASE_NAME} \
-#                ./helm_deploy/. \
-#                --install --wait \
-#                --namespace=${K8S_NAMESPACE} \
-#                --values ./helm_deploy/values-${ENVIRONMENT}.yaml \
-#                --set image.repository="${ECR_ENDPOINT}" \
-#                --set image.tag="${IMAGE_TAG}" \
-#                --set ingress.annotations."external-dns\.alpha\.kubernetes\.io/set-identifier"="$IDENTIFIER" \
-#                --set ingress.hosts[0].host="$RELEASE_HOST" \
-#                --debug \
-#                --atomic
+  helm upgrade ${BRANCH_RELEASE_NAME} \
+                ./helm_deploy/. \
+                --install --wait \
+                --namespace=${K8S_NAMESPACE} \
+                --values ./helm_deploy/values-${ENVIRONMENT}.yaml \
+                --set image.repository="${ECR_ENDPOINT}" \
+                --set image.tag="${IMAGE_TAG}" \
+                --set ingress.annotations."external-dns\.alpha\.kubernetes\.io/set-identifier"="$IDENTIFIER" \
+                --set ingress.hosts[0].host="$RELEASE_HOST" \
+                --debug \
+                --atomic
 }
 
 deploy_main() {
