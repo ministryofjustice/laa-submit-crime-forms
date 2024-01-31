@@ -295,15 +295,8 @@ jobs:
       - run:
           name: Deploy to << parameters.environment >>
           command: |
-            helm upgrade laa-claim-non-standard-magistrate-fee-backend \
-              ./helm_deploy/. \
-                --install --wait --force \
-                --namespace=${K8S_NAMESPACE} \
-                --values ./helm_deploy/values-<< parameters.environment >>.yaml \
-                --set image.repository="<< parameters.registry >>/${ECR_REPOSITORY}" \
-                --set image.tag="${CIRCLE_SHA1}" \
-                --debug \
-                --atomic
+            ./bin/deploy << parameters.registry >> << parameters.environment >>
+
 
 #  deploy-dev:
 #    executor: cloud-platform-executor
