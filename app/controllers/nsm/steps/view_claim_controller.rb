@@ -2,7 +2,7 @@
 
 module Nsm
   module Steps
-    class ViewClaimController < ::Steps::BaseStepController
+    class ViewClaimController < Nsm::Steps::BaseController
       def show
         @report = CheckAnswers::ReadOnlyReport.new(current_application)
       end

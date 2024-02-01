@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class DisbursementsController < ::Steps::BaseStepController
+    class DisbursementsController < Nsm::Steps::BaseController
       def edit
         @disbursements_by_date = current_application.disbursements.by_age.group_by(&:disbursement_date)
         @form_object = ::Steps::AddAnotherForm.build(

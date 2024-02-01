@@ -2,6 +2,7 @@
 
 class HealthcheckController < ApplicationController
   skip_before_action :authenticate_provider!
+  skip_before_action :can_access_service
 
   def ping
     render json: build_args, status: :ok

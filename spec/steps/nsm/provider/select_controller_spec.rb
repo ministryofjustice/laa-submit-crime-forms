@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::Steps::Office::SelectController, type: :controller do
-  let(:provider) { Provider.new }
+  let(:provider) { build_stubbed(:provider) }
 
   before do
     allow(controller).to receive(:current_provider).and_return(provider)
