@@ -175,7 +175,7 @@ RSpec/ExampleLength:
   Exclude:
     - spec/steps/**/integration_spec.rb
     - spec/presenters/nsm/check_answers/**/*
-    - spec/services/notify_app_store/message_builder_spec.rb
+    - spec/services/submit_to_app_store/nsm_payload_builder_spec.rb
     - spec/system/**/*
 
 Lint/MissingSuper:

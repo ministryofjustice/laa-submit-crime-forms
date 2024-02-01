@@ -1,5 +1,5 @@
-class NotifyAppStore
-  class HttpNotifier
+class SubmitToAppStore
+  class HttpClient
     include HTTParty
     headers 'Content-Type' => 'application/json'
 
