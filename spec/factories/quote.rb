@@ -18,7 +18,7 @@ FactoryBot.define do
 
   trait :custom do
     service_type { 'custom' }
-    custom_service_name { 'random service'}
+    custom_service_name { 'random service' }
   end
 
   trait :primary do
