@@ -53,6 +53,7 @@ FactoryBot.define do
       plea { 'something' }
       youth_court { 'something' }
       next_hearing { true }
+      supporting_documents { build_list(:supporting_document, 2) }
     end
   end
 end

@@ -22,7 +22,7 @@ class SubmitToAppStore < ApplicationJob
   end
 
   def submit(submission)
-    payload = PayloadBuilder.call(submission:)
+    payload = PayloadBuilder.call(submission)
     raise 'SNS notification is not yet enabled' if ENV.key?('SNS_URL')
 
     # implement and call SNS notification

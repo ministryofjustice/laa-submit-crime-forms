@@ -72,14 +72,10 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
     }
   end
   let(:provider) { create(:provider) }
-  let(:application) do
-    create(:prior_authority_application, :full)
-  end
+  let(:application) { create(:prior_authority_application, :full) }
+  let(:fixed_arbitrary_date) { Date.new(2024, 1, 15) }
 
-  before do
-    travel_to(Date.new(2024, 1, 15))
-    create_list(:supporting_document, 2, documentable: application)
-  end
+  before { travel_to(fixed_arbitrary_date) }
 
   it 'generates the payload for an application' do
     expect(subject.payload.with_indifferent_access).to eq(expected_output.with_indifferent_access)
