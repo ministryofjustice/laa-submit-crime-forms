@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :quote do
     service_type { 'Forensics Expert' }
+    custom_service_name { nil }
     contact_full_name { 'Joe Bloggs' }
     organisation { 'LAA' }
     postcode { 'CR0 1RE' }
@@ -9,9 +10,15 @@ FactoryBot.define do
   trait :blank do
     service_type { nil }
     contact_full_name { nil }
+    custom_service_name { nil }
     organisation { nil }
     postcode { nil }
     primary { nil }
+  end
+
+  trait :custom do
+    service_type { 'custom' }
+    custom_service_name { 'random service'}
   end
 
   trait :primary do
