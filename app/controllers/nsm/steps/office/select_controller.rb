@@ -1,7 +1,7 @@
 module Nsm
   module Steps
     module Office
-      class SelectController < ::Steps::BaseStepController
+      class SelectController < Nsm::Steps::BaseController
         skip_before_action :check_application_presence
 
         def edit

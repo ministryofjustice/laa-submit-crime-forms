@@ -16,7 +16,7 @@
       <%# File upload component %>
       <div class="moj-multi-file-upload">
         <div class="moj-multi-file-upload__upload">
-          <%= f.govuk_file_field :documents, label: { text: t('.file_upload.heading'), size: 'm' }, hint: { text: t('.file_upload.caption'), class: 'govuk-!-margin-bottom-6' }, class: 'moj-multi-file-upload__input', multiple: true, accept: "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/rtf,image/jpeg,image/bmp,image/png,image/tiff,application/pdf" %>
+          <%= f.govuk_file_field :documents, label: { text: t('.file_upload.heading'), size: 'm' }, hint: { text: t('.file_upload.caption'), class: 'govuk-!-margin-bottom-6' }, class: 'moj-multi-file-upload__input', multiple: true, accept: SupportedFileTypes::SUPPORTING_EVIDENCE.join(',') %>
 
           <button class="govuk-button govuk-button--secondary moj-multi-file-upload__button" data-module="govuk-button">
             <%= t('.upload_file') %>

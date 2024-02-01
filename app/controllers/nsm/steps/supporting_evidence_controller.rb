@@ -2,14 +2,9 @@
 
 module Nsm
   module Steps
-    class SupportingEvidenceController < ::Steps::BaseStepController
+    class SupportingEvidenceController < Nsm::Steps::BaseController
       skip_before_action :verify_authenticity_token
       before_action :supporting_evidence
-
-      SUPPORTED_FILE_TYPES = %w[
-        application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document
-        application/rtf image/jpeg image/bmp image/png image/tiff application/pdf
-      ].freeze
 
       def edit
         @form_object = SupportingEvidenceForm.build(
@@ -56,7 +51,7 @@ module Nsm
       end
 
       def supporting_evidence
-        @supporting_evidence = SupportingEvidence.where(claim_id: current_application.id)
+        @supporting_evidence = current_application.supporting_evidence
       end
 
       def file_uploader
@@ -69,17 +64,16 @@ module Nsm
       end
 
       def save_evidence_data(params, file_path)
-        SupportingEvidence.create(
+        current_application.supporting_evidence.create(
           file_name: params.original_filename,
           file_type: params.content_type,
           file_size: params.tempfile.size,
-          claim: current_application,
           file_path: file_path
         )
       end
 
       def supported_filetype(params)
-        SUPPORTED_FILE_TYPES.include? params.content_type
+        SupportedFileTypes::SUPPORTING_EVIDENCE.include? params.content_type
       end
 
       def return_success(dict)

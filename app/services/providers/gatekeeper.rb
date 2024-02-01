@@ -1,18 +1,26 @@
 # This class is used to limit User access
 module Providers
   class Gatekeeper
+    ANY_SERVICE = :any
+    PAA = :crm4
+    NSM = :crm7
+
     attr_reader :auth_info
 
     def initialize(auth_info)
       @auth_info = auth_info
     end
 
-    def provider_enrolled?
-      email_enrolled? || office_enrolled?
+    def provider_enrolled?(service: ANY_SERVICE)
+      email_enrolled? || office_enrolled?(service:)
     end
 
-    def office_enrolled?
-      allowed_office_codes.intersect?(auth_info.office_codes)
+    def office_enrolled?(service: ANY_SERVICE)
+      if service == ANY_SERVICE
+        auth_info.office_codes.any? { allowed_office_codes[_1.to_sym] }
+      else
+        auth_info.office_codes.any? { allowed_office_codes[_1.to_sym].include?(service.to_s) }
+      end
     end
 
     # TODO: implement separately once decided if this is required

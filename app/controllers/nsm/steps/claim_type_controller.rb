@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class ClaimTypeController < ::Steps::BaseStepController
+    class ClaimTypeController < Nsm::Steps::BaseController
       def edit
         @form_object = ClaimTypeForm.build(
           current_application

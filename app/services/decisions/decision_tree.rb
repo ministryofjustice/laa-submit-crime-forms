@@ -109,5 +109,7 @@ module Decisions
       .goto(show: 'prior_authority/steps/start_page')
     from(:youth_court).goto(show: 'prior_authority/steps/start_page')
     from(:psychiatric_liaison).goto(show: 'prior_authority/steps/start_page')
+
+    from(:reason_why).goto(show: 'prior_authority/steps/start_page')
   end
 end

@@ -22,5 +22,15 @@ FactoryBot.define do
       psychiatric_liaison { nil }
       psychiatric_liaison_reason_not { nil }
     end
+
+    trait :about_request_enabled do
+      ufn { '123456/001' }
+      after(:create) do |paa, _a|
+        create(:defendant, :valid_paa, defendable_id: paa.id, defendable_type: paa.class.to_s)
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/ufn"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/client_detail"
+        paa.save
+      end
+    end
   end
 end

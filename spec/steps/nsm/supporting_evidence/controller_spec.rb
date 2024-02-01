@@ -42,7 +42,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
               filename: 'test.png',
               content_type: 'image/png'
             )
-            @file_upload = SupportingEvidence.create(claim: current_application, file: image)
+            @file_upload = create(:supporting_evidence, documentable_id: current_application.id, file: image)
           end
 
           it 'responds with HTTP Success' do
@@ -57,7 +57,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
 
   describe '#create' do
     context 'when a file is uploaded' do
-      let(:current_application) { build(:claim) }
+      let(:current_application) { create(:claim) }
 
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
@@ -66,7 +66,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
       end
 
       after do
-        FileUtils.rm SupportingEvidence.find(JSON.parse(response.body)['success']['evidence_id']).file_path
+        FileUtils.rm SupportingDocument.find(JSON.parse(response.body)['success']['evidence_id']).file_path
       end
 
       it 'uploads and returns a success' do
@@ -132,15 +132,12 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
   end
 
   describe '#destroy' do
-    let(:current_application) { build(:claim) }
+    let(:current_application) { create(:claim) }
     let(:evidence) do
-      SupportingEvidence.create(
-        file_name: 'test.png',
-        file_type: 'image/png',
-        file_size: '2857',
-        claim: current_application,
-        file_path: Rails.root.join('spec/fixtures/files/12345').to_s
-      )
+      create(:supporting_evidence,
+             file_size: '2857',
+             documentable_id: current_application.id,
+             file_path: Rails.root.join('spec/fixtures/files/12345').to_s)
     end
 
     context 'when there are files present' do

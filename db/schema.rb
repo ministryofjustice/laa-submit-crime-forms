@@ -177,6 +177,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "reason_why"
     t.string "main_offence"
     t.date "rep_order_date"
     t.string "client_maat_number"
@@ -239,15 +240,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
     t.index ["previous_id"], name: "index_solicitors_on_previous_id"
   end
 
-  create_table "supporting_evidence", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "claim_id", null: false
+  create_table "supporting_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "documentable_id", null: false
     t.string "file_name"
     t.string "file_type"
     t.integer "file_size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "file_path"
-    t.index ["claim_id"], name: "index_supporting_evidence_on_claim_id"
+    t.string "documentable_type"
+    t.string "document_type"
+    t.index ["documentable_id"], name: "index_supporting_documents_on_documentable_id"
+    t.index ["documentable_type", "documentable_id"], name: "idx_on_documentable_type_documentable_id_ab3e47fb9f"
   end
 
   create_table "work_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -274,6 +278,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
   add_foreign_key "prior_authority_applications", "solicitors"
   add_foreign_key "quotes", "prior_authority_applications"
   add_foreign_key "solicitors", "solicitors", column: "previous_id"
-  add_foreign_key "supporting_evidence", "claims"
   add_foreign_key "work_items", "claims"
 end
