@@ -27,6 +27,8 @@ Capybara.register_driver :headless_chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
+Capybara.default_driver = Capybara.javascript_driver = :headless_chrome
+
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
@@ -52,7 +54,7 @@ RSpec.configure do |config|
     c.max_formatted_output_length = nil
   end
 
-  config.filter_run_excluding :accessibility unless ENV['INCLUDE_ACCESSIBILITY_SPECS'] =='true'
+  config.filter_run_excluding :accessibility unless ENV['INCLUDE_ACCESSIBILITY_SPECS'] == 'true'
 end
 
 Capybara.configure do |config|

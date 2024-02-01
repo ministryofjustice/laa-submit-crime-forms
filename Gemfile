@@ -50,7 +50,6 @@ group :test do
   gem 'axe-core-rspec'
   gem 'capybara'
   gem 'capybara-selenium'
-  gem 'cuprite', '~> 0.15'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false

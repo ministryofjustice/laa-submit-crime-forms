@@ -163,9 +163,6 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    cuprite (0.15)
-      capybara (~> 3.0)
-      ferrum (~> 0.14.0)
     dartsass-rails (0.5.0)
       railties (>= 6.0.0)
       sass-embedded (~> 1.63)
@@ -210,11 +207,6 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
-    ferrum (0.14)
-      addressable (~> 2.5)
-      concurrent-ruby (~> 1.1)
-      webrick (~> 1.7)
-      websocket-driver (>= 0.6, < 0.8)
     fugit (1.9.0)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
@@ -548,7 +540,6 @@ DEPENDENCIES
   capybara
   capybara-selenium
   clamby (~> 1.6)
-  cuprite (~> 0.15)
   dartsass-rails (~> 0.5.0)
   debug
   dotenv-rails
