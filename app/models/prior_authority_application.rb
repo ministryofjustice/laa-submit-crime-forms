@@ -3,6 +3,11 @@ class PriorAuthorityApplication < ApplicationRecord
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
   has_one :defendant, dependent: :destroy, as: :defendable
+  has_many :supporting_documents, -> { order(:created_at, :file_name).supporting_documents },
+           dependent: :destroy,
+           inverse_of: :documentable,
+           class_name: 'SupportingDocument',
+           as: :documentable
 
   attribute :prison_law, :boolean
   attribute :ufn, :string

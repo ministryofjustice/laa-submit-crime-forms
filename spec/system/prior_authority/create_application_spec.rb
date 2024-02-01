@@ -7,7 +7,7 @@ RSpec.describe 'Prior authority application creation' do
   end
 
   it 'allows the user to create an application' do
-    click_on 'Start an application'
+    click_on 'New application'
 
     expect(page).to have_content 'Is this a Prison Law matter?'
     choose 'Yes'
@@ -27,7 +27,7 @@ RSpec.describe 'Prior authority application creation' do
   end
 
   it 'performs validations' do
-    click_on 'Start an application'
+    click_on 'New application'
 
     click_on 'Save and continue'
     expect(page).to have_content 'Select yes if this is a Prison Law matter'
@@ -40,11 +40,11 @@ RSpec.describe 'Prior authority application creation' do
     click_on 'Save and continue'
 
     click_on 'Save and continue'
-    expect(page).to have_content 'Enter your unique file number for this application'
+    expect(page).to have_content 'Enter the unique file number'
   end
 
   it 'offboards the user for authority request of less than £500' do
-    click_on 'Start an application'
+    click_on 'New application'
 
     choose 'Yes'
     click_on 'Save and continue'
@@ -58,7 +58,7 @@ RSpec.describe 'Prior authority application creation' do
   end
 
   it 'offboards the user for authority request of less than £100' do
-    click_on 'Start an application'
+    click_on 'New application'
 
     choose 'No'
     click_on 'Save and continue'

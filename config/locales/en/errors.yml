@@ -129,12 +129,16 @@ en:
         prior_authority/steps/ufn_form:
           attributes:
             ufn:
-              blank: Enter your unique file number for this application
-              invalid: UFN must be a 9-digit number
+              blank: Enter the unique file number
+              invalid: Unique file number must be in the correct format, for example 310224/001
         prior_authority/steps/youth_court_form:
           attributes:
             youth_court:
               inclusion: Select yes if this is a youth court matter
+        prior_authority/steps/reason_why_form:
+          attributes:
+            reason_why:
+              blank: Enter why prior authority is required
         nsm/steps/claim_type_form:
           attributes:
             ufn:
