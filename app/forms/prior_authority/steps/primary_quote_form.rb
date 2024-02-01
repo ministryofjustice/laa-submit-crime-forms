@@ -35,7 +35,7 @@ module PriorAuthority
       end
 
       def translated_values
-        QuoteServices.values.map { |value| value.translated }
+        QuoteServices.values.map(&:translated)
       end
     end
   end
