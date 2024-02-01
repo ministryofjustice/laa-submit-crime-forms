@@ -39,13 +39,12 @@ function convertSelectToAutocomplete(){
       var convertedToAutocomplete = $acElements[i].getAttribute('data-converted')
       if(!convertedToAutocomplete){
         const name = $acElements[i].getAttribute('data-name')
-        const autoselect = $acElements[i].getAttribute('data-autoselect') === "true"
         accessibleAutocomplete.enhanceSelectElement({
           selectElement: $acElements[i],
           defaultValue: '',
           showNoOptionsFound: name === null,
           name: name,
-          autoselect: autoselect
+          autoselect: $acElements[i].getAttribute('data-autoselect') === "true"
         })
         $acElements[i].setAttribute('data-converted', true)
       }

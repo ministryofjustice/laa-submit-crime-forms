@@ -2,6 +2,7 @@ module PriorAuthority
   module Steps
     class PrimaryQuoteForm < ::Steps::BaseFormObject
       attribute :service_type, :value_object, source: QuoteServices
+      attribute :custom_service_name, :string
       attribute :contact_full_name, :string
       attribute :organisation, :string
       attribute :postcode, :string
@@ -12,15 +13,19 @@ module PriorAuthority
       validates :postcode, presence: true, uk_postcode: true
 
       def service_type_suggestion=(value)
-        return if service_type && QuoteServices.new(service_type).translated == value
-
-        self.service_type = value
+        if value.in?(translated_values)
+          self.service_type = service_type.value
+          self.custom_service_name = nil
+        else
+          self.service_type = 'custom'
+          self.custom_service_name = value
+        end
       end
 
       private
 
       def persist!
-        record.update!(attributes_with_resets.merge(default_attributes))
+        record.update!(attributes.merge(default_attributes))
       end
 
       def default_attributes
@@ -29,12 +34,8 @@ module PriorAuthority
         }
       end
 
-      def attributes_with_resets
-        attributes.merge('custom_service_name' => custom_service? ? service_type : nil)
-      end
-
-      def custom_service?
-        service_type.in? QuoteServices.values
+      def translated_values
+        QuoteServices.values.map { |value| value.translated }
       end
     end
   end

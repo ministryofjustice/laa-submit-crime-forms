@@ -43,13 +43,12 @@ export function initAutocomplete(elementId){
   if(elements.length > 0){
     let element = elements[0]
     let name = element.getAttribute("data-name")
-    let autoselect = element.getAttribute('data-autoselect') === "true"
 
     accessibleAutocomplete.enhanceSelectElement({
       selectElement: element,
       name: name,
       source: customSuggest,
-      autoselect: autoselect,
+      autoselect: element.getAttribute('data-autoselect') === "true",
       templates: {
         inputValue: inputValueTemplate,
         suggestion: suggestionTemplate

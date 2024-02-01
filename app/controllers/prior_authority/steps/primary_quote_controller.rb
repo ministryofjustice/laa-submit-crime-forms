@@ -16,7 +16,11 @@ module PriorAuthority
       private
 
       def primary_quote
-        current_application.primary_quote || current_application.build_primary_quote
+        record = current_application.primary_quote || current_application.build_primary_quote
+        if record.service_type == 'custom'
+          record.service_type = record.custom_service_name
+        end
+        record
       end
 
       def as
