@@ -117,4 +117,29 @@ RSpec.describe SubmitToAppStore do
       end
     end
   end
+
+  describe '#notify' do
+    context 'when submission is a claim' do
+      let(:submission) { build(:claim) }
+      let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
+
+      it 'triggers an email' do
+        expect(ClaimSubmissionMailer).to receive(:notify).with(submission).and_return(mailer)
+        expect(mailer).to receive(:deliver_later!)
+
+        subject.notify(submission)
+      end
+    end
+
+    context 'when submission is a PA application' do
+      let(:submission) { build(:prior_authority_application) }
+      let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
+
+      it 'triggers no email' do
+        expect(ClaimSubmissionMailer).not_to receive(:notify)
+
+        subject.notify(submission)
+      end
+    end
+  end
 end

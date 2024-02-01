@@ -6,7 +6,11 @@ FactoryBot.define do
 
     trait :with_firm_and_solicitor do
       firm_office factory: %i[firm_office valid]
-      solicitor factory: %i[solicitor valid]
+      solicitor factory: %i[solicitor full]
+    end
+
+    trait :with_defendant do
+      defendant factory: %i[defendant valid], strategy: :build
     end
 
     trait :with_psychiatric_liaison do
@@ -31,6 +35,24 @@ FactoryBot.define do
         paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/client_detail"
         paa.save
       end
+    end
+
+    trait :full do
+      with_firm_and_solicitor
+      with_defendant
+      with_psychiatric_liaison
+      ufn { '123123/123' }
+      client_maat_number { '123' }
+      prison_law { true }
+      reason_why { 'something' }
+      main_offence { 'something' }
+      client_detained { true }
+      client_detained_prison { 'something' }
+      subject_to_poca { true }
+      next_hearing_date { 1.day.from_now }
+      plea { 'something' }
+      youth_court { 'something' }
+      next_hearing { true }
     end
   end
 end
