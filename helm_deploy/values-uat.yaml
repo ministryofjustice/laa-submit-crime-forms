@@ -32,7 +32,7 @@ service:
 ingress:
   enabled: true
   namespace: laa-claim-non-standard-magistrate-fee-uat
-#  className: modsec
+  className: modsec
 #  annotations:
 #    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
 #    nginx.ingress.kubernetes.io/modsecurity-snippet: |

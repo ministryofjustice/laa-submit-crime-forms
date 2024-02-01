@@ -17,7 +17,6 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   namespace: {{ .Values.ingress.namespace}}
-  className: modsec
   labels:
     {{- include "laa-claim-non-standard-magistrate-fee-backend.labels" . | nindent 4 }}
   annotations:
