@@ -17,7 +17,7 @@ module PriorAuthority
           self.service_type = service_type.value
           self.custom_service_name = nil
         else
-          self.service_type = 'custom'
+          self.service_type = 'custom' if value.present?
           self.custom_service_name = value
         end
       end
