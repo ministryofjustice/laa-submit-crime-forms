@@ -284,14 +284,9 @@ jobs:
           region: $ECR_REGION
       - checkout
       - run:
-          name: Authenticate K8s
+          name: Authenticate K8s and export environment variables
           command: |
-            echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
-            kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_URL}
-            kubectl config set-credentials circleci --token=${K8S_TOKEN}
-            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
-            kubectl config use-context ${K8S_CLUSTER_NAME}
-            kubectl --namespace=${K8S_NAMESPACE} get pods
+            .circleci/authenticate_with_kubernetes_cluster
             source .circleci/define_build_environment_variables << parameters.dynamic_hostname >>
             echo "export IMAGE_TAG=$IMAGE_TAG" >> $BASH_ENV
             echo "export RELEASE_HOST=$RELEASE_HOST" >> $BASH_ENV
@@ -301,6 +296,18 @@ jobs:
           command: |
             ./bin/deploy << parameters.registry >> << parameters.environment >>
 
+  cleanup_merged:
+    executor: cloud-platform-executor
+    steps:
+      - checkout
+      - run:
+          name: Authenticate with cluster
+          command: |
+            .circleci/authenticate_with_kubernetes_cluster
+      - run:
+          name: Delete dynamic release
+          command: |
+            ./bin/delete_dynamic_release
 
 # ------------------
 # WORKFLOWS
@@ -325,6 +332,11 @@ workflows:
       - scan-docker-image:
           requires:
             - rspec-tests
+      - cleanup_merged:
+          name: cleanup_merged_live
+          context:
+            - laa-claim-non-standard-magistrates-fee-dev-crm4
+            - laa-claim-non-standard-magistrates-fee-dev-crm4
 
   build-push-branch:
     jobs:

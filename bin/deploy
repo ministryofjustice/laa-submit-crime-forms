@@ -1,9 +1,7 @@
 #!/bin/sh
 REGISTRY=$1
 ENVIRONMENT=$2
-# Convert the branch name into a string that can be turned into a valid URL
-  #BRANCH_RELEASE_NAME=$(echo $CIRCLE_BRANCH | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
-  ECR_ENDPOINT=${REGISTRY}/${ECR_REPOSITORY}
+ECR_ENDPOINT=${REGISTRY}/${ECR_REPOSITORY}
 
 deploy_branch() {
 # Set the deployment host, this will add the prefix of the branch name e.g el-257-deploy-with-circleci or just main
@@ -37,9 +35,11 @@ deploy_main() {
                           --namespace=${K8S_NAMESPACE} \
                           --values ./helm_deploy/values-${ENVIRONMENT}.yaml \
                           --set image.repository="${ECR_ENDPOINT}" \
-                          --set ingress.cluster.name=${INGRESS_CLUSTER_NAME} \
-                          --set ingress.cluster.weight=${INGRESS_CLUSTER_WEIGHT} \
-                          --set image.tag="${IMAGE_TAG}"
+                          --set ingress.cluster.name=green \
+                          --set ingress.cluster.weight=100 \
+                          --set image.tag="${IMAGE_TAG}" \
+                          --debug \
+                          --atomic
 }
 
 if [[ "$CIRCLE_BRANCH" == "main" ]]; then
