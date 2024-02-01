@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class DefendantDetailsController < ::Steps::BaseStepController
+    class DefendantDetailsController < Nsm::Steps::BaseController
       before_action :ensure_defendant
 
       def edit

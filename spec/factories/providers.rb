@@ -2,8 +2,28 @@ FactoryBot.define do
   factory :provider do
     auth_provider { 'saml' }
     uid { 'test-user' }
-    office_codes { ['1A123B'] }
+    office_codes { selected_office_codes }
     email { 'provider@example.com' }
-    settings { { selected_office_code: '1A123B' } }
+    settings { { selected_office_code: } }
+
+    trait :paa_access do
+      paa_office_codes { ['BBBBBB'] }
+      base_office_codes { [] }
+    end
+
+    trait :nsm_access do
+      nsm_office_codes { ['AAAAAA'] }
+      base_office_codes { [] }
+    end
+
+    transient do
+      selected_office_code { office_codes[0] }
+      selected_office_codes do
+        [*paa_office_codes, *nsm_office_codes, *base_office_codes]
+      end
+      paa_office_codes { [] }
+      nsm_office_codes { [] }
+      base_office_codes { ['1A123B'] }
+    end
   end
 end

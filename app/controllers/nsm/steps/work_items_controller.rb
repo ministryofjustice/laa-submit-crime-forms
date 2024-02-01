@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class WorkItemsController < ::Steps::BaseStepController
+    class WorkItemsController < Nsm::Steps::BaseController
       def edit
         @work_items_by_date = current_application.work_items.group_by(&:completed_on)
         @form_object = ::Steps::AddAnotherForm.build(

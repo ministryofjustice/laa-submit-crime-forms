@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class FirmDetailsController < ::Steps::BaseStepController
+    class FirmDetailsController < Nsm::Steps::BaseController
       def edit
         @form_object = FirmDetailsForm.build(
           current_application

@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class WorkItemDeleteController < ::Steps::BaseStepController
+    class WorkItemDeleteController < Nsm::Steps::BaseController
       before_action :ensure_work_item
 
       def edit

@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class HearingDetailsController < ::Steps::BaseStepController
+    class HearingDetailsController < Nsm::Steps::BaseController
       def edit
         @form_object = HearingDetailsForm.build(
           current_application

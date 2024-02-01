@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class OtherInfoController < ::Steps::BaseStepController
+    class OtherInfoController < Nsm::Steps::BaseController
       def edit
         @form_object = OtherInfoForm.build(
           current_application

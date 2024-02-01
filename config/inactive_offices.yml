@@ -7,7 +7,7 @@
 # This is used by Provider::ActiveOfficeChecker to filter out inactive
 # offices from the array that Crime Apply receives from the portal auth_info
 #
-# This happens after the Provider::Gatekeeper has filtered out providers
+# This happens after the Providers::Gatekeeper has filtered out providers
 # that have not been onboarded yet in Providers::OmniauthCallbacksController.
 #
 #

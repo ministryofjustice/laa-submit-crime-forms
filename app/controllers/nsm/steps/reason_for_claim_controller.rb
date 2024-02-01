@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class ReasonForClaimController < ::Steps::BaseStepController
+    class ReasonForClaimController < Nsm::Steps::BaseController
       def edit
         @form_object = ReasonForClaimForm.build(
           current_application

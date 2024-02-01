@@ -48,7 +48,7 @@ RSpec.describe 'Sign in user journey' do
     before do
       allow_any_instance_of(
         Provider
-      ).to receive(:office_codes).and_return(['A1'])
+      ).to receive(:office_codes).and_return(['1A123B'])
 
       click_button 'Sign in with LAA Portal'
     end
