@@ -17,21 +17,6 @@ if ($inputs) {
   }
 }
 
-//enhance all tagged select elements to be accessible-autocomplete elements
-const $acElements = document.querySelectorAll('[data-module="accessible-autocomplete"]')
-if ($acElements) {
-  for (let i = 0; i < $acElements.length; i++) {
-    const name = $acElements[i].getAttribute('data-name')
-
-    accessibleAutocomplete.enhanceSelectElement({
-      selectElement: $acElements[i],
-      defaultValue: '',
-      showNoOptionsFound: name === null,
-      name: name
-    })
-  }
-}
-
 // Avoid flickering header menu on small screens
 // Refer to `stylesheets/local/custom.scss`
 const $headerNavigation = document.querySelector('ul.app-header-menu-hidden-on-load')
@@ -39,6 +24,30 @@ if ($headerNavigation) {
   $headerNavigation.classList.remove("app-header-menu-hidden-on-load")
 }
 
+convertSelectToAutocomplete()
+
 $(document).on('turbo:render', function () {
   initAll()
+  convertSelectToAutocomplete()
 })
+
+function convertSelectToAutocomplete(){
+  //enhance all tagged select elements to be accessible-autocomplete elements
+  const $acElements = document.querySelectorAll('[data-module="accessible-autocomplete"]')
+  if ($acElements) {
+    for (let i = 0; i < $acElements.length; i++) {
+      var convertedToAutocomplete = $acElements[i].getAttribute('data-converted')
+      if(!convertedToAutocomplete){
+        const name = $acElements[i].getAttribute('data-name')
+        accessibleAutocomplete.enhanceSelectElement({
+          selectElement: $acElements[i],
+          defaultValue: '',
+          showNoOptionsFound: name === null,
+          name: name,
+          autoselect: $acElements[i].getAttribute('data-autoselect') === "true"
+        })
+        $acElements[i].setAttribute('data-converted', true)
+      }
+    }
+  }
+}

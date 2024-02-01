@@ -73,83 +73,93 @@ total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
   end
 
   describe '#sections' do
-    # rubocop:disable RSpec/ExampleLength
-    it 'returns an array of data for the Summary list renderer' do
-      expect(subject.sections).to eq(
-        [
-          {
-            card: {
-              actions: ['<a class="govuk-link" ' \
-                        "href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"],
-              title: 'Work Items Total £75.00'
-            },
-            rows: [
-              {
-                key: { classes: 'govuk-summary-list__value-width-50', text: 'Items' },
-                value: { classes: 'govuk-summary-list__value-bold', text: 'Total per item' }
-              },
-              *wi_rows,
-              {
-                classes: 'govuk-summary-list__row-double-border',
-                key: { classes: 'govuk-summary-list__value-width-50', text: 'Total' },
-                value: { classes: 'govuk-summary-list__value-bold', text: '£75.00' }
-              },
-              {
-                key: { classes: 'govuk-summary-list__value-width-50', text: 'Total (including VAT)' },
-                value: { classes: 'govuk-summary-list__value-bold', text: '£85.00' }
-              }
-            ]
+    it 'returns an array of sections' do
+      expect(subject.sections).to be_a Array
+    end
+
+    it 'returns a section for work items' do
+      expect(subject.sections).to include(
+        {
+          card: {
+            actions: ['<a class="govuk-link" ' \
+                      "href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"],
+            title: 'Work Items Total £75.00'
           },
-          {
-            card: {
-              actions: ['<a class="govuk-link" ' \
-                        "href=\"/non-standard-magistrates/applications/#{id}/steps/letters_calls\">Change</a>"],
-              title: 'Letters and Calls Total £100.00'
+          rows: [
+            {
+              key: { classes: 'govuk-summary-list__value-width-50', text: 'Items' },
+              value: { classes: 'govuk-summary-list__value-bold', text: 'Total per item' }
             },
-            rows: [
-              {
-                key: { classes: 'govuk-summary-list__value-width-50', text: 'Items' },
-                value: { classes: 'govuk-summary-list__value-bold', text: 'Total per item' }
-              },
-              *l_rows,
-              {
-                classes: 'govuk-summary-list__row-double-border',
-                key: { classes: 'govuk-summary-list__value-width-50', text: 'Total' },
-                value: { classes: 'govuk-summary-list__value-bold', text: '£100.00' }
-              },
-              {
-                key: { classes: 'govuk-summary-list__value-width-50', text: 'Total (including VAT)' },
-                value: { classes: 'govuk-summary-list__value-bold', text: '£120.00' }
-              }
-            ]
-          },
-          {
-            card: {
-              actions: ['<a class="govuk-link" ' \
-                        "href=\"/non-standard-magistrates/applications/#{id}/steps/disbursements\">Change</a>"],
-              title: 'Disbursements Total £55.00'
+            *wi_rows,
+            {
+              classes: 'govuk-summary-list__row-double-border',
+              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total' },
+              value: { classes: 'govuk-summary-list__value-bold', text: '£75.00' }
             },
-            rows: [
-              {
-                key: { classes: 'govuk-summary-list__value-width-50', text: 'Items' },
-                value: { classes: 'govuk-summary-list__value-bold', text: 'Total per item' }
-              },
-              *d_rows,
-              {
-                classes: 'govuk-summary-list__row-double-border',
-                key: { classes: 'govuk-summary-list__value-width-50', text: 'Total' },
-                value: { classes: 'govuk-summary-list__value-bold', text: '£55.00' }
-              },
-              {
-                key: { classes: 'govuk-summary-list__value-width-50', text: 'Total (including any VAT)' },
-                value: { classes: 'govuk-summary-list__value-bold', text: '£65.00' }
-              }
-            ]
-          }
-        ]
+            {
+              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total (including VAT)' },
+              value: { classes: 'govuk-summary-list__value-bold', text: '£85.00' }
+            }
+          ]
+        }
       )
     end
-    # rubocop:enable RSpec/ExampleLength
+
+    it 'returns a section for letters and calls' do
+      expect(subject.sections).to include(
+        {
+          card: {
+            actions: ['<a class="govuk-link" ' \
+                      "href=\"/non-standard-magistrates/applications/#{id}/steps/letters_calls\">Change</a>"],
+            title: 'Letters and Calls Total £100.00'
+          },
+          rows: [
+            {
+              key: { classes: 'govuk-summary-list__value-width-50', text: 'Items' },
+              value: { classes: 'govuk-summary-list__value-bold', text: 'Total per item' }
+            },
+            *l_rows,
+            {
+              classes: 'govuk-summary-list__row-double-border',
+              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total' },
+              value: { classes: 'govuk-summary-list__value-bold', text: '£100.00' }
+            },
+            {
+              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total (including VAT)' },
+              value: { classes: 'govuk-summary-list__value-bold', text: '£120.00' }
+            }
+          ]
+        }
+      )
+    end
+
+    it 'returns a section for disbursements' do
+      expect(subject.sections).to include(
+        {
+          card: {
+            actions: ['<a class="govuk-link" ' \
+                      "href=\"/non-standard-magistrates/applications/#{id}/steps/disbursements\">Change</a>"],
+            title: 'Disbursements Total £55.00'
+          },
+          rows: [
+            {
+              key: { classes: 'govuk-summary-list__value-width-50', text: 'Items' },
+              value: { classes: 'govuk-summary-list__value-bold', text: 'Total per item' }
+            },
+            *d_rows,
+            {
+              classes: 'govuk-summary-list__row-double-border',
+              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total' },
+              value: { classes: 'govuk-summary-list__value-bold', text: '£55.00' }
+            },
+            {
+              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total (including any VAT)' },
+              value: { classes: 'govuk-summary-list__value-bold', text: '£65.00' }
+            }
+          ]
+        }
+      )
+    end
   end
 
   describe '#total_cost' do

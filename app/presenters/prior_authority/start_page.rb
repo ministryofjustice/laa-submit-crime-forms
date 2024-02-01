@@ -21,9 +21,10 @@ module PriorAuthority
         ],
         [
           :about_request, [
+            'prior_authority/primary_quote',
             'prior_authority/reason_why'
-          ]
-        ]
+          ],
+        ],
       ].freeze
     end
   end

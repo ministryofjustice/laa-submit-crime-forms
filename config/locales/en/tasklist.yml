@@ -14,11 +14,13 @@ en:
       claim: About the claim
       evidence: Supporting evidence
       review: Review and confirm
+      about_request: About the request
     task:
       prior_authority/ufn: Unique file number
       prior_authority/case_contact: Case contact
       prior_authority/case_and_hearing_detail: Case and hearing details
       prior_authority/client_detail: Client details
+      prior_authority/primary_quote: Primary quote
       prior_authority/reason_why: Reason for prior authority
       nsm/claim_type:
         non_standard_magistrate: Non-standard magistrates’ court payment

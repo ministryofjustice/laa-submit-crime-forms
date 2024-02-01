@@ -69,6 +69,17 @@ en:
         edit:
           legend: Is this a Prison Law matter?
           page_title: Prison law
+      primary_quote:
+        edit:
+          page_title: Primary quote
+          caption: 3. About the request
+          service_name_hint: |
+           Enter the name of the service you require,
+           or select one from the suggestions that appear when you start to enter the name.
+          service_details: Service details
+          contact_full_name: Contact full name
+          organisation: Organisation
+          postcode: Postcode
       psychiatric_liaison:
         edit:
           caption: 2. About the case

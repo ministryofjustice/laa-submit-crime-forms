@@ -95,7 +95,6 @@ describe LaaPortal::SamlSetup do
         ).to receive(:parse_remote_to_hash).with(metadata_url).and_return(metadata_result)
       end
 
-      # rubocop:disable RSpec/ExampleLength
       it 'merges the configuration into the `omniauth.strategy`' do
         expect(
           subject
@@ -128,7 +127,6 @@ describe LaaPortal::SamlSetup do
           }
         )
       end
-      # rubocop:enable RSpec/ExampleLength
     end
   end
 end

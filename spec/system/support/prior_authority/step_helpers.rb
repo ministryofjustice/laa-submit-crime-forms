@@ -2,6 +2,7 @@
 
 module PriorAuthority
   module StepHelpers
+    # rubocop:disable Metrics/CyclomaticComplexity
     def fill_in_until_step(step, prison_law: 'No', court_type: "Magistrate's court")
       fill_in_prison_law_and_authority_value(prison_law)
 
@@ -27,8 +28,15 @@ module PriorAuthority
 
       return if step.in?(%i[psychiatric_liaison youth_court])
 
+      fill_in_youth_court
+
+      return if step == :primary_quote
+
+      fill_in_primary_quote
+
       :end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def fill_in_prison_law_and_authority_value(prison_law)
       visit provider_saml_omniauth_callback_path
@@ -100,6 +108,24 @@ module PriorAuthority
       choose plea
       choose court_type
       click_on 'Save and continue'
+    end
+
+    def fill_in_youth_court
+      within('.govuk-form-group', text: 'Is this a youth court matter') do
+        choose 'No'
+      end
+      click_on 'Save and continue'
+    end
+
+    def fill_in_primary_quote
+      click_on 'Primary quote'
+
+      fill_in 'Service required', with: 'Forensics'
+      fill_in 'Contact full name', with: 'Joe Bloggs'
+      fill_in 'Organisation', with: 'LAA'
+      fill_in 'Postcode', with: 'CR0 1RE'
+
+      click_on 'Save and come back later'
     end
   end
 end

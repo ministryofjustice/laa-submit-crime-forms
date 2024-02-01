@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_25_153852) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -216,6 +216,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_25_153852) do
     t.index ["auth_provider", "uid"], name: "index_providers_on_auth_provider_and_uid", unique: true
   end
 
+  create_table "quotes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "service_type"
+    t.string "custom_service_name"
+    t.string "contact_full_name"
+    t.string "organisation"
+    t.string "postcode"
+    t.boolean "primary", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "prior_authority_application_id", null: false
+    t.index ["prior_authority_application_id"], name: "index_quotes_on_prior_authority_application_id"
+  end
+
   create_table "solicitors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "full_name"
     t.string "reference_number"
@@ -263,6 +276,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_25_153852) do
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
   add_foreign_key "prior_authority_applications", "firm_offices"
   add_foreign_key "prior_authority_applications", "solicitors"
+  add_foreign_key "quotes", "prior_authority_applications"
   add_foreign_key "solicitors", "solicitors", column: "previous_id"
   add_foreign_key "work_items", "claims"
 end

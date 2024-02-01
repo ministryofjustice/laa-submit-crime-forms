@@ -3,12 +3,15 @@ class PriorAuthorityApplication < ApplicationRecord
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
   has_one :defendant, dependent: :destroy, as: :defendable
+  has_many :quote, dependent: :destroy
+  has_one :primary_quote, lambda {
+                            where(primary: true)
+                          }, class_name: 'Quote', dependent: :destroy, inverse_of: :prior_authority_application
   has_many :supporting_documents, -> { order(:created_at, :file_name).supporting_documents },
            dependent: :destroy,
            inverse_of: :documentable,
            class_name: 'SupportingDocument',
            as: :documentable
-
   attribute :prison_law, :boolean
   attribute :ufn, :string
   attribute :office_code, :string

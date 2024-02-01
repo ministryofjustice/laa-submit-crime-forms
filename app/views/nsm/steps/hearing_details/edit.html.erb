@@ -10,7 +10,7 @@
       <%= f.govuk_number_field :number_of_hearing, min: 1, step: 1, width: 3, label: { size: 's' }%>
 
       <%= suggestion_select f, :court, LaaMultiStepForms::Court.all, :name, :name, width: 20,
-                              options: { include_blank: true }, label: { size: 's' } %>
+                              options: { include_blank: true }, label: { size: 's' }, data: { autoselect: false } %>
 
       <%= f.govuk_radio_buttons_fieldset :in_area, legend: { size: 's' } do %>
         <%= f.govuk_radio_button :in_area, YesNoAnswer::YES.to_s %>
@@ -22,12 +22,12 @@
       <% end%>
 
       <%= f.govuk_collection_select :hearing_outcome, OutcomeCode.all, :id, :name,
-                              data: { module: 'accessible-autocomplete' }, width: 20,
+                              data: { module: 'accessible-autocomplete', autoselect: true }, width: 20,
                               options: { include_blank: true }, label: { size: 's' } %>
 
 
       <%= f.govuk_collection_select :matter_type, MatterType.all, :id, :name,
-                              data: { module: 'accessible-autocomplete' }, width: 20,
+                              data: { module: 'accessible-autocomplete', autoselect: true }, width: 20,
                               options: { include_blank: true }, label: { size: 's' } %>
 
       <%= f.continue_button %>

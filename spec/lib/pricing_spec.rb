@@ -7,7 +7,6 @@ RSpec.describe Pricing do
   let(:date) { nil }
 
   describe '#for' do
-    # rubocop:disable RSpec/ExampleLength
     context 'when date is nil' do
       it 'returns the current (post CLAIR) pricing' do
         expect(described_class).to receive(:new).with(
@@ -80,7 +79,6 @@ RSpec.describe Pricing do
         subject
       end
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 
   describe '#initialize' do

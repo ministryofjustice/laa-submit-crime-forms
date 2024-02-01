@@ -43,14 +43,15 @@ export function initAutocomplete(elementId){
   if(elements.length > 0){
     let element = elements[0]
     let name = element.getAttribute("data-name")
-   
+
     accessibleAutocomplete.enhanceSelectElement({
       selectElement: element,
       name: name,
       source: customSuggest,
-      templates: { 
+      autoselect: element.getAttribute('data-autoselect') === "true",
+      templates: {
         inputValue: inputValueTemplate,
-        suggestion: suggestionTemplate 
+        suggestion: suggestionTemplate
       }
     })
   }
@@ -69,7 +70,7 @@ $("document").ready(() => {
 
   selectElements.each((index, element) => {
     let elementId = element.id
-    
+
     //enhance offence select tags
     initAutocomplete(elementId)
 

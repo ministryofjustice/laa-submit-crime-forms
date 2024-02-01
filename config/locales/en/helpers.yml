@@ -328,6 +328,8 @@ en:
           'y': 'Yes'
           'n': 'No'
           u: Unknown
+      prior_authority_steps_primary_quote_form:
+        service_type: Service required
     other_disbursement_type:
       accident_reconstruction_report: Accident Reconstruction Report
       accident_emergency_report: Accident & Emergency Report
@@ -365,4 +367,110 @@ en:
       travel_expenses_excl_car: Travel expenses (excl car)
       veterinarian_report: Veterinarian Report
       voice_recognition_experts: Voice Recognition
-
+    quote_services:
+      ae_consultant: A&E Consultant
+      accident_reconstruction: Accident Reconstruction
+      accountant: Accountant
+      anaesthatist: Anaesthatist
+      animal_behaviourist: Animal Behaviourist
+      architect: Architect
+      back_calculations: Back Calculations
+      benefit_expert: Benefit Expert
+      culture_expert: Culture expert
+      cardiologist: Cardiologist
+      cell_site_analysis: Cell site analysis
+      child_psychiatrist: Child Psychiatrist
+      child_psychologist: Child Psychologist
+      computer_experts: Computer Experts
+      consultant_engineer: Consultant Engineer
+      dentist: Dentist
+      dermatologist: Dermatologist
+      disability_consultant: Disability Consultant
+      dna_per_person: DNA (per person)
+      doctor_gp: Doctor (GP)
+      drug_expert: Drug Expert
+      employment_consultant: Employment Consultant
+      encro_chat: Encro Chat
+      engineer: Engineer
+      enquiry_agent: Enquiry Agent
+      ent_surgeon: ENT Surgeon
+      enviromental_expert: Enviromental expert
+      facial_mapping: Facial Mapping
+      fingerprint_experts: Fingerprint Experts
+      firearm_expert: Firearm Expert
+      fire_investigation: Fire Investigation
+      forensic_psychiatrist: Forensic Psychiatrist
+      forensic_scientist: Forensic Scientist
+      general_surgeon: General Surgeon
+      geneticist: Geneticist
+      cultural_music_expert: Cultural Music Expert
+      gp_records_report: GP (Records Report)
+      gynaecologist: Gynaecologist
+      haematologist: Haematologist
+      handwriting_expert: Handwriting Expert
+      human_trafficking: Human Trafficking
+      interpreters: Interpreters
+      intermediary: Intermediary
+      intermediary_after_apr_2022: Intermediary submitted after 1st April 2022
+      jewellery_valuation: Jewellery valuation
+      legal_prison_expert_extradition: Legal/Prison expert (extradition)
+      lip_reader_signer: Lip-Reader / Signer
+      mortgage_expert: Mortgage Expert
+      mediators_fees: Mediators Fees
+      medical_consultant: Medical Consultant
+      medical_report: Medical Report
+      medical_microbiologist: Medical Microbiologist
+      meteorologist: Meteorologist
+      midwife: Midwife
+      neonatologist: Neonatologist
+      neurologist: Neurologist
+      neuropathologist: Neuropathologist
+      neuropsychiatrist: Neuropsychiatrist
+      neuropsychologist: Neuropsychologist
+      neuroradiologist: Neuroradiologist
+      neurosurgeon: Neurosurgeon
+      nursing_expert: Nursing Expert
+      obstetrician: Obstetrician
+      occupational_therapist: Occupational Therapist
+      oncologist: Oncologist
+      opthalmologist: Opthalmologist
+      orthopaedic_surgeon: Orthopaedic Surgeon
+      paediatrician: Paediatrician
+      pathologist: Pathologist
+      pharmacologist: Pharmacologist
+      photocopying_per_sheet: Photocopying per sheet
+      photographer: Photographer
+      physiotherapist: Physiotherapist
+      plastic_surgeon: Plastic Surgeon
+      process_server: Process Server
+      private_investigator: Private Investigator
+      psychiatrist_inc_chld: Psychiatrist (inc Chld)
+      psychologist: Psychologist
+      psychologist_child: Psychologist - Child
+      radiologist: Radiologist
+      rheumatologist: Rheumatologist
+      risk_assessment_expert: Risk Assessment Expert
+      sleep_expert: Sleep expert
+      speech_therapist: Speech Therapist
+      surgeon: Surgeon
+      surveyor: Surveyor
+      surveyor_housing_disrepair: Surveyor (housing disrepair)
+      tachograph_expert: Tachograph Expert
+      telecoms_expert: Telecoms Expert
+      toxicologist: Toxicologist
+      transcripts_recordings: Transcripts (recordings)
+      translation_and_transcription_word: Translation and Transcription (word counts)
+      court_transcription: Court transcription
+      translator_documents: Translator (documents)
+      urologist: Urologist
+      vet: Vet
+      voice_recognition: Voice Recognition
+      jewellery_valuer_gemmologist: Jewellery Valuer / Gemmologist
+      specialist_barristers_: Specialist Barristers (Land, Property, Chancery Law)
+      lab_fees: Lab Fees
+      independent_social_worker: Independent Social Worker
+      psychiatric_report_prsn_law: A Psychiatric report (Prison Law)
+      psychological_report_prsn_law: A Psychological report (Prison Law)
+      other: Other
+      travel: Travel
+      report_writing: report writing
