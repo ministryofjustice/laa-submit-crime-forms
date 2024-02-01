@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class CaseDetailsController < ::Steps::BaseStepController
+    class CaseDetailsController < Nsm::Steps::BaseController
       def edit
         @form_object = CaseDetailsForm.build(
           current_application

@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class DefendantSummaryController < ::Steps::BaseStepController
+    class DefendantSummaryController < Nsm::Steps::BaseController
       def edit
         @main_defendant, *@additional_defendants = current_application.defendants
         @form_object = ::Steps::AddAnotherForm.build(

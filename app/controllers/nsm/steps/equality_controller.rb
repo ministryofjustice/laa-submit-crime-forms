@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class EqualityController < ::Steps::BaseStepController
+    class EqualityController < Nsm::Steps::BaseController
       def edit
         @form_object = AnswerEqualityForm.build(
           current_application

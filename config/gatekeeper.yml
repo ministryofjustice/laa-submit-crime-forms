@@ -6,25 +6,27 @@
 #
 localhost:
   office_codes:
-    - 1A123B
-    - 1K022G
-    - AAAAAA
-    - 0A719G
+    1A123B: ['crm7', 'crm4']
+    1K022G: ['crm7', 'crm4']
+    AAAAAA: ['crm7', 'crm4']
+    0A719G: ['crm7', 'crm4']
+    AAAAAA: ['crm7']
+    BBBBBB: ['crm4']
 
 development:
   office_codes:
-    - 1A123B
-    - 1K022G
-    - AAAAAA
-    - 0A719G
+    1A123B: ['crm7', 'crm4']
+    1K022G: ['crm7', 'crm4']
+    AAAAAA: ['crm7', 'crm4']
+    0A719G: ['crm7', 'crm4']
 
 uat:
   office_codes:
-    - 1A123B
-    - 1K022G
-    - AAAAAA
-    - 0Z981E
-    - 0A719G
+    1A123B: ['crm7', 'crm4']
+    1K022G: ['crm7', 'crm4']
+    AAAAAA: ['crm7', 'crm4']
+    0A719G: ['crm7', 'crm4']
+    0Z981E: ['crm7', 'crm4']
 
 production:
-  office_codes: []
+  office_codes: {}

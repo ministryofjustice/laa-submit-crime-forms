@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class SolicitorDeclarationController < ::Steps::BaseStepController
+    class SolicitorDeclarationController < Nsm::Steps::BaseController
       def edit
         @form_object = SolicitorDeclarationForm.build(
           current_application

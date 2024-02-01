@@ -1,6 +1,7 @@
 module Providers
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     skip_before_action :verify_authenticity_token
+    skip_before_action :can_access_service
     before_action :check_provider_is_enrolled, only: [:saml]
 
     def saml

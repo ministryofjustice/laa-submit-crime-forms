@@ -29,5 +29,9 @@ module PriorAuthority
       attributes[:office_code] = current_office_code
       current_provider.prior_authority_applications.create!(attributes).tap(&block)
     end
+
+    def service
+      Providers::Gatekeeper::PAA
+    end
   end
 end

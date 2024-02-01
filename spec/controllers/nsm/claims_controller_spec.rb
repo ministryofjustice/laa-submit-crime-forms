@@ -17,7 +17,7 @@ RSpec.describe Nsm::ClaimsController do
   end
 
   context 'create' do
-    let(:provider) { instance_double(Provider, selected_office_code: 'AAA') }
+    let(:provider) { instance_double(Provider, selected_office_code: 'AAA', office_codes: ['1A123B']) }
     let(:claim) { instance_double(Claim, id: SecureRandom.uuid) }
 
     before do
