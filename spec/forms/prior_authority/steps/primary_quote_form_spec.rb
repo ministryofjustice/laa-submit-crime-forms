@@ -13,15 +13,14 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     }
   end
 
+  let(:record) { instance_double(Quote) }
+  let(:service_type) { 'Forensics Expert' }
+  let(:contact_full_name) { 'Joe Bloggs' }
+  let(:organisation) { 'LAA' }
+  let(:postcode) { 'CR0 1RE' }
+
   describe '#validate' do
-    let(:record) { instance_double(Quote) }
-
     context 'with valid quote details' do
-      let(:service_type) { 'Forensics Expert' }
-      let(:contact_full_name) { 'Joe Bloggs' }
-      let(:organisation) { 'LAA' }
-      let(:postcode) { 'CR0 1RE' }
-
       it { is_expected.to be_valid }
     end
 
@@ -87,6 +86,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
           .to(
             hash_including(
               'service_type' => 'Forensics Expert',
+              'custom_service_name' => nil,
               'contact_full_name' => 'Joe Bloggs',
               'organisation' => 'LAA',
               'postcode' => 'CR0 1RE',
@@ -114,6 +114,40 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
             )
           )
       end
+    end
+  end
+
+  describe '#service_type' do
+    subject(:form) { described_class.new(arguments.merge(service_type_suggestion:)) }
+    let(:service_type) { PriorAuthority::QuoteServices.values.sample }
+
+    context 'service type suggestion matches a quote service' do
+      let(:service_type_suggestion) { service_type.translated }
+
+      it { expect(subject.service_type).to eq(service_type) }
+    end
+
+    context 'service type suggestion does not match a quote service' do
+      let(:service_type_suggestion) { 'garbage value' }
+
+      it{ expect(subject.service_type).to eq(PriorAuthority::QuoteServices.new('custom')) }
+    end
+  end
+
+  describe '#custom_service_name' do
+    subject(:form) { described_class.new(arguments.merge(service_type_suggestion:)) }
+    let(:service_type) { PriorAuthority::QuoteServices.values.sample }
+
+    context 'service type suggestion matches a quote service' do
+      let(:service_type_suggestion) { service_type.translated }
+
+      it { expect(subject.custom_service_name).to eq(nil) }
+    end
+
+    context 'service type suggestion does not match a quote service' do
+      let(:service_type_suggestion) { 'garbage value' }
+
+      it{ expect(subject.custom_service_name).to eq('garbage value') }
     end
   end
 end
