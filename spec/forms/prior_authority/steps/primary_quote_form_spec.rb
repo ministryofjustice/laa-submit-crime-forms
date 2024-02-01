@@ -6,7 +6,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   let(:arguments) do
     {
       record:,
-      service_name:,
+      service_type:,
       contact_full_name:,
       organisation:,
       postcode:,
@@ -17,7 +17,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     let(:record) { instance_double(Quote) }
 
     context 'with valid quote details' do
-      let(:service_name) { 'Forensics Expert' }
+      let(:service_type) { 'Forensics Expert' }
       let(:contact_full_name) { 'Joe Bloggs' }
       let(:organisation) { 'LAA' }
       let(:postcode) { 'CR0 1RE' }
@@ -26,14 +26,14 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     end
 
     context 'with blank quote details' do
-      let(:service_name) { '' }
+      let(:service_type) { '' }
       let(:contact_full_name) { '' }
       let(:organisation) { '' }
       let(:postcode) { '' }
 
       it 'has a validation errors on blank fields' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:service_name, :blank)).to be(true)
+        expect(form.errors.of_kind?(:service_type, :blank)).to be(true)
         expect(form.errors.of_kind?(:contact_full_name, :blank)).to be(true)
         expect(form.errors.of_kind?(:organisation, :blank)).to be(true)
         expect(form.errors.of_kind?(:postcode, :blank)).to be(true)
@@ -46,7 +46,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     end
 
     context 'with invalid quote details' do
-      let(:service_name) { 'Forensics Expert' }
+      let(:service_type) { 'Forensics Expert' }
       let(:contact_full_name) { 'Tim' }
       let(:organisation) { 'LAA' }
       let(:postcode) { 'loren ipsum' }
@@ -68,7 +68,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     let(:record) { create(:quote, :blank, prior_authority_application: create(:prior_authority_application)) }
 
     context 'with valid quote details' do
-      let(:service_name) { 'Forensics Expert' }
+      let(:service_type) { 'Forensics Expert' }
       let(:contact_full_name) { 'Joe Bloggs' }
       let(:organisation) { 'LAA' }
       let(:postcode) { 'CR0 1RE' }
@@ -77,7 +77,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         expect { save }.to change { record.reload.attributes }
           .from(
             hash_including(
-              'service_name' => nil,
+              'service_type' => nil,
               'contact_full_name' => nil,
               'organisation' => nil,
               'postcode' => nil,
@@ -86,7 +86,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
           )
           .to(
             hash_including(
-              'service_name' => 'Forensics Expert',
+              'service_type' => 'Forensics Expert',
               'contact_full_name' => 'Joe Bloggs',
               'organisation' => 'LAA',
               'postcode' => 'CR0 1RE',
@@ -97,7 +97,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     end
 
     context 'with incomplete quote details' do
-      let(:service_name) { 'Forensics Expert' }
+      let(:service_type) { 'Forensics Expert' }
       let(:contact_full_name) { '' }
       let(:organisation) { '' }
       let(:postcode) { '' }
@@ -106,7 +106,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         expect { save }.not_to change { record.reload.attributes }
           .from(
             hash_including(
-              'service_name' => nil,
+              'service_type' => nil,
               'contact_full_name' => nil,
               'organisation' => nil,
               'postcode' => nil,
