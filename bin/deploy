@@ -4,7 +4,6 @@ ENVIRONMENT=$2
 # Convert the branch name into a string that can be turned into a valid URL
   #BRANCH_RELEASE_NAME=$(echo $CIRCLE_BRANCH | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
   ECR_ENDPOINT=${REGISTRY}/${ECR_REPOSITORY}
-  #HOST="crm4dev.apps.live.cloud-platform.service.justice.gov.uk"
 
 deploy_branch() {
 # Set the deployment host, this will add the prefix of the branch name e.g el-257-deploy-with-circleci or just main
@@ -24,7 +23,8 @@ deploy_branch() {
                 --set environment=$RELEASE_NAME \
                 --set image.repository="${ECR_ENDPOINT}" \
                 --set image.tag="${IMAGE_TAG}" \
-                --set ingress.annotations."external-dns\.alpha\.kubernetes\.io/set-identifier"="$IDENTIFIER" \
+                --set ingress.cluster.name=${INGRESS_CLUSTER_NAME} \
+                --set ingress.cluster.weight=${INGRESS_CLUSTER_WEIGHT} \
                 --set ingress.hosts[0].host="$RELEASE_HOST" \
                 --debug \
                 --atomic
@@ -37,6 +37,8 @@ deploy_main() {
                           --namespace=${K8S_NAMESPACE} \
                           --values ./helm_deploy/values-${ENVIRONMENT}.yaml \
                           --set image.repository="${ECR_ENDPOINT}" \
+                          --set ingress.cluster.name=${INGRESS_CLUSTER_NAME} \
+                          --set ingress.cluster.weight=${INGRESS_CLUSTER_WEIGHT} \
                           --set image.tag="${IMAGE_TAG}"
 }
 

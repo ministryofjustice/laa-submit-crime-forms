@@ -17,12 +17,19 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   namespace: {{ .Values.ingress.namespace}}
+  className: modsec
   labels:
     {{- include "laa-claim-non-standard-magistrate-fee-backend.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- if .Values.ingress.cluster.name }}
+    external-dns.alpha.kubernetes.io/set-identifier: "{{ $fullName }}-{{ .Release.Namespace }}-{{- .Values.ingress.cluster.name -}}"
+    external-dns.alpha.kubernetes.io/aws-weight: "{{- .Values.ingress.cluster.weight -}}"
+    {{- end }}
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/modsecurity-snippet: |
+      SecRuleEngine On
+      SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
+      SecAction "id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=6"
 spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: {{ .Values.ingress.className }}
