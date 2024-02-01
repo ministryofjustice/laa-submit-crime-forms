@@ -119,6 +119,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
   describe '#service_type' do
     subject(:form) { described_class.new(arguments.merge(service_type_suggestion:)) }
+
     let(:service_type) { PriorAuthority::QuoteServices.values.sample }
 
     context 'service type suggestion matches a quote service' do
@@ -130,24 +131,25 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     context 'service type suggestion does not match a quote service' do
       let(:service_type_suggestion) { 'garbage value' }
 
-      it{ expect(subject.service_type).to eq(PriorAuthority::QuoteServices.new('custom')) }
+      it { expect(subject.service_type).to eq(PriorAuthority::QuoteServices.new('custom')) }
     end
   end
 
   describe '#custom_service_name' do
     subject(:form) { described_class.new(arguments.merge(service_type_suggestion:)) }
+
     let(:service_type) { PriorAuthority::QuoteServices.values.sample }
 
     context 'service type suggestion matches a quote service' do
       let(:service_type_suggestion) { service_type.translated }
 
-      it { expect(subject.custom_service_name).to eq(nil) }
+      it { expect(subject.custom_service_name).to be_nil }
     end
 
     context 'service type suggestion does not match a quote service' do
       let(:service_type_suggestion) { 'garbage value' }
 
-      it{ expect(subject.custom_service_name).to eq('garbage value') }
+      it { expect(subject.custom_service_name).to eq('garbage value') }
     end
   end
 end
