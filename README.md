@@ -109,6 +109,6 @@ Documentation related to the below components is available in the `gems/laa_mult
 
 To run the test suite, run `bundle exec rspec`.
 This will run everything except for the accessibility tests, which are slow, and by default only run on CI.
-To run those, run `INCLUDE_ACCESSIBILITY_SPECS=1 bundle exec rspec`.
+To run those, run `INCLUDE_ACCESSIBILITY_SPECS=true bundle exec rspec`.
 Our test suite will report as failing if line and branch coverage is not at 100%.
 We expect every feature's happy path to have a system test, and every screen to have an accessibility test.

@@ -52,7 +52,7 @@ RSpec.configure do |config|
     c.max_formatted_output_length = nil
   end
 
-  config.filter_run_excluding :accessibility unless ENV['INCLUDE_ACCESSIBILITY_SPECS']
+  config.filter_run_excluding :accessibility unless ENV['INCLUDE_ACCESSIBILITY_SPECS'] =='true'
 end
 
 Capybara.configure do |config|

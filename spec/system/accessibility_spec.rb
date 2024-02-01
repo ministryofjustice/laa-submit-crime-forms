@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# These specs will not run unless the `INCLUDE_ACCESSIBILITY_SPECS` env var is set
+# These specs will not run unless the `INCLUDE_ACCESSIBILITY_SPECS` env var is set to `true`
 RSpec.describe 'Accessibility', :accessibility do
   subject { page }
 
