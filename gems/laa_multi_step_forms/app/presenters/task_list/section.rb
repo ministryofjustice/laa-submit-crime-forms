@@ -1,10 +1,11 @@
 module TaskList
   class Section < BaseRenderer
-    attr_reader :tasks, :index, :show_index
+    attr_reader :tasks, :index, :task_statuses
 
-    def initialize(application, name:, tasks:, index:, show_index: true)
+    def initialize(application, name:, tasks:, index:, task_statuses:)
       super(application, name:)
 
+      @task_statuses = task_statuses
       @tasks = tasks
       @index = index
       @show_index = show_index
@@ -22,7 +23,7 @@ module TaskList
       @items ||= tasks.map do |name|
         name = name.call(application) if name.respond_to?(:call)
 
-        Task.new(application, name:)
+        Task.new(application, name:, task_statuses:)
       end
     end
 
@@ -30,7 +31,7 @@ module TaskList
 
     def section_header
       tag.h2 class: 'moj-task-list__section' do
-        if show_index
+        if index
           tag.span class: 'moj-task-list__section-number' do
             "#{index}."
           end.concat t!("tasklist.heading.#{name}")

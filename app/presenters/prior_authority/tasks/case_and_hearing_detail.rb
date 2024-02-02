@@ -11,28 +11,20 @@ module PriorAuthority
         end
       end
 
-      def completed?
-        results = forms_for_completion_hash.each_with_object([]) do |(_k, form_hash), arr|
-          arr << form_hash[:form].build(application).valid? if form_hash[:required]
-        end
-        results.all?(true)
+      def completed?(_rec = record, _form = associated_form)
+        required_forms.all? { |form| super(record, form) }
       end
 
       private
 
-      def forms_for_completion_hash
-        {
-          nh: { form: ::PriorAuthority::Steps::NextHearingForm,
-                required: application.prison_law? },
-          cd: { form: ::PriorAuthority::Steps::CaseDetailForm,
-                required: !application.prison_law? },
-          hd: { form: ::PriorAuthority::Steps::HearingDetailForm,
-                required: !application.prison_law? },
-          yc: { form: ::PriorAuthority::Steps::YouthCourtForm,
-                required: youth_court_applicable? },
-          pl: { form: ::PriorAuthority::Steps::PsychiatricLiaisonForm,
-                required: psychiatric_liaison_applicable? },
-        }
+      def required_forms
+        previous_tasks = []
+        previous_tasks << ::PriorAuthority::Steps::NextHearingForm if application.prison_law?
+        previous_tasks << ::PriorAuthority::Steps::CaseDetailForm unless application.prison_law?
+        previous_tasks << ::PriorAuthority::Steps::HearingDetailForm unless application.prison_law?
+        previous_tasks << ::PriorAuthority::Steps::YouthCourtForm if youth_court_applicable?
+        previous_tasks << ::PriorAuthority::Steps::PsychiatricLiaisonForm if psychiatric_liaison_applicable?
+        previous_tasks
       end
 
       def youth_court_applicable?

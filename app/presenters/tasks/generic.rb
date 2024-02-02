@@ -15,7 +15,7 @@ module Tasks
     end
 
     def can_start?
-      fulfilled?(self.class::PREVIOUS_TASK)
+      previous_tasks.all? { |task| fulfilled?(task) }
     end
 
     def completed?(rec = record, form = associated_form)
@@ -23,6 +23,14 @@ module Tasks
     end
 
     private
+
+    def previous_tasks
+      if self.class.const_defined?(:PREVIOUS_TASKS)
+        self.class::PREVIOUS_TASKS
+      else
+        [self.class::PREVIOUS_TASK]
+      end
+    end
 
     def record
       application
