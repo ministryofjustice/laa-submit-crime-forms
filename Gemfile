@@ -7,6 +7,7 @@ gem 'aws-sdk-s3', '~> 1.143'
 gem 'bootsnap', '~> 1.18.3', require: false
 gem 'clamby', '~> 1.6'
 gem 'dartsass-rails', '~> 0.5.0'
+gem 'factory_bot_rails', '>= 6.4.3'
 gem 'govuk_notify_rails', '~> 2.2.0'
 gem 'httparty'
 gem 'importmap-rails'
@@ -48,7 +49,6 @@ end
 group :test do
   gem 'capybara'
   gem 'cuprite', '~> 0.15'
-  gem 'factory_bot_rails', '>= 6.4.3'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
