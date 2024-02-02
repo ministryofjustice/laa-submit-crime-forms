@@ -96,7 +96,7 @@ FactoryBot.define do
       quotes { build_list(:quote, 1, :primary) }
       prior_authority_granted { false }
       no_alternative_quote_reason { 'a reason' }
-      service_type { 'pathologist' }
+      service_type { 'pathologist_report' }
       custom_service_name { nil }
     end
 
@@ -119,7 +119,7 @@ FactoryBot.define do
       youth_court { false }
 
       # quotes
-      service_type { 'telecoms_expert' }
+      service_type { 'telecommunications_expert' }
       primary_quote factory: %i[quote primary], strategy: :build
       supporting_documents { build_list(:supporting_document, 2) }
       quotes { build_list(:quote, 1, :primary) }
@@ -140,7 +140,7 @@ FactoryBot.define do
       next_hearing_date { 1.day.from_now }
 
       # quotes
-      service_type { 'telecoms_expert' }
+      service_type { 'telecommunications_expert' }
       primary_quote factory: %i[quote primary], strategy: :build
       supporting_documents { build_list(:supporting_document, 2) }
       quotes { build_list(:quote, 1, :primary) }
@@ -161,7 +161,7 @@ FactoryBot.define do
       next_hearing_date { 1.day.from_now }
 
       # quotes
-      service_type { 'telecoms_expert' }
+      service_type { 'telecommunications_expert' }
       primary_quote factory: %i[quote primary], strategy: :build
       supporting_documents { build_list(:supporting_document, 2) }
       prior_authority_granted { false }

@@ -15,8 +15,8 @@ Clamby.configure(
     output_level: 'high',
     fdpass: true,
     stream: true,
-    error_clamscan_missing: true,
-    error_clamscan_client_error: true,
+    error_clamscan_missing: !Rails.env.test?,
+    error_clamscan_client_error: !Rails.env.test?,
     error_file_missing: true,
   }
 )

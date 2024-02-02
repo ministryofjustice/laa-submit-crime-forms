@@ -80,6 +80,11 @@ en:
           contact_full_name: Contact full name
           organisation: Organisation
           postcode: Postcode
+          file_upload: Upload the quote
+          file_upload_hint: |
+            The maximum file size of the quote is 20MB.
+            Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
+
       psychiatric_liaison:
         edit:
           caption: 2. About the case
@@ -123,6 +128,7 @@ en:
           change: Change
           service_required: Service required
           service_details: Service details
+          service_quote_upload: Quote upload
           prior_authority_granted: Existing prior authority granted
           total: Total
           period: Time

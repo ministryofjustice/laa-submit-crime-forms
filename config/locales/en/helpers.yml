@@ -368,110 +368,106 @@ en:
       veterinarian_report: Veterinarian Report
       voice_recognition_experts: Voice Recognition
     quote_services:
-      ae_consultant: A&E Consultant
-      accident_reconstruction: Accident Reconstruction
+      ae_consultant: A&E consultant
+      accident_reconstruction: Accident reconstruction
       accountant: Accountant
-      anaesthatist: Anaesthatist
-      animal_behaviourist: Animal Behaviourist
+      anaesthetist: Anaesthetist
+      animal_behaviourist: Animal behaviourist
       architect: Architect
-      back_calculations: Back Calculations
-      benefit_expert: Benefit Expert
-      culture_expert: Culture expert
+      back_calculation: Back calculation
+      benefit_expert: Benefit expert
       cardiologist: Cardiologist
-      cell_site_analysis: Cell site analysis
-      child_psychiatrist: Child Psychiatrist
-      child_psychologist: Child Psychologist
-      computer_experts: Computer Experts
-      consultant_engineer: Consultant Engineer
+      cell_phone_site_analysis: Cell phone site analysis
+      child_psychologist: Child psychologist
+      computer_expert: Computer expert
+      consultant_engineer: Consultant engineer
+      court_transcription: Court transcription
+      cultural_music_expert: Cultural music expert
+      culture_expert: Culture expert
       dentist: Dentist
       dermatologist: Dermatologist
-      disability_consultant: Disability Consultant
-      dna_per_person: DNA (per person)
+      disability_consultant: Disability consultant
+      dna_report: DNA Report
       doctor_gp: Doctor (GP)
-      drug_expert: Drug Expert
-      employment_consultant: Employment Consultant
-      encro_chat: Encro Chat
-      engineer: Engineer
-      enquiry_agent: Enquiry Agent
-      ent_surgeon: ENT Surgeon
-      enviromental_expert: Enviromental expert
-      facial_mapping: Facial Mapping
-      fingerprint_experts: Fingerprint Experts
-      firearm_expert: Firearm Expert
-      fire_investigation: Fire Investigation
-      forensic_psychiatrist: Forensic Psychiatrist
-      forensic_scientist: Forensic Scientist
-      general_surgeon: General Surgeon
+      drug_expert: Drug expert
+      employment_consultant: Employment consultant
+      encro_chat: Encro chat
+      engineers_report: Engineer's report
+      enquiry_agent: Enquiry agent
+      ent_surgeon: ENT surgeon
+      environmental_expert: Environmental expert
+      facial_mapping_expert: Facial mapping expert
+      fingerprint_expert: Fingerprint expert
+      fire_investigation_report: Fire investigation report
+      firearm_expert: Firearm expert
+      forensic_psychiatrist: Forensic psychiatrist
+      forensic_scientist: Forensic scientist
+      general_surgeon: General surgeon
       geneticist: Geneticist
-      cultural_music_expert: Cultural Music Expert
-      gp_records_report: GP (Records Report)
+      gps_records_report: GP's records report
       gynaecologist: Gynaecologist
       haematologist: Haematologist
-      handwriting_expert: Handwriting Expert
-      human_trafficking: Human Trafficking
-      interpreters: Interpreters
+      handwriting_expert: Handwriting expert
+      human_trafficking: Human trafficking
+      independent_social_worker: Independent social worker
       intermediary: Intermediary
-      intermediary_after_apr_2022: Intermediary submitted after 1st April 2022
+      interpreter: Interpreter
       jewellery_valuation: Jewellery valuation
-      legal_prison_expert_extradition: Legal/Prison expert (extradition)
-      lip_reader_signer: Lip-Reader / Signer
-      mortgage_expert: Mortgage Expert
-      mediators_fees: Mediators Fees
-      medical_consultant: Medical Consultant
-      medical_report: Medical Report
-      medical_microbiologist: Medical Microbiologist
+      lab_fees: Lab fees
+      legal_prison_expert: Legal/Prison expert
+      lip_reader_signer: Lip-reader / Signer
+      mediators_fees: Mediator's Fees
+      medical_consultant: Medical consultant
+      medical_microbiologist: Medical microbiologist
+      medical_report: Medical report
       meteorologist: Meteorologist
       midwife: Midwife
+      mortgage_experts_report: Mortgage expert's report
       neonatologist: Neonatologist
-      neurologist: Neurologist
+      neurologists_report: Neurologist's report
       neuropathologist: Neuropathologist
       neuropsychiatrist: Neuropsychiatrist
       neuropsychologist: Neuropsychologist
       neuroradiologist: Neuroradiologist
       neurosurgeon: Neurosurgeon
-      nursing_expert: Nursing Expert
+      nursing_expert: Nursing expert
       obstetrician: Obstetrician
-      occupational_therapist: Occupational Therapist
+      occupational_therapist: Occupational therapist
       oncologist: Oncologist
-      opthalmologist: Opthalmologist
-      orthopaedic_surgeon: Orthopaedic Surgeon
-      paediatrician: Paediatrician
-      pathologist: Pathologist
+      ophthalmologist: Ophthalmologist
+      orthopaedic_surgeon: Orthopaedic surgeon
+      paediatrician_report: Paediatrician report
+      pathologist_report: Pathologist report
       pharmacologist: Pharmacologist
-      photocopying_per_sheet: Photocopying per sheet
+      photocopying: Photocopying
       photographer: Photographer
       physiotherapist: Physiotherapist
-      plastic_surgeon: Plastic Surgeon
-      process_server: Process Server
-      private_investigator: Private Investigator
-      psychiatrist_inc_chld: Psychiatrist (inc Chld)
+      planning_expert: Planning expert
+      plastic_surgeon: Plastic surgeon
+      private_investigator: Private investigator
+      process_server: Process server
+      psychiatric_report_prison_law: Psychiatric report (Prison Law)
+      psychiatrist_including_child: Psychiatrist (including child)
+      psychological_report_prison_law: Psychological report (Prison Law)
       psychologist: Psychologist
-      psychologist_child: Psychologist - Child
       radiologist: Radiologist
+      report_writing: Report writing
       rheumatologist: Rheumatologist
-      risk_assessment_expert: Risk Assessment Expert
+      risk_assessment_expert: Risk assessment expert
       sleep_expert: Sleep expert
-      speech_therapist: Speech Therapist
+      specialist_barrister: Specialist barrister (Land, Property, Chancery Law)
+      speech_therapist: Speech therapist
       surgeon: Surgeon
-      surveyor: Surveyor
-      surveyor_housing_disrepair: Surveyor (housing disrepair)
-      tachograph_expert: Tachograph Expert
-      telecoms_expert: Telecoms Expert
-      toxicologist: Toxicologist
-      transcripts_recordings: Transcripts (recordings)
-      translation_and_transcription_word: Translation and Transcription (word counts)
-      court_transcription: Court transcription
-      translator_documents: Translator (documents)
-      urologist: Urologist
-      vet: Vet
-      voice_recognition: Voice Recognition
-      jewellery_valuer_gemmologist: Jewellery Valuer / Gemmologist
-      specialist_barristers_: Specialist Barristers (Land, Property, Chancery Law)
-      lab_fees: Lab Fees
-      independent_social_worker: Independent Social Worker
-      psychiatric_report_prsn_law: A Psychiatric report (Prison Law)
-      psychological_report_prsn_law: A Psychological report (Prison Law)
-      other: Other
+      surveyor: Surveyor (housing disrepair)
+      surveyors_report: Surveyor's report
+      tachograph_expert: Tachograph expert
+      telecommunications_expert: Telecommunications expert
+      toxicologist_report: Toxicologist report
+      transcription_recording: Transcription (recording)
+      translation_and_transcription: Translation and transcription
+      translator: Translator
       travel: Travel
-      report_writing: report writing
+      urologist: Urologist
+      veterinary_report: Veterinary report
+      voice_recognition: Voice recognition
       custom: Other

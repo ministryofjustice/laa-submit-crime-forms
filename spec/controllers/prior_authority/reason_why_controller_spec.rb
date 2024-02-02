@@ -47,6 +47,9 @@ RSpec.describe PriorAuthority::Steps::ReasonWhyController, type: :controller do
 
     context 'when an incorrect file is uploaded' do
       let(:current_application) { build(:claim) }
+      let(:no_file_error_msg) do
+        'The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF'
+      end
 
       before do
         post :create,
@@ -58,7 +61,7 @@ RSpec.describe PriorAuthority::Steps::ReasonWhyController, type: :controller do
       end
 
       it 'returns an error message' do
-        expect(response.parsed_body['error']['message']).to eq 'Incorrect file type provided'
+        expect(response.parsed_body['error']['message']).to eq no_file_error_msg
       end
     end
 

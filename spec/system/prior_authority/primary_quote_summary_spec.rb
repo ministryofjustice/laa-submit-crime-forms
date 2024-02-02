@@ -8,6 +8,7 @@ RSpec.describe 'Prior authority applications - add service costs' do
   it 'shows a summary screen' do
     expect(page).to have_content 'Primary quote summary'
     expect(page).to have_content 'Quote total cost £6.15'
+    expect(page).to have_content 'test.png'
   end
 
   it 'is the default screen if I return to the primary quote section' do

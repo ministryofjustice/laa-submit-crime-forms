@@ -54,6 +54,13 @@ module PriorAuthority
         end
       end
 
+      def document
+        # needed for primary quote summary presenter
+        # can probably remove if we make a custom type for files and handle
+        # upload via the form
+        application.primary_quote.document
+      end
+
       private
 
       def persist!

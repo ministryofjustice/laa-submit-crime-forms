@@ -1,5 +1,12 @@
 class Quote < ApplicationRecord
   belongs_to :prior_authority_application
+  has_one :document, lambda {
+                       where(document_type: SupportingDocument::QUOTE_DOCUMENT)
+                     },
+          dependent: :destroy,
+          inverse_of: :documentable,
+          class_name: 'SupportingDocument',
+          as: :documentable
 
   scope :alternative, -> { where(primary: false) }
 end
