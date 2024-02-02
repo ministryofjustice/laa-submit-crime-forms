@@ -1,6 +1,8 @@
 module PriorAuthority
   module Steps
     class PrimaryQuoteController < BaseController
+      skip_before_action :verify_authenticity_token, only: [:create]
+
       def edit
         @form_object = PrimaryQuoteForm.build(
           primary_quote,
@@ -14,7 +16,7 @@ module PriorAuthority
         unless supported_filetype(params[:documents])
           return return_error(nil, { message: 'Incorrect file type provided' })
         end
-
+        Rails.logger.debug "Creating file"
         evidence = upload_file(params)
         return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
       rescue FileUpload::FileUploader::PotentialMalwareError => e
