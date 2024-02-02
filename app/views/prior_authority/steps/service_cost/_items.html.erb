@@ -1,0 +1,7 @@
+<%= form.govuk_number_field :items, width: 5, label: { text: t('.items', items: t(".#{@form_object.item_type}").pluralize(2)),
+                                                       size: size } %>
+<%= form.govuk_text_field :cost_per_item,
+                          width: 5,
+                          prefix_text: "&pound;".html_safe,
+                          inputmode: "decimal",
+                          label: { text: t('.cost_per_item', item: t(".#{@form_object.item_type}")), size: size } %>

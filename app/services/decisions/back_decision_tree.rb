@@ -54,12 +54,11 @@ module Decisions
     from('prior_authority/steps/prison_law').goto(edit: 'prior_authority/applications')
     from('prior_authority/steps/authority_value').goto(edit: 'prior_authority/steps/prison_law')
     from('prior_authority/steps/ufn').goto(edit: 'prior_authority/steps/authority_value')
-    from('prior_authority/steps/case_contact').goto(show: 'prior_authority/steps/start_page')
+    from('prior_authority/steps/case_contact').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
     from('prior_authority/steps/client_detail').goto(edit: 'prior_authority/steps/case_contact')
-    from('prior_authority/steps/primary_quote').goto(show: 'prior_authority/steps/start_page')
 
     # prison law flow
-    from('prior_authority/steps/next_hearing').goto(show: 'prior_authority/steps/start_page')
+    from('prior_authority/steps/next_hearing').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
 
     # non-prison law flow
     from('prior_authority/steps/case_detail').goto(edit: 'prior_authority/steps/client_detail')
@@ -67,6 +66,8 @@ module Decisions
     from('prior_authority/steps/youth_court').goto(edit: 'prior_authority/steps/hearing_detail')
     from('prior_authority/steps/psychiatric_liaison').goto(edit: 'prior_authority/steps/hearing_detail')
 
-    from('prior_authority/steps/reason_why').goto(show: 'prior_authority/steps/start_page')
+    from('prior_authority/steps/primary_quote').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
+    from('prior_authority/steps/service_cost').goto(edit: 'prior_authority/steps/primary_quote')
+    from('prior_authority/steps/reason_why').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
   end
 end

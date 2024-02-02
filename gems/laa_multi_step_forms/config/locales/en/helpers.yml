@@ -18,6 +18,7 @@ en:
       try_again: Try again
       apply_in_eforms: Apply in eForms
       update_calculation: Update the calculation
+      update_calculation_no_article: Update calculation
     time_period: &period
       hours:
         one: '%{count} Hour '

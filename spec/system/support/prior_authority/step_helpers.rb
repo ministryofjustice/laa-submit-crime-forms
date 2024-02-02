@@ -3,6 +3,7 @@
 module PriorAuthority
   module StepHelpers
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     def fill_in_until_step(step, prison_law: 'No', court_type: "Magistrate's court")
       fill_in_prison_law_and_authority_value(prison_law)
 
@@ -34,9 +35,12 @@ module PriorAuthority
 
       fill_in_primary_quote
 
+      return if step == :service_cost
+
       :end
     end
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
 
     def fill_in_prison_law_and_authority_value(prison_law)
       visit provider_saml_omniauth_callback_path
@@ -125,7 +129,7 @@ module PriorAuthority
       fill_in 'Organisation', with: 'LAA'
       fill_in 'Postcode', with: 'CR0 1RE'
 
-      click_on 'Save and come back later'
+      click_on 'Save and continue'
     end
   end
 end

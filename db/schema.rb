@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_02_095033) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -191,6 +191,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
     t.boolean "psychiatric_liaison"
     t.string "psychiatric_liaison_reason_not"
     t.boolean "next_hearing"
+    t.boolean "prior_authority_granted"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
@@ -226,6 +227,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "prior_authority_application_id", null: false
+    t.boolean "ordered_by_court"
+    t.boolean "related_to_post_mortem"
+    t.string "user_chosen_cost_type"
+    t.decimal "cost_per_hour", precision: 10, scale: 2
+    t.decimal "cost_per_item", precision: 10, scale: 2
+    t.integer "items"
+    t.integer "period"
     t.index ["prior_authority_application_id"], name: "index_quotes_on_prior_authority_application_id"
   end
 

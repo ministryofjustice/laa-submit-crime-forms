@@ -91,6 +91,27 @@ en:
           caption: 2. About the case
           legend: Is this a youth court matter?
           page_title: Is this a youth court matter?
+      service_cost:
+        edit:
+          caption: About the request
+          page_title: Service cost
+          prior_authority_granted: Have you already been granted prior authority in this case for the same type of service?
+          ordered_by_court: Was this report ordered by the court?
+          related_to_post_mortem: Is this related to a post-mortem?
+          total_cost: Total cost
+          user_chosen_cost_type: How are you being charged?
+          per_item: Charged per item
+          per_hour: Charged by the hour
+        items:
+          items: Number of %{items}
+          cost_per_item: What is the cost per %{item}?
+          item: item
+          minute: minute
+          word: word
+          page: page
+        time:
+          period: Time
+          cost_per_hour: Hourly cost
       reason_why:
         edit:
           caption: 2. About the request
