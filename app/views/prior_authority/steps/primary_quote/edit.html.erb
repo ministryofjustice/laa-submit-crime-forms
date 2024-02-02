@@ -15,7 +15,7 @@
       <%= form.govuk_text_field :contact_full_name, label: { text: t(".contact_full_name"), size: "s" } %>
       <%= form.govuk_text_field :organisation, label: { text: t(".organisation"), size: "s" } %>
       <%= form.govuk_text_field :postcode, label: { text: t(".postcode"), size: "s" } %>
-      <%= form.govuk_file_field :primary_quote_document, label: { text: t(".file_upload"), size: "m" }, hint: { text: t(".file_upload_hint") }, accept: SupportedFileTypes::PRIMARY_QUOTE_DOCUMENT.join(',') %>
+      <%= form.govuk_file_field :documents, label: { text: t(".file_upload"), size: "m" }, hint: { text: t(".file_upload_hint") }, accept: SupportedFileTypes::PRIMARY_QUOTE_DOCUMENT.join(',') %>
       <%# Uploaded files section %>
       <div class="moj-multi-file__uploaded-files <%= 'moj-hidden' unless @primary_quote_document.present? %>">
         <table class="govuk-table">
