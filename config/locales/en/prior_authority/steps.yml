@@ -91,6 +91,55 @@ en:
           caption: 2. About the case
           legend: Is this a youth court matter?
           page_title: Is this a youth court matter?
+      service_cost:
+        edit:
+          caption: About the request
+          page_title: Service cost
+          prior_authority_granted: Have you already been granted prior authority in this case for the same type of service?
+          ordered_by_court: Was this report ordered by the court?
+          related_to_post_mortem: Is this related to a post-mortem?
+          total_cost: Total cost
+          user_chosen_cost_type: How are you being charged?
+          per_item: Charged per item
+          per_hour: Charged by the hour
+        items:
+          items: Number of %{items}
+          cost_per_item: What is the cost per %{item}?
+          item: item
+          minute: minute
+          word: word
+          page: page
+        time:
+          period: Time
+          cost_per_hour: Hourly cost
+      primary_quote_summary:
+        show:
+          caption: About the request
+          page_title: Primary quote summary
+          quote_total_cost: Quote total cost
+        service_cost_card:
+          service_costs: Service costs
+          change: Change
+          service_required: Service required
+          service_details: Service details
+          prior_authority_granted: Existing prior authority granted
+          total: Total
+          period: Time
+          cost_per_hour: Cost per hour
+        travel_cost_card:
+          travel_costs: Travel costs
+          change: Change
+          delete: Delete
+          none_added: No travel costs added
+          total: Total
+          period: Travel time
+          cost_per_hour: Hourly cost
+        additional_cost_card:
+          additional_costs: Additional costs
+          change: Change
+          none_added: No additional costs added
+          cost: Cost
+          total: Total
       reason_why:
         edit:
           caption: 2. About the request
@@ -114,3 +163,59 @@ en:
           upload_file: Upload file
           supporting_documentation: Supporting documentation (optional)
           supporting_documentation_caption: Attach copies of any supporting documentation. The maximum file size is 70MB. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
+      travel_detail:
+        edit:
+          caption: 3. About the request
+          page_title: Travel cost
+          explanation: Only include the hourly rate cost. Any other travel expenditure (such as mileage, parking and travel fares) can be added later as additional costs.
+          travel_cost_reason: Why are there travel costs if your client is not detained?
+          travel_time: Travel time
+          hourly_cost: Hourly cost
+          hourly_cost_hint: Costs should be exclusive of VAT
+          total_cost: Total cost
+      delete_travel:
+        edit:
+          page_title: Are you sure you want to delete this travel cost?
+          travel_time: Travel time
+          hourly_cost: Hourly cost
+          total: Total
+          yes_delete: Yes, delete it
+          no_delete: No, do not delete it
+      additional_costs:
+        edit:
+          caption: 3. About the request
+          page_title: You've added %{number} additional %{cost}
+          cost: cost
+          question: Do you want to add another additional cost?
+        cost_summary:
+          additional_cost: Additional cost
+          change: Change
+          delete: Delete
+          name: Description
+          description: Why required
+          items: Items
+          cost_per_item: Cost per hour
+          period: Time
+          cost_per_hour: Rate per hour
+          total: Total
+      additional_cost_details:
+        edit:
+          caption: 3. About the request
+          page_title: Additional cost
+          name: What is the additional cost for?
+          name_hint: Only add one type of cost. Further costs can be added later.
+          description: Why is the additional cost required?
+          unit_type: How are you being charged
+          per_item: Charged per item
+          per_hour: Charged by the hour
+          items: Number of items
+          cost_per_item: What is the cost per item?
+          cost_per_item_hint: Costs should be exclusive of VAT
+          period: Time
+          cost_per_hour: What is the hourly cost?
+          cost_per_hour_hint: Costs should be exclusive of VAT
+          total_cost: Total cost
+        confirm_delete:
+          page_title: Are you sure you want to delete this additional cost?
+          yes_delete: Yes, delete it
+          no_delete: No, do not delete it

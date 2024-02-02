@@ -12,6 +12,8 @@ class PriorAuthorityApplication < ApplicationRecord
            inverse_of: :documentable,
            class_name: 'SupportingDocument',
            as: :documentable
+  has_many :additional_costs, dependent: :destroy
+
   attribute :prison_law, :boolean
   attribute :ufn, :string
   attribute :office_code, :string
