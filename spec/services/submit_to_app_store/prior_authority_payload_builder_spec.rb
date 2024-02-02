@@ -63,6 +63,16 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             file_size: 1234,
             file_type: 'image/png'
           }
+        ],
+        quotes: [
+          {
+            service_type: 'Forensics Expert',
+            custom_service_name: nil,
+            contact_full_name: 'Joe Bloggs',
+            organisation: 'LAA',
+            postcode: 'CR0 1RE',
+            primary: true
+          }
         ]
       },
       application_id: application.id,

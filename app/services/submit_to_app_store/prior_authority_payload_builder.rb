@@ -25,6 +25,7 @@ class SubmitToAppStore
         firm_office:,
         solicitor:,
         defendant:,
+        quotes:,
       )
     end
 
@@ -73,11 +74,18 @@ class SubmitToAppStore
     end
 
     def defendant
-      application.defendant.as_json(only: %i[
-                                      maat
-                                      first_name
-                                      last_name
-                                    ])
+      application.defendant.as_json(only: %i[maat first_name last_name])
+    end
+
+    def quotes
+      application.quotes.as_json(only: %i[
+                                   service_type
+                                   custom_service_name
+                                   contact_full_name
+                                   organisation
+                                   postcode
+                                   primary
+                                 ])
     end
 
     DIRECT_ATTRIBUTES = %i[
