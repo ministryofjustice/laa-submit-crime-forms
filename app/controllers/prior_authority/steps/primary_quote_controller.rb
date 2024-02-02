@@ -10,12 +10,6 @@ module PriorAuthority
         @primary_quote_document = current_application.primary_quote_document
       end
 
-      def update
-        @primary_quote_document = current_application.primary_quote_document
-        record = primary_quote
-        update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
-      end
-
       def create
         unless supported_filetype(params[:primary_quote_document])
           return return_error(nil, { message: 'Incorrect file type provided' })
@@ -28,6 +22,12 @@ module PriorAuthority
                                    'Please contact your administrator' })
       rescue StandardError => e
         return_error(e, { message: 'Unable to upload file at this time' })
+      end
+
+      def update
+        @primary_quote_document = current_application.primary_quote_document
+        record = primary_quote
+        update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       end
 
       private
