@@ -12,7 +12,9 @@ class PriorAuthorityApplication < ApplicationRecord
                     inverse_of: :documentable,
                     class_name: 'SupportingDocument',
                     as: :documentable
-  has_one :primary_quote_document,
+  has_one :primary_quote_document, lambda {
+                                     where(document_type: SupportingDocument::PRIMARY_QUOTE_DOCUMENT)
+                                   },
           dependent: :destroy,
           inverse_of: :documentable,
           class_name: 'SupportingDocument',
