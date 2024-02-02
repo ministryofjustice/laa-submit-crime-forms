@@ -24,6 +24,9 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         psychiatric_liaison_reason_not: 'whatever you like',
         next_hearing: true,
         office_code: '1A123B',
+        service_type: 'pathologist',
+        firm_name: 'Firm A',
+        client_name: 'bob jim',
         defendant: {
           first_name: 'bob',
           last_name: 'jim',
@@ -66,19 +69,21 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         ],
         quotes: [
           {
-            service_type: 'Forensics Expert',
+            service_type: 'pathologist',
             custom_service_name: nil,
             contact_full_name: 'Joe Bloggs',
             organisation: 'LAA',
             postcode: 'CR0 1RE',
             primary: true
           }
-        ]
+        ],
+        additional_costs: []
       },
       application_id: application.id,
       application_state: 'submitted',
       application_type: 'crm4',
-      json_schema_version: 1
+      json_schema_version: 1,
+      application_risk: 'N/A'
     }
   end
   let(:provider) { create(:provider) }

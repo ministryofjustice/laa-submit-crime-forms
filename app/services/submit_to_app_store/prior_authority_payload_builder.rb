@@ -5,13 +5,12 @@ class SubmitToAppStore
     end
 
     def payload
-      {
-        application_id: application.id,
+      { application_id: application.id,
         json_schema_version: 1,
         application_state: 'submitted',
         application: data,
-        application_type: 'crm4'
-      }
+        application_type: 'crm4',
+        application_risk: 'N/A' }
     end
 
     private
@@ -26,7 +25,7 @@ class SubmitToAppStore
         solicitor:,
         defendant:,
         quotes:,
-      )
+      ).merge(convenience_attributes)
     end
 
     def direct_attributes
@@ -35,21 +34,16 @@ class SubmitToAppStore
 
     def supporting_documents
       application.supporting_documents.map do |document|
-        document.as_json(only: %i[
-                           file_name
-                           file_type
-                           file_size
-                           file_path
-                           document_type
-                         ])
+        document.as_json(only: %i[file_name
+                                  file_type
+                                  file_size
+                                  file_path
+                                  document_type])
       end
     end
 
     def provider
-      application.provider.as_json(only: %i[
-                                     email
-                                     description
-                                   ])
+      application.provider.as_json(only: %i[email description])
     end
 
     def firm_office
@@ -86,6 +80,17 @@ class SubmitToAppStore
                                    postcode
                                    primary
                                  ])
+    end
+
+    def convenience_attributes
+      {
+        # N.B We do this instead of `.primary_quote` to make resilient to cases
+        # where the quotes are not persisted to the database
+        service_type: application.quotes.detect(&:primary).service_type,
+        additional_costs: [],
+        firm_name: application.firm_office.name,
+        client_name: application.defendant.full_name
+      }
     end
 
     DIRECT_ATTRIBUTES = %i[
