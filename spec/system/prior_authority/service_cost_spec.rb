@@ -1,14 +1,13 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - add service costs', :javascript, type: :system do
+RSpec.describe 'Prior authority applications - add service costs' do
   before do
     fill_in_until_step(:primary_quote)
-    fill_in_primary_quote(service_type:, suggestion:)
+    fill_in_primary_quote_no_js(service_type:)
     expect(page).to have_title 'Service cost'
   end
 
   let(:service_type) { 'Meteorologist' }
-  let(:suggestion) { 1 }
 
   context 'when the service is A Psychiatric report (Prison Law)' do
     let(:service_type) { 'A Psychiatric report (Prison Law)' }
@@ -20,8 +19,6 @@ RSpec.describe 'Prior authority applications - add service costs', :javascript, 
 
   context 'when the service is Pathologist' do
     let(:service_type) { 'Pathologist' }
-    # The first suggestion is 'Neuropathologist', which we don't want
-    let(:suggestion) { 2 }
 
     it 'asks a pathologist question' do
       expect(page).to have_content 'Is this related to a post-mortem?'

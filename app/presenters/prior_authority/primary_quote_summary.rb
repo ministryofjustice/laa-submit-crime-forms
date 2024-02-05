@@ -7,10 +7,10 @@ module PriorAuthority
     attr_reader :application
 
     def formatted_total_cost
-      # TODO: When available, add additional costs to this
       NumberTo.pounds(
         service_cost_form.total_cost +
-        (travel_detail_form.valid? ? travel_detail_form.total_cost : 0)
+        (travel_detail_form.valid? ? travel_detail_form.total_cost : 0) +
+        additional_cost_overview_form.total_cost
       )
     end
 
@@ -30,6 +30,10 @@ module PriorAuthority
 
     def travel_detail_form
       @travel_detail_form ||= Steps::TravelDetailForm.build(application)
+    end
+
+    def additional_cost_overview_form
+      @additional_cost_overview_form ||= Steps::AdditionalCosts::OverviewForm.build(application)
     end
   end
 end

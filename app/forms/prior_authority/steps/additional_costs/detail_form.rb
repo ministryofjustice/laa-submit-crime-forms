@@ -24,11 +24,15 @@ module PriorAuthority
         validates :items, presence: true, numericality: { greater_than: 0 }, if: :per_item?
         validates :cost_per_item, presence: true, numericality: { greater_than: 0 }, if: :per_item?
 
-        validates :period, presence: true, time_period: true, unless: :per_item?
-        validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, unless: :per_item?
+        validates :period, presence: true, time_period: true, if: :per_hour?
+        validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, if: :per_hour?
 
         def formatted_total_cost
-          NumberTo.pounds(per_item? ? item_cost : time_cost)
+          NumberTo.pounds(total_cost)
+        end
+
+        def total_cost
+          per_item? ? item_cost : time_cost
         end
 
         def http_verb
@@ -45,6 +49,10 @@ module PriorAuthority
 
         def per_item?
           unit_type == PER_ITEM
+        end
+
+        def per_hour?
+          unit_type == PER_HOUR
         end
 
         private

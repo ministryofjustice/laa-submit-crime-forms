@@ -13,6 +13,10 @@ module PriorAuthority
           additional_costs.count
         end
 
+        def total_cost
+          additional_costs.sum(&:total_cost)
+        end
+
         private
 
         def persist!

@@ -1,8 +1,8 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - add service costs', :javascript, type: :system do
+RSpec.describe 'Prior authority applications - add service costs' do
   before do
-    fill_in_until_step(:primary_quote_summary)
+    fill_in_until_step(:primary_quote_summary, javascript: false)
   end
 
   it 'shows a summary screen' do

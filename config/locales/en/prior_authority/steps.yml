@@ -134,6 +134,12 @@ en:
           total: Total
           period: Travel time
           cost_per_hour: Hourly cost
+        additional_cost_card:
+          additional_costs: Additional costs
+          change: Change
+          none_added: No additional costs added
+          cost: Cost
+          total: Total
       reason_why:
         edit:
           caption: 2. About the request

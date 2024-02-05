@@ -1,8 +1,8 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - travel costs', :javascript, type: :system do
+RSpec.describe 'Prior authority applications - travel costs' do
   before do
-    fill_in_until_step(:primary_quote_summary)
+    fill_in_until_step(:primary_quote_summary, javascript: false)
   end
 
   context 'when the user has entered nothing' do
@@ -16,8 +16,6 @@ RSpec.describe 'Prior authority applications - travel costs', :javascript, type:
       within '#travel-cost-summary' do
         click_on 'Change'
       end
-      # This check forces capybara to wait for the new page to load
-      find('h1', text: 'Travel cost')
     end
 
     context 'when user fills in valid information' do
