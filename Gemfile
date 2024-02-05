@@ -47,14 +47,16 @@ group :development do
 end
 
 group :test do
+  gem 'axe-core-rspec'
   gem 'capybara'
-  gem 'cuprite', '~> 0.15'
+  gem 'capybara-selenium'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'selenium-webdriver'
   gem 'simplecov'
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'

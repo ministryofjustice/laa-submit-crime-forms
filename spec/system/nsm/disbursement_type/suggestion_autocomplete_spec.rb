@@ -21,6 +21,9 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
     choose 'Other disbursement type', visible: :all
     fill_in other_type_field, with: 'Accident &'
 
+    # Click the first auto-completion suggestion
+    find_by_id('nsm-steps-disbursement-type-form-other-type-field__option--0').click
+
     expect(page).to have_field(other_type_field, with: 'Accident & Emergency Report')
 
     click_on 'Save and come back later'

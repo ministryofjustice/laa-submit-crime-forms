@@ -15,7 +15,7 @@
   <%= favicon_link_tag asset_path("images/favicon.svg"), rel: "icon", sizes: "any", type: "image/svg+xml" %>
   <%= favicon_link_tag asset_path("images/govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c" %>
   <%= favicon_link_tag asset_path("images/govuk-icon-180.png"), rel: "apple-touch-icon" %>
-  <link rel="manifest" href=<%= asset_path("manifest.json") %> />
+  <link rel="manifest" href=<%= asset_path("manifest.json") %>/>
 
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_importmap_tags %>
@@ -63,7 +63,9 @@
 
 <div class="govuk-width-container">
   <%= yield(:phase_banner) %>
-  <%= yield(:back_link) %>
+  <div role="navigation">
+    <%= yield(:back_link) %>
+  </div>
   <%= render partial: 'shared/flash_banner' %>
 
   <main class="govuk-main-wrapper" id="main-content" role="main">
