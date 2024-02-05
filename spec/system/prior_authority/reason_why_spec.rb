@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - add case contact', type: :system do
+RSpec.describe 'Prior authority applications - add case contact', :javascript, type: :system do
   let(:application) { create(:prior_authority_application, :about_request_enabled) }
 
   before do
@@ -21,7 +21,14 @@ RSpec.describe 'Prior authority applications - add case contact', type: :system 
     )
   end
 
-  # TODO: implement test 'can have a reason with attachments'
-  # This is currently not possible as the cuprite driver does not support
-  # the capybara `drop` command at this time.
+  it 'can have a reason with attachments' do
+    fill_in 'Why is prior authority required?', with: 'important reasons'
+    find('.moj-multi-file-upload__dropzone').drop(Rails.root.join('spec/support/assets/test.png'))
+    click_on 'Save and continue'
+
+    expect(application.reload).to have_attributes(
+      reason_why: 'important reasons'
+    )
+    # TODO: Implement verification that file has been uploaded successfully.
+  end
 end

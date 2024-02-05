@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NotifyAppStore::MessageBuilder do
+RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
   subject { described_class.new(claim:, scorer:) }
 
   let(:scorer) { double(:risk_assessment_scorer, calculate: 'high') }
@@ -14,7 +14,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
 
   it 'generates and send the data message for a claim' do
     travel_to(Time.zone.local(2023, 8, 17, 12, 13, 14)) do
-      tester.process(subject.message)
+      tester.process(subject.payload)
 
       expect(tester).to have_received(:process).with(
         application: {

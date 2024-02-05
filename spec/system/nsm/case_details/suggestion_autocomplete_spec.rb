@@ -37,7 +37,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
     click_on 'Save and continue'
 
     fill_in 'Main offence', with: 'Apples'
-
+    fill_in 'Day', with: 12
     click_on 'Save and come back later'
 
     expect(claim.reload).to have_attributes(
