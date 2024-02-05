@@ -13,10 +13,10 @@ module PriorAuthority
       end
 
       def create
+        Rails.logger.debug "Creating file"
         unless supported_filetype(params[:documents])
           return return_error(nil, { message: 'Incorrect file type provided' })
         end
-        Rails.logger.debug "Creating file"
         evidence = upload_file(params)
         return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
       rescue FileUpload::FileUploader::PotentialMalwareError => e
