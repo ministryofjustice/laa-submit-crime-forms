@@ -13,6 +13,7 @@ RSpec.describe 'Prior authority application lists', :javascript do
 
   it 'only shows submitted applications on the submitted tab' do
     click_on 'Submitted'
+    find('.govuk-table__cell', text: 'LAA-AAAAA') # Hack to force capybara to wait for JS load
     expect(page).to have_content 'AAAAA'
     expect(page).to have_content 'BBBBB'
     expect(page).to have_no_content 'CCCCC'
@@ -21,6 +22,7 @@ RSpec.describe 'Prior authority application lists', :javascript do
 
   it 'allows sorting by columns in ascending and descending order' do
     click_on 'Submitted'
+    find('.govuk-table__cell', text: 'LAA-AAAAA') # Hack to force capybara to wait for JS load
     click_on 'LAA reference'
     find('th[aria-sort="ascending"]')
     expect(page.body).to match(/AAAAA.*BBBBB.*/m)
@@ -31,6 +33,7 @@ RSpec.describe 'Prior authority application lists', :javascript do
 
   it 'only shows draft applications on the drafts tab' do
     click_on 'Drafts'
+    find('.govuk-table__cell', text: 'LAA-DDDDD') # Hack to force capybara to wait for JS load
     expect(page).to have_no_content 'AAAAA'
     expect(page).to have_no_content 'BBBBB'
     expect(page).to have_no_content 'CCCCC'
@@ -39,6 +42,7 @@ RSpec.describe 'Prior authority application lists', :javascript do
 
   it 'only shows assessed applications on the assessed tab' do
     click_on 'Assessed'
+    find('.govuk-table__cell', text: 'LAA-CCCCC') # Hack to force capybara to wait for JS load
     expect(page).to have_no_content 'AAAAA'
     expect(page).to have_no_content 'BBBBB'
     expect(page).to have_content 'CCCCC'
