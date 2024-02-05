@@ -15,13 +15,13 @@ module PriorAuthority
       def update
         @primary_quote_document = current_application.primary_quote_document
         record = primary_quote
-
-        unless supported_filetype(params[:documents])
-          return return_error(nil, { message: 'Incorrect file type provided' })
-        end
-        evidence = upload_file(params)
-        return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
-        update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
+        Rails.logger.debug params[:prior_authority_steps_primary_quote_form][:documents]
+        # unless supported_filetype(params[:documents])
+        #   return return_error(nil, { message: 'Incorrect file type provided' })
+        # end
+        # evidence = upload_file(params)
+        # return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
+        # update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
         return_error(e, { message: 'File potentially contains malware so cannot be uploaded. ' \
                                    'Please contact your administrator' })
