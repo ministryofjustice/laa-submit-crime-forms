@@ -42,7 +42,7 @@ FactoryBot.define do
       with_defendant
       with_psychiatric_liaison
       ufn { '123123/123' }
-      client_maat_number { '123' }
+      defendant factory: %i[defendant valid_paa], strategy: :build
       prison_law { true }
       reason_why { 'something' }
       main_offence { 'something' }

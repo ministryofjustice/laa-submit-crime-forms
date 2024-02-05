@@ -12,6 +12,7 @@ FactoryBot.define do
       first_name { 'bob' }
       last_name { 'jim' }
       date_of_birth { Date.new(1981, 11, 12) }
+      maat { 'AA1' }
     end
 
     trait :partial do

@@ -16,6 +16,12 @@ module PriorAuthority
       def as
         :case_detail
       end
+
+      def additional_permitted_params
+        [
+          defendant_attributes: CaseDetail::DefendantForm.attribute_names,
+        ]
+      end
     end
   end
 end

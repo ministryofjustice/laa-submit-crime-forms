@@ -21,7 +21,7 @@ en:
           client_detained: Is your client detained?
           client_detained_prison: Where is your client detained?
           client_detained_prison_hint: Enter the name of prison, or select one from the suggestions that appear when you start to enter the name.
-          client_maat_number: MAAT number
+          maat: MAAT number
           main_offence: What was the main offence?
           main_offence_hint: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name.
           page_title: Case details
