@@ -31,7 +31,7 @@ module PriorAuthority
           NumberTo.pounds(per_item? ? item_cost : time_cost)
         end
 
-        def method
+        def http_verb
           record.persisted? ? :patch : :post
         end
 

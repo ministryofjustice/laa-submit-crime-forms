@@ -7,7 +7,7 @@
     <span class="govuk-caption-xl"><%= t(".caption") %></span>
     <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
 
-    <%= step_form @form_object, method: @form_object.method, url: @form_object.url do |form| %>
+    <%= step_form @form_object, method: @form_object.http_verb, url: @form_object.url do |form| %>
       <%= form.govuk_text_field :name,
                                 label: { text: t('.name'), size: 's' },
                                 hint: { text: t('.name_hint') } %>

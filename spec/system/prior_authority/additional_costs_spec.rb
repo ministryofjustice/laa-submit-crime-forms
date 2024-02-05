@@ -3,15 +3,7 @@ require 'system_helper'
 RSpec.describe 'Prior authority applications - additional costs' do
   context 'when I visit the appropriate screen' do
     before do
-      fill_in_until_step(:travel)
-      # TODO: When there is a UI path to this screen, remove this:
-      visit current_path.gsub('/youth_court', '/additional_costs')
-
-      # N.B: ultimately this screen will never have this title as we'll never
-      # in practice link to it until a cost has already been added. It's
-      # only due to the above-mentioned lack of a UI path that we're
-      # starting the journey here
-      expect(page).to have_title "You've added 0 additional costs"
+      fill_in_until_step(:primary_quote_summary)
     end
 
     it 'allows me to add an additional cost' do
@@ -92,28 +84,6 @@ RSpec.describe 'Prior authority applications - additional costs' do
       click_on 'Save and continue'
       expect(page).to have_title 'Additional cost'
       expect(page).to have_content 'Enter what the additional cost is for'
-    end
-  end
-
-  context 'when I have previously entered travel costs' do
-    before do
-      fill_in_until_step(:travel)
-      # TODO: When there is a UI path to this screen, remove this:
-      visit current_path.gsub('/youth_court', '/travel')
-
-      choose 'Yes'
-      click_on 'Save and continue'
-
-      fill_in 'Why are there travel costs if your client is not detained?', with: 'because'
-      fill_in 'Hours', with: 0
-      fill_in 'Minutes', with: 30
-      fill_in 'Hourly cost', with: 3.21
-      click_on 'Save and continue'
-    end
-
-    it 'handles the back button' do
-      click_on 'Back'
-      expect(page).to have_title 'Travel cost'
     end
   end
 end

@@ -75,6 +75,7 @@ module Decisions
     from('prior_authority/steps/travel_detail').goto(edit: 'prior_authority/steps/travel')
 
     from('prior_authority/steps/additional_costs').goto(show: DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
-    from('prior_authority/steps/additional_cost_details').goto(show: DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
+    from('prior_authority/steps/additional_cost_details')
+      .goto(show: DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
   end
 end
