@@ -100,7 +100,6 @@ class SubmitToAppStore
       laa_reference
       status
       rep_order_data
-      client_maat_number
       reason_why
       main_offence
       client_detained

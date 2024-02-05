@@ -10,7 +10,10 @@
     <%= step_form @form_object do |form| %>
       <%= form.govuk_text_field :main_offence, label: { text: t(".main_offence"), size: 's' }, hint: { text: t(".main_offence_hint") } %>
       <%= form.govuk_date_field :rep_order_date, legend: { text: t(".rep_order_date"), size: 's' }, hint: { text: t(".rep_order_date_hint") } %>
-      <%= form.govuk_text_field :client_maat_number, width: 10, label: { text: t('.client_maat_number'), size: 's' } %>
+
+      <%= form.fields_for :defendant, as: :defendant_form do |defendant_object| %>
+        <%= defendant_object.govuk_text_field :maat, width: 10, label: { text: t('.maat'), size: 's' } %>
+      <% end%>
 
       <%= form.govuk_radio_buttons_fieldset :client_detained, legend: { text: t('.client_detained'), size: 's' } do %>
         <%= form.govuk_radio_button :client_detained, true, label: { text: t('generic.yes') }, link_errors: true do %>

@@ -12,7 +12,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         status: 'pre_draft',
         reason_why: 'something',
         main_offence: 'something',
-        client_maat_number: '123',
         client_detained: true,
         client_detained_prison: 'something',
         subject_to_poca: true,
