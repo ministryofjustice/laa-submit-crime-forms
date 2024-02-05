@@ -75,6 +75,7 @@ secrets:
   portalIDPMetadataFile: config/laa_portal/metadata/prod.xml
   spEntityId: LAA_Portal_CRM7_Prod
   appStore: https://laa-crime-application-store-prod.apps.live.cloud-platform.service.justice.gov.uk
+  maxFileUploadBytes: 10485760
 
 service_account:
   name: laa-claim-non-standard-magistrate-fee-prod-irsa

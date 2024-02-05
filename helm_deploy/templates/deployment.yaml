@@ -138,6 +138,8 @@ spec:
               value: {{ .Values.secrets.portalIDPMetadataFile }}
             - name: SP_ENTITY_ID
               value: {{ .Values.secrets.spEntityId }}
+            - name: MAX_UPLOAD_SIZE_BYTES
+              value: {{ .Values.secrets.maxUploadSizeBytes }}
             - name: ANALYTICS_TRACKING_ID
               valueFrom:
                 secretKeyRef:

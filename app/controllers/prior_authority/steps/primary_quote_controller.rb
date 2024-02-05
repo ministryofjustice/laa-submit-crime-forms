@@ -15,8 +15,10 @@ module PriorAuthority
       def update
         @primary_quote_document = current_application.primary_quote_document
         record = primary_quote
-        unless supported_filetype(params[:prior_authority_steps_primary_quote_form][:documents])
+        if supported_filetype(params[:prior_authority_steps_primary_quote_form][:documents])
           return return_error(nil, { message: 'Incorrect file type provided' })
+        elsif file_size_within_limit
+          return return_error(nil, { message: 'The selected file must be smaller than 10MB' })
         end
         evidence = upload_file(params)
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
@@ -62,12 +64,15 @@ module PriorAuthority
         record.save!
       end
 
-      def supported_filetype(params)
-        SupportedFileTypes::PRIMARY_QUOTE_DOCUMENT.include? params.content_type
+      def supported_filetype
+        SupportedFileTypes::PRIMARY_QUOTE_DOCUMENT.include? params[:prior_authority_steps_primary_quote_form][:documents].content_type
+      end
+
+      def file_size_within_limit
+        params[:prior_authority_steps_primary_quote_form][:documents].tempfile.size <= ENV.fetch('MAX_UPLOAD_SIZE_BYTES', nil).to_i
       end
 
       def return_error(exception, dict)
-        Rails.logger.debug(exception)
         Sentry.capture_exception(exception)
         flash[:alert] = dict[:message]
         redirect_to edit_prior_authority_steps_primary_quote_path(current_application)
