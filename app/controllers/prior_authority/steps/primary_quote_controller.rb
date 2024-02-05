@@ -59,6 +59,7 @@ module PriorAuthority
         record.file_type = params.content_type
         record.file_size = params.tempfile.size
         record.file_path = file_path
+        record.save!
       end
 
       def supported_filetype(params)
