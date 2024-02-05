@@ -75,7 +75,7 @@ secrets:
   portalIDPMetadataFile: config/laa_portal/metadata/uat.xml
   spEntityId: LAA_Portal_CRM7_UAT
   appStore: https://laa-crime-application-store-uat.apps.live.cloud-platform.service.justice.gov.uk
-  maxFileUploadBytes: 10485760
+  maxFileUploadBytes: "10485760"
 
 service_account:
   name: laa-claim-non-standard-magistrate-fee-uat-irsa
