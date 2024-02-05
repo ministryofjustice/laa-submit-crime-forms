@@ -1,7 +1,7 @@
 module PriorAuthority
   module Steps
     class PrimaryQuoteController < BaseController
-      skip_before_action :verify_authenticity_token, only: [:create]
+      skip_before_action :verify_authenticity_token, only: [:update]
 
       def edit
         @form_object = PrimaryQuoteForm.build(
@@ -12,23 +12,21 @@ module PriorAuthority
         @primary_quote_document = current_application.primary_quote_document
       end
 
-      def create
+      def update
+        @primary_quote_document = current_application.primary_quote_document
+        record = primary_quote
+
         unless supported_filetype(params[:documents])
           return return_error(nil, { message: 'Incorrect file type provided' })
         end
         evidence = upload_file(params)
         return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
+        update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
         return_error(e, { message: 'File potentially contains malware so cannot be uploaded. ' \
                                    'Please contact your administrator' })
       rescue StandardError => e
         return_error(e, { message: 'Unable to upload file at this time' })
-      end
-
-      def update
-        @primary_quote_document = current_application.primary_quote_document
-        record = primary_quote
-        update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       end
 
       private
