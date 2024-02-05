@@ -8,15 +8,10 @@ module PriorAuthority
         private
 
         def persist!
-          existing = application.defendant
-          existing&.assign_attributes(attributes)
+          defendant = application.defendant || application.build_defendant
+          defendant.assign_attributes(attributes)
 
-          if existing.nil?
-            application.create_defendant!(attributes)
-            application.save!
-          else
-            application.update!(defendant: existing)
-          end
+          application.update!(defendant:)
         end
       end
     end

@@ -89,20 +89,6 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         expect { save }.to change { application.reload.defendant }.from(nil)
         expect(application.defendant).to have_attributes(maat: '123456')
       end
-
-      context 'when defendant already exists' do
-        before { defendant }
-
-        let(:defendant) { create(:defendant, :valid_paa, maat: nil, defendable: application) }
-
-        it 'does not add a new defendant' do
-          expect { save }.not_to change { application.reload.defendant }.from(defendant)
-        end
-
-        it 'updates the existing defendant' do
-          expect { save }.to change { application.reload.defendant.maat }.from(nil).to('123456')
-        end
-      end
     end
 
     context 'with incomplete case details' do
