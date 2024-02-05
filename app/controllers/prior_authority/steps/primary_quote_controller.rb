@@ -13,7 +13,6 @@ module PriorAuthority
       end
 
       def create
-        Rails.logger.debug "Creating file"
         unless supported_filetype(params[:documents])
           return return_error(nil, { message: 'Incorrect file type provided' })
         end
@@ -53,14 +52,11 @@ module PriorAuthority
       end
 
       def upload_file(params)
-        Rails.logger.debug "Uploading file"
-        Rails.logger.debug params
         file_path = file_uploader.upload(params[:documents])
         save_file(params[:documents], file_path)
       end
 
       def save_file(params, file_path)
-        Rails.logger.debug "Saving file"
         current_application.primary_quote_document.create(
           document_type: SupportingDocument::PRIMARY_QUOTE_DOCUMENT,
           file_name: params.original_filename,
@@ -68,7 +64,6 @@ module PriorAuthority
           file_size: params.tempfile.size,
           file_path: file_path
         )
-        Rails.logger.debug current_application.primary_quote_document
       end
 
       def supported_filetype(params)
