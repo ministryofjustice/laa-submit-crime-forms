@@ -22,8 +22,10 @@ RSpec.describe 'Prior authority application lists', :javascript do
   it 'allows sorting by columns in ascending and descending order' do
     click_on 'Submitted'
     click_on 'LAA reference'
+    find('th[aria-sort="ascending"]')
     expect(page.body).to match(/AAAAA.*BBBBB.*/m)
     click_on 'LAA reference'
+    find('th[aria-sort="descending"]')
     expect(page.body).to match(/BBBBB.*AAAAA.*/m)
   end
 
