@@ -241,7 +241,11 @@ jobs:
       - install-gems
       - install-compile-assets
       - *attach-tmp-workspace
-      - browser-tools/install-browser-tools
+      - browser-tools/install-browser-tools:
+          replace-existing-chrome: true
+          install-firefox: false
+          install-geckodriver: false
+          install-chromedriver: false
       - rspec
 
   rspec-gem-tests:
