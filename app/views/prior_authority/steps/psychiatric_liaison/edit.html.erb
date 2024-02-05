@@ -7,7 +7,7 @@
     <span class="govuk-caption-xl"><%= t(".caption") %></span>
 
     <%= step_form @form_object do |form| %>
-      <%= form.govuk_radio_buttons_fieldset :psychiatric_liaison, legend: { text: t('.legend'), size: 'xl' } do %>
+      <%= form.govuk_radio_buttons_fieldset :psychiatric_liaison, legend: { text: t('.legend'), size: 'xl', tag: 'h1' } do %>
         <%= form.govuk_radio_button :psychiatric_liaison, true, label: { text: t('generic.yes') } %>
           <%= form.govuk_radio_button :psychiatric_liaison, false, label: { text: t('generic.no') }, link_errors: true do %>
             <%= form.govuk_text_area :psychiatric_liaison_reason_not,

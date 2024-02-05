@@ -7,6 +7,7 @@ gem 'aws-sdk-s3', '~> 1.143'
 gem 'bootsnap', '~> 1.18.3', require: false
 gem 'clamby', '~> 1.6'
 gem 'dartsass-rails', '~> 0.5.0'
+gem 'factory_bot_rails', '>= 6.4.3'
 gem 'govuk_notify_rails', '~> 2.2.0'
 gem 'httparty'
 gem 'importmap-rails'
@@ -46,15 +47,16 @@ group :development do
 end
 
 group :test do
+  gem 'axe-core-rspec'
   gem 'capybara'
-  gem 'cuprite', '~> 0.15'
-  gem 'factory_bot_rails', '>= 6.4.3'
+  gem 'capybara-selenium'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'selenium-webdriver'
   gem 'simplecov'
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'

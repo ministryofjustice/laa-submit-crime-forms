@@ -14,12 +14,16 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
     click_on 'Save and continue'
 
     fill_in 'Which court was the last case hearing heard at?', with: 'Aldershot'
-    expect(page).to have_field('Which court was the last case hearing heard at?', with: 'Aldershot')
+
+    # Click the first autocomplete suggestion
+    find_by_id('nsm-steps-hearing-details-form-court-field__option--0').click
+
+    expect(page).to have_field('Which court was the last case hearing heard at?', with: "Aldershot Magistrates' Court")
 
     click_on 'Save and come back later'
 
     expect(claim.reload).to have_attributes(
-      court: 'Aldershot'
+      court: "Aldershot Magistrates' Court"
     )
   end
 

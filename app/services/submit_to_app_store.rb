@@ -1,13 +1,13 @@
-class NotifyAppStore < ApplicationJob
+class SubmitToAppStore < ApplicationJob
   queue_as :default
 
-  def process(claim:, scorer: RiskAssessment::RiskAssessmentScorer)
+  def process(submission:)
     if ENV.key?('REDIS_HOST')
-      self.class.perform_later(claim)
+      self.class.perform_later(submission)
     else
       begin
-        notify(MessageBuilder.new(claim:, scorer:))
-        ClaimSubmissionMailer.notify(claim).deliver_later!
+        submit(submission)
+        notify(submission)
       rescue StandardError => e
         # we only get errors here when processing inline, which we don't want
         # to be visible to the end user, so swallow errors
@@ -16,12 +16,13 @@ class NotifyAppStore < ApplicationJob
     end
   end
 
-  def perform(claim, scorer: RiskAssessment::RiskAssessmentScorer)
-    notify(MessageBuilder.new(claim:, scorer:))
-    ClaimSubmissionMailer.notify(claim).deliver_later!
+  def perform(submission)
+    submit(submission)
+    notify(submission)
   end
 
-  def notify(message_builder)
+  def submit(submission)
+    payload = PayloadBuilder.call(submission)
     raise 'SNS notification is not yet enabled' if ENV.key?('SNS_URL')
 
     # implement and call SNS notification
@@ -29,7 +30,11 @@ class NotifyAppStore < ApplicationJob
     # TODO: we only do post requests here as the system is not currently
     # able to support re-sending/submitting an appplication so we can ignore
     # put requests
-    post_manager = HttpNotifier.new
-    post_manager.post(message_builder.message)
+    post_manager = HttpClient.new
+    post_manager.post(payload)
+  end
+
+  def notify(submission)
+    ClaimSubmissionMailer.notify(submission).deliver_later! if submission.is_a?(Claim)
   end
 end

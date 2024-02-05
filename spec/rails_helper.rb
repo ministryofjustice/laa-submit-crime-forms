@@ -7,6 +7,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'sidekiq/testing'
+require 'axe-rspec'
 Sidekiq::Testing.inline!
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
@@ -19,6 +20,14 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
+Capybara.register_driver :headless_chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless=new')
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
+Capybara.default_driver = Capybara.javascript_driver = :headless_chrome
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
@@ -44,6 +53,8 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.max_formatted_output_length = nil
   end
+
+  config.filter_run_excluding :accessibility unless ENV['INCLUDE_ACCESSIBILITY_SPECS'] == 'true'
 end
 
 Capybara.configure do |config|

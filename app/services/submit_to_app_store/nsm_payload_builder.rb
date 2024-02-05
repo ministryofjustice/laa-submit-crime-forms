@@ -1,15 +1,15 @@
-class NotifyAppStore
-  class MessageBuilder
+class SubmitToAppStore
+  class NsmPayloadBuilder
     DEFAULT_IGNORE = %w[claim_id created_at updated_at].freeze
 
     attr_reader :claim, :scorer
 
-    def initialize(claim:, scorer:)
+    def initialize(claim:, scorer: RiskAssessment::RiskAssessmentScorer)
       @claim = claim
       @scorer = scorer
     end
 
-    def message
+    def payload
       {
         application_id: claim.id,
         json_schema_version: 1,
