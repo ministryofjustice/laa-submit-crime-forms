@@ -15,9 +15,9 @@ module PriorAuthority
       def update
         @primary_quote_document = current_application.primary_quote_document
         record = primary_quote
-        if supported_filetype
+        if !supported_filetype
           return return_error(nil, { message: 'Incorrect file type provided' })
-        elsif file_size_within_limit
+        elsif !file_size_within_limit
           return return_error(nil, { message: 'The selected file must be smaller than 10MB' })
         end
         evidence = upload_file(params)
