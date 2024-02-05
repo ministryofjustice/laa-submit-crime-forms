@@ -68,6 +68,7 @@ module Decisions
 
     from('prior_authority/steps/primary_quote').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
     from('prior_authority/steps/service_cost').goto(edit: 'prior_authority/steps/primary_quote')
+    from('prior_authority/steps/primary_quote_summary').goto(edit: 'prior_authority/steps/service_cost')
     from('prior_authority/steps/reason_why').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
   end
 end

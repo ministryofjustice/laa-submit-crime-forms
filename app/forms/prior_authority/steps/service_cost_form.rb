@@ -53,7 +53,11 @@ module PriorAuthority
       end
 
       def formatted_total_cost
-        NumberTo.pounds(per_item? ? item_cost : time_cost)
+        NumberTo.pounds(total_cost)
+      end
+
+      def total_cost
+        per_item? ? item_cost : time_cost
       end
 
       def per_item?

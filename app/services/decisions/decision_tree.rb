@@ -113,7 +113,7 @@ module Decisions
 
     # about the request
     from(:primary_quote).goto(edit: 'prior_authority/steps/service_cost')
-    from(:service_cost).goto(show: PRIOR_AUTHORITY_START_PAGE)
+    from(:service_cost).goto(show: 'prior_authority/steps/primary_quote_summary')
     from(:reason_why).goto(show: PRIOR_AUTHORITY_START_PAGE)
   end
 end

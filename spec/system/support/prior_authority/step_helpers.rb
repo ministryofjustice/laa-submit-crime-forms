@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
 module PriorAuthority
   module StepHelpers
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/AbcSize
     def fill_in_until_step(step, prison_law: 'No', court_type: "Magistrate's court")
       fill_in_prison_law_and_authority_value(prison_law)
 
@@ -37,10 +39,15 @@ module PriorAuthority
 
       return if step == :service_cost
 
+      fill_in_service_cost
+
+      return if step == :primary_quote_summary
+
       :end
     end
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/AbcSize
 
     def fill_in_prison_law_and_authority_value(prison_law)
       visit provider_saml_omniauth_callback_path
@@ -125,16 +132,28 @@ module PriorAuthority
       click_on 'Primary quote'
 
       fill_in 'Service required', with: service_type
-      # TODO: Currently this field is glitchy and you *have* to click on an option
-      find_by_id("prior-authority-steps-primary-quote-form-service-type-field__option--#{suggestion - 1}").click
+
+      # TODO: Currently this field is glitchy and you *have* to click on an option for a non-custom value
+      suggestion_id = "prior-authority-steps-primary-quote-form-service-type-field__option--#{suggestion - 1}"
+      find_by_id(suggestion_id).click if page.has_css?("##{suggestion_id}")
+
       fill_in 'Contact full name', with: 'Joe Bloggs'
       fill_in 'Organisation', with: 'LAA'
       fill_in 'Postcode', with: 'CR0 1RE'
 
       click_on 'Save and continue'
     end
+
+    def fill_in_service_cost
+      choose 'Yes'
+      choose 'Charged per item'
+      fill_in 'Number of items', with: '5'
+      fill_in 'What is the cost per item?', with: '1.23'
+      click_on 'Save and continue'
+    end
   end
 end
+# rubocop:enable Metrics/ModuleLength
 
 RSpec.configure do |config|
   config.include PriorAuthority::StepHelpers, type: :system

@@ -4,7 +4,11 @@ module PriorAuthority
       FORM = ::PriorAuthority::Steps::PrimaryQuoteForm
 
       def path
-        edit_prior_authority_steps_primary_quote_path(application)
+        if record && completed?(record, PriorAuthority::Steps::ServiceCostForm)
+          prior_authority_steps_primary_quote_summary_path(application)
+        else
+          edit_prior_authority_steps_primary_quote_path(application)
+        end
       end
 
       def can_start?

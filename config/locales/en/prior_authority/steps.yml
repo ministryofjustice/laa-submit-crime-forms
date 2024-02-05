@@ -112,6 +112,20 @@ en:
         time:
           period: Time
           cost_per_hour: Hourly cost
+      primary_quote_summary:
+        show:
+          caption: About the request
+          page_title: Primary quote summary
+          quote_total_cost: Quote total cost
+        service_cost_card:
+          service_costs: Service costs
+          change: Change
+          service_required: Service required
+          service_details: Service details
+          prior_authority_granted: Existing prior authority granted
+          total: Total
+          period: Time
+          cost_per_hour: Cost per hour
       reason_why:
         edit:
           caption: 2. About the request
