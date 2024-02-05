@@ -15,6 +15,8 @@
 
       <%= render 'travel_cost_card', form: @model.travel_detail_form %>
 
+      <%= render 'additional_cost_card', form: @model.additional_cost_overview_form %>
+
       <div class="govuk-button-group">
         <%= govuk_button_link_to(t('prior_authority.generic.save_and_continue'),
                                  prior_authority_steps_start_page_path(@model.application)) %>

@@ -6,7 +6,7 @@ module PriorAuthority
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize
-    def fill_in_until_step(step, prison_law: 'No', court_type: "Magistrate's court")
+    def fill_in_until_step(step, prison_law: 'No', court_type: "Magistrate's court", javascript: true)
       fill_in_prison_law_and_authority_value(prison_law)
 
       return if step == :ufn
@@ -35,7 +35,7 @@ module PriorAuthority
 
       return if step == :primary_quote
 
-      fill_in_primary_quote
+      javascript ? fill_in_primary_quote : fill_in_primary_quote_no_js
 
       return if step == :service_cost
 
@@ -136,6 +136,18 @@ module PriorAuthority
       # TODO: Currently this field is glitchy and you *have* to click on an option for a non-custom value
       suggestion_id = "prior-authority-steps-primary-quote-form-service-type-field__option--#{suggestion - 1}"
       find_by_id(suggestion_id).click if page.has_css?("##{suggestion_id}")
+
+      fill_in 'Contact full name', with: 'Joe Bloggs'
+      fill_in 'Organisation', with: 'LAA'
+      fill_in 'Postcode', with: 'CR0 1RE'
+
+      click_on 'Save and continue'
+    end
+
+    def fill_in_primary_quote_no_js(service_type: 'Meteorologist')
+      click_on 'Primary quote'
+
+      select service_type, from: 'Service required'
 
       fill_in 'Contact full name', with: 'Joe Bloggs'
       fill_in 'Organisation', with: 'LAA'

@@ -23,6 +23,10 @@ module PriorAuthority
       redirect_to prior_authority_applications_path
     end
 
+    def offboard
+      @model = current_provider.prior_authority_applications.find(params[:id])
+    end
+
     private
 
     def initialize_application(attributes = {}, &block)

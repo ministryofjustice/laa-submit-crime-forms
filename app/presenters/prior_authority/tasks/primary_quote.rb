@@ -1,6 +1,6 @@
 module PriorAuthority
   module Tasks
-    class PrimaryQuote < ::Tasks::Generic
+    class PrimaryQuote < Base
       FORM = ::PriorAuthority::Steps::PrimaryQuoteForm
 
       def path
