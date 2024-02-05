@@ -12,7 +12,7 @@ module SortableTableHelper
       safe_join([tag.input(type: 'hidden', name: 'sort_by', value: column),
                  tag.input(type: 'hidden', name: 'sort_direction', value: next_direction),
                  tag.button(type: 'submit', 'data-index': index) do
-                   I18n.t("#{i18n_stem}.#{column}")
+                   I18n.t(column, scope: i18n_stem)
                  end])
     end
   end
