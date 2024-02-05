@@ -132,10 +132,6 @@ commands:
 
   rspec:
     steps:
-      - save_cache:
-          key: nsmf-claim-repo-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - ~/repo
       - db-setup
       - run:
           name: Run rspec tests
@@ -150,8 +146,15 @@ commands:
             -- ${TESTFILES}
       - store_test_results:
           path: /tmp/test-results/rspec
-      - restore_cache:
-          key: nsmf-claim-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Stash coverage results
+          command: |
+            mkdir coverage_results
+            cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage_results
       - store_artifacts:
           path: ~/repo/coverage
           destination: coverage
@@ -161,7 +164,24 @@ commands:
       - run:
           name: Run rspec tests
           command: |
-            bundle exec rspec
+            bundle exec rspec \
+             --format progress \
+             --format RspecJunitFormatter \
+             --out /tmp/gem-test-results/rspec/rspec.xml
+      - store_test_results:
+          path: /tmp/gem-test-results/rspec
+      - run:
+          name: Stash coverage results
+          command: |
+            mkdir coverage_results
+            cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}-gem.json
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage_results
+      - store_artifacts:
+          path: ~/repo/coverage
+          destination: coverage
 
   build-docker-image:
       steps:
@@ -235,6 +255,7 @@ jobs:
       - rubocop
 
   rspec-tests:
+    parallelism: 2
     executor: test-executor
     steps:
       - checkout
@@ -246,6 +267,11 @@ jobs:
           install-firefox: false
           install-geckodriver: false
           install-chromedriver: false
+      - save_cache:
+          name: Saving assets and dependencies cache for use in later steps
+          key: nsmf-claim-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/repo
       - rspec
 
   rspec-gem-tests:
@@ -256,6 +282,22 @@ jobs:
           path: ~/repo
       - install-gems
       - rspec-gem-specs
+
+  coverage:
+    executor: test-executor
+    steps:
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          name: Restoring assets and dependencies cache from tests
+          key: nsmf-claim-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Process coverage
+          command: |
+            bundle exec rake simplecov:process_coverage
+      - store_artifacts:
+          path: ~/repo/coverage
+          destination: coverage
 
   scan-docker-image:
     executor: test-executor
@@ -342,6 +384,10 @@ workflows:
       - rspec-gem-tests:
           requires:
             - build-test-container
+      - coverage:
+          requires:
+            - rspec-tests
+            - rspec-gem-tests
       - scan-docker-image:
           requires:
             - rspec-tests
