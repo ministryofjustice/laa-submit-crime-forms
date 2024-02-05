@@ -69,6 +69,8 @@ module PriorAuthority
       def return_error(exception, dict)
         Rails.logger.debug(exception)
         Sentry.capture_exception(exception)
+        flash[:alert] = dict[:message]
+        redirect_to edit_prior_authority_steps_primary_quote_path(current_application)
       end
     end
   end
