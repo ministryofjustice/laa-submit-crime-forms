@@ -121,10 +121,12 @@ module PriorAuthority
       click_on 'Save and continue'
     end
 
-    def fill_in_primary_quote
+    def fill_in_primary_quote(service_type: 'Forensics', suggestion: 1)
       click_on 'Primary quote'
 
-      fill_in 'Service required', with: 'Forensics'
+      fill_in 'Service required', with: service_type
+      # TODO: Currently this field is glitchy and you *have* to click on an option
+      find_by_id("prior-authority-steps-primary-quote-form-service-type-field__option--#{suggestion - 1}").click
       fill_in 'Contact full name', with: 'Joe Bloggs'
       fill_in 'Organisation', with: 'LAA'
       fill_in 'Postcode', with: 'CR0 1RE'

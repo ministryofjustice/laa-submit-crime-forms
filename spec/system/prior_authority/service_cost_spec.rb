@@ -2,18 +2,16 @@ require 'system_helper'
 
 RSpec.describe 'Prior authority applications - add service costs', :javascript, type: :system do
   before do
-    fill_in_until_step(:service_cost)
-    # TODO: When this branch has selenium available, select
-    # service type via the UI - it's not currently working for non-custom choices
-    Quote.last.update(service_type:)
-    visit current_path
+    fill_in_until_step(:primary_quote)
+    fill_in_primary_quote(service_type:, suggestion:)
     expect(page).to have_title 'Service cost'
   end
 
-  let(:service_type) { 'meteorologist' }
+  let(:service_type) { 'Meteorologist' }
+  let(:suggestion) { 1 }
 
   context 'when the service is A Psychiatric report (Prison Law)' do
-    let(:service_type) { 'psychiatric_report_prsn_law' }
+    let(:service_type) { 'A Psychiatric report (Prison Law)' }
 
     it 'asks a court order question' do
       expect(page).to have_content 'Was this report ordered by the court?'
@@ -21,7 +19,9 @@ RSpec.describe 'Prior authority applications - add service costs', :javascript, 
   end
 
   context 'when the service is Pathologist' do
-    let(:service_type) { 'pathologist' }
+    let(:service_type) { 'Pathologist' }
+    # The first suggestion is 'Neuropathologist', which we don't want
+    let(:suggestion) { 2 }
 
     it 'asks a pathologist question' do
       expect(page).to have_content 'Is this related to a post-mortem?'
@@ -29,7 +29,7 @@ RSpec.describe 'Prior authority applications - add service costs', :javascript, 
   end
 
   context 'when the service is Transcripts (recordings)' do
-    let(:service_type) { 'transcripts_recordings' }
+    let(:service_type) { 'Transcripts (recordings)' }
 
     it 'asks a question about minutes' do
       expect(page).to have_content 'What is the cost per minute?'
@@ -37,7 +37,7 @@ RSpec.describe 'Prior authority applications - add service costs', :javascript, 
   end
 
   context 'when the service is Translator (documents)' do
-    let(:service_type) { 'translator_documents' }
+    let(:service_type) { 'Translator (documents)' }
 
     it 'asks a question about words' do
       expect(page).to have_content 'What is the cost per word?'
@@ -45,7 +45,7 @@ RSpec.describe 'Prior authority applications - add service costs', :javascript, 
   end
 
   context 'when the service is Photocopying per sheet' do
-    let(:service_type) { 'photocopying_per_sheet' }
+    let(:service_type) { 'Photocopying per sheet' }
 
     it 'asks a question about words' do
       expect(page).to have_content 'What is the cost per page?'
@@ -53,7 +53,7 @@ RSpec.describe 'Prior authority applications - add service costs', :javascript, 
   end
 
   context 'when the service is DNA (per person)' do
-    let(:service_type) { 'dna_per_person' }
+    let(:service_type) { 'DNA (per person)' }
 
     it 'asks a question about cost type' do
       expect(page).to have_content 'How are you being charged?'
@@ -61,7 +61,7 @@ RSpec.describe 'Prior authority applications - add service costs', :javascript, 
   end
 
   context 'when the service is Cardiologist' do
-    let(:service_type) { 'cardiologist' }
+    let(:service_type) { 'Cardiologist' }
 
     it 'asks a question about hours' do
       expect(page).to have_content 'Hourly cost'
