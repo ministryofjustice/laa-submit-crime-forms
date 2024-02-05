@@ -53,7 +53,7 @@ module PriorAuthority
       end
 
       def save_file(params, file_path)
-        current_application.primary_quote_document.create(
+        current_application.build_primary_quote_document(
           document_type: SupportingDocument::PRIMARY_QUOTE_DOCUMENT,
           file_name: params.original_filename,
           file_type: params.content_type,
