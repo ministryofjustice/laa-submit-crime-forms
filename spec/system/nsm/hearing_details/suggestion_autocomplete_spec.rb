@@ -23,7 +23,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
     click_on 'Save and come back later'
 
     expect(claim.reload).to have_attributes(
-      court: 'Aldershot'
+      court: "Aldershot Magistrates' Court"
     )
   end
 
