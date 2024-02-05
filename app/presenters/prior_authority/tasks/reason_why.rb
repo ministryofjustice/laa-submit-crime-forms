@@ -1,6 +1,6 @@
 module PriorAuthority
   module Tasks
-    class ReasonWhy < ::Tasks::Generic
+    class ReasonWhy < Base
       PREVIOUS_TASK = PriorAuthority::Tasks::ClientDetail
       FORM = ::PriorAuthority::Steps::ReasonWhyForm
 

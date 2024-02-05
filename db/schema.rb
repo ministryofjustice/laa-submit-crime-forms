@@ -42,6 +42,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_095033) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "additional_costs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "unit_type"
+    t.decimal "cost_per_hour", precision: 10, scale: 2
+    t.decimal "cost_per_item", precision: 10, scale: 2
+    t.integer "items"
+    t.integer "period"
+    t.uuid "prior_authority_application_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["prior_authority_application_id"], name: "index_additional_costs_on_prior_authority_application_id"
+  end
+
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "ufn"
     t.string "office_code", null: false
@@ -192,6 +206,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_095033) do
     t.string "psychiatric_liaison_reason_not"
     t.boolean "next_hearing"
     t.boolean "prior_authority_granted"
+    t.integer "travel_time"
+    t.decimal "travel_cost_per_hour", precision: 10, scale: 2
+    t.text "travel_cost_reason"
+    t.boolean "additional_costs_still_to_add"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
@@ -276,6 +294,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_095033) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "additional_costs", "prior_authority_applications"
   add_foreign_key "claims", "firm_offices"
   add_foreign_key "claims", "providers", column: "submitter_id"
   add_foreign_key "claims", "solicitors"
