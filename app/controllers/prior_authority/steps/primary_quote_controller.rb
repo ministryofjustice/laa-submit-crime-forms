@@ -53,13 +53,12 @@ module PriorAuthority
       end
 
       def save_file(params, file_path)
-        current_application.build_primary_quote_document(
-          document_type: SupportingDocument::PRIMARY_QUOTE_DOCUMENT,
-          file_name: params.original_filename,
-          file_type: params.content_type,
-          file_size: params.tempfile.size,
-          file_path: file_path
-        )
+        record = current_application.primary_quote_document || current_application.build_primary_quote_document
+        record.document_type = SupportingDocument::PRIMARY_QUOTE_DOCUMENT
+        record.file_name = params.original_filename
+        record.file_type = params.content_type
+        record.file_size = params.tempfile.size
+        record.file_path = file_path
       end
 
       def supported_filetype(params)
