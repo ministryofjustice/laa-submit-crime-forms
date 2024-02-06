@@ -22,6 +22,9 @@ RSpec.describe 'Prior authority applications - add case contact', :javascript, t
   end
 
   it 'can have a reason with attachments' do
+    # Bypass malware scanning in test environment
+    allow(Clamby).to receive(:safe?).and_return(true)
+
     fill_in 'Why is prior authority required?', with: 'important reasons'
     find('.moj-multi-file-upload__dropzone').drop(Rails.root.join('spec/support/assets/test.png'))
     click_on 'Save and continue'
