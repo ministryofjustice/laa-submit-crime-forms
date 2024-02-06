@@ -5,6 +5,9 @@ module PriorAuthority
 
     def index
       @empty = current_provider.prior_authority_applications.none?
+      @assessed_pagy, @assessed_model = order_and_paginate(current_provider.prior_authority_applications.assessed)
+      @draft_pagy, @draft_model = order_and_paginate(current_provider.prior_authority_applications.draft)
+      @submitted_pagy, @submitted_model = order_and_paginate(current_provider.prior_authority_applications.submitted)
     end
 
     def create
