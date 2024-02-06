@@ -140,7 +140,6 @@ spec:
               value: {{ .Values.secrets.spEntityId }}
             - name: MAX_UPLOAD_SIZE_BYTES
               value: {{ mul .Values.secrets.maxFileUploadBytes 1 }}
-              type: int64
             - name: ANALYTICS_TRACKING_ID
               valueFrom:
                 secretKeyRef:
