@@ -3,6 +3,7 @@
 module PriorAuthority
   module StepHelpers
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize
     def fill_in_until_step(step, prison_law: 'No', court_type: "Magistrate's court")
       fill_in_prison_law_and_authority_value(prison_law)
 
@@ -22,6 +23,7 @@ module PriorAuthority
 
       return if step == :case_detail
 
+      click_on 'Case and hearing details'
       fill_in_case_detail
 
       return if step == :hearing_detail
@@ -40,6 +42,7 @@ module PriorAuthority
       :end
     end
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
     def fill_in_prison_law_and_authority_value(prison_law)
       visit provider_saml_omniauth_callback_path
