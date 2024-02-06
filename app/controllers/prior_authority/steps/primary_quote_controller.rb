@@ -20,7 +20,8 @@ module PriorAuthority
         elsif !file_size_within_limit
           return return_error({ message: t('errors.shared.shared_upload_errors.file_size', max_size: '10MB') })
         end
-        evidence = upload_file(params)
+
+        upload_file(params)
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
         return_error(e, { message: t('errors.shared.shared_upload_errors.malware') })
@@ -68,10 +69,12 @@ module PriorAuthority
       end
 
       def file_size_within_limit
-        params[:prior_authority_steps_primary_quote_form][:documents].tempfile.size <= ENV.fetch('MAX_UPLOAD_SIZE_BYTES', nil).to_i
+        params[:prior_authority_steps_primary_quote_form][:documents].tempfile.size <= ENV.fetch(
+          'MAX_UPLOAD_SIZE_BYTES', nil
+        ).to_i
       end
 
-      def return_error(dict, exception=nil)
+      def return_error(dict, exception = nil)
         if exception.nil?
           Sentry.capture_exception(dict[:message])
         else
@@ -81,5 +84,5 @@ module PriorAuthority
         redirect_to edit_prior_authority_steps_primary_quote_path(current_application)
       end
     end
-kb  end
+    kb end
 end

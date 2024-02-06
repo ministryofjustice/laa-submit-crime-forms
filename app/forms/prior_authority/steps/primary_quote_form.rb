@@ -35,11 +35,11 @@ module PriorAuthority
       end
 
       def translated_values
-        QuoteServices.values.map{|value| value.translated.downcase }
+        QuoteServices.values.map { |value| value.translated.downcase }
       end
 
       def service_type_code(service_type_string)
-       I18n.t("helpers.quote_services").transform_values(&:downcase).key(service_type_string.downcase)
+        I18n.t('helpers.quote_services').transform_values(&:downcase).key(service_type_string.downcase)
       end
     end
   end
