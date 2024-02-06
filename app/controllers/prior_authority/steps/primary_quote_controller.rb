@@ -24,9 +24,9 @@ module PriorAuthority
         upload_file(params)
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
-        return_error(e, { message: t('shared.shared_upload_errors.malware') })
+        return_error({ message: t('shared.shared_upload_errors.malware') }, e)
       rescue StandardError => e
-        return_error(e, { message: t('shared.shared_upload_errors.unable') })
+        return_error({ message: t('shared.shared_upload_errors.unable') }, e)
       end
 
       private
