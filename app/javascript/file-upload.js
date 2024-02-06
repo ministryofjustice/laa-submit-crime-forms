@@ -30,6 +30,7 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
             feedback.html(this.getSuccessHtml(`${response.success.file_name} has been uploaded`));
             this.status.html(`${response.success.file_name} has been uploaded`);
             item.find(`a.remove-link.moj-multi-file-upload__delete`).attr("value", response.success.evidence_id ?? file.name)
+            item.find(`a.remove-link.moj-multi-file-upload__delete`).removeClass('govuk-!-display-none')
             this.params.uploadFileExitHook(this, file, response);
         }, this),
         error: $.proxy(function (jqXHR, textStatus, errorThrown) {
@@ -58,7 +59,7 @@ MOJFrontend.MultiFileUpload.prototype.getFileRowHtml = function (file, fileListL
                 <span class="moj-multi-file-upload__filename"> ${file.name}</span>
                 <span class="moj-multi-file-upload__progress">(0%)</span></td>
             <td class="govuk-table__cell moj-multi-file-upload__actions">
-                <a class="remove-link moj-multi-file-upload__delete" href="#0" value="${file.name}">Delete
+                <a class="remove-link moj-multi-file-upload__delete govuk-!-display-none" href="#0"" value="${file.name}">Delete
                 <span class="govuk-visually-hidden">${file.name}</span>
                 </a>
             </td>
