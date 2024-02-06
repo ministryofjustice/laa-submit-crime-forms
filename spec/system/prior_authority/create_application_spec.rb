@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority application creation', :javascript do
+RSpec.describe 'Prior authority application creation' do
   before do
     visit provider_saml_omniauth_callback_path
     visit prior_authority_root_path
