@@ -117,8 +117,6 @@ Rails.application.routes.draw do
     resources :service_types, only: [:index], format: :js
 
     scope 'applications/:id' do
-      get '/steps/start_page', to: 'steps/start_page#show', as: 'after_commit'
-
       namespace :steps do
         edit_step :prison_law
         edit_step :authority_value

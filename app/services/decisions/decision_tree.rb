@@ -89,7 +89,7 @@ module Decisions
     # ---------------------------------
     # prior authority application steps
     # ---------------------------------
-    from(:case_contact).goto(edit: 'prior_authority/steps/client_detail')
+    from(:case_contact).goto(show: 'prior_authority/steps/start_page')
     from(:client_detail)
       .when(-> { application.prison_law? })
       .goto(edit: 'prior_authority/steps/next_hearing')
