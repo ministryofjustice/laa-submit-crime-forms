@@ -15,9 +15,7 @@ en:
       file_type: Incorrect file type provided
       unable_upload: Unable to upload file at this time
       unable_delete: Unable to delete file at this time
-      malware: |
-        File potentially contains malware so cannot be uploaded.
-        Please contact your administrator
+      malware: File potentially contains malware so cannot be uploaded. Please contact your administrator
   laa_multi_step_forms:
     errors:
       format: "%{message}"
