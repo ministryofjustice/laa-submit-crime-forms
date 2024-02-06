@@ -26,6 +26,7 @@ module PriorAuthority
         return_error(e, { message: 'File potentially contains malware so cannot be uploaded. ' \
                                    'Please contact your administrator' })
       rescue StandardError => e
+        Rails.logger.debug e
         return_error(e, { message: 'Unable to upload file at this time' })
       end
 
