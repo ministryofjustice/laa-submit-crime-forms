@@ -15,12 +15,8 @@ module PriorAuthority
       def update
         @primary_quote_document = current_application.primary_quote_document
         record = primary_quote
-        if !supported_filetype
-          return return_error({ message: t('shared.shared_upload_errors.file_type') })
-        elsif !file_size_within_limit
-          return return_error({ message: t('shared.shared_upload_errors.file_size', max_size: '10MB') })
-        end
 
+        validate_file
         upload_file(params)
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
@@ -65,13 +61,22 @@ module PriorAuthority
       end
 
       def supported_filetype
-        SupportedFileTypes::PRIMARY_QUOTE_DOCUMENT.include? params[:prior_authority_steps_primary_quote_form][:documents].content_type
+        SupportedFileTypes::PRIMARY_QUOTE_DOCUMENT
+          .include? params[:prior_authority_steps_primary_quote_form][:documents].content_type
       end
 
       def file_size_within_limit
         params[:prior_authority_steps_primary_quote_form][:documents].tempfile.size <= ENV.fetch(
           'MAX_UPLOAD_SIZE_BYTES', nil
         ).to_i
+      end
+
+      def validate_file
+        if !supported_filetype
+          return_error({ message: t('shared.shared_upload_errors.file_type') })
+        elsif !file_size_within_limit
+          return_error({ message: t('shared.shared_upload_errors.file_size', max_size: '10MB') })
+        end
       end
 
       def return_error(dict, exception = nil)
