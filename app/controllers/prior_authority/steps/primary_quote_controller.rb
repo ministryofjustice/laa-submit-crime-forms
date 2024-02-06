@@ -16,17 +16,17 @@ module PriorAuthority
         @primary_quote_document = current_application.primary_quote_document
         record = primary_quote
         if !supported_filetype
-          return return_error({ message: t('errors.shared.shared_upload_errors.file_type') })
+          return return_error({ message: t('shared.shared_upload_errors.file_type') })
         elsif !file_size_within_limit
-          return return_error({ message: t('errors.shared.shared_upload_errors.file_size', max_size: '10MB') })
+          return return_error({ message: t('shared.shared_upload_errors.file_size', max_size: '10MB') })
         end
 
         upload_file(params)
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
-        return_error(e, { message: t('errors.shared.shared_upload_errors.malware') })
+        return_error(e, { message: t('shared.shared_upload_errors.malware') })
       rescue StandardError => e
-        return_error(e, { message: t('errors.shared.shared_upload_errors.unable') })
+        return_error(e, { message: t('shared.shared_upload_errors.unable') })
       end
 
       private
