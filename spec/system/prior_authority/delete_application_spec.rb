@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority application deletion', :javascript do
+RSpec.describe 'Prior authority application deletion' do
   before do
     fill_in_until_step(:your_application_progress)
     click_on 'Back to your applications'
