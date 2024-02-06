@@ -10,6 +10,13 @@ en:
       year_too_early: Date is too far in the past
       future_not_allowed: Date cannot be in the future
       before_date_from: End date cannot be before start date
+    shared_file_upload_errors:
+      file_size_limit: "The selected file must be smaller than %{max_size}"
+      file_type: Incorrect file type provided
+      unable: Unable to upload file at this time
+      malware: |
+        File potentially contains malware so cannot be uploaded.
+        Please contact your administrator
   laa_multi_step_forms:
     errors:
       format: "%{message}"

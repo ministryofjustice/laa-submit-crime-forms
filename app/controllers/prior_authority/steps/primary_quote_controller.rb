@@ -16,19 +16,16 @@ module PriorAuthority
         @primary_quote_document = current_application.primary_quote_document
         record = primary_quote
         if !supported_filetype
-          return return_error(nil, { message: 'Incorrect file type provided' })
+          return return_error({ message: t('errors.shared.shared_upload_errors.file_type') })
         elsif !file_size_within_limit
-          return return_error(nil, { message: 'The selected file must be smaller than 10MB' })
+          return return_error({ message: t('errors.shared.shared_upload_errors.file_size', max_size: '10MB') })
         end
         evidence = upload_file(params)
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
-        return_error(e, { message: 'File potentially contains malware so cannot be uploaded. ' \
-                                   'Please contact your administrator' })
+        return_error(e, { message: t('errors.shared.shared_upload_errors.malware') })
       rescue StandardError => e
-        Rails.logger.debug "Upload failed"
-        Rails.logger.debug e
-        return_error(e, { message: 'Unable to upload file at this time' })
+        return_error(e, { message: t('errors.shared.shared_upload_errors.unable') })
       end
 
       private
@@ -74,11 +71,15 @@ module PriorAuthority
         params[:prior_authority_steps_primary_quote_form][:documents].tempfile.size <= ENV.fetch('MAX_UPLOAD_SIZE_BYTES', nil).to_i
       end
 
-      def return_error(exception, dict)
-        # Sentry.capture_exception(exception)
+      def return_error(dict, exception=nil)
+        if exception.nil?
+          Sentry.capture_exception(dict[:message])
+        else
+          Sentry.capture_exception(exception)
+        end
         flash[:alert] = dict[:message]
         redirect_to edit_prior_authority_steps_primary_quote_path(current_application)
       end
     end
-  end
+kb  end
 end
