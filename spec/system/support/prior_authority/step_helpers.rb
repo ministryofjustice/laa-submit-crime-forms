@@ -75,6 +75,7 @@ module PriorAuthority
     end
 
     def fill_in_client_detail
+      click_on 'Client details'
       fill_in 'First name', with: 'John'
       fill_in 'Last name', with: 'Doe'
 

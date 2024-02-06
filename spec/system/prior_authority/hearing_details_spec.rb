@@ -72,6 +72,6 @@ RSpec.describe 'Prior authority applications - add hearing details' do
 
   it 'allows save and come back later' do
     click_on 'Save and come back later'
-    expect(page).to have_content('Case and hearing detailsIn progress')
+    expect(page).to have_content('Your applications')
   end
 end

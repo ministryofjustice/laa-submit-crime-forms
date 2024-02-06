@@ -18,12 +18,9 @@ RSpec.describe 'Prior authority applications - add client details' do
       fill_in 'Year', with: '2000'
     end
 
-    click_on 'Save and come back later'
-
-    expect(page).to have_content 'Client detailsCompleted'
-
-    click_on 'Client details'
     click_on 'Save and continue'
+
+    expect(page).to have_content 'Case details'
   end
 
   it 'validates client detail fields' do
@@ -41,6 +38,6 @@ RSpec.describe 'Prior authority applications - add client details' do
     click_on 'Client details'
 
     click_on 'Save and come back later'
-    expect(page).to have_content 'Client detailsIn progress'
+    expect(page).to have_content 'Your applications'
   end
 end

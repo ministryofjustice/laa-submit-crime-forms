@@ -13,13 +13,9 @@ RSpec.describe 'Prior authority applications - add case contact' do
     fill_in 'Email address', with: 'john@does.com'
     fill_in 'Firm name', with: 'LegalCorp Ltd'
     fill_in 'Firm account number', with: 'A12345'
-    click_on 'Save and come back later'
+    click_on 'Save and continue'
 
     expect(page).to have_content 'Case contactCompleted'
-
-    click_on 'Case contact'
-    click_on 'Save and continue'
-    expect(page).to have_title 'Client details'
   end
 
   it 'does validations' do
@@ -37,6 +33,28 @@ RSpec.describe 'Prior authority applications - add case contact' do
     click_on 'Case contact'
     click_on 'Save and come back later'
 
-    expect(page).to have_content 'Case contactIn progress'
+    expect(page).to have_title 'Your applications'
+  end
+
+  context 'when the screen has already been filled in' do
+    before do
+      fill_in_case_contact
+    end
+
+    it 'allows contact detail updating' do
+      click_on 'Case contact'
+      fill_in 'Full name', with: 'Jane Doe'
+      click_on 'Save and continue'
+
+      expect(page).to have_content 'Case contactCompleted'
+    end
+
+    it 'allows firm detail updating' do
+      click_on 'Case contact'
+      fill_in 'Firm account number', with: 'A12345'
+      click_on 'Save and continue'
+
+      expect(page).to have_content 'Case contactCompleted'
+    end
   end
 end
