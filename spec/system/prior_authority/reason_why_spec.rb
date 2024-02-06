@@ -29,6 +29,6 @@ RSpec.describe 'Prior authority applications - add case contact', :javascript, t
     expect(application.reload).to have_attributes(
       reason_why: 'important reasons'
     )
-    # TODO: Implement verification that file has been uploaded successfully.
+    expect(application.supporting_documents.first.file_name).to eq 'test.png'
   end
 end
