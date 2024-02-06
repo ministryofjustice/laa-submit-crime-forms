@@ -13,7 +13,8 @@ en:
     shared_upload_errors:
       file_size_limit: "The selected file must be smaller than %{max_size}"
       file_type: Incorrect file type provided
-      unable: Unable to upload file at this time
+      unable_upload: Unable to upload file at this time
+      unable_delete: Unable to delete file at this time
       malware: |
         File potentially contains malware so cannot be uploaded.
         Please contact your administrator

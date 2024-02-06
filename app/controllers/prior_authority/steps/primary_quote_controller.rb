@@ -26,7 +26,7 @@ module PriorAuthority
       rescue FileUpload::FileUploader::PotentialMalwareError => e
         return_error({ message: t('shared.shared_upload_errors.malware') }, e)
       rescue StandardError => e
-        return_error({ message: t('shared.shared_upload_errors.unable') }, e)
+        return_error({ message: t('shared.shared_upload_errors.unable_upload') }, e)
       end
 
       private
