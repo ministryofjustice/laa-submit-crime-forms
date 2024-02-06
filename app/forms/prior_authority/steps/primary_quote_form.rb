@@ -13,8 +13,8 @@ module PriorAuthority
       validates :postcode, presence: true, uk_postcode: true
 
       def service_type_suggestion=(value)
-        if value.in?(translated_values)
-          self.service_type = service_type.value
+        if value.in?(translations.keys)
+          self.service_type = translations[value]
           self.custom_service_name = nil
         else
           self.service_type = 'custom' if value.present?
@@ -34,8 +34,8 @@ module PriorAuthority
         }
       end
 
-      def translated_values
-        QuoteServices.values.map(&:translated)
+      def translations
+        QuoteServices.values.to_h { [_1.translated, _1.value] }
       end
     end
   end
