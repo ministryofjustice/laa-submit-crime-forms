@@ -28,7 +28,7 @@ module PriorAuthority
       rescue StandardError => e
         Rails.logger.debug "Upload failed"
         Rails.logger.debug e
-        # return_error(e, { message: 'Unable to upload file at this time' })
+        return_error(e, { message: 'Unable to upload file at this time' })
       end
 
       private
@@ -75,7 +75,7 @@ module PriorAuthority
       end
 
       def return_error(exception, dict)
-        Sentry.capture_exception(exception)
+        # Sentry.capture_exception(exception)
         flash[:alert] = dict[:message]
         redirect_to edit_prior_authority_steps_primary_quote_path(current_application)
       end
