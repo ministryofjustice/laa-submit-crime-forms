@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_05_125500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -177,20 +177,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_112459) do
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "reason_why"
-    t.string "main_offence"
-    t.date "rep_order_date"
-    t.string "client_maat_number"
-    t.boolean "client_detained"
-    t.string "client_detained_prison"
-    t.boolean "subject_to_poca"
+    t.boolean "next_hearing"
     t.date "next_hearing_date"
     t.string "plea"
     t.string "court_type"
     t.boolean "youth_court"
     t.boolean "psychiatric_liaison"
     t.string "psychiatric_liaison_reason_not"
-    t.boolean "next_hearing"
+    t.string "main_offence"
+    t.date "rep_order_date"
+    t.boolean "client_detained"
+    t.string "client_detained_prison"
+    t.boolean "subject_to_poca"
+    t.text "reason_why"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"

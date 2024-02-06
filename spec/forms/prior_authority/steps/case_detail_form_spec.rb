@@ -18,7 +18,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         {
           main_offence: 'Supply a controlled drug of Class A - Heroin',
           rep_order_date: Date.yesterday,
-          client_maat_number: '123456',
+          defendant_attributes: { 'maat' => '123456' },
           client_detained: true,
           client_detained_prison: 'HMP Bedford',
           subject_to_poca: false,
@@ -28,12 +28,12 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
       it { is_expected.to be_valid }
     end
 
-    context 'with invalid solicitor and firm details' do
+    context 'with invalid case details' do
       let(:case_detail_attributes) do
         {
           main_offence: nil,
           rep_order_date: nil,
-          client_maat_number: nil,
+          defendant_attributes: { 'maat' => nil },
           client_detained: nil,
           client_detained_prison: nil,
           subject_to_poca: nil,
@@ -62,7 +62,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         {
           main_offence: 'Supply a controlled drug of Class A - Heroin',
           rep_order_date: Date.yesterday,
-          client_maat_number: '123456',
+          defendant_attributes: { 'maat' => '123456' },
           client_detained: true,
           client_detained_prison: 'HMP Bedford',
           subject_to_poca: false,
@@ -74,17 +74,20 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
           .from(
             hash_including(
               'main_offence' => nil, 'rep_order_date' => nil,
-              'client_maat_number' => nil, 'client_detained' => nil,
-              'client_detained_prison' => nil, 'subject_to_poca' => nil,
+              'client_detained' => nil, 'client_detained_prison' => nil, 'subject_to_poca' => nil,
             )
           )
           .to(
             hash_including(
               'main_offence' => 'Supply a controlled drug of Class A - Heroin', 'rep_order_date' => Date.yesterday,
-              'client_maat_number' => '123456', 'client_detained' => true,
-              'client_detained_prison' => 'HMP Bedford', 'subject_to_poca' => false,
+              'client_detained' => true, 'client_detained_prison' => 'HMP Bedford', 'subject_to_poca' => false,
             )
           )
+      end
+
+      it 'persists the defendant' do
+        expect { save }.to change { application.reload.defendant }.from(nil)
+        expect(application.defendant).to have_attributes(maat: '123456')
       end
     end
 
@@ -93,7 +96,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         {
           main_offence: nil,
           rep_order_date: nil,
-          client_maat_number: nil,
+          defendant_attributes: { 'maat' => nil },
           client_detained: nil,
           client_detained_prison: nil,
           subject_to_poca: nil,
@@ -106,12 +109,15 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
             hash_including(
               'main_offence' => nil,
               'rep_order_date' => nil,
-              'client_maat_number' => nil,
               'client_detained' => nil,
               'client_detained_prison' => nil,
               'subject_to_poca' => nil,
             )
           )
+      end
+
+      it 'does not persist the defendant' do
+        expect { save }.not_to change { application.reload.defendant }.from(nil)
       end
     end
   end
