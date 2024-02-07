@@ -137,6 +137,11 @@ Rails.application.routes.draw do
     end
 
     resources :applications, only: %i[index show create destroy] do
+      collection do
+        get :draft
+        get :submitted
+        get :assessed
+      end
       member do
         get 'offboard'
         get :confirm_delete, path: 'confirm-delete'

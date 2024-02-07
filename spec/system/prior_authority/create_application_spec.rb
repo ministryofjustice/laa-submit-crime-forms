@@ -22,7 +22,7 @@ RSpec.describe 'Prior authority application creation' do
 
     expect(page).to have_content 'Your application progress'
     click_on 'Back to your applications'
-
+    click_on 'Drafts'
     expect(page).to have_content '000000/123'
   end
 
