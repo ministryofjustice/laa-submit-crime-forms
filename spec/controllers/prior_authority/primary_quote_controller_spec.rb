@@ -99,6 +99,29 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
           .to eq('The selected file must be smaller than 10MB')
       end
     end
+
+    context 'when there is a standard error' do
+      before do
+        request.env['CONTENT_TYPE'] = 'image/png'
+        put :update,
+            params: { id: '12345',
+            prior_authority_steps_primary_quote_form:
+            {
+              documents: fixture_file_upload('test.png', 'image/png')
+            } }
+
+        allow(controller).to receive(:update).and_return(StandardError)
+      end
+
+      it 'redirects back to form' do
+        expect(response).to redirect_to(edit_prior_authority_steps_primary_quote_path(application))
+      end
+
+      it 'generates flash error' do
+        expect(flash[:alert])
+          .to eq('Unable to upload file at this time')
+      end
+    end
   end
 
   describe '#primary_quote' do
