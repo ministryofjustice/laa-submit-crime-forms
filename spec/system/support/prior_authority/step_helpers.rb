@@ -25,6 +25,7 @@ module PriorAuthority
 
       return if step == :case_detail
 
+      click_on 'Case and hearing details'
       fill_in_case_detail
 
       return if step == :hearing_detail

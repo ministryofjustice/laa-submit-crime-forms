@@ -20,7 +20,7 @@ RSpec.describe 'Prior authority applications - add client details' do
 
     click_on 'Save and continue'
 
-    expect(page).to have_content 'Case details'
+    expect(page).to have_content 'Your application progress'
   end
 
   it 'validates client detail fields' do

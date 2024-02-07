@@ -94,10 +94,7 @@ module Decisions
     # prior authority application steps
     # ---------------------------------
     from(:case_contact).goto(show: PRIOR_AUTHORITY_START_PAGE)
-    from(:client_detail)
-      .when(-> { application.prison_law? })
-      .goto(edit: 'prior_authority/steps/next_hearing')
-      .goto(edit: 'prior_authority/steps/case_detail')
+    from(:client_detail).goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     # prison law flow
     from(:next_hearing).goto(show: PRIOR_AUTHORITY_START_PAGE)
