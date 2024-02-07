@@ -3,6 +3,7 @@ require 'system_helper'
 RSpec.describe 'Prior authority applications - add service costs' do
   before do
     fill_in_until_step(:primary_quote)
+    click_on 'Primary quote'
     fill_in_primary_quote(service_type:)
     expect(page).to have_title 'Service cost'
   end

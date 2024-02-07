@@ -38,6 +38,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
 
   context 'when the screen has already been filled in' do
     before do
+      click_on 'Case contact'
       fill_in_case_contact
     end
 
