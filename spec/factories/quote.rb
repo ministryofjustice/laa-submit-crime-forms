@@ -5,6 +5,8 @@ FactoryBot.define do
     contact_full_name { 'Joe Bloggs' }
     organisation { 'LAA' }
     postcode { 'CR0 1RE' }
+    cost_per_hour { 10 }
+    period { 180 }
   end
 
   trait :blank do

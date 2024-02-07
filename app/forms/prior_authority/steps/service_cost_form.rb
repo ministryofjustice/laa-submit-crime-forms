@@ -76,14 +76,14 @@ module PriorAuthority
         service_type.translated
       end
 
+      def cost_type
+        variable_cost_type? ? user_chosen_cost_type : enforced_cost_type
+      end
+
       private
 
       def enforced_cost_type
         service_rule.cost_type == :per_item ? PER_ITEM : PER_HOUR
-      end
-
-      def cost_type
-        variable_cost_type? ? user_chosen_cost_type : enforced_cost_type
       end
 
       def item_cost
