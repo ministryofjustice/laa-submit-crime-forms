@@ -14,6 +14,8 @@ module Decisions
     NSM_DISBURSEMENT_ADD = 'nsm/steps/disbursement_add'.freeze
     NSM_EQUALITY = 'nsm/steps/equality'.freeze
 
+    PRIOR_AUTHORITY_TASKLIST = 'prior_authority/steps/start_page'.freeze
+
     from(:claim_type).goto(show: 'nsm/steps/start_page')
     # start_page to firm_details is a hard coded link as show page
     from(:firm_details)
@@ -84,20 +86,17 @@ module Decisions
     # prior authority pre-draft application steps
     from(:prison_law).goto(edit: 'prior_authority/steps/authority_value')
     from(:authority_value).goto(edit: 'prior_authority/steps/ufn')
-    from(:ufn).goto(show: 'prior_authority/steps/start_page')
+    from(:ufn).goto(show: PRIOR_AUTHORITY_TASKLIST)
 
     # ---------------------------------
     # prior authority application steps
     # ---------------------------------
-    from(:case_contact).goto(edit: 'prior_authority/steps/client_detail')
-    from(:client_detail)
-      .when(-> { application.prison_law? })
-      .goto(edit: 'prior_authority/steps/next_hearing')
-      .goto(edit: 'prior_authority/steps/case_detail')
-    from(:primary_quote).goto(show: 'prior_authority/steps/start_page')
+    from(:case_contact).goto(show: PRIOR_AUTHORITY_TASKLIST)
+    from(:client_detail).goto(show: PRIOR_AUTHORITY_TASKLIST)
+    from(:primary_quote).goto(show: PRIOR_AUTHORITY_TASKLIST)
 
     # prison law flow
-    from(:next_hearing).goto(show: 'prior_authority/steps/start_page')
+    from(:next_hearing).goto(show: PRIOR_AUTHORITY_TASKLIST)
 
     # non-prison law flow
     from(:case_detail).goto(edit: 'prior_authority/steps/hearing_detail')
@@ -106,10 +105,10 @@ module Decisions
       .goto(edit: 'prior_authority/steps/youth_court')
       .when(-> { application.court_type == PriorAuthority::CourtTypeOptions::CENTRAL_CRIMINAL.to_s })
       .goto(edit: 'prior_authority/steps/psychiatric_liaison')
-      .goto(show: 'prior_authority/steps/start_page')
-    from(:youth_court).goto(show: 'prior_authority/steps/start_page')
-    from(:psychiatric_liaison).goto(show: 'prior_authority/steps/start_page')
+      .goto(show: PRIOR_AUTHORITY_TASKLIST)
+    from(:youth_court).goto(show: PRIOR_AUTHORITY_TASKLIST)
+    from(:psychiatric_liaison).goto(show: PRIOR_AUTHORITY_TASKLIST)
 
-    from(:reason_why).goto(show: 'prior_authority/steps/start_page')
+    from(:reason_why).goto(show: PRIOR_AUTHORITY_TASKLIST)
   end
 end
