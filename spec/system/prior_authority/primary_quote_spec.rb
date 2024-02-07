@@ -42,4 +42,5 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     click_on 'Save and come back later'
     expect(page).to have_content 'Primary quote In progress'
   end
+  # TODO: Add system tests for uploading files
 end
