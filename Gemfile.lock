@@ -160,7 +160,8 @@ GEM
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
-    crack (0.4.5)
+    crack (0.4.6)
+      bigdecimal
       rexml
     crass (1.0.6)
     dartsass-rails (0.5.0)
@@ -518,7 +519,7 @@ GEM
       descendants_tracker (~> 0.0, >= 0.0.3)
     warden (1.2.9)
       rack (>= 2.0.9)
-    webmock (3.19.1)
+    webmock (3.20.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -581,7 +582,7 @@ DEPENDENCIES
   super_diff
   turbo-rails (~> 1.5.0)
   tzinfo-data
-  webmock (~> 3.19)
+  webmock (~> 3.20)
 
 RUBY VERSION
    ruby 3.2.2p53
