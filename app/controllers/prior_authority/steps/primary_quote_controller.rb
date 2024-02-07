@@ -16,8 +16,11 @@ module PriorAuthority
         @primary_quote_document = current_application.primary_quote_document
         record = primary_quote
         if params[:prior_authority_steps_primary_quote_form][:documents]
-          validate_file
-          upload_file(params)
+          if file_error_present
+             return
+          else
+            upload_file(params)
+          end
         end
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
@@ -72,11 +75,13 @@ module PriorAuthority
         ).to_i
       end
 
-      def validate_file
+      def file_error_present
         if !supported_filetype
           return_error({ message: t('shared.shared_upload_errors.file_type') })
         elsif !file_size_within_limit
-          return_error({ message: t('shared.shared_upload_errors.file_size', max_size: '10MB') })
+          return_error({ message: t('shared.shared_upload_errors.file_size_limit', max_size: '10MB') })
+        else
+          false
         end
       end
 

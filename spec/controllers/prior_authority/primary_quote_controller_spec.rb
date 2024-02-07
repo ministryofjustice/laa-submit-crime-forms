@@ -15,7 +15,9 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
         expect(Clamby).to receive(:safe?).and_return(true)
         put :update,
             params: { id: '12345',
-prior_authority_steps_primary_quote_form: { documents: fixture_file_upload('test.png', 'image/png') } }
+            prior_authority_steps_primary_quote_form: {
+              documents: fixture_file_upload('test.png', 'image/png')
+            } }
       end
 
       it 'returns a successful response' do
@@ -40,7 +42,10 @@ prior_authority_steps_primary_quote_form: { documents: fixture_file_upload('test
         expect(Clamby).to receive(:safe?).and_return(false)
         put :update,
             params: { id: '12345',
-prior_authority_steps_primary_quote_form: { documents: fixture_file_upload('test.png', 'image/png') } }
+            prior_authority_steps_primary_quote_form:
+              {
+                documents: fixture_file_upload('test.png', 'image/png')
+              } }
       end
 
       it 'redirects back to form' do
@@ -50,6 +55,48 @@ prior_authority_steps_primary_quote_form: { documents: fixture_file_upload('test
       it 'generates flash error' do
         expect(flash[:alert])
           .to eq('File potentially contains malware so cannot be uploaded. Please contact your administrator')
+      end
+    end
+
+    context 'when incorrect file type is uploaded' do
+      before do
+        request.env['CONTENT_TYPE'] = 'application/json'
+        put :update,
+            params: { id: '12345',
+            prior_authority_steps_primary_quote_form:
+            {
+              documents: fixture_file_upload('test.png', 'application/json')
+            } }
+      end
+
+      it 'redirects back to form' do
+        expect(response).to redirect_to(edit_prior_authority_steps_primary_quote_path(application))
+      end
+
+      it 'generates flash error' do
+        expect(flash[:alert])
+          .to eq('Incorrect file type provided')
+      end
+    end
+
+    context 'when file size too big' do
+      before do
+        request.env['CONTENT_TYPE'] = 'image/png'
+        put :update,
+            params: { id: '12345',
+            prior_authority_steps_primary_quote_form:
+            {
+              documents: fixture_file_upload('test_2.png', 'image/png')
+            } }
+      end
+
+      it 'redirects back to form' do
+        expect(response).to redirect_to(edit_prior_authority_steps_primary_quote_path(application))
+      end
+
+      it 'generates flash error' do
+        expect(flash[:alert])
+          .to eq('The selected file must be smaller than 10MB')
       end
     end
   end
