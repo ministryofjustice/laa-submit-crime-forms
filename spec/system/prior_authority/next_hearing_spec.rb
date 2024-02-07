@@ -38,6 +38,7 @@ RSpec.describe 'Prior authority applications (prison law) - add next hearing' do
   context 'when navigation from previous step' do
     before do
       fill_in_until_step(:your_application_progress, prison_law: 'Yes')
+      click_on 'Client details'
       fill_in_client_detail
     end
 

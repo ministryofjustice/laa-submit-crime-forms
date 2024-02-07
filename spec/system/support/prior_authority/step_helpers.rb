@@ -12,10 +12,12 @@ module PriorAuthority
 
       return if step.in?(%i[your_application_progress case_contact])
 
+      click_on 'Case contact'
       fill_in_case_contact
 
       return if step == :client_detail
 
+      click_on 'Client details'
       fill_in_client_detail
 
       return if step == :case_detail
@@ -32,6 +34,7 @@ module PriorAuthority
 
       return if step == :primary_quote
 
+      click_on 'Primary quote'
       fill_in_primary_quote
 
       :end
@@ -55,7 +58,6 @@ module PriorAuthority
     end
 
     def fill_in_case_contact
-      click_on 'Case contact'
       fill_in 'Full name', with: 'John Doe'
       fill_in 'Email address', with: 'john@does.com'
       fill_in 'Firm name', with: 'LegalCorp Ltd'
@@ -64,7 +66,6 @@ module PriorAuthority
     end
 
     def fill_in_client_detail
-      click_on 'Client details'
       fill_in 'First name', with: 'John'
       fill_in 'Last name', with: 'Doe'
 
@@ -119,8 +120,6 @@ module PriorAuthority
     end
 
     def fill_in_primary_quote
-      click_on 'Primary quote'
-
       fill_in 'Service required', with: 'Forensics'
       fill_in 'Contact full name', with: 'Joe Bloggs'
       fill_in 'Organisation', with: 'LAA'
