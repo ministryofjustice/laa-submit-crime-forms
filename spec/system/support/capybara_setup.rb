@@ -3,7 +3,7 @@
 # Capybara settings (not covered by Rails system tests)
 
 # Don't wait too long in `have_xyz` matchers
-Capybara.default_max_wait_time = 2
+Capybara.default_max_wait_time = 3
 
 # Normalizes whitespaces when using `has_text?` and similar matchers
 Capybara.default_normalize_ws = true

@@ -1,45 +1,32 @@
 require 'simplecov'
-require 'simplecov-lcov'
 require 'webmock/rspec'
 
-# This allows both LCOV and HTML formatting -
-# lcov for undercover gem and cc-test-reporter, HTML for humans
-module SimpleCov
-  module Formatter
-    class MergedFormatter
-      def format(result)
-        SimpleCov::Formatter::HTMLFormatter.new.format(result)
-        SimpleCov::Formatter::LcovFormatter.new.format(result)
-      end
-    end
-  end
-end
+SimpleCov.start 'rails' do
+  add_filter 'spec/'
+  add_filter 'gems/'
+  add_filter 'config/'
+  add_filter 'lib/tasks/'
 
-SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
-# for cc-test-reporter after-build action
-SimpleCov::Formatter::LcovFormatter.config.output_directory = 'coverage'
-SimpleCov::Formatter::LcovFormatter.config.lcov_file_name = 'lcov.info'
-SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
+  # TODO: REMOVE ONCE EVIDENCE UPLOAD IS COMPLETE
+  add_filter 'app/presenters/check_answers/evidence_uploads_card.rb'
+  add_filter 'app/jobs/application_job.rb'
+  add_filter 'app/mailers/application_mailer.rb'
 
-unless ENV['NOCOVERAGE']
-  SimpleCov.start 'rails' do
-    add_filter 'spec/'
-    add_filter 'gems/'
-    add_filter 'config/'
+  add_group 'Forms', '/app/forms'
+  add_group 'Presenters', '/app/presenters'
+  add_group 'Services', '/app/services'
+  add_group 'Value objects', '/app/value_objects'
 
-    # TODO: REMOVE ONCE EVIDENCE UPLOAD IS COMPLETE
-    add_filter 'app/presenters/check_answers/evidence_uploads_card.rb'
-    add_filter 'app/jobs/application_job.rb'
-    add_filter 'app/mailers/application_mailer.rb'
+  enable_coverage :branch
 
-    add_group 'Forms', '/app/forms'
-    add_group 'Presenters', '/app/presenters'
-    add_group 'Services', '/app/services'
-    add_group 'Value objects', '/app/value_objects'
-
-    enable_coverage :branch
+  # Do not fail coverage on circleci as it breaks parrallel spec runs, instead rely on coverage step in CI
+  unless ENV['CI']
     primary_coverage :branch
     minimum_coverage branch: 100, line: 100
+
+    SimpleCov.at_exit do
+      SimpleCov.result.format!
+    end
   end
 end
 

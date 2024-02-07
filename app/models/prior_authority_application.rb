@@ -29,7 +29,16 @@ class PriorAuthorityApplication < ApplicationRecord
   attribute :created_at, :datetime
   attribute :updated_at, :datetime
 
-  enum :status, { pre_draft: 'pre_draft', draft: 'draft', submitted: 'submitted' }
+  enum :status, {
+    pre_draft: 'pre_draft',
+    draft: 'draft',
+    submitted: 'submitted',
+    granted: 'granted',
+    part_granted: 'part_granted',
+    rejected: 'rejected'
+  }
+
+  scope :assessed, -> { where(status: %w[granted part_granted rejected]) }
 
   scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
 end

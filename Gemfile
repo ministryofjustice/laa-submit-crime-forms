@@ -37,7 +37,7 @@ group :development, :test do
   gem 'overcommit'
   gem 'pry'
   gem 'rspec-expectations'
-  gem 'rspec_junit_formatter'
+  gem 'rspec_junit_formatter', require: false
   gem 'rspec-rails', '~> 6.1.1'
 end
 
@@ -58,8 +58,7 @@ group :test do
   gem 'rubocop-rspec', require: false
   gem 'selenium-webdriver'
   gem 'simplecov'
-  gem 'simplecov-lcov'
   gem 'simplecov-rcov'
   gem 'super_diff'
-  gem 'webmock', '~> 3.19'
+  gem 'webmock', '~> 3.20'
 end
