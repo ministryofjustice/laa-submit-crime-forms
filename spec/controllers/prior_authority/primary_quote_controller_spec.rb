@@ -13,7 +13,9 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
         expect(Clamby).to receive(:safe?).and_return(true)
-        put :update, params: { id: '12345', prior_authority_steps_primary_quote_form: { documents: fixture_file_upload('test.png', 'image/png') } }
+        put :update,
+            params: { id: '12345',
+prior_authority_steps_primary_quote_form: { documents: fixture_file_upload('test.png', 'image/png') } }
       end
 
       it 'returns a successful response' do
@@ -24,7 +26,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
     context 'when no file is uploaded' do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
-        put :update, params: { id: '12345', prior_authority_steps_primary_quote_form: { documents: nil }}
+        put :update, params: { id: '12345', prior_authority_steps_primary_quote_form: { documents: nil } }
       end
 
       it 'returns a successful response' do
@@ -36,7 +38,9 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
         expect(Clamby).to receive(:safe?).and_return(false)
-        put :update, params: { id: '12345', prior_authority_steps_primary_quote_form: { documents: fixture_file_upload('test.png', 'image/png') }}
+        put :update,
+            params: { id: '12345',
+prior_authority_steps_primary_quote_form: { documents: fixture_file_upload('test.png', 'image/png') } }
       end
 
       it 'redirects back to form' do
@@ -44,7 +48,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
       end
 
       it 'generates flash error' do
-        expect(flash[:alert]).to eq('File potentially contains malware so cannot be uploaded. Please contact your administrator')
+        expect(flash[:alert])
+          .to eq('File potentially contains malware so cannot be uploaded. Please contact your administrator')
       end
     end
   end
