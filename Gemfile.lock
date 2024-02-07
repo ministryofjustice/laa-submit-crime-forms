@@ -117,10 +117,10 @@ GEM
       aws-sigv4 (~> 1.8)
     aws-sigv4 (1.8.0)
       aws-eventstream (~> 1, >= 1.0.2)
-    axe-core-api (4.8.0)
+    axe-core-api (4.8.1)
       dumb_delegator
       virtus
-    axe-core-rspec (4.8.0)
+    axe-core-rspec (4.8.1)
       axe-core-api
       dumb_delegator
       virtus
@@ -160,7 +160,8 @@ GEM
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
-    crack (0.4.5)
+    crack (0.4.6)
+      bigdecimal
       rexml
     crass (1.0.6)
     dartsass-rails (0.5.0)
@@ -278,7 +279,7 @@ GEM
     net-smtp (0.4.0.1)
       net-protocol
     nio4r (2.7.0)
-    nokogiri (1.16.0)
+    nokogiri (1.16.2)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     notifications-ruby-client (5.4.0)
@@ -446,7 +447,8 @@ GEM
     sass-embedded (1.63.5)
       google-protobuf (~> 3.23)
       rake (>= 13.0.0)
-    selenium-webdriver (4.16.0)
+    selenium-webdriver (4.17.0)
+      base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
@@ -517,7 +519,7 @@ GEM
       descendants_tracker (~> 0.0, >= 0.0.3)
     warden (1.2.9)
       rack (>= 2.0.9)
-    webmock (3.19.1)
+    webmock (3.20.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -580,7 +582,7 @@ DEPENDENCIES
   super_diff
   turbo-rails (~> 1.5.0)
   tzinfo-data
-  webmock (~> 3.19)
+  webmock (~> 3.20)
 
 RUBY VERSION
    ruby 3.2.2p53
