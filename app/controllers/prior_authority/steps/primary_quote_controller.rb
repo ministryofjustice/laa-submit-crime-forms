@@ -16,11 +16,10 @@ module PriorAuthority
         @primary_quote_document = current_application.primary_quote_document
         record = primary_quote
         if params[:prior_authority_steps_primary_quote_form][:documents]
-          if file_error_present
-             return
-          else
-            upload_file(params)
-          end
+          return if file_error_present
+
+          upload_file(params)
+
         end
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
