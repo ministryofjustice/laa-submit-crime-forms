@@ -132,7 +132,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       let(:service_type_suggestion) { 'Computer Experts' }
 
       it 'uses the service type associated with the suggestion' do
-        expect(subject.service_type).to eq(PriorAuthority::QuoteServices::COMPUTER_EXPERTS)
+        expect(subject.service_type).to eq(PriorAuthority::QuoteServices::COMPUTER_EXPERT)
       end
     end
 
