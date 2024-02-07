@@ -120,12 +120,20 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   describe '#service_type' do
     subject(:form) { described_class.new(arguments.merge(service_type_suggestion:)) }
 
-    let(:service_type) { PriorAuthority::QuoteServices.values.sample }
+    let(:service_type) { 'culture_expert' }
 
-    context 'service type suggestion matches a quote service' do
-      let(:service_type_suggestion) { service_type.translated }
+    context 'service type suggestion matches provided service' do
+      let(:service_type_suggestion) { 'Culture expert' }
 
-      it { expect(subject.service_type).to eq(service_type) }
+      it { expect(subject.service_type).to eq(PriorAuthority::QuoteServices::CULTURE_EXPERT) }
+    end
+
+    context 'service type suggestion matches a different service' do
+      let(:service_type_suggestion) { 'Computer Experts' }
+
+      it 'uses the service type associated with the suggestion' do
+        expect(subject.service_type).to eq(PriorAuthority::QuoteServices::COMPUTER_EXPERTS)
+      end
     end
 
     context 'service type suggestion does not match a quote service' do

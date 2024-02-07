@@ -13,8 +13,15 @@ module PriorAuthority
       validates :postcode, presence: true, uk_postcode: true
 
       def service_type_suggestion=(value)
-        if value.in?(translated_values)
-          self.service_type = service_type.value
+        # The value of service_type_suggestion is the contents of the visible text field, which is the translated value.
+        # This is separate from the value of service_type which is the untranslated value, stored in a hidden dropdown.
+        # The complication is that if a user types in a value to the text field but doesn't click the autocomplete,
+        # service_type_suggestion will contain an accurate translated value, but service_type dropdown contains
+        # a false untranslated value.
+        # So to avoid being caught out, the translated value needs to take precedence, and we need to infer the
+        # untranslated value from that.
+        if value.in?(translations.keys)
+          self.service_type = translations[value]
           self.custom_service_name = nil
         else
           self.service_type = 'custom' if value.present?
@@ -34,8 +41,8 @@ module PriorAuthority
         }
       end
 
-      def translated_values
-        QuoteServices.values.map(&:translated)
+      def translations
+        QuoteServices.values.to_h { [_1.translated, _1.value] }
       end
     end
   end
