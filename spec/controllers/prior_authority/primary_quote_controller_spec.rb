@@ -16,7 +16,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
         put :update,
             params: { id: '12345',
             prior_authority_steps_primary_quote_form: {
-              documents: fixture_file_upload('test.png', 'image/png')
+              document: fixture_file_upload('test.png', 'image/png')
             } }
       end
 
@@ -28,7 +28,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
     context 'when no file is uploaded' do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
-        put :update, params: { id: '12345', prior_authority_steps_primary_quote_form: { documents: nil } }
+        put :update, params: { id: '12345', prior_authority_steps_primary_quote_form: { document: nil } }
       end
 
       it 'returns a successful response' do
@@ -44,7 +44,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
             params: { id: '12345',
             prior_authority_steps_primary_quote_form:
               {
-                documents: fixture_file_upload('test.png', 'image/png')
+                document: fixture_file_upload('test.png', 'image/png')
               } }
       end
 
@@ -65,7 +65,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
             params: { id: '12345',
             prior_authority_steps_primary_quote_form:
             {
-              documents: fixture_file_upload('test.png', 'application/json')
+              document: fixture_file_upload('test.png', 'application/json')
             } }
       end
 
@@ -86,7 +86,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
             params: { id: '12345',
             prior_authority_steps_primary_quote_form:
             {
-              documents: fixture_file_upload('test_2.png', 'image/png')
+              document: fixture_file_upload('test_2.png', 'image/png')
             } }
       end
 
@@ -107,7 +107,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
             params: { id: '12345',
             prior_authority_steps_primary_quote_form:
             {
-              documents: fixture_file_upload('test.png', 'image/png')
+              document: fixture_file_upload('test.png', 'image/png')
             } }
 
         allow(controller).to receive(:update).and_return(StandardError)

@@ -15,7 +15,7 @@ module PriorAuthority
       def update
         @primary_quote_document = current_application.primary_quote_document
         record = primary_quote
-        if params[:prior_authority_steps_primary_quote_form][:documents]
+        if params[:prior_authority_steps_primary_quote_form][:document]
           return if file_error_present
 
           upload_file(params)
@@ -49,8 +49,8 @@ module PriorAuthority
       end
 
       def upload_file(params)
-        file_path = file_uploader.upload(params[:prior_authority_steps_primary_quote_form][:documents])
-        save_file(params[:prior_authority_steps_primary_quote_form][:documents], file_path)
+        file_path = file_uploader.upload(params[:prior_authority_steps_primary_quote_form][:document])
+        save_file(params[:prior_authority_steps_primary_quote_form][:document], file_path)
       end
 
       def save_file(params, file_path)
@@ -65,11 +65,11 @@ module PriorAuthority
 
       def supported_filetype
         SupportedFileTypes::PRIMARY_QUOTE_DOCUMENT
-          .include? params[:prior_authority_steps_primary_quote_form][:documents].content_type
+          .include? params[:prior_authority_steps_primary_quote_form][:document].content_type
       end
 
       def file_size_within_limit
-        params[:prior_authority_steps_primary_quote_form][:documents].tempfile.size <= ENV.fetch(
+        params[:prior_authority_steps_primary_quote_form][:document].tempfile.size <= ENV.fetch(
           'MAX_UPLOAD_SIZE_BYTES', nil
         ).to_i
       end
