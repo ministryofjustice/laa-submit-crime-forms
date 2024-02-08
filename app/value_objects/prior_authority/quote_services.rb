@@ -98,7 +98,6 @@ module PriorAuthority
       TELECOMMUNICATIONS_EXPERT = new(:telecommunications_expert),
       TOXICOLOGIST_REPORT = new(:toxicologist_report),
       TRANSCRIPTION_RECORDING = new(:transcription_recording),
-      TRANSCRIPTION_DOCUMENTS = new(:transcription_documents),
       TRANSLATION_AND_TRANSCRIPTION = new(:translation_and_transcription),
       TRANSLATOR = new(:translator),
       TRAVEL = new(:travel),
