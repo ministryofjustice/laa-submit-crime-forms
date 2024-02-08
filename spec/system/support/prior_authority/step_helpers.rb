@@ -15,14 +15,17 @@ module PriorAuthority
 
       return if step.in?(%i[your_application_progress case_contact])
 
+      click_on 'Case contact'
       fill_in_case_contact
 
       return if step == :client_detail
 
+      click_on 'Client details'
       fill_in_client_detail
 
       return if step == :case_detail
 
+      click_on 'Case and hearing details'
       fill_in_case_detail
 
       return if step == :hearing_detail
@@ -35,6 +38,7 @@ module PriorAuthority
 
       return if step == :primary_quote
 
+      click_on 'Primary quote'
       fill_in_primary_quote
 
       return if step == :service_cost
@@ -66,7 +70,6 @@ module PriorAuthority
     end
 
     def fill_in_case_contact
-      click_on 'Case contact'
       fill_in 'Full name', with: 'John Doe'
       fill_in 'Email address', with: 'john@does.com'
       fill_in 'Firm name', with: 'LegalCorp Ltd'
@@ -129,8 +132,6 @@ module PriorAuthority
     end
 
     def fill_in_primary_quote(service_type: 'Meteorologist')
-      click_on 'Primary quote'
-
       # Note that if Javascript is enabled for the current test, this will
       # be hidden
       select service_type, from: 'Service required'

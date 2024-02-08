@@ -10,7 +10,7 @@ module PriorAuthority
       end
 
       def after_commit_redirect_path
-        prior_authority_after_commit_path(id: current_application.id)
+        prior_authority_root_path(anchor: 'drafts')
       end
 
       # :nocov:

@@ -55,13 +55,13 @@ module Decisions
     from('prior_authority/steps/authority_value').goto(edit: 'prior_authority/steps/prison_law')
     from('prior_authority/steps/ufn').goto(edit: 'prior_authority/steps/authority_value')
     from('prior_authority/steps/case_contact').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
-    from('prior_authority/steps/client_detail').goto(edit: 'prior_authority/steps/case_contact')
+    from('prior_authority/steps/client_detail').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
 
     # prison law flow
     from('prior_authority/steps/next_hearing').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
 
     # non-prison law flow
-    from('prior_authority/steps/case_detail').goto(edit: 'prior_authority/steps/client_detail')
+    from('prior_authority/steps/case_detail').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
     from('prior_authority/steps/hearing_detail').goto(edit: 'prior_authority/steps/case_detail')
     from('prior_authority/steps/youth_court').goto(edit: 'prior_authority/steps/hearing_detail')
     from('prior_authority/steps/psychiatric_liaison').goto(edit: 'prior_authority/steps/hearing_detail')
