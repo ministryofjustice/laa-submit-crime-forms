@@ -129,7 +129,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     end
 
     context 'service type suggestion matches a different service' do
-      let(:service_type_suggestion) { 'Computer Experts' }
+      let(:service_type_suggestion) { 'Computer expert' }
 
       it 'uses the service type associated with the suggestion' do
         expect(subject.service_type).to eq(PriorAuthority::QuoteServices::COMPUTER_EXPERT)
