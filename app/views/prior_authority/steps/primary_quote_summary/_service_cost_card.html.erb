@@ -1,0 +1,68 @@
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title"><%= t('.service_costs') %></h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <%= govuk_link_to(t('.change'), edit_prior_authority_steps_primary_quote_path(current_application)) %>
+        <span class="govuk-visually-hidden"> (<%= t('.service_costs') %>)</span>
+      </li>
+    </ul>
+  </div>
+  <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= t('.service_required') %></dt>
+        <dd class="govuk-summary-list__value"><%= costs.service_name %></dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= t('.service_details') %></dt>
+        <dd class="govuk-summary-list__value">
+          <%= quote.contact_full_name %>
+          <br>
+          <%= [quote.organisation, quote.postcode].join(', ') %>
+        </dd>
+      </div>
+      <%# TODO: CRM457-1015 Add service upload summary here %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= t('.prior_authority_granted') %></dt>
+        <dd class="govuk-summary-list__value">
+          <%= t("prior_authority.generic.#{costs.prior_authority_granted ? 'yes' : 'no'}_choice") %>
+        </dd>
+      </div>
+    </dl>
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-visually-hidden">
+        <%= t('.service_costs') %>
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <% if costs.per_item? %>
+            <th scope="col" class="govuk-table__header">
+              <%= t("prior_authority.steps.service_cost.items.#{costs.item_type}").pluralize(2).capitalize %>
+            </th>
+            <th scope="col" class="govuk-table__header">
+              <%= t('prior_authority.steps.service_cost.items.cost_per_item',
+                    item: t("prior_authority.steps.service_cost.items.#{costs.item_type}")) %>
+            </th>
+          <% else %>
+            <th scope="col" class="govuk-table__header"><%= t('.period') %></th>
+            <th scope="col" class="govuk-table__header"><%= t('.cost_per_hour') %></th>
+          <% end %>
+          <th scope="col" class="govuk-table__header"><%= t('.total') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <% if costs.per_item? %>
+            <td class="govuk-table__cell"><%= costs.items %></td>
+            <td class="govuk-table__cell"><%= NumberTo.pounds(costs.cost_per_item) %></td>
+          <% else %>
+             <td class="govuk-table__cell"><%= format_period(costs.period) %></td>
+             <td class="govuk-table__cell"><%= NumberTo.pounds(costs.cost_per_hour) %></td>
+          <% end %>
+          <td class="govuk-table__cell"><%= costs.formatted_total_cost %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

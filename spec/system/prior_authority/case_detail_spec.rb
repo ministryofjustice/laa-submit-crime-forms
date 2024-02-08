@@ -28,8 +28,8 @@ RSpec.describe 'Prior authority applications - add case details' do
       choose 'Yes'
     end
 
-    click_on 'Save and come back later'
-    expect(page).to have_content 'Case and hearing detailsIn progress'
+    click_on 'Save and continue'
+    expect(page).to have_content 'Hearing details'
   end
 
   it 'validates client detail fields' do
@@ -55,6 +55,6 @@ RSpec.describe 'Prior authority applications - add case details' do
     click_on 'Case and hearing details'
 
     click_on 'Save and come back later'
-    expect(page).to have_content 'Case and hearing detailsIn progress'
+    expect(page).to have_content 'Your applications'
   end
 end

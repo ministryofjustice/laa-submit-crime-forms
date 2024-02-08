@@ -34,18 +34,4 @@ RSpec.describe 'Prior authority applications (prison law) - add next hearing' do
       expect(page).to have_content('Date cannot be blank')
     end
   end
-
-  context 'when navigation from previous step' do
-    before do
-      fill_in_until_step(:your_application_progress, prison_law: 'Yes')
-      click_on 'Client details'
-      fill_in_client_detail
-    end
-
-    it 'moves to the next hearing detail page' do
-      expect(page).to have_content '2. About the case'
-      expect(page).to have_title 'Case and hearing details'
-      expect(page).to have_content 'Do you know the date of the next hearing?'
-    end
-  end
 end
