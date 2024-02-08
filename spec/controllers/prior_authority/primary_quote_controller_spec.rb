@@ -11,15 +11,19 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
   describe '#primary_quote' do
     context 'non custom primary quote service' do
       it 'returns a quote with non custom service type' do
-        expect(subject.send(:primary_quote)).to eq(quote)
+        expect(subject.send(:record)).to eq(quote)
       end
     end
 
     context 'custom primary quote service' do
-      let(:quote) { build(:quote, :primary, :custom) }
+      let(:application) do
+        build(:prior_authority_application,
+              primary_quote: quote, service_type: 'custom', custom_service_name: 'random service')
+      end
 
       it 'returns a quote with non custom service type' do
-        expect(subject.send(:primary_quote).service_type).to eq('random service')
+        subject.send(:set_service_type)
+        expect(subject.send(:current_application).service_type).to eq('random service')
       end
     end
   end

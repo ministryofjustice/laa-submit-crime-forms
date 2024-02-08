@@ -6,7 +6,9 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   let(:arguments) do
     {
       record:,
+      application:,
       service_type:,
+      custom_service_name:,
       contact_full_name:,
       organisation:,
       postcode:,
@@ -14,7 +16,9 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   end
 
   let(:record) { instance_double(Quote) }
-  let(:service_type) { 'Forensics Expert' }
+  let(:application) { instance_double(PriorAuthorityApplication) }
+  let(:service_type) { 'forensics_expert' }
+  let(:custom_service_name) { '' }
   let(:contact_full_name) { 'Joe Bloggs' }
   let(:organisation) { 'LAA' }
   let(:postcode) { 'CR0 1RE' }
@@ -64,7 +68,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   describe '#save' do
     subject(:save) { form.save }
 
-    let(:record) { create(:quote, :blank, prior_authority_application: create(:prior_authority_application)) }
+    let(:record) { create(:quote, :blank, prior_authority_application: application) }
+    let(:application) { create(:prior_authority_application) }
 
     context 'with valid quote details' do
       let(:service_type) { 'Forensics Expert' }
@@ -76,7 +81,6 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         expect { save }.to change { record.reload.attributes }
           .from(
             hash_including(
-              'service_type' => nil,
               'contact_full_name' => nil,
               'organisation' => nil,
               'postcode' => nil,
@@ -85,12 +89,25 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
           )
           .to(
             hash_including(
-              'service_type' => 'Forensics Expert',
-              'custom_service_name' => nil,
               'contact_full_name' => 'Joe Bloggs',
               'organisation' => 'LAA',
               'postcode' => 'CR0 1RE',
               'primary' => true
+            )
+          )
+      end
+
+      it 'persists the application changes' do
+        expect { save }.to change { application.reload.attributes }
+          .from(
+            hash_including(
+              'service_type' => nil,
+            )
+          )
+          .to(
+            hash_including(
+              'service_type' => 'Forensics Expert',
+              'custom_service_name' => '',
             )
           )
       end
@@ -106,7 +123,6 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         expect { save }.not_to change { record.reload.attributes }
           .from(
             hash_including(
-              'service_type' => nil,
               'contact_full_name' => nil,
               'organisation' => nil,
               'postcode' => nil,

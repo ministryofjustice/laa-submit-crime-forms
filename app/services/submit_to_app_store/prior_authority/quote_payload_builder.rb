@@ -17,8 +17,9 @@ class SubmitToAppStore
 
       ATTRIBUTES = %i[
         id
-        service_type
-        custom_service_name
+        travel_time
+        travel_cost_per_hour
+        travel_cost_reason
         contact_full_name
         organisation
         postcode

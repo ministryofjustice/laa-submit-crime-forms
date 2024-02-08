@@ -56,8 +56,9 @@ FactoryBot.define do
       with_defendant
       with_case_details
       with_psychiatric_liaison
-      primary_quote factory: %i[quote primary variable_cost], strategy: :build
+      primary_quote factory: %i[quote primary], strategy: :build
       ufn { '123456/001' }
+      service_type { 'meteorologist' }
       prior_authority_granted { true }
       after(:create) do |paa, _a|
         create(:defendant, :valid_paa, defendable_id: paa.id, defendable_type: paa.class.to_s)
@@ -90,9 +91,9 @@ FactoryBot.define do
       supporting_documents { build_list(:supporting_document, 2) }
       quotes { build_list(:quote, 1, :primary) }
       prior_authority_granted { false }
-      travel_cost_per_hour {  50.0 }
-      travel_time { 150 }
       no_alternative_quote_reason { 'a reason' }
+      service_type { 'pathologist' }
+      custom_service_name { nil }
     end
   end
 end

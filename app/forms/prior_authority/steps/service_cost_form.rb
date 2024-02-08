@@ -2,7 +2,7 @@ module PriorAuthority
   module Steps
     class ServiceCostForm < ::Steps::BaseFormObject
       def self.attribute_names
-        super - ['prior_authority_granted']
+        super - %w[prior_authority_granted service_type]
       end
 
       def initialize(attrs)
@@ -14,8 +14,8 @@ module PriorAuthority
           attrs[:prior_authority_granted] = attrs[:application].prior_authority_granted
         end
 
-        # This will be nil when loaded on update, populated on edit
-        attrs[:service_type] ||= attrs[:record].service_type
+        attrs[:service_type] = attrs[:application].service_type
+
         super(attrs)
       end
 
@@ -99,7 +99,7 @@ module PriorAuthority
       end
 
       def persist!
-        record.update!(attributes.except('prior_authority_granted'))
+        record.update!(attributes.except('prior_authority_granted', 'service_type'))
         application.update(prior_authority_granted:)
       end
 

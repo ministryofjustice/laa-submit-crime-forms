@@ -3,15 +3,20 @@ module PriorAuthority
     class TravelDetailController < BaseController
       def edit
         @form_object = TravelDetailForm.build(
-          current_application
+          record,
+          application: current_application
         )
       end
 
       def update
-        update_and_advance(TravelDetailForm, as:, after_commit_redirect_path:)
+        update_and_advance(TravelDetailForm, as:, after_commit_redirect_path:, record:)
       end
 
       private
+
+      def record
+        current_application.primary_quote
+      end
 
       def as
         :travel_detail
