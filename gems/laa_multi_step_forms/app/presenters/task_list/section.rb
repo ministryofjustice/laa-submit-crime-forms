@@ -8,7 +8,6 @@ module TaskList
       @task_statuses = task_statuses
       @tasks = tasks
       @index = index
-      @show_index = show_index
     end
 
     def render

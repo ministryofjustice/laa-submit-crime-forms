@@ -4,7 +4,7 @@ module Tasks
 
     attr_accessor :application, :task_statuses
 
-    def initialize(application:, task_statuses:)
+    def initialize(application:, task_statuses: TaskList::TaskStatus.new)
       @application = application
       @task_statuses = task_statuses
     end
@@ -21,7 +21,7 @@ module Tasks
     end
 
     def fulfilled?(task_class)
-      task_statuses.status(task_class, application:).completed?
+      task_statuses.status(task_class:, application:).completed?
     end
 
     # Used by the `Routing` module to build the urls
@@ -30,7 +30,7 @@ module Tasks
     end
 
     def status
-      task_statuses.status(self.class, application:)
+      task_statuses.self_status(task: self)
     end
 
     def current_status

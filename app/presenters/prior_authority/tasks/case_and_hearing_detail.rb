@@ -11,20 +11,20 @@ module PriorAuthority
         end
       end
 
-      def completed?(_rec = record, _form = associated_form)
+      def completed?(_rec = record, _form = nil)
         required_forms.all? { |form| super(record, form) }
       end
 
       private
 
       def required_forms
-        previous_tasks = []
-        previous_tasks << ::PriorAuthority::Steps::NextHearingForm if application.prison_law?
-        previous_tasks << ::PriorAuthority::Steps::CaseDetailForm unless application.prison_law?
-        previous_tasks << ::PriorAuthority::Steps::HearingDetailForm unless application.prison_law?
-        previous_tasks << ::PriorAuthority::Steps::YouthCourtForm if youth_court_applicable?
-        previous_tasks << ::PriorAuthority::Steps::PsychiatricLiaisonForm if psychiatric_liaison_applicable?
-        previous_tasks
+        required_forms = []
+        required_forms << ::PriorAuthority::Steps::NextHearingForm if application.prison_law?
+        required_forms << ::PriorAuthority::Steps::CaseDetailForm unless application.prison_law?
+        required_forms << ::PriorAuthority::Steps::HearingDetailForm unless application.prison_law?
+        required_forms << ::PriorAuthority::Steps::YouthCourtForm if youth_court_applicable?
+        required_forms << ::PriorAuthority::Steps::PsychiatricLiaisonForm if psychiatric_liaison_applicable?
+        required_forms
       end
 
       def youth_court_applicable?
