@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :quote do
-    service_type { 'pathologist' }
+    service_type { 'pathologist_report' }
     custom_service_name { nil }
     contact_full_name { 'Joe Bloggs' }
     organisation { 'LAA' }

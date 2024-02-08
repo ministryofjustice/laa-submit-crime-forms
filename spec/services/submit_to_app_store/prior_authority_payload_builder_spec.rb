@@ -23,7 +23,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         psychiatric_liaison_reason_not: 'whatever you like',
         next_hearing: true,
         office_code: '1A123B',
-        service_type: 'pathologist',
+        service_type: 'pathologist_report',
         firm_name: 'Firm A',
         client_name: 'bob jim',
         prior_authority_granted: false,
@@ -72,7 +72,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         ],
         quotes: [
           {
-            service_type: 'pathologist',
+            service_type: 'pathologist_report',
             custom_service_name: nil,
             contact_full_name: 'Joe Bloggs',
             organisation: 'LAA',

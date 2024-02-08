@@ -100,6 +100,7 @@ module PriorAuthority
       TRANSCRIPTION_RECORDING = new(:transcription_recording),
       TRANSCRIPTION_DOCUMENTS = new(:transcription_documents),
       TRANSLATION_AND_TRANSCRIPTION = new(:translation_and_transcription),
+      TRANSLATOR = new(:translator),
       TRAVEL = new(:travel),
       UROLOGIST = new(:urologist),
       VETERINARY_REPORT = new(:veterinary_report),

@@ -4,22 +4,22 @@ module PriorAuthority
     # This is an unusually long method because it's essentially config
     def self.build(service_type)
       case service_type
-      when QuoteServices::PSYCHIATRIC_REPORT_PRSN_LAW,
-           QuoteServices::PSYCHOLOGICAL_REPORT_PRSN_LAW,
-           QuoteServices::INTERPRETERS
+      when QuoteServices::PSYCHIATRIC_REPORT_PRISON_LAW,
+           QuoteServices::PSYCHOLOGICAL_REPORT_PRISON_LAW,
+           QuoteServices::INTERPRETER
         new(court_order_relevant: true)
-      when QuoteServices::PATHOLOGIST
+      when QuoteServices::PATHOLOGIST_REPORT
         new(post_mortem_relevant: true)
-      when QuoteServices::TRANSCRIPTS_RECORDINGS,
-           QuoteServices::TRANSLATION_AND_TRANSCRIPTION_WORD
+      when QuoteServices::TRANSCRIPTION_RECORDING,
+           QuoteServices::TRANSLATION_AND_TRANSCRIPTION
         new(cost_type: :per_item, item: 'minute')
-      when QuoteServices::TRANSLATOR_DOCUMENTS
+      when QuoteServices::TRANSLATOR
         new(cost_type: :per_item, item: 'word')
-      when QuoteServices::PHOTOCOPYING_PER_SHEET
+      when QuoteServices::PHOTOCOPYING
         new(cost_type: :per_item, item: 'page')
-      when QuoteServices::DNA_PER_PERSON,
+      when QuoteServices::DNA_REPORT,
            QuoteServices::METEOROLOGIST,
-           QuoteServices::BACK_CALCULATIONS,
+           QuoteServices::BACK_CALCULATION,
            QuoteServices.new(:custom)
         new(cost_type: :variable)
       else
