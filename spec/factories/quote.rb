@@ -4,6 +4,7 @@ FactoryBot.define do
     custom_service_name { nil }
     contact_full_name { 'Joe Bloggs' }
     organisation { 'LAA' }
+    document { nil }
     postcode { 'CR0 1RE' }
     cost_per_hour { 10 }
     period { 180 }
@@ -29,5 +30,9 @@ FactoryBot.define do
 
   trait :additional do
     primary { false }
+  end
+
+  trait :with_document do
+    document { build(:quote_document) }
   end
 end
