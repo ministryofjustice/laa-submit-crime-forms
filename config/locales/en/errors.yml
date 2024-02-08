@@ -152,10 +152,82 @@ en:
           attributes:
             youth_court:
               inclusion: Select yes if this is a youth court matter
+        prior_authority/steps/service_cost_form:
+          attributes:
+            prior_authority_granted:
+              inclusion: Select yes if you have already been granted prior authority in this case for the same type of service
+            ordered_by_court:
+              inclusion: Select yes if this report was ordered by the court
+            related_to_post_mortem:
+              inclusion: Select yes if this is related to a post-mortem
+            user_chosen_cost_type:
+              inclusion: Select how you are being charged
+            period:
+              blank: Enter the time
+              blank_hours: The number of hours must be a number
+              invalid_hours: The number of hours must be 0 or more
+              blank_minutes: The number of minutes must be a number
+              invalid_minutes: The number of minutes must be between 0 and 59
+              invalid_period: Time must be more than 0
+              invalid: Time must be valid
+            cost_per_hour:
+              blank: Enter the hourly cost
+              greater_than: The hourly cost must be more than 0
+            items:
+              blank: Enter the number of items
+              greater_than: The number of items must be more than 0
+            cost_per_item:
+              blank: Enter the cost per item
+              greater_than: The cost per item must be more than 0
+        prior_authority/steps/travel_detail_form:
+          attributes:
+            travel_cost_reason:
+              blank: Explain why there are travel costs if your client is not detained
+            travel_time:
+              blank: Enter the travel time
+              blank_hours: The number of hours must be a number
+              invalid_hours: The number of hours must be 0 or more
+              blank_minutes: The number of minutes must be a number
+              invalid_minutes: The number of minutes must be between 0 and 59
+              invalid_period: Travel time must be more than 0
+              invalid: Travel time must be valid
+            travel_cost_per_hour:
+              blank: Enter the cost per hour
+              greater_than: The cost per hour must be more than 0
+            cost_per_hour:
+              blank: Enter the hourly cost
+              greater_than: The hourly cost must be more than 0
+            items:
+              blank: Enter the number of items
+              greater_than: The number of items must be more than 0
+            cost_per_item:
+              blank: Enter the cost per item
+              greater_than: The cost per item must be more than 0
+        prior_authority/steps/additional_costs/overview_form:
+          attributes:
+            additional_costs_still_to_add:
+              inclusion: Select yes if you want to add additional costs
+        prior_authority/steps/additional_costs/detail_form:
+          attributes:
+            name:
+              blank: Enter what the additional cost is for
+            description:
+              blank: Enter why the additional cost is required
+            unit_type:
+              inclusion: Select how you are being charged
+            period:
+              blank: Enter the time
+              blank_hours: The number of hours must be a number
+              invalid_hours: The number of hours must be 0 or more
+              blank_minutes: The number of minutes must be a number
+              invalid_minutes: The number of minutes must be between 0 and 59
+              invalid_period: Time must be more than 0
+              invalid: Time must be valid
         prior_authority/steps/reason_why_form:
           attributes:
             reason_why:
               blank: Enter why prior authority is required
+
         nsm/steps/claim_type_form:
           attributes:
             ufn:

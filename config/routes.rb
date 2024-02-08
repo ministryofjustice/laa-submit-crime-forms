@@ -116,7 +116,7 @@ Rails.application.routes.draw do
   namespace :prior_authority, path: 'prior-authority' do
     resources :service_types, only: [:index], format: :js
 
-    scope 'applications/:id' do
+    scope 'applications/:application_id' do
       get '/steps/start_page', to: 'steps/start_page#show', as: 'after_commit'
 
       namespace :steps do
@@ -126,12 +126,20 @@ Rails.application.routes.draw do
         edit_step :ufn
         edit_step :case_contact
         edit_step :client_detail
-        edit_step :primary_quote
         edit_step :next_hearing
         edit_step :case_detail
         edit_step :hearing_detail
         edit_step :youth_court
         edit_step :psychiatric_liaison
+        edit_step :primary_quote
+        edit_step :service_cost
+        show_step :primary_quote_summary
+        edit_step :travel_detail
+        edit_step :delete_travel
+        edit_step :additional_costs
+        resources :additional_cost_details, only: %i[new create edit update destroy] do
+          member { get :confirm_delete }
+        end
         upload_step :reason_why
       end
     end

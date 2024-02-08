@@ -3,7 +3,7 @@ module ApplicationHelper
   def current_application
     @current_application ||=
       Claim.for(current_provider).find_by(id: params[:id]) ||
-      PriorAuthorityApplication.for(current_provider).find_by(id: params[:id])
+      PriorAuthorityApplication.for(current_provider).find_by(id: params[:application_id])
   end
 
   def current_office_code

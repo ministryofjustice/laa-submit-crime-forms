@@ -1,0 +1,6 @@
+<%= form.govuk_period_field :period, legend: -> { tag.label(t('.period'), class: "govuk-label govuk-label--#{size}") } %>
+<%= form.govuk_text_field :cost_per_hour,
+                          width: 5,
+                          prefix_text: "&pound;".html_safe,
+                          inputmode: "decimal",
+                          label: { text: t('.cost_per_hour'), size: size } %>
