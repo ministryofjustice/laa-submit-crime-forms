@@ -9,18 +9,18 @@ module PriorAuthority
           application: current_application
         )
 
-        @primary_quote_document = current_application.primary_quote_document
+        @primary_quote_document = current_application.primary_quote.document
       end
 
       def update
-        @primary_quote_document = current_application.primary_quote_document
+        @primary_quote_document = current_application.primary_quote.document
         record = primary_quote
-        if params[:prior_authority_steps_primary_quote_form][:document]
-          return if file_error_present
+        # if params[:prior_authority_steps_primary_quote_form][:document]
+        #   return if file_error_present
 
-          upload_file(params)
+        #   upload_file(params)
 
-        end
+        # end
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
         return_error({ message: t('shared.shared_upload_errors.malware') }, e)
@@ -54,8 +54,8 @@ module PriorAuthority
       end
 
       def save_file(params, file_path)
-        record = current_application.primary_quote_document || current_application.build_primary_quote_document
-        record.document_type = SupportingDocument::PRIMARY_QUOTE_DOCUMENT
+        record = current_application.primary_quote.document || current_application.primary_quote.build_document
+        record.document_type = SupportingDocument::QUOTE_DOCUMENT
         record.file_name = params.original_filename
         record.file_type = params.content_type
         record.file_size = params.tempfile.size
@@ -64,7 +64,7 @@ module PriorAuthority
       end
 
       def supported_filetype
-        SupportedFileTypes::PRIMARY_QUOTE_DOCUMENT
+        SupportedFileTypes::QUOTE_DOCUMENT
           .include? params[:prior_authority_steps_primary_quote_form][:document].content_type
       end
 

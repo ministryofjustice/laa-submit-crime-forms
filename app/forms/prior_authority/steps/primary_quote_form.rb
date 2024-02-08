@@ -6,11 +6,13 @@ module PriorAuthority
       attribute :contact_full_name, :string
       attribute :organisation, :string
       attribute :postcode, :string
+      attribute :document, :string
 
       validates :service_type, presence: true
       validates :contact_full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
       validates :organisation, presence: true
       validates :postcode, presence: true, uk_postcode: true
+      validates :document, presence: true
 
       def service_type_suggestion=(value)
         # The value of service_type_suggestion is the contents of the visible text field, which is the translated value.
@@ -32,6 +34,7 @@ module PriorAuthority
       private
 
       def persist!
+        Rails.logger.debug document
         record.update!(attributes.merge(default_attributes))
       end
 
