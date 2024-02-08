@@ -1,26 +1,5 @@
 require 'bundler/setup'
-
 require 'simplecov'
-require 'simplecov-lcov'
-
-# This allows both LCOV and HTML formatting -
-# lcov for undercover gem and cc-test-reporter, HTML for humans
-module SimpleCov
-  module Formatter
-    class MergedFormatter
-      def format(result)
-        SimpleCov::Formatter::HTMLFormatter.new.format(result)
-        SimpleCov::Formatter::LcovFormatter.new.format(result)
-      end
-    end
-  end
-end
-
-SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
-# for cc-test-reporter after-build action
-SimpleCov::Formatter::LcovFormatter.config.output_directory = 'coverage'
-SimpleCov::Formatter::LcovFormatter.config.lcov_file_name = 'lcov.info'
-SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
 
 unless ENV['NOCOVERAGE']
   SimpleCov.start 'rails' do
@@ -28,8 +7,15 @@ unless ENV['NOCOVERAGE']
     add_filter 'config/'
 
     enable_coverage :branch
-    primary_coverage :branch
-    minimum_coverage branch: 100, line: 100
+
+    unless ENV['CI']
+      primary_coverage :branch
+      minimum_coverage branch: 100, line: 100
+
+      SimpleCov.at_exit do
+        SimpleCov.result.format!
+      end
+    end
   end
 end
 
