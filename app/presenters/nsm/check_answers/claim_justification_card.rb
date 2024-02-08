@@ -38,7 +38,7 @@ module Nsm
           additional_fields << {
             head_key: 'representation_order_withdrawn_date',
             text: check_missing(claim.representation_order_withdrawn_date) do
-              claim.representation_order_withdrawn_date.strftime('%d %B %Y')
+              claim.representation_order_withdrawn_date.to_fs(:stamp)
             end
           }
         end

@@ -38,11 +38,11 @@ module Nsm
           end,
           process_boolean_value(boolean_field: claim.work_before, value_field: claim.work_before_date,
                                 boolean_key: 'work_before', value_key: 'work_before_date') do
-            claim.work_before_date.strftime('%d %B %Y')
+            claim.work_before_date.to_fs(:stamp)
           end,
           process_boolean_value(boolean_field: claim.work_after, value_field: claim.work_after_date,
                                 boolean_key: 'work_after', value_key: 'work_after_date') do
-            claim.work_after_date.strftime('%d %B %Y')
+            claim.work_after_date.to_fs(:stamp)
           end
         ].flatten
       end

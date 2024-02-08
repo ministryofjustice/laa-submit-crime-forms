@@ -38,7 +38,7 @@ module Nsm
 
         array << {
           head_key: head_key,
-          text: date_value.strftime('%d %B %Y')
+          text: date_value.to_fs(:stamp)
         }
       end
     end
