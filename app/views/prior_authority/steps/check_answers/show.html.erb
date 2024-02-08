@@ -1,0 +1,23 @@
+<% title t('.page_title') %>
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <% @report.section_groups.each do |section_group| %>
+      <h2 class="govuk-heading-l"><%= section_group[:heading] %></h2>
+      <% section_group[:sections].each do |section| %>
+        <%= govuk_summary_list(**section) %>
+      <% end %>
+    <% end %>
+    <div class="govuk-button-group">
+      <%# TODO: accept and send path %>
+      <%= link_to '', class: "govuk-button", data_module: "govuk-button", data_prevent_double_click: "true" do %>
+        Accept and send
+      <% end %>
+      <%= link_to prior_authority_root_path(anchor: 'drafts'), class: "govuk-button govuk-button--secondary", data_module: "govuk-button", data_prevent_double_click: "true" do %>
+        Save and come back later
+      <% end %>
+    </div>
+  </div>
+</div>
