@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe TaskList::Collection do
   include ActionView::TestCase::Behavior
 
-  subject { klass.new(view, application:) }
+  subject { klass.new(view, application:, show_index:) }
 
   let(:klass) do
     Class.new(described_class).tap do |klass|
@@ -12,6 +12,7 @@ RSpec.describe TaskList::Collection do
   end
   let(:name) { :foobar_task }
   let(:application) { double }
+  let(:show_index) { true }
 
   describe 'collection of sections' do
     it 'returns the section details' do
@@ -60,6 +61,17 @@ RSpec.describe TaskList::Collection do
       expect(
         subject.render
       ).to match(%r{<ol class="moj-task-list">.*</ol>})
+    end
+
+    context 'when show_index is false' do
+      let(:show_index) { false }
+
+      it 'creates Sections with index set to nil' do
+        expect(TaskList::Section).to receive(:new).twice do |_application, **keys|
+          expect(keys).to include(index: nil)
+        end
+        subject
+      end
     end
   end
 end

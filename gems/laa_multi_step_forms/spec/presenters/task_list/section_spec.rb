@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe TaskList::Section do
-  subject { described_class.new(application, name:, tasks:, index:, show_index:) }
+  subject { described_class.new(application, name:, tasks:, index:, task_statuses:) }
 
   let(:name) { :foobar_task }
   let(:tasks) { [:task_one, :task_two] }
   let(:index) { 1 }
-  let(:show_index) { true }
+  let(:task_statuses) { TaskList::TaskStatus.new }
 
   let(:application) { double }
 
@@ -58,8 +58,8 @@ RSpec.describe TaskList::Section do
       end
     end
 
-    context 'when show_index is false' do
-      let(:show_index) { false }
+    context 'when index is nil' do
+      let(:index) { nil }
 
       it 'renders without numbered headings' do
         expect(

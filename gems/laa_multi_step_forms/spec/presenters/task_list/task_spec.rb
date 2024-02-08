@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe TaskList::Task do
-  subject { described_class.new(application, name:) }
+  subject { described_class.new(application, name:, task_statuses:) }
 
   let(:name) { :foobar_task }
   let(:application) { double }
+  let(:task_statuses) { TaskList::TaskStatus.new }
 
   describe '#render' do
     before do
@@ -14,7 +15,7 @@ RSpec.describe TaskList::Task do
       allow(
         Tasks::BaseTask
       ).to receive(:build).with(
-        name, application:
+        name, application:, task_statuses:
       ).and_return(task_double)
     end
 
