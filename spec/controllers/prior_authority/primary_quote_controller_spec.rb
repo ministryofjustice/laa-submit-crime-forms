@@ -14,7 +14,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
         request.env['CONTENT_TYPE'] = 'image/png'
         expect(Clamby).to receive(:safe?).and_return(true)
         put :update,
-            params: { id: '12345',
+            params: { application_id: '12345',
             prior_authority_steps_primary_quote_form: {
               document: fixture_file_upload('test.png', 'image/png')
             } }
@@ -28,7 +28,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
     context 'when no file is uploaded' do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
-        put :update, params: { id: '12345', prior_authority_steps_primary_quote_form: { document: nil } }
+        put :update, params: { application_id: '12345', prior_authority_steps_primary_quote_form: { document: nil } }
       end
 
       it 'returns a successful response' do
@@ -41,7 +41,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
         request.env['CONTENT_TYPE'] = 'image/png'
         expect(Clamby).to receive(:safe?).and_return(false)
         put :update,
-            params: { id: '12345',
+            params: { application_id: '12345',
             prior_authority_steps_primary_quote_form:
               {
                 document: fixture_file_upload('test.png', 'image/png')
@@ -62,7 +62,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
       before do
         request.env['CONTENT_TYPE'] = 'application/json'
         put :update,
-            params: { id: '12345',
+            params: { application_id: '12345',
             prior_authority_steps_primary_quote_form:
             {
               document: fixture_file_upload('test.png', 'application/json')
@@ -83,7 +83,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
         put :update,
-            params: { id: '12345',
+            params: { application_id: '12345',
             prior_authority_steps_primary_quote_form:
             {
               document: fixture_file_upload('test_2.png', 'image/png')
@@ -104,7 +104,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
         put :update,
-            params: { id: '12345',
+            params: { application_id: '12345',
             prior_authority_steps_primary_quote_form:
             {
               document: fixture_file_upload('test.png', 'image/png')
