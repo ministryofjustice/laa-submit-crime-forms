@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_08_143129) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_08_165017) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -253,6 +253,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_08_143129) do
     t.integer "travel_time"
     t.decimal "travel_cost_per_hour", precision: 10, scale: 2
     t.text "travel_cost_reason"
+    t.text "additional_cost_list"
+    t.decimal "additional_cost_total", precision: 10, scale: 2
     t.index ["prior_authority_application_id"], name: "index_quotes_on_prior_authority_application_id"
   end
 

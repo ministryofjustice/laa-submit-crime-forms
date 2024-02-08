@@ -43,6 +43,10 @@ module AddAnotherMethods
     @record = object_collection.find(params[:id])
   end
 
+  def reload
+    render :edit
+  end
+
   # :nocov:
   def build_form_object
     raise 'Implement in subclass'

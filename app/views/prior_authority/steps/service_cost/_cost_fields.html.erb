@@ -1,0 +1,14 @@
+<% if @form_object.variable_cost_type? %>
+  <%= form.govuk_radio_buttons_fieldset :user_chosen_cost_type, legend: { text: t('.user_chosen_cost_type'), size: 's' } do %>
+    <%= form.govuk_radio_button :user_chosen_cost_type, @form_object.class::PER_ITEM, label: { text: t('.per_item') }, link_errors: true do %>
+      <%= render 'prior_authority/steps/service_cost/items', form: form, size: nil %>
+    <% end %>
+    <%= form.govuk_radio_button :user_chosen_cost_type, @form_object.class::PER_HOUR, label: { text: t('.per_hour') } do %>
+      <%= render 'prior_authority/steps/service_cost/time', form: form, size: nil %>
+    <% end %>
+  <% end %>
+<% elsif @form_object.per_item? %>
+  <%= render 'prior_authority/steps/service_cost/items', form: form, size: 's' %>
+<% else %>
+  <%= render 'prior_authority/steps/service_cost/time', form: form, size: 's' %>
+<% end %>

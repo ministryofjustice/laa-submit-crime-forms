@@ -25,6 +25,8 @@ module PriorAuthority
       validates :ordered_by_court, inclusion: { in: [true, false], allow_nil: false }, if: :court_order_relevant
       validates :related_to_post_mortem, inclusion: { in: [true, false], allow_nil: false }, if: :post_mortem_relevant
 
+      include QuoteCostValidations
+
       delegate :court_order_relevant, :post_mortem_relevant, to: :service_rule
 
       private

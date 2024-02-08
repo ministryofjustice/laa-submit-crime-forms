@@ -24,14 +24,6 @@ module PriorAuthority
       attribute :period, :time_period
       attribute :cost_per_hour, :decimal, precision: 10, scale: 2
 
-      validates :user_chosen_cost_type, inclusion: { in: COST_TYPES, allow_nil: false }, if: :variable_cost_type?
-
-      validates :items, presence: true, numericality: { greater_than: 0 }, if: :per_item?
-      validates :cost_per_item, presence: true, numericality: { greater_than: 0 }, if: :per_item?
-
-      validates :period, presence: true, time_period: true, if: :per_hour?
-      validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, if: :per_hour?
-
       def variable_cost_type?
         service_rule.cost_type == :variable
       end

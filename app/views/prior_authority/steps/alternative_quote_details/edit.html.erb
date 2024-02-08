@@ -15,7 +15,35 @@
       <%= form.govuk_text_field :organisation, label: { text: t('.organisation'), size: 's' } %>
       <%= form.govuk_text_field :postcode, label: { text: t('.postcode'), size: 's' } %>
 
-      <%= form.continue_button %>
+      <h2 class="govuk-heading-m"><%= t('.cost', service_name: @form_object.service_name) %></h2>
+      <%= render 'prior_authority/steps/service_cost/cost_fields', form: form %>
+
+      <h2 class="govuk-heading-m"><%= t('.travel_cost') %></h2>
+      <p class="govuk-text"><%= t('.travel_cost_hint') %></p>
+      <%= form.govuk_period_field :travel_time, legend: { text: t('.travel_time'), size: 's' } %>
+      <%= form.govuk_text_field :travel_cost_per_hour,
+                                width: 5,
+                                prefix_text: "&pound;".html_safe,
+                                inputmode: "decimal",
+                                label: { text: t('.hourly_cost'), size: 's' } %>
+
+      <h2 class="govuk-heading-m"><%= t('.additional_costs') %></h2>
+      <p class="govuk-text"><%= t('.additional_costs_hint') %></p>
+      <%= form.govuk_text_area :additional_cost_list, label: { text: t('.additional_cost_list'), size: 's' } %>
+      <%= form.govuk_text_field :additional_cost_total,
+                                width: 5,
+                                prefix_text: "&pound;".html_safe,
+                                inputmode: "decimal",
+                                label: { text: t('.additional_cost_total'), size: 's' } %>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <%= form.reload_button(button: :update_calculation_no_article) %>
+      <span class="govuk-caption-l"><%= t('.total_cost') %></span>
+      <h2 class="govuk-heading-l" id="totalTravelCost">
+        <%= @form_object.formatted_total_cost %>
+      </h2>
+
+      <%= form.continue_button secondary: false %>
     <% end %>
   </div>
 </div>

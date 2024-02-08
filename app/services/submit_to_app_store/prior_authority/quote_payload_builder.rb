@@ -30,6 +30,8 @@ class SubmitToAppStore
         cost_per_item
         items
         period
+        additional_cost_list
+        additional_cost_total
       ].freeze
     end
   end

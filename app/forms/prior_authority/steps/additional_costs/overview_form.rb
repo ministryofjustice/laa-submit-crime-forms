@@ -6,7 +6,8 @@ module PriorAuthority
         validates :additional_costs_still_to_add, inclusion: { in: [true, false] }
 
         def additional_costs
-          application.additional_costs.map { AdditionalCosts::DetailForm.build(_1, application:) }
+          application.additional_costs
+                     .map { AdditionalCosts::DetailForm.build(_1, application:) }
         end
 
         def costs_added

@@ -36,20 +36,7 @@
           ) %>
       <% end %>
       <h2 class="govuk-heading-m"><%= @form_object.service_name %></h2>
-      <% if @form_object.variable_cost_type? %>
-        <%= form.govuk_radio_buttons_fieldset :user_chosen_cost_type, legend: { text: t('.user_chosen_cost_type'), size: 's' } do %>
-          <%= form.govuk_radio_button :user_chosen_cost_type, @form_object.class::PER_ITEM, label: { text: t('.per_item') }, link_errors: true do %>
-            <%= render 'items', form: form, size: nil %>
-          <% end %>
-          <%= form.govuk_radio_button :user_chosen_cost_type, @form_object.class::PER_HOUR, label: { text: t('.per_hour') } do %>
-            <%= render 'time', form: form, size: nil %>
-          <% end %>
-        <% end %>
-      <% elsif @form_object.per_item? %>
-        <%= render 'items', form: form, size: 's' %>
-      <% else %>
-        <%= render 'time', form: form, size: 's' %>
-      <% end %>
+      <%= render 'cost_fields', form: form %>
       <%= form.refresh_button(button: :update_calculation_no_article) %>
       <span class="govuk-caption-l"><%= t('.total_cost') %></span>
       <h2 class="govuk-heading-l">
@@ -59,5 +46,3 @@
     <% end %>
   </div>
 </div>
-
-

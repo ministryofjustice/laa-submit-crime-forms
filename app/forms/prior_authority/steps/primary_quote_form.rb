@@ -54,6 +54,13 @@ module PriorAuthority
         record.update!(attributes.except('service_type', 'custom_service_name')
                                  .merge(default_attributes))
         application.update(service_type:, custom_service_name:)
+
+        # If a change to service type has rendered any alternative quotes invalid,
+        # delete them because we don't yet have a UI for highlighting invalidities
+        # from the overview screen
+        application.alternative_quotes
+                   .reject { AlternativeQuotes::DetailForm.build(_1, application:).valid? }
+                   .each(&:destroy)
       end
 
       def default_attributes

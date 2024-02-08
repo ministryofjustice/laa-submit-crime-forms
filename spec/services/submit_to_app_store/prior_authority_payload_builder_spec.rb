@@ -85,7 +85,9 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             id: application.primary_quote.id,
             travel_cost_per_hour: '50.0',
             travel_cost_reason: nil,
-            travel_time: 150
+            travel_time: 150,
+            additional_cost_list: nil,
+            additional_cost_total: nil,
           }
         ],
         additional_costs: []
