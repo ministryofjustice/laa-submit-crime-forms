@@ -13,8 +13,8 @@ module PriorAuthority
       end
 
       def update
-        @primary_quote_document = current_application.primary_quote.document
         record = primary_quote
+        @primary_quote_document = current_application.primary_quote.document
         if params[:prior_authority_steps_primary_quote_form][:document]
           return if file_error_present
 
