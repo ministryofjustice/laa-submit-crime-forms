@@ -27,7 +27,7 @@ module Nsm
       def date_actioned_row
         {
           head_key: date_actioned_head,
-          text: claim.updated_at&.strftime('%d %B %Y')
+          text: claim.updated_at&.to_fs(:stamp)
         }
       end
 

@@ -17,7 +17,7 @@ module Nsm
           {
             head_key: 'hearing_date',
             text: check_missing(hearing_details_form.first_hearing_date) do
-              hearing_details_form.first_hearing_date.strftime('%d %B %Y')
+              hearing_details_form.first_hearing_date.to_fs(:stamp)
             end
           },
           {

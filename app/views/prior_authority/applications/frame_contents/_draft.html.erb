@@ -24,7 +24,7 @@
             <%= application.defendant&.full_name %>
           </td>
           <td class="govuk-table__cell">
-            <%= application.updated_at.strftime('%d %B %Y') %>
+            <%= application.updated_at.to_fs(:stamp) %>
           </td>
           <td class="govuk-table__cell">
             <%= application.laa_reference %>
