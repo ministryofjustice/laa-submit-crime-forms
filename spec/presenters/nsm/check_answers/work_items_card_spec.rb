@@ -45,15 +45,15 @@ RSpec.describe Nsm::CheckAnswers::WorkItemsCard do
               text: '<strong>Total per item</strong>'
             },
             {
-              head_key: 'Attendance without counsel',
+              head_key: 'attendance_without_counsel',
               text: '£0.00'
             },
             {
-              head_key: 'Preparation',
+              head_key: 'preparation',
               text: '£104.30'
             },
             {
-              head_key: 'Advocacy',
+              head_key: 'advocacy',
               text: '£392.52'
             },
             {
@@ -81,15 +81,15 @@ RSpec.describe Nsm::CheckAnswers::WorkItemsCard do
               text: '<strong>Total per item</strong>'
             },
             {
-              head_key: 'Attendance without counsel',
+              head_key: 'attendance_without_counsel',
               text: '£0.00'
             },
             {
-              head_key: 'Preparation',
+              head_key: 'preparation',
               text: '£104.30'
             },
             {
-              head_key: 'Advocacy',
+              head_key: 'advocacy',
               text: '£392.52'
             },
             {

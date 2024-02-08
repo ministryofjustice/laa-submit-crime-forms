@@ -82,6 +82,7 @@ en:
               total: Total
               total_inc_vat: Total (including VAT)
             disbursements:
+              car: Car
               items: Items
               items_total: <strong>Total per item</strong>
               total: Total

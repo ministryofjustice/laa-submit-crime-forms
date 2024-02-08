@@ -40,7 +40,7 @@ module Nsm
       def work_item_rows
         work_items.rows.map do |row|
           {
-            head_key: row[:key][:text],
+            head_key: row[:key][:text].parameterize.underscore,
             text: row[:value][:text]
           }
         end

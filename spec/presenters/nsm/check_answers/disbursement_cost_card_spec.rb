@@ -20,7 +20,7 @@ RSpec.describe Nsm::CheckAnswers::DisbursementCostsCard do
             text: '<strong>Total per item</strong>'
           },
           {
-            head_key: 'Accident Reconstruction Report',
+            head_key: 'accident_reconstruction_report',
             text: '£90.00'
           },
           {
