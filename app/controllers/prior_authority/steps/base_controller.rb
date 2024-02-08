@@ -22,6 +22,10 @@ module PriorAuthority
       def service
         Providers::Gatekeeper::PAA
       end
+
+      # The default behaviour of prune_navigation_stack assumes linear completion of tasks
+      # which doesn't apply to Prior Authority
+      def prune_navigation_stack; end
     end
   end
 end
