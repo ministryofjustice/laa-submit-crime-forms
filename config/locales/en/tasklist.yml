@@ -20,6 +20,7 @@ en:
       prior_authority/case_and_hearing_detail: Case and hearing details
       prior_authority/client_detail: Client details
       prior_authority/primary_quote: Primary quote
+      prior_authority/alternative_quotes: Alternative quotes
       prior_authority/reason_why: Reason for prior authority
       prior_authority/check_answers: Submit application
       nsm/claim_type:

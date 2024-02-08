@@ -1,0 +1,52 @@
+en:
+  prior_authority:
+    steps:
+      alternative_quotes:
+        no_alternative_quotes:
+          caption: About the request
+          page_title: Have you got other quotes?
+          why_not: Why did you not get other quotes?
+        with_alternative_quotes:
+          caption: About the request
+          page_title: You've added %{number} alternative %{quote}
+          quote: quote
+          question: Do you want to add an additional quote?
+        quote_summary:
+          alternative_quote: Alternative quote
+          change: Change
+          delete: Delete
+          service_details: Service details
+        important: Important
+        deleted: The alternative quote was deleted
+      alternative_quote_details:
+        confirm_delete:
+          page_title: Are you sure you want to delete this alternative quote?
+          yes_delete: Yes, delete it
+          no_delete: No, do not delete it
+        edit:
+          page_title: Add alternative quotes
+          caption: About the request
+          hint: You can add up to 3 alternative quotes.
+          alternative_quote: Alternative quote
+          service_details: Service details
+          contact_full_name: Contact full name
+          organisation: Organisation
+          postcode: Postcode
+  activemodel:
+    errors:
+      models:
+        prior_authority/steps/alternative_quotes/overview_form:
+          attributes:
+            alternative_quotes_still_to_add:
+              inclusion: Select yes if you have other quotes
+            no_alternative_quote_reason:
+              blank: Explain why you did not get other quotes
+        prior_authority/steps/alternative_quotes/detail_form:
+          attributes:
+            contact_full_name:
+              blank: Enter the contact's full name
+            organisation:
+              blank: Enter the organisation name
+            postcode:
+              blank: Enter the postcode
+              invalid: Enter a real postcode

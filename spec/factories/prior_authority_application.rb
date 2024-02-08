@@ -58,6 +58,7 @@ FactoryBot.define do
       prior_authority_granted { false }
       travel_cost_per_hour {  50.0 }
       travel_time { 150 }
+      no_alternative_quote_reason { 'a reason' }
     end
   end
 end
