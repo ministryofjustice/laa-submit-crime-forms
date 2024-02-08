@@ -26,6 +26,10 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         service_type: 'pathologist',
         firm_name: 'Firm A',
         client_name: 'bob jim',
+        prior_authority_granted: false,
+        travel_cost_per_hour: '50.0',
+        travel_cost_reason: nil,
+        travel_time: 150,
         defendant: {
           first_name: 'bob',
           last_name: 'jim',
@@ -73,7 +77,15 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             contact_full_name: 'Joe Bloggs',
             organisation: 'LAA',
             postcode: 'CR0 1RE',
-            primary: true
+            primary: true,
+            cost_type: 'per_hour',
+            cost_per_hour: '10.0',
+            period: 180,
+            cost_per_item: nil,
+            items: nil,
+            ordered_by_court: nil,
+            related_to_post_mortem: nil,
+            id: application.primary_quote.id
           }
         ],
         additional_costs: []

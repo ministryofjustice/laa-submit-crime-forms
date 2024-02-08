@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
 module PriorAuthority
   module StepHelpers
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/AbcSize
     def fill_in_until_step(step, prison_law: 'No', court_type: "Magistrate's court")
       fill_in_prison_law_and_authority_value(prison_law)
 
@@ -12,14 +15,17 @@ module PriorAuthority
 
       return if step.in?(%i[your_application_progress case_contact])
 
+      click_on 'Case contact'
       fill_in_case_contact
 
       return if step == :client_detail
 
+      click_on 'Client details'
       fill_in_client_detail
 
       return if step == :case_detail
 
+      click_on 'Case and hearing details'
       fill_in_case_detail
 
       return if step == :hearing_detail
@@ -32,11 +38,20 @@ module PriorAuthority
 
       return if step == :primary_quote
 
+      click_on 'Primary quote'
       fill_in_primary_quote
+
+      return if step == :service_cost
+
+      fill_in_service_cost
+
+      return if step == :primary_quote_summary
 
       :end
     end
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/AbcSize
 
     def fill_in_prison_law_and_authority_value(prison_law)
       visit provider_saml_omniauth_callback_path
@@ -55,7 +70,6 @@ module PriorAuthority
     end
 
     def fill_in_case_contact
-      click_on 'Case contact'
       fill_in 'Full name', with: 'John Doe'
       fill_in 'Email address', with: 'john@does.com'
       fill_in 'Firm name', with: 'LegalCorp Ltd'
@@ -117,18 +131,28 @@ module PriorAuthority
       click_on 'Save and continue'
     end
 
-    def fill_in_primary_quote
-      click_on 'Primary quote'
+    def fill_in_primary_quote(service_type: 'Meteorologist')
+      # Note that if Javascript is enabled for the current test, this will
+      # be hidden
+      select service_type, from: 'Service required'
 
-      fill_in 'Service required', with: 'Forensics'
       fill_in 'Contact full name', with: 'Joe Bloggs'
       fill_in 'Organisation', with: 'LAA'
       fill_in 'Postcode', with: 'CR0 1RE'
 
-      click_on 'Save and come back later'
+      click_on 'Save and continue'
+    end
+
+    def fill_in_service_cost
+      choose 'Yes'
+      choose 'Charged per item'
+      fill_in 'Number of items', with: '5'
+      fill_in 'What is the cost per item?', with: '1.23'
+      click_on 'Save and continue'
     end
   end
 end
+# rubocop:enable Metrics/ModuleLength
 
 RSpec.configure do |config|
   config.include PriorAuthority::StepHelpers, type: :system

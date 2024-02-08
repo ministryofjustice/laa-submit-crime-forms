@@ -5,8 +5,6 @@ RSpec.shared_examples 'a generic decision' do |from:, goto:, additional_param: n
     it "moves to #{goto.inspect}" do
       destination = goto
       destination[additional_param] = public_send(additional_param) if additional_param
-      destination[:id] = application unless destination[:action] == :index
-
       expect(subject.destination).to eq(destination)
     end
   end

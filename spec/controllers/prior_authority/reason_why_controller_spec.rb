@@ -12,7 +12,7 @@ RSpec.describe PriorAuthority::Steps::ReasonWhyController, type: :controller do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
         expect(Clamby).to receive(:safe?).and_return(true)
-        post :create, params: { id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
+        post :create, params: { application_id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
       end
 
       after do
@@ -33,7 +33,7 @@ RSpec.describe PriorAuthority::Steps::ReasonWhyController, type: :controller do
 
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
-        post :create, params: { id: '12345', documents: nil }
+        post :create, params: { application_id: '12345', documents: nil }
       end
 
       it 'returns a bad request' do
@@ -49,7 +49,8 @@ RSpec.describe PriorAuthority::Steps::ReasonWhyController, type: :controller do
       let(:current_application) { build(:claim) }
 
       before do
-        post :create, params: { id: '12345', documents: fixture_file_upload('test.json', 'application/json') }
+        post :create,
+             params: { application_id: '12345', documents: fixture_file_upload('test.json', 'application/json') }
       end
 
       it 'returns a bad request' do
@@ -67,7 +68,7 @@ RSpec.describe PriorAuthority::Steps::ReasonWhyController, type: :controller do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
         expect(Clamby).to receive(:safe?).and_return(false)
-        post :create, params: { id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
+        post :create, params: { application_id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
       end
 
       it 'returns a bad request' do
@@ -96,7 +97,7 @@ RSpec.describe PriorAuthority::Steps::ReasonWhyController, type: :controller do
       end
 
       it 'deletes the file' do
-        delete :destroy, params: { id: '12345', evidence_id: evidence.id }
+        delete :destroy, params: { application_id: '12345', evidence_id: evidence.id }
 
         expect(response).to be_successful
       end
@@ -104,7 +105,7 @@ RSpec.describe PriorAuthority::Steps::ReasonWhyController, type: :controller do
 
     context 'when there are no files present' do
       it 'returns a 400' do
-        delete :destroy, params: { id: '12345', evidence_id: SecureRandom.uuid }
+        delete :destroy, params: { application_id: '12345', evidence_id: SecureRandom.uuid }
 
         expect(response).to be_bad_request
       end

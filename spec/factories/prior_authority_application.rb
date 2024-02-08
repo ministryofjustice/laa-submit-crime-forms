@@ -55,6 +55,9 @@ FactoryBot.define do
       next_hearing { true }
       supporting_documents { build_list(:supporting_document, 2) }
       quotes { build_list(:quote, 1, :primary) }
+      prior_authority_granted { false }
+      travel_cost_per_hour {  50.0 }
+      travel_time { 150 }
     end
   end
 end

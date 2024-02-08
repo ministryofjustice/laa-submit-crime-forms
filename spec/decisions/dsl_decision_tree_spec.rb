@@ -26,7 +26,6 @@ RSpec.describe Decisions::DslDecisionTree do
         expect(subject.destination).to eq(
           controller: :branch,
           action: :edit,
-          id: application
         )
       end
     end
@@ -57,7 +56,6 @@ RSpec.describe Decisions::DslDecisionTree do
         expect(subject.destination).to eq(
           controller: :branch,
           action: :edit,
-          id: application,
           branch_id: 'apple'
         )
       end
@@ -78,7 +76,6 @@ RSpec.describe Decisions::DslDecisionTree do
         expect(subject.destination).to eq(
           controller: :branch,
           action: :edit,
-          id: application,
           branch_id: application.id
         )
       end
@@ -103,8 +100,7 @@ RSpec.describe Decisions::DslDecisionTree do
         it 'matches defined steps' do
           expect(subject.destination).to eq(
             controller: :success,
-            action: :edit,
-            id: application
+            action: :edit
           )
         end
       end
@@ -115,8 +111,7 @@ RSpec.describe Decisions::DslDecisionTree do
         it 'matches defined steps' do
           expect(subject.destination).to eq(
             controller: :failure,
-            action: :edit,
-            id: application
+            action: :edit
           )
         end
       end
@@ -147,7 +142,6 @@ RSpec.describe Decisions::DslDecisionTree do
       expect(subject.destination).to eq(
         controller: :success,
         action: :edit,
-        id: application,
         record_id: record.id
       )
     end
@@ -173,7 +167,6 @@ RSpec.describe Decisions::DslDecisionTree do
       expect(subject.destination).to eq(
         controller: :success,
         action: :edit,
-        id: application,
         wrapper_type: 'Apple'
       )
     end

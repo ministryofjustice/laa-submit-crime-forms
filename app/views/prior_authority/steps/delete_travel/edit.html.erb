@@ -1,0 +1,26 @@
+<% title t('.page_title') %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 id="page-title" class="govuk-heading-xl"><%= t('.page_title') %></h1>
+    <table class="govuk-table" aria-describedby="page-title">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header"><%= t('.travel_time') %></th>
+          <th scope="col" class="govuk-table__header"><%= t('.hourly_cost') %></th>
+          <th scope="col" class="govuk-table__header"><%= t('.total') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= format_period(@form_object.travel_time) %></td>
+          <td class="govuk-table__cell"><%= NumberTo.pounds(@form_object.travel_cost_per_hour) %></td>
+          <td class="govuk-table__cell"><%= @form_object.formatted_total_cost %></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="govuk-button-group">
+      <%= govuk_button_to(t('.yes_delete'), prior_authority_steps_delete_travel_path(current_application), warning: true, method: :patch) %>
+      <%= govuk_button_to(t('.no_delete'), prior_authority_steps_primary_quote_summary_path(current_application), method: :get) %>
+    </div>
+  </div>
+</div>

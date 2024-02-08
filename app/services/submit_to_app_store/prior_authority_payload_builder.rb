@@ -25,6 +25,7 @@ class SubmitToAppStore
         solicitor:,
         defendant:,
         quotes:,
+        additional_costs:,
       ).merge(convenience_attributes)
     end
 
@@ -33,13 +34,7 @@ class SubmitToAppStore
     end
 
     def supporting_documents
-      application.supporting_documents.map do |document|
-        document.as_json(only: %i[file_name
-                                  file_type
-                                  file_size
-                                  file_path
-                                  document_type])
-      end
+      PriorAuthority::SupportingDocumentsPayloadBuilder.new(application).payload
     end
 
     def provider
@@ -47,24 +42,11 @@ class SubmitToAppStore
     end
 
     def firm_office
-      application.firm_office.as_json(only: %i[
-                                        name
-                                        account_number
-                                        address_line_1
-                                        address_line_2
-                                        town
-                                        postcode
-                                        vat_registered
-                                      ])
+      PriorAuthority::FirmOfficePayloadBuilder.new(application).payload
     end
 
     def solicitor
-      application.solicitor.as_json(only: %i[
-                                      full_name
-                                      reference_number
-                                      contact_full_name
-                                      contact_email
-                                    ])
+      PriorAuthority::SolicitorPayloadBuilder.new(application).payload
     end
 
     def defendant
@@ -72,22 +54,18 @@ class SubmitToAppStore
     end
 
     def quotes
-      application.quotes.as_json(only: %i[
-                                   service_type
-                                   custom_service_name
-                                   contact_full_name
-                                   organisation
-                                   postcode
-                                   primary
-                                 ])
+      PriorAuthority::QuotePayloadBuilder.new(application).payload
+    end
+
+    def additional_costs
+      PriorAuthority::AdditionalCostPayloadBuilder.new(application).payload
     end
 
     def convenience_attributes
       {
-        # N.B We do this instead of `.primary_quote` to make resilient to cases
+        # N.B We do `detect(&:primary)` instead of `.primary_quote` to make resilient to cases
         # where the quotes are not persisted to the database
         service_type: application.quotes.detect(&:primary).service_type,
-        additional_costs: [],
         firm_name: application.firm_office.name,
         client_name: application.defendant.full_name
       }
@@ -112,6 +90,10 @@ class SubmitToAppStore
       psychiatric_liaison
       psychiatric_liaison_reason_not
       next_hearing
+      travel_time
+      travel_cost_per_hour
+      travel_cost_reason
+      prior_authority_granted
     ].freeze
   end
 end

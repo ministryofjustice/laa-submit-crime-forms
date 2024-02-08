@@ -21,7 +21,7 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
 
     click_on 'Save and continue'
 
-    expect(page).to have_content 'Primary quote Completed'
+    expect(page).to have_content 'Service cost'
   end
 
   it 'validates primary quote fields fields' do
@@ -40,6 +40,6 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     click_on 'Primary quote'
 
     click_on 'Save and come back later'
-    expect(page).to have_content 'Primary quote In progress'
+    expect(page).to have_content 'Your applications'
   end
 end
