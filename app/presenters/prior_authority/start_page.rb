@@ -30,6 +30,11 @@ module PriorAuthority
             'prior_authority/reason_why'
           ],
         ],
+        [
+          'prior_authority/review', [
+            'prior_authority/check_answers',
+          ]
+        ],
       ].freeze
     end
   end

@@ -34,9 +34,9 @@ RSpec.describe 'Prior authority applications - add hearing details' do
       choose 'Not guilty'
     end
 
-    context "with magistrate's court chosen" do
+    context "with magistrates' court chosen" do
       it 'moves to Youth court page' do
-        choose  "Magistrate's court"
+        choose  "Magistrates' court"
 
         click_on 'Save and continue'
         expect(page).to have_title 'Is this a youth court matter?'

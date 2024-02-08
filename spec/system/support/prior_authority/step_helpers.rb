@@ -6,7 +6,7 @@ module PriorAuthority
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize
-    def fill_in_until_step(step, prison_law: 'No', court_type: "Magistrate's court")
+    def fill_in_until_step(step, prison_law: 'No', court_type: "Magistrates' court")
       fill_in_prison_law_and_authority_value(prison_law)
 
       return if step == :ufn
@@ -120,7 +120,7 @@ module PriorAuthority
       click_on 'Save and continue'
     end
 
-    def fill_in_hearing_detail(plea: 'Not guilty', court_type: "Magistrate's court")
+    def fill_in_hearing_detail(plea: 'Not guilty', court_type: "Magistrates' court")
       within('.govuk-form-group', text: 'Date of next hearing') do
         dt = Date.tomorrow
         fill_in 'Day', with: dt.day

@@ -1,0 +1,70 @@
+---
+en:
+  prior_authority:
+    steps:
+      check_answers:
+        show:
+          page_title: Check your answers
+          heading: Check your answers
+          sections:
+            case_contact:
+              contact_details: Contact details
+              firm_details: Firm details
+            case_detail:
+              main_offence: Main offence
+              rep_order_date: Date of representation order
+              maat: MAAT number
+              client_detained: Client detained
+              subject_to_poca: Subject to POCA
+            client_detail:
+              full_name: Client name
+              date_of_birth: Date of birth
+            hearing_detail:
+              next_hearing_date: Date of next hearing
+              plea: Likely or actual plea
+              court_type: Court type
+              psychiatric_liaison: Psychiatric liaison service accessed
+              psychiatric_liaison_reason_not: Why not?
+              youth_court: Youth court matter
+            primary_quote_summary:
+              ordered_by_court: Ordered by court
+              prior_authority_granted: Existing prior authority granted
+              quote_upload: Quote upload
+              related_to_post_mortem: Post-mortem
+              service_name: Service required
+              service_details: Service details
+              travel_cost_reason: Why travel costs are required
+              summary: 'Quote summary'
+            reason_why:
+              reason_why: Why prior authority is required
+              supporting_documents: Supporting documents
+            ufn:
+              laa_reference: LAA reference
+              prison_law: Prison law
+              ufn: Unique file number
+
+        groups:
+          about_case:
+            heading: About the case
+            case_detail:
+              title: Case details
+            client_detail:
+              title: Client details
+            hearing_detail:
+              title: Hearing details
+          about_request:
+            heading: About the request
+            primary_quote_summary:
+              title: Primary quote
+            reason_why:
+              title: Reason for prior authority
+          application_detail:
+            heading: ''
+            ufn:
+              title: Application details
+          contact_details:
+            heading: Contact details
+            case_contact:
+              title: Case contact
+          further_information:
+            heading: Required further information

@@ -49,7 +49,7 @@ en:
             unknown: Unknown
           court_type: Type of court
           court_type_description:
-            magistrates_court: Magistrate's court
+            magistrates_court: Magistrates' court
             central_criminal_court: Central Criminal Court
             crown_court: Crown Court (excluding Central Criminal Court)
           page_title: Hearing details
