@@ -15,12 +15,12 @@ module PriorAuthority
       def update
         @primary_quote_document = current_application.primary_quote.document
         record = primary_quote
-        # if params[:prior_authority_steps_primary_quote_form][:document]
-        #   return if file_error_present
+        if params[:prior_authority_steps_primary_quote_form][:document]
+          return if file_error_present
 
-        #   upload_file(params)
+          upload_file(params)
 
-        # end
+        end
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
         return_error({ message: t('shared.shared_upload_errors.malware') }, e)
