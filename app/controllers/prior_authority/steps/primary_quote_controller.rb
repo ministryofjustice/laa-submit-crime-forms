@@ -92,7 +92,7 @@ module PriorAuthority
         end
         record = primary_quote
         flash[:alert] = dict[:message]
-        update_and_advance(PrimaryQuoteForm, as:, save_and_refresh:, record:)
+        update_and_advance(PrimaryQuoteForm, as:, save_and_refresh: true, record:)
       end
     end
   end
