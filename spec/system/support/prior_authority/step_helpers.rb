@@ -49,7 +49,18 @@ module PriorAuthority
 
       fill_in_service_cost
 
-      return if step == :primary_quote_summary
+      return if step.in?(%i[primary_quote_summary travel_cost])
+
+      within('#travel-cost-summary') { click_on 'Change' }
+      fill_in_travel_cost
+      click_on 'Save and continue'
+
+      return if step == :reason_for_prior_authority
+
+      click_on 'Reason for prior authority'
+      fill_in_reason_for_prior_authority
+
+      return if step == :submit_application
 
       :end
     end
@@ -152,7 +163,15 @@ module PriorAuthority
       click_on 'Save and continue'
     end
 
-    def fill_in_service_cost(cost_type: :variable)
+    def fill_in_travel_cost
+      fill_in 'Why are there travel costs if your client is not detained?', with: 'Client lives in Wales'
+      fill_in 'Hours', with: 0
+      fill_in 'Minutes', with: 30
+      fill_in 'Hourly cost', with: 3.21
+      click_on 'Save and continue'
+    end
+
+    def fill_in_service_cost
       choose 'Yes'
       choose 'Charged per item' if cost_type == :variable
 
@@ -164,6 +183,15 @@ module PriorAuthority
         fill_in 'Number of items', with: '5'
         fill_in 'What is the cost per item?', with: '1.23'
       end
+
+      click_on 'Save and continue'
+    end
+
+    def fill_in_reason_for_prior_authority
+      fill_in 'Why is prior authority required?', with: 'Required because...'
+
+      # this emulates a drop of a file on the dropzone
+      # find(".dz-clickable").drop(file_fixture("basic_bulk_submission.csv"))
 
       click_on 'Save and continue'
     end
