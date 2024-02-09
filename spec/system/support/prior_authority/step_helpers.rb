@@ -140,6 +140,10 @@ module PriorAuthority
       fill_in 'Organisation', with: 'LAA'
       fill_in 'Postcode', with: 'CR0 1RE'
 
+      page.attach_file("#{Rails.root}spec/fixtures/files/test.png") do
+        page.find('.govuk-file-upload').click
+      end
+
       click_on 'Save and continue'
     end
 
