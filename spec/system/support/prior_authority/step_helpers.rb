@@ -26,15 +26,19 @@ module PriorAuthority
       return if step == :case_detail
 
       click_on 'Case and hearing details'
-      fill_in_case_detail
+      if prison_law == 'Yes'
+        fill_in_next_hearing
+      else
+        fill_in_case_detail
 
-      return if step == :hearing_detail
+        return if step == :hearing_detail
 
-      fill_in_hearing_detail(court_type:)
+        fill_in_hearing_detail(court_type:)
 
-      return if step.in?(%i[psychiatric_liaison youth_court])
+        return if step.in?(%i[psychiatric_liaison youth_court])
 
-      fill_in_youth_court
+        fill_in_youth_court
+      end
 
       return if step == :primary_quote
 
@@ -108,6 +112,11 @@ module PriorAuthority
         choose 'Yes'
       end
 
+      click_on 'Save and continue'
+    end
+
+    def fill_in_next_hearing
+      choose 'No'
       click_on 'Save and continue'
     end
 
