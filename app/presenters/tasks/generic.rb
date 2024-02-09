@@ -5,7 +5,7 @@ module Tasks
     end
 
     def path
-      form_class = self.class::PREVIOUS_TASK::FORM
+      form_class = self.class::PREVIOUS_TASKS::FORM
       destination = Decisions::DecisionTree.new(
         form_class.new(application:, record:),
         as: self.class::PREVIOUS_STEP_NAME,
@@ -15,7 +15,7 @@ module Tasks
     end
 
     def can_start?
-      fulfilled?(self.class::PREVIOUS_TASK)
+      previous_tasks.all? { |task| fulfilled?(task) }
     end
 
     def completed?(rec = record, form = associated_form)
@@ -23,6 +23,10 @@ module Tasks
     end
 
     private
+
+    def previous_tasks
+      Array(self.class::PREVIOUS_TASKS)
+    end
 
     def record
       application

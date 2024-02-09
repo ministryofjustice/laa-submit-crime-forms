@@ -3,7 +3,7 @@ module PriorAuthority
     class ClientDetail < Base
       # TODO: Ufn is not the previous task, but it must be listed as such to allow
       # treating this task as can_start-able when Ufn is provided
-      PREVIOUS_TASK = Ufn
+      PREVIOUS_TASKS = Ufn
       FORM = ::PriorAuthority::Steps::ClientDetailForm
 
       def path

@@ -18,7 +18,7 @@ RSpec.describe PriorAuthority::Tasks::ReasonWhy, type: :presenter do
   describe '#can_start?' do
     it { is_expected.not_to be_can_start }
 
-    context 'when about requets elemenst are enabled' do
+    context 'when about requets elements are enabled' do
       let(:application) { create(:prior_authority_application, :about_request_enabled) }
 
       it { is_expected.to be_can_start }

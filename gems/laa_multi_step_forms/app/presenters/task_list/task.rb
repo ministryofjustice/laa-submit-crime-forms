@@ -2,6 +2,13 @@ module TaskList
   class Task < BaseRenderer
     delegate :status, to: :task
     delegate :completed?, to: :status
+    attr_reader :task_statuses
+
+    def initialize(application, name:, task_statuses:)
+      super(application, name:)
+
+      @task_statuses = task_statuses
+    end
 
     def render
       tag.li class: 'moj-task-list__item' do
@@ -32,7 +39,7 @@ module TaskList
     end
 
     def task
-      @task ||= Tasks::BaseTask.build(name, application:)
+      @task ||= Tasks::BaseTask.build(name, application:, task_statuses:)
     end
   end
 end

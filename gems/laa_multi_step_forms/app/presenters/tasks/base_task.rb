@@ -2,10 +2,11 @@ module Tasks
   class BaseTask
     include Routing
 
-    attr_accessor :application
+    attr_accessor :application, :task_statuses
 
-    def initialize(application:)
+    def initialize(application:, task_statuses: TaskList::TaskStatus.new)
       @application = application
+      @task_statuses = task_statuses
     end
 
     def self.build(name, **)
@@ -20,7 +21,7 @@ module Tasks
     end
 
     def fulfilled?(task_class)
-      task_class.new(application:).status.completed?
+      task_statuses.status(task_class:, application:).completed?
     end
 
     # Used by the `Routing` module to build the urls
@@ -29,8 +30,12 @@ module Tasks
     end
 
     def status
+      task_statuses.self_status(task: self)
+    end
+
+    def current_status
       return TaskStatus::NOT_APPLICABLE if not_applicable?
-      return TaskStatus::UNREACHABLE unless can_start?
+      return TaskStatus::UNREACHABLE unless in_progress? || can_start?
       return TaskStatus::NOT_STARTED unless in_progress?
       return TaskStatus::COMPLETED if completed?
 

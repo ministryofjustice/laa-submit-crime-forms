@@ -2,7 +2,7 @@ module PriorAuthority
   module Tasks
     class AlternativeQuotes < Base
       FORM = ::PriorAuthority::Steps::AlternativeQuotes::OverviewForm
-      PREVIOUS_TASK = PrimaryQuote
+      PREVIOUS_TASKS = PrimaryQuote
 
       def path
         prior_authority_steps_alternative_quotes_path(application)
