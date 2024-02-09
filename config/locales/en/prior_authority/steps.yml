@@ -127,6 +127,7 @@ en:
           change: Change
           service_required: Service required
           service_details: Service details
+          service_quote_upload: Quote upload
           prior_authority_granted: Existing prior authority granted
           total: Total
           period: Time
