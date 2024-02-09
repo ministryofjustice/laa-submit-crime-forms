@@ -1,7 +1,7 @@
 module PriorAuthority
   module Tasks
     class CaseContact < Base
-      PREVIOUS_TASK = Ufn
+      PREVIOUS_TASKS = Ufn
       FORM = PriorAuthority::Steps::CaseContactForm
 
       def path

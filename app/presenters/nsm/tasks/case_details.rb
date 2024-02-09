@@ -1,7 +1,7 @@
 module Nsm
   module Tasks
     class CaseDetails < ::Tasks::Generic
-      PREVIOUS_TASK = Defendants
+      PREVIOUS_TASKS = Defendants
       FORM = Nsm::Steps::CaseDetailsForm
 
       def path

@@ -3,7 +3,7 @@
 module Nsm
   module Tasks
     class SupportingEvidence < ::Tasks::Generic
-      PREVIOUS_TASK = OtherInfo
+      PREVIOUS_TASKS = OtherInfo
       FORM = Nsm::Steps::SupportingEvidenceForm
 
       def path

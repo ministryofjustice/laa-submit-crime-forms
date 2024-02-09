@@ -1,7 +1,7 @@
 module Nsm
   module Tasks
     class WorkItems < ::Tasks::Generic
-      PREVIOUS_TASK = ClaimDetails
+      PREVIOUS_TASKS = ClaimDetails
       PREVIOUS_STEP_NAME = :claim_details
       FORM = Nsm::Steps::WorkItemForm
 

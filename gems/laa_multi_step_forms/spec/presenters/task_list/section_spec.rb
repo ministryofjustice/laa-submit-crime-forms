@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TaskList::Section do
-  subject { described_class.new(application, name:, tasks:, index:, task_statuses:) }
+  subject(:section) { described_class.new(application, name:, tasks:, index:, task_statuses:) }
 
   let(:name) { :foobar_task }
   let(:tasks) { [:task_one, :task_two] }
@@ -12,18 +12,18 @@ RSpec.describe TaskList::Section do
 
   describe '#items' do
     it 'contains a collection of Task instances' do
-      expect(subject.items).to contain_exactly(TaskList::Task, TaskList::Task)
+      expect(section.items).to contain_exactly(TaskList::Task, TaskList::Task)
     end
 
     it 'has the proper attributes' do
-      expect(subject.items.map(&:name)).to eq(tasks)
+      expect(section.items.map(&:name)).to eq(tasks)
     end
 
     context 'when task name is a proc' do
       let(:tasks) { [:task_one, ->(_app) { 'task.two' }] }
 
       it 'evaluates the proc to detmine teh task name' do
-        expect(subject.items.map(&:name)).to eq([:task_one, 'task.two'])
+        expect(section.items.map(&:name)).to eq([:task_one, 'task.two'])
       end
     end
   end
@@ -31,7 +31,7 @@ RSpec.describe TaskList::Section do
   describe '#render' do
     before do
       # Ensure we don't rely on task locales, so we have predictable tests
-      allow(subject).to receive(:t!).with('tasklist.heading.foobar_task').and_return('Foo Bar Heading')
+      allow(section).to receive(:t!).with('tasklist.heading.foobar_task').and_return('Foo Bar Heading')
 
       # We test the Task separately, here we don't need to
       allow_any_instance_of(TaskList::Task).to receive(:render).and_return('[task_markup]')
@@ -39,7 +39,7 @@ RSpec.describe TaskList::Section do
 
     it 'renders the expected section HTML element' do
       expect(
-        subject.render
+        section.render
       ).to eq(
         '<li>' \
         '<h2 class="moj-task-list__section"><span class="moj-task-list__section-number">1.</span>Foo Bar Heading</h2>' \
@@ -53,7 +53,7 @@ RSpec.describe TaskList::Section do
 
       it 'renders the expected section HTML element' do
         expect(
-          subject.render
+          section.render
         ).to match(%r{<span class="moj-task-list__section-number">3.</span>})
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe TaskList::Section do
 
       it 'renders without numbered headings' do
         expect(
-          subject.render
+          section.render
         ).to eq(
           '<li>' \
           '<h2 class="moj-task-list__section">Foo Bar Heading</h2>' \

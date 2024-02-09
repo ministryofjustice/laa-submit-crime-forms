@@ -1,7 +1,7 @@
 module PriorAuthority
   module Tasks
     class CaseAndHearingDetail < Base
-      PREVIOUS_TASK = Ufn
+      PREVIOUS_TASKS = Ufn
 
       def path
         if application.prison_law?
@@ -11,8 +11,8 @@ module PriorAuthority
         end
       end
 
-      def completed?(_rec = record, _form = nil)
-        required_forms.all? { |form| super(record, form) }
+      def completed?(rec = record, _form = nil)
+        required_forms.all? { |form| super(rec, form) }
       end
 
       private
