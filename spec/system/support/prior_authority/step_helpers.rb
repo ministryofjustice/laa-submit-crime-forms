@@ -134,7 +134,7 @@ module PriorAuthority
     def fill_in_primary_quote(service_type: 'Meteorologist')
       # Note that if Javascript is enabled for the current test, this will
       # be hidden
-      select service_type, from: 'Service required'
+      fill_in 'Service required', with: service_type
 
       fill_in 'Contact full name', with: 'Joe Bloggs'
       fill_in 'Organisation', with: 'LAA'

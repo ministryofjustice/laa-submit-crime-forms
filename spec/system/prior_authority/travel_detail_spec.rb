@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - travel costs' do
+RSpec.describe 'Prior authority applications - travel costs', :javascript, type: :system do
   before do
     fill_in_until_step(:primary_quote_summary)
   end
