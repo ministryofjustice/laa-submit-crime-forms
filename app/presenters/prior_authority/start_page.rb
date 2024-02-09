@@ -2,25 +2,29 @@ module PriorAuthority
   module StartPage
     class PreTaskList < TaskList::Collection
       SECTIONS = [
-        [:application_detail, ['prior_authority/ufn']],
+        [
+          'prior_authority/application_detail', [
+            'prior_authority/ufn'
+          ]
+        ],
       ].freeze
     end
 
     class TaskList < TaskList::Collection
       SECTIONS = [
         [
-          :contact_details, [
+          'prior_authority/contact_details', [
             'prior_authority/case_contact'
           ],
         ],
         [
-          :about_case, [
+          'prior_authority/about_case', [
             'prior_authority/client_detail',
             'prior_authority/case_and_hearing_detail',
           ],
         ],
         [
-          :about_request, [
+          'prior_authority/about_request', [
             'prior_authority/primary_quote',
             'prior_authority/reason_why'
           ],
