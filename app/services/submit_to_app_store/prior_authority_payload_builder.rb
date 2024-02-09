@@ -94,6 +94,7 @@ class SubmitToAppStore
       travel_cost_per_hour
       travel_cost_reason
       prior_authority_granted
+      no_alternative_quote_reason
     ].freeze
   end
 end

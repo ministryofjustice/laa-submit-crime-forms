@@ -5,25 +5,50 @@ module Nsm
     NEW_RECORD = '00000000-0000-0000-0000-000000000000'.freeze
 
     class PreTaskList < TaskList::Collection
-      SECTIONS = [[:what, [->(app) { "nsm/claim_type.#{app.claim_type}" }]]].freeze
+      SECTIONS = [['nsm/what', [->(app) { "nsm/claim_type.#{app.claim_type}" }]]].freeze
     end
 
     class TaskList < TaskList::Collection
       SECTIONS = [
-        [:about_you, ['nsm/firm_details']],
-        [:defendant, ['nsm/defendants',]],
-        [:case, ['nsm/case_details', 'nsm/hearing_details', 'nsm/case_disposal']],
-        [:claim,
-         ['nsm/reason_for_claim',
-          'nsm/claim_details',
-          'nsm/work_items',
-          'nsm/letters_calls',
-          'nsm/disbursements',
-          'nsm/cost_summary',
-          'nsm/other_info']],
-        [:evidence, ['nsm/supporting_evidence']],
-        [:review,
-         ['nsm/check_answers', 'nsm/solicitor_declaration']],
+        [
+          'nsm/about_you', [
+            'nsm/firm_details'
+          ]
+        ],
+        [
+          'nsm/defendant', [
+            'nsm/defendants',
+          ]
+        ],
+        [
+          'nsm/case', [
+            'nsm/case_details',
+            'nsm/hearing_details',
+            'nsm/case_disposal'
+          ]
+        ],
+        [
+          'nsm/claim', [
+            'nsm/reason_for_claim',
+            'nsm/claim_details',
+            'nsm/work_items',
+            'nsm/letters_calls',
+            'nsm/disbursements',
+            'nsm/cost_summary',
+            'nsm/other_info'
+          ]
+        ],
+        [
+          'nsm/evidence', [
+            'nsm/supporting_evidence'
+          ]
+        ],
+        [
+          'nsm/review', [
+            'nsm/check_answers',
+            'nsm/solicitor_declaration'
+          ]
+        ],
       ].freeze
     end
   end

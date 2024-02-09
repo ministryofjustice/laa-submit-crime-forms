@@ -66,7 +66,7 @@ class ClaimSubmissionMailer < GovukNotifyRails::Mailer
   end
 
   def submission_date
-    DateTime.now.strftime('%d %B %Y')
+    DateTime.now.to_fs(:stamp)
   end
 
   def feedback_url

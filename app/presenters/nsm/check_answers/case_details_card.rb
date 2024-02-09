@@ -22,7 +22,7 @@ module Nsm
           {
             head_key: 'main_offence_date',
             text: check_missing(claim.main_offence_date) do
-                    claim.main_offence_date.strftime('%d %B %Y')
+                    claim.main_offence_date.to_fs(:stamp)
                   end
           },
           {
@@ -47,7 +47,7 @@ module Nsm
                                 value_field: claim.remitted_to_magistrate_date,
                                 boolean_key: 'remitted_to_magistrate',
                                 value_key: 'remitted_to_magistrate_date') do
-            claim.remitted_to_magistrate_date.strftime('%d %B %Y')
+            claim.remitted_to_magistrate_date.to_fs(:stamp)
           end
         ].flatten
       end

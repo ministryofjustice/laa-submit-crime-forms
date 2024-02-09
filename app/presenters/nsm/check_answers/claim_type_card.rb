@@ -34,7 +34,7 @@ module Nsm
         [
           {
             head_key: 'rep_order_date',
-            text: claim.rep_order_date.try(:strftime, '%d %B %Y')
+            text: claim.rep_order_date&.to_fs(:stamp)
           }
         ]
       end
@@ -47,7 +47,7 @@ module Nsm
           },
           {
             head_key: 'cntp_rep_order',
-            text: claim.cntp_date.try(:strftime, '%d %B %Y')
+            text: claim.cntp_date&.to_fs(:stamp)
           }
         ]
       end

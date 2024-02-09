@@ -14,7 +14,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
   end
 
   describe '#row_data' do
-    context 'non standard magistrates claim' do
+    context 'with non standard magistrates claim' do
       let(:claim) { build(:claim, :case_type_magistrates) }
 
       it 'generates magistrates rows' do
@@ -37,7 +37,16 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
       end
     end
 
-    context 'breach of injunction claim' do
+    context 'with non standard magistrates claim without rep order date' do
+      let(:claim) { build(:claim, :case_type_magistrates, rep_order_date: nil) }
+
+      it 'allows a nil rep order date' do
+        expect(subject.row_data)
+          .to match(a_hash_including(head_key: 'rep_order_date', text: nil))
+      end
+    end
+
+    context 'with breach of injunction claim' do
       let(:claim) { build(:claim, :case_type_breach) }
 
       it 'generates magistrates rows' do
@@ -62,6 +71,15 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
             }
           ]
         )
+      end
+    end
+
+    context 'with breach of injunction claim without contempt date' do
+      let(:claim) { build(:claim, :case_type_breach, cntp_date: nil) }
+
+      it 'allows a nil contempt date' do
+        expect(subject.row_data)
+          .to match(a_hash_including(head_key: 'cntp_rep_order', text: nil))
       end
     end
   end

@@ -10,7 +10,16 @@ FactoryBot.define do
     end
 
     trait :with_defendant do
-      defendant factory: %i[defendant valid], strategy: :build
+      defendant factory: %i[defendant valid_paa], strategy: :build
+    end
+
+    trait :with_case_details do
+      main_offence { 'Jaywalking' }
+      rep_order_date { 1.year.ago }
+      client_detained { false }
+      subject_to_poca { false }
+      next_hearing_date { 1.year.from_now }
+      plea { 'guilty' }
     end
 
     trait :with_psychiatric_liaison do
@@ -42,6 +51,26 @@ FactoryBot.define do
       end
     end
 
+    trait :with_primary_quote do
+      with_firm_and_solicitor
+      with_defendant
+      with_case_details
+      with_psychiatric_liaison
+      primary_quote factory: %i[quote primary variable_cost], strategy: :build
+      ufn { '123456/001' }
+      prior_authority_granted { true }
+      after(:create) do |paa, _a|
+        create(:defendant, :valid_paa, defendable_id: paa.id, defendable_type: paa.class.to_s)
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/ufn"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/case_contact"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/client_detail"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/case_detail"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/primary_quote"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/primary_quote_summary"
+        paa.save
+      end
+    end
+
     trait :full do
       with_firm_and_solicitor
       with_defendant
@@ -63,6 +92,7 @@ FactoryBot.define do
       prior_authority_granted { false }
       travel_cost_per_hour {  50.0 }
       travel_time { 150 }
+      no_alternative_quote_reason { 'a reason' }
     end
   end
 end

@@ -17,6 +17,7 @@ module Decisions
     PRIOR_AUTHORITY_START_PAGE = 'prior_authority/steps/start_page'.freeze
     PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY = 'prior_authority/steps/primary_quote_summary'.freeze
     PRIOR_AUTHORITY_ADDITIONAL_COSTS = 'prior_authority/steps/additional_costs'.freeze
+    PRIOR_AUTHORITY_ALTERNATIVE_QUOTES = 'prior_authority/steps/alternative_quotes'.freeze
 
     from(:claim_type).goto(show: 'nsm/steps/start_page')
     # start_page to firm_details is a hard coded link as show page
@@ -110,7 +111,7 @@ module Decisions
     from(:youth_court).goto(show: PRIOR_AUTHORITY_START_PAGE)
     from(:psychiatric_liaison).goto(show: PRIOR_AUTHORITY_START_PAGE)
 
-    # about the request
+    # primary quote
     from(:primary_quote).goto(edit: 'prior_authority/steps/service_cost')
     from(:service_cost).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
     from(:reason_why).goto(show: PRIOR_AUTHORITY_START_PAGE)
@@ -123,5 +124,14 @@ module Decisions
 
     from(:additional_cost_details)
       .goto(edit: PRIOR_AUTHORITY_ADDITIONAL_COSTS)
+
+    # alternative quotes
+    from(:alternative_quotes)
+      .when(-> { application.alternative_quotes_still_to_add })
+      .goto(new: 'prior_authority/steps/alternative_quote_details')
+      .goto(show: PRIOR_AUTHORITY_START_PAGE)
+
+    from(:alternative_quote_details)
+      .goto(edit: PRIOR_AUTHORITY_ALTERNATIVE_QUOTES)
   end
 end

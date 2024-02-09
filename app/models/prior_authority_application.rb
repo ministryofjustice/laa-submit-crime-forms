@@ -7,6 +7,11 @@ class PriorAuthorityApplication < ApplicationRecord
   has_one :primary_quote, lambda {
                             where(primary: true)
                           }, class_name: 'Quote', dependent: :destroy, inverse_of: :prior_authority_application
+  has_many :alternative_quotes,
+           -> { alternative },
+           class_name: 'Quote',
+           dependent: :destroy,
+           inverse_of: :prior_authority_application
   has_many :supporting_documents, -> { order(:created_at, :file_name).supporting_documents },
            dependent: :destroy,
            inverse_of: :documentable,

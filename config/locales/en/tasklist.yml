@@ -2,26 +2,27 @@
 en:
   tasklist:
     heading:
-      application_detail: Application details
-      about_case: About the case
-      contact_details: Contact details
-      about_request: About the request
-      case_contact: Case contact
-      what: What you are claiming
-      about_you: About you
-      case: About the case
-      defendant: About the defendant
-      claim: About the claim
-      evidence: Supporting evidence
-      review: Review and confirm
-      about_request: About the request
+      nsm/what: What you are claiming
+      nsm/about_you: About you
+      nsm/case: About the case
+      nsm/defendant: About the defendant
+      nsm/claim: About the claim
+      nsm/evidence: Supporting evidence
+      nsm/review: Review and confirm
+      prior_authority/application_detail: Application details
+      prior_authority/about_case: About the case
+      prior_authority/about_request: About the request
+      prior_authority/contact_details: Contact details
+      prior_authority/review: Apply
     task:
       prior_authority/ufn: Unique file number
       prior_authority/case_contact: Case contact
       prior_authority/case_and_hearing_detail: Case and hearing details
       prior_authority/client_detail: Client details
       prior_authority/primary_quote: Primary quote
+      prior_authority/alternative_quotes: Alternative quotes
       prior_authority/reason_why: Reason for prior authority
+      prior_authority/check_answers: Submit application
       nsm/claim_type:
         non_standard_magistrate: Non-standard magistrates’ court payment
         breach_of_injunction: Breach of injunction court payment

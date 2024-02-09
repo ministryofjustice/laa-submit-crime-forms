@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_05_125500) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_08_101924) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -209,6 +209,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_05_125500) do
     t.text "travel_cost_reason"
     t.boolean "additional_costs_still_to_add"
     t.boolean "prior_authority_granted"
+    t.text "no_alternative_quote_reason"
+    t.boolean "alternative_quotes_still_to_add"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
