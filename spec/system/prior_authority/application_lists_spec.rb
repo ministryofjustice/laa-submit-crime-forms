@@ -7,6 +7,7 @@ RSpec.describe 'Prior authority application lists' do
     create(:prior_authority_application, laa_reference: 'LAA-BBBBB', status: 'submitted', created_at: 2.days.ago)
     create(:prior_authority_application, laa_reference: 'LAA-CCCCC', status: 'granted', created_at: 3.days.ago)
     create(:prior_authority_application, laa_reference: 'LAA-DDDDD', status: 'draft', created_at: 4.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-EEEEE', status: 'draft', office_code: 'OTHER')
 
     visit prior_authority_root_path
   end
@@ -39,5 +40,9 @@ RSpec.describe 'Prior authority application lists' do
     expect(page.body).to match(/AAAAA.*BBBBB.*/m)
     click_on 'LAA reference'
     expect(page.body).to match(/BBBBB.*AAAAA.*/m)
+  end
+
+  it 'does not show applications from other offices' do
+    expect(page).to have_no_content 'EEEEE'
   end
 end
