@@ -66,6 +66,14 @@ module PriorAuthority
             head_key: 'psychiatric_liaison',
             text: I18n.t("generic.#{application.psychiatric_liaison}"),
           },
+          *psychiatric_liaison_reason_not_row,
+        ]
+      end
+
+      def psychiatric_liaison_reason_not_row
+        return [] if application.psychiatric_liaison?
+
+        [
           {
             head_key: 'psychiatric_liaison_reason_not',
             text: application.psychiatric_liaison_reason_not,
