@@ -40,6 +40,9 @@ module Steps
       elsif params.key?(:save_and_refresh)
         @form_object.save!
         redirect_to_current_object
+      elsif params.key?(:redirect_to_path)
+        @form_object.save!
+        redirect_to opts[:redirect_path]
       elsif @form_object.save
         redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       else
