@@ -7,6 +7,7 @@ FactoryBot.define do
     postcode { 'CR0 1RE' }
     cost_per_hour { 10 }
     period { 180 }
+    document factory: %i[quote_document], strategy: :build
   end
 
   trait :blank do

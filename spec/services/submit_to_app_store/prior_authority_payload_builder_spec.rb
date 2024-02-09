@@ -85,7 +85,14 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             items: nil,
             ordered_by_court: nil,
             related_to_post_mortem: nil,
-            id: application.primary_quote.id
+            id: application.primary_quote.id,
+            document: {
+              document_type: 'quote_document',
+              file_name: 'test.png',
+              file_path: 'test_path',
+              file_size: 1234,
+              file_type: 'image/png'
+            }
           }
         ],
         additional_costs: []
