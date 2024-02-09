@@ -39,7 +39,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
     context 'when vulnerable file type is uploaded' do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
-        allow(FileUpload::FileUploader).to receive(:scan_file).and_raise(PotentialMalwareError)
+        allow(FileUpload::FileUploader).to receive(:scan_file).and_raise(FileUpload::FileUploader::PotentialMalwareError)
         put :update,
             params: { application_id: '12345',
             prior_authority_steps_primary_quote_form:
