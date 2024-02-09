@@ -1,0 +1,6 @@
+<% decision_step_header %>
+<% if @form_object.alternative_quotes.any? %>
+  <%= render 'with_alternative_quotes' %>
+<% else %>
+  <%= render 'no_alternative_quotes' %>
+<% end %>

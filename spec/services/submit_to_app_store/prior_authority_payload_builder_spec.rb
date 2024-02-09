@@ -30,6 +30,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         travel_cost_per_hour: '50.0',
         travel_cost_reason: nil,
         travel_time: 150,
+        no_alternative_quote_reason: 'a reason',
         defendant: {
           first_name: 'bob',
           last_name: 'jim',
