@@ -39,7 +39,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
     context 'when vulnerable file type is uploaded' do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
-        allow(FileUpload::FileUploader).to receive(:upload).and_raise(FileUpload::FileUploader::PotentialMalwareError)
+        allow(controller).to receive(:upload_file).and_raise(FileUpload::FileUploader::PotentialMalwareError)
         put :update,
             params: { application_id: '12345',
             prior_authority_steps_primary_quote_form:
@@ -103,14 +103,13 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
     context 'when there is a standard error' do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
+        allow(controller).to receive(:upload_file).and_raise(StandardError)
         put :update,
             params: { application_id: '12345',
             prior_authority_steps_primary_quote_form:
             {
               document: fixture_file_upload('test.png', 'image/png')
             } }
-
-        allow(controller).to receive(:update).and_raise(StandardError)
       end
 
       it 'redirects back to form' do
