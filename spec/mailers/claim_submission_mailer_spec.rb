@@ -33,7 +33,7 @@ RSpec.describe ClaimSubmissionMailer, type: :mailer do
           main_defendant_name: 'bob jim',
           defendant_reference: 'MAAT ID: AA1',
           claim_total: '£20.45',
-          date: DateTime.now.strftime('%d %B %Y'),
+          date: DateTime.now.to_fs(:stamp),
           feedback_url: 'tbc'
         )
       end
@@ -51,7 +51,7 @@ RSpec.describe ClaimSubmissionMailer, type: :mailer do
           main_defendant_name: 'bob jim',
           defendant_reference: "Client's CNTP number: CNTP12345",
           claim_total: '£20.45',
-          date: DateTime.now.strftime('%d %B %Y'),
+          date: DateTime.now.to_fs(:stamp),
           feedback_url: 'tbc'
         )
       end
