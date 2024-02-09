@@ -3,10 +3,10 @@ require 'system_helper'
 RSpec.describe 'Prior authority application lists' do
   before do
     visit provider_saml_omniauth_callback_path
-    create(:prior_authority_application, laa_reference: 'LAA-AAAAA', status: 'submitted', provider: Provider.first)
-    create(:prior_authority_application, laa_reference: 'LAA-BBBBB', status: 'submitted', provider: Provider.first)
-    create(:prior_authority_application, laa_reference: 'LAA-CCCCC', status: 'granted', provider: Provider.first)
-    create(:prior_authority_application, laa_reference: 'LAA-DDDDD', status: 'draft', provider: Provider.first)
+    create(:prior_authority_application, laa_reference: 'LAA-AAAAA', status: 'submitted', created_at: 1.day.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-BBBBB', status: 'submitted', created_at: 2.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-CCCCC', status: 'granted', created_at: 3.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-DDDDD', status: 'draft', created_at: 4.days.ago)
 
     visit prior_authority_root_path
   end
@@ -23,6 +23,12 @@ RSpec.describe 'Prior authority application lists' do
 
     within '#drafts' do
       expect(page).to have_content 'DDDDD'
+    end
+  end
+
+  it 'shows most recent at the top by default' do
+    within '#submitted' do
+      expect(page.body).to match(/AAAAA.*BBBBB.*/m)
     end
   end
 

@@ -65,7 +65,7 @@ module PriorAuthority
     }.freeze
 
     def order_and_paginate(query)
-      order_template = ORDERS.fetch(params[:sort_by], 'created_at ?')
+      order_template = ORDERS.fetch(params[:sort_by], 'created_at DESC')
       direction = params[:sort_direction] == 'descending' ? 'DESC' : 'ASC'
       pagy(query.includes(:defendant).order(order_template.gsub('?', direction)))
     end
