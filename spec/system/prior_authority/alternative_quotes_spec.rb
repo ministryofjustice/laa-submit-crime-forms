@@ -1,10 +1,17 @@
 require 'system_helper'
 
 RSpec.describe 'Prior authority applications - alternative quote' do
+  let(:application) do
+    create(:prior_authority_application, :with_primary_quote)
+  end
+
+  before do
+    visit provider_saml_omniauth_callback_path
+    visit prior_authority_steps_start_page_path(application)
+  end
+
   context 'when I visit the quote summary screen' do
     before do
-      fill_in_until_step(:primary_quote_summary)
-      click_on 'Save and continue'
       click_on 'Alternative quotes'
     end
 
