@@ -14,7 +14,17 @@ module PriorAuthority
       end
 
       def persist!
-        application.update!(attributes)
+        application.update!(attributes_to_reset)
+      end
+
+      def attributes_to_reset
+        attributes.merge(reset_attributes)
+      end
+
+      def reset_attributes
+        {
+          psychiatric_liaison_reason_not: psychiatric_liaison ? nil : psychiatric_liaison_reason_not,
+        }
       end
     end
   end
