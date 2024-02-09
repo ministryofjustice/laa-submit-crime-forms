@@ -1,6 +1,8 @@
 module PriorAuthority
   module Steps
-    class AdditionalCostDetailsController < AddAnotherController
+    class AdditionalCostDetailsController < BaseController
+      include AddAnotherMethods
+
       private
 
       def build_form_object

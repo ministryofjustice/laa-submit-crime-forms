@@ -1,6 +1,8 @@
 module PriorAuthority
   module Steps
-    class AlternativeQuoteDetailsController < AddAnotherController
+    class AlternativeQuoteDetailsController < BaseController
+      include AddAnotherMethods
+
       private
 
       def build_form_object
