@@ -140,7 +140,7 @@ Style/HashEachMethods:
   Exclude:
     - app/value_objects/value_object.rb
     - app/forms/nsm/steps/**/*
-    - spec/steps/**/*
+    - spec/forms/nsm/steps/case_disposal_form_spec.rb
     - spec/factories/*
 
 Performance/InefficientHashSearch:
@@ -157,8 +157,8 @@ Naming/PredicateName:
 RSpec/MultipleMemoizedHelpers:
   Max: 12
   Exclude:
-    - spec/steps/nsm/claim_details/form_spec.rb
-    - spec/steps/nsm/work_items/add/form_spec.rb
+    - spec/forms/nsm/steps/claim_details_form_spec.rb
+    - spec/forms/nsm/steps/work_items_add_form_spec.rb
     - spec/presenters/nsm/cost_summary/report_spec.rb
     - spec/presenters/nsm/check_answers/your_details_card_spec.rb
 
@@ -186,7 +186,8 @@ Lint/MissingSuper:
 
 Rails/RedundantActiveRecordAllMethod:
   Exclude:
-    - 'spec/steps/**/*'
+    - 'spec/models/matter_type_spec.rb'
+    - 'spec/models/outcome_code_spec.rb'
     - 'app/presenters/**/*'
 
 # Causing false positives when implemented in methods

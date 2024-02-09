@@ -66,7 +66,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
       end
 
       after do
-        FileUtils.rm SupportingDocument.find(JSON.parse(response.body)['success']['evidence_id']).file_path
+        FileUtils.rm SupportingDocument.find(response.parsed_body['success']['evidence_id']).file_path
       end
 
       it 'uploads and returns a success' do
@@ -74,7 +74,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
       end
 
       it 'returns the evidence_id' do
-        expect(JSON.parse(response.body)['success']['evidence_id']).not_to be_empty
+        expect(response.parsed_body['success']['evidence_id']).not_to be_empty
       end
     end
 
@@ -91,7 +91,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
       end
 
       it 'returns an error message' do
-        expect(JSON.parse(response.body)['error']['message']).to eq 'Unable to upload file at this time'
+        expect(response.parsed_body['error']['message']).to eq 'Unable to upload file at this time'
       end
     end
 
@@ -107,7 +107,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
       end
 
       it 'returns an error message' do
-        expect(JSON.parse(response.body)['error']['message']).to eq 'Incorrect file type provided'
+        expect(response.parsed_body['error']['message']).to eq 'Incorrect file type provided'
       end
     end
 
@@ -125,8 +125,8 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
       end
 
       it 'returns an error message' do
-        expect(JSON.parse(response.body)['error']['message']).to eq('File potentially contains malware so cannot be ' \
-                                                                    'uploaded. Please contact your administrator')
+        expect(response.parsed_body['error']['message']).to eq('File potentially contains malware so cannot be ' \
+                                                               'uploaded. Please contact your administrator')
       end
     end
   end
