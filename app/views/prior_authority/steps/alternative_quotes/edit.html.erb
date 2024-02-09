@@ -1,5 +1,4 @@
 <% decision_step_header %>
-<%# TODO: Use a custom UI if no alternative quotes and params[:deleted] %>
 <% if @form_object.alternative_quotes.any? %>
   <%= render 'with_alternative_quotes' %>
 <% elsif params[:deleted] %>

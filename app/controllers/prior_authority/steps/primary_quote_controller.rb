@@ -31,6 +31,8 @@ module PriorAuthority
       def set_service_type
         return unless current_application.service_type == 'custom'
 
+        # This ensures that the 'service type suggestion' field in the UI is
+        # is pre-populated with the custom name
         current_application.service_type = current_application.custom_service_name
       end
     end

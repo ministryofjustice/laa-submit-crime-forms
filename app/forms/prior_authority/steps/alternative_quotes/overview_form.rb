@@ -10,8 +10,7 @@ module PriorAuthority
         validates :no_alternative_quote_reason, presence: true, if: :no_alternative_quotes?
 
         def alternative_quotes
-          application.alternative_quotes
-                     .map { AlternativeQuotes::DetailForm.build(_1, application:) }
+          application.alternative_quotes.map { AlternativeQuotes::DetailForm.build(_1, application:) }
         end
 
         def quotes_added

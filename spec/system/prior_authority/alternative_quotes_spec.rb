@@ -124,7 +124,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
 
           # Leave primary quote summary screen
           click_on 'Save and continue'
-          expect(page).to have_content 'Alternative quotesNot started'
+          expect(page).to have_content 'Alternative quotesIn progress'
         end
       end
     end
