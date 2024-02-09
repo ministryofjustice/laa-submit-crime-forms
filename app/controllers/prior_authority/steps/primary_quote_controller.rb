@@ -90,9 +90,9 @@ module PriorAuthority
         else
           Sentry.capture_exception(exception)
         end
-        record = primary_quote
         flash[:alert] = dict[:message]
-        update_and_advance(PrimaryQuoteForm, as:, save_and_refresh: true, record:)
+        @form_object.save!
+        redirect_to edit_prior_authority_steps_primary_quote_path(current_application)
       end
     end
   end
