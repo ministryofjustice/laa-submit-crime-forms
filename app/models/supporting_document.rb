@@ -7,5 +7,4 @@ class SupportingDocument < ApplicationRecord
   has_one_attached :file
 
   scope :supporting_documents, -> { where(document_type: SUPPORTING_DOCUMENT) }
-  scope :quote_ocument, -> { where(document_type: QUOTE_DOCUMENT) }
 end
