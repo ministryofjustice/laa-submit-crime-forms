@@ -29,7 +29,6 @@ module PriorAuthority
         end
       end
 
-
       def document
         # needed for primary quote summary presenter
         # can probably remove if we make a custom type for files and handle
