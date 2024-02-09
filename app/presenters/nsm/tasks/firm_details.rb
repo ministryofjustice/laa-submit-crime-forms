@@ -1,7 +1,7 @@
 module Nsm
   module Tasks
     class FirmDetails < ::Tasks::Generic
-      PREVIOUS_TASK = ClaimType
+      PREVIOUS_TASKS = ClaimType
       FORM = Nsm::Steps::FirmDetailsForm
 
       def path

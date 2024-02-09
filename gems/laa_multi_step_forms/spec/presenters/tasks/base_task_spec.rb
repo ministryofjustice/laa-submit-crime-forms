@@ -51,7 +51,7 @@ RSpec.describe Tasks::BaseTask do
     before do
       allow_any_instance_of(
         details_klass
-      ).to receive(:status).and_return(status)
+      ).to receive(:current_status).and_return(status)
     end
 
     context 'for a completed task' do

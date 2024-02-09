@@ -30,8 +30,14 @@ module TaskList
     end
 
     def collection
-      sections.map.with_index(1) do |(name, tasks), idx|
-        Section.new(application, name: name, tasks: tasks, index: idx, show_index: show_index)
+      sections.map.with_index(1) do |(name, tasks), index|
+        Section.new(
+          application,
+          name: name,
+          tasks: tasks,
+          index: show_index ? index : nil,
+          task_statuses: task_statuses
+        )
       end
     end
 
@@ -39,6 +45,10 @@ module TaskList
       raise 'implement SECTIONS, in subclasses' unless self.class.const_defined?(:SECTIONS)
 
       self.class::SECTIONS
+    end
+
+    def task_statuses
+      @task_statuses ||= TaskStatus.new
     end
   end
 end

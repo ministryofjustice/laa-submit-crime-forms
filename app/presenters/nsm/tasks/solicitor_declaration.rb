@@ -1,7 +1,7 @@
 module Nsm
   module Tasks
     class SolicitorDeclaration < ::Tasks::Generic
-      PREVIOUS_TASK = CheckAnswers
+      PREVIOUS_TASKS = CheckAnswers
       FORM = Nsm::Steps::SolicitorDeclarationForm
 
       def path

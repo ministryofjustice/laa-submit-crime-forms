@@ -1,6 +1,13 @@
 module PriorAuthority
   module Tasks
     class PrimaryQuote < Base
+      PREVIOUS_TASKS = [
+        PriorAuthority::Tasks::Ufn,
+        PriorAuthority::Tasks::CaseContact,
+        PriorAuthority::Tasks::ClientDetail,
+        PriorAuthority::Tasks::CaseAndHearingDetail,
+      ].freeze
+
       FORM = ::PriorAuthority::Steps::PrimaryQuoteForm
 
       def path
