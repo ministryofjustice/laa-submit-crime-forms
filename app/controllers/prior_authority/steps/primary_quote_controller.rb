@@ -91,17 +91,7 @@ module PriorAuthority
           Sentry.capture_exception(exception)
         end
         flash[:alert] = dict[:message]
-        redirect_after_upload_error
-      end
-
-      def redirect_after_upload_error
-        record = primary_quote
-        update_and_advance(
-          PrimaryQuoteForm, as: as,
-          redirect_to_path: true,
-          redirect_path: edit_prior_authority_steps_primary_quote_path(current_application),
-          record: record
-        )
+        redirect_to edit_prior_authority_steps_primary_quote_path(current_application)
       end
     end
   end
