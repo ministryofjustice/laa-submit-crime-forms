@@ -18,6 +18,9 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     fill_in 'Contact full name', with: 'Joe Bloggs'
     fill_in 'Organisation', with: 'LAA'
     fill_in 'Postcode', with: 'CR0 1RE'
+    page.attach_file(Rails.root + "spec/fixtures/files/test.png") do
+      page.find(".govuk-file-upload").click
+    end
 
     click_on 'Save and continue'
 
@@ -42,5 +45,4 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     click_on 'Save and come back later'
     expect(page).to have_content 'Your applications'
   end
-  # TODO: Add system tests for uploading files
 end
