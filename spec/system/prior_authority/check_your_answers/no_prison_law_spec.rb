@@ -17,7 +17,7 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
       .and have_css('.govuk-heading-l', text: 'Required further information')
   end
 
-  it 'shows the application details card' do
+  it 'shows the application details card and continues to check your answers' do
     within('.govuk-summary-card', text: 'Application details') do
       expect(page)
         .to have_css('.govuk-summary-card__content', text: 'Prison lawNo')
@@ -27,9 +27,12 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
       click_on 'Change'
       expect(page).to have_title('Unique file number')
     end
+
+    click_on 'Save and continue'
+    expect(page).to have_title('Check your answers')
   end
 
-  it 'shows the case contact card' do
+  it 'shows the case contact card and continues to check your answers' do
     within('.govuk-summary-card', text: 'Case contact') do
       expect(page)
         .to have_css('.govuk-summary-card__content', text: 'Contact detailsJohn Doejohn@does.com')
@@ -38,9 +41,12 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
       click_on 'Change'
       expect(page).to have_title('Case contact')
     end
+
+    click_on 'Save and continue'
+    expect(page).to have_title('Check your answers')
   end
 
-  it 'shows the client details card' do
+  it 'shows the client details card and continues to check your answers' do
     within('.govuk-summary-card', text: 'Client details') do
       expect(page)
         .to have_css('.govuk-summary-card__content', text: 'Client nameJohn Doe')
@@ -49,9 +55,12 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
       click_on 'Change'
       expect(page).to have_title('Client details')
     end
+
+    click_on 'Save and continue'
+    expect(page).to have_title('Check your answers')
   end
 
-  it 'shows the case details card' do
+  it 'shows the case details card and continues to check your answers' do
     within('.govuk-summary-card', text: 'Case details') do
       expect(page)
         .to have_css('.govuk-summary-card__content', text: 'Main offenceSupply a controlled drug of Class A - Heroin')
@@ -63,9 +72,12 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
       click_on 'Change'
       expect(page).to have_title('Case details')
     end
+
+    click_on 'Save and continue'
+    expect(page).to have_title('Check your answers')
   end
 
-  it 'shows the hearing details card' do
+  it 'shows the hearing details for magistrates\' court card and continues to check your answers' do
     within('.govuk-summary-card', text: 'Hearing details') do
       expect(page)
         .to have_css('.govuk-summary-card__content', text: "Date of next hearing#{Date.tomorrow.to_fs(:stamp)}")
@@ -75,6 +87,61 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
 
       click_on 'Change'
       expect(page).to have_title('Hearing details')
+    end
+
+    click_on 'Save and continue'
+    expect(page).to have_title('Is this a youth court matter?')
+
+    click_on 'Save and continue'
+    expect(page).to have_title('Check your answers')
+  end
+
+  it 'allows change of hearing details to central criminal court card and continues to check your answers' do
+    within('.govuk-summary-card', text: 'Hearing details') do
+      click_on 'Change'
+      expect(page).to have_title('Hearing details')
+    end
+
+    choose 'Central Criminal Court'
+
+    click_on 'Save and continue'
+    expect(page).to have_title('Have you accessed the psychiatric liaison service?')
+
+    choose 'No'
+    fill_in 'Explain why you did not access this service', with: 'whatever'
+
+    click_on 'Save and continue'
+    expect(page).to have_title('Check your answers')
+
+    within('.govuk-summary-card', text: 'Hearing details') do
+      expect(page)
+        .to have_css('.govuk-summary-card__content', text: "Date of next hearing#{Date.tomorrow.to_fs(:stamp)}")
+        .and have_css('.govuk-summary-card__content', text: 'Likely or actual pleaNot guilty')
+        .and have_css('.govuk-summary-card__content', text: 'Court typeCentral Criminal Court')
+        .and have_css('.govuk-summary-card__content', text: 'Psychiatric liaison service accessedNo')
+        .and have_css('.govuk-summary-card__content', text: 'Why not?whatever')
+    end
+  end
+
+  it 'allows change of hearing details to crown court card and continues to check your answers' do
+    within('.govuk-summary-card', text: 'Hearing details') do
+      click_on 'Change'
+      expect(page).to have_title('Hearing details')
+    end
+
+    choose 'Crown Court (excluding Central Criminal Court)'
+
+    click_on 'Save and continue'
+    expect(page).to have_title('Check your answers')
+
+    within('.govuk-summary-card', text: 'Hearing details') do
+      expect(page)
+        .to have_css('.govuk-summary-card__content', text: "Date of next hearing#{Date.tomorrow.to_fs(:stamp)}")
+        .and have_css('.govuk-summary-card__content', text: 'Likely or actual pleaNot guilty')
+        .and have_css('.govuk-summary-card__content', text: 'Court typeCrown Court (excluding Central Criminal Court)')
+        .and have_no_content('Youth court matter')
+        .and have_no_content('Psychiatric liaison service')
+        .and have_no_content('Why not?')
     end
   end
 
@@ -102,5 +169,8 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
       click_on 'Change'
       expect(page).to have_title('Why is prior authority required')
     end
+
+    click_on 'Save and continue'
+    expect(page).to have_title('Check your answers')
   end
 end

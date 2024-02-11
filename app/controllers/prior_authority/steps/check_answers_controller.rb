@@ -7,10 +7,19 @@ module PriorAuthority
       # before_action :check_complete?
 
       def show
-        @report = CheckAnswers::Report.new(current_application)
+        @application = current_application
+        @application.update!(navigation_stack: stack_with_step_moved_to_end)
+
+        @report = CheckAnswers::Report.new(@application)
       end
 
-      # private
+      private
+
+      def stack_with_step_moved_to_end
+        stack_with_step_moved_to_end = @application.navigation_stack.delete_if { |step| step == request.fullpath }
+        stack_with_step_moved_to_end << request.fullpath
+        stack_with_step_moved_to_end
+      end
 
       # def check_complete?
       #   return if PriorAuthority::Tasks::CheckAnswers.new(application: current_application).status.complete?
