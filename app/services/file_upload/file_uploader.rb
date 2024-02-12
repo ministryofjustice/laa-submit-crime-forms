@@ -18,9 +18,13 @@ module FileUpload
     private
 
     def scan_file(file)
-      result = Clamby.safe?(file.tempfile.path)
+      result = if ENV.fetch('CLAMBY_ENABLED', nil) == 'true'
+                 Clamby.safe?(file.tempfile.path)
+               else
+                 true
+               end
 
-      raise PotentialMalwareError unless result || Rails.env.test?
+      raise PotentialMalwareError unless result
     end
   end
 end

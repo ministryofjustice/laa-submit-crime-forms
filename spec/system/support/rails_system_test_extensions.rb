@@ -35,5 +35,6 @@ RSpec.configure do |config|
   config.before(:each, :javascript, type: :system) do
     # Use JS driver
     driven_by Capybara.javascript_driver
+    allow(Clamby).to receive(:safe?).and_return(true)
   end
 end
