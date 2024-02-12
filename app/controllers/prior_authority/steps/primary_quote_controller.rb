@@ -86,7 +86,7 @@ module PriorAuthority
 
       def return_error(dict, exception = nil)
         if exception.nil?
-          Sentry.capture_exception(dict[:message]) if dict[:message]
+          Sentry.capture_exception(dict[:message])
         else
           Sentry.capture_exception(exception)
         end
