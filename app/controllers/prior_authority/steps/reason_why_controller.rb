@@ -13,7 +13,7 @@ module PriorAuthority
 
       def create
         unless supported_filetype(params[:documents])
-          return return_error(nil, { message: t('shared.shared_upload_errors.file_type') })
+          return return_error(nil, { message: t('shared.shared_upload_errors.file_type', file_types: t('shared.shared_upload_errors.file_types')) })
         end
 
         evidence = upload_file(params)
