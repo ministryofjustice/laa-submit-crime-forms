@@ -12,6 +12,13 @@ module PriorAuthority
           attrs.delete('service_type')
           attrs.delete('custom_service_name')
         else
+
+          # This ensures that the 'service type suggestion' field in the UI is
+          # is pre-populated with the custom name
+          if attrs[:application].service_type == 'custom'
+            attrs[:application].service_type = attrs[:application].custom_service_name
+          end
+
           # But otherwise, we need to pull in application-wide settings to this quote-specific model
           attrs[:service_type] ||= attrs[:application].service_type
           attrs[:custom_service_name] ||= attrs[:application].custom_service_name

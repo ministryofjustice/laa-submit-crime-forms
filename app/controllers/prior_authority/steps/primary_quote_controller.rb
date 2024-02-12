@@ -1,8 +1,6 @@
 module PriorAuthority
   module Steps
     class PrimaryQuoteController < BaseController
-      before_action :set_service_type
-
       def edit
         @form_object = PrimaryQuoteForm.build(
           record,
@@ -26,14 +24,6 @@ module PriorAuthority
 
       def additional_permitted_params
         %i[service_type_suggestion service_type custom_service_name]
-      end
-
-      def set_service_type
-        return unless current_application.service_type == 'custom'
-
-        # This ensures that the 'service type suggestion' field in the UI is
-        # is pre-populated with the custom name
-        current_application.service_type = current_application.custom_service_name
       end
     end
   end

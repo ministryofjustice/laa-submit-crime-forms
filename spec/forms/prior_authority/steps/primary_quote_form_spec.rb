@@ -16,7 +16,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   end
 
   let(:record) { instance_double(Quote) }
-  let(:application) { instance_double(PriorAuthorityApplication) }
+  let(:application) { instance_double(PriorAuthorityApplication, service_type: 'forensics') }
   let(:service_type) { 'forensics_expert' }
   let(:custom_service_name) { '' }
   let(:contact_full_name) { 'Joe Bloggs' }
