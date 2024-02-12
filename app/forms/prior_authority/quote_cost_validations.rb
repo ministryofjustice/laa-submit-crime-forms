@@ -9,11 +9,15 @@ module PriorAuthority
                 inclusion: { in: PriorAuthority::Steps::QuoteCostForm::COST_TYPES, allow_nil: false },
                 if: :variable_cost_type?
 
-      validates :items, presence: true, numericality: { greater_than: 0 }, if: :per_item?
-      validates :cost_per_item, presence: true, numericality: { greater_than: 0 }, if: :per_item?
+      with_options if: :per_item? do
+        validates :items, presence: true, numericality: { greater_than: 0 }
+        validates :cost_per_item, presence: true, numericality: { greater_than: 0 }
+      end
 
-      validates :period, presence: true, time_period: true, if: :per_hour?
-      validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, if: :per_hour?
+      with_options if: :per_hour? do
+        validates :period, presence: true, time_period: true
+        validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }
+      end
     end
   end
 end
