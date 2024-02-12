@@ -235,6 +235,7 @@ en:
           attributes:
             reason_why:
               blank: Enter why prior authority is required
+              too_long: The reaosn why you need prior authority cannot be more than 2000 characters.
 
         nsm/steps/claim_type_form:
           attributes:
