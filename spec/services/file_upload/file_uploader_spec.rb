@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe FileUpload::FileUploader do
-  subject { described_class.new() }
+  subject { described_class.new }
+
   describe '#new' do
     context 'development environment' do
       it 'returns local file uploader' do
@@ -28,22 +29,25 @@ RSpec.describe FileUpload::FileUploader do
 
       context 'CLAMBY_ENABLED is set to false' do
         before do
-          allow(ENV).to receive(:fetch).with("CLAMBY_ENABLED", nil).and_return('false')
+          allow(ENV).to receive(:fetch).with('CLAMBY_ENABLED', nil).and_return('false')
         end
 
         it 'runs without using clamby to scan the file' do
-          expect{ subject.send(:scan_file, fixture_file_upload('test.png', 'image/png')) }.not_to raise_error
+          expect { subject.send(:scan_file, fixture_file_upload('test.png', 'image/png')) }.not_to raise_error
         end
       end
 
       context 'CLAMBY_ENABLED is set to true' do
         before do
-          allow(ENV).to receive(:fetch).with("CLAMBY_ENABLED", nil).and_return('true')
+          allow(ENV).to receive(:fetch).with('CLAMBY_ENABLED', nil).and_return('true')
           allow(Clamby).to receive(:safe?).and_return(false)
         end
 
         it 'runs without using clamby to scan the file' do
-          expect{ subject.send(:scan_file, fixture_file_upload('test.png', 'image/png')) }.to raise_error(FileUpload::FileUploader::PotentialMalwareError)
+          expect do
+            subject.send(:scan_file,
+                         fixture_file_upload('test.png', 'image/png'))
+          end.to raise_error(FileUpload::FileUploader::PotentialMalwareError)
         end
       end
     end
@@ -55,22 +59,28 @@ RSpec.describe FileUpload::FileUploader do
 
       context 'CLAMBY_ENABLED is set to false' do
         before do
-          allow(ENV).to receive(:fetch).with("CLAMBY_ENABLED", nil).and_return('false')
+          allow(ENV).to receive(:fetch).with('CLAMBY_ENABLED', nil).and_return('false')
         end
 
         it 'runs without using clamby to scan the file' do
-          expect{ subject.send(:scan_file, fixture_file_upload('test.png', 'image/png')) }.to raise_error(FileUpload::FileUploader::PotentialMalwareError)
+          expect do
+            subject.send(:scan_file,
+                         fixture_file_upload('test.png', 'image/png'))
+          end.to raise_error(FileUpload::FileUploader::PotentialMalwareError)
         end
       end
 
       context 'CLAMBY_ENABLED is set to true' do
         before do
-          allow(ENV).to receive(:fetch).with("CLAMBY_ENABLED", nil).and_return('true')
+          allow(ENV).to receive(:fetch).with('CLAMBY_ENABLED', nil).and_return('true')
           allow(Clamby).to receive(:safe?).and_return(false)
         end
 
         it 'runs without using clamby to scan the file' do
-          expect{ subject.send(:scan_file, fixture_file_upload('test.png', 'image/png')) }.to raise_error(FileUpload::FileUploader::PotentialMalwareError)
+          expect do
+            subject.send(:scan_file,
+                         fixture_file_upload('test.png', 'image/png'))
+          end.to raise_error(FileUpload::FileUploader::PotentialMalwareError)
         end
       end
     end
