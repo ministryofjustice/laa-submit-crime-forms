@@ -12,10 +12,11 @@ en:
       before_date_from: End date cannot be before start date
     shared_upload_errors:
       file_size_limit: "The selected file must be smaller than %{max_size}"
-      file_type: Incorrect file type provided
+      file_type: "The selected file must be a %{file_types}"
       unable_upload: Unable to upload file at this time
       unable_delete: Unable to delete file at this time
       malware: File potentially contains malware so cannot be uploaded. Please contact your administrator
+      file_types: DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF
   laa_multi_step_forms:
     errors:
       format: "%{message}"
