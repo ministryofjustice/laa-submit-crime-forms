@@ -18,6 +18,11 @@ RSpec.describe 'Prior authority applications - travel costs', :javascript, type:
       end
     end
 
+    it 'validates appropriately' do
+      click_on 'Save and continue'
+      expect(page).to have_title 'Error: Travel cost'
+    end
+
     context 'when user fills in valid information' do
       before do
         fill_in 'Why are there travel costs if your client is not detained?', with: 'because'
@@ -40,11 +45,6 @@ RSpec.describe 'Prior authority applications - travel costs', :javascript, type:
         click_on 'Update calculation'
         expect(page).to have_content 'Total cost £1.61'
       end
-    end
-
-    it 'validates appropriately' do
-      click_on 'Save and continue'
-      expect(page).to have_title 'Error: Travel cost'
     end
   end
 
