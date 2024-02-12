@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller do
   let(:application) { build(:prior_authority_application, primary_quote: quote) }
+  let(:primary_quote_form) { build(:quote, :primary) }
   let(:quote) { build(:quote, :primary) }
 
   before do
@@ -28,11 +29,16 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
     context 'when no file is uploaded' do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
-        put :update, params: { application_id: '12345', prior_authority_steps_primary_quote_form: { document: nil } }
+        put :update, params: { application_id: '12345', prior_authority_steps_primary_quote_form: primary_quote_form }
       end
 
-      it 'returns a successful response' do
-        expect(response).to be_successful
+      it 'redirects back to form' do
+        expect(response).to redirect_to(edit_prior_authority_steps_primary_quote_path(application))
+      end
+
+      it 'generates flash error' do
+        expect(flash[:alert])
+          .to eq('Upload the primary quote')
       end
     end
 
@@ -75,7 +81,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
 
       it 'generates flash error' do
         expect(flash[:alert])
-          .to eq('Incorrect file type provided')
+          .to eq('The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF')
       end
     end
 

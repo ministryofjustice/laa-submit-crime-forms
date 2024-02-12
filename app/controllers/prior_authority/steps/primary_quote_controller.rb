@@ -70,13 +70,13 @@ module PriorAuthority
       end
 
       def file_error_present
-        if !supported_filetype
-          return_error({ message: t('shared.shared_upload_errors.file_type',
-                                    file_types: t('shared.shared_upload_errors.file_types')) })
+        if params[:prior_authority_steps_primary_quote_form][:document].nil?
+          return_error({ message: t('shared.shared_upload_errors.file_not_present', file: 'primary quote') })
         elsif !file_size_within_limit
           return_error({ message: t('shared.shared_upload_errors.file_size_limit', max_size: '10MB') })
-        elsif params[:prior_authority_steps_primary_quote_form][:document].nil?
-          return_error({ message: t('shared.shared_upload_errors.file_not_present', file: 'primary quote') })
+        elsif !supported_filetype
+          return_error({ message: t('shared.shared_upload_errors.file_type',
+                                    file_types: t('shared.shared_upload_errors.file_types')) })
         else
           false
         end
