@@ -17,7 +17,9 @@ module PriorAuthority
           return if file_error_present
 
           upload_file(params)
-
+        else
+          return_error({ message: t('shared.shared_upload_errors.file_not_present', file: "primary quote") })
+          return
         end
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
@@ -85,7 +87,7 @@ module PriorAuthority
 
       def return_error(dict, exception = nil)
         if exception.nil?
-          Sentry.capture_exception(dict[:message])
+          Sentry.capture_exception(dict[:message]) if dict[:message]
         else
           Sentry.capture_exception(exception)
         end

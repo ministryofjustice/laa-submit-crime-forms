@@ -17,6 +17,7 @@ en:
       unable_delete: Unable to delete file at this time
       malware: File potentially contains malware so cannot be uploaded. Please contact your administrator
       file_types: DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF
+      file_not_present: "Upload the %{file}"
   laa_multi_step_forms:
     errors:
       format: "%{message}"
