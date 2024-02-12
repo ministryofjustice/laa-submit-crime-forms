@@ -1,8 +1,6 @@
 module PriorAuthority
   module Steps
     class PrimaryQuoteController < BaseController
-      skip_before_action :verify_authenticity_token, only: [:update]
-
       def edit
         @form_object = PrimaryQuoteForm.build(
           primary_quote,
