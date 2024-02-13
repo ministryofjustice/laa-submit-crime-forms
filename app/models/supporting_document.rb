@@ -1,5 +1,7 @@
 class SupportingDocument < ApplicationRecord
   SUPPORTING_DOCUMENT = 'supporting_document'.freeze
+  QUOTE_DOCUMENT = 'quote_document'.freeze
+
   belongs_to :documentable, polymorphic: true
 
   has_one_attached :file
