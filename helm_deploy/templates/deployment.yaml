@@ -168,6 +168,8 @@ spec:
                 secretKeyRef:
                   name: sidekiq-auth
                   key: password
+            - name: MAX_UPLOAD_SIZE_BYTES
+              value: {{ mul .Values.secrets.maxFileUploadBytes 1 | quote }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
