@@ -23,14 +23,13 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         psychiatric_liaison_reason_not: 'whatever you like',
         next_hearing: true,
         office_code: '1A123B',
-        service_type: 'pathologist',
+        service_type: 'pathologist_report',
         firm_name: 'Firm A',
         client_name: 'bob jim',
         prior_authority_granted: false,
         travel_cost_per_hour: '50.0',
         travel_cost_reason: nil,
         travel_time: 150,
-        no_alternative_quote_reason: 'a reason',
         defendant: {
           first_name: 'bob',
           last_name: 'jim',
@@ -73,7 +72,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         ],
         quotes: [
           {
-            service_type: 'pathologist',
+            service_type: 'pathologist_report',
             custom_service_name: nil,
             contact_full_name: 'Joe Bloggs',
             organisation: 'LAA',
@@ -86,7 +85,14 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             items: nil,
             ordered_by_court: nil,
             related_to_post_mortem: nil,
-            id: application.primary_quote.id
+            id: application.primary_quote.id,
+            document: {
+              document_type: 'quote_document',
+              file_name: 'test.png',
+              file_path: 'test_path',
+              file_size: 1234,
+              file_type: 'image/png'
+            }
           }
         ],
         additional_costs: []
