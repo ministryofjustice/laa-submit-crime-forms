@@ -1,12 +1,13 @@
 FactoryBot.define do
   factory :quote do
-    service_type { 'pathologist' }
+    service_type { 'pathologist_report' }
     custom_service_name { nil }
     contact_full_name { 'Joe Bloggs' }
     organisation { 'LAA' }
     postcode { 'CR0 1RE' }
     cost_per_hour { 10 }
     period { 180 }
+    document factory: %i[quote_document], strategy: :build
   end
 
   trait :blank do
