@@ -14,6 +14,8 @@ RSpec.describe 'Prior authority applications - travel costs', :javascript, type:
   context 'when the user clicks through to the travel details page' do
     before do
       within '#travel-cost-summary' do
+        # TODO: REMOVE THE LINE BELOW
+        take_screenshot
         click_on 'Change'
       end
     end
