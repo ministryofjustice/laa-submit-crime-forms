@@ -72,7 +72,7 @@ module PriorAuthority
       end
 
       def file_error_present(file)
-        if file.nil? && !params[:commit_draft]
+        if file.nil? && !current_application.primary_quote.document&.file_name && !params[:commit_draft]
           return_error({ message: t('shared.shared_upload_errors.file_not_present', file: 'primary quote') })
         elsif file && !file_size_within_limit(file)
           return_error({ message: t('shared.shared_upload_errors.file_size_limit', max_size: '10MB') })

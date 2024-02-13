@@ -36,4 +36,8 @@ FactoryBot.define do
   trait :additional do
     primary { false }
   end
+
+  trait :no_document do
+    document { nil }
+  end
 end

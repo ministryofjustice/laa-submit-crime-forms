@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller do
-  let(:application) { build(:prior_authority_application, primary_quote: quote) }
-  let(:primary_quote_form) { build(:quote, :primary) }
+  let(:application) { create(:prior_authority_application, primary_quote: quote) }
   let(:quote) { build(:quote, :primary) }
 
   before do
@@ -29,16 +28,28 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
     context 'when no file is uploaded' do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
-        put :update, params: { application_id: '12345', prior_authority_steps_primary_quote_form: primary_quote_form }
+        put :update, params: { application_id: '12345', prior_authority_steps_primary_quote_form: {
+          document: nil
+        } }
       end
 
-      it 'redirects back to form' do
-        expect(response).to redirect_to(edit_prior_authority_steps_primary_quote_path(application))
+      context 'when there is already a file associated to quote' do
+        it 'redirects back to form' do
+          expect(response).to be_successful
+        end
       end
 
-      it 'generates flash error' do
-        expect(flash[:alert])
-          .to eq('Upload the primary quote')
+      context 'when there is no file associated to quote' do
+        let(:quote) { build(:quote, :primary, :no_document) }
+
+        it 'redirects back to form' do
+          expect(response).to redirect_to(edit_prior_authority_steps_primary_quote_path(application))
+        end
+
+        it 'generates flash error' do
+          expect(flash[:alert])
+            .to eq('Upload the primary quote')
+        end
       end
     end
 
