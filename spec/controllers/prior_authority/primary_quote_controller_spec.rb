@@ -92,7 +92,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteController, type: :controller 
             params: { application_id: '12345',
             prior_authority_steps_primary_quote_form:
             {
-              document: fixture_file_upload('test_2.png', 'image/png')
+              document: fixture_file_upload('test_37KB.png', 'image/png')
             } }
       end
 
