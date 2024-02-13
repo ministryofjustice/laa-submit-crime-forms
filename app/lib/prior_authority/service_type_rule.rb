@@ -11,7 +11,7 @@ module PriorAuthority
       when QuoteServices::PATHOLOGIST_REPORT
         new(post_mortem_relevant: true)
       when QuoteServices::TRANSCRIPTION_RECORDING,
-        QuoteServices::TRANSLATION_AND_TRANSCRIPTION
+           QuoteServices::TRANSLATION_AND_TRANSCRIPTION
         new(cost_type: :per_item, item: 'minute')
       when QuoteServices::TRANSLATOR
         new(cost_type: :per_item, item: 'word')
