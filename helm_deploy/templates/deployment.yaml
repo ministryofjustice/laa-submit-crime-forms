@@ -170,6 +170,8 @@ spec:
                   key: password
             - name: MAX_UPLOAD_SIZE_BYTES
               value: {{ mul .Values.secrets.maxFileUploadBytes 1 | quote }}
+            - name: CLAMBY_ENABLED
+              value: 'true'
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
