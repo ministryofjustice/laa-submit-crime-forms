@@ -154,8 +154,6 @@ module PriorAuthority
       end
 
       click_on 'Save and continue'
-      #TODO: REMOVE THIS
-      take_screenshot
     end
 
     def fill_in_service_cost
