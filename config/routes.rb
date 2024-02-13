@@ -138,6 +138,10 @@ Rails.application.routes.draw do
         resources :additional_cost_details, only: %i[new create edit update destroy] do
           member { get :confirm_delete }
         end
+        edit_step :alternative_quotes
+        resources :alternative_quote_details, only: %i[new create edit update destroy] do
+          member { get :confirm_delete }
+        end
         upload_step :reason_why
       end
     end

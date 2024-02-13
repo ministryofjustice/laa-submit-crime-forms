@@ -7,4 +7,6 @@ class Quote < ApplicationRecord
           inverse_of: :documentable,
           class_name: 'SupportingDocument',
           as: :documentable
+
+  scope :alternative, -> { where(primary: false) }
 end

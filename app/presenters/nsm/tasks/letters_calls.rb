@@ -1,7 +1,7 @@
 module Nsm
   module Tasks
     class LettersCalls < ::Tasks::Generic
-      PREVIOUS_TASK = WorkItems
+      PREVIOUS_TASKS = WorkItems
       FORM = Nsm::Steps::LettersCallsForm
 
       def path

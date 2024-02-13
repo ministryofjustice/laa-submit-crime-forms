@@ -24,6 +24,11 @@ FactoryBot.define do
     custom_service_name { 'random service' }
   end
 
+  trait :variable_cost do
+    service_type { 'meteorologist' }
+    user_chosen_cost_type { 'per_hour' }
+  end
+
   trait :primary do
     primary { true }
   end

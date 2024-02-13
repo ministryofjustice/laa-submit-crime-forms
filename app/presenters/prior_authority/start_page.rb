@@ -26,6 +26,7 @@ module PriorAuthority
         [
           'prior_authority/about_request', [
             'prior_authority/primary_quote',
+            'prior_authority/alternative_quotes',
             'prior_authority/reason_why'
           ],
         ],

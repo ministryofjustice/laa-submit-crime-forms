@@ -66,14 +66,20 @@ module Decisions
     from('prior_authority/steps/youth_court').goto(edit: 'prior_authority/steps/hearing_detail')
     from('prior_authority/steps/psychiatric_liaison').goto(edit: 'prior_authority/steps/hearing_detail')
 
+    # primary quote
     from('prior_authority/steps/primary_quote').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
     from('prior_authority/steps/service_cost').goto(edit: 'prior_authority/steps/primary_quote')
-    from('prior_authority/steps/primary_quote_summary').goto(edit: 'prior_authority/steps/service_cost')
+    from(DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY).goto(edit: 'prior_authority/steps/service_cost')
     from('prior_authority/steps/reason_why').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
     from('prior_authority/steps/travel_detail').goto(show: DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
     from('prior_authority/steps/delete_travel').goto(show: DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
     from('prior_authority/steps/additional_costs').goto(show: DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
     from('prior_authority/steps/additional_cost_details')
       .goto(show: DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
+
+    # additional quotes
+    from(DecisionTree::PRIOR_AUTHORITY_ALTERNATIVE_QUOTES).goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
+    from('prior_authority/steps/alternative_quote_details')
+      .goto(edit: DecisionTree::PRIOR_AUTHORITY_ALTERNATIVE_QUOTES)
   end
 end

@@ -1,7 +1,7 @@
 module Nsm
   module Tasks
     class CheckAnswers < ::Tasks::Generic
-      PREVIOUS_TASK = SupportingEvidence
+      PREVIOUS_TASKS = SupportingEvidence
 
       def path
         nsm_steps_check_answers_path(application)
