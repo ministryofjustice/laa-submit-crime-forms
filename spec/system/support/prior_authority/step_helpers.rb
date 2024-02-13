@@ -26,19 +26,15 @@ module PriorAuthority
       return if step == :case_detail
 
       click_on 'Case and hearing details'
-      if prison_law == 'Yes'
-        fill_in_next_hearing
-      else
-        fill_in_case_detail
+      fill_in_case_detail
 
-        return if step == :hearing_detail
+      return if step == :hearing_detail
 
-        fill_in_hearing_detail(court_type:)
+      fill_in_hearing_detail(court_type:)
 
-        return if step.in?(%i[psychiatric_liaison youth_court])
+      return if step.in?(%i[psychiatric_liaison youth_court])
 
-        fill_in_youth_court
-      end
+      fill_in_youth_court
 
       return if step == :primary_quote
 
@@ -115,11 +111,6 @@ module PriorAuthority
       click_on 'Save and continue'
     end
 
-    def fill_in_next_hearing
-      choose 'No'
-      click_on 'Save and continue'
-    end
-
     def fill_in_hearing_detail(plea: 'Not guilty', court_type: "Magistrate's court")
       within('.govuk-form-group', text: 'Date of next hearing') do
         dt = Date.tomorrow
@@ -143,11 +134,15 @@ module PriorAuthority
     def fill_in_primary_quote(service_type: 'Meteorologist')
       # Note that if Javascript is enabled for the current test, this will
       # be hidden
-      select service_type, from: 'Service required'
+      fill_in 'Service required', with: service_type
 
       fill_in 'Contact full name', with: 'Joe Bloggs'
       fill_in 'Organisation', with: 'LAA'
       fill_in 'Postcode', with: 'CR0 1RE'
+
+      page.attach_file(Rails.root.join('spec/fixtures/files/test.png').to_s) do
+        page.find('.govuk-file-upload').click
+      end
 
       click_on 'Save and continue'
     end

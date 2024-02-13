@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - additional costs' do
+RSpec.describe 'Prior authority applications - additional costs', :javascript, type: :system do
   context 'when I visit the quote summary screen' do
     before do
       fill_in_until_step(:primary_quote_summary)

@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - travel costs' do
+RSpec.describe 'Prior authority applications - travel costs', :javascript, type: :system do
   before do
     fill_in_until_step(:primary_quote_summary)
   end
@@ -16,6 +16,11 @@ RSpec.describe 'Prior authority applications - travel costs' do
       within '#travel-cost-summary' do
         click_on 'Change'
       end
+    end
+
+    it 'validates appropriately' do
+      click_on 'Save and continue'
+      expect(page).to have_title 'Error: Travel cost'
     end
 
     context 'when user fills in valid information' do
@@ -40,11 +45,6 @@ RSpec.describe 'Prior authority applications - travel costs' do
         click_on 'Update calculation'
         expect(page).to have_content 'Total cost £1.61'
       end
-    end
-
-    it 'validates appropriately' do
-      click_on 'Save and continue'
-      expect(page).to have_title 'Error: Travel cost'
     end
   end
 

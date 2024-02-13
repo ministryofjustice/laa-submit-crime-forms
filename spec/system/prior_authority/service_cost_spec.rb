@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - add service costs' do
+RSpec.describe 'Prior authority applications - add service costs', :javascript, type: :system do
   before do
     fill_in_until_step(:primary_quote)
     click_on 'Primary quote'
@@ -10,48 +10,48 @@ RSpec.describe 'Prior authority applications - add service costs' do
 
   let(:service_type) { 'Meteorologist' }
 
-  context 'when the service is A Psychiatric report (Prison Law)' do
-    let(:service_type) { 'A Psychiatric report (Prison Law)' }
+  context 'when the service is Psychiatric report (Prison Law)' do
+    let(:service_type) { 'Psychiatric report (Prison Law)' }
 
     it 'asks a court order question' do
       expect(page).to have_content 'Was this report ordered by the court?'
     end
   end
 
-  context 'when the service is Pathologist' do
-    let(:service_type) { 'Pathologist' }
+  context 'when the service is Pathologist report' do
+    let(:service_type) { 'Pathologist report' }
 
-    it 'asks a pathologist question' do
+    it 'asks a pathologist report question' do
       expect(page).to have_content 'Is this related to a post-mortem?'
     end
   end
 
-  context 'when the service is Transcripts (recordings)' do
-    let(:service_type) { 'Transcripts (recordings)' }
+  context 'when the service is Transcription (recording)' do
+    let(:service_type) { 'Transcription (recording)' }
 
     it 'asks a question about minutes' do
       expect(page).to have_content 'What is the cost per minute?'
     end
   end
 
-  context 'when the service is Translator (documents)' do
-    let(:service_type) { 'Translator (documents)' }
+  context 'when the service is Translator' do
+    let(:service_type) { 'Translator' }
 
     it 'asks a question about words' do
       expect(page).to have_content 'What is the cost per word?'
     end
   end
 
-  context 'when the service is Photocopying per sheet' do
-    let(:service_type) { 'Photocopying per sheet' }
+  context 'when the service is Photocopying' do
+    let(:service_type) { 'Photocopying' }
 
     it 'asks a question about words' do
       expect(page).to have_content 'What is the cost per page?'
     end
   end
 
-  context 'when the service is DNA (per person)' do
-    let(:service_type) { 'DNA (per person)' }
+  context 'when the service is DNA Report' do
+    let(:service_type) { 'DNA Report' }
 
     it 'asks a question about cost type' do
       expect(page).to have_content 'How are you being charged?'
