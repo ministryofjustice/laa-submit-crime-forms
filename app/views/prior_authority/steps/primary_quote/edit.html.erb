@@ -17,7 +17,7 @@
       <%= form.govuk_text_field :postcode, label: { text: t(".postcode"), size: "s" } %>
       <%= form.govuk_file_field :document, label: { text: t(".file_upload"), size: "m" }, hint: { text: t(".file_upload_hint") }, accept: SupportedFileTypes::QUOTE_DOCUMENT.join(',') %>
       <%# Uploaded files section %>
-      <div class="moj-multi-file__uploaded-files <%= 'moj-hidden' unless @primary_quote_document.nil? %>">
+      <div class="moj-multi-file__uploaded-files <%= 'moj-hidden' unless @primary_quote_document&.file_name.present? %>">
         <table class="govuk-table">
           <caption class="govuk-table__caption govuk-table__caption--m">Uploaded files</caption>
           <thead class="govuk-table__head">
