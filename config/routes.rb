@@ -129,7 +129,7 @@ Rails.application.routes.draw do
         edit_step :hearing_detail
         edit_step :youth_court
         edit_step :psychiatric_liaison
-        edit_step :primary_quote
+        upload_step :primary_quote
         edit_step :service_cost
         show_step :primary_quote_summary
         edit_step :travel_detail
