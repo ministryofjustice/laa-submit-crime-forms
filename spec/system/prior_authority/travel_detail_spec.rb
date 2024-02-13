@@ -14,16 +14,12 @@ RSpec.describe 'Prior authority applications - travel costs', :javascript, type:
   context 'when the user clicks through to the travel details page' do
     before do
       within '#travel-cost-summary' do
-        # TODO: REMOVE THE LINE BELOW
-        save_screenshot
         click_on 'Change'
       end
     end
 
     it 'validates appropriately' do
       click_on 'Save and continue'
-      # TODO: REMOVE THE LINE BELOW
-      save_screenshot
       expect(page).to have_title 'Error: Travel cost'
     end
 
