@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title t(".page_title") %>
 <% decision_step_header %>
 
 <div class="govuk-grid-row">
@@ -9,15 +9,33 @@
 
     <%= step_form @form_object do |form| %>
       <%= suggestion_select form, :service_type, PriorAuthority::QuoteServices.values, :to_sym, :translated, width: 20,
-                            options: { include_blank: true }, label: { size: 'm' }, hint: { size: 's', text: t('.service_name_hint')},
+                            options: { include_blank: true }, label: { size: "m" }, hint: { size: "s", text: t(".service_name_hint")},
                             data: { autoselect: false } %>
       <h2 class="govuk-heading-m"><%= t(".service_details") %></h2>
-      <%= form.govuk_text_field :contact_full_name, label: { text: t(".contact_full_name"), size: 's' } %>
-      <%= form.govuk_text_field :organisation, label: { text: t(".organisation"), size: 's' } %>
-      <%= form.govuk_text_field :postcode, label: { text: t(".postcode"), size: 's' } %>
+      <%= form.govuk_text_field :contact_full_name, label: { text: t(".contact_full_name"), size: "s" } %>
+      <%= form.govuk_text_field :organisation, label: { text: t(".organisation"), size: "s" } %>
+      <%= form.govuk_text_field :postcode, label: { text: t(".postcode"), size: "s" } %>
+      <%= form.govuk_file_field :document, label: { text: t(".file_upload"), size: "m" }, hint: { text: t(".file_upload_hint") }, accept: SupportedFileTypes::QUOTE_DOCUMENT.join(',') %>
+      <%# Uploaded files section %>
+      <div class="moj-multi-file__uploaded-files <%= 'moj-hidden' unless @primary_quote_document.nil? %>">
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--m">Uploaded files</caption>
+          <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">File name</th>
+          </tr>
+          </thead>
+          <%# Uploaded file list   %>
+          <tbody class="govuk-table__body moj-multi-file-upload__list">
+            <tr class="govuk-table__row moj-multi-file-upload__row" id="primary_quote_document_details_row" >
+              <td class="govuk-table__cell moj-multi-file-upload__filename">
+                <span class="moj-multi-file-upload__filename"><%= @primary_quote_document&.file_name %></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <%= form.continue_button %>
     <% end %>
   </div>
 </div>
-
-
