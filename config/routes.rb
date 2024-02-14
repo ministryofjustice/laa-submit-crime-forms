@@ -124,7 +124,7 @@ Rails.application.routes.draw do
         edit_step :ufn
         edit_step :case_contact
         edit_step :client_detail
-        upload_step :primary_quote
+        edit_step :primary_quote
         edit_step :next_hearing
         edit_step :case_detail
         edit_step :hearing_detail
