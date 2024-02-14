@@ -14,11 +14,12 @@
       <%= form.govuk_text_area :description, label: { text: t('.description'), size: 's' } %>
       <%= form.govuk_radio_buttons_fieldset :unit_type, legend: { text: t('.unit_type'), size: 's' } do %>
         <%= form.govuk_radio_button :unit_type, @form_object.class::PER_ITEM, label: { text: t('.per_item') }, link_errors: true do %>
-          <%= form.govuk_number_field :items, width: 5, label: { text: t('.items') } %>
+          <%= form.govuk_text_field :items, width: 5, label: { text: t('.items') } %>
           <%= form.govuk_text_field :cost_per_item,
                                     width: 5,
                                     prefix_text: "&pound;".html_safe,
                                     inputmode: "decimal",
+                                    value: gbp_field_value(@form_object.cost_per_item),
                                     label: { text: t('.cost_per_item') },
                                     hint: { text: t('.cost_per_item_hint') } %>
         <% end %>
@@ -28,6 +29,7 @@
                                     width: 5,
                                     prefix_text: "&pound;".html_safe,
                                     inputmode: "decimal",
+                                    value: gbp_field_value(@form_object.cost_per_hour),
                                     label: { text: t('.cost_per_hour') },
                                     hint: { text: t('.cost_per_hour_hint') } %>
         <% end %>

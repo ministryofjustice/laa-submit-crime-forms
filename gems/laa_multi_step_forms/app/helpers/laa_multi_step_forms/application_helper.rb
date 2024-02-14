@@ -39,6 +39,12 @@ module LaaMultiStepForms
         t('helpers.time_period.minutes', count: period % 60)
     end
 
+    def gbp_field_value(value)
+      return value if value.is_a?(String)
+
+      number_with_precision(value, precision: 2, delimiter: ',')
+    end
+
     def suggestion_select(form, field, values, id_field, value_field, data_module = 'accessible-autocomplete', *,
                           data: {}, **)
       data[:module] = data_module

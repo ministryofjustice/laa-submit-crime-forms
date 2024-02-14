@@ -18,10 +18,10 @@ module PriorAuthority
       attribute :service_type, :value_object, source: QuoteServices
 
       attribute :user_chosen_cost_type, :string
-      attribute :items, :integer
-      attribute :cost_per_item, :decimal, precision: 10, scale: 2
+      attribute :items, :fully_validatable_integer
+      attribute :cost_per_item, :gbp
       attribute :period, :time_period
-      attribute :cost_per_hour, :decimal, precision: 10, scale: 2
+      attribute :cost_per_hour, :gbp
 
       def variable_cost_type?
         service_rule.cost_type == :variable

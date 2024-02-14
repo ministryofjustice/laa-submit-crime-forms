@@ -3,5 +3,5 @@
                           width: 5,
                           prefix_text: "&pound;".html_safe,
                           inputmode: "decimal",
-                          value: number_with_precision(@form_object.cost_per_hour, precision: 2),
+                          value: gbp_field_value(@form_object.cost_per_hour),
                           label: { text: t('.cost_per_hour'), size: size } %>

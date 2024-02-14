@@ -10,13 +10,13 @@ module PriorAuthority
                 if: :variable_cost_type?
 
       with_options if: :per_item? do
-        validates :items, presence: true, numericality: { greater_than: 0 }
-        validates :cost_per_item, presence: true, numericality: { greater_than: 0 }
+        validates :items, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+        validates :cost_per_item, presence: true, numericality: { greater_than: 0 }, is_a_number: true
       end
 
       with_options if: :per_hour? do
         validates :period, presence: true, time_period: true, numericality: { greater_than: 0 }
-        validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }
+        validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
       end
     end
   end
