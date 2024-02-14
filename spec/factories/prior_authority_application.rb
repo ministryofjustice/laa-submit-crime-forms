@@ -17,10 +17,6 @@ FactoryBot.define do
       with_defendant
     end
 
-    trait :with_hearing_details do
-      next_hearing_date { 1.day.from_now }
-    end
-
     trait :with_case_details do
       main_offence { 'Jaywalking' }
       rep_order_date { 1.year.ago }
@@ -152,6 +148,10 @@ FactoryBot.define do
       no_alternative_quote_reason { 'a reason' }
 
       reason_why { 'something' }
+    end
+
+    trait :with_alternative_quotes do
+      quotes { build_list(:quote, 2, :alternative) }
     end
   end
 end

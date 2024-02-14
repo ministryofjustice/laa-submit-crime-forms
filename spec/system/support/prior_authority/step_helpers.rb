@@ -55,6 +55,15 @@ module PriorAuthority
       fill_in_travel_cost
       click_on 'Save and continue'
 
+      return if step == :alternative_quote_question
+
+      click_on 'Alternative quotes'
+      fill_in_alternative_quote_question
+
+      return if step == :add_alternative_quote
+
+      fill_in_alternative_quote
+
       return if step == :reason_for_prior_authority
 
       click_on 'Reason for prior authority'
@@ -184,6 +193,33 @@ module PriorAuthority
         fill_in 'What is the cost per item?', with: '1.23'
       end
 
+      click_on 'Save and continue'
+    end
+
+    def fill_in_alternative_quote_question
+      choose 'Yes'
+
+      click_on 'Save and continue'
+    end
+
+    def fill_in_alternative_quote
+      fill_in 'Contact full name', with: 'Jim Bob'
+      fill_in 'Organisation', with: 'Experts Inc.'
+      fill_in 'Postcode', with: 'SW1A 1AA'
+
+      choose 'Charged per item'
+      fill_in 'Number of items', with: '1'
+      fill_in 'What is the cost per item?', with: '100'
+      fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_1i', with: '1'
+      fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_2i', with: '0'
+      fill_in 'What is the hourly cost?', with: '50'
+      fill_in 'Total additional costs', with: '5'
+
+      click_on 'Save and continue'
+
+      within('.govuk-form-group', text: 'Do you want to add an additional quote?') do
+        choose 'No'
+      end
       click_on 'Save and continue'
     end
 

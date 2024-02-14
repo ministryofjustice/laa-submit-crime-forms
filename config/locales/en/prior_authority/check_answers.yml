@@ -7,6 +7,9 @@ en:
           page_title: Check your answers
           heading: Check your answers
           sections:
+            alternative_quotes:
+              quote_summary: Quote
+              no_alternatve_quotes: Reason for no alternative quotes
             case_contact:
               contact_details: Contact details
               firm_details: Firm details
@@ -47,6 +50,8 @@ en:
 
         groups:
           about_case:
+            alternative_quotes:
+              title: Alternative quotes
             heading: About the case
             case_detail:
               title: Case details

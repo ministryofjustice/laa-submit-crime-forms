@@ -31,6 +31,7 @@ RSpec.describe PriorAuthority::CheckAnswers::Report do
             'Case details',
             'Hearing details',
             'Primary quote',
+            'Alternative quotes',
             'Reason for prior authority',
           )
       end
@@ -60,6 +61,7 @@ RSpec.describe PriorAuthority::CheckAnswers::Report do
             'Client details',
             'Case and hearing details',
             'Primary quote',
+            'Alternative quotes',
             'Reason for prior authority',
           )
       end
