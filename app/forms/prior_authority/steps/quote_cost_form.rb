@@ -7,7 +7,6 @@ module PriorAuthority
 
       def initialize(attrs)
         attrs[:service_type] = attrs[:application].service_type
-
         super(attrs)
       end
 

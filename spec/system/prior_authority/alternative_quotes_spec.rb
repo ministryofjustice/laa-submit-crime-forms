@@ -129,4 +129,16 @@ RSpec.describe 'Prior authority applications - alternative quote' do
       end
     end
   end
+
+  context 'when I already have 3 quotes' do
+    before do
+      create_list(:quote, 3, :alternative, prior_authority_application: application)
+    end
+
+    it 'does not prompt me to add more' do
+      click_on 'Alternative quotes'
+      click_on 'Save and continue'
+      expect(page).to have_content 'Alternative quotesCompleted'
+    end
+  end
 end
