@@ -1,4 +1,4 @@
-FROM ruby:3.2.2-alpine3.18 AS base
+FROM ruby:3.2.2-alpine3.19 AS base
 LABEL maintainer="Non-standard magistrates' court payment team"
 
 # temp fix to security issue in base image: ruby:3.2.2-alpine3.18
