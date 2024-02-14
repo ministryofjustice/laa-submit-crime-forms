@@ -56,7 +56,7 @@ FactoryBot.define do
       with_defendant
       with_case_details
       with_psychiatric_liaison
-      primary_quote factory: %i[quote primary], strategy: :build
+      primary_quote factory: %i[quote primary variable_cost], strategy: :build
       ufn { '123456/001' }
       service_type { 'meteorologist' }
       prior_authority_granted { true }
@@ -89,10 +89,10 @@ FactoryBot.define do
       youth_court { 'something' }
       next_hearing { true }
       supporting_documents { build_list(:supporting_document, 2) }
-      quotes { build_list(:quote, 1, :primary) }
+      quotes { build_list(:quote, 1, :primary, :variable_cost) }
       prior_authority_granted { false }
       no_alternative_quote_reason { 'a reason' }
-      service_type { 'pathologist' }
+      service_type { 'pathologist_report' }
       custom_service_name { nil }
     end
   end
