@@ -6,7 +6,12 @@
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <% ['ufn', 'client', 'last_updated', 'laa_reference'].each_with_index do |key, index| %>
-          <%= table_header(key, 'prior_authority.applications.tabs.header', index, submitted_prior_authority_applications_path) %>
+          <%= table_header(key,
+                          'prior_authority.applications.tabs.header',
+                           index,
+                           submitted_prior_authority_applications_path,
+                           @sort_by,
+                           @sort_direction) %>
         <% end %>
       </tr>
     </thead>

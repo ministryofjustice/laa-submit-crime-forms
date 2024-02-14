@@ -1,13 +1,14 @@
 module PriorAuthority
   class ApplicationsController < ApplicationController
     before_action :authenticate_provider!
+    before_action :set_default_table_sort_options
+    before_action :load_drafts, only: %i[index draft]
+    before_action :load_assessed, only: %i[index assessed]
+    before_action :load_submitted, only: %i[index submitted]
     layout 'prior_authority'
 
     def index
-      @empty = current_provider.prior_authority_applications.none?
-      @assessed_pagy, @assessed_model = order_and_paginate(current_provider.prior_authority_applications.assessed)
-      @draft_pagy, @draft_model = order_and_paginate(current_provider.prior_authority_applications.draft)
-      @submitted_pagy, @submitted_model = order_and_paginate(current_provider.prior_authority_applications.submitted)
+      @empty = PriorAuthorityApplication.for(current_provider).none?
     end
 
     def create
@@ -17,35 +18,44 @@ module PriorAuthority
     end
 
     def confirm_delete
-      @model = current_provider.prior_authority_applications.find(params[:id])
+      @model = PriorAuthorityApplication.for(current_provider).find(params[:id])
     end
 
     def destroy
-      @model = current_provider.prior_authority_applications.find(params[:id])
+      @model = PriorAuthorityApplication.for(current_provider).find(params[:id])
       @model.destroy
       redirect_to prior_authority_applications_path(anchor: 'drafts')
     end
 
     def draft
-      @pagy, @model = order_and_paginate(current_provider.prior_authority_applications.draft)
       render layout: nil
     end
 
     def assessed
-      @pagy, @model = order_and_paginate(current_provider.prior_authority_applications.assessed)
       render layout: nil
     end
 
     def submitted
-      @pagy, @model = order_and_paginate(current_provider.prior_authority_applications.submitted)
       render layout: nil
     end
 
     def offboard
-      @model = current_provider.prior_authority_applications.find(params[:id])
+      @model = PriorAuthorityApplication.for(current_provider).find(params[:id])
     end
 
     private
+
+    def load_drafts
+      @draft_pagy, @draft_model = order_and_paginate(PriorAuthorityApplication.for(current_provider).draft)
+    end
+
+    def load_assessed
+      @assessed_pagy, @assessed_model = order_and_paginate(PriorAuthorityApplication.for(current_provider).assessed)
+    end
+
+    def load_submitted
+      @submitted_pagy, @submitted_model = order_and_paginate(PriorAuthorityApplication.for(current_provider).submitted)
+    end
 
     def initialize_application(attributes = {}, &block)
       attributes[:office_code] = current_office_code
@@ -64,10 +74,20 @@ module PriorAuthority
       'status' => 'status ?'
     }.freeze
 
+    DIRECTIONS = {
+      'descending' => 'DESC',
+      'ascending' => 'ASC',
+    }.freeze
+
     def order_and_paginate(query)
-      order_template = ORDERS.fetch(params[:sort_by], 'created_at ?')
-      direction = params[:sort_direction] == 'descending' ? 'DESC' : 'ASC'
+      order_template = ORDERS[@sort_by]
+      direction = DIRECTIONS[@sort_direction]
       pagy(query.includes(:defendant).order(order_template.gsub('?', direction)))
+    end
+
+    def set_default_table_sort_options
+      @sort_by = params.fetch(:sort_by, 'last_updated')
+      @sort_direction = params.fetch(:sort_direction, 'descending')
     end
   end
 end
