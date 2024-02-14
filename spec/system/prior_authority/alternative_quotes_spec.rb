@@ -118,7 +118,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
             click_on 'Change'
           end
           # Charged per hour, not per item
-          select 'Animal Behaviourist', from: 'Service required'
+          select 'Animal behaviourist', from: 'Service required'
           click_on 'Save and continue'
           fill_in_service_cost(cost_type: :per_hour)
 
@@ -132,7 +132,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
 
   context 'when I already have 3 quotes' do
     before do
-      create_list(:quote, 3, :alternative, prior_authority_application: application)
+      create_list(:quote, 3, :alternative, :per_item, prior_authority_application: application)
     end
 
     it 'does not prompt me to add more' do
