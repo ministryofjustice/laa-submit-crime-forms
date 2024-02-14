@@ -171,7 +171,7 @@ module PriorAuthority
       click_on 'Save and continue'
     end
 
-    def fill_in_service_cost
+    def fill_in_service_cost(cost_type: :variable)
       choose 'Yes'
       choose 'Charged per item' if cost_type == :variable
 

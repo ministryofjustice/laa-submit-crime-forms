@@ -122,7 +122,9 @@ FactoryBot.define do
       court_type { 'magistrates_court' }
       youth_court { false }
 
-      primary_quote factory: %i[quote primary variable_cost], strategy: :build
+      # quotes
+      service_type { 'telecoms_expert' }
+      primary_quote factory: %i[quote primary], strategy: :build
       supporting_documents { build_list(:supporting_document, 2) }
       quotes { build_list(:quote, 1, :primary) }
       prior_authority_granted { false }
@@ -141,7 +143,9 @@ FactoryBot.define do
       next_hearing { true }
       next_hearing_date { 1.day.from_now }
 
-      primary_quote factory: %i[quote primary variable_cost], strategy: :build
+      # quotes
+      service_type { 'telecoms_expert' }
+      primary_quote factory: %i[quote primary], strategy: :build
       supporting_documents { build_list(:supporting_document, 2) }
       quotes { build_list(:quote, 1, :primary) }
       prior_authority_granted { false }

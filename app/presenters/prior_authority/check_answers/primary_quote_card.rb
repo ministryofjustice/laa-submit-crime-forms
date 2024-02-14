@@ -90,7 +90,7 @@ module PriorAuthority
         [
           {
             head_key: 'travel_cost_reason',
-            text: application.travel_cost_reason,
+            text: application.primary_quote.travel_cost_reason,
           },
         ]
       end

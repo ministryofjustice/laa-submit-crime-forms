@@ -27,6 +27,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
           :prior_authority_application,
           client_detained: true,
           prior_authority_granted: true,
+          service_type: 'telecoms_expert',
           primary_quote: primary_quote,
         )
       end
@@ -35,7 +36,6 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
         build(
           :quote,
           :primary,
-          service_type: 'telecoms_expert',
           contact_full_name: 'Jim Bean',
           organisation: 'Post-mortems R us',
           postcode: 'SW1A 1AA',
@@ -69,11 +69,18 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
     end
 
     context 'with post mortem relevant service type' do
+      let(:application) do
+        build(
+          :prior_authority_application,
+          service_type: 'pathologist',
+          primary_quote: primary_quote,
+        )
+      end
+
       let(:primary_quote) do
         build(
           :quote,
           :primary,
-          service_type: 'pathologist',
           related_to_post_mortem: true,
         )
       end
@@ -90,12 +97,16 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
     end
 
     context 'without post mortem relevant service type' do
-      let(:primary_quote) do
+      let(:application) do
         build(
-          :quote,
-          :primary,
+          :prior_authority_application,
           service_type: 'telecoms_expert',
+          primary_quote: primary_quote,
         )
+      end
+
+      let(:primary_quote) do
+        build(:quote, :primary)
       end
 
       it 'does not add the related to post mortem row' do
@@ -110,13 +121,16 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
     end
 
     context 'with court order[ed] relevant service type' do
-      let(:primary_quote) do
+      let(:application) do
         build(
-          :quote,
-          :primary,
+          :prior_authority_application,
           service_type: 'interpreters',
-          ordered_by_court: true,
+          primary_quote: primary_quote,
         )
+      end
+
+      let(:primary_quote) do
+        build(:quote, :primary, ordered_by_court: true)
       end
 
       it 'adds the ordered by court row' do
@@ -131,12 +145,16 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
     end
 
     context 'without court order[ed] relevant service type' do
-      let(:primary_quote) do
+      let(:application) do
         build(
-          :quote,
-          :primary,
+          :prior_authority_application,
           service_type: 'telecoms_expert',
+          primary_quote: primary_quote,
         )
+      end
+
+      let(:primary_quote) do
+        build(:quote, :primary)
       end
 
       it 'does not add the ordered by court row' do
@@ -155,6 +173,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
         build(
           :prior_authority_application,
           client_detained: true,
+          service_type: 'telecoms_expert',
           primary_quote: primary_quote,
         )
       end
@@ -177,12 +196,14 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
         build(
           :prior_authority_application,
           client_detained: false,
-          travel_cost_reason: 'client lives in northern ireland',
+          service_type: 'telecoms_expert',
           primary_quote: primary_quote,
         )
       end
 
-      let(:primary_quote) { build(:quote, :primary) }
+      let(:primary_quote) do
+        build(:quote, :primary, travel_cost_reason: 'client lives in northern ireland')
+      end
 
       it 'adds the travel cost reason row' do
         expect(card.row_data)
