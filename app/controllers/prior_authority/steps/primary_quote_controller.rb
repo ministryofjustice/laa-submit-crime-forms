@@ -20,9 +20,9 @@ module PriorAuthority
         upload_file(pending_document) unless pending_document.nil?
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
       rescue FileUpload::FileUploader::PotentialMalwareError => e
-        return_error({ message: t('shared.shared_upload_errors.malware') }, e)
+        return_error(t('shared.shared_upload_errors.malware'), e)
       rescue StandardError => e
-        return_error({ message: t('shared.shared_upload_errors.unable_upload') }, e)
+        return_error(t('shared.shared_upload_errors.unable_upload'), e)
       end
 
       private
@@ -77,24 +77,24 @@ module PriorAuthority
 
       def file_error_present(file)
         if file.nil? && no_document_in_quote && !params[:commit_draft]
-          return_error({ message: t('shared.shared_upload_errors.file_not_present', file: 'primary quote') })
+          return_error(t('shared.shared_upload_errors.file_not_present', file: 'primary quote'))
         elsif file && !file_size_within_limit(file)
-          return_error({ message: t('shared.shared_upload_errors.file_size_limit', max_size: '10MB') })
+          return_error(t('shared.shared_upload_errors.file_size_limit', max_size: '10MB'))
         elsif file && !supported_filetype(file)
-          return_error({ message: t('shared.shared_upload_errors.file_type',
-                                    file_types: t('shared.shared_upload_errors.file_types')) })
+          return_error(t('shared.shared_upload_errors.file_type',
+                                    file_types: t('shared.shared_upload_errors.file_types')))
         else
           false
         end
       end
 
-      def return_error(dict, exception = nil)
+      def return_error(message, exception = nil)
         if exception.nil?
-          Sentry.capture_exception(dict[:message])
+          Sentry.capture_exception(message)
         else
           Sentry.capture_exception(exception)
         end
-        flash[:alert] = dict[:message]
+        flash[:alert] = message
         redirect_to edit_prior_authority_steps_primary_quote_path(current_application)
       end
     end
