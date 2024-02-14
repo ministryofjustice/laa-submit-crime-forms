@@ -75,7 +75,7 @@ module PriorAuthority
       def about_request_section
         [
           PrimaryQuoteCard.new(application),
-          # TODO: AlternativeQuotesCard.new(application),
+          AlternativeQuotesCard.new(application),
           ReasonWhyCard.new(application),
         ]
       end
