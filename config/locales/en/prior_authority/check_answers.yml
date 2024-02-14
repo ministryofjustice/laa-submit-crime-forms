@@ -26,6 +26,8 @@ en:
               psychiatric_liaison: Psychiatric liaison service accessed
               psychiatric_liaison_reason_not: Why not?
               youth_court: Youth court matter
+            next_hearing:
+              next_hearing_date: Date of next hearing
             primary_quote_summary:
               ordered_by_court: Ordered by court
               prior_authority_granted: Existing prior authority granted
@@ -52,6 +54,8 @@ en:
               title: Client details
             hearing_detail:
               title: Hearing details
+            next_hearing:
+              title: Case and hearing details
           about_request:
             heading: About the request
             primary_quote_summary:

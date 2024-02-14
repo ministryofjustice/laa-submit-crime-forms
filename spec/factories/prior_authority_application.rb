@@ -13,6 +13,14 @@ FactoryBot.define do
       defendant factory: %i[defendant valid_paa], strategy: :build
     end
 
+    trait :with_client_details do
+      with_defendant
+    end
+
+    trait :with_hearing_details do
+      next_hearing_date { 1.day.from_now }
+    end
+
     trait :with_case_details do
       main_offence { 'Jaywalking' }
       rep_order_date { 1.year.ago }
@@ -94,6 +102,52 @@ FactoryBot.define do
       no_alternative_quote_reason { 'a reason' }
       service_type { 'pathologist' }
       custom_service_name { nil }
+    end
+
+    trait :with_complete_non_prison_law do
+      prison_law { false }
+      ufn { '123123/123' }
+      with_firm_and_solicitor
+      with_defendant
+
+      # case details
+      main_offence { 'Jay walking' }
+      rep_order_date { 1.year.ago.to_date }
+      client_detained { false }
+      subject_to_poca { true }
+
+      # hearing details
+      next_hearing_date { 1.day.from_now }
+      plea { 'not_guilty' }
+      court_type { 'magistrates_court' }
+      youth_court { false }
+
+      primary_quote factory: %i[quote primary variable_cost], strategy: :build
+      supporting_documents { build_list(:supporting_document, 2) }
+      quotes { build_list(:quote, 1, :primary) }
+      prior_authority_granted { false }
+      no_alternative_quote_reason { 'a reason' }
+
+      reason_why { 'something' }
+    end
+
+    trait :with_complete_prison_law do
+      prison_law { true }
+      ufn { '123123/123' }
+      with_firm_and_solicitor
+      with_defendant
+
+      # next hearing details
+      next_hearing { true }
+      next_hearing_date { 1.day.from_now }
+
+      primary_quote factory: %i[quote primary variable_cost], strategy: :build
+      supporting_documents { build_list(:supporting_document, 2) }
+      quotes { build_list(:quote, 1, :primary) }
+      prior_authority_granted { false }
+      no_alternative_quote_reason { 'a reason' }
+
+      reason_why { 'something' }
     end
   end
 end

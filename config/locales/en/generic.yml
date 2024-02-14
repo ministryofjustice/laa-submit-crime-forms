@@ -5,3 +5,4 @@ en:
     'no': 'No'
     'true': "Yes"
     'false': "No"
+    unknown: Not known

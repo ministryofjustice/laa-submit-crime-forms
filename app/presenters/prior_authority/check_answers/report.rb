@@ -55,9 +55,21 @@ module PriorAuthority
       def about_case_section
         [
           ClientDetailCard.new(application),
-          CaseDetailCard.new(application),
-          HearingDetailCard.new(application),
+          *case_and_hearing_detail_cards,
         ]
+      end
+
+      def case_and_hearing_detail_cards
+        if application.prison_law?
+          [
+            NextHearingCard.new(application)
+          ]
+        else
+          [
+            CaseDetailCard.new(application),
+            HearingDetailCard.new(application),
+          ]
+        end
       end
 
       def about_request_section
