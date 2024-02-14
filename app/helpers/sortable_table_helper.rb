@@ -1,7 +1,7 @@
 module SortableTableHelper
-  def table_header(column, i18n_stem, index, path)
-    aria_sort = params[:sort_by] == column ? params[:sort_direction] : 'none'
-    next_direction = params[:sort_direction] == 'ascending' ? 'descending' : 'ascending'
+  def table_header(column, i18n_stem, index, path, sort_by, sort_direction)
+    aria_sort = sort_by == column ? sort_direction : 'none'
+    next_direction = sort_direction == 'ascending' ? 'descending' : 'ascending'
     tag.th(scope: 'col', class: 'govuk-table__header', 'aria-sort': aria_sort) do
       reorder_form(path, column, next_direction, i18n_stem, index)
     end
