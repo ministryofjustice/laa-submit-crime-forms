@@ -19,7 +19,7 @@
                                 inputmode: "decimal",
                                 label: { text: t('.hourly_cost'), size: 's' },
                                 hint: { text: t('.hourly_cost_hint') } %>
-      <%= form.refresh_button(button: :update_calculation_no_article) %>
+      <%= form.reload_button(button: :update_calculation_no_article) %>
       <span class="govuk-caption-l"><%= t('.total_cost') %></span>
       <h2 class="govuk-heading-l" id="totalTravelCost">
         <%= @form_object.formatted_total_cost %>
