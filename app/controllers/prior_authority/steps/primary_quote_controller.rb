@@ -82,7 +82,7 @@ module PriorAuthority
           return_error(t('shared.shared_upload_errors.file_size_limit', max_size: '10MB'))
         elsif file && !supported_filetype(file)
           return_error(t('shared.shared_upload_errors.file_type',
-                                    file_types: t('shared.shared_upload_errors.file_types')))
+                         file_types: t('shared.shared_upload_errors.file_types')))
         else
           false
         end
