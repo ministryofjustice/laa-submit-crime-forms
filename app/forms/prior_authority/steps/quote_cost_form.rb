@@ -48,7 +48,11 @@ module PriorAuthority
       end
 
       def service_name
-        service_type.translated
+        if service_type == QuoteServices.new(:custom)
+          application.custom_service_name
+        else
+          service_type.translated
+        end
       end
 
       def cost_type
@@ -68,6 +72,7 @@ module PriorAuthority
       end
 
       def time_cost
+        return 0 if period.is_a?(Hash)
         return 0 unless cost_per_hour.to_i.positive? && period.to_i.positive?
 
         (cost_per_hour * (period.hours + (period.minutes / 60.0))).round(2)
