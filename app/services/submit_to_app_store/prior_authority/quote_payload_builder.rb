@@ -17,8 +17,9 @@ class SubmitToAppStore
 
       ATTRIBUTES = %i[
         id
-        service_type
-        custom_service_name
+        travel_time
+        travel_cost_per_hour
+        travel_cost_reason
         contact_full_name
         organisation
         postcode
@@ -29,6 +30,8 @@ class SubmitToAppStore
         cost_per_item
         items
         period
+        additional_cost_list
+        additional_cost_total
       ].freeze
     end
   end

@@ -3,7 +3,7 @@ module PriorAuthority
     module AlternativeQuotes
       class OverviewForm < ::Steps::BaseFormObject
         attribute :alternative_quotes_still_to_add, :boolean
-        validates :alternative_quotes_still_to_add, inclusion: { in: [true, false] }
+        validates :alternative_quotes_still_to_add, inclusion: { in: [true, false] }, if: :more_quotes_addable?
 
         attribute :no_alternative_quote_reason, :string
 
@@ -15,6 +15,10 @@ module PriorAuthority
 
         def quotes_added
           application.alternative_quotes.count
+        end
+
+        def more_quotes_addable?
+          quotes_added < 3
         end
 
         private

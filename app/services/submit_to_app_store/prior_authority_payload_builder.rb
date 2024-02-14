@@ -63,9 +63,6 @@ class SubmitToAppStore
 
     def convenience_attributes
       {
-        # N.B We do `detect(&:primary)` instead of `.primary_quote` to make resilient to cases
-        # where the quotes are not persisted to the database
-        service_type: application.quotes.detect(&:primary).service_type,
         firm_name: application.firm_office.name,
         client_name: application.defendant.full_name
       }
@@ -90,9 +87,8 @@ class SubmitToAppStore
       psychiatric_liaison
       psychiatric_liaison_reason_not
       next_hearing
-      travel_time
-      travel_cost_per_hour
-      travel_cost_reason
+      service_type
+      custom_service_name
       prior_authority_granted
       no_alternative_quote_reason
     ].freeze

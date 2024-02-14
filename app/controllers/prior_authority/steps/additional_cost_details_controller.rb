@@ -23,10 +23,6 @@ module PriorAuthority
       def as
         :additional_cost_details
       end
-
-      def redirect_to_current_object
-        redirect_to edit_prior_authority_steps_additional_cost_detail_path(current_application, record)
-      end
     end
   end
 end

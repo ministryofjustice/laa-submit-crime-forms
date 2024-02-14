@@ -29,7 +29,10 @@ module PriorAuthority
     end
 
     def travel_detail_form
-      @travel_detail_form ||= Steps::TravelDetailForm.build(application)
+      @travel_detail_form ||= Steps::TravelDetailForm.build(
+        application.primary_quote,
+        application:,
+      )
     end
 
     def additional_cost_overview_form

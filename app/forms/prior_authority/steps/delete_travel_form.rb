@@ -8,7 +8,7 @@ module PriorAuthority
       private
 
       def persist!
-        application.update!(
+        record.update!(
           travel_cost_reason: nil,
           travel_time: nil,
           travel_cost_per_hour: nil

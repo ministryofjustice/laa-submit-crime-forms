@@ -16,6 +16,10 @@ module Steps
     def update
       raise 'implement this action, if needed, in subclasses'
     end
+
+    def reload
+      raise 'implement this action, if needed, in subclasses'
+    end
     # :nocov:
 
     private
@@ -28,7 +32,6 @@ module Steps
     def update_and_advance(form_class, opts = {})
       hash = permitted_params(form_class).to_h
       record = opts.fetch(:record, current_application)
-
       @form_object = form_class.new(
         hash.merge(application: current_application, record: record)
       )
@@ -37,6 +40,8 @@ module Steps
         # Validations will not be run when saving a draft
         @form_object.save!
         redirect_to opts[:after_commit_redirect_path] || nsm_after_commit_path(id: current_application.id)
+      elsif params.key?(:reload)
+        reload
       elsif params.key?(:save_and_refresh)
         @form_object.save!
         redirect_to_current_object

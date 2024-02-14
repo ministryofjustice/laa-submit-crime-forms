@@ -11,11 +11,24 @@ en:
           page_title: You've added %{number} alternative %{quote}
           quote: quote
           question: Do you want to add an additional quote?
+        last_quote_deleted:
+          caption: About the request
+          page_title: You've added 0 alternative quotes
+          add_one: Do you want to add an additional quote?
+          why_not: Why did you not get other quotes?
         quote_summary:
           alternative_quote: Alternative quote
           change: Change
           delete: Delete
           service_details: Service details
+          additional_items: Additional items
+          none: None
+          costs: Costs
+          total: Total
+          service: Service
+          travel: Travel
+          additional: Additional
+          total_cost: Total cost
         important: Important
         deleted: The alternative quote was deleted
       alternative_quote_details:
@@ -32,6 +45,16 @@ en:
           contact_full_name: Contact full name
           organisation: Organisation
           postcode: Postcode
+          cost: "%{service_name} cost"
+          travel_cost: Travel cost (optional)
+          travel_cost_hint: Only include the hourly rate cost. Any other travel expenditure (such as mileage, parking and travel fares) can be added as additional costs.
+          travel_time: Time
+          hourly_cost: What is the hourly cost?
+          additional_costs: Additional costs (optional)
+          additional_costs_hint: For example, other costs such as extra fees, travel mileage, parking charges or travel fares.
+          additional_cost_list: List additional costs
+          additional_cost_total: Total additional costs
+          total_cost: Total quote cost
   activemodel:
     errors:
       models:
@@ -50,3 +73,31 @@ en:
             postcode:
               blank: Enter the postcode
               invalid: Enter a real postcode
+            user_chosen_cost_type:
+              inclusion: Select how you are being charged
+            period:
+              blank: Enter the time
+              blank_hours: The number of hours must be a number
+              invalid_hours: The number of hours must be 0 or more
+              blank_minutes: The number of minutes must be a number
+              invalid_minutes: The number of minutes must be between 0 and 59
+              invalid_period: Time must be more than 0
+              invalid: Time must be valid
+            cost_per_hour:
+              blank: Enter the hourly cost
+              greater_than: The hourly cost must be more than 0
+            items:
+              blank: Enter the number of items
+              greater_than: The number of items must be more than 0
+            cost_per_item:
+              blank: Enter the cost per item
+              greater_than: The cost per item must be more than 0
+            travel_time:
+              blank_hours: The number of hours must be a number
+              invalid_hours: The number of hours must be 0 or more
+              blank_minutes: The number of minutes must be a number
+              invalid_minutes: The number of minutes must be between 0 and 59
+              invalid_period: Travel time must be more than 0
+              invalid: Travel time must be valid
+            travel_cost_per_hour:
+              greater_than: The cost per hour must be more than 0

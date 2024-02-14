@@ -19,15 +19,16 @@
     <%= step_form @form_object do |form| %>
 
       <%= govuk_error_summary(@form_object) %>
-      <%= form.govuk_collection_radio_buttons(
-        :alternative_quotes_still_to_add,
-        YesNoAnswer.radio_options,
-        :value,
-        :label,
-        inline: true,
-        legend: { text: t('.question'), size: 's' }
-      ) %>
-
+      <% if @form_object.more_quotes_addable? %>
+        <%= form.govuk_collection_radio_buttons(
+          :alternative_quotes_still_to_add,
+          YesNoAnswer.radio_options,
+          :value,
+          :label,
+          inline: true,
+          legend: { text: t('.question'), size: 's' }
+        ) %>
+      <% end %>
       <%= form.continue_button %>
     <% end %>
   </div>

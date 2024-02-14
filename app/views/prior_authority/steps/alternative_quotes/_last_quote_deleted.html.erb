@@ -2,21 +2,25 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
+    <%= govuk_notification_banner(title_text: t('prior_authority.steps.alternative_quotes.important'),
+                                  text: t('prior_authority.steps.alternative_quotes.deleted'),
+                                  success: true) %>
+    <span class="govuk-caption-xl"><%= t(".caption") %></span>
+    <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
     <%= step_form @form_object do |form| %>
+
       <%= govuk_error_summary(@form_object) %>
-      <span class="govuk-caption-xl"><%= t(".caption") %></span>
       <%= form.govuk_radio_buttons_fieldset :alternative_quotes_still_to_add,
-                                            legend: { text: t('.page_title'), size: 'xl', tag: 'h1' } do %>
+                                            legend: { text: t('.add_one'), size: 's' } do %>
+        <%= form.govuk_radio_button :alternative_quotes_still_to_add,
+                                    true,
+                                    label: { text: t('prior_authority.generic.yes_choice') } %>
         <%= form.govuk_radio_button :alternative_quotes_still_to_add,
                                     false,
                                     label: { text: t('prior_authority.generic.no_choice') },
                                     link_errors: true do %>
           <%= form.govuk_text_area :no_alternative_quote_reason, label: { text: t('.why_not') } %>
         <% end %>
-        <%= form.govuk_radio_button :alternative_quotes_still_to_add,
-                                    true,
-                                    label: { text: t('prior_authority.generic.yes_choice') } %>
       <% end %>
 
       <%= form.continue_button %>

@@ -99,6 +99,7 @@ en:
           ordered_by_court: Was this report ordered by the court?
           related_to_post_mortem: Is this related to a post-mortem?
           total_cost: Total cost
+        cost_fields:
           user_chosen_cost_type: How are you being charged?
           per_item: Charged per item
           per_hour: Charged by the hour

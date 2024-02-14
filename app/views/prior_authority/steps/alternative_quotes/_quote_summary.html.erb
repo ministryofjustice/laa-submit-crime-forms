@@ -25,7 +25,54 @@
         </dd>
       </div>
       <%# TODO: CRM457-1105 Add file upload summary here %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= t('.additional_items') %></dt>
+        <dd class="govuk-summary-list__value">
+          <% if alternative_quote.additional_cost_list.present? %>
+            <% alternative_quote.additional_cost_list.split("\n").map do |line| %>
+              <%= line %>
+              <br>
+            <% end %>
+          <% else %>
+            <%= t('.none') %>
+          <% end %>
+        </dd>
+      </div>
     </dl>
-      <%# TODO: CRM457-1106 Add cost summary here %>
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-visually-hidden">
+        <%= t('.alternative_quote') %>
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header"><%= t('.costs') %></th>
+          <th scope="col" class="govuk-table__header"><%= t('.total') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= t('.service') %></td>
+          <td class="govuk-table__cell">
+            <%= NumberTo.pounds(alternative_quote.main_cost) %>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= t('.travel') %></td>
+          <td class="govuk-table__cell">
+            <%= NumberTo.pounds(alternative_quote.travel_cost) %>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= t('.additional') %></td>
+          <td class="govuk-table__cell">
+            <%= NumberTo.pounds(alternative_quote.additional_cost) %>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-table__header"><%= t('.total_cost') %></td>
+          <td class="govuk-table__cell"><strong><%= NumberTo.pounds(alternative_quote.total_cost) %></strong></td>
+        </tr>
+    </tbody>
+    </table>
   </div>
 </div>
