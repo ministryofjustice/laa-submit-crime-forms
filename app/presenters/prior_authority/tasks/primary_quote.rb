@@ -11,7 +11,7 @@ module PriorAuthority
       FORM = ::PriorAuthority::Steps::PrimaryQuoteForm
 
       def path
-        if completed?
+        if first_steps_completed?
           prior_authority_steps_primary_quote_summary_path(application)
         else
           edit_prior_authority_steps_primary_quote_path(application)
@@ -27,7 +27,18 @@ module PriorAuthority
       end
 
       def completed?
-        record && super && super(record, PriorAuthority::Steps::ServiceCostForm)
+        first_steps_completed? &&
+          all_additional_costs_completed?
+      end
+
+      def first_steps_completed?
+        record &&
+          FORM.build(record, application:).valid? &&
+          PriorAuthority::Steps::ServiceCostForm.build(record, application:).valid?
+      end
+
+      def all_additional_costs_completed?
+        !application.additional_costs_still_to_add?
       end
     end
   end

@@ -13,7 +13,7 @@ module PriorAuthority
         attribute :description, :string
         attribute :unit_type, :string
         attribute :items, :integer
-        attribute :cost_per_item, :decimal, precision: 10, scale: 2
+        attribute :cost_per_item, :gbp
         attribute :period, :time_period
         attribute :cost_per_hour, :decimal, precision: 10, scale: 2
 
@@ -21,11 +21,15 @@ module PriorAuthority
         validates :description, presence: true
         validates :unit_type, inclusion: { in: UNIT_TYPES, allow_nil: false }
 
-        validates :items, presence: true, numericality: { greater_than: 0 }, if: :per_item?
-        validates :cost_per_item, presence: true, numericality: { greater_than: 0 }, if: :per_item?
+        with_options if: :per_item? do
+          validates :items, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+          validates :cost_per_item, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+        end
 
-        validates :period, presence: true, time_period: true, if: :per_hour?
-        validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, if: :per_hour?
+        with_options if: :per_hour? do
+          validates :period, presence: true, time_period: true, numericality: { greater_than: 0 }, is_a_number: true
+          validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+        end
 
         def formatted_total_cost
           NumberTo.pounds(total_cost)
@@ -68,6 +72,7 @@ module PriorAuthority
         end
 
         def time_cost
+          return 0 if period.is_a?(Hash)
           return 0 unless cost_per_hour.to_i.positive? && period.to_i.positive?
 
           (cost_per_hour * (period.hours + (period.minutes / 60.0))).round(2)

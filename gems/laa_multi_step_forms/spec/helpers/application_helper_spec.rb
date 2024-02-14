@@ -225,4 +225,22 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe '#gbp_field_value' do
+    context 'when it is given a string' do
+      let(:value) { 'invalid value' }
+
+      it 'returns the string' do
+        expect(helper.gbp_field_value(value)).to eq(value)
+      end
+    end
+
+    context 'when it is given a number' do
+      let(:value) { 1234.5 }
+
+      it 'returns a nice representation of that number as a monetary value' do
+        expect(helper.gbp_field_value(value)).to eq('1,234.50')
+      end
+    end
+  end
 end

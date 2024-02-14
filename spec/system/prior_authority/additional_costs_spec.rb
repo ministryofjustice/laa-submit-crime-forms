@@ -85,6 +85,14 @@ RSpec.describe 'Prior authority applications - additional costs' do
 
           expect(page).to have_title "You've added 2 additional costs"
         end
+
+        it 'detects that I am in an invalid state' do
+          choose 'Yes'
+          click_on 'Save and continue'
+          click_on 'Back' # to quote summary screen
+          click_on 'Save and continue' # to application progress screen
+          expect(page).to have_content 'Primary quoteIn progress'
+        end
       end
 
       it 'validates if forms left blank' do
@@ -92,6 +100,15 @@ RSpec.describe 'Prior authority applications - additional costs' do
         click_on 'Save and continue'
         expect(page).to have_title 'Additional cost'
         expect(page).to have_content 'Enter what the additional cost is for'
+      end
+
+      it 'validates if forms are invalid' do
+        choose 'Charged by the hour'
+        fill_in 'Hours', with: '0'
+        fill_in 'Minutes', with: '61'
+        click_on 'Save and continue'
+        expect(page).to have_title 'Additional cost'
+        expect(page).to have_content 'The number of minutes must be between 0 and 59'
       end
     end
   end
