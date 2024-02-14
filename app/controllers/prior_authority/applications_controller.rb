@@ -1,6 +1,7 @@
 module PriorAuthority
   class ApplicationsController < ApplicationController
     before_action :authenticate_provider!
+    before_action :set_default_table_sort_options
     before_action :load_drafts, only: %i[index draft]
     before_action :load_assessed, only: %i[index assessed]
     before_action :load_submitted, only: %i[index submitted]
@@ -79,9 +80,14 @@ module PriorAuthority
     }.freeze
 
     def order_and_paginate(query)
-      order_template = ORDERS.fetch(params[:sort_by], 'updated_at ?')
-      direction = DIRECTIONS.fetch(params[:sort_direction], 'DESC')
+      order_template = ORDERS[@sort_by]
+      direction = DIRECTIONS[@sort_direction]
       pagy(query.includes(:defendant).order(order_template.gsub('?', direction)))
+    end
+
+    def set_default_table_sort_options
+      @sort_by = params.fetch(:sort_by, 'last_updated')
+      @sort_direction = params.fetch(:sort_direction, 'descending')
     end
   end
 end
