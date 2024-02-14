@@ -82,6 +82,16 @@ RSpec.describe 'Prior authority applications - add service costs' do
     expect(page).to have_content 'Enter the hourly cost'
   end
 
+  it 'validates appropriately with invalid data' do
+    choose 'No'
+    choose 'Charged by the hour'
+    fill_in 'Hours', with: '1'
+    fill_in 'Minutes', with: '61'
+    fill_in 'Hourly cost', with: '1'
+    click_on 'Save and continue'
+    expect(page).to have_content 'The number of minutes must be between 0 and 59'
+  end
+
   it 'updates the calculation on demand for item costs' do
     choose 'Charged per item'
     fill_in 'Number of items', with: '5'

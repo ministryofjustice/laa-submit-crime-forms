@@ -170,6 +170,7 @@ en:
               invalid_minutes: The number of minutes must be between 0 and 59
               invalid_period: Time must be more than 0
               invalid: Time must be valid
+              greater_than:  Time must be more than 0
             cost_per_hour:
               blank: Enter the hourly cost
               greater_than: The hourly cost must be more than 0

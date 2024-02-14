@@ -4,4 +4,5 @@
                           width: 5,
                           prefix_text: "&pound;".html_safe,
                           inputmode: "decimal",
+                          value: number_with_precision(@form_object.cost_per_item, precision: 2),
                           label: { text: t('.cost_per_item', item: t(".#{@form_object.item_type}")), size: size } %>
