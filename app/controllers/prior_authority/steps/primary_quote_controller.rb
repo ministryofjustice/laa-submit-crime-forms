@@ -3,16 +3,15 @@ module PriorAuthority
     class PrimaryQuoteController < BaseController
       def edit
         @form_object = PrimaryQuoteForm.build(
-          primary_quote,
+          record,
           application: current_application
         )
 
-        @primary_quote_document = current_application.primary_quote.document
+        @primary_quote_document = record.document
       end
 
       def update
-        record = primary_quote
-        @primary_quote_document = current_application.primary_quote.document
+        @primary_quote_document = record.document
         pending_document = params[:prior_authority_steps_primary_quote_form][:document]
 
         return if file_error_present(pending_document)
@@ -27,10 +26,8 @@ module PriorAuthority
 
       private
 
-      def primary_quote
-        record = current_application.primary_quote || current_application.build_primary_quote
-        record.service_type = record.custom_service_name if record.service_type == 'custom'
-        record
+      def record
+        current_application.primary_quote || current_application.build_primary_quote
       end
 
       def as
@@ -38,7 +35,7 @@ module PriorAuthority
       end
 
       def additional_permitted_params
-        [:service_type_suggestion]
+        %i[service_type_suggestion service_type custom_service_name]
       end
 
       def file_uploader

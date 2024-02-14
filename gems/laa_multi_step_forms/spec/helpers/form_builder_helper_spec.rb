@@ -56,6 +56,50 @@ foo: 'bar' }
     end
   end
 
+  describe '#reload_button' do
+    context 'standard button' do
+      let(:expected_markup) do
+        '<button type="submit" formnovalidate="formnovalidate" class="govuk-button govuk-button--secondary" ' \
+          'data-module="govuk-button" data-prevent-double-click="true" name="reload">' \
+          'Update the calculation</button>'
+      end
+
+      it 'outputs only the continue button' do
+        expect(
+          builder.reload_button
+        ).to eq(expected_markup)
+      end
+    end
+
+    context 'button text can be customised' do
+      before do
+        # Ensure we don't rely on specific locales, so we have predictable tests
+        allow(I18n).to receive(:t).with('helpers.submit.refresh').and_return('Refresh')
+      end
+
+      it 'outputs the buttons with specific text' do
+        html = builder.reload_button(button: :refresh)
+        doc = Nokogiri::HTML.fragment(html)
+
+        assert_select(doc, 'button', attributes: { name: 'save_and_refresh' }, text: 'Refresh')
+      end
+    end
+
+    context 'custom attributes' do
+      it 'outputs the buttons with additional attributes' do
+        html = builder.reload_button(
+          opts: { class: 'custom-class-secondary', foo: 'bar' }
+        )
+        doc = Nokogiri::HTML.fragment(html)
+
+        assert_select(
+          doc, 'button', attributes: { class: 'govuk-button govuk-button--secondary custom-class-secondary',
+foo: 'bar' }
+        )
+      end
+    end
+  end
+
   describe '#continue_button' do
     context 'when there is no secondary action' do
       let(:expected_markup) do

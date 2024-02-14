@@ -9,22 +9,30 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     expect(page).to have_content 'Primary quote Cannot yet start'
   end
 
-  it 'allows primary quote creation' do
-    fill_in_until_step(:primary_quote)
-    click_on 'Primary quote'
-    expect(page).to have_title 'Primary quote'
-
-    fill_in 'Service required', with: 'Forensics'
-    fill_in 'Contact full name', with: 'Joe Bloggs'
-    fill_in 'Organisation', with: 'LAA'
-    fill_in 'Postcode', with: 'CR0 1RE'
-    page.attach_file(Rails.root.join('spec/fixtures/files/test.png').to_s) do
-      page.find('.govuk-file-upload').click
+  context 'when I fill in a primary quote' do
+    before do
+      fill_in_until_step(:primary_quote)
+      click_on 'Primary quote'
+      expect(page).to have_title 'Primary quote'
+      fill_in 'Service required', with: 'Custom Forensics'
+      fill_in 'Contact full name', with: 'Joe Bloggs'
+      fill_in 'Organisation', with: 'LAA'
+      fill_in 'Postcode', with: 'CR0 1RE'
+      page.attach_file(Rails.root.join('spec/fixtures/files/test.png').to_s) do
+        page.find('.govuk-file-upload').click
+      end
     end
 
-    click_on 'Save and continue'
+    it 'allows primary quote creation' do
+      click_on 'Save and continue'
+      expect(page).to have_content 'Service cost'
+    end
 
-    expect(page).to have_content 'Service cost'
+    it 'pre-populates the text field with a custom service name' do
+      click_on 'Save and continue'
+      click_on 'Back'
+      expect(page).to have_field 'Service required', with: 'Custom Forensics'
+    end
   end
 
   it 'validates primary quote form fields' do

@@ -20,6 +20,10 @@ module LaaMultiStepForms
       submit_button(button, opts.merge(secondary: true, name: 'save_and_refresh'))
     end
 
+    def reload_button(button: :update_calculation, opts: {})
+      submit_button(button, opts.merge(secondary: true, name: 'reload'))
+    end
+
     def continue_button(primary: :save_and_continue, secondary: :save_and_come_back_later,
                         primary_opts: {}, secondary_opts: {})
       submit_button(primary, primary_opts) do

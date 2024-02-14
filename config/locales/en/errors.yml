@@ -202,15 +202,6 @@ en:
             travel_cost_per_hour:
               blank: Enter the cost per hour
               greater_than: The cost per hour must be more than 0
-            cost_per_hour:
-              blank: Enter the hourly cost
-              greater_than: The hourly cost must be more than 0
-            items:
-              blank: Enter the number of items
-              greater_than: The number of items must be more than 0
-            cost_per_item:
-              blank: Enter the cost per item
-              greater_than: The cost per item must be more than 0
         prior_authority/steps/additional_costs/overview_form:
           attributes:
             additional_costs_still_to_add:
@@ -231,6 +222,15 @@ en:
               invalid_minutes: The number of minutes must be between 0 and 59
               invalid_period: Time must be more than 0
               invalid: Time must be valid
+            cost_per_hour:
+              blank: Enter the hourly cost
+              greater_than: The hourly cost must be more than 0
+            items:
+              blank: Enter the number of items
+              greater_than: The number of items must be more than 0
+            cost_per_item:
+              blank: Enter the cost per item
+              greater_than: The cost per item must be more than 0
         prior_authority/steps/reason_why_form:
           attributes:
             reason_why:

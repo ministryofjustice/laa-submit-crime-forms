@@ -1,6 +1,8 @@
 <% decision_step_header %>
 <% if @form_object.alternative_quotes.any? %>
   <%= render 'with_alternative_quotes' %>
+<% elsif params[:deleted] %>
+  <%= render 'last_quote_deleted' %>
 <% else %>
   <%= render 'no_alternative_quotes' %>
 <% end %>

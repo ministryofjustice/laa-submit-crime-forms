@@ -80,6 +80,12 @@ with the current step, and either running the validations and saving it or just
 saving the data (this is done when saving a draft version). It also redirects to
 the next step based on the `decision_tree_class` (see Routing between steps).
 
+There are a few "magic" params that will cause special behaviour to be applied here:
+
+* `commit_draft` will skip validations and redirect to `after_commit_redirect_path`. This is used for the "Save and come back later" flow
+* `reload` will skip validations, not persist data, and re-render the page. This is used to updatean on-screen calculation based on data entered so far without persisting anything in the database (particularly relevant when dealing with "add another" forms)
+* `save_and_refresh` will skip validations, persist the data, and redirect back to the same page again
+
 ### additional_permitted_params
 
 By default the `update_and_advance` method will permit params based on the attributes

@@ -156,11 +156,19 @@ module PriorAuthority
       click_on 'Save and continue'
     end
 
-    def fill_in_service_cost
+    def fill_in_service_cost(cost_type: :variable)
       choose 'Yes'
-      choose 'Charged per item'
-      fill_in 'Number of items', with: '5'
-      fill_in 'What is the cost per item?', with: '1.23'
+      choose 'Charged per item' if cost_type == :variable
+
+      if cost_type == :per_hour
+        fill_in 'Hours', with: '1'
+        fill_in 'Minutes', with: '0'
+        fill_in 'Hourly cost', with: '100'
+      else
+        fill_in 'Number of items', with: '5'
+        fill_in 'What is the cost per item?', with: '1.23'
+      end
+
       click_on 'Save and continue'
     end
   end

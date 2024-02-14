@@ -32,13 +32,12 @@
                                     hint: { text: t('.cost_per_hour_hint') } %>
         <% end %>
       <% end %>
-
-      <%= form.refresh_button(button: :update_calculation_no_article) %>
+      <%= form.reload_button(button: :update_calculation_no_article) %>
       <span class="govuk-caption-l"><%= t('.total_cost') %></span>
       <h2 class="govuk-heading-l">
         <%= @form_object.formatted_total_cost %>
       </h2>
-      <%= form.continue_button %>
+      <%= form.continue_button secondary: false %>
     <% end %>
   </div>
 </div>

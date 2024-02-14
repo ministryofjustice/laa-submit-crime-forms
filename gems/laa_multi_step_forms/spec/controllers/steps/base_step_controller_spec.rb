@@ -267,6 +267,41 @@ RSpec.describe DummyStepController, type: :controller do
       end
     end
 
+    context 'when reloading (without save)' do
+      let(:form) { instance_double(Steps::BaseFormObject, application:, record:) }
+      let(:record) { application }
+      let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, reload: true } }
+
+      it 'sets the paramters on the form' do
+        expect(form_class).to receive(:new)
+          .with({ 'application' => application,
+                  'record' => application,
+                  'first' => '1',
+                  'second' => '2' })
+
+        put :update, params:
+      end
+
+      context 'additional/missing params are passed in' do
+        let(:params) { { id: application.id, test_model: { first: 1, third: 3 }, reload: true } }
+
+        it 'ignore additional and skips missing params' do
+          expect(form_class).to receive(:new)
+            .with({ 'application' => application,
+                    'record' => application,
+                    'first' => '1' })
+
+          put :update, params:
+        end
+      end
+
+      it 'calls the subclass implementation of reload' do
+        put(:update, params:)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
     context 'when saving the record' do
       let(:params) { { id: application.id, test_model: { first: 1, second: 2 } } }
 

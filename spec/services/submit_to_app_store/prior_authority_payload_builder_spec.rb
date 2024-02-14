@@ -10,6 +10,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         ufn: '123123/123',
         laa_reference: 'LAA-n4AohV',
         status: 'pre_draft',
+        custom_service_name: nil,
         reason_why: 'something',
         main_offence: 'something',
         client_detained: true,
@@ -27,9 +28,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         firm_name: 'Firm A',
         client_name: 'bob jim',
         prior_authority_granted: false,
-        travel_cost_per_hour: '50.0',
-        travel_cost_reason: nil,
-        travel_time: 150,
         no_alternative_quote_reason: 'a reason',
         defendant: {
           first_name: 'bob',
@@ -73,8 +71,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         ],
         quotes: [
           {
-            service_type: 'pathologist_report',
-            custom_service_name: nil,
             contact_full_name: 'Joe Bloggs',
             organisation: 'LAA',
             postcode: 'CR0 1RE',
@@ -93,7 +89,12 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
               file_path: 'test_path',
               file_size: 1234,
               file_type: 'image/png'
-            }
+            },
+            travel_cost_per_hour: '50.0',
+            travel_cost_reason: nil,
+            travel_time: 150,
+            additional_cost_list: nil,
+            additional_cost_total: nil,
           }
         ],
         additional_costs: []

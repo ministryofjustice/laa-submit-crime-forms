@@ -1,6 +1,32 @@
 module PriorAuthority
   module Steps
     class PrimaryQuoteForm < ::Steps::BaseFormObject
+      def self.attribute_names
+        super - %w[service_type custom_service_name]
+      end
+
+      def initialize(attrs)
+        # We have logic to set these below if a service type suggestion is provided,
+        # and we don't want the arbitrary order of attribute assignment to overwrite that
+        if attrs['service_type_suggestion'].present?
+          attrs.delete('service_type')
+          attrs.delete('custom_service_name')
+        else
+
+          # This ensures that the 'service type suggestion' field in the UI is
+          # is pre-populated with the custom name
+          if attrs[:application].service_type == 'custom'
+            attrs[:application].service_type = attrs[:application].custom_service_name
+          end
+
+          # But otherwise, we need to pull in application-wide settings to this quote-specific model
+          attrs[:service_type] ||= attrs[:application].service_type
+          attrs[:custom_service_name] ||= attrs[:application].custom_service_name
+        end
+
+        super(attrs)
+      end
+
       attribute :service_type, :value_object, source: QuoteServices
       attribute :custom_service_name, :string
       attribute :contact_full_name, :string
@@ -39,7 +65,16 @@ module PriorAuthority
       private
 
       def persist!
-        record.update!(attributes.merge(default_attributes))
+        record.update!(attributes.except('service_type', 'custom_service_name')
+                                 .merge(default_attributes))
+        application.update(service_type:, custom_service_name:)
+
+        # If a change to service type has rendered any alternative quotes invalid,
+        # delete them because we don't yet have a UI for highlighting invalidities
+        # from the overview screen
+        application.alternative_quotes
+                   .reject { AlternativeQuotes::DetailForm.build(_1, application:).valid? }
+                   .each(&:destroy)
       end
 
       def default_attributes

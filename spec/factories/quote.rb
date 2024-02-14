@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :quote do
-    service_type { 'pathologist_report' }
-    custom_service_name { nil }
     contact_full_name { 'Joe Bloggs' }
     organisation { 'LAA' }
     postcode { 'CR0 1RE' }
@@ -10,30 +8,24 @@ FactoryBot.define do
     document factory: %i[quote_document], strategy: :build
   end
 
+  trait :variable_cost do
+    travel_cost_per_hour { 50.0 }
+    travel_time { 150 }
+    user_chosen_cost_type { 'per_hour' }
+  end
+
   trait :blank do
-    service_type { nil }
     contact_full_name { nil }
-    custom_service_name { nil }
     organisation { nil }
     postcode { nil }
     primary { nil }
-  end
-
-  trait :custom do
-    service_type { 'custom' }
-    custom_service_name { 'random service' }
-  end
-
-  trait :variable_cost do
-    service_type { 'meteorologist' }
-    user_chosen_cost_type { 'per_hour' }
   end
 
   trait :primary do
     primary { true }
   end
 
-  trait :additional do
+  trait :alternative do
     primary { false }
   end
 
