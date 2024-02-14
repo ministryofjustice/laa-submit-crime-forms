@@ -14,6 +14,7 @@ RSpec.describe 'Prior authority applications - travel costs', :javascript, type:
   context 'when the user clicks through to the travel details page' do
     before do
       within '#travel-cost-summary' do
+        find '.govuk-link'
         click_on 'Change'
       end
     end
