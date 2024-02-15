@@ -12,8 +12,8 @@ module GOVUKDesignSystemFormBuilder
       FIELDS = %i[hours minutes].freeze
       DEFAULT_WIDTH = 2
 
-      def segement_id(key)
-        "#{FIELDS.index(key) + 1}i"
+      def segment_id(key)
+        (FIELDS.index(key) + 1).to_s
       end
 
       def multiparameter_key(key)
@@ -128,7 +128,7 @@ module GOVUKDesignSystemFormBuilder
         if has_errors? && link_errors
           field_id(link_errors:)
         else
-          [@object_name, @attribute_name, segement_id(segment)].join('_')
+          [@object_name, @attribute_name, segment_id(segment)].join('_')
         end
       end
 
@@ -137,7 +137,7 @@ module GOVUKDesignSystemFormBuilder
           '%<object_name>s[%<input_name>s(%<segment>s)]',
           object_name: @object_name,
           input_name: @attribute_name,
-          segment: segement_id(segment)
+          segment: segment_id(segment)
         )
       end
 

@@ -77,12 +77,8 @@ en:
               inclusion: Select how you are being charged
             period:
               blank: Enter the time
-              blank_hours: The number of hours must be a number
-              invalid_hours: The number of hours must be 0 or more
-              blank_minutes: The number of minutes must be a number
-              invalid_minutes: The number of minutes must be between 0 and 59
-              invalid_period: Time must be more than 0
               invalid: Time must be valid
+              greater_than:  Time must be more than 0
             cost_per_hour:
               blank: Enter the hourly cost
               greater_than: The hourly cost must be more than 0
@@ -93,11 +89,6 @@ en:
               blank: Enter the cost per item
               greater_than: The cost per item must be more than 0
             travel_time:
-              blank_hours: The number of hours must be a number
-              invalid_hours: The number of hours must be 0 or more
-              blank_minutes: The number of minutes must be a number
-              invalid_minutes: The number of minutes must be between 0 and 59
-              invalid_period: Travel time must be more than 0
               invalid: Travel time must be valid
             travel_cost_per_hour:
               greater_than: The cost per hour must be more than 0
