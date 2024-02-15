@@ -8,7 +8,7 @@ module PriorAuthority
       def initialize(attrs)
         # We have logic to set these below if a service type suggestion is provided,
         # and we don't want the arbitrary order of attribute assignment to overwrite that
-        if attrs['service_type_suggestion'].present?
+        if attrs.key?('service_type_suggestion')
           attrs.delete('service_type')
           attrs.delete('custom_service_name')
         else
@@ -23,7 +23,6 @@ module PriorAuthority
           attrs[:service_type] ||= attrs[:application].service_type
           attrs[:custom_service_name] ||= attrs[:application].custom_service_name
         end
-
         super(attrs)
       end
 
