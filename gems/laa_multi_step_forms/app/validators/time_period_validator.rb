@@ -42,14 +42,14 @@ class TimePeriodValidator < ActiveModel::EachValidator
   end
 
   def validate_hours(hours)
-    add_error(:blank_hours) if hours.nil?
+    add_error(:blank_hours) if hours.blank?
     add_error(:non_numerical_hours) if non_numerical_string?(hours)
     add_error(:non_integer_hours) if non_integer_string?(hours)
     add_error(:invalid_hours) unless hours.to_i >= 0
   end
 
   def validate_minutes(minutes)
-    add_error(:blank_minutes) if minutes.nil?
+    add_error(:blank_minutes) if minutes.blank?
     add_error(:non_numerical_minutes) if non_numerical_string?(minutes)
     add_error(:non_integer_minutes) if non_integer_string?(minutes)
     add_error(:invalid_minutes) unless minutes.to_i.between?(0, 59)
