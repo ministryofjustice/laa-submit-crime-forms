@@ -160,7 +160,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   end
 
   describe '#custom_service_name' do
-    subject(:form) { described_class.new(arguments.merge(service_type_suggestion:)) }
+    subject(:form) { described_class.new(arguments.merge(service_type_suggestion:).with_indifferent_access) }
 
     let(:service_type) { PriorAuthority::QuoteServices.values.sample }
 
@@ -174,6 +174,12 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       let(:service_type_suggestion) { 'garbage value' }
 
       it { expect(subject.custom_service_name).to eq('garbage value') }
+    end
+
+    context 'when it is included but blank' do
+      let(:service_type_suggestion) { '' }
+
+      it { is_expected.not_to be_valid }
     end
   end
 end
