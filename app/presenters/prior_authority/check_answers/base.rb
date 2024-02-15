@@ -10,7 +10,7 @@ module PriorAuthority
       delegate :sanitize, to: 'ApplicationController.helpers'
 
       def translate_table_key(section, key, **)
-        I18n.t("prior_authority.steps.check_answers.show.sections.#{section}.#{key}", **)
+        I18n.t("prior_authority.steps.check_answers.edit.sections.#{section}.#{key}", **)
       end
 
       def title(**)

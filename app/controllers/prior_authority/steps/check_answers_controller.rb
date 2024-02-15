@@ -6,11 +6,16 @@ module PriorAuthority
       #
       # before_action :check_complete?
 
-      def show
+      def edit
         @application = current_application
         @application.update!(navigation_stack: stack_with_step_moved_to_end)
 
         @report = CheckAnswers::Report.new(@application)
+      end
+
+      # TODO: CRM457-1132 check answers confirmation form
+      def update
+        # update_and_advance(CheckAnswersForm, as:, after_commit_redirect_path:)
       end
 
       private
