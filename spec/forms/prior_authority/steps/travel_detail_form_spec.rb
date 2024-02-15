@@ -8,8 +8,8 @@ RSpec.describe PriorAuthority::Steps::TravelDetailForm do
       application: application,
       record: application,
       travel_cost_reason: travel_cost_reason,
-      'travel_time(1i)': travel_hours,
-      'travel_time(2i)': travel_minutes,
+      'travel_time(1)': travel_hours,
+      'travel_time(2)': travel_minutes,
       travel_cost_per_hour: travel_cost_per_hour
     }
   end
@@ -45,8 +45,11 @@ RSpec.describe PriorAuthority::Steps::TravelDetailForm do
           'Explain why there are travel costs if your client is not detained'
         )
         expect(form.errors.of_kind?(:travel_time, :blank_hours)).to be(true)
-        expect(form.errors.messages[:travel_time]).to include('The number of hours must be a number')
+        expect(form.errors.messages[:travel_time]).to include('Enter the number of hours')
+        expect(form.errors.messages[:travel_time]).to include('The number of minutes must be between 0 and 59')
       end
+
+      it { expect(form.total_cost).to eq 0 }
 
       context 'when travel costs do not require justification' do
         let(:prison_law) { true }

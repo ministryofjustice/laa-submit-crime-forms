@@ -26,12 +26,9 @@ class TimePeriodValidator < ActiveModel::EachValidator
 
   private
 
-  # rubocop:disable Metrics/AbcSize
   def validate_period(time_period)
-    add_error(:blank_hours) if time_period.hours.nil?
-    add_error(:invalid_hours) unless time_period.hours.to_i >= 0
-    add_error(:blank_minutes) if time_period.minutes.nil?
-    add_error(:invalid_minutes) unless time_period.minutes.to_i.between?(0, 59)
+    validate_hours(time_period.hours)
+    validate_minutes(time_period.minutes)
 
     if time_period.is_a?(IntegerTimePeriod)
       add_error(:invalid_period) unless time_period.to_i >= 0
@@ -43,7 +40,36 @@ class TimePeriodValidator < ActiveModel::EachValidator
       add_error(:invalid)
     end
   end
-  # rubocop:enable Metrics/AbcSize
+
+  def validate_hours(hours)
+    add_error(:blank_hours) if hours.nil?
+    add_error(:non_numerical_hours) if non_numerical_string?(hours)
+    add_error(:non_integer_hours) if non_integer_string?(hours)
+    add_error(:invalid_hours) unless hours.to_i >= 0
+  end
+
+  def validate_minutes(minutes)
+    add_error(:blank_minutes) if minutes.nil?
+    add_error(:non_numerical_minutes) if non_numerical_string?(minutes)
+    add_error(:non_integer_minutes) if non_integer_string?(minutes)
+    add_error(:invalid_minutes) unless minutes.to_i.between?(0, 59)
+  end
+
+  def non_numerical_string?(value)
+    return false unless value.is_a?(String)
+
+    non_decimal_string?(value) && non_integer_string?(value)
+  end
+
+  def non_integer_string?(value)
+    return false unless value.is_a?(String)
+
+    value.strip.to_i.to_s != value.strip
+  end
+
+  def non_decimal_string?(value)
+    value.strip.to_f.to_s != value.strip
+  end
 
   def add_error(error)
     record.errors.add(attribute, error)
