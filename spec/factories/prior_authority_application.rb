@@ -150,6 +150,41 @@ FactoryBot.define do
       reason_why { 'something' }
     end
 
+    trait :with_all_tasks_completed do
+      prison_law { true }
+      ufn { '123123/123' }
+      with_firm_and_solicitor
+      with_defendant
+
+      # next hearing details
+      next_hearing { true }
+      next_hearing_date { 1.day.from_now }
+
+      # quotes
+      service_type { 'telecoms_expert' }
+      primary_quote factory: %i[quote primary], strategy: :build
+      supporting_documents { build_list(:supporting_document, 2) }
+      prior_authority_granted { false }
+      no_alternative_quote_reason { 'a reason' }
+      alternative_quotes_still_to_add { false }
+
+      reason_why { 'something' }
+
+      after(:create) do |paa, _a|
+        create(:defendant, :valid_paa, defendable_id: paa.id, defendable_type: paa.class.to_s)
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/ufn"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/case_contact"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/client_detail"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/case_detail"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/next_hearing"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/primary_quote"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/primary_quote_summary"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/alternative_quotes"
+        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/reason_why"
+        paa.save
+      end
+    end
+
     trait :with_alternative_quotes do
       quotes { build_list(:quote, 2, :alternative) }
     end

@@ -3,7 +3,7 @@ en:
   prior_authority:
     steps:
       check_answers:
-        show:
+        edit:
           page_title: Check your answers
           heading: Check your answers
           sections:
