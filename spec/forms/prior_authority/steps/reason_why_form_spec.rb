@@ -36,7 +36,7 @@ RSpec.describe PriorAuthority::Steps::ReasonWhyForm do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:reason_why, :too_long)).to be(true)
         expect(form.errors.messages[:reason_why]).to include(
-          'The reaosn why you need prior authority cannot be more than 2000 characters.'
+          'The reason why you need prior authority cannot be more than 2000 characters.'
         )
       end
     end
