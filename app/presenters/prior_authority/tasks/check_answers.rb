@@ -15,12 +15,9 @@ module PriorAuthority
         edit_prior_authority_steps_check_answers_path
       end
 
-      # TODO: completed once user has moved to the next page?? remove nocov once we have a next page
-      # :nocov:
       def completed?
-        application.navigation_stack[0..-2].include?(path)
+        application.status == PriorAuthorityApplication.statuses[:submitted]
       end
-      # :nocov:
     end
   end
 end

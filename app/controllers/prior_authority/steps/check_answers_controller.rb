@@ -1,8 +1,8 @@
 module PriorAuthority
   module Steps
     class CheckAnswersController < PriorAuthority::Steps::BaseController
-      # TODO: This is a placeholder to show how the before_action would be implemented
-      # expect to repeat this before form submission as well.
+      # TODO: CRM457-1132 This is a placeholder to show how the before_action
+      # would be implemented expect to repeat this before form submission as well.
       #
       # before_action :check_complete?
 

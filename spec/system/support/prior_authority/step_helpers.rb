@@ -226,9 +226,6 @@ module PriorAuthority
     def fill_in_reason_for_prior_authority
       fill_in 'Why is prior authority required?', with: 'Required because...'
 
-      # this emulates a drop of a file on the dropzone
-      # find(".dz-clickable").drop(file_fixture("basic_bulk_submission.csv"))
-
       click_on 'Save and continue'
     end
   end

@@ -26,4 +26,24 @@ RSpec.describe PriorAuthority::Tasks::CheckAnswers, type: :presenter do
       it { is_expected.to be_can_start }
     end
   end
+
+  describe '#completed?' do
+    subject(:completed?) { presenter.completed? }
+
+    context 'when application status is submitted' do
+      before do
+        allow(application).to receive(:status).and_return('submitted')
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'when application status is not submitted' do
+      before do
+        allow(application).to receive(:status).and_return('draft')
+      end
+
+      it { is_expected.to be false }
+    end
+  end
 end
