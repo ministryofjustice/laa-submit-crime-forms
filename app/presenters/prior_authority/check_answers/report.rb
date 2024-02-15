@@ -10,7 +10,6 @@ module PriorAuthority
         contact_details
         about_case
         about_request
-        further_information
       ].freeze
 
       attr_reader :application
@@ -77,12 +76,6 @@ module PriorAuthority
           PrimaryQuoteCard.new(application),
           AlternativeQuotesCard.new(application),
           ReasonWhyCard.new(application),
-        ]
-      end
-
-      def further_information_section
-        [
-          # TODO: FurtherInformationCard.new(application)
         ]
       end
 

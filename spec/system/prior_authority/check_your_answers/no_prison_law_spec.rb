@@ -14,7 +14,6 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
       .and have_css('.govuk-heading-l', text: 'Contact details')
       .and have_css('.govuk-heading-l', text: 'About the case')
       .and have_css('.govuk-heading-l', text: 'About the request')
-      .and have_css('.govuk-heading-l', text: 'Required further information')
   end
 
   it 'shows the application details card and continues to check your answers' do
