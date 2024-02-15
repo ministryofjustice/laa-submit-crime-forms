@@ -19,6 +19,9 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
       fill_in 'Contact full name', with: 'Joe Bloggs'
       fill_in 'Organisation', with: 'LAA'
       fill_in 'Postcode', with: 'CR0 1RE'
+      page.attach_file(Rails.root.join('spec/fixtures/files/test.png').to_s) do
+        page.find('.govuk-file-upload').click
+      end
     end
 
     it 'allows primary quote creation' do
@@ -33,9 +36,13 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     end
   end
 
-  it 'validates primary quote fields fields' do
+  it 'validates primary quote form fields' do
     fill_in_until_step(:primary_quote)
     click_on 'Primary quote'
+
+    page.attach_file(Rails.root.join('spec/fixtures/files/test.png').to_s) do
+      page.find('.govuk-file-upload').click
+    end
 
     click_on 'Save and continue'
     expect(page).to have_content 'Enter the service required'

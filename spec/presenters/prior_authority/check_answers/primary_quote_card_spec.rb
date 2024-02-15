@@ -27,7 +27,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
           :prior_authority_application,
           client_detained: true,
           prior_authority_granted: true,
-          service_type: 'telecoms_expert',
+          service_type: 'telecommunications_expert',
           primary_quote: primary_quote,
         )
       end
@@ -46,7 +46,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
         expect(card.row_data).to include(
           {
             head_key: 'service_name',
-            text: 'Telecoms Expert',
+            text: 'Telecommunications expert',
           },
           {
             head_key: 'service_details',
@@ -72,7 +72,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
       let(:application) do
         build(
           :prior_authority_application,
-          service_type: 'pathologist',
+          service_type: 'pathologist_report',
           primary_quote: primary_quote,
         )
       end
@@ -100,7 +100,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
       let(:application) do
         build(
           :prior_authority_application,
-          service_type: 'telecoms_expert',
+          service_type: 'telecommunications_expert',
           primary_quote: primary_quote,
         )
       end
@@ -124,7 +124,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
       let(:application) do
         build(
           :prior_authority_application,
-          service_type: 'interpreters',
+          service_type: 'interpreter',
           primary_quote: primary_quote,
         )
       end
@@ -148,7 +148,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
       let(:application) do
         build(
           :prior_authority_application,
-          service_type: 'telecoms_expert',
+          service_type: 'telecommunications_expert',
           primary_quote: primary_quote,
         )
       end
@@ -173,7 +173,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
         build(
           :prior_authority_application,
           client_detained: true,
-          service_type: 'telecoms_expert',
+          service_type: 'telecommunications_expert',
           primary_quote: primary_quote,
         )
       end
@@ -196,7 +196,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
         build(
           :prior_authority_application,
           client_detained: false,
-          service_type: 'telecoms_expert',
+          service_type: 'telecommunications_expert',
           primary_quote: primary_quote,
         )
       end

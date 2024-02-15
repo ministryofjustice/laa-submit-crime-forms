@@ -8,6 +8,7 @@ FactoryBot.define do
     travel_cost_per_hour { 50.0 }
     travel_time { 150 }
     user_chosen_cost_type { 'per_hour' }
+    document factory: %i[quote_document], strategy: :build
 
     trait :blank do
       contact_full_name { nil }
@@ -23,5 +24,9 @@ FactoryBot.define do
     trait :alternative do
       primary { false }
     end
+  end
+
+  trait :no_document do
+    document { nil }
   end
 end
