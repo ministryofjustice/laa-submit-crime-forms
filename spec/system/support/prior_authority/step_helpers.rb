@@ -210,8 +210,8 @@ module PriorAuthority
       choose 'Charged per item'
       fill_in 'Number of items', with: '1'
       fill_in 'What is the cost per item?', with: '100'
-      fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_1i', with: '1'
-      fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_2i', with: '0'
+      fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_1', with: '1'
+      fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_2', with: '0'
       fill_in 'What is the hourly cost?', with: '50'
       fill_in 'Total additional costs', with: '5'
 
