@@ -166,11 +166,6 @@ en:
               inclusion: Select how you are being charged
             period:
               blank: Enter the time
-              blank_hours: The number of hours must be a number
-              invalid_hours: The number of hours must be 0 or more
-              blank_minutes: The number of minutes must be a number
-              invalid_minutes: The number of minutes must be between 0 and 59
-              invalid_period: Time must be more than 0
               invalid: Time must be valid
               greater_than:  Time must be more than 0
             cost_per_hour:
@@ -191,11 +186,6 @@ en:
               blank: Explain why there are travel costs if your client is not detained
             travel_time:
               blank: Enter the travel time
-              blank_hours: The number of hours must be a number
-              invalid_hours: The number of hours must be 0 or more
-              blank_minutes: The number of minutes must be a number
-              invalid_minutes: The number of minutes must be between 0 and 59
-              invalid_period: Travel time must be more than 0
               invalid: Travel time must be valid
             travel_cost_per_hour:
               blank: Enter the cost per hour
@@ -214,11 +204,6 @@ en:
               inclusion: Select how you are being charged
             period:
               blank: Enter the time
-              blank_hours: The number of hours must be a number
-              invalid_hours: The number of hours must be 0 or more
-              blank_minutes: The number of minutes must be a number
-              invalid_minutes: The number of minutes must be between 0 and 59
-              invalid_period: Time must be more than 0
               invalid: Time must be valid
               greater_than: Time must be more than 0
             cost_per_hour:
@@ -435,3 +420,13 @@ en:
               invalid: |
                 Name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
                 Name must be 2 words or more.
+      messages:
+        blank_hours: Enter the number of hours
+        invalid_hours: The number of hours must be 0 or more
+        blank_minutes: Enter the number of minutes
+        invalid_minutes: The number of minutes must be between 0 and 59
+        invalid_period: Time must be more than 0
+        non_numerical_hours: The number of hours must be a number
+        non_numerical_minutes: The number of minutes must be a number
+        non_integer_hours: The number of hours must be a whole number
+        non_integer_minutes: The number of minutes must be a whole number
