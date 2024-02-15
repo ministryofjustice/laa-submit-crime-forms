@@ -37,8 +37,8 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
     let(:legend_text) { 'Amount of time spent' }
     let(:hint_text) { 'It is in hours and minutes' }
 
-    let(:minutes_multiparam_attribute) { '2i' }
-    let(:hour_multiparam_attribute) { '1i' }
+    let(:minutes_multiparam_attribute) { '2' }
+    let(:hour_multiparam_attribute) { '1' }
     let(:multiparam_attributes) { [hour_multiparam_attribute, minutes_multiparam_attribute] }
 
     let(:hour_identifier) { "person_time_spent_#{hour_multiparam_attribute}" }
@@ -248,14 +248,14 @@ maxlength: '2' })
         specify 'should set the hour value correctly via the error link id' do
           expect(subject).to have_tag('input', with: {
                                         id: 'person-time-spent-field-error',
-            name: 'person[time_spent(1i)]'
+            name: 'person[time_spent(1)]'
                                       })
         end
 
         specify 'should set the minutes value correctly' do
           expect(subject).to have_tag('input', with: {
                                         id: minute_identifier,
-            name: 'person[time_spent(2i)]'
+            name: 'person[time_spent(2)]'
                                       })
         end
       end
