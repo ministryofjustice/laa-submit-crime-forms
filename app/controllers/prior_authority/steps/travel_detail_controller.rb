@@ -12,6 +12,10 @@ module PriorAuthority
         update_and_advance(TravelDetailForm, as:, after_commit_redirect_path:, record:)
       end
 
+      def reload
+        render :edit
+      end
+
       private
 
       def record

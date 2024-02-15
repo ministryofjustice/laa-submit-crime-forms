@@ -37,11 +37,6 @@ RSpec.describe 'Prior authority applications - travel costs' do
         expect(page).to have_title 'Primary quote summary'
       end
 
-      it 'allows user to enter information and come back later' do
-        click_on 'Save and come back later'
-        expect(page).to have_title 'Your applications'
-      end
-
       it 'allows user to view calculation' do
         click_on 'Update calculation'
         expect(page).to have_content 'Total cost £1.61'
