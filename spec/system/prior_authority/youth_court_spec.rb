@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Prior authority applications - add youth court' do
   before do
-    fill_in_until_step(:youth_court, court_type: "Magistrate's court")
+    fill_in_until_step(:youth_court, court_type: "Magistrates' court")
   end
 
   context 'when youth court matter question answered' do

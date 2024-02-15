@@ -116,7 +116,6 @@ en:
               defendants_ethnicity: Defendants ethnic group
               defendant_identification: Defendant identification
               defendant_disabled: Defendant disability
-              
         groups:
           application_status:
             heading: Claim Status

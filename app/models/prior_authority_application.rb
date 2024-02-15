@@ -41,4 +41,12 @@ class PriorAuthorityApplication < ApplicationRecord
   scope :assessed, -> { where(status: %w[granted part_granted rejected]) }
 
   scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
+
+  def youth_court_applicable?
+    court_type == PriorAuthority::CourtTypeOptions::MAGISTRATE.to_s
+  end
+
+  def psychiatric_liaison_applicable?
+    court_type == PriorAuthority::CourtTypeOptions::CENTRAL_CRIMINAL.to_s
+  end
 end

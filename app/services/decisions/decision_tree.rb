@@ -15,6 +15,7 @@ module Decisions
     NSM_EQUALITY = 'nsm/steps/equality'.freeze
 
     PRIOR_AUTHORITY_START_PAGE = 'prior_authority/steps/start_page'.freeze
+    PRIOR_AUTHORITY_CHECK_ANSWERS = 'prior_authority/steps/check_answers'.freeze
     PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY = 'prior_authority/steps/primary_quote_summary'.freeze
     PRIOR_AUTHORITY_ADDITIONAL_COSTS = 'prior_authority/steps/additional_costs'.freeze
     PRIOR_AUTHORITY_ALTERNATIVE_QUOTES = 'prior_authority/steps/alternative_quotes'.freeze
@@ -89,32 +90,59 @@ module Decisions
     # prior authority pre-draft application steps
     from(:prison_law).goto(edit: 'prior_authority/steps/authority_value')
     from(:authority_value).goto(edit: 'prior_authority/steps/ufn')
-    from(:ufn).goto(show: PRIOR_AUTHORITY_START_PAGE)
+    from(:ufn)
+      .when(-> { application.navigation_stack[-1].match?('check_answers') })
+      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
+      .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     # ---------------------------------
     # prior authority application steps
     # ---------------------------------
-    from(:case_contact).goto(show: PRIOR_AUTHORITY_START_PAGE)
-    from(:client_detail).goto(show: PRIOR_AUTHORITY_START_PAGE)
+    from(:case_contact)
+      .when(-> { application.navigation_stack[-1].match?('check_answers') })
+      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
+      .goto(show: PRIOR_AUTHORITY_START_PAGE)
+
+    from(:client_detail)
+      .when(-> { application.navigation_stack[-1].match?('check_answers') })
+      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
+      .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     # prison law flow
-    from(:next_hearing).goto(show: PRIOR_AUTHORITY_START_PAGE)
+    from(:next_hearing)
+      .when(-> { application.navigation_stack[-1].match?('check_answers') })
+      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
+      .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     # non-prison law flow
-    from(:case_detail).goto(edit: 'prior_authority/steps/hearing_detail')
+    from(:case_detail)
+      .when(-> { application.navigation_stack[-1].match?('check_answers') })
+      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
+      .goto(edit: 'prior_authority/steps/hearing_detail')
+
     from(:hearing_detail)
       .when(-> { application.court_type == PriorAuthority::CourtTypeOptions::MAGISTRATE.to_s })
       .goto(edit: 'prior_authority/steps/youth_court')
       .when(-> { application.court_type == PriorAuthority::CourtTypeOptions::CENTRAL_CRIMINAL.to_s })
       .goto(edit: 'prior_authority/steps/psychiatric_liaison')
+      .when(-> { application.navigation_stack[-1].match?('check_answers') })
+      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
       .goto(show: PRIOR_AUTHORITY_START_PAGE)
-    from(:youth_court).goto(show: PRIOR_AUTHORITY_START_PAGE)
-    from(:psychiatric_liaison).goto(show: PRIOR_AUTHORITY_START_PAGE)
+
+    from(:youth_court)
+      .when(-> { application.navigation_stack[-2..].any? { |el| el.match?('check_answers') } })
+      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
+      .goto(show: PRIOR_AUTHORITY_START_PAGE)
+
+    from(:psychiatric_liaison)
+      .when(-> { application.navigation_stack[-2..].any? { |el| el.match?('check_answers') } })
+      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
+      .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     # primary quote
     from(:primary_quote).goto(edit: 'prior_authority/steps/service_cost')
     from(:service_cost).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
-    from(:reason_why).goto(show: PRIOR_AUTHORITY_START_PAGE)
+
     from(:travel_detail).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
     from(:delete_travel).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
     from(:additional_costs)
@@ -133,5 +161,10 @@ module Decisions
 
     from(:alternative_quote_details)
       .goto(edit: PRIOR_AUTHORITY_ALTERNATIVE_QUOTES)
+
+    from(:reason_why)
+      .when(-> { application.navigation_stack[-1].match?('check_answers') })
+      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
+      .goto(show: PRIOR_AUTHORITY_START_PAGE)
   end
 end

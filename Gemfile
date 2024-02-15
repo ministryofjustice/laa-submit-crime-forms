@@ -50,6 +50,7 @@ group :test do
   gem 'axe-core-rspec'
   gem 'capybara'
   gem 'capybara-selenium'
+  gem 'launchy'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
