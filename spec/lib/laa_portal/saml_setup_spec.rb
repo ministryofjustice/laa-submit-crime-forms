@@ -14,19 +14,25 @@ describe LaaPortal::SamlSetup do
   let(:metadata_url) { nil }
   let(:metadata_file) { nil }
 
+  around do |spec|
+    temporary_env = {
+      'LAA_PORTAL_IDP_METADATA_URL' => metadata_url,
+      'LAA_PORTAL_IDP_METADATA_FILE' => metadata_file,
+      'LAA_PORTAL_SP_CERT' => nil,
+      'LAA_PORTAL_SP_PRIVATE_KEY' => nil,
+    }
+
+    previous_env_values = ENV.slice(*temporary_env.keys)
+    temporary_env.each { |k, v| ENV[k] = v }
+
+    spec.run
+
+    previous_env_values.each { |k, v| ENV[k] = v }
+  end
+
   before do
     allow(Sentry).to receive(:capture_exception)
     allow(OmniAuth.config).to receive(:test_mode).and_return(false)
-
-    stub_const(
-      'ENV',
-      ENV.to_h.merge(
-        'LAA_PORTAL_IDP_METADATA_URL' => metadata_url,
-        'LAA_PORTAL_IDP_METADATA_FILE' => metadata_file,
-        'LAA_PORTAL_SP_CERT' => nil,
-        'LAA_PORTAL_SP_PRIVATE_KEY' => nil,
-      )
-    )
   end
 
   describe '.setup' do
