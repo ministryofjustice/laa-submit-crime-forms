@@ -38,7 +38,7 @@ module PriorAuthority
           *related_to_post_mortem,
           {
             head_key: 'quote_upload',
-            text: 'TODO',
+            text: primary_quote.document.file_name,
           },
           *ordered_by_court,
           {
