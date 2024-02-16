@@ -10,14 +10,24 @@
         <%= govuk_summary_list(**section) %>
       <% end %>
     <% end %>
-    <div class="govuk-button-group">
-      <%# TODO: accept and send path %>
-      <%= link_to '', class: "govuk-button", data_module: "govuk-button", data_prevent_double_click: "true" do %>
-        Accept and send
+
+    <h2 class="govuk-heading-l"><%= t('.subheading') %></h2>
+
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_check_boxes_fieldset :confirm_excluding_vat, multiple: false, legend: nil do %>
+        <%= f.govuk_check_box :confirm_excluding_vat, 1, 0, multiple: false, link_errors: true, label: { text: t('.confirmations.excluding_vat') } %>
       <% end %>
-      <%= link_to prior_authority_root_path(anchor: 'drafts'), class: "govuk-button govuk-button--secondary", data_module: "govuk-button", data_prevent_double_click: "true" do %>
-        Save and come back later
+
+      <%= f.govuk_check_boxes_fieldset :confirm_travel_expenditure, multiple: false, legend: nil do %>
+        <%= f.govuk_check_box :confirm_travel_expenditure, 1, 0, multiple: false, link_errors: true, label: { text: t('.confirmations.travel_expenditure') } %>
       <% end %>
-    </div>
+
+      <p class="govuk-body">
+        <%= t('.confirmations.blurb') %>
+      </p>
+      <%= f.continue_button(primary: :accept_and_send) %>
+    <% end %>
   </div>
 </div>
