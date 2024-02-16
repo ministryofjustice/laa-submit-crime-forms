@@ -144,6 +144,7 @@ Rails.application.routes.draw do
         end
         upload_step :reason_why
         edit_step :check_answers
+        show_step :submission_confirmation
       end
     end
 

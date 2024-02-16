@@ -226,3 +226,19 @@ en:
           page_title: Are you sure you want to delete this additional cost?
           yes_delete: Yes, delete it
           no_delete: No, do not delete it
+      submission_confirmation:
+        show:
+          page_title: Application complete
+          panel_heading: Application complete
+          panel_text: Your LAA reference number
+          print_application:
+            title: How to print your application
+            instructions: If needed you can view all of your submitted applications and print them.
+          confirmation_email_sent: We have sent you a confirmation email.
+          next_steps:
+            title: What happens next
+            process_1: We'll assess your application.
+            process_2: We’ll send you an email to either accept your application or to ask for more information.
+          feedback:
+            link_text: What did you think of this service?
+            description: takes 30 seconds

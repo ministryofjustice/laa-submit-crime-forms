@@ -1,0 +1,35 @@
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">
+        <%= t('.panel_heading')%>
+      </h1>
+      <div class="govuk-panel__body">
+        <%= t('.panel_text')%><br><strong><%= @laa_reference%></strong>
+      </div>
+    </div>
+
+    <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+    <p class="govuk-body"><%= t('.confirmation_email_sent')%></p>
+      <h2 class="govuk-heading-m"><%= t('.next_steps.title')%></h2>
+      <p class="govuk-body"><%= t('.next_steps.process_1')%></p>
+      <p class="govuk-body"><%= t('.next_steps.process_2')%></p>
+      <p class="govuk-body">
+          <a href="#" class="govuk-link"><%= t('.feedback.link_text')%></a>
+          (<%= t('.feedback.description')%>)
+      </p>
+      <h2 class="govuk-heading-m"><%= t('.print_application.title')%></h2>
+      <p class="govuk-body"><%= t('.print_application.instructions')%></p>
+    </div>
+
+    <div class="govuk-button-group confirmation-button-group">
+      <%= link_button t('helpers.view_applications'), prior_authority_applications_path, class: 'govuk-button' %>
+      <%= button_to prior_authority_applications_path, class: "govuk-button govuk-button--secondary" do %>
+        <%= t('helpers.start_new_application')%>
+      <% end %>
+    </div>
+  </div>
+</div>
+
