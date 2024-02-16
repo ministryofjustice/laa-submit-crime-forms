@@ -3,6 +3,10 @@ module PriorAuthority
     class BaseController < ::Steps::BaseStepController
       layout 'prior_authority'
 
+      before_action :check_completed, only: :edit
+
+      def edit; end
+
       private
 
       def decision_tree_class
@@ -26,6 +30,14 @@ module PriorAuthority
       def prune_navigation_stack
         # The default behaviour of prune_navigation_stack assumes linear completion of tasks
         # which doesn't apply to Prior Authority. So we do a noop instead.
+      end
+
+      def check_completed
+        redirect_to prior_authority_steps_start_page_path(current_application) if answers_checked?
+      end
+
+      def answers_checked?
+        PriorAuthority::Tasks::CheckAnswers.new(application: current_application).completed?
       end
     end
   end
