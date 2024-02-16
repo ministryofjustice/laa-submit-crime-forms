@@ -32,12 +32,12 @@ module PriorAuthority
         end
       end
 
-      # TODO: could use index to supply to translations?!
       def alternative_quote_collection
-        alternative_quotes.each_with_object([]) do |alt, memo|
+        alternative_quotes.each_with_object([]).with_index do |(quote, memo), idx|
           memo << {
             head_key: 'quote_summary',
-            text: alternative_quote_summary_html(alt),
+            head_opts: { count: idx + 1 },
+            text: alternative_quote_summary_html(quote),
           }
           memo
         end

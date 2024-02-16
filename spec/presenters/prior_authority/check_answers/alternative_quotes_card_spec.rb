@@ -43,10 +43,12 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
           [
             {
               head_key: 'quote_summary',
+              head_opts: { count: 1 },
               text: 'Jim Bob<br>£50.00'
             },
             {
               head_key: 'quote_summary',
+              head_opts: { count: 2 },
               text: 'John Boy<br>£100.00'
             },
           ]
