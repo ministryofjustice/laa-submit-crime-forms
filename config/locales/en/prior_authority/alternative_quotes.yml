@@ -78,7 +78,6 @@ en:
             period:
               blank: Enter the time
               invalid: Time must be valid
-              greater_than:  Time must be more than 0
             cost_per_hour:
               blank: Enter the hourly cost
               greater_than: The hourly cost must be more than 0

@@ -27,7 +27,7 @@ module PriorAuthority
         end
 
         with_options if: :per_hour? do
-          validates :period, presence: true, time_period: true, numericality: { greater_than: 0 }, is_a_number: true
+          validates :period, presence: true, time_period: true
           validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
         end
 

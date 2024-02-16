@@ -31,6 +31,7 @@ class TimePeriodValidator < ActiveModel::EachValidator
     validate_minutes(time_period.minutes)
 
     if time_period.is_a?(IntegerTimePeriod)
+      add_error(:zero_time_period) if time_period.to_i.zero? && !options[:allow_zero]
       add_error(:invalid_period) unless time_period.to_i >= 0
     else
       # If, after all, we still don't have a valid date object, it means
