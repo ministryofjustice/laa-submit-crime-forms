@@ -36,7 +36,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
       it 'treats a blank file upload as a validation error' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:file_upload, 'Upload the primary quote')).to be(true)
+        expect(form.errors.of_kind?(:file_upload, :blank)).to be(true)
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
         it 'adds an appropriate error message' do
           expect(form).not_to be_valid
-          expect(form.errors.of_kind?(:file_upload, 'The selected file must be smaller than 20MB')).to be(true)
+          expect(form.errors.of_kind?(:file_upload, :attachment_too_large)).to be(true)
         end
       end
 
@@ -105,12 +105,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
         it 'adds an appropriate error message' do
           expect(form).not_to be_valid
-          expect(
-            form.errors.of_kind?(
-              :file_upload,
-              'The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF'
-            )
-          ).to be(true)
+          expect(form.errors.of_kind?(:file_upload, :forbidden_document_type)).to be(true)
         end
       end
 
@@ -121,12 +116,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
         it 'adds an appropriate error message' do
           expect(form).not_to be_valid
-          expect(
-            form.errors.of_kind?(
-              :file_upload,
-              'File potentially contains malware so cannot be uploaded. Please contact your administrator'
-            )
-          ).to be(true)
+          expect(form.errors.of_kind?(:file_upload, :suspected_malware)).to be(true)
         end
       end
     end

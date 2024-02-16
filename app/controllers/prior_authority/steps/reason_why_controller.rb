@@ -14,14 +14,13 @@ module PriorAuthority
       def create
         unless supported_filetype(params[:documents])
           return return_error(nil,
-                              { message: t('shared.shared_upload_errors.file_type',
-                                           file_types: t('shared.shared_upload_errors.file_types')) })
+                              { message: t('activemodel.errors.messages.forbidden_document_type') })
         end
 
         evidence = upload_file(params)
         return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
       rescue FileUpload::FileUploader::PotentialMalwareError => e
-        return_error(e, { message: t('shared.shared_upload_errors.malware') })
+        return_error(e, { message: t('activemodel.errors.messages.suspected_malware') })
       rescue StandardError => e
         return_error(e, { message: t('shared.shared_upload_errors.unable_upload') })
       end

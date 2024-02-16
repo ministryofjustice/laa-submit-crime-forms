@@ -43,23 +43,18 @@ module PriorAuthority
       if file_upload.nil?
         handle_no_upload
       elsif !file_size_within_limit?
-        add_file_upload_error(I18n.t('shared.shared_upload_errors.file_size_limit', max_size: '20MB'))
+        errors.add(:file_upload, :attachment_too_large)
       elsif !supported_filetype?
-        add_file_upload_error(I18n.t('shared.shared_upload_errors.file_type',
-                                     file_types: I18n.t('shared.shared_upload_errors.file_types')))
+        errors.add(:file_upload, :forbidden_document_type)
       elsif suspected_malware?
-        add_file_upload_error(I18n.t('shared.shared_upload_errors.malware'))
+        errors.add(:file_upload, :suspected_malware)
       end
     end
 
     def handle_no_upload
       return if document_already_uploaded? || file_is_optional?
 
-      add_file_upload_error(I18n.t('shared.shared_upload_errors.file_not_present', file: 'primary quote'))
-    end
-
-    def add_file_upload_error(string)
-      errors.add(:file_upload, string)
+      errors.add(:file_upload, :blank)
     end
 
     def file_size_within_limit?

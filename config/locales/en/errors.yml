@@ -11,13 +11,8 @@ en:
       future_not_allowed: Date cannot be in the future
       before_date_from: End date cannot be before start date
     shared_upload_errors:
-      file_size_limit: "The selected file must be smaller than %{max_size}"
-      file_type: "The selected file must be a %{file_types}"
       unable_upload: Unable to upload file at this time
       unable_delete: Unable to delete file at this time
-      malware: File potentially contains malware so cannot be uploaded. Please contact your administrator
-      file_types: DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF
-      file_not_present: "Upload the %{file}"
   laa_multi_step_forms:
     errors:
       format: "%{message}"
@@ -164,6 +159,8 @@ en:
             postcode:
               blank: Enter the postcode
               invalid: Enter a real postcode
+            file_upload:
+              blank: Upload the primary quote
         prior_authority/steps/youth_court_form:
           attributes:
             youth_court:
@@ -443,3 +440,6 @@ en:
         non_integer_hours: The number of hours must be a whole number
         non_integer_minutes: The number of minutes must be a whole number
         zero_time_period: Time must be more than 0
+        attachment_too_large: The selected file must be smaller than 20MB
+        forbidden_document_type: The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF
+        suspected_malware: File potentially contains malware so cannot be uploaded. Please contact your administrator
