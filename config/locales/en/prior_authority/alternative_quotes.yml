@@ -21,6 +21,7 @@ en:
           change: Change
           delete: Delete
           service_details: Service details
+          quote_upload: Quote upload
           additional_items: Additional items
           none: None
           costs: Costs

@@ -56,12 +56,12 @@ module PriorAuthority
         @alternative_quotes ||= application.alternative_quotes
       end
 
-      # TODO: alt quote supporting document[s] required here according to prototype?!
       def alternative_quote_summary_html(quote)
         form = alternative_quote_form(quote)
 
         alternative_quote_summary_html = [
           quote.contact_full_name,
+          quote.document&.file_name,
           NumberTo.pounds(form.total_cost)
         ].compact.join('<br>')
 

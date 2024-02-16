@@ -47,6 +47,20 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         expect(page).to have_content 'Mrs Expert'
       end
 
+      it 'allows me to add a quote with a file' do
+        fill_in 'Contact full name', with: 'Mrs Expert'
+        fill_in 'Organisation', with: 'ExpertiseCo'
+        fill_in 'Postcode', with: 'SW1 1AA'
+        choose 'Charged per item'
+        fill_in 'Number of items', with: '2'
+        fill_in 'What is the cost per item?', with: '3'
+        attach_file(Rails.root.join('spec/fixtures/files/test.png'))
+        click_on 'Save and continue'
+
+        expect(page).to have_content "You've added 1 alternative quote"
+        expect(page).to have_content 'test.png'
+      end
+
       it 'does maths for me' do
         fill_in 'Contact full name', with: 'Mrs Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'

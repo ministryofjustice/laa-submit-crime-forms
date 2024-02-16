@@ -31,7 +31,6 @@ module PriorAuthority
       attribute :contact_full_name, :string
       attribute :organisation, :string
       attribute :postcode, :string
-      attribute :file_upload
 
       validates :service_type, presence: true
       validates :contact_full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }

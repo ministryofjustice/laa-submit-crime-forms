@@ -1,12 +1,14 @@
 module PriorAuthority
-  # This concern expects there to be an attribute called `file_upload` containing the temporary file
-  # and a method called document that returns the appropriate SupportingDocument object
+  # This concern expects there to be a method called document that returns
+  # the appropriate SupportingDocument object
   # It will handle validation automatically, but you will need to call `save_file` in your
-  # `persist` method to get it to actually upload it and persist the metadata
+  # `persist` method to get it to actually upload it and persist the metadata. You will
+  # also need to remove 'file_upload' from your attribute_names
   module DocumentUploader
     extend ActiveSupport::Concern
 
     included do
+      attribute :file_upload
       validate :validate_uploaded_file
     end
 
@@ -15,6 +17,10 @@ module PriorAuthority
     end
 
     private
+
+    def file_is_optional?
+      false
+    end
 
     def save_file
       return if file_upload.blank?
@@ -35,9 +41,7 @@ module PriorAuthority
 
     def validate_uploaded_file
       if file_upload.nil?
-        return if document_already_uploaded?
-
-        add_file_upload_error(I18n.t('shared.shared_upload_errors.file_not_present', file: 'primary quote'))
+        handle_no_upload
       elsif !file_size_within_limit?
         add_file_upload_error(I18n.t('shared.shared_upload_errors.file_size_limit', max_size: '20MB'))
       elsif !supported_filetype?
@@ -46,6 +50,12 @@ module PriorAuthority
       elsif suspected_malware?
         add_file_upload_error(I18n.t('shared.shared_upload_errors.malware'))
       end
+    end
+
+    def handle_no_upload
+      return if document_already_uploaded? || file_is_optional?
+
+      add_file_upload_error(I18n.t('shared.shared_upload_errors.file_not_present', file: 'primary quote'))
     end
 
     def add_file_upload_error(string)
