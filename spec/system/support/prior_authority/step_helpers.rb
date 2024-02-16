@@ -170,7 +170,7 @@ module PriorAuthority
       fill_in 'Organisation', with: 'LAA'
       fill_in 'Postcode', with: 'CR0 1RE'
 
-      attach_file(Rails.root.join('spec/fixtures/files/test.png'))
+      attach_file(file_fixture('test.png'))
 
       click_on 'Save and continue'
     end
