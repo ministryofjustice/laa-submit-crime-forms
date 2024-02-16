@@ -84,6 +84,9 @@ en:
           file_upload_hint: |
             The maximum file size of the quote is 20MB.
             Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
+        uploaded_file_summary:
+          uploaded_files: Uploaded files
+          file_name: File name
 
       psychiatric_liaison:
         edit:

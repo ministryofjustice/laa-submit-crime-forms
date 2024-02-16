@@ -15,8 +15,6 @@ module FileUpload
       @uploader.destroy(file_path)
     end
 
-    private
-
     def scan_file(file)
       result = if Rails.env.production? || ENV.fetch('CLAMBY_ENABLED', nil) == 'true'
                  Clamby.safe?(file.tempfile.path)

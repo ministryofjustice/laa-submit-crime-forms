@@ -45,6 +45,10 @@ en:
           contact_full_name: Contact full name
           organisation: Organisation
           postcode: Postcode
+          file_upload: Upload the quote (optional)
+          file_upload_hint: |
+            The maximum file size of the quote is 20MB.
+            Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
           cost: "%{service_name} cost"
           travel_cost: Travel cost (optional)
           travel_cost_hint: Only include the hourly rate cost. Any other travel expenditure (such as mileage, parking and travel fares) can be added as additional costs.

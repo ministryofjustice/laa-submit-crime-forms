@@ -2,7 +2,7 @@ module PriorAuthority
   module Steps
     class PrimaryQuoteForm < ::Steps::BaseFormObject
       def self.attribute_names
-        super - %w[service_type custom_service_name]
+        super - %w[service_type custom_service_name file_upload]
       end
 
       def initialize(attrs)
@@ -31,11 +31,13 @@ module PriorAuthority
       attribute :contact_full_name, :string
       attribute :organisation, :string
       attribute :postcode, :string
+      attribute :file_upload
 
       validates :service_type, presence: true
       validates :contact_full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
       validates :organisation, presence: true
       validates :postcode, presence: true, uk_postcode: true
+      include DocumentUploader # Include this here so that validations appear in the correct order
 
       def service_type_suggestion=(value)
         # The value of service_type_suggestion is the contents of the visible text field, which is the translated value.
@@ -55,17 +57,14 @@ module PriorAuthority
       end
 
       def document
-        # needed for primary quote summary presenter
-        # can probably remove if we make a custom type for files and handle
-        # upload via the form
-        application.primary_quote.document
+        record.document || record.build_document
       end
 
       private
 
       def persist!
-        record.update!(attributes.except('service_type', 'custom_service_name')
-                                 .merge(default_attributes))
+        save_file
+        save_quote
         application.update(service_type:, custom_service_name:)
 
         # If a change to service type has rendered any alternative quotes invalid,
@@ -84,6 +83,11 @@ module PriorAuthority
 
       def translations
         QuoteServices.values.to_h { [_1.translated, _1.value] }
+      end
+
+      def save_quote
+        record.update!(attributes.except('service_type', 'custom_service_name', 'file_upload')
+                                 .merge(default_attributes))
       end
     end
   end
