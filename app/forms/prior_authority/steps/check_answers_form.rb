@@ -10,12 +10,12 @@ module PriorAuthority
       def persist!
         application.update!(attributes)
 
-        # TODO: placeholder for possible logic to actually submit
-        # PriorAuthorityApplication.transaction do
-        #   application.status = :submitted
-        #   application.update!(attributes)
-        #   SubmitToAppStore.new.process(submission: application)
-        # end
+        # TODO: actually submit to app store
+        PriorAuthorityApplication.transaction do
+          application.status = :submitted
+          application.update!(attributes)
+          # SubmitToAppStore.new.process(submission: application)
+        end
       end
     end
   end

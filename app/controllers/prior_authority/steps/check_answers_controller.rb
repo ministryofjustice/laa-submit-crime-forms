@@ -1,15 +1,10 @@
 module PriorAuthority
   module Steps
-    class CheckAnswersController < PriorAuthority::Steps::BaseController
-      # TODO: CRM457-1132 This is a placeholder to show how the before_action
-      # would be implemented expect to repeat this before form submission as well.
-      #
-      # before_action :check_complete?
-
-      before_action :build_report
+    class CheckAnswersController < BaseController
+      before_action :check_completed, :build_report
 
       def edit
-        @application.update!(navigation_stack: stack_with_step_moved_to_end)
+        current_application.update!(navigation_stack: stack_with_step_moved_to_end)
 
         @form_object = CheckAnswersForm.build(
           current_application
@@ -26,22 +21,25 @@ module PriorAuthority
         :check_answers
       end
 
-      def build_report
-        @application = current_application
-        @report = CheckAnswers::Report.new(@application)
-      end
-
       def stack_with_step_moved_to_end
-        stack_with_step_moved_to_end = @application.navigation_stack.delete_if { |step| step == request.fullpath }
+        stack_with_step_moved_to_end = current_application.navigation_stack.delete_if do |step|
+          step == request.fullpath
+        end
         stack_with_step_moved_to_end << request.fullpath
         stack_with_step_moved_to_end
       end
 
-      # def check_complete?
-      #   return if PriorAuthority::Tasks::CheckAnswers.new(application: current_application).status.complete?
+      def check_completed
+        redirect_to prior_authority_steps_start_page_path(current_application) if answers_checked?
+      end
 
-      #   redirect_to prior_authority_steps_start_page_path(application)
-      # end
+      def answers_checked?
+        PriorAuthority::Tasks::CheckAnswers.new(application: current_application).completed?
+      end
+
+      def build_report
+        @report = CheckAnswers::Report.new(current_application)
+      end
     end
   end
 end

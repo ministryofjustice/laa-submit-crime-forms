@@ -44,4 +44,29 @@ RSpec.describe 'Prior authority applications, check your answers, submission' do
         .and have_css('.govuk-error-message', text: 'Select if you confirm that', count: 2)
     end
   end
+
+  context 'when check answers form already submitted' do
+    before do
+      check 'I confirm that all costs are exclusive of VAT'
+      check 'I confirm that any travel expenditure (such as mileage, ' \
+            'parking and travel fares) is included as additional items ' \
+            'in the primary quote, and is not included as part of any hourly rate'
+
+      click_on 'Accept and send'
+    end
+
+    it 'can be seen on the list of submitted applications' do
+      visit prior_authority_applications_path(anchor: 'submitted')
+
+      expect(page).to have_title('Your applications')
+      expect(page).to have_css('.govuk-table__row', text: '111111/123')
+    end
+
+    it 'stops me getting back to the check your answers page' do
+      application = PriorAuthorityApplication.find_by(ufn: '111111/123')
+      visit prior_authority_steps_check_answers_path(application)
+
+      expect(page).to have_title('Your application progress')
+    end
+  end
 end
