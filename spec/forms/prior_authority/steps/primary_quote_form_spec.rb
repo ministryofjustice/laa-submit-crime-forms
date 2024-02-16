@@ -96,7 +96,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
         it 'adds an appropriate error message' do
           expect(form).not_to be_valid
-          expect(form.errors.of_kind?(:file_upload, :attachment_too_large)).to be(true)
+          expect(form.errors.of_kind?(:file_upload, 'The selected file must be smaller than 1MB')).to be(true)
         end
       end
 

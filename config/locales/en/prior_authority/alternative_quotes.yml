@@ -48,7 +48,7 @@ en:
           postcode: Postcode
           file_upload: Upload the quote (optional)
           file_upload_hint: |
-            The maximum file size of the quote is 20MB.
+            The maximum file size of the quote is %{size}.
             Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
           cost: "%{service_name} cost"
           travel_cost: Travel cost (optional)

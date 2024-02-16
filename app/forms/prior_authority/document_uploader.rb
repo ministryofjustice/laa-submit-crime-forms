@@ -43,7 +43,8 @@ module PriorAuthority
       if file_upload.nil?
         handle_no_upload
       elsif !file_size_within_limit?
-        errors.add(:file_upload, :attachment_too_large)
+        errors.add(:file_upload, I18n.t('shared.shared_upload_errors.attachment_too_large',
+                                        size: FileUpload::FileUploader.human_readable_max_file_size))
       elsif !supported_filetype?
         errors.add(:file_upload, :forbidden_document_type)
       elsif suspected_malware?

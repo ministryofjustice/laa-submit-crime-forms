@@ -13,6 +13,7 @@ en:
     shared_upload_errors:
       unable_upload: Unable to upload file at this time
       unable_delete: Unable to delete file at this time
+      attachment_too_large: The selected file must be smaller than %{size}
   laa_multi_step_forms:
     errors:
       format: "%{message}"
@@ -440,6 +441,5 @@ en:
         non_integer_hours: The number of hours must be a whole number
         non_integer_minutes: The number of minutes must be a whole number
         zero_time_period: Time must be more than 0
-        attachment_too_large: The selected file must be smaller than 20MB
         forbidden_document_type: The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF
         suspected_malware: File potentially contains malware so cannot be uploaded. Please contact your administrator
