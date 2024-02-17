@@ -30,10 +30,29 @@ module PriorAuthority
           {
             head_key: 'ufn',
             text: application.ufn,
+            actions: ufn_change_link,
           },
         ]
       end
       # rubocop:enable Metrics/MethodLength
+
+      def actions
+        []
+      end
+
+      def ufn_change_link
+        helper = Rails.application.routes.url_helpers
+
+        [
+          {
+            href:  helper.url_for(controller: "prior_authority/steps/#{section}",
+                                  action: request_method,
+                                  application_id: application.id,
+                                  only_path: true),
+            visually_hidden_text: 'Change Unique file number',
+          }
+        ]
+      end
     end
   end
 end

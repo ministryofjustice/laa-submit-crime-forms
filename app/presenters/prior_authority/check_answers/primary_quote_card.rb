@@ -100,7 +100,7 @@ module PriorAuthority
         [
           {
             head_key: 'summary',
-            text: PrimaryQuoteCardSummary.new(application).render
+            text: PrimaryQuoteCardSummary.new(application).render,
           },
         ]
       end

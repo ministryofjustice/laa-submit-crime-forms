@@ -3,6 +3,9 @@ module PriorAuthority
   module CheckAnswers
     class Base
       include LaaMultiStepForms::CheckMissingHelper
+      include ActionView::Helpers::UrlHelper
+      include GovukLinkHelper
+      include GovukVisuallyHiddenHelper
       include ActionView::Helpers::TagHelper
 
       attr_accessor :group, :section
@@ -19,7 +22,7 @@ module PriorAuthority
 
       def rows
         row_data.map do |row|
-          row_content(row[:head_key], row[:text], row[:head_opts] || {})
+          row_content(row[:head_key], row[:text], row[:actions], row[:head_opts] || {})
         end
       end
 
@@ -33,7 +36,7 @@ module PriorAuthority
       end
       # :nocov:
 
-      def row_content(head_key, text, head_opts = {})
+      def row_content(head_key, text, actions = [], head_opts = {})
         heading = translate_table_key(section, head_key, **head_opts)
 
         {
@@ -43,8 +46,23 @@ module PriorAuthority
           },
           value: {
             text:
-          }
+          },
+          actions: actions
         }
+      end
+
+      def actions
+        helper = Rails.application.routes.url_helpers
+
+        [
+          govuk_link_to(
+            'Change',
+            helper.url_for(controller: "prior_authority/steps/#{section}",
+                           action: request_method,
+                           application_id: application.id,
+                           only_path: true)
+          ),
+        ]
       end
     end
   end
