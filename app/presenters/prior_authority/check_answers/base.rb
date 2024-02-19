@@ -56,7 +56,7 @@ module PriorAuthority
 
         [
           govuk_link_to(
-            'Change',
+            I18n.t('generic.change'),
             helper.url_for(controller: "prior_authority/steps/#{section}",
                            action: request_method,
                            application_id: application.id,
