@@ -35,7 +35,7 @@ module PriorAuthority
       end
 
       def additional_permitted_params
-        %i[service_type_suggestion service_type custom_service_name]
+        %i[service_type_autocomplete_suggestion]
       end
 
       def file_uploader

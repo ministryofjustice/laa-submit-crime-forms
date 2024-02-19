@@ -8,7 +8,7 @@
     <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
 
     <%= step_form @form_object do |form| %>
-      <%= suggestion_select form, :service_type, PriorAuthority::QuoteServices.values, :to_sym, :translated, width: 20,
+      <%= suggestion_select form, :service_type_autocomplete, PriorAuthority::QuoteServices.values, :to_sym, :translated, width: 20,
                             options: { include_blank: true }, label: { size: "m" }, hint: { size: "s", text: t(".service_name_hint")},
                             data: { autoselect: false } %>
       <h2 class="govuk-heading-m"><%= t(".service_details") %></h2>
