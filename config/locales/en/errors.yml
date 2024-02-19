@@ -148,7 +148,7 @@ en:
               invalid: Unique file number must be in the correct format, for example 310224/001
         prior_authority/steps/primary_quote_form:
           attributes:
-            service_type:
+            service_type_autocomplete:
               blank: Enter the service required
             contact_full_name:
               blank: Enter the contact's full name

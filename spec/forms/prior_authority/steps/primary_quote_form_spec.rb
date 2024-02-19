@@ -7,8 +7,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     {
       record:,
       application:,
-      service_type:,
-      custom_service_name:,
+      service_type_autocomplete_suggestion:,
       contact_full_name:,
       organisation:,
       postcode:,
@@ -17,8 +16,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
   let(:record) { instance_double(Quote) }
   let(:application) { instance_double(PriorAuthorityApplication, service_type: 'forensics') }
-  let(:service_type) { 'forensics_expert' }
-  let(:custom_service_name) { '' }
+  let(:service_type_autocomplete_suggestion) { 'forensics_expert' }
   let(:contact_full_name) { 'Joe Bloggs' }
   let(:organisation) { 'LAA' }
   let(:postcode) { 'CR0 1RE' }
@@ -29,14 +27,14 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     end
 
     context 'with blank quote details' do
-      let(:service_type) { '' }
+      let(:service_type_autocomplete_suggestion) { '' }
       let(:contact_full_name) { '' }
       let(:organisation) { '' }
       let(:postcode) { '' }
 
       it 'has a validation errors on blank fields' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:service_type, :blank)).to be(true)
+        expect(form.errors.of_kind?(:service_type_autocomplete, :blank)).to be(true)
         expect(form.errors.of_kind?(:contact_full_name, :blank)).to be(true)
         expect(form.errors.of_kind?(:organisation, :blank)).to be(true)
         expect(form.errors.of_kind?(:postcode, :blank)).to be(true)
@@ -49,7 +47,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     end
 
     context 'with invalid quote details' do
-      let(:service_type) { 'Forensics Expert' }
+      let(:service_type_autocomplete_suggestion) { 'Forensics Expert' }
       let(:contact_full_name) { 'Tim' }
       let(:organisation) { 'LAA' }
       let(:postcode) { 'loren ipsum' }
@@ -72,7 +70,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     let(:application) { create(:prior_authority_application) }
 
     context 'with valid quote details' do
-      let(:service_type) { 'Forensics Expert' }
+      let(:service_type_autocomplete_suggestion) { 'Forensic scientist' }
       let(:contact_full_name) { 'Joe Bloggs' }
       let(:organisation) { 'LAA' }
       let(:postcode) { 'CR0 1RE' }
@@ -106,15 +104,15 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
           )
           .to(
             hash_including(
-              'service_type' => 'Forensics Expert',
-              'custom_service_name' => '',
+              'service_type' => 'forensic_scientist',
+              'custom_service_name' => nil,
             )
           )
       end
     end
 
     context 'with incomplete quote details' do
-      let(:service_type) { 'Forensics Expert' }
+      let(:service_type_autocomplete_suggestion) { 'Forensic scientist' }
       let(:contact_full_name) { '' }
       let(:organisation) { '' }
       let(:postcode) { '' }
@@ -131,53 +129,68 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
           )
       end
     end
+
+    context 'when data populated from the DB' do
+      subject(:form) { described_class.build(quote, application: prior_authority_application) }
+
+      let(:prior_authority_application) { create(:prior_authority_application, :with_primary_quote) }
+      let(:quote) { create(:quote, :primary, prior_authority_application:) }
+
+      it 'saving does not modify application fields' do
+        expect { form.save }.not_to(change do
+                                      [application.reload.service_type, application.reload.custom_service_name]
+                                    end)
+      end
+    end
   end
 
   describe '#service_type' do
-    subject(:form) { described_class.new(arguments.merge(service_type_suggestion:)) }
+    subject(:form) { described_class.new(arguments.merge(service_type_autocomplete_suggestion:)) }
 
     let(:service_type) { 'culture_expert' }
 
     context 'service type suggestion matches provided service' do
-      let(:service_type_suggestion) { 'Culture expert' }
+      let(:service_type_autocomplete_suggestion) { 'Culture expert' }
 
-      it { expect(subject.service_type).to eq(PriorAuthority::QuoteServices::CULTURE_EXPERT) }
+      it { expect(subject.service_type).to eq(PriorAuthority::QuoteServices::CULTURE_EXPERT.value) }
     end
 
     context 'service type suggestion matches a different service' do
-      let(:service_type_suggestion) { 'Computer expert' }
+      let(:service_type_autocomplete_suggestion) { 'Computer expert' }
 
       it 'uses the service type associated with the suggestion' do
-        expect(subject.service_type).to eq(PriorAuthority::QuoteServices::COMPUTER_EXPERT)
+        expect(subject.service_type).to eq(PriorAuthority::QuoteServices::COMPUTER_EXPERT.value)
       end
     end
 
     context 'service type suggestion does not match a quote service' do
-      let(:service_type_suggestion) { 'garbage value' }
+      let(:service_type_autocomplete_suggestion) { 'garbage value' }
 
-      it { expect(subject.service_type).to eq(PriorAuthority::QuoteServices.new('custom')) }
+      it { expect(subject.service_type).to eq(PriorAuthority::QuoteServices.new('custom').value.to_s) }
     end
   end
 
   describe '#custom_service_name' do
-    subject(:form) { described_class.new(arguments.merge(service_type_suggestion:).with_indifferent_access) }
+    subject(:form) do
+      described_class.new(arguments.merge(service_type_autocomplete_suggestion:).with_indifferent_access)
+    end
 
     let(:service_type) { PriorAuthority::QuoteServices.values.sample }
 
     context 'service type suggestion matches a quote service' do
-      let(:service_type_suggestion) { service_type.translated }
+      let(:service_type_autocomplete_suggestion) { service_type.translated }
 
       it { expect(subject.custom_service_name).to be_nil }
     end
 
     context 'service type suggestion does not match a quote service' do
-      let(:service_type_suggestion) { 'garbage value' }
+      let(:service_type_autocomplete_suggestion) { 'garbage value' }
 
       it { expect(subject.custom_service_name).to eq('garbage value') }
     end
 
     context 'when it is included but blank' do
-      let(:service_type_suggestion) { '' }
+      let(:service_type_autocomplete_suggestion) { '' }
 
       it { is_expected.not_to be_valid }
     end

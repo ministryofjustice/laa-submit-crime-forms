@@ -19,6 +19,15 @@ module PriorAuthority
         scope.service_type == 'custom' ? scope.custom_service_name : scope.service_type
       end
 
+      # this should only be called when JS is disabled
+      def service_type_autocomplete=(value)
+        # used to ensure we use the right scope in validations
+        self.local_values = true
+
+        self.service_type = value
+        self.custom_service_name = nil
+      end
+
       def service_type_autocomplete_suggestion=(value)
         # used to ensure we use the right scope in validations
         self.local_values = true
