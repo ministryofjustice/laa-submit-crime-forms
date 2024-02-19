@@ -50,6 +50,11 @@ en:
               service_details: Service details
               travel_cost_reason: Why travel costs are required
               summary: 'Quote summary'
+              costs: Costs
+              service: Service
+              travel: Travel
+              additional: Additional
+              total_cost: Total cost
             reason_why:
               reason_why: Why prior authority is required
               supporting_documents: Supporting documents

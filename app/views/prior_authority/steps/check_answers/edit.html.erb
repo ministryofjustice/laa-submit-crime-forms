@@ -7,7 +7,17 @@
     <% @report.section_groups.each do |section_group| %>
       <h2 class="govuk-heading-l"><%= section_group[:heading] %></h2>
       <% section_group[:sections].each do |section| %>
-        <%= govuk_summary_list(**section) %>
+        <%# govuk_summary_list(card: section[:card], rows: section[:rows]) %>
+        <%# section[:object].addendum if section[:object].respond_to?(:addendum) %>
+        <%# if section[:object].respond_to?(:presenter) %>
+          <%# section[:object].presenter.render %>
+        <% if section[:object].respond_to?(:template) %>
+            <%= render(section[:object].template, section: section) %>
+        <% else %>
+          <%= govuk_summary_card(**section[:card]) do |card|
+            card.with_summary_list(rows: section[:rows])
+            end %>
+        <% end %>
       <% end %>
     <% end %>
 
