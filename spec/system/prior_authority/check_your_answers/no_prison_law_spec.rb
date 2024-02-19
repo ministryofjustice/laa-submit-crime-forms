@@ -162,7 +162,7 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
   it 'shows the alternative quote card' do
     within('.govuk-summary-card', text: 'Alternative quotes') do
       expect(page)
-        .to have_css('.govuk-summary-card__content', text: 'QuoteJim Bob£155.00')
+        .to have_css('.govuk-summary-card__content', text: 'Quote 1Jim Bob£155.00')
 
       click_on 'Change'
       expect(page).to have_title('You\'ve added 1 alternative quote')
