@@ -153,6 +153,14 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
         .and have_css('.govuk-summary-card__content', text: 'Existing prior authority grantedYes')
         .and have_css('.govuk-summary-card__content', text: 'Why travel costs are requiredClient lives in Wales')
 
+      expect(page)
+        .to have_css('.govuk-table__caption', text: 'Primary quote summary')
+
+      within('.govuk-table__row', text: 'Service') { expect(page).to have_content('£6.15') }
+      within('.govuk-table__row', text: 'Travel') { expect(page).to have_content('£1.61') }
+      within('.govuk-table__row', text: 'Additional') { expect(page).to have_content('£0.00') }
+      within('.govuk-table__row', text: 'Total cost') { expect(page).to have_content('£7.76') }
+
       click_on 'Change'
       expect(page).to have_title('Primary quote summary')
     end
