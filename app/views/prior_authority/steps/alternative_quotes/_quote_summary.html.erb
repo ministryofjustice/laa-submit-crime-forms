@@ -24,7 +24,14 @@
           <%= [alternative_quote.organisation, alternative_quote.postcode].join(', ') %>
         </dd>
       </div>
-      <%# TODO: CRM457-1105 Add file upload summary here %>
+      <% if alternative_quote.document.present? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key"><%= t('.quote_upload') %></dt>
+          <dd class="govuk-summary-list__value">
+            <%= alternative_quote.document.file_name %>
+          </dd>
+        </div>
+      <% end %>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key"><%= t('.additional_items') %></dt>
         <dd class="govuk-summary-list__value">

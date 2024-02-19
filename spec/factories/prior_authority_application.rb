@@ -98,7 +98,7 @@ FactoryBot.define do
       youth_court { 'something' }
       next_hearing { true }
       supporting_documents { build_list(:supporting_document, 2) }
-      quotes { build_list(:quote, 1, :primary) }
+      quotes { [build(:quote, :primary), build(:quote, :alternative, document: nil)] }
       prior_authority_granted { false }
       no_alternative_quote_reason { 'a reason' }
       service_type { 'pathologist_report' }

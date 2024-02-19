@@ -4,22 +4,28 @@ module PriorAuthority
       class DetailForm < PriorAuthority::Steps::QuoteCostForm
         include Rails.application.routes.url_helpers
 
+        def self.attribute_names
+          super - %w[file_upload]
+        end
+
         attribute :id, :string
         attribute :contact_full_name, :string
         attribute :organisation, :string
         attribute :postcode, :string
         attribute :travel_time, :time_period
-        attribute :travel_cost_per_hour, :decimal, precision: 10, scale: 2
+        attribute :travel_cost_per_hour, :gbp
         attribute :additional_cost_list, :string
-        attribute :additional_cost_total, :decimal, precision: 10, scale: 2
+        attribute :additional_cost_total, :gbp
 
         validates :contact_full_name, presence: true
         validates :organisation, presence: true
         validates :postcode, presence: true, uk_postcode: true
-
+        include DocumentUploadable
         include QuoteCostValidations
 
         validates :travel_time, time_period: true
+        validates :travel_cost_per_hour, is_a_number: true
+        validates :additional_cost_total, is_a_number: true
 
         def total_cost
           main_cost + travel_cost + additional_cost
@@ -51,10 +57,20 @@ module PriorAuthority
           additional_cost_total.to_f
         end
 
+        def document
+          record.document || record.build_document
+        end
+
         private
 
         def persist!
-          record.update!(attributes.except('id', 'service_type'))
+          return false unless save_file
+
+          record.update!(attributes.except('id', 'service_type', 'file_upload'))
+        end
+
+        def file_is_optional?
+          true
         end
       end
     end

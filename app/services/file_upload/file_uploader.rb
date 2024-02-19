@@ -15,8 +15,6 @@ module FileUpload
       @uploader.destroy(file_path)
     end
 
-    private
-
     def scan_file(file)
       result = if Rails.env.production? || ENV.fetch('CLAMBY_ENABLED', nil) == 'true'
                  Clamby.safe?(file.tempfile.path)
@@ -25,6 +23,10 @@ module FileUpload
                end
 
       raise PotentialMalwareError unless result
+    end
+
+    def self.human_readable_max_file_size
+      "#{(ENV['MAX_UPLOAD_SIZE_BYTES'].to_i / (1024 * 1024.0)).round}MB"
     end
   end
 end

@@ -21,6 +21,7 @@ en:
           change: Change
           delete: Delete
           service_details: Service details
+          quote_upload: Quote upload
           additional_items: Additional items
           none: None
           costs: Costs
@@ -45,6 +46,10 @@ en:
           contact_full_name: Contact full name
           organisation: Organisation
           postcode: Postcode
+          file_upload: Upload the quote (optional)
+          file_upload_hint: |
+            The maximum file size of the quote is %{size}.
+            Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
           cost: "%{service_name} cost"
           travel_cost: Travel cost (optional)
           travel_cost_hint: Only include the hourly rate cost. Any other travel expenditure (such as mileage, parking and travel fares) can be added as additional costs.
@@ -81,13 +86,20 @@ en:
             cost_per_hour:
               blank: Enter the hourly cost
               greater_than: The hourly cost must be more than 0
+              not_a_number: The hourly cost must be a number, like 25
             items:
               blank: Enter the number of items
               greater_than: The number of items must be more than 0
+              not_a_number: The number of items must be a number, like 25
             cost_per_item:
               blank: Enter the cost per item
               greater_than: The cost per item must be more than 0
+              not_a_number: The cost must be a number, like 25
             travel_time:
               invalid: Travel time must be valid
             travel_cost_per_hour:
               greater_than: The cost per hour must be more than 0
+              not_a_number: The cost per hour must be a number, like 25
+            additional_cost_total:
+              not_a_number: The cost must be a number, like 25
+

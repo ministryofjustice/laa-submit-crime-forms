@@ -17,6 +17,8 @@ class SubmitToAppStore
       end
 
       def document(quote)
+        return nil unless quote.document
+
         quote.document.as_json(only: %i[file_name
                                         file_type
                                         file_size
