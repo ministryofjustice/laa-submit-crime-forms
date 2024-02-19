@@ -23,21 +23,8 @@ module PriorAuthority
       def section_group(name, section_list)
         {
           heading: group_heading(name),
-          sections: sections(section_list),
+          sections: section_list,
         }
-      end
-
-      def sections(section_list)
-        section_list.map do |section|
-          {
-            card: {
-              title: section.title,
-              actions: section.actions,
-            },
-            rows: section.rows,
-            object: section,
-          }
-        end
       end
 
       def application_detail_section
