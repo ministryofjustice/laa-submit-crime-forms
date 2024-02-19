@@ -24,6 +24,10 @@ module PriorAuthority
         base_rows
       end
 
+      def quote_summary
+        @quote_summary ||= PriorAuthority::PrimaryQuoteSummary.new(application)
+      end
+
       # rubocop:disable Metrics/MethodLength
       def base_rows
         [
@@ -46,10 +50,13 @@ module PriorAuthority
             text: I18n.t("generic.#{application.prior_authority_granted?}"),
           },
           *travel_cost_reason,
-          *summary,
         ]
       end
       # rubocop:enable Metrics/MethodLength
+
+      def template
+        'prior_authority/steps/check_answers/primary_quote'
+      end
 
       private
 
@@ -91,16 +98,6 @@ module PriorAuthority
           {
             head_key: 'travel_cost_reason',
             text: application.primary_quote.travel_cost_reason,
-          },
-        ]
-      end
-
-      # TODO: this needs to be modified to add the list or table nested in a single list item/column
-      def summary
-        [
-          {
-            head_key: 'summary',
-            text: PrimaryQuoteCardSummary.new(application).render,
           },
         ]
       end

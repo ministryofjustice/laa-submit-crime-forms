@@ -35,6 +35,7 @@ module PriorAuthority
               actions: section.actions,
             },
             rows: section.rows,
+            object: section,
           }
         end
       end
