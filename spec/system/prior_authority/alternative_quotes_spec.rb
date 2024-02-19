@@ -54,7 +54,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         choose 'Charged per item'
         fill_in 'Number of items', with: '2'
         fill_in 'What is the cost per item?', with: '3'
-        attach_file(Rails.root.join('spec/fixtures/files/test.png'))
+        attach_file(file_fixture('test.png'))
         click_on 'Save and continue'
 
         expect(page).to have_content "You've added 1 alternative quote"

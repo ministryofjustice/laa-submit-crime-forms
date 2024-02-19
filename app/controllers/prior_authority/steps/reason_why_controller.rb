@@ -22,7 +22,7 @@ module PriorAuthority
       rescue FileUpload::FileUploader::PotentialMalwareError => e
         return_error(e, { message: t('activemodel.errors.messages.suspected_malware') })
       rescue StandardError => e
-        return_error(e, { message: t('shared.shared_upload_errors.unable_upload') })
+        return_error(e, { message: t('activemodel.errors.messages.upload_failed') })
       end
 
       def update

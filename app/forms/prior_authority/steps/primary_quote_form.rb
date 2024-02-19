@@ -36,7 +36,7 @@ module PriorAuthority
       validates :contact_full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
       validates :organisation, presence: true
       validates :postcode, presence: true, uk_postcode: true
-      include DocumentUploader # Include this here so that validations appear in the correct order
+      include DocumentUploadable # Include this here so that validations appear in the correct order
 
       def service_type_suggestion=(value)
         # The value of service_type_suggestion is the contents of the visible text field, which is the translated value.
@@ -62,7 +62,8 @@ module PriorAuthority
       private
 
       def persist!
-        save_file
+        return false unless save_file
+
         save_quote
         application.update(service_type:, custom_service_name:)
 

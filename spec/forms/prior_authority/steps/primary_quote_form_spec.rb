@@ -96,7 +96,9 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
         it 'adds an appropriate error message' do
           expect(form).not_to be_valid
-          expect(form.errors.of_kind?(:file_upload, 'The selected file must be smaller than 1MB')).to be(true)
+          expect(form.errors[:file_upload]).to include(
+            'The selected file must be smaller than 5MB'
+          )
         end
       end
 
@@ -105,7 +107,9 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
         it 'adds an appropriate error message' do
           expect(form).not_to be_valid
-          expect(form.errors.of_kind?(:file_upload, :forbidden_document_type)).to be(true)
+          expect(form.errors[:file_upload]).to include(
+            'The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF'
+          )
         end
       end
 
@@ -116,7 +120,9 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
         it 'adds an appropriate error message' do
           expect(form).not_to be_valid
-          expect(form.errors.of_kind?(:file_upload, :suspected_malware)).to be(true)
+          expect(form.errors[:file_upload]).to include(
+            'File potentially contains malware so cannot be uploaded. Please contact your administrator'
+          )
         end
       end
     end
@@ -217,6 +223,19 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
           file_size: 150,
           file_path: '/cloud/url'
         )
+      end
+
+      context 'when there is an upload error' do
+        before { expect(uploader).to receive(:upload).with(file_upload).and_raise StandardError }
+
+        it 'does not update data' do
+          expect { save }.not_to(change { application.reload.attributes })
+        end
+
+        it 'adds a validation error' do
+          save
+          expect(form.errors[:file_upload]).to include 'Unable to upload file at this time'
+        end
       end
     end
   end

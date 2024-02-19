@@ -10,10 +10,6 @@ module PriorAuthority
 
       def update
         update_and_advance(PrimaryQuoteForm, as:, after_commit_redirect_path:, record:)
-      rescue StandardError => e
-        Sentry.capture_exception(e)
-        @form_object.errors.add(:base, t('shared.shared_upload_errors.unable_upload'))
-        render :edit
       end
 
       private

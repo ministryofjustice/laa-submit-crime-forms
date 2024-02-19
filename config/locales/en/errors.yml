@@ -11,7 +11,6 @@ en:
       future_not_allowed: Date cannot be in the future
       before_date_from: End date cannot be before start date
     shared_upload_errors:
-      unable_upload: Unable to upload file at this time
       unable_delete: Unable to delete file at this time
       attachment_too_large: The selected file must be smaller than %{size}
   laa_multi_step_forms:
@@ -443,3 +442,4 @@ en:
         zero_time_period: Time must be more than 0
         forbidden_document_type: The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF
         suspected_malware: File potentially contains malware so cannot be uploaded. Please contact your administrator
+        upload_failed: Unable to upload file at this time

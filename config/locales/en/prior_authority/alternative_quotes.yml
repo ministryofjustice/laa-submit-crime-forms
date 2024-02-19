@@ -86,13 +86,20 @@ en:
             cost_per_hour:
               blank: Enter the hourly cost
               greater_than: The hourly cost must be more than 0
+              not_a_number: The hourly cost must be a number, like 25
             items:
               blank: Enter the number of items
               greater_than: The number of items must be more than 0
+              not_a_number: The number of items must be a number, like 25
             cost_per_item:
               blank: Enter the cost per item
               greater_than: The cost per item must be more than 0
+              not_a_number: The cost must be a number, like 25
             travel_time:
               invalid: Travel time must be valid
             travel_cost_per_hour:
               greater_than: The cost per hour must be more than 0
+              not_a_number: The cost per hour must be a number, like 25
+            additional_cost_total:
+              not_a_number: The cost must be a number, like 25
+
