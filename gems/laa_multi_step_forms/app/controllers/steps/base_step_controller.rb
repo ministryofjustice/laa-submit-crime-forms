@@ -33,7 +33,7 @@ module Steps
       hash = permitted_params(form_class).to_h
       record = opts.fetch(:record, current_application)
       @form_object = form_class.new(
-        hash.merge(application: current_application, record: record)
+        hash.merge(application: current_application, record: record, commit_draft: params.key?(:commit_draft))
       )
 
       if params.key?(:commit_draft)

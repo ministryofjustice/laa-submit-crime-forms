@@ -8,14 +8,14 @@ module PriorAuthority
       validates :confirm_travel_expenditure, acceptance: { accept: true }, allow_nil: false
 
       def persist!
-        application.update!(attributes)
+        submit! unless commit_draft
+      end
 
-        # TODO: actually submit to app store
-        PriorAuthorityApplication.transaction do
-          application.status = :submitted
-          application.update!(attributes)
-          # SubmitToAppStore.new.process(submission: application)
-        end
+      def submit!
+        return unless application.update!(attributes.merge({ status: :submitted }))
+
+        SubmitToAppStore.new.process(submission: application)
+        true
       end
     end
   end

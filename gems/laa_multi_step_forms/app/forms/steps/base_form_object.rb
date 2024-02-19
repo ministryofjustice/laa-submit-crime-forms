@@ -5,7 +5,8 @@ module Steps
     include ActiveRecord::AttributeAssignment
 
     attr_accessor :application,
-                  :record
+                  :record,
+                  :commit_draft
 
     # Initialize a new form object given an AR model, reading and setting
     # the attributes declared in the form object.

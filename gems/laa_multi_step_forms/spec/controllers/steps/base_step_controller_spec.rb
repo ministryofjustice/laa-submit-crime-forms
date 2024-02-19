@@ -161,26 +161,28 @@ RSpec.describe DummyStepController, type: :controller do
 
   describe '#update_and_advance' do
     context 'when saving as a draft' do
-      let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, commit_draft: true } }
+      let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, commit_draft: '' } }
 
       it 'sets the paramters on the form' do
         expect(form_class).to receive(:new)
           .with({ 'application' => application,
                   'record' => application,
                   'first' => '1',
-                  'second' => '2' })
+                  'second' => '2',
+                  'commit_draft' => true })
 
         put :update, params:
       end
 
       context 'additional/missing params are passed in' do
-        let(:params) { { id: application.id, test_model: { first: 1, third: 3 }, commit_draft: true } }
+        let(:params) { { id: application.id, test_model: { first: 1, third: 3 }, commit_draft: '' } }
 
         it 'ignore additional and skips missing params' do
           expect(form_class).to receive(:new)
             .with({ 'application' => application,
                     'record' => application,
-                    'first' => '1' })
+                    'first' => '1',
+                    'commit_draft' => true })
 
           put :update, params:
         end
@@ -219,26 +221,28 @@ RSpec.describe DummyStepController, type: :controller do
     context 'when refreshing (with save)' do
       let(:form) { instance_double(Steps::BaseFormObject, application: application, record: record, save!: true) }
       let(:record) { application }
-      let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, save_and_refresh: true } }
+      let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, save_and_refresh: '' } }
 
       it 'sets the paramters on the form' do
         expect(form_class).to receive(:new)
           .with({ 'application' => application,
                   'record' => application,
                   'first' => '1',
-                  'second' => '2' })
+                  'second' => '2',
+                  'commit_draft' => false })
 
         put :update, params:
       end
 
       context 'additional/missing params are passed in' do
-        let(:params) { { id: application.id, test_model: { first: 1, third: 3 }, commit_draft: true } }
+        let(:params) { { id: application.id, test_model: { first: 1, third: 3 }, commit_draft: '' } }
 
         it 'ignore additional and skips missing params' do
           expect(form_class).to receive(:new)
             .with({ 'application' => application,
                     'record' => application,
-                    'first' => '1' })
+                    'first' => '1',
+                    'commit_draft' => true })
 
           put :update, params:
         end
@@ -277,7 +281,8 @@ RSpec.describe DummyStepController, type: :controller do
           .with({ 'application' => application,
                   'record' => application,
                   'first' => '1',
-                  'second' => '2' })
+                  'second' => '2',
+                  'commit_draft' => false })
 
         put :update, params:
       end
@@ -289,7 +294,8 @@ RSpec.describe DummyStepController, type: :controller do
           expect(form_class).to receive(:new)
             .with({ 'application' => application,
                     'record' => application,
-                    'first' => '1' })
+                    'first' => '1',
+                    'commit_draft' => false })
 
           put :update, params:
         end
@@ -310,7 +316,8 @@ RSpec.describe DummyStepController, type: :controller do
           .with({ 'application' => application,
                   'record' => application,
                   'first' => '1',
-                  'second' => '2' })
+                  'second' => '2',
+                  'commit_draft' => false })
 
         put :update, params:
       end
