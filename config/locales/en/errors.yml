@@ -74,6 +74,12 @@ en:
               blank: Enter the name of the prison
             subject_to_poca:
               inclusion: Select yes if this case is subject to POCA (Proceeds of Crime Act 2002)?
+        prior_authority/steps/check_answers_form:
+          attributes:
+            confirm_excluding_vat:
+              accepted: Select if you confirm that all costs are exclusive of VAT
+            confirm_travel_expenditure:
+              accepted: Select if you confirm that any travel expenditure (such as mileage, parking and travel fares) is included as additional items in the primary quote, and is not included as part of any hourly rate
         prior_authority/steps/case_detail/defendant_form:
           attributes:
             maat:

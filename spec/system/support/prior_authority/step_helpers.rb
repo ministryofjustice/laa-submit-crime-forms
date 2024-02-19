@@ -6,7 +6,7 @@ module PriorAuthority
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize
-    def fill_in_until_step(step, prison_law: 'No', court_type: "Magistrates' court")
+    def fill_in_until_step(step, prison_law: 'No', client_detained: 'No', court_type: "Magistrates' court")
       fill_in_prison_law_and_authority_value(prison_law)
 
       return if step == :ufn
@@ -29,7 +29,7 @@ module PriorAuthority
       if prison_law == 'Yes'
         fill_in_next_hearing
       else
-        fill_in_case_detail
+        fill_in_case_detail(client_detained:)
 
         return if step == :hearing_detail
 
@@ -52,7 +52,7 @@ module PriorAuthority
       return if step.in?(%i[primary_quote_summary travel_cost])
 
       within('#travel-cost-summary') { click_on 'Change' }
-      fill_in_travel_cost
+      fill_in_travel_cost(prison_law:, client_detained:)
       click_on 'Save and continue'
 
       return if step == :alternative_quote_question
@@ -114,7 +114,7 @@ module PriorAuthority
       click_on 'Save and continue'
     end
 
-    def fill_in_case_detail
+    def fill_in_case_detail(client_detained: 'No', client_detained_prison: '')
       fill_in 'What was the main offence', with: 'Supply a controlled drug of Class A - Heroin'
 
       within('.govuk-form-group', text: 'Date of representation order') do
@@ -125,7 +125,8 @@ module PriorAuthority
 
       fill_in 'MAAT number', with: '123456'
       within('.govuk-form-group', text: 'Is your client detained?') do
-        choose 'No'
+        choose client_detained
+        fill_in 'Where is your client detained?', with: client_detained_prison if client_detained == 'Yes'
       end
 
       within('.govuk-form-group', text: 'Is this case subject to POCA (Proceeds of Crime Act 2002)?') do
@@ -169,13 +170,16 @@ module PriorAuthority
       fill_in 'Organisation', with: 'LAA'
       fill_in 'Postcode', with: 'CR0 1RE'
 
-      attach_file(Rails.root.join('spec/fixtures/files/test.png'))
+      attach_file(file_fixture('test.png'))
 
       click_on 'Save and continue'
     end
 
-    def fill_in_travel_cost
-      fill_in 'Why are there travel costs if your client is not detained?', with: 'Client lives in Wales'
+    def fill_in_travel_cost(prison_law: 'No', client_detained: 'No')
+      if prison_law == 'No' && client_detained == 'No'
+        fill_in 'Why are there travel costs if your client is not detained?', with: 'Client lives in Wales'
+      end
+
       fill_in 'Hours', with: 0
       fill_in 'Minutes', with: 30
       fill_in 'Hourly cost', with: 3.21

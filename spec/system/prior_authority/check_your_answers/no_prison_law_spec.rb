@@ -149,10 +149,9 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
       expect(page)
         .to have_css('.govuk-summary-card__content', text: 'Service requiredMeteorologist')
         .and have_css('.govuk-summary-card__content', text: 'Service detailsJoe BloggsLAA, CR0 1RE')
-        .and have_css('.govuk-summary-card__content', text: 'Quote uploadTODO')
+        .and have_css('.govuk-summary-card__content', text: 'Quote uploadtest.png')
         .and have_css('.govuk-summary-card__content', text: 'Existing prior authority grantedYes')
         .and have_css('.govuk-summary-card__content', text: 'Why travel costs are requiredClient lives in Wales')
-      # TODO: quote sumary
 
       click_on 'Change'
       expect(page).to have_title('Primary quote summary')

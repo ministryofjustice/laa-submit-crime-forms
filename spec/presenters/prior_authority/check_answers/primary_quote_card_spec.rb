@@ -54,7 +54,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
           },
           {
             head_key: 'quote_upload',
-            text: 'TODO',
+            text: 'test.png',
           },
           {
             head_key: 'prior_authority_granted',

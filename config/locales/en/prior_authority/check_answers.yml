@@ -4,8 +4,18 @@ en:
     steps:
       check_answers:
         edit:
-          page_title: Check your answers
+          confirmations:
+            blurb: |
+              By submitting this application you are confirming that, to the best of your
+              knowledge, the details you are providing are correct.
+
+            excluding_vat: I confirm that all costs are exclusive of VAT
+            travel_expenditure: |
+              I confirm that any travel expenditure (such as mileage, parking and travel fares)
+              is included as additional items in the primary quote, and is not included as part
+              of any hourly rate
           heading: Check your answers
+          page_title: Check your answers
           sections:
             alternative_quotes:
               quote_summary: "Quote %{count}"
@@ -47,6 +57,7 @@ en:
               laa_reference: LAA reference
               prison_law: Prison law
               ufn: Unique file number
+          subheading: Now send your application
 
         groups:
           about_case:

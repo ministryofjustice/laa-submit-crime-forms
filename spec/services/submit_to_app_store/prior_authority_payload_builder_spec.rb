@@ -29,6 +29,8 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         client_name: 'bob jim',
         prior_authority_granted: false,
         no_alternative_quote_reason: 'a reason',
+        confirm_excluding_vat: true,
+        confirm_travel_expenditure: true,
         defendant: {
           first_name: 'bob',
           last_name: 'jim',
@@ -107,7 +109,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
     }
   end
   let(:provider) { create(:provider) }
-  let(:application) { create(:prior_authority_application, :full) }
+  let(:application) { create(:prior_authority_application, :full, :with_confirmations) }
   let(:fixed_arbitrary_date) { Date.new(2024, 1, 15) }
 
   before { travel_to(fixed_arbitrary_date) }
