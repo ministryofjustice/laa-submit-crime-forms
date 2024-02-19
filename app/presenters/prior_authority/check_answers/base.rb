@@ -31,6 +31,12 @@ module PriorAuthority
       end
 
       # :nocov:
+      def template
+        nil
+      end
+      # :nocov:
+
+      # :nocov:
       def row_data
         raise 'Implement in subclass'
       end
