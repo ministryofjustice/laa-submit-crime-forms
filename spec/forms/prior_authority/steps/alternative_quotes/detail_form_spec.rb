@@ -61,4 +61,23 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
       end
     end
   end
+
+  describe '#travel_cost' do
+    let(:arguments) do
+      {
+        record: record,
+        application: application,
+        'travel_time(1)': travel_hours,
+        'travel_time(2)': travel_minutes,
+        travel_cost_per_hour: '1'
+      }
+    end
+
+    let(:travel_hours) { '1' }
+    let(:travel_minutes) { '' }
+
+    it 'returns 0 if travel_time is invalid' do
+      expect(form.travel_cost).to eq 0
+    end
+  end
 end
