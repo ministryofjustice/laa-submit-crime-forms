@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 module PriorAuthority
   module CheckAnswers
     class PrimaryQuoteCard < Base
@@ -51,15 +50,9 @@ module PriorAuthority
             text: I18n.t("generic.#{application.prior_authority_granted?}"),
           },
           *travel_cost_reason,
-          # *summary,
-          # *summary_too,
         ]
       end
       # rubocop:enable Metrics/MethodLength
-
-      # def presenter
-      #   PrimaryQuoteCardSummary.new(application)
-      # end
 
       def template
         'prior_authority/steps/check_answers/primary_quote'
@@ -108,43 +101,6 @@ module PriorAuthority
           },
         ]
       end
-
-      # TODO: this needs to be modified to add the list or table nested in a single list item/column
-      # def summary
-      #   [
-      #     {
-      #       head_key: 'summary',
-      #       text: PrimaryQuoteCardSummary.new(application).render
-      #     },
-      #   ]
-      # end
-
-      # def summary_too
-      #   [
-      #     {
-      #       head_key: 'costs',
-      #       text: sanitize('<b>Total</b>', tags: ['b'])
-      #     },
-      #     {
-      #       head_key: 'service',
-      #       text: NumberTo.pounds(quote_summary.service_cost_form.total_cost)
-      #     },
-      #     {
-      #       head_key: 'travel',
-      #       text: NumberTo.pounds(quote_summary.travel_detail_form.total_cost)
-      #     },
-      #     {
-      #       head_key: 'additional',
-      #       text:  NumberTo.pounds(quote_summary.additional_cost_overview_form.total_cost)
-      #     },
-      #     {
-      #       head_key: 'total_cost',
-      #       # text:  format_total(quote_summary.formatted_total_cost),
-      #       text: sanitize("<b>#{quote_summary.formatted_total_cost}</b>", tags: ['b'])
-      #     },
-      #   ]
-      # end
     end
   end
 end
-# rubocop:disable Metrics/ClassLength

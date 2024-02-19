@@ -1,31 +1,32 @@
 <% if local_assigns[:section] %>
   <% quote_summary = section[:object].quote_summary %>
+
   <table class="govuk-table">
     <caption class="govuk-table__caption govuk-visually-hidden">
-      <%='primary quote summary' %>
+      <%= t('.caption') %>
     </caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header"><%= 'Costs' %></th>
-        <th scope="col" class="govuk-table__header"><%= 'Total' %></th>
+        <th scope="col" class="govuk-table__header"><%= t('.headers.costs') %></th>
+        <th scope="col" class="govuk-table__header"><%= t('.headers.total') %></th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><%= 'Service' %></td>
+        <td class="govuk-table__cell"><%= t('.service') %></td>
         <td class="govuk-table__cell"><%= NumberTo.pounds(quote_summary.service_cost_form.total_cost) %></td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><%= 'Travel' %></td>
+        <td class="govuk-table__cell"><%= t('.travel') %></td>
         <td class="govuk-table__cell"><%= NumberTo.pounds(quote_summary.travel_detail_form.total_cost) %></td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><%= 'Additional' %></td>
+        <td class="govuk-table__cell"><%= t('.additional') %></td>
         <td class="govuk-table__cell"><%= NumberTo.pounds(quote_summary.additional_cost_overview_form.total_cost) %></td>
       </tr>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">
-          <strong><%= 'Total cost' %></strong>
+          <strong><%= t('.total_cost') %></strong>
         </td>
         <td class="govuk-table__cell">
           <strong><%= quote_summary.formatted_total_cost %></strong>

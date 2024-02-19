@@ -20,6 +20,14 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
     end
   end
 
+  describe '#template' do
+    let(:primary_quote) { build(:quote, :primary) }
+
+    it 'stores a template name for rendering' do
+      expect(card.template).to eq 'prior_authority/steps/check_answers/primary_quote'
+    end
+  end
+
   describe '#row_data' do
     context 'with service type without special rules' do
       let(:application) do
@@ -59,10 +67,6 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
           {
             head_key: 'prior_authority_granted',
             text: 'Yes',
-          },
-          {
-            head_key: 'summary',
-            text: kind_of(String),
           },
         )
       end
