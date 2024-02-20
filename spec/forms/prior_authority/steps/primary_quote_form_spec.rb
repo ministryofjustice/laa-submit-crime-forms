@@ -251,6 +251,26 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     end
   end
 
+  describe 'variable assignment order' do
+    subject(:form) { described_class.new }
+
+    it 'service_type_autocomplete_suggestion overwrites service_type_autocomplete' do
+      form.service_type_autocomplete = 'Culture expert'
+      form.service_type_autocomplete_suggestion = 'apples'
+
+      expect(form.service_type).to eq('custom')
+      expect(form.custom_service_name).to eq('apples')
+    end
+
+    it 'service_type_autocomplete does not overwrites service_type_autocomplete_suggestion' do
+      form.service_type_autocomplete_suggestion = 'apples'
+      form.service_type_autocomplete = 'Culture expert'
+
+      expect(form.service_type).to eq('custom')
+      expect(form.custom_service_name).to eq('apples')
+    end
+  end
+
   describe '#service_type' do
     subject(:form) { described_class.new(arguments.merge(service_type_autocomplete_suggestion:)) }
 
