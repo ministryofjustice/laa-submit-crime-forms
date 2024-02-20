@@ -23,7 +23,7 @@ module PriorAuthority
         scope.service_type == 'custom' ? scope.custom_service_name : scope.service_type
       end
 
-      # this should only be called when JS is disabled
+      # this should only be used when JS is disabled - otherwise overwritten by service_type_autocomplete_suggestion
       def service_type_autocomplete=(value)
         # ensure that is the suggestion is set first it cannot be overwritten
         return if local_values
