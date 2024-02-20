@@ -17,6 +17,7 @@
                                 width: 5,
                                 prefix_text: "&pound;".html_safe,
                                 inputmode: "decimal",
+                                value: gbp_field_value(@form_object.travel_cost_per_hour),
                                 label: { text: t('.hourly_cost'), size: 's' },
                                 hint: { text: t('.hourly_cost_hint') } %>
       <%= form.reload_button(button: :update_calculation_no_article) %>
