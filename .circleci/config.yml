@@ -403,7 +403,7 @@ workflows:
               ignore:
                 - main
       - build-to-ecr:
-          context: laa-claim-non-standard-magistrates-fee-dev
+          context: laa-apply-for-a-criminal-legal-aid-application-dev
           requires:
             - branch-build-approval
       - hold-dev:
@@ -411,7 +411,7 @@ workflows:
           requires:
             - build-to-ecr
       - deploy-dev:
-          context: laa-claim-non-standard-magistrates-fee-dev
+          context: laa-apply-for-a-criminal-legal-aid-application-dev
           requires:
             - hold-dev
       - hold-dev-crm4:
@@ -427,7 +427,7 @@ workflows:
           requires:
             - build-to-ecr
       - deploy-uat:
-          context: laa-claim-non-standard-magistrates-fee-uat
+          context: laa-apply-for-a-criminal-legal-aid-application-uat
           requires:
             - hold-uat
 
@@ -457,7 +457,7 @@ workflows:
           requires:
             - build-to-ecr
       - deploy-uat:
-          context: laa-claim-non-standard-magistrates-fee-uat
+          context: laa-apply-for-a-criminal-legal-aid-application-uat
           requires:
             - hold-uat
       - hold-prod:
