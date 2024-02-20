@@ -195,10 +195,11 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
       end
     end
 
-    context 'when client NOT detained' do
+    context 'when travel costs require justification (not prison law, client not detained)' do
       let(:application) do
         build(
           :prior_authority_application,
+          prison_law: false,
           client_detained: false,
           service_type: 'telecommunications_expert',
           primary_quote: primary_quote,
@@ -217,6 +218,26 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
               text: 'client lives in northern ireland',
             },
           )
+      end
+    end
+
+    context 'when travel costs do NOT require justification (prison law)' do
+      let(:application) do
+        build(
+          :prior_authority_application,
+          prison_law: true,
+          client_detained: nil,
+          service_type: 'telecommunications_expert',
+          primary_quote: primary_quote,
+        )
+      end
+
+      let(:primary_quote) do
+        build(:quote, :primary, travel_cost_reason: nil)
+      end
+
+      it 'does NOT include travel cost reason row' do
+        expect(card.row_data.pluck(:head_key)).not_to include('travel_cost_reason')
       end
     end
   end
