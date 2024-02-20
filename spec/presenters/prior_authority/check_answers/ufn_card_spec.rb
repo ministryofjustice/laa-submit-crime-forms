@@ -15,10 +15,12 @@ RSpec.describe PriorAuthority::CheckAnswers::UfnCard do
 
   describe '#row_data' do
     let(:application) do
-      build(:prior_authority_application,
-            laa_reference: 'LAA-u2u2u2',
-            prison_law: false,
-            ufn: '111111/111')
+      build_stubbed(
+        :prior_authority_application,
+        laa_reference: 'LAA-u2u2u2',
+        prison_law: false,
+        ufn: '111111/111'
+      )
     end
 
     it 'generates expected rows' do
@@ -34,7 +36,13 @@ RSpec.describe PriorAuthority::CheckAnswers::UfnCard do
           },
           {
             head_key: 'ufn',
-            text: '111111/111'
+            text: '111111/111',
+            actions: [
+              {
+                href: "/prior-authority/applications/#{application.id}/steps/ufn",
+                visually_hidden_text: 'Change Unique file number'
+              }
+            ],
           },
         ]
       )

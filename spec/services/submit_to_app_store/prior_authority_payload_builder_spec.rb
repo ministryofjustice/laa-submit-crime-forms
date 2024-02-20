@@ -29,6 +29,8 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         client_name: 'bob jim',
         prior_authority_granted: false,
         no_alternative_quote_reason: 'a reason',
+        confirm_excluding_vat: true,
+        confirm_travel_expenditure: true,
         defendant: {
           first_name: 'bob',
           last_name: 'jim',
@@ -95,6 +97,26 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             travel_time: 150,
             additional_cost_list: nil,
             additional_cost_total: nil,
+          },
+          {
+            contact_full_name: 'Joe Bloggs',
+            organisation: 'LAA',
+            postcode: 'CR0 1RE',
+            primary: false,
+            cost_type: 'per_hour',
+            cost_per_hour: '10.0',
+            period: 180,
+            cost_per_item: nil,
+            items: nil,
+            ordered_by_court: nil,
+            related_to_post_mortem: nil,
+            id: application.alternative_quotes.first.id,
+            document: nil,
+            travel_cost_per_hour: '50.0',
+            travel_cost_reason: nil,
+            travel_time: 150,
+            additional_cost_list: nil,
+            additional_cost_total: nil,
           }
         ],
         additional_costs: []
@@ -107,7 +129,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
     }
   end
   let(:provider) { create(:provider) }
-  let(:application) { create(:prior_authority_application, :full) }
+  let(:application) { create(:prior_authority_application, :full, :with_confirmations) }
   let(:fixed_arbitrary_date) { Date.new(2024, 1, 15) }
 
   before { travel_to(fixed_arbitrary_date) }

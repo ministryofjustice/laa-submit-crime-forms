@@ -87,7 +87,11 @@ module Decisions
     from(:equality_questions).goto(edit: 'nsm/steps/solicitor_declaration')
     from(:solicitor_declaration).goto(show: 'nsm/steps/claim_confirmation')
 
-    # prior authority pre-draft application steps
+    # ---------------------------------
+    # prior authority application steps
+    # ---------------------------------
+
+    # pre-draft application steps
     from(:prison_law).goto(edit: 'prior_authority/steps/authority_value')
     from(:authority_value).goto(edit: 'prior_authority/steps/ufn')
     from(:ufn)
@@ -95,9 +99,6 @@ module Decisions
       .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
       .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
-    # ---------------------------------
-    # prior authority application steps
-    # ---------------------------------
     from(:case_contact)
       .when(-> { application.navigation_stack[-1].match?('check_answers') })
       .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
@@ -166,5 +167,8 @@ module Decisions
       .when(-> { application.navigation_stack[-1].match?('check_answers') })
       .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
       .goto(show: PRIOR_AUTHORITY_START_PAGE)
+
+    from(:check_answers)
+      .goto(show: 'prior_authority/steps/submission_confirmation')
   end
 end

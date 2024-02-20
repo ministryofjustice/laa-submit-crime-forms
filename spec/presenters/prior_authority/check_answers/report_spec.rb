@@ -20,7 +20,7 @@ RSpec.describe PriorAuthority::CheckAnswers::Report do
       end
 
       it 'contains expected card titles' do
-        card_titles = section_groups.pluck(:sections).flat_map { |section| section.pluck(:card).pluck(:title) }
+        card_titles = section_groups.flat_map { |group| group[:sections].map(&:title) }
 
         expect(card_titles)
           .to contain_exactly(
@@ -50,7 +50,7 @@ RSpec.describe PriorAuthority::CheckAnswers::Report do
       end
 
       it 'contains expected card titles' do
-        card_titles = section_groups.pluck(:sections).flat_map { |section| section.pluck(:card).pluck(:title) }
+        card_titles = section_groups.flat_map { |group| group[:sections].map(&:title) }
 
         expect(card_titles)
           .to contain_exactly(

@@ -9,6 +9,7 @@ module PriorAuthority
       validates :contact_full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
       validates :organisation, presence: true
       validates :postcode, presence: true, uk_postcode: true
+      include DocumentUploadable # Include this here so that validations appear in the correct order
 
       # Using local variable for service_type_autocomplete to avoid issues with
       # assignment of value into two fields service_type and custom_service_name
@@ -42,16 +43,15 @@ module PriorAuthority
       end
 
       def document
-        # needed for primary quote summary presenter
-        # can probably remove if we make a custom type for files and handle
-        # upload via the form
-        application.primary_quote.document
+        record.document || record.build_document
       end
 
       private
 
       def persist!
-        record.update!(attributes_to_update)
+        return false unless save_file
+
+        save_quote
         application.update(service_type:, custom_service_name:) if service_type
 
         # If a change to service type has rendered any alternative quotes invalid,
@@ -70,6 +70,11 @@ module PriorAuthority
 
       def translations
         QuoteServices.values.to_h { [_1.translated, _1.value] }
+      end
+
+      def save_quote
+        record.update!(attributes.except('service_type', 'custom_service_name', 'file_upload')
+                                 .merge(default_attributes))
       end
     end
   end

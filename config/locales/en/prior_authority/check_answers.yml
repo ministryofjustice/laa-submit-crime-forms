@@ -4,11 +4,21 @@ en:
     steps:
       check_answers:
         edit:
-          page_title: Check your answers
+          confirmations:
+            blurb: |
+              By submitting this application you are confirming that, to the best of your
+              knowledge, the details you are providing are correct.
+
+            excluding_vat: I confirm that all costs are exclusive of VAT
+            travel_expenditure: |
+              I confirm that any travel expenditure (such as mileage, parking and travel fares)
+              is included as additional items in the primary quote, and is not included as part
+              of any hourly rate
           heading: Check your answers
+          page_title: Check your answers
           sections:
             alternative_quotes:
-              quote_summary: Quote
+              quote_summary: "Quote %{count}"
               no_alternatve_quotes: Reason for no alternative quotes
             case_contact:
               contact_details: Contact details
@@ -39,7 +49,6 @@ en:
               service_name: Service required
               service_details: Service details
               travel_cost_reason: Why travel costs are required
-              summary: 'Quote summary'
             reason_why:
               reason_why: Why prior authority is required
               supporting_documents: Supporting documents
@@ -47,6 +56,7 @@ en:
               laa_reference: LAA reference
               prison_law: Prison law
               ufn: Unique file number
+          subheading: Now send your application
 
         groups:
           about_case:
@@ -75,3 +85,13 @@ en:
             heading: Contact details
             case_contact:
               title: Case contact
+
+        primary_quote_totals:
+            additional: Additional
+            caption: Primary quote summary
+            headers:
+              costs: Costs
+              total: Total
+            service: Service
+            travel: Travel
+            total_cost: Total cost

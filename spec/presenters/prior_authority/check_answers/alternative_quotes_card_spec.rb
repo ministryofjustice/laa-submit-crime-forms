@@ -33,7 +33,7 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
         [
           build(:quote, :alternative, contact_full_name: 'Jim Bob',
                 cost_per_hour: 20, period: 60, travel_cost_per_hour: 30, travel_time: 60),
-          build(:quote, :alternative, contact_full_name: 'John Boy',
+          build(:quote, :alternative, contact_full_name: 'John Boy', document: nil,
                 cost_per_hour: 20, period: 120, travel_cost_per_hour: 30, travel_time: 120),
         ]
       end
@@ -43,10 +43,12 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
           [
             {
               head_key: 'quote_summary',
-              text: 'Jim Bob<br>£50.00'
+              head_opts: { count: 1 },
+              text: 'Jim Bob<br>test.png<br>£50.00'
             },
             {
               head_key: 'quote_summary',
+              head_opts: { count: 2 },
               text: 'John Boy<br>£100.00'
             },
           ]

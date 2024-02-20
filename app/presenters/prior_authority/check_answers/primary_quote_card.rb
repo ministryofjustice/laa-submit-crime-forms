@@ -3,16 +3,23 @@
 module PriorAuthority
   module CheckAnswers
     class PrimaryQuoteCard < Base
-      attr_reader :application, :service_cost_form
+      attr_reader :application, :service_cost_form, :travel_detail_form
 
       def initialize(application)
         @group = 'about_request'
         @section = 'primary_quote_summary'
         @application = application
+
         @service_cost_form = PriorAuthority::Steps::ServiceCostForm.build(
           application.primary_quote,
           application:
         )
+
+        @travel_detail_form = PriorAuthority::Steps::TravelDetailForm.build(
+          application.primary_quote,
+          application:
+        )
+
         super()
       end
 
@@ -22,6 +29,10 @@ module PriorAuthority
 
       def row_data
         base_rows
+      end
+
+      def quote_summary
+        @quote_summary ||= PriorAuthority::PrimaryQuoteSummary.new(application)
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -38,7 +49,7 @@ module PriorAuthority
           *related_to_post_mortem,
           {
             head_key: 'quote_upload',
-            text: 'TODO',
+            text: primary_quote.document.file_name,
           },
           *ordered_by_court,
           {
@@ -46,10 +57,13 @@ module PriorAuthority
             text: I18n.t("generic.#{application.prior_authority_granted?}"),
           },
           *travel_cost_reason,
-          *summary,
         ]
       end
       # rubocop:enable Metrics/MethodLength
+
+      def template
+        'prior_authority/steps/check_answers/primary_quote'
+      end
 
       private
 
@@ -85,22 +99,12 @@ module PriorAuthority
       end
 
       def travel_cost_reason
-        return [] if application.client_detained?
+        return [] unless travel_detail_form.travel_costs_require_justification?
 
         [
           {
             head_key: 'travel_cost_reason',
             text: application.primary_quote.travel_cost_reason,
-          },
-        ]
-      end
-
-      # TODO: this needs to be modified to add the list or table nested in a single list item/column
-      def summary
-        [
-          {
-            head_key: 'summary',
-            text: PrimaryQuoteCardSummary.new(application).render
           },
         ]
       end

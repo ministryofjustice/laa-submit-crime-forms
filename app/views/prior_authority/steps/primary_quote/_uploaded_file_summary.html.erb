@@ -1,0 +1,19 @@
+<%# Uploaded files section %>
+<div class="moj-multi-file__uploaded-files">
+  <table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--m"><%= t('.uploaded_files') %></caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header"><%= t('.file_name') %></th>
+    </tr>
+    </thead>
+    <%# Uploaded file list   %>
+    <tbody class="govuk-table__body moj-multi-file-upload__list">
+      <tr class="govuk-table__row moj-multi-file-upload__row" id="primary_quote_document_details_row" >
+        <td class="govuk-table__cell moj-multi-file-upload__filename">
+          <span class="moj-multi-file-upload__filename"><%= document.file_name %></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

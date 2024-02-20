@@ -76,6 +76,11 @@ FactoryBot.define do
       end
     end
 
+    trait :with_confirmations do
+      confirm_excluding_vat { true }
+      confirm_travel_expenditure { true }
+    end
+
     trait :full do
       with_firm_and_solicitor
       with_defendant
@@ -93,7 +98,7 @@ FactoryBot.define do
       youth_court { 'something' }
       next_hearing { true }
       supporting_documents { build_list(:supporting_document, 2) }
-      quotes { build_list(:quote, 1, :primary) }
+      quotes { [build(:quote, :primary), build(:quote, :alternative, document: nil)] }
       prior_authority_granted { false }
       no_alternative_quote_reason { 'a reason' }
       service_type { 'pathologist_report' }

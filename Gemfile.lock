@@ -11,7 +11,7 @@ PATH
     laa_multi_step_forms (0.1.0)
       devise (~> 4.8)
       govuk-components
-      govuk_design_system_formbuilder (>= 4.0, < 5.1)
+      govuk_design_system_formbuilder (>= 4.0, < 5.2)
       hmcts_common_platform
       omniauth-rails_csrf_protection (~> 1.0.1)
       omniauth-saml (~> 2.1.0)
@@ -218,7 +218,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (~> 6.0)
       view_component (>= 3.9, < 3.10)
-    govuk_design_system_formbuilder (5.0.0)
+    govuk_design_system_formbuilder (5.1.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -460,7 +460,7 @@ GEM
       sentry-ruby (~> 5.16.1)
     sentry-ruby (5.16.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    sidekiq (7.2.1)
+    sidekiq (7.2.2)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)

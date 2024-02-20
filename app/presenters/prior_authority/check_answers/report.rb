@@ -1,10 +1,6 @@
 module PriorAuthority
   module CheckAnswers
     class Report
-      include GovukLinkHelper
-      include GovukVisuallyHiddenHelper
-      include ActionView::Helpers::UrlHelper
-
       GROUPS = %w[
         application_detail
         contact_details
@@ -27,20 +23,8 @@ module PriorAuthority
       def section_group(name, section_list)
         {
           heading: group_heading(name),
-          sections: sections(section_list)
+          sections: section_list,
         }
-      end
-
-      def sections(section_list)
-        section_list.map do |data|
-          {
-            card: {
-              title: data.title,
-              actions: actions(data.section, request_method: data.request_method)
-            },
-            rows: data.rows
-          }
-        end
       end
 
       def application_detail_section
@@ -80,20 +64,6 @@ module PriorAuthority
       end
 
       private
-
-      def actions(key, request_method: :edit)
-        helper = Rails.application.routes.url_helpers
-
-        [
-          govuk_link_to(
-            'Change',
-            helper.url_for(controller: "prior_authority/steps/#{key}",
-                           action: request_method,
-                           application_id: application.id,
-                           only_path: true)
-          ),
-        ]
-      end
 
       def group_heading(group_key, **)
         I18n.t("prior_authority.steps.check_answers.groups.#{group_key}.heading", **)
