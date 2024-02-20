@@ -25,7 +25,7 @@ module PriorAuthority
 
       # this should only be used when JS is disabled - otherwise overwritten by service_type_autocomplete_suggestion
       def service_type_autocomplete=(value)
-        # ensure that is the suggestion is set first it cannot be overwritten
+        # ensure that if the suggestion is set first it cannot be overwritten
         return if local_values
 
         # used to ensure we use the right scope in validations
