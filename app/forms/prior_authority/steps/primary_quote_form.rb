@@ -1,6 +1,9 @@
 module PriorAuthority
   module Steps
     class PrimaryQuoteForm < ::Steps::BaseFormObject
+      def self.attribute_names
+        super - %w[service_type custom_service_name file_upload]
+      end
       attribute :contact_full_name, :string
       attribute :organisation, :string
       attribute :postcode, :string
@@ -65,10 +68,10 @@ module PriorAuthority
                    .each(&:destroy)
       end
 
-      def attributes_to_update
-        attributes
-          .except('service_type', 'custom_service_name')
-          .merge('primary' => true)
+      def default_attributes
+        {
+          'primary' => true
+        }
       end
 
       def translations
