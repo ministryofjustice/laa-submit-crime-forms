@@ -22,6 +22,9 @@ module PriorAuthority
 
       # this should only be called when JS is disabled
       def service_type_autocomplete=(value)
+        # ensure that is the suggestion is set first it cannot be overwritten
+        return if local_values
+
         # used to ensure we use the right scope in validations
         self.local_values = true
 
