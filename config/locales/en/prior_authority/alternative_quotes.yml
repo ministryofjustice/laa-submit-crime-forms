@@ -97,9 +97,13 @@ en:
               not_a_number: The cost must be a number, like 25
             travel_time:
               invalid: Travel time must be valid
+              blank: To add travel costs you must enter both the time and the hourly cost
             travel_cost_per_hour:
               greater_than: The cost per hour must be more than 0
               not_a_number: The cost per hour must be a number, like 25
+              blank: To add travel costs you must enter both the time and the hourly cost
+            additional_cost_list:
+              blank: To add additional costs you must both a list of the additional costs and the total cost
             additional_cost_total:
               not_a_number: The cost must be a number, like 25
-
+              blank: To add additional costs you must both a list of the additional costs and the total cost
