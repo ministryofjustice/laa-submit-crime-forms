@@ -393,7 +393,7 @@ workflows:
       - deploy-dev:
           context: laa-claim-non-standard-magistrates-fee-dev
           requires:
-            - hold-dev
+            - build-to-ecr
       - hold-uat:
           type: approval
           requires:
