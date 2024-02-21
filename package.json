@@ -1,5 +1,5 @@
 {
-  "name": "laa-apply-for-criminal-legal-aid",
+  "name": "laa-submit-crime-forms",
   "private": "true",
   "dependencies": {
     "@ministryofjustice/frontend": "2.1.1",
