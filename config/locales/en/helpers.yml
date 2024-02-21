@@ -329,7 +329,7 @@ en:
           'n': 'No'
           u: Unknown
       prior_authority_steps_primary_quote_form:
-        service_type: Service required
+        service_type_autocomplete: Service required
     other_disbursement_type:
       accident_reconstruction_report: Accident Reconstruction Report
       accident_emergency_report: Accident & Emergency Report
