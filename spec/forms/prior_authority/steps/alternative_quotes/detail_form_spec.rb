@@ -93,7 +93,7 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
       it 'adds an appropriate error message' do
         subject.save
         expect(subject.errors[:additional_cost_total]).to include(
-          'To add additional costs you must both a list of the additional costs and the total cost'
+          'To add additional costs you must enter both a list of the additional costs and the total cost'
         )
       end
     end
