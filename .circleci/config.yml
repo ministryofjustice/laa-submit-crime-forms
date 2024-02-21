@@ -226,18 +226,10 @@ commands:
                 kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
                 kubectl config use-context ${K8S_CLUSTER_NAME}
                 kubectl --namespace=${K8S_NAMESPACE} get pods
-        - run:
-            name: Deploy to namespace
+        - deploy:
+            name: Deploy to << parameters.environment >>
             command: |
-                helm upgrade laa-claim-non-standard-magistrate-fee-backend \
-                  ./helm_deploy/. \
-                    --install --wait --force \
-                    --namespace=${K8S_NAMESPACE} \
-                    --values ./helm_deploy/values-<< parameters.environment >>.yaml \
-                    --set image.repository="<< parameters.registry >>/${ECR_REPOSITORY}" \
-                    --set image.tag="${CIRCLE_SHA1}" \
-                    --debug \
-                    --atomic
+              ./bin/deploy << parameters.environment >>
 
 # ------------------
 # JOBS
@@ -331,9 +323,15 @@ jobs:
             aws ecr get-login-password --region $ECR_REGION | docker login \
             --username AWS --password-stdin \
             ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+      - run:
+          name: Set ECR_TAGS environment variable for use in next step
+          command: |
+            [[ "$CIRCLE_BRANCH" == "main" ]] && ECR_TAGS="main-$CIRCLE_SHA1,latest" || ECR_TAGS="branch-$CIRCLE_SHA1"
+            echo "export ECR_TAGS=$ECR_TAGS" >> "$BASH_ENV"
+            source "$BASH_ENV"
       - aws-ecr/build-image:
           push-image: true
-          tag: ${CIRCLE_SHA1}
+          tag: ${ECR_TAGS}
           region: $ECR_REGION
           repo: $ECR_REPOSITORY
           extra-build-args: |
@@ -347,12 +345,6 @@ jobs:
     steps:
       - deploy-to-environment:
           environment: dev
-
-  deploy-dev-crm4:
-    executor: cloud-platform-executor
-    steps:
-      - deploy-to-environment:
-          environment: dev-crm4
 
   deploy-uat:
     executor: cloud-platform-executor
@@ -394,77 +386,27 @@ workflows:
           requires:
             - rspec-tests
 
-  build-push-branch:
+  build-and-deploy:
     jobs:
-      - branch-build-approval:
+      - build-to-ecr:
+          context: laa-claim-non-standard-magistrates-fee-dev
+      - deploy-dev:
+          context: laa-claim-non-standard-magistrates-fee-dev
+          requires:
+            - hold-dev
+      - hold-uat:
           type: approval
+          requires:
+            - build-to-ecr
           filters:
             branches:
-              ignore:
+              only:
                 - main
-      - build-to-ecr:
-          context: laa-claim-non-standard-magistrates-fee-dev
-          requires:
-            - branch-build-approval
-      - hold-dev:
-          type: approval
-          requires:
-            - build-to-ecr
-      - deploy-dev:
-          context: laa-claim-non-standard-magistrates-fee-dev
-          requires:
-            - hold-dev
-      - hold-dev-crm4:
-          type: approval
-          requires:
-            - build-to-ecr
-      - deploy-dev-crm4:
-          context: laa-claim-non-standard-magistrates-fee-dev-crm4
-          requires:
-            - hold-dev-crm4
-      - hold-uat:
-          type: approval
-          requires:
-            - build-to-ecr
       - deploy-uat:
           context: laa-claim-non-standard-magistrates-fee-uat
           requires:
             - hold-uat
-
-  build-deploy-main:
-    jobs:
-      - build-to-ecr:
-          <<: *main-only
-          context: laa-apply-for-a-criminal-legal-aid-application-dev
-      - hold-dev:
-          type: approval
-          requires:
-            - build-to-ecr
-      - deploy-dev:
-          context: laa-apply-for-a-criminal-legal-aid-application-dev
-          requires:
-            - hold-dev
-      - hold-dev-crm4:
-          type: approval
-          requires:
-            - build-to-ecr
-      - deploy-dev-crm4:
-          context: laa-claim-non-standard-magistrates-fee-dev-crm4
-          requires:
-            - hold-dev-crm4
-      - hold-uat:
-          type: approval
-          requires:
-            - build-to-ecr
-      - deploy-uat:
-          context: laa-claim-non-standard-magistrates-fee-uat
-          requires:
-            - hold-uat
-      - hold-prod:
-          type: approval
-          requires:
-            - build-to-ecr
-      - deploy-prod:
-          context: laa-claim-non-standard-magistrates-fee-prod
-          requires:
-            - hold-prod
+          filters:
+            branches:
+              only:
+                - main

@@ -56,6 +56,14 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+          {{ if .Values.redis.enabled }}
+            - name: REDIS_PROTOCOL
+              value: "redis"
+            - name: REDIS_HOST
+              value: {{ template "helm_deploy.redisUatHost" . }}
+            - name: REDIS_PASSWORD
+              value: {{ .Values.redis.auth.password }}
+          {{ else }}
             - name: REDIS_HOST
               valueFrom:
                 secretKeyRef:
@@ -66,11 +74,23 @@ spec:
                 secretKeyRef:
                   name: nsm-elasticache
                   key: auth_token
+          {{ end }}
+          {{ if .Values.postgresql.enabled }}
+            - name: POSTGRES_USER
+              value: {{ .Values.postgresql.postgresqlUsername }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.postgresql.auth.postgresPassword }}
+            - name: POSTGRES_HOST
+              value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
+            - name: POSTGRES_DATABASE
+              value: {{ .Values.postgresql.auth.database }}
+          {{ else }}
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: rds-postgresql-instance-output
                   key: url
+          {{ end }}
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:

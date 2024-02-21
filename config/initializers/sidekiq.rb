@@ -22,7 +22,8 @@ if Rails.env.development?
 end
 
 if ENV['REDIS_HOST'].present? && ENV['REDIS_PASSWORD'].present?
-  redis_url = "rediss://:#{ENV.fetch('REDIS_PASSWORD',
+  protocol = ENV.fetch("REDIS_PROTOCOL", "rediss")
+  redis_url = "#{protocol}://:#{ENV.fetch('REDIS_PASSWORD',
                                      nil)}@#{ENV.fetch('REDIS_HOST',
                                                        nil)}:6379"
 end
