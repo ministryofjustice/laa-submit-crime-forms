@@ -49,7 +49,7 @@ en:
             unknown: Unknown
           court_type: Type of court
           court_type_description:
-            magistrates_court: Magistrate's court
+            magistrates_court: Magistrates' court
             central_criminal_court: Central Criminal Court
             crown_court: Crown Court (excluding Central Criminal Court)
           page_title: Hearing details
@@ -80,6 +80,14 @@ en:
           contact_full_name: Contact full name
           organisation: Organisation
           postcode: Postcode
+          file_upload: Upload the quote
+          file_upload_hint: |
+            The maximum file size of the quote is %{size}.
+            Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
+        uploaded_file_summary:
+          uploaded_files: Uploaded files
+          file_name: File name
+
       psychiatric_liaison:
         edit:
           caption: 2. About the case
@@ -123,6 +131,7 @@ en:
           change: Change
           service_required: Service required
           service_details: Service details
+          service_quote_upload: Quote upload
           prior_authority_granted: Existing prior authority granted
           total: Total
           period: Time
@@ -220,3 +229,19 @@ en:
           page_title: Are you sure you want to delete this additional cost?
           yes_delete: Yes, delete it
           no_delete: No, do not delete it
+      submission_confirmation:
+        show:
+          page_title: Application complete
+          panel_heading: Application complete
+          panel_text: Your LAA reference number
+          print_application:
+            title: How to print your application
+            instructions: If needed you can view all of your submitted applications and print them.
+          confirmation_email_sent: We have sent you a confirmation email.
+          next_steps:
+            title: What happens next
+            process_1: We'll assess your application.
+            process_2: We’ll send you an email to either accept your application or to ask for more information.
+          feedback:
+            link_text: What did you think of this service?
+            description: takes 30 seconds

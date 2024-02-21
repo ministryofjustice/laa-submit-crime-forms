@@ -90,7 +90,7 @@ module Nsm
         helper = Rails.application.routes.url_helpers
         [
           govuk_link_to(
-            'Change',
+            I18n.t('generic.change'),
             helper.url_for(controller: "nsm/steps/#{key}", action: :edit, id: claim.id, only_path: true)
           ),
         ]

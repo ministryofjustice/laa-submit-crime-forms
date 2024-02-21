@@ -28,6 +28,16 @@ RSpec.describe PriorAuthority::Steps::CaseDetail::DefendantForm do
         expect(form.errors.messages[:maat]).to include('Enter the MAAT number')
       end
     end
+
+    context 'with invalid format of MAAT number' do
+      let(:maat) { 'A12345' }
+
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:maat, :invalid)).to be(true)
+        expect(form.errors.messages[:maat]).to include('The MAAT number must only contain numbers')
+      end
+    end
   end
 
   describe '#save' do
@@ -45,10 +55,18 @@ RSpec.describe PriorAuthority::Steps::CaseDetail::DefendantForm do
       end
     end
 
-    context 'with invalid defendant details' do
+    context 'with blank MAAT number details' do
       let(:maat) { '' }
 
-      it 'does not persists to persist the solicitor' do
+      it 'does not persists to persist the defendant' do
+        expect { save }.not_to change { application.reload.defendant }.from(nil)
+      end
+    end
+
+    context 'with invalid format of MAAT number' do
+      let(:maat) { 'A23456' }
+
+      it 'does not persist the defendant' do
         expect { save }.not_to change { application.reload.defendant }.from(nil)
       end
     end

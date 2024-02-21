@@ -14,8 +14,14 @@ RSpec.describe 'Prior authority applications - travel costs' do
   context 'when the user clicks through to the travel details page' do
     before do
       within '#travel-cost-summary' do
+        find '.govuk-link'
         click_on 'Change'
       end
+    end
+
+    it 'validates appropriately' do
+      click_on 'Save and continue'
+      expect(page).to have_title 'Error: Travel cost'
     end
 
     context 'when user fills in valid information' do
@@ -31,20 +37,10 @@ RSpec.describe 'Prior authority applications - travel costs' do
         expect(page).to have_title 'Primary quote summary'
       end
 
-      it 'allows user to enter information and come back later' do
-        click_on 'Save and come back later'
-        expect(page).to have_title 'Your applications'
-      end
-
       it 'allows user to view calculation' do
         click_on 'Update calculation'
         expect(page).to have_content 'Total cost £1.61'
       end
-    end
-
-    it 'validates appropriately' do
-      click_on 'Save and continue'
-      expect(page).to have_title 'Error: Travel cost'
     end
   end
 

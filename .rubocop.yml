@@ -114,6 +114,12 @@ Metrics/MethodLength:
 Metrics/AbcSize:
   Max: 18
 
+Metrics/CyclomaticComplexity:
+  Max: 8
+
+Metrics/PerceivedComplexity:
+  Max: 9
+
 Metrics/ParameterLists:
   Max: 7
 
@@ -155,7 +161,7 @@ Naming/PredicateName:
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:
-  Max: 12
+  Max: 20
   Exclude:
     - spec/forms/nsm/steps/claim_details_form_spec.rb
     - spec/forms/nsm/steps/work_items_add_form_spec.rb

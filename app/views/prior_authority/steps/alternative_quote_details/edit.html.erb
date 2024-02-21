@@ -15,6 +15,14 @@
       <%= form.govuk_text_field :organisation, label: { text: t('.organisation'), size: 's' } %>
       <%= form.govuk_text_field :postcode, label: { text: t('.postcode'), size: 's' } %>
 
+      <%= form.govuk_file_field :file_upload,
+                                label: { text: t(".file_upload"), size: "m" },
+                                hint: { text: t(".file_upload_hint", size: FileUpload::FileUploader.human_readable_max_file_size) },
+                                accept: SupportedFileTypes::QUOTE_DOCUMENT.join(',') %>
+      <% if @form_object.document_already_uploaded? %>
+        <%= render "prior_authority/steps/primary_quote/uploaded_file_summary", document: @form_object.document %>
+      <% end %>
+
       <h2 class="govuk-heading-m"><%= t('.cost', service_name: @form_object.service_name) %></h2>
       <%= render 'prior_authority/steps/service_cost/cost_fields', form: form %>
 

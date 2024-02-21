@@ -13,5 +13,9 @@ FactoryBot.define do
       documentable_type { 'Claim' }
       document_type { 'supporting_evidence' }
     end
+
+    factory :quote_document do
+      document_type { 'quote_document' }
+    end
   end
 end

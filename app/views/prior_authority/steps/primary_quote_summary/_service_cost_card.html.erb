@@ -22,7 +22,12 @@
           <%= [quote.organisation, quote.postcode].join(', ') %>
         </dd>
       </div>
-      <%# TODO: CRM457-1015 Add service upload summary here %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= t('.service_quote_upload') %></dt>
+        <dd class="govuk-summary-list__value">
+          <%= quote.document&.file_name %>
+        </dd>
+      </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key"><%= t('.prior_authority_granted') %></dt>
         <dd class="govuk-summary-list__value">

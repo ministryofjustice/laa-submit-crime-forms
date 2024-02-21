@@ -1,0 +1,43 @@
+<% title t('.page_title') %>
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <% @report.section_groups.each do |section_group| %>
+      <h2 class="govuk-heading-l"><%= section_group[:heading] %></h2>
+      <% section_group[:sections].each do |section| %>
+        <% if section.template %>
+          <%= render(section.template, section: section) %>
+        <% else %>
+          <%= govuk_summary_list(
+                card: {
+                  title: section.title,
+                  actions: section.actions,
+                },
+                rows: section.rows
+              ) %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <h2 class="govuk-heading-l"><%= t('.subheading') %></h2>
+
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_check_boxes_fieldset :confirm_excluding_vat, multiple: false, legend: nil do %>
+        <%= f.govuk_check_box :confirm_excluding_vat, 1, 0, multiple: false, link_errors: true, label: { text: t('.confirmations.excluding_vat') } %>
+      <% end %>
+
+      <%= f.govuk_check_boxes_fieldset :confirm_travel_expenditure, multiple: false, legend: nil do %>
+        <%= f.govuk_check_box :confirm_travel_expenditure, 1, 0, multiple: false, link_errors: true, label: { text: t('.confirmations.travel_expenditure') } %>
+      <% end %>
+
+      <p class="govuk-body">
+        <%= t('.confirmations.blurb') %>
+      </p>
+      <%= f.continue_button(primary: :accept_and_send) %>
+    <% end %>
+  </div>
+</div>

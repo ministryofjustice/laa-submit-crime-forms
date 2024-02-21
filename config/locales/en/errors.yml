@@ -10,6 +10,9 @@ en:
       year_too_early: Date is too far in the past
       future_not_allowed: Date cannot be in the future
       before_date_from: End date cannot be before start date
+    shared_upload_errors:
+      unable_delete: Unable to delete file at this time
+      attachment_too_large: The selected file must be smaller than %{size}
   laa_multi_step_forms:
     errors:
       format: "%{message}"
@@ -66,13 +69,21 @@ en:
               blank: Enter the name of the prison
             subject_to_poca:
               inclusion: Select yes if this case is subject to POCA (Proceeds of Crime Act 2002)?
+        prior_authority/steps/check_answers_form:
+          attributes:
+            confirm_excluding_vat:
+              accepted: Select if you confirm that all costs are exclusive of VAT
+            confirm_travel_expenditure:
+              accepted: Select if you confirm that any travel expenditure (such as mileage, parking and travel fares) is included as additional items in the primary quote, and is not included as part of any hourly rate
         prior_authority/steps/case_detail/defendant_form:
           attributes:
             maat:
               blank: Enter the MAAT number
+              invalid: The MAAT number must only contain numbers
           summary:
             maat:
               blank: Enter the MAAT number
+              invalid: The MAAT number must only contain numbers
         prior_authority/steps/client_detail_form:
           attributes:
             first_name:
@@ -148,6 +159,8 @@ en:
             postcode:
               blank: Enter the postcode
               invalid: Enter a real postcode
+            file_upload:
+              blank: Upload the primary quote
         prior_authority/steps/youth_court_form:
           attributes:
             youth_court:
@@ -164,13 +177,7 @@ en:
               inclusion: Select how you are being charged
             period:
               blank: Enter the time
-              blank_hours: The number of hours must be a number
-              invalid_hours: The number of hours must be 0 or more
-              blank_minutes: The number of minutes must be a number
-              invalid_minutes: The number of minutes must be between 0 and 59
-              invalid_period: Time must be more than 0
               invalid: Time must be valid
-              greater_than:  Time must be more than 0
             cost_per_hour:
               blank: Enter the hourly cost
               greater_than: The hourly cost must be more than 0
@@ -189,11 +196,6 @@ en:
               blank: Explain why there are travel costs if your client is not detained
             travel_time:
               blank: Enter the travel time
-              blank_hours: The number of hours must be a number
-              invalid_hours: The number of hours must be 0 or more
-              blank_minutes: The number of minutes must be a number
-              invalid_minutes: The number of minutes must be between 0 and 59
-              invalid_period: Travel time must be more than 0
               invalid: Travel time must be valid
             travel_cost_per_hour:
               blank: Enter the cost per hour
@@ -212,13 +214,7 @@ en:
               inclusion: Select how you are being charged
             period:
               blank: Enter the time
-              blank_hours: The number of hours must be a number
-              invalid_hours: The number of hours must be 0 or more
-              blank_minutes: The number of minutes must be a number
-              invalid_minutes: The number of minutes must be between 0 and 59
-              invalid_period: Time must be more than 0
               invalid: Time must be valid
-              greater_than: Time must be more than 0
             cost_per_hour:
               blank: Enter the hourly cost
               greater_than: The hourly cost must be more than 0
@@ -235,6 +231,7 @@ en:
           attributes:
             reason_why:
               blank: Enter why prior authority is required
+              too_long: The reason why you need prior authority cannot be more than 2000 characters.
 
         nsm/steps/claim_type_form:
           attributes:
@@ -432,3 +429,17 @@ en:
               invalid: |
                 Name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
                 Name must be 2 words or more.
+      messages:
+        blank_hours: Enter the number of hours
+        invalid_hours: The number of hours must be 0 or more
+        blank_minutes: Enter the number of minutes
+        invalid_minutes: The number of minutes must be between 0 and 59
+        invalid_period: Time must be more than 0
+        non_numerical_hours: The number of hours must be a number
+        non_numerical_minutes: The number of minutes must be a number
+        non_integer_hours: The number of hours must be a whole number
+        non_integer_minutes: The number of minutes must be a whole number
+        zero_time_period: Time must be more than 0
+        forbidden_document_type: The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF
+        suspected_malware: File potentially contains malware so cannot be uploaded. Please contact your administrator
+        upload_failed: Unable to upload file at this time

@@ -158,6 +158,8 @@ commands:
       - store_artifacts:
           path: ~/repo/coverage
           destination: coverage
+      - store_artifacts:
+          path: ~/repo/tmp/capybara
 
   rspec-gem-specs:
     steps:
@@ -433,13 +435,13 @@ workflows:
     jobs:
       - build-to-ecr:
           <<: *main-only
-          context: laa-claim-non-standard-magistrates-fee-dev
+          context: laa-apply-for-a-criminal-legal-aid-application-dev
       - hold-dev:
           type: approval
           requires:
             - build-to-ecr
       - deploy-dev:
-          context: laa-claim-non-standard-magistrates-fee-dev
+          context: laa-apply-for-a-criminal-legal-aid-application-dev
           requires:
             - hold-dev
       - hold-dev-crm4:

@@ -10,9 +10,20 @@ class SubmitToAppStore
           form = ::PriorAuthority::Steps::ServiceCostForm.build(quote, application: @application)
 
           quote.as_json(only: ATTRIBUTES).merge(
-            cost_type: form.cost_type
+            cost_type: form.cost_type,
+            document: document(quote)
           )
         end
+      end
+
+      def document(quote)
+        return nil unless quote.document
+
+        quote.document.as_json(only: %i[file_name
+                                        file_type
+                                        file_size
+                                        file_path
+                                        document_type])
       end
 
       ATTRIBUTES = %i[

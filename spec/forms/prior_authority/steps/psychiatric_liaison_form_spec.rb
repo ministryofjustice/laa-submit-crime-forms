@@ -73,7 +73,7 @@ RSpec.describe PriorAuthority::Steps::PsychiatricLiaisonForm do
           .to(
             hash_including(
               'psychiatric_liaison' => true,
-              'psychiatric_liaison_reason_not' => '',
+              'psychiatric_liaison_reason_not' => nil,
             )
           )
       end
@@ -112,6 +112,32 @@ RSpec.describe PriorAuthority::Steps::PsychiatricLiaisonForm do
               'psychiatric_liaison_reason_not' => nil,
             )
           )
+      end
+
+      context 'when psychiatric liaison of false with reason changed to true' do
+        let(:application) do
+          create(:prior_authority_application,
+                 psychiatric_liaison: false,
+                 psychiatric_liaison_reason_not: 'whatever')
+        end
+
+        let(:psychiatric_liaison) { 'true' }
+
+        it 'blanks the reason not value' do
+          expect { save }.to change { application.reload.attributes }
+            .from(
+              hash_including(
+                'psychiatric_liaison' => false,
+                'psychiatric_liaison_reason_not' => 'whatever',
+              )
+            )
+            .to(
+              hash_including(
+                'psychiatric_liaison' => true,
+                'psychiatric_liaison_reason_not' => nil,
+              )
+            )
+        end
       end
     end
   end

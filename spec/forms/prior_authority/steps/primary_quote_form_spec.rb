@@ -12,11 +12,14 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       contact_full_name:,
       organisation:,
       postcode:,
+      file_upload:,
     }
   end
 
-  let(:record) { instance_double(Quote) }
+  let(:record) { instance_double(Quote, document:) }
+  let(:document) { instance_double(SupportingDocument, file_name: 'foo.png') }
   let(:application) { instance_double(PriorAuthorityApplication, service_type: 'forensics') }
+  let(:file_upload) { nil }
   let(:service_type) { 'forensics_expert' }
   let(:custom_service_name) { '' }
   let(:contact_full_name) { 'Joe Bloggs' }
@@ -24,8 +27,17 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   let(:postcode) { 'CR0 1RE' }
 
   describe '#validate' do
-    context 'with valid quote details' do
+    context 'with valid quote details not including a file upload' do
       it { is_expected.to be_valid }
+    end
+
+    context 'when no file has previously been uploaded' do
+      let(:document) { instance_double(SupportingDocument, file_name: nil) }
+
+      it 'treats a blank file upload as a validation error' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:file_upload, :blank)).to be(true)
+      end
     end
 
     context 'with blank quote details' do
@@ -61,6 +73,57 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         expect(form.errors.messages.values.flatten)
           .to include('Enter a valid full name',
                       'Enter a real postcode')
+      end
+    end
+
+    context 'with a file upload' do
+      let(:file_upload) { instance_double(ActionDispatch::Http::UploadedFile, tempfile:, content_type:) }
+      let(:tempfile) { instance_double(File, size:) }
+      let(:size) { 150 }
+      let(:content_type) { 'application/msword' }
+      let(:uploader) { instance_double(FileUpload::FileUploader, scan_file: nil) }
+
+      before do
+        allow(FileUpload::FileUploader).to receive(:new).and_return(uploader)
+      end
+
+      context 'with a valid upload' do
+        it { is_expected.to be_valid }
+      end
+
+      context 'with an overly large file' do
+        let(:size) { ENV['MAX_UPLOAD_SIZE_BYTES'].to_i + 1 }
+
+        it 'adds an appropriate error message' do
+          expect(form).not_to be_valid
+          expect(form.errors[:file_upload]).to include(
+            'The selected file must be smaller than 5MB'
+          )
+        end
+      end
+
+      context 'with an unsupported file type' do
+        let(:content_type) { 'application/dodgy_executable' }
+
+        it 'adds an appropriate error message' do
+          expect(form).not_to be_valid
+          expect(form.errors[:file_upload]).to include(
+            'The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF'
+          )
+        end
+      end
+
+      context 'with suspected malware' do
+        before do
+          allow(uploader).to receive(:scan_file).and_raise FileUpload::FileUploader::PotentialMalwareError
+        end
+
+        it 'adds an appropriate error message' do
+          expect(form).not_to be_valid
+          expect(form.errors[:file_upload]).to include(
+            'File potentially contains malware so cannot be uploaded. Please contact your administrator'
+          )
+        end
       end
     end
   end
@@ -131,6 +194,50 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
           )
       end
     end
+
+    context 'with a valid file' do
+      let(:file_upload) do
+        instance_double(ActionDispatch::Http::UploadedFile,
+                        tempfile: tempfile,
+                        content_type: 'application/msword',
+                        original_filename: 'foo.png')
+      end
+      let(:tempfile) { instance_double(File, size: 150, path: '/tmp/foo.com') }
+      let(:uploader) { instance_double(FileUpload::FileUploader, scan_file: nil) }
+
+      before do
+        allow(FileUpload::FileUploader).to receive(:new).and_return(uploader)
+        allow(uploader).to receive(:upload).and_return('/cloud/url')
+      end
+
+      it 'uploads the file' do
+        expect(uploader).to receive(:upload).with(file_upload)
+        save
+      end
+
+      it 'updates the metadata' do
+        save
+        expect(record.document).to have_attributes(
+          file_name: 'foo.png',
+          file_type: 'application/msword',
+          file_size: 150,
+          file_path: '/cloud/url'
+        )
+      end
+
+      context 'when there is an upload error' do
+        before { expect(uploader).to receive(:upload).with(file_upload).and_raise StandardError }
+
+        it 'does not update data' do
+          expect { save }.not_to(change { application.reload.attributes })
+        end
+
+        it 'adds a validation error' do
+          save
+          expect(form.errors[:file_upload]).to include 'Unable to upload file at this time'
+        end
+      end
+    end
   end
 
   describe '#service_type' do
@@ -145,10 +252,10 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     end
 
     context 'service type suggestion matches a different service' do
-      let(:service_type_suggestion) { 'Computer Experts' }
+      let(:service_type_suggestion) { 'Computer expert' }
 
       it 'uses the service type associated with the suggestion' do
-        expect(subject.service_type).to eq(PriorAuthority::QuoteServices::COMPUTER_EXPERTS)
+        expect(subject.service_type).to eq(PriorAuthority::QuoteServices::COMPUTER_EXPERT)
       end
     end
 
@@ -160,7 +267,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   end
 
   describe '#custom_service_name' do
-    subject(:form) { described_class.new(arguments.merge(service_type_suggestion:)) }
+    subject(:form) { described_class.new(arguments.merge(service_type_suggestion:).with_indifferent_access) }
 
     let(:service_type) { PriorAuthority::QuoteServices.values.sample }
 
@@ -174,6 +281,12 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       let(:service_type_suggestion) { 'garbage value' }
 
       it { expect(subject.custom_service_name).to eq('garbage value') }
+    end
+
+    context 'when it is included but blank' do
+      let(:service_type_suggestion) { '' }
+
+      it { is_expected.not_to be_valid }
     end
   end
 end

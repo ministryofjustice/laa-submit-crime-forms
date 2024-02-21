@@ -13,16 +13,16 @@ module PriorAuthority
 
       def create
         unless supported_filetype(params[:documents])
-          return return_error(nil, { message: 'Incorrect file type provided' })
+          return return_error(nil,
+                              { message: t('activemodel.errors.messages.forbidden_document_type') })
         end
 
         evidence = upload_file(params)
         return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
       rescue FileUpload::FileUploader::PotentialMalwareError => e
-        return_error(e, { message: 'File potentially contains malware so cannot be uploaded. ' \
-                                   'Please contact your administrator' })
+        return_error(e, { message: t('activemodel.errors.messages.suspected_malware') })
       rescue StandardError => e
-        return_error(e, { message: 'Unable to upload file at this time' })
+        return_error(e, { message: t('activemodel.errors.messages.upload_failed') })
       end
 
       def update
@@ -37,7 +37,7 @@ module PriorAuthority
 
         return_success({ deleted: true })
       rescue StandardError => e
-        return_error(e, { message: 'Unable to delete file at this time' })
+        return_error(e, { message: t('shared.shared_upload_errors.unable_delete') })
       end
 
       private

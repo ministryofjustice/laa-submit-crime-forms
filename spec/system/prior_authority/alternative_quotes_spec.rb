@@ -47,6 +47,20 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         expect(page).to have_content 'Mrs Expert'
       end
 
+      it 'allows me to add a quote with a file' do
+        fill_in 'Contact full name', with: 'Mrs Expert'
+        fill_in 'Organisation', with: 'ExpertiseCo'
+        fill_in 'Postcode', with: 'SW1 1AA'
+        choose 'Charged per item'
+        fill_in 'Number of items', with: '2'
+        fill_in 'What is the cost per item?', with: '3'
+        attach_file(file_fixture('test.png'))
+        click_on 'Save and continue'
+
+        expect(page).to have_content "You've added 1 alternative quote"
+        expect(page).to have_content 'test.png'
+      end
+
       it 'does maths for me' do
         fill_in 'Contact full name', with: 'Mrs Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'
@@ -54,8 +68,8 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         choose 'Charged per item'
         fill_in 'Number of items', with: '1'
         fill_in 'What is the cost per item?', with: '100'
-        fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_1i', with: '1'
-        fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_2i', with: '0'
+        fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_1', with: '1'
+        fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_2', with: '0'
         fill_in 'What is the hourly cost?', with: '50'
         fill_in 'Total additional costs', with: '5'
         click_on 'Update calculation'
@@ -118,7 +132,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
             click_on 'Change'
           end
           # Charged per hour, not per item
-          select 'Animal Behaviourist', from: 'Service required'
+          select 'Animal behaviourist', from: 'Service required'
           click_on 'Save and continue'
           fill_in_service_cost(cost_type: :per_hour)
 

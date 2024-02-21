@@ -116,7 +116,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
 
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
-        expect(Clamby).to receive(:safe?).and_return(false)
+        allow(controller).to receive(:upload_file).and_raise(FileUpload::FileUploader::PotentialMalwareError)
         post :create, params: { id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
       end
 
