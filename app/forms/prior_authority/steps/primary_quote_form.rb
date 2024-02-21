@@ -43,7 +43,7 @@ module PriorAuthority
           self.service_type = translations[value]
           self.custom_service_name = nil
         else
-          self.service_type = 'custom' if value.present?
+          self.service_type = value.present? ? 'custom' : nil
           self.custom_service_name = value
         end
       end
