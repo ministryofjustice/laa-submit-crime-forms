@@ -8,13 +8,11 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
       application:,
       confirm_excluding_vat:,
       confirm_travel_expenditure:,
-      commit_draft:
     }
   end
 
   describe '#validate' do
     let(:application) { instance_double(PriorAuthorityApplication) }
-    let(:commit_draft) { nil }
 
     context 'with all confirmations accepted' do
       let(:confirm_excluding_vat) { 'true' }
@@ -52,15 +50,14 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     end
   end
 
-  describe '#save' do
-    subject(:save) { form.save }
+  describe '#save! ("Save and come back later")' do
+    subject(:save) { form.save! }
 
     let(:application) { create(:prior_authority_application, status: 'draft') }
 
-    context 'when saving and coming back later (commit draft)' do
+    context 'with accepted confirmations' do
       let(:confirm_excluding_vat) { 'true' }
       let(:confirm_travel_expenditure) { 'true' }
-      let(:commit_draft) { true }
 
       it 'does NOT persist the confirmations' do
         expect { save }.not_to change { application.reload.attributes }
@@ -82,11 +79,16 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
         expect(SubmitToAppStore).not_to have_received(:new)
       end
     end
+  end
 
-    context 'when accepting and sending (not saving a draft)' do
+  describe '#save ("Accept and send")' do
+    subject(:save) { form.save }
+
+    let(:application) { create(:prior_authority_application, status: 'draft') }
+
+    context 'with accepted confirmations' do
       let(:confirm_excluding_vat) { 'true' }
       let(:confirm_travel_expenditure) { 'true' }
-      let(:commit_draft) { nil }
 
       it 'persists the value' do
         expect { save }.to change { application.reload.attributes }
@@ -133,7 +135,6 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     context 'with unaccepted confirmations' do
       let(:confirm_excluding_vat) { false }
       let(:confirm_travel_expenditure) { false }
-      let(:commit_draft) { nil }
 
       it 'does not persist the confirmations' do
         expect { save }.not_to change { application.reload.attributes }
@@ -159,7 +160,6 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     context 'with nil confirmations' do
       let(:confirm_excluding_vat) { nil }
       let(:confirm_travel_expenditure) { nil }
-      let(:commit_draft) { nil }
 
       it 'does not persist the confirmations' do
         expect { save }.not_to change { application.reload.attributes }

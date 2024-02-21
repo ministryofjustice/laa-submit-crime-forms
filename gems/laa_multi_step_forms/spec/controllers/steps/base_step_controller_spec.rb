@@ -168,8 +168,7 @@ RSpec.describe DummyStepController, type: :controller do
           .with({ 'application' => application,
                   'record' => application,
                   'first' => '1',
-                  'second' => '2',
-                  'commit_draft' => true })
+                  'second' => '2' })
 
         put :update, params:
       end
@@ -181,8 +180,7 @@ RSpec.describe DummyStepController, type: :controller do
           expect(form_class).to receive(:new)
             .with({ 'application' => application,
                     'record' => application,
-                    'first' => '1',
-                    'commit_draft' => true })
+                    'first' => '1' })
 
           put :update, params:
         end
@@ -228,8 +226,7 @@ RSpec.describe DummyStepController, type: :controller do
           .with({ 'application' => application,
                   'record' => application,
                   'first' => '1',
-                  'second' => '2',
-                  'commit_draft' => false })
+                  'second' => '2' })
 
         put :update, params:
       end
@@ -241,8 +238,7 @@ RSpec.describe DummyStepController, type: :controller do
           expect(form_class).to receive(:new)
             .with({ 'application' => application,
                     'record' => application,
-                    'first' => '1',
-                    'commit_draft' => true })
+                    'first' => '1' })
 
           put :update, params:
         end
@@ -281,8 +277,7 @@ RSpec.describe DummyStepController, type: :controller do
           .with({ 'application' => application,
                   'record' => application,
                   'first' => '1',
-                  'second' => '2',
-                  'commit_draft' => false })
+                  'second' => '2' })
 
         put :update, params:
       end
@@ -294,8 +289,7 @@ RSpec.describe DummyStepController, type: :controller do
           expect(form_class).to receive(:new)
             .with({ 'application' => application,
                     'record' => application,
-                    'first' => '1',
-                    'commit_draft' => false })
+                    'first' => '1' })
 
           put :update, params:
         end
@@ -316,8 +310,7 @@ RSpec.describe DummyStepController, type: :controller do
           .with({ 'application' => application,
                   'record' => application,
                   'first' => '1',
-                  'second' => '2',
-                  'commit_draft' => false })
+                  'second' => '2' })
 
         put :update, params:
       end
