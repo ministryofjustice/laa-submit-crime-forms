@@ -4,53 +4,46 @@ module PriorAuthority
       def self.attribute_names
         super - %w[service_type custom_service_name file_upload]
       end
-
-      def initialize(attrs)
-        # We have logic to set these below if a service type suggestion is provided,
-        # and we don't want the arbitrary order of attribute assignment to overwrite that
-        if attrs.key?('service_type_suggestion')
-          attrs.delete('service_type')
-          attrs.delete('custom_service_name')
-        else
-
-          # This ensures that the 'service type suggestion' field in the UI is
-          # is pre-populated with the custom name
-          if attrs[:application].service_type == 'custom'
-            attrs[:application].service_type = attrs[:application].custom_service_name
-          end
-
-          # But otherwise, we need to pull in application-wide settings to this quote-specific model
-          attrs[:service_type] ||= attrs[:application].service_type
-          attrs[:custom_service_name] ||= attrs[:application].custom_service_name
-        end
-        super(attrs)
-      end
-
-      attribute :service_type, :value_object, source: QuoteServices
-      attribute :custom_service_name, :string
       attribute :contact_full_name, :string
       attribute :organisation, :string
       attribute :postcode, :string
 
-      validates :service_type, presence: true
+      validates :service_type_autocomplete, presence: true
       validates :contact_full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
       validates :organisation, presence: true
       validates :postcode, presence: true, uk_postcode: true
       include DocumentUploadable # Include this here so that validations appear in the correct order
 
-      def service_type_suggestion=(value)
-        # The value of service_type_suggestion is the contents of the visible text field, which is the translated value.
-        # This is separate from the value of service_type which is the untranslated value, stored in a hidden dropdown.
-        # The complication is that if a user types in a value to the text field but doesn't click the autocomplete,
-        # service_type_suggestion will contain an accurate translated value, but service_type dropdown contains
-        # a false untranslated value.
-        # So to avoid being caught out, the translated value needs to take precedence, and we need to infer the
-        # untranslated value from that.
+      # Using local variable for service_type_autocomplete to avoid issues with
+      # assignment of value into two fields service_type and custom_service_name
+      attr_accessor :service_type, :custom_service_name, :local_values
+
+      def service_type_autocomplete
+        scope = local_values ? self : application
+        scope.service_type == 'custom' ? scope.custom_service_name : scope.service_type
+      end
+
+      # this should only be used when JS is disabled - otherwise overwritten by service_type_autocomplete_suggestion
+      def service_type_autocomplete=(value)
+        # ensure that if the suggestion is set first it cannot be overwritten
+        return if local_values
+
+        # used to ensure we use the right scope in validations
+        self.local_values = true
+
+        self.service_type = value
+        self.custom_service_name = nil
+      end
+
+      def service_type_autocomplete_suggestion=(value)
+        # used to ensure we use the right scope in validations
+        self.local_values = true
+
         if value.in?(translations.keys)
           self.service_type = translations[value]
           self.custom_service_name = nil
         else
-          self.service_type = 'custom' if value.present?
+          self.service_type = value.present? ? 'custom' : nil
           self.custom_service_name = value
         end
       end
@@ -65,7 +58,7 @@ module PriorAuthority
         return false unless save_file
 
         save_quote
-        application.update(service_type:, custom_service_name:)
+        application.update(service_type:, custom_service_name:) if service_type
 
         # If a change to service type has rendered any alternative quotes invalid,
         # delete them because we don't yet have a UI for highlighting invalidities

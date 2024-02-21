@@ -1,8 +1,7 @@
-<% if local_assigns[:section] %>
-  <%= govuk_summary_card(**local_assigns[:section][:card]) do |card|
-        govuk_summary_list(rows: local_assigns[:section][:rows])
-          .concat(
-            render('primary_quote_totals', section: local_assigns[:section])
-          )
-      end %>
-<% end %>
+<%= govuk_summary_card(title: section.title, actions: section.actions) do |card|
+      govuk_summary_list(rows: section.rows)
+        .concat(
+          render('primary_quote_totals', section: section)
+        )
+    end %>
+

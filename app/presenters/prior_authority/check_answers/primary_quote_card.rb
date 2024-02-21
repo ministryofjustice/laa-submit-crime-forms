@@ -3,16 +3,23 @@
 module PriorAuthority
   module CheckAnswers
     class PrimaryQuoteCard < Base
-      attr_reader :application, :service_cost_form
+      attr_reader :application, :service_cost_form, :travel_detail_form
 
       def initialize(application)
         @group = 'about_request'
         @section = 'primary_quote_summary'
         @application = application
+
         @service_cost_form = PriorAuthority::Steps::ServiceCostForm.build(
           application.primary_quote,
           application:
         )
+
+        @travel_detail_form = PriorAuthority::Steps::TravelDetailForm.build(
+          application.primary_quote,
+          application:
+        )
+
         super()
       end
 
@@ -92,7 +99,7 @@ module PriorAuthority
       end
 
       def travel_cost_reason
-        return [] if application.client_detained?
+        return [] unless travel_detail_form.travel_costs_require_justification?
 
         [
           {

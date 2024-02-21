@@ -2,7 +2,7 @@
   "name": "laa-submit-crime-forms",
   "private": "true",
   "dependencies": {
-    "@ministryofjustice/frontend": "2.1.0",
+    "@ministryofjustice/frontend": "2.1.1",
     "accessible-autocomplete": "^2.0.4",
     "govuk-frontend": "5.1.0",
     "jquery": "^3.7.1",

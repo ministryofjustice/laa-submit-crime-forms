@@ -5,7 +5,7 @@ module PriorAuthority
       attribute :plea, :value_object, source: PleaOptions
       attribute :court_type, :value_object, source: CourtTypeOptions
 
-      validates :next_hearing_date, presence: true, multiparam_date: { allow_past: true, allow_future: true }
+      validates :next_hearing_date, multiparam_date: { allow_past: true, allow_future: true }
       validates :plea, inclusion: { in: PleaOptions.values }
       validates :court_type, inclusion: { in: CourtTypeOptions.values }
 
