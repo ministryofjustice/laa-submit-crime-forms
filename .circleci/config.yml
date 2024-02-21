@@ -403,7 +403,7 @@ workflows:
               ignore:
                 - main
       - build-to-ecr:
-          context: laa-apply-for-a-criminal-legal-aid-application-dev
+          context: laa-submit-crime-forms-dev
           requires:
             - branch-build-approval
       - hold-dev:
@@ -411,7 +411,7 @@ workflows:
           requires:
             - build-to-ecr
       - deploy-dev:
-          context: laa-apply-for-a-criminal-legal-aid-application-dev
+          context: laa-submit-crime-forms-dev
           requires:
             - hold-dev
       - hold-dev-crm4:
@@ -419,7 +419,7 @@ workflows:
           requires:
             - build-to-ecr
       - deploy-dev-crm4:
-          context: laa-claim-non-standard-magistrates-fee-dev-crm4
+          context: laa-submit-crime-forms-dev-crm4
           requires:
             - hold-dev-crm4
       - hold-uat:
@@ -427,7 +427,7 @@ workflows:
           requires:
             - build-to-ecr
       - deploy-uat:
-          context: laa-apply-for-a-criminal-legal-aid-application-uat
+          context: laa-submit-crime-forms-uat
           requires:
             - hold-uat
 
@@ -435,13 +435,13 @@ workflows:
     jobs:
       - build-to-ecr:
           <<: *main-only
-          context: laa-apply-for-a-criminal-legal-aid-application-dev
+          context: laa-submit-crime-forms-dev
       - hold-dev:
           type: approval
           requires:
             - build-to-ecr
       - deploy-dev:
-          context: laa-apply-for-a-criminal-legal-aid-application-dev
+          context: laa-submit-crime-forms-dev
           requires:
             - hold-dev
       - hold-dev-crm4:
@@ -449,7 +449,7 @@ workflows:
           requires:
             - build-to-ecr
       - deploy-dev-crm4:
-          context: laa-claim-non-standard-magistrates-fee-dev-crm4
+          context: laa-submit-crime-forms-dev-crm4
           requires:
             - hold-dev-crm4
       - hold-uat:
@@ -457,7 +457,7 @@ workflows:
           requires:
             - build-to-ecr
       - deploy-uat:
-          context: laa-apply-for-a-criminal-legal-aid-application-uat
+          context: laa-submit-crime-forms-uat
           requires:
             - hold-uat
       - hold-prod:
@@ -465,6 +465,6 @@ workflows:
           requires:
             - build-to-ecr
       - deploy-prod:
-          context: laa-claim-non-standard-magistrates-fee-prod
+          context: laa-submit-crime-forms-production
           requires:
             - hold-prod
