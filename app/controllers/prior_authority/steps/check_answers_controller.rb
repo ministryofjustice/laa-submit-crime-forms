@@ -1,11 +1,10 @@
 module PriorAuthority
   module Steps
     class CheckAnswersController < BaseController
+      before_action :check_complete?
       before_action :build_report
 
       def edit
-        current_application.update!(navigation_stack: stack_with_step_moved_to_end)
-
         @form_object = CheckAnswersForm.build(
           current_application
         )
@@ -21,16 +20,14 @@ module PriorAuthority
         :check_answers
       end
 
-      def stack_with_step_moved_to_end
-        stack_with_step_moved_to_end = current_application.navigation_stack.delete_if do |step|
-          step == request.fullpath
-        end
-        stack_with_step_moved_to_end << request.fullpath
-        stack_with_step_moved_to_end
-      end
-
       def build_report
         @report = CheckAnswers::Report.new(current_application)
+      end
+
+      def check_complete?
+        return false if PriorAuthority::Tasks::CheckAnswers.new(application: current_application).can_start?
+
+        redirect_to prior_authority_steps_start_page_path(current_application)
       end
     end
   end

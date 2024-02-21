@@ -1,6 +1,7 @@
 module Decisions
   class DslDecisionTree < BaseDecisionTree
     WRAPPER_CLASS = SimpleDelegator
+    ANY = '*'.freeze
 
     class << self
       def rules
@@ -14,24 +15,41 @@ module Decisions
       end
     end
 
-    attr_reader :rule
+    attr_reader :destinations, :any_destinations
 
     def initialize(*, **)
       super
-      @rule = self.class.rules[step_name]
+      @any_destinations = Array(self.class.rules[ANY]&.destinations)
+      @destinations = Array(self.class.rules[step_name]&.destinations)
     end
 
     def destination
-      return to_route(index: '/nsm/claims') unless rule
+      return to_route(index: '/nsm/claims') if destinations.none?
 
-      detected = nil
-      _, destination = rule.destinations.detect do |(condition, _)|
-        detected = condition.nil? || wrapped_form_object.instance_exec(&condition.to_proc)
-      end
+      destination, detected = process
+      any_destination, any_detected = process(any_destinations)
+
+      destination = any_destination || destination
+      detected = any_detected || detected
 
       return to_route(index: '/nsm/claims') unless destination
 
       to_route(process_hash(destination, detected))
+    end
+
+    def process(paths = destinations)
+      detected = nil
+      _, destination = paths.detect do |(condition, _)|
+        detected =
+          if condition.nil?
+            true
+          else
+            args = condition.arity.zero? ? [] : [self]
+            wrapped_form_object.instance_exec(*args, &condition.to_proc)
+          end
+      end
+
+      [destination, detected]
     end
 
     def wrapped_form_object

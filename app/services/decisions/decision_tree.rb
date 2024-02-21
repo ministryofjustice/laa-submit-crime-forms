@@ -99,25 +99,27 @@ module Decisions
       .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
       .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
-    from(:case_contact)
-      .when(-> { application.navigation_stack[-1].match?('check_answers') })
+    # ---------------------------------
+    # prior authority application steps
+    # ---------------------------------
+    # catchall to return to the check answers page if the was the original source location
+    from(ANY)
+      .when(->(rule) { source_was_check_answers?(rule) })
       .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
+
+    from(:case_contact)
       .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     from(:client_detail)
-      .when(-> { application.navigation_stack[-1].match?('check_answers') })
-      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
       .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     # prison law flow
     from(:next_hearing)
-      .when(-> { application.navigation_stack[-1].match?('check_answers') })
-      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
       .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     # non-prison law flow
     from(:case_detail)
-      .when(-> { application.navigation_stack[-1].match?('check_answers') })
+      .when(->(rule) { source_was_check_answers?(rule, any_source: true) })
       .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
       .goto(edit: 'prior_authority/steps/hearing_detail')
 
@@ -126,18 +128,12 @@ module Decisions
       .goto(edit: 'prior_authority/steps/youth_court')
       .when(-> { application.court_type == PriorAuthority::CourtTypeOptions::CENTRAL_CRIMINAL.to_s })
       .goto(edit: 'prior_authority/steps/psychiatric_liaison')
-      .when(-> { application.navigation_stack[-1].match?('check_answers') })
-      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
       .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     from(:youth_court)
-      .when(-> { application.navigation_stack[-2..].any? { |el| el.match?('check_answers') } })
-      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
       .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     from(:psychiatric_liaison)
-      .when(-> { application.navigation_stack[-2..].any? { |el| el.match?('check_answers') } })
-      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
       .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     # primary quote
@@ -146,6 +142,7 @@ module Decisions
 
     from(:travel_detail).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
     from(:delete_travel).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
+    from(:primary_quote_summary).goto(show: PRIOR_AUTHORITY_START_PAGE)
     from(:additional_costs)
       .when(-> { application.additional_costs_still_to_add })
       .goto(new: 'prior_authority/steps/additional_cost_details')
@@ -164,8 +161,6 @@ module Decisions
       .goto(edit: PRIOR_AUTHORITY_ALTERNATIVE_QUOTES)
 
     from(:reason_why)
-      .when(-> { application.navigation_stack[-1].match?('check_answers') })
-      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
       .goto(show: PRIOR_AUTHORITY_START_PAGE)
 
     from(:check_answers)
