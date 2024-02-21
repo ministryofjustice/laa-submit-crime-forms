@@ -25,6 +25,18 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
       it { is_expected.to be_valid }
     end
 
+    context 'without next hearing date' do
+      let(:hearing_detail_attributes) do
+        {
+          next_hearing_date: nil,
+          plea: 'not_guilty',
+          court_type: 'central_criminal_court',
+        }
+      end
+
+      it { is_expected.to be_valid }
+    end
+
     context 'with invalid hearing details' do
       let(:hearing_detail_attributes) do
         {
@@ -34,11 +46,10 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
         }
       end
 
-      it 'has a validation error on the field' do
+      it 'has expected validation errors on the field' do
         expect(form).not_to be_valid
         expect(form.errors.messages.values.flatten)
-          .to include('Date cannot be blank',
-                      'Select the likely or actual plea',
+          .to include('Select the likely or actual plea',
                       'Select the type of court')
       end
     end
