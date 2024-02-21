@@ -406,6 +406,18 @@ workflows:
           context: laa-submit-crime-forms-uat
           requires:
             - hold-uat
+      - hold-prod:
+          type: approval
+          requires:
+            - build-to-ecr
+          filters:
+            branches:
+              only:
+                - main
+      - deploy-prod:
+          context: laa-submit-crime-forms-production
+          requires:
+            - hold-prod
           filters:
             branches:
               only:
