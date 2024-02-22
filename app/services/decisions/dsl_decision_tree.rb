@@ -14,18 +14,18 @@ module Decisions
       end
     end
 
-    attr_reader :destinations, :session
+    attr_reader :rule
 
     def initialize(*, **)
       super
-      @destinations = Array(self.class.rules[step_name]&.destinations)
+      @rule = self.class.rules[step_name]
     end
 
     def destination
-      return to_route(index: '/nsm/claims') if destinations.none?
+      return to_route(index: '/nsm/claims') unless rule
 
       detected = nil
-      _, destination = destinations.detect do |(condition, _)|
+      _, destination = rule.destinations.detect do |(condition, _)|
         detected = condition.nil? || wrapped_form_object.instance_exec(&condition.to_proc)
       end
 

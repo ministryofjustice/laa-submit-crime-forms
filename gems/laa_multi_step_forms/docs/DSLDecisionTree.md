@@ -6,8 +6,8 @@ Look (here)[https://github.com/ministryofjustice/laa-claim-non-standard-magistra
 
 ## What?
 
-This is a simple DSL that implements the same interface as the previous NsmDecisionTree code implementation and as such it
-the implementation can easily be swapped out without requiring changes to other aspects of the codebase. It currently layers on top of the existing DecisonTree code that was used in crime apply. Due to
+This is a simple DSL that implements the same interface as the previous DecisionTree code implementation and as such it
+the implementation can easily be swapped out without requiring changes to other aspects of the codebase. It currently layers on top of the existing DecisionTree code that was used in crime apply. Due to
 this it is fully backwards compatible with the previous implementation.
 
 ## Why?
