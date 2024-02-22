@@ -1,0 +1,85 @@
+<% title t('.page_title') %>
+<% content_for(:back_link) do %>
+  <%= link_to t('helpers.back_link'), prior_authority_applications_path(anchor: 'submitted'), class: 'govuk-back-link' %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title"><%= t(".application_status") %></h2>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              <%= t(".status") %>
+            </dt>
+            <%# When this view is used for assessed applications, customise this section based on state-specific designs %>
+            <dd class="govuk-summary-list__value">
+                <p><strong class="govuk-tag govuk-tag--green"><%= t(".statuses.submitted") %></strong></p>
+                <p><%= @application.updated_at.to_fs(:stamp) %></p>
+                <p><%= t(".awaiting_review") %></p>
+                <br>
+                <p><%= t('.amount_requested', amount: @primary_quote_summary.formatted_total_cost) %></p>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title"><%= t(".application_reference") %></h2>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              <%= t(".laa_reference") %>
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <%= @application.laa_reference %>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              <%= t(".ufn") %>
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <%= @application.ufn %>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <% @report.section_groups.each do |section_group| %>
+      <h2 class="govuk-heading-m"><%= section_group[:heading] %></h2>
+      <% section_group[:sections].reject { _1.is_a?(PriorAuthority::CheckAnswers::UfnCard) }.each do |section| %>
+        <% if section.template %>
+          <%= render(section.template, section: section, show_actions: false) %>
+        <% else %>
+          <%= govuk_summary_list(
+                card: {
+                  title: section.title,
+                },
+                rows: section.rows
+              ) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <aside class="app-aside__bar--blue aside-generic" role="complementary" aria-labelledby="aside-title">
+      <h3 id="aside-title" class="govuk-heading-s govuk-!-margin-bottom-4">
+        <%= t('.email_us') %>
+      </h3>
+      <p class="govuk-body govuk-!-margin-0">
+        <%= link_to t('.email'), "mailto:#{t('.email')}" %>
+      </p>
+    </aside>
+  </div>
+</div>
