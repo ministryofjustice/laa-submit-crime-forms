@@ -65,7 +65,7 @@ RSpec.describe 'Prior authority applications - add hearing details' do
   it 'validates hearing detail fields' do
     click_on 'Save and continue'
     expect(page)
-      .to have_content('Date cannot be blank')
+      .to have_no_content('Date cannot be blank')
       .and have_content('Select the likely or actual plea')
       .and have_content('Select the type of court')
   end

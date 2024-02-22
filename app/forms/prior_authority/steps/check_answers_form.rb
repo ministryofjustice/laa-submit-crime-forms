@@ -7,15 +7,13 @@ module PriorAuthority
       validates :confirm_excluding_vat, acceptance: { accept: true }, allow_nil: false
       validates :confirm_travel_expenditure, acceptance: { accept: true }, allow_nil: false
 
-      def persist!
-        application.update!(attributes)
+      # Do not save confirmations if "Save and come back later" - commit_draft
+      def save!; end
 
-        # TODO: actually submit to app store
-        PriorAuthorityApplication.transaction do
-          application.status = :submitted
-          application.update!(attributes)
-          # SubmitToAppStore.new.process(submission: application)
-        end
+      def persist!
+        application.update!(attributes.merge({ status: :submitted }))
+        SubmitToAppStore.new.process(submission: application)
+        true
       end
     end
   end

@@ -24,7 +24,7 @@ gem 'sidekiq', '~> 7.2'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron', '~> 1.12.0'
 gem 'sprockets-rails'
-gem 'turbo-rails', '~> 1.5.0'
+gem 'turbo-rails', '~> 2.0.3'
 gem 'tzinfo-data'
 
 # required as can't specify github in gemspe for laa_multi_step_form
@@ -61,5 +61,5 @@ group :test do
   gem 'simplecov'
   gem 'simplecov-rcov'
   gem 'super_diff'
-  gem 'webmock', '~> 3.20'
+  gem 'webmock', '~> 3.22'
 end

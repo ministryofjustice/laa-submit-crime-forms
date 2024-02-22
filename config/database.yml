@@ -84,6 +84,7 @@ test:
 #
 production:
   <<: *default
-  database: laa-claim-non-standard-magistrate-fee-prod
-  username: crm7restbackend
-  password: <%= ENV["CRM7RESTBACKEND_DATABASE_PASSWORD"] %>
+  host: <%= ENV['POSTGRES_HOST'] %>
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  database: <%= ENV['POSTGRES_DATABASE'] %>
