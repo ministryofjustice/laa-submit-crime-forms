@@ -111,6 +111,8 @@ en:
               blank: Enter an account number
         prior_authority/steps/hearing_detail_form:
           attributes:
+            next_hearing:
+              inclusion: Select yes if you know the date of the next hearing
             next_hearing_date: *shared_date_errors
             plea:
               inclusion: Select the likely or actual plea

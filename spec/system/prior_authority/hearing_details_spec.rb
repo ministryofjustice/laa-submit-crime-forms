@@ -5,10 +5,11 @@ RSpec.describe 'Prior authority applications - add hearing details' do
     fill_in_until_step(:hearing_detail)
   end
 
-  it 'allows hearing detail creation' do
+  it 'allows hearing detail creation with next hearing date' do
     expect(page).to have_title 'Hearing details'
 
-    within('.govuk-form-group', text: 'Date of next hearing') do
+    choose 'Yes'
+    within('.govuk-form-group', text: 'Date of next hearing', match: :first) do
       dt = Date.tomorrow
       fill_in 'Day', with: dt.day
       fill_in 'Month', with: dt.month
@@ -22,9 +23,22 @@ RSpec.describe 'Prior authority applications - add hearing details' do
     expect(page).to have_title 'Have you accessed the psychiatric liaison service?'
   end
 
+  it 'allows hearing detail creation without next hearing date' do
+    expect(page).to have_title 'Hearing details'
+
+    choose 'No'
+    choose 'Not guilty'
+    choose 'Central Criminal Court'
+
+    click_on 'Save and continue'
+    expect(page).to have_title 'Have you accessed the psychiatric liaison service?'
+  end
+
   context 'when navigating to next page' do
     before do
-      within('.govuk-form-group', text: 'Date of next hearing') do
+      choose 'Yes'
+
+      within('.govuk-form-group', text: 'Date of next hearing', match: :first) do
         dt = Date.tomorrow
         fill_in 'Day', with: dt.day
         fill_in 'Month', with: dt.month
