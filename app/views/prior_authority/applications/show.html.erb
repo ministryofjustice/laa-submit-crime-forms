@@ -1,6 +1,6 @@
 <% title t('.page_title') %>
 <% content_for(:back_link) do %>
-  <%= link_to t('helpers.back_link'), prior_authority_applications_path(anchor: 'submitted'), class: 'govuk-back-link' %>
+  <%= link_to t('helpers.back_link'), prior_authority_applications_path(anchor: 'submitted'), class: 'govuk-back-link hide-on-print' %>
 <% end %>
 
 <div class="govuk-grid-row">
