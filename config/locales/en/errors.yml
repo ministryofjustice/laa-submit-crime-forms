@@ -202,6 +202,7 @@ en:
             travel_cost_per_hour:
               blank: Enter the cost per hour
               greater_than: The cost per hour must be more than 0
+              not_a_number: The cost per hour must be a number, like 25
         prior_authority/steps/additional_costs/overview_form:
           attributes:
             additional_costs_still_to_add:
