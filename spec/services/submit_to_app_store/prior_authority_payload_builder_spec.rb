@@ -83,7 +83,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             cost_per_item: nil,
             items: nil,
             ordered_by_court: nil,
-            related_to_post_mortem: nil,
+            related_to_post_mortem: true,
             id: application.primary_quote.id,
             document: {
               document_type: 'quote_document',
@@ -109,7 +109,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             cost_per_item: nil,
             items: nil,
             ordered_by_court: nil,
-            related_to_post_mortem: nil,
+            related_to_post_mortem: true,
             id: application.alternative_quotes.first.id,
             document: nil,
             travel_cost_per_hour: '50.0',

@@ -8,6 +8,7 @@ FactoryBot.define do
     travel_cost_per_hour { 50.0 }
     travel_time { 150 }
     user_chosen_cost_type { 'per_hour' }
+    related_to_post_mortem { true }
     document factory: %i[quote_document], strategy: :build
 
     trait :blank do

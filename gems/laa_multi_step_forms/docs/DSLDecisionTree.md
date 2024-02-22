@@ -7,7 +7,7 @@ Look (here)[https://github.com/ministryofjustice/laa-claim-non-standard-magistra
 ## What?
 
 This is a simple DSL that implements the same interface as the previous DecisionTree code implementation and as such it
-the implementation can easily be swapped out without requiring changes to other aspects of the codebase. It currently layers on top of the existing DecisonTree code that was used in crime apply. Due to
+the implementation can easily be swapped out without requiring changes to other aspects of the codebase. It currently layers on top of the existing DecisionTree code that was used in crime apply. Due to
 this it is fully backwards compatible with the previous implementation.
 
 ## Why?
@@ -93,6 +93,7 @@ Additional parameters can be set in 3 ways:
 1. static value -> this just adds the additional params in the hash
 2. dynamic value (block without params) -> this executes on the block form object allowing the value to be set
 3. dynamic value (block with params) -> this passes the result of the `when` block into the `goto` block
+4. dynamic goto -> this is expected to return a hash
 
 > NOTE: type 3 is not currently in use and unsure of a required use-case - documented for completeness
 
@@ -101,6 +102,7 @@ from('A').goto(edit: 'B', tag: 'help')
 from('B').goto(edit: 'C', tag: -> { record.id })
 from('C')
   .when(-> { record }).goto(edit: 'D', tag: ->(inst) { inst.id })
+from('D').goto { { show: 'apples } }
 
 it_behaves_like 'a generic decision', from: 'A', goto: { action: :edit, controller: 'B', tag: 'help' }
 context do
@@ -111,6 +113,7 @@ context do
   let(:tag) { record.id }
   it_behaves_like 'a generic decision', from: 'C', goto: { action: :edit, controller: 'D', tag: 'help' }, additional_param: :tag
 end
+it_behaves_like 'a generic decision', from: 'C', goto: { action: :show, controller: 'apples' }
 ```
 
 > NOTE: for non-static values the tests expects a `let` to expose the tag value (must have matching name to param) to exist that

@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class CaseDisposal < ::Tasks::Generic
+    class CaseDisposal < Base
       PREVIOUS_TASKS = HearingDetails
       FORM = Nsm::Steps::CaseDisposalForm
 

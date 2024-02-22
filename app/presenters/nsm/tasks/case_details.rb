@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class CaseDetails < ::Tasks::Generic
+    class CaseDetails < Base
       PREVIOUS_TASKS = Defendants
       FORM = Nsm::Steps::CaseDetailsForm
 

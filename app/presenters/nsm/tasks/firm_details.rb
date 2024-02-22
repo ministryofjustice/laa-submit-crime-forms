@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class FirmDetails < ::Tasks::Generic
+    class FirmDetails < Base
       PREVIOUS_TASKS = ClaimType
       FORM = Nsm::Steps::FirmDetailsForm
 

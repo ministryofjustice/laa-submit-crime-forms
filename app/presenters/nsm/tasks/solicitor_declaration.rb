@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class SolicitorDeclaration < ::Tasks::Generic
+    class SolicitorDeclaration < Base
       PREVIOUS_TASKS = CheckAnswers
       FORM = Nsm::Steps::SolicitorDeclarationForm
 

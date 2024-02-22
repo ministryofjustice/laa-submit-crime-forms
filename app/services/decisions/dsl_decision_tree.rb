@@ -31,20 +31,23 @@ module Decisions
 
       return to_route(index: '/nsm/claims') unless destination
 
-      to_route(process_hash(destination, detected))
+      to_route(resolve_procs(destination, detected))
     end
 
     def wrapped_form_object
       self.class::WRAPPER_CLASS.new(form_object)
     end
 
-    def process_hash(hash, detected)
-      hash.transform_values do |value|
-        if value.respond_to?(:call)
-          value.arity.zero? ? wrapped_form_object.instance_exec(&value) : value.call(detected)
-        else
-          value
-        end
+    def resolve_procs(hash_or_proc, detected)
+      hash = resolve_proc(hash_or_proc, detected)
+      hash.transform_values { |value| resolve_proc(value, detected) }
+    end
+
+    def resolve_proc(value, detected)
+      if value.respond_to?(:call)
+        value.arity.zero? ? wrapped_form_object.instance_exec(&value) : value.call(detected)
+      else
+        value
       end
     end
 

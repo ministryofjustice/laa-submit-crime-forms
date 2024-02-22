@@ -18,6 +18,7 @@ RSpec.describe 'Prior authority applications, prison law - check your answers' d
     end
 
     click_on 'Save and continue'
+
     expect(page).to have_title('Check your answers')
   end
 
