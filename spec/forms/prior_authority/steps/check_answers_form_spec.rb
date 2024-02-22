@@ -50,12 +50,43 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     end
   end
 
-  describe '#save' do
+  describe '#save! ("Save and come back later")' do
+    subject(:save) { form.save! }
+
+    let(:application) { create(:prior_authority_application, status: 'draft') }
+
+    context 'with accepted confirmations' do
+      let(:confirm_excluding_vat) { 'true' }
+      let(:confirm_travel_expenditure) { 'true' }
+
+      it 'does NOT persist the confirmations' do
+        expect { save }.not_to change { application.reload.attributes }
+          .from(
+            hash_including(
+              'confirm_excluding_vat' => nil,
+              'confirm_travel_expenditure' => nil,
+            )
+          )
+      end
+
+      it 'does NOT update the status of the application' do
+        expect { save }.not_to change(application, :status).from('draft')
+      end
+
+      it 'does NOT submit the application to the app store' do
+        allow(SubmitToAppStore).to receive(:new)
+        save
+        expect(SubmitToAppStore).not_to have_received(:new)
+      end
+    end
+  end
+
+  describe '#save ("Accept and send")' do
     subject(:save) { form.save }
 
-    let(:application) { create(:prior_authority_application) }
+    let(:application) { create(:prior_authority_application, status: 'draft') }
 
-    context 'with all confirmations accepted' do
+    context 'with accepted confirmations' do
       let(:confirm_excluding_vat) { 'true' }
       let(:confirm_travel_expenditure) { 'true' }
 
@@ -74,13 +105,38 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
             )
           )
       end
+
+      it 'updates the status of the application to submitted' do
+        expect { save }.to change(application, :status).from('draft').to('submitted')
+      end
+
+      it 'submits the application to the appstore' do
+        app_store_submitter = instance_double(SubmitToAppStore)
+        allow(SubmitToAppStore).to receive(:new).and_return(app_store_submitter)
+        allow(app_store_submitter).to receive(:process)
+        save
+        expect(app_store_submitter).to have_received(:process).with(submission: application)
+      end
+
+      context 'when update fails' do
+        before do
+          allow(application).to receive(:update!).and_raise(StandardError)
+        end
+
+        it 'does NOT submit the application to the app store' do
+          allow(SubmitToAppStore).to receive(:new)
+          save
+        rescue StandardError
+          expect(SubmitToAppStore).not_to have_received(:new)
+        end
+      end
     end
 
     context 'with unaccepted confirmations' do
       let(:confirm_excluding_vat) { false }
       let(:confirm_travel_expenditure) { false }
 
-      it 'does not persist the case details' do
+      it 'does not persist the confirmations' do
         expect { save }.not_to change { application.reload.attributes }
           .from(
             hash_including(
@@ -89,13 +145,23 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
             )
           )
       end
+
+      it 'does NOT update the status of the application' do
+        expect { save }.not_to change(application, :status).from('draft')
+      end
+
+      it 'does NOT submit the application to the app store' do
+        allow(SubmitToAppStore).to receive(:new)
+        save
+        expect(SubmitToAppStore).not_to have_received(:new)
+      end
     end
 
     context 'with nil confirmations' do
       let(:confirm_excluding_vat) { nil }
       let(:confirm_travel_expenditure) { nil }
 
-      it 'does not persist the case details' do
+      it 'does not persist the confirmations' do
         expect { save }.not_to change { application.reload.attributes }
           .from(
             hash_including(
@@ -103,6 +169,10 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
               'confirm_travel_expenditure' => nil,
             )
           )
+      end
+
+      it 'does NOT update the status of the application' do
+        expect { save }.not_to change(application, :status).from('draft')
       end
     end
   end

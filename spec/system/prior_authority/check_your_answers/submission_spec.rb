@@ -24,7 +24,7 @@ RSpec.describe 'Prior authority applications, check your answers, submission' do
     expect(page).to have_title('Your applications')
   end
 
-  context 'when I have confirmed conditions I must abide by' do
+  context 'when I have confirmed conditions I must abide by', :stub_oauth_token do
     it 'allows me to submit my application' do
       check 'I confirm that all costs are exclusive of VAT'
       check 'I confirm that any travel expenditure (such as mileage, ' \
