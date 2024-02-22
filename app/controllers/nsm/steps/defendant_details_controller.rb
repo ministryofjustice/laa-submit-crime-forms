@@ -17,7 +17,7 @@ module Nsm
       private
 
       def decision_tree_class
-        Decisions::NsmDecisionTree
+        Decisions::DecisionTree
       end
 
       def defendant

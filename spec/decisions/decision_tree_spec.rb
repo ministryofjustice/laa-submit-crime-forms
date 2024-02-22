@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Decisions::NsmDecisionTree do
+RSpec.describe Decisions::DecisionTree do
   let(:id) { SecureRandom.uuid }
   let(:application) { build(:claim, id:) }
   let(:record) { application }

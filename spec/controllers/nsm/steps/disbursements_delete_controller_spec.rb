@@ -109,10 +109,10 @@ save!: true)
               expect(form_object).to receive(:save).and_return(true)
             end
 
-            let(:decision_tree) { instance_double(Decisions::NsmDecisionTree, destination: '/expected_destination') }
+            let(:decision_tree) { instance_double(Decisions::DecisionTree, destination: '/expected_destination') }
 
             it 'asks the decision tree for the next destination and redirects there' do
-              expect(Decisions::NsmDecisionTree).to receive(:new).and_return(decision_tree)
+              expect(Decisions::DecisionTree).to receive(:new).and_return(decision_tree)
               put :update, params: expected_params
               expect(response).to have_http_status(:redirect)
               expect(subject).to redirect_to('/expected_destination')

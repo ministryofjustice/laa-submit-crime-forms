@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::Steps::DisbursementCostController, type: :controller do
   let(:disbursement) { existing_case.is_a?(Claim) ? existing_case.disbursements.create : nil }
 
-  it_behaves_like 'a generic step controller', Nsm::Steps::DisbursementCostForm, Decisions::NsmDecisionTree,
+  it_behaves_like 'a generic step controller', Nsm::Steps::DisbursementCostForm, Decisions::DecisionTree,
                   ->(scope) { { disbursement_id: scope.disbursement&.id || '4321' } }
   it_behaves_like 'a step that can be drafted', Nsm::Steps::DisbursementCostForm,
                   ->(scope) { { disbursement_id: scope.disbursement&.id || '4321' } }
