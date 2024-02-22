@@ -142,7 +142,9 @@ module PriorAuthority
     end
 
     def fill_in_hearing_detail(plea: 'Not guilty', court_type: "Magistrates' court")
-      within('.govuk-form-group', text: 'Date of next hearing') do
+      choose 'Yes'
+
+      within('.govuk-form-group', text: 'Date of next hearing', match: :first) do
         dt = Date.tomorrow
         fill_in 'Day', with: dt.day
         fill_in 'Month', with: dt.month

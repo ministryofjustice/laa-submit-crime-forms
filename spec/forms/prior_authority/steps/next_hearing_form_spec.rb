@@ -24,6 +24,17 @@ RSpec.describe PriorAuthority::Steps::NextHearingForm do
       it { is_expected.to be_valid }
     end
 
+    context 'without next hearing date' do
+      let(:next_hearing_attributes) do
+        {
+          next_hearing: false,
+          next_hearing_date: nil,
+        }
+      end
+
+      it { is_expected.to be_valid }
+    end
+
     context 'with invalid next hearing details' do
       let(:next_hearing_attributes) do
         {
@@ -36,6 +47,21 @@ RSpec.describe PriorAuthority::Steps::NextHearingForm do
         expect(form).not_to be_valid
         expect(form.errors.messages.values.flatten)
           .to contain_exactly('Select yes if you know the date of the next hearing')
+      end
+    end
+
+    context 'with invalid combination of next hearing details' do
+      let(:next_hearing_attributes) do
+        {
+          next_hearing: true,
+          next_hearing_date: nil,
+        }
+      end
+
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.messages.values.flatten)
+          .to contain_exactly('Date cannot be blank')
       end
     end
   end
