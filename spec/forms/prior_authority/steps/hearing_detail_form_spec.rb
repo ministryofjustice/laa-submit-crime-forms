@@ -13,9 +13,10 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
   describe '#validate' do
     let(:application) { instance_double(PriorAuthorityApplication) }
 
-    context 'with hearing details' do
+    context 'with hearing details including next hearing date' do
       let(:hearing_detail_attributes) do
         {
+          next_hearing: true,
           next_hearing_date: Date.tomorrow,
           plea: 'not_guilty',
           court_type: 'central_criminal_court',
@@ -25,9 +26,10 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
       it { is_expected.to be_valid }
     end
 
-    context 'without next hearing date' do
+    context 'with hearing details excluding next hearing date' do
       let(:hearing_detail_attributes) do
         {
+          next_hearing: false,
           next_hearing_date: nil,
           plea: 'not_guilty',
           court_type: 'central_criminal_court',
@@ -40,6 +42,7 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
     context 'with invalid hearing details' do
       let(:hearing_detail_attributes) do
         {
+          next_hearing: nil,
           next_hearing_date: nil,
           plea: nil,
           court_type: nil,
@@ -49,8 +52,26 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
       it 'has expected validation errors on the field' do
         expect(form).not_to be_valid
         expect(form.errors.messages.values.flatten)
-          .to include('Select the likely or actual plea',
+          .to include('Select yes if you know the date of the next hearing',
+                      'Select the likely or actual plea',
                       'Select the type of court')
+      end
+    end
+
+    context 'without next hearing date when it is expected' do
+      let(:hearing_detail_attributes) do
+        {
+          next_hearing: true,
+          next_hearing_date: nil,
+          plea: 'not_guilty',
+          court_type: 'central_criminal_court',
+        }
+      end
+
+      it 'has expected validation errors on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.messages.values.flatten)
+          .to include('Date cannot be blank')
       end
     end
   end
@@ -63,6 +84,7 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
     context 'with valid hearing details' do
       let(:hearing_detail_attributes) do
         {
+          next_hearing: true,
           next_hearing_date: Date.tomorrow,
           plea: 'not_guilty',
           court_type: 'central_criminal_court',
@@ -73,6 +95,7 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
         expect { save }.to change { application.reload.attributes }
           .from(
             hash_including(
+              'next_hearing' => nil,
               'next_hearing_date' => nil,
               'plea' => nil,
               'court_type' => nil,
@@ -80,6 +103,7 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
           )
           .to(
             hash_including(
+              'next_hearing' => true,
               'next_hearing_date' => Date.tomorrow,
               'plea' => 'not_guilty',
               'court_type' => 'central_criminal_court',
@@ -91,6 +115,7 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
     context 'with incomplete hearing details' do
       let(:hearing_detail_attributes) do
         {
+          next_hearing: nil,
           next_hearing_date: nil,
           plea: nil,
           court_type: nil,
@@ -101,9 +126,40 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
         expect { save }.not_to change { application.reload.attributes }
           .from(
             hash_including(
+              'next_hearing' => nil,
               'next_hearing_date' => nil,
               'plea' => nil,
               'court_type' => nil,
+            )
+          )
+      end
+    end
+
+    context 'when changing next_hering from true to false' do
+      let(:application) { create(:prior_authority_application, next_hearing: true, next_hearing_date: a_date) }
+      let(:a_date) { Date.tomorrow }
+
+      let(:hearing_detail_attributes) do
+        {
+          next_hearing: false,
+          next_hearing_date: a_date,
+          plea: 'not_guilty',
+          court_type: 'central_criminal_court',
+        }
+      end
+
+      it 'nullifies next_hearing_date field' do
+        expect { save }.to change { application.reload.attributes }
+          .from(
+            hash_including(
+              'next_hearing' => true,
+              'next_hearing_date' => a_date,
+            )
+          )
+          .to(
+            hash_including(
+              'next_hearing' => false,
+              'next_hearing_date' => nil,
             )
           )
       end
@@ -114,6 +170,7 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
 
       let(:hearing_detail_attributes) do
         {
+          next_hearing: true,
           next_hearing_date: Date.tomorrow,
           plea: 'not_guilty',
           court_type: 'central_criminal_court',
@@ -142,6 +199,7 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
 
       let(:hearing_detail_attributes) do
         {
+          next_hearing: true,
           next_hearing_date: Date.tomorrow,
           plea: 'not_guilty',
           court_type: 'magistrates_court',
@@ -172,6 +230,7 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
 
       let(:hearing_detail_attributes) do
         {
+          next_hearing: true,
           next_hearing_date: Date.tomorrow,
           plea: 'not_guilty',
           court_type: 'crown_court',
@@ -202,6 +261,7 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
 
       let(:hearing_detail_attributes) do
         {
+          next_hearing: true,
           next_hearing_date: Date.tomorrow,
           plea: 'not_guilty',
           court_type: 'crown_court',
