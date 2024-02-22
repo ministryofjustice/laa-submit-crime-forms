@@ -15,7 +15,7 @@ module Nsm
       private
 
       def decision_tree_class
-        Decisions::DecisionTree
+        Decisions::NsmDecisionTree
       end
 
       def additional_permitted_params

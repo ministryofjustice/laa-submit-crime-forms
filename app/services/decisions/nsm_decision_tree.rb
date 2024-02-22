@@ -1,5 +1,5 @@
 module Decisions
-  class DecisionTree < DslDecisionTree
+  class NsmDecisionTree < DslDecisionTree
     # used to add custom methods to filter/query the data
     WRAPPER_CLASS = CustomWrapper
 
@@ -13,12 +13,6 @@ module Decisions
     NSM_LETTERS_CALLS = 'nsm/steps/letters_calls'.freeze
     NSM_DISBURSEMENT_ADD = 'nsm/steps/disbursement_add'.freeze
     NSM_EQUALITY = 'nsm/steps/equality'.freeze
-
-    PRIOR_AUTHORITY_START_PAGE = 'prior_authority/steps/start_page'.freeze
-    PRIOR_AUTHORITY_CHECK_ANSWERS = 'prior_authority/steps/check_answers'.freeze
-    PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY = 'prior_authority/steps/primary_quote_summary'.freeze
-    PRIOR_AUTHORITY_ADDITIONAL_COSTS = 'prior_authority/steps/additional_costs'.freeze
-    PRIOR_AUTHORITY_ALTERNATIVE_QUOTES = 'prior_authority/steps/alternative_quotes'.freeze
 
     from(:claim_type).goto(show: 'nsm/steps/start_page')
     # start_page to firm_details is a hard coded link as show page
@@ -86,84 +80,5 @@ module Decisions
       .goto(edit: 'nsm/steps/solicitor_declaration')
     from(:equality_questions).goto(edit: 'nsm/steps/solicitor_declaration')
     from(:solicitor_declaration).goto(show: 'nsm/steps/claim_confirmation')
-
-    # ---------------------------------
-    # prior authority application steps
-    # ---------------------------------
-
-    # pre-draft application steps
-    from(:prison_law).goto(edit: 'prior_authority/steps/authority_value')
-    from(:authority_value).goto(edit: 'prior_authority/steps/ufn')
-    from(:ufn)
-      .when(-> { application.navigation_stack[-1].match?('check_answers') })
-      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
-      .goto(show: PRIOR_AUTHORITY_START_PAGE)
-
-    # ---------------------------------
-    # prior authority application steps
-    # ---------------------------------
-    # catchall to return to the check answers page if the was the original source location
-    from(ANY)
-      .when(->(rule) { source_was_check_answers?(rule) })
-      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
-
-    from(:case_contact)
-      .goto(show: PRIOR_AUTHORITY_START_PAGE)
-
-    from(:client_detail)
-      .goto(show: PRIOR_AUTHORITY_START_PAGE)
-
-    # prison law flow
-    from(:next_hearing)
-      .goto(show: PRIOR_AUTHORITY_START_PAGE)
-
-    # non-prison law flow
-    from(:case_detail)
-      .when(->(rule) { source_was_check_answers?(rule, any_source: true) })
-      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
-      .goto(edit: 'prior_authority/steps/hearing_detail')
-
-    from(:hearing_detail)
-      .when(-> { application.court_type == PriorAuthority::CourtTypeOptions::MAGISTRATE.to_s })
-      .goto(edit: 'prior_authority/steps/youth_court')
-      .when(-> { application.court_type == PriorAuthority::CourtTypeOptions::CENTRAL_CRIMINAL.to_s })
-      .goto(edit: 'prior_authority/steps/psychiatric_liaison')
-      .goto(show: PRIOR_AUTHORITY_START_PAGE)
-
-    from(:youth_court)
-      .goto(show: PRIOR_AUTHORITY_START_PAGE)
-
-    from(:psychiatric_liaison)
-      .goto(show: PRIOR_AUTHORITY_START_PAGE)
-
-    # primary quote
-    from(:primary_quote).goto(edit: 'prior_authority/steps/service_cost')
-    from(:service_cost).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
-
-    from(:travel_detail).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
-    from(:delete_travel).goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
-    from(:primary_quote_summary).goto(show: PRIOR_AUTHORITY_START_PAGE)
-    from(:additional_costs)
-      .when(-> { application.additional_costs_still_to_add })
-      .goto(new: 'prior_authority/steps/additional_cost_details')
-      .goto(show: PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
-
-    from(:additional_cost_details)
-      .goto(edit: PRIOR_AUTHORITY_ADDITIONAL_COSTS)
-
-    # alternative quotes
-    from(:alternative_quotes)
-      .when(-> { application.alternative_quotes_still_to_add })
-      .goto(new: 'prior_authority/steps/alternative_quote_details')
-      .goto(show: PRIOR_AUTHORITY_START_PAGE)
-
-    from(:alternative_quote_details)
-      .goto(edit: PRIOR_AUTHORITY_ALTERNATIVE_QUOTES)
-
-    from(:reason_why)
-      .goto(show: PRIOR_AUTHORITY_START_PAGE)
-
-    from(:check_answers)
-      .goto(show: 'prior_authority/steps/submission_confirmation')
   end
 end

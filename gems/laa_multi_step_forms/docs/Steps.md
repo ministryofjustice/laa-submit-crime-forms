@@ -97,7 +97,7 @@ adding the parameter names to the `additional_permitted_params` response
 
 ## 3. Routing between steps
 
-Routing to the next step is handled by the DecisionTree object returned from the
+Routing to the next step is handled by the NsmDecisionTree object returned from the
 `decision_tree_class` method. The key here is that the current step and the
 underlying application object are passing into this class and it returns a
 hash that can be used by the rails router to redirect to the next step.

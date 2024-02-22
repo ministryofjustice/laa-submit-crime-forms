@@ -172,6 +172,30 @@ RSpec.describe Decisions::DslDecisionTree do
     end
   end
 
+  describe 'rule with proc for the goto response' do
+    let(:wrapper_class) do
+      Class.new(SimpleDelegator) do
+        def calculated_path
+          { show: 'Apple' }
+        end
+      end
+    end
+    let(:as) { :tree }
+    let(:decision_tree) do
+      Class.new(described_class) do
+        from(:tree)
+          .when(-> { record }).goto { calculated_path }
+      end
+    end
+
+    it 'processes the proc response' do
+      expect(subject.destination).to eq(
+        controller: 'Apple',
+        action: :show,
+      )
+    end
+  end
+
   describe 'from definitions' do
     let(:as) { :tree }
     let(:decision_tree) { Class.new(described_class) }

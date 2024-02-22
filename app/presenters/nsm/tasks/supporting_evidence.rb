@@ -2,7 +2,7 @@
 
 module Nsm
   module Tasks
-    class SupportingEvidence < ::Tasks::Generic
+    class SupportingEvidence < Base
       PREVIOUS_TASKS = OtherInfo
       FORM = Nsm::Steps::SupportingEvidenceForm
 

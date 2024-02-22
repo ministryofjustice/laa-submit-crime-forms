@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::Steps::WorkItemController, type: :controller do
   let(:work_item) { existing_case.is_a?(Claim) ? existing_case.work_items.create : nil }
 
-  it_behaves_like 'a generic step controller', Nsm::Steps::WorkItemForm, Decisions::DecisionTree,
+  it_behaves_like 'a generic step controller', Nsm::Steps::WorkItemForm, Decisions::NsmDecisionTree,
                   ->(scope) { { work_item_id: scope.work_item&.id || '4321' } }
   it_behaves_like 'a step that can be drafted', Nsm::Steps::WorkItemForm,
                   ->(scope) { { work_item_id: scope.work_item&.id || '4321' } }

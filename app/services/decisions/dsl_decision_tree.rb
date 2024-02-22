@@ -1,7 +1,6 @@
 module Decisions
   class DslDecisionTree < BaseDecisionTree
     WRAPPER_CLASS = SimpleDelegator
-    ANY = '*'.freeze
 
     class << self
       def rules
@@ -15,54 +14,40 @@ module Decisions
       end
     end
 
-    attr_reader :destinations, :any_destinations
+    attr_reader :destinations, :session
 
     def initialize(*, **)
       super
-      @any_destinations = Array(self.class.rules[ANY]&.destinations)
       @destinations = Array(self.class.rules[step_name]&.destinations)
     end
 
     def destination
       return to_route(index: '/nsm/claims') if destinations.none?
 
-      destination, detected = process
-      any_destination, any_detected = process(any_destinations)
-
-      destination = any_destination || destination
-      detected = any_detected || detected
+      detected = nil
+      _, destination = destinations.detect do |(condition, _)|
+        detected = condition.nil? || wrapped_form_object.instance_exec(&condition.to_proc)
+      end
 
       return to_route(index: '/nsm/claims') unless destination
 
-      to_route(process_hash(destination, detected))
-    end
-
-    def process(paths = destinations)
-      detected = nil
-      _, destination = paths.detect do |(condition, _)|
-        detected =
-          if condition.nil?
-            true
-          else
-            args = condition.arity.zero? ? [] : [self]
-            wrapped_form_object.instance_exec(*args, &condition.to_proc)
-          end
-      end
-
-      [destination, detected]
+      to_route(resolve_procs(destination, detected))
     end
 
     def wrapped_form_object
       self.class::WRAPPER_CLASS.new(form_object)
     end
 
-    def process_hash(hash, detected)
-      hash.transform_values do |value|
-        if value.respond_to?(:call)
-          value.arity.zero? ? wrapped_form_object.instance_exec(&value) : value.call(detected)
-        else
-          value
-        end
+    def resolve_procs(hash_or_proc, detected)
+      hash = resolve_proc(hash_or_proc, detected)
+      hash.transform_values { |value| resolve_proc(value, detected) }
+    end
+
+    def resolve_proc(value, detected)
+      if value.respond_to?(:call)
+        value.arity.zero? ? wrapped_form_object.instance_exec(&value) : value.call(detected)
+      else
+        value
       end
     end
 

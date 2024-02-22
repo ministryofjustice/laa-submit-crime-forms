@@ -10,7 +10,7 @@ module PriorAuthority
       private
 
       def decision_tree_class
-        Decisions::DecisionTree
+        Decisions::PaDecisionTree
       end
 
       def after_commit_redirect_path

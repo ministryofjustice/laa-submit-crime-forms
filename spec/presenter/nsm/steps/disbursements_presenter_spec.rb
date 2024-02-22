@@ -19,7 +19,7 @@ RSpec.describe Nsm::Tasks::Disbursements, type: :system do
   let(:has_disbursements) { nil }
 
   describe '#path' do
-    # This is calling the DecisionTree code so not full tested all options here
+    # This is calling the NsmDecisionTree code so not full tested all options here
     context 'no disbursements' do
       let(:disbursements) { [] }
 
