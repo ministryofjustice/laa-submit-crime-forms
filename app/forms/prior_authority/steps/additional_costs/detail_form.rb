@@ -15,7 +15,7 @@ module PriorAuthority
         attribute :items, :integer
         attribute :cost_per_item, :gbp
         attribute :period, :time_period
-        attribute :cost_per_hour, :decimal, precision: 10, scale: 2
+        attribute :cost_per_hour, :gbp
 
         validates :name, presence: true
         validates :description, presence: true
