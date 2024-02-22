@@ -10,7 +10,7 @@ en:
       index:
         page_title: Your applications
         none: You have not started any applications.
-        start_application: New application
+        start_application: Make a new application
         tabs:
           drafts: Drafts
           submitted: Submitted
