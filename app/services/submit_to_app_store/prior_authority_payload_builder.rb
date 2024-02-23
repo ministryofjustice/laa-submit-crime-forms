@@ -74,7 +74,7 @@ class SubmitToAppStore
       ufn
       laa_reference
       status
-      rep_order_data
+      rep_order_date
       reason_why
       main_offence
       client_detained
