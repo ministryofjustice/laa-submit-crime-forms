@@ -23,7 +23,7 @@ module PriorAuthority
         [
           {
             head_key: 'next_hearing_date',
-            text: application.next_hearing_date.to_fs(:stamp),
+            text: next_hearing_date,
           },
           {
             head_key: 'plea',
@@ -39,6 +39,14 @@ module PriorAuthority
 
       def i18n_scope
         @i18n_scope ||= 'prior_authority.steps.hearing_detail.edit'
+      end
+
+      def next_hearing_date
+        if application.next_hearing
+          application.next_hearing_date.to_fs(:stamp)
+        else
+          I18n.t('generic.unknown')
+        end
       end
 
       def court_type_rows
