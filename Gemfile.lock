@@ -214,7 +214,7 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-protobuf (3.23.3)
-    govuk-components (5.1.0)
+    govuk-components (5.2.0)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (~> 6.0)
       view_component (>= 3.9, < 3.11)
