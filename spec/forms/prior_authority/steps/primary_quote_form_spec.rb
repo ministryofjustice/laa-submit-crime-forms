@@ -269,17 +269,16 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
         let(:service_type_autocomplete_suggestion) { 'Photocopying' }
 
-        before { save }
-
-        it 'clears out old item data for all quotes' do
-          expect(application.reload.primary_quote).to have_attributes(
-            items: nil,
-            cost_per_item: nil
+        it 'clears out old item data for primary quote' do
+          expect { save }.to change { application.reload.primary_quote.attributes }.from(
+            hash_including('items' => 3, 'cost_per_item' => 1.23)
+          ).to(
+            hash_including('items' => nil, 'cost_per_item' => nil)
           )
         end
 
         it 'removes alternative quotes entirely' do
-          expect(application.alternative_quotes.count).to eq 0
+          expect { save }.to change(application.alternative_quotes, :count).from(1).to(0)
         end
       end
 
@@ -293,17 +292,16 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
                  ])
         end
 
-        before { save }
-
-        it 'clears out old item data for all quotes' do
-          expect(application.reload.primary_quote).to have_attributes(
-            items: nil,
-            cost_per_item: nil
+        it 'clears out old item data for primary quote' do
+          expect { save }.to change { application.reload.primary_quote.attributes }.from(
+            hash_including('period' => 30, 'cost_per_hour' => 1.23)
+          ).to(
+            hash_including('period' => nil, 'cost_per_hour' => nil)
           )
         end
 
         it 'removes alternative quotes entirely' do
-          expect(application.alternative_quotes.count).to eq 0
+          expect { save }.to change(application.alternative_quotes, :count).from(1).to(0)
         end
       end
     end
