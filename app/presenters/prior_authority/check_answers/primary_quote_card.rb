@@ -3,12 +3,13 @@
 module PriorAuthority
   module CheckAnswers
     class PrimaryQuoteCard < Base
-      attr_reader :application, :service_cost_form, :travel_detail_form
+      attr_reader :application, :service_cost_form, :travel_detail_form, :verbose
 
-      def initialize(application)
+      def initialize(application, verbose: false)
         @group = 'about_request'
         @section = 'primary_quote_summary'
         @application = application
+        @verbose = verbose
 
         @service_cost_form = PriorAuthority::Steps::ServiceCostForm.build(
           application.primary_quote,
@@ -65,6 +66,11 @@ module PriorAuthority
         'prior_authority/steps/check_answers/primary_quote'
       end
 
+      def nested_table_template
+        filename = verbose ? 'primary_quote_details' : 'primary_quote_totals'
+        "prior_authority/steps/check_answers/#{filename}"
+      end
+
       private
 
       delegate :primary_quote, to: :application
@@ -99,6 +105,7 @@ module PriorAuthority
       end
 
       def travel_cost_reason
+        return [] if verbose # In verbose mode, travel costs are handled separately
         return [] unless travel_detail_form.travel_costs_require_justification?
 
         [

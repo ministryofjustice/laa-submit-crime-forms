@@ -95,3 +95,10 @@ en:
             service: Service
             travel: Travel
             total_cost: Total cost
+
+        primary_quote_details:
+          service_cost: '%{service} cost'
+          travel_cost: Travel cost
+          travel_reason: "Reason for travel cost: '%{reason}'"
+          additional_cost: Additional cost %{n}
+          cost_description: 'Cost description: "%{name} - %{description}"'

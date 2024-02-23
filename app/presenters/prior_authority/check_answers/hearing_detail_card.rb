@@ -18,7 +18,6 @@ module PriorAuthority
 
       private
 
-      # rubocop:disable Metrics/MethodLength
       def base_rows
         [
           {
@@ -35,7 +34,6 @@ module PriorAuthority
           },
         ]
       end
-      # rubocop:enable Metrics/MethodLength
 
       def i18n_scope
         @i18n_scope ||= 'prior_authority.steps.hearing_detail.edit'

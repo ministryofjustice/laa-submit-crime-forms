@@ -14,7 +14,7 @@ module PriorAuthority
     def show
       @application = PriorAuthorityApplication.for(current_provider).find(params[:id])
       @primary_quote_summary = PriorAuthority::PrimaryQuoteSummary.new(@application)
-      @report = CheckAnswers::Report.new(@application)
+      @report = CheckAnswers::Report.new(@application, verbose: true)
     end
 
     def create

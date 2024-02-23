@@ -1,6 +1,10 @@
+<% counter ||= nil %>
 <div class="govuk-summary-card">
   <div class="govuk-summary-card__title-wrapper">
-    <h2 class="govuk-summary-card__title"><%= t('.alternative_quote') %></h2>
+    <h2 class="govuk-summary-card__title">
+      <%= t('.alternative_quote') %>
+      <%= counter %>
+    </h2>
     <% if links %>
       <ul class="govuk-summary-card__actions">
         <li class="govuk-summary-card__action">

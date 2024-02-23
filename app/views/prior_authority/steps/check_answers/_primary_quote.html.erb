@@ -1,7 +1,7 @@
 <%= govuk_summary_card(title: section.title, actions: (show_actions ? section.actions : [])) do |card|
       govuk_summary_list(rows: section.rows, actions: show_actions)
         .concat(
-          render('prior_authority/steps/check_answers/primary_quote_totals', section: section)
+          render(section.nested_table_template, section: section)
         )
     end %>
 
