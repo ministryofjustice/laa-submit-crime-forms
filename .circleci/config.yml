@@ -185,10 +185,10 @@ commands:
           path: ~/repo/coverage
           destination: coverage
 
-  build-docker-image:
+  build-docker-image-for-scan:
       steps:
         - run:
-            name: Build docker image for app
+            name: Build docker image of app for scanning
             command: |
               docker build \
               --label build.git.sha=${CIRCLE_SHA1} \
@@ -300,7 +300,7 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - build-docker-image
+      - build-docker-image-for-scan
       - snyk/scan:
           token-variable: SNYK_TOKEN
           docker-image-name: app
@@ -362,7 +362,8 @@ jobs:
 # WORKFLOWS
 # ------------------
 workflows:
-  test:
+  version: 2
+  test-opened-pr:
     jobs:
       - build-test-container:
           filters:
@@ -386,10 +387,45 @@ workflows:
           requires:
             - rspec-tests
 
-  build-and-deploy:
+  build-opened-pr:
     jobs:
       - build-to-ecr:
           context: laa-submit-crime-forms-dev
+          filters:
+            branches:
+              ignore:
+                - main
+      - deploy-dev:
+          context: laa-submit-crime-forms-dev
+          requires:
+            - build-to-ecr
+
+  test-build-deploy-merged-pr:
+    jobs:
+      - build-test-container:
+          filters:
+            branches:
+              only:
+                - main
+      - linter-tests:
+          requires:
+            - build-test-container
+      - rspec-tests:
+          requires:
+            - build-test-container
+      - rspec-gem-tests:
+          requires:
+            - build-test-container
+      - coverage:
+          requires:
+            - rspec-tests
+            - rspec-gem-tests
+      - build-to-ecr:
+          context: laa-submit-crime-forms-dev
+          requires:
+            - linter-tests
+            - rspec-tests
+            - rspec-gem-tests
       - deploy-dev:
           context: laa-submit-crime-forms-dev
           requires:
