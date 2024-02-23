@@ -20,7 +20,11 @@ module PriorAuthority
 
       def service_type_autocomplete
         scope = local_values ? self : application
-        scope.service_type == 'custom' ? scope.custom_service_name : scope.service_type
+        if scope.service_type == 'custom'
+          scope.custom_service_name
+        elsif scope.service_type.present?
+          QuoteServices.new(scope.service_type).translated
+        end
       end
 
       # this should only be used when JS is disabled - otherwise overwritten by service_type_autocomplete_suggestion

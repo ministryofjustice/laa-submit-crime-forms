@@ -13,7 +13,7 @@ module PriorAuthority
       when QuoteServices::TRANSCRIPTION_RECORDING,
            QuoteServices::TRANSLATION_AND_TRANSCRIPTION
         new(cost_type: :per_item, item: 'minute')
-      when QuoteServices::TRANSLATOR
+      when QuoteServices::TRANSLATION_DOCUMENTS
         new(cost_type: :per_item, item: 'word')
       when QuoteServices::PHOTOCOPYING
         new(cost_type: :per_item, item: 'page')
