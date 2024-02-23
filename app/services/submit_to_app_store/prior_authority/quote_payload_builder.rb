@@ -11,6 +11,7 @@ class SubmitToAppStore
 
           quote.as_json(only: ATTRIBUTES).merge(
             cost_type: form.cost_type,
+            item_type: form.item_type,
             document: document(quote)
           )
         end
