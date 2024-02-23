@@ -85,19 +85,25 @@ module PriorAuthority
       end
 
       def reset_quote_cost_fields
-        return unless service_type_changed?
+        return unless service_type_rules_changed?
 
-        values_to_reset = {}
+        application.quotes.find_each do |quote|
+          quote.update!(
+            items: nil,
+            cost_per_item: nil,
+            period: nil,
+            cost_per_hour: nil,
+            user_chosen_cost_type: nil
+          )
+        end
+      end
 
+      def service_type_rules_changed?
         # If we have changed cost type, e.g. from per_item to per_hour, or we have changed item type,
         # e.g. from pages to words, then values previously entered shouldn't carry across
-        values_to_reset.merge!(QUOTE_ITEM_FIELD_RESETS) if previous_service_rule.item != current_service_rule.item
-
-        # Cost type is per_item, per_hour, or variable
-        values_to_reset.merge!(QUOTE_ITEM_FIELD_RESETS) if current_service_rule.cost_type != :per_item
-        values_to_reset.merge!(QUOTE_TIME_FIELD_RESETS) if current_service_rule.cost_type != :per_hour
-
-        reset_quote_values(values_to_reset)
+        service_type_changed? &&
+          (current_service_rule.cost_type != previous_service_rule.cost_type ||
+           current_service_rule.item != previous_service_rule.item)
       end
 
       def previous_service_rule
@@ -108,16 +114,9 @@ module PriorAuthority
         @current_service_rule ||= ServiceTypeRule.build(QuoteServices.new(service_type))
       end
 
-      def reset_quote_values(values)
-        application.quotes.find_each { _1.update!(values) }
-      end
-
       def service_type_changed?
         service_type && application.service_type && service_type != application.service_type
       end
-
-      QUOTE_ITEM_FIELD_RESETS = { items: nil, cost_per_item: nil }.freeze
-      QUOTE_TIME_FIELD_RESETS = { period: nil, cost_per_hour: nil }.freeze
     end
   end
 end
