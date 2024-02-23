@@ -61,7 +61,7 @@ RSpec.describe PriorAuthority::Steps::NextHearingForm do
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.messages.values.flatten)
-          .to contain_exactly('Date cannot be blank')
+          .to contain_exactly('Enter a hearing date')
       end
     end
   end

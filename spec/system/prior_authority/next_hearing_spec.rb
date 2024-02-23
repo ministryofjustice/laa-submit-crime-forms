@@ -31,7 +31,7 @@ RSpec.describe 'Prior authority applications (prison law) - add next hearing' do
 
       choose 'Yes'
       click_on 'Save and continue'
-      expect(page).to have_content('Date cannot be blank')
+      expect(page).to have_content('Enter a hearing date')
     end
   end
 end
