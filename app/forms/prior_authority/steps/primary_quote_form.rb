@@ -58,6 +58,7 @@ module PriorAuthority
         return false unless save_file
 
         save_quote
+        reset_quote_cost_fields
         application.update(service_type:, custom_service_name:) if service_type
 
         # If a change to service type has rendered any alternative quotes invalid,
@@ -82,6 +83,41 @@ module PriorAuthority
         record.update!(attributes.except('service_type', 'custom_service_name', 'file_upload')
                                  .merge(default_attributes))
       end
+
+      def reset_quote_cost_fields
+        return unless service_type_changed?
+
+        values_to_reset = {}
+
+        # If we have changed cost type, e.g. from per_item to per_hour, or we have changed item type,
+        # e.g. from pages to words, then values previously entered shouldn't carry across
+        values_to_reset.merge!(QUOTE_ITEM_FIELD_RESETS) if previous_service_rule.item != current_service_rule.item
+
+        # Cost type is per_item, per_hour, or variable
+        values_to_reset.merge!(QUOTE_ITEM_FIELD_RESETS) if current_service_rule.cost_type != :per_item
+        values_to_reset.merge!(QUOTE_TIME_FIELD_RESETS) if current_service_rule.cost_type != :per_hour
+
+        reset_quote_values(values_to_reset)
+      end
+
+      def previous_service_rule
+        @previous_service_rule ||= ServiceTypeRule.build(QuoteServices.new(application.service_type))
+      end
+
+      def current_service_rule
+        @current_service_rule ||= ServiceTypeRule.build(QuoteServices.new(service_type))
+      end
+
+      def reset_quote_values(values)
+        application.quotes.find_each { _1.update!(values) }
+      end
+
+      def service_type_changed?
+        service_type && application.service_type && service_type != application.service_type
+      end
+
+      QUOTE_ITEM_FIELD_RESETS = { items: nil, cost_per_item: nil }.freeze
+      QUOTE_TIME_FIELD_RESETS = { period: nil, cost_per_hour: nil }.freeze
     end
   end
 end

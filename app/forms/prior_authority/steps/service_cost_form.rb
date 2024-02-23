@@ -32,7 +32,7 @@ module PriorAuthority
       private
 
       def persist!
-        record.update!(attributes.except('prior_authority_granted', 'service_type'))
+        record.update!(attributes.except('prior_authority_granted', 'service_type').merge(reset_attributes))
         application.update(prior_authority_granted:)
       end
     end

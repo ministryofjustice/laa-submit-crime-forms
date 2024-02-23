@@ -81,6 +81,13 @@ module PriorAuthority
       def service_rule
         @service_rule ||= ServiceTypeRule.build(service_type)
       end
+
+      def reset_attributes
+        {
+          PER_ITEM => { period: nil, cost_per_hour: nil },
+          PER_HOUR => { items: nil, cost_per_item: nil }
+        }.fetch(cost_type)
+      end
     end
   end
 end

@@ -249,6 +249,64 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         end
       end
     end
+
+    context 'when the service type is changed' do
+      let(:contact_full_name) { 'Joe Bloggs' }
+      let(:organisation) { 'LAA' }
+      let(:postcode) { 'CR0 1RE' }
+      let(:record) { application.primary_quote }
+      let(:service_type_autocomplete_suggestion) { 'Photocopying' }
+
+      context 'when changed to one with a different item type' do
+        let(:application) do
+          create(:prior_authority_application,
+                 service_type: 'transcription_recording',
+                 quotes: [
+                   build(:quote, :primary, items: 3, cost_per_item: 1.23),
+                   build(:quote, :alternative, items: 3, cost_per_item: 1.25)
+                 ])
+        end
+
+        let(:service_type_autocomplete_suggestion) { 'Photocopying' }
+
+        before { save }
+
+        it 'clears out old item data for all quotes' do
+          expect(application.reload.primary_quote).to have_attributes(
+            items: nil,
+            cost_per_item: nil
+          )
+        end
+
+        it 'removes alternative quotes entirely' do
+          expect(application.alternative_quotes.count).to eq 0
+        end
+      end
+
+      context 'when changed to one with a different cost basis type' do
+        let(:application) do
+          create(:prior_authority_application,
+                 service_type: 'pathologist_report',
+                 quotes: [
+                   build(:quote, :primary, period: 30, cost_per_hour: 1.23),
+                   build(:quote, :alternative, period: 60, cost_per_hour: 1.25)
+                 ])
+        end
+
+        before { save }
+
+        it 'clears out old item data for all quotes' do
+          expect(application.reload.primary_quote).to have_attributes(
+            items: nil,
+            cost_per_item: nil
+          )
+        end
+
+        it 'removes alternative quotes entirely' do
+          expect(application.alternative_quotes.count).to eq 0
+        end
+      end
+    end
   end
 
   describe 'variable assignment order' do
