@@ -49,7 +49,6 @@ module PriorAuthority
         {
           key: {
             text: heading,
-            classes: 'govuk-summary-list__value-width-50'
           },
           value: {
             text:
