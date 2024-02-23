@@ -14,35 +14,62 @@ RSpec.describe PriorAuthority::CheckAnswers::HearingDetailCard do
   end
 
   describe '#row_data' do
+    context 'when next hearing date known' do
+      let(:application) do
+        build(:prior_authority_application,
+              next_hearing: true,
+              next_hearing_date: 1.month.from_now.to_date)
+      end
+
+      it 'generates expected rows' do
+        expect(card.row_data).to include(
+          {
+            head_key: 'next_hearing_date',
+            text: 1.month.from_now.to_date.to_fs(:stamp),
+          },
+        )
+      end
+    end
+
+    context 'when next hearing date NOT known' do
+      let(:application) do
+        build(:prior_authority_application,
+              next_hearing: false,
+              next_hearing_date: nil)
+      end
+
+      it 'generates expected rows' do
+        expect(card.row_data).to include(
+          {
+            head_key: 'next_hearing_date',
+            text: 'Not known',
+          },
+        )
+      end
+    end
+
     context 'when magistrates\' court' do
       let(:application) do
         build(:prior_authority_application,
-              next_hearing_date: 1.month.from_now.to_date,
               plea: 'mixed',
               court_type: 'magistrates_court',
               youth_court: true)
       end
 
       it 'generates expected rows' do
-        expect(card.row_data).to eq(
-          [
-            {
-              head_key: 'next_hearing_date',
-              text: 1.month.from_now.to_date.to_fs(:stamp),
-            },
-            {
-              head_key: 'plea',
-              text: 'Mixed plea',
-            },
-            {
-              head_key: 'court_type',
-              text: 'Magistrates\' court',
-            },
-            {
-              head_key: 'youth_court',
-              text: 'Yes',
-            },
-          ]
+        expect(card.row_data).to include(
+          {
+            head_key: 'plea',
+            text: 'Mixed plea',
+          },
+          {
+            head_key: 'court_type',
+            text: 'Magistrates\' court',
+          },
+          {
+            head_key: 'youth_court',
+            text: 'Yes',
+          },
         )
       end
     end
@@ -50,7 +77,6 @@ RSpec.describe PriorAuthority::CheckAnswers::HearingDetailCard do
     context 'when central criminal court with psychiatric liason not accessed' do
       let(:application) do
         build(:prior_authority_application,
-              next_hearing_date: 1.month.from_now.to_date,
               plea: 'not_guilty',
               court_type: 'central_criminal_court',
               psychiatric_liaison: false,
@@ -58,29 +84,23 @@ RSpec.describe PriorAuthority::CheckAnswers::HearingDetailCard do
       end
 
       it 'generates expected rows' do
-        expect(card.row_data).to eq(
-          [
-            {
-              head_key: 'next_hearing_date',
-              text: 1.month.from_now.to_date.to_fs(:stamp),
-            },
-            {
-              head_key: 'plea',
-              text: 'Not guilty',
-            },
-            {
-              head_key: 'court_type',
-              text: 'Central Criminal Court',
-            },
-            {
-              head_key: 'psychiatric_liaison',
-              text: 'No',
-            },
-            {
-              head_key: 'psychiatric_liaison_reason_not',
-              text: 'whatever',
-            },
-          ]
+        expect(card.row_data).to include(
+          {
+            head_key: 'plea',
+            text: 'Not guilty',
+          },
+          {
+            head_key: 'court_type',
+            text: 'Central Criminal Court',
+          },
+          {
+            head_key: 'psychiatric_liaison',
+            text: 'No',
+          },
+          {
+            head_key: 'psychiatric_liaison_reason_not',
+            text: 'whatever',
+          },
         )
       end
     end
@@ -88,32 +108,25 @@ RSpec.describe PriorAuthority::CheckAnswers::HearingDetailCard do
     context 'when central criminal court with psychiatric liason accessed' do
       let(:application) do
         build(:prior_authority_application,
-              next_hearing_date: 1.month.from_now.to_date,
               plea: 'not_guilty',
               court_type: 'central_criminal_court',
               psychiatric_liaison: true)
       end
 
       it 'generates expected rows' do
-        expect(card.row_data).to eq(
-          [
-            {
-              head_key: 'next_hearing_date',
-              text: 1.month.from_now.to_date.to_fs(:stamp),
-            },
-            {
-              head_key: 'plea',
-              text: 'Not guilty',
-            },
-            {
-              head_key: 'court_type',
-              text: 'Central Criminal Court',
-            },
-            {
-              head_key: 'psychiatric_liaison',
-              text: 'Yes',
-            },
-          ]
+        expect(card.row_data).to include(
+          {
+            head_key: 'plea',
+            text: 'Not guilty',
+          },
+          {
+            head_key: 'court_type',
+            text: 'Central Criminal Court',
+          },
+          {
+            head_key: 'psychiatric_liaison',
+            text: 'Yes',
+          },
         )
       end
     end
@@ -121,28 +134,21 @@ RSpec.describe PriorAuthority::CheckAnswers::HearingDetailCard do
     context 'when crown court' do
       let(:application) do
         build(:prior_authority_application,
-              next_hearing_date: 1.month.from_now.to_date,
               plea: 'unknown',
               court_type: 'crown_court',
               youth_court: true)
       end
 
       it 'generates expected rows' do
-        expect(card.row_data).to eq(
-          [
-            {
-              head_key: 'next_hearing_date',
-              text: 1.month.from_now.to_date.to_fs(:stamp),
-            },
-            {
-              head_key: 'plea',
-              text: 'Unknown',
-            },
-            {
-              head_key: 'court_type',
-              text: 'Crown Court (excluding Central Criminal Court)',
-            },
-          ]
+        expect(card.row_data).to include(
+          {
+            head_key: 'plea',
+            text: 'Unknown',
+          },
+          {
+            head_key: 'court_type',
+            text: 'Crown Court (excluding Central Criminal Court)',
+          },
         )
       end
     end
