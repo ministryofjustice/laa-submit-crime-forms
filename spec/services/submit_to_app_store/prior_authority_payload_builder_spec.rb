@@ -16,6 +16,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         client_detained_prison: 'something',
         subject_to_poca: true,
         next_hearing_date: '2024-01-16',
+        rep_order_date: nil,
         plea: 'something',
         court_type: 'central_criminal_court',
         youth_court: true,
