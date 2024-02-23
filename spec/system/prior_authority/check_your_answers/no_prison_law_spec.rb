@@ -151,7 +151,7 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
         .and have_css('.govuk-summary-card__content', text: 'Service detailsJoe BloggsLAA, CR0 1RE')
         .and have_css('.govuk-summary-card__content', text: 'Quote uploadtest.png')
         .and have_css('.govuk-summary-card__content', text: 'Existing prior authority grantedYes')
-        .and have_css('.govuk-summary-card__content', text: 'Why travel costs are requiredClient lives in Wales')
+        .and have_css('.govuk-summary-card__content', text: /Why travel costs are required.*Client lives in Wales/)
 
       expect(page)
         .to have_css('.govuk-table__caption', text: 'Primary quote summary')
@@ -179,7 +179,7 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
   it 'shows the reason for prior authority card' do
     within('.govuk-summary-card', text: 'Reason for prior authority') do
       expect(page)
-        .to have_css('.govuk-summary-card__content', text: 'Why prior authority is requiredRequired because...')
+        .to have_css('.govuk-summary-card__content', text: /Why prior authority is required.*Required because.../)
       # TODO: supporting document upload file names
 
       click_on 'Change'

@@ -20,7 +20,7 @@ module PriorAuthority
         [
           {
             head_key: 'reason_why',
-            text: application.reason_why,
+            text: simple_format(application.reason_why),
           },
           {
             head_key: 'supporting_documents',

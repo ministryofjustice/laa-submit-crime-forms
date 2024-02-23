@@ -16,7 +16,7 @@ RSpec.describe PriorAuthority::CheckAnswers::ReasonWhyCard do
   describe '#row_data' do
     let(:application) do
       build(:prior_authority_application,
-            reason_why: 'because',
+            reason_why: "reason 1\nreason 2",
             supporting_documents: supporting_documents)
     end
 
@@ -32,7 +32,7 @@ RSpec.describe PriorAuthority::CheckAnswers::ReasonWhyCard do
         [
           {
             head_key: 'reason_why',
-            text: 'because',
+            text: "<p>reason 1\n<br />reason 2</p>",
           },
           {
             head_key: 'supporting_documents',

@@ -207,7 +207,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
       end
 
       let(:primary_quote) do
-        build(:quote, :primary, travel_cost_reason: 'client lives in northern ireland')
+        build(:quote, :primary, travel_cost_reason: "reason 1\nreason 2")
       end
 
       it 'adds the travel cost reason row' do
@@ -215,7 +215,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
           .to include(
             {
               head_key: 'travel_cost_reason',
-              text: 'client lives in northern ireland',
+              text: "<p>reason 1\n<br />reason 2</p>",
             },
           )
       end
