@@ -19,7 +19,7 @@
 
       <div class="govuk-button-group">
         <%= govuk_button_link_to(t('prior_authority.generic.save_and_continue'),
-                                 prior_authority_steps_start_page_path(@model.application)) %>
+                                 Decisions::DecisionTree.new(@model, as: :primary_quote_summary).destination) %>
         <%= govuk_button_link_to(t('prior_authority.generic.save_and_come_back_later'),
                                  prior_authority_steps_start_page_path(@model.application), secondary: true) %>
       </div>

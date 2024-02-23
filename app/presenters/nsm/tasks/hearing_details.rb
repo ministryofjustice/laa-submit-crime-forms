@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class HearingDetails < ::Tasks::Generic
+    class HearingDetails < Base
       PREVIOUS_TASKS = CaseDetails
       FORM = Nsm::Steps::HearingDetailsForm
 

@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class CostSummary < ::Tasks::Generic
+    class CostSummary < Base
       PREVIOUS_TASKS = Disbursements
 
       def can_start?

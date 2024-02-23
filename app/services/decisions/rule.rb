@@ -7,9 +7,9 @@ module Decisions
       self
     end
 
-    def goto(**destination)
+    def goto(**destination, &block)
       @destinations ||= []
-      @destinations << [@condition, destination]
+      @destinations << [@condition, block || destination]
       @condition = nil
       self
     end

@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class ReasonForClaim < ::Tasks::Generic
+    class ReasonForClaim < Base
       PREVIOUS_TASKS = CaseDisposal
       FORM = Nsm::Steps::ReasonForClaimForm
 

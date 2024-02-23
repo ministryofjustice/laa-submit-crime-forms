@@ -56,14 +56,10 @@ module PriorAuthority
       end
 
       def cost_type
-        variable_cost_type? ? user_chosen_cost_type : enforced_cost_type
+        @cost_type ||= variable_cost_type? ? user_chosen_cost_type : service_rule.cost_type.to_s
       end
 
       private
-
-      def enforced_cost_type
-        service_rule.cost_type == :per_item ? PER_ITEM : PER_HOUR
-      end
 
       def item_cost
         return 0 unless cost_per_item.to_f.positive? && items.to_i.positive?

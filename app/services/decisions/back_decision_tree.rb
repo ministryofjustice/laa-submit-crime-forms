@@ -1,7 +1,7 @@
 module Decisions
   class BackDecisionTree < DslDecisionTree
     # used to add custom methods to filter/query the data
-    WRAPPER_CLASS = SimpleDelegator
+    WRAPPER_CLASS = CustomWrapper
 
     # start_page - takes use back to previous page
     from('nsm/steps/start_page').goto(edit: 'nsm/steps/claim_type')
@@ -54,23 +54,24 @@ module Decisions
     from('prior_authority/steps/prison_law').goto(edit: 'prior_authority/applications')
     from('prior_authority/steps/authority_value').goto(edit: 'prior_authority/steps/prison_law')
     from('prior_authority/steps/ufn').goto(edit: 'prior_authority/steps/authority_value')
-    from('prior_authority/steps/case_contact').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
-    from('prior_authority/steps/client_detail').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
+    from('prior_authority/steps/case_contact').goto { overwrite_to_cya }
+    from('prior_authority/steps/client_detail').goto { overwrite_to_cya }
 
     # prison law flow
-    from('prior_authority/steps/next_hearing').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
+    from('prior_authority/steps/next_hearing').goto { overwrite_to_cya }
 
     # non-prison law flow
-    from('prior_authority/steps/case_detail').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
-    from('prior_authority/steps/hearing_detail').goto(edit: 'prior_authority/steps/case_detail')
+    from('prior_authority/steps/case_detail').goto { overwrite_to_cya }
+    from('prior_authority/steps/hearing_detail')
+      .goto { overwrite_to_cya(action: :edit, destination: 'prior_authority/steps/case_detail') }
     from('prior_authority/steps/youth_court').goto(edit: 'prior_authority/steps/hearing_detail')
     from('prior_authority/steps/psychiatric_liaison').goto(edit: 'prior_authority/steps/hearing_detail')
 
     # primary quote
-    from('prior_authority/steps/primary_quote').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
+    from('prior_authority/steps/primary_quote').goto { overwrite_to_cya }
     from('prior_authority/steps/service_cost').goto(edit: 'prior_authority/steps/primary_quote')
     from(DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY).goto(edit: 'prior_authority/steps/service_cost')
-    from('prior_authority/steps/reason_why').goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
+    from('prior_authority/steps/reason_why').goto { overwrite_to_cya }
     from('prior_authority/steps/travel_detail').goto(show: DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
     from('prior_authority/steps/delete_travel').goto(show: DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
     from('prior_authority/steps/additional_costs').goto(show: DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
@@ -78,7 +79,7 @@ module Decisions
       .goto(show: DecisionTree::PRIOR_AUTHORITY_PRIMARY_QUOTE_SUMMARY)
 
     # additional quotes
-    from(DecisionTree::PRIOR_AUTHORITY_ALTERNATIVE_QUOTES).goto(show: DecisionTree::PRIOR_AUTHORITY_START_PAGE)
+    from(DecisionTree::PRIOR_AUTHORITY_ALTERNATIVE_QUOTES).goto { overwrite_to_cya }
     from('prior_authority/steps/alternative_quote_details')
       .goto(edit: DecisionTree::PRIOR_AUTHORITY_ALTERNATIVE_QUOTES)
   end

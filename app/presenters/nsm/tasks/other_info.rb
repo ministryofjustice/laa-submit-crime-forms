@@ -1,6 +1,6 @@
 module Nsm
   module Tasks
-    class OtherInfo < ::Tasks::Generic
+    class OtherInfo < Base
       FORM = Nsm::Steps::OtherInfoForm
 
       def can_start?
