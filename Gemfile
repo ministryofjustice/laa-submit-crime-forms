@@ -61,5 +61,5 @@ group :test do
   gem 'simplecov'
   gem 'simplecov-rcov'
   gem 'super_diff'
-  gem 'webmock', '~> 3.22'
+  gem 'webmock', '~> 3.23'
 end
