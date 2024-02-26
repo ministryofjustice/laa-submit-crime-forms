@@ -29,4 +29,5 @@ uat:
     0Z981E: ['crm7', 'crm4']
 
 production:
-  office_codes: {}
+  office_codes:
+    2N232W: ['crm7', 'crm4'] # dummy user/office
