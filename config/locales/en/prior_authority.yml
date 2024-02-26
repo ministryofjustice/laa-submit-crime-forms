@@ -6,6 +6,7 @@ en:
       no_choice: 'No'
       save_and_continue: 'Save and continue'
       save_and_come_back_later: 'Save and come back later'
+      none: None
     applications:
       index:
         page_title: Your applications
@@ -62,9 +63,6 @@ en:
           submitted: Submitted
         awaiting_review: Awaiting LAA review
         amount_requested: '%{amount} requested'
-        application_reference: Application reference
-        laa_reference: LAA reference
-        ufn: Unique file number
     steps:
       start_page:
         show:

@@ -32,10 +32,12 @@ module PriorAuthority
       private
 
       def supporting_documents
-        return @supporting_documents if @supporting_documents
-
-        @supporting_documents = application.supporting_documents.map(&:file_name).join('<br>')
-        @supporting_documents = sanitize(supporting_documents, tags: %w[br])
+        @supporting_documents ||= if application.supporting_documents.none?
+                                    I18n.t('prior_authority.generic.none')
+                                  else
+                                    text = application.supporting_documents.map(&:file_name).join('<br>')
+                                    sanitize(text, tags: %w[br])
+                                  end
       end
     end
   end

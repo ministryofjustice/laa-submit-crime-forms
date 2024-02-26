@@ -24,7 +24,7 @@ module PriorAuthority
       end
 
       def template
-        'prior_authority/steps/check_answers/alternative_quotes' if @verbose
+        'prior_authority/steps/check_answers/alternative_quotes' if @verbose && alternative_quotes.present?
       end
 
       def alternative_quote_forms

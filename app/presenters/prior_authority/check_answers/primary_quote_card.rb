@@ -47,11 +47,11 @@ module PriorAuthority
             head_key: 'service_details',
             text: service_details_html,
           },
-          *related_to_post_mortem,
           {
             head_key: 'quote_upload',
             text: primary_quote.document.file_name,
           },
+          *related_to_post_mortem,
           *ordered_by_court,
           {
             head_key: 'prior_authority_granted',

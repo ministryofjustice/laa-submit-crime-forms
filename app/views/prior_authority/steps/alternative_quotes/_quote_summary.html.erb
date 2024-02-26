@@ -28,14 +28,16 @@
           <%= [alternative_quote.organisation, alternative_quote.postcode].join(', ') %>
         </dd>
       </div>
-      <% if alternative_quote.document.present? %>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key"><%= t('.quote_upload') %></dt>
-          <dd class="govuk-summary-list__value">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= t('.quote_upload') %></dt>
+        <dd class="govuk-summary-list__value">
+          <% if alternative_quote.document&.file_name.present? %>
             <%= alternative_quote.document.file_name %>
-          </dd>
-        </div>
-      <% end %>
+          <% else %>
+            <%= t('.none') %>
+          <% end %>
+        </dd>
+      </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key"><%= t('.additional_items') %></dt>
         <dd class="govuk-summary-list__value">
