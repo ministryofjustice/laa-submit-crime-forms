@@ -41,18 +41,14 @@ After you've defined your DB configuration in the above files, run the following
 
 **4. ClamAV Virus Scanning**
 
-We utilise [ClamAV](https://www.clamav.net/) and [Clamby](https://github.com/kobaltz/clamby) within this application to scan files before saving them to ensure that they are clear of
-malware where possible. The brewfile above will install ClamAV on your system but before you can use this there is some
-minor setup you will need to do first:
+We utilise [ClamAV](https://www.clamav.net/) and [Clamby](https://github.com/kobaltz/clamby) within this
+application to scan files before saving them to ensure that they are clear of malware where possible. The
+brewfile above will install ClamAV on your system but will not configure it. Run the following script to
+both brew install clamav (if needed) and configure for use with this app.
 
 ```shell
-cd /usr/local/etc/clamav/
-cp freshclam.conf.sample freshclam.conf
-cp clamd.conf.sample clamd.conf
+bin/install_clamav_on_mac
 ```
-
-Then you will need to open the 2 created files and comment out the line `example` and save. To confirm this is working
-you can run the command `freshclam` and this should download the latest definitions to your system.
 
 **5. Run the app locally**
 
@@ -76,7 +72,7 @@ the recommended way. Follow the instructions in the above repository to setup an
 
 We currently protect the sidekiq UI on production servers (Dev, UAT, Prod, Dev-CRM4) with basic auth.
 
-In order to extract the password from the k8 files run the following commands:
+In order to extract the password from the k8s secrets run the following commands:
 
 > NOTE: this requires your kubectl to be setup and [authenticated](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/getting-started/kubectl-config.html#authenticating-with-the-cloud-platform-39-s-kubernetes-cluster) as well as having [`jq`](https://jqlang.github.io/jq/download/) installed.
 
