@@ -214,7 +214,7 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-protobuf (3.23.3)
-    govuk-components (5.1.0)
+    govuk-components (5.2.1)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (~> 6.0)
       view_component (>= 3.9, < 3.11)
@@ -306,7 +306,7 @@ GEM
       ruby-saml (~> 1.12)
     optimist (3.1.0)
     orm_adapter (0.5.0)
-    overcommit (0.62.0)
+    overcommit (0.63.0)
       childprocess (>= 0.6.3, < 6)
       iniparse (~> 1.4)
       rexml (~> 3.2)
@@ -520,7 +520,7 @@ GEM
       descendants_tracker (~> 0.0, >= 0.0.3)
     warden (1.2.9)
       rack (>= 2.0.9)
-    webmock (3.22.0)
+    webmock (3.23.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -583,7 +583,7 @@ DEPENDENCIES
   super_diff
   turbo-rails (~> 2.0.3)
   tzinfo-data
-  webmock (~> 3.22)
+  webmock (~> 3.23)
 
 RUBY VERSION
    ruby 3.2.2p53
