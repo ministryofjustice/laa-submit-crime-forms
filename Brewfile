@@ -1,5 +1,5 @@
 tap 'homebrew/cask'
-brew 'postgresql@14'
+brew 'postgresql@16'
 brew 'redis', restart_service: true
 brew 'node'
 brew 'yarn'
