@@ -51,3 +51,16 @@ function convertSelectToAutocomplete(){
     }
   }
 }
+
+// to ensure that the index view has up to date data when the user chnages tab
+// we use JS here to reload any visible turboframnes
+$(function () {
+  var reloader = $('.reload-visible-turboframes')
+
+  if(reloader) {
+    var selector = reloader.data('selector')
+    $('.reload-visible-turboframes ' + selector).on('click', function () {
+      $('turbo-frame:visible')[0].reload()
+    })
+  }
+})

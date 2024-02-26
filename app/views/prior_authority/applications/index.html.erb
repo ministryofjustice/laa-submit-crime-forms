@@ -24,15 +24,15 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
-      <%= govuk_tabs(title: t(".page_title")) do |c| %>
+      <%= govuk_tabs(title: t(".page_title"), classes: ['reload-visible-turboframes'], html_attributes: { data: { selector: '.govuk-tabs__tab' }}) do |c| %>
         <% c.with_tab(label: t(".tabs.assessed")) do %>
-          <%= render 'prior_authority/applications/frame_contents/assessed', model: @assessed_model, pagy: @assessed_pagy %>
+          <%= turbo_frame_tag 'assessed_applications', src: assessed_prior_authority_applications_path, loading: :lazy %>
         <% end %>
         <% c.with_tab(label: t(".tabs.submitted")) do %>
-          <%= render 'prior_authority/applications/frame_contents/submitted', model: @submitted_model, pagy: @submitted_pagy %>
+          <%= turbo_frame_tag 'submitted_applications', src: submitted_prior_authority_applications_path, loading: :lazy %>
         <% end %>
         <% c.with_tab(label: t(".tabs.drafts")) do %>
-          <%= render 'prior_authority/applications/frame_contents/draft', model: @draft_model, pagy: @draft_pagy %>
+          <%= turbo_frame_tag 'draft_applications', src: draft_prior_authority_applications_path, loading: :lazy %>
         <% end %>
       <% end %>
     </div>
