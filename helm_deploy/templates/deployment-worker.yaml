@@ -37,6 +37,13 @@ spec:
             - bundle
             - exec
             - sidekiq
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop: [ "ALL" ]
           ports:
             - name: http
               containerPort: {{ .Values.service.workerPort }}
