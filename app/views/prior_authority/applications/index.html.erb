@@ -26,13 +26,19 @@
 
       <%= govuk_tabs(title: t(".page_title"), classes: ['reload-visible-turboframes'], html_attributes: { data: { selector: '.govuk-tabs__tab' }}) do |c| %>
         <% c.with_tab(label: t(".tabs.assessed")) do %>
-          <%= turbo_frame_tag 'assessed_applications', src: assessed_prior_authority_applications_path, loading: :lazy %>
+          <%= turbo_frame_tag 'assessed_applications', src: assessed_prior_authority_applications_path, loading: :lazy do %>
+            <%= render 'prior_authority/applications/frame_contents/assessed', model: @assessed_model, pagy: @assessed_pagy %>
+          <% end %>
         <% end %>
         <% c.with_tab(label: t(".tabs.submitted")) do %>
-          <%= turbo_frame_tag 'submitted_applications', src: submitted_prior_authority_applications_path, loading: :lazy %>
+          <%= turbo_frame_tag 'submitted_applications', src: submitted_prior_authority_applications_path, loading: :lazy do %>
+            <%= render 'prior_authority/applications/frame_contents/submitted', model: @submitted_model, pagy: @submitted_pagy %>
+          <% end %>
         <% end %>
         <% c.with_tab(label: t(".tabs.drafts")) do %>
           <%= turbo_frame_tag 'draft_applications', src: draft_prior_authority_applications_path, loading: :lazy %>
+            <%= render 'prior_authority/applications/frame_contents/draft', model: @draft_model, pagy: @draft_pagy do %>
+          <% end %>
         <% end %>
       <% end %>
     </div>
