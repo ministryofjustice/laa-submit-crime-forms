@@ -35,7 +35,8 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         defendant: {
           first_name: 'bob',
           last_name: 'jim',
-          maat: 'AA1'
+          maat: 'AA1',
+          date_of_birth: '1981-11-12'
         },
         firm_office: {
           account_number: '123ABC',

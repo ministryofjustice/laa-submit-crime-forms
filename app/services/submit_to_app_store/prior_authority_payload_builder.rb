@@ -50,7 +50,7 @@ class SubmitToAppStore
     end
 
     def defendant
-      application.defendant.as_json(only: %i[maat first_name last_name])
+      application.defendant.as_json(only: %i[maat first_name last_name date_of_birth])
     end
 
     def quotes
