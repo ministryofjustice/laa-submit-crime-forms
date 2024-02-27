@@ -36,8 +36,8 @@
           <% end %>
         <% end %>
         <% c.with_tab(label: t(".tabs.drafts")) do %>
-          <%= turbo_frame_tag 'draft_applications', src: draft_prior_authority_applications_path, loading: :lazy %>
-            <%= render 'prior_authority/applications/frame_contents/draft', model: @draft_model, pagy: @draft_pagy do %>
+          <%= turbo_frame_tag 'draft_applications', src: draft_prior_authority_applications_path, loading: :lazy do %>
+            <%= render 'prior_authority/applications/frame_contents/draft', model: @draft_model, pagy: @draft_pagy %>
           <% end %>
         <% end %>
       <% end %>
