@@ -8,8 +8,6 @@ gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', 
 
 gem 'sqlite3'
 
-gem 'sprockets-rails'
-
 group :development, :test do
   gem 'debug'
   gem 'pry'
