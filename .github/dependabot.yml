@@ -3,30 +3,37 @@ updates:
 - package-ecosystem: bundler
   directory: "/"
   schedule:
-    interval: daily
+    interval: weekly
+    day: wednesday
     time: "03:00"
     timezone: Europe/London
   groups:
-    aws-gems:
+    bundler:
       patterns:
-        - "aws-*"
+        - "*"
   open-pull-requests-limit: 10
-  reviewers:
-    - "ministryofjustice/crm7team"
 - package-ecosystem: npm
   directory: "/"
   schedule:
-    interval: daily
+    interval: weekly
+    day: wednesday
     time: "03:00"
     timezone: Europe/London
   groups:
     npm-babel:
       patterns:
-        - "*babel*"
-    npm-jest:
-      patterns:
-        - "jest*"
+        - "*"
   open-pull-requests-limit: 10
-  reviewers:
-    - "ministryofjustice/crm7team"
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: wednesday
+    time: "03:00"
+    timezone: Europe/London
+  groups:
+    github-actions:
+      patterns:
+        - "*"
+  open-pull-requests-limit: 10
 
