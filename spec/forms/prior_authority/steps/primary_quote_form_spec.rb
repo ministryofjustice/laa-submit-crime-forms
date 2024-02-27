@@ -249,6 +249,62 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         end
       end
     end
+
+    context 'when the service type is changed' do
+      let(:contact_full_name) { 'Joe Bloggs' }
+      let(:organisation) { 'LAA' }
+      let(:postcode) { 'CR0 1RE' }
+      let(:record) { application.primary_quote }
+      let(:service_type_autocomplete_suggestion) { 'Photocopying' }
+
+      context 'when changed to one with a different item type' do
+        let(:application) do
+          create(:prior_authority_application,
+                 service_type: 'transcription_recording',
+                 quotes: [
+                   build(:quote, :primary, items: 3, cost_per_item: 1.23),
+                   build(:quote, :alternative, items: 3, cost_per_item: 1.25)
+                 ])
+        end
+
+        let(:service_type_autocomplete_suggestion) { 'Photocopying' }
+
+        it 'clears out old item data for primary quote' do
+          expect { save }.to change { application.reload.primary_quote.attributes }.from(
+            hash_including('items' => 3, 'cost_per_item' => 1.23)
+          ).to(
+            hash_including('items' => nil, 'cost_per_item' => nil)
+          )
+        end
+
+        it 'removes alternative quotes entirely' do
+          expect { save }.to change(application.alternative_quotes, :count).from(1).to(0)
+        end
+      end
+
+      context 'when changed to one with a different cost basis type' do
+        let(:application) do
+          create(:prior_authority_application,
+                 service_type: 'pathologist_report',
+                 quotes: [
+                   build(:quote, :primary, period: 30, cost_per_hour: 1.23),
+                   build(:quote, :alternative, period: 60, cost_per_hour: 1.25)
+                 ])
+        end
+
+        it 'clears out old item data for primary quote' do
+          expect { save }.to change { application.reload.primary_quote.attributes }.from(
+            hash_including('period' => 30, 'cost_per_hour' => 1.23)
+          ).to(
+            hash_including('period' => nil, 'cost_per_hour' => nil)
+          )
+        end
+
+        it 'removes alternative quotes entirely' do
+          expect { save }.to change(application.alternative_quotes, :count).from(1).to(0)
+        end
+      end
+    end
   end
 
   describe 'variable assignment order' do

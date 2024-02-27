@@ -23,9 +23,13 @@ module PriorAuthority
         include DocumentUploadable
         include QuoteCostValidations
 
-        validates :travel_time, time_period: true
-        validates :travel_cost_per_hour, is_a_number: true
-        validates :additional_cost_total, is_a_number: true
+        validates :travel_time, time_period: true, presence: { if: -> { travel_cost_per_hour.to_i.positive? } }
+        validates :travel_cost_per_hour,
+                  is_a_number: true,
+                  presence: { if: -> { travel_time.is_a?(IntegerTimePeriod) && travel_time.to_i.positive? } }
+
+        validates :additional_cost_list, presence: { if: -> { additional_cost_total.to_i.positive? } }
+        validates :additional_cost_total, is_a_number: true, presence: { if: -> { additional_cost_list.present? } }
 
         def total_cost
           main_cost + travel_cost + additional_cost
@@ -67,7 +71,7 @@ module PriorAuthority
         def persist!
           return false unless save_file
 
-          record.update!(attributes.except('id', 'service_type', 'file_upload'))
+          record.update!(attributes.except('id', 'service_type', 'file_upload').merge(reset_attributes))
         end
 
         def file_is_optional?

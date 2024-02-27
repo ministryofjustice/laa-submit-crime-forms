@@ -141,6 +141,7 @@ en:
           travel_costs: Travel costs
           change: Change
           delete: Delete
+          why_travel_costs: Why travel costs if not detained?
           none_added: No travel costs added
           total: Total
           period: Travel time
