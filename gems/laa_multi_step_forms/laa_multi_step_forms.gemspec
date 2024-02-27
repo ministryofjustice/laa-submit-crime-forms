@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'rails', '>= 7.0.4.3'
 
-  spec.add_dependency 'govuk-components'
+  spec.add_dependency 'govuk-components', '>= 5.0.0'
   spec.add_dependency 'govuk_design_system_formbuilder', '>= 4.0', '< 5.3'
   spec.add_dependency 'hmcts_common_platform'
 

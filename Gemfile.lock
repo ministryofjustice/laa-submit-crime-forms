@@ -10,7 +10,7 @@ PATH
   specs:
     laa_multi_step_forms (0.1.0)
       devise (~> 4.8)
-      govuk-components
+      govuk-components (>= 5.0.0)
       govuk_design_system_formbuilder (>= 4.0, < 5.3)
       hmcts_common_platform
       omniauth-rails_csrf_protection (~> 1.0.1)
