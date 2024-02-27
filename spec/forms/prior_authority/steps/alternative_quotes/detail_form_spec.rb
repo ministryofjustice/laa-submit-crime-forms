@@ -13,6 +13,9 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
       file_upload: file_upload,
       items: '1',
       cost_per_item: '1',
+      period: period,
+      cost_per_hour: cost_per_hour,
+      user_chosen_cost_type: user_chosen_cost_type,
       'travel_time(1)': '',
       'travel_time(2)': '',
       travel_cost_per_hour: travel_cost_per_hour,
@@ -21,6 +24,9 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
     }
   end
 
+  let(:period) { nil }
+  let(:cost_per_hour) { nil }
+  let(:user_chosen_cost_type) { nil }
   let(:travel_cost_per_hour) { '' }
   let(:additional_cost_list) { '' }
   let(:record) { build(:quote, document: nil) }
@@ -94,6 +100,25 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
         subject.save
         expect(subject.errors[:additional_cost_total]).to include(
           'To add additional costs you must enter both a list of the additional costs and the total cost'
+        )
+      end
+    end
+
+    context 'when redundant fields are entered' do
+      let(:period) { 180 }
+      let(:cost_per_hour) { '35' }
+      let(:items) { '3' }
+      let(:cost_per_item) { '20' }
+      let(:user_chosen_cost_type) { 'per_hour' }
+      let(:application) { create(:prior_authority_application, service_type: 'custom') }
+      let(:record) { build(:quote, document: nil, prior_authority_application: application) }
+      let(:file_upload) { nil }
+
+      it 'clears them out' do
+        subject.save
+        expect(record.reload).to have_attributes(
+          items: nil,
+          cost_per_item: nil
         )
       end
     end

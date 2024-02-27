@@ -16,6 +16,14 @@
   </div>
   <div class="govuk-summary-card__content">
     <% if form.valid? %>
+      <% if form.travel_costs_require_justification? %>
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key"><%= t('.why_travel_costs') %></dt>
+            <dd class="govuk-summary-list__value"><%= form.travel_cost_reason %></dd>
+          </div>
+        </dl>
+      <% end %>
       <table class="govuk-table">
         <caption class="govuk-table__caption govuk-visually-hidden">
           <%= t('.travel_costs') %>

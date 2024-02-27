@@ -99,7 +99,7 @@ module PriorAuthority
       TOXICOLOGIST_REPORT = new(:toxicologist_report),
       TRANSCRIPTION_RECORDING = new(:transcription_recording),
       TRANSLATION_AND_TRANSCRIPTION = new(:translation_and_transcription),
-      TRANSLATOR = new(:translator),
+      TRANSLATION_DOCUMENTS = new(:translation_documents),
       TRAVEL = new(:travel),
       UROLOGIST = new(:urologist),
       VETERINARY_REPORT = new(:veterinary_report),
