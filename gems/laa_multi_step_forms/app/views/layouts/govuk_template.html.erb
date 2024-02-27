@@ -18,7 +18,7 @@
   <link rel="manifest" href=<%= asset_path("manifest.json") %>/>
 
   <%= stylesheet_link_tag 'application', media: 'all' %>
-  <%= javascript_importmap_tags %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module' %>
 
   <%= yield :head %>
   <%= yield :analytics if @analytics_cookies_accepted %>

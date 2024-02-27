@@ -3,11 +3,11 @@ module PriorAuthority
     class TravelDetailForm < ::Steps::BaseFormObject
       attribute :travel_cost_reason, :string
       attribute :travel_time, :time_period
-      attribute :travel_cost_per_hour, :decimal, precision: 10, scale: 2
+      attribute :travel_cost_per_hour, :gbp
 
       validates :travel_cost_reason, presence: true, if: :travel_costs_require_justification?
       validates :travel_time, presence: true, time_period: true
-      validates :travel_cost_per_hour, presence: true, numericality: { greater_than: 0 }
+      validates :travel_cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
 
       def travel_costs_require_justification?
         !application.prison_law && !application.client_detained

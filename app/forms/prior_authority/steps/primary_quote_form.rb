@@ -20,7 +20,11 @@ module PriorAuthority
 
       def service_type_autocomplete
         scope = local_values ? self : application
-        scope.service_type == 'custom' ? scope.custom_service_name : scope.service_type
+        if scope.service_type == 'custom'
+          scope.custom_service_name
+        elsif scope.service_type.present?
+          QuoteServices.new(scope.service_type).translated
+        end
       end
 
       # this should only be used when JS is disabled - otherwise overwritten by service_type_autocomplete_suggestion
@@ -58,6 +62,7 @@ module PriorAuthority
         return false unless save_file
 
         save_quote
+        reset_quote_cost_fields
         application.update(service_type:, custom_service_name:) if service_type
 
         # If a change to service type has rendered any alternative quotes invalid,
@@ -81,6 +86,40 @@ module PriorAuthority
       def save_quote
         record.update!(attributes.except('service_type', 'custom_service_name', 'file_upload')
                                  .merge(default_attributes))
+      end
+
+      def reset_quote_cost_fields
+        return unless service_type_rules_changed?
+
+        application.quotes.find_each do |quote|
+          quote.update!(
+            items: nil,
+            cost_per_item: nil,
+            period: nil,
+            cost_per_hour: nil,
+            user_chosen_cost_type: nil
+          )
+        end
+      end
+
+      def service_type_rules_changed?
+        # If we have changed cost type, e.g. from per_item to per_hour, or we have changed item type,
+        # e.g. from pages to words, then values previously entered shouldn't carry across
+        service_type_changed? &&
+          (current_service_rule.cost_type != previous_service_rule.cost_type ||
+           current_service_rule.item != previous_service_rule.item)
+      end
+
+      def previous_service_rule
+        @previous_service_rule ||= ServiceTypeRule.build(QuoteServices.new(application.service_type))
+      end
+
+      def current_service_rule
+        @current_service_rule ||= ServiceTypeRule.build(QuoteServices.new(service_type))
+      end
+
+      def service_type_changed?
+        service_type && application.service_type && service_type != application.service_type
       end
     end
   end

@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email       = ['david.henry@digital.justice.gov.uk']
   spec.summary     = 'Multipart forms for LAA'
   spec.description = 'Base implementation of multipart forms for LAA'
-  spec.required_ruby_version = '>= 3.2'
+  spec.required_ruby_version = '>= 3.3'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'rails', '>= 7.0.4.3'
 
-  spec.add_dependency 'govuk-components'
+  spec.add_dependency 'govuk-components', '>= 5.0.0'
   spec.add_dependency 'govuk_design_system_formbuilder', '>= 4.0', '< 5.3'
   spec.add_dependency 'hmcts_common_platform'
 

@@ -19,7 +19,7 @@ executors:
   test-executor:
     working_directory: ~/repo
     docker:
-      - image: cimg/ruby:3.2.2-browsers
+      - image: cimg/ruby:3.3.0-browsers
         environment:
           RACK_ENV: test
           RAILS_ENV: test
@@ -79,8 +79,7 @@ references:
     run:
       name: Install and compile assets
       command: |
-        RUBYOPT=-W:no-deprecated \
-        yarn install && bin/rails dartsass:build
+        yarn install && yarn build && yarn build:css
 
   _save-assets: &save-assets
     save_cache:

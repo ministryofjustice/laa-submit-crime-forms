@@ -34,8 +34,8 @@ RSpec.describe 'Prior authority applications - add service costs' do
     end
   end
 
-  context 'when the service is Translator' do
-    let(:service_type) { 'Translator' }
+  context 'when the service is Translation (documents)' do
+    let(:service_type) { 'Translation (documents)' }
 
     it 'asks a question about words' do
       expect(page).to have_content 'What is the cost per word?'
