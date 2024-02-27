@@ -206,6 +206,8 @@ spec:
                   key: password
             - name: CLAMBY_ENABLED
               value: 'true'
+            - name: RAILS_SERVE_STATIC_FILES
+              value: 'true'
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

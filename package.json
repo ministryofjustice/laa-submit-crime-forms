@@ -4,12 +4,17 @@
   "dependencies": {
     "@ministryofjustice/frontend": "2.1.1",
     "accessible-autocomplete": "^2.0.4",
+    "esbuild": "^0.20.1",
     "govuk-frontend": "5.2.0",
     "jquery": "^3.7.1",
-    "yarn": "^1.22.21"
+    "yarn": "^1.22.21",
+    "@hotwired/turbo-rails": "8.0.3",
+    "sass": "^1.69.6"
   },
   "scripts": {
-    "unit-test": "jest"
+    "unit-test": "jest",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
+    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css --no-source-map --load-path=node_modules  --quiet-deps"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.23.9",
