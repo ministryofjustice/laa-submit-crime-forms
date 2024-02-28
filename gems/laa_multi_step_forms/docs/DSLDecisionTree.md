@@ -1,8 +1,8 @@
 # DSL Decision Tree
 
-This documentation refers to the code implemented (here)[https://github.com/ministryofjustice/laa-claim-non-standard-magistrate-fee-backend/blob/main/app/services/decisions/dsl_decision_tree.rb].
+This documentation refers to the code implemented (here)[https://github.com/ministryofjustice/laa-submit-crime-forms/blob/main/app/services/decisions/dsl_decision_tree.rb].
 
-Look (here)[https://github.com/ministryofjustice/laa-claim-non-standard-magistrate-fee-backend/commit/82a50d76dad2bf6ee8e9c32edbbcce7fe03731f6#diff-603684f9e79565b6842d793e2bfaebf72f76ca1e2a45208d49d02ef7feb0df90] to review against the previous implementation.
+Look (here)[https://github.com/ministryofjustice/laa-submit-crime-forms/commit/82a50d76dad2bf6ee8e9c32edbbcce7fe03731f6#diff-603684f9e79565b6842d793e2bfaebf72f76ca1e2a45208d49d02ef7feb0df90] to review against the previous implementation.
 
 ## What?
 
