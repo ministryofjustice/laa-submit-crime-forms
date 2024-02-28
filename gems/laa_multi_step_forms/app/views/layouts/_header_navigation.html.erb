@@ -8,7 +8,9 @@
         <%= current_provider.display_name %>
       </li>
       <li class="govuk-header__navigation-item govuk-!-static-margin-left-3">
-        <%= link_to t('.sign_out'), main_app.providers_logout_path, class: 'govuk-header__link app-header__auth-link' %>
+        <%# Signing out will reset the session ID which will reset the CSP nonce token, so turbo-based page replacement
+            will fail as inline scripts will no longer have a valid nonce, so we disable turbo %>
+        <%= link_to t('.sign_out'), main_app.providers_logout_path, class: 'govuk-header__link app-header__auth-link', data: { turbo: false } %>
       </li>
     </ul>
   </nav>
