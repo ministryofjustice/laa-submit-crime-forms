@@ -18,7 +18,7 @@
   <link rel="manifest" href=<%= asset_path("manifest.json") %>/>
 
   <%= stylesheet_link_tag 'application', media: 'all' %>
-  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module' %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', nonce: true, type: 'module' %>
 
   <%= yield :head %>
   <%= yield :analytics if @analytics_cookies_accepted %>
@@ -26,9 +26,9 @@
 
 <body class="govuk-template__body <%= app_environment %>">
 <%= yield(:cookie_banner)%>
-<script>
+<%= javascript_tag nonce: true do %>
   document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
-</script>
+<% end %>
 
 <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">
   <%= content_for?(:skip_link_message) ? yield(:skip_link_message) : 'Skip to main content' %>
