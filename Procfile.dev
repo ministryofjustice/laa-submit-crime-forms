@@ -1,4 +1,4 @@
 web: bin/rails server -p 3000
 js: yarn build --watch
 css: yarn build:css --watch
-sidekiq: DISABLE_SIDEKIQ_ALIVE=true bundle exec sidekiqjs: yarn build --watch
+sidekiq: DISABLE_SIDEKIQ_ALIVE=true bundle exec sidekiq
