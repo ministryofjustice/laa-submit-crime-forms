@@ -105,8 +105,9 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
 
     context 'when period is not nil' do
       it 'formats the value in hours and minutes' do
-        expect(helper.format_period(62)).to eq('1 Hour 2 Mins')
-        expect(helper.format_period(1)).to eq('0 Hours 1 Min')
+        expect(helper.format_period(62)).to eq('1 hour 2 minutes')
+        expect(helper.format_period(1)).to eq('0 hours 1 minute')
+        expect(helper.format_period(120)).to eq('2 hours 0 minutes')
       end
     end
   end
