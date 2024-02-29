@@ -1,5 +1,3 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'
 import accessibleAutocomplete from 'accessible-autocomplete'
@@ -51,3 +49,16 @@ function convertSelectToAutocomplete(){
     }
   }
 }
+
+// to ensure that the index view has up to date data when the user chnages tab
+// we use JS here to reload any visible turboframnes
+$(function () {
+  var reloader = $('.reload-visible-turboframes')
+
+  if(reloader) {
+    var selector = reloader.data('selector')
+    $('.reload-visible-turboframes ' + selector).on('click', function () {
+      $('turbo-frame:visible')[0].reload()
+    })
+  }
+})

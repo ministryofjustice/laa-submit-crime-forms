@@ -54,10 +54,10 @@ bin/install_clamav_on_mac
 
 Once all the above is done, you should be able to run the application as follows:
 
-a) `bin/dev` - will run foreman, spawning a rails server and `dartsass:watch` to process SCSS files and watch for any changes.
+a) `bin/dev` - will run foreman, spawning a rails server and `yarn build --watch` to process JS/SCSS files and watch for any changes.
 b) `rails server` - will only run the rails server, usually fine if you are not making changes to the CSS.
 
-You can also compile assets manually with `rails dartsass:build` at any time, and just run the rails server, without foreman.
+You can also compile assets manually with `rails yarn build`/`rails yarn build:css` at any time, and just run the rails server, without foreman.
 
 If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
 
@@ -108,3 +108,7 @@ This will run everything except for the accessibility tests, which are slow, and
 To run those, run `INCLUDE_ACCESSIBILITY_SPECS=true bundle exec rspec`.
 Our test suite will report as failing if line and branch coverage is not at 100%.
 We expect every feature's happy path to have a system test, and every screen to have an accessibility test.
+
+**9. Development end-to-end setup**
+
+see [Development e2e setup](docs/development-e2e-setup.md)
