@@ -19,7 +19,11 @@ module PriorAuthority
 
       def additional_permitted_params
         [
-          defendant_attributes: CaseDetail::DefendantForm.attribute_names,
+          :main_offence_autocomplete,
+          :main_offence_autocomplete_suggestion,
+          :prison_autocomplete,
+          :prison_autocomplete_suggestion,
+          { defendant_attributes: CaseDetail::DefendantForm.attribute_names },
         ]
       end
     end

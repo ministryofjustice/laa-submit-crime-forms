@@ -115,7 +115,12 @@ module PriorAuthority
     end
 
     def fill_in_case_detail(client_detained: 'No', client_detained_prison: '')
-      fill_in 'What was the main offence', with: 'Supply a controlled drug of Class A - Heroin'
+      # Depending on whether JS is enabled, this may present as an input or a select
+      if page.has_css?('input#prior-authority-steps-case-detail-form-main-offence-autocomplete-field')
+        fill_in 'What was the main offence', with: 'Supply a controlled drug of Class A - Heroin'
+      else
+        select 'Supply a controlled drug of Class A - Heroin', from: 'What was the main offence'
+      end
 
       within('.govuk-form-group', text: 'Date of representation order') do
         fill_in 'Day', with: '27'
@@ -126,7 +131,7 @@ module PriorAuthority
       fill_in 'MAAT number', with: '123456'
       within('.govuk-form-group', text: 'Is your client detained?') do
         choose client_detained
-        fill_in 'Where is your client detained?', with: client_detained_prison if client_detained == 'Yes'
+        select client_detained_prison, from: 'Where is your client detained?' if client_detained == 'Yes'
       end
 
       within('.govuk-form-group', text: 'Is this case subject to POCA (Proceeds of Crime Act 2002)?') do

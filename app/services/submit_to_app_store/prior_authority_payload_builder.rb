@@ -76,9 +76,11 @@ class SubmitToAppStore
       status
       rep_order_date
       reason_why
-      main_offence
+      main_offence_id
+      custom_main_offence_name
       client_detained
-      client_detained_prison
+      prison_id
+      custom_prison_name
       subject_to_poca
       next_hearing_date
       plea

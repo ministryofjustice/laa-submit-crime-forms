@@ -60,12 +60,12 @@ en:
               blank: Enter the contact email address
         prior_authority/steps/case_detail_form:
           attributes:
-            main_offence:
+            main_offence_autocomplete:
               blank: Enter the main offence
             rep_order_date: *shared_date_errors
             client_detained:
               inclusion: Select yes if your client is detained
-            client_detained_prison:
+            prison_autocomplete:
               blank: Enter the name of the prison
             subject_to_poca:
               inclusion: Select yes if this case is subject to POCA (Proceeds of Crime Act 2002)?

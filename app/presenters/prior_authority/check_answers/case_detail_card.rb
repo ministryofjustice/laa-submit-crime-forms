@@ -21,7 +21,7 @@ module PriorAuthority
         [
           {
             head_key: 'main_offence',
-            text: application.main_offence,
+            text: main_offence
           },
           {
             head_key: 'rep_order_date',
@@ -47,10 +47,22 @@ module PriorAuthority
 
       def client_detained
         @client_detained ||= if application.client_detained?
-                               application.client_detained_prison
+                               if application.prison_id == 'custom'
+                                 application.custom_prison_name
+                               else
+                                 I18n.t("prior_authority.prisons.#{application.prison_id}")
+                               end
                              else
                                I18n.t("generic.#{application.client_detained?}")
                              end
+      end
+
+      def main_offence
+        if application.main_offence_id == 'custom'
+          application.custom_main_offence_name
+        else
+          I18n.t("prior_authority.offences.#{application.main_offence_id}")
+        end
       end
     end
   end
