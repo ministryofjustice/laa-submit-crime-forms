@@ -82,5 +82,8 @@ module Decisions
     from(DecisionTree::PRIOR_AUTHORITY_ALTERNATIVE_QUOTES).goto { overwrite_to_cya }
     from('prior_authority/steps/alternative_quote_details')
       .goto(edit: DecisionTree::PRIOR_AUTHORITY_ALTERNATIVE_QUOTES)
+
+    # check answers
+    from('prior_authority/steps/check_answers').goto(show: 'prior_authority/steps/start_page')
   end
 end
