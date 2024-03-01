@@ -53,7 +53,11 @@ module Decisions
     # ---------------------------------
     from('prior_authority/steps/prison_law').goto(edit: 'prior_authority/applications')
     from('prior_authority/steps/authority_value').goto(edit: 'prior_authority/steps/prison_law')
-    from('prior_authority/steps/ufn').goto(edit: 'prior_authority/steps/authority_value')
+    from('prior_authority/steps/ufn')
+      .when(-> { application.status == PriorAuthorityApplication.statuses[:pre_draft] })
+      .goto(edit: 'prior_authority/steps/authority_value')
+      .goto { overwrite_to_cya }
+
     from('prior_authority/steps/case_contact').goto { overwrite_to_cya }
     from('prior_authority/steps/client_detail').goto { overwrite_to_cya }
 
