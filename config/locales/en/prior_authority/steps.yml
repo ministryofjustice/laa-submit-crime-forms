@@ -134,6 +134,8 @@ en:
           service_details: Service details
           service_quote_upload: Quote upload
           prior_authority_granted: Existing prior authority granted
+        service_cost_subtable:
+          service_costs: Service costs
           total: Total
           period: Time
           cost_per_hour: Cost per hour
@@ -143,6 +145,8 @@ en:
           delete: Delete
           why_travel_costs: Why travel costs if not detained?
           none_added: No travel costs added
+        travel_cost_subtable:
+          travel_costs: Travel costs
           total: Total
           period: Travel time
           cost_per_hour: Hourly cost
@@ -205,8 +209,10 @@ en:
           delete: Delete
           name: Description
           description: Why required
+        subtable:
+          additional_cost: Additional cost
           items: Items
-          cost_per_item: Cost per hour
+          cost_per_item: Cost per item
           period: Time
           cost_per_hour: Rate per hour
           total: Total

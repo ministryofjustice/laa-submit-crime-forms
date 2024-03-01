@@ -70,7 +70,6 @@ module LaaPortal
       )
     end
 
-    # rubocop:disable Metrics/MethodLength
     def metadata_config
       if metadata_url.present?
         metadata_from_server
@@ -89,7 +88,6 @@ module LaaPortal
       Sentry.capture_exception(e)
       raise(e) # re-raise exception
     end
-    # rubocop:enable Metrics/MethodLength
 
     def metadata_from_server
       # An explicit timeout is set, as the gem parser does not have one,
