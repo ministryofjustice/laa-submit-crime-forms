@@ -10,8 +10,9 @@ module PriorAuthority
 
       attr_reader :application
 
-      def initialize(application)
+      def initialize(application, verbose: false)
         @application = application
+        @verbose = verbose
       end
 
       def section_groups
@@ -57,8 +58,8 @@ module PriorAuthority
 
       def about_request_section
         [
-          PrimaryQuoteCard.new(application),
-          AlternativeQuotesCard.new(application),
+          PrimaryQuoteCard.new(application, verbose: @verbose),
+          AlternativeQuotesCard.new(application, verbose: @verbose),
           ReasonWhyCard.new(application),
         ]
       end

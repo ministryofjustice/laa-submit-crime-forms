@@ -8,7 +8,7 @@
       <h2 class="govuk-heading-l"><%= section_group[:heading] %></h2>
       <% section_group[:sections].each do |section| %>
         <% if section.template %>
-          <%= render(section.template, section: section) %>
+          <%= render(section.template, section: section, show_actions: true) %>
         <% else %>
           <%= govuk_summary_list(
                 card: {

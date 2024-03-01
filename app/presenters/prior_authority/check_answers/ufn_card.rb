@@ -16,7 +16,6 @@ module PriorAuthority
         base_rows
       end
 
-      # rubocop:disable Metrics/MethodLength
       def base_rows
         [
           {
@@ -34,7 +33,6 @@ module PriorAuthority
           },
         ]
       end
-      # rubocop:enable Metrics/MethodLength
 
       def actions
         []

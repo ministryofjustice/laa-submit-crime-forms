@@ -1,0 +1,34 @@
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-visually-hidden">
+    <%= t('.service_costs') %>
+  </caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <% if costs.per_item? %>
+        <th scope="col" class="govuk-table__header">
+          <%= t("prior_authority.steps.service_cost.items.#{costs.item_type}").pluralize(2).capitalize %>
+        </th>
+        <th scope="col" class="govuk-table__header">
+          <%= t('prior_authority.steps.service_cost.items.cost_per_item',
+                item: t("prior_authority.steps.service_cost.items.#{costs.item_type}")) %>
+        </th>
+      <% else %>
+        <th scope="col" class="govuk-table__header"><%= t('.period') %></th>
+        <th scope="col" class="govuk-table__header"><%= t('.cost_per_hour') %></th>
+      <% end %>
+      <th scope="col" class="govuk-table__header"><%= t('.total') %></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <% if costs.per_item? %>
+        <td class="govuk-table__cell"><%= costs.items %></td>
+        <td class="govuk-table__cell"><%= NumberTo.pounds(costs.cost_per_item) %></td>
+      <% else %>
+          <td class="govuk-table__cell"><%= format_period(costs.period) %></td>
+          <td class="govuk-table__cell"><%= NumberTo.pounds(costs.cost_per_hour) %></td>
+      <% end %>
+      <td class="govuk-table__cell"><%= costs.formatted_total_cost %></td>
+    </tr>
+  </tbody>
+</table>

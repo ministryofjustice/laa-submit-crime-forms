@@ -24,9 +24,9 @@ en:
       update_calculation_no_article: Update calculation
     time_period: &period
       hours:
-        one: '%{count} Hour '
-        other: '%{count} Hours '
+        one: '%{count} hour '
+        other: '%{count} hours '
       minutes:
-        one: '%{count} Min'
-        other: '%{count} Mins'
+        one: '%{count} minute'
+        other: '%{count} minutes'
     missing_data: Incomplete

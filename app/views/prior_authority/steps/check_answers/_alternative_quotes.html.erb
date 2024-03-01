@@ -1,0 +1,6 @@
+<% section.alternative_quote_forms.each_with_index do |quote, index| %>
+  <%= render 'prior_authority/steps/alternative_quotes/quote_summary',
+             alternative_quote: quote,
+             links: false,
+             counter: (index + 1) %>
+<% end %>

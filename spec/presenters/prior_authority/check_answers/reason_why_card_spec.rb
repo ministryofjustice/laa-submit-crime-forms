@@ -41,5 +41,24 @@ RSpec.describe PriorAuthority::CheckAnswers::ReasonWhyCard do
         ]
       )
     end
+
+    context 'when there are no documents' do
+      let(:supporting_documents) { [] }
+
+      it 'generates expected rows' do
+        expect(card.row_data).to eq(
+          [
+            {
+              head_key: 'reason_why',
+              text: "<p>reason 1\n<br />reason 2</p>",
+            },
+            {
+              head_key: 'supporting_documents',
+              text: 'None',
+            },
+          ]
+        )
+      end
+    end
   end
 end
