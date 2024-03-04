@@ -55,4 +55,28 @@ RSpec.describe AppStoreTokenProvider do
     it { is_expected.to be_a String }
     it { is_expected.to eql 'test-bearer-token' }
   end
+
+  describe '#authentication_configured?' do
+    subject(:authentication_configured) { client.authentication_configured? }
+
+    around do |spec|
+      normal_tenant_id = ENV.fetch('APP_STORE_TENANT_ID', nil)
+
+      ENV['APP_STORE_TENANT_ID'] = tenant_id
+      spec.run
+      ENV['APP_STORE_TENANT_ID'] = normal_tenant_id
+    end
+
+    context 'when there is a tenant_id' do
+      let(:tenant_id) { '123' }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when there is no tenant_id' do
+      let(:tenant_id) { nil }
+
+      it { is_expected.to be false }
+    end
+  end
 end

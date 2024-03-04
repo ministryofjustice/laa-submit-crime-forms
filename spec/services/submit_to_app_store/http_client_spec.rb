@@ -28,6 +28,20 @@ RSpec.describe SubmitToAppStore::HttpClient, :stub_oauth_token do
 
       subject.post(message)
     end
+
+    context 'when authentication is not configured' do
+      before do
+        allow(ENV).to receive(:fetch).with('APP_STORE_TENANT_ID', nil).and_return(nil)
+      end
+
+      it 'posts the message without headers' do
+        expect(described_class).to receive(:post)
+          .with('http://some.url/v1/application/',
+                body: message.to_json)
+
+        subject.post(message)
+      end
+    end
   end
 
   context 'when APP_STORE_URL is not present' do
