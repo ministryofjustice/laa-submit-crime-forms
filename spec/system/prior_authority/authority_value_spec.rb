@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - add case contact' do
+RSpec.describe 'Prior authority applications - add authority value' do
   before do
     visit provider_saml_omniauth_callback_path
     visit prior_authority_root_path
@@ -8,7 +8,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
   end
 
   context 'when application relates to a prison law matter' do
-    it 'set authority threshold to £500' do
+    it 'sets authority threshold to £500' do
       expect(page).to have_content 'Is this a Prison Law matter?'
 
       choose 'Yes'
@@ -26,7 +26,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
   end
 
   context 'when application does not relate to a prison law matter' do
-    it 'set authority threshold to £500' do
+    it 'sets authority threshold to £500' do
       expect(page).to have_content 'Is this a Prison Law matter?'
       choose 'No'
       click_on 'Save and continue'
