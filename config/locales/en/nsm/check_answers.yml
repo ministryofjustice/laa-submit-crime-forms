@@ -32,9 +32,11 @@ en:
               contact_full_name: Contact full name
               contact_email: Contact email address
             defendant_summary:
-              main_defendant_full_name: Main defendant full name
+              main_defendant_first_name: Main defendant first name
+              main_defendant_last_name: Main defendant last name
               main_defendant_maat: Main defendant MAAT ID
-              additional_defendant_full_name: Additional defendant %{count} full name
+              additional_defendant_first_name: Additional defendant %{count} first name
+              additional_defendant_last_name: Additional defendant %{count} last name
               additional_defendant_maat: Additional defendant %{count} MAAT ID
             case_details:
               main_offence: Main offence name

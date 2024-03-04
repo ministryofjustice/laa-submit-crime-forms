@@ -22,7 +22,8 @@ module Nsm
       private
 
       def generate_rows(key_prefix, defendant, index)
-        data = [row(key_prefix, :full_name, defendant, index)]
+        data = [row(key_prefix, :first_name, defendant, index),
+                row(key_prefix, :last_name, defendant, index)]
 
         data << row(key_prefix, :maat, defendant, index) if maat_required
 
