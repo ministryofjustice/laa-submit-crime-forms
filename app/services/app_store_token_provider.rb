@@ -24,6 +24,10 @@ class AppStoreTokenProvider
     access_token.token
   end
 
+  def authentication_configured?
+    tenant_id.present?
+  end
+
   private
 
   def new_access_token
