@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
+  # Some of the views that are rendered in the tests expect these paths to exist
+  get '/callback', to: 'home#index', as: :provider_saml_omniauth_authorize
+  get '/applications', to: 'home#index', as: :nsm_applications
+
   scope 'applications/:id' do
     namespace :steps do
       edit_step :claim_type
