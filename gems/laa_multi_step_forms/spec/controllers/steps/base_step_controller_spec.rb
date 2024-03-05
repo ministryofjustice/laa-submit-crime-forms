@@ -10,6 +10,8 @@ class FakeApp < Steps::BaseFormObject
 end
 
 RSpec.describe DummyStepController, type: :controller do
+  render_views
+
   let(:application_id) { SecureRandom.uuid }
   let(:navigation_stack) { [] }
   let!(:application) do
