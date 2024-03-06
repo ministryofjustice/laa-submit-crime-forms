@@ -18,6 +18,11 @@ RSpec.describe 'Prior authority applications, check your answers, submission' do
       )
   end
 
+  it 'allows me to go back to the tasklist' do
+    click_on 'Back'
+    expect(page).to have_title('Your application progress')
+  end
+
   it 'allows me to save and come back later' do
     click_on 'Save and come back later'
 

@@ -11,6 +11,12 @@ module PriorAuthority
       @empty = PriorAuthorityApplication.for(current_provider).none?
     end
 
+    def show
+      @application = PriorAuthorityApplication.for(current_provider).find(params[:id])
+      @primary_quote_summary = PriorAuthority::PrimaryQuoteSummary.new(@application)
+      @report = CheckAnswers::Report.new(@application, verbose: true)
+    end
+
     def create
       initialize_application do |paa|
         redirect_to edit_prior_authority_steps_prison_law_path(paa)

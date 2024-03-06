@@ -5,19 +5,33 @@ RSpec.describe Nsm::CheckAnswers::DefendantCard do
 
   let(:claim) { instance_double(Claim, claim_type:, defendants:) }
   let(:defendants) { [] }
-  let(:main_defendant) { { main: true, full_name: main_defendant_name, maat: main_defendant_maat } }
+  let(:main_defendant) do
+    { main: true,
+     first_name: main_defendant_first_name,
+     last_name: main_defendant_last_name,
+     maat: main_defendant_maat }
+  end
   let(:first_additional_defendant) do
-    { main: false, full_name: first_additional_defendant_name, maat: first_additional_defendant_maat }
+    { main: false,
+     first_name: first_additional_defendant_first_name,
+     last_name: first_additional_defendant_last_name,
+     maat: first_additional_defendant_maat }
   end
   let(:second_additional_defendant) do
-    { main: false, full_name: second_additional_defendant_name, maat: second_additional_defendant_maat }
+    { main: false,
+      first_name: second_additional_defendant_first_name,
+      last_name: second_additional_defendant_last_name,
+      maat: second_additional_defendant_maat }
   end
 
-  let(:main_defendant_name) { 'Tim Roy' }
+  let(:main_defendant_first_name) { 'Tim' }
+  let(:main_defendant_last_name) { 'Roy' }
   let(:main_defendant_maat) { '123ABC' }
-  let(:first_additional_defendant_name) { 'James Brown' }
+  let(:first_additional_defendant_first_name) { 'James' }
+  let(:first_additional_defendant_last_name) { 'Brown' }
   let(:first_additional_defendant_maat) { '456EFG' }
-  let(:second_additional_defendant_name) { 'Timmy Turner' }
+  let(:second_additional_defendant_first_name) { 'Timmy' }
+  let(:second_additional_defendant_last_name) { 'Turner' }
   let(:second_additional_defendant_maat) { '789HIJ' }
 
   let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
@@ -43,8 +57,13 @@ RSpec.describe Nsm::CheckAnswers::DefendantCard do
         expect(subject.row_data).to eq(
           [
             {
-              head_key: 'main_defendant_full_name',
-              text: 'Tim Roy',
+              head_key: 'main_defendant_first_name',
+              text: 'Tim',
+              head_opts: { count: 1 },
+            },
+            {
+              head_key: 'main_defendant_last_name',
+              text: 'Roy',
               head_opts: { count: 1 },
             },
             {
@@ -53,8 +72,13 @@ RSpec.describe Nsm::CheckAnswers::DefendantCard do
               head_opts: { count: 1 },
             },
             {
-              head_key: 'additional_defendant_full_name',
-              text: 'James Brown',
+              head_key: 'additional_defendant_first_name',
+              text: 'James',
+              head_opts: { count: 1 }
+            },
+            {
+              head_key: 'additional_defendant_last_name',
+              text: 'Brown',
               head_opts: { count: 1 }
             },
             {
@@ -63,8 +87,13 @@ RSpec.describe Nsm::CheckAnswers::DefendantCard do
               head_opts: { count: 1 }
             },
             {
-              head_key: 'additional_defendant_full_name',
-              text: 'Timmy Turner',
+              head_key: 'additional_defendant_first_name',
+              text: 'Timmy',
+              head_opts: { count: 2 }
+            },
+            {
+              head_key: 'additional_defendant_last_name',
+              text: 'Turner',
               head_opts: { count: 2 }
             },
             {
@@ -84,20 +113,35 @@ RSpec.describe Nsm::CheckAnswers::DefendantCard do
           expect(subject.row_data).to eq(
             [
               {
-                head_key: 'main_defendant_full_name',
-                text: 'Tim Roy',
+                head_key: 'main_defendant_first_name',
+                text: 'Tim',
                 head_opts: { count: 1 },
               },
               {
-                head_key: 'additional_defendant_full_name',
-                text: 'James Brown',
+                head_key: 'main_defendant_last_name',
+                text: 'Roy',
+                head_opts: { count: 1 },
+              },
+              {
+                head_key: 'additional_defendant_first_name',
+                text: 'James',
                 head_opts: { count: 1 }
               },
               {
-                head_key: 'additional_defendant_full_name',
-                text: 'Timmy Turner',
+                head_key: 'additional_defendant_last_name',
+                text: 'Brown',
+                head_opts: { count: 1 }
+              },
+              {
+                head_key: 'additional_defendant_first_name',
+                text: 'Timmy',
                 head_opts: { count: 2 }
               },
+              {
+                head_key: 'additional_defendant_last_name',
+                text: 'Turner',
+                head_opts: { count: 2 }
+              }
             ]
           )
         end
@@ -107,11 +151,16 @@ RSpec.describe Nsm::CheckAnswers::DefendantCard do
     context 'no defendants' do
       let(:defendants) { [] }
 
-      it 'generates full name and maat for 1 main defendant' do
+      it 'generates missing info lines' do
         expect(subject.row_data).to eq(
           [
             {
-              head_key: 'main_defendant_full_name',
+              head_key: 'main_defendant_first_name',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
+              head_opts: { count: 1 },
+            },
+            {
+              head_key: 'main_defendant_last_name',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
               head_opts: { count: 1 },
             },
@@ -132,10 +181,16 @@ RSpec.describe Nsm::CheckAnswers::DefendantCard do
         expect(subject.row_data).to eq(
           [
             {
-              head_key: 'main_defendant_full_name',
-              text: 'Tim Roy',
+              head_key: 'main_defendant_first_name',
+              text: 'Tim',
               head_opts: { count: 1 },
             },
+            {
+              head_key: 'main_defendant_last_name',
+              text: 'Roy',
+              head_opts: { count: 1 },
+            },
+
             {
               head_key: 'main_defendant_maat',
               text: '123ABC',
@@ -152,10 +207,16 @@ RSpec.describe Nsm::CheckAnswers::DefendantCard do
           expect(subject.row_data).to eq(
             [
               {
-                head_key: 'main_defendant_full_name',
-                text: 'Tim Roy',
+                head_key: 'main_defendant_first_name',
+                text: 'Tim',
                 head_opts: { count: 1 },
               },
+              {
+                head_key: 'main_defendant_last_name',
+                text: 'Roy',
+                head_opts: { count: 1 },
+              },
+
               {
                 head_key: 'main_defendant_maat',
                 text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',

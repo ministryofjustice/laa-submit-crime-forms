@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe LaaMultiStepForms::ErrorsController, type: :controller do
+  render_views
+
   it '#invalid_session' do
     get :invalid_session, params: { use_route: :laa_msf }
 
