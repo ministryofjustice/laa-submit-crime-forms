@@ -154,17 +154,17 @@ spec:
             - name: APP_STORE_TENANT_ID
               valueFrom:
                 secretKeyRef:
-                  name: azure-secret
+                  name: app-store-auth
                   key: tenant_id
             - name: APP_STORE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: azure-secret
+                  name: app-store-auth
                   key: app_client_id
             - name: APP_STORE_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: azure-secret
+                  name: app-store-auth
                   key: app_client_secret
 
       {{- with .Values.nodeSelector }}
