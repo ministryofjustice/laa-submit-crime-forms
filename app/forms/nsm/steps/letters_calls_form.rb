@@ -83,7 +83,6 @@ module Nsm
         end
       end
 
-      # rubocop:disable Metrics/MethodLength
       def letters_row
         [
           translate(:letters),
@@ -119,7 +118,6 @@ module Nsm
           )
         ]
       end
-      # rubocop:enable Metrics/MethodLength
 
       def translate(key)
         I18n.t("nsm.steps.letters_calls.edit.#{key}")

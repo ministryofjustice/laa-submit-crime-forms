@@ -9,8 +9,8 @@ orbs:
   ruby: circleci/ruby@2.1.0
   browser-tools: circleci/browser-tools@1.4.7
   snyk: snyk/snyk@1.1.2
-  aws-cli: circleci/aws-cli@4.0.0
-  aws-ecr: circleci/aws-ecr@8.2.1
+  aws-cli: circleci/aws-cli@4.1.3
+  aws-ecr: circleci/aws-ecr@9.0.2
 
 # ------------------
 # EXECUTORS
@@ -327,17 +327,19 @@ jobs:
           command: |
             [[ "$CIRCLE_BRANCH" == "main" ]] && ECR_TAGS="main-$CIRCLE_SHA1,latest" || ECR_TAGS="branch-$CIRCLE_SHA1"
             echo "export ECR_TAGS=$ECR_TAGS" >> "$BASH_ENV"
+            echo "export APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z)"  >> "$BASH_ENV"
             source "$BASH_ENV"
-      - aws-ecr/build-image:
-          push-image: true
+      - aws-ecr/build_image:
+          push_image: true
           tag: ${ECR_TAGS}
           region: $ECR_REGION
           repo: $ECR_REPOSITORY
-          extra-build-args: |
-            --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
-            --build-arg APP_BUILD_TAG=${CIRCLE_SHA1} \
-            --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1} \
-            --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH} \
+          account_id: $AWS_ECR_REGISTRY_ID
+          extra_build_args: >-
+            --build-arg APP_BUILD_DATE=${APP_BUILD_DATE}
+            --build-arg APP_BUILD_TAG=${CIRCLE_SHA1}
+            --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1}
+            --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH}
 
   deploy-dev:
     executor: cloud-platform-executor

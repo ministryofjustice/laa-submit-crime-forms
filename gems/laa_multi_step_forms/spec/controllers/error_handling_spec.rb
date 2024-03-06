@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe DummyStepController, type: :controller do
+  render_views
   #  when Errors::InvalidSession, ActionController::InvalidAuthenticityToken
   #         redirect_to laa_msf.invalid_session_errors_path
   #       when Errors::ApplicationNotFound

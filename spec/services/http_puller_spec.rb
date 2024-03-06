@@ -29,6 +29,19 @@ RSpec.describe HttpPuller, :stub_oauth_token do
 
         subject.get_all(1)
       end
+
+      context 'when authentication is not configured' do
+        before do
+          allow(ENV).to receive(:fetch).with('APP_STORE_TENANT_ID', nil).and_return(nil)
+        end
+
+        it 'gets the claims without headers' do
+          expect(described_class).to receive(:get)
+            .with('http://some.url/v1/applications?since=1')
+
+          subject.get_all(1)
+        end
+      end
     end
 
     context 'when APP_STORE_URL is not present' do

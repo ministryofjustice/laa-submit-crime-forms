@@ -22,6 +22,8 @@ class HttpPuller
   def options
     options = {}
 
+    return options unless AppStoreTokenProvider.instance.authentication_configured?
+
     token = AppStoreTokenProvider.instance.bearer_token
 
     options.merge(

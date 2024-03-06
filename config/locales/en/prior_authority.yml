@@ -6,6 +6,7 @@ en:
       no_choice: 'No'
       save_and_continue: 'Save and continue'
       save_and_come_back_later: 'Save and come back later'
+      none: None
     applications:
       index:
         page_title: Your applications
@@ -52,6 +53,16 @@ en:
             'no': You do not need to apply for prior authority to incur disbursements if the total authority is less than £100.
             'yes': You do not need to apply for prior authority to incur disbursements for a Prison Law matter if the total authority is less than £500.
         finish: 'Finish'
+      show:
+        page_title: Application details
+        email_us: Email the LAA case team
+        email: prior-auth@laa.gov.uk
+        application_status: Application status
+        status: Status
+        statuses:
+          submitted: Submitted
+        awaiting_review: Awaiting LAA review
+        amount_requested: '%{amount} requested'
     steps:
       start_page:
         show:

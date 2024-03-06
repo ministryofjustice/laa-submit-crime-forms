@@ -1,0 +1,4 @@
+.aside-generic {
+  border-top: 2px solid $govuk-brand-colour;
+  @include govuk-responsive-padding(2, "top", $adjustment: 0);
+}
