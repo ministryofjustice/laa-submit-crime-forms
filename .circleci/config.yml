@@ -389,13 +389,13 @@ workflows:
   build-opened-pr:
     jobs:
       - build-to-ecr:
-          context: ivan-test-provider
+          context: laa-submit-crime-forms-dev
           filters:
             branches:
               ignore:
                 - main
       - deploy-dev:
-          context: ivan-test-provider
+          context: laa-submit-crime-forms-dev
           requires:
             - build-to-ecr
 
@@ -420,13 +420,13 @@ workflows:
             - rspec-tests
             - rspec-gem-tests
       - build-to-ecr:
-          context: ivan-test-provider
+          context: laa-submit-crime-forms-dev
           requires:
             - linter-tests
             - rspec-tests
             - rspec-gem-tests
       - deploy-dev:
-          context: ivan-test-provider
+          context: laa-submit-crime-forms-dev
           requires:
             - build-to-ecr
       - hold-uat:
