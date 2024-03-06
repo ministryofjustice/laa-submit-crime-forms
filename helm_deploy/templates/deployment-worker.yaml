@@ -133,12 +133,12 @@ spec:
             - name: LAA_PORTAL_SP_CERT
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.secrets.portalSPCertificateKey }}
+                  name: portal-sp-certificate
                   key: tls.crt
             - name: LAA_PORTAL_SP_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.secrets.portalSPCertificateKey }}
+                  name: portal-sp-certificate
                   key: tls.key
             - name: LAA_PORTAL_IDP_METADATA_FILE
               value: {{ .Values.secrets.portalIDPMetadataFile }}
