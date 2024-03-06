@@ -8,14 +8,7 @@ module Nsm
 
       def translate_table_key(table, key, **)
         I18n.t("nsm.steps.check_answers.show.sections.#{table}.#{key}", **)
-      # :nocov:
-      rescue I18n::MissingTranslationData => e
-        # TODO: remove as part of CRM457-1183.
-        # This hack is a continuation of the hack on line 34, adjusting it to cope with the fact
-        # that in some environments (notably dev), we raise on missing translation errors
-        e.message
       end
-      # :nocov:
 
       def title(**)
         I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.title", **)
@@ -32,9 +25,7 @@ module Nsm
       end
 
       def row_content(head_key, text, head_opts = {}, footer: false)
-        translated_heading = translate_table_key(section, head_key, **head_opts)
-        # TODO: remove the below line once we have implemented CRM457-1183.
-        heading = translated_heading.start_with?('Translation missing:') ? head_key : translated_heading
+        heading = head_opts[:text] || translate_table_key(section, head_key, **head_opts)
         row = {
           key: {
             text: heading,
