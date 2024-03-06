@@ -17,7 +17,7 @@
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css --no-source-map --load-path=node_modules  --quiet-deps"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-env": "^7.24.0",
     "babel-jest": "^29.6.4",
     "jest": "^29.6.4",
     "jest-environment-jsdom": "^29.6.4"
