@@ -128,16 +128,6 @@ spec:
               value: enabled
             - name: APP_STORE_URL
               value: {{ .Values.secrets.appStore }}
-            - name: APP_STORE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: app-store-auth
-                  key: username
-            - name: APP_STORE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-store-auth
-                  key: password
             - name: ENV
               value: {{ .Values.secrets.environment}}
             - name: LAA_PORTAL_SP_CERT
