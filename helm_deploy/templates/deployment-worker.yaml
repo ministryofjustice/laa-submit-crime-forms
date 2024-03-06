@@ -127,9 +127,9 @@ spec:
             - name: RAILS_LOG_TO_STDOUT
               value: enabled
             - name: APP_STORE_URL
-              value: {{ .Values.secrets.appStore }}
+              value: {{ .Values.variables.appStore }}
             - name: ENV
-              value: {{ .Values.secrets.environment}}
+              value: {{ .Values.variables.environment}}
             - name: LAA_PORTAL_SP_CERT
               valueFrom:
                 secretKeyRef:
@@ -141,11 +141,11 @@ spec:
                   name: portal-sp-certificate
                   key: tls.key
             - name: LAA_PORTAL_IDP_METADATA_FILE
-              value: {{ .Values.secrets.portalIDPMetadataFile }}
+              value: {{ .Values.variables.portalIDPMetadataFile }}
             - name: SP_ENTITY_ID
-              value: {{ .Values.secrets.spEntityId }}
+              value: {{ .Values.variables.spEntityId }}
             - name: MAX_UPLOAD_SIZE_BYTES
-              value: {{ mul .Values.secrets.maxFileUploadBytes 1 | quote }}
+              value: {{ mul .Values.variables.maxFileUploadBytes 1 | quote }}
             - name: ANALYTICS_TRACKING_ID
               valueFrom:
                 secretKeyRef:

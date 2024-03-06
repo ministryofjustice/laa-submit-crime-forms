@@ -69,7 +69,7 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
 
-secrets:
+variables:
   environment: development
   portalSPCertificateKey: portal-sp-certificate-dev
   portalIDPMetadataFile: config/laa_portal/metadata/dev.xml
