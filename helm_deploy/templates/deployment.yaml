@@ -92,12 +92,12 @@ spec:
             - name: REDIS_HOST
               valueFrom:
                 secretKeyRef:
-                  name: nsm-elasticache
+                  name: crm-elasticache
                   key: primary_endpoint_address
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nsm-elasticache
+                  name: crm-elasticache
                   key: auth_token
           {{ end }}
           {{ if .Values.postgresql.enabled }}
