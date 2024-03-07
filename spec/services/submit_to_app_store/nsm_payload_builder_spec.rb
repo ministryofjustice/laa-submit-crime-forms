@@ -128,7 +128,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'submitter' => { 'description' => nil, 'email' => 'provider@example.com' },
           'supplemental_claim' => nil,
           'time_spent' => nil,
-          'ufn' => '123456/001',
+          'ufn' => '120423/001',
           'unassigned_counsel' => 'no',
           'updated_at' => '2023-08-17T12:13:14.000Z',
           'vat_rate' => 0.2,

@@ -6,7 +6,7 @@ RSpec.describe 'Prior authority application lists' do
     create(:prior_authority_application,
            :full,
            laa_reference: 'LAA-AAAAA',
-           ufn: '818181/818',
+           ufn: '120423/818',
            status: 'submitted',
            updated_at: 1.day.ago)
     create(:prior_authority_application, laa_reference: 'LAA-BBBBB', status: 'submitted', updated_at: 2.days.ago)
@@ -52,7 +52,7 @@ RSpec.describe 'Prior authority application lists' do
   end
 
   it 'links through to a readonly summary page for submitted applications' do
-    click_on '818181/818'
+    click_on '120423/818'
     expect(page).to have_content 'Application details'
     expect(page).to have_content 'LAA-AAAAA'
     expect(page).to have_no_content 'Change'

@@ -22,7 +22,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
           [
             {
               head_key: 'file_ufn',
-              text: '123456/001'
+              text: '120423/001'
             },
             {
               head_key: 'type_of_claim',
@@ -54,7 +54,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
           [
             {
               head_key: 'file_ufn',
-              text: '123456/002'
+              text: '120423/002'
             },
             {
               head_key: 'type_of_claim',
