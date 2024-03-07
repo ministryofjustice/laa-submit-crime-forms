@@ -19,7 +19,7 @@ RSpec.describe PriorAuthority::CheckAnswers::CaseDetailCard do
     context 'when not client detained' do
       let(:application) do
         build(:prior_authority_application,
-              main_offence: 'Supply a controlled drug of Class A - Heroin',
+              main_offence_id: 'robbery',
               rep_order_date: 1.month.ago.to_date,
               client_detained: false,
               subject_to_poca: true,
@@ -31,7 +31,7 @@ RSpec.describe PriorAuthority::CheckAnswers::CaseDetailCard do
           [
             {
               head_key: 'main_offence',
-              text: 'Supply a controlled drug of Class A - Heroin',
+              text: 'Robbery',
             },
             {
               head_key: 'rep_order_date',
@@ -57,10 +57,11 @@ RSpec.describe PriorAuthority::CheckAnswers::CaseDetailCard do
     context 'when client detained' do
       let(:application) do
         build(:prior_authority_application,
-              main_offence: 'Supply a controlled drug of Class A - Heroin',
+              main_offence_id: 'custom',
+              custom_main_offence_name: 'Custom crime',
               rep_order_date: 1.month.ago.to_date,
               client_detained: true,
-              client_detained_prison: 'HMP Belmarsh',
+              prison_id: 'hmp_albany',
               subject_to_poca: true,
               defendant: defendant)
       end
@@ -70,7 +71,7 @@ RSpec.describe PriorAuthority::CheckAnswers::CaseDetailCard do
           [
             {
               head_key: 'main_offence',
-              text: 'Supply a controlled drug of Class A - Heroin',
+              text: 'Custom crime',
             },
             {
               head_key: 'rep_order_date',
@@ -82,7 +83,47 @@ RSpec.describe PriorAuthority::CheckAnswers::CaseDetailCard do
             },
             {
               head_key: 'client_detained',
-              text: 'HMP Belmarsh',
+              text: 'HMP Albany',
+            },
+            {
+              head_key: 'subject_to_poca',
+              text: 'Yes',
+            },
+          ]
+        )
+      end
+    end
+
+    context 'when client detained in custom prison' do
+      let(:application) do
+        build(:prior_authority_application,
+              main_offence_id: 'robbery',
+              rep_order_date: 1.month.ago.to_date,
+              client_detained: true,
+              prison_id: 'custom',
+              custom_prison_name: 'Some custom prison',
+              subject_to_poca: true,
+              defendant: defendant)
+      end
+
+      it 'generates expected rows' do
+        expect(card.row_data).to eq(
+          [
+            {
+              head_key: 'main_offence',
+              text: 'Robbery',
+            },
+            {
+              head_key: 'rep_order_date',
+              text: 1.month.ago.to_date.to_fs(:stamp),
+            },
+            {
+              head_key: 'maat',
+              text: '654321',
+            },
+            {
+              head_key: 'client_detained',
+              text: 'Some custom prison',
             },
             {
               head_key: 'subject_to_poca',
