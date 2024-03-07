@@ -29,7 +29,7 @@ RSpec.describe ClaimSubmissionMailer, type: :mailer do
           mail.govuk_notify_personalisation
         ).to include(
           LAA_case_reference: 'LAA-n4AohV',
-          UFN: '123456/001',
+          UFN: '120423/001',
           main_defendant_name: 'bob jim',
           defendant_reference: 'MAAT ID: AA1',
           claim_total: '£20.45',
@@ -47,7 +47,7 @@ RSpec.describe ClaimSubmissionMailer, type: :mailer do
           mail.govuk_notify_personalisation
         ).to include(
           LAA_case_reference: 'LAA-n4AohV',
-          UFN: '123456/002',
+          UFN: '120423/002',
           main_defendant_name: 'bob jim',
           defendant_reference: "Client's CNTP number: CNTP12345",
           claim_total: '£20.45',

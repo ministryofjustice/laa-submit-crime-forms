@@ -36,7 +36,20 @@ RSpec.describe PriorAuthority::Steps::UfnForm do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:ufn, :invalid)).to be(true)
         expect(form.errors.messages[:ufn]).to include(
-          'Unique file number must be in the correct format, for example 310224/001'
+          'Unique file number must be a 6 digit date, followed by / and 3 more digits, ' \
+          'for example DDMMYY/123 or 121023/123'
+        )
+      end
+    end
+
+    context 'with ufn a date in the future' do
+      let(:ufn) { "#{Date.tomorrow.strftime('%d%m%y')}/001" }
+
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:ufn, :future_date)).to be(true)
+        expect(form.errors.messages[:ufn]).to include(
+          'First 6 digits of the unique file number cannot be a future date'
         )
       end
     end

@@ -153,7 +153,9 @@ en:
           attributes:
             ufn:
               blank: Enter the unique file number
-              invalid: Unique file number must be in the correct format, for example 310224/001
+              invalid: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
+              invalid_characters: Unique file number must only include numbers and a forward slash
+              future_date: First 6 digits of the unique file number cannot be a future date
         prior_authority/steps/primary_quote_form:
           attributes:
             service_type_autocomplete:
@@ -245,9 +247,11 @@ en:
           attributes:
             ufn:
               blank: "Enter a unique file number"
-              invalid: UFN must be a 9-digit number
+              invalid: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
+              invalid_characters: Unique file number must only include numbers and a forward slash
+              future_date: First 6 digits of the unique file number cannot be a future date
             claim_type:
-              inclusion: Please select what you are claiming for
+              inclusion: Select what you are claiming for
             rep_order_date: *shared_date_errors
             cntp_order:
               blank: Enter a CNTP number
@@ -320,7 +324,7 @@ en:
         nsm/steps/case_disposal_form:
           attributes:
             plea:
-              blank: Please select a case disposal
+              blank: Select a case disposal
             cracked_trial_date: *shared_date_errors
             arrest_warrant_date: *shared_date_errors
         nsm/steps/hearing_details_form:
@@ -356,7 +360,7 @@ en:
         nsm/steps/add_another_form:
           attributes:
             add_another:
-              blank: Please choose yes or no to add another record
+              blank: Choose yes or no to add another record
         nsm/steps/claim_details_form:
           attributes:
             prosecution_evidence:
@@ -406,9 +410,9 @@ en:
         nsm/steps/letters_calls_form:
           attributes:
             letters:
-              blank: Please set the number of letters
+              blank: Set the number of letters
             calls:
-              blank: Please set the number of calls
+              blank: Set the number of calls
             letters_uplift:
               blank: Letters uplift percentage must be set
             calls_uplift:
@@ -417,19 +421,19 @@ en:
           attributes:
             disbursement_date: *shared_date_errors
             disbursement_type:
-              blank: Please set disbursement type
+              blank: Set disbursement type
             other_type:
-              blank: Please set other disbursement type
+              blank: Set other disbursement type
         nsm/steps/disbursement_cost_form:
           attributes:
             miles:
-              blank: Please enter the number of miles travels
+              blank: Enter the number of miles travels
             total_cost_without_vat:
-              blank: Please set total cost
+              blank: Set total cost
             details:
-              blank: Please provdie details of disbursement
+              blank: Provdie details of disbursement
             prior_authority:
-              blank: Please confirm if you have prior authority
+              blank: Confirm if you have prior authority
         nsm/steps/solicitor_declaration_form:
           attributes:
             signatory_name:

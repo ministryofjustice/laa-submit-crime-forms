@@ -64,7 +64,7 @@ en:
       ufn:
         edit:
           hint: For example 310223/001
-          label: What is your unique file number?
+          label: What is your unique file number (UFN)?
           page_title: Unique file number
       prison_law:
         edit:

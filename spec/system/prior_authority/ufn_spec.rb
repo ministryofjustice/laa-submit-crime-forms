@@ -8,7 +8,7 @@ RSpec.describe 'Prior authority applications - add Unique file number' do
 
     it 'has the expected content' do
       expect(page).to have_title 'Unique file number'
-      expect(page).to have_content 'What is your unique file number?'
+      expect(page).to have_content 'What is your unique file number (UFN)?'
     end
 
     it 'allows me to go back to the authority value question' do
@@ -17,7 +17,7 @@ RSpec.describe 'Prior authority applications - add Unique file number' do
     end
 
     it 'allows me to save and continue' do
-      fill_in 'What is your unique file number?', with: '111111/111'
+      fill_in 'What is your unique file number (UFN)?', with: '111111/111'
       click_on 'Save and continue'
       expect(page).to have_title 'Your application progress'
     end

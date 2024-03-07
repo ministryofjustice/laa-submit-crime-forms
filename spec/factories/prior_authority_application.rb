@@ -42,7 +42,7 @@ FactoryBot.define do
 
     trait :about_request_enabled do
       prison_law { true }
-      ufn { '123456/001' }
+      ufn { '120423/001' }
       with_firm_and_solicitor
       next_hearing { false }
       after(:create) do |paa, _a|
@@ -61,7 +61,7 @@ FactoryBot.define do
       with_case_details
       with_psychiatric_liaison
       primary_quote factory: %i[quote primary], strategy: :build
-      ufn { '123456/001' }
+      ufn { '120423/001' }
       service_type { 'meteorologist' }
       prior_authority_granted { true }
       after(:create) do |paa, _a|
@@ -85,7 +85,7 @@ FactoryBot.define do
       with_firm_and_solicitor
       with_defendant
       with_psychiatric_liaison
-      ufn { '123123/123' }
+      ufn { '120423/123' }
       defendant factory: %i[defendant valid_paa], strategy: :build
       prison_law { true }
       reason_why { 'something' }
@@ -107,7 +107,7 @@ FactoryBot.define do
 
     trait :with_complete_non_prison_law do
       prison_law { false }
-      ufn { '123123/123' }
+      ufn { '120423/123' }
       with_firm_and_solicitor
       with_defendant
 
@@ -136,7 +136,7 @@ FactoryBot.define do
 
     trait :with_complete_prison_law do
       prison_law { true }
-      ufn { '123123/123' }
+      ufn { '120423/123' }
       with_firm_and_solicitor
       with_defendant
 
@@ -157,7 +157,7 @@ FactoryBot.define do
 
     trait :with_all_tasks_completed do
       prison_law { true }
-      ufn { '123123/123' }
+      ufn { '120423/123' }
       with_firm_and_solicitor
       with_defendant
 
