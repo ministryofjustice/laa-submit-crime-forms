@@ -18,7 +18,7 @@ FactoryBot.define do
     end
 
     trait :with_case_details do
-      main_offence { 'Jaywalking' }
+      main_offence_id { 'jaywalking' }
       rep_order_date { 1.year.ago }
       client_detained { false }
       subject_to_poca { false }
@@ -89,9 +89,9 @@ FactoryBot.define do
       defendant factory: %i[defendant valid_paa], strategy: :build
       prison_law { true }
       reason_why { 'something' }
-      main_offence { 'something' }
+      main_offence_id { 'something' }
       client_detained { true }
-      client_detained_prison { 'something' }
+      prison_id { 'something' }
       subject_to_poca { true }
       next_hearing_date { 1.day.from_now }
       plea { 'something' }
@@ -112,7 +112,7 @@ FactoryBot.define do
       with_defendant
 
       # case details
-      main_offence { 'Jay walking' }
+      main_offence_id { 'jaywalking' }
       rep_order_date { 1.year.ago.to_date }
       client_detained { false }
       subject_to_poca { true }
