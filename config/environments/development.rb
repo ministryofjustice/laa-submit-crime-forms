@@ -59,7 +59,7 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
-  config.hosts = ['crm7dev.apps.live.cloud-platform.service.justice.gov.uk', 'localhost', '127.0.0.1', '.ngrok-free.app']
+  config.hosts = ['dev.submit-crime-forms.service.justice.gov.uk', 'localhost', '127.0.0.1', '.ngrok-free.app']
 
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
