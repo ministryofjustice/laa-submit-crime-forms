@@ -1,12 +1,12 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - add case details' do
+RSpec.describe 'Prior authority applications - add case details', :javascript, type: :system do
   before do
     fill_in_until_step(:your_application_progress)
   end
 
   it 'allows case detail creation' do
-    expect(page).to have_content 'Case and hearing detailsNot started'
+    expect(page).to have_content 'Case and hearing details Not started'
 
     click_on 'Case and hearing details'
     expect(page).to have_title 'Case details'
@@ -25,7 +25,7 @@ RSpec.describe 'Prior authority applications - add case details' do
     end
 
     within('.govuk-form-group', text: 'Is this case subject to POCA (Proceeds of Crime Act 2002)?') do
-      choose 'Yes'
+      2.times { choose 'Yes' } # The first time may simply close the autocomplete suggestion box opened above
     end
 
     click_on 'Save and continue'

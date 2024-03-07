@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "laa-claim-non-standard-magistrate-fee-backend.fullname" . }}-worker
+  name: {{ include "laa-submit-crime-forms.fullname" . }}-worker
   labels:
-    {{- include "laa-claim-non-standard-magistrate-fee-backend.labels" . | nindent 4 }}
+    {{- include "laa-submit-crime-forms.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "laa-claim-non-standard-magistrate-fee-backend.selectorLabels" . | nindent 6 }}
+      {{- include "laa-submit-crime-forms.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "laa-claim-non-standard-magistrate-fee-backend.selectorLabels" . | nindent 8 }}
+        {{- include "laa-submit-crime-forms.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ .Values.service_account.name }}
       {{- with .Values.imagePullSecrets }}
@@ -74,12 +74,12 @@ spec:
             - name: REDIS_HOST
               valueFrom:
                 secretKeyRef:
-                  name: nsm-elasticache
+                  name: crm-elasticache
                   key: primary_endpoint_address
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nsm-elasticache
+                  name: crm-elasticache
                   key: auth_token
           {{ end }}
           {{ if .Values.postgresql.enabled }}
@@ -127,35 +127,25 @@ spec:
             - name: RAILS_LOG_TO_STDOUT
               value: enabled
             - name: APP_STORE_URL
-              value: {{ .Values.secrets.appStore }}
-            - name: APP_STORE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: app-store-auth
-                  key: username
-            - name: APP_STORE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-store-auth
-                  key: password
+              value: {{ .Values.variables.appStore }}
             - name: ENV
-              value: {{ .Values.secrets.environment}}
+              value: {{ .Values.variables.environment}}
             - name: LAA_PORTAL_SP_CERT
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.secrets.portalSPCertificateKey }}
+                  name: portal-sp-certificate
                   key: tls.crt
             - name: LAA_PORTAL_SP_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.secrets.portalSPCertificateKey }}
+                  name: portal-sp-certificate
                   key: tls.key
             - name: LAA_PORTAL_IDP_METADATA_FILE
-              value: {{ .Values.secrets.portalIDPMetadataFile }}
+              value: {{ .Values.variables.portalIDPMetadataFile }}
             - name: SP_ENTITY_ID
-              value: {{ .Values.secrets.spEntityId }}
+              value: {{ .Values.variables.spEntityId }}
             - name: MAX_UPLOAD_SIZE_BYTES
-              value: {{ mul .Values.secrets.maxFileUploadBytes 1 | quote }}
+              value: {{ mul .Values.variables.maxFileUploadBytes 1 | quote }}
             - name: ANALYTICS_TRACKING_ID
               valueFrom:
                 secretKeyRef:
@@ -164,17 +154,17 @@ spec:
             - name: APP_STORE_TENANT_ID
               valueFrom:
                 secretKeyRef:
-                  name: azure-secret
+                  name: app-store-auth
                   key: tenant_id
             - name: APP_STORE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: azure-secret
+                  name: app-store-auth
                   key: app_client_id
             - name: APP_STORE_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: azure-secret
+                  name: app-store-auth
                   key: app_client_secret
 
       {{- with .Values.nodeSelector }}

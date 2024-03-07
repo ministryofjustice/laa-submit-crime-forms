@@ -9,7 +9,7 @@ deploy_branch() {
   # Set the deployment host, this will add the prefix of the branch name e.g crm457-1062-tempor
   RELEASE_HOST="$BRANCH_RELEASE_NAME-nscc-provider-dev.cloud-platform.service.justice.gov.uk"
   # Set the ingress name, needs release name, namespace and -green suffix
-  IDENTIFIER="$BRANCH_RELEASE_NAME-laa-claim-non-standard-magistrate-fee-dev-green"
+  IDENTIFIER="$BRANCH_RELEASE_NAME-laa-submit-crime-forms-dev-green"
   echo "Deploying under release name: '$BRANCH_RELEASE_NAME' with identifier '$IDENTIFIER'..."
 
   helm upgrade $BRANCH_RELEASE_NAME ./helm_deploy/. \
@@ -27,7 +27,7 @@ deploy_branch() {
 }
 
 deploy_main() {
-  helm upgrade laa-claim-non-standard-magistrate-fee ./helm_deploy/. \
+  helm upgrade laa-submit-crime-forms ./helm_deploy/. \
                           --install --wait \
                           --namespace=${K8S_NAMESPACE} \
                           --values ./helm_deploy/values-$ENVIRONMENT.yaml \

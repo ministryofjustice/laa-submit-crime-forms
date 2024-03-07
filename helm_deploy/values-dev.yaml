@@ -1,4 +1,4 @@
-# Default values for laa-claim-non-standard-magistrate-fee-backend.
+# Default values for laa-submit-crime-forms.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -11,8 +11,8 @@ image:
   tag: ""
 
 imagePullSecrets: []
-nameOverride: laa-claim-non-standard-magistrate-fee-backend-app
-fullnameOverride: laa-claim-non-standard-magistrate-fee-backend-app
+nameOverride: laa-submit-crime-forms-app
+fullnameOverride: laa-submit-crime-forms-app
 
 securityContext:
   #  capabilities:
@@ -31,7 +31,7 @@ service:
 
 ingress:
   enabled: true
-  namespace: laa-claim-non-standard-magistrate-fee-dev
+  namespace: laa-submit-crime-forms-dev
   className: modsec
   annotations:
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
@@ -39,7 +39,7 @@ ingress:
       SecRuleEngine On
       SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
       SecAction "id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=6"
-    external-dns.alpha.kubernetes.io/set-identifier: laa-claim-non-standard-magistrate-fee-backend-app-laa-claim-non-standard-magistrate-fee-dev-green
+    external-dns.alpha.kubernetes.io/set-identifier: laa-submit-crime-forms-app-laa-submit-crime-forms-dev-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
   hosts:
     - host: crm7dev.apps.live.cloud-platform.service.justice.gov.uk
@@ -48,7 +48,7 @@ ingress:
           pathType: ImplementationSpecific
           backend:
           service:
-            name: laa-claim-non-standard-magistrate-fee-dev
+            name: laa-submit-crime-forms-dev
             port:
               number: 3000
   tls:
@@ -69,16 +69,15 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
 
-secrets:
+variables:
   environment: development
-  portalSPCertificateKey: portal-sp-certificate-dev
   portalIDPMetadataFile: config/laa_portal/metadata/dev.xml
   spEntityId: LAA_Portal_CRM7_Dev
   appStore: https://laa-crime-application-store-dev.apps.live.cloud-platform.service.justice.gov.uk
   maxFileUploadBytes: 10485760
 
 service_account:
-  name: laa-claim-non-standard-magistrate-fee-dev-irsa
+  name: laa-submit-crime-forms-dev-irsa
 
 # This is used to configure the temporary non-RDS postgres DB
 postgresql:

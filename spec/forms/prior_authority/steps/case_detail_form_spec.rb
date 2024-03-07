@@ -11,16 +11,16 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
   end
 
   describe '#validate' do
-    let(:application) { instance_double(PriorAuthorityApplication) }
+    let(:application) { instance_double(PriorAuthorityApplication, main_offence_id: nil, prison_id: nil) }
 
     context 'with case details' do
       let(:case_detail_attributes) do
         {
-          main_offence: 'Supply a controlled drug of Class A - Heroin',
+          main_offence_autocomplete: 'robbery',
           rep_order_date: Date.yesterday,
           defendant_attributes: { 'maat' => '123456' },
           client_detained: true,
-          client_detained_prison: 'HMP Bedford',
+          prison_autocomplete: 'hmp_bedford',
           subject_to_poca: false,
         }
       end
@@ -31,11 +31,11 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
     context 'with invalid case details' do
       let(:case_detail_attributes) do
         {
-          main_offence: nil,
+          main_offence_id: nil,
           rep_order_date: nil,
           defendant_attributes: { 'maat' => nil },
           client_detained: nil,
-          client_detained_prison: nil,
+          prison_id: nil,
           subject_to_poca: nil,
         }
       end
@@ -60,11 +60,11 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
     context 'with valid case details' do
       let(:case_detail_attributes) do
         {
-          main_offence: 'Supply a controlled drug of Class A - Heroin',
+          main_offence_autocomplete: 'robbery',
           rep_order_date: Date.yesterday,
           defendant_attributes: { 'maat' => '123456' },
           client_detained: true,
-          client_detained_prison: 'HMP Bedford',
+          prison_autocomplete: 'hmp_albany',
           subject_to_poca: false,
         }
       end
@@ -73,14 +73,14 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         expect { save }.to change { application.reload.attributes }
           .from(
             hash_including(
-              'main_offence' => nil, 'rep_order_date' => nil,
-              'client_detained' => nil, 'client_detained_prison' => nil, 'subject_to_poca' => nil,
+              'main_offence_id' => nil, 'rep_order_date' => nil,
+              'client_detained' => nil, 'prison_id' => nil, 'subject_to_poca' => nil,
             )
           )
           .to(
             hash_including(
-              'main_offence' => 'Supply a controlled drug of Class A - Heroin', 'rep_order_date' => Date.yesterday,
-              'client_detained' => true, 'client_detained_prison' => 'HMP Bedford', 'subject_to_poca' => false,
+              'main_offence_id' => 'robbery', 'rep_order_date' => Date.yesterday,
+              'client_detained' => true, 'prison_id' => 'hmp_albany', 'subject_to_poca' => false,
             )
           )
       end
@@ -91,14 +91,105 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
       end
     end
 
+    context 'with valid case details via the suggestion fields' do
+      let(:case_detail_attributes) do
+        {
+          main_offence_autocomplete_suggestion: 'Robbery',
+          rep_order_date: Date.yesterday,
+          defendant_attributes: { 'maat' => '123456' },
+          client_detained: true,
+          prison_autocomplete_suggestion: 'HMP Albany',
+          subject_to_poca: false,
+        }
+      end
+
+      it 'persists the case details' do
+        expect { save }.to change { application.reload.attributes }
+          .from(
+            hash_including(
+              'main_offence_id' => nil, 'rep_order_date' => nil,
+              'client_detained' => nil, 'prison_id' => nil, 'subject_to_poca' => nil,
+            )
+          )
+          .to(
+            hash_including(
+              'main_offence_id' => 'robbery', 'rep_order_date' => Date.yesterday,
+              'client_detained' => true, 'prison_id' => 'hmp_albany', 'subject_to_poca' => false,
+            )
+          )
+      end
+    end
+
+    context 'with valid case details including custom fields' do
+      let(:case_detail_attributes) do
+        {
+          main_offence_autocomplete_suggestion: 'Custom crime',
+          rep_order_date: Date.yesterday,
+          defendant_attributes: { 'maat' => '123456' },
+          client_detained: true,
+          prison_autocomplete_suggestion: 'Custom prison',
+          subject_to_poca: false,
+        }
+      end
+
+      it 'persists the case details' do
+        expect { save }.to change { application.reload.attributes }
+          .from(
+            hash_including(
+              'main_offence_id' => nil, 'rep_order_date' => nil,
+              'client_detained' => nil, 'prison_id' => nil, 'subject_to_poca' => nil,
+            )
+          )
+          .to(
+            hash_including(
+              'main_offence_id' => 'custom', 'custom_main_offence_name' => 'Custom crime',
+              'rep_order_date' => Date.yesterday,
+              'client_detained' => true, 'prison_id' => 'custom', 'custom_prison_name' => 'Custom prison',
+              'subject_to_poca' => false,
+            )
+          )
+      end
+    end
+
+    context 'with both autocomplete and autocomplete suggestion values' do
+      let(:case_detail_attributes) do
+        {
+          main_offence_autocomplete: 'robbery',
+          main_offence_autocomplete_suggestion: 'False imprisonment',
+          rep_order_date: Date.yesterday,
+          defendant_attributes: { 'maat' => '123456' },
+          client_detained: true,
+          prison_autocomplete_suggestion: 'HMP Bristol',
+          prison_autocomplete: 'hmp_albany',
+          subject_to_poca: false,
+        }
+      end
+
+      it 'persists the case details' do
+        expect { save }.to change { application.reload.attributes }
+          .from(
+            hash_including(
+              'main_offence_id' => nil, 'rep_order_date' => nil,
+              'client_detained' => nil, 'prison_id' => nil, 'subject_to_poca' => nil,
+            )
+          )
+          .to(
+            hash_including(
+              'main_offence_id' => 'false_imprisonment', 'custom_main_offence_name' => nil,
+              'prison_id' => 'hmp_bristol', 'custom_prison_name' => nil,
+            )
+          )
+      end
+    end
+
     context 'with incomplete case details' do
       let(:case_detail_attributes) do
         {
-          main_offence: nil,
+          main_offence_id: nil,
           rep_order_date: nil,
           defendant_attributes: { 'maat' => nil },
           client_detained: nil,
-          client_detained_prison: nil,
+          prison_id: nil,
           subject_to_poca: nil,
         }
       end
@@ -107,10 +198,10 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         expect { save }.not_to change { application.reload.attributes }
           .from(
             hash_including(
-              'main_offence' => nil,
+              'main_offence_id' => nil,
               'rep_order_date' => nil,
               'client_detained' => nil,
-              'client_detained_prison' => nil,
+              'prison_id' => nil,
               'subject_to_poca' => nil,
             )
           )
