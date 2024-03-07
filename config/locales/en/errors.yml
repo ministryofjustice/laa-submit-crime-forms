@@ -154,7 +154,7 @@ en:
             ufn:
               blank: Enter the unique file number
               invalid: Unique reference number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
-              future_date: Date portion of UFN is in the future. First 6 digits of the unique reference number cannot be a future date
+              future_date: First 6 digits of the unique reference number cannot be a future date
         prior_authority/steps/primary_quote_form:
           attributes:
             service_type_autocomplete:
@@ -247,7 +247,7 @@ en:
             ufn:
               blank: "Enter a unique file number"
               invalid: Unique reference number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
-              future_date: Date portion of UFN is in the future. First 6 digits of the unique reference number cannot be a future date
+              future_date: First 6 digits of the unique reference number cannot be a future date
             claim_type:
               inclusion: Please select what you are claiming for
             rep_order_date: *shared_date_errors

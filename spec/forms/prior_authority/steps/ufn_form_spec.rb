@@ -49,7 +49,7 @@ RSpec.describe PriorAuthority::Steps::UfnForm do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:ufn, :future_date)).to be(true)
         expect(form.errors.messages[:ufn]).to include(
-          'Date portion of UFN is in the future. First 6 digits of the unique reference number cannot be a future date'
+          'First 6 digits of the unique reference number cannot be a future date'
         )
       end
     end
