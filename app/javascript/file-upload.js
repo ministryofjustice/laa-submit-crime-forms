@@ -124,7 +124,7 @@ MOJFrontend.MultiFileUpload.prototype.getErrorHtml = function(message) {
 
 };
 
-// $(function() {
+$(function() {
     if (typeof MOJFrontend.MultiFileUpload !== "undefined") {
         new MOJFrontend.MultiFileUpload({
             container: $(".moj-multi-file-upload"),
@@ -132,5 +132,5 @@ MOJFrontend.MultiFileUpload.prototype.getErrorHtml = function(message) {
             deleteUrl: window.location.href
         })
     }
-// })
+})
 
