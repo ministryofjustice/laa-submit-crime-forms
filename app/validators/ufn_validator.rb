@@ -16,6 +16,8 @@ class UfnValidator < ActiveModel::EachValidator
       date_parts[0] += 2000
 
       add_error :future_date if Date.new(*date_parts) > Time.zone.today
+    elsif value.match?(%r{[^\d/]})
+      add_error :invalid_characters
     else
       add_error :invalid
     end

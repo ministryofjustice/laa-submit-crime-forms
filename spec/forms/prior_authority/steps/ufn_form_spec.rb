@@ -36,7 +36,7 @@ RSpec.describe PriorAuthority::Steps::UfnForm do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:ufn, :invalid)).to be(true)
         expect(form.errors.messages[:ufn]).to include(
-          'Unique reference number must be a 6 digit date, followed by / and 3 more digits, ' \
+          'Unique file number must be a 6 digit date, followed by / and 3 more digits, ' \
           'for example DDMMYY/123 or 121023/123'
         )
       end

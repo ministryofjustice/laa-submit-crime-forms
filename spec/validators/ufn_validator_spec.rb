@@ -58,7 +58,7 @@ RSpec.describe UfnValidator do
 
       it 'is not valid' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:ufn, :invalid)).to be(true)
+        expect(subject.errors.of_kind?(:ufn, :invalid_characters)).to be(true)
       end
     end
 
