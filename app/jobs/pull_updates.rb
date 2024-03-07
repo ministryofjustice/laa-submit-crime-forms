@@ -8,7 +8,12 @@ class PullUpdates < ApplicationJob
     json_data = HttpPuller.new.get_all(last_update)
 
     json_data['applications'].each do |record|
-      save(record['application_id'], convert_params(record))
+      case record['application_type']
+      when 'crm7'
+        update_claim(record['application_id'], convert_params(record))
+      when 'crm4'
+        update_prior_authority_application(record['application_id'], convert_params(record))
+      end
     end
   end
 
@@ -21,9 +26,15 @@ class PullUpdates < ApplicationJob
     }
   end
 
-  def save(claim_id, params)
+  def update_claim(claim_id, params)
     claim = Claim.find_by(id: claim_id)
 
     claim&.update!(params)
+  end
+
+  def update_prior_authority_application(application_id, params)
+    application = PriorAuthorityApplication.find_by(id: application_id)
+
+    application&.update!(params)
   end
 end
