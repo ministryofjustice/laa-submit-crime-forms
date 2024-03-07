@@ -1,0 +1,144 @@
+en:
+  prior_authority:
+    prisons:
+      hmp_acklington: HMP Acklington
+      hmp_albany: HMP Albany
+      hmp_altcourse: HMP Altcourse
+      hmp_ashfield: HMP Ashfield
+      hmp_ashwell: HMP Ashwell
+      hmp_askham_grange: HMP Askham Grange
+      hmp_aylesbury: HMP Aylesbury
+      hmp_bedford: HMP Bedford
+      hmp_belmarsh: HMP Belmarsh
+      hmp_birmingham: HMP Birmingham
+      hmp_blantyre_house: HMP Blantyre House
+      hmp_blundeston: HMP Blundeston
+      hmp_brinsford: HMP Brinsford
+      hmp_bristol: HMP Bristol
+      hmp_brixton: HMP Brixton
+      hmp_bronzefield: HMP Bronzefield
+      hmp_buckley_hall: HMP Buckley Hall
+      hmp_bullingdon: HMP Bullingdon
+      hmp_bullwood_hall: HMP Bullwood Hall
+      hmp_bure: HMP Bure
+      hmp_camp_hill: HMP Camp Hill
+      hmp_canterbury: HMP Canterbury
+      hmp_cardiff: HMP Cardiff
+      hmp_castington: HMP Castington
+      hmp_channings_wood: HMP Channings Wood
+      hmp_chelmsford: HMP Chelmsford
+      hmp_coldingley: HMP Coldingley
+      hmpyoi_cookham_wood: HMPYOI Cookham Wood
+      hmp_dartmoor: HMP Dartmoor
+      hmp_deerbolt: HMP Deerbolt
+      hmp_doncaster: HMP Doncaster
+      hmp_dorchester: HMP Dorchester
+      hmp_dovegate: HMP Dovegate
+      hmp_doverirc: HMP Dover(IRC)
+      hmp_downview: HMP Downview
+      hmp_drake_hall: HMP Drake Hall
+      hmp_durham: HMP Durham
+      hmp_east_sutton_park: HMP East Sutton Park
+      hmp_eastwood_park: HMP Eastwood Park
+      hmp_edmunds_hill: HMP Edmunds Hill
+      hmp_elmley: HMP Elmley
+      hmp_erlestoke: HMP Erlestoke
+      hmp_everthorpe: HMP Everthorpe
+      hmp_exeter: HMP Exeter
+      hmp_featherstone: HMP Featherstone
+      hmpyoi_feltham: HMPYOI Feltham
+      hmp_ford: HMP Ford
+      hmp_forest_bank: HMP Forest Bank
+      hmp_foston_hall: HMP Foston Hall
+      hmp_frankland: HMP Frankland
+      hmp_full_sutton: HMP Full Sutton
+      hmp_garth: HMP Garth
+      hmp_gartree: HMP Gartree
+      hmp_glen_parva: HMP Glen Parva
+      hmp_gloucester: HMP Gloucester
+      hmp_grendon: HMP Grendon
+      hmp_guys_marsh: HMP Guys Marsh
+      hmp_haslarirc: HMP Haslar(IRC)
+      hmp_haverigg: HMP Haverigg
+      hmp_hewell: HMP Hewell
+      hmp_highdown: HMP Highdown
+      hmp_highpoint_south: HMP Highpoint South
+      hmp_hindley: HMP Hindley
+      hmp_hollesley_bay: HMP Hollesley Bay
+      hmp_holloway: HMP Holloway
+      hmp_holme_house: HMP Holme House
+      hmp_hull: HMP Hull
+      hmp_huntercombe: HMP Huntercombe
+      hmp_kennet: HMP Kennet
+      hmp_kingston: HMP Kingston
+      hmp_kirkham: HMP Kirkham
+      hmp_kirklevington: HMP Kirklevington
+      hmp_lancaster_castle: HMP Lancaster Castle
+      hmp_lancaster_farms: HMP Lancaster Farms
+      hmp_latchmere_house: HMP Latchmere House
+      hmp_leeds: HMP Leeds
+      hmp_leicester: HMP Leicester
+      hmp_lewes: HMP Lewes
+      hmp_leyhill: HMP Leyhill
+      hmp_lincoln: HMP Lincoln
+      hmp_lindholmeirc: HMP Lindholme(IRC)
+      hmp_littlehey: HMP Littlehey
+      hmp_liverpool: HMP Liverpool
+      hmp_long_lartin: HMP Long Lartin
+      hmp_low_newton: HMP Low Newton
+      hmp_lowdham_grange: HMP Lowdham Grange
+      hmp_maidstone: HMP Maidstone
+      hmp_manchester: HMP Manchester
+      hmp_moorland_closed: HMP Moorland (Closed)
+      hmp_moorland_open: HMP Moorland (Open)
+      hmp_morton_hall: HMP Morton Hall
+      hmp_mount: HMP Mount
+      hmp_new_hall: HMP New Hall
+      hmp_north_sea_camp: HMP North Sea Camp
+      hmp_northallerton: HMP Northallerton
+      hmp_norwich: HMP Norwich
+      hmp_nottingham: HMP Nottingham
+      hmp_onley: HMP Onley
+      hmpyoi_parc: HMPYOI Parc
+      hmp_parkhurst: HMP Parkhurst
+      hmp_pentonville: HMP Pentonville
+      hmp_peterborough: HMP Peterborough
+      hmp_portland: HMP Portland
+      hmp_prescoed: HMP Prescoed
+      hmp_preston: HMP Preston
+      hmp_ranby: HMP Ranby
+      hmp_reading: HMP Reading
+      hmp_risley: HMP Risley
+      hmp_rochester: HMP Rochester
+      hmp_rye_hill: HMP Rye Hill
+      hmp_send: HMP Send
+      hmp_shepton_mallet: HMP Shepton Mallet
+      hmp_shrewsbury: HMP Shrewsbury
+      hmp_spring_hill: HMP Spring Hill
+      hmp_stafford: HMP Stafford
+      hmp_standford_hill: HMP Standford Hill
+      hmp_stocken: HMP Stocken
+      hmp_stoke_heath: HMP Stoke Heath
+      hmp_styal: HMP Styal
+      hmp_sudbury: HMP Sudbury
+      hmp_swaleside: HMP Swaleside
+      hmp_swansea: HMP Swansea
+      hmp_swinfen_hall: HMP Swinfen Hall
+      hmp_thorn_cross: HMP Thorn Cross
+      hmp_usk: HMP Usk
+      hmp_verne: HMP Verne
+      hmp_wakefield: HMP Wakefield
+      hmp_wandsworth: HMP Wandsworth
+      hmp_warren_hill: HMP Warren Hill
+      hmp_wayland: HMP Wayland
+      hmp_wealstun: HMP Wealstun
+      hmp_wellingborough: HMP Wellingborough
+      hmpyoi_werrington: HMPYOI Werrington
+      hmpyoi_wetherby: HMPYOI Wetherby
+      hmp_whatton: HMP Whatton
+      hmp_whitemoor: HMP Whitemoor
+      hmp_winchester: HMP Winchester
+      hmp_wolds: HMP Wolds
+      hmp_woodhill: HMP Woodhill
+      hmp_wormwood: HMP Wormwood
+      hmp_wymott: HMP Wymott

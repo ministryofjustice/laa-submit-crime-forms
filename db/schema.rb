@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_16_084333) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_29_140805) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -191,19 +191,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_084333) do
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "next_hearing"
+    t.text "reason_why"
+    t.date "rep_order_date"
+    t.boolean "client_detained"
+    t.boolean "subject_to_poca"
     t.date "next_hearing_date"
     t.string "plea"
     t.string "court_type"
     t.boolean "youth_court"
     t.boolean "psychiatric_liaison"
     t.string "psychiatric_liaison_reason_not"
-    t.string "main_offence"
-    t.date "rep_order_date"
-    t.boolean "client_detained"
-    t.string "client_detained_prison"
-    t.boolean "subject_to_poca"
-    t.text "reason_why"
+    t.boolean "next_hearing"
     t.boolean "additional_costs_still_to_add"
     t.boolean "prior_authority_granted"
     t.text "no_alternative_quote_reason"
@@ -212,6 +210,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_084333) do
     t.string "custom_service_name"
     t.boolean "confirm_excluding_vat"
     t.boolean "confirm_travel_expenditure"
+    t.string "main_offence_id"
+    t.string "custom_main_offence_name"
+    t.string "prison_id"
+    t.string "custom_prison_name"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
