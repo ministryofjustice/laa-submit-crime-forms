@@ -17,13 +17,13 @@ RSpec.describe 'Prior authority application creation' do
     choose 'No'
     click_on 'Save and continue'
 
-    fill_in 'What is your unique file number?', with: '000000/123'
+    fill_in 'What is your unique file number (UFN)?', with: '070324/123'
     click_on 'Save and continue'
 
     expect(page).to have_content 'Your application progress'
     click_on 'Back to your applications'
     click_on 'Drafts'
-    expect(page).to have_content '000000/123'
+    expect(page).to have_content '070324/123'
   end
 
   it 'performs validations' do

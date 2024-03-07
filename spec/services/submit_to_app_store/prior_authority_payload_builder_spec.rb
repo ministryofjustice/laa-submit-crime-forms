@@ -7,7 +7,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
     {
       application: {
         prison_law: true,
-        ufn: '123123/123',
+        ufn: '120423/123',
         laa_reference: 'LAA-n4AohV',
         status: 'pre_draft',
         reason_why: 'something',
