@@ -89,7 +89,7 @@ module PriorAuthority
     end
 
     def fill_in_ufn
-      fill_in 'What is your unique file number?', with: '111111/123'
+      fill_in 'What is your unique file number (UFN)?', with: '111111/123'
       click_on 'Save and continue'
     end
 

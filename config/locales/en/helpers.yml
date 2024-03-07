@@ -136,7 +136,7 @@ en:
           'yes': 'Yes'
           'no': 'No, another office is handling this application'
       nsm_steps_claim_type_form:
-        ufn: What is your unique file number?
+        ufn: What is your unique file number (UFN)?
         claim_type_options:
           non_standard_magistrate: Non-standard magistrates' court payment
           breach_of_injunction: Breach of injunction
