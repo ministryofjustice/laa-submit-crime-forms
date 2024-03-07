@@ -112,3 +112,7 @@ We expect every feature's happy path to have a system test, and every screen to 
 **9. Development end-to-end setup**
 
 see [Development e2e setup](docs/development-e2e-setup.md)
+
+**10. Secrets**
+
+See [Configuring Kubernetes Secrets via AWS Secret Manager](https://dsdmoj.atlassian.net/wiki/spaces/CRM457/pages/4754899285/Configuring+Kubernetes+Secrets+via+AWS+Secret+Manger)
