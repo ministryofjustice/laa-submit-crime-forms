@@ -97,4 +97,13 @@ RSpec.describe PullUpdates do
       end
     end
   end
+
+  context 'when application type is not recognised' do
+    let(:application_type) { 'crm5' }
+    let(:id) { 'unknown-id' }
+
+    it 'does not raise an error' do
+      expect { subject.perform }.not_to raise_error
+    end
+  end
 end
