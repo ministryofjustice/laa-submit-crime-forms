@@ -8,33 +8,47 @@
     <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
 
     <%= step_form @form_object do |form| %>
-      <%= suggestion_select form, :main_offence_autocomplete, @form_object.offence_list, :first, :last, width: 20,
-                            options: { include_blank: true }, label: {text: t(".main_offence"), size: "s" }, hint: { size: "s", text: t(".main_offence_hint")},
-                            data: { autoselect: false } %>
-      <%= form.govuk_date_field :rep_order_date, legend: { text: t(".rep_order_date"), size: 's' }, hint: { text: t(".rep_order_date_hint") } %>
+      <% if form.errors[:base].include?(:interrupt) %>
+        This is the interupt
 
-      <%= form.fields_for :defendant, as: :defendant_form do |defendant_object| %>
-        <%= defendant_object.govuk_text_field :maat, width: 10, label: { text: t('.maat'), size: 's' } %>
+        all teh details
+
+        some logic related to interrupt direction (yes to not or not to yes)
+
+        <%= form.hidden_field_tag :interrupt_cleared, true %>
+
+        <%= form.continue_button %>
+        <%= link_to 'revert', edit_steps_case_details_path(current_application) %>
       <% end %>
+      <div class="<%= 'govuk-hidden' if form.errors[:base].include?(:interrupt) %>">
+        <%= suggestion_select form, :main_offence_autocomplete, @form_object.offence_list, :first, :last, width: 20,
+                              options: { include_blank: true }, label: {text: t(".main_offence"), size: "s" }, hint: { size: "s", text: t(".main_offence_hint")},
+                              data: { autoselect: false } %>
+        <%= form.govuk_date_field :rep_order_date, legend: { text: t(".rep_order_date"), size: 's' }, hint: { text: t(".rep_order_date_hint") } %>
 
-      <%= form.govuk_radio_buttons_fieldset :client_detained, legend: { text: t('.client_detained'), size: 's' } do %>
-        <%= form.govuk_radio_button :client_detained, true, label: { text: t('generic.yes') }, link_errors: true do %>
-            <%= suggestion_select form, :prison_autocomplete, @form_object.prison_list, :first, :last, width: 20,
-                                  options: { include_blank: true }, label: {text: t(".client_detained_prison"), size: "s" }, hint: { size: "s", text: t(".client_detained_prison_hint")},
-                                  data: { autoselect: false } %>
+        <%= form.fields_for :defendant, as: :defendant_form do |defendant_object| %>
+          <%= defendant_object.govuk_text_field :maat, width: 10, label: { text: t('.maat'), size: 's' } %>
         <% end %>
-        <%= form.govuk_radio_button :client_detained, false, label: { text: t('generic.no') } %>
-      <% end %>
 
-      <%= form.govuk_collection_radio_buttons(
-            :subject_to_poca,
-            YesNoAnswer.radio_options,
-            :value,
-            :label,
-            legend: { text: t('.subject_to_poca'), size: 's' }
-          ) %>
+        <%= form.govuk_radio_buttons_fieldset :client_detained, legend: { text: t('.client_detained'), size: 's' } do %>
+          <%= form.govuk_radio_button :client_detained, true, label: { text: t('generic.yes') }, link_errors: true do %>
+              <%= suggestion_select form, :prison_autocomplete, @form_object.prison_list, :first, :last, width: 20,
+                                    options: { include_blank: true }, label: {text: t(".client_detained_prison"), size: "s" }, hint: { size: "s", text: t(".client_detained_prison_hint")},
+                                    data: { autoselect: false } %>
+          <% end %>
+          <%= form.govuk_radio_button :client_detained, false, label: { text: t('generic.no') } %>
+        <% end %>
 
-      <%= form.continue_button %>
+        <%= form.govuk_collection_radio_buttons(
+              :subject_to_poca,
+              YesNoAnswer.radio_options,
+              :value,
+              :label,
+              legend: { text: t('.subject_to_poca'), size: 's' }
+            ) %>
+
+        <%= form.continue_button %>
+      </div>
     <% end %>
   </div>
 </div>

@@ -4,6 +4,7 @@ module PriorAuthority
       attribute :rep_order_date, :multiparam_date
       attribute :client_detained, :boolean
       attribute :subject_to_poca, :boolean
+      attribute :interrupt_cleared, :boolean
 
       validates :defendant, presence: true, nested: true
       validates :main_offence_autocomplete, presence: true
@@ -11,10 +12,19 @@ module PriorAuthority
       validates :client_detained, inclusion: { in: [true, false] }
       validates :prison_autocomplete, presence: true, if: :client_detained
       validates :subject_to_poca, inclusion: { in: [true, false] }
+      validate :client_detained_interrupt
 
       attr_accessor :main_offence_id, :custom_main_offence_name, :local_main_offence_values,
                     :prison_id, :custom_prison_name, :local_prison_values,
                     :defendant_attributes
+
+      def client_detained_interrupt
+        return if interrupt_cleared
+        return unless client_detained != application.client_detail
+        return if application.primary_quote.travel_cost_per_hour.blank?
+
+        errors.add(:interupt)
+      end
 
       def main_offence_autocomplete
         construct_autocomplete_value(:main_offence, :offences)
