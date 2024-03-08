@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe PullUpdates do
   let(:last_update) { 2 }
   let(:http_puller) { instance_double(HttpPuller, get_all: http_response) }
+  let(:arbitrary_fixed_date) { DateTime.new(2021, 12, 1, 13, 23, 24) }
   let(:http_response) do
     {
       'applications' => [{
@@ -10,10 +11,12 @@ RSpec.describe PullUpdates do
         'version' => 2,
         'application_state' => 'granted',
         'application_risk' => 'high',
-        'updated_at' => 10
+        'application_type' => application_type,
+        'updated_at' => arbitrary_fixed_date
       }]
     }
   end
+  let(:application_type) { 'crm7' }
 
   before do
     allow(HttpPuller).to receive(:new).and_return(http_puller)
@@ -43,7 +46,7 @@ RSpec.describe PullUpdates do
         expect(Claim).to have_received(:find_by).with(id:)
         expect(claim).to have_received(:update!).with(
           status: 'granted',
-          app_store_updated_at: 10
+          app_store_updated_at: arbitrary_fixed_date
         )
       end
 
@@ -67,6 +70,40 @@ RSpec.describe PullUpdates do
       expect(claim.reload).to have_attributes(
         status: 'granted'
       )
+    end
+  end
+
+  context 'when updating a prior authority application' do
+    let(:application_type) { 'crm4' }
+
+    context 'when ID is not recognised' do
+      let(:id) { 'unknown' }
+
+      it 'does not raise an error' do
+        expect { subject.perform }.not_to raise_error
+      end
+    end
+
+    context 'when ID is recognised' do
+      let(:id) { application.id }
+      let(:application) { create(:prior_authority_application) }
+
+      it 'processed the update' do
+        subject.perform
+        expect(application.reload).to have_attributes(
+          status: 'granted',
+          app_store_updated_at: arbitrary_fixed_date
+        )
+      end
+    end
+  end
+
+  context 'when application type is not recognised' do
+    let(:application_type) { 'crm5' }
+    let(:id) { 'unknown-id' }
+
+    it 'does not raise an error' do
+      expect { subject.perform }.not_to raise_error
     end
   end
 end
