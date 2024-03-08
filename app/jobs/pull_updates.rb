@@ -2,9 +2,6 @@ class PullUpdates < ApplicationJob
   # queue :default
 
   def perform
-    last_update = Claim.where.not(app_store_updated_at: nil)
-                       .maximum(:app_store_updated_at) || Time.zone.local(2023, 1, 1)
-
     json_data = HttpPuller.new.get_all(last_update)
 
     json_data['applications'].each do |record|
@@ -18,6 +15,14 @@ class PullUpdates < ApplicationJob
   end
 
   private
+
+  def last_update
+    [
+      Claim.where.not(app_store_updated_at: nil).maximum(:app_store_updated_at),
+      PriorAuthorityApplication.where.not(app_store_updated_at: nil).maximum(:app_store_updated_at),
+      Time.zone.local(2023, 1, 1)
+    ].compact.max
+  end
 
   def convert_params(record)
     {
