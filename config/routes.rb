@@ -31,7 +31,11 @@ Rails.application.routes.draw do
              }
 
   devise_scope :provider do
-    get 'login', to: 'laa_multi_step_forms/errors#unauthorized', as: :new_provider_session
+    if FeatureFlags.omniauth_test_mode.enabled?
+      get "login", to: "home#dev_login", as: :new_provider_session
+    else
+      get 'login', to: 'laa_multi_step_forms/errors#unauthorized', as: :new_provider_session
+    end
 
     namespace :providers do
       delete 'logout', to: 'sessions#destroy', as: :logout
@@ -49,6 +53,8 @@ Rails.application.routes.draw do
   end
 
   namespace :nsm, path: 'non-standard-magistrates' do
+    root "home#index"
+    get "start", to: "home#start"
     resources :claims, except: [:edit, :show, :new, :update], as: :applications do
       member do
         get :delete
@@ -160,7 +166,7 @@ Rails.application.routes.draw do
       end
     end
 
-    root to: 'applications#index'
+    root to: 'home#index'
   end
 
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:

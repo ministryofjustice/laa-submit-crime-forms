@@ -38,4 +38,12 @@ RSpec.describe Claim do
       expect(subject.short_id).to eq(subject.id.first(8))
     end
   end
+
+  describe '#main_defendant' do
+    subject(:saved_claim) { create(:claim, :main_defendant) }
+
+    it 'returns the main defendant' do
+      expect(saved_claim.main_defendant).to eq saved_claim.defendants.find_by(main: true)
+    end
+  end
 end

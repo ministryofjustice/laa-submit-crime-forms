@@ -1,0 +1,11 @@
+---
+en:
+  prior_authority:
+    home:
+      index:
+        page_title: "Apply for prior authority to incur disbursements, previously CRM4"
+        instruction: "Complete applications for solicitors to incur disbursements or instruct experts. You do not need to apply for prior authority to incur disbursements:"
+        bullets:
+          - if the total authority is less than £100
+          - for a Prison Law matter if the total authority is less than £500
+        start: Start now

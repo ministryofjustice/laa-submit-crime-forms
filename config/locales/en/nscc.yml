@@ -1,0 +1,11 @@
+en:
+  nscc:
+    service_name: Non-standard crime claims
+  home:
+    index:
+      page_title: Non-standard crime claims
+      which_service: Which service do you want to use?
+      pa: Apply for prior authority to incur disbursements, previously CRM4
+      eol: Apply for extension of upper limits, previously CRM5
+      nsm: Claim non-standard magistrates' court payments, previously CRM7
+

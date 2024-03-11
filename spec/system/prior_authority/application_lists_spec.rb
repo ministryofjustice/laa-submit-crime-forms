@@ -14,7 +14,7 @@ RSpec.describe 'Prior authority application lists' do
     create(:prior_authority_application, laa_reference: 'LAA-DDDDD', status: 'draft', updated_at: 4.days.ago)
     create(:prior_authority_application, laa_reference: 'LAA-EEEEE', status: 'draft', office_code: 'OTHER')
 
-    visit prior_authority_root_path
+    visit prior_authority_applications_path
   end
 
   it 'only shows right applications in the right tabs' do

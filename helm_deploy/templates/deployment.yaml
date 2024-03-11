@@ -198,6 +198,8 @@ spec:
               value: 'true'
             - name: RAILS_SERVE_STATIC_FILES
               value: 'true'
+            - name: EOL_PATH
+              value: {{ .Values.variables.eolPath }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

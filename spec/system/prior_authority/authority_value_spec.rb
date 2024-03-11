@@ -3,7 +3,7 @@ require 'system_helper'
 RSpec.describe 'Prior authority applications - add authority value' do
   before do
     visit provider_saml_omniauth_callback_path
-    visit prior_authority_root_path
+    visit prior_authority_applications_path
     click_on 'Make a new application'
   end
 

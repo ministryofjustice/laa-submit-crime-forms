@@ -81,6 +81,7 @@ module PriorAuthority
       visit provider_saml_omniauth_callback_path
       visit prior_authority_root_path
 
+      click_on 'Start now'
       click_on 'Make a new application'
       choose prison_law
       click_on 'Save and continue'

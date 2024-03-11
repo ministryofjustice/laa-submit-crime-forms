@@ -38,7 +38,7 @@ class PriorAuthorityApplication < ApplicationRecord
     rejected: 'rejected'
   }
 
-  scope :assessed, -> { where(status: %w[granted part_granted rejected]) }
+  scope :assessed, -> { where(status: %i[granted part_granted rejected]) }
 
   scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
 

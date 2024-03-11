@@ -12,6 +12,11 @@
             will fail as inline scripts will no longer have a valid nonce, so we disable turbo %>
         <%= link_to t('.sign_out'), main_app.providers_logout_path, class: 'govuk-header__link app-header__auth-link', data: { turbo: false } %>
       </li>
+      <% unless request.path == root_path %>
+        <li class="govuk-header__navigation-item govuk-header__navigation-item__pull-right govuk-!-static-margin-right-9">
+          <%= link_to t('.switch_service'), main_app.root_path, class: 'govuk-header__link' %>
+        </li>
+      <% end %>
     </ul>
   </nav>
 <% end %>
