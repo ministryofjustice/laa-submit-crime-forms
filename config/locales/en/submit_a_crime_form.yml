@@ -1,9 +1,9 @@
 en:
   submit_a_crime_form:
-    service_name: Non-standard crime claims
+    service_name: Submit a crime form
   home:
     index:
-      page_title: Non-standard crime claims
+      page_title: Submit a crime form
       pa: Apply for prior authority to incur disbursements, previously CRM4
       eol: Apply for extension of upper limits, previously CRM5
       nsm: Claim non-standard magistrates' court payments, previously CRM7
