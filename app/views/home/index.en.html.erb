@@ -3,18 +3,13 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl">
-      <%=  t('.page_title') %>
+      <%= t('.page_title') %>
     </h1>
 
-    <p class="govuk-body">
-      <%= t('.which_service') %>
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li><%= link_to t('.pa'), prior_authority_root_path %></li>
-      <% if ENV["EOL_PATH"] %>
-        <li><%= link_to t('.eol'), ENV["EOL_PATH"] %></li>
-      <% end %>
-      <li><%= link_to t('.nsm'), nsm_root_path %></li>
-    </ul>
+    <p class="govuk-body"><%= link_to t('.pa'), prior_authority_root_path %></p>
+    <% if ENV["EOL_PATH"] %>
+      <p class="govuk-body"><%= link_to t('.eol'), ENV["EOL_PATH"] %></p>
+    <% end %>
+    <p class="govuk-body"><%= link_to t('.nsm'), nsm_root_path %></p>
   </div>
 </div>
