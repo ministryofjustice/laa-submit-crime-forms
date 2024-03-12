@@ -26,7 +26,7 @@ module PriorAuthority
       validates :related_to_post_mortem, inclusion: { in: [true, false], allow_nil: false }, if: :post_mortem_relevant
 
       def adjusted_cost
-        record.base_cost_allowed
+        record.base_cost_allowed || total_cost
       end
 
       include QuoteCostValidations

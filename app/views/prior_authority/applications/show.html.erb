@@ -1,6 +1,10 @@
 <% title t('.page_title') %>
 <% content_for(:back_link) do %>
-  <%= link_to t('helpers.back_link'), prior_authority_applications_path(anchor: 'submitted'), class: 'govuk-back-link hide-on-print' %>
+  <%= link_to t('helpers.back_link'),
+              prior_authority_applications_path(
+                anchor: @application.status == 'submitted' ? 'submitted' : 'assessed'
+              ),
+              class: 'govuk-back-link hide-on-print' %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -20,7 +24,7 @@
                 <%= render "prior_authority/applications/state_summaries/#{@application.status}" %>
             </dd>
           </div>
-          <% if @application.assessment_comment.present? %>
+          <% if @application.status.in?(['part_grant', 'rejected']) || @application.assessment_comment.present? %>
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">
                 <%= t(".laa_response") %>
