@@ -3,7 +3,7 @@ class AdditionalCost < ApplicationRecord
 
   def total_cost
     if unit_type == 'per_hour'
-      (cost_per_hour * period/60)
+      (cost_per_hour * period / 60)
     elsif unit_type == 'per_item'
       (cost_per_item * items)
     end
