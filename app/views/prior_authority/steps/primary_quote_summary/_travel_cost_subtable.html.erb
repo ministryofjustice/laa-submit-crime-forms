@@ -21,7 +21,7 @@
       <td class="govuk-table__cell"><%= NumberTo.pounds(form.travel_cost_per_hour) %></td>
       <% if show_allowances %>
         <td class="govuk-table__cell"><%= form.formatted_total_cost %></th>
-        <td class="govuk-table__cell"><%= NumberTo.pounds(form.adjusted_cost) %></th>
+        <td class="govuk-table__cell"><%= allowed_value(form.formatted_total_cost, form.adjusted_cost, show_allowances) %></th>
       <% else %>
         <td class="govuk-table__cell"><%= form.formatted_total_cost %></td>
       <% end %>

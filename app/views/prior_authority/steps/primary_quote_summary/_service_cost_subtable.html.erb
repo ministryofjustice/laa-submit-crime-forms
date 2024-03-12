@@ -36,7 +36,7 @@
       <% end %>
       <% if show_allowances %>
         <td class="govuk-table__cell"><%= costs.formatted_total_cost %></th>
-        <td class="govuk-table__cell"><%= NumberTo.pounds(costs.adjusted_cost) %></th>
+        <td class="govuk-table__cell"><%= allowed_value(costs.formatted_total_cost, costs.adjusted_cost, show_allowances) %></th>
       <% else %>
         <td class="govuk-table__cell"><%= costs.formatted_total_cost %></td>
       <% end %>

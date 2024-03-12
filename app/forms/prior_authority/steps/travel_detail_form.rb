@@ -25,7 +25,7 @@ module PriorAuthority
       end
 
       def adjusted_cost
-        record.travel_cost_allowed || total_cost
+        record.travel_cost_allowed
       end
 
       private

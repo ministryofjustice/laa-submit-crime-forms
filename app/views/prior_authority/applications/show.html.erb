@@ -56,7 +56,8 @@
       <h2 class="govuk-heading-m"><%= section_group[:heading] %></h2>
       <% section_group[:sections].each do |section| %>
         <% if section.template %>
-          <%= render(section.template, section: section, show_actions: false, show_allowances: @application.status != 'submitted') %>
+          <% allowance_type = { 'granted' => :original, 'part_grant' => :dynamic, 'rejected' => :na }.fetch(@application.status, false) %>
+          <%= render(section.template, section: section, show_actions: false, show_allowances: allowance_type) %>
         <% else %>
           <%= govuk_summary_list(
                 card: {
