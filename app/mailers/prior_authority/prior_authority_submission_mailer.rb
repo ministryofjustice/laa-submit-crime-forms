@@ -19,7 +19,7 @@ module PriorAuthority
     private
 
     def email_recipient
-
+      Provider.find(@application.provider_id).email
     end
 
     def case_reference
