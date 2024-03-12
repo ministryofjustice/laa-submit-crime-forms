@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PullUpdates do
   let(:last_update) { 2 }
-  let(:http_puller) { instance_double(HttpPuller) }
+  let(:http_puller) { instance_double(AppStoreClient) }
   let(:arbitrary_fixed_date) { '2021-12-01T23:24:58.846345' }
   let(:http_response) do
     {
@@ -19,7 +19,7 @@ RSpec.describe PullUpdates do
   let(:application_type) { 'crm7' }
 
   before do
-    allow(HttpPuller).to receive(:new).and_return(http_puller)
+    allow(AppStoreClient).to receive(:new).and_return(http_puller)
     allow(http_puller).to receive(:get_all).and_return('applications' => [])
     allow(http_puller).to receive(:get_all).with(since: PullUpdates::EARLIEST_POLL_DATE, count: 100)
                                            .and_return(http_response)

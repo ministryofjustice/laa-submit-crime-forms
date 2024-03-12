@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_07_165611) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_12_102142) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_165611) do
     t.uuid "prior_authority_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "total_cost_allowed", precision: 10, scale: 2
     t.index ["prior_authority_application_id"], name: "index_additional_costs_on_prior_authority_application_id"
   end
 
@@ -191,17 +192,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_165611) do
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "next_hearing"
+    t.text "reason_why"
+    t.date "rep_order_date"
+    t.boolean "client_detained"
+    t.boolean "subject_to_poca"
     t.date "next_hearing_date"
     t.string "plea"
     t.string "court_type"
     t.boolean "youth_court"
     t.boolean "psychiatric_liaison"
     t.string "psychiatric_liaison_reason_not"
-    t.date "rep_order_date"
-    t.boolean "client_detained"
-    t.boolean "subject_to_poca"
-    t.text "reason_why"
+    t.boolean "next_hearing"
     t.boolean "additional_costs_still_to_add"
     t.boolean "prior_authority_granted"
     t.text "no_alternative_quote_reason"
@@ -260,6 +261,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_165611) do
     t.text "travel_cost_reason"
     t.text "additional_cost_list"
     t.decimal "additional_cost_total", precision: 10, scale: 2
+    t.decimal "base_cost_allowed", precision: 10, scale: 2
+    t.decimal "travel_cost_allowed", precision: 10, scale: 2
     t.index ["prior_authority_application_id"], name: "index_quotes_on_prior_authority_application_id"
   end
 

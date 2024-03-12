@@ -6,7 +6,7 @@ class PullUpdates < ApplicationJob
     since = last_update
 
     loop do
-      json_data = HttpPuller.new.get_all(since:, count:)
+      json_data = AppStoreClient.new.get_all(since:, count:)
       break if json_data['applications'].none?
 
       last_updated = process(json_data['applications'])
@@ -58,5 +58,6 @@ class PullUpdates < ApplicationJob
     application = PriorAuthorityApplication.find_by(id: application_id)
 
     application&.update!(params)
+    PriorAuthority::CostSyncer.call(application)
   end
 end
