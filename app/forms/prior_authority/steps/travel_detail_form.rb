@@ -24,6 +24,10 @@ module PriorAuthority
         (travel_cost_per_hour * (travel_time.hours + (travel_time.minutes / 60.0))).round(2)
       end
 
+      def adjusted_cost
+        record.travel_cost_allowed
+      end
+
       private
 
       def persist!

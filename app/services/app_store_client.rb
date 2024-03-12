@@ -18,28 +18,29 @@ class AppStoreClient
   end
 
   def get_all(since:, count: 20)
-    process_get("#{host}/v1/applications?since=#{since.to_i}&count=#{count}")
+    process_get("/v1/applications?since=#{since.to_i}&count=#{count}")
   end
 
   def get(submission_id)
-    process_get("#{host}/v1/application/#{submission_id}")
+    process_get("/v1/application/#{submission_id}")
   end
 
   private
 
-  def process_get(url)
+  def process_get(path)
+    url = "#{host}#{path}"
     response = self.class.get(url, **options)
 
     case response.code
     when 200
       JSON.parse(response.body)
     else
-      raise "Unexpected response from AppStore - status #{response.code} for '#{url}'"
+      raise "Unexpected response from AppStore - status #{response.code} for '#{path}'"
     end
   end
 
-  def options
-    options = {}
+  def options(message = nil)
+    options = message ? { body: message.to_json } : {}
 
     return options unless AppStoreTokenProvider.instance.authentication_configured?
 

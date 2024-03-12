@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_12_102142) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_12_123638) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,6 +54,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_12_102142) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "total_cost_allowed", precision: 10, scale: 2
+    t.string "adjustment_comment"
     t.index ["prior_authority_application_id"], name: "index_additional_costs_on_prior_authority_application_id"
   end
 
@@ -192,17 +193,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_12_102142) do
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "reason_why"
-    t.date "rep_order_date"
-    t.boolean "client_detained"
-    t.boolean "subject_to_poca"
+    t.boolean "next_hearing"
     t.date "next_hearing_date"
     t.string "plea"
     t.string "court_type"
     t.boolean "youth_court"
     t.boolean "psychiatric_liaison"
     t.string "psychiatric_liaison_reason_not"
-    t.boolean "next_hearing"
+    t.date "rep_order_date"
+    t.boolean "client_detained"
+    t.boolean "subject_to_poca"
+    t.text "reason_why"
     t.boolean "additional_costs_still_to_add"
     t.boolean "prior_authority_granted"
     t.text "no_alternative_quote_reason"
@@ -216,6 +217,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_12_102142) do
     t.string "prison_id"
     t.string "custom_prison_name"
     t.datetime "app_store_updated_at"
+    t.string "assessment_comment"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
@@ -263,6 +265,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_12_102142) do
     t.decimal "additional_cost_total", precision: 10, scale: 2
     t.decimal "base_cost_allowed", precision: 10, scale: 2
     t.decimal "travel_cost_allowed", precision: 10, scale: 2
+    t.string "base_adjustment_comment"
+    t.string "travel_adjustment_comment"
     t.index ["prior_authority_application_id"], name: "index_quotes_on_prior_authority_application_id"
   end
 

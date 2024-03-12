@@ -16,15 +16,34 @@
             <dt class="govuk-summary-list__key">
               <%= t(".status") %>
             </dt>
-            <%# When this view is used for assessed applications, customise this section based on state-specific designs %>
             <dd class="govuk-summary-list__value">
-                <p><strong class="govuk-tag govuk-tag--green"><%= t(".statuses.submitted") %></strong></p>
-                <p><%= @application.updated_at.to_fs(:stamp) %></p>
-                <p><%= t(".awaiting_review") %></p>
-                <br>
-                <p><%= t('.amount_requested', amount: @primary_quote_summary.formatted_total_cost) %></p>
+                <%= render "prior_authority/applications/state_summaries/#{@application.status}" %>
             </dd>
           </div>
+          <% if @application.assessment_comment.present? %>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                <%= t(".laa_response") %>
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <p><%= @application.assessment_comment %></p>
+                <ul class="govuk-list govuk-list--bullet">
+                  <% if @application.primary_quote.base_adjustment_comment.present? %>
+                    <li><%= link_to t('.review_service_cost_adjustments'), '#service-cost' %></li>
+                  <% end %>
+                  <% if @application.primary_quote.travel_adjustment_comment.present? %>
+                    <li><%= link_to t('.review_travel_cost_adjustments'), '#travel-cost' %></li>
+                  <% end %>
+                  <% if @application.additional_costs.any? { _1.adjustment_comment.present? } %>
+                    <li><%= link_to t('.review_additional_cost_adjustments'), '#additional-cost-0' %></li>
+                  <% end %>
+                </ul>
+                <% if @application.status != 'granted' %>
+                  <%= govuk_button_link_to(t('.appeal'), '#') %>
+                <% end %>
+              </dd>
+            </div>
+          <% end %>
         </dl>
       </div>
     </div>
@@ -33,7 +52,7 @@
       <h2 class="govuk-heading-m"><%= section_group[:heading] %></h2>
       <% section_group[:sections].each do |section| %>
         <% if section.template %>
-          <%= render(section.template, section: section, show_actions: false) %>
+          <%= render(section.template, section: section, show_actions: false, show_allowances: @application.status != 'submitted') %>
         <% else %>
           <%= govuk_summary_list(
                 card: {

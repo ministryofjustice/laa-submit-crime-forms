@@ -90,6 +90,10 @@ RSpec.describe PullUpdates do
   context 'when updating a prior authority application' do
     let(:application_type) { 'crm4' }
 
+    before do
+      allow(PriorAuthority::AssessmentSyncer).to receive(:call)
+    end
+
     context 'when ID is not recognised' do
       let(:id) { 'unknown' }
 
@@ -102,12 +106,17 @@ RSpec.describe PullUpdates do
       let(:id) { application.id }
       let(:application) { create(:prior_authority_application) }
 
-      it 'processed the update' do
+      it 'processes the update' do
         subject.perform
         expect(application.reload).to have_attributes(
           status: 'granted',
           app_store_updated_at: Time.zone.parse(arbitrary_fixed_date)
         )
+      end
+
+      it 'triggers a sync' do
+        subject.perform
+        expect(PriorAuthority::AssessmentSyncer).to have_received(:call).with(application)
       end
     end
   end

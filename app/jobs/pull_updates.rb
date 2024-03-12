@@ -56,8 +56,9 @@ class PullUpdates < ApplicationJob
 
   def update_prior_authority_application(application_id, params)
     application = PriorAuthorityApplication.find_by(id: application_id)
+    return unless application
 
-    application&.update!(params)
-    PriorAuthority::CostSyncer.call(application)
+    application.update!(params)
+    PriorAuthority::AssessmentSyncer.call(application)
   end
 end

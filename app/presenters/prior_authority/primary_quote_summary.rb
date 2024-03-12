@@ -14,6 +14,13 @@ module PriorAuthority
       )
     end
 
+    def formatted_total_allowed_cost
+      NumberTo.pounds(
+        @application.primary_quote.base_cost_allowed + @application.primary_quote.travel_cost_allowed +
+        @application.additional_costs.sum(&:total_cost_allowed)
+      )
+    end
+
     def service_cost_form
       @service_cost_form ||= Steps::ServiceCostForm.build(
         application.primary_quote,

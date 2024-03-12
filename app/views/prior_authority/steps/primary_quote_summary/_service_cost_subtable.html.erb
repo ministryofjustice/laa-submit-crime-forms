@@ -1,3 +1,4 @@
+<% show_allowances ||= false %>
 <table class="govuk-table">
   <caption class="govuk-table__caption govuk-visually-hidden">
     <%= t('.service_costs') %>
@@ -16,7 +17,12 @@
         <th scope="col" class="govuk-table__header"><%= t('.period') %></th>
         <th scope="col" class="govuk-table__header"><%= t('.cost_per_hour') %></th>
       <% end %>
-      <th scope="col" class="govuk-table__header"><%= t('.total') %></th>
+      <% if show_allowances %>
+        <th scope="col" class="govuk-table__header"><%= t('.requested') %></th>
+        <th scope="col" class="govuk-table__header"><%= t('.laa_allowed') %></th>
+      <% else %>
+        <th scope="col" class="govuk-table__header"><%= t('.total') %></th>
+      <% end %>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -28,7 +34,13 @@
           <td class="govuk-table__cell"><%= format_period(costs.period) %></td>
           <td class="govuk-table__cell"><%= NumberTo.pounds(costs.cost_per_hour) %></td>
       <% end %>
-      <td class="govuk-table__cell"><%= costs.formatted_total_cost %></td>
+      <% if show_allowances %>
+        <td class="govuk-table__cell"><%= costs.formatted_total_cost %></th>
+        <td class="govuk-table__cell"><%= NumberTo.pounds(costs.adjusted_cost) %></th>
+      <% else %>
+        <td class="govuk-table__cell"><%= costs.formatted_total_cost %></td>
+      <% end %>
+
     </tr>
   </tbody>
 </table>

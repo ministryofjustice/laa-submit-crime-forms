@@ -13,7 +13,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
         .and_return(response)
       allow(ENV).to receive(:fetch).and_call_original
       allow(ENV).to receive(:fetch).with('APP_STORE_USERNAME', nil)
-                                  .and_return(username)
+                                   .and_return(username)
     end
 
     context 'when APP_STORE_URL is present' do
@@ -99,13 +99,13 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
         .and_return(response)
       allow(ENV).to receive(:fetch).and_call_original
       allow(ENV).to receive(:fetch).with('APP_STORE_USERNAME', nil)
-                                  .and_return(username)
+                                   .and_return(username)
     end
 
     context 'when APP_STORE_URL is present' do
       before do
         allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000')
-                                    .and_return('http://some.url')
+                                     .and_return('http://some.url')
       end
 
       it 'posts the message to the specified URL' do
@@ -148,7 +148,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
 
       before do
         allow(ENV).to receive(:fetch).with('APP_STORE_PASSWORD')
-                                    .and_return('kimbob')
+                                     .and_return('kimbob')
       end
 
       it 'add basic auth creditals' do

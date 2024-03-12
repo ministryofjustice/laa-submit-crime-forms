@@ -20,7 +20,9 @@
       <% model.each do |application| %>
         <tr class="govuk-table__row app-task-list__item">
           <td class="govuk-table__cell">
-            <%= application.ufn %>
+            <%= link_to prior_authority_application_path(application), data: { turbo: false } do %>
+              <%= application.ufn %>
+            <% end %>
           </td>
           <td class="govuk-table__cell">
             <%= application.defendant&.full_name %>
