@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ClaimSubmissionMailer, type: :mailer do
+RSpec.describe Nsm::ClaimSubmissionMailer, type: :mailer do
   let(:feedback_template) { '0403454c-47a5-4540-804c-cb614e77dc22' }
   let(:claim) { build(:claim, :case_type_magistrates, :main_defendant, :letters_calls) }
 
