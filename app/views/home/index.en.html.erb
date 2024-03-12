@@ -1,15 +1,32 @@
 <% title  t('.page_title') %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
+  <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
       <%= t('.page_title') %>
     </h1>
 
-    <p class="govuk-body"><%= link_to t('.pa'), prior_authority_root_path %></p>
-    <% if ENV["EOL_PATH"] %>
-      <p class="govuk-body"><%= link_to t('.eol'), ENV["EOL_PATH"] %></p>
-    <% end %>
-    <p class="govuk-body"><%= link_to t('.nsm'), nsm_root_path %></p>
+    <p>
+      <%= t('.introduction_html', eforms_link: link_to(t('.eforms'), "https://portal.legalservices.gov.uk/")) %>
+    </p>
+    <h2 class="govuk-heading-s">
+      <%= link_to t('.pa_header'), prior_authority_applications_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
+    </h2>
+    <p>
+      <%= t('.pa_text') %>
+    </p>
+    <h2 class="govuk-heading-s">
+      <%= link_to t('.eol_header'), ENV['EOL_URL'], class: "govuk-link--no-visited-state", data: { turbo: false } %>
+    </h2>
+    <p>
+      <%= t('.eol_text') %>
+    </p>
+    <h2 class="govuk-heading-s">
+      <%= link_to t('.nsm_header'), nsm_start_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
+    </h2>
+    <p>
+      <%= t('.nsm_text') %>
+    </p>
+
   </div>
 </div>

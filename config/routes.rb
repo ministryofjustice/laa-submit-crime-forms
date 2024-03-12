@@ -53,7 +53,6 @@ Rails.application.routes.draw do
   end
 
   namespace :nsm, path: 'non-standard-magistrates' do
-    root "home#index"
     get "start", to: "home#start"
     resources :claims, except: [:edit, :show, :new, :update], as: :applications do
       member do
@@ -165,8 +164,6 @@ Rails.application.routes.draw do
         get :confirm_delete, path: 'confirm-delete'
       end
     end
-
-    root to: 'home#index'
   end
 
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:

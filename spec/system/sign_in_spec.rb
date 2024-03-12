@@ -40,7 +40,6 @@ RSpec.describe 'Sign in user journey' do
 
     it 'does not prompt for office code logic' do
       click_on "Claim non-standard magistrates' court payments, previously CRM7"
-      click_on 'Start now'
       expect(page).to have_current_path(nsm_applications_path)
     end
   end
@@ -60,7 +59,6 @@ RSpec.describe 'Sign in user journey' do
 
     it 'does not prompt for office code logic' do
       click_on "Claim non-standard magistrates' court payments, previously CRM7"
-      click_on 'Start now'
       expect(page).to have_current_path(edit_nsm_steps_office_select_path)
     end
   end

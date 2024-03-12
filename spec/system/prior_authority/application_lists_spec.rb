@@ -55,7 +55,9 @@ RSpec.describe 'Prior authority application lists' do
     click_on '120423/818'
     expect(page).to have_content 'Application details'
     expect(page).to have_content 'LAA-AAAAA'
-    expect(page).to have_no_content 'Change'
+    within 'main.govuk-main-wrapper' do
+      expect(page).to have_no_content 'Change'
+    end
     expect(page).to have_content 'Email the LAA case team'
   end
 end
