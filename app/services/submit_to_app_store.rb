@@ -35,6 +35,6 @@ class SubmitToAppStore < ApplicationJob
   end
 
   def notify(submission)
-    ClaimSubmissionMailer.notify(submission).deliver_later! if submission.is_a?(Claim)
+    Nsm::ClaimSubmissionMailer.notify(submission).deliver_later! if submission.is_a?(Claim)
   end
 end

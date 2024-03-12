@@ -9,7 +9,7 @@ RSpec.describe SubmitToAppStore do
   before do
     allow(described_class::PayloadBuilder).to receive(:call)
       .and_return(payload)
-    allow(ClaimSubmissionMailer).to receive_message_chain(:notify, :deliver_later!)
+    allow(Nsm::ClaimSubmissionMailer).to receive_message_chain(:notify, :deliver_later!)
   end
 
   describe '#process' do
@@ -124,7 +124,7 @@ RSpec.describe SubmitToAppStore do
       let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
 
       it 'triggers an email' do
-        expect(ClaimSubmissionMailer).to receive(:notify).with(submission).and_return(mailer)
+        expect(Nsm::ClaimSubmissionMailer).to receive(:notify).with(submission).and_return(mailer)
         expect(mailer).to receive(:deliver_later!)
 
         subject.notify(submission)
@@ -136,7 +136,7 @@ RSpec.describe SubmitToAppStore do
       let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
 
       it 'triggers no email' do
-        expect(ClaimSubmissionMailer).not_to receive(:notify)
+        expect(Nsm::ClaimSubmissionMailer).not_to receive(:notify)
 
         subject.notify(submission)
       end
