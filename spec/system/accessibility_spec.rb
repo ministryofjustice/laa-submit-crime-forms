@@ -30,7 +30,7 @@ RSpec.describe 'Accessibility', :accessibility do
       nsm_applications
       edit_nsm_steps_office_confirm
       edit_nsm_steps_office_select
-      prior_authority_root
+      prior_authority_applications
     ].each do |path|
       describe "#{path} screen" do
         before { visit send(:"#{path}_path") }
