@@ -49,4 +49,12 @@ class PriorAuthorityApplication < ApplicationRecord
   def psychiatric_liaison_applicable?
     court_type == PriorAuthority::CourtTypeOptions::CENTRAL_CRIMINAL.to_s
   end
+
+  def total_cost
+    primary_quote.total_cost + additional_costs.sum(&:total_cost) + alternative_quotes.sum(&:total_cost)
+  end
+
+  def total_cost_gbp
+    NumberTo.pounds(total_cost)
+  end
 end

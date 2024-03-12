@@ -35,7 +35,7 @@ module PriorAuthority
     end
 
     def application_total
-
+      @application.total_cost_gbp
     end
 
     def submission_date
