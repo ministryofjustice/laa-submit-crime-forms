@@ -26,7 +26,7 @@ class SubmitToAppStore
         defendant:,
         quotes:,
         additional_costs:,
-      ).merge(convenience_attributes)
+      )
     end
 
     def direct_attributes
@@ -59,13 +59,6 @@ class SubmitToAppStore
 
     def additional_costs
       PriorAuthority::AdditionalCostPayloadBuilder.new(application).payload
-    end
-
-    def convenience_attributes
-      {
-        firm_name: application.firm_office.name,
-        client_name: application.defendant.full_name
-      }
     end
 
     DIRECT_ATTRIBUTES = %i[
