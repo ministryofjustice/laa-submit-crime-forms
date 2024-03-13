@@ -3,6 +3,7 @@ module Providers
   class Gatekeeper
     ANY_SERVICE = :any
     PAA = :crm4
+    EOL = :crm5
     NSM = :crm7
 
     attr_reader :auth_info
