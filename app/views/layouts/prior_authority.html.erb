@@ -14,7 +14,7 @@
 <% end %>
 
 <% content_for(:service_name) do %>
-  <%= link_to t('prior_authority.service_name'), provider_signed_in? ? prior_authority_applications_path : root_path,
+  <%= link_to t('prior_authority.service_name'), prior_authority_applications_path,
               class: 'govuk-header__link govuk-header__service-name', id: 'header-service-name' %>
 <% end %>
 

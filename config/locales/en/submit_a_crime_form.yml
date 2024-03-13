@@ -1,0 +1,15 @@
+en:
+  submit_a_crime_form:
+    service_name: Submit a crime form
+  home:
+    index:
+      page_title: Submit a crime form
+      pa_header: Apply for prior authority to incur disbursements, previously CRM4
+      pa_text: Complete applications for prior authority to incur disbursements in criminal cases in relation to magistrates, crown and prison law work.
+      eol_header: Apply for extension of upper limits, previously CRM5
+      eol_text: Complete applications for solicitors to increase funding limits in investigations, appeals and parole matters for ongoing criminal cases.
+      nsm_header: Claim non-standard magistrates' court payments, previously CRM7
+      nsm_text: Submit a claim for a non-standard magistrates fee or for a breach of injunction.
+      introduction_html: You can only use these services if you have been invited to take part in the private pilot. If you do not have access continue using %{eforms_link}.
+      eforms: eForms
+

@@ -12,7 +12,7 @@
     </ul>
     <div class="govuk-button-group">
       <%= govuk_button_to(t('.yes_delete'), prior_authority_application_path(@model), warning: true, method: :delete) %>
-      <%= govuk_button_to(t('.no_delete'), prior_authority_root_path(anchor: 'drafts'), method: :get) %>
+      <%= govuk_button_to(t('.no_delete'), prior_authority_applications_path(anchor: 'drafts'), method: :get) %>
     </div>
   </div>
 </div>

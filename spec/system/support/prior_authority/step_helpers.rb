@@ -79,8 +79,7 @@ module PriorAuthority
 
     def fill_in_prison_law_and_authority_value(prison_law)
       visit provider_saml_omniauth_callback_path
-      visit prior_authority_root_path
-
+      visit prior_authority_applications_path
       click_on 'Make a new application'
       choose prison_law
       click_on 'Save and continue'

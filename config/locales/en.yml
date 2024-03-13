@@ -29,6 +29,7 @@ en:
       your_applications: Your applications
       sign_in: Sign in
       sign_out: Sign out
+      switch_service: Change service
     phase_banner:
       phase: Beta
       phase_description_html: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us to improve it.
