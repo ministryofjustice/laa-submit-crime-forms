@@ -4,9 +4,11 @@ class PriorAuthorityApplication < ApplicationRecord
   belongs_to :solicitor, optional: true
   has_one :defendant, dependent: :destroy, as: :defendable
   has_many :quotes, dependent: :destroy
-  has_one :primary_quote, lambda {
-                            where(primary: true)
-                          }, class_name: 'Quote', dependent: :destroy, inverse_of: :prior_authority_application
+  has_one :primary_quote,
+           -> { primary },
+           class_name: 'Quote',
+           dependent: :destroy,
+           inverse_of: :prior_authority_application
   has_many :alternative_quotes,
            -> { alternative },
            class_name: 'Quote',
@@ -51,7 +53,7 @@ class PriorAuthorityApplication < ApplicationRecord
   end
 
   def total_cost
-    primary_quote.total_cost + additional_costs.sum(&:total_cost) + alternative_quotes.sum(&:total_cost)
+    primary_quote.total_cost + additional_costs&.sum(&:total_cost) + alternative_quotes.sum(&:total_cost)
   end
 
   def total_cost_gbp

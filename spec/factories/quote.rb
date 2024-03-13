@@ -30,4 +30,9 @@ FactoryBot.define do
   trait :no_document do
     document { nil }
   end
+
+  trait :with_additional_cost do
+    additional_cost_total { 20 }
+    additional_cost_list { 'Some things' }
+  end
 end

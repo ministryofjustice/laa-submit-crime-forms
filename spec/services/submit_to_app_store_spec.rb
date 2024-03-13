@@ -10,6 +10,7 @@ RSpec.describe SubmitToAppStore do
     allow(described_class::PayloadBuilder).to receive(:call)
       .and_return(payload)
     allow(Nsm::SubmissionMailer).to receive_message_chain(:notify, :deliver_later!)
+    allow(PriorAuthority::SubmissionMailer).to receive_message_chain(:notify, :deliver_later!)
   end
 
   describe '#process' do
