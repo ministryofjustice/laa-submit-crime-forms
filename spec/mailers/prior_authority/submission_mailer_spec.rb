@@ -4,7 +4,10 @@ require 'rails_helper'
 
 RSpec.describe PriorAuthority::SubmissionMailer, type: :mailer do
   let(:feedback_template) { 'd07d03fd-65d0-45e4-8d49-d4ee41efad35' }
-  let(:application) { create(:prior_authority_application, :with_defendant, :with_created_primary_quote, :with_created_alternative_quote, :with_ufn) }
+  let(:application) do
+    create(:prior_authority_application, :with_defendant, :with_created_primary_quote, :with_created_alternative_quote,
+           :with_ufn)
+  end
 
   describe '#notify' do
     subject(:mail) { described_class.notify(application) }

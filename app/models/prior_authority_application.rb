@@ -5,10 +5,10 @@ class PriorAuthorityApplication < ApplicationRecord
   has_one :defendant, dependent: :destroy, as: :defendable
   has_many :quotes, dependent: :destroy
   has_one :primary_quote,
-           -> { primary },
-           class_name: 'Quote',
-           dependent: :destroy,
-           inverse_of: :prior_authority_application
+          -> { primary },
+          class_name: 'Quote',
+          dependent: :destroy,
+          inverse_of: :prior_authority_application
   has_many :alternative_quotes,
            -> { alternative },
            class_name: 'Quote',
