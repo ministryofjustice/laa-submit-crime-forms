@@ -123,7 +123,7 @@ RSpec.describe SubmitToAppStore do
       let(:submission) { build(:claim) }
       let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
 
-      it 'triggers an email' do
+      it 'triggers an email for nsm' do
         expect(Nsm::SubmissionMailer).to receive(:notify).with(submission).and_return(mailer)
         expect(mailer).to receive(:deliver_later!)
 
@@ -135,8 +135,9 @@ RSpec.describe SubmitToAppStore do
       let(:submission) { build(:prior_authority_application) }
       let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
 
-      it 'triggers no email' do
-        expect(Nsm::SubmissionMailer).not_to receive(:notify)
+      it 'triggers an email for prior authority' do
+        expect(PriorAuthority::SubmissionMailer).to receive(:notify).with(submission).and_return(mailer)
+        expect(mailer).to receive(:deliver_later!)
 
         subject.notify(submission)
       end

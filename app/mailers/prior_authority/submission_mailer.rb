@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PriorAuthority
-  class PriorAuthoritySubmissionMailer < GovukNotifyRails::Mailer
+  class SubmissionMailer < GovukNotifyRails::Mailer
     def notify(application)
       @application = application
       set_template('d07d03fd-65d0-45e4-8d49-d4ee41efad35')

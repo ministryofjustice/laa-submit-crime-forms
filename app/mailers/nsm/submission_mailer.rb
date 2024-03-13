@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Nsm
-  class ClaimSubmissionMailer < GovukNotifyRails::Mailer
+  class SubmissionMailer < GovukNotifyRails::Mailer
     def notify(claim)
       @claim = claim
       set_template('0403454c-47a5-4540-804c-cb614e77dc22')
