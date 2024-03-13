@@ -9,24 +9,29 @@
     <p>
       <%= t('.introduction_html', eforms_link: link_to(t('.eforms'), "https://portal.legalservices.gov.uk/")) %>
     </p>
-    <h2 class="govuk-heading-s">
-      <%= link_to t('.pa_header'), prior_authority_applications_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
-    </h2>
-    <p>
-      <%= t('.pa_text') %>
-    </p>
-    <h2 class="govuk-heading-s">
-      <%= link_to t('.eol_header'), ENV['EOL_URL'], class: "govuk-link--no-visited-state", data: { turbo: false } %>
-    </h2>
-    <p>
-      <%= t('.eol_text') %>
-    </p>
-    <h2 class="govuk-heading-s">
-      <%= link_to t('.nsm_header'), nsm_start_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
-    </h2>
-    <p>
-      <%= t('.nsm_text') %>
-    </p>
-
+    <% if @gatekeeper.provider_enrolled?(service: Providers::Gatekeeper::PAA) %>
+      <h2 class="govuk-heading-s">
+        <%= link_to t('.pa_header'), prior_authority_applications_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
+      </h2>
+      <p>
+        <%= t('.pa_text') %>
+      </p>
+    <% end %>
+    <% if @gatekeeper.provider_enrolled?(service: Providers::Gatekeeper::EOL) %>
+      <h2 class="govuk-heading-s">
+        <%= link_to t('.eol_header'), ENV['EOL_URL'], class: "govuk-link--no-visited-state", data: { turbo: false } %>
+      </h2>
+      <p>
+        <%= t('.eol_text') %>
+      </p>
+    <% end %>
+    <% if @gatekeeper.provider_enrolled?(service: Providers::Gatekeeper::NSM) %>
+      <h2 class="govuk-heading-s">
+        <%= link_to t('.nsm_header'), nsm_start_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
+      </h2>
+      <p>
+        <%= t('.nsm_text') %>
+      </p>
+    <% end %>
   </div>
 </div>

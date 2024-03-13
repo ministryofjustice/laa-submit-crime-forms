@@ -47,7 +47,22 @@ RSpec.describe 'System Access', type: :system do
       expect(page).to have_current_path(root_path)
     end
 
-    context 'selectes an alternative office code that does not have access' do
+    it 'can view NSM link on home page' do
+      visit root_path
+      expect(page).to have_content "Claim non-standard magistrates' court payments"
+    end
+
+    it 'cannot view PAA link on home page' do
+      visit root_path
+      expect(page).to have_no_content 'Apply for prior authority to incur disbursements'
+    end
+
+    it 'cannot view EOL link on home page' do
+      visit root_path
+      expect(page).to have_no_content 'Apply for extension of upper limits'
+    end
+
+    context 'selects an alternative office code that does not have access' do
       it 'can access NSM' do
         visit nsm_applications_path
         expect(page).to have_content('Your claims')
@@ -75,6 +90,21 @@ RSpec.describe 'System Access', type: :system do
       expect(page).to have_content('Your applications')
     end
 
+    it 'cannot view NSM link on home page' do
+      visit root_path
+      expect(page).to have_no_content "Claim non-standard magistrates' court payments"
+    end
+
+    it 'can view PAA link on home page' do
+      visit root_path
+      expect(page).to have_content 'Apply for prior authority to incur disbursements'
+    end
+
+    it 'cannot view EOL link on home page' do
+      visit root_path
+      expect(page).to have_no_content 'Apply for extension of upper limits'
+    end
+
     context 'selectes an alternative office code that does not have access' do
       it 'can not access NSM' do
         visit nsm_applications_path
@@ -89,8 +119,8 @@ RSpec.describe 'System Access', type: :system do
     end
   end
 
-  context 'user with office codes with access to neither NSM or PAA' do
-    let(:provider) { create(:provider, office_codes: ['CCCCCC']) }
+  context 'user with office codes with access to neither NSM, PAA nor EOL' do
+    let(:provider) { create(:provider, office_codes: ['DDDDD']) }
 
     it 'can not access NSM' do
       visit nsm_applications_path
@@ -116,6 +146,36 @@ RSpec.describe 'System Access', type: :system do
         expect(page).to have_no_content('Your Applications')
         expect(page).to have_current_path(new_provider_session_path)
       end
+    end
+  end
+
+  context 'user with office codes with access to EOL only' do
+    let(:provider) { create(:provider, :eol_access) }
+
+    it 'cannot access NSM' do
+      visit nsm_applications_path
+      expect(page).to have_no_content('Your claims')
+      expect(page).to have_current_path(root_path)
+    end
+
+    it 'cannot access PAA' do
+      visit prior_authority_applications_path
+      expect(page).to have_current_path(root_path)
+    end
+
+    it 'cannot view NSM link on home page' do
+      visit root_path
+      expect(page).to have_no_content "Claim non-standard magistrates' court payments"
+    end
+
+    it 'cannot view PAA link on home page' do
+      visit root_path
+      expect(page).to have_no_content 'Apply for prior authority to incur disbursements'
+    end
+
+    it 'can view EOL link on home page' do
+      visit root_path
+      expect(page).to have_content 'Apply for extension of upper limits'
     end
   end
 end

@@ -6,28 +6,29 @@
 #
 localhost:
   office_codes:
-    1A123B: ['crm7', 'crm4']
-    1K022G: ['crm7', 'crm4']
-    AAAAAA: ['crm7', 'crm4']
-    0A719G: ['crm7', 'crm4']
+    1A123B: ['crm7', 'crm4', 'crm5']
+    1K022G: ['crm7', 'crm4', 'crm5']
+    AAAAAA: ['crm7', 'crm4', 'crm5']
+    0A719G: ['crm7', 'crm4', 'crm5']
     AAAAAA: ['crm7']
     BBBBBB: ['crm4']
+    CCCCCC: ['crm5']
 
 development:
   office_codes:
-    1A123B: ['crm7', 'crm4']
-    1K022G: ['crm7', 'crm4']
+    1A123B: ['crm7', 'crm4', 'crm5']
+    1K022G: ['crm7', 'crm4', 'crm5']
     AAAAAA: ['crm7', 'crm4']
-    0A719G: ['crm7', 'crm4']
+    0A719G: ['crm7', 'crm4', 'crm5']
 
 uat:
   office_codes:
-    1A123B: ['crm7', 'crm4']
-    1K022G: ['crm7', 'crm4']
-    AAAAAA: ['crm7', 'crm4']
-    0A719G: ['crm7', 'crm4']
-    0Z981E: ['crm7', 'crm4']
+    1A123B: ['crm7', 'crm4', 'crm5']
+    1K022G: ['crm7', 'crm4', 'crm5']
+    AAAAAA: ['crm7', 'crm4', 'crm5']
+    0A719G: ['crm7', 'crm4', 'crm5']
+    0Z981E: ['crm7', 'crm4', 'crm5']
 
 production:
   office_codes:
-    2N232W: ['crm7', 'crm4'] # dummy user/office
+    2N232W: ['crm7', 'crm4', 'crm5'] # dummy user/office
