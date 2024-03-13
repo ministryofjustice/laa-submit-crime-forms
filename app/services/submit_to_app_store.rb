@@ -36,6 +36,6 @@ class SubmitToAppStore < ApplicationJob
 
   def notify(submission)
     Nsm::SubmissionMailer.notify(submission).deliver_later! if submission.is_a?(Claim)
-    PriorAuthority::SubmissionMailer.notify(submission).deliver_later! if submission.is_a?(PriorAuthorityApplication)
+    ::PriorAuthority::SubmissionMailer.notify(submission).deliver_later! if submission.is_a?(PriorAuthorityApplication)
   end
 end
