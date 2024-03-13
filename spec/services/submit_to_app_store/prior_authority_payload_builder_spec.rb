@@ -28,8 +28,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         office_code: '1A123B',
         service_type: 'pathologist_report',
         custom_service_name: nil,
-        firm_name: 'Firm A',
-        client_name: 'bob jim',
         prior_authority_granted: false,
         no_alternative_quote_reason: 'a reason',
         confirm_excluding_vat: true,
