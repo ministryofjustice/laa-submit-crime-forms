@@ -6,10 +6,10 @@ module PriorAuthority
       @application = application
       set_template('d07d03fd-65d0-45e4-8d49-d4ee41efad35')
       set_personalisation(
-        LAA_case_reference: case_reference,
-        UFN: unique_file_number,
+        laa_case_reference: case_reference,
+        ufn: unique_file_number,
         defendant_name: defendant_name,
-        claim_total: application_total,
+        application_total: application_total,
         date: submission_date,
         feedback_url: feedback_url
       )

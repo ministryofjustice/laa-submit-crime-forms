@@ -30,10 +30,10 @@ RSpec.describe PriorAuthority::SubmissionMailer, type: :mailer do
       expect(
         mail.govuk_notify_personalisation
       ).to include(
-        LAA_case_reference: 'LAA-n4AohV',
-        UFN: '120423/001',
+        laa_case_reference: 'LAA-n4AohV',
+        ufn: '120423/001',
         defendant_name: 'bob jim',
-        claim_total: '£330.00',
+        application_total: '£330.00',
         date: DateTime.now.to_fs(:stamp),
         feedback_url: 'tbc'
       )
