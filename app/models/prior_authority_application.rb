@@ -53,10 +53,10 @@ class PriorAuthorityApplication < ApplicationRecord
   end
 
   def total_cost
-    [primary_quote&.total_cost, additional_costs.sum(&:total_cost), alternative_quotes.sum(&:total_cost)].compact.sum
+    primary_quote&.total_cost
   end
 
   def total_cost_gbp
-    NumberTo.pounds(total_cost)
+    total_cost ? NumberTo.pounds(total_cost) : nil
   end
 end

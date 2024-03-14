@@ -12,20 +12,15 @@ class Quote < ApplicationRecord
   scope :primary, -> { where(primary: true) }
 
   def total_cost
-    if cost_per_item
-      (cost_per_item * items) + travel_cost + additional_cost_value
-    elsif cost_per_hour
-      (cost_per_hour * period / 60) + travel_cost + additional_cost_value
-    else
-      travel_cost + additional_cost_value
-    end
+    base_cost = ::PriorAuthority::Steps::ServiceCostForm.build(self, application: prior_authority_application).total_cost
+    base_cost + travel_cost + additional_cost_value
   end
 
   def travel_cost
-    travel_cost_per_hour * travel_time / 60
+    ::PriorAuthority::Steps::TravelDetailForm.build(self, application: prior_authority_application).total_cost
   end
 
   def additional_cost_value
-    additional_cost_total || 0
+    primary ? AdditionalCost.where(prior_authority_application_id:).sum{ |cost| cost.total_cost } : additional_cost_total
   end
 end

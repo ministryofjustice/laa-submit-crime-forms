@@ -33,7 +33,7 @@ RSpec.describe PriorAuthority::SubmissionMailer, type: :mailer do
         laa_case_reference: 'LAA-n4AohV',
         ufn: '120423/001',
         defendant_name: 'bob jim',
-        application_total: '£330.00',
+        application_total: '£155.00',
         date: DateTime.now.to_fs(:stamp),
         feedback_url: 'tbc'
       )

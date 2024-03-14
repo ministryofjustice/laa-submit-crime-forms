@@ -19,7 +19,7 @@ module PriorAuthority
     private
 
     def email_recipient
-      @application.submitter.email
+      @application.provider.email
     end
 
     def case_reference

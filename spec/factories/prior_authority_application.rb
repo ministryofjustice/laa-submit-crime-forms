@@ -217,5 +217,12 @@ FactoryBot.define do
         create(:quote, :primary, prior_authority_application_id: paa.id)
       end
     end
+
+    trait :with_additional_costs do
+      after(:create) do |paa|
+        create(:additional_cost, :per_item, prior_authority_application_id: paa.id)
+        create(:additional_cost, :per_hour, prior_authority_application_id: paa.id)
+      end
+    end
   end
 end
