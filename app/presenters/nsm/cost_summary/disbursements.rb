@@ -45,7 +45,6 @@ module Nsm
 
       private
 
-      # rubocop:disable Metrics/AbcSize
       def translated_text(form)
         if form.record.disbursement_type == DisbursementTypes::OTHER.to_s
           known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(form.record.other_type))
@@ -58,7 +57,6 @@ module Nsm
           end
         end
       end
-      # rubocop:enable Metrics/AbcSize
     end
   end
 end
