@@ -204,6 +204,13 @@ FactoryBot.define do
       end
     end
 
+    trait :with_created_alternative_quotes do
+      after(:create) do |paa|
+        create(:quote, :alternative, :with_additional_cost, prior_authority_application_id: paa.id)
+        create(:quote, :alternative, :cost_per_item, :with_additional_cost, prior_authority_application_id: paa.id)
+      end
+    end
+
     trait :with_created_primary_quote do
       after(:create) do |paa|
         create(:defendant, :valid_paa, defendable_id: paa.id, defendable_type: paa.class.to_s)

@@ -53,7 +53,7 @@ class PriorAuthorityApplication < ApplicationRecord
   end
 
   def total_cost
-    primary_quote.total_cost + additional_costs&.sum(&:total_cost) + alternative_quotes.sum(&:total_cost)
+    [primary_quote&.total_cost, additional_costs.sum(&:total_cost), alternative_quotes.sum(&:total_cost)].compact.sum
   end
 
   def total_cost_gbp

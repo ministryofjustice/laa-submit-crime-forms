@@ -16,6 +16,8 @@ class Quote < ApplicationRecord
       (cost_per_item * items) + travel_cost + additional_cost_value
     elsif cost_per_hour
       (cost_per_hour * period / 60) + travel_cost + additional_cost_value
+    else
+      travel_cost + additional_cost_value
     end
   end
 
