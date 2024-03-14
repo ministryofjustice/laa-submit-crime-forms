@@ -35,7 +35,7 @@ RSpec.describe PriorAuthorityApplication do
       subject(:prior_authority_application) { create(:prior_authority_application) }
 
       it 'calculates the total cost and shows it in pounds' do
-        expect(prior_authority_application.total_cost_gbp).to eq(nil)
+        expect(prior_authority_application.total_cost_gbp).to be_nil
       end
     end
   end

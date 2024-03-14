@@ -12,7 +12,8 @@ class Quote < ApplicationRecord
   scope :primary, -> { where(primary: true) }
 
   def total_cost
-    base_cost = ::PriorAuthority::Steps::ServiceCostForm.build(self, application: prior_authority_application).total_cost
+    base_cost = ::PriorAuthority::Steps::ServiceCostForm.build(self,
+                                                               application: prior_authority_application).total_cost
     base_cost + travel_cost + additional_cost_value
   end
 
@@ -21,6 +22,10 @@ class Quote < ApplicationRecord
   end
 
   def additional_cost_value
-    primary ? AdditionalCost.where(prior_authority_application_id:).sum{ |cost| cost.total_cost } : additional_cost_total
+    if primary
+      AdditionalCost.where(prior_authority_application_id:).sum(&:total_cost)
+    else
+      additional_cost_total
+    end
   end
 end
