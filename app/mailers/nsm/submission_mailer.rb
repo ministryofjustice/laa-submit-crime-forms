@@ -20,7 +20,7 @@ module Nsm
     private
 
     def email_recipient
-      Provider.find(@claim.submitter_id).email
+      @claim.submitter.email
     end
 
     def case_reference
@@ -32,7 +32,7 @@ module Nsm
     end
 
     def main_defendant
-      @claim.defendants.find { |defendant| defendant.main == true }
+      @claim.defendants.find_by(main: true)
     end
 
     def defendant_name

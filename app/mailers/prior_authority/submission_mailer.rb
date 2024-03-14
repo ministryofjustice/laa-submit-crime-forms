@@ -8,7 +8,7 @@ module PriorAuthority
       set_personalisation(
         laa_case_reference: case_reference,
         ufn: unique_file_number,
-        defendant_name: defendant_name,
+        defendant_name: @application.defendant.full_name,
         application_total: application_total,
         date: submission_date,
         feedback_url: feedback_url
@@ -19,7 +19,7 @@ module PriorAuthority
     private
 
     def email_recipient
-      Provider.find(@application.provider_id).email
+      @application.submitter.email
     end
 
     def case_reference
@@ -28,10 +28,6 @@ module PriorAuthority
 
     def unique_file_number
       @application.ufn
-    end
-
-    def defendant_name
-      "#{@application.defendant.first_name} #{@application.defendant.last_name}"
     end
 
     def application_total
