@@ -1,76 +1,37 @@
-<% title t('.page_title') %>
+<% title  t('.page_title') %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
+  <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= service_name %>
+      <%= t('.page_title') %>
     </h1>
 
-    <p class="govuk-body">
-    <%= t('.instruction') %>
+    <p>
+      <%= t('.introduction_html', eforms_link: link_to(t('.eforms'), "https://portal.legalservices.gov.uk/")) %>
     </p>
-
-    <h2 class="govuk-heading-m">
-      <%= t('.section.title')%>
-    </h3>
-
-    <ul class="govuk-list">
-      <li>
-      <%= link_to t('.section.link.CCCD.name'), "https://claim-crown-court-defence.service.gov.uk/",
-                  class: 'govuk-link',
-                  role: 'link',
-                  target: '_blank' %>, <%= t('.section.link.CCCD.content') %>
-      </li>
-      <li>
-      <%= link_to t('.section.link.CWA.name'), "https://portal.legalservices.gov.uk/",
-                  class: 'govuk-link',
-                  role: 'link',
-                  target: '_blank' %>, <%= t('.section.link.CWA.content') %>
-      </li>
-    </ul>
-
-    <% if FeatureFlags.omniauth_test_mode.enabled? %>
-
-      <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'test-user', info: { name: 'Test User', email: 'provider@example.com', office_codes: ['1A123B', '2A555X'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
-        Login to Warden (Primary test user)
-        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-        </svg>
-      <% end %>
-      <br>
-
-      <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'single-office', info: { name: 'Single Office', email: 'single@office.com', office_codes: ['1A123B'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
-        Login to Warden (Single office code)
-        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-        </svg>
-      <% end %>
-      <br>
-
-      <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'same-office', info: { name: 'Same Office', email: 'same@office.com', office_codes: ['1A123B', '2A555X'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
-        Login to Warden (Different user same office)
-        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-        </svg>
-      <% end %>
-      <br>
-
-      <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'diff-office', info: { name: 'Different Office', email: 'different@office.com', office_codes: ['AAAAAA', 'BBBBBB'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
-        Login to Warden (Different user different office)
-        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-        </svg>
-      <% end %>
-      <br>
+    <% if @gatekeeper.provider_enrolled?(service: Providers::Gatekeeper::PAA) %>
+      <h2 class="govuk-heading-s">
+        <%= link_to t('.pa_header'), prior_authority_applications_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
+      </h2>
+      <p>
+        <%= t('.pa_text') %>
+      </p>
     <% end %>
-
-
-    <!-- NOTE: temporarily until we implement LAA Portal Login, this button goes to the dashboard-->
-    <%= link_button nil, nsm_applications_path, class: 'govuk-button--start govuk-!-margin-top-4' do %>
-      Start now
-      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-      </svg>
+    <% if @gatekeeper.provider_enrolled?(service: Providers::Gatekeeper::EOL) %>
+      <h2 class="govuk-heading-s">
+        <%= link_to t('.eol_header'), ENV['EOL_URL'], class: "govuk-link--no-visited-state", data: { turbo: false } %>
+      </h2>
+      <p>
+        <%= t('.eol_text') %>
+      </p>
+    <% end %>
+    <% if @gatekeeper.provider_enrolled?(service: Providers::Gatekeeper::NSM) %>
+      <h2 class="govuk-heading-s">
+        <%= link_to t('.nsm_header'), nsm_start_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
+      </h2>
+      <p>
+        <%= t('.nsm_text') %>
+      </p>
     <% end %>
   </div>
 </div>

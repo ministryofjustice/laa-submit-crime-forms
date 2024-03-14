@@ -15,7 +15,7 @@ module Providers
     private
 
     def after_sign_in_path_for(*)
-      Providers::OfficeRouter.call(current_provider)
+      root_path
     end
 
     def after_omniauth_failure_path_for(*)

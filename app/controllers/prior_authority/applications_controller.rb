@@ -1,6 +1,5 @@
 module PriorAuthority
   class ApplicationsController < ApplicationController
-    before_action :authenticate_provider!
     before_action :set_default_table_sort_options
     before_action :load_drafts, only: %i[index draft]
     before_action :load_assessed, only: %i[index assessed]

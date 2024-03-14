@@ -3,7 +3,7 @@ require 'system_helper'
 RSpec.describe 'Prior authority application creation' do
   before do
     visit provider_saml_omniauth_callback_path
-    visit prior_authority_root_path
+    visit prior_authority_applications_path
   end
 
   it 'allows the user to create an application' do

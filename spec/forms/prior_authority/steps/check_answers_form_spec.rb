@@ -81,7 +81,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     end
   end
 
-  describe '#save ("Accept and send")' do
+  describe '#save ("Accept and send")', :stub_oauth_token do
     subject(:save) { form.save }
 
     let(:application) { create(:prior_authority_application, status: 'draft') }

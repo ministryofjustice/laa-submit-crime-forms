@@ -16,13 +16,19 @@ FactoryBot.define do
       base_office_codes { [] }
     end
 
+    trait :eol_access do
+      eol_office_codes { ['CCCCCC'] }
+      base_office_codes { [] }
+    end
+
     transient do
       selected_office_code { office_codes[0] }
       selected_office_codes do
-        [*paa_office_codes, *nsm_office_codes, *base_office_codes]
+        [*paa_office_codes, *nsm_office_codes, *base_office_codes, *eol_office_codes]
       end
       paa_office_codes { [] }
       nsm_office_codes { [] }
+      eol_office_codes { [] }
       base_office_codes { ['1A123B'] }
     end
   end
