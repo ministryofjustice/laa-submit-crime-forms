@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe PriorAuthorityApplication do
-  subject(:prior_authority_application) { create(:prior_authority_application, :with_firm_and_solicitor, :with_created_alternative_quotes, :with_created_primary_quote) }
+  subject(:prior_authority_application) do
+    create(:prior_authority_application, :with_firm_and_solicitor, :with_created_alternative_quotes,
+           :with_created_primary_quote)
+  end
 
   describe '#provider' do
     it 'belongs to a provider' do
@@ -30,6 +33,7 @@ RSpec.describe PriorAuthorityApplication do
 
     context 'claim has no quotes or additional costs' do
       subject(:prior_authority_application) { create(:prior_authority_application) }
+
       it 'calculates the total cost and shows it in pounds' do
         expect(prior_authority_application.total_cost_gbp).to eq('£0.00')
       end
