@@ -88,13 +88,13 @@ en:
               greater_than: The hourly cost must be more than 0
               not_a_number: The hourly cost must be a number, like 25
             items:
-              blank: Enter the number of items
-              greater_than: The number of items must be more than 0
-              not_a_number: The number of items must be a number, like 25
+              blank: Enter the number of %{item_type}
+              greater_than: The number of %{item_type} must be more than 0
+              not_a_number: The number of %{item_type} must be a number, like 25
             cost_per_item:
-              blank: Enter the cost per item
-              greater_than: The cost per item must be more than 0
-              not_a_number: The cost must be a number, like 25
+              blank: Enter the cost per %{item_type}
+              greater_than: The cost per %{item_type} must be more than 0
+              not_a_number: The cost per %{item_type} must be a number, like 25
             travel_time:
               invalid: Travel time must be valid
               blank: To add travel costs you must enter both the time and the hourly cost

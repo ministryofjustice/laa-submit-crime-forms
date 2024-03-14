@@ -155,4 +155,61 @@ RSpec.describe 'Prior authority applications - alternative quote' do
       expect(page).to have_content 'Alternative quotesCompleted'
     end
   end
+
+  context 'when i have a item type specific primary quote' do
+    let(:application) do
+      create(:prior_authority_application, :with_primary_quote_per_item, service_type:)
+    end
+
+    before do
+      click_on 'Alternative quotes'
+      choose 'Yes'
+      click_on 'Save and continue'
+    end
+
+    context 'with Translation (documents) service' do
+      let(:service_type) { 'translation_documents' }
+
+      it 'asks a question about words' do
+        expect(page).to have_content 'What is the cost per word?'
+      end
+
+      it 'validates appropriately with partial data' do
+        click_on 'Save and continue'
+        expect(page)
+          .to have_content('Enter the number of words')
+          .and have_content('Enter the cost per word')
+      end
+    end
+
+    context 'with Photocopying service' do
+      let(:service_type) { 'photocopying' }
+
+      it 'asks a question about pages' do
+        expect(page).to have_content 'What is the cost per page?'
+      end
+
+      it 'validates appropriately with partial data' do
+        click_on 'Save and continue'
+        expect(page)
+          .to have_content('Enter the number of pages')
+          .and have_content('Enter the cost per page')
+      end
+    end
+
+    context 'with Translation and transcription service' do
+      let(:service_type) { 'translation_and_transcription' }
+
+      it 'asks a question about minutes' do
+        expect(page).to have_content 'What is the cost per minute?'
+      end
+
+      it 'validates appropriately with partial data' do
+        click_on 'Save and continue'
+        expect(page)
+          .to have_content('Enter the number of minutes')
+          .and have_content('Enter the cost per minute')
+      end
+    end
+  end
 end
