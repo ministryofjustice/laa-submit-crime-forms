@@ -33,10 +33,12 @@ en:
           status: Status
         status_colour:
           granted: govuk-tag--green
+          auto_grant: govuk-tag--green
           part_granted: govuk-tag--blue
           rejected: govuk-tag--red
         status:
           granted: Granted
+          auto_grant: Granted
           part_granted: Part granted
           rejected: Rejected
         delete: Delete

@@ -35,10 +35,11 @@ class PriorAuthorityApplication < ApplicationRecord
     submitted: 'submitted',
     granted: 'granted',
     part_granted: 'part_granted',
-    rejected: 'rejected'
+    rejected: 'rejected',
+    auto_grant: 'auto_grant'
   }
 
-  scope :assessed, -> { where(status: %i[granted part_granted rejected]) }
+  scope :assessed, -> { where(status: %i[granted part_granted rejected auto_grant]) }
 
   scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
 
