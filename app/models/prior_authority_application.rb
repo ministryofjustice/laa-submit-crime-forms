@@ -34,12 +34,13 @@ class PriorAuthorityApplication < ApplicationRecord
     draft: 'draft',
     submitted: 'submitted',
     granted: 'granted',
-    part_granted: 'part_granted',
+    part_granted: 'part_granted', # legacy - not removed as enum
     rejected: 'rejected',
-    auto_grant: 'auto_grant'
+    auto_grant: 'auto_grant',
+    part_grant: 'part_grant'
   }
 
-  scope :assessed, -> { where(status: %i[granted part_granted rejected auto_grant]) }
+  scope :assessed, -> { where(status: %i[granted part_grant rejected auto_grant]) }
 
   scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
 

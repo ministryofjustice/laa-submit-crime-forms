@@ -34,12 +34,14 @@ en:
         status_colour:
           granted: govuk-tag--green
           auto_grant: govuk-tag--green
-          part_granted: govuk-tag--blue
+          part_granted: govuk-tag--blue # legacy
+          part_grant: govuk-tag--blue
           rejected: govuk-tag--red
         status:
           granted: Granted
           auto_grant: Granted
-          part_granted: Part granted
+          part_granted: Part granted # legacy
+          part_grant: Part granted
           rejected: Rejected
         delete: Delete
       confirm_delete:

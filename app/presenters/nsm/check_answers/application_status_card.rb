@@ -38,7 +38,7 @@ module Nsm
         when 'granted', 'auto_grant'
           I18n.t('nsm.steps.check_answers.show.sections.application_status.granted')
         when 'part_grant'
-          I18n.t('nsm.steps.check_answers.show.sections.application_status.part_granted')
+          I18n.t('nsm.steps.check_answers.show.sections.application_status.part_grant')
         else
           I18n.t('nsm.steps.check_answers.show.sections.application_status.returned')
         end
