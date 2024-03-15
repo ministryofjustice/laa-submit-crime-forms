@@ -386,7 +386,7 @@ workflows:
             - rspec-gem-tests
       - scan-docker-image:
           requires:
-            - rspec-tests
+            - build-test-container
 
   build-opened-pr:
     jobs:
