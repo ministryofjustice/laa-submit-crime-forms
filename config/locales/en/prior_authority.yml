@@ -54,7 +54,7 @@ en:
       show:
         page_title: Application details
         email_us: Email the LAA case team
-        email: prior-auth@laa.gov.uk
+        email: magsbilling@justice.gov.uk
         application_status: Application status
         status: Status
         amount_requested: '%{amount} requested'
