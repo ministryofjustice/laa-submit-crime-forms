@@ -2,7 +2,7 @@
 <% content_for(:back_link) do %>
   <%= link_to t('helpers.back_link'),
               prior_authority_applications_path(
-                anchor: @application.status == 'submitted' ? 'submitted' : 'assessed'
+                anchor: relevant_prior_authority_list_anchor(@application)
               ),
               class: 'govuk-back-link hide-on-print' %>
 <% end %>
