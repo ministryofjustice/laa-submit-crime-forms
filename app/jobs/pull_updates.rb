@@ -26,7 +26,9 @@ class PullUpdates < ApplicationJob
       end
     end
 
-    Time.zone.parse(applications.last['updated_at'])
+    last_updated_str = applications.pluck('updated_at').max
+
+    Time.zone.parse(last_updated_str)
   end
 
   private
