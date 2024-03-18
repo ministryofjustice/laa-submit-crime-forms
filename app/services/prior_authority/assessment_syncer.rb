@@ -41,7 +41,7 @@ module PriorAuthority
           base_cost_allowed: base_cost_form.total_cost,
           travel_cost_allowed: travel_cost_form.total_cost,
           travel_adjustment_comment: quote_data['travel_adjustment_comment'],
-          base_adjustment_comment: quote_data['adjustment_comment']
+          service_adjustment_comment: quote_data['adjustment_comment']
         )
       end
 

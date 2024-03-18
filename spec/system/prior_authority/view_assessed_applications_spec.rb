@@ -53,7 +53,7 @@ RSpec.describe 'View assessed applications' do
 
     let(:quote) do
       build(:quote, :primary,
-            base_adjustment_comment: 'Too much',
+            service_adjustment_comment: 'Too much',
             travel_adjustment_comment: 'Not enough',
             base_cost_allowed: 29,
             travel_cost_allowed: 126)

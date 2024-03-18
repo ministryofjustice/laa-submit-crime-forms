@@ -32,7 +32,7 @@
               <dd class="govuk-summary-list__value">
                 <p><%= @application.assessment_comment %></p>
                 <ul class="govuk-list govuk-list--bullet">
-                  <% if @application.primary_quote.base_adjustment_comment.present? %>
+                  <% if @application.primary_quote.service_adjustment_comment.present? %>
                     <li><%= link_to t('.review_service_cost_adjustments'), '#service-cost' %></li>
                   <% end %>
                   <% if @application.primary_quote.travel_adjustment_comment.present? %>
@@ -56,8 +56,7 @@
       <h2 class="govuk-heading-m"><%= section_group[:heading] %></h2>
       <% section_group[:sections].each do |section| %>
         <% if section.template %>
-          <% allowance_type = { 'granted' => :original, 'part_grant' => :dynamic, 'rejected' => :na }.fetch(@application.status, false) %>
-          <%= render(section.template, section: section, show_actions: false, show_allowances: allowance_type) %>
+          <%= render(section.template, section: section, show_actions: false, show_adjustments: @allowance_type) %>
         <% else %>
           <%= govuk_summary_list(
                 card: {

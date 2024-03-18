@@ -89,7 +89,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
       end
 
       it 'syncs the primary quote adjustment comments' do
-        expect(primary_quote.base_adjustment_comment).to eq 'Service cost comment'
+        expect(primary_quote.service_adjustment_comment).to eq 'Service cost comment'
         expect(primary_quote.travel_adjustment_comment).to eq 'Travel comment'
       end
 

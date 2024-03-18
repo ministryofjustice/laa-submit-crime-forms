@@ -32,11 +32,6 @@ en:
           action: Action
           client: Client
           status: Status
-        status_colour:
-          granted: govuk-tag--green
-          auto_grant: govuk-tag--green
-          part_grant: govuk-tag--blue
-          rejected: govuk-tag--red
         status:
           granted: Granted
           auto_grant: Granted

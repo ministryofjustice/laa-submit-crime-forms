@@ -1,4 +1,4 @@
-<p><strong class="govuk-tag govuk-tag--green"><%= t(".status") %></strong></p>
+<p><strong class="govuk-tag <%= prior_authority_tag_colour(:submitted) %>"><%= t(".status") %></strong></p>
 <p><%= @application.updated_at.to_fs(:stamp) %></p>
 <p><%= t(".awaiting_review") %></p>
 <br>

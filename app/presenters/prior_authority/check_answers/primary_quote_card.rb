@@ -71,8 +71,8 @@ module PriorAuthority
         "prior_authority/steps/check_answers/#{filename}"
       end
 
-      def base_adjustment_comment
-        primary_quote.base_adjustment_comment.presence
+      def service_adjustment_comment
+        primary_quote.service_adjustment_comment.presence
       end
 
       def travel_adjustment_comment
