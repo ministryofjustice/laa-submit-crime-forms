@@ -1,10 +1,23 @@
 class PullUpdates < ApplicationJob
+  EARLIEST_POLL_DATE = Time.zone.local(2023, 1, 1)
   # queue :default
 
-  def perform
-    json_data = HttpPuller.new.get_all(last_update)
+  def perform(count: 100)
+    since = last_update
 
-    json_data['applications'].each do |record|
+    loop do
+      json_data = HttpPuller.new.get_all(since:, count:)
+      break if json_data['applications'].none?
+
+      last_updated = process(json_data['applications'])
+      break if since == last_updated
+
+      since = last_updated
+    end
+  end
+
+  def process(applications)
+    applications.each do |record|
       case record['application_type']
       when 'crm7'
         update_claim(record['application_id'], convert_params(record))
@@ -12,6 +25,10 @@ class PullUpdates < ApplicationJob
         update_prior_authority_application(record['application_id'], convert_params(record))
       end
     end
+
+    last_updated_str = applications.pluck('updated_at').max
+
+    Time.zone.parse(last_updated_str)
   end
 
   private
@@ -20,7 +37,7 @@ class PullUpdates < ApplicationJob
     [
       Claim.where.not(app_store_updated_at: nil).maximum(:app_store_updated_at),
       PriorAuthorityApplication.where.not(app_store_updated_at: nil).maximum(:app_store_updated_at),
-      Time.zone.local(2023, 1, 1)
+      EARLIEST_POLL_DATE
     ].compact.max
   end
 
