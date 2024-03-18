@@ -2,8 +2,8 @@ class HttpPuller
   include HTTParty
   headers 'Content-Type' => 'application/json'
 
-  def get_all(last_update)
-    process(:get, "/v1/applications?since=#{last_update.to_i}")
+  def get_all(since:, count: 20)
+    process(:get, "/v1/applications?since=#{since.to_i}&count=#{count}")
   end
 
   private

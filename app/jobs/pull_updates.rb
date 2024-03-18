@@ -1,8 +1,8 @@
 class PullUpdates < ApplicationJob
   # queue :default
 
-  def perform
-    json_data = HttpPuller.new.get_all(last_update)
+  def perform(count: 100)
+    since = last_update
 
     loop do
       json_data = HttpPuller.new.get_all(since:, count:)

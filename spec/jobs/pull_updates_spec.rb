@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PullUpdates do
   let(:last_update) { 2 }
-  let(:http_puller) { instance_double(HttpPuller, get_all: http_response) }
+  let(:http_puller) { instance_double(HttpPuller) }
   let(:arbitrary_fixed_date) { DateTime.new(2021, 12, 1, 13, 23, 24) }
   let(:http_response) do
     {
@@ -20,6 +20,9 @@ RSpec.describe PullUpdates do
 
   before do
     allow(HttpPuller).to receive(:new).and_return(http_puller)
+    allow(http_puller).to receive(:get_all).and_return('applications' => [])
+    allow(http_puller).to receive(:get_all).with(since: Time.zone.local(2023, 1, 1), count: 100)
+                                           .and_return(http_response)
   end
 
   context 'when mocking claim' do

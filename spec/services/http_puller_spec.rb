@@ -24,10 +24,18 @@ RSpec.describe HttpPuller, :stub_oauth_token do
 
       it 'get the claims to the specified URL' do
         expect(described_class).to receive(:get)
-          .with('http://some.url/v1/applications?since=1',
+          .with('http://some.url/v1/applications?since=1&count=20',
                 headers: { authorization: 'Bearer test-bearer-token' })
 
-        subject.get_all(1)
+        subject.get_all(since: 1)
+      end
+
+      it 'can set the coutn varible to set page size' do
+        expect(described_class).to receive(:get)
+          .with('http://some.url/v1/applications?since=1&count=100',
+                headers: { authorization: 'Bearer test-bearer-token' })
+
+        subject.get_all(since: 1, count: 100)
       end
 
       context 'when authentication is not configured' do
@@ -37,9 +45,9 @@ RSpec.describe HttpPuller, :stub_oauth_token do
 
         it 'gets the claims without headers' do
           expect(described_class).to receive(:get)
-            .with('http://some.url/v1/applications?since=1')
+            .with('http://some.url/v1/applications?since=1&count=20')
 
-          subject.get_all(1)
+          subject.get_all(since: 1)
         end
       end
     end
@@ -47,10 +55,10 @@ RSpec.describe HttpPuller, :stub_oauth_token do
     context 'when APP_STORE_URL is not present' do
       it 'get the claims to default localhost url' do
         expect(described_class).to receive(:get)
-          .with('http://localhost:8000/v1/applications?since=1',
+          .with('http://localhost:8000/v1/applications?since=1&count=20',
                 headers: { authorization: 'Bearer test-bearer-token' })
 
-        subject.get_all(1)
+        subject.get_all(since: 1)
       end
     end
 
@@ -64,16 +72,16 @@ RSpec.describe HttpPuller, :stub_oauth_token do
 
       it 'add basic auth credentials' do
         expect(described_class).to receive(:get)
-          .with('http://localhost:8000/v1/applications?since=1',
+          .with('http://localhost:8000/v1/applications?since=1&count=20',
                 headers: { authorization: 'Bearer test-bearer-token' })
 
-        subject.get_all(1)
+        subject.get_all(since: 1)
       end
     end
 
     context 'when response code is 200 - ok' do
       it 'returns the parsed json' do
-        expect(subject.get_all(1)).to eq('some' => 'data')
+        expect(subject.get_all(since: 1)).to eq('some' => 'data')
       end
     end
 
@@ -81,8 +89,8 @@ RSpec.describe HttpPuller, :stub_oauth_token do
       let(:code) { 501 }
 
       it 'raises and error' do
-        expect { subject.get_all(1) }.to raise_error(
-          "Unexpected response from AppStore - status 501 for '/v1/applications?since=1'"
+        expect { subject.get_all(since: 1) }.to raise_error(
+          "Unexpected response from AppStore - status 501 for '/v1/applications?since=1&count=20'"
         )
       end
     end
