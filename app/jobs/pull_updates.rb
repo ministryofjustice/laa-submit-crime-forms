@@ -1,4 +1,5 @@
 class PullUpdates < ApplicationJob
+  EARLIEST_POLL_DATE = Time.zone.local(2023, 1, 1)
   # queue :default
 
   def perform(count: 100)
@@ -34,7 +35,7 @@ class PullUpdates < ApplicationJob
     [
       Claim.where.not(app_store_updated_at: nil).maximum(:app_store_updated_at),
       PriorAuthorityApplication.where.not(app_store_updated_at: nil).maximum(:app_store_updated_at),
-      Time.zone.local(2023, 1, 1)
+      EARLIEST_POLL_DATE
     ].compact.max
   end
 

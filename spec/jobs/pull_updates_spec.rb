@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PullUpdates do
   let(:last_update) { 2 }
   let(:http_puller) { instance_double(HttpPuller) }
-  let(:arbitrary_fixed_date) { DateTime.new(2021, 12, 1, 13, 23, 24) }
+  let(:arbitrary_fixed_date) { '2021-12-01T23:24:58.846345' }
   let(:http_response) do
     {
       'applications' => [{
@@ -21,7 +21,7 @@ RSpec.describe PullUpdates do
   before do
     allow(HttpPuller).to receive(:new).and_return(http_puller)
     allow(http_puller).to receive(:get_all).and_return('applications' => [])
-    allow(http_puller).to receive(:get_all).with(since: Time.zone.local(2023, 1, 1), count: 100)
+    allow(http_puller).to receive(:get_all).with(since: PullUpdates::EARLIEST_POLL_DATE, count: 100)
                                            .and_return(http_response)
   end
 
@@ -49,7 +49,7 @@ RSpec.describe PullUpdates do
         expect(Claim).to have_received(:find_by).with(id:)
         expect(claim).to have_received(:update!).with(
           status: 'granted',
-          app_store_updated_at: arbitrary_fixed_date
+          app_store_updated_at: Time.zone.parse(arbitrary_fixed_date)
         )
       end
 
@@ -59,6 +59,17 @@ RSpec.describe PullUpdates do
         it 'skips the update' do
           expect { subject.perform }.not_to raise_error
         end
+      end
+    end
+
+    context 'ensure loop ends' do
+      before do
+        allow(http_puller).to receive(:get_all).with(since: Time.zone.parse(arbitrary_fixed_date), count: 100)
+                                               .and_return(http_response)
+      end
+
+      it 'does not get stuck due to non-integer timetamps' do
+        expect { Timeout.timeout(1) { subject.perform } }.not_to raise_error
       end
     end
   end
@@ -95,7 +106,7 @@ RSpec.describe PullUpdates do
         subject.perform
         expect(application.reload).to have_attributes(
           status: 'granted',
-          app_store_updated_at: arbitrary_fixed_date
+          app_store_updated_at: Time.zone.parse(arbitrary_fixed_date)
         )
       end
     end

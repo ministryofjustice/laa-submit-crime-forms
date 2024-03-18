@@ -30,7 +30,7 @@ RSpec.describe HttpPuller, :stub_oauth_token do
         subject.get_all(since: 1)
       end
 
-      it 'can set the coutn varible to set page size' do
+      it 'can set the count varible to set page size' do
         expect(described_class).to receive(:get)
           .with('http://some.url/v1/applications?since=1&count=100',
                 headers: { authorization: 'Bearer test-bearer-token' })
