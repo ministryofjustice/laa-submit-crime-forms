@@ -4,7 +4,19 @@ class PullUpdates < ApplicationJob
   def perform
     json_data = HttpPuller.new.get_all(last_update)
 
-    json_data['applications'].each do |record|
+    loop do
+      json_data = HttpPuller.new.get_all(since:, count:)
+      break if json_data['applications'].none?
+
+      last_updated = process(json_data['applications'])
+      break if since == last_updated
+
+      since = last_updated
+    end
+  end
+
+  def process(applications)
+    applications.each do |record|
       case record['application_type']
       when 'crm7'
         update_claim(record['application_id'], convert_params(record))
@@ -12,6 +24,8 @@ class PullUpdates < ApplicationJob
         update_prior_authority_application(record['application_id'], convert_params(record))
       end
     end
+
+    Time.zone.parse(applications.last['updated_at'])
   end
 
   private
