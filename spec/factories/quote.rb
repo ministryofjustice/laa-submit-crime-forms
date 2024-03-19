@@ -22,6 +22,16 @@ FactoryBot.define do
       primary { true }
     end
 
+    trait :primary_per_item do
+      primary { true }
+      related_to_post_mortem { nil }
+      cost_per_hour { nil }
+      period { nil }
+      cost_per_item { 10 }
+      items { 100 }
+      user_chosen_cost_type { 'per_item' }
+    end
+
     trait :alternative do
       primary { false }
     end

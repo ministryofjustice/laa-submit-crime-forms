@@ -12,8 +12,9 @@ en:
               status: Status
               submitted: Date Submitted
               granted: Date Assessed
-              part_granted: Date Assessed
+              part_granted: Date Assessed # legacy
               returned: Date Returned
+              part_grant: Date Assessed
             claim_type:
               file_ufn: Unique file number
               type_of_claim: Type of claim
