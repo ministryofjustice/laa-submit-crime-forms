@@ -24,7 +24,7 @@ RSpec.describe AdditionalCost do
       let(:attributes) { { unit_type: nil } }
 
       it 'calculates total_cost correctly' do
-        expect(subject.total_cost).to be_nil
+        expect(subject.total_cost).to 0
       end
     end
   end
