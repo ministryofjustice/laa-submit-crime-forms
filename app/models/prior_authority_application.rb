@@ -39,7 +39,10 @@ class PriorAuthorityApplication < ApplicationRecord
     part_granted: 'part_granted', # legacy - not removed as enum
     rejected: 'rejected',
     auto_grant: 'auto_grant',
-    part_grant: 'part_grant'
+    part_grant: 'part_grant',
+    sent_back: 'sent_back',
+    provider_updated: 'provider_updated',
+    expired: 'expired'
   }
 
   scope :assessed, -> { where(status: %i[granted part_grant rejected auto_grant]) }
