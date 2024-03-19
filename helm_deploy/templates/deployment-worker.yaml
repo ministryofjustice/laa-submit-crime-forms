@@ -50,13 +50,13 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /ping
               port: {{ .Values.service.workerPort }}
             initialDelaySeconds: 20
             periodSeconds: 30
           readinessProbe:
             httpGet:
-              path: /
+              path: /ping
               port: {{ .Values.service.workerPort }}
             initialDelaySeconds: 20
             periodSeconds: 30
