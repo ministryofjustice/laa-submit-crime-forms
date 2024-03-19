@@ -9,7 +9,8 @@ RSpec.describe SubmitToAppStore do
   before do
     allow(described_class::PayloadBuilder).to receive(:call)
       .and_return(payload)
-    allow(ClaimSubmissionMailer).to receive_message_chain(:notify, :deliver_later!)
+    allow(Nsm::SubmissionMailer).to receive_message_chain(:notify, :deliver_now!)
+    allow(PriorAuthority::SubmissionMailer).to receive_message_chain(:notify, :deliver_now!)
   end
 
   describe '#process' do
@@ -120,23 +121,24 @@ RSpec.describe SubmitToAppStore do
 
   describe '#notify' do
     context 'when submission is a claim' do
-      let(:submission) { build(:claim) }
+      let(:submission) { create(:claim) }
       let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
 
-      it 'triggers an email' do
-        expect(ClaimSubmissionMailer).to receive(:notify).with(submission).and_return(mailer)
-        expect(mailer).to receive(:deliver_later!)
+      it 'triggers an email for nsm' do
+        expect(Nsm::SubmissionMailer).to receive(:notify).with(submission).and_return(mailer)
+        expect(mailer).to receive(:deliver_now!)
 
         subject.notify(submission)
       end
     end
 
     context 'when submission is a PA application' do
-      let(:submission) { build(:prior_authority_application) }
+      let(:submission) { create(:prior_authority_application) }
       let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
 
-      it 'triggers no email' do
-        expect(ClaimSubmissionMailer).not_to receive(:notify)
+      it 'triggers an email for prior authority' do
+        expect(PriorAuthority::SubmissionMailer).to receive(:notify).with(submission).and_return(mailer)
+        expect(mailer).to receive(:deliver_now!)
 
         subject.notify(submission)
       end

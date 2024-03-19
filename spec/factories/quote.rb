@@ -40,4 +40,16 @@ FactoryBot.define do
   trait :no_document do
     document { nil }
   end
+
+  trait :with_additional_cost do
+    additional_cost_total { 20 }
+    additional_cost_list { 'Some things' }
+  end
+
+  trait :cost_per_item do
+    cost_per_hour { nil }
+    period { nil }
+    cost_per_item { 10 }
+    items { 2 }
+  end
 end

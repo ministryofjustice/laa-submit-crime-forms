@@ -30,7 +30,6 @@ module Nsm
         end
       end
 
-      # rubocop:disable  Metrics/AbcSize
       def additional_fields
         additional_fields = []
 
@@ -52,7 +51,6 @@ module Nsm
 
         additional_fields
       end
-      # rubocop:enable Metrics/AbcSize
     end
   end
 end

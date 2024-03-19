@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe ClaimSubmissionMailer, type: :mailer do
+RSpec.describe Nsm::SubmissionMailer, type: :mailer do
   let(:feedback_template) { '0403454c-47a5-4540-804c-cb614e77dc22' }
-  let(:claim) { build(:claim, :case_type_magistrates, :main_defendant, :letters_calls) }
+  let(:claim) { create(:claim, :case_type_magistrates, :main_defendant, :letters_calls) }
 
   describe '#notify' do
     subject(:mail) { described_class.notify(claim) }
@@ -40,7 +40,7 @@ RSpec.describe ClaimSubmissionMailer, type: :mailer do
     end
 
     context 'defendant with cntp id' do
-      let(:claim) { build(:claim, :case_type_breach, :breach_defendant, :letters_calls) }
+      let(:claim) { create(:claim, :case_type_breach, :breach_defendant, :letters_calls) }
 
       it 'sets personalisation from args' do
         expect(

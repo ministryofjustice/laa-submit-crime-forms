@@ -12,7 +12,6 @@ module Nsm
         @section = 'letters_calls'
       end
 
-      # rubocop:disable Metrics/AbcSize
       def row_data
         [
           {
@@ -48,7 +47,6 @@ module Nsm
             }
           ] + total_inc_vat_fields
       end
-      # rubocop:enable Metrics/AbcSize
 
       private
 
