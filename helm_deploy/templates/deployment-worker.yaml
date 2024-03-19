@@ -49,17 +49,15 @@ spec:
               containerPort: {{ .Values.service.workerPort }}
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.service.workerPort }}
-            initialDelaySeconds: 20
-            periodSeconds: 30
+            exec:
+              command: ['bin/sidekiq_health_check']
+            initialDelaySeconds: 60
+            periodSeconds: 5
           readinessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.service.workerPort }}
-            initialDelaySeconds: 20
-            periodSeconds: 30
+            exec:
+              command: ['bin/sidekiq_health_check']
+            initialDelaySeconds: 60
+            periodSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
