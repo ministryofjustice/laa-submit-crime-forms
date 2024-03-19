@@ -31,16 +31,12 @@ module Nsm
       @claim.ufn
     end
 
-    def main_defendant
-      @claim.defendants.find_by(main: true)
-    end
-
     def defendant_name
-      main_defendant.full_name
+      @claim.main_defendant.full_name
     end
 
     def maat_id
-      main_defendant.maat
+      @claim.main_defendant.maat
     end
 
     def cntp_order
