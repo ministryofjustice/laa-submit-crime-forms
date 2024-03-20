@@ -253,3 +253,7 @@ en:
           feedback:
             link_text: What did you think of this service?
             description: takes 30 seconds
+      further_information:
+        edit:
+          page_title: Further information requested
+          caption: About the request
