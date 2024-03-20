@@ -69,9 +69,9 @@ RSpec.describe 'View assessed applications' do
       expect(page).to have_content 'Part granted'
       expect(page).to have_content '£275.00 requested'
       expect(page).to have_content '£274.00 allowed'
-      expect(page).to have_content 'Review LAA service cost adjustments'
-      expect(page).to have_content 'Review LAA travel cost adjustments'
-      expect(page).to have_content 'Review LAA additional cost adjustments'
+      expect(page).to have_content 'Review service cost adjustments'
+      expect(page).to have_content 'Review travel cost adjustments'
+      expect(page).to have_content 'Review additional cost adjustments'
       expect(page).to have_content 'How to appeal this decision'
     end
 

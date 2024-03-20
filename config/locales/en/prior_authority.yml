@@ -61,9 +61,9 @@ en:
         amount_allowed: '%{amount} allowed'
         laa_response: LAA response
         appeal: How to appeal this decision
-        review_service_cost_adjustments: Review LAA service cost adjustments
-        review_travel_cost_adjustments: Review LAA travel cost adjustments
-        review_additional_cost_adjustments: Review LAA additional cost adjustments
+        review_service_cost_adjustments: Review service cost adjustments
+        review_travel_cost_adjustments: Review travel cost adjustments
+        review_additional_cost_adjustments: Review additional cost adjustments
       state_summaries:
         submitted:
           status: Submitted
