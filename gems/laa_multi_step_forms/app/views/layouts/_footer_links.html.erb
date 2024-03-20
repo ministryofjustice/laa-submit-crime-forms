@@ -11,9 +11,11 @@
     <%= link_to 'Contact', main_app.about_contact_path, class: 'govuk-footer__link' %>
   </li>
 
-  <li class="govuk-footer__inline-list-item">
-    <%= link_to 'Feedback', main_app.about_feedback_index_path, class: 'govuk-footer__link' %>
-  </li>
+  <% if content_for?(:feedback_link) %>
+    <li class="govuk-footer__inline-list-item">
+      <%= link_to 'Feedback', yield(:feedback_link), class: 'govuk-footer__link' %>
+    </li>
+  <% end %>
 
   <li class="govuk-footer__inline-list-item">
     <%= link_to 'Privacy policy', main_app.about_privacy_path, class: 'govuk-footer__link' %>
