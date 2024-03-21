@@ -48,7 +48,9 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
               items: 10,
               adjustment_comment: 'Additional cost comment'
             }
-          ]
+          ],
+          further_information_explanation: 'Some additional information is needed',
+          incorrect_information_explanation: 'This is incorrect'
         }
       }
     end
@@ -95,6 +97,18 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
 
       it 'syncs the additional cost adjustment comments' do
         expect(additional_cost.adjustment_comment).to eq 'Additional cost comment'
+      end
+    end
+
+    context 'when app is sent back' do
+      let(:status) { 'sent_back' }
+
+      it 'syncs the further info needed' do
+        expect(application.further_information_explanation).to eq 'Some additional information is needed'
+      end
+
+      it 'syncs the incorrect info' do
+        expect(application.incorrect_information_explanation).to eq 'This is incorrect'
       end
     end
   end
