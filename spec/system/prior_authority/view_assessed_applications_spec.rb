@@ -60,14 +60,14 @@ RSpec.describe 'View assessed applications' do
     end
 
     let(:additional_cost) do
-      build(:additional_cost,
+      build(:additional_cost, :per_item,
             adjustment_comment: 'Nearly right',
             total_cost_allowed: 119)
     end
 
     it 'shows overall details' do
       expect(page).to have_content 'Part granted'
-      expect(page).to have_content '£275.00 requested'
+      expect(page).to have_content '£175.00 requested'
       expect(page).to have_content '£274.00 allowed'
       expect(page).to have_content 'Review service cost adjustments'
       expect(page).to have_content 'Review travel cost adjustments'
@@ -87,7 +87,7 @@ RSpec.describe 'View assessed applications' do
 
     it 'shows additional cost adjustments' do
       expect(page).to have_content 'Nearly right'
-      expect(page).to have_content '£120.00 £119.00'
+      expect(page).to have_content '£20.00 £119.00'
     end
   end
 end

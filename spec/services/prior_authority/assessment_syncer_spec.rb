@@ -9,7 +9,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
              additional_costs: [additional_cost])
     end
     let(:primary_quote) { build(:quote, :primary) }
-    let(:additional_cost) { build(:additional_cost) }
+    let(:additional_cost) { build(:additional_cost, :per_item) }
     let(:status) { 'granted' }
 
     let(:payload) do
