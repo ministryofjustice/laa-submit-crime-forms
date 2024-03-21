@@ -108,6 +108,8 @@ FactoryBot.define do
       no_alternative_quote_reason { 'a reason' }
       service_type { 'pathologist_report' }
       custom_service_name { nil }
+      further_information_explanation { 'Some additional information is needed' }
+      incorrect_information_explanation { 'This is incorrect' }
     end
 
     trait :with_complete_non_prison_law do
