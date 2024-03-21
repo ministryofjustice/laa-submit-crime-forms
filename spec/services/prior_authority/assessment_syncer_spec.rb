@@ -50,7 +50,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
             }
           ],
           further_information_explanation: 'Some additional information is needed',
-          incorrect_information_explanation: 'This is incorrect'
+          incorrect_information_explanation: 'This is incorrect',
           updates_needed: ['further_information', 'incorrect_information']
         }
       }
