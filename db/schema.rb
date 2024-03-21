@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_07_165611) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_18_102807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_165611) do
     t.uuid "prior_authority_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "total_cost_allowed", precision: 10, scale: 2
+    t.string "adjustment_comment"
     t.index ["prior_authority_application_id"], name: "index_additional_costs_on_prior_authority_application_id"
   end
 
@@ -215,6 +217,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_165611) do
     t.string "prison_id"
     t.string "custom_prison_name"
     t.datetime "app_store_updated_at"
+    t.string "assessment_comment"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
@@ -260,6 +263,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_165611) do
     t.text "travel_cost_reason"
     t.text "additional_cost_list"
     t.decimal "additional_cost_total", precision: 10, scale: 2
+    t.decimal "base_cost_allowed", precision: 10, scale: 2
+    t.decimal "travel_cost_allowed", precision: 10, scale: 2
+    t.string "service_adjustment_comment"
+    t.string "travel_adjustment_comment"
     t.index ["prior_authority_application_id"], name: "index_quotes_on_prior_authority_application_id"
   end
 

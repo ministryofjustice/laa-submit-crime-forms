@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.143'
+gem 'aws-sdk-s3', '~> 1.146'
 gem 'bootsnap', '~> 1.18.3', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
@@ -19,8 +19,8 @@ gem 'pg', '~> 1.5'
 gem 'propshaft'
 gem 'puma', '~> 6.4'
 gem 'rails', '~> 7.1.3'
-gem 'sentry-rails', '~> 5.16.1'
-gem 'sentry-ruby', '~> 5.16.1'
+gem 'sentry-rails', '~> 5.17.1'
+gem 'sentry-ruby', '~> 5.17.1'
 gem 'sidekiq', '~> 7.2'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron', '~> 1.12.0'
@@ -38,7 +38,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec_junit_formatter', require: false
-  gem 'rspec-rails', '~> 6.1.1'
+  gem 'rspec-rails', '~> 6.1.2'
 end
 
 group :development do
