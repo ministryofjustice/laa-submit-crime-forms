@@ -1,5 +1,7 @@
 module PriorAuthority
   class OfficesController < ::OfficesController
+    layout 'prior_authority'
+
     def edit_path
       edit_prior_authority_office_path
     end
