@@ -36,7 +36,6 @@ class PriorAuthorityApplication < ApplicationRecord
     draft: 'draft',
     submitted: 'submitted',
     granted: 'granted',
-    part_granted: 'part_granted', # legacy - not removed as enum
     rejected: 'rejected',
     auto_grant: 'auto_grant',
     part_grant: 'part_grant',

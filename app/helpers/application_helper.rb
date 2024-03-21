@@ -17,4 +17,15 @@ module ApplicationHelper
   def multiline_text(string)
     ApplicationController.helpers.sanitize(string.gsub("\n", '<br>'), tags: %w[br])
   end
+
+  def relevant_prior_authority_list_anchor(prior_authority_application)
+    case prior_authority_application.status
+    when 'submitted'
+      :submitted
+    when 'draft'
+      :draft
+    else
+      :assessed
+    end
+  end
 end

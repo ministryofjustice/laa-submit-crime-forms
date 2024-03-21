@@ -139,6 +139,8 @@ en:
           total: Total
           period: Time
           cost_per_hour: Cost per hour
+          requested: Requested
+          laa_allowed: LAA allowed
         travel_cost_card:
           travel_costs: Travel costs
           change: Change
@@ -150,6 +152,8 @@ en:
           total: Total
           period: Travel time
           cost_per_hour: Hourly cost
+          requested: Requested
+          laa_allowed: LAA allowed
         additional_cost_card:
           additional_costs: Additional costs
           change: Change
@@ -216,6 +220,8 @@ en:
           period: Time
           cost_per_hour: Rate per hour
           total: Total
+          requested: Requested
+          laa_allowed: LAA allowed
       additional_cost_details:
         edit:
           caption: 3. About the request

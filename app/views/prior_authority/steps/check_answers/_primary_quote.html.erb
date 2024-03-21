@@ -1,7 +1,8 @@
+<% show_adjustments ||= false %>
 <%= govuk_summary_card(title: section.title, actions: (show_actions ? section.actions : [])) do |card|
       govuk_summary_list(rows: section.rows, actions: show_actions)
         .concat(
-          render(section.nested_table_template, section: section)
+          render(section.nested_table_template, section:, show_adjustments:)
         )
     end %>
 

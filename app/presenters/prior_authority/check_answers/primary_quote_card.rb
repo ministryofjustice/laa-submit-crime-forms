@@ -71,6 +71,14 @@ module PriorAuthority
         "prior_authority/steps/check_answers/#{filename}"
       end
 
+      def service_adjustment_comment
+        primary_quote.service_adjustment_comment.presence
+      end
+
+      def travel_adjustment_comment
+        primary_quote.travel_adjustment_comment.presence
+      end
+
       private
 
       delegate :primary_quote, to: :application

@@ -102,3 +102,4 @@ en:
           travel_reason: "Reason for travel cost: '%{reason}'"
           additional_cost: Additional cost %{n}
           cost_description: 'Cost description: "%{name} - %{description}"'
+          laa_adjustment: LAA adjustment
