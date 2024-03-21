@@ -10,7 +10,7 @@ module PriorAuthority
         when 'part_grant'
           sync_allowances(application, app_store_record)
         when 'sent_back'
-          sync_further_info_request()
+          sync_further_info_request(application, app_store_record)
         end
       end
 
