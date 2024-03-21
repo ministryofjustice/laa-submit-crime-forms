@@ -53,6 +53,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_114806) do
     t.uuid "prior_authority_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "total_cost_allowed", precision: 10, scale: 2
+    t.string "adjustment_comment"
     t.index ["prior_authority_application_id"], name: "index_additional_costs_on_prior_authority_application_id"
   end
 
@@ -217,6 +219,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_114806) do
     t.datetime "app_store_updated_at"
     t.string "further_information_explanation"
     t.string "incorrect_information_explanation"
+    t.string "assessment_comment"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
@@ -262,6 +265,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_114806) do
     t.text "travel_cost_reason"
     t.text "additional_cost_list"
     t.decimal "additional_cost_total", precision: 10, scale: 2
+    t.decimal "base_cost_allowed", precision: 10, scale: 2
+    t.decimal "travel_cost_allowed", precision: 10, scale: 2
+    t.string "service_adjustment_comment"
+    t.string "travel_adjustment_comment"
     t.index ["prior_authority_application_id"], name: "index_quotes_on_prior_authority_application_id"
   end
 

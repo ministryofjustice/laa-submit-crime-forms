@@ -55,4 +55,10 @@ RSpec.describe ApplicationHelper, type: :helper do
       it { expect(helper).not_to be_maat_required(form) }
     end
   end
+
+  describe '#relevant_prior_authority_list_anchor' do
+    let(:application) { build(:prior_authority_application, status: 'draft') }
+
+    it { expect(helper.relevant_prior_authority_list_anchor(application)).to eq(:draft) }
+  end
 end

@@ -1,25 +1,42 @@
-<h4 class="govuk-heading-s govuk-!-margin-top-6">
+<h4 id="service-cost" class="govuk-heading-s govuk-!-margin-top-6">
   <%= t('.service_cost', service: section.service_cost_form.service_name) %>
 </h4>
+<% if section.service_adjustment_comment %>
+  <div class="govuk-inset-text">
+    <strong><%= t('.laa_adjustment') %></strong><br>
+    <%= section.service_adjustment_comment %>
+  </div>
+<% end %>
 <%= render 'prior_authority/steps/primary_quote_summary/service_cost_subtable',
-           costs: section.service_cost_form %>
+           costs: section.service_cost_form, show_adjustments: show_adjustments %>
 
 <% if section.travel_detail_form.valid? %>
-  <h4 class="govuk-heading-s"><%= t('.travel_cost') %></h4>
-
+  <h4 id="travel-cost" class="govuk-heading-s"><%= t('.travel_cost') %></h4>
+  <% if section.travel_adjustment_comment %>
+    <div class="govuk-inset-text">
+      <strong><%= t('.laa_adjustment') %></strong><br>
+      <%= section.travel_adjustment_comment %>
+    </div>
+  <% end %>
   <% if section.travel_detail_form.travel_cost_reason.present? %>
     <p>
       <%= t('.travel_reason', reason: section.travel_detail_form.travel_cost_reason) %>
     </p>
   <% end %>
   <%= render 'prior_authority/steps/primary_quote_summary/travel_cost_subtable',
-             form: section.travel_detail_form %>
+             form: section.travel_detail_form, show_adjustments: show_adjustments %>
 <% end %>
 
 <% section.quote_summary.additional_cost_overview_form.additional_costs.each_with_index do |additional_cost, index| %>
-  <h4 class="govuk-heading-s"><%= t('.additional_cost', n: index + 1) %></h4>
+  <h4 id="additional-cost-<%= index %>" class="govuk-heading-s"><%= t('.additional_cost', n: index + 1) %></h4>
+  <% if additional_cost.adjustment_comment %>
+    <div class="govuk-inset-text">
+      <strong><%= t('.laa_adjustment') %></strong><br>
+      <%= additional_cost.adjustment_comment %>
+    </div>
+  <% end %>
   <p>
     <%= t('.cost_description', name: additional_cost.name, description: additional_cost.description) %>
   </p>
-  <%= render 'prior_authority/steps/additional_costs/subtable', additional_cost: %>
+  <%= render 'prior_authority/steps/additional_costs/subtable', additional_cost:, show_adjustments: %>
 <% end %>

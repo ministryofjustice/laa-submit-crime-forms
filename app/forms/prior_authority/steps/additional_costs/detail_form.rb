@@ -59,6 +59,14 @@ module PriorAuthority
           unit_type == PER_HOUR
         end
 
+        def adjustment_comment
+          record.adjustment_comment.presence
+        end
+
+        def adjusted_cost
+          record.total_cost_allowed
+        end
+
         private
 
         def persist!

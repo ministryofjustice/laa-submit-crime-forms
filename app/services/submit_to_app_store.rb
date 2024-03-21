@@ -30,7 +30,7 @@ class SubmitToAppStore < ApplicationJob
     # TODO: we only do post requests here as the system is not currently
     # able to support re-sending/submitting an appplication so we can ignore
     # put requests
-    post_manager = HttpClient.new
+    post_manager = AppStoreClient.new
     post_manager.post(payload)
   end
 
