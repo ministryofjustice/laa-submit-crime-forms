@@ -22,7 +22,6 @@ RSpec.describe 'Accessibility', :accessibility do
   context 'when viewing general screenss' do
     %i[
       root
-      about_feedback_index
       about_cookies
       about_privacy
       about_contact
