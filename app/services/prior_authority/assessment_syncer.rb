@@ -11,6 +11,7 @@ module PriorAuthority
           sync_allowances(application, app_store_record)
         when 'sent_back'
           sync_further_info_request()
+        end
       end
 
       def sync_overall_comment(application, app_store_record)
