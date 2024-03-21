@@ -59,9 +59,11 @@ module PriorAuthority
 
       def sync_further_info_request(application, app_store_record)
         data = app_store_record['application']
+        further_info_required = data['updates_needed'].include? 'further_information'
+        data['updates_needed'].include? 'incorrect_information'
         application.update(
-          further_information_explanation: data['further_information_explanation'],
-          incorrect_information_explanation: data['incorrect_information_explanation']
+          further_information_explanation: further_info_required ? data['further_information_explanation'] : nil,
+          incorrect_information_explanation: further_info_required ? data['incorrect_information_explanation'] : nil
         )
       end
 
