@@ -45,6 +45,7 @@ class PullUpdates < ApplicationJob
     {
       status: record['application_state'],
       app_store_updated_at: record['updated_at'],
+      further_information_explanation: record['application']['further_information_explanation']
     }
   end
 
