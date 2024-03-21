@@ -1,0 +1,5 @@
+<p><strong class="govuk-tag <%= prior_authority_tag_colour(:submitted) %>"><%= t(".status") %></strong></p>
+<p><%= @application.updated_at.to_fs(:stamp) %></p>
+<p><%= t(".awaiting_review") %></p>
+<br>
+<p><%= t('prior_authority.applications.show.amount_requested', amount: @primary_quote_summary.formatted_total_cost) %></p>

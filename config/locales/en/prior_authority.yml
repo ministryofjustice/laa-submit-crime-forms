@@ -7,6 +7,7 @@ en:
       save_and_continue: 'Save and continue'
       save_and_come_back_later: 'Save and come back later'
       none: None
+      not_applicable: N/A
     applications:
       index:
         page_title: Your applications
@@ -31,16 +32,9 @@ en:
           action: Action
           client: Client
           status: Status
-        status_colour:
-          granted: govuk-tag--green
-          auto_grant: govuk-tag--green
-          part_granted: govuk-tag--blue # legacy
-          part_grant: govuk-tag--blue
-          rejected: govuk-tag--red
         status:
           granted: Granted
           auto_grant: Granted
-          part_granted: Part granted # legacy
           part_grant: Part granted
           rejected: Rejected
         delete: Delete
@@ -60,13 +54,26 @@ en:
       show:
         page_title: Application details
         email_us: Email the LAA case team
-        email: prior-auth@laa.gov.uk
+        email: magsbilling@justice.gov.uk
         application_status: Application status
         status: Status
-        statuses:
-          submitted: Submitted
-        awaiting_review: Awaiting LAA review
         amount_requested: '%{amount} requested'
+        amount_allowed: '%{amount} allowed'
+        laa_response: LAA response
+        appeal: How to appeal this decision
+        review_service_cost_adjustments: Review service cost adjustments
+        review_travel_cost_adjustments: Review travel cost adjustments
+        review_additional_cost_adjustments: Review additional cost adjustments
+      state_summaries:
+        submitted:
+          status: Submitted
+          awaiting_review: Awaiting LAA review
+        granted:
+          status: Granted
+        rejected:
+          status: Rejected
+        part_grant:
+          status: Part granted
     steps:
       start_page:
         show:

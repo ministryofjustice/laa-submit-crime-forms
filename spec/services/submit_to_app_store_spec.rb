@@ -18,11 +18,11 @@ RSpec.describe SubmitToAppStore do
       before do
         allow(ENV).to receive(:key?).and_call_original
         allow(ENV).to receive(:key?).with('REDIS_HOST').and_return(false)
-        expect(described_class::HttpClient).to receive(:new)
+        expect(AppStoreClient).to receive(:new)
           .and_return(http_client)
       end
 
-      let(:http_client) { instance_double(described_class::HttpClient, post: true) }
+      let(:http_client) { instance_double(AppStoreClient, post: true) }
 
       it 'does not raise any errors' do
         expect { subject.process(submission:) }.not_to raise_error
@@ -61,10 +61,10 @@ RSpec.describe SubmitToAppStore do
   end
 
   describe '#perform' do
-    let(:http_client) { instance_double(described_class::HttpClient, post: true) }
+    let(:http_client) { instance_double(AppStoreClient, post: true) }
 
     before do
-      allow(described_class::HttpClient).to receive(:new)
+      allow(AppStoreClient).to receive(:new)
         .and_return(http_client)
     end
 
@@ -78,15 +78,15 @@ RSpec.describe SubmitToAppStore do
 
   describe '#submit' do
     context 'when SNS_URL is not present' do
-      let(:http_client) { instance_double(described_class::HttpClient, post: true) }
+      let(:http_client) { instance_double(AppStoreClient, post: true) }
 
       before do
-        allow(described_class::HttpClient).to receive(:new)
+        allow(AppStoreClient).to receive(:new)
           .and_return(http_client)
       end
 
-      it 'creates a new HttpClient instance' do
-        expect(described_class::HttpClient).to receive(:new)
+      it 'creates a new AppStoreClient instance' do
+        expect(AppStoreClient).to receive(:new)
 
         subject.submit(submission)
       end
