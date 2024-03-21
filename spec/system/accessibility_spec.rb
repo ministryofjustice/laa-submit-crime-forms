@@ -27,8 +27,8 @@ RSpec.describe 'Accessibility', :accessibility do
       about_contact
       about_accessibility
       nsm_applications
-      edit_nsm_steps_office_confirm
-      edit_nsm_steps_office_select
+      edit_nsm_office
+      edit_prior_authority_office
       prior_authority_applications
     ].each do |path|
       describe "#{path} screen" do
