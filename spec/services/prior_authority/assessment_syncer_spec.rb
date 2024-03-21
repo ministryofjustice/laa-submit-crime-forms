@@ -119,7 +119,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
           {
             application: {
               further_information_explanation: 'Some additional information is needed',
-              incorrect_information_explanation: 'This is incorrect'
+              incorrect_information_explanation: 'This is incorrect',
               updates_needed: ['further_information']
             }
           }
@@ -139,7 +139,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
           {
             application: {
               further_information_explanation: 'Some additional information is needed',
-              incorrect_information_explanation: 'This is incorrect'
+              incorrect_information_explanation: 'This is incorrect',
               updates_needed: ['incorrect_information']
             }
           }
