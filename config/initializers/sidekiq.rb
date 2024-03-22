@@ -16,7 +16,7 @@ Sidekiq.default_job_options = { retry: 5 }
 # Perform Sidekiq jobs immediately in development,
 # so you don't have to run a separate process.
 # You'll also benefit from code reloading.
-if Rails.env.development?
+if ENV.fetch('RUN_SIDEKIQ_IN_TEST_MODE', false) == "true"
   require 'sidekiq/testing'
   Sidekiq::Testing.inline!
 end
