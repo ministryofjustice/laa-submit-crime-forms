@@ -1,4 +1,4 @@
-web: bin/rails server -p 3001
+web: RUN_SIDEKIQ_IN_TEST_MODE=false bin/rails server -p 3001
 js: yarn build --watch
 css: yarn build:css --watch
 sidekiq: DISABLE_SIDEKIQ_ALIVE=true bundle exec sidekiq
