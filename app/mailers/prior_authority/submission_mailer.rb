@@ -11,7 +11,6 @@ module PriorAuthority
         defendant_name: @application.defendant.full_name,
         application_total: application_total,
         date: submission_date,
-        feedback_url: feedback_url
       )
       mail(to: email_recipient)
     end
@@ -19,7 +18,7 @@ module PriorAuthority
     private
 
     def email_recipient
-      @application.provider.email
+      @application.solicitor.contact_email
     end
 
     def case_reference
@@ -36,10 +35,6 @@ module PriorAuthority
 
     def submission_date
       DateTime.now.to_fs(:stamp)
-    end
-
-    def feedback_url
-      Rails.configuration.x.contact.feedback_url
     end
   end
 end

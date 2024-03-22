@@ -56,6 +56,10 @@ module PriorAuthority
         record.document || record.build_document
       end
 
+      def draft?
+        application.status.in?(%w[pre_draft draft])
+      end
+
       private
 
       def persist!

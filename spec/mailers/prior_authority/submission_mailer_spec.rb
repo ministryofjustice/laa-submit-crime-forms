@@ -5,8 +5,14 @@ require 'rails_helper'
 RSpec.describe PriorAuthority::SubmissionMailer, type: :mailer do
   let(:feedback_template) { 'd07d03fd-65d0-45e4-8d49-d4ee41efad35' }
   let(:application) do
-    create(:prior_authority_application, :with_defendant, :with_created_primary_quote, :with_created_alternative_quote,
-           :with_ufn)
+    create(
+      :prior_authority_application,
+      :with_firm_and_solicitor,
+      :with_defendant,
+      :with_created_primary_quote,
+      :with_created_alternative_quote,
+      :with_ufn
+    )
   end
 
   describe '#notify' do
@@ -16,8 +22,8 @@ RSpec.describe PriorAuthority::SubmissionMailer, type: :mailer do
       expect(mail.delivery_method).to be_a(GovukNotifyRails::Delivery)
     end
 
-    it 'sets the recipient from config' do
-      expect(mail.to).to eq(['provider@example.com'])
+    it 'sets the recipient to solicitors contact email' do
+      expect(mail.to).to eq(['james@email.com'])
     end
 
     it 'sets the template' do
@@ -35,7 +41,6 @@ RSpec.describe PriorAuthority::SubmissionMailer, type: :mailer do
         defendant_name: 'bob jim',
         application_total: '£155.00',
         date: DateTime.now.to_fs(:stamp),
-        feedback_url: 'tbc'
       )
     end
   end

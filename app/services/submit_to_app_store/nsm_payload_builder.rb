@@ -69,7 +69,7 @@ class SubmitToAppStore
 
     def defendant_data
       claim.defendants.map do |defendant|
-        defendant.as_json(only: %i[id maat main position]).merge('full_name' => defendant.full_name)
+        defendant.as_json(only: %i[id maat main position first_name last_name])
       end
     end
 
