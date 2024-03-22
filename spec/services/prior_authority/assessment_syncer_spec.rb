@@ -79,6 +79,22 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
       expect(application.assessment_comment).to eq 'Decision comment'
     end
 
+    context 'when app is granted' do
+      let(:status) { 'granted' }
+
+      it 'syncs the assessment comment' do
+        expect(application.assessment_comment).to eq 'Decision comment'
+      end
+    end
+
+    context 'when app is rejected' do
+      let(:status) { 'rejected' }
+
+      it 'syncs the assessment comment' do
+        expect(application.assessment_comment).to eq 'Decision comment'
+      end
+    end
+
     context 'when the app is part granted' do
       let(:status) { 'part_grant' }
 
