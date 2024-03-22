@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_21_114806) do
-
+ActiveRecord::Schema[7.1].define(version: 2024_03_22_135218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -181,6 +180,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_114806) do
     t.index ["previous_id"], name: "index_firm_offices_on_previous_id"
   end
 
+  create_table "further_informations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "information_requested"
+    t.string "information_supplied"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "prior_authority_application_id", null: false
+    t.index ["prior_authority_application_id"], name: "index_further_informations_on_prior_authority_application_id"
+  end
+
   create_table "prior_authority_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "provider_id"
     t.uuid "firm_office_id"
@@ -218,8 +226,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_114806) do
     t.string "prison_id"
     t.string "custom_prison_name"
     t.datetime "app_store_updated_at"
-    t.string "further_information_explanation"
-    t.string "incorrect_information_explanation"
     t.string "assessment_comment"
     t.string "further_information_explanation"
     t.string "incorrect_information_explanation"
@@ -321,6 +327,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_114806) do
   add_foreign_key "cost_totals", "claims"
   add_foreign_key "disbursements", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
+  add_foreign_key "further_informations", "prior_authority_applications"
   add_foreign_key "prior_authority_applications", "firm_offices"
   add_foreign_key "prior_authority_applications", "solicitors"
   add_foreign_key "quotes", "prior_authority_applications"
