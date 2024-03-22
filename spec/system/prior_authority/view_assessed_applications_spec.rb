@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'View reviewed applications' do
+  let(:arbitrary_fixed_date) { DateTime.new(2024, 3, 22, 15, 23, 11) }
+
   before do
+    travel_to arbitrary_fixed_date
     visit provider_saml_omniauth_callback_path
     application
     visit prior_authority_applications_path

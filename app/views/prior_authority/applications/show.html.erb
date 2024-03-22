@@ -56,7 +56,7 @@
                   <% t('.expiry_explanations',
                        requested: @application.resubmission_requested.to_fs(:stamp),
                        deadline: @application.resubmission_deadline.to_fs(:stamp)).each do |paragraph| %>
-                    <p><%= paragraph %>
+                    <p><%= paragraph %></p>
                   <% end %>
               </dt>
           <% end %>
