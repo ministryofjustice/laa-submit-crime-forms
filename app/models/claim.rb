@@ -19,7 +19,7 @@ class Claim < ApplicationRecord
 
   scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
 
-  enum status: { draft: 'draft', submitted: 'completed', granted: 'granted', part_grant: 'part-granted',
+  enum status: { draft: 'draft', submitted: 'submitted', granted: 'granted', part_grant: 'part_grant',
                  review: 'review', further_info: 'further_info', provider_requested: 'provider_requested',
                  rejected: 'rejected' }
 

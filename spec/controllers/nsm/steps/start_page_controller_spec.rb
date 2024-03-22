@@ -32,9 +32,9 @@ RSpec.describe Nsm::Steps::StartPageController, type: :controller do
       end
     end
 
-    context 'when claim is in a completed state' do
+    context 'when claim is in a submitted state' do
       let(:navigation_stack) { ['/foo'] }
-      let(:status) { 'completed' }
+      let(:status) { 'submitted' }
 
       it 'redirects to the read only view' do
         get :show, params: { id: claim }
