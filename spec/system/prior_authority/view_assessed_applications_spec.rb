@@ -95,6 +95,23 @@ RSpec.describe 'View reviewed applications' do
     end
   end
 
+  context 'when application is sent back' do
+    let(:application) do
+      create(:prior_authority_application,
+             :full,
+             status: 'sent_back',
+             app_store_updated_at: 1.day.ago,
+             resubmission_requested: 1.day.ago,
+             resubmission_deadline: 12.days.from_now)
+    end
+
+    it 'shows expiry details' do
+      expect(page).to have_content 'Update needed'
+      expect(page).to have_content '£155.00 requested'
+      expect(page).to have_content 'Review the requests and resubmit your application by 3 April 2024'
+    end
+  end
+
   context 'when application is expired' do
     let(:application) do
       create(:prior_authority_application,

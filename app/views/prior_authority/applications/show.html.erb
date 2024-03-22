@@ -21,11 +21,29 @@
               <%= t(".status") %>
             </dt>
             <dd class="govuk-summary-list__value">
-                <%= render "prior_authority/applications/state_summaries/#{@application.status}" %>
+              <p><strong class="govuk-tag <%= prior_authority_tag_colour(@application.status) %>"><%= t("prior_authority.statuses.#{@application.status}") %></strong></p>
+              <%= render "prior_authority/applications/state_summaries/#{@application.status}" %>
             </dd>
           </div>
           <% if @application.assessment_comment.present? %>
             <%= render "prior_authority/applications/response_summaries/assessed" %>
+          <% elsif @application.sent_back? %>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                <%= t(".laa_response") %>
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <% t('.sent_back_explanations_html',
+                    deadline: tag.strong(@application.resubmission_deadline.to_fs(:stamp))).each do |paragraph| %>
+                  <p><%= paragraph %></p>
+                <% end %>
+                <% if @application.further_information_explanation.present?%>
+                  <%= govuk_button_link_to(t('.update_application'),  '#TODO: CRM457-1192') %>
+                <% else %>
+                  <%= govuk_button_link_to(t('.update_application'),  edit_prior_authority_steps_check_answers_path(@application)) %>
+                <% end %>
+              </dd>
+            </div>
           <% elsif @application.expired? %>
             <%= render "prior_authority/applications/response_summaries/expired" %>
           <% end %>
