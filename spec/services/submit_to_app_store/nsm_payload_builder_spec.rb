@@ -34,7 +34,8 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'created_at' => '2023-08-17T12:13:14.000Z',
           'defence_statement' => nil,
           'defendants' => [{
-            'full_name' => 'bob jim',
+            'first_name' => 'bob',
+            'last_name' => 'jim',
             'id' => defendant.id,
             'maat' => 'AA1',
             'main' => true,
