@@ -4,10 +4,11 @@ module PriorAuthority
       def call(application)
         app_store_record = AppStoreClient.new.get(application.id)
 
-        sync_overall_comment(application, app_store_record)
-
         case application.status
+        when 'rejected', 'granted'
+          sync_overall_comment(application, app_store_record)
         when 'part_grant'
+          sync_overall_comment(application, app_store_record)
           sync_allowances(application, app_store_record)
         when 'sent_back'
           sync_further_info_request(application, app_store_record)
