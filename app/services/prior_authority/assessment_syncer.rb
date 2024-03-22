@@ -4,10 +4,15 @@ module PriorAuthority
       def call(application)
         app_store_record = AppStoreClient.new.get(application.id)
 
-        sync_overall_comment(application, app_store_record)
-        return unless application.status == 'part_grant'
-
-        sync_allowances(application, app_store_record)
+        case application.status
+        when 'rejected', 'granted'
+          sync_overall_comment(application, app_store_record)
+        when 'part_grant'
+          sync_overall_comment(application, app_store_record)
+          sync_allowances(application, app_store_record)
+        when 'sent_back'
+          sync_further_info_request(application, app_store_record)
+        end
       end
 
       def sync_overall_comment(application, app_store_record)
@@ -50,6 +55,16 @@ module PriorAuthority
         cost.update(
           total_cost_allowed: cost_form.total_cost,
           adjustment_comment: cost_data['adjustment_comment']
+        )
+      end
+
+      def sync_further_info_request(application, app_store_record)
+        data = app_store_record['application']
+        further_info_required = data['updates_needed'].include? 'further_information'
+        info_correct_required = data['updates_needed'].include? 'incorrect_information'
+        application.update(
+          further_information_explanation: further_info_required ? data['further_information_explanation'] : nil,
+          incorrect_information_explanation: info_correct_required ? data['incorrect_information_explanation'] : nil
         )
       end
 
