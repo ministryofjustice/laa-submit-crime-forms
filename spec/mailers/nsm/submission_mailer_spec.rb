@@ -34,7 +34,6 @@ RSpec.describe Nsm::SubmissionMailer, type: :mailer do
           defendant_reference: 'MAAT ID: AA1',
           claim_total: '£20.45',
           date: DateTime.now.to_fs(:stamp),
-          feedback_url: 'tbc'
         )
       end
     end
@@ -52,7 +51,6 @@ RSpec.describe Nsm::SubmissionMailer, type: :mailer do
           defendant_reference: "Client's CNTP number: CNTP12345",
           claim_total: '£20.45',
           date: DateTime.now.to_fs(:stamp),
-          feedback_url: 'tbc'
         )
       end
     end
