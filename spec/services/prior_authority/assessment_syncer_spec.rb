@@ -170,5 +170,13 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
         end
       end
     end
+
+    context 'when app has status that should not sync' do
+      let(:status) { nil }
+
+      it 'does not sync any new data' do
+        expect(application.assessment_comment).to be_nil
+      end
+    end
   end
 end
