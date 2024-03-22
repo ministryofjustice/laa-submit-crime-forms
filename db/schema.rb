@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_22_122517) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_22_141829) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -220,6 +220,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_122517) do
     t.string "assessment_comment"
     t.string "further_information_explanation"
     t.string "incorrect_information_explanation"
+    t.datetime "resubmission_requested"
+    t.datetime "resubmission_deadline"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"

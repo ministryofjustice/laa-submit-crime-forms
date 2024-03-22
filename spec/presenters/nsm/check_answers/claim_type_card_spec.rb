@@ -30,7 +30,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
             },
             {
               head_key: 'rep_order_date',
-              text: '01 January 2023'
+              text: '1 January 2023'
             }
           ]
         )
@@ -67,7 +67,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
             },
             {
               head_key: 'cntp_rep_order',
-              text: '01 February 2023'
+              text: '1 February 2023'
             }
           ]
         )

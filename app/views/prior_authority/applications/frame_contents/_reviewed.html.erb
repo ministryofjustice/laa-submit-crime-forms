@@ -1,7 +1,7 @@
 <% if model.none? %>
-  <p><%= t('prior_authority.applications.tabs.no_assessed') %></p>
+  <p><%= t('prior_authority.applications.tabs.no_reviewed') %></p>
 <% else %>
-  <h2 class="govuk-heading-m"><%= t('prior_authority.applications.tabs.assessed') %></h2>
+  <h2 class="govuk-heading-m"><%= t('prior_authority.applications.tabs.reviewed') %></h2>
   <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="tab_submitted">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
@@ -9,7 +9,7 @@
           <%= table_header(key,
                           'prior_authority.applications.tabs.header',
                            index,
-                           assessed_prior_authority_applications_path,
+                           reviewed_prior_authority_applications_path,
                            @sort_by,
                            @sort_direction) %>
         <% end %>

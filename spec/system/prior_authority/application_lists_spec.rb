@@ -23,7 +23,7 @@ RSpec.describe 'Prior authority application lists' do
       expect(page).to have_content 'BBBBB'
     end
 
-    within '#assessed' do
+    within '#reviewed' do
       expect(page).to have_content 'CCCCC'
     end
 

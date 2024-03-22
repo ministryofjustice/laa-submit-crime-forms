@@ -47,6 +47,18 @@
                 <% end %>
               </dd>
             </div>
+          <% elsif @application.expired? %>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                <%= t(".laa_response") %>
+              </dt>
+              <dd class="govuk-summary-list__value">
+                  <% t('.expiry_explanations',
+                       requested: @application.resubmission_requested.to_fs(:stamp),
+                       deadline: @application.resubmission_deadline.to_fs(:stamp)).each do |paragraph| %>
+                    <p><%= paragraph %>
+                  <% end %>
+              </dt>
           <% end %>
         </dl>
       </div>

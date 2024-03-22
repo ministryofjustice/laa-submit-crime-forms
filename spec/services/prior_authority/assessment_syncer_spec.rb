@@ -11,6 +11,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
     let(:primary_quote) { build(:quote, :primary) }
     let(:additional_cost) { build(:additional_cost, :per_item) }
     let(:status) { 'granted' }
+    let(:resubmission_deadline) { 9.days.from_now }
 
     let(:payload) do
       {
@@ -51,7 +52,8 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
           ],
           further_information_explanation: 'Some additional information is needed',
           incorrect_information_explanation: 'This is incorrect',
-          updates_needed: %w[further_information incorrect_information]
+          updates_needed: %w[further_information incorrect_information],
+          resubmission_deadline: resubmission_deadline,
         }
       }
     end
@@ -64,7 +66,10 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
       )
     end
 
+    let(:arbitrary_fixed_date) { DateTime.new(2024, 2, 1, 15, 23, 27) }
+
     before do
+      travel_to arbitrary_fixed_date
       app_store_stub
       described_class.call(application)
       primary_quote.reload
@@ -127,6 +132,11 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
 
         it 'syncs the incorrect info' do
           expect(application.incorrect_information_explanation).to eq 'This is incorrect'
+        end
+
+        it 'syncs dates' do
+          expect(application.resubmission_deadline).to eq resubmission_deadline
+          expect(application.resubmission_requested).to eq DateTime.current
         end
       end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'View assessed applications' do
+RSpec.describe 'View reviewed applications' do
   before do
     visit provider_saml_omniauth_callback_path
     application
@@ -88,6 +88,24 @@ RSpec.describe 'View assessed applications' do
     it 'shows additional cost adjustments' do
       expect(page).to have_content 'Nearly right'
       expect(page).to have_content '£20.00 £119.00'
+    end
+  end
+
+  context 'when application is expired' do
+    let(:application) do
+      create(:prior_authority_application,
+             :full,
+             status: 'expired',
+             app_store_updated_at: 1.day.ago,
+             resubmission_requested: 14.days.ago,
+             resubmission_deadline: 1.day.ago)
+    end
+
+    it 'shows expiry details' do
+      expect(page).to have_content 'Expired'
+      expect(page).to have_content '£155.00 requested'
+      expect(page).to have_content 'On 8 March 2024 we asked you to update your application'
+      expect(page).to have_content 'This was due by 21 March 2024'
     end
   end
 end
