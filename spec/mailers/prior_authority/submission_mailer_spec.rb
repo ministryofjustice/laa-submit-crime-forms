@@ -41,7 +41,6 @@ RSpec.describe PriorAuthority::SubmissionMailer, type: :mailer do
         defendant_name: 'bob jim',
         application_total: '£155.00',
         date: DateTime.now.to_fs(:stamp),
-        feedback_url: 'tbc'
       )
     end
   end

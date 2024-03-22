@@ -48,7 +48,10 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
               items: 10,
               adjustment_comment: 'Additional cost comment'
             }
-          ]
+          ],
+          further_information_explanation: 'Some additional information is needed',
+          incorrect_information_explanation: 'This is incorrect',
+          updates_needed: %w[further_information incorrect_information]
         }
       }
     end
@@ -76,6 +79,22 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
       expect(application.assessment_comment).to eq 'Decision comment'
     end
 
+    context 'when app is granted' do
+      let(:status) { 'granted' }
+
+      it 'syncs the assessment comment' do
+        expect(application.assessment_comment).to eq 'Decision comment'
+      end
+    end
+
+    context 'when app is rejected' do
+      let(:status) { 'rejected' }
+
+      it 'syncs the assessment comment' do
+        expect(application.assessment_comment).to eq 'Decision comment'
+      end
+    end
+
     context 'when the app is part granted' do
       let(:status) { 'part_grant' }
 
@@ -95,6 +114,68 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
 
       it 'syncs the additional cost adjustment comments' do
         expect(additional_cost.adjustment_comment).to eq 'Additional cost comment'
+      end
+    end
+
+    context 'when app is sent back' do
+      let(:status) { 'sent_back' }
+
+      context 'further info and incorrect info needed' do
+        it 'syncs the further info needed' do
+          expect(application.further_information_explanation).to eq 'Some additional information is needed'
+        end
+
+        it 'syncs the incorrect info' do
+          expect(application.incorrect_information_explanation).to eq 'This is incorrect'
+        end
+      end
+
+      context 'only further info needed' do
+        let(:payload) do
+          {
+            application: {
+              further_information_explanation: 'Some additional information is needed',
+              incorrect_information_explanation: 'This is incorrect',
+              updates_needed: ['further_information']
+            }
+          }
+        end
+
+        it 'syncs the further info needed' do
+          expect(application.further_information_explanation).to eq 'Some additional information is needed'
+        end
+
+        it 'syncs the incorrect info' do
+          expect(application.incorrect_information_explanation).to be_nil
+        end
+      end
+
+      context 'only incorrect info needed' do
+        let(:payload) do
+          {
+            application: {
+              further_information_explanation: 'Some additional information is needed',
+              incorrect_information_explanation: 'This is incorrect',
+              updates_needed: ['incorrect_information']
+            }
+          }
+        end
+
+        it 'syncs the further info needed' do
+          expect(application.further_information_explanation).to be_nil
+        end
+
+        it 'syncs the incorrect info' do
+          expect(application.incorrect_information_explanation).to eq 'This is incorrect'
+        end
+      end
+    end
+
+    context 'when app has status that should not sync' do
+      let(:status) { nil }
+
+      it 'does not sync any new data' do
+        expect(application.assessment_comment).to be_nil
       end
     end
   end
