@@ -5,6 +5,7 @@ module TagHelper
     auto_grant: 'govuk-tag--green',
     part_grant: 'govuk-tag--blue',
     rejected: 'govuk-tag--red',
+    sent_back: 'govuk-tag--yellow',
   }.freeze
 
   def prior_authority_tag_colour(status)

@@ -44,7 +44,7 @@ class PriorAuthorityApplication < ApplicationRecord
     expired: 'expired'
   }
 
-  scope :assessed, -> { where(status: %i[granted part_grant rejected auto_grant]) }
+  scope :reviewed, -> { where(status: %i[granted part_grant rejected auto_grant sent_back]) }
 
   scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
 

@@ -2,7 +2,7 @@ module PriorAuthority
   class ApplicationsController < ApplicationController
     before_action :set_default_table_sort_options
     before_action :load_drafts, only: %i[index draft]
-    before_action :load_assessed, only: %i[index assessed]
+    before_action :load_reviewed, only: %i[index reviewed]
     before_action :load_submitted, only: %i[index submitted]
     layout 'prior_authority'
 
@@ -39,7 +39,7 @@ module PriorAuthority
       render layout: nil
     end
 
-    def assessed
+    def reviewed
       render layout: nil
     end
 
@@ -57,8 +57,8 @@ module PriorAuthority
       @draft_pagy, @draft_model = order_and_paginate(PriorAuthorityApplication.for(current_provider).draft)
     end
 
-    def load_assessed
-      @assessed_pagy, @assessed_model = order_and_paginate(PriorAuthorityApplication.for(current_provider).assessed)
+    def load_reviewed
+      @reviewed_pagy, @reviewed_model = order_and_paginate(PriorAuthorityApplication.for(current_provider).reviewed)
     end
 
     def load_submitted
