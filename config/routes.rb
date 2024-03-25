@@ -148,7 +148,7 @@ Rails.application.routes.draw do
           member { get :confirm_delete }
         end
         upload_step :reason_why
-        edit_step :further_information
+        upload_step :further_information
         edit_step :check_answers
         show_step :submission_confirmation
       end
