@@ -63,7 +63,15 @@ module PriorAuthority
         further_info_required = data['updates_needed'].include? 'further_information'
         info_correct_required = data['updates_needed'].include? 'incorrect_information'
         application.update( incorrect_information_explanation: info_correct_required ? data['incorrect_information_explanation'] : nil)
-        #TO DO - add further info via building form to get validations
+        if further_info_required
+          current_further_info = data['further_information'].last
+          application.further_informations.build({
+            caseworker_id: current_further_info['caseworker_id'],
+            information_requested: current_further_info['information_requested'],
+            requested_at: current_further_info['requested_at'],
+            expires_at: current_further_info['expires_at']
+          })
+        end
       end
 
       def build_form(application, record, form_class, data)
