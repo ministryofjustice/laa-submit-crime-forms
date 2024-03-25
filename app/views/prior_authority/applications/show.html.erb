@@ -21,11 +21,14 @@
               <%= t(".status") %>
             </dt>
             <dd class="govuk-summary-list__value">
-                <%= render "prior_authority/applications/state_summaries/#{@application.status}" %>
+              <p><strong class="govuk-tag <%= prior_authority_tag_colour(@application.status) %>"><%= t("prior_authority.statuses.#{@application.status}") %></strong></p>
+              <%= render "prior_authority/applications/state_summaries/#{@application.status}" %>
             </dd>
           </div>
           <% if @application.assessment_comment.present? %>
             <%= render "prior_authority/applications/response_summaries/assessed" %>
+          <% elsif @application.sent_back? %>
+            <%= render "prior_authority/applications/response_summaries/sent_back" %>
           <% elsif @application.expired? %>
             <%= render "prior_authority/applications/response_summaries/expired" %>
           <% end %>
