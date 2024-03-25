@@ -64,7 +64,9 @@ module PriorAuthority
         info_correct_required = data['updates_needed'].include? 'incorrect_information'
         application.update(
           further_information_explanation: further_info_required ? data['further_information_explanation'] : nil,
-          incorrect_information_explanation: info_correct_required ? data['incorrect_information_explanation'] : nil
+          incorrect_information_explanation: info_correct_required ? data['incorrect_information_explanation'] : nil,
+          resubmission_deadline: data['resubmission_deadline'],
+          resubmission_requested: DateTime.current
         )
       end
 

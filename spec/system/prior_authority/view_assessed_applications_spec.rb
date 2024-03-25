@@ -1,7 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'View assessed applications' do
+RSpec.describe 'View reviewed applications' do
+  let(:arbitrary_fixed_date) { DateTime.new(2024, 3, 22, 15, 23, 11) }
+
   before do
+    travel_to arbitrary_fixed_date
     visit provider_saml_omniauth_callback_path
     application
     visit prior_authority_applications_path
@@ -46,6 +49,7 @@ RSpec.describe 'View assessed applications' do
       create(:prior_authority_application,
              :full,
              status: 'part_grant',
+             assessment_comment: 'Too much',
              app_store_updated_at: 1.day.ago,
              quotes: [quote],
              additional_costs: [additional_cost])
@@ -88,6 +92,24 @@ RSpec.describe 'View assessed applications' do
     it 'shows additional cost adjustments' do
       expect(page).to have_content 'Nearly right'
       expect(page).to have_content '£20.00 £119.00'
+    end
+  end
+
+  context 'when application is expired' do
+    let(:application) do
+      create(:prior_authority_application,
+             :full,
+             status: 'expired',
+             app_store_updated_at: 1.day.ago,
+             resubmission_requested: 14.days.ago,
+             resubmission_deadline: 1.day.ago)
+    end
+
+    it 'shows expiry details' do
+      expect(page).to have_content('Expired')
+        .and have_content('£155.00 requested')
+        .and have_content('On 8 March 2024 we asked you to update your application')
+        .and have_content('This was due by 21 March 2024')
     end
   end
 end

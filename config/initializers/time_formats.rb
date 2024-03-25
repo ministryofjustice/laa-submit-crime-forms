@@ -3,5 +3,5 @@
 # instead of
 # `my_date.strftime('%d %B %Y')`
 #
-Date::DATE_FORMATS[:stamp] = '%d %B %Y' # DD MONTH YYYY
-Time::DATE_FORMATS[:stamp] = '%d %B %Y' # DD MONTH YYYY
+Date::DATE_FORMATS[:stamp] = '%-d %B %Y' # DD MONTH YYYY
+Time::DATE_FORMATS[:stamp] = '%-d %B %Y' # DD MONTH YYYY

@@ -50,7 +50,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDisposalCard do
           },
           {
             head_key: 'arrest_warrant_date',
-            text: '01 March 2023'
+            text: '1 March 2023'
           }
         ]
       )
@@ -85,7 +85,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDisposalCard do
           },
           {
             head_key: 'cracked_trial_date',
-            text: '01 March 2023'
+            text: '1 March 2023'
           }
         ]
       )

@@ -157,7 +157,7 @@ Rails.application.routes.draw do
       collection do
         get :draft
         get :submitted
-        get :assessed
+        get :reviewed
       end
       member do
         get 'offboard'

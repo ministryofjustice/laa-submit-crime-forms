@@ -24,7 +24,7 @@ RSpec.describe Nsm::CheckAnswers::HearingDetailsCard do
         [
           {
             head_key: 'hearing_date',
-            text: '01 March 2023'
+            text: '1 March 2023'
           },
           {
             head_key: 'number_of_hearing',

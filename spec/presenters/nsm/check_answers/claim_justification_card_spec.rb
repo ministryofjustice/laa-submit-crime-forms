@@ -57,7 +57,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimJustificationCard do
             },
             {
               head_key: 'representation_order_withdrawn_date',
-              text: '01 August 2023'
+              text: '1 August 2023'
             },
             {
               head_key: 'reason_for_claim_other_details',

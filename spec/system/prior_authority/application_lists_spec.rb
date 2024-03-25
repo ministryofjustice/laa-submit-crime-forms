@@ -10,7 +10,11 @@ RSpec.describe 'Prior authority application lists' do
            status: 'submitted',
            updated_at: 1.day.ago)
     create(:prior_authority_application, laa_reference: 'LAA-BBBBB', status: 'submitted', updated_at: 2.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-CCCCC', status: 'granted', updated_at: 3.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-CCCC1', status: 'granted', updated_at: 3.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-CCCC2', status: 'sent_back', updated_at: 3.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-CCCC3', status: 'part_grant', updated_at: 3.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-CCCC4', status: 'rejected', updated_at: 3.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-CCCC5', status: 'auto_grant', updated_at: 3.days.ago)
     create(:prior_authority_application, laa_reference: 'LAA-DDDDD', status: 'draft', updated_at: 4.days.ago)
     create(:prior_authority_application, laa_reference: 'LAA-EEEEE', status: 'draft', office_code: 'OTHER')
 
@@ -23,8 +27,13 @@ RSpec.describe 'Prior authority application lists' do
       expect(page).to have_content 'BBBBB'
     end
 
-    within '#assessed' do
-      expect(page).to have_content 'CCCCC'
+    within '#reviewed' do
+      expect(page)
+        .to have_content('CCCC1')
+        .and have_content('CCCC2')
+        .and have_content('CCCC3')
+        .and have_content('CCCC4')
+        .and have_content('CCCC5')
     end
 
     within '#drafts' do
