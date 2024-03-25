@@ -1,9 +1,15 @@
 module PriorAuthority
   module Tasks
     class FurtherInformation < Base
-      # TODO: Ufn is not the previous task, but it must be listed as such to allow
-      # treating this task as can_start-able when Ufn is provided
-      PREVIOUS_TASKS = Ufn
+      PREVIOUS_TASKS = [
+        PriorAuthority::Tasks::Ufn,
+        PriorAuthority::Tasks::CaseContact,
+        PriorAuthority::Tasks::ClientDetail,
+        PriorAuthority::Tasks::CaseAndHearingDetail,
+        PriorAuthority::Tasks::PrimaryQuote,
+        PriorAuthority::Tasks::AlternativeQuotes,
+        PriorAuthority::Tasks::ReasonWhy,
+      ].freeze
       FORM = ::PriorAuthority::Steps::FurtherInformationForm
 
       def path
@@ -11,9 +17,12 @@ module PriorAuthority
       end
 
       def completed?
-        record&.status == 'in_progress' && FORM.build(record, application:).valid?
+        FORM.build(record, application:).valid?
       end
 
+      # This method assumes that the application is in a send back state and a
+      # further information update is needed - the task wouldn't available on the
+      # UI otherwise
       def record
         application.further_informations.last
       end
