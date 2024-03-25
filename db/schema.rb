@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_25_121503) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_25_172750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -189,6 +189,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_121503) do
     t.uuid "caseworker_id"
     t.datetime "requested_at"
     t.datetime "expired_at"
+    t.string "status"
     t.index ["prior_authority_application_id"], name: "index_further_informations_on_prior_authority_application_id"
   end
 

@@ -70,10 +70,11 @@ module PriorAuthority
 
         current_further_info = data['further_information'].last
         application.further_informations.build({
+                                                 status: 'in_progress',
                                                  caseworker_id: current_further_info['caseworker_id'],
-          information_requested: current_further_info['information_requested'],
-          requested_at: current_further_info['requested_at'],
-          expires_at: current_further_info['expires_at']
+                                                 information_requested: current_further_info['information_requested'],
+                                                 requested_at: current_further_info['requested_at'],
+                                                 expires_at: current_further_info['expires_at']
                                                })
       end
 
