@@ -1,10 +1,8 @@
-class Quote < ApplicationRecord
+class FurtherInformation < ApplicationRecord
   belongs_to :prior_authority_application
-  has_one :document, lambda {
-                       where(document_type: SupportingDocument::FURTHER_INFORMATION_DOCUMENT)
-                     },
-          dependent: :destroy,
-          inverse_of: :documentable,
-          class_name: 'SupportingDocument',
-          as: :documentable
+  has_many :supporting_documents, -> { order(:created_at, :file_name).supporting_documents },
+           dependent: :destroy,
+           inverse_of: :documentable,
+           class_name: 'SupportingDocument',
+           as: :documentable
 end

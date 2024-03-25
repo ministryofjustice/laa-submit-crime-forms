@@ -62,10 +62,8 @@ module PriorAuthority
         data = app_store_record['application']
         further_info_required = data['updates_needed'].include? 'further_information'
         info_correct_required = data['updates_needed'].include? 'incorrect_information'
-        application.update(
-          further_information_explanation: further_info_required ? data['further_information_explanation'] : nil,
-          incorrect_information_explanation: info_correct_required ? data['incorrect_information_explanation'] : nil
-        )
+        application.update( incorrect_information_explanation: info_correct_required ? data['incorrect_information_explanation'] : nil)
+        #TO DO - add further info via building form to get validations
       end
 
       def build_form(application, record, form_class, data)

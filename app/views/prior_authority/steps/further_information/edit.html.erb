@@ -9,5 +9,10 @@
       <p><strong><%= t(".request_heading") %></strong></p>
       <p><%= @explanation %></p>
     </div>
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |form| %>
+      <%= form.govuk_text_area :information_supplied, label: { text: t(".information_supplied"), size: "s" }%>
+      <%= form.continue_button %>
+    <% end %>
   </div>
 </div>
