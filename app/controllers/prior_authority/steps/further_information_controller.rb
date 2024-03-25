@@ -9,13 +9,6 @@ module PriorAuthority
         @supporting_documents = record.supporting_documents
       end
 
-      def update
-        @supporting_documents = record.supporting_documents
-        update_and_advance(FurtherInformationForm, as:, after_commit_redirect_path:, record:)
-      end
-
-
-
       def create
         unless supported_filetype(params[:documents])
           return return_error(nil,
@@ -28,6 +21,11 @@ module PriorAuthority
         return_error(e, { message: t('activemodel.errors.messages.suspected_malware') })
       rescue StandardError => e
         return_error(e, { message: t('activemodel.errors.messages.upload_failed') })
+      end
+
+      def update
+        @supporting_documents = record.supporting_documents
+        update_and_advance(FurtherInformationForm, as:, after_commit_redirect_path:, record:)
       end
 
       def destroy

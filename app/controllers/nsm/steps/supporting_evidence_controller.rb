@@ -13,9 +13,7 @@ module Nsm
       end
 
       def create
-        unless supported_filetype(params[:documents])
-          return return_error(nil, { message: 'Incorrect file type provided' })
-        end
+        return return_error(nil, { message: 'Incorrect file type provided' }) unless supported_filetype(params[:documents])
 
         evidence = upload_file(params)
         return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
