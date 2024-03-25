@@ -49,6 +49,7 @@ RSpec.describe 'View reviewed applications' do
       create(:prior_authority_application,
              :full,
              status: 'part_grant',
+             assessment_comment: 'Too much',
              app_store_updated_at: 1.day.ago,
              quotes: [quote],
              additional_costs: [additional_cost])
@@ -105,10 +106,10 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'shows expiry details' do
-      expect(page).to have_content 'Expired'
-      expect(page).to have_content '£155.00 requested'
-      expect(page).to have_content 'On 8 March 2024 we asked you to update your application'
-      expect(page).to have_content 'This was due by 21 March 2024'
+      expect(page).to have_content('Expired')
+        .and have_content('£155.00 requested')
+        .and have_content('On 8 March 2024 we asked you to update your application')
+        .and have_content('This was due by 21 March 2024')
     end
   end
 end

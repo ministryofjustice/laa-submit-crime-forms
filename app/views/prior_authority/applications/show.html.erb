@@ -24,41 +24,10 @@
                 <%= render "prior_authority/applications/state_summaries/#{@application.status}" %>
             </dd>
           </div>
-          <% if @application.status.in?(['part_grant', 'rejected']) || @application.assessment_comment.present? %>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                <%= t(".laa_response") %>
-              </dt>
-              <dd class="govuk-summary-list__value">
-                <p><%= @application.assessment_comment %></p>
-                <ul class="govuk-list govuk-list--bullet">
-                  <% if @application.primary_quote.service_adjustment_comment.present? %>
-                    <li><%= link_to t('.review_service_cost_adjustments'), '#service-cost' %></li>
-                  <% end %>
-                  <% if @application.primary_quote.travel_adjustment_comment.present? %>
-                    <li><%= link_to t('.review_travel_cost_adjustments'), '#travel-cost' %></li>
-                  <% end %>
-                  <% if @application.additional_costs.any? { _1.adjustment_comment.present? } %>
-                    <li><%= link_to t('.review_additional_cost_adjustments'), '#additional-cost-0' %></li>
-                  <% end %>
-                </ul>
-                <% if @application.status != 'granted' %>
-                  <%= govuk_button_link_to(t('.appeal'), '#') %>
-                <% end %>
-              </dd>
-            </div>
+          <% if @application.assessment_comment.present? %>
+            <%= render "prior_authority/applications/response_summaries/assessed" %>
           <% elsif @application.expired? %>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                <%= t(".laa_response") %>
-              </dt>
-              <dd class="govuk-summary-list__value">
-                  <% t('.expiry_explanations',
-                       requested: @application.resubmission_requested.to_fs(:stamp),
-                       deadline: @application.resubmission_deadline.to_fs(:stamp)).each do |paragraph| %>
-                    <p><%= paragraph %></p>
-                  <% end %>
-              </dt>
+            <%= render "prior_authority/applications/response_summaries/expired" %>
           <% end %>
         </dl>
       </div>
