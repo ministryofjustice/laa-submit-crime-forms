@@ -115,6 +115,7 @@ FactoryBot.define do
       further_information_explanation { 'Please provide more evidence to support the service costs...' }
       incorrect_information_explanation { 'Please correct the following information...' }
       resubmission_deadline { 14.days.from_now }
+      resubmission_requested { DateTime.current }
     end
 
     trait :with_complete_non_prison_law do

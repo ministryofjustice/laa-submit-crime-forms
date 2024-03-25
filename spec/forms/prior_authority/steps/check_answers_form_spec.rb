@@ -12,7 +12,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
   end
 
   describe '#validate' do
-    let(:application) { instance_double(PriorAuthorityApplication) }
+    let(:application) { instance_double(PriorAuthorityApplication, sent_back?: false) }
 
     context 'with all confirmations accepted' do
       let(:confirm_excluding_vat) { 'true' }
@@ -46,6 +46,25 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
             'parking and travel fares) is included as additional items in the primary ' \
             'quote, and is not included as part of any hourly rate'
           )
+      end
+    end
+
+    context 'with a sent_back application with no changes made' do
+      let(:application) do
+        travel_to(sent_back_datetime) do
+          create(:prior_authority_application, :full, :with_sent_back_status)
+        end
+      end
+
+      let(:sent_back_datetime) { 2.days.ago.change({ hour: 11, minute: 0 }) }
+      let(:confirm_excluding_vat) { 'true' }
+      let(:confirm_travel_expenditure) { 'true' }
+
+      it 'adds validation to base to change/correct the application' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:base, :application_not_corrected)).to be(true)
+        expect(form.errors.messages[:base])
+          .to include('Your application needs existing information corrected')
       end
     end
   end

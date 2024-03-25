@@ -4,12 +4,22 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+
+    <%= govuk_error_summary(@form_object) %>
+
     <% if @form_object.application.incorrect_information_explanation %>
-      <div class="govuk-inset-text">
-        <strong><%= t('.incorrect_information_heading') %></strong><br>
-        <br>
-        <%= @form_object.application.incorrect_information_explanation %>
-      </div>
+      <% if @form_object.errors.of_kind?(:base, :application_not_corrected) %>
+        <div class="govuk-form-group--error">
+          <p class="govuk-error-message" id="prior-authority-steps-check-answers-form-base-field-error"><%= t('.incorrect_information_heading') %></p>
+          <p class="govuk-body"><%= @form_object.application.incorrect_information_explanation %></p>
+        </div>
+      <% else %>
+        <div class="govuk-inset-text">
+          <strong><%= t('.incorrect_information_heading') %></strong><br>
+          <br>
+          <p class="govuk-body"><%= @form_object.application.incorrect_information_explanation %></p>
+        </div>
+      <% end %>
     <% end %>
 
     <% @report.section_groups.each do |section_group| %>
@@ -30,8 +40,6 @@
     <% end %>
 
     <h2 class="govuk-heading-l"><%= t('.subheading') %></h2>
-
-    <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_check_boxes_fieldset :confirm_excluding_vat, multiple: false, legend: nil do %>
