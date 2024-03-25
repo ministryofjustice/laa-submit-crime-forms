@@ -153,13 +153,13 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
               'document_type' => 'supporting_evidence',
               'documentable_id' => an_instance_of(String),
               'documentable_type' => 'Claim',
-              'created_at' => '2023-03-01T00:00:00.000Z',
+              'created_at' => '2023-08-17T12:13:14.000Z',
                'file_name' => 'test.png',
                'file_path' => 'test_path',
                'file_size' => 1234,
                'file_type' => 'image/png',
                'id' => an_instance_of(String),
-               'updated_at' => '2023-03-01T00:00:00.000Z'
+               'updated_at' => '2023-08-17T12:13:14.000Z'
             }],
           'cost_totals' =>
           [
