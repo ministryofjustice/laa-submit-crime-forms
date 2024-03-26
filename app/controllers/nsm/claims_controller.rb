@@ -1,5 +1,7 @@
 module Nsm
   class ClaimsController < ApplicationController
+    layout 'nsm'
+
     def index
       filtered_claims = Claim.for(current_provider).where.not(ufn: nil).order('updated_at DESC')
       @pagy, @claims = pagy(filtered_claims)

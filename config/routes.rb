@@ -44,7 +44,6 @@ Rails.application.routes.draw do
   end
 
   namespace :about do
-    resources :feedback, only: [:index, :create]
     resources :cookies, only: [:index, :create]
     get :update_cookies
     get :privacy
