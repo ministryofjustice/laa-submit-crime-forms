@@ -7,23 +7,23 @@ RSpec.describe PriorAuthority::Steps::FurtherInformationForm do
     {
       application:,
       record:,
+      information_supplied:
     }
   end
+
+  let(:record) { instance_double(FurtherInformation) }
 
   describe '#validate' do
     let(:application) { instance_double(PriorAuthorityApplication) }
 
     context 'with information supplied' do
-      let(:record) { instance_double(FurtherInformation, information_supplied: 'some information') }
+      let(:information_supplied) { 'some information' }
 
-      it 'test' do
-        binding.pry
-        expect(form).to be_valid
-      end
+      it { is_expected.to be_valid }
     end
 
     context 'with blank information supplied' do
-      let(:record) { instance_double(FurtherInformation, information_supplied: '') }
+      let(:information_supplied) { '' }
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:information_supplied, :blank)).to be(true)
