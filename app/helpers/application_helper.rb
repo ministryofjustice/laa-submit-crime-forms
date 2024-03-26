@@ -25,7 +25,7 @@ module ApplicationHelper
     when 'draft'
       :draft
     else
-      :assessed
+      :reviewed
     end
   end
 end
