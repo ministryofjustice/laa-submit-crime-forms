@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_26_115712) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_26_132108) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -183,12 +183,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_115712) do
   create_table "further_informations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "information_requested"
     t.string "information_supplied"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "prior_authority_application_id", null: false
     t.uuid "caseworker_id"
     t.datetime "requested_at"
     t.datetime "expired_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "prior_authority_application_id", null: false
     t.index ["prior_authority_application_id"], name: "index_further_informations_on_prior_authority_application_id"
   end
 
@@ -228,9 +228,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_115712) do
     t.string "custom_prison_name"
     t.datetime "app_store_updated_at"
     t.string "assessment_comment"
+    t.string "incorrect_information_explanation"
     t.datetime "resubmission_requested"
     t.datetime "resubmission_deadline"
-    t.string "incorrect_information_explanation"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
