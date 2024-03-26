@@ -3,6 +3,9 @@ class AddTableFurtherInformation < ActiveRecord::Migration[7.1]
     create_table :further_informations, id: :uuid do |t|
       t.string :information_requested
       t.string :information_supplied
+      t.uuid :caseworker_id
+      t.datetime :requested_at
+      t.datetime :expired_at
 
       t.timestamps
     end
