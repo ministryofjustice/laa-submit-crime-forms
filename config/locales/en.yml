@@ -32,4 +32,4 @@ en:
       switch_service: Change service
     phase_banner:
       phase: Beta
-      phase_description_html: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us to improve it.
+      phase_description_html: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us improve it.

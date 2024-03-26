@@ -17,8 +17,7 @@
       <p class="govuk-body"><%= t('.next_steps.process_1')%></p>
       <p class="govuk-body"><%= t('.next_steps.process_2')%></p>
       <p class="govuk-body">
-          <a href="#" class="govuk-link"><%= t('.feedback.link_text')%></a>
-          (<%= t('.feedback.description')%>)
+        <%= govuk_link_to(t('.feedback.link_text'), Rails.configuration.x.prior_authority.feedback_url) %> (<%= t('.feedback.description')%>)
       </p>
       <h2 class="govuk-heading-m"><%= t('.print_application.title')%></h2>
       <p class="govuk-body"><%= t('.print_application.instructions')%></p>
