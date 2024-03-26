@@ -31,12 +31,8 @@ module PriorAuthority
       end
 
       def further_information_needed
-        last_further_info_request = current_application.further_informations&.last.created_at
-        if current_application.status == 'sent_back' && last_further_info_request > current_application.app_store_updated_at
-          true
-        else
-          false
-        end
+        last_further_info_request = current_application.further_informations&.last&.created_at
+        current_application.status == 'sent_back' && last_further_info_request > current_application.app_store_updated_at
       end
     end
   end
