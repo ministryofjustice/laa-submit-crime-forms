@@ -1,6 +1,6 @@
 <% content_for?(:page_title) ? yield(:page_title) : fallback_title %>
 
-<% content_for(:feedback_link) { Rails.configuration.x.prior_authority.feedback_url } %>
+<% content_for(:feedback_link) { Rails.configuration.x.nsm.feedback_url } %>
 
 <% content_for(:head) do %>
   <%= csrf_meta_tags %>
@@ -16,7 +16,7 @@
 <% end %>
 
 <% content_for(:service_name) do %>
-  <%= link_to t('prior_authority.service_name'), prior_authority_applications_path,
+  <%= link_to service_name, main_app.nsm_applications_path,
               class: 'govuk-header__link govuk-header__service-name', id: 'header-service-name' %>
 <% end %>
 
