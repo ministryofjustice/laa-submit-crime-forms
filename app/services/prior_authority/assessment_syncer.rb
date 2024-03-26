@@ -58,7 +58,7 @@ module PriorAuthority
         )
       end
 
-      def sync_further_info_request(application, app_store_record)
+      def sync_sent_back_request(application, app_store_record)
         data = app_store_record['application']
         further_info_required = data['updates_needed'].include? 'further_information'
         info_correction_required = data['updates_needed'].include? 'incorrect_information'
@@ -68,6 +68,11 @@ module PriorAuthority
                            })
         return unless further_info_required
 
+        sync_further_info_request(application, app_store_record)
+      end
+
+      def sync_further_info_request(application, app_store_record)
+        data = app_store_record['application']
         current_further_info = data['further_information'].last
         application.further_informations.build({
                                                  status: 'in_progress',
