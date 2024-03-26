@@ -4,6 +4,8 @@ module PriorAuthority
       def call(application)
         app_store_record = AppStoreClient.new.get(application.id)
 
+        application.update(incorrect_information_explanation: nil)
+
         case application.status
         when 'rejected', 'granted'
           sync_overall_comment(application, app_store_record)
