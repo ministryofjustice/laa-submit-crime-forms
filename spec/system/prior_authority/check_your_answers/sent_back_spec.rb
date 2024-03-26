@@ -37,4 +37,18 @@ RSpec.describe 'Prior authority applications, sent back - check your answers' do
                                text: 'Your application needs existing information corrected')
     end
   end
+
+  it 'submits when changes made since it was sent back by caseworker', :stub_oauth_token do
+    application.defendant.update!(first_name: 'Billy')
+
+    check 'I confirm that all costs are exclusive of VAT'
+    check 'I confirm that any travel expenditure (such as mileage, ' \
+          'parking and travel fares) is included as additional items ' \
+          'in the primary quote, and is not included as part of any hourly rate'
+    click_on 'Accept and send'
+
+    expect(page)
+      .to have_title('Application complete')
+      .and have_content('What happens next')
+  end
 end

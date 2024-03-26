@@ -9,7 +9,7 @@ module PriorAuthority
 
       validate :application_corrected, if: :needs_correcting?
 
-      # Do not save confirmations if "Save and come back later" - commit_draft
+      # Do not call persist! if "Save and come back later" - commit_draft
       def save!; end
 
       def persist!
