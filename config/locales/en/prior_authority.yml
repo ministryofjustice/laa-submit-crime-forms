@@ -15,6 +15,7 @@ en:
       rejected: Rejected
       sent_back: Update needed
       expired: Expired
+      provider_updated: Re-submitted
     applications:
       index:
         page_title: Your applications

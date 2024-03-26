@@ -57,6 +57,9 @@ en:
               laa_reference: LAA reference
               prison_law: Prison law
               ufn: Unique file number
+            further_information:
+              information_request: Information request
+              your_response: Your response
           subheading: Now send your application
 
         groups:
@@ -78,6 +81,8 @@ en:
               title: Primary quote
             reason_why:
               title: Reason for prior authority
+            further_information:
+              title: Further information request %{date}
           application_detail:
             heading: ''
             ufn:
