@@ -117,6 +117,14 @@ FactoryBot.define do
       resubmission_requested { DateTime.current }
     end
 
+    trait :with_further_information_request do
+      further_informations { [build(:further_information)] }
+    end
+
+    trait :with_further_information_supplied do
+      further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
+    end
+
     trait :with_complete_non_prison_law do
       prison_law { false }
       ufn { '120423/123' }
