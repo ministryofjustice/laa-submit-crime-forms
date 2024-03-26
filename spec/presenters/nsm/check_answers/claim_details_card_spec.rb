@@ -46,7 +46,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
             },
             {
               head_key: 'work_before_date',
-              text: '01 December 2020'
+              text: '1 December 2020'
             },
             {
               head_key: 'work_after',
@@ -54,7 +54,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
             },
             {
               head_key: 'work_after_date',
-              text: '01 January 2020'
+              text: '1 January 2020'
             }
           ]
         )

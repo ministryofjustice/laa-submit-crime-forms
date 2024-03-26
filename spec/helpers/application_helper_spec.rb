@@ -57,8 +57,21 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe '#relevant_prior_authority_list_anchor' do
-    let(:application) { build(:prior_authority_application, status: 'draft') }
+    let(:application) { build(:prior_authority_application) }
 
-    it { expect(helper.relevant_prior_authority_list_anchor(application)).to eq(:draft) }
+    it 'returns draft for draft status' do
+      allow(application).to receive(:status).and_return('draft')
+      expect(helper.relevant_prior_authority_list_anchor(application)).to eq(:draft)
+    end
+
+    it 'returns submitted for submitted status' do
+      allow(application).to receive(:status).and_return('submitted')
+      expect(helper.relevant_prior_authority_list_anchor(application)).to eq(:submitted)
+    end
+
+    it 'returns reviewed for all statuses other than draft or submitted' do
+      allow(application).to receive(:status).and_return('whatever')
+      expect(helper.relevant_prior_authority_list_anchor(application)).to eq(:reviewed)
+    end
   end
 end

@@ -8,6 +8,13 @@ en:
       save_and_come_back_later: 'Save and come back later'
       none: None
       not_applicable: N/A
+    statuses:
+      granted: Granted
+      auto_grant: Granted
+      part_grant: Part granted
+      rejected: Rejected
+      sent_back: Update needed
+      expired: Expired
     applications:
       index:
         page_title: Your applications
@@ -16,14 +23,14 @@ en:
         tabs:
           drafts: Drafts
           submitted: Submitted
-          assessed: Assessed
+          reviewed: Reviewed
       tabs:
         drafts: Drafts
         submitted: Submitted
-        assessed: Assessed
+        reviewed: Reviewed
         no_drafts: You do not have any draft applications.
-        no_submitted: You do not have any applications waiting to be assessed.
-        no_assessed: You do not have any applications that have been assessed.
+        no_submitted: You do not have any applications waiting to be reviewed.
+        no_reviewed: You do not have any applications that have been reviewed.
         application: application
         header:
           ufn: UFN
@@ -32,11 +39,6 @@ en:
           action: Action
           client: Client
           status: Status
-        status:
-          granted: Granted
-          auto_grant: Granted
-          part_grant: Part granted
-          rejected: Rejected
         delete: Delete
       confirm_delete:
         page_title: Are you sure you want to delete this draft application?
@@ -64,16 +66,19 @@ en:
         review_service_cost_adjustments: Review service cost adjustments
         review_travel_cost_adjustments: Review travel cost adjustments
         review_additional_cost_adjustments: Review additional cost adjustments
+        expiry_explanations:
+          - On %{requested} we asked you to update your application before we could complete the assessment. This was due by %{deadline}.
+          - As this update was not made by the required date this application has been automatically closed.
+          - If you make a new application you should include the requested update.
+        sent_back_explanations_html:
+          - Updates are needed to proceed with your application.
+          - Review the requests and resubmit your application by %{deadline}.
+          - After this date your application will be automatically closed.
+        update_application: Update application
       state_summaries:
         submitted:
-          status: Submitted
           awaiting_review: Awaiting LAA review
-        granted:
-          status: Granted
-        rejected:
-          status: Rejected
-        part_grant:
-          status: Part granted
+
     steps:
       start_page:
         show:

@@ -1,15 +1,15 @@
 <% if model.none? %>
-  <p><%= t('prior_authority.applications.tabs.no_assessed') %></p>
+  <p><%= t('prior_authority.applications.tabs.no_reviewed') %></p>
 <% else %>
-  <h2 class="govuk-heading-m"><%= t('prior_authority.applications.tabs.assessed') %></h2>
-  <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="tab_submitted">
+  <h2 class="govuk-heading-m"><%= t('prior_authority.applications.tabs.reviewed') %></h2>
+  <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="tab_reviewed">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <% ['ufn', 'client', 'last_updated', 'laa_reference', 'status'].each_with_index do |key, index| %>
           <%= table_header(key,
                           'prior_authority.applications.tabs.header',
                            index,
-                           assessed_prior_authority_applications_path,
+                           reviewed_prior_authority_applications_path,
                            @sort_by,
                            @sort_direction) %>
         <% end %>
@@ -35,7 +35,7 @@
           </td>
           <td class="govuk-table__cell">
             <div class="govuk-tag <%= prior_authority_tag_colour(application.status) %>">
-              <%= t("prior_authority.applications.tabs.status.#{application.status}") %>
+              <%= t("prior_authority.statuses.#{application.status}") %>
             </div>
           </td>
         </tr>

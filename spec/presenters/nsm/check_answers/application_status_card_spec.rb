@@ -26,7 +26,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'Date Submitted',
-              text: '01 December 2023'
+              text: '1 December 2023'
             }
           ]
         )

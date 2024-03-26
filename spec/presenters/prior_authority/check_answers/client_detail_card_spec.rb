@@ -29,7 +29,7 @@ RSpec.describe PriorAuthority::CheckAnswers::ClientDetailCard do
           },
           {
             head_key: 'date_of_birth',
-            text: '01 January 2001'
+            text: '1 January 2001'
           },
         ]
       )
