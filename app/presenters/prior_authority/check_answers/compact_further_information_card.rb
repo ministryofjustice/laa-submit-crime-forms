@@ -5,11 +5,10 @@ module PriorAuthority
     class CompactFurtherInformationCard < Base
       attr_reader :further_information
 
-      def initialize(further_information, verbose: false)
+      def initialize(further_information)
         @group = 'about_request'
         @section = 'further_information'
         @further_information = further_information
-        @verbose = verbose
         super()
       end
 

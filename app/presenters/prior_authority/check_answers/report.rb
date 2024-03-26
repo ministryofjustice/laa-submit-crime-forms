@@ -63,7 +63,7 @@ module PriorAuthority
           ReasonWhyCard.new(application),
         ]
         if @verbose
-          base + application.further_informations.map { CompactFurtherInformationCard.new(_1, verbose: true) }
+          base + application.further_informations.map { CompactFurtherInformationCard.new(_1) }
         else
           base # TODO: CRM457-1226: Add card for most recent further information
         end
