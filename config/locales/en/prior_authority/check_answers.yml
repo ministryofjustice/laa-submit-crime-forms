@@ -15,6 +15,7 @@ en:
               is included as additional items in the primary quote, and is not included as part
               of any hourly rate
           heading: Check your answers
+          incorrect_information_heading: Your application needs existing information corrected
           page_title: Check your answers
           sections:
             alternative_quotes:
