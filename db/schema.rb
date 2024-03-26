@@ -230,6 +230,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_115712) do
     t.string "assessment_comment"
     t.datetime "resubmission_requested"
     t.datetime "resubmission_deadline"
+    t.string "incorrect_information_explanation"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
