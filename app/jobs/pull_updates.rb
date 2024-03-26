@@ -44,8 +44,7 @@ class PullUpdates < ApplicationJob
   def convert_params(record)
     {
       status: record['application_state'],
-      app_store_updated_at: record['updated_at'],
-      further_information_explanation: record['application']['further_information_explanation']
+      app_store_updated_at: record['updated_at']
     }
   end
 
