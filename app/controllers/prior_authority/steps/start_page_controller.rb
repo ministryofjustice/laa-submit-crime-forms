@@ -19,7 +19,7 @@ module PriorAuthority
       private
 
       def start_page_tasklist
-        if current_application.further_informations.last&.status == 'in_progress'
+        if further_information_needed
           @tasklist || StartPage::FurtherInformationTaskList.new(
             view_context, application: current_application
           )
@@ -27,6 +27,15 @@ module PriorAuthority
           @tasklist || StartPage::TaskList.new(
             view_context, application: current_application
           )
+        end
+      end
+
+      def further_information_needed
+        last_further_info_request = current_application.further_informations&.last.created_at
+        if current_application.status == 'sent_back' && last_further_info_request > current_application.app_store_updated_at
+          true
+        else
+          false
         end
       end
     end
