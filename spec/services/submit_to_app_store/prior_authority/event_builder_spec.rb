@@ -155,9 +155,11 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
       let(:dummy_client) { instance_double(AppStoreClient) }
       let(:old_data) { new_data.merge(changes).deep_stringify_keys }
       let(:listed_corrections) { described_class.call(application, new_data).first.dig(:details, :corrected_info) }
+      let(:random_id) { 'random-id' }
 
       before do
         allow(AppStoreClient).to receive(:new).and_return(dummy_client)
+        allow(SecureRandom).to receive(:uuid).and_return(random_id)
         allow(dummy_client).to receive(:get).and_return({ 'application' => old_data })
       end
 
@@ -168,6 +170,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
           expect(described_class.call(application, new_data)).to eq(
             [
               {
+                id: random_id,
                 details: {
                   comment: 'TODO: Extract from latest further_information',
                   corrected_info: [],

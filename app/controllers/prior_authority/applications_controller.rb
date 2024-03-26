@@ -63,7 +63,9 @@ module PriorAuthority
     end
 
     def load_submitted
-      @submitted_pagy, @submitted_model = order_and_paginate(PriorAuthorityApplication.for(current_provider).submitted)
+      @submitted_pagy, @submitted_model = order_and_paginate(
+        PriorAuthorityApplication.for(current_provider).submitted_or_resubmitted
+      )
     end
 
     def initialize_application(attributes = {}, &block)

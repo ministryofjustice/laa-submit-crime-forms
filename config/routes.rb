@@ -157,6 +157,8 @@ Rails.application.routes.draw do
         get :confirm_delete, path: 'confirm-delete'
       end
     end
+
+    resources :downloads, only: :show
   end
 
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
