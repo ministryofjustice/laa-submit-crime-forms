@@ -108,7 +108,13 @@ FactoryBot.define do
       no_alternative_quote_reason { 'a reason' }
       service_type { 'pathologist_report' }
       custom_service_name { nil }
-      incorrect_information_explanation { 'This is incorrect' }
+    end
+
+    trait :with_sent_back_status do
+      status { 'sent_back' }
+      incorrect_information_explanation { 'Please correct the following information...' }
+      resubmission_deadline { 14.days.from_now }
+      resubmission_requested { DateTime.current }
     end
 
     trait :with_complete_non_prison_law do

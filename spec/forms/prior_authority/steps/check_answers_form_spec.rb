@@ -12,7 +12,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
   end
 
   describe '#validate' do
-    let(:application) { instance_double(PriorAuthorityApplication) }
+    let(:application) { instance_double(PriorAuthorityApplication, sent_back?: false) }
 
     context 'with all confirmations accepted' do
       let(:confirm_excluding_vat) { 'true' }
@@ -48,36 +48,47 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
           )
       end
     end
+
+    context 'with a sent_back application with no changes made' do
+      let(:application) do
+        travel_to(sent_back_datetime) do
+          create(:prior_authority_application, :full, :with_sent_back_status)
+        end
+      end
+
+      let(:sent_back_datetime) { 2.days.ago.change({ hour: 11, minute: 0 }) }
+      let(:confirm_excluding_vat) { 'true' }
+      let(:confirm_travel_expenditure) { 'true' }
+
+      it 'adds validation to base to change/correct the application' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:base, :application_not_corrected)).to be(true)
+        expect(form.errors.messages[:base])
+          .to include('Your application needs existing information corrected')
+      end
+    end
   end
 
   describe '#save! ("Save and come back later")' do
     subject(:save) { form.save! }
 
     let(:application) { create(:prior_authority_application, status: 'draft') }
+    let(:confirm_excluding_vat) { '' }
+    let(:confirm_travel_expenditure) { '' }
 
-    context 'with accepted confirmations' do
-      let(:confirm_excluding_vat) { 'true' }
-      let(:confirm_travel_expenditure) { 'true' }
+    it 'does NOT validate the form' do
+      save
+      expect(form.errors).to be_empty
+    end
 
-      it 'does NOT persist the confirmations' do
-        expect { save }.not_to change { application.reload.attributes }
-          .from(
-            hash_including(
-              'confirm_excluding_vat' => nil,
-              'confirm_travel_expenditure' => nil,
-            )
-          )
-      end
+    it 'does NOT update the status of the application' do
+      expect { save }.not_to change(application, :status).from('draft')
+    end
 
-      it 'does NOT update the status of the application' do
-        expect { save }.not_to change(application, :status).from('draft')
-      end
-
-      it 'does NOT submit the application to the app store' do
-        allow(SubmitToAppStore).to receive(:new)
-        save
-        expect(SubmitToAppStore).not_to have_received(:new)
-      end
+    it 'does NOT submit the application to the app store' do
+      allow(SubmitToAppStore).to receive(:new)
+      save
+      expect(SubmitToAppStore).not_to have_received(:new)
     end
   end
 
@@ -89,22 +100,6 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     context 'with accepted confirmations' do
       let(:confirm_excluding_vat) { 'true' }
       let(:confirm_travel_expenditure) { 'true' }
-
-      it 'persists the value' do
-        expect { save }.to change { application.reload.attributes }
-          .from(
-            hash_including(
-              'confirm_excluding_vat' => nil,
-              'confirm_travel_expenditure' => nil,
-            )
-          )
-          .to(
-            hash_including(
-              'confirm_excluding_vat' => true,
-              'confirm_travel_expenditure' => true,
-            )
-          )
-      end
 
       it 'updates the status of the application to submitted' do
         expect { save }.to change(application, :status).from('draft').to('submitted')
@@ -136,14 +131,9 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
       let(:confirm_excluding_vat) { false }
       let(:confirm_travel_expenditure) { false }
 
-      it 'does not persist the confirmations' do
-        expect { save }.not_to change { application.reload.attributes }
-          .from(
-            hash_including(
-              'confirm_excluding_vat' => nil,
-              'confirm_travel_expenditure' => nil,
-            )
-          )
+      it 'validates the confirmations' do
+        save
+        expect(form.errors.messages).to include(:confirm_excluding_vat, :confirm_travel_expenditure)
       end
 
       it 'does NOT update the status of the application' do
@@ -161,18 +151,19 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
       let(:confirm_excluding_vat) { nil }
       let(:confirm_travel_expenditure) { nil }
 
-      it 'does not persist the confirmations' do
-        expect { save }.not_to change { application.reload.attributes }
-          .from(
-            hash_including(
-              'confirm_excluding_vat' => nil,
-              'confirm_travel_expenditure' => nil,
-            )
-          )
+      it 'validates the confirmations' do
+        save
+        expect(form.errors.messages).to include(:confirm_excluding_vat, :confirm_travel_expenditure)
       end
 
       it 'does NOT update the status of the application' do
         expect { save }.not_to change(application, :status).from('draft')
+      end
+
+      it 'does NOT submit the application to the app store' do
+        allow(SubmitToAppStore).to receive(:new)
+        save
+        expect(SubmitToAppStore).not_to have_received(:new)
       end
     end
   end

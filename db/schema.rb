@@ -222,8 +222,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_121503) do
     t.boolean "alternative_quotes_still_to_add"
     t.string "service_type"
     t.string "custom_service_name"
-    t.boolean "confirm_excluding_vat"
-    t.boolean "confirm_travel_expenditure"
     t.string "main_offence_id"
     t.string "custom_main_offence_name"
     t.string "prison_id"

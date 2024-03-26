@@ -31,6 +31,8 @@ class PriorAuthorityApplication < ApplicationRecord
   attribute :firm_account_number, :string
   attribute :created_at, :datetime
   attribute :updated_at, :datetime
+  attribute :confirm_excluding_vat, :boolean
+  attribute :confirm_travel_expenditure, :boolean
 
   enum :status, {
     pre_draft: 'pre_draft',

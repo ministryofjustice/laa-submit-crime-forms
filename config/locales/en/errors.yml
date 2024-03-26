@@ -71,6 +71,8 @@ en:
               inclusion: Select yes if this case is subject to POCA (Proceeds of Crime Act 2002)?
         prior_authority/steps/check_answers_form:
           attributes:
+            base:
+              application_not_corrected: Your application needs existing information corrected
             confirm_excluding_vat:
               accepted: Select if you confirm that all costs are exclusive of VAT
             confirm_travel_expenditure:
