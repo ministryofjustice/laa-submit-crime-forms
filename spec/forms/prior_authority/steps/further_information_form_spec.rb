@@ -32,21 +32,16 @@ RSpec.describe PriorAuthority::Steps::FurtherInformationForm do
     end
   end
 
-  # describe '#save' do
-  #   subject(:save) { form.save }
+  describe '#save' do
+    subject(:save) { form.save }
 
-  #   let(:application) { create(:prior_authority_application) }
-
-  #   context 'with a valid reason why' do
-  #     let(:further_information) {
-  #       {
-  #         information_supplied: 'some information'
-  #       }
-  #     }
-
-  #     it 'persists the reason why' do
-  #       expect { save }.to change { application.reload.reason_why }.from(nil).to('important_stuff')
-  #     end
-  #   end
-  # end
+    context 'with valid information supplied' do
+      let(:application) { create(:prior_authority_application, :with_further_information) }
+      let(:record) { application.further_informations.last }
+      let(:information_supplied) { 'new info' }
+      it 'persists the further information' do
+        expect { save }.to change { application.reload.further_informations.last.information_supplied }.from('some information').to('new info')
+      end
+    end
+  end
 end
