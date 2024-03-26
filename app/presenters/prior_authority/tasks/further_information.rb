@@ -24,7 +24,7 @@ module PriorAuthority
       # further information update is needed - the task wouldn't available on the
       # UI otherwise
       def record
-        application.further_informations.last
+        application.further_informations.order_by(:requested_at).last
       end
     end
   end
