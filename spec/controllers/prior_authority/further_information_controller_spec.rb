@@ -1,12 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::Steps::ReasonWhyController, type: :controller do
+RSpec.describe PriorAuthority::Steps::FurtherInformationController, type: :controller do
+  let (:current_application) { create(:prior_authority_application, :with_further_information) }
   describe '#destroy' do
-     let(:current_application) { create(:prior_authority_application) }
-     let(:evidence) do
-      create(:supporting_document,
+    let(:evidence) do
+      create(
+             :further_information_document,
              file_size: '2857',
-             documentable_id: current_application.id,
+             documentable_id: current_application.further_informations.last.id,
              file_path: Rails.root.join('spec/fixtures/files/12345').to_s)
     end
 
@@ -31,5 +32,5 @@ RSpec.describe PriorAuthority::Steps::ReasonWhyController, type: :controller do
     end
   end
 
-  it_behaves_like 'a multi file upload controller', application: -> { create(:prior_authority_application) }
+  it_behaves_like 'a multi file upload controller', application: -> { create(:prior_authority_application, :with_further_information) }
 end

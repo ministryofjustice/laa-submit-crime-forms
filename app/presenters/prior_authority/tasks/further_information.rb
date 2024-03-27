@@ -20,6 +20,10 @@ module PriorAuthority
         FORM.build(record, application:).valid?
       end
 
+      def can_start?
+        PREVIOUS_TASKS.all? { |task| fulfilled?(task) }
+      end
+
       # This method assumes that the application is in a send back state and a
       # further information update is needed - the task wouldn't available on the
       # UI otherwise

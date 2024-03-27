@@ -114,6 +114,7 @@ RSpec.describe 'Accessibility', :accessibility do
       edit_prior_authority_steps_youth_court
       edit_prior_authority_steps_psychiatric_liaison
       edit_prior_authority_steps_reason_why
+      edit_prior_authority_steps_further_information
       offboard_prior_authority_application
     ].each do |path|
       describe "#{path} screen" do
