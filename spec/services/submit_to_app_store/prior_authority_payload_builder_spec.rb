@@ -129,14 +129,18 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
       application_state: 'submitted',
       application_type: 'crm4',
       json_schema_version: 1,
-      application_risk: 'N/A'
+      application_risk: 'N/A',
+      events: []
     }
   end
   let(:provider) { create(:provider) }
   let(:application) { create(:prior_authority_application, :full, :with_confirmations) }
   let(:fixed_arbitrary_date) { Date.new(2024, 1, 15) }
 
-  before { travel_to(fixed_arbitrary_date) }
+  before do
+    travel_to(fixed_arbitrary_date)
+    allow(SubmitToAppStore::PriorAuthority::EventBuilder).to receive(:call).and_return([])
+  end
 
   it 'generates the payload for an application' do
     expect(subject.payload.with_indifferent_access).to eq(expected_output.with_indifferent_access)
