@@ -35,6 +35,7 @@ RSpec.describe PriorAuthority::Steps::FurtherInformationController, type: :contr
   end
 
   it_behaves_like 'a multi file upload controller', application: lambda {
-                                                                   create(:prior_authority_application, :with_further_information)
+                                                                   create(:prior_authority_application,
+                                                                          :with_further_information)
                                                                  }
 end
