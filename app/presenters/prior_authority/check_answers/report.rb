@@ -57,11 +57,16 @@ module PriorAuthority
       end
 
       def about_request_section
-        [
+        base = [
           PrimaryQuoteCard.new(application, verbose: @verbose),
           AlternativeQuotesCard.new(application, verbose: @verbose),
           ReasonWhyCard.new(application),
         ]
+        if @verbose
+          base + application.further_informations.map { CompactFurtherInformationCard.new(_1) }
+        else
+          base # TODO: CRM457-1226: Add card for most recent further information
+        end
       end
 
       private

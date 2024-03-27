@@ -129,4 +129,33 @@ RSpec.describe 'View reviewed applications' do
         .and have_content('This was due by 21 March 2024')
     end
   end
+
+  context 'when application is provider updated' do
+    let(:application) do
+      create(:prior_authority_application,
+             :full,
+             status: 'provider_updated',
+             further_informations: [further_information])
+    end
+
+    let(:further_information) do
+      build(:further_information,
+            information_requested: 'Tell me more',
+            information_supplied: 'More info',
+            created_at: 1.day.ago,
+            supporting_documents: [build(:supporting_document)])
+    end
+
+    it 'shows uodate details' do
+      expect(page).to have_content('Re-submitted')
+        .and have_content('Further information request 21 March 2024')
+        .and have_content('Tell me more')
+        .and have_content('More info')
+    end
+
+    it 'lets me download my uploaded file' do
+      click_on 'test.png'
+      expect(page).to have_current_path(%r{/test_path})
+    end
+  end
 end

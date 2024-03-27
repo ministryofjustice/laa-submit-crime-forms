@@ -4,6 +4,7 @@ class PriorAuthorityApplication < ApplicationRecord
   belongs_to :solicitor, optional: true
   has_one :defendant, dependent: :destroy, as: :defendable
   has_many :quotes, dependent: :destroy
+  has_many :further_informations, dependent: :destroy
   has_one :primary_quote,
           -> { primary },
           class_name: 'Quote',
@@ -47,6 +48,7 @@ class PriorAuthorityApplication < ApplicationRecord
   }
 
   scope :reviewed, -> { where(status: %i[granted part_grant rejected auto_grant sent_back expired]) }
+  scope :submitted_or_resubmitted, -> { where(status: %i[submitted provider_updated]) }
 
   scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
 
