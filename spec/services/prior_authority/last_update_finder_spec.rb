@@ -10,7 +10,7 @@ RSpec.describe PriorAuthority::LastUpdateFinder do
                :with_all_tasks_completed,
                :with_firm_and_solicitor,
                :with_alternative_quotes,
-               :with_sent_back_status)
+               :sent_back_for_incorrect_info)
       end
     end
 
@@ -148,6 +148,18 @@ RSpec.describe PriorAuthority::LastUpdateFinder do
 
       it 'returns the date the additional supporting document was created/updated' do
         expect(finder).to eql(updated_datetime)
+      end
+    end
+
+    context 'when further_informations added' do
+      before do
+        travel_to(updated_datetime) do
+          application.further_informations << build(:further_information)
+        end
+      end
+
+      it 'excludes further_informations addede or updated dates' do
+        expect(finder).to eql(sent_back_datetime)
       end
     end
   end

@@ -48,10 +48,6 @@ module PriorAuthority
         :further_information
       end
 
-      def additional_permitted_params
-        %i[information_supplied]
-      end
-
       def file_uploader
         @file_uploader ||= FileUpload::FileUploader.new
       end
