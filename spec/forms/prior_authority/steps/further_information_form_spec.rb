@@ -37,14 +37,15 @@ RSpec.describe PriorAuthority::Steps::FurtherInformationForm do
     subject(:save) { form.save }
 
     context 'with valid information supplied' do
-      let(:application) { create(:prior_authority_application, :with_further_information) }
+      let(:application) { create(:prior_authority_application, :with_further_information_supplied) }
       let(:record) { application.further_informations.last }
       let(:information_supplied) { 'new info' }
 
       it 'persists the further information' do
-        expect { save }.to change {
-                             application.reload.further_informations.last.information_supplied
-                           }.from('some information').to('new info')
+        expect { save }
+          .to change { application.reload.further_informations.last.information_supplied }
+          .from('here is the extra information you requested')
+          .to('new info')
       end
     end
   end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PriorAuthority::Steps::FurtherInformationController, type: :controller do
-  let(:current_application) { create(:prior_authority_application, :with_further_information) }
+  let(:current_application) { create(:prior_authority_application, :with_further_information_request) }
 
   describe '#destroy' do
     let(:evidence) do
@@ -36,6 +36,6 @@ RSpec.describe PriorAuthority::Steps::FurtherInformationController, type: :contr
 
   it_behaves_like 'a multi file upload controller', application: lambda {
                                                                    create(:prior_authority_application,
-                                                                          :with_further_information)
+                                                                          :with_further_information_request)
                                                                  }
 end
