@@ -24,6 +24,7 @@ RSpec.describe PriorAuthority::Steps::FurtherInformationForm do
 
     context 'with blank information supplied' do
       let(:information_supplied) { '' }
+
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:information_supplied, :blank)).to be(true)
@@ -39,8 +40,11 @@ RSpec.describe PriorAuthority::Steps::FurtherInformationForm do
       let(:application) { create(:prior_authority_application, :with_further_information) }
       let(:record) { application.further_informations.last }
       let(:information_supplied) { 'new info' }
+
       it 'persists the further information' do
-        expect { save }.to change { application.reload.further_informations.last.information_supplied }.from('some information').to('new info')
+        expect { save }.to change {
+                             application.reload.further_informations.last.information_supplied
+                           }.from('some information').to('new info')
       end
     end
   end

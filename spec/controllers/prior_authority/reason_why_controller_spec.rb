@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe PriorAuthority::Steps::ReasonWhyController, type: :controller do
   describe '#destroy' do
-     let(:current_application) { create(:prior_authority_application) }
-     let(:evidence) do
+    let(:current_application) { create(:prior_authority_application) }
+    let(:evidence) do
       create(:supporting_document,
              file_size: '2857',
              documentable_id: current_application.id,

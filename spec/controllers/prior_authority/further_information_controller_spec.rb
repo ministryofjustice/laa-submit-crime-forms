@@ -1,14 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe PriorAuthority::Steps::FurtherInformationController, type: :controller do
-  let (:current_application) { create(:prior_authority_application, :with_further_information) }
+  let(:current_application) { create(:prior_authority_application, :with_further_information) }
+
   describe '#destroy' do
     let(:evidence) do
       create(
-             :further_information_document,
-             file_size: '2857',
-             documentable_id: current_application.further_informations.last.id,
-             file_path: Rails.root.join('spec/fixtures/files/12345').to_s)
+        :further_information_document,
+        file_size: '2857',
+        documentable_id: current_application.further_informations.last.id,
+        file_path: Rails.root.join('spec/fixtures/files/12345').to_s
+      )
     end
 
     context 'when there are files present' do
@@ -32,5 +34,7 @@ RSpec.describe PriorAuthority::Steps::FurtherInformationController, type: :contr
     end
   end
 
-  it_behaves_like 'a multi file upload controller', application: -> { create(:prior_authority_application, :with_further_information) }
+  it_behaves_like 'a multi file upload controller', application: lambda {
+                                                                   create(:prior_authority_application, :with_further_information)
+                                                                 }
 end
