@@ -10,7 +10,7 @@ RSpec.describe PriorAuthority::LastUpdateFinder do
                :with_all_tasks_completed,
                :with_firm_and_solicitor,
                :with_alternative_quotes,
-               :with_sent_back_status)
+               :sent_back_for_incorrect_info)
       end
     end
 

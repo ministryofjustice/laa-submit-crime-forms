@@ -110,7 +110,7 @@ FactoryBot.define do
       custom_service_name { nil }
     end
 
-    trait :with_sent_back_status do
+    trait :sent_back_for_incorrect_info do
       status { 'sent_back' }
       incorrect_information_explanation { 'Please correct the following information...' }
       resubmission_deadline { 14.days.from_now }
