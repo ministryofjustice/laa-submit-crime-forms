@@ -2,14 +2,6 @@
 en:
   nsm:
     steps:
-      office:
-        confirm:
-          edit:
-            page_title: Confirm office account number
-            current_office_legend: Is %{office_code} your office account number?
-        select:
-          edit:
-            page_title: Select office account number
       claim_type:
         edit:
           page_title: What you are claiming for

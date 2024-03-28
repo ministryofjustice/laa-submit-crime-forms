@@ -1,0 +1,11 @@
+en:
+  offices:
+    edit:
+      page_title: Select your office account number
+  activemodel:
+    errors:
+      models:
+        office_form:
+          attributes:
+            selected_office_code:
+              blank: Select your office account number
