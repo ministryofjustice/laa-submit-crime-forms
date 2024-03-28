@@ -68,7 +68,7 @@ module PriorAuthority
       end
 
       def supported_filetype(params)
-        SupportedFileTypes::FURTHER_INFORMATION.include? params.content_type
+        SupportedFileTypes::SUPPORTED_FILE_TYPES.include? params.content_type
       end
 
       def return_success(dict)

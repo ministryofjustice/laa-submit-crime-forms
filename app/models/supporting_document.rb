@@ -1,6 +1,6 @@
 class SupportingDocument < ApplicationRecord
   SUPPORTING_DOCUMENT = 'supporting_document'.freeze
-  QUOTE_DOCUMENT = 'quote_document'.freeze
+  SUPPORTED_FILE_TYPES = 'quote_document'.freeze
 
   belongs_to :documentable, polymorphic: true
 
