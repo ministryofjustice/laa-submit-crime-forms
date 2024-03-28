@@ -7,9 +7,9 @@
         deadline: tag.strong(@application.resubmission_deadline.to_fs(:stamp))).each do |paragraph| %>
       <p><%= paragraph %></p>
     <% end %>
-    <% if @application.further_information_explanation.present?%>
+    <% if @further_info_review_needed %>
       <%= govuk_button_link_to(t('prior_authority.applications.show.update_application'),
-                               '#TODO: CRM457-1192') %>
+                               edit_prior_authority_steps_further_information_path(@application)) %>
     <% else %>
       <%= govuk_button_link_to(t('prior_authority.applications.show.update_application'),
                                edit_prior_authority_steps_check_answers_path(@application)) %>

@@ -89,5 +89,8 @@ module Decisions
 
     # check answers
     from('prior_authority/steps/check_answers').goto(show: 'prior_authority/steps/start_page')
+
+    # further information
+    from('prior_authority/steps/further_information').goto(show: 'prior_authority/steps/start_page')
   end
 end

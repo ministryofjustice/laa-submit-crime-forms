@@ -61,10 +61,17 @@ module PriorAuthority
           PrimaryQuoteCard.new(application, verbose: @verbose),
           AlternativeQuotesCard.new(application, verbose: @verbose),
           ReasonWhyCard.new(application),
-        ]
+          further_information_card,
+        ].compact
       end
 
       private
+
+      def further_information_card
+        return unless application.further_informations.any?
+
+        FurtherInformationCard.new(application)
+      end
 
       def group_heading(group_key, **)
         I18n.t("prior_authority.steps.check_answers.groups.#{group_key}.heading", **)

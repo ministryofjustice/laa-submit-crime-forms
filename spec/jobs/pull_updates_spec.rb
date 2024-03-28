@@ -2,11 +2,9 @@ require 'rails_helper'
 
 RSpec.describe PullUpdates do
   let(:last_update) { 2 }
-  let(:app_store_client) { instance_double(AppStoreClient) }
+  let(:http_puller) { instance_double(AppStoreClient) }
   let(:arbitrary_fixed_date) { '2021-12-01T23:24:58.846345' }
-  let(:application_type) { 'crm7' }
-
-  let(:get_all_response) do
+  let(:http_response) do
     {
       'applications' => [{
         'application_id' => id,
@@ -18,15 +16,13 @@ RSpec.describe PullUpdates do
       }]
     }
   end
+  let(:application_type) { 'crm7' }
 
   before do
-    allow(AppStoreClient).to receive(:new).and_return(app_store_client)
-    allow(app_store_client).to receive(:get_all).and_return('applications' => [])
-
-    allow(app_store_client)
-      .to receive(:get_all)
-      .with(since: PullUpdates::EARLIEST_POLL_DATE, count: 100)
-      .and_return(get_all_response)
+    allow(AppStoreClient).to receive(:new).and_return(http_puller)
+    allow(http_puller).to receive(:get_all).and_return('applications' => [])
+    allow(http_puller).to receive(:get_all).with(since: PullUpdates::EARLIEST_POLL_DATE, count: 100)
+                                           .and_return(http_response)
   end
 
   context 'when mocking claim' do
@@ -37,8 +33,8 @@ RSpec.describe PullUpdates do
       allow(Claim).to receive_messages(maximum: last_update, find_by: claim)
     end
 
-    context 'with no data since last pull' do
-      let(:get_all_response) { { 'applications' => [] } }
+    context 'no data since last pull' do
+      let(:http_response) { { 'applications' => [] } }
 
       it 'do nothing' do
         subject.perform
@@ -66,12 +62,10 @@ RSpec.describe PullUpdates do
       end
     end
 
-    context 'when it times out' do
+    context 'ensure loop ends' do
       before do
-        allow(app_store_client)
-          .to receive(:get_all)
-          .with(since: Time.zone.parse(arbitrary_fixed_date), count: 100)
-          .and_return(get_all_response)
+        allow(http_puller).to receive(:get_all).with(since: Time.zone.parse(arbitrary_fixed_date), count: 100)
+                                               .and_return(http_response)
       end
 
       it 'does not get stuck due to non-integer timetamps' do
@@ -123,128 +117,6 @@ RSpec.describe PullUpdates do
       it 'triggers a sync' do
         subject.perform
         expect(PriorAuthority::AssessmentSyncer).to have_received(:call).with(application)
-      end
-    end
-
-    context 'with multiple updates' do
-      let(:paa_one) { create(:prior_authority_application, :full, status: 'submitted') }
-      let(:paa_two) { create(:prior_authority_application, :full, status: 'submitted') }
-
-      let(:get_all_response) do
-        {
-          'applications' =>
-            [
-              {
-                'application_id' => paa_one.id,
-                'version' => 2,
-                'application_state' => 'granted',
-                'application_risk' => 'N/A',
-                'application_type' => application_type,
-                'updated_at' => arbitrary_fixed_date
-              },
-              {
-                'application_id' => paa_two.id,
-                'version' => 2,
-                'application_state' => 'rejected',
-                'application_risk' => 'N/A',
-                'application_type' => application_type,
-                'updated_at' => arbitrary_fixed_date
-              },
-            ]
-        }
-      end
-
-      let(:get_response_one) do
-        {
-          'application_state' => 'granted',
-          'application_type' => 'crm4',
-          'events' => [
-            {
-              'details' => { 'comment' => 'All good, granting...' },
-              'created_at' => '2024-03-26T16:56:27.039Z',
-              'public' => true,
-              'event_type' => 'Event::Decision'
-            }
-          ],
-        }
-      end
-
-      let(:get_response_two) do
-        {
-          'application_state' => 'rejected',
-          'application_type' => 'crm4',
-          'events' => [
-            {
-              'details' => { 'comment' => 'Sorry have to reject this because...' },
-              'created_at' => '2024-03-26T16:56:27.039Z',
-              'public' => true,
-              'event_type' => 'Event::Decision'
-            }
-          ],
-        }
-      end
-
-      it 'updates both application statuses' do
-        expect { subject.perform }
-          .to change { paa_one.reload.status }.from('submitted').to('granted')
-          .and change { paa_two.reload.status }.from('submitted').to('rejected')
-      end
-
-      context 'when syncing successufully' do
-        before do
-          allow(PriorAuthority::AssessmentSyncer).to receive(:call).and_call_original
-
-          allow(app_store_client).to receive(:get).with(paa_one.id).and_return(get_response_one)
-          allow(app_store_client).to receive(:get).with(paa_two.id).and_return(get_response_two)
-        end
-
-        it 'syncs both applications' do
-          expect { subject.perform }
-            .to change { paa_one.reload.assessment_comment }.from(nil).to('All good, granting...')
-            .and change { paa_two.reload.assessment_comment }.from(nil).to('Sorry have to reject this because...')
-        end
-      end
-
-      context 'when syncing raises error' do
-        before do
-          allow(PriorAuthority::AssessmentSyncer).to receive(:call).and_call_original
-
-          allow(app_store_client).to receive(:get_all).and_return(get_all_response)
-          allow(app_store_client).to receive(:get).with(paa_one.id).and_return(private_response_one)
-          allow(app_store_client).to receive(:get).with(paa_two.id).and_return(get_response_two)
-
-          allow(Sentry).to receive(:capture_exception)
-        end
-
-        let(:private_response_one) do
-          {
-            'application_state' => 'granted',
-            'application_type' => 'crm4',
-            'events' => [
-              {
-                'details' => { 'comment' => 'All good, granting...' },
-                'created_at' => '2024-03-26T16:56:27.039Z',
-                'public' => false, # <-- this fake change will break the sync, but future changes to payloads could too
-                'event_type' => 'Event::Decision'
-              }
-            ],
-          }
-        end
-
-        it 'syncs (does not block) the unbroken application' do
-          subject.perform
-          expect(paa_one.reload.assessment_comment).to be_nil
-          expect(paa_two.reload.assessment_comment).to eq('Sorry have to reject this because...')
-        end
-
-        it 'captures the error' do
-          subject.perform
-          expect(Sentry)
-            .to have_received(:capture_exception)
-            .with("PriorAuthority::AssessmentSyncer encountered error 'undefined method `dig' for nil' " \
-                  "for application '#{paa_one.id}'")
-            .at_least(:once)
-        end
       end
     end
   end

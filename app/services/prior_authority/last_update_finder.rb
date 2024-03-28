@@ -41,9 +41,8 @@ module PriorAuthority
       end
     end
 
-    # TODO: CRM457-1192 exclude further_information[_request]s association when it exists
     def excluded?(association_name)
-      association_name.in?(%i[provider])
+      association_name.in?(%i[provider further_informations])
     end
   end
 end

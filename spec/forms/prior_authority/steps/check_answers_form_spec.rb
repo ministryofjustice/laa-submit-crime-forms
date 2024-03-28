@@ -52,7 +52,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     context 'with a sent_back application with no changes made' do
       let(:application) do
         travel_to(sent_back_datetime) do
-          create(:prior_authority_application, :full, :with_sent_back_status)
+          create(:prior_authority_application, :full, :sent_back_for_incorrect_info)
         end
       end
 

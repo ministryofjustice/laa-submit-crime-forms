@@ -110,12 +110,19 @@ FactoryBot.define do
       custom_service_name { nil }
     end
 
-    trait :with_sent_back_status do
+    trait :sent_back_for_incorrect_info do
       status { 'sent_back' }
-      further_information_explanation { 'Please provide more evidence to support the service costs...' }
       incorrect_information_explanation { 'Please correct the following information...' }
       resubmission_deadline { 14.days.from_now }
       resubmission_requested { DateTime.current }
+    end
+
+    trait :with_further_information_request do
+      further_informations { [build(:further_information)] }
+    end
+
+    trait :with_further_information_supplied do
+      further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
     end
 
     trait :with_complete_non_prison_law do
@@ -235,6 +242,13 @@ FactoryBot.define do
       after(:create) do |paa|
         create(:additional_cost, :per_item, prior_authority_application_id: paa.id)
         create(:additional_cost, :per_hour, prior_authority_application_id: paa.id)
+      end
+    end
+
+    trait :with_further_information do
+      status { 'sent_back' }
+      after(:create) do |paa|
+        create(:further_information, prior_authority_application_id: paa.id)
       end
     end
   end
