@@ -8,13 +8,13 @@
     <%= step_form @form_object do |f| %>
       <%= suggestion_select f, :main_offence, MainOffence.all, :name, :name, 'offence-autocomplete', width: 20,
                               options: { include_blank: true }, data: { autoselect: false }, label: { size: 's' } %>
-      <%= f.govuk_date_field :main_offence_date, maxlength_enabled: true, legend: { size: 's' } %>
+      <%= f.govuk_fully_validatable_date_field :main_offence_date, maxlength_enabled: true, legend: { size: 's' } %>
 
       <% @form_object.boolean_fields.each do |field| %>
         <%= f.govuk_radio_buttons_fieldset field, legend: { size: 's' } do %>
           <%= f.govuk_radio_button field, YesNoAnswer::YES.to_s do %>
            <% if field == :remitted_to_magistrate %>
-              <%= f.govuk_date_field "#{field}_date", width: 'one-third', legend: { size: 's', class: 'govuk-date-legend-non-bold' } %>
+              <%= f.govuk_fully_validatable_date_field "#{field}_date", width: 'one-third', legend: { size: 's', class: 'govuk-date-legend-non-bold' } %>
             <% end %>
           <% end %>
           <%= f.govuk_radio_button field, YesNoAnswer::NO.to_s %>

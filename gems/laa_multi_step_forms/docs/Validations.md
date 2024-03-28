@@ -4,7 +4,7 @@ A number of custom validators have been created to help simplify using the forms
 
 ## Multi param date
 
-This is used with the `govuk_date_field` and validates both the parts of the date
+This is used with the `govuk_fully_validatable_date_field` and validates both the parts of the date
 field (day, month, year) and the full date to provide the simpliest error messages
 to follow. In addition this validator supports the following criteria:
 
