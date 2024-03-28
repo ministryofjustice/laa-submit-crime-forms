@@ -20,7 +20,7 @@ module Providers
       if service == ANY_SERVICE
         auth_info.office_codes.any? { allowed_office_codes[_1.to_sym] }
       else
-        auth_info.office_codes.any? { allowed_office_codes[_1.to_sym].include?(service.to_s) }
+        auth_info.office_codes.any? { allowed_office_codes[_1.to_sym]&.include?(service.to_s) }
       end
     end
 
