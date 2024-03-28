@@ -25,7 +25,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               text: '<strong class="govuk-tag govuk-tag--primary">Submitted</strong>'
             },
             {
-              head_key: 'Date Submitted',
+              head_key: 'submitted',
               text: '1 December 2023'
             }
           ]
@@ -44,7 +44,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               text: '<strong class="govuk-tag govuk-tag--green">Granted</strong>'
             },
             {
-              head_key: 'Date Assessed',
+              head_key: 'assessed',
               text: nil
             }
           ]
@@ -63,7 +63,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               text: '<strong class="govuk-tag govuk-tag--blue">Part Granted</strong>'
             },
             {
-              head_key: 'Date Assessed',
+              head_key: 'assessed',
               text: nil
             }
           ]
@@ -82,7 +82,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               text: '<strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong>'
             },
             {
-              head_key: 'Date Returned',
+              head_key: 'returned',
               text: nil
             }
           ]
@@ -101,7 +101,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               text: '<strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong>'
             },
             {
-              head_key: 'Date Returned',
+              head_key: 'returned',
               text: nil
             }
           ]
@@ -120,7 +120,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               text: '<strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong>'
             },
             {
-              head_key: 'Date Returned',
+              head_key: 'returned',
               text: nil
             }
           ]
@@ -139,7 +139,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               text: '<strong class="govuk-tag govuk-tag--red">Rejected</strong>'
             },
             {
-              head_key: 'Date Returned',
+              head_key: 'returned',
               text: nil
             }
           ]
