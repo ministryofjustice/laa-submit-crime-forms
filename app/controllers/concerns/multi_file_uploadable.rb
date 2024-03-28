@@ -1,5 +1,10 @@
 module MultiFileUploadable
   extend ActiveSupport::Concern
+
+  included do
+    skip_before_action :verify_authenticity_token, only: [:create, :destroy]
+  end
+
   def create
     unless supported_filetype(params[:documents])
       return return_error(nil,
