@@ -31,16 +31,24 @@ RSpec.describe Providers::Gatekeeper do
 
   describe '#office_enrolled?' do
     context 'when any of the office codes are in the allow list' do
-      it 'returns true' do
+      it 'returns true when no service is specified' do
         expect(subject.office_enrolled?).to be(true)
+      end
+
+      it 'returns true when a service is specified' do
+        expect(subject.office_enrolled?(service: :crm7)).to be(true)
       end
     end
 
     context 'when no office codes are in the allow list' do
       let(:office_codes) { %w[1X000X] }
 
-      it 'returns false' do
+      it 'returns false when no service is specified' do
         expect(subject.office_enrolled?).to be(false)
+      end
+
+      it 'returns false when a service is specified' do
+        expect(subject.office_enrolled?(service: :crm4)).to be(false)
       end
     end
   end

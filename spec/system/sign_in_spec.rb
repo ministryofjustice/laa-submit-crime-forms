@@ -57,9 +57,44 @@ RSpec.describe 'Sign in user journey' do
       expect(page).to have_current_path(root_path)
     end
 
-    it 'does not prompt for office code logic' do
-      click_on "Claim non-standard magistrates' court payments, previously CRM7"
-      expect(page).to have_current_path(edit_nsm_steps_office_select_path)
+    context 'when I start NSM journey' do
+      before { click_on "Claim non-standard magistrates' court payments, previously CRM7" }
+
+      it 'prompts for office code logic' do
+        expect(page).to have_current_path(edit_nsm_office_path)
+      end
+
+      it 'saves selected office code and moves me on' do
+        choose '1A123B'
+        expect { click_on 'Save and continue' }.to change { Provider.first.selected_office_code }.from(nil).to('1A123B')
+        expect(page).to have_current_path(nsm_applications_path)
+      end
+
+      it 'validates my choice' do
+        click_on 'Save and continue'
+        expect(page).to have_current_path(nsm_office_path)
+        expect(page).to have_text 'There is a problem'
+      end
+    end
+
+    context 'when I start PA journey' do
+      before { click_on 'Apply for prior authority to incur disbursements, previously CRM4' }
+
+      it 'prompts for office code logic' do
+        expect(page).to have_current_path(edit_prior_authority_office_path)
+      end
+
+      it 'saves selected office code and moves me on' do
+        choose '1A123B'
+        expect { click_on 'Save and continue' }.to change { Provider.first.selected_office_code }.from(nil).to('1A123B')
+        expect(page).to have_current_path(prior_authority_applications_path)
+      end
+
+      it 'validates my choice' do
+        click_on 'Save and continue'
+        expect(page).to have_current_path(prior_authority_office_path)
+        expect(page).to have_text 'There is a problem'
+      end
     end
   end
 end

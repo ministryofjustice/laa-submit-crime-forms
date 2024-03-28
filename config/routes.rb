@@ -52,7 +52,6 @@ Rails.application.routes.draw do
   end
 
   namespace :nsm, path: 'non-standard-magistrates' do
-    get "start", to: "home#start"
     resources :claims, except: [:edit, :show, :new, :update], as: :applications do
       member do
         get :delete
@@ -60,14 +59,7 @@ Rails.application.routes.draw do
     end
 
     resources :offences, only: [:index], format: :js
-
-    namespace :steps do
-      namespace :office do
-        edit_step :confirm
-        edit_step :select
-      end
-    end
-
+    resource :office, only: %i[show edit update]
 
     scope 'applications/:id' do
       # This is used as a generic redirect once a draft has been commited
@@ -118,6 +110,7 @@ Rails.application.routes.draw do
   end
 
   namespace :prior_authority, path: 'prior-authority' do
+    resource :office, only: %i[show edit update]
     resources :service_types, only: [:index], format: :js
 
     scope 'applications/:application_id' do
