@@ -10,7 +10,7 @@
     <%= step_form @form_object do |form| %>
       <%= form.govuk_radio_buttons_fieldset :next_hearing, legend: { text: t('.next_hearing'), size: 's' } do %>
         <%= form.govuk_radio_button :next_hearing, true, label: { text: t('generic.yes') }, link_errors: true do %>
-              <%= form.govuk_date_field :next_hearing_date, legend: { text: t(".next_hearing_date"), size: 's' }, hint: { text: t(".next_hearing_date_hint") } %>
+              <%= form.govuk_fully_validatable_date_field :next_hearing_date, legend: { text: t(".next_hearing_date"), size: 's' }, hint: { text: t(".next_hearing_date_hint") } %>
           <% end %>
           <%= form.govuk_radio_button :next_hearing, false, label: { text: t('generic.no') } %>
       <% end %>
