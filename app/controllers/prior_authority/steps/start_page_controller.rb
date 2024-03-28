@@ -32,7 +32,7 @@ module PriorAuthority
         if current_application.further_informations.empty?
           false
         else
-          last_further_info_request = current_application.further_informations.last.created_at
+          last_further_info_request = current_application.further_informations.order(:created_at).last.created_at
           current_application.status == 'sent_back' && last_further_info_request > current_application.app_store_updated_at
         end
       end
