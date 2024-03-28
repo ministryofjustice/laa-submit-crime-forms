@@ -99,8 +99,7 @@ module PriorAuthority
         {
           caseworker_id: latest_further_info['caseworker_id'],
           information_requested: latest_further_info['information_requested'],
-          requested_at: latest_further_info['requested_at'],
-          expired_at: latest_further_info['expires_at']
+          requested_at: latest_further_info['requested_at']
         }
       )
     end

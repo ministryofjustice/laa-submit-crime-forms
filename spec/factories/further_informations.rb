@@ -4,7 +4,6 @@ FactoryBot.define do
     information_supplied { nil }
     caseworker_id { 'case-worker-uuid' }
     requested_at { DateTime.current }
-    expired_at { 14.days.from_now }
     created_at { DateTime.current }
 
     trait :with_response do
