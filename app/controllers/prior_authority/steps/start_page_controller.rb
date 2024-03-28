@@ -17,7 +17,7 @@ module PriorAuthority
       end
 
       def start_page_tasklist
-        if further_information_needed
+        if further_information_needed(current_application)
           @tasklist || StartPage::FurtherInformationTaskList.new(
             view_context, application: current_application
           )
@@ -25,15 +25,6 @@ module PriorAuthority
           @tasklist || StartPage::TaskList.new(
             view_context, application: current_application
           )
-        end
-      end
-
-      def further_information_needed
-        if current_application.further_informations.empty?
-          false
-        else
-          last_further_info_request = current_application.further_informations.order(:created_at).last.created_at
-          current_application.status == 'sent_back' && last_further_info_request > current_application.app_store_updated_at
         end
       end
     end

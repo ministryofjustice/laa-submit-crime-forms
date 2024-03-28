@@ -18,6 +18,15 @@ module ApplicationHelper
     ApplicationController.helpers.sanitize(string.gsub("\n", '<br>'), tags: %w[br])
   end
 
+  def further_information_needed(application)
+    if application.further_informations.empty?
+      false
+    else
+      (application.status == 'sent_back') &&
+        (application.further_informations.order(:created_at).last.created_at >= application.app_store_updated_at)
+    end
+  end
+
   def relevant_prior_authority_list_anchor(prior_authority_application)
     case prior_authority_application.status
     when 'submitted'

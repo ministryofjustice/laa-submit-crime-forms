@@ -12,7 +12,7 @@ module PriorAuthority
 
     def show
       @application = PriorAuthorityApplication.for(current_provider).find(params[:id])
-      @further_info_review_needed = @application.further_informations.order(:created_at).last.created_at >= @application.app_store_updated_at
+      @further_info_review_needed = further_information_needed(@application)
       @primary_quote_summary = PriorAuthority::PrimaryQuoteSummary.new(@application)
       @report = CheckAnswers::Report.new(@application, verbose: true)
       @allowance_type = { 'granted' => :original,
