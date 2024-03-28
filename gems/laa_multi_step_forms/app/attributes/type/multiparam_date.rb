@@ -10,9 +10,6 @@ module Type
 
       # `value` is a hash in the format: {3=>31, 2=>12, 1=>2000}
       # where `3` is the day, `2` is the month and `1` is the year.
-
-      # If a non-numerical-string has been entered anywhere, `to_i` will translate it to `0`,
-      # resulting in an invalid date
       value_args = value.values_at(1, 2, 3).map { _1&.to_i }
 
       if Date.valid_date?(*value_args) && value_args.none?(&:zero?)
