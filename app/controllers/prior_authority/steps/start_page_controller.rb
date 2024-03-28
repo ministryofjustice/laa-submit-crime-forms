@@ -16,8 +16,6 @@ module PriorAuthority
                locals: { header: -> {}, skip_progress: true, app_type: 'application' }
       end
 
-      private
-
       def start_page_tasklist
         if further_information_needed
           @tasklist || StartPage::FurtherInformationTaskList.new(
@@ -31,8 +29,12 @@ module PriorAuthority
       end
 
       def further_information_needed
-        last_further_info_request = current_application.further_informations&.last&.created_at
-        current_application.status == 'sent_back' && last_further_info_request > current_application.app_store_updated_at
+        if current_application.further_informations.empty?
+          false
+        else
+          last_further_info_request = current_application.further_informations.last.created_at
+          current_application.status == 'sent_back' && last_further_info_request > current_application.app_store_updated_at
+        end
       end
     end
   end

@@ -246,8 +246,9 @@ FactoryBot.define do
     end
 
     trait :with_further_information do
+      status { 'sent_back' }
       after(:create) do |paa|
-        create(:further_information, :valid, prior_authority_application_id: paa.id)
+        create(:further_information, prior_authority_application_id: paa.id)
       end
     end
   end
