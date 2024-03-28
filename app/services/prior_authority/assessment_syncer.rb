@@ -13,6 +13,8 @@ module PriorAuthority
         when 'sent_back'
           sync_further_info_request(application, app_store_record)
         end
+      rescue StandardError => e
+        Sentry.capture_exception("#{self} encountered error '#{e}' for application '#{application.id}'")
       end
 
       def sync_overall_comment(application, app_store_record)
