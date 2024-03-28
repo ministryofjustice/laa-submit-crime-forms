@@ -34,13 +34,11 @@ module Nsm
       def date_actioned_head
         case claim.status
         when 'submitted'
-          I18n.t('nsm.steps.check_answers.show.sections.application_status.submitted')
-        when 'granted', 'auto_grant'
-          I18n.t('nsm.steps.check_answers.show.sections.application_status.granted')
-        when 'part_grant'
-          I18n.t('nsm.steps.check_answers.show.sections.application_status.part_grant')
+          'submitted'
+        when 'granted', 'auto_grant', 'part_grant'
+          'assessed'
         else
-          I18n.t('nsm.steps.check_answers.show.sections.application_status.returned')
+          'returned'
         end
       end
     end

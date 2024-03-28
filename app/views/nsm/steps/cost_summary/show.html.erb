@@ -2,7 +2,7 @@
 <% decision_step_header %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-one-thirds">
+  <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <h2 class="govuk-hint govuk-!-font-size-24"><%= t('.estimate') %></h2>
     <div class="govuk-heading-l"><%= @vat_registered ? @report.total_cost_inc_vat : @report.total_cost %></div>
