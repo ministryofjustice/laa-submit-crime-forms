@@ -3,7 +3,7 @@
 module Nsm
   module Steps
     class SupportingEvidenceController < Nsm::Steps::BaseController
-      skip_before_action :verify_authenticity_token
+      include MultiFileUploadable
       before_action :supporting_evidence
 
       def edit
