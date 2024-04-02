@@ -55,7 +55,6 @@ FactoryBot.define do
     end
 
     trait :case_details do
-      # ufn { '20150612/001' }
       main_offence { MainOffence.all.sample.name }
       main_offence_date { Date.yesterday }
 
