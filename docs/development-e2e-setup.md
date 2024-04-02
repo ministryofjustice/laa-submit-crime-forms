@@ -8,12 +8,13 @@ For provider app submission you will need to ensure you have the following env v
 
 ```sh
 # App store credentials (for authenticating to a local app store currently)
-# TODO: Oauth may be removed from local/development app store in the future
+# It is possible to develop locally without using Oauth in which case you should not declare APP_STORE_TENANT_ID.
+PROVIDER_CLIENT_ID=not-a-real-key
+PROVIDER_CLIENT_SECRET=not-a-real-key
 APP_STORE_CLIENT_ID=not-a-real-key
-APP_STORE_CLIENT_SECRET=not-a-real-key
 APP_STORE_TENANT_ID=not-a-real-key
 ```
-Ask a dev where these can be retrieved, and do not use production versions
+Ask a dev where these can be retrieved, and **do not use production versions**
 
 To receive emails to you own email address, or avoid errors on submission, you should supply the following ENV VAR
 ```sh

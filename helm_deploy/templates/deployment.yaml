@@ -179,11 +179,16 @@ spec:
                 secretKeyRef:
                   name: app-store-auth
                   key: app_client_id
-            - name: APP_STORE_CLIENT_SECRET
+            - name: PROVIDER_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   name: app-store-auth
-                  key: app_client_secret
+                  key: provider_client_id
+            - name: PROVIDER_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-store-auth
+                  key: provider_client_secret
             - name: SIDEKIQ_WEB_UI_USERNAME
               valueFrom:
                 secretKeyRef:
