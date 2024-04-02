@@ -28,6 +28,10 @@ module PriorAuthority
 
       private
 
+      def record
+        current_application
+      end
+
       def as
         :reason_why
       end
