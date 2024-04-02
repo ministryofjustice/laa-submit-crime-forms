@@ -18,7 +18,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
       let(:claim) { build(:claim, :case_type_magistrates) }
 
       it 'generates magistrates rows' do
-        expect(subject.row_data).to eq(
+        expect(subject.row_data).to match(
           [
             {
               head_key: 'file_ufn',
@@ -30,7 +30,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
             },
             {
               head_key: 'rep_order_date',
-              text: '1 January 2023'
+              text: /\A\d{1,2} \w+ \d{4}\z/
             }
           ]
         )
@@ -50,7 +50,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
       let(:claim) { build(:claim, :case_type_breach) }
 
       it 'generates magistrates rows' do
-        expect(subject.row_data).to eq(
+        expect(subject.row_data).to match(
           [
             {
               head_key: 'file_ufn',
@@ -63,11 +63,11 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
             },
             {
               head_key: 'cntp_number',
-              text: 'CNTP12345'
+              text: /\ACNTP\d+\z/
             },
             {
               head_key: 'cntp_rep_order',
-              text: '1 February 2023'
+              text: /\A\d{1,2} \w+ \d{4}\z/
             }
           ]
         )

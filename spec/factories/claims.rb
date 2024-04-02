@@ -4,6 +4,10 @@ FactoryBot.define do
     office_code { '1A123B' }
     laa_reference { 'LAA-n4AohV' }
 
+    transient do
+      date { Date.new(2023, 4, 12) }
+    end
+
     trait :complete do
       firm_details
       main_defendant
@@ -20,16 +24,16 @@ FactoryBot.define do
     end
 
     trait :case_type_magistrates do
-      ufn { '120423/001' }
+      ufn { "#{date.strftime('%d%m%y')}/001" }
       claim_type { 'non_standard_magistrate' }
-      rep_order_date { '2023-01-01' }
+      rep_order_date { date.strftime('%Y-%m-%d') }
     end
 
     trait :case_type_breach do
-      ufn { '120423/002' }
+      ufn { "#{date.strftime('%d%m%y')}/002" }
       claim_type { 'breach_of_injunction' }
-      cntp_order { 'CNTP12345' }
-      cntp_date { '2023-02-01' }
+      cntp_order { "CNTP#{rand(10_000)}" }
+      cntp_date { date.strftime('%Y-%m-%d') }
     end
 
     trait :firm_details do
@@ -51,7 +55,7 @@ FactoryBot.define do
     end
 
     trait :case_details do
-      ufn { '20150612/001' }
+      # ufn { '20150612/001' }
       main_offence { MainOffence.all.sample.name }
       main_offence_date { Date.yesterday }
 
@@ -63,16 +67,16 @@ FactoryBot.define do
 
     trait :with_remittal do
       remitted_to_magistrate { 'yes' }
-      remitted_to_magistrate_date { Date.new(2023, 3, 1) }
+      remitted_to_magistrate_date { date + rand(40) }
     end
 
     trait :hearing_details do
-      first_hearing_date { Date.new(2023, 3, 1) }
+      first_hearing_date { date + rand(40) }
       number_of_hearing { 1 }
       youth_court { 'no' }
       in_area { 'yes' }
       court { 'A Court' }
-      hearing_outcome { 'CP01' }
+      hearing_outcome { OutcomeCode.all.sample.id }
       matter_type { '1' }
     end
 
