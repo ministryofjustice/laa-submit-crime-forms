@@ -12,7 +12,7 @@ module TestData
         @claim_type ||= {
           'ufn' => SecureRandom.uuid,
           'claim_type' => ::ClaimType::BREACH_OF_INJUNCTION,
-          'cntp_order' => date
+          'cntp_order' => date,
           'cntp_date' => ''
         }
       end

@@ -1,5 +1,5 @@
 module TestData
-  class NsmBuilder
+  class Builder
     NSM_TO_BUILD = 1000
 
     attr_reader :year, :providers
