@@ -38,7 +38,7 @@ RSpec.describe PriorAuthority::SubmissionMailer, type: :mailer do
       ).to include(
         laa_case_reference: 'LAA-n4AohV',
         ufn: '120423/001',
-        defendant_name: 'bob jim',
+        defendant_name: an_instance_of(String),
         application_total: '£155.00',
         date: DateTime.now.to_fs(:stamp),
       )

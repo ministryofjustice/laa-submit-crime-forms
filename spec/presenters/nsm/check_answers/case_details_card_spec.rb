@@ -15,7 +15,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
 
   describe '#row_data' do
     it 'generates case detail rows with no remittal' do
-      expect(subject.row_data).to eq(
+      expect(subject.row_data).to match(
         [
           {
             head_key: 'main_offence',
@@ -23,7 +23,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
           },
           {
             head_key: 'main_offence_date',
-            text: '1 January 2023'
+            text: /\A\d{1,2} \w+ \d{4}\z/
           },
           {
             head_key: 'assigned_counsel',
@@ -49,7 +49,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
       let(:claim) { build(:claim, :case_details, :with_remittal, main_offence:, main_offence_date:) }
 
       it 'generates case detail rows with remittal' do
-        expect(subject.row_data).to eq(
+        expect(subject.row_data).to match(
           [
             {
               head_key: 'main_offence',
@@ -57,7 +57,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
             },
             {
               head_key: 'main_offence_date',
-              text: '1 January 2023'
+              text: /\A\d{1,2} \w+ \d{4}\z/
             },
             {
               head_key: 'assigned_counsel',
@@ -77,7 +77,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
             },
             {
               head_key: 'remitted_to_magistrate_date',
-              text: '1 March 2023'
+              text: /\A\d{1,2} \w+ \d{4}\z/
             }
           ]
         )

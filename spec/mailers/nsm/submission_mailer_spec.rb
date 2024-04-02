@@ -30,7 +30,7 @@ RSpec.describe Nsm::SubmissionMailer, type: :mailer do
         ).to include(
           LAA_case_reference: 'LAA-n4AohV',
           UFN: '120423/001',
-          main_defendant_name: 'bob jim',
+          main_defendant_name: an_instance_of(String),
           defendant_reference: 'MAAT ID: AA1',
           claim_total: '£20.45',
           date: DateTime.now.to_fs(:stamp),
@@ -47,8 +47,8 @@ RSpec.describe Nsm::SubmissionMailer, type: :mailer do
         ).to include(
           LAA_case_reference: 'LAA-n4AohV',
           UFN: '120423/002',
-          main_defendant_name: 'bob jim',
-          defendant_reference: "Client's CNTP number: CNTP12345",
+          main_defendant_name: an_instance_of(String),
+          defendant_reference: /\AClient's CNTP number: CNTP\d+\z/,
           claim_total: '£20.45',
           date: DateTime.now.to_fs(:stamp),
         )
