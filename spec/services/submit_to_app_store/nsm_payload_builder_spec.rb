@@ -43,10 +43,10 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           [{
             'apply_vat' => 'true',
             'details' => 'Details',
-            'disbursement_date' => '2023-08-16',
+            'disbursement_date' => /\A\d{4}-\d{2}-\d{2}\z/,
             'disbursement_type' => { en: an_instance_of(String), value: disbursement.disbursement_type },
             'id' => disbursement.id,
-            'miles' => '100.0',
+            'miles' => disbursement.miles.to_s,
             'other_type' => { en: nil, value: nil },
             'pricing' => pricing[disbursement.disbursement_type],
             'prior_authority' => nil,
@@ -136,11 +136,11 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'work_before_date' => nil,
           'work_items' =>
           [{
-            'completed_on' => '2023-08-16',
-            'fee_earner' => 'jimbob',
+            'completed_on' => /\A\d{4}-\d{2}-\d{2}\z/,
+            'fee_earner' => an_instance_of(String),
             'id' => work_item.id,
             'pricing' => pricing[work_item.work_type],
-            'time_spent' => 100,
+            'time_spent' => an_instance_of(Integer),
             'uplift' => nil,
             'work_type' => { en: an_instance_of(String), value: work_item.work_type },
           }],

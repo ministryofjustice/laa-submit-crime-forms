@@ -2,13 +2,13 @@ FactoryBot.define do
   factory :disbursement do
     # using age as a shorthane  to set the disbursement date
     transient do
-      age { 1 }
+      age { rand(40) }
     end
 
     trait :valid do
       disbursement_date { age.days.ago.to_date }
       disbursement_type { DisbursementTypes.values.reject(&:other?).sample.to_s }
-      miles { 100 }
+      miles { 50 + 200**Random.new.rand(1.0).to_i } # range: 50 -> 250
       total_cost_without_vat do |disb|
         Pricing.for(Claim.new)[disb.disbursement_type] * disb.miles
       end
