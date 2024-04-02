@@ -10,7 +10,7 @@ module TestData
     end
 
     def build(nsm_to_build: NSM_TO_BUILD)
-      nsm_to_build.times do |i|
+      nsm_to_build.times do |_i|
         data = nsm_data.sample.new(
           date: (Date.new(year, 1, 1) + rand(36)).next_weekday,
           provider: providers.sample

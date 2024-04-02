@@ -28,61 +28,33 @@ module TestData
         }
       end
 
-      def case_details
+      def case_details; end
 
-      end
+      def hearing_details; end
 
-      def hearing_details
+      def case_disposal; end
 
-      end
+      def reason_for_claim; end
 
-      def case_disposal
+      def claim_details; end
 
-      end
+      def work_item; end
 
-      def reason_for_claim
+      def letters_calls; end
 
-      end
+      def disbursement_cost; end
 
-      def claim_details
+      def disbursement_type; end
 
-      end
+      def other_info; end
 
-      def work_item
+      def supporting_evidence; end
 
-      end
+      def answer_equality; end
 
-      def letters_calls
+      def equality_questions; end
 
-      end
-
-      def disbursement_cost
-
-      end
-
-      def disbursement_type
-
-      end
-
-      def other_info
-
-      end
-
-      def supporting_evidence
-
-      end
-
-      def answer_equality
-
-      end
-
-      def equality_questions
-
-      end
-
-      def solicitor_declaration
-
-      end
+      def solicitor_declaration; end
     end
   end
 end
