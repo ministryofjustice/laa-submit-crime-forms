@@ -163,7 +163,7 @@ RSpec.describe PullUpdates do
               'details' => { 'comment' => 'All good, granting...' },
               'created_at' => '2024-03-26T16:56:27.039Z',
               'public' => true,
-              'event_type' => 'Event::Decision'
+              'event_type' => 'decision'
             }
           ],
         }
@@ -178,7 +178,7 @@ RSpec.describe PullUpdates do
               'details' => { 'comment' => 'Sorry have to reject this because...' },
               'created_at' => '2024-03-26T16:56:27.039Z',
               'public' => true,
-              'event_type' => 'Event::Decision'
+              'event_type' => 'decision'
             }
           ],
         }
@@ -225,7 +225,7 @@ RSpec.describe PullUpdates do
                 'details' => { 'comment' => 'All good, granting...' },
                 'created_at' => '2024-03-26T16:56:27.039Z',
                 'public' => false, # <-- this fake change will break the sync, but future changes to payloads could too
-                'event_type' => 'Event::Decision'
+                'event_type' => 'decision'
               }
             ],
           }
