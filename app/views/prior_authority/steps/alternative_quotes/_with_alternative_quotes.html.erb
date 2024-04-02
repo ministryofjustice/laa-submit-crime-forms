@@ -10,6 +10,7 @@
                                     text: t('prior_authority.steps.alternative_quotes.deleted'),
                                     success: true) %>
     <% end %>
+    <%= govuk_error_summary(@form_object) %>
     <span class="govuk-caption-xl"><%= t(".caption") %></span>
     <h1 class="govuk-heading-xl"><%= title_string %></h1>
     <% @form_object.alternative_quotes.each do |alternative_quote| %>
@@ -17,8 +18,6 @@
     <% end %>
 
     <%= step_form @form_object do |form| %>
-
-      <%= govuk_error_summary(@form_object) %>
       <% if @form_object.more_quotes_addable? %>
         <%= form.govuk_collection_radio_buttons(
           :alternative_quotes_still_to_add,
