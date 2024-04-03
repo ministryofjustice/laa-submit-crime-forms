@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PullUpdates do
   let(:id) { SecureRandom.uuid }
-  let(:last_update) { Date.new(2021,11,30) }
+  let(:last_update) { Date.new(2021, 11, 30) }
   let(:http_puller) { instance_double(AppStoreClient) }
   let(:arbitrary_fixed_date) { '2021-12-01T23:24:58.846345' }
   let(:http_response) do
