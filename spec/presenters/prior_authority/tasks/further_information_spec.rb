@@ -16,21 +16,7 @@ RSpec.describe PriorAuthority::Tasks::FurtherInformation, type: :presenter do
   end
 
   describe '#can_start?' do
-    it { is_expected.not_to be_can_start }
-
-    context 'when about an application is complete' do
-      before do
-        allow(subject).to receive(:fulfilled?).with(PriorAuthority::Tasks::Ufn).and_return(true)
-        allow(subject).to receive(:fulfilled?).with(PriorAuthority::Tasks::CaseContact).and_return(true)
-        allow(subject).to receive(:fulfilled?).with(PriorAuthority::Tasks::ClientDetail).and_return(true)
-        allow(subject).to receive(:fulfilled?).with(PriorAuthority::Tasks::CaseAndHearingDetail).and_return(true)
-        allow(subject).to receive(:fulfilled?).with(PriorAuthority::Tasks::PrimaryQuote).and_return(true)
-        allow(subject).to receive(:fulfilled?).with(PriorAuthority::Tasks::AlternativeQuotes).and_return(true)
-        allow(subject).to receive(:fulfilled?).with(PriorAuthority::Tasks::ReasonWhy).and_return(true)
-      end
-
-      it { is_expected.to be_can_start }
-    end
+    it { is_expected.to be_can_start }
   end
 
   it_behaves_like 'a task with generic complete?', PriorAuthority::Steps::FurtherInformationForm
