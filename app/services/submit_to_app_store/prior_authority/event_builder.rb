@@ -15,7 +15,7 @@ class SubmitToAppStore
 
         [
           {
-            event_type: 'Event::ProviderUpdated',
+            event_type: 'provider_updated',
             details: {
               comment: 'TODO: Extract from latest further_information',
               documents: [], # TODO: Extract from latest further_information

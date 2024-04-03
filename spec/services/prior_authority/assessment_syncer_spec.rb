@@ -17,7 +17,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
       {
         events: [
           {
-            event_type: 'Event::Decision',
+            event_type: 'decision',
             created_at: 1.day.ago,
             public: true,
             details: { comment: 'Decision comment' }

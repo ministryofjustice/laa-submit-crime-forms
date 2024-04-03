@@ -173,7 +173,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
                   corrected_info: [],
                   documents: []
                 },
-                event_type: 'Event::ProviderUpdated'
+                event_type: 'provider_updated'
               }
             ]
           )
