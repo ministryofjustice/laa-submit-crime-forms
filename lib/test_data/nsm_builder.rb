@@ -1,26 +1,17 @@
 module TestData
   class NsmBuilder
-    def initialize(data)
-      @data = data
+    def build_many(count)
+      count.times { build }
     end
 
     def build
-      type, args = options.sample
-      args.pop if args.last.is_a?(Hash)
-      claim = FactoryBot.create(*args)
+      args, kwargs = *options.values.sample
+      claim = FactoryBot.create(*args, kwargs.call)
 
-      rand(40).times do
-        FactoryBot.create(:work_item, claim:)
-      end
-
-      rand(type == :no_disbursements ? 0 : 10).times do
-        FactoryBot.create(:disbursments, claim:)
-      end
-
-      SubmitToAppStore.new.submit(application)
+      SubmitToAppStore.new.submit(claim)
     end
 
-    # rubocop:disable  Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength
     def options
       {
         magistrates: [
@@ -41,6 +32,6 @@ module TestData
         ],
       }
     end
-    # rubocop:enable  Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength
   end
 end

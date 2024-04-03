@@ -6,6 +6,8 @@ FactoryBot.define do
 
     transient do
       date { Date.new(2023, 4, 12) }
+      work_item_count { 0 }
+      disbursements_count { 0 }
     end
 
     trait :complete do
