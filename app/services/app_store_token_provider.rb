@@ -39,7 +39,7 @@ class AppStoreTokenProvider
   end
 
   def app_store_client_id
-      ENV.fetch('APP_STORE_CLIENT_ID', nil)
+    ENV.fetch('APP_STORE_CLIENT_ID', nil)
   end
 
   def tenant_id
