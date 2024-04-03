@@ -26,7 +26,7 @@ module PriorAuthority
     private
 
     def sync_overall_comment
-      comment_event = app_store_record['events'].select { _1['public'] && _1['event_type'] == 'Event::Decision' }
+      comment_event = app_store_record['events'].select { _1['public'] && _1['event_type'] == 'decision' }
                                                 .max_by { DateTime.parse(_1['created_at']) }
 
       application.update(assessment_comment: comment_event.dig('details', 'comment'))
