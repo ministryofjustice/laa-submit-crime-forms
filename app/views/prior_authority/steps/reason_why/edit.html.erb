@@ -12,7 +12,7 @@
 
       <h1 class="govuk-heading-m"><%= t(".supporting_documentation") %></h1>
       <span class="govuk-caption-m govuk-!-margin-bottom-8"><%= t(".supporting_documentation_caption") %></span>
-      <%= render 'shared/multifile_upload', supporting_documents: @supporting_documents, form: form, locale_prefix: 'prior_authority.steps.reason_why.edit' %>
+      <%= render 'shared/multifile_upload', supporting_documents: @form_object.supporting_documents, form: form, locale_prefix: 'prior_authority.steps.reason_why.edit' %>
       <%= form.continue_button %>
     <% end %>
   </div>

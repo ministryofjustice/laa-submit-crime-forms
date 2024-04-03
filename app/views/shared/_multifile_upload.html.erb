@@ -7,7 +7,7 @@
     </button>
   </div>
   <%# Uploaded files section %>
-  <div class="moj-multi-file__uploaded-files <%= 'moj-hidden' unless @supporting_documents.count > 0 %>">
+  <div class="moj-multi-file__uploaded-files <%= 'moj-hidden' unless supporting_documents.count > 0 %>">
     <table class="govuk-table">
       <caption class="govuk-table__caption govuk-table__caption--m">Uploaded files</caption>
       <thead class="govuk-table__head">
@@ -18,7 +18,7 @@
       </thead>
       <%# Uploaded file list   %>
       <tbody class="govuk-table__body moj-multi-file-upload__list">
-      <% @supporting_documents.each_with_index do |record, index| %>
+      <% supporting_documents.each_with_index do |record, index| %>
         <tr class="govuk-table__row moj-multi-file-upload__row" id="<%= index %>" >
           <td class="govuk-table__cell moj-multi-file-upload__filename">
             <span class="moj-multi-file-upload__filename"><%= record.file_name %></span>

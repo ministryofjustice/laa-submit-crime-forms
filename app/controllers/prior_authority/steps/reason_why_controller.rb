@@ -7,12 +7,9 @@ module PriorAuthority
         @form_object = ReasonWhyForm.build(
           current_application
         )
-
-        @supporting_documents = current_application.supporting_documents
       end
 
       def update
-        @supporting_documents = current_application.supporting_documents
         update_and_advance(ReasonWhyForm, as:, after_commit_redirect_path:)
       end
 

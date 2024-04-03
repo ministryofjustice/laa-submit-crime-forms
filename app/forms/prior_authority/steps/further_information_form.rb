@@ -5,6 +5,14 @@ module PriorAuthority
 
       validates :information_supplied, presence: true
 
+      def explanation
+        record.information_requested
+      end
+
+      def supporting_documents
+        record.supporting_documents
+      end
+
       private
 
       def persist!

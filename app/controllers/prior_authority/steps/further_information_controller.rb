@@ -5,12 +5,9 @@ module PriorAuthority
 
       def edit
         @form_object = FurtherInformationForm.build(record, application: current_application)
-        @explanation = record.information_requested
-        @supporting_documents = record.supporting_documents
       end
 
       def update
-        @supporting_documents = record.supporting_documents
         update_and_advance(FurtherInformationForm, as:, after_commit_redirect_path:, record:)
       end
 
