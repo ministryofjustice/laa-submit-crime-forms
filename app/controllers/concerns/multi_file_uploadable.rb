@@ -19,20 +19,6 @@ module MultiFileUploadable
     return_error(e, { message: t('activemodel.errors.messages.upload_failed') })
   end
 
-  # :nocov:
-  def destroy
-    raise 'Implement in subclass'
-  end
-
-  def edit
-    raise 'Implement in subclass'
-  end
-
-  def update
-    raise 'Implement in subclass'
-  end
-  # :nocov:
-
   private
 
   def file_uploader
@@ -70,10 +56,4 @@ module MultiFileUploadable
       error: dict
     }, status: :bad_request
   end
-
-  # :nocov:
-  def as
-    raise 'Implement in subclass'
-  end
-  # :nocov:
 end
