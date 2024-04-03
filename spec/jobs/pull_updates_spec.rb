@@ -125,7 +125,7 @@ RSpec.describe PullUpdates do
       let(:paa_one) { create(:prior_authority_application, :full, status: 'submitted') }
       let(:paa_two) { create(:prior_authority_application, :full, status: 'submitted') }
 
-      let(:get_all_response) do
+      let(:http_response) do
         {
           'applications' =>
             [
@@ -204,7 +204,7 @@ RSpec.describe PullUpdates do
         before do
           allow(PriorAuthority::AssessmentSyncer).to receive(:call).and_call_original
 
-          allow(http_puller).to receive(:get_all).and_return(get_all_response)
+          allow(http_puller).to receive(:get_all).and_return(http_response)
           allow(http_puller).to receive(:get).with(paa_one.id).and_return(private_response_one)
           allow(http_puller).to receive(:get).with(paa_two.id).and_return(get_response_two)
 
