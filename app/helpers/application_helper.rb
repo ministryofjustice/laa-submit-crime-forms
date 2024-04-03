@@ -22,8 +22,8 @@ module ApplicationHelper
     if current_application.further_informations.empty?
       false
     else
-      (current_application.status == 'sent_back') &&
-        (current_application.further_informations.order(:created_at).last.created_at >= current_application.app_store_updated_at)
+      last_further_info = current_application.further_informations.order(:created_at).last.created_at
+      (current_application.status == 'sent_back') && (last_further_info >= current_application.app_store_updated_at)
     end
   end
 

@@ -107,7 +107,8 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
       end
 
       it 'returns an error message' do
-        expect(response.parsed_body['error']['message']).to eq 'The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF'
+        expect(response.parsed_body['error']['message'])
+          .to eq 'The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF'
       end
     end
 
