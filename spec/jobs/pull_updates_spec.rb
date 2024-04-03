@@ -119,6 +119,128 @@ RSpec.describe PullUpdates do
         expect(PriorAuthority::AssessmentSyncer).to have_received(:call).with(application)
       end
     end
+
+    context 'with multiple updates' do
+      let(:paa_one) { create(:prior_authority_application, :full, status: 'submitted') }
+      let(:paa_two) { create(:prior_authority_application, :full, status: 'submitted') }
+
+      let(:get_all_response) do
+        {
+          'applications' =>
+            [
+              {
+                'application_id' => paa_one.id,
+                'version' => 2,
+                'application_state' => 'granted',
+                'application_risk' => 'N/A',
+                'application_type' => application_type,
+                'updated_at' => arbitrary_fixed_date
+              },
+              {
+                'application_id' => paa_two.id,
+                'version' => 2,
+                'application_state' => 'rejected',
+                'application_risk' => 'N/A',
+                'application_type' => application_type,
+                'updated_at' => arbitrary_fixed_date
+              },
+            ]
+        }
+      end
+
+      let(:get_response_one) do
+        {
+          'application_state' => 'granted',
+          'application_type' => 'crm4',
+          'events' => [
+            {
+              'details' => { 'comment' => 'All good, granting...' },
+              'created_at' => '2024-03-26T16:56:27.039Z',
+              'public' => true,
+              'event_type' => 'decision'
+            }
+          ],
+        }
+      end
+
+      let(:get_response_two) do
+        {
+          'application_state' => 'rejected',
+          'application_type' => 'crm4',
+          'events' => [
+            {
+              'details' => { 'comment' => 'Sorry have to reject this because...' },
+              'created_at' => '2024-03-26T16:56:27.039Z',
+              'public' => true,
+              'event_type' => 'decision'
+            }
+          ],
+        }
+      end
+
+      it 'updates both application statuses' do
+        expect { subject.perform }
+          .to change { paa_one.reload.status }.from('submitted').to('granted')
+          .and change { paa_two.reload.status }.from('submitted').to('rejected')
+      end
+
+      context 'when syncing successufully' do
+        before do
+          allow(PriorAuthority::AssessmentSyncer).to receive(:call).and_call_original
+
+          allow(app_store_client).to receive(:get).with(paa_one.id).and_return(get_response_one)
+          allow(app_store_client).to receive(:get).with(paa_two.id).and_return(get_response_two)
+        end
+
+        it 'syncs both applications' do
+          expect { subject.perform }
+            .to change { paa_one.reload.assessment_comment }.from(nil).to('All good, granting...')
+            .and change { paa_two.reload.assessment_comment }.from(nil).to('Sorry have to reject this because...')
+        end
+      end
+
+      context 'when syncing raises error' do
+        before do
+          allow(PriorAuthority::AssessmentSyncer).to receive(:call).and_call_original
+
+          allow(app_store_client).to receive(:get_all).and_return(get_all_response)
+          allow(app_store_client).to receive(:get).with(paa_one.id).and_return(private_response_one)
+          allow(app_store_client).to receive(:get).with(paa_two.id).and_return(get_response_two)
+
+          allow(Sentry).to receive(:capture_exception)
+        end
+
+        let(:private_response_one) do
+          {
+            'application_state' => 'granted',
+            'application_type' => 'crm4',
+            'events' => [
+              {
+                'details' => { 'comment' => 'All good, granting...' },
+                'created_at' => '2024-03-26T16:56:27.039Z',
+                'public' => false, # <-- this fake change will break the sync, but future changes to payloads could too
+                'event_type' => 'decision'
+              }
+            ],
+          }
+        end
+
+        it 'syncs (does not block) the unbroken application' do
+          subject.perform
+          expect(paa_one.reload.assessment_comment).to be_nil
+          expect(paa_two.reload.assessment_comment).to eq('Sorry have to reject this because...')
+        end
+
+        it 'captures the error' do
+          subject.perform
+          expect(Sentry)
+            .to have_received(:capture_exception)
+            .with("PriorAuthority::AssessmentSyncer encountered error 'undefined method `dig' for nil' " \
+                  "for application '#{paa_one.id}'")
+            .at_least(:once)
+        end
+      end
+    end
   end
 
   context 'when application type is not recognised' do
