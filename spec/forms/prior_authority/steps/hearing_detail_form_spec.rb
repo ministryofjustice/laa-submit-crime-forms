@@ -74,6 +74,23 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
           .to include('Enter a hearing date')
       end
     end
+
+    context 'with invalid hearing date when one is expected' do
+      let(:hearing_detail_attributes) do
+        {
+          next_hearing: true,
+          'next_hearing_date(3i)': '14',
+          'next_hearing_date(2i)': '10',
+          'next_hearing_date(1i)': '1066',
+        }
+      end
+
+      it 'has expected validation errors on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.messages.values.flatten)
+          .to include('Date is too far in the past')
+      end
+    end
   end
 
   describe '#save' do
