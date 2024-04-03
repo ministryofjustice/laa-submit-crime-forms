@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Nsm::CheckAnswers::HearingDetailsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { build(:claim, :hearing_details) }
+  let(:claim) { build(:claim, :hearing_details, first_hearing_date:) }
+  let(:first_hearing_date) { Date.new(2023, 12, 14) }
 
   describe '#initialize' do
     it 'creates the data instance' do
@@ -24,7 +25,7 @@ RSpec.describe Nsm::CheckAnswers::HearingDetailsCard do
         [
           {
             head_key: 'hearing_date',
-            text: /\A\d{1,2} \w+ \d{4}\z/
+            text: '14 December 2023'
           },
           {
             head_key: 'number_of_hearing',
