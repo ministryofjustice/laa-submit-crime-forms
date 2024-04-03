@@ -93,7 +93,7 @@ module PriorAuthority
     end
 
     def sync_further_info_request
-      latest_further_info = data['further_information'].last
+      latest_further_info = data['further_information'].max_by { _1['requested_at'] }
 
       application.further_informations.create(
         {
