@@ -16,7 +16,7 @@ module Tasks
 
     def can_start?
       previous_tasks.all? { |task| fulfilled?(task) } ||
-        application.sent_back?
+        application.status == 'sent_back'
     end
 
     def completed?(rec = record, form = associated_form)

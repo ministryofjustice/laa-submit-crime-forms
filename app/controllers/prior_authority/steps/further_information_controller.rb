@@ -3,6 +3,8 @@ module PriorAuthority
     class FurtherInformationController < BaseController
       include MultiFileUploadable
 
+      skip_before_action :verify_authenticity_token, only: [:destroy]
+
       def edit
         @form_object = FurtherInformationForm.build(record, application: current_application)
       end

@@ -9,9 +9,7 @@ module PriorAuthority
         record.information_requested
       end
 
-      def supporting_documents
-        record.supporting_documents
-      end
+      delegate :supporting_documents, to: :record
 
       private
 

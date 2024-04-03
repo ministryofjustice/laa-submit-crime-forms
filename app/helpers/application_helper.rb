@@ -23,7 +23,7 @@ module ApplicationHelper
       false
     else
       last_further_info = current_application.further_informations.order(:created_at).last.created_at
-      (current_application.sent_back?) && (last_further_info >= current_application.app_store_updated_at)
+      current_application.sent_back? && (last_further_info >= current_application.app_store_updated_at)
     end
   end
 

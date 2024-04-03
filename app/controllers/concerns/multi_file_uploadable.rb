@@ -2,7 +2,7 @@ module MultiFileUploadable
   extend ActiveSupport::Concern
 
   included do
-    skip_before_action :verify_authenticity_token, only: [:create, :destroy]
+    skip_before_action :verify_authenticity_token, only: [:create]
   end
 
   def create
