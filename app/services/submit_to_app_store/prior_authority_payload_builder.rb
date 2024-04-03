@@ -5,12 +5,14 @@ class SubmitToAppStore
     end
 
     def payload
+      content = data
       { application_id: application.id,
         json_schema_version: 1,
         application_state: 'submitted',
-        application: data,
+        application: content,
         application_type: 'crm4',
-        application_risk: 'N/A' }
+        application_risk: 'N/A',
+        events: PriorAuthority::EventBuilder.call(application, content) }
     end
 
     private
