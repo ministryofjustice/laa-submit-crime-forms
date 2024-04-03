@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe PullUpdates do
-  let(:last_update) { 2 }
+  let(:id) { SecureRandom.uuid }
+  let(:last_update) { Date.new(2021,11,30) }
   let(:http_puller) { instance_double(AppStoreClient) }
   let(:arbitrary_fixed_date) { '2021-12-01T23:24:58.846345' }
   let(:http_response) do
@@ -188,8 +189,8 @@ RSpec.describe PullUpdates do
         before do
           allow(PriorAuthority::AssessmentSyncer).to receive(:call).and_call_original
 
-          allow(app_store_client).to receive(:get).with(paa_one.id).and_return(get_response_one)
-          allow(app_store_client).to receive(:get).with(paa_two.id).and_return(get_response_two)
+          allow(http_puller).to receive(:get).with(paa_one.id).and_return(get_response_one)
+          allow(http_puller).to receive(:get).with(paa_two.id).and_return(get_response_two)
         end
 
         it 'syncs both applications' do
@@ -203,9 +204,9 @@ RSpec.describe PullUpdates do
         before do
           allow(PriorAuthority::AssessmentSyncer).to receive(:call).and_call_original
 
-          allow(app_store_client).to receive(:get_all).and_return(get_all_response)
-          allow(app_store_client).to receive(:get).with(paa_one.id).and_return(private_response_one)
-          allow(app_store_client).to receive(:get).with(paa_two.id).and_return(get_response_two)
+          allow(http_puller).to receive(:get_all).and_return(get_all_response)
+          allow(http_puller).to receive(:get).with(paa_one.id).and_return(private_response_one)
+          allow(http_puller).to receive(:get).with(paa_two.id).and_return(get_response_two)
 
           allow(Sentry).to receive(:capture_exception)
         end
