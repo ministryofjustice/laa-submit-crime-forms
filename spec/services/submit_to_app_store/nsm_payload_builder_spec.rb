@@ -24,12 +24,12 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'claim_type' => { en: 'Non-standard magistrates\' court payment', value: 'non_standard_magistrate' },
           'cntp_date' => nil,
           'cntp_order' => nil,
-          'concluded' => nil,
+          'concluded' => 'no',
           'conclusion' => nil,
           'court' => 'A Court',
           'cracked_trial_date' => nil,
           'created_at' => '2023-08-17T12:13:14.000Z',
-          'defence_statement' => nil,
+          'defence_statement' => 10,
           'defendants' => [{
             'first_name' => an_instance_of(String),
             'last_name' => an_instance_of(String),
@@ -74,7 +74,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           },
           'id' => claim.id,
           'in_area' => 'yes',
-          'is_other_info' => nil,
+          'is_other_info' => 'no',
           'laa_reference' => 'LAA-n4AohV',
           'letters_and_calls' => [
             { 'count' => 2, 'pricing' => 4.09, 'type' => { en: 'Letters', value: 'letters' }, 'uplift' => nil },
@@ -87,7 +87,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             en: 'Offences against the person'
           },
           'number_of_hearing' => 1,
-          'number_of_witnesses' => nil,
+          'number_of_witnesses' => 2,
           'office_code' => '1A123B',
           'other_info' => nil,
           'plea' => {
@@ -98,8 +98,8 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             value: claim.plea_category,
             en: an_instance_of(String)
           },
-          'preparation_time' => nil,
-          'prosecution_evidence' => nil,
+          'preparation_time' => 'yes',
+          'prosecution_evidence' => 1,
           'reason_for_claim_other_details' => nil,
           'reasons_for_claim' => [
             {
@@ -112,7 +112,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'rep_order_date' => /\A\d{4}-\d{2}-\d{2}\z/,
           'representation_order_withdrawn_date' => nil,
           'send_by_post' => nil,
-          'signatory_name' => nil,
+          'signatory_name' => an_instance_of(String),
           'solicitor' => {
             'contact_email' => nil,
             'contact_full_name' => nil,
@@ -124,16 +124,16 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'submitted_total' => nil,
           'submitted_total_inc_vat' => nil,
           'submitter' => { 'description' => nil, 'email' => 'provider@example.com' },
-          'supplemental_claim' => nil,
-          'time_spent' => nil,
+          'supplemental_claim' => 'yes',
+          'time_spent' => 121,
           'ufn' => '120423/001',
           'unassigned_counsel' => 'no',
           'updated_at' => '2023-08-17T12:13:14.000Z',
           'vat_rate' => 0.2,
-          'work_after' => nil,
-          'work_after_date' => nil,
-          'work_before' => nil,
-          'work_before_date' => nil,
+          'work_after' => 'yes',
+          'work_after_date' => '2020-01-01',
+          'work_before' => 'yes',
+          'work_before_date' => '2020-12-01',
           'work_items' =>
           [{
             'completed_on' => /\A\d{4}-\d{2}-\d{2}\z/,
