@@ -44,8 +44,8 @@ module TestData
 
     # we use tasks here as they already know how to build all the required forms for the more complicated scenarios
     def check_tasks(claim)
-      invalid_tasks = %w[ClaimConfirmation Base AlwaysDisabled CostSummary CheckAnswers]
-      tasks = (Nsm::Tasks.constants.map(&:to_s) - invalid_tasks)
+      skipped_tasks = %w[ClaimConfirmation Base AlwaysDisabled CostSummary CheckAnswers]
+      tasks = (Nsm::Tasks.constants.map(&:to_s) - skipped_tasks)
               .map { |name| [name, Nsm::Tasks.const_get(name)] }
 
       tasks.reject { |_name, klass| klass.new(application: claim).completed? }
