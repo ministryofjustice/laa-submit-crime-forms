@@ -3,27 +3,14 @@
 module Nsm
   module Steps
     class SupportingEvidenceController < Nsm::Steps::BaseController
-      skip_before_action :verify_authenticity_token
+      include MultiFileUploadable
       before_action :supporting_evidence
 
       def edit
         @form_object = SupportingEvidenceForm.build(
           current_application
         )
-      end
-
-      def create
-        unless supported_filetype(params[:documents])
-          return return_error(nil, { message: 'Incorrect file type provided' })
-        end
-
-        evidence = upload_file(params)
-        return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
-      rescue FileUpload::FileUploader::PotentialMalwareError => e
-        return_error(e, { message: 'File potentially contains malware so cannot be uploaded. ' \
-                                   'Please contact your administrator' })
-      rescue StandardError => e
-        return_error(e, { message: 'Unable to upload file at this time' })
+        @supporting_documents = supporting_evidence
       end
 
       def update
@@ -51,7 +38,7 @@ module Nsm
       end
 
       def supporting_evidence
-        @supporting_evidence = current_application.supporting_evidence
+        current_application.supporting_evidence
       end
 
       def file_uploader
@@ -60,33 +47,16 @@ module Nsm
 
       def upload_file(params)
         file_path = file_uploader.upload(params[:documents])
-        save_evidence_data(params[:documents], file_path)
+        save_file(params[:documents], file_path)
       end
 
-      def save_evidence_data(params, file_path)
+      def save_file(params, file_path)
         current_application.supporting_evidence.create(
           file_name: params.original_filename,
           file_type: params.content_type,
           file_size: params.tempfile.size,
           file_path: file_path
         )
-      end
-
-      def supported_filetype(params)
-        SupportedFileTypes::SUPPORTING_EVIDENCE.include? params.content_type
-      end
-
-      def return_success(dict)
-        render json: {
-          success: dict
-        }, status: :ok
-      end
-
-      def return_error(exception, dict)
-        Sentry.capture_exception(exception)
-        render json: {
-          error: dict
-        }, status: :bad_request
       end
     end
   end

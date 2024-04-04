@@ -15,7 +15,8 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
 
   describe '#row_data' do
     context 'with non standard magistrates claim' do
-      let(:claim) { build(:claim, :case_type_magistrates) }
+      let(:claim) { build(:claim, :case_type_magistrates, rep_order_date:) }
+      let(:rep_order_date) { Date.new(2024, 3, 1) }
 
       it 'generates magistrates rows' do
         expect(subject.row_data).to match(
@@ -30,7 +31,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
             },
             {
               head_key: 'rep_order_date',
-              text: /\A\d{1,2} \w+ \d{4}\z/
+              text: '1 March 2024'
             }
           ]
         )
@@ -47,7 +48,8 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
     end
 
     context 'with breach of injunction claim' do
-      let(:claim) { build(:claim, :case_type_breach) }
+      let(:claim) { build(:claim, :case_type_breach, cntp_date:) }
+      let(:cntp_date) { Date.new(2024, 2, 10) }
 
       it 'generates magistrates rows' do
         expect(subject.row_data).to match(
@@ -67,7 +69,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
             },
             {
               head_key: 'cntp_rep_order',
-              text: /\A\d{1,2} \w+ \d{4}\z/
+              text: '10 February 2024'
             }
           ]
         )

@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe PullUpdates do
-  let(:last_update) { 2 }
-  let(:app_store_client) { instance_double(AppStoreClient) }
+  let(:id) { SecureRandom.uuid }
+  let(:last_update) { Date.new(2021, 11, 30) }
+  let(:http_puller) { instance_double(AppStoreClient) }
   let(:arbitrary_fixed_date) { '2021-12-01T23:24:58.846345' }
-  let(:application_type) { 'crm7' }
-
-  let(:get_all_response) do
+  let(:http_response) do
     {
       'applications' => [{
         'application_id' => id,
@@ -18,15 +17,13 @@ RSpec.describe PullUpdates do
       }]
     }
   end
+  let(:application_type) { 'crm7' }
 
   before do
-    allow(AppStoreClient).to receive(:new).and_return(app_store_client)
-    allow(app_store_client).to receive(:get_all).and_return('applications' => [])
-
-    allow(app_store_client)
-      .to receive(:get_all)
-      .with(since: PullUpdates::EARLIEST_POLL_DATE, count: 100)
-      .and_return(get_all_response)
+    allow(AppStoreClient).to receive(:new).and_return(http_puller)
+    allow(http_puller).to receive(:get_all).and_return('applications' => [])
+    allow(http_puller).to receive(:get_all).with(since: PullUpdates::EARLIEST_POLL_DATE, count: 100)
+                                           .and_return(http_response)
   end
 
   context 'when mocking claim' do
@@ -37,8 +34,8 @@ RSpec.describe PullUpdates do
       allow(Claim).to receive_messages(maximum: last_update, find_by: claim)
     end
 
-    context 'with no data since last pull' do
-      let(:get_all_response) { { 'applications' => [] } }
+    context 'no data since last pull' do
+      let(:http_response) { { 'applications' => [] } }
 
       it 'do nothing' do
         subject.perform
@@ -66,12 +63,10 @@ RSpec.describe PullUpdates do
       end
     end
 
-    context 'when it times out' do
+    context 'ensure loop ends' do
       before do
-        allow(app_store_client)
-          .to receive(:get_all)
-          .with(since: Time.zone.parse(arbitrary_fixed_date), count: 100)
-          .and_return(get_all_response)
+        allow(http_puller).to receive(:get_all).with(since: Time.zone.parse(arbitrary_fixed_date), count: 100)
+                                               .and_return(http_response)
       end
 
       it 'does not get stuck due to non-integer timetamps' do
@@ -130,7 +125,7 @@ RSpec.describe PullUpdates do
       let(:paa_one) { create(:prior_authority_application, :full, status: 'submitted') }
       let(:paa_two) { create(:prior_authority_application, :full, status: 'submitted') }
 
-      let(:get_all_response) do
+      let(:http_response) do
         {
           'applications' =>
             [
@@ -163,7 +158,7 @@ RSpec.describe PullUpdates do
               'details' => { 'comment' => 'All good, granting...' },
               'created_at' => '2024-03-26T16:56:27.039Z',
               'public' => true,
-              'event_type' => 'Event::Decision'
+              'event_type' => 'decision'
             }
           ],
         }
@@ -178,7 +173,7 @@ RSpec.describe PullUpdates do
               'details' => { 'comment' => 'Sorry have to reject this because...' },
               'created_at' => '2024-03-26T16:56:27.039Z',
               'public' => true,
-              'event_type' => 'Event::Decision'
+              'event_type' => 'decision'
             }
           ],
         }
@@ -194,8 +189,8 @@ RSpec.describe PullUpdates do
         before do
           allow(PriorAuthority::AssessmentSyncer).to receive(:call).and_call_original
 
-          allow(app_store_client).to receive(:get).with(paa_one.id).and_return(get_response_one)
-          allow(app_store_client).to receive(:get).with(paa_two.id).and_return(get_response_two)
+          allow(http_puller).to receive(:get).with(paa_one.id).and_return(get_response_one)
+          allow(http_puller).to receive(:get).with(paa_two.id).and_return(get_response_two)
         end
 
         it 'syncs both applications' do
@@ -209,9 +204,9 @@ RSpec.describe PullUpdates do
         before do
           allow(PriorAuthority::AssessmentSyncer).to receive(:call).and_call_original
 
-          allow(app_store_client).to receive(:get_all).and_return(get_all_response)
-          allow(app_store_client).to receive(:get).with(paa_one.id).and_return(private_response_one)
-          allow(app_store_client).to receive(:get).with(paa_two.id).and_return(get_response_two)
+          allow(http_puller).to receive(:get_all).and_return(http_response)
+          allow(http_puller).to receive(:get).with(paa_one.id).and_return(private_response_one)
+          allow(http_puller).to receive(:get).with(paa_two.id).and_return(get_response_two)
 
           allow(Sentry).to receive(:capture_exception)
         end
@@ -225,7 +220,7 @@ RSpec.describe PullUpdates do
                 'details' => { 'comment' => 'All good, granting...' },
                 'created_at' => '2024-03-26T16:56:27.039Z',
                 'public' => false, # <-- this fake change will break the sync, but future changes to payloads could too
-                'event_type' => 'Event::Decision'
+                'event_type' => 'decision'
               }
             ],
           }

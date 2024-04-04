@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications, sent back - check your answers' do
+RSpec.describe 'Prior authority applications, sent back for info correction - check your answers' do
   before do
     visit provider_saml_omniauth_callback_path
     visit prior_authority_steps_check_answers_path(application)
@@ -8,7 +8,7 @@ RSpec.describe 'Prior authority applications, sent back - check your answers' do
 
   let(:application) do
     travel_to(sent_back_datetime) do
-      create(:prior_authority_application, :full, :with_sent_back_status)
+      create(:prior_authority_application, :full, :sent_back_for_incorrect_info)
     end
   end
 

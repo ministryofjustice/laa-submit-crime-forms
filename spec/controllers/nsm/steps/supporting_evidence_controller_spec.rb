@@ -16,7 +16,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
     end
 
     context 'when application is found' do
-      let(:current_application) { create(:claim) }
+      let(:current_application) { create(:claim, id: SecureRandom.uuid) }
       let(:form) { instance_double(Nsm::Steps::SupportingEvidenceForm) }
 
       before do
@@ -62,7 +62,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
         expect(Clamby).to receive(:safe?).and_return(true)
-        post :create, params: { id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
+        post :create, params: { id: current_application.id, documents: fixture_file_upload('test.png', 'image/png') }
       end
 
       after do
@@ -79,11 +79,11 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
     end
 
     context 'when a file fails to upload' do
-      let(:current_application) { build(:claim) }
+      let(:current_application) { build(:claim, id: SecureRandom.uuid) }
 
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
-        post :create, params: { id: '12345', documents: nil }
+        post :create, params: { id: current_application.id, documents: nil }
       end
 
       it 'returns a bad request' do
@@ -96,10 +96,10 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
     end
 
     context 'when an incorrect file is uploaded' do
-      let(:current_application) { build(:claim) }
+      let(:current_application) { build(:claim, id: SecureRandom.uuid) }
 
       before do
-        post :create, params: { id: '12345', documents: fixture_file_upload('test.json', 'application/json') }
+        post :create, params: { id: current_application.id, documents: fixture_file_upload('test.json', 'application/json') }
       end
 
       it 'returns a bad request' do
@@ -107,17 +107,18 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
       end
 
       it 'returns an error message' do
-        expect(response.parsed_body['error']['message']).to eq 'Incorrect file type provided'
+        expect(response.parsed_body['error']['message'])
+          .to eq 'The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF'
       end
     end
 
     context 'when an vulnerable file is uploaded' do
-      let(:current_application) { build(:claim) }
+      let(:current_application) { build(:claim, id: SecureRandom.uuid) }
 
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
         allow(controller).to receive(:upload_file).and_raise(FileUpload::FileUploader::PotentialMalwareError)
-        post :create, params: { id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
+        post :create, params: { id: current_application.id, documents: fixture_file_upload('test.png', 'image/png') }
       end
 
       it 'returns a bad request' do
@@ -132,7 +133,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
   end
 
   describe '#destroy' do
-    let(:current_application) { create(:claim) }
+    let(:current_application) { create(:claim, id: SecureRandom.uuid) }
     let(:evidence) do
       create(:supporting_evidence,
              file_size: '2857',
@@ -146,7 +147,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
       end
 
       it 'deletes the file' do
-        delete :destroy, params: { id: '12345', evidence_id: evidence.id }
+        delete :destroy, params: { id: current_application.id, evidence_id: evidence.id }
 
         expect(response).to be_successful
       end
@@ -154,7 +155,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
 
     context 'when there are no files present' do
       it 'returns a 400' do
-        delete :destroy, params: { id: '12345', evidence_id: SecureRandom.uuid }
+        delete :destroy, params: { id: current_application.id, evidence_id: SecureRandom.uuid }
 
         expect(response).to be_bad_request
       end

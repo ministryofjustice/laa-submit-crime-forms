@@ -33,6 +33,10 @@ en:
             client_detail:
               full_name: Client name
               date_of_birth: Date of birth
+            further_information:
+              information_requested: LAA request
+              information_supplied: Further information provided
+              supporting_documents: Supporting documents
             hearing_detail:
               next_hearing_date: Date of next hearing
               plea: Likely or actual plea
@@ -78,6 +82,8 @@ en:
               title: Primary quote
             reason_why:
               title: Reason for prior authority
+            further_information:
+              title: Further information requested
           application_detail:
             heading: ''
             ufn:
