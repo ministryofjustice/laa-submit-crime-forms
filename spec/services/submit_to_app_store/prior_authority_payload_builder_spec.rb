@@ -5,7 +5,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
 
   let(:expected_output) do
     {
-      application: {
+      application: hash_including(
         prison_law: true,
         ufn: '120423/123',
         laa_reference: 'LAA-n4AohV',
@@ -32,12 +32,12 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         no_alternative_quote_reason: 'a reason',
         confirm_excluding_vat: true,
         confirm_travel_expenditure: true,
-        defendant: {
-          first_name: 'bob',
-          last_name: 'jim',
+        defendant: hash_including(
+          first_name: an_instance_of(String),
+          last_name: an_instance_of(String),
           maat: 'AA1',
-          date_of_birth: '1981-11-12'
-        },
+          date_of_birth: /\A\d{4}-\d{2}-\d{2}\z/
+        ),
         firm_office: {
           account_number: '123ABC',
           address_line_1: '2 Laywer Suite',
@@ -124,7 +124,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
           }
         ],
         additional_costs: []
-      },
+      ),
       application_id: application.id,
       application_state: 'submitted',
       application_type: 'crm4',
@@ -143,6 +143,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
   end
 
   it 'generates the payload for an application' do
-    expect(subject.payload.with_indifferent_access).to eq(expected_output.with_indifferent_access)
+    check_json(subject.payload.deep_symbolize_keys).matches(expected_output)
   end
 end

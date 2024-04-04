@@ -201,6 +201,8 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
+    faker (3.3.0)
+      i18n (>= 1.8.11, < 2)
     faraday (2.7.12)
       base64
       faraday-net_http (>= 2.0, < 3.1)
@@ -543,6 +545,7 @@ DEPENDENCIES
   dotenv-rails
   erb_lint
   factory_bot_rails (>= 6.4.3)
+  faker
   govuk_notify_rails (~> 2.2.0)
   hmcts_common_platform!
   httparty

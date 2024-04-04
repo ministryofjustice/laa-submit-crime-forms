@@ -2,9 +2,9 @@ FactoryBot.define do
   factory :work_item do
     trait :valid do
       work_type { WorkTypes.values.sample.to_s }
-      time_spent { 100 }
-      completed_on { Date.yesterday }
-      fee_earner { 'jimbob' }
+      time_spent { 50 + (400**Random.new.rand(1.0).to_i) } # range: 50 -> 450
+      completed_on { rand(40).days.ago.to_date }
+      fee_earner { Faker::Name.name }
     end
 
     trait :partial do
