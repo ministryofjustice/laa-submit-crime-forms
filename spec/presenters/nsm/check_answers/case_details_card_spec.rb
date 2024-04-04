@@ -60,7 +60,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
             },
             {
               head_key: 'main_offence_date',
-            text: '1 January 2023'
+              text: '1 January 2023'
             },
             {
               head_key: 'assigned_counsel',
