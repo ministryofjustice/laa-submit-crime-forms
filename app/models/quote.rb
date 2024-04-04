@@ -28,4 +28,8 @@ class Quote < ApplicationRecord
       additional_cost_total
     end
   end
+
+  def contact_full_name
+    "#{contact_first_name} #{contact_last_name}"
+  end
 end

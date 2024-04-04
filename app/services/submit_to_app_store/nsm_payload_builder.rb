@@ -23,15 +23,14 @@ class SubmitToAppStore
     private
 
     # rubocop:disable Metrics/AbcSize
-    # NOTE: slice! returns as hash with the other fields
     def data
-      data = claim.as_json.slice!('navigation_stack', 'firm_office_id', 'solicitor_id', 'submitter_id')
+      data = claim.as_json(except: %w[navigation_stack firm_office_id solicitor_id submitter_id])
       data.merge(
         'disbursements' => disbursement_data,
         'work_items' => work_item_data,
         'defendants' => defendant_data,
-        'firm_office' => claim.firm_office.attributes.slice!('id', *DEFAULT_IGNORE),
-        'solicitor' => claim.solicitor.attributes.slice!('id', *DEFAULT_IGNORE),
+        'firm_office' => claim.firm_office.attributes.except('id', *DEFAULT_IGNORE),
+        'solicitor' => claim.solicitor.attributes.except('id', *DEFAULT_IGNORE),
         'submitter' => claim.submitter.attributes.slice('email', 'description'),
         'supporting_evidences' => supporting_evidence,
         'cost_totals' => costs_data,
@@ -41,13 +40,13 @@ class SubmitToAppStore
 
     def costs_data
       claim.cost_totals.map do |cost|
-        cost.as_json.slice!(*DEFAULT_IGNORE)
+        cost.as_json(except: DEFAULT_IGNORE)
       end
     end
 
     def disbursement_data
       claim.disbursements.map do |disbursement|
-        data = disbursement.as_json.slice!(*DEFAULT_IGNORE)
+        data = disbursement.as_json(except: DEFAULT_IGNORE)
         data['disbursement_date'] = data['disbursement_date'].to_s
         data['pricing'] = pricing[disbursement.disbursement_type] || 1.0
         data['vat_rate'] = pricing[:vat]
@@ -60,7 +59,7 @@ class SubmitToAppStore
 
     def work_item_data
       claim.work_items.map do |work_item|
-        data = work_item.as_json.slice!(*DEFAULT_IGNORE)
+        data = work_item.as_json(except: DEFAULT_IGNORE)
         data['completed_on'] = data['completed_on'].to_s
         data['pricing'] = pricing[work_item.work_type]
         data

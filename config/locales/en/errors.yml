@@ -127,11 +127,10 @@ en:
               inclusion: Select the type of court
         prior_authority/steps/case_contact/solicitor_form:
           attributes: &contact_form
-            contact_full_name:
-              blank: Enter the full name of the contact
-              invalid: |
-                Contact's name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
-                The contact's full name must be 2 words or more.
+            contact_first_name:
+              blank: Enter the first name of the contact
+            contact_last_name:
+              blank: Enter the last name of the contact
             contact_email:
               blank: Enter the email address of the contact
               invalid: Enter a valid email address
@@ -162,9 +161,10 @@ en:
           attributes:
             service_type_autocomplete:
               blank: Enter the service required
-            contact_full_name:
-              blank: Enter the contact's full name
-              invalid: Enter a valid full name
+            contact_first_name:
+              blank: Enter the contact's first name
+            contact_last_name:
+              blank: Enter the contact's last name
             organisation:
               blank: Enter the organisation name
             postcode:
@@ -288,19 +288,17 @@ en:
           attributes: *firm_office_form
         nsm/steps/firm_details/solicitor_form:
           summary: &solicitor_form
-            full_name:
-              blank: "Enter the solicitor's full name"
-              invalid: |
-                Solicitor's full name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
-                The solicitor's full name must be 2 words or more.
+            first_name:
+              blank: "Enter the solicitor's first name"
+            last_name:
+              blank: "Enter the solicitor's last name"
 
             reference_number:
               blank: "Enter the solicitor's reference number"
-            contact_full_name:
-              blank: "Enter the full name of the alternative contact"
-              invalid: |
-                Contact's name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
-                The contact's full name must be 2 words or more.
+            contact_first_name:
+              blank: "Enter the first name of the alternative contact"
+            contact_last_name:
+              blank: "Enter the last name of the alternative contact"
             contact_email:
               blank: "Enter the email address of the alternative contact"
               invalid: "Enter a valid email address"

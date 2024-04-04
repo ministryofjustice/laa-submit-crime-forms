@@ -18,7 +18,9 @@ RSpec.describe PriorAuthority::CheckAnswers::CaseContactCard do
       build(:prior_authority_application, firm_office:, solicitor:)
     end
 
-    let(:solicitor) { build(:solicitor, contact_full_name: 'Joe Bloggs', contact_email: 'joe@bloggs.com') }
+    let(:solicitor) do
+      build(:solicitor, contact_first_name: 'Joe', contact_last_name: 'Bloggs', contact_email: 'joe@bloggs.com')
+    end
     let(:firm_office) { build(:firm_office, name: 'Bloggs & Co', account_number: '2B0N2B') }
 
     it 'generates expected rows' do

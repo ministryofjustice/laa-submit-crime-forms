@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_28_165804) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_04_094407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -256,7 +256,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_165804) do
   end
 
   create_table "quotes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "contact_full_name"
     t.string "organisation"
     t.string "postcode"
     t.boolean "primary", default: false
@@ -279,17 +278,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_165804) do
     t.decimal "travel_cost_allowed", precision: 10, scale: 2
     t.string "service_adjustment_comment"
     t.string "travel_adjustment_comment"
+    t.string "contact_first_name"
+    t.string "contact_last_name"
     t.index ["prior_authority_application_id"], name: "index_quotes_on_prior_authority_application_id"
   end
 
   create_table "solicitors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "full_name"
     t.string "reference_number"
-    t.string "contact_full_name"
     t.string "contact_email"
     t.uuid "previous_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contact_first_name"
+    t.string "contact_last_name"
+    t.string "first_name"
+    t.string "last_name"
     t.index ["previous_id"], name: "index_solicitors_on_previous_id"
   end
 

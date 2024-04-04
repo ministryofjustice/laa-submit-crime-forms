@@ -26,9 +26,11 @@ en:
               firm_account_number: Firm account number
               firm_address: Firm address
               vat_registered: Firm VAT registered
-              solicitor_full_name: Solicitor full name
+              solicitor_first_name: Solicitor first name
+              solicitor_last_name: Solicitor last name
               solicitor_reference_number: Solicitor reference number
-              contact_full_name: Contact full name
+              contact_first_name: Contact first name
+              contact_last_name: Contact last name
               contact_email: Contact email address
             defendant_summary:
               main_defendant_first_name: Main defendant first name

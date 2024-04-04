@@ -93,7 +93,8 @@ module PriorAuthority
     end
 
     def fill_in_case_contact
-      fill_in 'Full name', with: 'John Doe'
+      fill_in 'First name', with: 'John'
+      fill_in 'Last name', with: 'Doe'
       fill_in 'Email address', with: 'john@does.com'
       fill_in 'Firm name', with: 'LegalCorp Ltd'
       fill_in 'Firm account number', with: 'A12345'
@@ -172,7 +173,8 @@ module PriorAuthority
       # be hidden
       select service_type, from: 'Service required'
 
-      fill_in 'Contact full name', with: 'Joe Bloggs'
+      fill_in 'First name', with: 'Joe'
+      fill_in 'Last name', with: 'Bloggs'
       fill_in 'Organisation', with: 'LAA'
       fill_in 'Postcode', with: 'CR0 1RE'
 
@@ -215,7 +217,8 @@ module PriorAuthority
     end
 
     def fill_in_alternative_quote
-      fill_in 'Contact full name', with: 'Jim Bob'
+      fill_in 'First name', with: 'Jim'
+      fill_in 'Last name', with: 'Bob'
       fill_in 'Organisation', with: 'Experts Inc.'
       fill_in 'Postcode', with: 'SW1A 1AA'
 
