@@ -17,6 +17,17 @@ class AppStoreClient
     end
   end
 
+  def put(message)
+    response = self.class.put("#{host}/v1/application/", **options(message))
+
+    case response.code
+    when 201
+      :success
+    else
+      raise "Unexpected response from AppStore - status #{response.code} for '#{message[:application_id]}'"
+    end
+  end
+
   def get_all(since:, count: 20)
     process_get("/v1/applications?since=#{since.to_i}&count=#{count}")
   end
