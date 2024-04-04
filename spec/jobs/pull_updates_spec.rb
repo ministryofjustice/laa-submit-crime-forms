@@ -208,7 +208,7 @@ RSpec.describe PullUpdates do
           allow(http_puller).to receive(:get).with(paa_one.id).and_return(private_response_one)
           allow(http_puller).to receive(:get).with(paa_two.id).and_return(get_response_two)
 
-          allow(Sentry).to receive(:capture_exception)
+          allow(Sentry).to receive(:capture_message)
         end
 
         let(:private_response_one) do
@@ -235,7 +235,7 @@ RSpec.describe PullUpdates do
         it 'captures the error' do
           subject.perform
           expect(Sentry)
-            .to have_received(:capture_exception)
+            .to have_received(:capture_message)
             .with("PriorAuthority::AssessmentSyncer encountered error 'undefined method `dig' for nil' " \
                   "for application '#{paa_one.id}'")
             .at_least(:once)
