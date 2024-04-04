@@ -1,7 +1,7 @@
 class Quote < ApplicationRecord
   belongs_to :prior_authority_application
   has_one :document, lambda {
-                       where(document_type: SupportingDocument::QUOTE_DOCUMENT)
+                       where(document_type: SupportingDocument::SUPPORTED_FILE_TYPES)
                      },
           dependent: :destroy,
           inverse_of: :documentable,

@@ -12,6 +12,11 @@ FactoryBot.define do
       document_type { 'supporting_evidence' }
     end
 
+    factory :further_information_document do
+      documentable_type { 'FurtherInformation' }
+      document_type { 'supporting_document' }
+    end
+
     factory :quote_document do
       document_type { 'quote_document' }
     end

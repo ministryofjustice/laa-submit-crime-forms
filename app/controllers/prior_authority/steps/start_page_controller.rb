@@ -8,14 +8,24 @@ module PriorAuthority
           view_context, application: current_application, show_index: false
         )
 
-        @tasklist = StartPage::TaskList.new(
-          view_context, application: current_application
-        )
+        @tasklist = start_page_tasklist
         # # passed in separately to current_application to
         # # allow it to be wrapped in a presenter in the future
         @application = current_application
         render 'laa_multi_step_forms/task_list/show',
                locals: { header: -> {}, skip_progress: true, app_type: 'application' }
+      end
+
+      def start_page_tasklist
+        if further_information_needed
+          @tasklist || StartPage::FurtherInformationTaskList.new(
+            view_context, application: current_application
+          )
+        else
+          @tasklist || StartPage::TaskList.new(
+            view_context, application: current_application
+          )
+        end
       end
     end
   end

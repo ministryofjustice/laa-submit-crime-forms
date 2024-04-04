@@ -124,6 +124,7 @@ Metrics/ParameterLists:
   Max: 7
 
 Layout/LineLength:
+  Max: 125
   Exclude:
     - spec/decisions/**/*
 

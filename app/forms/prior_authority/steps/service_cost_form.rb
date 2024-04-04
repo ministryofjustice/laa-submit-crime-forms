@@ -10,9 +10,7 @@ module PriorAuthority
         # not a specific quote
 
         # This will be nil when loaded on edit, populated on updated
-        if attrs[:prior_authority_granted].nil?
-          attrs[:prior_authority_granted] = attrs[:application].prior_authority_granted
-        end
+        attrs[:prior_authority_granted] = attrs[:application].prior_authority_granted if attrs[:prior_authority_granted].nil?
 
         super(attrs)
       end

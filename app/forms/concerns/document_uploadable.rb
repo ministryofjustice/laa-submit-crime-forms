@@ -35,7 +35,7 @@ module DocumentUploadable
 
   def save_file_metadata(file_path)
     document.update!(
-      document_type: SupportingDocument::QUOTE_DOCUMENT,
+      document_type: SupportingDocument::SUPPORTED_FILE_TYPES,
       file_name: file_upload.original_filename,
       file_type: file_upload.content_type,
       file_size: file_upload.tempfile.size,
@@ -67,7 +67,7 @@ module DocumentUploadable
   end
 
   def supported_filetype?
-    SupportedFileTypes::QUOTE_DOCUMENT.include? file_upload.content_type
+    SupportedFileTypes::SUPPORTED_FILE_TYPES.include? file_upload.content_type
   end
 
   def suspected_malware?

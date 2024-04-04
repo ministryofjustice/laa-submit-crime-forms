@@ -7,6 +7,7 @@ import $ from 'jquery'
 initAll()
 
 Turbo.setFormMode('optin')
+Turbo.session.drive = false
 
 const $inputs = document.querySelectorAll('[data-module="govuk-input"]')
 if ($inputs) {

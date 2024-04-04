@@ -259,3 +259,14 @@ en:
           feedback:
             link_text: What did you think of this service?
             description: takes 30 seconds
+      further_information:
+        edit:
+          page_title: Further information requested
+          caption: About the request
+          request_heading: Your application needs the following further information to proceed
+          information_supplied: Enter the information requested
+          supporting_documentation: Supporting documentation (optional)
+          supporting_documentation_caption: Attach copies of any supporting documentation. The maximum file size is 70MB. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
+          file_upload:
+            heading: Upload files
+          upload_file: Choose files

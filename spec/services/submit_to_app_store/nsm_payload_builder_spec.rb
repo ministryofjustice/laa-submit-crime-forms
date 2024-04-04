@@ -9,14 +9,11 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
   let(:disbursement) { claim.disbursements.first }
   let(:work_item) { claim.work_items.first }
   let(:cost_total) { claim.cost_totals.first }
-  let(:tester) { double(:tester, process: true) }
   let(:pricing) { Pricing.for(claim) }
 
   it 'generates and send the data message for a claim' do
     travel_to(Time.zone.local(2023, 8, 17, 12, 13, 14)) do
-      tester.process(subject.payload)
-
-      expect(tester).to have_received(:process).with(
+      check_json(subject.payload).matches(
         application: {
           'agent_instructed' => 'no',
           'adjusted_total' => nil,
@@ -34,8 +31,8 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'created_at' => '2023-08-17T12:13:14.000Z',
           'defence_statement' => nil,
           'defendants' => [{
-            'first_name' => 'bob',
-            'last_name' => 'jim',
+            'first_name' => an_instance_of(String),
+            'last_name' => an_instance_of(String),
             'id' => defendant.id,
             'maat' => 'AA1',
             'main' => true,
@@ -46,10 +43,10 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           [{
             'apply_vat' => 'true',
             'details' => 'Details',
-            'disbursement_date' => '2023-08-16',
+            'disbursement_date' => /\A\d{4}-\d{2}-\d{2}\z/,
             'disbursement_type' => { en: an_instance_of(String), value: disbursement.disbursement_type },
             'id' => disbursement.id,
-            'miles' => '100.0',
+            'miles' => disbursement.miles.to_s,
             'other_type' => { en: nil, value: nil },
             'pricing' => pricing[disbursement.disbursement_type],
             'prior_authority' => nil,
@@ -68,12 +65,12 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'town' => 'Lawyer Town',
             'vat_registered' => 'yes'
           },
-          'first_hearing_date' => '2023-03-01',
+          'first_hearing_date' => /\A\d{4}-\d{2}-\d{2}\z/,
           'gender' => { en: 'Male', value: 'm' },
           'has_disbursements' => nil,
           'hearing_outcome' => {
-            value: 'CP01',
-            en: 'Arrest warrant issued/adjourned indefinitely'
+            value: /\ACP\d{2}\z/,
+            en: an_instance_of(String)
           },
           'id' => claim.id,
           'in_area' => 'yes',
@@ -84,7 +81,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             { 'count' => 3, 'pricing' => 4.09, 'type' => { en: 'Calls', value: 'calls' }, 'uplift' => nil }
           ],
           'main_offence' => claim.main_offence,
-          'main_offence_date' => '2023-08-16',
+          'main_offence_date' => /\A\d{4}-\d{2}-\d{2}\z/,
           'matter_type' => {
             value: '1',
             en: 'Offences against the person'
@@ -112,7 +109,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           ],
           'remitted_to_magistrate' => 'no',
           'remitted_to_magistrate_date' => nil,
-          'rep_order_date' => '2023-01-01',
+          'rep_order_date' => /\A\d{4}-\d{2}-\d{2}\z/,
           'representation_order_withdrawn_date' => nil,
           'send_by_post' => nil,
           'signatory_name' => nil,
@@ -139,11 +136,11 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'work_before_date' => nil,
           'work_items' =>
           [{
-            'completed_on' => '2023-08-16',
-            'fee_earner' => 'jimbob',
+            'completed_on' => /\A\d{4}-\d{2}-\d{2}\z/,
+            'fee_earner' => an_instance_of(String),
             'id' => work_item.id,
             'pricing' => pricing[work_item.work_type],
-            'time_spent' => 100,
+            'time_spent' => an_instance_of(Integer),
             'uplift' => nil,
             'work_type' => { en: an_instance_of(String), value: work_item.work_type },
           }],

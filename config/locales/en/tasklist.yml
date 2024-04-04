@@ -23,6 +23,7 @@ en:
       prior_authority/alternative_quotes: Alternative quotes
       prior_authority/reason_why: Reason for prior authority
       prior_authority/check_answers: Submit application
+      prior_authority/further_information: Further information
       nsm/claim_type:
         non_standard_magistrate: Non-standard magistrates’ court payment
         breach_of_injunction: Breach of injunction court payment

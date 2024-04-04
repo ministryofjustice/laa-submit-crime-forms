@@ -4,6 +4,8 @@ module PriorAuthority
       attribute :reason_why, :string
       validates :reason_why, presence: true, length: { maximum: 2000 }
 
+      delegate :supporting_documents, to: :application
+
       private
 
       def persist!

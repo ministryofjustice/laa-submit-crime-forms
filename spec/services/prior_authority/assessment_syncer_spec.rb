@@ -8,16 +8,16 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
              quotes: [primary_quote],
              additional_costs: [additional_cost])
     end
+
     let(:primary_quote) { build(:quote, :primary) }
     let(:additional_cost) { build(:additional_cost, :per_item) }
     let(:status) { 'granted' }
-    let(:resubmission_deadline) { 9.days.from_now }
 
     let(:payload) do
       {
         events: [
           {
-            event_type: 'Event::Decision',
+            event_type: 'decision',
             created_at: 1.day.ago,
             public: true,
             details: { comment: 'Decision comment' }
@@ -50,10 +50,16 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
               adjustment_comment: 'Additional cost comment'
             }
           ],
-          further_information_explanation: 'Some additional information is needed',
+          further_information: [
+            {
+              caseworker_id: 'case-worker-uuid',
+              information_requested: 'Need more evidence',
+              requested_at: DateTime.current
+            }
+          ],
           incorrect_information_explanation: 'This is incorrect',
           updates_needed: %w[further_information incorrect_information],
-          resubmission_deadline: resubmission_deadline,
+          resubmission_deadline: 14.days.from_now,
         }
       }
     end
@@ -69,11 +75,12 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
     let(:arbitrary_fixed_date) { DateTime.new(2024, 2, 1, 15, 23, 27) }
 
     before do
-      travel_to arbitrary_fixed_date
-      app_store_stub
-      described_class.call(application)
-      primary_quote.reload
-      additional_cost.reload
+      travel_to(arbitrary_fixed_date) do
+        app_store_stub
+        described_class.call(application)
+        primary_quote.reload
+        additional_cost.reload
+      end
     end
 
     it 'calls the app store' do
@@ -125,54 +132,50 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
     context 'when app is sent back' do
       let(:status) { 'sent_back' }
 
-      context 'further info and incorrect info needed' do
-        it 'syncs the further info needed' do
-          expect(application.further_information_explanation).to eq 'Some additional information is needed'
-        end
-
+      context 'with further info and incorrect info' do
         it 'syncs the incorrect info' do
           expect(application.incorrect_information_explanation).to eq 'This is incorrect'
         end
 
         it 'syncs dates' do
-          expect(application.resubmission_deadline).to eq resubmission_deadline
-          expect(application.resubmission_requested).to eq DateTime.current
+          expect(application.resubmission_deadline).to eq arbitrary_fixed_date + 14.days
+          expect(application.resubmission_requested).to eq arbitrary_fixed_date
         end
       end
 
-      context 'only further info needed' do
+      context 'with only further info' do
         let(:payload) do
           {
             application: {
-              further_information_explanation: 'Some additional information is needed',
-              incorrect_information_explanation: 'This is incorrect',
-              updates_needed: ['further_information']
+              updates_needed: ['further_information'],
+              further_information: [
+                {
+                  caseworker_id: 'case-worker-uuid',
+                  information_requested: 'Need more evidence',
+                  requested_at: DateTime.current
+                }
+              ],
             }
           }
         end
 
-        it 'syncs the further info needed' do
-          expect(application.further_information_explanation).to eq 'Some additional information is needed'
+        it 'nullifies the incorrect info' do
+          expect(application.incorrect_information_explanation).to be_nil
         end
 
-        it 'syncs the incorrect info' do
-          expect(application.incorrect_information_explanation).to be_nil
+        it 'syncs the further info' do
+          expect(application.further_informations.exists?).to be true
         end
       end
 
-      context 'only incorrect info needed' do
+      context 'with only incorrect info' do
         let(:payload) do
           {
             application: {
-              further_information_explanation: 'Some additional information is needed',
               incorrect_information_explanation: 'This is incorrect',
               updates_needed: ['incorrect_information']
             }
           }
-        end
-
-        it 'syncs the further info needed' do
-          expect(application.further_information_explanation).to be_nil
         end
 
         it 'syncs the incorrect info' do
