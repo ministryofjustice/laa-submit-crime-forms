@@ -5,9 +5,11 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
 
   let(:arguments) do
     {
-      full_name:,
+      first_name:,
+      last_name:,
       reference_number:,
-      contact_full_name:,
+      contact_first_name:,
+      contact_last_name:,
       contact_email:,
     }
   end
@@ -16,9 +18,11 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
     instance_double(Claim)
   end
 
-  let(:full_name) { 'Jame Roberts' }
+  let(:first_name) { 'James' }
+  let(:last_name) { 'Roberts' }
   let(:reference_number) { 'ref1' }
-  let(:contact_full_name) { 'JimBob' }
+  let(:contact_first_name) { 'Jim' }
+  let(:contact_last_name) { 'Bob' }
   let(:contact_email) { 'job@bob.com' }
   let(:alternative_contact_details) { 'no' }
 
@@ -29,7 +33,7 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
       end
     end
 
-    %i[full_name reference_number].each do |field|
+    %i[first_name last_name reference_number].each do |field|
       context "when #{field} is missing" do
         let(field) { nil }
 
@@ -40,7 +44,7 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
       end
     end
 
-    %i[contact_full_name contact_email].each do |field|
+    %i[contact_first_name contact_last_name contact_email].each do |field|
       context "when #{field} is missing and alternative_contact_details is NO" do
         let(field) { nil }
 
@@ -81,7 +85,8 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
     context 'when passed in as other' do
       let(:alternative_contact_details) { 'other' }
       let(:contact_email) { nil }
-      let(:contact_full_name) { nil }
+      let(:contact_first_name) { nil }
+      let(:contact_last_name) { nil }
 
       it 'determined based on presence of contact email and full anme' do
         expect(form.alternative_contact_details).to eq(YesNoAnswer::NO)
@@ -91,7 +96,7 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
     context 'when not passed in' do
       let(:alternative_contact_details) { nil }
 
-      context 'when contact_full_name is set' do
+      context 'when contact_first_name is set' do
         let(:contact_email) { nil }
 
         it 'return yes value' do
@@ -100,7 +105,9 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
       end
 
       context 'when contact_email is set' do
-        let(:contact_full_name) { nil }
+        let(:contact_first_name) { nil }
+
+        let(:contact_last_name) { nil }
 
         it 'return yes value' do
           expect(form.alternative_contact_details).to eq(YesNoAnswer::YES)
@@ -109,7 +116,8 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
 
       context 'when neither contact fields are set' do
         let(:contact_email) { nil }
-        let(:contact_full_name) { nil }
+        let(:contact_first_name) { nil }
+        let(:contact_last_name) { nil }
 
         it 'return no value' do
           expect(form.alternative_contact_details).to eq(YesNoAnswer::NO)
@@ -139,7 +147,7 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
 
     context 'when application has an existing solicitor' do
       context 'and solicitor details have changed' do
-        let(:solicitor) { Solicitor.new(arguments.merge(full_name: 'Jim Bob')) }
+        let(:solicitor) { Solicitor.new(arguments.merge(first_name: 'Jim', last_name: 'Bob')) }
 
         it 'creates a new solicitor record' do
           expect { subject.save! }.to change(Solicitor, :count).by(1)
@@ -158,7 +166,7 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
 
     context 'when application has no solictor but one exists for the the reference code' do
       context 'and solicitor details have changed' do
-        before { Solicitor.create!(arguments.merge(full_name: 'Jim Bob')) }
+        before { Solicitor.create!(arguments.merge(first_name: 'Jim', last_name: 'Bob')) }
 
         it 'creates a new solicitor record' do
           expect { subject.save! }.to change(Solicitor, :count).by(1)
@@ -177,7 +185,7 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
       context 'it matches a historic solicitor details' do
         before do
           old_solicitor = travel_to(1.day.ago) { Solicitor.create!(arguments) }
-          Solicitor.create!(arguments.merge(full_name: 'Jim Bob', previous: old_solicitor))
+          Solicitor.create!(arguments.merge(first_name: 'Jim', last_name: 'Bob', previous: old_solicitor))
         end
 
         it 'create a new solicitor record' do

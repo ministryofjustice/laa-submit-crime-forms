@@ -4,12 +4,14 @@ module PriorAuthority
       def self.attribute_names
         super - %w[service_type custom_service_name file_upload]
       end
-      attribute :contact_full_name, :string
+      attribute :contact_first_name, :string
+      attribute :contact_last_name, :string
       attribute :organisation, :string
       attribute :postcode, :string
 
       validates :service_type_autocomplete, presence: true
-      validates :contact_full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
+      validates :contact_first_name, presence: true
+      validates :contact_last_name, presence: true
       validates :organisation, presence: true
       validates :postcode, presence: true, uk_postcode: true
       include DocumentUploadable # Include this here so that validations appear in the correct order
@@ -59,6 +61,8 @@ module PriorAuthority
       def draft?
         application.status.in?(%w[pre_draft draft])
       end
+
+      delegate :contact_full_name, to: :record
 
       private
 

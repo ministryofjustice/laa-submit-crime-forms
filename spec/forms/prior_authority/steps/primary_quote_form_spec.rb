@@ -8,7 +8,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       record:,
       application:,
       service_type_autocomplete_suggestion:,
-      contact_full_name:,
+      contact_first_name:,
+      contact_last_name:,
       organisation:,
       postcode:,
       file_upload:,
@@ -20,7 +21,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   let(:application) { instance_double(PriorAuthorityApplication, service_type: 'forensics') }
   let(:service_type_autocomplete_suggestion) { 'forensics_expert' }
   let(:file_upload) { nil }
-  let(:contact_full_name) { 'Joe Bloggs' }
+  let(:contact_first_name) { 'Joe' }
+  let(:contact_last_name) { 'Bloggs' }
   let(:organisation) { 'LAA' }
   let(:postcode) { 'CR0 1RE' }
 
@@ -40,19 +42,21 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
     context 'with blank quote details' do
       let(:service_type_autocomplete_suggestion) { '' }
-      let(:contact_full_name) { '' }
+      let(:contact_first_name) { '' }
+      let(:contact_last_name) { '' }
       let(:organisation) { '' }
       let(:postcode) { '' }
 
       it 'has a validation errors on blank fields' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:service_type_autocomplete, :blank)).to be(true)
-        expect(form.errors.of_kind?(:contact_full_name, :blank)).to be(true)
+        expect(form.errors.of_kind?(:contact_first_name, :blank)).to be(true)
+        expect(form.errors.of_kind?(:contact_last_name, :blank)).to be(true)
         expect(form.errors.of_kind?(:organisation, :blank)).to be(true)
         expect(form.errors.of_kind?(:postcode, :blank)).to be(true)
         expect(form.errors.messages.values.flatten)
           .to include('Enter the service required',
-                      "Enter the contact's full name",
+                      "Enter the contact's first name",
                       'Enter the organisation name',
                       'Enter the postcode')
       end
@@ -60,17 +64,13 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
     context 'with invalid quote details' do
       let(:service_type_autocomplete_suggestion) { 'Forensics Expert' }
-      let(:contact_full_name) { 'Tim' }
-      let(:organisation) { 'LAA' }
       let(:postcode) { 'loren ipsum' }
 
       it 'has a validation errors on blank fields' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:contact_full_name, :invalid)).to be(true)
         expect(form.errors.of_kind?(:postcode, :invalid)).to be(true)
         expect(form.errors.messages.values.flatten)
-          .to include('Enter a valid full name',
-                      'Enter a real postcode')
+          .to include('Enter a real postcode')
       end
     end
 
@@ -134,7 +134,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
     context 'with valid quote details' do
       let(:service_type_autocomplete_suggestion) { 'Forensic scientist' }
-      let(:contact_full_name) { 'Joe Bloggs' }
+      let(:contact_first_name) { 'Joe' }
+      let(:contact_last_name) { 'Bloggs' }
       let(:organisation) { 'LAA' }
       let(:postcode) { 'CR0 1RE' }
 
@@ -142,7 +143,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         expect { save }.to change { record.reload.attributes }
           .from(
             hash_including(
-              'contact_full_name' => nil,
+              'contact_first_name' => nil,
+              'contact_last_name' => nil,
               'organisation' => nil,
               'postcode' => nil,
               'primary' => nil
@@ -150,7 +152,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
           )
           .to(
             hash_including(
-              'contact_full_name' => 'Joe Bloggs',
+              'contact_first_name' => 'Joe',
+              'contact_last_name' => 'Bloggs',
               'organisation' => 'LAA',
               'postcode' => 'CR0 1RE',
               'primary' => true
@@ -176,7 +179,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
     context 'with incomplete quote details' do
       let(:service_type_autocomplete_suggestion) { 'Forensic scientist' }
-      let(:contact_full_name) { '' }
+      let(:contact_first_name) { '' }
       let(:organisation) { '' }
       let(:postcode) { '' }
 
@@ -184,7 +187,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         expect { save }.not_to change { record.reload.attributes }
           .from(
             hash_including(
-              'contact_full_name' => nil,
+              'contact_first_name' => nil,
+              'contact_last_name' => nil,
               'organisation' => nil,
               'postcode' => nil,
               'primary' => nil
@@ -251,7 +255,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     end
 
     context 'when the service type is changed' do
-      let(:contact_full_name) { 'Joe Bloggs' }
+      let(:contact_first_name) { 'Joe' }
+      let(:contact_last_name) { 'Bloggs' }
       let(:organisation) { 'LAA' }
       let(:postcode) { 'CR0 1RE' }
       let(:record) { application.primary_quote }
