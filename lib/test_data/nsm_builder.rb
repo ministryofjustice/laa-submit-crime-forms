@@ -24,6 +24,8 @@ module TestData
       ActiveRecord::Base.transaction do
         args, kwargs = *options(**options).values.sample
         claim = FactoryBot.create(*args, kwargs.call)
+        # Nsm::Steps::SolicitorDeclarationForm.new(application: claim, record: claim, signatory_name: Faker::Name.name).save
+        claim.update!(status: :submitted, updated_at: claim.updated_at + 1.minute)
 
         invalid_tasks = check_tasks(claim)
         raise "Invalid for #{invalid_tasks.map(&:first).join(', ')}" if invalid_tasks.any?
@@ -47,25 +49,37 @@ module TestData
       {
         magistrates: [
           [:claim, :complete, :case_type_magistrates, :build_associates],
-          proc { { date: date(year), disbursements_count: rand(max / 2), work_items_count: rand(min..max) } }
+          proc do
+            date = date_for(year)
+            { date: date, disbursements_count: rand(max / 2), work_items_count: rand(min..max), updated_at: date }
+          end
         ],
         breach: [
           [:claim, :complete, :case_type_breach, :build_associates],
-          proc { { date: date(year), disbursements_count: rand(max / 2), work_items_count: rand(min..max) } }
+          proc do
+            date = date_for(year)
+            { date: date, disbursements_count: rand(max / 2), work_items_count: rand(min..max), updated_at: date }
+          end
         ],
         no_disburesments: [
           [:claim, :complete, :case_type_magistrates, :build_associates],
-          proc { { date: date(year), disbursements_count: 0, work_items_count: rand(min..max) } }
+          proc do
+            date = date_for(year)
+            { date: date, disbursements_count: 0, work_items_count: rand(min..max), updated_at: date }
+          end
         ],
         enhanced_rates: [
           [:claim, :complete, :case_type_magistrates, :with_enhanced_rates, :build_associates],
-          proc { { date: date(year), disbursements_count: rand(max / 2), work_items_count: rand(min..max) } }
+          proc do
+            date = date_for(year)
+            { date: date, disbursements_count: rand(max / 2), work_items_count: rand(min..max), updated_at: date }
+          end
         ],
       }
     end
     # rubocop:enable Metrics/MethodLength
 
-    def date(year)
+    def date_for(year)
       (Date.new(year, 1, 1) + rand(350)).next_weekday
     end
   end
