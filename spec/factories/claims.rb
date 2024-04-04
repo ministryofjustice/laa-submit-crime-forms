@@ -97,11 +97,11 @@ FactoryBot.define do
 
     trait :with_remittal do
       remitted_to_magistrate { 'yes' }
-      remitted_to_magistrate_date { date + rand(40) }
+      remitted_to_magistrate_date { date - rand(40) }
     end
 
     trait :hearing_details do
-      first_hearing_date { date + rand(40) }
+      first_hearing_date { date - rand(40) }
       number_of_hearing { 1 }
       youth_court { 'no' }
       in_area { 'yes' }
