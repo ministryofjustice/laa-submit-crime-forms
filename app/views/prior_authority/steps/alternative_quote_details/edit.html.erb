@@ -18,7 +18,7 @@
       <%= form.govuk_file_field :file_upload,
                                 label: { text: t(".file_upload"), size: "m" },
                                 hint: { text: t(".file_upload_hint", size: FileUpload::FileUploader.human_readable_max_file_size) },
-                                accept: SupportedFileTypes::QUOTE_DOCUMENT.join(',') %>
+                                accept: SupportedFileTypes::SUPPORTED_FILE_TYPES.join(',') %>
       <% if @form_object.document_already_uploaded? %>
         <%= render "prior_authority/steps/primary_quote/uploaded_file_summary", document: @form_object.document %>
       <% end %>

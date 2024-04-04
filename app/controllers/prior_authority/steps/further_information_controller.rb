@@ -1,22 +1,20 @@
 module PriorAuthority
   module Steps
-    class ReasonWhyController < BaseController
+    class FurtherInformationController < BaseController
       include MultiFileUploadable
 
       skip_before_action :verify_authenticity_token, only: [:destroy]
 
       def edit
-        @form_object = ReasonWhyForm.build(
-          current_application
-        )
+        @form_object = FurtherInformationForm.build(record, application: current_application)
       end
 
       def update
-        update_and_advance(ReasonWhyForm, as:, after_commit_redirect_path:)
+        update_and_advance(FurtherInformationForm, as:, after_commit_redirect_path:, record:)
       end
 
       def destroy
-        evidence = current_application.supporting_documents.find_by(id: params[:evidence_id])
+        evidence = record.supporting_documents.find_by(id: params[:evidence_id])
         file_uploader.destroy(evidence.file_path)
         evidence.destroy
 
@@ -28,11 +26,11 @@ module PriorAuthority
       private
 
       def record
-        current_application
+        current_application.further_informations.last
       end
 
       def as
-        :reason_why
+        :further_information
       end
     end
   end

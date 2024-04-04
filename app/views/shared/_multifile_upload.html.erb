@@ -1,0 +1,36 @@
+<div class="moj-multi-file-upload">
+  <div class="moj-multi-file-upload__upload">
+    <%= form.govuk_file_field :documents, label: { text: t("#{locale_prefix}.file_upload.heading"), size: 'm' }, class: 'moj-multi-file-upload__input', multiple: true, accept: SupportedFileTypes::SUPPORTED_FILE_TYPES.join(',') %>
+
+    <button class="govuk-button govuk-button--secondary moj-multi-file-upload__button" data-module="govuk-button">
+      <%= t("#{locale_prefix}.upload_file") %>
+    </button>
+  </div>
+  <%# Uploaded files section %>
+  <div class="moj-multi-file__uploaded-files <%= 'moj-hidden' unless supporting_documents.count > 0 %>">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Uploaded files</caption>
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">File name</th>
+        <th scope="col" class="govuk-table__header">Action</th>
+      </tr>
+      </thead>
+      <%# Uploaded file list   %>
+      <tbody class="govuk-table__body moj-multi-file-upload__list">
+      <% supporting_documents.each_with_index do |record, index| %>
+        <tr class="govuk-table__row moj-multi-file-upload__row" id="<%= index %>" >
+          <td class="govuk-table__cell moj-multi-file-upload__filename">
+            <span class="moj-multi-file-upload__filename"><%= record.file_name %></span>
+            <span class="moj-multi-file-upload__progress">100%</span></td>
+          <td class="govuk-table__cell moj-multi-file-upload__actions">
+            <a class="remove-link moj-multi-file-upload__delete" href="#0" value="<%= record.id %>">Delete
+              <span class="govuk-visually-hidden"><%= record.id %></span>
+            </a>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

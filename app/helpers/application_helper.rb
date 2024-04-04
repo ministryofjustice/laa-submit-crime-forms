@@ -3,7 +3,7 @@ module ApplicationHelper
   def current_application
     @current_application ||=
       Claim.for(current_provider).find_by(id: params[:id]) ||
-      PriorAuthorityApplication.for(current_provider).find_by(id: params[:application_id])
+      PriorAuthorityApplication.for(current_provider).find_by(id: params[:application_id] || params[:id])
   end
 
   def current_office_code
@@ -16,6 +16,15 @@ module ApplicationHelper
 
   def multiline_text(string)
     ApplicationController.helpers.sanitize(string.gsub("\n", '<br>'), tags: %w[br])
+  end
+
+  def further_information_needed
+    if current_application.further_informations.empty?
+      false
+    else
+      last_further_info = current_application.further_informations.order(:created_at).last.created_at
+      current_application.sent_back? && (last_further_info >= current_application.app_store_updated_at)
+    end
   end
 
   def relevant_prior_authority_list_anchor(prior_authority_application)

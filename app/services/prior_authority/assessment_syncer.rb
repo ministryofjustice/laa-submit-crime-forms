@@ -1,82 +1,119 @@
 module PriorAuthority
   class AssessmentSyncer
-    class << self
-      def call(application)
-        app_store_record = AppStoreClient.new.get(application.id)
+    def self.call(application)
+      new(application).call
+    end
 
-        case application.status
-        when 'rejected', 'granted'
-          sync_overall_comment(application, app_store_record)
-        when 'part_grant'
-          sync_overall_comment(application, app_store_record)
-          sync_allowances(application, app_store_record)
-        when 'sent_back'
-          sync_further_info_request(application, app_store_record)
-        end
-      rescue StandardError => e
-        Sentry.capture_exception("#{self} encountered error '#{e}' for application '#{application.id}'")
+    attr_reader :application, :app_store_record
+
+    def initialize(application)
+      @application = application
+      @app_store_record = AppStoreClient.new.get(application.id)
+    end
+
+    def call
+      case application.status
+      when 'rejected', 'granted'
+        sync_overall_comment
+      when 'part_grant'
+        sync_overall_comment
+        sync_allowances
+      when 'sent_back'
+        sync_sent_back_request
       end
+    rescue StandardError => e
+      Sentry.capture_exception("#{self.class.name} encountered error '#{e}' for application '#{application.id}'")
+    end
 
-      def sync_overall_comment(application, app_store_record)
-        comment_event = app_store_record['events'].select { _1['public'] && _1['event_type'] == 'decision' }
-                                                  .max_by { DateTime.parse(_1['created_at']) }
+    private
 
-        application.update(assessment_comment: comment_event.dig('details', 'comment'))
-      end
+    def sync_overall_comment
+      comment_event = app_store_record['events'].select { _1['public'] && _1['event_type'] == 'decision' }
+                                                .max_by { DateTime.parse(_1['created_at']) }
 
-      def sync_allowances(application, app_store_record)
-        data = app_store_record['application']
-        sync_primary_quote(
-          application.primary_quote,
-          data['quotes'].find { _1['primary'] },
-          application
-        )
+      application.update(assessment_comment: comment_event.dig('details', 'comment'))
+    end
 
-        application.additional_costs.each do |additional_cost|
-          sync_additional_cost(
-            additional_cost,
-            data['additional_costs'].find { _1['id'] == additional_cost.id },
-            application
-          )
-        end
-      end
+    def sync_allowances
+      sync_primary_quote(application.primary_quote, data['quotes'].find { _1['primary'] })
 
-      def sync_primary_quote(quote, quote_data, application)
-        base_cost_form = build_form(application, quote, Steps::ServiceCostForm, quote_data)
-        travel_cost_form = build_form(application, quote, Steps::TravelDetailForm, quote_data)
-        quote.update(
-          base_cost_allowed: base_cost_form.total_cost,
-          travel_cost_allowed: travel_cost_form.total_cost,
-          travel_adjustment_comment: quote_data['travel_adjustment_comment'],
-          service_adjustment_comment: quote_data['adjustment_comment']
+      application.additional_costs.each do |additional_cost|
+        sync_additional_cost(
+          additional_cost,
+          data['additional_costs'].find { _1['id'] == additional_cost.id },
         )
       end
+    end
 
-      def sync_additional_cost(cost, cost_data, application)
-        cost_form = build_form(application, cost, Steps::AdditionalCosts::DetailForm, cost_data)
-        cost.update(
-          total_cost_allowed: cost_form.total_cost,
-          adjustment_comment: cost_data['adjustment_comment']
-        )
-      end
+    def sync_primary_quote(quote, quote_data)
+      base_cost_form = build_form(application, quote, Steps::ServiceCostForm, quote_data)
+      travel_cost_form = build_form(application, quote, Steps::TravelDetailForm, quote_data)
 
-      def sync_further_info_request(application, app_store_record)
-        data = app_store_record['application']
-        further_info_required = data['updates_needed'].include? 'further_information'
-        info_correct_required = data['updates_needed'].include? 'incorrect_information'
-        application.update(
-          further_information_explanation: further_info_required ? data['further_information_explanation'] : nil,
-          incorrect_information_explanation: info_correct_required ? data['incorrect_information_explanation'] : nil,
-          resubmission_deadline: data['resubmission_deadline'],
-          resubmission_requested: DateTime.current
-        )
-      end
+      quote.update(
+        base_cost_allowed: base_cost_form.total_cost,
+        travel_cost_allowed: travel_cost_form.total_cost,
+        travel_adjustment_comment: quote_data['travel_adjustment_comment'],
+        service_adjustment_comment: quote_data['adjustment_comment']
+      )
+    end
 
-      def build_form(application, record, form_class, data)
-        form_class.new(
-          data.slice(*form_class.attribute_names).merge(application:, record:)
-        )
-      end
+    def sync_additional_cost(cost, cost_data)
+      cost_form = build_form(application, cost, Steps::AdditionalCosts::DetailForm, cost_data)
+
+      cost.update(
+        total_cost_allowed: cost_form.total_cost,
+        adjustment_comment: cost_data['adjustment_comment']
+      )
+    end
+
+    def sync_sent_back_request
+      application.update(
+        incorrect_information_explanation: incorrect_information_explanation,
+        resubmission_deadline: resubmission_deadline,
+        resubmission_requested: DateTime.current
+      )
+
+      return unless further_info_required?
+
+      sync_further_info_request
+    end
+
+    def further_info_required?
+      data['updates_needed'].include?('further_information')
+    end
+
+    def incorrect_information_explanation
+      data['incorrect_information_explanation'] if info_correction_required?
+    end
+
+    def info_correction_required?
+      data['updates_needed'].include?('incorrect_information')
+    end
+
+    def resubmission_deadline
+      data['resubmission_deadline']
+    end
+
+    def sync_further_info_request
+      latest_further_info = data['further_information'].max_by { _1['requested_at'] }
+
+      application.further_informations.create(
+        {
+          caseworker_id: latest_further_info['caseworker_id'],
+          information_requested: latest_further_info['information_requested'],
+          requested_at: latest_further_info['requested_at']
+        }
+      )
+    end
+
+    def data
+      @data ||= app_store_record['application']
+    end
+
+    def build_form(application, record, form_class, data)
+      form_class.new(
+        data.slice(*form_class.attribute_names).merge(application:, record:)
+      )
     end
   end
 end

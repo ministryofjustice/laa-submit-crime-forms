@@ -154,6 +154,9 @@ module Decisions
     from(:reason_why)
       .goto { overwrite_to_cya }
 
+    from(:further_information)
+      .goto { overwrite_to_cya }
+
     from(:check_answers)
       .goto(show: 'prior_authority/steps/submission_confirmation')
   end
