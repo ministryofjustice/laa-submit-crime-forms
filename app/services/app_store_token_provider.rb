@@ -31,10 +31,14 @@ class AppStoreTokenProvider
   private
 
   def new_access_token
-    oauth_client.client_credentials.get_token(scope: "api://#{client_id}/.default")
+    oauth_client.client_credentials.get_token(scope: "api://#{app_store_client_id}/.default")
   end
 
   def client_id
+    ENV.fetch('PROVIDER_CLIENT_ID', nil)
+  end
+
+  def app_store_client_id
     ENV.fetch('APP_STORE_CLIENT_ID', nil)
   end
 
@@ -43,6 +47,6 @@ class AppStoreTokenProvider
   end
 
   def client_secret
-    ENV.fetch('APP_STORE_CLIENT_SECRET', nil)
+    ENV.fetch('PROVIDER_CLIENT_SECRET', nil)
   end
 end
