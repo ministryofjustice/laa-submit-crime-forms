@@ -1,9 +1,21 @@
 module TestData
   class NsmBuilder
     def build_many(bulk: 100, large: 4, year: 2023)
-      bulk.times { build(year:) }
+      raise 'Do not run on production' if HostEnv.production?
 
-      large_ids = Array.new(large) { build(min: 400, max: 600, year: year) }
+      bulk.times do
+        build(year:)
+
+        # avoid issues with large number of applications with the same last_updated_at time
+        sleep 0.1 unless HostEnv.local?
+      end
+
+      large_ids = Array.new(large) do
+        build(min: 400, max: 600, year: year).tap do
+          # avoid issues with large number of applications with the same last_updated_at time
+          sleep 0.1 unless HostEnv.local?
+        end
+      end
 
       Rails.logger.info "Created large examples: #{large_ids.to_sentence}"
     end
@@ -14,32 +26,11 @@ module TestData
         claim = FactoryBot.create(*args, kwargs.call)
 
         invalid_tasks = check_tasks(claim)
-
-        if invalid_tasks.any?
-          Rails.logger.debug { "Invalid for #{invalid_tasks.map(&:last).join(', ')}" }
-
-          # rubocop:disable Lint/Debugger
-          debugger if ENV['DEBUG_TEST_DATA']
-          # rubocop:enable Lint/Debugger
-
-          # help with debugging for base tasks run (for simple objects):
-          #   errors_for(task_klass, claim)
-          #   errors_for(task_klass, claim, record)
-
-          raise "Invalid for #{invalid_tasks.map(&:first).join(', ')}"
-        end
+        raise "Invalid for #{invalid_tasks.map(&:first).join(', ')}" if invalid_tasks.any?
 
         SubmitToAppStore.new.submit(claim)
-
         claim.id
       end
-    end
-
-    def errors_for(task_klass, claim, record = nil)
-      task = task_klass.new(application: claim)
-      form = task.send(:associated_form).build(record || task.send(:record), application: claim)
-      form.valid?
-      form.errors
     end
 
     # we use tasks here as they already know how to build all the required forms for the more complicated scenarios

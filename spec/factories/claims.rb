@@ -155,7 +155,6 @@ FactoryBot.define do
     end
 
     trait :letters_calls do
-      rep_order_date { Date.yesterday }
       letters { 2 }
       calls { 3 }
 
