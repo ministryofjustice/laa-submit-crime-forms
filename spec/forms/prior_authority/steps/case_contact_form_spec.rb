@@ -20,7 +20,7 @@ RSpec.describe PriorAuthority::Steps::CaseContactForm do
     context 'with valid solicitor and firm details' do
       let(:firm_office_attributes) { { 'name' => 'anything', 'account_number' => 'anything' } }
       let(:solicitor_attributes) do
-        { 'contact_full_name' => 'Joe Bloggs', 'contact_email' => 'joe.bloggs@legalcorp.com' }
+        { 'contact_first_name' => 'Joe', 'contact_last_name' => 'Bloggs', 'contact_email' => 'joe.bloggs@legalcorp.com' }
       end
 
       it { is_expected.to be_valid }
@@ -28,17 +28,19 @@ RSpec.describe PriorAuthority::Steps::CaseContactForm do
 
     context 'with invalid solicitor and firm details' do
       let(:firm_office_attributes) { { 'name' => '', 'account_number' => '' } }
-      let(:solicitor_attributes) { { 'contact_full_name' => '', 'contact_email' => '' } }
+      let(:solicitor_attributes) { { 'contact_first_name' => '', 'contact_last_name' => '', 'contact_email' => '' } }
 
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:'firm_office-attributes.name', :blank)).to be(true)
         expect(form.errors.of_kind?(:'firm_office-attributes.account_number', :blank)).to be(true)
-        expect(form.errors.of_kind?(:'solicitor-attributes.contact_full_name', :blank)).to be(true)
+        expect(form.errors.of_kind?(:'solicitor-attributes.contact_first_name', :blank)).to be(true)
+        expect(form.errors.of_kind?(:'solicitor-attributes.contact_last_name', :blank)).to be(true)
         expect(form.errors.of_kind?(:'solicitor-attributes.contact_email', :blank)).to be(true)
         expect(form.errors.messages.values.flatten).to include('Enter a firm name',
                                                                'Enter an account number',
-                                                               'Enter the full name of the contact',
+                                                               'Enter the first name of the contact',
+                                                               'Enter the last name of the contact',
                                                                'Enter the email address of the contact')
       end
     end
@@ -52,7 +54,7 @@ RSpec.describe PriorAuthority::Steps::CaseContactForm do
     context 'with valid solicitor and firm details' do
       let(:firm_office_attributes) { { 'name' => 'anything', 'account_number' => 'anything' } }
       let(:solicitor_attributes) do
-        { 'contact_full_name' => 'Joe Bloggs', 'contact_email' => 'joe.bloggs@legalcorp.com' }
+        { 'contact_first_name' => 'Joe', 'contact_last_name' => 'Bloggs', 'contact_email' => 'joe.bloggs@legalcorp.com' }
       end
 
       it 'persists the firm details' do
@@ -62,14 +64,15 @@ RSpec.describe PriorAuthority::Steps::CaseContactForm do
 
       it 'persists the solicitor details' do
         expect { save }.to change { application.reload.solicitor }.from(nil).to(be_a(Solicitor))
-        expect(application.solicitor).to have_attributes(contact_full_name: 'Joe Bloggs',
+        expect(application.solicitor).to have_attributes(contact_first_name: 'Joe',
+                                                         contact_last_name: 'Bloggs',
                                                          contact_email: 'joe.bloggs@legalcorp.com')
       end
     end
 
     context 'with invalid solicitor and firm details' do
       let(:firm_office_attributes) { { 'name' => '', 'account_number' => '' } }
-      let(:solicitor_attributes) { { 'contact_full_name' => '', 'contact_email' => '' } }
+      let(:solicitor_attributes) { { 'contact_first_name' => '', 'contact_last_name' => '', 'contact_email' => '' } }
 
       it 'does not persists the solicitor details' do
         expect { save }.not_to change { application.reload.solicitor }.from(nil)

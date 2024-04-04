@@ -115,8 +115,10 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'signatory_name' => nil,
           'solicitor' => {
             'contact_email' => nil,
-            'contact_full_name' => nil,
-            'full_name' => 'Richard Jenkins',
+            'contact_first_name' => nil,
+            'contact_last_name' => nil,
+            'first_name' => 'Richard',
+            'last_name' => 'Jenkins',
             'previous_id' => nil,
             'reference_number' => '111222'
           },
