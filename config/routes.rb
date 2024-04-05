@@ -159,7 +159,7 @@ Rails.application.routes.draw do
     end
   end
 
-  if FeatureFlags.manual_sync_trigger.enabled?
+  if ENV.fetch("ENABLE_SYNC_TRIGGER_ENDPOINT", false) == "true"
     get "sync", to: "sync#sync_all"
   end
 

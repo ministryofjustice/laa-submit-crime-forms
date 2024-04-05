@@ -4,8 +4,3 @@ feature_flags:
     development: true
     uat: false
     production: false # must never be enabled in the live service
-  manual_sync_trigger:
-    local: true
-    development: true
-    uat: false
-    production: false
