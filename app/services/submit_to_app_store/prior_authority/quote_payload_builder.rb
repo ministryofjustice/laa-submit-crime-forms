@@ -32,7 +32,8 @@ class SubmitToAppStore
         travel_time
         travel_cost_per_hour
         travel_cost_reason
-        contact_full_name
+        contact_first_name
+        contact_last_name
         organisation
         postcode
         primary

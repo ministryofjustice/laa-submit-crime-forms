@@ -7,9 +7,9 @@ class SubmitToAppStore
 
       def payload
         @application.solicitor.as_json(only: %i[
-                                         full_name
                                          reference_number
-                                         contact_full_name
+                                         contact_first_name
+                                         contact_last_name
                                          contact_email
                                        ])
       end

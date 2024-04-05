@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :quote do
-    contact_full_name { 'Joe Bloggs' }
+    contact_first_name { 'Joe' }
+    contact_last_name { 'Bloggs' }
     organisation { 'LAA' }
     postcode { 'CR0 1RE' }
     cost_per_hour { 10 }
@@ -12,7 +13,8 @@ FactoryBot.define do
     document factory: %i[quote_document], strategy: :build
 
     trait :blank do
-      contact_full_name { nil }
+      contact_first_name { nil }
+      contact_last_name { nil }
       organisation { nil }
       postcode { nil }
       primary { nil }

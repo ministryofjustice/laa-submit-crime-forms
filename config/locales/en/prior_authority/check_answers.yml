@@ -52,7 +52,7 @@ en:
               quote_upload: Quote upload
               related_to_post_mortem: Post-mortem
               service_name: Service required
-              service_details: Service details
+              service_details: Service provider details
               travel_cost_reason: Why travel costs are required
             reason_why:
               reason_why: Why prior authority is required

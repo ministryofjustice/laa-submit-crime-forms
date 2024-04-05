@@ -18,12 +18,14 @@ RSpec.describe 'User can fill in firm details', type: :system do
 
     choose 'nsm-steps-firm-details-form-firm-office-attributes-vat-registered-yes-field'
 
-    fill_in 'Solicitor full name', with: 'James Robert'
+    fill_in 'Solicitor first name', with: 'James'
+    fill_in 'Solicitor last name', with: 'Robert'
     fill_in 'Solicitor reference number', with: '2222'
 
     choose 'nsm-steps-firm-details-form-solicitor-attributes-alternative-contact-details-yes-field'
 
-    fill_in 'Full name of alternative contact', with: 'Jim Bob'
+    fill_in 'First name of alternative contact', with: 'Jim'
+    fill_in 'Last name of alternative contact', with: 'Bob'
     fill_in 'Email address of alternative contact', with: 'jim@bob.com'
 
     click_on 'Save and continue'
@@ -43,9 +45,11 @@ RSpec.describe 'User can fill in firm details', type: :system do
     )
 
     expect(claim.solicitor).to have_attributes(
-      full_name: 'James Robert',
+      first_name: 'James',
+      last_name: 'Robert',
       reference_number: '2222',
-      contact_full_name: 'Jim Bob',
+      contact_first_name: 'Jim',
+      contact_last_name: 'Bob',
       contact_email: 'jim@bob.com',
     )
   end

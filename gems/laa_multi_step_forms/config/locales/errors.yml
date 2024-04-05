@@ -42,11 +42,15 @@ en:
               blank: "Enter a postcode"
         steps/firm_details/solicitor_form:
           attributes:
-            full_name:
-              blank: "Enter the solicitor's full name"
+            first_name:
+              blank: "Enter the solicitor's first name"
+            last_name:
+              blank: "Enter the solicitor's last name"
             reference_number:
               blank: "Enter the solicitor's reference number"
-            contact_full_name:
-              blank: "Enter a contacts name"
+            contact_first_name:
+              blank: "Enter a contacts first name"
+            contact_last_name:
+              blank: "Enter a contacts last name"
             contact_email:
               blank: "Enter a contacts email"

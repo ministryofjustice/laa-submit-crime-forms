@@ -35,7 +35,8 @@ RSpec.describe 'Prior authority applications - alternative quote' do
       end
 
       it 'allows me to add an alternative quote' do
-        fill_in 'Contact full name', with: 'Mrs Expert'
+        fill_in 'First name', with: 'Mrs'
+        fill_in 'Last name', with: 'Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'
         fill_in 'Postcode', with: 'SW1 1AA'
         choose 'Charged per item'
@@ -48,7 +49,8 @@ RSpec.describe 'Prior authority applications - alternative quote' do
       end
 
       it 'allows me to add a quote with a file' do
-        fill_in 'Contact full name', with: 'Mrs Expert'
+        fill_in 'First name', with: 'Mrs'
+        fill_in 'Last name', with: 'Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'
         fill_in 'Postcode', with: 'SW1 1AA'
         choose 'Charged per item'
@@ -62,7 +64,8 @@ RSpec.describe 'Prior authority applications - alternative quote' do
       end
 
       it 'does maths for me' do
-        fill_in 'Contact full name', with: 'Mrs Expert'
+        fill_in 'First name', with: 'Mrs'
+        fill_in 'Last name', with: 'Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'
         fill_in 'Postcode', with: 'SW1 1AA'
         choose 'Charged per item'
@@ -79,12 +82,13 @@ RSpec.describe 'Prior authority applications - alternative quote' do
 
       it 'validates' do
         click_on 'Save and continue'
-        expect(page).to have_content "Enter the contact's full name"
+        expect(page).to have_content "Enter the contact's first name"
       end
 
       context 'When I have added a quote' do
         before do
-          fill_in 'Contact full name', with: 'Mrs Expert'
+          fill_in 'First name', with: 'Mrs'
+          fill_in 'Last name', with: 'Expert'
           fill_in 'Organisation', with: 'ExpertiseCo'
           fill_in 'Postcode', with: 'SW1 1AA'
           choose 'Charged per item'
@@ -96,7 +100,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         it 'allows me to edit a quote' do
           click_on 'Change'
 
-          fill_in 'Contact full name', with: 'Mr Expert'
+          fill_in 'First name', with: 'Mr'
           click_on 'Save and continue'
 
           expect(page).to have_content "You've added 1 alternative quote"

@@ -9,7 +9,8 @@ module PriorAuthority
         end
 
         attribute :id, :string
-        attribute :contact_full_name, :string
+        attribute :contact_first_name, :string
+        attribute :contact_last_name, :string
         attribute :organisation, :string
         attribute :postcode, :string
         attribute :travel_time, :time_period
@@ -17,7 +18,8 @@ module PriorAuthority
         attribute :additional_cost_list, :string
         attribute :additional_cost_total, :gbp
 
-        validates :contact_full_name, presence: true
+        validates :contact_first_name, presence: true
+        validates :contact_last_name, presence: true
         validates :organisation, presence: true
         validates :postcode, presence: true, uk_postcode: true
         include DocumentUploadable
@@ -65,6 +67,8 @@ module PriorAuthority
         def document
           record.document || record.build_document
         end
+
+        delegate :contact_full_name, to: :record
 
         private
 

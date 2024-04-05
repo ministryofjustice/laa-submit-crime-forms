@@ -53,8 +53,8 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         },
         solicitor: {
           contact_email: 'james@email.com',
-          contact_full_name: 'James Blake',
-          full_name: 'Richard Jenkins',
+          contact_first_name: 'James',
+          contact_last_name: 'Blake',
           reference_number: '111222'
         },
         supporting_documents: [
@@ -75,7 +75,8 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         ],
         quotes: [
           {
-            contact_full_name: 'Joe Bloggs',
+            contact_first_name: 'Joe',
+            contact_last_name: 'Bloggs',
             organisation: 'LAA',
             postcode: 'CR0 1RE',
             primary: true,
@@ -102,7 +103,8 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             additional_cost_total: nil,
           },
           {
-            contact_full_name: 'Joe Bloggs',
+            contact_first_name: 'Joe',
+            contact_last_name: 'Bloggs',
             organisation: 'LAA',
             postcode: 'CR0 1RE',
             primary: false,
