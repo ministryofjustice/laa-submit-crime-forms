@@ -49,9 +49,21 @@ RSpec.describe TestData::NsmBuilder do
       end
 
       it 'runs with delay' do
-        expect(subject).to receive(:sleep)
+        expect(subject).to receive(:sleep).twice
 
-        subject.build_many(bulk: 1, large: 0)
+        subject.build_many(bulk: 1, large: 1)
+      end
+    end
+
+    context 'when claim is invalid (not completed)' do
+      let(:incomplete_form) { instance_double(Nsm::Tasks::CaseDetails, completed?: false) }
+
+      before do
+        allow(Nsm::Tasks::CaseDetails).to receive(:new).and_return(incomplete_form)
+      end
+
+      it 'runs raises and error' do
+        expect { subject.build_many }.to raise_error('Invalid for CaseDetails')
       end
     end
   end
