@@ -73,9 +73,9 @@ en:
         prior_authority/steps/alternative_quotes/detail_form:
           attributes:
             contact_first_name:
-              blank: Enter the contact's first name
+              blank: Enter the service provider's first name
             contact_last_name:
-              blank: Enter the contact's last name
+              blank: Enter the service provider's last name
             organisation:
               blank: Enter the organisation name
             postcode:

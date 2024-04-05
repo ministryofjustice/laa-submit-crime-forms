@@ -82,7 +82,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
 
       it 'validates' do
         click_on 'Save and continue'
-        expect(page).to have_content "Enter the contact's first name"
+        expect(page).to have_content "Enter the service provider's first name"
       end
 
       context 'When I have added a quote' do
