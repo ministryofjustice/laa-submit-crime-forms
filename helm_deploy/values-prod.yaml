@@ -77,7 +77,7 @@ variables:
   appStore: https://laa-crime-application-store-prod.apps.live.cloud-platform.service.justice.gov.uk
   maxFileUploadBytes: 10485760
   eolUrl: https://apply-for-extension-of-upper-limits.form.service.justice.gov.uk/
-  enableSyncTriggerEndpoint: false
+  enableSyncTriggerEndpoint: 'false'
 
 service_account:
   name: laa-submit-crime-forms-prod-irsa
