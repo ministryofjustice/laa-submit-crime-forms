@@ -7,13 +7,13 @@ module TestData
         build(year:)
 
         # avoid issues with large number of applications with the same last_updated_at time
-        sleep 0.1 unless Production.env.test?
+        sleep 0.1 unless Rails.env.test?
       end
 
       large_ids = Array.new(large) do
         build(min: 400, max: 600, year: year).tap do
           # avoid issues with large number of applications with the same last_updated_at time
-          sleep 0.1 unless Production.env.test?
+          sleep 0.1 unless Rails.env.test?
         end
       end
 
