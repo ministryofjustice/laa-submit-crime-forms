@@ -68,4 +68,76 @@ RSpec.describe TestData::NsmBuilder do
       end
     end
   end
+
+  describe '#options' do
+    subject(:options) { described_class.new.options[key] }
+
+    context 'magistrates' do
+      let(:key) { :magistrates }
+
+      it 'has the arguements' do
+        expect(options[0]).to eq([:claim, :complete, :case_type_magistrates, :build_associates])
+      end
+
+      it 'has the kwargs' do
+        expect(options[1].call).to match(
+          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
+          disbursements_count: (0..25),
+          work_items_count: (1..50),
+          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31))
+        )
+      end
+    end
+
+    context 'breach' do
+      let(:key) { :breach }
+
+      it 'has the arguements' do
+        expect(options[0]).to eq([:claim, :complete, :case_type_breach, :build_associates])
+      end
+
+      it 'has the kwargs' do
+        expect(options[1].call).to match(
+          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
+          disbursements_count: (0..25),
+          work_items_count: (1..50),
+          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31))
+        )
+      end
+    end
+
+    context 'no_disbursements' do
+      let(:key) { :no_disbursements }
+
+      it 'has the arguements' do
+        expect(options[0]).to eq([:claim, :complete, :case_type_magistrates, :build_associates])
+      end
+
+      it 'has the kwargs' do
+        expect(options[1].call).to match(
+          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
+          disbursements_count: 0,
+          work_items_count: (1..50),
+          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31))
+        )
+      end
+    end
+
+    context 'enhanced_rates' do
+      let(:key) { :enhanced_rates }
+
+      it 'has the arguements' do
+        expect(options[0]).to eq([:claim, :complete, :case_type_magistrates, :with_enhanced_rates, :build_associates])
+      end
+
+      it 'has the kwargs' do
+        expect(options[1].call).to match(
+          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
+          disbursements_count: (0..25),
+          work_items_count: (1..50),
+          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31))
+        )
+      end
+    end
+  end
 end
