@@ -207,6 +207,8 @@ spec:
               value: {{ .Values.variables.eolUrl }}
             - name: HOSTS
               value: {{ range $index, $hostObject := .Values.ingress.hosts }}{{ if ne $index 0 }},{{ end }}{{ $hostObject.host }}{{ end }}
+            - name: ENABLE_SYNC_TRIGGER_ENDPOINT
+              value: '{{ .Values.variables.enableSyncTriggerEndpoint }}'
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
