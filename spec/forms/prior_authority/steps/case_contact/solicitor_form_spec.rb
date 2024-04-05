@@ -31,7 +31,7 @@ RSpec.describe PriorAuthority::Steps::CaseContact::SolicitorForm do
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:contact_first_name, :blank)).to be(true)
-        expect(form.errors.messages[:contact_first_name]).to include('Enter the first name of the contact')
+        expect(form.errors.messages[:contact_first_name]).to include("Enter the contact's first name")
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe PriorAuthority::Steps::CaseContact::SolicitorForm do
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:contact_last_name, :blank)).to be(true)
-        expect(form.errors.messages[:contact_last_name]).to include('Enter the last name of the contact')
+        expect(form.errors.messages[:contact_last_name]).to include("Enter the contact's last name")
       end
     end
 

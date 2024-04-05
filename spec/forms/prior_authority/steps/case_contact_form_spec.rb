@@ -39,8 +39,8 @@ RSpec.describe PriorAuthority::Steps::CaseContactForm do
         expect(form.errors.of_kind?(:'solicitor-attributes.contact_email', :blank)).to be(true)
         expect(form.errors.messages.values.flatten).to include('Enter a firm name',
                                                                'Enter an account number',
-                                                               'Enter the first name of the contact',
-                                                               'Enter the last name of the contact',
+                                                               "Enter the contact's first name",
+                                                               "Enter the contact's last name",
                                                                'Enter the email address of the contact')
       end
     end

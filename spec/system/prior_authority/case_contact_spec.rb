@@ -25,7 +25,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
     click_on 'Case contact'
     click_on 'Save and continue'
 
-    expect(page).to have_content 'Enter the first name of the contact'
+    expect(page).to have_content "Enter the contact's first name"
   end
 
   it 'allows save and come back later' do

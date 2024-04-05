@@ -3,8 +3,8 @@ module PriorAuthority
     class CaseContactForm < ::Steps::BaseFormObject
       attr_accessor :firm_office_attributes, :solicitor_attributes
 
-      validates :firm_office, presence: true, nested: true
       validates :solicitor, presence: true, nested: true
+      validates :firm_office, presence: true, nested: true
 
       def firm_office
         @firm_office ||= PriorAuthority::Steps::CaseContact::FirmDetailForm.new(firm_office_fields.merge(application:))

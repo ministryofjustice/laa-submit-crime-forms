@@ -52,12 +52,6 @@ en:
               inclusion:
                 less_than_five_hundred: Select yes if you are applying for a total authority of less than £500
                 less_than_one_hundred: Select yes if you are applying for a total authority of less than £100
-        prior_authority/steps/case_contact_form:
-          attributes:
-            contact_name:
-              blank: Enter the full contact name
-            contact_email:
-              blank: Enter the contact email address
         prior_authority/steps/case_detail_form:
           attributes:
             main_offence_autocomplete:
@@ -128,9 +122,9 @@ en:
         prior_authority/steps/case_contact/solicitor_form:
           attributes: &contact_form
             contact_first_name:
-              blank: Enter the first name of the contact
+              blank: Enter the contact's first name
             contact_last_name:
-              blank: Enter the last name of the contact
+              blank: Enter the contact's last name
             contact_email:
               blank: Enter the email address of the contact
               invalid: Enter a valid email address
@@ -162,9 +156,9 @@ en:
             service_type_autocomplete:
               blank: Enter the service required
             contact_first_name:
-              blank: Enter the contact's first name
+              blank: Enter the service provider's first name
             contact_last_name:
-              blank: Enter the contact's last name
+              blank: Enter the service provider's last name
             organisation:
               blank: Enter the organisation name
             postcode:
