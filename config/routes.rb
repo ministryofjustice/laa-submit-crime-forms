@@ -159,6 +159,10 @@ Rails.application.routes.draw do
     end
   end
 
+  if FeatureFlags.manual_sync_trigger.enabled?
+    get "sync", to: "sync#sync_all"
+  end
+
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
     lambda { |_request| !Rails.application.config.consider_all_requests_local }
 end
