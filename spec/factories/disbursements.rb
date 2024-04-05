@@ -8,11 +8,12 @@ FactoryBot.define do
     trait :valid do
       disbursement_date { age.days.ago.to_date }
       disbursement_type { DisbursementTypes.values.reject(&:other?).sample.to_s }
-      miles { 50 + (200**Random.new.rand(1.0).to_i) } # range: 50 -> 250
+      miles { 50 + (200**rand).to_i } # range: 50 -> 250 with logorithmic distribution
       total_cost_without_vat do |disb|
         Pricing.for(Claim.new)[disb.disbursement_type] * disb.miles
       end
       vat_amount { total_cost_without_vat * 0.2 }
+      prior_authority { total_cost_without_vat >= 100 ? 'yes' : nil }
       details { 'Details' }
       apply_vat { 'true' }
     end

@@ -23,7 +23,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
           },
           {
             head_key: 'main_offence_date',
-            text: '1 January 2023'
+            text: /\A\d{1,2} \w+ \d{4}\z/
           },
           {
             head_key: 'assigned_counsel',
@@ -60,7 +60,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
             },
             {
               head_key: 'main_offence_date',
-              text: '1 January 2023'
+              text: /\A\d{1,2} \w+ \d{4}\z/
             },
             {
               head_key: 'assigned_counsel',
