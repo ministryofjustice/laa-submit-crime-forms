@@ -7,13 +7,13 @@ module TestData
         build(year:)
 
         # avoid issues with large number of applications with the same last_updated_at time
-        sleep 0.1 unless HostEnv.local?
+        sleep 0.1 unless Production.env.test?
       end
 
       large_ids = Array.new(large) do
         build(min: 400, max: 600, year: year).tap do
           # avoid issues with large number of applications with the same last_updated_at time
-          sleep 0.1 unless HostEnv.local?
+          sleep 0.1 unless Production.env.test?
         end
       end
 
@@ -24,7 +24,6 @@ module TestData
       ActiveRecord::Base.transaction do
         args, kwargs = *options(**options).values.sample
         claim = FactoryBot.create(*args, kwargs.call)
-        # Nsm::Steps::SolicitorDeclarationForm.new(application: claim, record: claim, signatory_name: Faker::Name.name).save
         claim.update!(status: :submitted, updated_at: claim.updated_at + 1.minute)
 
         invalid_tasks = check_tasks(claim)
@@ -61,7 +60,7 @@ module TestData
             { date: date, disbursements_count: rand(max / 2), work_items_count: rand(min..max), updated_at: date }
           end
         ],
-        no_disburesments: [
+        no_disbursements: [
           [:claim, :complete, :case_type_magistrates, :build_associates],
           proc do
             date = date_for(year)

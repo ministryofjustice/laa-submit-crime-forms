@@ -45,7 +45,8 @@ RSpec.describe TestData::NsmBuilder do
 
     context 'when hostenv is not local' do
       before do
-        allow(HostEnv).to receive_messages(production?: false, local?: false)
+        allow(HostEnv).to receive_messages(production?: false)
+        allow(Production.env).to receive_messages(test?: false)
       end
 
       it 'runs with delay' do
