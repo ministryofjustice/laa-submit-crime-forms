@@ -56,7 +56,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         expect(form.errors.of_kind?(:postcode, :blank)).to be(true)
         expect(form.errors.messages.values.flatten)
           .to include('Enter the service required',
-                      "Enter the contact's first name",
+                      "Enter the service provider's first name",
                       'Enter the organisation name',
                       'Enter the postcode')
       end
