@@ -179,11 +179,16 @@ spec:
                 secretKeyRef:
                   name: app-store-auth
                   key: app_client_id
-            - name: APP_STORE_CLIENT_SECRET
+            - name: PROVIDER_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   name: app-store-auth
-                  key: app_client_secret
+                  key: provider_client_id
+            - name: PROVIDER_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-store-auth
+                  key: provider_client_secret
             - name: SIDEKIQ_WEB_UI_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -202,6 +207,8 @@ spec:
               value: {{ .Values.variables.eolUrl }}
             - name: HOSTS
               value: {{ range $index, $hostObject := .Values.ingress.hosts }}{{ if ne $index 0 }},{{ end }}{{ $hostObject.host }}{{ end }}
+            - name: ENABLE_SYNC_TRIGGER_ENDPOINT
+              value: '{{ .Values.variables.enableSyncTriggerEndpoint }}'
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

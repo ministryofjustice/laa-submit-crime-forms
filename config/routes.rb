@@ -161,6 +161,10 @@ Rails.application.routes.draw do
     resources :downloads, only: :show
   end
 
+  if ENV.fetch("ENABLE_SYNC_TRIGGER_ENDPOINT", false) == "true"
+    get "sync", to: "sync#sync_all"
+  end
+
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
     lambda { |_request| !Rails.application.config.consider_all_requests_local }
 end

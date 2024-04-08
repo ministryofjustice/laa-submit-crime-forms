@@ -2,23 +2,27 @@ module Nsm
   module Steps
     module FirmDetails
       class SolicitorForm < ::Steps::BaseFormObject
-        attribute :full_name, :string
+        attribute :first_name, :string
+        attribute :last_name, :string
         attribute :reference_number, :string
-        attribute :contact_full_name, :string
+        attribute :contact_first_name, :string
+        attribute :contact_last_name, :string
         attribute :contact_email, :string
 
-        validates :full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
+        validates :first_name, presence: true
+        validates :last_name, presence: true
         validates :reference_number, presence: true
 
-        validates :contact_full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i },
-                                                      if: ->(form) { form.alternative_contact_details? }
-        validates :contact_email, presence: true, format: { with: /\A.*@.*\..*\z/ },
-                                                  if: ->(form) { form.alternative_contact_details? }
+        with_options if: :alternative_contact_details? do
+          validates :contact_first_name, presence: true
+          validates :contact_last_name, presence: true
+          validates :contact_email, presence: true, format: { with: /\A.*@.*\..*\z/ }
+        end
 
         def alternative_contact_details
           return @alternative_contact_details unless @alternative_contact_details.nil?
 
-          contact_full_name.present? || contact_email.present? ? YesNoAnswer::YES : YesNoAnswer::NO
+          [contact_last_name, contact_first_name, contact_email].any?(&:present?) ? YesNoAnswer::YES : YesNoAnswer::NO
         end
 
         def alternative_contact_details=(val)
@@ -50,7 +54,8 @@ module Nsm
           return attributes if alternative_contact_details?
 
           attributes.merge(
-            'contact_full_name' => nil,
+            'contact_first_name' => nil,
+            'contact_last_name' => nil,
             'contact_email' => nil,
           )
         end

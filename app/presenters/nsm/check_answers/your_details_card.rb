@@ -31,8 +31,12 @@ module Nsm
             text: check_missing(firm_details_form.firm_office.vat_registered.to_s.capitalize)
           },
           {
-            head_key: 'solicitor_full_name',
-            text: check_missing(firm_details_form.solicitor.full_name)
+            head_key: 'solicitor_first_name',
+            text: check_missing(firm_details_form.solicitor.first_name)
+          },
+          {
+            head_key: 'solicitor_last_name',
+            text: check_missing(firm_details_form.solicitor.last_name)
           },
           {
             head_key: 'solicitor_reference_number',
@@ -40,11 +44,17 @@ module Nsm
           },
         ]
 
-        if firm_details_form.solicitor.contact_full_name || firm_details_form.solicitor.contact_email
+        if firm_details_form.solicitor.contact_first_name ||
+           firm_details_form.solicitor.contact_last_name ||
+           firm_details_form.solicitor.contact_email
           data += [
             {
-              head_key: 'contact_full_name',
-              text: check_missing(firm_details_form.solicitor.contact_full_name)
+              head_key: 'contact_first_name',
+              text: check_missing(firm_details_form.solicitor.contact_first_name)
+            },
+            {
+              head_key: 'contact_last_name',
+              text: check_missing(firm_details_form.solicitor.contact_last_name)
             },
             {
               head_key: 'contact_email',

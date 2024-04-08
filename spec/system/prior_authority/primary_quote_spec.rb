@@ -16,7 +16,8 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
       expect(page).to have_title 'Primary quote'
 
       fill_in 'Service required', with: 'Custom Forensics'
-      fill_in 'Contact full name', with: 'Joe Bloggs'
+      fill_in 'First name', with: 'Joe'
+      fill_in 'Last name', with: 'Bloggs'
       fill_in 'Organisation', with: 'LAA'
       fill_in 'Postcode', with: 'CR0 1RE'
       page.attach_file(file_fixture('test.png')) do
@@ -46,7 +47,8 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
 
     click_on 'Save and continue'
     expect(page).to have_content 'Enter the service required'
-    expect(page).to have_content "Enter the contact's full name"
+    expect(page).to have_content "Enter the service provider's first name"
+    expect(page).to have_content "Enter the service provider's last name"
     expect(page).to have_content 'Enter the organisation name'
     expect(page).to have_content 'Enter the postcode'
   end

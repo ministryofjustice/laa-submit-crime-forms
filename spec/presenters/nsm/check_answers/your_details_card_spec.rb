@@ -40,16 +40,24 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: 'No'
             },
             {
-              head_key: 'solicitor_full_name',
-              text: 'Richard Jenkins'
+              head_key: 'solicitor_first_name',
+              text: 'Richard'
+            },
+            {
+              head_key: 'solicitor_last_name',
+              text: 'Jenkins'
             },
             {
               head_key: 'solicitor_reference_number',
               text: '111222'
             },
             {
-              head_key: 'contact_full_name',
-              text: 'James Blake'
+              head_key: 'contact_first_name',
+              text: 'James'
+            },
+            {
+              head_key: 'contact_last_name',
+              text: 'Blake'
             },
             {
               head_key: 'contact_email',
@@ -83,8 +91,12 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: 'Yes'
             },
             {
-              head_key: 'solicitor_full_name',
-              text: 'Richard Jenkins'
+              head_key: 'solicitor_first_name',
+              text: 'Richard'
+            },
+            {
+              head_key: 'solicitor_last_name',
+              text: 'Jenkins'
             },
             {
               head_key: 'solicitor_reference_number',
@@ -118,7 +130,11 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
-              head_key: 'solicitor_full_name',
+              head_key: 'solicitor_first_name',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'solicitor_last_name',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
@@ -154,8 +170,12 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: 'Yes'
             },
             {
-              head_key: 'solicitor_full_name',
-              text: 'Richard Jenkins'
+              head_key: 'solicitor_first_name',
+              text: 'Richard'
+            },
+            {
+              head_key: 'solicitor_last_name',
+              text: 'Jenkins'
             },
             {
               head_key: 'solicitor_reference_number',
@@ -190,8 +210,12 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: 'Yes'
             },
             {
-              head_key: 'solicitor_full_name',
-              text: 'Richard Jenkins'
+              head_key: 'solicitor_first_name',
+              text: 'Richard'
+            },
+            {
+              head_key: 'solicitor_last_name',
+              text: 'Jenkins'
             },
             {
               head_key: 'solicitor_reference_number',

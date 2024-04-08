@@ -8,16 +8,18 @@ en:
           page_title: Authority value
       case_contact:
         edit:
-          caption: 1. Contact details
-          contact_full_name: Full name
+          caption: Contact details
+          contact_first_name: First name
+          contact_last_name: Last name
           contact_email: Email address
           firm_name: Firm name
           firm_account_number: Firm account number
           hint: For example, 1A234B
           page_title: Case contact
+          explanation: We’ll use these contact details if we need to ask you for more information or to tell you the outcome of your application.
       case_detail:
         edit:
-          caption: 2. About the case
+          caption: About the case
           client_detained: Is your client detained?
           client_detained_prison: Where is your client detained?
           client_detained_prison_hint: Enter the name of prison, or select one from the suggestions that appear when you start to enter the name.
@@ -30,7 +32,7 @@ en:
           subject_to_poca: Is this case subject to POCA (Proceeds of Crime Act 2002)?
       client_detail:
         edit:
-          caption: 2. About the case
+          caption: About the case
           first_name: First name
           last_name: Last name
           date_of_birth: Date of birth
@@ -38,7 +40,7 @@ en:
           page_title: Client details
       hearing_detail:
         edit:
-          caption: 2. About the case
+          caption: About the case
           next_hearing: Do you know the date of the next hearing?
           next_hearing_date: Date of next hearing
           next_hearing_date_hint: For example, 27 3 2022
@@ -56,7 +58,7 @@ en:
           page_title: Hearing details
       next_hearing:
         edit:
-          caption: 2. About the case
+          caption: About the case
           next_hearing: Do you know the date of the next hearing?
           next_hearing_date: Date of next hearing
           next_hearing_date_hint: For example, 27 3 2024
@@ -73,12 +75,13 @@ en:
       primary_quote:
         edit:
           page_title: Primary quote
-          caption: 3. About the request
+          caption: About the request
           service_name_hint: |
            Enter the name of the service you require,
            or select one from the suggestions that appear when you start to enter the name.
-          service_details: Service details
-          contact_full_name: Contact full name
+          service_details: Service provider details
+          contact_first_name: First name
+          contact_last_name: Last name
           organisation: Organisation
           postcode: Postcode
           file_upload: Upload the quote
@@ -91,13 +94,13 @@ en:
 
       psychiatric_liaison:
         edit:
-          caption: 2. About the case
+          caption: About the case
           legend: Have you accessed the psychiatric liaison service?
           page_title: Have you accessed the psychiatric liaison service?
           psychiatric_liaison_reason_not: Explain why you did not access this service
       youth_court:
         edit:
-          caption: 2. About the case
+          caption: About the case
           legend: Is this a youth court matter?
           page_title: Is this a youth court matter?
       service_cost:
@@ -131,7 +134,7 @@ en:
           service_costs: Service costs
           change: Change
           service_required: Service required
-          service_details: Service details
+          service_details: Service provider details
           service_quote_upload: Quote upload
           prior_authority_granted: Existing prior authority granted
         service_cost_subtable:
@@ -162,7 +165,7 @@ en:
           total: Total
       reason_why:
         edit:
-          caption: 2. About the request
+          caption: About the request
           page_title: Why is prior authority required?
           reason_why_hint_html: |
             <p>Provide a summary of:</p>
@@ -185,7 +188,7 @@ en:
           supporting_documentation_caption: Attach copies of any supporting documentation. The maximum file size is 70MB. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
       travel_detail:
         edit:
-          caption: 3. About the request
+          caption: About the request
           page_title: Travel cost
           explanation: Only include the hourly rate cost. Any other travel expenditure (such as mileage, parking and travel fares) can be added later as additional costs.
           travel_cost_reason: Why are there travel costs if your client is not detained?
@@ -203,7 +206,7 @@ en:
           no_delete: No, do not delete it
       additional_costs:
         edit:
-          caption: 3. About the request
+          caption: About the request
           page_title: You've added %{number} additional %{cost}
           cost: cost
           question: Do you want to add another additional cost?
@@ -224,7 +227,7 @@ en:
           laa_allowed: LAA allowed
       additional_cost_details:
         edit:
-          caption: 3. About the request
+          caption: About the request
           page_title: Additional cost
           name: What is the additional cost for?
           name_hint: Only add one type of cost. Further costs can be added later.
