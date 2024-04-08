@@ -82,7 +82,7 @@ RSpec/StubbedMock:
 RSpec/NoExpectationExample:
   Enabled: false
 
-RSpec/Rails/InferredSpecType:
+RSpecRails/InferredSpecType:
   Enabled: false
 
 Naming/VariableNumber:
