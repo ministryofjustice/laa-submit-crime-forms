@@ -41,7 +41,7 @@ module PriorAuthority
                         Rails.application.routes.url_helpers.prior_authority_download_path(document))
         end
         response = further_information.information_supplied
-        parts = ([response, tag.br] + links.flat_map { [_1, tag.br] }[..-2])
+        parts = [response] + links.flat_map { [tag.br, _1] }
         safe_join(parts)
       end
     end
