@@ -163,6 +163,8 @@ Rails.application.routes.draw do
     get "sync", to: "sync#sync_all"
   end
 
+  get "robots.txt", to: "robots#index"
+
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
     lambda { |_request| !Rails.application.config.consider_all_requests_local }
 end

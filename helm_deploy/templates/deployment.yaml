@@ -209,6 +209,8 @@ spec:
               value: {{ range $index, $hostObject := .Values.ingress.hosts }}{{ if ne $index 0 }},{{ end }}{{ $hostObject.host }}{{ end }}
             - name: ENABLE_SYNC_TRIGGER_ENDPOINT
               value: '{{ .Values.variables.enableSyncTriggerEndpoint }}'
+            - name: ALLOW_INDEXING
+              value: '{{ .Values.variables.allowIndexing }}'
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
