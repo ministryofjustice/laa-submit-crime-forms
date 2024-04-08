@@ -33,6 +33,20 @@ RSpec.describe 'Prior authority applications - add client details' do
     expect(page).to have_content "Enter the client's date of birth"
   end
 
+  it 'validates non-numerical date fields' do
+    click_on 'Client details'
+    fill_in 'First name', with: 'John'
+    fill_in 'Last name', with: 'Doe'
+    within('.govuk-form-group', text: 'Date of birth') do
+      fill_in 'Day', with: '27'
+      fill_in 'Month', with: '12'
+      fill_in 'Year', with: 'Two thousand'
+    end
+
+    click_on 'Save and continue'
+    expect(page).to have_content 'The year must include 4 numbers'
+  end
+
   it 'allows save and come back later' do
     expect(page).to have_content 'Client detailsNot started'
     click_on 'Client details'

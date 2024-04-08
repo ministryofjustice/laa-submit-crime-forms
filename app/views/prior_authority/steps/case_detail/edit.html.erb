@@ -11,7 +11,7 @@
       <%= suggestion_select form, :main_offence_autocomplete, @form_object.offence_list, :first, :last, width: 20,
                             options: { include_blank: true }, label: {text: t(".main_offence"), size: "s" }, hint: { size: "s", text: t(".main_offence_hint")},
                             data: { autoselect: false } %>
-      <%= form.govuk_date_field :rep_order_date, legend: { text: t(".rep_order_date"), size: 's' }, hint: { text: t(".rep_order_date_hint") } %>
+      <%= form.govuk_fully_validatable_date_field :rep_order_date, legend: { text: t(".rep_order_date"), size: 's' }, hint: { text: t(".rep_order_date_hint") } %>
 
       <%= form.fields_for :defendant, as: :defendant_form do |defendant_object| %>
         <%= defendant_object.govuk_text_field :maat, width: 10, label: { text: t('.maat'), size: 's' } %>

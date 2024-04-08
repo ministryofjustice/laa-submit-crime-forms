@@ -16,7 +16,7 @@
       <% end %>
 
       <%= f.govuk_period_field :time_spent, width: 'one-third', legend: { size: 's' } %>
-      <%= f.govuk_date_field :completed_on, maxlength_enabled: true, legend: { size: 's' } %>
+      <%= f.govuk_fully_validatable_date_field :completed_on, maxlength_enabled: true, legend: { size: 's' } %>
       <%= f.govuk_text_field :fee_earner, width: 3, label: { size: 's' } %>
 
       <% if @form_object.allow_uplift? %>

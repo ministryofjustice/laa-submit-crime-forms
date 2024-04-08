@@ -10,11 +10,11 @@
 
       <%= f.govuk_radio_buttons_fieldset :claim_type, legend: { size: 's' } do %>
         <%= f.govuk_radio_button :claim_type, ClaimType::NON_STANDARD_MAGISTRATE.value do %>
-          <%= f.govuk_date_field :rep_order_date, maxlength_enabled: true, legend: { size: 's', class: 'govuk-date-legend-non-bold' } %>
+          <%= f.govuk_fully_validatable_date_field :rep_order_date, maxlength_enabled: true, legend: { size: 's', class: 'govuk-date-legend-non-bold' } %>
         <% end %>
         <%= f.govuk_radio_button :claim_type, ClaimType::BREACH_OF_INJUNCTION.value do %>
           <%= f.govuk_text_field :cntp_order, width: 'one-third', autocomplete: 'off' %>
-          <%= f.govuk_date_field :cntp_date, maxlength_enabled: true, legend: { size: 's', class: 'govuk-date-legend-non-bold' } %>
+          <%= f.govuk_fully_validatable_date_field :cntp_date, maxlength_enabled: true, legend: { size: 's', class: 'govuk-date-legend-non-bold' } %>
         <% end %>
       <% end %>
       <%= f.continue_button(secondary: false) %>

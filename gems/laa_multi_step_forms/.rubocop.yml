@@ -133,12 +133,8 @@ Naming/PredicateName:
     - has_codefendants
     - has_one_association
 
-# TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:
-  Max: 10
-  Exclude:
-    - spec/lib/govuk_design_system_formbuilder/builder/period_spec.rb
-    - spec/controllers/steps/base_step_controller_spec.rb
+  Max: 25
 
 RSpec/MultipleExpectations:
   Max: 7
