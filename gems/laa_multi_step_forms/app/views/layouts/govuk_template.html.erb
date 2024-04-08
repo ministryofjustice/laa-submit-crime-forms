@@ -10,6 +10,7 @@
   <%= tag.meta name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' %>
   <%= tag.meta name: 'theme-color', content: '#0b0c0c' %>
   <%= tag.meta property: 'og:image', content: asset_path('images/govuk-opengraph-image.png') %>
+  <%= tag.meta name: 'robots', content: ENV.fetch('ALLOW_INDEXING', false) == 'true' ? 'all' : "noindex" %>
 
   <%= favicon_link_tag asset_path("images/favicon.ico"), rel: "icon", sizes: "48x48" %>
   <%= favicon_link_tag asset_path("images/favicon.svg"), rel: "icon", sizes: "any", type: "image/svg+xml" %>
