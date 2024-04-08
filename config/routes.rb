@@ -157,6 +157,8 @@ Rails.application.routes.draw do
         get :confirm_delete, path: 'confirm-delete'
       end
     end
+
+    resources :downloads, only: :show
   end
 
   if ENV.fetch("ENABLE_SYNC_TRIGGER_ENDPOINT", false) == "true"

@@ -15,6 +15,7 @@ class SubmitToAppStore
 
         [
           {
+            id: SecureRandom.uuid,
             event_type: 'provider_updated',
             details: {
               comment: 'TODO: Extract from latest further_information',
