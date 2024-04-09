@@ -77,6 +77,38 @@ RSpec.describe SubmitToAppStore do
   end
 
   describe '#submit' do
+    context 'when submission is PriorAuthorityApplication already in app store' do
+      let(:submission) { create(:prior_authority_application, app_store_updated_at: DateTime.now)}
+      let(:http_client) { instance_double(AppStoreClient, post: true, put: true) }
+
+      before do
+        allow(AppStoreClient).to receive(:new)
+          .and_return(http_client)
+      end
+
+      it 'sends a HTTP PUT request' do
+        expect(http_client).to receive(:put).with(payload)
+
+        subject.submit(submission)
+      end
+    end
+
+    context 'when submission is PriorAuthorityApplication not already in app store' do
+      let(:submission) { create(:prior_authority_application, app_store_updated_at: nil)}
+      let(:http_client) { instance_double(AppStoreClient, post: true, put: true) }
+
+      before do
+        allow(AppStoreClient).to receive(:new)
+          .and_return(http_client)
+      end
+
+      it 'sends a HTTP POST request' do
+        expect(http_client).to receive(:post).with(payload)
+
+        subject.submit(submission)
+      end
+    end
+
     context 'when SNS_URL is not present' do
       let(:http_client) { instance_double(AppStoreClient, post: true) }
 
