@@ -143,24 +143,6 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       end
     end
 
-    context 'when APP_STORE_USERNAME is present' do
-      let(:username) { 'jimbob' }
-
-      before do
-        allow(ENV).to receive(:fetch).with('APP_STORE_PASSWORD')
-                                     .and_return('kimbob')
-      end
-
-      it 'add basic auth creditals' do
-        expect(described_class).to receive(:put)
-          .with('http://localhost:8000/v1/application/',
-                body: message.to_json,
-                headers: { authorization: 'Bearer test-bearer-token' })
-
-        subject.put(message)
-      end
-    end
-
     context 'when response code is 201 - created' do
       it 'returns a created status' do
         expect(subject.put(message)).to eq(:success)
@@ -224,24 +206,6 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
 
     context 'when APP_STORE_URL is not present' do
       it 'posts the message to default localhost url' do
-        expect(described_class).to receive(:post)
-          .with('http://localhost:8000/v1/application/',
-                body: message.to_json,
-                headers: { authorization: 'Bearer test-bearer-token' })
-
-        subject.post(message)
-      end
-    end
-
-    context 'when APP_STORE_USERNAME is present' do
-      let(:username) { 'jimbob' }
-
-      before do
-        allow(ENV).to receive(:fetch).with('APP_STORE_PASSWORD')
-                                     .and_return('kimbob')
-      end
-
-      it 'add basic auth creditals' do
         expect(described_class).to receive(:post)
           .with('http://localhost:8000/v1/application/',
                 body: message.to_json,
