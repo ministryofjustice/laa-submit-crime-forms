@@ -21,7 +21,7 @@ class SubmitToAppStore < ApplicationJob
     notify(submission)
   end
 
-  def submit(submission)
+  def submit(submission, update)
     payload = PayloadBuilder.call(submission)
     raise 'SNS notification is not yet enabled' if ENV.key?('SNS_URL')
 
@@ -31,7 +31,7 @@ class SubmitToAppStore < ApplicationJob
     # able to support re-sending/submitting an appplication so we can ignore
     # put requests
     post_manager = AppStoreClient.new
-    post_manager.post(payload)
+    update ? post_manager.put(payload) || post_manager.post(payload)
   end
 
   def notify(submission)
