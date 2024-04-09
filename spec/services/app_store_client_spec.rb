@@ -12,8 +12,6 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       allow(described_class).to receive(:get)
         .and_return(response)
       allow(ENV).to receive(:fetch).and_call_original
-      allow(ENV).to receive(:fetch).with('APP_STORE_USERNAME', nil)
-                                   .and_return(username)
     end
 
     context 'when APP_STORE_URL is present' do
@@ -54,23 +52,6 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       end
     end
 
-    context 'when APP_STORE_USERNAME is present' do
-      let(:username) { 'jimbob' }
-
-      before do
-        allow(ENV).to receive(:fetch).with('APP_STORE_PASSWORD')
-                                     .and_return('kimbob')
-      end
-
-      it 'add basic auth credentials' do
-        expect(described_class).to receive(:get)
-          .with('http://localhost:8000/v1/applications?since=1&count=2',
-                headers: { authorization: 'Bearer test-bearer-token' })
-
-        subject.get_all(since: 1, count: 2)
-      end
-    end
-
     context 'when response code is 200 - ok' do
       it 'returns the parsed json' do
         expect(subject.get_all(since: 1, count: 2)).to eq('some' => 'data')
@@ -98,8 +79,6 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       allow(described_class).to receive(:put)
         .and_return(response)
       allow(ENV).to receive(:fetch).and_call_original
-      allow(ENV).to receive(:fetch).with('APP_STORE_USERNAME', nil)
-                                   .and_return(username)
     end
 
     context 'when APP_STORE_URL is present' do
@@ -170,8 +149,6 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       allow(described_class).to receive(:post)
         .and_return(response)
       allow(ENV).to receive(:fetch).and_call_original
-      allow(ENV).to receive(:fetch).with('APP_STORE_USERNAME', nil)
-                                   .and_return(username)
     end
 
     context 'when APP_STORE_URL is present' do
