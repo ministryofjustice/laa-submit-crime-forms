@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Nsm::CheckAnswers::HearingDetailsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { build(:claim, :hearing_details) }
+  let(:claim) { build(:claim, :hearing_details, first_hearing_date:) }
+  let(:first_hearing_date) { Date.new(2023, 12, 14) }
 
   describe '#initialize' do
     it 'creates the data instance' do
@@ -20,11 +21,11 @@ RSpec.describe Nsm::CheckAnswers::HearingDetailsCard do
 
   describe '#row_data' do
     it 'generates hearing details rows' do
-      expect(subject.row_data).to eq(
+      expect(subject.row_data).to match(
         [
           {
             head_key: 'hearing_date',
-            text: '1 March 2023'
+            text: '14 December 2023'
           },
           {
             head_key: 'number_of_hearing',
@@ -44,7 +45,7 @@ RSpec.describe Nsm::CheckAnswers::HearingDetailsCard do
           },
           {
             head_key: 'hearing_outcome',
-            text: 'Arrest warrant issued/adjourned indefinitely'
+            text: an_instance_of(String)
           },
           {
             head_key: 'matter_type',

@@ -4,7 +4,39 @@ FactoryBot.define do
     office_code { '1A123B' }
     laa_reference { 'LAA-n4AohV' }
 
+    transient do
+      date { Date.new(2023, 4, 12) }
+      work_items_count { 0 }
+      disbursements_count { 0 }
+    end
+
+    trait :build_associates do
+      work_items do
+        uplift_enabled = reasons_for_claim.include?(ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s)
+        Array.new(work_items_count) do
+          completed_on = date - rand(40)
+          has_uplift = [false, false, uplift_enabled].sample # max 1/3 of entries
+          args = [:work_item, :valid]
+          args << :with_uplift if has_uplift
+          build(*args, completed_on:)
+        end
+      end
+
+      disbursements do
+        Array.new(disbursements_count) do
+          disbursement_date = date - rand(40)
+          type = rand > 0.2 ? :valid : :valid_other
+          apply_vat = rand > 0.5 ? 'true' : 'false'
+
+          build(:disbursement, type, disbursement_date:, apply_vat:)
+        end
+      end
+
+      has_disbursements { disbursements_count.zero? ? 'no' : 'yes' }
+    end
+
     trait :complete do
+      claim_details
       firm_details
       main_defendant
       case_details
@@ -17,19 +49,22 @@ FactoryBot.define do
       with_evidence
       with_equality
       one_cost
+      is_other_info { 'no' }
+      concluded { 'no' }
+      signatory_name { Faker::Name.name }
     end
 
     trait :case_type_magistrates do
-      ufn { '120423/001' }
+      ufn { "#{date.strftime('%d%m%y')}/001" }
       claim_type { 'non_standard_magistrate' }
-      rep_order_date { '2023-01-01' }
+      rep_order_date { date.strftime('%Y-%m-%d') }
     end
 
     trait :case_type_breach do
-      ufn { '120423/002' }
+      ufn { "#{date.strftime('%d%m%y')}/002" }
       claim_type { 'breach_of_injunction' }
-      cntp_order { 'CNTP12345' }
-      cntp_date { '2023-02-01' }
+      cntp_order { "CNTP#{rand(10_000)}" }
+      cntp_date { date.strftime('%Y-%m-%d') }
     end
 
     trait :firm_details do
@@ -51,7 +86,6 @@ FactoryBot.define do
     end
 
     trait :case_details do
-      ufn { '20150612/001' }
       main_offence { MainOffence.all.sample.name }
       main_offence_date { Date.yesterday }
 
@@ -63,16 +97,16 @@ FactoryBot.define do
 
     trait :with_remittal do
       remitted_to_magistrate { 'yes' }
-      remitted_to_magistrate_date { Date.new(2023, 3, 1) }
+      remitted_to_magistrate_date { date - rand(40) }
     end
 
     trait :hearing_details do
-      first_hearing_date { Date.new(2023, 3, 1) }
+      first_hearing_date { date - rand(40) }
       number_of_hearing { 1 }
       youth_court { 'no' }
       in_area { 'yes' }
       court { 'A Court' }
-      hearing_outcome { 'CP01' }
+      hearing_outcome { OutcomeCode.all.sample.id }
       matter_type { '1' }
     end
 
@@ -121,7 +155,6 @@ FactoryBot.define do
     end
 
     trait :letters_calls do
-      rep_order_date { Date.yesterday }
       letters { 2 }
       calls { 3 }
 

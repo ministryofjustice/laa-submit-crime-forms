@@ -2,10 +2,12 @@ module PriorAuthority
   module Steps
     module CaseContact
       class SolicitorForm < ::Steps::BaseFormObject
-        attribute :contact_full_name, :string
+        attribute :contact_first_name, :string
+        attribute :contact_last_name, :string
         attribute :contact_email, :string
 
-        validates :contact_full_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
+        validates :contact_first_name, presence: true
+        validates :contact_last_name, presence: true
         validates :contact_email, presence: true, format: { with: /\A.*@.*\..*\z/ }
 
         private

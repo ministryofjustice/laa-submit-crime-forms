@@ -38,6 +38,12 @@ RSpec.describe Type::MultiparamDate do
       it { expect(coerced_value).to eq(date) }
     end
 
+    context 'and all parts are strings' do
+      let(:value) { { 3 => date.day.to_s, 2 => date.month.to_s, 1 => date.year.to_s } }
+
+      it { expect(coerced_value).to eq(date) }
+    end
+
     context 'the parts do not represent a valid date (invalid month)' do
       let(:value) { { 3 => date.day, 2 => 13, 1 => date.year } }
 
@@ -58,6 +64,18 @@ RSpec.describe Type::MultiparamDate do
 
     context 'any part is set to nil' do
       let(:value) { { 3 => date.day, 2 => date.month, 1 => nil } }
+
+      it { expect(coerced_value).to eq(value) }
+    end
+
+    context 'year is a non-numerical string' do
+      let(:value) { { 3 => date.day.to_s, 2 => date.month.to_s, 1 => 'three' } }
+
+      it { expect(coerced_value).to eq(value) }
+    end
+
+    context 'day is a non-numerical string' do
+      let(:value) { { 3 => 'three', 2 => date.month.to_s, 1 => date.year.to_s } }
 
       it { expect(coerced_value).to eq(value) }
     end

@@ -157,7 +157,15 @@ Rails.application.routes.draw do
         get :confirm_delete, path: 'confirm-delete'
       end
     end
+
+    resources :downloads, only: :show
   end
+
+  if ENV.fetch("ENABLE_SYNC_TRIGGER_ENDPOINT", false) == "true"
+    get "sync", to: "sync#sync_all"
+  end
+
+  get "robots.txt", to: "robots#index"
 
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
     lambda { |_request| !Rails.application.config.consider_all_requests_local }

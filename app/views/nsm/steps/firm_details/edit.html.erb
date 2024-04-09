@@ -26,14 +26,16 @@
       <%= f.fields_for :solicitor, as: :firm_details_form do |so| %>
         <%# used govuk_radio_buttons_fieldset instead of govuk_fieldset as it allows hints to be rendered %>
         <%= f.govuk_radio_buttons_fieldset :solicitor_details, legend: { size: 'm', is_page_heading: true } do %>
-          <%= so.govuk_text_field :full_name, width: 20, label: { size: 's' } %>
+          <%= so.govuk_text_field :first_name, width: 20, label: { size: 's' } %>
+          <%= so.govuk_text_field :last_name, width: 20, label: { size: 's' } %>
           <%= so.govuk_text_field :reference_number, width: 10, label: { size: 's' } %>
         <% end %>
 
         <%= so.govuk_radio_buttons_fieldset :alternative_contact_details, legend: { size: 'm' } do %>
           <%= f.fields_for :solicitor, as: :firm_details_form do |so| %>
             <%= so.govuk_radio_button :alternative_contact_details, YesNoAnswer::YES.to_s do %>
-                <%= so.govuk_text_field :contact_full_name, width: 20 %>
+                <%= so.govuk_text_field :contact_first_name, width: 20 %>
+                <%= so.govuk_text_field :contact_last_name, width: 20 %>
                 <%= so.govuk_text_field :contact_email, width: 20 %>
             <% end %>
           <% end %>

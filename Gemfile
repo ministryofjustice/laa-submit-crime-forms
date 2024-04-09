@@ -14,7 +14,7 @@ gem 'jsbundling-rails'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'logstasher', '~> 2.1'
 gem 'oauth2', '~> 2.0'
-gem 'pagy', '~> 6.5.0'
+gem 'pagy', '~> 7.0.11'
 gem 'pg', '~> 1.5'
 gem 'propshaft'
 gem 'puma', '~> 6.4'
@@ -34,6 +34,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
+  gem 'faker'
   gem 'overcommit'
   gem 'pry'
   gem 'rspec-expectations'

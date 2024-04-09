@@ -4,7 +4,7 @@ RSpec.describe 'User can see an application status', type: :system do
   let(:claim) { create(:claim, ufn:, solicitor:, firm_office:, claim_type:, rep_order_date:) }
   let(:ufn) { '120223/001' }
   let(:firm_office) { FirmOffice.create }
-  let(:solicitor) { Solicitor.create(full_name: 'James Robert') }
+  let(:solicitor) { Solicitor.create(first_name: 'James', last_name: 'Robest') }
   let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE }
   let(:rep_order_date) { Date.yesterday }
 

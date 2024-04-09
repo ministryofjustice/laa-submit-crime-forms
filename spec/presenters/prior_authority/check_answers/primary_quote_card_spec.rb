@@ -44,7 +44,8 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
         build(
           :quote,
           :primary,
-          contact_full_name: 'Jim Bean',
+          contact_first_name: 'Jim',
+          contact_last_name: 'Bean',
           organisation: 'Post-mortems R us',
           postcode: 'SW1A 1AA',
         )
