@@ -6,17 +6,18 @@
     <%= govuk_error_summary(@form_object) %>
     <span class="govuk-caption-xl"><%= t(".caption") %></span>
     <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
-
+    <p><%= t(".explanation") %>
     <%= step_form @form_object do |form| %>
 
       <%= form.fields_for :solicitor, as: :firm_detail_form do |solicitor_object| %>
-        <%= solicitor_object.govuk_text_field :contact_full_name, label: { text: t(".contact_full_name"), size: 'm' } %>
-        <%= solicitor_object.govuk_text_field :contact_email, label: { text: t(".contact_email"), size: 'm' } %>
-      <% end%>
+        <%= solicitor_object.govuk_text_field :contact_first_name, width: 20, label: { text: t(".contact_first_name"), size: 's' } %>
+        <%= solicitor_object.govuk_text_field :contact_last_name, width: 20, label: { text: t(".contact_last_name"), size: 's' } %>
+        <%= solicitor_object.govuk_text_field :contact_email, width: 20, label: { text: t(".contact_email"), size: 's' } %>
+      <% end %>
 
       <%= form.fields_for :firm_office, as: :firm_detail_form do |firm_office_object| %>
-        <%= firm_office_object.govuk_text_field :name, label: { text: t(".firm_name"), size: 'm' } %>
-        <%= firm_office_object.govuk_text_field :account_number, label: { text: t(".firm_account_number"), size: 'm' }, hint: { text: t(".hint") }  %>
+        <%= firm_office_object.govuk_text_field :name, width: 20, label: { text: t(".firm_name"), size: 's' } %>
+        <%= firm_office_object.govuk_text_field :account_number, width: 20, label: { text: t(".firm_account_number"), size: 's' }, hint: { text: t(".hint") }  %>
       <% end %>
 
       <%= form.continue_button %>

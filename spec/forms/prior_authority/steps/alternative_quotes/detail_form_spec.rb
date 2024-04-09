@@ -7,7 +7,8 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
     {
       record: record,
       application: application,
-      contact_full_name: 'John Smith',
+      contact_first_name: 'John',
+      contact_last_name: 'Smith',
       organisation: 'Acme Ltd',
       postcode: 'SW1 1AA',
       file_upload: file_upload,

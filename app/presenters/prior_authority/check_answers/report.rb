@@ -61,16 +61,20 @@ module PriorAuthority
           PrimaryQuoteCard.new(application, verbose: @verbose),
           AlternativeQuotesCard.new(application, verbose: @verbose),
           ReasonWhyCard.new(application),
-          further_information_card,
-        ].compact
+          further_information_cards,
+        ].flatten.compact
       end
 
       private
 
-      def further_information_card
+      def further_information_cards
         return unless application.further_informations.any?
 
-        FurtherInformationCard.new(application)
+        if @verbose
+          application.further_informations.map { CompactFurtherInformationCard.new(_1) }
+        else
+          FurtherInformationCard.new(application)
+        end
       end
 
       def group_heading(group_key, **)

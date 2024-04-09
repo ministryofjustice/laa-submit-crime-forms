@@ -8,9 +8,9 @@
     <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
 
     <%= step_form @form_object do |form| %>
-      <%= form.govuk_text_field :first_name, label: { text: t(".first_name"), size: 'm' } %>
-      <%= form.govuk_text_field :last_name, label: { text: t(".last_name"), size: 'm' } %>
-      <%= form.govuk_date_field :date_of_birth, date_of_birth: true, legend: { text: t(".date_of_birth") }, hint: { text: t(".date_of_birth_hint") } %>
+      <%= form.govuk_text_field :first_name, width: 20, label: { text: t(".first_name"), size: 's' } %>
+      <%= form.govuk_text_field :last_name, width: 20, label: { text: t(".last_name"), size: 's' } %>
+      <%= form.govuk_fully_validatable_date_field :date_of_birth, date_of_birth: true, legend: { text: t(".date_of_birth"), size: 's' }, hint: { text: t(".date_of_birth_hint") } %>
 
       <%= form.continue_button %>
     <% end %>

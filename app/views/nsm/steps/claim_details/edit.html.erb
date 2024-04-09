@@ -15,7 +15,7 @@
             <% if field == :preparation_time %>
               <%= f.govuk_period_field :time_spent,legend: { size: 's', class: 'govuk-!-font-weight-regular' }, width: 'one-third' %>
             <% elsif %i[work_before work_after].include?(field) %>
-              <%= f.govuk_date_field :"#{field}_date",legend: { size: 's', class: 'govuk-!-font-weight-regular' }, width: 'one-third' %>
+              <%= f.govuk_fully_validatable_date_field :"#{field}_date",legend: { size: 's', class: 'govuk-!-font-weight-regular' }, width: 'one-third' %>
             <% end %>
           <% end %>
           <%= f.govuk_radio_button field, YesNoAnswer::NO %>

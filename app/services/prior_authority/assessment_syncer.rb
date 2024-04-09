@@ -22,7 +22,7 @@ module PriorAuthority
         sync_sent_back_request
       end
     rescue StandardError => e
-      Sentry.capture_exception("#{self.class.name} encountered error '#{e}' for application '#{application.id}'")
+      Sentry.capture_message("#{self.class.name} encountered error '#{e}' for application '#{application.id}'")
     end
 
     private

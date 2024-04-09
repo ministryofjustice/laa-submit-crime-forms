@@ -13,7 +13,7 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
   end
 
   describe '#title' do
-    let(:quote) { build_stubbed(:quote, :alternative, contact_full_name: 'Joe Bloggs') }
+    let(:quote) { build_stubbed(:quote, :alternative, contact_first_name: 'Joe', contact_last_name: 'Bloggs') }
 
     it 'shows correct title' do
       expect(card.title).to eq('Alternative quotes')
@@ -31,9 +31,9 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
     context 'when alternative quotes exist' do
       let(:quotes) do
         [
-          build(:quote, :alternative, contact_full_name: 'Jim Bob',
+          build(:quote, :alternative, contact_first_name: 'Jim', contact_last_name: 'Bob',
                 cost_per_hour: 20, period: 60, travel_cost_per_hour: 30, travel_time: 60),
-          build(:quote, :alternative, contact_full_name: 'John Boy', document: nil,
+          build(:quote, :alternative, contact_first_name: 'John', contact_last_name: 'Boy', document: nil,
                 cost_per_hour: 20, period: 120, travel_cost_per_hour: 30, travel_time: 120),
         ]
       end

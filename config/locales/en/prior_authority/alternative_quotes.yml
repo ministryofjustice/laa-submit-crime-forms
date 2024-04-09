@@ -20,7 +20,7 @@ en:
           alternative_quote: Alternative quote
           change: Change
           delete: Delete
-          service_details: Service details
+          service_details: Service provider details
           quote_upload: Quote upload
           additional_items: Additional items
           none: None
@@ -42,8 +42,9 @@ en:
           caption: About the request
           hint: You can add up to 3 alternative quotes.
           alternative_quote: Alternative quote
-          service_details: Service details
-          contact_full_name: Contact full name
+          service_details: Service provider details
+          contact_first_name: First name
+          contact_last_name: Last name
           organisation: Organisation
           postcode: Postcode
           file_upload: Upload the quote (optional)
@@ -71,8 +72,10 @@ en:
               blank: Explain why you did not get other quotes
         prior_authority/steps/alternative_quotes/detail_form:
           attributes:
-            contact_full_name:
-              blank: Enter the contact's full name
+            contact_first_name:
+              blank: Enter the service provider's first name
+            contact_last_name:
+              blank: Enter the service provider's last name
             organisation:
               blank: Enter the organisation name
             postcode:

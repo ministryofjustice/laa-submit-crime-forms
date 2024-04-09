@@ -1,23 +1,23 @@
 FactoryBot.define do
   factory :defendant do
     trait :valid do
-      first_name { 'bob' }
-      last_name { 'jim' }
+      first_name { Faker::Name.first_name }
+      last_name { Faker::Name.last_name }
       maat { 'AA1' }
       position { 1 }
       main { true }
     end
 
     trait :valid_paa do
-      first_name { 'bob' }
-      last_name { 'jim' }
-      date_of_birth { Date.new(1981, 11, 12) }
+      first_name { Faker::Name.first_name }
+      last_name { Faker::Name.last_name }
+      date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65) }
       maat { 'AA1' }
     end
 
     trait :partial do
-      first_name { 'bob' }
-      last_name { 'jim' }
+      first_name { Faker::Name.first_name }
+      last_name { Faker::Name.last_name }
       main { true }
     end
   end
