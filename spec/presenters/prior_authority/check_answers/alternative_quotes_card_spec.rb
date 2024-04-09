@@ -70,7 +70,7 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
           [
             {
               head_key: 'no_alternatve_quotes',
-              text: 'No other experts available'
+              text: '<p>No other experts available</p>'
             },
           ]
         )

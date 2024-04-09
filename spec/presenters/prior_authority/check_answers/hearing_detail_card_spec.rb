@@ -99,7 +99,7 @@ RSpec.describe PriorAuthority::CheckAnswers::HearingDetailCard do
           },
           {
             head_key: 'psychiatric_liaison_reason_not',
-            text: 'whatever',
+            text: '<p>whatever</p>',
           },
         )
       end

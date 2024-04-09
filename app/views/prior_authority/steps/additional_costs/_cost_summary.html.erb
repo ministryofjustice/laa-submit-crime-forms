@@ -22,7 +22,7 @@
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key"><%= t('.description') %></dt>
-        <dd class="govuk-summary-list__value"><%= additional_cost.description %></dd>
+        <dd class="govuk-summary-list__value"><%= simple_format(additional_cost.description) %></dd>
       </div>
     </dl>
     <%= render 'prior_authority/steps/additional_costs/subtable', additional_cost: %>
