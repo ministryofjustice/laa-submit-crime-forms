@@ -12,6 +12,7 @@ module Nsm
           build_costs
           application.update!(attributes)
           SubmitToAppStore.new.process(submission: application)
+          true
         end
       end
 
