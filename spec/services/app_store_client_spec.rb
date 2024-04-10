@@ -71,7 +71,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
 
   describe '#put' do
     let(:application_id) { SecureRandom.uuid }
-    let(:message) { { application_id: application_id } }
+    let(:message) { { application_id: } }
     let(:response) { double(:response, code:) }
     let(:code) { 201 }
     let(:username) { nil }

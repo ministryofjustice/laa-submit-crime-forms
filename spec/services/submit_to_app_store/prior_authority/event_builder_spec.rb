@@ -187,8 +187,13 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
 
       context 'when application has further information added' do
         let(:changes) { {} }
-        let(:application) { create(:prior_authority_application, :with_further_information_supplied, app_store_updated_at: DateTime.now - 1.days, status:) }
-        let(:further_info_documents) { application.further_informations.order(:created_at).last.supporting_documents}
+        let(:application) do
+          create(:prior_authority_application, :with_further_information_supplied,
+                 app_store_updated_at: DateTime.now - 1.day,
+                 status: status)
+        end
+        let(:further_info_documents) { application.further_informations.order(:created_at).last.supporting_documents }
+
         it 'returns an event with further info comment' do
           expect(described_class.call(application, new_data)).to eq(
             [

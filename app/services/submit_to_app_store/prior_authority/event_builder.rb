@@ -29,7 +29,7 @@ class SubmitToAppStore
       def further_information_comment
         if further_information_supplied(@application)
           @application.further_informations
-                             .order(:created_at).last.information_supplied
+                      .order(:created_at).last.information_supplied
         else
           ''
         end
@@ -38,7 +38,7 @@ class SubmitToAppStore
       def further_information_documents
         if further_information_supplied(@application)
           @application.further_informations
-                             .order(:created_at).last.supporting_documents
+                      .order(:created_at).last.supporting_documents
         else
           []
         end
