@@ -18,7 +18,7 @@ class AppStoreClient
   end
 
   def put(message)
-    response = self.class.put("#{host}/v1/application/", **options(message))
+    response = self.class.put("#{host}/v1/application/#{message[:application_id]}", **options(message))
 
     case response.code
     when 201

@@ -70,7 +70,8 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
   end
 
   describe '#put' do
-    let(:message) { { application_id: SecureRandom.uuid } }
+    let(:application_id) { SecureRandom.uuid }
+    let(:message) { { application_id: application_id } }
     let(:response) { double(:response, code:) }
     let(:code) { 201 }
     let(:username) { nil }
@@ -89,7 +90,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
 
       it 'posts the message to the specified URL' do
         expect(described_class).to receive(:put)
-          .with('http://some.url/v1/application/',
+          .with("http://some.url/v1/application/#{application_id}",
                 body: message.to_json,
                 headers: { authorization: 'Bearer test-bearer-token' })
 
@@ -103,7 +104,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
 
         it 'posts the message without headers' do
           expect(described_class).to receive(:put)
-            .with('http://some.url/v1/application/',
+            .with("http://some.url/v1/application/#{application_id}",
                   body: message.to_json)
 
           subject.put(message)
@@ -114,7 +115,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     context 'when APP_STORE_URL is not present' do
       it 'posts the message to default localhost url' do
         expect(described_class).to receive(:put)
-          .with('http://localhost:8000/v1/application/',
+          .with("http://localhost:8000/v1/application/#{application_id}",
                 body: message.to_json,
                 headers: { authorization: 'Bearer test-bearer-token' })
 
