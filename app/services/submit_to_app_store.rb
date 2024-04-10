@@ -33,6 +33,7 @@ class SubmitToAppStore < ApplicationJob
     client = AppStoreClient.new
 
     if submission.is_a?(PriorAuthorityApplication)
+      submission.update(status: 'provider_updated') if submission.sent_back?
       submission.app_store_updated_at.present? ? client.put(payload) : client.post(payload)
     else
       client.post(payload)
