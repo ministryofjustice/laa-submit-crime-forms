@@ -78,7 +78,7 @@ RSpec.describe SubmitToAppStore do
 
   describe '#submit' do
     context 'when submission is PriorAuthorityApplication already in app store' do
-      let(:submission) { create(:prior_authority_application, app_store_updated_at: DateTime.now) }
+      let(:submission) { create(:prior_authority_application, app_store_updated_at: DateTime.now)}
       let(:http_client) { instance_double(AppStoreClient, post: true, put: true) }
 
       before do
@@ -94,7 +94,7 @@ RSpec.describe SubmitToAppStore do
     end
 
     context 'when submission is PriorAuthorityApplication not already in app store' do
-      let(:submission) { create(:prior_authority_application, app_store_updated_at: nil) }
+      let(:submission) { create(:prior_authority_application, app_store_updated_at: nil)}
       let(:http_client) { instance_double(AppStoreClient, post: true, put: true) }
 
       before do
@@ -106,6 +106,22 @@ RSpec.describe SubmitToAppStore do
         expect(http_client).to receive(:post).with(payload)
 
         subject.submit(submission)
+      end
+    end
+
+    context 'when submission provider has updated PriorAuthorityApplication' do
+      let(:submission) { create(:prior_authority_application, app_store_updated_at: nil, status: 'sent_back')}
+      let(:http_client) { instance_double(AppStoreClient, post: true, put: true) }
+
+      before do
+        allow(AppStoreClient).to receive(:new)
+          .and_return(http_client)
+      end
+
+      it 'updates application status to provider_updated' do
+        subject.submit(submission)
+
+        expect(submission.status).to eq('provider_updated')
       end
     end
 
