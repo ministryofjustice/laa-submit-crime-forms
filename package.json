@@ -9,7 +9,7 @@
     "jquery": "^3.7.1",
     "yarn": "^1.22.22",
     "@hotwired/turbo-rails": "8.0.4",
-    "sass": "^1.72.0"
+    "sass": "^1.74.1"
   },
   "scripts": {
     "unit-test": "jest",
@@ -17,7 +17,7 @@
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css --no-source-map --load-path=node_modules  --quiet-deps"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.24.3",
+    "@babel/preset-env": "^7.24.4",
     "babel-jest": "^29.6.4",
     "jest": "^29.6.4",
     "jest-environment-jsdom": "^29.6.4"
