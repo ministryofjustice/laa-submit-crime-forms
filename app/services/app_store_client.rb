@@ -2,8 +2,8 @@ class AppStoreClient
   include HTTParty
   headers 'Content-Type' => 'application/json'
 
-  def post(message)
-    response = self.class.post("#{host}/v1/application/", **options(message))
+  def post(message, path: 'v1/application/')
+    response = self.class.post("#{host}/#{path}", **options(message))
 
     case response.code
     when 201
