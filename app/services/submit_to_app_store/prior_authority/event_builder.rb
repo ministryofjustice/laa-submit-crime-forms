@@ -27,12 +27,10 @@ class SubmitToAppStore
       end
 
       def further_information_comment
-        if further_information_supplied(@application)
-          @application.further_informations
-                      .order(:created_at).last.information_supplied
-        else
-          nil
-        end
+        return unless further_information_supplied(@application)
+
+        @application.further_informations
+                    .order(:created_at).last.information_supplied
       end
 
       def further_information_documents
