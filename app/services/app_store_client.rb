@@ -6,7 +6,7 @@ class AppStoreClient
     response = self.class.post("#{host}/#{path}", **options(message))
 
     case response.code
-    when 201
+    when 200..204
       :success
     when 409
       # can be ignored but should be notified so we can track when it occurs
