@@ -147,7 +147,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             ],
             information_requested: 'please provider further evidence',
             information_supplied: 'here is the extra information you requested',
-            requested_at: DateTime.new(2024,1,1,1,1,1),
+            requested_at: DateTime.new(2024, 1, 1, 1, 1, 1),
           }
         ]
       ),
