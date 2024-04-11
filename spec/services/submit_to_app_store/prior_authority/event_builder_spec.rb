@@ -174,7 +174,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
               {
                 id: random_id,
                 details: {
-                  comment: '',
+                  comment: nil,
                   corrected_info: [],
                   documents: []
                 },
