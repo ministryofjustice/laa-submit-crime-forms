@@ -31,7 +31,7 @@ class SubmitToAppStore
           @application.further_informations
                       .order(:created_at).last.information_supplied
         else
-          ''
+          nil
         end
       end
 

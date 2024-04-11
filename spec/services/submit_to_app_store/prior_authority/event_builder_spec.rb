@@ -402,8 +402,6 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
           expect(listed_corrections).to eq ['alternative_quote_2']
         end
       end
-
-      context 'when further info'
     end
   end
 end
