@@ -28,6 +28,7 @@ class SubmitToAppStore
         defendant:,
         quotes:,
         additional_costs:,
+        further_informations:,
       )
     end
 
@@ -61,6 +62,10 @@ class SubmitToAppStore
 
     def additional_costs
       PriorAuthority::AdditionalCostPayloadBuilder.new(application).payload
+    end
+
+    def further_informations
+      PriorAuthority::FurtherInformationsPayloadBuilder.new(application).payload
     end
 
     DIRECT_ATTRIBUTES = %i[
