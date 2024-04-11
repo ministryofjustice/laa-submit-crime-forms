@@ -108,6 +108,7 @@ FactoryBot.define do
       no_alternative_quote_reason { 'a reason' }
       service_type { 'pathologist_report' }
       custom_service_name { nil }
+      further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
     end
 
     trait :sent_back_for_incorrect_info do

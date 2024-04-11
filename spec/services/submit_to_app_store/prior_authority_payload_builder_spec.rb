@@ -125,7 +125,31 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             additional_cost_total: nil,
           }
         ],
-        additional_costs: []
+        additional_costs: [],
+        further_informations: [
+          {
+            caseworker_id: '87e88ac6-d89a-4180-80d4-e03285023fb0',
+            documents: [
+              {
+                file_name: 'further_info1.pdf',
+                file_size: 1234,
+                file_path: 'test_path',
+                file_type: 'image/png',
+                document_type: 'supporting_document'
+              },
+              {
+                file_name: 'further_info2.pdf',
+                file_size: 1234,
+                file_path: 'test_path',
+                file_type: 'image/png',
+                document_type: 'supporting_document'
+              }
+            ],
+            information_requested: 'please provider further evidence',
+            information_supplied: 'here is the extra information you requested',
+            requested_at: DateTime.new(2024,1,1,1,1,1),
+          }
+        ]
       ),
       application_id: application.id,
       application_state: 'submitted',

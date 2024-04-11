@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :further_information do
     information_requested { 'please provider further evidence' }
     information_supplied { nil }
-    caseworker_id { 'case-worker-uuid' }
-    requested_at { DateTime.current }
+    caseworker_id { '87e88ac6-d89a-4180-80d4-e03285023fb0' }
+    requested_at { DateTime.new(2024,1,1,1,1,1) }
     created_at { DateTime.current }
 
     trait :with_response do
