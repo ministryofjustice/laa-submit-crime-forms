@@ -30,8 +30,14 @@ class SubmitToAppStore < ApplicationJob
     # TODO: we only do post requests here as the system is not currently
     # able to support re-sending/submitting an appplication so we can ignore
     # put requests
-    post_manager = AppStoreClient.new
-    post_manager.post(payload)
+    client = AppStoreClient.new
+
+    if submission.is_a?(PriorAuthorityApplication)
+      submission.update(status: 'provider_updated') if submission.sent_back?
+      submission.app_store_updated_at.present? ? client.put(payload) : client.post(payload)
+    else
+      client.post(payload)
+    end
   end
 
   def notify(submission)

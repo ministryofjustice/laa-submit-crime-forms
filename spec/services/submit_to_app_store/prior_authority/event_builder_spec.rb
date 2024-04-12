@@ -174,9 +174,35 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
               {
                 id: random_id,
                 details: {
-                  comment: 'TODO: Extract from latest further_information',
+                  comment: nil,
                   corrected_info: [],
                   documents: []
+                },
+                event_type: 'provider_updated'
+              }
+            ]
+          )
+        end
+      end
+
+      context 'when application has further information added' do
+        let(:changes) { {} }
+        let(:application) do
+          create(:prior_authority_application, :with_further_information_supplied,
+                 app_store_updated_at: DateTime.now - 1.day,
+                 status: status)
+        end
+        let(:further_info_documents) { application.further_informations.order(:created_at).last.supporting_documents }
+
+        it 'returns an event with further info comment' do
+          expect(described_class.call(application, new_data)).to eq(
+            [
+              {
+                id: random_id,
+                details: {
+                  comment: 'here is the extra information you requested',
+                  corrected_info: [],
+                  documents: further_info_documents
                 },
                 event_type: 'provider_updated'
               }

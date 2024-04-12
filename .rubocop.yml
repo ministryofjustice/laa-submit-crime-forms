@@ -103,6 +103,7 @@ RSpec/FilePath:
 Metrics/ClassLength:
   Exclude:
     - app/services/decisions/**/*
+    - app/services/submit_to_app_store/prior_authority/event_builder.rb
 # To be tweaked until we find the right balance
 Metrics/MethodLength:
   Max: 15

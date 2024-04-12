@@ -108,6 +108,7 @@ FactoryBot.define do
       no_alternative_quote_reason { 'a reason' }
       service_type { 'pathologist_report' }
       custom_service_name { nil }
+      further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
     end
 
     trait :sent_back_for_incorrect_info do
@@ -122,7 +123,9 @@ FactoryBot.define do
     end
 
     trait :with_further_information_supplied do
-      further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
+      after(:create) do |paa|
+        create(:further_information, :with_response, :with_supporting_documents, prior_authority_application_id: paa.id)
+      end
     end
 
     trait :with_complete_non_prison_law do
