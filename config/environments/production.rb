@@ -100,5 +100,5 @@ Rails.application.configure do
   config.logstasher.logger_path = 'log/logstasher.log'
   config.logstasher.log_level = Logger::INFO
   config.logstasher.suppress_app_log = false
-  config.logstasher.source = "laa-claim-no-standard-magistrates-fee-backed-#{ENV.fetch('ENV', nil)}"
+  config.logstasher.source = "laa-submit-crime-forms-#{ENV.fetch('ENV', nil)}"
 end
