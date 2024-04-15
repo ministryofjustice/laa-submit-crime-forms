@@ -164,7 +164,7 @@ FactoryBot.define do
       # quotes
       service_type { service_type_options.sample }
       custom_service_name { service_type == 'custom' ? Faker::ProgrammingLanguage.name : nil }
-      # primary_quote factory: %i[quote primary], strategy: :build
+      primary_quote { quotes.first }
       supporting_documents { build_list(:supporting_document, 2) }
       quotes { primary_quotes }
       prior_authority_granted { false }
@@ -188,7 +188,7 @@ FactoryBot.define do
       # quotes
       service_type { service_type_options.sample }
       custom_service_name { service_type == 'custom' ? Faker::ProgrammingLanguage.name : nil }
-      # primary_quote factory: %i[quote primary], strategy: :build
+      primary_quote { quotes.first }
       supporting_documents { build_list(:supporting_document, 2) }
       quotes { primary_quotes }
       prior_authority_granted { false }
