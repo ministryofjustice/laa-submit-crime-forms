@@ -4,13 +4,14 @@ FactoryBot.define do
     office_code { '1A123B' }
     laa_reference { 'LAA-n4AohV' }
 
+    # these are to add randomness to the TestData generation process
     transient do
       date { Date.new(2023, 4, 12) }
       service_type_cost_type { :per_hour }
       service_type_options do
         services = PriorAuthority::QuoteServices::VALUES.select do |service_type|
           rule = PriorAuthority::ServiceTypeRule.build(service_type)
-
+          # skip cour order and post mortem as they add too much complexity
           rule.cost_type.in?([service_type_cost_type, :variable]) && !rule.court_order_relevant && !rule.post_mortem_relevant
         end
         services.map(&:value) + ['custom']
