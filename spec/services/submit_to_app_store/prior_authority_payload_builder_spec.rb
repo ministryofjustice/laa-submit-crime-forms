@@ -5,7 +5,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
 
   let(:expected_output) do
     {
-      application: hash_including(
+      application: {
         prison_law: true,
         ufn: '120423/123',
         laa_reference: 'LAA-n4AohV',
@@ -35,7 +35,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         defendant: hash_including(
           first_name: an_instance_of(String),
           last_name: an_instance_of(String),
-          maat: 'AA1',
+          maat: '1234',
           date_of_birth: /\A\d{4}-\d{2}-\d{2}\z/
         ),
         firm_office: {
@@ -150,7 +150,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             requested_at: DateTime.new(2024, 1, 1, 1, 1, 1),
           }
         ]
-      ),
+      },
       application_id: application.id,
       application_state: 'submitted',
       application_type: 'crm4',

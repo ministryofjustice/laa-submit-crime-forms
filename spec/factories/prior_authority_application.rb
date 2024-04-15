@@ -4,6 +4,20 @@ FactoryBot.define do
     office_code { '1A123B' }
     laa_reference { 'LAA-n4AohV' }
 
+    transient do
+      date { Date.new(2023, 4, 12) }
+      service_type_cost_type { :per_hour }
+      service_type_options do
+        services = PriorAuthority::QuoteServices::VALUES.select do |service_type|
+          rule = PriorAuthority::ServiceTypeRule.build(service_type)
+
+          rule.cost_type.in?([service_type_cost_type, :variable]) && !rule.court_order_relevant && !rule.post_mortem_relevant
+        end
+        services.map(&:value) + ['custom']
+      end
+      primary_quotes { build_list(:quote, 1, :primary, service_type_cost_type) }
+    end
+
     trait :with_firm_and_solicitor do
       firm_office factory: %i[firm_office valid]
       solicitor factory: %i[solicitor full]
@@ -19,10 +33,10 @@ FactoryBot.define do
 
     trait :with_case_details do
       main_offence_id { 'jaywalking' }
-      rep_order_date { 1.year.ago }
+      rep_order_date { date - rand(10..365) }
       client_detained { false }
       subject_to_poca { false }
-      next_hearing_date { 1.year.from_now }
+      next_hearing_date { date + rand(10..365) }
       plea { 'guilty' }
     end
 
@@ -42,7 +56,7 @@ FactoryBot.define do
 
     trait :about_request_enabled do
       prison_law { true }
-      ufn { '120423/001' }
+      ufn { "#{date.strftime('%d%m%y')}/001" }
       with_firm_and_solicitor
       next_hearing { false }
       after(:create) do |paa, _a|
@@ -61,7 +75,7 @@ FactoryBot.define do
       with_case_details
       with_psychiatric_liaison
       primary_quote factory: %i[quote primary], strategy: :build
-      ufn { '120423/001' }
+      ufn { "#{date.strftime('%d%m%y')}/001" }
       service_type { 'meteorologist' }
       prior_authority_granted { true }
       after(:create) do |paa, _a|
@@ -90,7 +104,7 @@ FactoryBot.define do
       with_firm_and_solicitor
       with_defendant
       with_psychiatric_liaison
-      ufn { '120423/123' }
+      ufn { "#{date.strftime('%d%m%y')}/123" }
       defendant factory: %i[defendant valid_paa], strategy: :build
       prison_law { true }
       reason_why { 'something' }
@@ -130,57 +144,64 @@ FactoryBot.define do
 
     trait :with_complete_non_prison_law do
       prison_law { false }
-      ufn { '120423/123' }
+      ufn { "#{date.strftime('%d%m%y')}/123" }
       with_firm_and_solicitor
       with_defendant
 
       # case details
-      main_offence_id { 'jaywalking' }
+      main_offence_id { I18n.t('prior_authority.offences').to_a.sample.first }
       rep_order_date { 1.year.ago.to_date }
       client_detained { false }
       subject_to_poca { true }
 
       # hearing details
+      next_hearing { true }
       next_hearing_date { 1.day.from_now }
       plea { 'not_guilty' }
       court_type { 'magistrates_court' }
       youth_court { false }
 
       # quotes
-      service_type { 'telecommunications_expert' }
-      primary_quote factory: %i[quote primary], strategy: :build
+      service_type { service_type_options.sample }
+      custom_service_name { service_type == 'custom' ? Faker::ProgrammingLanguage.name : nil }
+      # primary_quote factory: %i[quote primary], strategy: :build
       supporting_documents { build_list(:supporting_document, 2) }
-      quotes { build_list(:quote, 1, :primary) }
+      quotes { primary_quotes }
       prior_authority_granted { false }
       no_alternative_quote_reason { 'a reason' }
+      alternative_quotes_still_to_add { false }
 
+      further_informations { [build(:further_information, :with_response)] }
       reason_why { 'something' }
     end
 
     trait :with_complete_prison_law do
       prison_law { true }
-      ufn { '120423/123' }
+      ufn { "#{date.strftime('%d%m%y')}/123" }
       with_firm_and_solicitor
       with_defendant
 
       # next hearing details
       next_hearing { true }
-      next_hearing_date { 1.day.from_now }
+      next_hearing_date { date + 1 }
 
       # quotes
-      service_type { 'telecommunications_expert' }
-      primary_quote factory: %i[quote primary], strategy: :build
+      service_type { service_type_options.sample }
+      custom_service_name { service_type == 'custom' ? Faker::ProgrammingLanguage.name : nil }
+      # primary_quote factory: %i[quote primary], strategy: :build
       supporting_documents { build_list(:supporting_document, 2) }
-      quotes { build_list(:quote, 1, :primary) }
+      quotes { primary_quotes }
       prior_authority_granted { false }
       no_alternative_quote_reason { 'a reason' }
+      alternative_quotes_still_to_add { false }
 
+      further_informations { [build(:further_information, :with_response)] }
       reason_why { 'something' }
     end
 
     trait :with_all_tasks_completed do
       prison_law { true }
-      ufn { '120423/123' }
+      ufn { "#{date.strftime('%d%m%y')}/123" }
       with_firm_and_solicitor
       with_defendant
 
@@ -214,11 +235,16 @@ FactoryBot.define do
     end
 
     trait :with_alternative_quotes do
-      quotes { build_list(:quote, 2, :alternative) }
+      transient do
+        quote_count { 2 }
+        alternative_quotes { build_list(:quote, quote_count, :alternative, service_type_cost_type) }
+      end
+
+      quotes { primary_quotes + alternative_quotes }
     end
 
     trait :with_ufn do
-      ufn { '120423/001' }
+      ufn { "#{date.strftime('%d%m%y')}/001" }
     end
 
     trait :with_created_alternative_quote do
