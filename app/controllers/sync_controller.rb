@@ -11,7 +11,7 @@ class SyncController < ApplicationController
 
   def sync_individual
     record = AppStoreClient.new.get(params[:submission_id])
-    PullUpdates.new.update(record, is_full: true)
+    AppStoreUpdateProcessor.call(record, is_full: true)
     head :ok
   end
 

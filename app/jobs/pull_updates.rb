@@ -18,21 +18,12 @@ class PullUpdates < ApplicationJob
 
   def process(applications)
     applications.each do |record|
-      update(record)
+      AppStoreUpdateProcessor.call(record)
     end
 
     last_updated_str = applications.pluck('updated_at').max
 
     Time.zone.parse(last_updated_str)
-  end
-
-  def update(record, is_full: false)
-    case record['application_type']
-    when 'crm7'
-      update_claim(record['application_id'], convert_params(record))
-    when 'crm4'
-      update_prior_authority_application(record['application_id'], convert_params(record), (record if is_full))
-    end
   end
 
   private
@@ -43,26 +34,5 @@ class PullUpdates < ApplicationJob
       PriorAuthorityApplication.where.not(app_store_updated_at: nil).maximum(:app_store_updated_at),
       EARLIEST_POLL_DATE
     ].compact.max
-  end
-
-  def convert_params(record)
-    {
-      status: record['application_state'],
-      app_store_updated_at: record['updated_at']
-    }
-  end
-
-  def update_claim(claim_id, params)
-    claim = Claim.find_by(id: claim_id)
-
-    claim&.update!(params)
-  end
-
-  def update_prior_authority_application(application_id, params, full_record_or_nil)
-    application = PriorAuthorityApplication.find_by(id: application_id)
-    return unless application
-
-    application.update!(params)
-    PriorAuthority::AssessmentSyncer.call(application, record: full_record_or_nil)
   end
 end

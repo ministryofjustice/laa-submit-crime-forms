@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Syncs' do
-  let(:job) { instance_double(PullUpdates, perform: true) }
-
-  before { allow(PullUpdates).to receive(:new).and_return(job) }
-
   describe 'GET /sync' do
+    let(:job) { instance_double(PullUpdates, perform: true) }
+
+    before { allow(PullUpdates).to receive(:new).and_return(job) }
+
     it 'triggers a sync job' do
       get '/sync'
 
@@ -59,14 +59,14 @@ RSpec.describe 'Syncs' do
 
           allow(AppStoreClient).to receive(:new).and_return(client)
           allow(client).to receive(:get).and_return(record)
-          allow(job).to receive(:update)
+          allow(AppStoreUpdateProcessor).to receive(:call)
         end
 
         it 'triggers a sync' do
           post '/app_store_webhook', params: { submission_id: '123' }, headers: { 'Authorization' => 'Bearer ABC' }
           expect(response).to have_http_status(:ok)
           expect(client).to have_received(:get).with('123')
-          expect(job).to have_received(:update).with(record, is_full: true)
+          expect(AppStoreUpdateProcessor).to have_received(:call).with(record, is_full: true)
         end
       end
     end

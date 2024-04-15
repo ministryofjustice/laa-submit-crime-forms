@@ -252,41 +252,4 @@ RSpec.describe PullUpdates do
       expect { subject.perform }.not_to raise_error
     end
   end
-
-  describe 'update' do
-    let(:response) do
-      {
-        'application_id' => application.id,
-        'version' => 2,
-        'application_state' => 'granted',
-        'application_risk' => 'high',
-        'application_type' => 'crm4',
-        'updated_at' => arbitrary_fixed_date,
-        'application' => { 'big-blob' => 'of-data' }
-      }
-    end
-    let(:application) { create(:prior_authority_application) }
-
-    before do
-      allow(PriorAuthority::AssessmentSyncer).to receive(:call)
-    end
-
-    context 'when response is explicitly flagged as being "full"' do
-      let(:is_full) { true }
-
-      it 'passes the full record on to AssessmentSyncer' do
-        subject.update(response, is_full:)
-        expect(PriorAuthority::AssessmentSyncer).to have_received(:call).with(application, record: response)
-      end
-    end
-
-    context 'when response is not explicitly flagged as being "full"' do
-      let(:is_full) { false }
-
-      it 'does not pass the record on to AssessmentSyncer' do
-        subject.update(response, is_full:)
-        expect(PriorAuthority::AssessmentSyncer).to have_received(:call).with(application, record: nil)
-      end
-    end
-  end
 end
