@@ -1,24 +1,30 @@
 module TestData
   class NsmBuilder
+    # rubocop:disable Rails/Output
     def build_many(bulk: 100, large: 4, year: 2023)
       raise 'Do not run on production' if HostEnv.production?
 
       bulk.times do
         build(year:)
+        print '.'
 
         # avoid issues with large number of applications with the same last_updated_at time
         sleep 0.1 unless Rails.env.test?
       end
+      puts "\nBulk complete"
 
       large_ids = Array.new(large) do
         build(min: 400, max: 600, year: year).tap do
+          print '.'
           # avoid issues with large number of applications with the same last_updated_at time
           sleep 0.1 unless Rails.env.test?
         end
       end
+      puts "\nLarge complete"
 
       Rails.logger.info "Created large examples: #{large_ids.to_sentence}"
     end
+    # rubocop:enable Rails/Output
 
     def build(**options)
       ActiveRecord::Base.transaction do

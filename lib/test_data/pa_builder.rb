@@ -1,15 +1,18 @@
 module TestData
   class PaBuilder
+    # rubocop:disable Rails/Output
     def build_many(bulk: 100, year: 2023)
       raise 'Do not run on production' if HostEnv.production?
 
       bulk.times do
         build(year:)
-
+        print '.'
         # avoid issues with large number of applications with the same last_updated_at time
         sleep 0.1 unless Rails.env.test?
       end
+      put "\nComplete"
     end
+    # rubocop:enable Rails/Output
 
     def build(**options)
       ActiveRecord::Base.transaction do
