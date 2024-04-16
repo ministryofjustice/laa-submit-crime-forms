@@ -167,6 +167,8 @@ Rails.application.routes.draw do
 
   get "robots.txt", to: "robots#index"
 
+  post :app_store_webhook, to: 'sync#sync_individual'
+
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
     lambda { |_request| !Rails.application.config.consider_all_requests_local }
 end
