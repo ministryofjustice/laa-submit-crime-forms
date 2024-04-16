@@ -147,83 +147,107 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     let(:code) { 201 }
     let(:username) { nil }
 
-    before do
-      allow(described_class).to receive(:post)
-        .and_return(response)
-      allow(ENV).to receive(:fetch).and_call_original
-    end
-
-    context 'when APP_STORE_URL is present' do
+    context 'when stubbing HTTParty' do
       before do
-        allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000')
-                                     .and_return('http://some.url')
+        allow(described_class).to receive(:post).and_return(response)
+        allow(ENV).to receive(:fetch).and_call_original
       end
 
-      it 'posts the message to the specified URL' do
-        expect(described_class).to receive(:post)
-          .with('http://some.url/v1/application/',
-                body: message.to_json,
-                headers: { authorization: 'Bearer test-bearer-token' })
-
-        subject.post(message)
-      end
-
-      context 'when authentication is not configured' do
+      context 'when APP_STORE_URL is present' do
         before do
-          allow(ENV).to receive(:fetch).with('APP_STORE_TENANT_ID', nil).and_return(nil)
+          allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000')
+                                       .and_return('http://some.url')
         end
 
-        it 'posts the message without headers' do
+        it 'posts the message to the specified URL' do
           expect(described_class).to receive(:post)
             .with('http://some.url/v1/application/',
                   body: message.to_json,
-                  headers: { 'X-Client-Type': 'provider' })
+                  headers: { authorization: 'Bearer test-bearer-token' })
+
+          subject.post(message)
+        end
+
+        context 'when authentication is not configured' do
+          before do
+            allow(ENV).to receive(:fetch).with('APP_STORE_TENANT_ID', nil).and_return(nil)
+          end
+
+          it 'posts the message without headers' do
+            expect(described_class).to receive(:post)
+              .with('http://some.url/v1/application/',
+                    body: message.to_json,
+                    headers: { 'X-Client-Type': 'provider' })
+
+            subject.post(message)
+          end
+        end
+      end
+
+      context 'when APP_STORE_URL is not present' do
+        it 'posts the message to default localhost url' do
+          expect(described_class).to receive(:post)
+            .with('http://localhost:8000/v1/application/',
+                  body: message.to_json,
+                  headers: { authorization: 'Bearer test-bearer-token' })
 
           subject.post(message)
         end
       end
-    end
 
-    context 'when APP_STORE_URL is not present' do
-      it 'posts the message to default localhost url' do
-        expect(described_class).to receive(:post)
-          .with('http://localhost:8000/v1/application/',
-                body: message.to_json,
-                headers: { authorization: 'Bearer test-bearer-token' })
+      context 'when response code is 201 - created' do
+        it 'returns a created status' do
+          expect(subject.post(message)).to eq(:success)
+        end
+      end
 
-        subject.post(message)
+      context 'when response code is 409 - conflict' do
+        let(:code) { 409 }
+
+        it 'returns a warning status' do
+          expect(subject.post(message)).to eq(:warning)
+        end
+
+        it 'sends a Sentry message' do
+          expect(Sentry).to receive(:capture_message).with(
+            "Application ID already exists in AppStore for '#{message[:application_id]}'"
+          )
+
+          subject.post(message)
+        end
+      end
+
+      context 'when response code is unexpected (neither 201 or 209)' do
+        let(:code) { 501 }
+
+        it 'raises and error' do
+          expect { subject.post(message) }.to raise_error(
+            "Unexpected response from AppStore - status 501 for '#{message[:application_id]}'"
+          )
+        end
       end
     end
 
-    context 'when response code is 201 - created' do
-      it 'returns a created status' do
-        expect(subject.post(message)).to eq(:success)
-      end
-    end
+    context 'when not stubbing HTTParty' do
+      context 'when authentication is not configured' do
+        before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with('APP_STORE_TENANT_ID', nil).and_return(nil)
+          allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000').and_return('http://some.url')
+        end
 
-    context 'when response code is 409 - conflict' do
-      let(:code) { 409 }
+        it 'posts the message without headers' do
+          http_stub = stub_request(:post, 'http://some.url/v1/application/').with(
+            body: message.to_json,
+            headers: {
+              'Content-Type' => 'application/json',
+              'X-Client-Type' => 'provider'
+            }
+          ).to_return(status: 200, body: '', headers: {})
+          subject.post(message)
 
-      it 'returns a warning status' do
-        expect(subject.post(message)).to eq(:warning)
-      end
-
-      it 'sends a Sentry message' do
-        expect(Sentry).to receive(:capture_message).with(
-          "Application ID already exists in AppStore for '#{message[:application_id]}'"
-        )
-
-        subject.post(message)
-      end
-    end
-
-    context 'when response code is unexpected (neither 201 or 209)' do
-      let(:code) { 501 }
-
-      it 'raises and error' do
-        expect { subject.post(message) }.to raise_error(
-          "Unexpected response from AppStore - status 501 for '#{message[:application_id]}'"
-        )
+          expect(http_stub).to have_been_requested
+        end
       end
     end
   end
