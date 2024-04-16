@@ -1,18 +1,16 @@
 module TestData
   class PaBuilder
-    # rubocop:disable Rails/Output
     def build_many(bulk: 100, year: 2023)
       raise 'Do not run on production' if HostEnv.production?
 
       bulk.times do
         build(year:)
-        print '.'
+        log '.'
         # avoid issues with large number of applications with the same last_updated_at time
         sleep 0.1 unless Rails.env.test?
       end
-      put "\nComplete"
+      log "\nComplete\n"
     end
-    # rubocop:enable Rails/Output
 
     def build(**options)
       ActiveRecord::Base.transaction do
@@ -59,24 +57,40 @@ module TestData
           [:prior_authority_application, :with_complete_non_prison_law, :with_alternative_quotes, :with_additional_costs],
           proc do
             date = date_for(year)
-            { date: date, updated_at: date, quote_count: [1, 2].sample,
-service_type_cost_type: %i[per_hour per_item].sample }
+            {
+              date: date, updated_at: date, quote_count: [1, 2].sample,
+              service_type_cost_type: %i[per_hour per_item].sample
+            }
           end
         ],
         complex_prision: [
           [:prior_authority_application, :with_complete_prison_law, :with_alternative_quotes, :with_additional_costs],
           proc do
             date = date_for(year)
-            { date: date, updated_at: date, quote_count: [1, 2].sample,
-service_type_cost_type: %i[per_hour per_item].sample }
+            {
+              date: date, updated_at: date, quote_count: [1, 2].sample,
+              service_type_cost_type: %i[per_hour per_item].sample
+            }
           end
         ],
       }
     end
     # rubocop:enable Metrics/MethodLength
 
+    private
+
     def date_for(year)
       (Date.new(year, 1, 1) + rand(350)).next_weekday
     end
+
+    # rubocop:disable Rails/Output
+    def log(str)
+      if Rails.env.test?
+        Rails.logger << str
+      else
+        print str
+      end
+    end
+    # rubocop:enable Rails/Output
   end
 end
