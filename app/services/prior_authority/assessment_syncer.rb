@@ -1,14 +1,14 @@
 module PriorAuthority
   class AssessmentSyncer
-    def self.call(application)
-      new(application).call
+    def self.call(application, record: nil)
+      new(application, record:).call
     end
 
     attr_reader :application, :app_store_record
 
-    def initialize(application)
+    def initialize(application, record: nil)
       @application = application
-      @app_store_record = AppStoreClient.new.get(application.id)
+      @app_store_record = record || AppStoreClient.new.get(application.id)
     end
 
     def call

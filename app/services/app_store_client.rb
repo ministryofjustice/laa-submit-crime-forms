@@ -2,11 +2,11 @@ class AppStoreClient
   include HTTParty
   headers 'Content-Type' => 'application/json'
 
-  def post(message)
-    response = self.class.post("#{host}/v1/application/", **options(message))
+  def post(message, path: 'v1/application/')
+    response = self.class.post("#{host}/#{path}", **options(message))
 
     case response.code
-    when 201
+    when 200..204
       :success
     when 409
       # can be ignored but should be notified so we can track when it occurs
