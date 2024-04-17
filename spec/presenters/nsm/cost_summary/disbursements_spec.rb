@@ -55,24 +55,14 @@ total_cost_pre_vat: 80.0)
   describe '#rows' do
     it 'generates letters and calls rows' do
       expect(subject.rows).to eq(
-        [
-          {
-            key: { classes: 'govuk-summary-list__value-width-50', text: 'Car' },
-            value: { text: '£90.00' }
-          },
-          {
-            key: { classes: 'govuk-summary-list__value-width-50', text: 'DNA Testing' },
-            value: { text: '£60.00' }
-          },
-          {
-            key: { classes: 'govuk-summary-list__value-width-50', text: 'Custom' },
-            value: { text: '£30.00' }
-          },
-          {
-            key: { classes: 'govuk-summary-list__value-width-50', text: 'Car' },
-            value: { text: '£80.00' }
-          }
-        ]
+        [[{ classes: 'govuk-table__header', text: 'Car' },
+          { classes: 'govuk-table__cell--numeric', text: '£90.00' }],
+         [{ classes: 'govuk-table__header', text: 'DNA Testing' },
+          { classes: 'govuk-table__cell--numeric', text: '£60.00' }],
+         [{ classes: 'govuk-table__header', text: 'Custom' },
+          { classes: 'govuk-table__cell--numeric', text: '£30.00' }],
+         [{ classes: 'govuk-table__header', text: 'Car' },
+          { classes: 'govuk-table__cell--numeric', text: '£80.00' }]]
       )
     end
   end
@@ -84,8 +74,8 @@ total_cost_pre_vat: 80.0)
   end
 
   describe '#title' do
-    it 'translates with total cost' do
-      expect(subject.title).to eq('Disbursements total £300.00')
+    it 'translates without total cost' do
+      expect(subject.title).to eq('Disbursements')
     end
   end
 end

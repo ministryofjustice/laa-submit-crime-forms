@@ -11,27 +11,27 @@ module Nsm
       end
 
       def rows
-        forms = work_item_forms.group_by(&:work_type)
         work_types = WorkTypes.values.filter { |work_type| work_type.display?(claim) }
 
         work_types.map do |work_type|
-          total_cost = forms[work_type]&.sum(&:total_cost)
-          {
-            key: { text: translate(work_type.to_s), classes: 'govuk-summary-list__value-width-50' },
-            value: { text: NumberTo.pounds(total_cost || 0) },
-          }
+          [
+            { text: translate(work_type.to_s), classes: 'govuk-table__header' },
+            { text: ApplicationController.helpers.format_period(time_spent_for(work_type)) },
+            { text: NumberTo.pounds(total_cost_for(work_type) || 0), classes: 'govuk-table__cell--numeric' },
+          ]
         end
       end
 
-      def footer_vat_row
-        return [] if total_cost_inc_vat.zero?
+      def total_cost_for(work_type)
+        forms[work_type]&.sum(&:total_cost)
+      end
 
-        [
-          {
-            key: { text: translate('.footer.total_inc_vat'), classes: 'govuk-summary-list__value-width-50' },
-            value: { text: NumberTo.pounds(total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
-          }
-        ]
+      def time_spent_for(work_type)
+        forms[work_type]&.sum(&:time_spent) || 0
+      end
+
+      def forms
+        @forms ||= work_item_forms.group_by(&:work_type)
       end
 
       def total_cost
@@ -43,13 +43,13 @@ module Nsm
       end
 
       def calculate_vat
-        return 0 if @claim.firm_office.vat_registered == YesNoAnswer::NO.to_s
+        return 0 unless vat_registered
 
         (total_cost * vat_rate) + total_cost
       end
 
       def title
-        translate('work_items', total: NumberTo.pounds(vat_registered ? total_cost_inc_vat : total_cost || 0))
+        translate('work_items')
       end
     end
   end

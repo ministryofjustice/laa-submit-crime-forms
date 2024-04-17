@@ -53,6 +53,12 @@ if: :other_disbursement_type?
                                 end
       end
 
+      def vat
+        return nil unless total_cost_pre_vat
+
+        apply_vat ? total_cost_pre_vat * vat_rate : 0.0
+      end
+
       def total_cost
         @total_cost ||= if apply_vat && total_cost_pre_vat
                           total_cost_pre_vat + vat
@@ -78,12 +84,6 @@ if: :other_disbursement_type?
           'vat_amount' => vat,
           'apply_vat' => apply_vat ? 'true' : 'false'
         )
-      end
-
-      def vat
-        return nil unless total_cost_pre_vat
-
-        apply_vat ? total_cost_pre_vat * vat_rate : 0.0
       end
 
       def auth_required?

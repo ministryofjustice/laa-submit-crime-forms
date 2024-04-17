@@ -3,14 +3,15 @@ en:
   summary:
     change: Change
     header:
-      items: Items
-      total: Total per item
+      item: Item
+      time: Time
+      net_cost: Net cost
     footer:
       total: Total
       total_inc_vat: Total (including VAT)
       total_inc_any_vat: Total (including any VAT)
     nsm/cost_summary/work_items:
-      work_items: Work items total %{total}
+      work_items: Work items
       preparation: Preparation
       advocacy: Advocacy
       attendance_with_counsel: Attendance with counsel
@@ -18,11 +19,11 @@ en:
       travel: Travel
       waiting: Waiting
     nsm/cost_summary/letters_calls:
-      letters_calls: Letters and phone calls total %{total}
+      letters_calls: Letters and phone calls
       letters: Letters
       calls: Phone calls
     nsm/cost_summary/disbursements:
-      disbursements: Disbursements total %{total}
+      disbursements: Disbursements
       standard:
         car: Car
         motorcycle: Motorcycle
