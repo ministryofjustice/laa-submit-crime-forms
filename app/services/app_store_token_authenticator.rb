@@ -1,6 +1,8 @@
 class AppStoreTokenAuthenticator
   class << self
     def call(headers)
+      return true unless AppStoreTokenProvider.instance.authentication_configured?
+
       jwt = headers['Authorization'].gsub(/^Bearer /, '')
       data = parse(jwt)
       valid?(data)

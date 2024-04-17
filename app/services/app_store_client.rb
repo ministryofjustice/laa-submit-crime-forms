@@ -52,16 +52,19 @@ class AppStoreClient
 
   def options(message = nil)
     options = message ? { body: message.to_json } : {}
+    options.merge(headers:)
+  end
 
-    return options unless AppStoreTokenProvider.instance.authentication_configured?
-
-    token = AppStoreTokenProvider.instance.bearer_token
-
-    options.merge(
-      headers: {
-        authorization: "Bearer #{token}"
+  def headers
+    if AppStoreTokenProvider.instance.authentication_configured?
+      {
+        authorization: "Bearer #{AppStoreTokenProvider.instance.bearer_token}"
       }
-    )
+    else
+      {
+        'X-Client-Type': 'provider'
+      }
+    end
   end
 
   def host
