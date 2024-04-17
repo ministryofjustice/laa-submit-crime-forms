@@ -27,6 +27,19 @@ RSpec.describe CostCalculator do
       it 'calculates the sum total cost for each travel and waiting work item with vat' do
         expect(subject).to eq(198)
       end
+
+      context 'when raw vat calculation returns a result that involves fractions of pennies' do
+        before do
+          object.disbursements.first.update(total_cost_without_vat: 37.79, apply_vat: 'true')
+          object.disbursements.last.update(total_cost_without_vat: 50.0, apply_vat: 'false')
+        end
+
+        it 'calculates the sum total cost for each travel and waiting work item with vat' do
+          # 37.79 * 1.2 = 45.35 (rounded)
+          # 45.35 + 50 = 95.35
+          expect(subject).to eq(95.35)
+        end
+      end
     end
 
     context 'when vat is false' do
@@ -48,6 +61,29 @@ RSpec.describe CostCalculator do
     context 'when vat is true' do
       it 'calculates the sum total cost for each travel and waiting work item with vat' do
         expect(subject).to eq(1.98)
+      end
+
+      context 'when raw vat calculation returns a result that involves fractions of pennies' do
+        let(:object) { create(:claim, work_items:) }
+        let(:work_items) do
+          [
+            build(:work_item, time_spent: 49, uplift: 10, work_type: 'travel'),
+            build(:work_item, time_spent: 60, uplift: 0, work_type: 'waiting'),
+          ]
+        end
+
+        let(:price) { 7.55 }
+
+        it 'calculates the sum total cost for each travel and waiting work item with vat' do
+          # First work item cost without VAT: 7.55 * 49/60 = 6.165833333
+          # First work item cost with uplift: 6.165833333 * 1.1 = 6.78241333
+          # First work item cost with VAT = 6.78241333 * 1.2 = 8.1389
+          # Second work item cost without VAT: 7.55
+          # Second work item cost with VAT: 7.55 * 1.2 = 9.06
+          # Total (unrounded): 8.1389 + 9.06 = 17.1989
+          # Total (rounded): 17.20
+          expect(subject).to eq(17.20)
+        end
       end
     end
 
