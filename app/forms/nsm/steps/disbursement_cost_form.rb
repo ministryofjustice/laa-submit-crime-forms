@@ -56,7 +56,7 @@ if: :other_disbursement_type?
       def vat
         return nil unless total_cost_pre_vat
 
-        apply_vat ? total_cost_pre_vat * vat_rate : 0.0
+        apply_vat ? (total_cost_pre_vat * vat_rate).round(2) : 0.0
       end
 
       def total_cost

@@ -33,9 +33,9 @@
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><%= t('.total') %></td>
-      <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.total_net %></td>
-      <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.total_vat %></td>
-      <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.total_gross %></td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong><%= NumberTo.pounds summary.total_net %></strong></td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong><%= NumberTo.pounds summary.total_vat %></strong></td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><strong><%= NumberTo.pounds summary.total_gross %></strong></td>
     </tr>
   </tbody>
 </table>
