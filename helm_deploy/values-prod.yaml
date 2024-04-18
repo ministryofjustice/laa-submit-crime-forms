@@ -74,7 +74,7 @@ variables:
   environment: production
   portalIDPMetadataFile: config/laa_portal/metadata/prod.xml
   spEntityId: LAA_Portal_CRM7_Prod
-  appStore: https://laa-crime-application-store-prod.apps.live.cloud-platform.service.justice.gov.uk
+  appStore: http://laa-crime-application-store-app.laa-crime-application-store-production.svc.cluster.local
   maxFileUploadBytes: 10485760
   eolUrl: https://apply-for-extension-of-upper-limits.form.service.justice.gov.uk/
   enableSyncTriggerEndpoint: 'false'
