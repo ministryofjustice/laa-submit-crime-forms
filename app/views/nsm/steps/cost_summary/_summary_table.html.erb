@@ -1,5 +1,8 @@
-<table class="govuk-table">
-  <caption class="govuk-table__caption govuk-table__caption--m"><%= t('.your_cost_summary') %></caption>
+<% hide_caption ||= false %>
+<table id="cost-summary-table" class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m <%= "govuk-visually-hidden" if hide_caption %>">
+    <%= t('.your_cost_summary') %>
+  </caption>
   <thead class="govuk-table__head">
     <tr><th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.item') %></th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-quarter govuk-table__header--numeric"><%= t('.net_cost') %> </th>

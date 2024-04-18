@@ -34,13 +34,14 @@ module Nsm
       end
 
       def sections(section_list)
-        section_list.map do |data|
+        section_list.map do |card|
           {
             card: {
-              title: data.title,
-              actions: actions(data.section)
+              title: card.title,
+              actions: actions(card.section, card.change_link_controller_method)
             },
-            rows: data.rows
+            rows: card.rows,
+            custom: card.custom
           }
         end
       end
@@ -69,9 +70,7 @@ module Nsm
         [
           ClaimJustificationCard.new(claim),
           ClaimDetailsCard.new(claim),
-          WorkItemsCard.new(claim),
-          LettersCallsCard.new(claim),
-          DisbursementCostsCard.new(claim),
+          CostSummaryCard.new(claim),
           OtherInfoCard.new(claim)
         ]
       end
@@ -84,14 +83,14 @@ module Nsm
 
       private
 
-      def actions(key)
+      def actions(key, action)
         return [] if @readonly
 
         helper = Rails.application.routes.url_helpers
         [
           govuk_link_to(
             I18n.t('generic.change'),
-            helper.url_for(controller: "nsm/steps/#{key}", action: :edit, id: claim.id, only_path: true)
+            helper.url_for(controller: "nsm/steps/#{key}", action: action, id: claim.id, only_path: true)
           ),
         ]
       end
