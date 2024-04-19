@@ -14,6 +14,7 @@ module Nsm
       end
 
       def update
+        @supporting_documents = supporting_evidence
         update_and_advance(SupportingEvidenceForm, as: :supporting_evidence)
       end
 

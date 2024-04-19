@@ -20,58 +20,100 @@ RSpec.describe Nsm::CheckAnswers::EvidenceUploadsCard do
   end
 
   describe '#row_data' do
-    context '2 evidence files' do
-      it 'generates section with 2 indexed filenames' do
-        expect(subject.row_data).to eq(
-          [
-            {
-              head_key: 'send_by_post',
-              text: 'No',
-            },
-            {
-              head_key: 'supporting_evidence',
-              text: 'Defendant Report.pdf',
-              head_opts: { count: 1 }
-            },
-            {
-              head_key: 'supporting_evidence',
-              text: 'Offences.pdf',
-              head_opts: { count: 2 }
-            }
-          ]
-        )
+    context 'when postal_evidence feature flag is enabled' do
+      before do
+        allow(FeatureFlags).to receive(:postal_evidence).and_return(double(:postal_evidence, enabled?: true))
+      end
+
+      context '2 evidence files' do
+        it 'generates section with 2 indexed filenames' do
+          expect(subject.row_data).to eq(
+            [
+              {
+                head_key: 'send_by_post',
+                text: 'No',
+              },
+              {
+                head_key: 'supporting_evidence',
+                text: 'Defendant Report.pdf',
+                head_opts: { count: 1 }
+              },
+              {
+                head_key: 'supporting_evidence',
+                text: 'Offences.pdf',
+                head_opts: { count: 2 }
+              }
+            ]
+          )
+        end
+      end
+
+      context 'No evidence files and send by post true' do
+        let(:supporting_evidence) { [] }
+        let(:send_by_post) { true }
+
+        it 'generates section without any information inside' do
+          expect(subject.row_data).to eq(
+            [
+              {
+                head_key: 'send_by_post',
+                text: 'Yes',
+              }
+            ]
+          )
+        end
+      end
+
+      context 'No evidence files and send by post not set' do
+        let(:supporting_evidence) { [] }
+        let(:send_by_post) { nil }
+
+        it 'generates section without any information inside' do
+          expect(subject.row_data).to eq(
+            [
+              {
+                head_key: 'send_by_post',
+                text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
+              }
+            ]
+          )
+        end
       end
     end
 
-    context 'No evidence files and send by post true' do
-      let(:supporting_evidence) { [] }
-      let(:send_by_post) { true }
-
-      it 'generates section without any information inside' do
-        expect(subject.row_data).to eq(
-          [
-            {
-              head_key: 'send_by_post',
-              text: 'Yes',
-            }
-          ]
-        )
+    context 'when postal_evidence feature flag is disabled' do
+      before do
+        allow(FeatureFlags).to receive(:postal_evidence).and_return(double(:postal_evidence, enabled?: false))
       end
-    end
 
-    context 'No evidence files and send by post not set' do
-      let(:supporting_evidence) { [] }
-      let(:send_by_post) { nil }
+      context '2 evidence files' do
+        it 'generates section with 2 indexed filenames' do
+          expect(subject.row_data).to eq(
+            [
+              {
+                head_key: 'supporting_evidence',
+                text: 'Defendant Report.pdf',
+                head_opts: { count: 1 }
+              },
+              {
+                head_key: 'supporting_evidence',
+                text: 'Offences.pdf',
+                head_opts: { count: 2 }
+              }
+            ]
+          )
+        end
+      end
 
-      it 'generates section without any information inside' do
-        expect(subject.row_data).to eq(
-          [
-            {
-              head_key: 'send_by_post',
-              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
-            }
-          ]
-        )
+      context 'No evidence files and send by post true' do
+        let(:supporting_evidence) { [] }
+        let(:send_by_post) { true }
+
+        it 'generates section without any information inside' do
+          expect(subject.row_data).to eq(
+            []
+          )
+        end
       end
     end
   end
