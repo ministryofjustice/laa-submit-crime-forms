@@ -16,6 +16,7 @@
       <%# File upload component %>
       <%= render 'shared/multifile_upload',
           supporting_documents: @supporting_documents,
+          field: :supporting_evidence,
           form: f,
           locale_prefix: 'nsm.steps.supporting_evidence.edit',
           hint: t('.upload_hint', size: FileUpload::FileUploader.human_readable_max_file_size) %>

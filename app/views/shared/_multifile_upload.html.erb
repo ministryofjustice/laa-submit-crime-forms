@@ -1,7 +1,8 @@
 <% hint ||= nil %>
+<% field ||= :documents %>
 <div class="moj-multi-file-upload">
   <div class="moj-multi-file-upload__upload">
-    <%= form.govuk_file_field :documents,
+    <%= form.govuk_file_field field,
                               label: { text: t("#{locale_prefix}.file_upload.heading"), size: 'm' },
                               hint: { text: hint },
                               class: 'moj-multi-file-upload__input',
