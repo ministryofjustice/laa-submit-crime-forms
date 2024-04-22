@@ -15,7 +15,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceForm do
     let(:send_by_post) { 'yes' }
 
     it 'is valid' do
-      expect(subject).to be_valid
+      expect(form).to be_valid
     end
 
     it 'saves the form' do
@@ -26,12 +26,20 @@ RSpec.describe Nsm::Steps::SupportingEvidenceForm do
   context 'when send_by_post is no' do
     let(:send_by_post) { 'no' }
 
-    it 'is valid' do
-      expect(subject).to be_valid
+    it 'is not valid without supporting evidence' do
+      expect(form).to be_valid
     end
 
-    it 'saves the form' do
-      expect(form.save).to be_truthy
+    context 'when there is already supporting evidence' do
+      let(:application) { instance_double(Claim, supporting_evidence: [:something], update!: true) }
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+
+      it 'saves the form' do
+        expect(form.save).to be_truthy
+      end
     end
   end
 end

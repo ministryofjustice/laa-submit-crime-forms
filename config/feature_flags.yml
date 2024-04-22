@@ -4,3 +4,9 @@ feature_flags:
     development: true
     uat: false
     production: false # must never be enabled in the live service
+  postal_evidence:
+    local: <%= ENV.fetch("POSTAL_EVIDENCE", false) %>
+    development: false
+    uat: false
+    production: false
+

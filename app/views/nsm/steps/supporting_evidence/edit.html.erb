@@ -14,13 +14,20 @@
     <%# Additional upload list %>
     <%= step_form @form_object do |f| %>
       <%# File upload component %>
-      <%= render 'shared/multifile_upload', supporting_documents: @supporting_documents, form: f, locale_prefix: 'nsm.steps.supporting_evidence.edit' %>
-      <%# Postal address component %>
-      <%= f.govuk_check_boxes_fieldset :send_by_post, multiple: false, legend: nil do %>
-        <%= f.govuk_check_box :send_by_post, 'true', 'false', multiple: false do %>
-          <%= render template: 'nsm/steps/supporting_evidence/_postal_address' %>
+      <%= render 'shared/multifile_upload',
+          supporting_documents: @supporting_documents,
+          field: :supporting_evidence,
+          form: f,
+          locale_prefix: 'nsm.steps.supporting_evidence.edit',
+          hint: t('.upload_hint', size: FileUpload::FileUploader.human_readable_max_file_size) %>
+      <% if FeatureFlags.postal_evidence.enabled? %>
+        <%# Postal address component %>
+        <%= f.govuk_check_boxes_fieldset :send_by_post, multiple: false, legend: nil do %>
+          <%= f.govuk_check_box :send_by_post, 'true', 'false', multiple: false do %>
+            <%= render template: 'nsm/steps/supporting_evidence/_postal_address' %>
+          <% end -%>
         <% end -%>
-      <% end -%>
+      <% end %>
       <%# Continue %>
       <%= f.continue_button %>
     <% end -%>

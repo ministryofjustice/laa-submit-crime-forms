@@ -1,7 +1,3 @@
-polling_job:
-  cron: "*/10 * * * *"
-  class: "PullUpdates"
-  queue: polling
 update_definitions:
   cron: "0 2 * * *"
   class: "UpdateVirusDefinitions"

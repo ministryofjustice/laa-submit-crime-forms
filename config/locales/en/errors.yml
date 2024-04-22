@@ -432,6 +432,10 @@ en:
               blank: Provdie details of disbursement
             prior_authority:
               blank: Confirm if you have prior authority
+        nsm/steps/supporting_evidence_form:
+          attributes:
+            supporting_evidence:
+              blank: Select a file to upload
         nsm/steps/solicitor_declaration_form:
           attributes:
             signatory_name:

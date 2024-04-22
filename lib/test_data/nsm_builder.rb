@@ -5,17 +5,21 @@ module TestData
 
       bulk.times do
         build(year:)
+        log '.'
 
         # avoid issues with large number of applications with the same last_updated_at time
         sleep 0.1 unless Rails.env.test?
       end
+      log "\nBulk complete\n"
 
       large_ids = Array.new(large) do
         build(min: 400, max: 600, year: year).tap do
+          log '.'
           # avoid issues with large number of applications with the same last_updated_at time
           sleep 0.1 unless Rails.env.test?
         end
       end
+      log "\nLarge complete\n"
 
       Rails.logger.info "Created large examples: #{large_ids.to_sentence}"
     end
@@ -78,8 +82,20 @@ module TestData
     end
     # rubocop:enable Metrics/MethodLength
 
+    private
+
     def date_for(year)
       (Date.new(year, 1, 1) + rand(350)).next_weekday
     end
+
+    # rubocop:disable Rails/Output
+    def log(str)
+      if Rails.env.test?
+        Rails.logger << str
+      else
+        print str
+      end
+    end
+    # rubocop:enable Rails/Output
   end
 end

@@ -12,7 +12,7 @@ FactoryBot.define do
       first_name { Faker::Name.first_name }
       last_name { Faker::Name.last_name }
       date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65) }
-      maat { 'AA1' }
+      maat { '1234' }
     end
 
     trait :partial do

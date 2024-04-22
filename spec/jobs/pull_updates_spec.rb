@@ -117,7 +117,7 @@ RSpec.describe PullUpdates do
 
       it 'triggers a sync' do
         subject.perform
-        expect(PriorAuthority::AssessmentSyncer).to have_received(:call).with(application)
+        expect(PriorAuthority::AssessmentSyncer).to have_received(:call).with(application, record: nil)
       end
     end
 

@@ -12,6 +12,14 @@ module Nsm
       end
 
       def row_data
+        postal_evidence_row + supporting_evidence_rows
+      end
+
+      private
+
+      def postal_evidence_row
+        return [] unless FeatureFlags.postal_evidence.enabled?
+
         [
           {
             head_key: 'send_by_post',
@@ -19,10 +27,8 @@ module Nsm
               (claim.send_by_post ? YesNoAnswer::YES : YesNoAnswer::NO).to_s.capitalize
             end,
           }
-        ] + supporting_evidence_rows
+        ]
       end
-
-      private
 
       def supporting_evidence_rows
         claim.supporting_evidence.map.with_index do |evidence, index|

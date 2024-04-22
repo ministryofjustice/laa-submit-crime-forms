@@ -46,5 +46,10 @@ module Crm7restbackend
 
     config.x.nsm.feedback_url = 'https://eu.surveymonkey.com/r/PDDG6YB'
     config.x.prior_authority.feedback_url = 'https://eu.surveymonkey.com/r/authprior'
+
+    config.after_initialize do
+      Rails.application.reload_routes!
+      AppStoreSubscriber.call
+    end
   end
 end

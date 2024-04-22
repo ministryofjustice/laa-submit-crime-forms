@@ -190,12 +190,12 @@ en:
           heading: Upload supporting evidence
           file_upload:
             heading: Upload files
-            caption: Files must be a DOC, DOCX, RTF, JPG, BMP, PNG, TIF or PDF.
           action: Action
           status: Status
           file_name: File Name
           uploading_docs: Documents waiting to be saved
           upload_files: Upload files
+          upload_hint: The maximum size for each file is %{size}. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
           uploaded_files: Uploaded files
           upload_file: Upload file
         content:
@@ -215,6 +215,7 @@ en:
             prosecution: prosecution evidence review
             emails: emails
             representation: representation order
+          para3_html: Files often have long, meaningless names by default, but if you rename them to a friendly name it will make it easier for us to assess your case. For example, <strong>Client-case.pdf</strong> instead of <strong>File23.PDF</strong>.
           upload_warning:
             icon: "!"
             assistive: Warning
