@@ -118,7 +118,7 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
         .and have_css('.govuk-summary-card__content', text: 'Likely or actual pleaNot guilty')
         .and have_css('.govuk-summary-card__content', text: 'Court typeCentral Criminal Court')
         .and have_css('.govuk-summary-card__content', text: 'Psychiatric liaison service accessedNo')
-        .and have_css('.govuk-summary-card__content', text: 'Why not?whatever')
+        .and have_css('.govuk-summary-card__content', text: 'Why not? whatever')
     end
   end
 
