@@ -13,7 +13,7 @@ module PriorAuthority
       def save!; end
 
       def persist!
-        application.update!(attributes.merge({ status: :submitted }))
+        application.update!(attributes.merge({ status: new_status }))
         SubmitToAppStore.new.process(submission: application)
         true
       end
@@ -33,6 +33,10 @@ module PriorAuthority
       def needs_correcting?
         application.sent_back? &&
           application.incorrect_information_explanation.present?
+      end
+
+      def new_status
+        application.sent_back? ? :provider_updated : :submitted
       end
     end
   end
