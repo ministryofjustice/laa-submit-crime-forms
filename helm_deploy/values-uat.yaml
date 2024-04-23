@@ -68,7 +68,7 @@ variables:
   environment: uat
   portalIDPMetadataFile: config/laa_portal/metadata/uat.xml
   spEntityId: LAA_Portal_CRM7_UAT
-  appStore: https://laa-crime-application-store-uat.apps.live.cloud-platform.service.justice.gov.uk
+  appStore: http://laa-crime-application-store-app.laa-crime-application-store-uat.svc.cluster.local
   maxFileUploadBytes: 10485760
   eolUrl: https://apply-for-extension-of-upper-limits.dev.form.service.justice.gov.uk/
   enableSyncTriggerEndpoint: 'false'
