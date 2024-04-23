@@ -143,7 +143,6 @@ en:
       nsm_steps_firm_details_form:
         firm_office_attributes:
           name: Firm name
-          account_number: Firm account number
           address_line_1: Address line 1
           address_line_2: Address line 2 (optional)
           town: Town or city

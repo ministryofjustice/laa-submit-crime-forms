@@ -72,6 +72,7 @@
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.ufn') %></th>
           <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.defendant') %></th>
+          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.account') %></th>
           <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.last_updated') %></th>
           <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.laa_reference') %></th>
           <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.status') %></th>
@@ -87,6 +88,7 @@
               <% end %>
             </td>
             <td class="govuk-table__cell"><%= check_missing(claim.main_defendant&.full_name) %></td>
+            <td class="govuk-table__cell"><%= check_missing(claim.office_code) %></td>
             <td class="govuk-table__cell"><%= claim.updated_at.to_fs(:stamp) %></td>
             <td class="govuk-table__cell"><%= claim.laa_reference %></td>
             <td class="govuk-table__cell">

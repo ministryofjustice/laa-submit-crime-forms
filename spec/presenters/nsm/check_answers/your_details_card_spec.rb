@@ -28,10 +28,6 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: 'Firm A'
             },
             {
-              head_key: 'firm_account_number',
-              text: '123ABC'
-            },
-            {
               head_key: 'firm_address',
               text: '2 Laywer Suite<br>Unit B<br>Lawyer Town<br>CR0 1RE'
             },
@@ -79,10 +75,6 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: 'Firm A'
             },
             {
-              head_key: 'firm_account_number',
-              text: '123ABC'
-            },
-            {
               head_key: 'firm_address',
               text: '2 Laywer Suite<br>Lawyer Town<br>CR0 1RE'
             },
@@ -115,10 +107,6 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
           [
             {
               head_key: 'firm_name',
-              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
-            },
-            {
-              head_key: 'firm_account_number',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
@@ -158,10 +146,6 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: 'Firm A'
             },
             {
-              head_key: 'firm_account_number',
-              text: '123ABC'
-            },
-            {
               head_key: 'firm_address',
               text: '2 Laywer Suite<br><strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
@@ -196,10 +180,6 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
             {
               head_key: 'firm_name',
               text: 'Firm A'
-            },
-            {
-              head_key: 'firm_account_number',
-              text: '123ABC'
             },
             {
               head_key: 'firm_address',

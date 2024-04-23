@@ -19,10 +19,6 @@ module Nsm
             text: check_missing(firm_details_form.firm_office.name)
           },
           {
-            head_key: 'firm_account_number',
-            text: check_missing(firm_details_form.firm_office.account_number)
-          },
-          {
             head_key: 'firm_address',
             text: format_address(firm_details_form.firm_office)
           },

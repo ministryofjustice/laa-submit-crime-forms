@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_04_094407) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_23_103901) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,7 +60,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_094407) do
 
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "ufn"
-    t.string "office_code", null: false
+    t.string "office_code"
     t.string "status", default: "draft"
     t.jsonb "navigation_stack", default: [], array: true
     t.string "claim_type"

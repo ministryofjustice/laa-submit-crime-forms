@@ -17,6 +17,12 @@ module Decisions
     from(:claim_type).goto(show: 'nsm/steps/start_page')
     # start_page to firm_details is a hard coded link as show page
     from(:firm_details)
+      .when(-> { application.submitter.office_codes.count > 1 })
+      .goto(edit: 'nsm/steps/office_code')
+      .when(-> { application.defendants.none? })
+      .goto(edit: 'nsm/steps/defendant_details', defendant_id: Nsm::StartPage::NEW_RECORD)
+      .goto(edit: NSM_DEFENDANT_SUMMARY)
+    from(:office_code)
       .when(-> { application.defendants.none? })
       .goto(edit: 'nsm/steps/defendant_details', defendant_id: Nsm::StartPage::NEW_RECORD)
       .goto(edit: NSM_DEFENDANT_SUMMARY)

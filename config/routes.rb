@@ -59,7 +59,6 @@ Rails.application.routes.draw do
     end
 
     resources :offences, only: [:index], format: :js
-    resource :office, only: %i[show edit update]
 
     scope 'applications/:id' do
       # This is used as a generic redirect once a draft has been commited
@@ -71,6 +70,7 @@ Rails.application.routes.draw do
         edit_step :claim_type
         show_step :start_page
         edit_step :firm_details
+        edit_step :office_code
         edit_step :case_details
         edit_step :case_disposal
         edit_step :hearing_details
