@@ -51,7 +51,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
 
     context 'with a sent_back application with no changes made' do
       before do
-        allow(PriorAuthority::ChangeLister).to receive_message_chain(:call, :corrected_info).and_return(nil)
+        allow(PriorAuthority::ChangeLister).to receive_message_chain(:call, :corrected_info).and_return([])
       end
 
       let(:application) { create(:prior_authority_application, :full, :sent_back_for_incorrect_info) }
