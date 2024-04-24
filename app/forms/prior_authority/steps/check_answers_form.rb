@@ -24,7 +24,7 @@ module PriorAuthority
 
       def application_changed_since_request?
         content = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:).data
-        ::PriorAuthority::ChangeLister.call(application, content).corrected_info.present?
+        ::PriorAuthority::ChangeLister.call(application, content).present?
       end
 
       def needs_correcting?
