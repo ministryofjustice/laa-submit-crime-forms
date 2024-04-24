@@ -2,6 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Prior authority applications, check your answers, submission' do
   before do
+    allow(SubmitToAppStore).to receive(:perform_later)
     fill_in_until_step(:submit_application)
     click_on 'Submit application'
   end

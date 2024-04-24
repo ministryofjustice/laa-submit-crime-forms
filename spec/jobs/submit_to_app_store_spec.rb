@@ -9,55 +9,7 @@ RSpec.describe SubmitToAppStore do
   before do
     allow(described_class::PayloadBuilder).to receive(:call)
       .and_return(payload)
-    allow(Nsm::SubmissionMailer).to receive_message_chain(:notify, :deliver_now!)
-    allow(PriorAuthority::SubmissionMailer).to receive_message_chain(:notify, :deliver_now!)
-  end
-
-  describe '#process' do
-    context 'when REDIS_HOST is not present' do
-      before do
-        allow(ENV).to receive(:key?).and_call_original
-        allow(ENV).to receive(:key?).with('REDIS_HOST').and_return(false)
-        expect(AppStoreClient).to receive(:new)
-          .and_return(http_client)
-      end
-
-      let(:http_client) { instance_double(AppStoreClient, post: true) }
-
-      it 'does not raise any errors' do
-        expect { subject.process(submission:) }.not_to raise_error
-      end
-
-      it 'sends a HTTP message' do
-        expect(http_client).to receive(:post).with(payload)
-
-        subject.process(submission:)
-      end
-
-      describe 'when error during notify process' do
-        before do
-          allow(http_client).to receive(:post).and_raise('annoying_error')
-        end
-
-        it 'sends the error to sentry and ignores it' do
-          expect(Sentry).to receive(:capture_exception)
-
-          expect { subject.process(submission:) }.not_to raise_error
-        end
-      end
-    end
-
-    context 'when REDIS_HOST is present' do
-      before do
-        allow(ENV).to receive(:key?).with('REDIS_HOST').and_return(true)
-      end
-
-      it 'schedules the job' do
-        expect(described_class).to receive(:perform_later).with(submission)
-
-        subject.process(submission:)
-      end
-    end
+    allow(SendNotificationEmail).to receive(:perform_later)
   end
 
   describe '#perform' do
@@ -72,7 +24,12 @@ RSpec.describe SubmitToAppStore do
       expect(described_class::PayloadBuilder).to receive(:call)
         .with(submission)
 
-      subject.perform(submission)
+      subject.perform(submission:)
+    end
+
+    it 'queues an email job' do
+      subject.perform(submission:)
+      expect(SendNotificationEmail).to have_received(:perform_later).with(submission)
     end
   end
 
@@ -125,7 +82,7 @@ RSpec.describe SubmitToAppStore do
       end
     end
 
-    context 'when SNS_URL is not present' do
+    context 'when submission is a Claim' do
       let(:http_client) { instance_double(AppStoreClient, post: true) }
 
       before do
@@ -153,42 +110,6 @@ RSpec.describe SubmitToAppStore do
         it 'allows the error to be raised - should reset the sidekiq job' do
           expect { subject.submit(submission) }.to raise_error('annoying_error')
         end
-      end
-    end
-
-    context 'when SNS_URL is present' do
-      before do
-        allow(ENV).to receive(:key?).with('SNS_URL').and_return(true)
-      end
-
-      it 'raises an error' do
-        expect { subject.submit(submission) }.to raise_error('SNS notification is not yet enabled')
-      end
-    end
-  end
-
-  describe '#notify' do
-    context 'when submission is a claim' do
-      let(:submission) { create(:claim) }
-      let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
-
-      it 'triggers an email for nsm' do
-        expect(Nsm::SubmissionMailer).to receive(:notify).with(submission).and_return(mailer)
-        expect(mailer).to receive(:deliver_now!)
-
-        subject.notify(submission)
-      end
-    end
-
-    context 'when submission is a PA application' do
-      let(:submission) { create(:prior_authority_application) }
-      let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
-
-      it 'triggers an email for prior authority' do
-        expect(PriorAuthority::SubmissionMailer).to receive(:notify).with(submission).and_return(mailer)
-        expect(mailer).to receive(:deliver_now!)
-
-        subject.notify(submission)
       end
     end
   end

@@ -13,10 +13,8 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
   let(:application) { create(:claim, :complete) }
 
   describe '#save the form' do
-    let(:app_store_notifier) { instance_double(SubmitToAppStore, process: true) }
-
     before do
-      allow(SubmitToAppStore).to receive(:new).and_return(app_store_notifier)
+      allow(SubmitToAppStore).to receive(:perform_later)
       allow(CostCalculator).to receive(:cost).and_return(100)
       allow(application).to receive(:status=).with(:submitted).and_return(true)
       allow(application).to receive(:update!).and_return(true)
@@ -34,8 +32,7 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
       it 'notifies the app store' do
         form.save
 
-        expect(SubmitToAppStore).to have_received(:new)
-        expect(app_store_notifier).to have_received(:process).with(submission: application)
+        expect(SubmitToAppStore).to have_received(:perform_later).with(submission: application)
       end
     end
   end
