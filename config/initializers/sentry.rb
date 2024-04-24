@@ -1,3 +1,5 @@
+require Rails.root.join('lib/host_env')
+
 if ENV.fetch('SENTRY_DSN', nil).present?
   Sentry.init do |config|
     config.environment = HostEnv.env_name
