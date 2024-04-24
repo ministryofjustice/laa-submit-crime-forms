@@ -14,7 +14,7 @@ module PriorAuthority
 
       def persist!
         application.update!(attributes.merge({ status: new_status }))
-        SubmitToAppStore.new.process(submission: application)
+        SubmitToAppStore.perform_later(submission: application)
         true
       end
 
