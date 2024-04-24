@@ -11,7 +11,7 @@ RSpec.describe 'Prior authority applications, sent back for info correction - ch
 
   context 'Application has not been updated' do
     before do
-      allow(PriorAuthority::ChangeLister).to receive_message_chain(:call, :corrected_info).and_return([])
+      allow(PriorAuthority::ChangeLister).to receive_message_chain(:call).and_return([])
     end
 
     it 'renders a custom govuk error when no changes made since it was sent back by caseworker' do
@@ -35,7 +35,7 @@ RSpec.describe 'Prior authority applications, sent back for info correction - ch
 
   context 'Application has been updated' do
     before do
-      allow(PriorAuthority::ChangeLister).to receive_message_chain(:call, :corrected_info).and_return([true])
+      allow(PriorAuthority::ChangeLister).to receive_message_chain(:call).and_return([true])
     end
 
     it 'shows the "incorrect information" details from the caseworker' do
