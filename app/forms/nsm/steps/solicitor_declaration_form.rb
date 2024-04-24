@@ -11,7 +11,7 @@ module Nsm
           application.status = :submitted
           build_costs
           application.update!(attributes)
-          SubmitToAppStore.new.process(submission: application)
+          SubmitToAppStore.perform_later(submission: application)
           true
         end
       end

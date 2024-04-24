@@ -8,7 +8,7 @@ class SubmitToAppStore
       content = data
       { application_id: application.id,
         json_schema_version: 1,
-        application_state: 'submitted',
+        application_state: application.status,
         application: content,
         application_type: 'crm4',
         application_risk: 'N/A',
@@ -28,7 +28,7 @@ class SubmitToAppStore
         defendant:,
         quotes:,
         additional_costs:,
-        further_informations:,
+        further_information:,
       )
     end
 
@@ -64,7 +64,7 @@ class SubmitToAppStore
       PriorAuthority::AdditionalCostPayloadBuilder.new(application).payload
     end
 
-    def further_informations
+    def further_information
       PriorAuthority::FurtherInformationsPayloadBuilder.new(application).payload
     end
 
