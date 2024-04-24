@@ -50,13 +50,12 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     end
 
     context 'with a sent_back application with no changes made' do
-      let(:application) do
-        travel_to(sent_back_datetime) do
-          create(:prior_authority_application, :full, :sent_back_for_incorrect_info)
-        end
+      before do
+        allow(PriorAuthority::ChangeLister).to receive_message_chain(:call, :corrected_info).and_return(nil)
       end
 
-      let(:sent_back_datetime) { 2.days.ago.change({ hour: 11, minute: 0 }) }
+      let(:application) { create(:prior_authority_application, :full, :sent_back_for_incorrect_info) }
+
       let(:confirm_excluding_vat) { 'true' }
       let(:confirm_travel_expenditure) { 'true' }
 

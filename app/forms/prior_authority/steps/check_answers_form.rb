@@ -23,11 +23,8 @@ module PriorAuthority
       end
 
       def application_changed_since_request?
-        last_updated_at > application.resubmission_requested
-      end
-
-      def last_updated_at
-        LastUpdateFinder.call(application)
+        content = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:).data
+        ::PriorAuthority::ChangeLister.call(application, content).corrected_info.present?
       end
 
       def needs_correcting?
