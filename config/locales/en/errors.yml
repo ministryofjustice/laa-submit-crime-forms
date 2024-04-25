@@ -435,6 +435,18 @@ en:
               blank: Provdie details of disbursement
             prior_authority:
               blank: Confirm if you have prior authority
+        nsm/steps/disbursements_form:
+          attributes:
+            add_another:
+              blank: "Select yes if you want to add another disbursement"
+        nsm/steps/defendant_summary_form:
+          attributes:
+            add_another:
+              blank: "Select yes if you want to add another defendant"
+        nsm/steps/work_items_form:
+          attributes:
+            add_another:
+              blank: "Select yes if you want to add another work item"
         nsm/steps/supporting_evidence_form:
           attributes:
             supporting_evidence:

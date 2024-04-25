@@ -218,7 +218,15 @@ en:
           extradition: Extradition
           other: Other
         reason_for_claim_other_details: Enter details
-      steps_add_another_form:
+      nsm_steps_disbursements_form:
+        add_another_options:
+          'yes': 'Yes'
+          'no': 'No'
+      nsm_steps_defendant_summary_form:
+        add_another_options:
+          'yes': 'Yes'
+          'no': 'No'
+      nsm_steps_work_items_form:
         add_another_options:
           'yes': 'Yes'
           'no': 'No'
