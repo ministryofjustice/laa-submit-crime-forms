@@ -303,6 +303,9 @@ en:
             link_text: What did you think of this service?
             description: takes 30 seconds
       view_claim:
+        status_summary_card:
+          claim_status: Claim status
+          status: Status
         show:
           page_title: Claim details
           heading: Claim details
