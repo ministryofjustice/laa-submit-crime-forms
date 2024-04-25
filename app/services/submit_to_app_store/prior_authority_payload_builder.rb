@@ -15,7 +15,7 @@ class SubmitToAppStore
     end
 
     def data
-      direct_attributes.merge(
+      @data ||= direct_attributes.merge(
         supporting_documents:,
         provider:,
         firm_office:,
