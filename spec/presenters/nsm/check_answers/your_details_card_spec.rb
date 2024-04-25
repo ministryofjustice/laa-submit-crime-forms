@@ -28,6 +28,10 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: 'Firm A'
             },
             {
+              head_key: 'firm_account_number',
+              text: '1A123B'
+            },
+            {
               head_key: 'firm_address',
               text: '2 Laywer Suite<br>Unit B<br>Lawyer Town<br>CR0 1RE'
             },
@@ -75,6 +79,10 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: 'Firm A'
             },
             {
+              head_key: 'firm_account_number',
+              text: '1A123B'
+            },
+            {
               head_key: 'firm_address',
               text: '2 Laywer Suite<br>Lawyer Town<br>CR0 1RE'
             },
@@ -100,13 +108,17 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
     end
 
     context 'with no data' do
-      let(:claim) { build(:claim) }
+      let(:claim) { build(:claim, office_code: nil) }
 
       it 'generates missing data rows for required fields' do
         expect(subject.row_data).to eq(
           [
             {
               head_key: 'firm_name',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'firm_account_number',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
@@ -146,6 +158,10 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: 'Firm A'
             },
             {
+              head_key: 'firm_account_number',
+              text: '1A123B'
+            },
+            {
               head_key: 'firm_address',
               text: '2 Laywer Suite<br><strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
@@ -180,6 +196,10 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
             {
               head_key: 'firm_name',
               text: 'Firm A'
+            },
+            {
+              head_key: 'firm_account_number',
+              text: '1A123B'
             },
             {
               head_key: 'firm_address',
