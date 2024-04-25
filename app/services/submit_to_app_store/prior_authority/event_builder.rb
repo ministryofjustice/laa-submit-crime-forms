@@ -7,7 +7,7 @@ class SubmitToAppStore
 
       def initialize(application, new_data)
         @application = application
-        @new_data = new_data.deep_stringify_keys
+        @new_data = new_data
       end
 
       def payload
