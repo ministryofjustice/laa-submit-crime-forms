@@ -305,6 +305,7 @@ en:
       view_claim:
         status_summary_card:
           claim_status: Claim status
+          claimed: claimed
           status: Status
           awaiting_review: Awaiting LAA review
         show:

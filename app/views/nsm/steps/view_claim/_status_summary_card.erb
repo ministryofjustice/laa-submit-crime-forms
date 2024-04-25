@@ -12,10 +12,12 @@
               <%= t("nsm.claims.index.status.#{claim.status}") %>
             </strong>
           </p>
-          <p><%= claim.updated_at&.to_fs(:stamp) %></p>
+          <%= claim.updated_at&.to_fs(:stamp) %><br>
           <% if claim.status == "submitted" %>
-            <p><%= t(".awaiting_review") %></p>
+            <%= t(".awaiting_review") %><br>
           <% end %>
+          <br>
+          <%= "#{NumberTo.pounds(claim.submitted_total)} #{t(".claimed")}" %>
         </dd>
       </div>
   </div>
