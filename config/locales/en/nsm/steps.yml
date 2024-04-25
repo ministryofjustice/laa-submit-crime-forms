@@ -304,6 +304,6 @@ en:
             description: takes 30 seconds
       view_claim:
         show:
-          page_title: View your claim
-          heading: View your claim
+          page_title: Claim details
+          heading: Claim details
 
