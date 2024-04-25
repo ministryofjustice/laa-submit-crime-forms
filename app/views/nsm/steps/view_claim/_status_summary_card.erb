@@ -7,9 +7,14 @@
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key"><%= t('.status') %></dt>
         <dd class="govuk-summary-list__value">
-          <strong class=<%= "govuk-tag #{I18n.t("nsm.claims.index.status_colour.#{claim.status}")}" %>>
-            <%= I18n.t("nsm.claims.index.status.#{claim.status}") %>
-          </strong>
+          <p>
+            <strong class=<%= "govuk-tag #{I18n.t("nsm.claims.index.status_colour.#{claim.status}")}" %>>
+              <%= I18n.t("nsm.claims.index.status.#{claim.status}") %>
+            </strong>
+          </p>
+          <p>
+            <%= claim.updated_at&.to_fs(:stamp) %>
+          </p>
         </dd>
       </div>
   </div>
