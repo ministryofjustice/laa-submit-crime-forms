@@ -18,7 +18,8 @@ module Steps
     end
 
     def reload
-      raise 'implement this action, if needed, in subclasses'
+      @form_object.valid?
+      render :edit
     end
     # :nocov:
 
