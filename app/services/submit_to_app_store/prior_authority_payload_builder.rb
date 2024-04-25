@@ -8,10 +8,10 @@ class SubmitToAppStore
       { application_id: application.id,
         json_schema_version: 1,
         application_state: application.status,
-        application: data,
+        application: @data,
         application_type: 'crm4',
         application_risk: 'N/A',
-        events: PriorAuthority::EventBuilder.call(application, data) }
+        events: PriorAuthority::EventBuilder.call(application, @data) }
     end
 
     def data
