@@ -8,13 +8,14 @@
         <dt class="govuk-summary-list__key"><%= t('.status') %></dt>
         <dd class="govuk-summary-list__value">
           <p>
-            <strong class=<%= "govuk-tag #{I18n.t("nsm.claims.index.status_colour.#{claim.status}")}" %>>
-              <%= I18n.t("nsm.claims.index.status.#{claim.status}") %>
+            <strong class=<%= "govuk-tag #{t("nsm.claims.index.status_colour.#{claim.status}")}" %>>
+              <%= t("nsm.claims.index.status.#{claim.status}") %>
             </strong>
           </p>
-          <p>
-            <%= claim.updated_at&.to_fs(:stamp) %>
-          </p>
+          <p><%= claim.updated_at&.to_fs(:stamp) %></p>
+          <% if claim.status == "submitted" %>
+            <p><%= t(".awaiting_review") %></p>
+          <% end %>
         </dd>
       </div>
   </div>

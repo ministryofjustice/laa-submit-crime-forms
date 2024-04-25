@@ -306,6 +306,7 @@ en:
         status_summary_card:
           claim_status: Claim status
           status: Status
+          awaiting_review: Awaiting LAA review
         show:
           page_title: Claim details
           heading: Claim details
