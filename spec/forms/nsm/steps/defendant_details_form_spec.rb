@@ -19,7 +19,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
   let(:main) { true }
   let(:first_name) { 'James' }
   let(:last_name) { 'Smith' }
-  let(:maat) { 'AA1' }
+  let(:maat) { '1234567' }
   let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
 
   describe '#maat_required' do
@@ -99,6 +99,24 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
         let(:claim_type) { ClaimType::BREACH_OF_INJUNCTION.to_s }
 
         it { expect(subject).to be_valid }
+      end
+    end
+
+    context 'when MAAT ID contains letters' do
+      let(:maat) { '123456A' }
+
+      it 'has the appropriate error messages' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:maat, :invalid)).to be(true)
+      end
+    end
+
+    context 'when MAAT ID is too short' do
+      let(:maat) { '12345' }
+
+      it 'has the appropriate error messages' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.messages[:maat]).to include('The MAAT number must be a 7 digit number')
       end
     end
   end

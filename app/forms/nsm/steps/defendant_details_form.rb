@@ -7,7 +7,10 @@ module Nsm
 
       validates :first_name, presence: true
       validates :last_name, presence: true
-      validates :maat, presence: true, if: :maat_required?
+      with_options if: :maat_required? do
+        validates :maat, presence: true, format: /\A\d+\z/
+        validates :maat, format: { with: /\d{7}/, message: :wrong_length }
+      end
 
       def maat_required?
         application.claim_type != ClaimType::BREACH_OF_INJUNCTION.to_s

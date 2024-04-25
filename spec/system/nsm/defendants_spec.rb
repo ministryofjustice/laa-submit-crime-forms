@@ -13,7 +13,7 @@ RSpec.describe 'User can manage defendants', type: :system do
     within('.govuk-fieldset', text: 'Main defendant') do
       fill_in 'First name', with: 'Jim'
       fill_in 'Last name', with: 'Bob'
-      fill_in 'MAAT ID', with: 'AA1'
+      fill_in 'MAAT ID', with: '1234567'
     end
 
     click_on 'Save and continue'
@@ -22,7 +22,7 @@ RSpec.describe 'User can manage defendants', type: :system do
       have_attributes(
         first_name: 'Jim',
         last_name: 'Bob',
-        maat: 'AA1',
+        maat: '1234567',
         position: 1,
         main: true,
       )
@@ -30,7 +30,7 @@ RSpec.describe 'User can manage defendants', type: :system do
   end
 
   it 'can add an additional defendant' do
-    claim.defendants.create(first_name: 'Jim', last_name: 'Bob', maat: 'AA1', position: 1, main: true)
+    claim.defendants.create(first_name: 'Jim', last_name: 'Bob', maat: '1234567', position: 1, main: true)
 
     visit edit_nsm_steps_defendant_summary_path(claim.id)
     choose 'Yes'
@@ -40,7 +40,7 @@ RSpec.describe 'User can manage defendants', type: :system do
     within('.govuk-fieldset', text: 'Additional defendant') do
       fill_in 'First name', with: 'Bob'
       fill_in 'Last name', with: 'Jim'
-      fill_in 'MAAT ID', with: 'BB1'
+      fill_in 'MAAT ID', with: '9876543'
     end
 
     click_on 'Save and continue'
@@ -49,14 +49,14 @@ RSpec.describe 'User can manage defendants', type: :system do
       have_attributes(
         first_name: 'Jim',
         last_name: 'Bob',
-        maat: 'AA1',
+        maat: '1234567',
         position: 1,
         main: true,
       ),
       have_attributes(
         first_name: 'Bob',
         last_name: 'Jim',
-        maat: 'BB1',
+        maat: '9876543',
         position: 2,
         main: false,
       ),
@@ -64,8 +64,8 @@ RSpec.describe 'User can manage defendants', type: :system do
   end
 
   it 'can delete a defendant' do
-    claim.defendants.create(first_name: 'Jim', last_name: 'Bob', maat: 'AA1', position: 1, main: true)
-    claim.defendants.create(first_name: 'Bob', last_name: 'Jim', maat: 'BB1', position: 2, main: false)
+    claim.defendants.create(first_name: 'Jim', last_name: 'Bob', maat: '1234567', position: 1, main: true)
+    claim.defendants.create(first_name: 'Bob', last_name: 'Jim', maat: '9876543', position: 2, main: false)
 
     visit edit_nsm_steps_defendant_summary_path(claim.id)
 
@@ -77,7 +77,7 @@ RSpec.describe 'User can manage defendants', type: :system do
       have_attributes(
         first_name: 'Jim',
         last_name: 'Bob',
-        maat: 'AA1',
+        maat: '1234567',
         position: 1,
         main: true,
       )
