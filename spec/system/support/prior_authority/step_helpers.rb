@@ -128,7 +128,7 @@ module PriorAuthority
         fill_in 'Year', with: '2023'
       end
 
-      fill_in 'MAAT number', with: '123456'
+      fill_in 'MAAT number', with: '1234567'
       within('.govuk-form-group', text: 'Is your client detained?') do
         choose client_detained
         select client_detained_prison, from: 'Where is your client detained?' if client_detained == 'Yes'

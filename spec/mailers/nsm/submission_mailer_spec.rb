@@ -31,7 +31,7 @@ RSpec.describe Nsm::SubmissionMailer, type: :mailer do
           LAA_case_reference: 'LAA-n4AohV',
           UFN: '120423/001',
           main_defendant_name: an_instance_of(String),
-          defendant_reference: 'MAAT ID: AA1',
+          defendant_reference: 'MAAT ID: 1234567',
           claim_total: '£20.45',
           date: DateTime.now.to_fs(:stamp),
         )

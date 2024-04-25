@@ -35,7 +35,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         defendant: hash_including(
           first_name: an_instance_of(String),
           last_name: an_instance_of(String),
-          maat: '1234',
+          maat: '1234567',
           date_of_birth: /\A\d{4}-\d{2}-\d{2}\z/
         ),
         firm_office: {
