@@ -18,6 +18,9 @@
           <% end %>
           <br>
           <%= "#{NumberTo.pounds(claim.submitted_total)} #{t(".claimed")}" %>
+          <% if claim.status != "submitted" %>
+            <br><%= "#{NumberTo.pounds(claim.adjusted_total)} #{t(".allowed")}" %>
+          <% end %>
         </dd>
       </div>
   </div>
