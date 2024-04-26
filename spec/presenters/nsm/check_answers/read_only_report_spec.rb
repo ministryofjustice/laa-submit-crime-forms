@@ -12,7 +12,28 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
       context 'section groups' do
         it 'returns multiple groups' do
           expect(subject.section_groups).to be_an_instance_of Array
-          expect(subject.section_groups.count).to eq 8
+          expect(subject.section_groups.count).to eq 7
+        end
+
+        context 'when status section_group name is passed in' do
+          it 'returns multiple groups' do
+            expect(subject.section_groups(:status)).to be_an_instance_of Array
+            expect(subject.section_groups(:status).count).to eq 1
+          end
+        end
+
+        context 'when overview section_group name is passed in' do
+          it 'returns multiple groups' do
+            expect(subject.section_groups(:overview)).to be_an_instance_of Array
+            expect(subject.section_groups(:overview).count).to eq 7
+          end
+        end
+
+        context 'when claimed_costs section_group name is passed in' do
+          it 'returns multiple groups' do
+            expect(subject.section_groups(:claimed_costs)).to be_an_instance_of Array
+            expect(subject.section_groups(:claimed_costs).count).to eq 1
+          end
         end
       end
 
@@ -65,7 +86,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
 
       context 'about claim section' do
         it 'returns multiple elements' do
-          expect(subject.about_claim_section.count).to eq 6
+          expect(subject.about_claim_section.count).to eq 3
         end
       end
 
@@ -84,7 +105,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
       context 'section groups' do
         it 'returns multiple groups' do
           expect(subject.section_groups).to be_an_instance_of Array
-          expect(subject.section_groups.count).to eq 8
+          expect(subject.section_groups.count).to eq 7
         end
       end
 
@@ -141,7 +162,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
 
       context 'about claim section' do
         it 'returns multiple elements' do
-          expect(subject.about_claim_section.count).to eq 6
+          expect(subject.about_claim_section.count).to eq 3
         end
       end
 

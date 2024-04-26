@@ -302,8 +302,4 @@ en:
           feedback:
             link_text: What did you think of this service?
             description: takes 30 seconds
-      view_claim:
-        show:
-          page_title: View your claim
-          heading: View your claim
 
