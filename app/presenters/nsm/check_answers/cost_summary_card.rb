@@ -3,11 +3,11 @@
 module Nsm
   module CheckAnswers
     class CostSummaryCard < Base
-      PROFIT_COSTS = 'profit_costs'.freeze
+      PROFIT_COSTS = 'profit_costs'
       # NOTE: nil values do NOT render a table cell
       SKIP_CELL = nil
 
-      attr_reader :claim, :work_items, :show_adjustments
+      attr_reader :claim, :show_adjustments
 
       def initialize(claim, show_adjustments: SKIP_CELL)
         @claim = claim
@@ -17,13 +17,7 @@ module Nsm
       end
 
       def title(**)
-        ApplicationController.helpers.sanitize(
-          [
-            I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.title", **),
-            check_missing(claim.work_items.any?) { nil },
-          ].compact.join(' '),
-          tags: %w[strong]
-        )
+        I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.title", **)
       end
 
       def template
@@ -31,7 +25,7 @@ module Nsm
       end
 
       def headers
-        base = [
+        [
           t('items', numeric: false, width: 'govuk-!-width-one-quarter'),
           t('request_net'),
           t('request_vat'),

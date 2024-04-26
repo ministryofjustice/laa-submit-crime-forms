@@ -12,7 +12,7 @@ FactoryBot.define do
       total_cost_without_vat do |disb|
         Pricing.for(Claim.new)[disb.disbursement_type] * disb.miles
       end
-      vat_amount { apply_vat =='true' ? total_cost_without_vat * 0.2 : nil }
+      vat_amount { apply_vat == 'true' ? total_cost_without_vat * 0.2 : nil }
       prior_authority { total_cost_without_vat >= 100 ? 'yes' : nil }
       details { 'Details' }
       apply_vat { 'true' }
