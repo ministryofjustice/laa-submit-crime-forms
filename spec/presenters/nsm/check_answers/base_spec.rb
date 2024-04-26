@@ -8,4 +8,8 @@ RSpec.describe Nsm::CheckAnswers::Base do
       )
     end
   end
+
+  describe '#template' do
+    it { expect(subject.template).to be_falsy }
+  end
 end

@@ -46,14 +46,6 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
         end
       end
 
-      context 'sections' do
-        let(:section) { subject.sections(subject.claim_type_section) }
-
-        it 'returns group of cards' do
-          expect(section.count).to eq 1
-        end
-      end
-
       context 'application status section' do
         it 'returns single elements' do
           expect(subject.application_status_section.count).to eq 1
@@ -86,7 +78,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
 
       context 'about claim section' do
         it 'returns multiple elements' do
-          expect(subject.about_claim_section.count).to eq 3
+          expect(subject.about_claim_section.count).to eq 4
         end
       end
 
@@ -118,18 +110,6 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
         end
       end
 
-      context 'sections' do
-        let(:section) { subject.sections(subject.claim_type_section) }
-
-        it 'returns group of cards' do
-          expect(section.count).to eq 1
-        end
-
-        it 'has option to change' do
-          expect(section[0][:card][:actions]).to eq []
-        end
-      end
-
       context 'application status section' do
         it 'returns single elements' do
           expect(subject.application_status_section.count).to eq 1
@@ -162,7 +142,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
 
       context 'about claim section' do
         it 'returns multiple elements' do
-          expect(subject.about_claim_section.count).to eq 3
+          expect(subject.about_claim_section.count).to eq 4
         end
       end
 

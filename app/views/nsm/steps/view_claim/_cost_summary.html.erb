@@ -1,0 +1,13 @@
+<%=
+  head = section.headers
+  rows = section.table_fields.map(&:values)
+  foot = section.summed_fields.values
+
+  govuk_summary_card(
+        title: section.title,
+        actions: [],
+    ) do |card|
+      govuk_table(first_cell_is_header: true, head:, rows:, foot:)
+  end
+%>
+
