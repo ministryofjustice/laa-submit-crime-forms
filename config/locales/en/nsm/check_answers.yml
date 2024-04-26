@@ -120,6 +120,13 @@ en:
               defendant_identification: Defendant identification
               defendant_disabled: Defendant disability
         groups:
+          costs:
+            work_items:
+              title: Work items
+            letters_calls:
+              title: Letters and phone calls
+            disbursements:
+              title: Disbursement costs
           application_status:
             heading: Claim Status
             application_status:
@@ -150,12 +157,8 @@ en:
               title: Claim justification
             claim_details:
               title: Claim details
-            work_items:
-              title: Work items
-            letters_calls:
-              title: Letters and phone calls
-            disbursements:
-              title: Disbursement costs
+            cost_summary:
+              title: Cost summary
             other_info:
               title: Other information
           costs:
@@ -174,4 +177,28 @@ en:
             heading: Equal Monitoring
             equal_monitoring:
               title: Equality Monitoring
+          cost_summary:
+            base:
+              items: Items
+              request_net: Net cost
+              request_vat: VAT
+              request_gross: Total
+              profit_costs: Profit costs
+              waiting: Waiting
+              travel: Travel
+              disbursements: Disbursements
+              total: Total
+            with_adjustments:
+              items: Items
+              request_net: Net cost claimed
+              request_vat: VAT claimed
+              request_gross: Total claimed
+              allowed_net: Net cost allowed
+              allowed_vat: VAT allowed
+              allowed_gross: Total allowed
+              profit_costs: Profit costs
+              waiting: Waiting
+              travel: Travel
+              disbursements: Disbursements
+              total: Total
 

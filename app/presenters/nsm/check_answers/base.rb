@@ -65,6 +65,10 @@ module Nsm
       def currency_value(value)
         NumberTo.pounds(value || 0)
       end
+
+      def template
+        false
+      end
     end
   end
 end

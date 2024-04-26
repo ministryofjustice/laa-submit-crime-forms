@@ -32,20 +32,8 @@ module Nsm
       def section_group(name, section_list)
         {
           heading: group_heading(name),
-          sections: sections(section_list)
+          sections: section_list
         }
-      end
-
-      def sections(section_list)
-        section_list.map do |data|
-          {
-            card: {
-              title: data.title,
-              actions: actions(data.section)
-            },
-            rows: data.rows
-          }
-        end
       end
 
       def application_status_section
@@ -76,6 +64,7 @@ module Nsm
         [
           ClaimJustificationCard.new(claim),
           ClaimDetailsCard.new(claim),
+          CostSummaryCard.new(claim),
           OtherInfoCard.new(claim)
         ]
       end
@@ -101,10 +90,6 @@ module Nsm
       end
 
       private
-
-      def actions(*)
-        []
-      end
 
       def group_heading(group_key, **)
         I18n.t("nsm.steps.check_answers.groups.#{group_key}.heading", **)
