@@ -22,15 +22,7 @@ class PriorAuthorityApplication < ApplicationRecord
 
   has_many :additional_costs, dependent: :destroy
   has_many :further_informations, dependent: :destroy, inverse_of: :prior_authority_application
-  attribute :prison_law, :boolean
-  attribute :ufn, :string
-  attribute :office_code, :string
-  attribute :contact_name, :string
-  attribute :contact_email, :string
-  attribute :firm_name, :string
-  attribute :firm_account_number, :string
-  attribute :created_at, :datetime
-  attribute :updated_at, :datetime
+
   attribute :confirm_excluding_vat, :boolean
   attribute :confirm_travel_expenditure, :boolean
 
@@ -50,7 +42,7 @@ class PriorAuthorityApplication < ApplicationRecord
   scope :reviewed, -> { where(status: %i[granted part_grant rejected auto_grant sent_back expired]) }
   scope :submitted_or_resubmitted, -> { where(status: %i[submitted provider_updated]) }
 
-  scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
+  scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(provider:)) }
 
   def youth_court_applicable?
     court_type == PriorAuthority::CourtTypeOptions::MAGISTRATE.to_s

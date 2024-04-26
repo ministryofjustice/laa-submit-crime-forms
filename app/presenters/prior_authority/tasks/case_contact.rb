@@ -7,6 +7,10 @@ module PriorAuthority
       def path
         edit_prior_authority_steps_case_contact_path
       end
+
+      def completed?
+        super && application.office_code.present?
+      end
     end
   end
 end

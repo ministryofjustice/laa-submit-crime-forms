@@ -97,7 +97,6 @@ module PriorAuthority
       fill_in 'Last name', with: 'Doe'
       fill_in 'Email address', with: 'john@does.com'
       fill_in 'Firm name', with: 'LegalCorp Ltd'
-      fill_in 'Firm account number', with: 'A12345'
       click_on 'Save and continue'
     end
 

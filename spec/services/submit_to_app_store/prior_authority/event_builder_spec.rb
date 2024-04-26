@@ -38,7 +38,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
           date_of_birth: '1981-11-12'
         },
         firm_office: {
-          account_number: '123ABC',
+          account_number: '1A123B',
           address_line_1: '2 Laywer Suite',
           address_line_2: nil,
           name: 'Firm A',
@@ -223,7 +223,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
         let(:changes) do
           {
             firm_office: {
-              account_number: '123ABC',
+              account_number: '1A123B',
               address_line_1: '3 Laywer Suite',
               address_line_2: nil,
               name: 'Firm A',
