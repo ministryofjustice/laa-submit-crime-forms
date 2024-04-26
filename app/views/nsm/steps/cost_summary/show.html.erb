@@ -3,24 +3,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
-    <h2 class="govuk-hint govuk-!-font-size-24"><%= t('.estimate') %></h2>
-    <div class="govuk-heading-l"><%= @vat_registered ? @report.total_cost_inc_vat : @report.total_cost %></div>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <span class="govuk-caption-xl"><%= t('.estimate') %></span>
+    <h2 class="govuk-heading-xl"><%= @report.total_cost %></h2>
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <%= govuk_details(summary_text: t('.payment_claim')) do %>
-          <%=
-            head = [t('.total'), t('.total_inc_vat')]
-            rows = [[@report.total_cost, @vat_registered ? @report.total_cost_inc_vat : @report.total_cost]]
-            govuk_table(head:, rows:)
-          %>
-        <% end %>
-      </div>
-    </div>
+    <%= render 'summary_table', summary: @report.summary %>
 
     <% @report.sections.each do |section| %>
-      <%= govuk_summary_list(**section) %>
+      <%= govuk_summary_card(**section[:card]) do %>
+        <%= govuk_table(**section[:table]) %>
+      <% end %>
     <% end %>
 
     <div class="govuk-button-group">

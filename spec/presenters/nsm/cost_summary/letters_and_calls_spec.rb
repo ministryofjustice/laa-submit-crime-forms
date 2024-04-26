@@ -28,16 +28,10 @@ RSpec.describe Nsm::CostSummary::LettersCalls do
   describe '#rows' do
     it 'generates letters and calls rows' do
       expect(subject.rows).to eq(
-        [
-          {
-            key: { classes: 'govuk-summary-list__value-width-50', text: 'Letters' },
-            value: { text: '£25.00' }
-          },
-          {
-            key: { classes: 'govuk-summary-list__value-width-50', text: 'Phone calls' },
-            value: { text: '£75.00' }
-          },
-        ]
+        [[{ classes: 'govuk-table__header', text: 'Letters' },
+          { classes: 'govuk-table__cell--numeric', text: '£25.00' }],
+         [{ classes: 'govuk-table__header', text: 'Phone calls' },
+          { classes: 'govuk-table__cell--numeric', text: '£75.00' }]]
       )
     end
   end
@@ -49,15 +43,9 @@ RSpec.describe Nsm::CostSummary::LettersCalls do
       end
     end
 
-    describe '#total_cost_inc_vat' do
-      it 'delegates to the form' do
-        expect(subject.total_cost_inc_vat).to eq(120.00)
-      end
-    end
-
     describe '#title' do
-      it 'translates with total cost' do
-        expect(subject.title).to eq('Letters and phone calls total £120.00')
+      it 'translates without total cost' do
+        expect(subject.title).to eq('Letters and phone calls')
       end
     end
   end
@@ -72,15 +60,9 @@ RSpec.describe Nsm::CostSummary::LettersCalls do
       end
     end
 
-    describe '#total_cost_inc_vat' do
-      it 'delegates to the form' do
-        expect(subject.total_cost_inc_vat).to eq(0)
-      end
-    end
-
     describe '#title' do
-      it 'translates with total cost' do
-        expect(subject.title).to eq('Letters and phone calls total £100.00')
+      it 'translates without total cost' do
+        expect(subject.title).to eq('Letters and phone calls')
       end
     end
   end
