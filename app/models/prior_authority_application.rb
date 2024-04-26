@@ -42,7 +42,7 @@ class PriorAuthorityApplication < ApplicationRecord
   scope :reviewed, -> { where(status: %i[granted part_grant rejected auto_grant sent_back expired]) }
   scope :submitted_or_resubmitted, -> { where(status: %i[submitted provider_updated]) }
 
-  scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(provider:)) }
+  scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(office_code: nil, provider: provider)) }
 
   def youth_court_applicable?
     court_type == PriorAuthority::CourtTypeOptions::MAGISTRATE.to_s
