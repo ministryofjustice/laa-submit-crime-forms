@@ -9,19 +9,19 @@ RSpec.describe TestData::NsmBuilder do
     end
 
     it 'can create multiple bulk claims' do
-      expect { subject.build_many(bulk: 2, large: 0) }.to change(Claim, :count).by(2)
+      expect { subject.build_many(bulk: 2, large: 0, sleep: false) }.to change(Claim, :count).by(2)
     end
 
     it 'can create multiple large claims' do
-      expect { subject.build_many(bulk: 0, large: 2) }.to change(Claim, :count).by(2)
+      expect { subject.build_many(bulk: 0, large: 2, sleep: false) }.to change(Claim, :count).by(2)
     end
 
     it 'can create multiple bulk and large claims' do
-      expect { subject.build_many(bulk: 2, large: 2) }.to change(Claim, :count).by(4)
+      expect { subject.build_many(bulk: 2, large: 2, sleep: false) }.to change(Claim, :count).by(4)
     end
 
     it 'can create claims for a specific year' do
-      subject.build_many(bulk: 1, large: 1, year: 2020)
+      subject.build_many(bulk: 1, large: 1, year: 2020, sleep: false)
       data = Claim.pluck(:ufn, :rep_order_date, :cntp_date)
 
       expect(data.count).to eq(2)
@@ -43,16 +43,11 @@ RSpec.describe TestData::NsmBuilder do
       end
     end
 
-    context 'when hostenv is not local' do
-      before do
-        allow(HostEnv).to receive_messages(production?: false)
-        allow(Rails.env).to receive_messages(test?: false)
-      end
-
+    context 'instructed to sleep' do
       it 'runs with delay' do
         expect(subject).to receive(:sleep).twice
 
-        subject.build_many(bulk: 1, large: 1)
+        subject.build_many(bulk: 1, large: 1, sleep: true)
       end
     end
 
