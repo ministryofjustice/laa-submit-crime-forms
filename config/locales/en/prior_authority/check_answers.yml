@@ -111,7 +111,7 @@ en:
         primary_quote_details:
           service_cost: '%{service} cost'
           travel_cost: Travel cost
-          travel_reason: "Reason for travel cost: '%{reason}'"
+          travel_reason: "Reason for travel cost:"
           additional_cost: Additional cost %{n}
-          cost_description: 'Cost description: "%{name} - %{description}"'
+          cost_description: 'Cost description: %{name}'
           laa_adjustment: LAA adjustment

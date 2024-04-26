@@ -131,6 +131,7 @@ FactoryBot.define do
       incorrect_information_explanation { 'Please correct the following information...' }
       resubmission_deadline { 14.days.from_now }
       resubmission_requested { DateTime.current }
+      app_store_updated_at { DateTime.current }
     end
 
     trait :with_further_information_request do

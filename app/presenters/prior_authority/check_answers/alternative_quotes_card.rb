@@ -56,7 +56,7 @@ module PriorAuthority
         [
           {
             head_key: 'no_alternatve_quotes',
-            text: application.no_alternative_quote_reason,
+            text: simple_format(application.no_alternative_quote_reason),
           }
         ]
       end

@@ -3,14 +3,14 @@ module Nsm
     class DefendantSummaryController < Nsm::Steps::BaseController
       def edit
         @main_defendant, *@additional_defendants = current_application.defendants
-        @form_object = ::Steps::AddAnotherForm.build(
+        @form_object = DefendantSummaryForm.build(
           current_application
         )
       end
 
       def update
         @main_defendant, *@additional_defendants = current_application.defendants
-        update_and_advance(::Steps::AddAnotherForm, as: :defendant_summary)
+        update_and_advance(DefendantSummaryForm, as: :defendant_summary)
       end
 
       private

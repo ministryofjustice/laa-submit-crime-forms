@@ -14,7 +14,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetail::DefendantForm do
     let(:application) { instance_double(PriorAuthorityApplication) }
 
     context 'with valid MAAT number' do
-      let(:maat) { '123456' }
+      let(:maat) { '1234567' }
 
       it { is_expected.to be_valid }
     end
@@ -46,12 +46,12 @@ RSpec.describe PriorAuthority::Steps::CaseDetail::DefendantForm do
     let(:application) { create(:prior_authority_application) }
 
     context 'with valid defendant details' do
-      let(:maat) { '123456' }
+      let(:maat) { '1234567' }
 
       it 'persists the defendant details' do
         expect(application.defendant).to be_nil
         save
-        expect(application.defendant).to have_attributes(maat: '123456')
+        expect(application.defendant).to have_attributes(maat: '1234567')
       end
     end
 
@@ -75,14 +75,14 @@ RSpec.describe PriorAuthority::Steps::CaseDetail::DefendantForm do
       before { defendant }
 
       let(:defendant) { create(:defendant, :valid_paa, maat: nil, defendable: application) }
-      let(:maat) { '123456' }
+      let(:maat) { '1234567' }
 
       it 'does not add a new defendant' do
         expect { save }.not_to change { application.reload.defendant }.from(defendant)
       end
 
       it 'updates the existing defendant' do
-        expect { save }.to change { application.reload.defendant.maat }.from(nil).to('123456')
+        expect { save }.to change { application.reload.defendant.maat }.from(nil).to('1234567')
       end
     end
   end

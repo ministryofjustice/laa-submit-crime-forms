@@ -50,13 +50,12 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     end
 
     context 'with a sent_back application with no changes made' do
-      let(:application) do
-        travel_to(sent_back_datetime) do
-          create(:prior_authority_application, :full, :sent_back_for_incorrect_info)
-        end
+      before do
+        allow(PriorAuthority::ChangeLister).to receive(:call).and_return([])
       end
 
-      let(:sent_back_datetime) { 2.days.ago.change({ hour: 11, minute: 0 }) }
+      let(:application) { create(:prior_authority_application, :full, :sent_back_for_incorrect_info) }
+
       let(:confirm_excluding_vat) { 'true' }
       let(:confirm_travel_expenditure) { 'true' }
 
@@ -76,6 +75,8 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     let(:confirm_excluding_vat) { '' }
     let(:confirm_travel_expenditure) { '' }
 
+    before { allow(SubmitToAppStore).to receive(:perform_later).and_return(nil) }
+
     it 'does NOT validate the form' do
       save
       expect(form.errors).to be_empty
@@ -86,9 +87,8 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     end
 
     it 'does NOT submit the application to the app store' do
-      allow(SubmitToAppStore).to receive(:new)
       save
-      expect(SubmitToAppStore).not_to have_received(:new)
+      expect(SubmitToAppStore).not_to have_received(:perform_later)
     end
   end
 
@@ -96,6 +96,8 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     subject(:save) { form.save }
 
     let(:application) { create(:prior_authority_application, status: 'draft') }
+
+    before { allow(SubmitToAppStore).to receive(:perform_later).and_return(nil) }
 
     context 'with accepted confirmations' do
       let(:confirm_excluding_vat) { 'true' }
@@ -106,11 +108,8 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
       end
 
       it 'submits the application to the appstore' do
-        app_store_submitter = instance_double(SubmitToAppStore)
-        allow(SubmitToAppStore).to receive(:new).and_return(app_store_submitter)
-        allow(app_store_submitter).to receive(:process)
         save
-        expect(app_store_submitter).to have_received(:process).with(submission: application)
+        expect(SubmitToAppStore).to have_received(:perform_later).with(submission: application)
       end
 
       context 'when update fails' do
@@ -119,10 +118,9 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
         end
 
         it 'does NOT submit the application to the app store' do
-          allow(SubmitToAppStore).to receive(:new)
           save
         rescue StandardError
-          expect(SubmitToAppStore).not_to have_received(:new)
+          expect(SubmitToAppStore).not_to have_received(:perform_later)
         end
       end
     end
@@ -141,9 +139,8 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
       end
 
       it 'does NOT submit the application to the app store' do
-        allow(SubmitToAppStore).to receive(:new)
         save
-        expect(SubmitToAppStore).not_to have_received(:new)
+        expect(SubmitToAppStore).not_to have_received(:perform_later)
       end
     end
 
@@ -161,9 +158,8 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
       end
 
       it 'does NOT submit the application to the app store' do
-        allow(SubmitToAppStore).to receive(:new)
         save
-        expect(SubmitToAppStore).not_to have_received(:new)
+        expect(SubmitToAppStore).not_to have_received(:perform_later)
       end
     end
   end

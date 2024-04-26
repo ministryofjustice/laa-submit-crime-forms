@@ -42,10 +42,7 @@
         <dt class="govuk-summary-list__key"><%= t('.additional_items') %></dt>
         <dd class="govuk-summary-list__value">
           <% if alternative_quote.additional_cost_list.present? %>
-            <% alternative_quote.additional_cost_list.split("\n").map do |line| %>
-              <%= line %>
-              <br>
-            <% end %>
+            <%= simple_format(alternative_quote.additional_cost_list) %>
           <% else %>
             <%= t('.none') %>
           <% end %>

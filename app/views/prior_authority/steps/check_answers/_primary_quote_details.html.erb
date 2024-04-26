@@ -20,8 +20,9 @@
   <% end %>
   <% if section.travel_detail_form.travel_cost_reason.present? %>
     <p>
-      <%= t('.travel_reason', reason: section.travel_detail_form.travel_cost_reason) %>
+      <%= t('.travel_reason') %>
     </p>
+    <%= simple_format section.travel_detail_form.travel_cost_reason %>
   <% end %>
   <%= render 'prior_authority/steps/primary_quote_summary/travel_cost_subtable',
              form: section.travel_detail_form, show_adjustments: show_adjustments %>
@@ -36,7 +37,8 @@
     </div>
   <% end %>
   <p>
-    <%= t('.cost_description', name: additional_cost.name, description: additional_cost.description) %>
+    <%= t('.cost_description', name: additional_cost.name) %>
   </p>
+  <%= simple_format additional_cost.description %>
   <%= render 'prior_authority/steps/additional_costs/subtable', additional_cost:, show_adjustments: %>
 <% end %>

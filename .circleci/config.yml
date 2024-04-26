@@ -305,7 +305,7 @@ jobs:
           docker-image-name: app
           target-file: ./Dockerfile
           organization: 'legal-aid-agency'
-          project: ministryofjustice/laa-assess-non-magistrate-fee
+          project: ministryofjustice/laa-submit-crime-forms
           severity-threshold: "high"
           fail-on-issues: true
 

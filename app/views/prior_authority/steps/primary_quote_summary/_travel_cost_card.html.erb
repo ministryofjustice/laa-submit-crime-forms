@@ -20,7 +20,7 @@
         <dl class="govuk-summary-list">
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"><%= t('.why_travel_costs') %></dt>
-            <dd class="govuk-summary-list__value"><%= form.travel_cost_reason %></dd>
+            <dd class="govuk-summary-list__value"><%= simple_format(form.travel_cost_reason) %></dd>
           </div>
         </dl>
       <% end %>

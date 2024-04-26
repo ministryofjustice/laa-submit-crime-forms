@@ -9,7 +9,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         prison_law: true,
         ufn: '120423/123',
         laa_reference: 'LAA-n4AohV',
-        status: 'pre_draft',
+        status: 'submitted',
         reason_why: 'something',
         main_offence_id: 'something',
         custom_main_offence_name: nil,
@@ -35,7 +35,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         defendant: hash_including(
           first_name: an_instance_of(String),
           last_name: an_instance_of(String),
-          maat: '1234',
+          maat: '1234567',
           date_of_birth: /\A\d{4}-\d{2}-\d{2}\z/
         ),
         firm_office: {
@@ -126,7 +126,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
           }
         ],
         additional_costs: [],
-        further_informations: [
+        further_information: [
           {
             caseworker_id: '87e88ac6-d89a-4180-80d4-e03285023fb0',
             documents: [
@@ -160,7 +160,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
     }
   end
   let(:provider) { create(:provider) }
-  let(:application) { create(:prior_authority_application, :full, :with_confirmations) }
+  let(:application) { create(:prior_authority_application, :full, :with_confirmations, status: :submitted) }
   let(:fixed_arbitrary_date) { Date.new(2024, 1, 15) }
 
   before do

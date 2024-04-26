@@ -34,7 +34,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
         defendant: {
           first_name: 'bob',
           last_name: 'jim',
-          maat: 'AA1',
+          maat: '1234567',
           date_of_birth: '1981-11-12'
         },
         firm_office: {
@@ -262,7 +262,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
             defendant: {
               first_name: 'rob',
               last_name: 'jim',
-              maat: 'AA1',
+              maat: '1234567',
               date_of_birth: '1981-11-12'
             },
           }

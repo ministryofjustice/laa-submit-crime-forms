@@ -18,7 +18,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         {
           main_offence_autocomplete: 'robbery',
           rep_order_date: Date.yesterday,
-          defendant_attributes: { 'maat' => '123456' },
+          defendant_attributes: { 'maat' => '1234567' },
           client_detained: true,
           prison_autocomplete: 'hmp_bedford',
           subject_to_poca: false,
@@ -62,7 +62,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         {
           main_offence_autocomplete: 'robbery',
           rep_order_date: Date.yesterday,
-          defendant_attributes: { 'maat' => '123456' },
+          defendant_attributes: { 'maat' => '1234567' },
           client_detained: true,
           prison_autocomplete: 'hmp_albany',
           subject_to_poca: false,
@@ -87,7 +87,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
 
       it 'persists the defendant' do
         expect { save }.to change { application.reload.defendant }.from(nil)
-        expect(application.defendant).to have_attributes(maat: '123456')
+        expect(application.defendant).to have_attributes(maat: '1234567')
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         {
           main_offence_autocomplete_suggestion: 'Robbery',
           rep_order_date: Date.yesterday,
-          defendant_attributes: { 'maat' => '123456' },
+          defendant_attributes: { 'maat' => '1234567' },
           client_detained: true,
           prison_autocomplete_suggestion: 'HMP Albany',
           subject_to_poca: false,
@@ -125,7 +125,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         {
           main_offence_autocomplete_suggestion: 'Custom crime',
           rep_order_date: Date.yesterday,
-          defendant_attributes: { 'maat' => '123456' },
+          defendant_attributes: { 'maat' => '1234567' },
           client_detained: true,
           prison_autocomplete_suggestion: 'Custom prison',
           subject_to_poca: false,
@@ -157,7 +157,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
           main_offence_autocomplete: 'robbery',
           main_offence_autocomplete_suggestion: 'False imprisonment',
           rep_order_date: Date.yesterday,
-          defendant_attributes: { 'maat' => '123456' },
+          defendant_attributes: { 'maat' => '1234567' },
           client_detained: true,
           prison_autocomplete_suggestion: 'HMP Bristol',
           prison_autocomplete: 'hmp_albany',

@@ -34,13 +34,7 @@ ingress:
   namespace: laa-submit-crime-forms-uat
   className: modsec
   annotations:
-    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
-    nginx.ingress.kubernetes.io/modsecurity-snippet: |
-      SecRuleEngine On
-      SecAction "id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=6"
-      SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
     external-dns.alpha.kubernetes.io/set-identifier: laa-submit-crime-forms-app-laa-submit-crime-forms-uat-green
-    external-dns.alpha.kubernetes.io/aws-weight: "100"
   hosts:
     - host: uat.submit-crime-forms.service.justice.gov.uk
       paths:
@@ -74,7 +68,7 @@ variables:
   environment: uat
   portalIDPMetadataFile: config/laa_portal/metadata/uat.xml
   spEntityId: LAA_Portal_CRM7_UAT
-  appStore: https://laa-crime-application-store-uat.apps.live.cloud-platform.service.justice.gov.uk
+  appStore: http://laa-crime-application-store-app.laa-crime-application-store-uat.svc.cluster.local
   maxFileUploadBytes: 10485760
   eolUrl: https://apply-for-extension-of-upper-limits.dev.form.service.justice.gov.uk/
   enableSyncTriggerEndpoint: 'false'

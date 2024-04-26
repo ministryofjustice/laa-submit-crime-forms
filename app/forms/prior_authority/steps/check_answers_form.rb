@@ -13,8 +13,8 @@ module PriorAuthority
       def save!; end
 
       def persist!
-        application.update!(attributes.merge({ status: :submitted }))
-        SubmitToAppStore.new.process(submission: application)
+        application.update!(attributes.merge({ status: new_status }))
+        SubmitToAppStore.perform_later(submission: application)
         true
       end
 
@@ -23,16 +23,17 @@ module PriorAuthority
       end
 
       def application_changed_since_request?
-        last_updated_at > application.resubmission_requested
-      end
-
-      def last_updated_at
-        LastUpdateFinder.call(application)
+        content = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:).data
+        ::PriorAuthority::ChangeLister.call(application, content).present?
       end
 
       def needs_correcting?
         application.sent_back? &&
           application.incorrect_information_explanation.present?
+      end
+
+      def new_status
+        application.sent_back? ? :provider_updated : :submitted
       end
     end
   end

@@ -8,6 +8,7 @@ gem 'bootsnap', '~> 1.18.3', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
 gem 'factory_bot_rails', '>= 6.4.3'
+gem 'faker'
 gem 'govuk_notify_rails', '~> 2.2.0'
 gem 'httparty'
 gem 'jsbundling-rails'
@@ -34,7 +35,6 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
-  gem 'faker'
   gem 'overcommit'
   gem 'pry'
   gem 'rspec-expectations'

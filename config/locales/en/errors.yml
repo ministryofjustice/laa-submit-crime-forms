@@ -76,6 +76,7 @@ en:
             maat:
               blank: Enter the MAAT number
               invalid: The MAAT number must only contain numbers
+              wrong_length: The MAAT number must be a 7 digit number
           summary:
             maat:
               blank: Enter the MAAT number
@@ -305,6 +306,8 @@ en:
               blank: Last name cannot be blank
             maat:
               blank: MAAT ID cannot be blank
+              invalid: The MAAT number must only contain numbers
+              wrong_length: The MAAT number must be a 7 digit number
         nsm/steps/case_details_form:
           attributes:
             main_offence:
@@ -432,6 +435,22 @@ en:
               blank: Provdie details of disbursement
             prior_authority:
               blank: Confirm if you have prior authority
+        nsm/steps/disbursements_form:
+          attributes:
+            add_another:
+              blank: "Select yes if you want to add another disbursement"
+        nsm/steps/defendant_summary_form:
+          attributes:
+            add_another:
+              blank: "Select yes if you want to add another defendant"
+        nsm/steps/work_items_form:
+          attributes:
+            add_another:
+              blank: "Select yes if you want to add another work item"
+        nsm/steps/supporting_evidence_form:
+          attributes:
+            supporting_evidence:
+              blank: Select a file to upload
         nsm/steps/solicitor_declaration_form:
           attributes:
             signatory_name:

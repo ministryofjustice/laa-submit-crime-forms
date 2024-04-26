@@ -34,7 +34,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'first_name' => an_instance_of(String),
             'last_name' => an_instance_of(String),
             'id' => defendant.id,
-            'maat' => 'AA1',
+            'maat' => '1234567',
             'main' => true,
             'position' => 1
           }],
