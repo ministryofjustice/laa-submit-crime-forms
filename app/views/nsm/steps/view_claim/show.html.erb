@@ -4,8 +4,27 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-    <% @report.section_groups.each do |section_group| %>
-      <h2 class="govuk-heading-l"><%= section_group[:heading] %></h2>
+    <% @report.section_groups(:status).each do |section_group| %>
+      <% section_group[:sections].each do |section| %>
+        <%= govuk_summary_list(**section) %>
+      <% end %>
+    <% end %>
+
+    <nav class="moj-sub-navigation" aria-label="Sub navigation" id="claim_nav">
+      <ul class="moj-sub-navigation__list">
+        <li class="moj-sub-navigation__item">
+          <%= link_to t('.tabs.overview'), nsm_steps_view_claim_path(@claim, section: 'overview'), class: 'moj-sub-navigation__link', 'aria-current': (@section == :overview ? "page" : nil) %>
+        </li>
+        <li class="moj-sub-navigation__item">
+          <%= link_to t('.tabs.claimed_costs'), nsm_steps_view_claim_path(@claim, section: 'claimed_costs'), class: 'moj-sub-navigation__link', 'aria-current': (@section == :claimed_costs ? "page" : nil) %>
+        </li>
+      </ul>
+    </nav>
+
+    <h2 class="govuk-heading-l"><%= t(".tabs.#{@section}") %></h2>
+    <% @report.section_groups(@section).each do |section_group| %>
+      <h3 class="govuk-heading-m"><%= section_group[:heading] %></h3>
+
       <% section_group[:sections].each do |section| %>
         <%= govuk_summary_list(**section) %>
       <% end %>

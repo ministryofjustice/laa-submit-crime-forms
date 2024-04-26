@@ -5,6 +5,8 @@ module Nsm
     class ViewClaimController < Nsm::Steps::BaseController
       def show
         @report = CheckAnswers::ReadOnlyReport.new(current_application)
+        @claim = current_application
+        @section = params.fetch(:section, :overview).to_sym
       end
     end
   end
