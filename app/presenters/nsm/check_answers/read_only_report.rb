@@ -23,7 +23,7 @@ module Nsm
         @claim = claim
       end
 
-      def section_groups(section=:overview)
+      def section_groups(section = :overview)
         GROUPS[section].map do |group_name|
           section_group(group_name, public_send(:"#{group_name}_section"))
         end
