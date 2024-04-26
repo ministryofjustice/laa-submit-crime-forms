@@ -9,11 +9,11 @@ RSpec.describe TestData::PaBuilder do
     end
 
     it 'can create multiple applications' do
-      expect { subject.build_many(bulk: 2) }.to change(PriorAuthorityApplication, :count).by(2)
+      expect { subject.build_many(bulk: 2, sleep: false) }.to change(PriorAuthorityApplication, :count).by(2)
     end
 
     it 'can applications claims for a specific year' do
-      subject.build_many(bulk: 2, year: 2020)
+      subject.build_many(bulk: 2, year: 2020, sleep: false)
       data = PriorAuthorityApplication.pluck(:ufn)
 
       expect(data.count).to eq(2)
@@ -33,16 +33,11 @@ RSpec.describe TestData::PaBuilder do
       end
     end
 
-    context 'when hostenv is not local' do
-      before do
-        allow(HostEnv).to receive_messages(production?: false)
-        allow(Rails.env).to receive_messages(test?: false)
-      end
-
+    context 'when instructed to sleep' do
       it 'runs with delay' do
         expect(subject).to receive(:sleep).twice
 
-        subject.build_many(bulk: 2)
+        subject.build_many(bulk: 2, sleep: true)
       end
     end
 

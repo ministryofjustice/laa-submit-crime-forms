@@ -12,6 +12,8 @@ The form has a single YesNoAnswer attribute and does not modify the application
 when processed.
 
 When using this pattern:
+* You will need to subclass this form if you want to display custom validation
+  error messages
 *  the controller will need to load any other data need for
 the view into a separate data variable, this should be done in both thge `edit`
 and `update` endpoints.

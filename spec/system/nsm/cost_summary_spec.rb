@@ -25,35 +25,43 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
   it 'can do green path' do
     visit nsm_steps_cost_summary_path(claim.id)
 
-    doc = Nokogiri::HTML(page.html)
-    values = doc.css('.govuk-summary-card h2, dd, dt').map(&:text)
+    expect(page)
+      .to have_content('Item Net cost VAT Total')
+      .and have_content('Profit costs £305.84 £61.17 £367.01')
+      .and have_content('Waiting £0.00 £0.00 £0.00')
+      .and have_content('Travel £0.00 £0.00 £0.00')
+      .and have_content('Disbursements £227.50 £31.50 £259.00')
+      .and have_content('Total £533.34 £92.67 £626.01')
+      # Work items
+      .and have_content('Attendance without counsel1 hour 30 minutes£78.23') # 52.15 * 90 / 60
+      .and have_content('Preparation0 hours 0 minutes£0.00')
+      .and have_content('Advocacy3 hours 10 minutes£207.16')
+      .and have_content('Total£285.39')
+      # Letters and calls
+      .and have_content('Letters£8.18') # 4.09 * 2
+      .and have_content('Phone calls£12.27') # 4.09 * 3
+      .and have_content('Total£20.45')
+      # Disbursements
+      .and have_content('Car£90.00')
+      .and have_content('DNA Testing£30.00')
+      .and have_content('Custom£40.00')
+      .and have_content('Car£67.50')
+      .and have_content('Total£227.50')
+  end
 
-    expect(values).to eq(
-      [
-        'Work items total £342.47',
-        'Items', 'Total per item',
-        'Attendance without counsel', '£78.23', # 52.15 * 90 / 60
-        'Preparation', '£0.00',
-        'Advocacy', '£207.16', # 65.42 * (104 + 86) / 60
-        'Total', '£285.39',
-        'Total (including VAT)', '£342.47',
+  context 'when claimant is not vat registered' do
+    before { claim.firm_office.update!(vat_registered: YesNoAnswer::NO) }
 
-        'Letters and phone calls total £24.54',
-        'Items', 'Total per item',
-        'Letters', '£8.18', # 4.09 * 2
-        'Phone calls', '£12.27', # 4.09 * 3
-        'Total', '£20.45',
-        'Total (including VAT)', '£24.54',
+    it 'shows summaries without vat (except for explicitly listed disbursements)' do
+      visit nsm_steps_cost_summary_path(claim.id)
 
-        'Disbursements total £259.00',
-        'Items', 'Total per item',
-        'Car', '£90.00',
-        'DNA Testing', '£30.00',
-        'Custom', '£40.00',
-        'Car', '£67.50',
-        'Total', '£227.50',
-        'Total (including any VAT)', '£259.00'
-      ]
-    )
+      expect(page)
+        .to have_content('Item Net cost VAT Total')
+        .and have_content('Profit costs £305.84 £0.00 £305.84')
+        .and have_content('Waiting £0.00 £0.00 £0.00')
+        .and have_content('Travel £0.00 £0.00 £0.00')
+        .and have_content('Disbursements £227.50 £31.50 £259.00')
+        .and have_content('Total £533.34 £31.50 £564.84')
+    end
   end
 end

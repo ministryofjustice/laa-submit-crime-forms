@@ -5,7 +5,7 @@ module Nsm
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
 
-      attr_reader :claim, :items
+      attr_reader :claim, :items, :summary
 
       def initialize(claim)
         @claim = claim
@@ -14,6 +14,7 @@ module Nsm
           letters_calls: LettersCalls.new(claim),
           disbursements: Disbursements.new(claim.disbursements.by_age, claim)
         }
+        @summary = Summary.new(claim)
       end
 
       def sections
@@ -23,17 +24,16 @@ module Nsm
               title: data.title,
               actions: actions(name)
             },
-            rows: [header_row, *data.rows, *footer_row(data)],
+            table: {
+              head: header_row(time_column: name == :work_items),
+              rows: [*data.rows, footer_row(data, time_column: name == :work_items)],
+            }
           }
         end
       end
 
       def total_cost
-        NumberTo.pounds(items.values.filter_map(&:total_cost).sum)
-      end
-
-      def total_cost_inc_vat
-        NumberTo.pounds(items.values.filter_map(&:total_cost_inc_vat).sum)
+        NumberTo.pounds summary.total_gross
       end
 
       private
@@ -48,21 +48,20 @@ module Nsm
         ]
       end
 
-      def header_row
-        {
-          key: { text: translate('.header.items'), classes: 'govuk-summary-list__value-width-50' },
-          value: { text: translate('.header.total'), classes: 'govuk-summary-list__value-bold' },
-        }
+      def header_row(time_column: false)
+        [
+          { text: translate('.header.item') },
+          ({ text: translate('.header.time') } if time_column),
+          { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
+        ].compact
       end
 
-      def footer_row(data)
+      def footer_row(data, time_column: false)
         [
-          {
-            key: { text: translate('.footer.total'), classes: 'govuk-summary-list__value-width-50' },
-            value: { text: NumberTo.pounds(data.total_cost), classes: 'govuk-summary-list__value-bold' },
-            classes: 'govuk-summary-list__row-double-border'
-          }
-        ] + data.footer_vat_row
+          { text: translate('.footer.total'), classes: 'govuk-table__header' },
+          ({} if time_column),
+          { text: NumberTo.pounds(data.total_cost), classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
+        ].compact
       end
     end
   end

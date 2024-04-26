@@ -40,8 +40,8 @@ module Nsm
       def work_item_rows
         work_items.rows.map do |row|
           {
-            head_opts: { text: row[:key][:text] },
-            text: row[:value][:text]
+            head_opts: { text: row[0][:text] },
+            text: row[2][:text]
           }
         end
       end

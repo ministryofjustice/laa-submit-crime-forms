@@ -66,7 +66,7 @@ RSpec.describe Nsm::CheckAnswers::Report do
 
       context 'about claim section' do
         it 'returns multiple elements' do
-          expect(subject.about_claim_section.count).to eq 6
+          expect(subject.about_claim_section.count).to eq 4
         end
       end
 
@@ -136,7 +136,7 @@ RSpec.describe Nsm::CheckAnswers::Report do
 
       context 'about claim section' do
         it 'returns multiple elements' do
-          expect(subject.about_claim_section.count).to eq 6
+          expect(subject.about_claim_section.count).to eq 4
         end
       end
 

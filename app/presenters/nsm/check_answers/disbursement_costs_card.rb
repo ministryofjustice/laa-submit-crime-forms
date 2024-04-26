@@ -30,8 +30,8 @@ module Nsm
       def disbursement_rows
         disbursements.rows.map do |row|
           {
-            head_opts: { text: row[:key][:text] },
-            text: row[:value][:text]
+            head_opts: { text: row[0][:text] },
+            text: row[1][:text]
           }
         end
       end

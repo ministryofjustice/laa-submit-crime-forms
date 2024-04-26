@@ -28,8 +28,7 @@ module Nsm
         heading = head_opts[:text] || translate_table_key(section, head_key, **head_opts)
         row = {
           key: {
-            text: heading,
-            classes: 'govuk-summary-list__value-width-50'
+            text: heading
           },
           value: {
             text:
@@ -68,6 +67,14 @@ module Nsm
 
       def template
         false
+      end
+
+      def custom
+        nil
+      end
+
+      def change_link_controller_method
+        :edit
       end
     end
   end

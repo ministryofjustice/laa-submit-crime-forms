@@ -9,10 +9,14 @@ RSpec.describe Nsm::CostSummary::WorkItems do
   let(:in_area) { 'yes' }
   let(:date) { Date.new(2008, 11, 22) }
   let(:work_items) { [instance_double(WorkItem), instance_double(WorkItem), instance_double(WorkItem)] }
-  let(:form_advocacy) { instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 100.0) }
-  let(:form_advocacy2) { instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 70.0) }
+  let(:form_advocacy) do
+    instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 100.0, time_spent: 180)
+  end
+  let(:form_advocacy2) do
+    instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 70.0, time_spent: 180)
+  end
   let(:form_preparation) do
-    instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::PREPARATION, total_cost: 40.0)
+    instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::PREPARATION, total_cost: 40.0, time_spent: 180)
   end
 
   before do
@@ -35,20 +39,15 @@ RSpec.describe Nsm::CostSummary::WorkItems do
   describe '#rows' do
     it 'generates letters and calls rows' do
       expect(subject.rows).to eq(
-        [
-          {
-            key: { classes: 'govuk-summary-list__value-width-50', text: 'Attendance without counsel' },
-            value: { text: '£0.00' }
-          },
-          {
-            key: { classes: 'govuk-summary-list__value-width-50', text: 'Preparation' },
-            value: { text: '£40.00' }
-          },
-          {
-            key: { classes: 'govuk-summary-list__value-width-50', text: 'Advocacy' },
-            value: { text: '£170.00' }
-          }
-        ]
+        [[{ classes: 'govuk-table__header', text: 'Attendance without counsel' },
+          { text: '0 hours 0 minutes' },
+          { classes: 'govuk-table__cell--numeric', text: '£0.00' }],
+         [{ classes: 'govuk-table__header', text: 'Preparation' },
+          { text: '3 hours 0 minutes' },
+          { classes: 'govuk-table__cell--numeric', text: '£40.00' }],
+         [{ classes: 'govuk-table__header', text: 'Advocacy' },
+          { text: '6 hours 0 minutes' },
+          { classes: 'govuk-table__cell--numeric', text: '£170.00' }]]
       )
     end
 
@@ -56,7 +55,7 @@ RSpec.describe Nsm::CostSummary::WorkItems do
       let(:assigned_counsel) { 'yes' }
 
       it 'includes ATTENDANCE_WITH_COUNSEL in data' do
-        row_keys = subject.rows.pluck(:key).pluck(:text)
+        row_keys = subject.rows.map(&:first).pluck(:text)
         expect(row_keys).to eq(
           ['Attendance with counsel', 'Attendance without counsel', 'Preparation', 'Advocacy']
         )
@@ -67,7 +66,7 @@ RSpec.describe Nsm::CostSummary::WorkItems do
       let(:in_area) { 'no' }
 
       it 'includes WAITING and TRAVEL in data' do
-        row_keys = subject.rows.pluck(:key).pluck(:text)
+        row_keys = subject.rows.map(&:first).pluck(:text)
         expect(row_keys).to eq(
           ['Attendance without counsel', 'Preparation', 'Advocacy', 'Travel', 'Waiting']
         )
@@ -89,8 +88,8 @@ RSpec.describe Nsm::CostSummary::WorkItems do
     end
 
     describe '#title' do
-      it 'translates with total cost' do
-        expect(subject.title).to eq('Work items total £252.00')
+      it 'translates without total cost' do
+        expect(subject.title).to eq('Work items')
       end
     end
   end
@@ -111,8 +110,8 @@ RSpec.describe Nsm::CostSummary::WorkItems do
     end
 
     describe '#title' do
-      it 'translates with total cost' do
-        expect(subject.title).to eq('Work items total £210.00')
+      it 'translates without total cost' do
+        expect(subject.title).to eq('Work items')
       end
     end
   end
