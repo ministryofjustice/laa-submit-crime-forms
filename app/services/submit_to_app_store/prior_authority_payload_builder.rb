@@ -5,22 +5,17 @@ class SubmitToAppStore
     end
 
     def payload
-      content = data
       { application_id: application.id,
         json_schema_version: 1,
         application_state: application.status,
-        application: content,
+        application: data,
         application_type: 'crm4',
         application_risk: 'N/A',
-        events: PriorAuthority::EventBuilder.call(application, content) }
+        events: PriorAuthority::EventBuilder.call(application, data) }
     end
 
-    private
-
-    attr_reader :application
-
     def data
-      direct_attributes.merge(
+      @data ||= direct_attributes.merge(
         supporting_documents:,
         provider:,
         firm_office:,
@@ -31,6 +26,10 @@ class SubmitToAppStore
         further_information:,
       )
     end
+
+    private
+
+    attr_reader :application
 
     def direct_attributes
       application.as_json(only: DIRECT_ATTRIBUTES)
