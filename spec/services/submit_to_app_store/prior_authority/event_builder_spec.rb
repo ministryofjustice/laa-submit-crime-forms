@@ -334,7 +334,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
         context 'when hearing detail has changed' do
           let(:changes) { { next_hearing: false, next_hearing_date: 1.month.from_now } }
 
-          it 'lists the change as next hearing' do
+          it 'lists the change as hearing detail' do
             expect(listed_corrections).to eq [:hearing_detail]
           end
         end
