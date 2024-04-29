@@ -25,10 +25,6 @@ class DummyStepController < ::Steps::BaseStepController
     true
   end
 
-  def reload
-    head(:ok)
-  end
-
   def decision_tree_class
     DummyStepImplementation.decision_tree_class || super
   end
