@@ -7,11 +7,12 @@ module Nsm
       # NOTE: nil values do NOT render a table cell
       SKIP_CELL = nil
 
-      attr_reader :claim, :show_adjustments
+      attr_reader :claim, :show_adjustments, :show_card
 
-      def initialize(claim, show_adjustments: SKIP_CELL)
+      def initialize(claim, show_adjustments: SKIP_CELL, show_card: true)
         @claim = claim
         @show_adjustments = show_adjustments
+        @show_card = show_card
         @group = 'about_claim'
         @section = 'cost_summary'
       end
@@ -81,9 +82,11 @@ module Nsm
 
       def calculate_disbursements(formatted:)
         net_cost = disbursements.total_cost
-        vat = disbursements.total_cost_inc_vat - disbursements.total_cost
+        gross_cost = disbursements.disbursement_forms.sum(&:total_cost)
+        vat = gross_cost - net_cost
         allowed_net_cost = show_adjustments && disbursements.total_cost
-        allowed_vat = show_adjustments && (disbursements.total_cost_inc_vat - disbursements.total_cost)
+        allowed_gross_cost = show_adjustments && disbursements.disbursement_forms.sum(&:total_cost)
+        allowed_vat = show_adjustments && allowed_gross_cost - net_cost
 
         build_hash(
           name: 'disbursements',

@@ -14,7 +14,7 @@ module Nsm
           supporting_evidence
           equality_answers
         ].freeze,
-        claimed_costs: %w[costs].freeze
+        claimed_costs: %w[cost_summary costs].freeze
       }.freeze
 
       attr_reader :claim
@@ -66,6 +66,12 @@ module Nsm
           ClaimDetailsCard.new(claim),
           CostSummaryCard.new(claim),
           OtherInfoCard.new(claim)
+        ]
+      end
+
+      def cost_summary_section
+        [
+          CostSummaryCard.new(claim, show_card: false),
         ]
       end
 

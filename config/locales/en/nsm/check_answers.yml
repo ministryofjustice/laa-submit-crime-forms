@@ -191,6 +191,7 @@ en:
             equal_monitoring:
               title: Equality Monitoring
           cost_summary:
+            heading: Cost summary
             base:
               items: Items
               request_net: Net cost
