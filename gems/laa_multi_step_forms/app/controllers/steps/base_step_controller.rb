@@ -16,12 +16,12 @@ module Steps
     def update
       raise 'implement this action, if needed, in subclasses'
     end
+    # :nocov:
 
     def reload
       @form_object.valid?
       render :edit
     end
-    # :nocov:
 
     private
 
