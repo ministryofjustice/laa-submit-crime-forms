@@ -52,6 +52,8 @@ module PriorAuthority
     end
 
     def hearing_detail_changed?
+      return false if @application.prison_law?
+
       [:next_hearing_date,
        :plea,
        :court_type,
@@ -61,7 +63,9 @@ module PriorAuthority
     end
 
     def next_hearing_changed?
-      different?(:next_hearing) || different?(:next_hearing_data)
+      return false unless @application.prison_law?
+
+      different?(:next_hearing) || different?(:next_hearing_date)
     end
 
     def primary_quote_changed?
