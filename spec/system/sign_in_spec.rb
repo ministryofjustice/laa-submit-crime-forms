@@ -39,8 +39,8 @@ RSpec.describe 'Sign in user journey' do
     end
 
     it 'does not prompt for office code logic' do
-      click_on "Claim non-standard magistrates' court payments, previously CRM7"
-      expect(page).to have_current_path(nsm_applications_path)
+      click_on 'Apply for prior authority to incur disbursements, previously CRM4'
+      expect(page).to have_current_path(prior_authority_applications_path)
     end
   end
 
@@ -60,20 +60,8 @@ RSpec.describe 'Sign in user journey' do
     context 'when I start NSM journey' do
       before { click_on "Claim non-standard magistrates' court payments, previously CRM7" }
 
-      it 'prompts for office code logic' do
-        expect(page).to have_current_path(edit_nsm_office_path)
-      end
-
-      it 'saves selected office code and moves me on' do
-        choose '1A123B'
-        expect { click_on 'Save and continue' }.to change { Provider.first.selected_office_code }.from(nil).to('1A123B')
+      it 'takes me to the application path page' do
         expect(page).to have_current_path(nsm_applications_path)
-      end
-
-      it 'validates my choice' do
-        click_on 'Save and continue'
-        expect(page).to have_current_path(nsm_office_path)
-        expect(page).to have_text 'There is a problem'
       end
     end
 

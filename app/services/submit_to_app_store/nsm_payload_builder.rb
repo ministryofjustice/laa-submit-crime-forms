@@ -22,14 +22,13 @@ class SubmitToAppStore
 
     private
 
-    # rubocop:disable Metrics/AbcSize
     def data
       data = claim.as_json(except: %w[navigation_stack firm_office_id solicitor_id submitter_id])
       data.merge(
         'disbursements' => disbursement_data,
         'work_items' => work_item_data,
         'defendants' => defendant_data,
-        'firm_office' => claim.firm_office.attributes.except('id', *DEFAULT_IGNORE),
+        'firm_office' => firm_office_data,
         'solicitor' => claim.solicitor.attributes.except('id', *DEFAULT_IGNORE),
         'submitter' => claim.submitter.attributes.slice('email', 'description'),
         'supporting_evidences' => supporting_evidence,
@@ -44,6 +43,12 @@ class SubmitToAppStore
       end
     end
 
+    def firm_office_data
+      claim.firm_office.attributes.except('id', 'account_number', *DEFAULT_IGNORE).merge(
+        'account_number' => claim.office_code
+      )
+    end
+
     def disbursement_data
       claim.disbursements.map do |disbursement|
         data = disbursement.as_json(except: DEFAULT_IGNORE)
@@ -55,7 +60,6 @@ class SubmitToAppStore
         data
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def work_item_data
       claim.work_items.map do |work_item|

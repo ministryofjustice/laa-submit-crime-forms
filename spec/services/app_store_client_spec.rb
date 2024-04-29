@@ -251,4 +251,26 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       end
     end
   end
+
+  describe '#get' do
+    before do
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with('APP_STORE_TENANT_ID', nil).and_return(nil)
+    end
+
+    let(:id) { 'some-id' }
+    let(:response) { { 'foo' => 'bar' } }
+
+    it 'gets the the requested item' do
+      http_stub = stub_request(:get, "http://localhost:8000/v1/application/#{id}").with(
+        headers: {
+          'Content-Type' => 'application/json',
+          'X-Client-Type' => 'provider'
+        }
+      ).to_return(status: 200, body: response.to_json, headers: {})
+      expect(subject.get(id)).to eq response
+
+      expect(http_stub).to have_been_requested
+    end
+  end
 end

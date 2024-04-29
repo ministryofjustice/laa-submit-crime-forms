@@ -298,6 +298,10 @@ en:
               blank: "Enter the email address of the alternative contact"
               invalid: "Enter a valid email address"
           attributes: *solicitor_form
+        nsm/steps/office_code_form:
+          attributes:
+            office_code:
+              inclusion: Select your firm account number
         nsm/steps/defendant_details_form:
           attributes:
             first_name:
@@ -408,6 +412,8 @@ en:
               blank: Type of work must be choosen
             uplift:
               blank: Uplift amount must be set
+              less_than_or_equal_to: You can only apply an uplift from 1 to 100
+              greater_than_or_equal_to: You can only apply an uplift from 1 to 100
         nsm/steps/letters_calls_form:
           attributes:
             letters:
@@ -416,8 +422,12 @@ en:
               blank: Set the number of calls
             letters_uplift:
               blank: Letters uplift percentage must be set
+              less_than_or_equal_to: You can only apply an uplift from 1 to 100
+              greater_than_or_equal_to: You can only apply an uplift from 1 to 100
             calls_uplift:
               blank: Calls uplift percentage must be set
+              less_than_or_equal_to: You can only apply an uplift from 1 to 100
+              greater_than_or_equal_to: You can only apply an uplift from 1 to 100
         nsm/steps/disbursement_type_form:
           attributes:
             disbursement_date: *shared_date_errors

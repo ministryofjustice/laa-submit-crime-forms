@@ -11,6 +11,7 @@ orbs:
   snyk: snyk/snyk@1.1.2
   aws-cli: circleci/aws-cli@4.1.3
   aws-ecr: circleci/aws-ecr@9.0.2
+  crime-forms-end-to-end-tests: ministryofjustice/crime-forms-end-to-end-tests@volatile
 
 # ------------------
 # EXECUTORS
@@ -341,6 +342,19 @@ jobs:
             --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1}
             --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH}
 
+  e2e-test-branch:
+    executor: crime-forms-end-to-end-tests/e2e-test-executor
+    steps:
+      - crime-forms-end-to-end-tests/run-e2e-tests:
+          e2e_current_image_var: NSCC_PROVIDER_IMAGE
+          e2e_current_image: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${PROVIDER_ECR_REPOSITORY}:branch-${CIRCLE_SHA1}
+          e2e_branch: main # Change to work against a fixed e2e test repo branch if needed
+
+  e2e-test-main:
+    executor: crime-forms-end-to-end-tests/e2e-test-executor
+    steps:
+      - crime-forms-end-to-end-tests/run-e2e-tests
+
   deploy-dev:
     executor: cloud-platform-executor
     steps:
@@ -396,6 +410,14 @@ workflows:
             branches:
               ignore:
                 - main
+      - e2e-test-branch:
+          context: laa-crime-forms-e2e-tests
+          requires:
+            - build-to-ecr
+          filters:
+            branches:
+              ignore:
+                - main
       - deploy-dev:
           context: laa-submit-crime-forms-dev
           requires:
@@ -427,6 +449,14 @@ workflows:
             - linter-tests
             - rspec-tests
             - rspec-gem-tests
+      - e2e-test-main:
+          context: laa-crime-forms-e2e-tests
+          requires:
+            - build-to-ecr
+          filters:
+            branches:
+              only:
+                - main
       - deploy-dev:
           context: laa-submit-crime-forms-dev
           requires:

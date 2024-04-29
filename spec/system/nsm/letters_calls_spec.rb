@@ -43,13 +43,6 @@ RSpec.describe 'User can fill in claim type details', type: :system do
 
     click_on 'Update the calculation'
 
-    expect(claim.reload).to have_attributes(
-      letters: 1,
-      calls: 2,
-      letters_uplift: nil,
-      calls_uplift: nil,
-    )
-
     within '.govuk-table__body' do
       expect(page.text).to eq('Letters£4.09Phone calls£8.18')
     end

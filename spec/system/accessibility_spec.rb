@@ -27,7 +27,6 @@ RSpec.describe 'Accessibility', :accessibility do
       about_contact
       about_accessibility
       nsm_applications
-      edit_nsm_office
       edit_prior_authority_office
       prior_authority_applications
     ].each do |path|
@@ -46,6 +45,7 @@ RSpec.describe 'Accessibility', :accessibility do
       edit_nsm_steps_claim_type
       nsm_steps_start_page
       edit_nsm_steps_firm_details
+      edit_nsm_steps_office_code
       edit_nsm_steps_case_details
       edit_nsm_steps_case_disposal
       edit_nsm_steps_hearing_details
