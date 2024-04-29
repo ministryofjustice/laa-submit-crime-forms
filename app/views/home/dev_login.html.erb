@@ -2,15 +2,7 @@
 <% if FeatureFlags.omniauth_test_mode.enabled? %>
 
   <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'test-user', info: { name: 'Test User', email: 'provider@example.com', office_codes: ['1A123B', '2A555X'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
-    Log in as primary test user
-    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-      <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-    </svg>
-  <% end %>
-  <br>
-
-  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'single-office', info: { name: 'Single Office', email: 'single@office.com', office_codes: ['1A123B'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
-    Log in as provider with single office code
+    Log in as primary test user (CRM7/4/5)
     <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
       <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
     </svg>
@@ -18,15 +10,71 @@
   <br>
 
   <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'same-office', info: { name: 'Same Office', email: 'same@office.com', office_codes: ['1A123B', '2A555X'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
-    Log in as different user at same office
+    Log in as different user at same offices (CRM7/4/5)
     <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
       <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
     </svg>
   <% end %>
   <br>
 
-  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'diff-office', info: { name: 'Different Office', email: 'different@office.com', office_codes: ['AAAAAA', 'BBBBBB'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
-    Log in as different user at different office
+  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'diff-office', info: { name: 'Different Office', email: 'different@office.com', office_codes: ['XXXXXX'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+    Log in as different user at different office (CRM7/4/5)
+    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+    </svg>
+  <% end %>
+  <br>
+
+  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'single-office-crm7', info: { name: 'Single Office (CRM7)', email: 'single@office.crm7.com', office_codes: ['AAAAAA'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+    Log in as provider with single office code (CRM7)
+    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+    </svg>
+  <% end %>
+  <br>
+
+  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'single-office-crm4', info: { name: 'Single Office (CRM4)', email: 'single@office.crm4.com', office_codes: ['BBBBBB'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+    Log in as provider with single office code (CRM4)
+    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+    </svg>
+  <% end %>
+  <br>
+
+  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'single-office-crm5', info: { name: 'Single Office (CRM5)', email: 'single@office.crm5.com', office_codes: ['CCCCCC'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+    Log in as provider with single office code (CRM5)
+    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+    </svg>
+  <% end %>
+  <br>
+
+  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'multif-office-single-role', info: { name: 'Multiple Offices (Single role per office)', email: 'multi@office.role-per-office.com', office_codes: ['AAAAAA','BBBBBB','CCCCCC'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+    Log in as provider with mulitple office codes (single role per office)
+    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+    </svg>
+  <% end %>
+  <br>
+
+  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'single-office-none', info: { name: 'Single Office (No access)', email: 'single@office.no-access.com', office_codes: ['ZZZZZZ'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+    Log in as provider with single office code (No access)
+    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+    </svg>
+  <% end %>
+  <br>
+
+  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'diff-office', info: { name: 'Different Office', email: 'different@office.com', office_codes: ['YYYYYY'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+    Log in as provider with single office code that is not enrolled/onboarded
+    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+    </svg>
+  <% end %>
+  <br>
+
+  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'no-office-defective', info: { name: 'No Office (defective)', email: 'no@office.defective.com', office_codes: [''] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+    Log in as provider with no office codes (defective)
     <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
       <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
     </svg>
