@@ -17,7 +17,7 @@ module Nsm
 
     def initialize_application(attributes = {}, &block)
       attributes.merge!(
-        office_code: current_office_code,
+        office_code: (current_provider.office_codes.first if current_provider.office_codes.count == 1),
         submitter: current_provider,
         laa_reference: generate_laa_reference
       )

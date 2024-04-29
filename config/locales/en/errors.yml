@@ -298,6 +298,10 @@ en:
               blank: "Enter the email address of the alternative contact"
               invalid: "Enter a valid email address"
           attributes: *solicitor_form
+        nsm/steps/office_code_form:
+          attributes:
+            office_code:
+              inclusion: Select your firm account number
         nsm/steps/defendant_details_form:
           attributes:
             first_name:
