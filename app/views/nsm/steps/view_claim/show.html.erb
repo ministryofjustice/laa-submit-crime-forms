@@ -6,7 +6,10 @@
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
     <% @report.section_groups(:status).each do |section_group| %>
       <% section_group[:sections].each do |section| %>
-        <%= govuk_summary_list(**section) %>
+        <%= govuk_summary_list(
+          card: { title: section.title },
+          rows: section.rows
+        ) %>
       <% end %>
     <% end %>
 
@@ -26,7 +29,20 @@
       <h3 class="govuk-heading-m"><%= section_group[:heading] %></h3>
 
       <% section_group[:sections].each do |section| %>
-        <%= govuk_summary_list(**section) %>
+        <% if section.custom %>
+          <% if section.has_card %>
+            <%= govuk_summary_card(title: section.title) do %>
+              <%= render section.custom[:partial], **section.custom[:locals] %>
+            <% end %>
+          <% else %>
+            <%= render section.custom[:partial], **section.custom[:locals] %>
+          <% end %>
+        <% else %>
+          <%= govuk_summary_list(
+            card: { title: section.title },
+            rows: section.rows
+          ) %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

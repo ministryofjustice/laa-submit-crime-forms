@@ -5,10 +5,11 @@ module Nsm
     class CostSummaryCard < Base
       attr_reader :claim, :work_items
 
-      def initialize(claim)
+      def initialize(claim, has_card: true)
         @claim = claim
         @group = 'about_claim'
         @section = 'cost_summary'
+        @has_card = has_card
       end
 
       def rows

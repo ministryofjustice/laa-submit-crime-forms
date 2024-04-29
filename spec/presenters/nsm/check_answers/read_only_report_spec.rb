@@ -32,7 +32,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
         context 'when claimed_costs section_group name is passed in' do
           it 'returns multiple groups' do
             expect(subject.section_groups(:claimed_costs)).to be_an_instance_of Array
-            expect(subject.section_groups(:claimed_costs).count).to eq 1
+            expect(subject.section_groups(:claimed_costs).count).to eq 2
           end
         end
       end
@@ -43,14 +43,6 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
         it 'returns a section object' do
           expect(section_group[:heading]).to eq 'What you are claiming for'
           expect(section_group[:sections].count).to eq 1
-        end
-      end
-
-      context 'sections' do
-        let(:section) { subject.sections(subject.claim_type_section) }
-
-        it 'returns group of cards' do
-          expect(section.count).to eq 1
         end
       end
 
@@ -86,7 +78,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
 
       context 'about claim section' do
         it 'returns multiple elements' do
-          expect(subject.about_claim_section.count).to eq 3
+          expect(subject.about_claim_section.count).to eq 4
         end
       end
 
@@ -118,18 +110,6 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
         end
       end
 
-      context 'sections' do
-        let(:section) { subject.sections(subject.claim_type_section) }
-
-        it 'returns group of cards' do
-          expect(section.count).to eq 1
-        end
-
-        it 'has option to change' do
-          expect(section[0][:card][:actions]).to eq []
-        end
-      end
-
       context 'application status section' do
         it 'returns single elements' do
           expect(subject.application_status_section.count).to eq 1
@@ -162,7 +142,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
 
       context 'about claim section' do
         it 'returns multiple elements' do
-          expect(subject.about_claim_section.count).to eq 3
+          expect(subject.about_claim_section.count).to eq 4
         end
       end
 

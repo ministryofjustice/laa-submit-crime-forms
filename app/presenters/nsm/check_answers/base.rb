@@ -4,7 +4,7 @@ module Nsm
       include LaaMultiStepForms::CheckMissingHelper
       include ActionView::Helpers::TagHelper
 
-      attr_accessor :group, :section
+      attr_accessor :group, :section, :has_card
 
       def translate_table_key(table, key, **)
         I18n.t("nsm.steps.check_answers.show.sections.#{table}.#{key}", **)
