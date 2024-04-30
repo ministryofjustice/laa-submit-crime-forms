@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_23_103901) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_26_083917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -168,7 +168,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_23_103901) do
 
   create_table "firm_offices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
-    t.string "account_number"
     t.string "address_line_1"
     t.string "address_line_2"
     t.string "town"
@@ -195,7 +194,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_23_103901) do
     t.uuid "provider_id"
     t.uuid "firm_office_id"
     t.uuid "solicitor_id"
-    t.string "office_code", null: false
+    t.string "office_code"
     t.boolean "prison_law"
     t.boolean "authority_value"
     t.string "ufn"

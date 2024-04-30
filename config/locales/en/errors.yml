@@ -99,13 +99,13 @@ en:
           attributes:
             name:
               blank: Enter a firm name
-            account_number:
-              blank: Enter an account number
           summary:
             name:
               blank: Enter a firm name
-            account_number:
-              blank: Enter an account number
+        prior_authority/steps/office_code_form:
+          attributes:
+            office_code:
+              inclusion: Select a firm account number
         prior_authority/steps/hearing_detail_form:
           attributes:
             next_hearing:
