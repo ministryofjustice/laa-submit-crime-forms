@@ -19,9 +19,9 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
   let(:letters) { 1 }
   let(:calls) { 1 }
   let(:apply_letters_uplift) { 'true' }
-  let(:letters_uplift) { 0 }
+  let(:letters_uplift) { 1 }
   let(:apply_calls_uplift) { 'true' }
-  let(:calls_uplift) { 0 }
+  let(:calls_uplift) { 1 }
   let(:date) { nil }
   let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
 
@@ -111,7 +111,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
         context 'is zero' do
           let(:letters_uplift) { 0 }
 
-          it { expect(subject).to be_valid }
+          it { expect(subject).not_to be_valid }
         end
 
         context 'is positive' do
@@ -179,7 +179,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
         context 'is zero' do
           let(:calls_uplift) { 0 }
 
-          it { expect(subject).to be_valid }
+          it { expect(subject).not_to be_valid }
         end
 
         context 'is positive' do
@@ -386,6 +386,8 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
   describe '#total_cost' do
     let(:letters) { 2 }
     let(:calls) { 3 }
+    let(:apply_calls_uplift) { 'false' }
+    let(:apply_letters_uplift) { 'false' }
 
     context 'letters is 0' do
       let(:letters) { 0 }

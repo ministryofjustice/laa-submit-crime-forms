@@ -18,7 +18,7 @@ module Nsm
               multiparam_date: { allow_past: true, allow_future: false }
       validates :fee_earner, presence: true
       validates :uplift, presence: true,
-              numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 },
+              numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
               if: :apply_uplift
 
       def allow_uplift?
@@ -27,7 +27,7 @@ module Nsm
 
       def apply_uplift
         allow_uplift? &&
-          (@apply_uplift.nil? ? uplift.present? : @apply_uplift == 'true')
+          (@apply_uplift.nil? ? uplift.to_f.positive? : @apply_uplift == 'true')
       end
 
       def pricing
