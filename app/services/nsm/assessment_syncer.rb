@@ -14,7 +14,7 @@ module Nsm
     def call
       sync_overall_comment
     rescue StandardError => e
-      Sentry.capture_message("#{self.class.name} encountered error '#{e}' for application '#{application.id}'")
+      Sentry.capture_message("#{self.class.name} encountered error '#{e}' for claim '#{claim.id}'")
     end
 
     private
@@ -23,7 +23,7 @@ module Nsm
       comment_event = app_store_record['events'].select { _1['public'] && _1['event_type'] == 'decision' }
                                                 .max_by { DateTime.parse(_1['created_at']) }
 
-      application.update(assessment_comment: comment_event.dig('details', 'comment'))
+      claim.update(assessment_comment: comment_event.dig('details', 'comment'))
     end
 
     def data
