@@ -152,6 +152,12 @@ RSpec.describe Nsm::Steps::WorkItemForm do
           it { expect(subject.apply_uplift).to be_truthy }
         end
 
+        context 'and letters_calls_uplift is zero' do
+          let(:uplift) { 0 }
+
+          it { expect(subject.apply_uplift).to be_falsey }
+        end
+
         context 'and letters_calls_uplift is nil' do
           let(:uplift) { nil }
 

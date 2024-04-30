@@ -110,7 +110,6 @@ Rails.application.routes.draw do
   end
 
   namespace :prior_authority, path: 'prior-authority' do
-    resource :office, only: %i[show edit update]
     resources :service_types, only: [:index], format: :js
 
     scope 'applications/:application_id' do
@@ -120,6 +119,7 @@ Rails.application.routes.draw do
         show_step :start_page
         edit_step :ufn
         edit_step :case_contact
+        edit_step :office_code
         edit_step :client_detail
         edit_step :next_hearing
         edit_step :case_detail

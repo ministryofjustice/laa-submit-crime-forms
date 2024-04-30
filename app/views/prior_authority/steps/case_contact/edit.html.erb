@@ -17,7 +17,6 @@
 
       <%= form.fields_for :firm_office, as: :firm_detail_form do |firm_office_object| %>
         <%= firm_office_object.govuk_text_field :name, width: 20, label: { text: t(".firm_name"), size: 's' } %>
-        <%= firm_office_object.govuk_text_field :account_number, width: 20, label: { text: t(".firm_account_number"), size: 's' }, hint: { text: t(".hint") }  %>
       <% end %>
 
       <%= form.continue_button %>

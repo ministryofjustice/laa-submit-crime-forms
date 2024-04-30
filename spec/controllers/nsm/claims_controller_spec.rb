@@ -17,7 +17,7 @@ RSpec.describe Nsm::ClaimsController do
   end
 
   context 'create' do
-    let(:provider) { instance_double(Provider, office_codes: ['1A123B']) }
+    let(:provider) { instance_double(Provider, office_codes: ['1A123B'], multiple_offices?: false) }
     let(:claim) { instance_double(Claim, id: SecureRandom.uuid) }
 
     before do
@@ -47,7 +47,7 @@ RSpec.describe Nsm::ClaimsController do
     end
 
     context 'when the provider has multiple office codes' do
-      let(:provider) { instance_double(Provider, office_codes: %w[1A123B CCCC]) }
+      let(:provider) { instance_double(Provider, office_codes: %w[1A123B CCCC], multiple_offices?: true) }
 
       it 'sets no office code' do
         post :create

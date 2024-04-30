@@ -27,7 +27,7 @@ module Nsm
 
       def apply_uplift
         allow_uplift? &&
-          (@apply_uplift.nil? ? uplift.present? : @apply_uplift == 'true')
+          (@apply_uplift.nil? ? uplift.to_f.positive? : @apply_uplift == 'true')
       end
 
       def pricing

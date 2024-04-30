@@ -4,7 +4,7 @@ FactoryBot.define do
     uid { 'test-user' }
     office_codes { selected_office_codes }
     email { 'provider@example.com' }
-    settings { { selected_office_code: } }
+    settings { {} }
 
     trait :paa_access do
       paa_office_codes { ['BBBBBB'] }
@@ -21,8 +21,11 @@ FactoryBot.define do
       base_office_codes { [] }
     end
 
+    trait :other do
+      uid { SecureRandom.uuid }
+    end
+
     transient do
-      selected_office_code { office_codes[0] }
       selected_office_codes do
         [*paa_office_codes, *nsm_office_codes, *base_office_codes, *eol_office_codes]
       end
