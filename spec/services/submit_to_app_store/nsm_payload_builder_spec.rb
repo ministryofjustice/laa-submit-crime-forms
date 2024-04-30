@@ -15,6 +15,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
     travel_to(Time.zone.local(2023, 8, 17, 12, 13, 14)) do
       check_json(subject.payload).matches(
         application: {
+          'assessment_comment' => nil,
           'agent_instructed' => 'no',
           'adjusted_total' => nil,
           'adjusted_total_inc_vat' => nil,
