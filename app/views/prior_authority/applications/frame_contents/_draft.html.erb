@@ -5,7 +5,7 @@
   <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="tab_drafts">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <% ['ufn', 'client', 'last_updated', 'laa_reference'].each_with_index do |key, index| %>
+        <% ['ufn', 'client', 'office_code', 'last_updated', 'laa_reference'].each_with_index do |key, index| %>
           <%= table_header(key,
                           'prior_authority.applications.tabs.header',
                            index,
@@ -27,6 +27,9 @@
           </td>
           <td class="govuk-table__cell">
             <%= application.defendant&.full_name %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= application.office_code %>
           </td>
           <td class="govuk-table__cell">
             <%= application.updated_at.to_fs(:stamp) %>

@@ -9,58 +9,34 @@ RSpec.describe Nsm::CostSummary::Report do
   let(:disbursements_scope) { double(:scope, by_age: [instance_double(Disbursement)]) }
   let(:id) { SecureRandom.uuid }
   let(:letters_calls) do
-    instance_double(Nsm::CostSummary::LettersCalls, title: l_title, rows: l_rows, total_cost: l_total_cost,
-total_cost_inc_vat: l_total_cost_inc_vat, footer_vat_row: l_footer_row)
+    instance_double(Nsm::CostSummary::LettersCalls, title: l_title, rows: l_rows, total_cost: l_total_cost)
   end
   let(:work_items) do
     instance_double(Nsm::CostSummary::WorkItems, title: wi_title, rows: wi_rows, total_cost: wi_total_cost,
-total_cost_inc_vat: wi_total_cost_inc_vat, footer_vat_row: wi_footer_row)
+total_cost_inc_vat: wi_total_cost_inc_vat)
   end
   let(:disbursements) do
-    instance_double(Nsm::CostSummary::Disbursements, title: d_title, rows: d_rows, total_cost: d_total_cost,
-total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
+    instance_double(Nsm::CostSummary::Disbursements, title: d_title, rows: d_rows, total_cost: d_total_cost)
   end
-  let(:l_title) { 'Letters and Calls Total £100.00' }
-  let(:l_rows) { [double(:row_data)] }
+  let(:summary) do
+    instance_double(Nsm::CostSummary::Summary, total_gross: 230)
+  end
+  let(:l_title) { 'Letters and Calls' }
+  let(:l_rows) { double(:l_row_data) }
   let(:l_total_cost) { 100.00 }
-  let(:l_total_cost_inc_vat) { 120.00 }
-  let(:wi_title) { 'Work Items Total £75.00' }
-  let(:wi_rows) { [double(:row_data)] }
+  let(:wi_title) { 'Work Items' }
+  let(:wi_rows) { double(:wi_row_data) }
   let(:wi_total_cost) { 75.00 }
   let(:wi_total_cost_inc_vat) { 85.00 }
-  let(:d_title) { 'Disbursements Total £55.00' }
-  let(:d_rows) { [double(:row_data)] }
+  let(:d_title) { 'Disbursements' }
+  let(:d_rows) { double(:d_row_data) }
   let(:d_total_cost) { 55.00 }
-  let(:d_total_cost_inc_vat) { 65.00 }
-  let(:l_footer_row) do
-    [
-      {
-        key: { text: 'Total (including VAT)', classes: 'govuk-summary-list__value-width-50' },
-        value: { text: NumberTo.pounds(l_total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
-      }
-    ]
-  end
-  let(:wi_footer_row) do
-    [
-      {
-        key: { text: 'Total (including VAT)', classes: 'govuk-summary-list__value-width-50' },
-        value: { text: NumberTo.pounds(wi_total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
-      }
-    ]
-  end
-  let(:d_footer_row) do
-    [
-      {
-        key: { text: 'Total (including any VAT)', classes: 'govuk-summary-list__value-width-50' },
-        value: { text: NumberTo.pounds(d_total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
-      }
-    ]
-  end
 
   before do
     allow(Nsm::CostSummary::WorkItems).to receive(:new).and_return(work_items)
     allow(Nsm::CostSummary::LettersCalls).to receive(:new).and_return(letters_calls)
     allow(Nsm::CostSummary::Disbursements).to receive(:new).and_return(disbursements)
+    allow(Nsm::CostSummary::Summary).to receive(:new).and_return(summary)
   end
 
   describe '#initialize' do
@@ -81,26 +57,26 @@ total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
       expect(subject.sections).to include(
         {
           card: {
-            actions: ['<a class="govuk-link" ' \
-                      "href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"],
-            title: 'Work Items Total £75.00'
+            actions: [
+              "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"
+            ],
+            title: 'Work Items'
           },
-          rows: [
-            {
-              key: { classes: 'govuk-summary-list__value-width-50', text: 'Items' },
-              value: { classes: 'govuk-summary-list__value-bold', text: 'Total per item' }
-            },
-            *wi_rows,
-            {
-              classes: 'govuk-summary-list__row-double-border',
-              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total' },
-              value: { classes: 'govuk-summary-list__value-bold', text: '£75.00' }
-            },
-            {
-              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total (including VAT)' },
-              value: { classes: 'govuk-summary-list__value-bold', text: '£85.00' }
-            }
-          ]
+          table: {
+            head: [
+              { text: 'Item' },
+              { text: 'Time' },
+              { classes: 'govuk-table__header--numeric', text: 'Net cost' }
+            ],
+            rows: [
+              wi_rows,
+              [
+                { classes: 'govuk-table__header', text: 'Total' },
+                {},
+                { classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold', text: '£75.00' }
+              ]
+            ]
+          }
         }
       )
     end
@@ -109,26 +85,24 @@ total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
       expect(subject.sections).to include(
         {
           card: {
-            actions: ['<a class="govuk-link" ' \
-                      "href=\"/non-standard-magistrates/applications/#{id}/steps/letters_calls\">Change</a>"],
-            title: 'Letters and Calls Total £100.00'
+            actions: [
+              "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/letters_calls\">Change</a>"
+            ],
+            title: 'Letters and Calls'
           },
-          rows: [
-            {
-              key: { classes: 'govuk-summary-list__value-width-50', text: 'Items' },
-              value: { classes: 'govuk-summary-list__value-bold', text: 'Total per item' }
-            },
-            *l_rows,
-            {
-              classes: 'govuk-summary-list__row-double-border',
-              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total' },
-              value: { classes: 'govuk-summary-list__value-bold', text: '£100.00' }
-            },
-            {
-              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total (including VAT)' },
-              value: { classes: 'govuk-summary-list__value-bold', text: '£120.00' }
-            }
-          ]
+          table: {
+            head: [
+              { text: 'Item' },
+              { classes: 'govuk-table__header--numeric', text: 'Net cost' }
+            ],
+            rows: [
+              l_rows,
+              [
+                { classes: 'govuk-table__header', text: 'Total' },
+                { classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold', text: '£100.00' }
+              ]
+            ]
+          }
         }
       )
     end
@@ -137,43 +111,32 @@ total_cost_inc_vat: d_total_cost_inc_vat, footer_vat_row: d_footer_row)
       expect(subject.sections).to include(
         {
           card: {
-            actions: ['<a class="govuk-link" ' \
-                      "href=\"/non-standard-magistrates/applications/#{id}/steps/disbursements\">Change</a>"],
-            title: 'Disbursements Total £55.00'
+            actions: [
+              "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/disbursements\">Change</a>"
+            ],
+            title: 'Disbursements'
           },
-          rows: [
-            {
-              key: { classes: 'govuk-summary-list__value-width-50', text: 'Items' },
-              value: { classes: 'govuk-summary-list__value-bold', text: 'Total per item' }
-            },
-            *d_rows,
-            {
-              classes: 'govuk-summary-list__row-double-border',
-              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total' },
-              value: { classes: 'govuk-summary-list__value-bold', text: '£55.00' }
-            },
-            {
-              key: { classes: 'govuk-summary-list__value-width-50', text: 'Total (including any VAT)' },
-              value: { classes: 'govuk-summary-list__value-bold', text: '£65.00' }
-            }
-          ]
+          table: {
+            head: [
+              { text: 'Item' },
+              { classes: 'govuk-table__header--numeric', text: 'Net cost' }
+            ],
+            rows: [
+              d_rows,
+              [
+                { classes: 'govuk-table__header', text: 'Total' },
+                { classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold', text: '£55.00' }
+              ]
+            ]
+          }
         }
       )
     end
   end
 
   describe '#total_cost' do
-    it 'sums the cost values' do
+    it 'delegates to the summary object' do
       expect(subject.total_cost).to eq('£230.00')
-    end
-
-    context 'when a section has a nil total cost' do
-      let(:l_total_cost) { nil }
-
-      it 'does not raise an error' do
-        expect { subject.total_cost }.not_to raise_error
-        expect(subject.total_cost).to eq('£130.00')
-      end
     end
   end
 end

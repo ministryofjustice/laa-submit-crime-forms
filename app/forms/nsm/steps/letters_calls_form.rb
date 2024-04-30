@@ -12,10 +12,10 @@ module Nsm
       validates :letters, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
       validates :calls, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
       validates :letters_uplift, presence: true,
-        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 },
+        numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
         if: :apply_letters_uplift
       validates :calls_uplift, presence: true,
-        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 },
+        numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
         if: :apply_calls_uplift
 
       def allow_uplift?
@@ -63,12 +63,6 @@ module Nsm
       end
 
       def total_cost_inc_vat
-        calculate_vat
-      end
-
-      def calculate_vat
-        return 0 unless total_cost && application.firm_office.vat_registered == YesNoAnswer::YES.to_s
-
         (total_cost * pricing.vat) + total_cost
       end
 

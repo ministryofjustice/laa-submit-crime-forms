@@ -9,6 +9,7 @@ en:
         header:
           ufn: Your UFN
           defendant: Defendant
+          account: Account
           last_updated: Last updated
           laa_reference: LAA reference
           status: Status

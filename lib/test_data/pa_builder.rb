@@ -1,13 +1,13 @@
 module TestData
   class PaBuilder
-    def build_many(bulk: 100, year: 2023)
+    def build_many(bulk: 100, year: 2023, sleep: true)
       raise 'Do not run on production' if HostEnv.production?
 
       bulk.times do
         build(year:)
         log '.'
         # avoid issues with large number of applications with the same last_updated_at time
-        sleep 0.1 unless Rails.env.test?
+        sleep 0.1 if sleep
       end
       log "\nComplete\n"
     end
@@ -86,9 +86,11 @@ module TestData
     # rubocop:disable Rails/Output
     def log(str)
       if Rails.env.test?
-        Rails.logger << str
+        Rails.logger.info str
+        # :nocov:
       else
         print str
+        # :nocov:
       end
     end
     # rubocop:enable Rails/Output

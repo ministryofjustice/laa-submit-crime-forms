@@ -14,6 +14,7 @@ en:
               assessed: Date Assessed
               returned: Date Returned
             claim_type:
+              laa_reference: LAA reference
               file_ufn: Unique file number
               type_of_claim: Type of claim
               rep_order_date: Representation order date
@@ -156,8 +157,18 @@ en:
               title: Letters and phone calls
             disbursements:
               title: Disbursement costs
+            cost_summary:
+              title: Costs summary
             other_info:
               title: Other information
+          costs:
+            heading: About the claim
+            work_items:
+              title: Work items
+            letters_calls:
+              title: Letters and phone calls
+            disbursements:
+              title: Disbursement costs
           supporting_evidence:
             heading:  Supporting evidence
             supporting_evidence:

@@ -29,7 +29,7 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
             },
             {
               head_key: 'firm_account_number',
-              text: '123ABC'
+              text: '1A123B'
             },
             {
               head_key: 'firm_address',
@@ -80,7 +80,7 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
             },
             {
               head_key: 'firm_account_number',
-              text: '123ABC'
+              text: '1A123B'
             },
             {
               head_key: 'firm_address',
@@ -108,7 +108,7 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
     end
 
     context 'with no data' do
-      let(:claim) { build(:claim) }
+      let(:claim) { build(:claim, office_code: nil) }
 
       it 'generates missing data rows for required fields' do
         expect(subject.row_data).to eq(
@@ -159,7 +159,7 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
             },
             {
               head_key: 'firm_account_number',
-              text: '123ABC'
+              text: '1A123B'
             },
             {
               head_key: 'firm_address',
@@ -199,7 +199,7 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
             },
             {
               head_key: 'firm_account_number',
-              text: '123ABC'
+              text: '1A123B'
             },
             {
               head_key: 'firm_address',

@@ -16,6 +16,10 @@ en:
           heading: Your details
           firm_details: Firm details
           vat_registered: Is your firm VAT registered?
+      office_code:
+        edit:
+          page_title: Which firm account number is this application for?
+          subheading: Your sign in details give you access to these firm account numbers. To get access to a different firm account number contact your firm's LAA account administrator.
       case_details:
         edit:
           page_title: Case details
@@ -179,7 +183,17 @@ en:
           total: Cost
           total_inc_vat: Cost (including VAT)
           heading: Check your payment claim
-          estimate: 'Total estimated:'
+          estimate: 'Total estimated'
+        summary_table:
+          your_cost_summary: Your cost summary
+          item: Item
+          net_cost: Net cost
+          vat: VAT
+          total: Total
+          profit_costs: Profit costs
+          waiting: Waiting
+          travel: Travel
+          disbursements: Disbursements
       other_info:
         edit:
           page_title: Other Relevant information

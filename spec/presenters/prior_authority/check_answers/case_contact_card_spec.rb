@@ -15,13 +15,14 @@ RSpec.describe PriorAuthority::CheckAnswers::CaseContactCard do
 
   describe '#row_data' do
     let(:application) do
-      build(:prior_authority_application, firm_office:, solicitor:)
+      build(:prior_authority_application, firm_office:, solicitor:, office_code:)
     end
 
     let(:solicitor) do
       build(:solicitor, contact_first_name: 'Joe', contact_last_name: 'Bloggs', contact_email: 'joe@bloggs.com')
     end
-    let(:firm_office) { build(:firm_office, name: 'Bloggs & Co', account_number: '2B0N2B') }
+    let(:firm_office) { build(:firm_office, name: 'Bloggs & Co') }
+    let(:office_code) { '2B0N2B' }
 
     it 'generates expected rows' do
       expect(card.row_data).to eq(

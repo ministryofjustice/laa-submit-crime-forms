@@ -13,10 +13,13 @@ en:
           contact_last_name: Last name
           contact_email: Email address
           firm_name: Firm name
-          firm_account_number: Firm account number
-          hint: For example, 1A234B
           page_title: Case contact
           explanation: We’ll use these contact details if we need to ask you for more information or to tell you the outcome of your application.
+      office_code:
+        edit:
+          caption: Contact details
+          page_title: Which firm account number is this application for?
+          subheading: Your sign in details give you access to these firm account numbers. To get access to a different firm account number contact your firm's LAA account administrator.
       case_detail:
         edit:
           caption: About the case

@@ -19,23 +19,11 @@ RSpec.describe AppStoreUpdateProcessor do
 
     before do
       allow(PriorAuthority::AssessmentSyncer).to receive(:call)
-      described_class.call(response, is_full:)
+      described_class.call(response)
     end
 
-    context 'when response is explicitly flagged as being "full"' do
-      let(:is_full) { true }
-
-      it 'passes the full record on to AssessmentSyncer' do
-        expect(PriorAuthority::AssessmentSyncer).to have_received(:call).with(application, record: response)
-      end
-    end
-
-    context 'when response is not explicitly flagged as being "full"' do
-      let(:is_full) { false }
-
-      it 'does not pass the record on to AssessmentSyncer' do
-        expect(PriorAuthority::AssessmentSyncer).to have_received(:call).with(application, record: nil)
-      end
+    it 'passes the full record on to AssessmentSyncer' do
+      expect(PriorAuthority::AssessmentSyncer).to have_received(:call).with(application, record: response)
     end
   end
 end

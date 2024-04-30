@@ -83,7 +83,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
         context 'is zero' do
           let(:uplift) { 0 }
 
-          it { expect(subject).to be_valid }
+          it { expect(subject).not_to be_valid }
         end
 
         context 'is positive' do
@@ -150,6 +150,12 @@ RSpec.describe Nsm::Steps::WorkItemForm do
           let(:uplift) { 10 }
 
           it { expect(subject.apply_uplift).to be_truthy }
+        end
+
+        context 'and letters_calls_uplift is zero' do
+          let(:uplift) { 0 }
+
+          it { expect(subject.apply_uplift).to be_falsey }
         end
 
         context 'and letters_calls_uplift is nil' do

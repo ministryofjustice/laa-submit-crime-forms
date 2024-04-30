@@ -13,34 +13,19 @@ module Nsm
 
       def rows
         disbursement_forms.map do |form|
-          {
-            key: { text: translated_text(form), classes: 'govuk-summary-list__value-width-50' },
-            value: { text: NumberTo.pounds(form.total_cost_pre_vat) },
-          }
+          [
+            { text: translated_text(form), classes: 'govuk-table__header' },
+            { text: NumberTo.pounds(form.total_cost_pre_vat), classes: 'govuk-table__cell--numeric' },
+          ]
         end
-      end
-
-      def footer_vat_row
-        return [] if total_cost_inc_vat.zero?
-
-        [
-          {
-            key: { text: translate('.footer.total_inc_any_vat'), classes: 'govuk-summary-list__value-width-50' },
-            value: { text: NumberTo.pounds(total_cost_inc_vat), classes: 'govuk-summary-list__value-bold' },
-          }
-        ]
       end
 
       def total_cost
         @total_cost ||= disbursement_forms.filter_map(&:total_cost_pre_vat).sum
       end
 
-      def total_cost_inc_vat
-        @total_cost_inc_vat ||= disbursement_forms.filter_map(&:total_cost).sum
-      end
-
       def title
-        translate('disbursements', total: NumberTo.pounds(total_cost_inc_vat))
+        translate('disbursements')
       end
 
       private

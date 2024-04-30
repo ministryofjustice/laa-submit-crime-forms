@@ -1,0 +1,13 @@
+---
+en:
+  nsm:
+    steps:
+      view_claim:
+        show:
+          page_title: Claim details
+          heading: Claim details
+          tabs:
+            overview: Overview
+            claimed_costs: Claimed costs
+        section:
+          page_title: Claim details

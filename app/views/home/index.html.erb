@@ -11,7 +11,7 @@
     </p>
     <% if @gatekeeper.provider_enrolled?(service: Providers::Gatekeeper::PAA) %>
       <h2 class="govuk-heading-s">
-        <%= link_to t('.pa_header'), prior_authority_office_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
+        <%= link_to t('.pa_header'), prior_authority_applications_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
       </h2>
       <p>
         <%= t('.pa_text') %>
@@ -27,7 +27,7 @@
     <% end %>
     <% if @gatekeeper.provider_enrolled?(service: Providers::Gatekeeper::NSM) %>
       <h2 class="govuk-heading-s">
-        <%= link_to t('.nsm_header'), nsm_office_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
+        <%= link_to t('.nsm_header'), nsm_applications_path, class: "govuk-link--no-visited-state", data: { turbo: false } %>
       </h2>
       <p>
         <%= t('.nsm_text') %>

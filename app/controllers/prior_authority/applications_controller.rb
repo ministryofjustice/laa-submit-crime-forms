@@ -69,7 +69,7 @@ module PriorAuthority
     end
 
     def initialize_application(attributes = {}, &block)
-      attributes[:office_code] = current_office_code
+      attributes[:office_code] = current_provider.office_codes.first unless current_provider.multiple_offices?
       current_provider.prior_authority_applications.create!(attributes).tap(&block)
     end
 
@@ -82,7 +82,8 @@ module PriorAuthority
       'client' => 'defendants.first_name ?, defendants.last_name ?',
       'last_updated' => 'updated_at ?',
       'laa_reference' => 'laa_reference ?',
-      'status' => 'status ?'
+      'status' => 'status ?',
+      'office_code' => 'office_code ?'
     }.freeze
 
     DIRECTIONS = {

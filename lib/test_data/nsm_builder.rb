@@ -1,6 +1,6 @@
 module TestData
   class NsmBuilder
-    def build_many(bulk: 100, large: 4, year: 2023)
+    def build_many(bulk: 100, large: 4, year: 2023, sleep: true)
       raise 'Do not run on production' if HostEnv.production?
 
       bulk.times do
@@ -8,7 +8,7 @@ module TestData
         log '.'
 
         # avoid issues with large number of applications with the same last_updated_at time
-        sleep 0.1 unless Rails.env.test?
+        sleep 0.1 if sleep
       end
       log "\nBulk complete\n"
 
@@ -16,7 +16,7 @@ module TestData
         build(min: 400, max: 600, year: year).tap do
           log '.'
           # avoid issues with large number of applications with the same last_updated_at time
-          sleep 0.1 unless Rails.env.test?
+          sleep 0.1 if sleep
         end
       end
       log "\nLarge complete\n"
@@ -91,9 +91,11 @@ module TestData
     # rubocop:disable Rails/Output
     def log(str)
       if Rails.env.test?
-        Rails.logger << str
+        Rails.logger.info str
+        # :nocov:
       else
         print str
+        # :nocov:
       end
     end
     # rubocop:enable Rails/Output
