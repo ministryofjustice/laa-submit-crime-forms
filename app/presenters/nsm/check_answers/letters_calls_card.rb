@@ -8,7 +8,7 @@ module Nsm
       def initialize(claim)
         @claim = claim
         @letters_calls_form = Nsm::Steps::LettersCallsForm.build(claim)
-        @group = 'about_claim'
+        @group = 'costs'
         @section = 'letters_calls'
       end
 
