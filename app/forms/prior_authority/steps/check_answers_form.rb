@@ -19,7 +19,10 @@ module PriorAuthority
       end
 
       def update_application
-        return false unless application.draft? || application.sent_back?
+        unless application.draft? || application.sent_back?
+          errors.add(:base, :application_already_submitted)
+          return false
+        end
 
         application.update!(attributes.merge({ status: new_status }))
         SubmitToAppStore.perform_later(submission: application)
