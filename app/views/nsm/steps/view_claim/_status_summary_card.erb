@@ -29,7 +29,10 @@
           <dd class="govuk-summary-list__value">
             <% if claim.status == "granted" %>
               <%= t(".granted_response") %>
+            <% else %>
+              <%= claim.assessment_comment %>
             <% end %>
+
           </dd>
         </div>
       <% end %>

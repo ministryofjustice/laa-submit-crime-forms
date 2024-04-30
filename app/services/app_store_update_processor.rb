@@ -21,7 +21,10 @@ class AppStoreUpdateProcessor
     def update_claim(claim_id, params)
       claim = Claim.find_by(id: claim_id)
 
-      claim&.update!(params)
+      return unless claim
+
+      claim.update!(params)
+      Nsm::AssessmentSyncer.call(claim, record:)
     end
 
     def update_prior_authority_application(application_id, params, record)
