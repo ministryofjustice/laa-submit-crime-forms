@@ -31,17 +31,18 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     end
 
     context 'granted' do
-      let(:claim) { create(:claim, :granted_status, :firm_details, :build_associates, work_items_count: 1) }
+      let(:claim) { create(:claim, :granted_status, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
 
       it 'generates granted rows' do
         expect(subject.row_data).to eq(
           [
             {
               head_key: 'application_status',
-              text: '<p><strong class="govuk-tag govuk-tag--green">Granted</strong></p><p></p><br><p>£0.00 claimed</p><p>£0.00 allowed</p>'
+              text: '<p><strong class="govuk-tag govuk-tag--green">Granted</strong></p>' \
+                    '<p>1 December 2023</p><br><p>£0.00 claimed</p><p>£0.00 allowed</p>'
             },
             {
-              head_key: "laa_response", :text=>"<p>Fake LAA Response</p>"
+              head_key: 'laa_response', text: '<p>Fake LAA Response</p>'
             }
           ]
         )
@@ -49,7 +50,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     end
 
     context 'part granted' do
-      let(:claim) { create(:claim, :part_granted_status, :firm_details, :build_associates, work_items_count: 1) }
+      let(:claim) { create(:claim, :part_granted_status, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
 
       it 'generates part granted rows' do
         expect(subject.row_data).to eq(
@@ -58,7 +59,21 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               head_key: 'application_status',
               text: '<strong class="govuk-tag govuk-tag--blue">Part Granted</strong>'
             },
-            {:head_key=>"laa_response", :text=>"<p>Fake LAA Response</p><p></p><ul class=\"govuk-list govuk-list--bullet\"><li><a class=\"govuk-link govuk-link--no-visited-state\" href=\"/non-standard-magistrates/applications/7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim?section=adjustments#work_items\">Review adjustments to work items</a></li><li><a class=\"govuk-link govuk-link--no-visited-state\" href=\"/non-standard-magistrates/applications/7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim?section=adjustments#letters_and_calls\">Review adjustments to letters and calls</a></li><li><a class=\"govuk-link govuk-link--no-visited-state\" href=\"/non-standard-magistrates/applications/7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim?section=adjustments#disbursements\">Review adjustments to disbursements</a></li></ul><p></p><p><a class=\"govuk-button govuk-!-margin-bottom-0\" href=\"/non-standard-magistrates/applications/7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim\">How to appeal this decision</a></p>"}
+            {
+              head_key: 'laa_response',
+              text: '<p>Fake LAA Response</p><p></p>' \
+                    '<ul class="govuk-list govuk-list--bullet">' \
+                    '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/applications/' \
+                    '7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim?section=adjustments#work_items">' \
+                    'Review adjustments to work items</a></li><li><a class="govuk-link govuk-link--no-visited-state" ' \
+                    'href="/non-standard-magistrates/applications/7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim?' \
+                    'section=adjustments#letters_and_calls">Review adjustments to letters and calls</a></li>' \
+                    '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/applications/' \
+                    '7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim?section=adjustments#disbursements">Review adjustments ' \
+                    'to disbursements</a></li></ul><p></p><p><a class="govuk-button govuk-!-margin-bottom-0" ' \
+                    'href="/non-standard-magistrates/applications/7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim">' \
+                    'How to appeal this decision</a></p>'
+            }
           ]
         )
       end
@@ -75,7 +90,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               text: '<p><strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong></p>' \
                     '<p>1 December 2023</p><br><p>£0.00 claimed</p><p>Pending Data</p>'
             },
-            {:head_key=>"laa_response", :text=>"<p>Fake LAA Response</p>"}
+            { head_key: 'laa_response', text: '<p>Fake LAA Response</p>' }
           ]
         )
       end
@@ -92,7 +107,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               text: '<p><strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong></p>' \
                     '<p>1 December 2023</p><br><p>£0.00 claimed</p><p>£0.00 allowed</p>'
             },
-            {:head_key=>"laa_response", :text=>"<p>Fake LAA Response</p>"}
+            { head_key: 'laa_response', text: '<p>Fake LAA Response</p>' }
           ]
         )
       end
@@ -109,14 +124,16 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               text: '<p><strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong></p>' \
                     '<p>1 December 2023</p><br><p>£0.00 claimed</p><p>Pending Data</p>'
             },
-            {:head_key=>"laa_response", :text=>"<p>Fake LAA Response</p>"}
+            { head_key: 'laa_response', text: '<p>Fake LAA Response</p>' }
           ]
         )
       end
     end
 
     context 'rejected' do
-      let(:claim) { create(:claim, :rejected_status, :firm_details, :build_associates, id: SecureRandom.uuid, work_items_count: 1) }
+      let(:claim) do
+        create(:claim, :rejected_status, :firm_details, :build_associates, id: SecureRandom.uuid, work_items_count: 1)
+      end
 
       it 'generates rejected rows' do
         expect(subject.row_data).to match(

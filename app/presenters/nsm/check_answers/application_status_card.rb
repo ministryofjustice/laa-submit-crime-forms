@@ -7,6 +7,7 @@ module Nsm
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
       attr_reader :claim
+
       delegate :status, to: :claim
 
       def initialize(claim)
