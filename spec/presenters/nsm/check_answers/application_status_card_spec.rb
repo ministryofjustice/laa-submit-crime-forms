@@ -53,25 +53,26 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
       let(:claim) { create(:claim, :part_granted_status, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
 
       it 'generates part granted rows' do
-        expect(subject.row_data).to eq(
+        expect(subject.row_data).to match(
           [
             {
               head_key: 'application_status',
-              text: '<strong class="govuk-tag govuk-tag--blue">Part Granted</strong>'
+              text: '<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
+                    '<p>1 December 2023</p><br><p>£28.15 claimed</p><p>Pending Data</p>'
             },
             {
               head_key: 'laa_response',
               text: '<p>Fake LAA Response</p><p></p>' \
                     '<ul class="govuk-list govuk-list--bullet">' \
                     '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/applications/' \
-                    '7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim?section=adjustments#work_items">' \
+                    '[a-e0-9\-]+/steps/view_claim?section=adjustments#work_items">' \
                     'Review adjustments to work items</a></li><li><a class="govuk-link govuk-link--no-visited-state" ' \
-                    'href="/non-standard-magistrates/applications/7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim?' \
+                    'href="/non-standard-magistrates/applications/[a-e0-9\-]+/steps/view_claim?' \
                     'section=adjustments#letters_and_calls">Review adjustments to letters and calls</a></li>' \
                     '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/applications/' \
-                    '7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim?section=adjustments#disbursements">Review adjustments ' \
+                    '[a-e0-9\-]+/steps/view_claim?section=adjustments#disbursements">Review adjustments ' \
                     'to disbursements</a></li></ul><p></p><p><a class="govuk-button govuk-!-margin-bottom-0" ' \
-                    'href="/non-standard-magistrates/applications/7f1acf61-414d-4319-b15a-a34671f5d28e/steps/view_claim">' \
+                    'href="/non-standard-magistrates/applications/[a-e0-9\-]+/steps/view_claim">' \
                     'How to appeal this decision</a></p>'
             }
           ]
@@ -105,7 +106,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'application_status',
               text: '<p><strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong></p>' \
-                    '<p>1 December 2023</p><br><p>£0.00 claimed</p><p>£0.00 allowed</p>'
+                    '<p>1 December 2023</p><br><p>£0.00 claimed</p><p>Pending Data</p>'
             },
             { head_key: 'laa_response', text: '<p>Fake LAA Response</p>' }
           ]
@@ -148,7 +149,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               head_key: 'laa_response',
               text: '<p>Fake LAA Response</p>' \
                     '<p><a class="govuk-button govuk-!-margin-bottom-0" href="/non-standard-magistrates/' \
-                    'applications/850602a8-ef6e-4379-94ab-8b30ab5e44f5/steps/view_claim">How to appeal this decision</a></p>'
+                    'applications/[a-e0-9\-]+/steps/view_claim">How to appeal this decision</a></p>'
             }
           ]
         )
