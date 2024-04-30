@@ -34,7 +34,7 @@ RSpec.describe PullUpdates do
 
   context 'when mocking claim' do
     let(:id) { SecureRandom.uuid }
-    let(:claim) { instance_double(Claim, update!: true) }
+    let(:claim) { instance_double(Claim, id:, update!: true) }
 
     before do
       allow(Claim).to receive_messages(maximum: last_update, find_by: claim)
