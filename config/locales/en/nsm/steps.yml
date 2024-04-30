@@ -324,6 +324,7 @@ en:
           claimed: claimed
           allowed: allowed
           awaiting_review: Awaiting LAA review
+          granted_response: The claim has been fully granted.
         show:
           page_title: Claim details
           heading: Claim details

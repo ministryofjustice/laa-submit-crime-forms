@@ -27,6 +27,9 @@
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key"><%= t(".laa_response") %></dt>
           <dd class="govuk-summary-list__value">
+            <% if claim.status == "granted" %>
+              <%= t(".granted_response") %>
+            <% end %>
           </dd>
         </div>
       <% end %>
