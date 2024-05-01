@@ -77,7 +77,7 @@ module Nsm
       end
 
       def submitted_data
-        claim.updated_at&.to_fs(:stamp)
+        claim.updated_at.to_fs(:stamp)
       end
 
       def appeal_button
@@ -116,11 +116,11 @@ module Nsm
       def any?(type)
         case type
         when 'work_items'
-          1 && true
+          claim.work_items.any?
         when 'letters_and_calls'
-          2 && true
-        when 'disbursements'
-          3 && true
+          claim
+        else # 'disbursements'
+          true
         end
       end
     end
