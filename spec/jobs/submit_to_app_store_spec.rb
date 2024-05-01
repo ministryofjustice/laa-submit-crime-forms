@@ -27,9 +27,20 @@ RSpec.describe SubmitToAppStore do
       subject.perform(submission:)
     end
 
-    it 'queues an email job' do
+    it 'does not queue an email' do
+      expect(SendNotificationEmail).not_to receive(:perform_later)
       subject.perform(submission:)
-      expect(SendNotificationEmail).to have_received(:perform_later).with(submission)
+    end
+
+    context 'when email flag is set' do
+      before do
+        allow(ENV).to receive(:fetch).with('SEND_EMAILS', 'false').and_return 'true'
+      end
+
+      it 'queues an email' do
+        expect(SendNotificationEmail).to receive(:perform_later).with(submission)
+        subject.perform(submission:)
+      end
     end
   end
 
