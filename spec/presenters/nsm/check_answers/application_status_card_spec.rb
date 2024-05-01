@@ -23,7 +23,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'application_status',
               text: Regexp.new('<p><strong class="govuk-tag govuk-tag--primary">Submitted</strong></p>' \
-                    '<p>1 December 2023</p><p>Awaiting LAA review</p><br><p>£\d+\.\d\d claimed</p>')
+                               '<p>1 December 2023</p><p>Awaiting LAA review</p><br><p>£\d+\.\d\d claimed</p>')
             }
           ]
         )
@@ -39,7 +39,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'application_status',
               text: Regexp.new('<p><strong class="govuk-tag govuk-tag--green">Granted</strong></p>' \
-                    '<p>1 December 2023</p><br><p>£(\d+\.\d\d) claimed</p><p>£\1 allowed</p>')
+                               '<p>1 December 2023</p><br><p>£(\d+\.\d\d) claimed</p><p>£\1 allowed</p>')
             },
             {
               head_key: 'laa_response', text: '<p>Fake LAA Response</p>'
@@ -50,7 +50,9 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     end
 
     context 'part granted' do
-      let(:claim) { create(:claim, :part_granted_status, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
+      let(:claim) do
+        create(:claim, :part_granted_status, :firm_details, :build_associates, :updated_at, work_items_count: 1)
+      end
 
       it 'generates part granted rows' do
         expect(subject.row_data).to match(
@@ -58,7 +60,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'application_status',
               text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
-                    '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
+                               '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
             },
             {
               head_key: 'laa_response',
@@ -88,7 +90,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               {
                 head_key: 'application_status',
                 text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
-                      '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
+                                 '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
               },
               {
                 head_key: 'laa_response',
@@ -97,11 +99,11 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
                       '<li><a class="govuk-link govuk-link--no-visited-state" ' \
                       "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim?" \
                       'section=adjustments#letters_and_calls">Review adjustments to letters and calls</a></li>' \
-                      '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/applications/' \
-                      "#{claim.id}/steps/view_claim?section=adjustments#disbursements\">Review adjustments " \
-                      'to disbursements</a></li></ul><p></p><p><a class="govuk-button govuk-!-margin-bottom-0" ' \
-                      "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim\">" \
-                      'How to appeal this decision</a></p>'
+                      '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/' \
+                      "applications/#{claim.id}/steps/view_claim?section=adjustments#disbursements\">Review " \
+                      'adjustments to disbursements</a></li></ul><p></p><p>' \
+                      '<a class="govuk-button govuk-!-margin-bottom-0" href="/non-standard-magistrates/applications/' \
+                      "#{claim.id}/steps/view_claim\">How to appeal this decision</a></p>"
               }
             ]
           )
@@ -118,7 +120,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'application_status',
               text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong></p>' \
-                    '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
+                               '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
             },
             { head_key: 'laa_response', text: '<p>Fake LAA Response</p>' }
           ]
@@ -127,7 +129,9 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     end
 
     context 'further info' do
-      let(:claim) { create(:claim, :further_info_status, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
+      let(:claim) do
+        create(:claim, :further_info_status, :firm_details, :build_associates, :updated_at, work_items_count: 1)
+      end
 
       it 'generates further info rows' do
         expect(subject.row_data).to match(
@@ -135,7 +139,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'application_status',
               text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong></p>' \
-                    '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
+                               '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
             },
             { head_key: 'laa_response', text: '<p>Fake LAA Response</p>' }
           ]
@@ -144,7 +148,9 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     end
 
     context 'provider requested' do
-      let(:claim) { create(:claim, :provider_requested_status, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
+      let(:claim) do
+        create(:claim, :provider_requested_status, :firm_details, :build_associates, :updated_at, work_items_count: 1)
+      end
 
       it 'generates provider requested rows' do
         expect(subject.row_data).to match(
@@ -152,7 +158,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'application_status',
               text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong></p>' \
-                    '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
+                               '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
             },
             { head_key: 'laa_response', text: '<p>Fake LAA Response</p>' }
           ]
@@ -171,7 +177,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'application_status',
               text: Regexp.new('<p><strong class="govuk-tag govuk-tag--red">Rejected</strong></p><p>1 December 2023</p>' \
-                    '<br><p>£\d+\.\d\d claimed</p><p>£0.00 allowed</p>')
+                               '<br><p>£\d+\.\d\d claimed</p><p>£0.00 allowed</p>')
 
             },
             {
