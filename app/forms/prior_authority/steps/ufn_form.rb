@@ -11,7 +11,7 @@ module PriorAuthority
       end
 
       def extended_attributes
-        attributes.merge(status: PriorAuthorityApplication.statuses[:draft],
+        attributes.merge(status: new_status,
                          laa_reference: generate_laa_reference)
       end
 
@@ -20,6 +20,10 @@ module PriorAuthority
           proposed_reference = "LAA-#{SecureRandom.alphanumeric(6)}"
           break proposed_reference unless PriorAuthorityApplication.exists?(laa_reference: proposed_reference)
         end
+      end
+
+      def new_status
+        application.pre_draft? ? :draft : application.status
       end
     end
   end
