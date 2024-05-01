@@ -17,6 +17,12 @@ module Decisions
     from(:claim_type).goto(show: 'nsm/steps/start_page')
     # start_page to firm_details is a hard coded link as show page
     from(:firm_details)
+      .when(-> { application.submitter.multiple_offices? })
+      .goto(edit: 'nsm/steps/office_code')
+      .when(-> { application.defendants.none? })
+      .goto(edit: 'nsm/steps/defendant_details', defendant_id: Nsm::StartPage::NEW_RECORD)
+      .goto(edit: NSM_DEFENDANT_SUMMARY)
+    from(:office_code)
       .when(-> { application.defendants.none? })
       .goto(edit: 'nsm/steps/defendant_details', defendant_id: Nsm::StartPage::NEW_RECORD)
       .goto(edit: NSM_DEFENDANT_SUMMARY)
@@ -93,13 +99,18 @@ module Decisions
     from(:ufn)
       .when(-> { application.navigation_stack[-1].match?('check_answers') })
       .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
-      .goto { overwrite_to_cya  }
+      .goto { overwrite_to_cya }
 
     # ---------------------------------
     # prior authority application steps
     # ---------------------------------
 
     from(:case_contact)
+      .when(-> { application.provider.multiple_offices? })
+      .goto(edit: 'prior_authority/steps/office_code')
+      .goto { overwrite_to_cya  }
+
+    from(:pa_office_code)
       .goto { overwrite_to_cya  }
 
     from(:client_detail)

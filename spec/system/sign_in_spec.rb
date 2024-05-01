@@ -25,7 +25,7 @@ RSpec.describe 'Sign in user journey' do
     end
   end
 
-  context 'user is signed in, only has one office code' do
+  context 'user is signed in' do
     before do
       allow_any_instance_of(
         Provider
@@ -38,62 +38,19 @@ RSpec.describe 'Sign in user journey' do
       expect(page).to have_current_path(root_path)
     end
 
-    it 'does not prompt for office code logic' do
-      click_on "Claim non-standard magistrates' court payments, previously CRM7"
-      expect(page).to have_current_path(nsm_applications_path)
-    end
-  end
-
-  context 'user is signed in and has many office codes' do
-    before do
-      allow_any_instance_of(
-        Provider
-      ).to receive(:office_codes).and_return(%w[1A123B 2A45B5])
-
-      visit provider_saml_omniauth_callback_path
-    end
-
-    it 'authenticates the user and redirects to the dashboard' do
-      expect(page).to have_current_path(root_path)
-    end
-
     context 'when I start NSM journey' do
       before { click_on "Claim non-standard magistrates' court payments, previously CRM7" }
 
-      it 'prompts for office code logic' do
-        expect(page).to have_current_path(edit_nsm_office_path)
-      end
-
-      it 'saves selected office code and moves me on' do
-        choose '1A123B'
-        expect { click_on 'Save and continue' }.to change { Provider.first.selected_office_code }.from(nil).to('1A123B')
+      it 'takes me to the application path page' do
         expect(page).to have_current_path(nsm_applications_path)
-      end
-
-      it 'validates my choice' do
-        click_on 'Save and continue'
-        expect(page).to have_current_path(nsm_office_path)
-        expect(page).to have_text 'There is a problem'
       end
     end
 
     context 'when I start PA journey' do
       before { click_on 'Apply for prior authority to incur disbursements, previously CRM4' }
 
-      it 'prompts for office code logic' do
-        expect(page).to have_current_path(edit_prior_authority_office_path)
-      end
-
-      it 'saves selected office code and moves me on' do
-        choose '1A123B'
-        expect { click_on 'Save and continue' }.to change { Provider.first.selected_office_code }.from(nil).to('1A123B')
+      it 'takes me to the application path page' do
         expect(page).to have_current_path(prior_authority_applications_path)
-      end
-
-      it 'validates my choice' do
-        click_on 'Save and continue'
-        expect(page).to have_current_path(prior_authority_office_path)
-        expect(page).to have_text 'There is a problem'
       end
     end
   end

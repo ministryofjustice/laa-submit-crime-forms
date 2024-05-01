@@ -59,7 +59,6 @@ Rails.application.routes.draw do
     end
 
     resources :offences, only: [:index], format: :js
-    resource :office, only: %i[show edit update]
 
     scope 'applications/:id' do
       # This is used as a generic redirect once a draft has been commited
@@ -71,6 +70,7 @@ Rails.application.routes.draw do
         edit_step :claim_type
         show_step :start_page
         edit_step :firm_details
+        edit_step :office_code
         edit_step :case_details
         edit_step :case_disposal
         edit_step :hearing_details
@@ -110,7 +110,6 @@ Rails.application.routes.draw do
   end
 
   namespace :prior_authority, path: 'prior-authority' do
-    resource :office, only: %i[show edit update]
     resources :service_types, only: [:index], format: :js
 
     scope 'applications/:application_id' do
@@ -120,6 +119,7 @@ Rails.application.routes.draw do
         show_step :start_page
         edit_step :ufn
         edit_step :case_contact
+        edit_step :office_code
         edit_step :client_detail
         edit_step :next_hearing
         edit_step :case_detail

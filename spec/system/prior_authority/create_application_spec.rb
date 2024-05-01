@@ -70,4 +70,26 @@ RSpec.describe 'Prior authority application creation' do
     expect(page)
       .to have_content 'to incur disbursements if the total authority is less than £100.'
   end
+
+  context 'when I have a single office code' do
+    before do
+      Provider.first.update(office_codes: %w[1A123B])
+    end
+
+    it 'stores my office code against the application' do
+      click_on 'Make a new application'
+      expect(PriorAuthorityApplication.first.office_code).to eq '1A123B'
+    end
+  end
+
+  context 'when I have multiple office codes' do
+    before do
+      Provider.first.update(office_codes: %w[1A123B 1K022G])
+    end
+
+    it 'leaves the office code blank for now' do
+      click_on 'Make a new application'
+      expect(PriorAuthorityApplication.first.office_code).to be_nil
+    end
+  end
 end

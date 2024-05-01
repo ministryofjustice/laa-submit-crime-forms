@@ -15,8 +15,7 @@ RSpec.describe 'Syncs' do
   end
 
   describe 'POST /app_store_webhook' do
-    let(:client) { instance_double(AppStoreClient) }
-    let(:record) { :record }
+    let(:record) { { 'foo' => { 'bar' => %w[baz biz] } } }
 
     context 'when no auth token is provided' do
       it 'rejects all requests' do
@@ -31,16 +30,14 @@ RSpec.describe 'Syncs' do
           allow(AppStoreTokenProvider).to receive(:instance).and_return(token_provider)
           allow(token_provider).to receive(:authentication_configured?).and_return false
 
-          allow(AppStoreClient).to receive(:new).and_return(client)
-          allow(client).to receive(:get).and_return(record)
           allow(AppStoreUpdateProcessor).to receive(:call)
         end
 
         it 'triggers a sync' do
-          post '/app_store_webhook', params: { submission_id: '123' }, headers: { 'Authorization' => 'Bearer ABC' }
+          post '/app_store_webhook', params: { submission_id: '123', data: record },
+headers: { 'Authorization' => 'Bearer ABC' }
           expect(response).to have_http_status(:ok)
-          expect(client).to have_received(:get).with('123')
-          expect(AppStoreUpdateProcessor).to have_received(:call).with(record, is_full: true)
+          expect(AppStoreUpdateProcessor).to have_received(:call).with(record)
         end
       end
     end
@@ -78,16 +75,14 @@ RSpec.describe 'Syncs' do
           allow(JWT::JWK::Set).to receive(:new).with('keys').and_return(jwks)
           allow(JWT).to receive(:decode).with('ABC', nil, true, { algorithms: 'RS256', jwks: jwks }).and_return(decoded)
 
-          allow(AppStoreClient).to receive(:new).and_return(client)
-          allow(client).to receive(:get).and_return(record)
           allow(AppStoreUpdateProcessor).to receive(:call)
         end
 
         it 'triggers a sync' do
-          post '/app_store_webhook', params: { submission_id: '123' }, headers: { 'Authorization' => 'Bearer ABC' }
+          post '/app_store_webhook', params: { submission_id: '123', data: record },
+headers: { 'Authorization' => 'Bearer ABC' }
           expect(response).to have_http_status(:ok)
-          expect(client).to have_received(:get).with('123')
-          expect(AppStoreUpdateProcessor).to have_received(:call).with(record, is_full: true)
+          expect(AppStoreUpdateProcessor).to have_received(:call).with(record)
         end
       end
     end

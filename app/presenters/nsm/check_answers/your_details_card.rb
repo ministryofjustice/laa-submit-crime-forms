@@ -20,7 +20,7 @@ module Nsm
           },
           {
             head_key: 'firm_account_number',
-            text: check_missing(firm_details_form.firm_office.account_number)
+            text: check_missing(firm_details_form.application.office_code)
           },
           {
             head_key: 'firm_address',

@@ -6,10 +6,6 @@ module ApplicationHelper
       PriorAuthorityApplication.for(current_provider).find_by(id: params[:application_id] || params[:id])
   end
 
-  def current_office_code
-    @current_office_code ||= current_provider&.selected_office_code
-  end
-
   def maat_required?(form)
     form.application.claim_type != ClaimType::BREACH_OF_INJUNCTION.to_s
   end

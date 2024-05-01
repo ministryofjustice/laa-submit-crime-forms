@@ -11,7 +11,6 @@ RSpec.describe 'User can fill in firm details', type: :system do
     visit edit_nsm_steps_firm_details_path(claim.id)
 
     fill_in 'Firm name', with: 'Lawyers'
-    fill_in 'Firm account number', with: '1111'
     fill_in 'Address line 1', with: 'home'
     fill_in 'Town or city', with: 'hometown'
     fill_in 'Postcode', with: 'AA1 1AA'
@@ -37,7 +36,6 @@ RSpec.describe 'User can fill in firm details', type: :system do
 
     expect(claim.firm_office).to have_attributes(
       name: 'Lawyers',
-      account_number: '1111',
       address_line_1: 'home',
       town: 'hometown',
       postcode: 'AA1 1AA',

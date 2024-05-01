@@ -1,0 +1,19 @@
+<% title t('.page_title') %>
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+   <span class="govuk-caption-xl"><%= t(".caption") %></span>
+    <%= step_form @form_object do |form| %>
+      <%= form.govuk_collection_radio_buttons :office_code, @form_object.options, :to_s, :to_s,
+                                              inline: false,
+                                              legend: { tag: 'h1', size: 'xl', text: t('.page_title') },
+                                              hint: { text: t('.subheading') } %>
+
+      <%= form.continue_button %>
+    <% end %>
+  </div>
+</div>
+
+

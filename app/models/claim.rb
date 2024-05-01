@@ -17,7 +17,7 @@ class Claim < ApplicationRecord
            class_name: 'SupportingDocument',
            as: :documentable
 
-  scope :for, ->(provider) { where(office_code: provider.selected_office_code) }
+  scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(office_code: nil, submitter: provider)) }
 
   enum status: { draft: 'draft', submitted: 'submitted', granted: 'granted', part_grant: 'part_grant',
                  review: 'review', further_info: 'further_info', provider_requested: 'provider_requested',
