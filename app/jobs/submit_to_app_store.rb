@@ -18,6 +18,6 @@ class SubmitToAppStore < ApplicationJob
   end
 
   def notify(submission)
-    SendNotificationEmail.perform_later(submission)
+    SendNotificationEmail.perform_later(submission) if ENV.fetch('SEND_EMAILS', 'false') == 'true'
   end
 end
