@@ -27,6 +27,7 @@ en:
           client_detained_prison: Where is your client detained?
           client_detained_prison_hint: Enter the name of prison, or select one from the suggestions that appear when you start to enter the name.
           maat: MAAT number
+          maat_hint: This is a 7 digit number, for example 1234567
           main_offence: What was the main offence?
           main_offence_hint: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name.
           page_title: Case details
@@ -68,7 +69,7 @@ en:
           page_title: Case and hearing details
       ufn:
         edit:
-          hint: For example 310223/001
+          hint: For example 311223/001
           label: What is your unique file number (UFN)?
           page_title: Unique file number
       prison_law:
@@ -173,9 +174,9 @@ en:
           reason_why_hint_html: |
             <p>Provide a summary of:</p>
             <ul>
-            <li>Why you are requesting this authority</li>
-            <li>Details of the prosecution case</li>
-            <li>The defence or mitigation</li>
+            <li>why you are requesting this authority</li>
+            <li>details of the prosecution case</li>
+            <li>the defence or mitigation</li>
             </ul>
             <p>If you do not include these, we may have to return your application to request more information, which will delay our decision.</p>
           file_upload:
@@ -235,7 +236,7 @@ en:
           name: What is the additional cost for?
           name_hint: Only add one type of cost. Further costs can be added later.
           description: Why is the additional cost required?
-          unit_type: How are you being charged
+          unit_type: How are you being charged?
           per_item: Charged per item
           per_hour: Charged by the hour
           items: Number of items

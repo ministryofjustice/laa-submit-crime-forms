@@ -35,7 +35,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetail::DefendantForm do
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:maat, :invalid)).to be(true)
-        expect(form.errors.messages[:maat]).to include('The MAAT number must only contain numbers')
+        expect(form.errors.messages[:maat]).to include('The MAAT number must be a 7 digit number')
       end
     end
   end

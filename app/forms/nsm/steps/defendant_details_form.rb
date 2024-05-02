@@ -8,8 +8,7 @@ module Nsm
       validates :first_name, presence: true
       validates :last_name, presence: true
       with_options if: :maat_required? do
-        validates :maat, presence: true, format: /\A\d+\z/
-        validates :maat, format: { with: /\d{7}/, message: :wrong_length }
+        validates :maat, presence: true, format: /\A\d{7}\z/
       end
 
       def maat_required?
