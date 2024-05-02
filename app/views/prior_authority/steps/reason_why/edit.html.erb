@@ -3,12 +3,22 @@
 <% title t('.page_title') %>
 <% decision_step_header %>
 
+<% content_for :hint do %>
+  <p><%= t('.reason_why_hint_p1') %></p>
+  <ul class="govuk-list govuk-list--bullet">
+    <% t('.reason_why_hints').each do |hint| %>
+      <li class="govuk-body"><%= hint %></li>
+    <% end %>
+  </ul>
+  <p><%= t('.reason_why_hint_p2') %></p>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
     <span class="govuk-caption-xl"><%= t(".caption") %></span>
     <%= step_form @form_object do |form| %>
-      <%= form.govuk_text_area :reason_why,  max_chars: 2000, rows: 16, label: { size: 'xl', text: t(".page_title") }, hint: { text: t('.reason_why_hint_html')}  %>
+      <%= form.govuk_text_area :reason_why,  max_chars: 2000, rows: 16, label: { size: 'xl', text: t(".page_title") }, hint: -> { content_for(:hint) }  %>
 
       <h1 class="govuk-heading-m"><%= t(".supporting_documentation") %></h1>
       <span class="govuk-caption-m govuk-!-margin-bottom-8"><%= t(".supporting_documentation_caption") %></span>
