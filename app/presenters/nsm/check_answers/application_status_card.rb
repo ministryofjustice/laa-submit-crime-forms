@@ -3,12 +3,16 @@
 module Nsm
   module CheckAnswers
     class ApplicationStatusCard < Base
+      EMAIL = 'magsbilling@justice.gov.uk'
       include GovukLinkHelper
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
+      include ActionView::Helpers::OutputSafetyHelper
       attr_reader :claim
 
-      delegate :status, to: :claim
+      def status
+        claim.status.inquiry
+      end
 
       def initialize(claim)
         @claim = claim
@@ -17,17 +21,15 @@ module Nsm
       end
 
       def row_data
-        response = status == 'submitted' ? nil : '<p>Fake LAA Response</p>'
-        links = join_strings(*edit_links, *appeal_button)
         [
           {
             head_key: 'application_status',
-            text: sanitize(status_text, tags: %w[strong br p])
+            text: status_text
           },
-          (if response
+          (if response.any?
              {
                head_key: 'laa_response',
-              text: sanitize(response, tags: %w[p]) + sanitize(links, tags: %w[ul li a p])
+               text: join_strings(*response, *edit_links, *appeal_button, *update_claim)
              }
            end)
         ].compact
@@ -40,15 +42,18 @@ module Nsm
       end
 
       def status_text
-        if status == 'submitted'
-          join_strings(status_tag(status), submitted_data, translate(:awaiting_review), tag.br, claimed_amount)
+        items = [status_tag(status), submitted_date]
+        if status.submitted?
+          items += [translate(:awaiting_review), tag.br, claimed_amount]
         else
-          join_strings(status_tag(status), submitted_data, tag.br, claimed_amount, allowed_amount(status))
+          items += [tag.br, claimed_amount]
+          items += [allowed_amount(status)] unless status.further_info? || status.provider_requested? || status.review?
         end
+        join_strings(*items)
       end
 
       def join_strings(*strings)
-        strings.map { |str| str == tag.br ? str : "<p>#{str}</p>" }.join
+        safe_join(strings.compact.map { |str| str == tag.br ? str : tag.p(str) })
       end
 
       def claimed_amount
@@ -59,29 +64,23 @@ module Nsm
         @total_gross ||= Nsm::CostSummary::Summary.new(claim).total_gross
       end
 
-      # TODO: calculate this amount
-      def allowed_amount(status)
-        return '£0.00 allowed' if status == 'rejected'
-        return "#{NumberTo.pounds(total_gross)} allowed" if status == 'granted'
-
-        'Pending Data'
-      end
-
       def translate(key)
         I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.#{key}")
       end
 
-      def status_tag(_status)
-        "<strong class=\"govuk-tag #{I18n.t("nsm.claims.index.status_colour.#{claim.status}")}\">" \
-        "#{I18n.t("nsm.claims.index.status.#{claim.status}")}</strong>".html_safe
+      def status_tag(status)
+        tag.strong(
+          I18n.t("nsm.claims.index.status.#{status}"),
+          class: ['govuk-tag', I18n.t("nsm.claims.index.status_colour.#{status}")]
+        )
       end
 
-      def submitted_data
+      def submitted_date
         claim.updated_at.to_fs(:stamp)
       end
 
       def appeal_button
-        return [] unless status.in?(%w[part_grant rejected])
+        return [] unless status.part_grant? || status.rejected?
 
         helper = Rails.application.routes.url_helpers
         [
@@ -94,11 +93,11 @@ module Nsm
       end
 
       def edit_links
-        return [] unless status == 'part_grant'
+        return [] unless status.part_grant?
 
         helper = Rails.application.routes.url_helpers
         li_elements = %w[work_items letters_and_calls disbursements].map do |type|
-          next unless any?(type)
+          next unless any_changes?(type)
 
           tag.li do
             govuk_link_to(
@@ -109,11 +108,37 @@ module Nsm
             )
           end
         end
-        tag.ul sanitize(li_elements.join, tags: %w[a li]), class: 'govuk-list govuk-list--bullet'
+        tag.ul safe_join(li_elements), class: 'govuk-list govuk-list--bullet'
       end
 
-      # TODO: implement logic here to check for changes
-      def any?(type)
+      def update_claim
+        return [] unless status.further_info? || status.provider_requested? || status.review?
+
+        key = status.provider_requested? ? 'update_provider_requested' : 'update_further_info'
+        email = tag.a(EMAIL, href: "mailto:#{EMAIL}")
+        [
+          tag.span(translate('update_claim'), class: 'govuk-!-font-weight-bold'),
+          translate(key).sub('%email%', email).html_safe
+        ].compact
+      end
+
+      # TODO: allow below methods are pending adjustment data and comments being available
+      #       ticket TBC
+      def response
+        @response ||= begin
+          response_text = "Fake LAA Response\nSecond line"
+          status.submitted? ? [] : response_text.split("\n").map { sanitize(_1) }
+        end
+      end
+
+      def allowed_amount(status)
+        return '£0.00 allowed' if status.rejected?
+        return "#{NumberTo.pounds(total_gross)} allowed" if status.granted?
+
+        'Pending Data'
+      end
+
+      def any_changes?(type)
         case type
         when 'work_items'
           claim.work_items.any?

@@ -1,6 +1,5 @@
 module Nsm
   module Steps
-    # rubocop:disable Metrics/ClassLength
     class LettersCallsForm < ::Steps::BaseFormObject
       attr_writer :apply_calls_uplift, :apply_letters_uplift
 
@@ -138,6 +137,5 @@ module Nsm
         calls.to_f * pricing.letters if calls && !calls.zero?
       end
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end

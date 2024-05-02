@@ -42,7 +42,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
                                '<p>1 December 2023</p><br><p>£(\d+\.\d\d) claimed</p><p>£\1 allowed</p>')
             },
             {
-              head_key: 'laa_response', text: '<p>Fake LAA Response</p>'
+              head_key: 'laa_response', text: '<p>Fake LAA Response</p><p>Second line</p>'
             }
           ]
         )
@@ -64,8 +64,8 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'laa_response',
-              text: '<p>Fake LAA Response</p><p></p>' \
-                    '<ul class="govuk-list govuk-list--bullet">' \
+              text: '<p>Fake LAA Response</p><p>Second line</p>' \
+                    '<p><ul class="govuk-list govuk-list--bullet">' \
                     '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/applications/' \
                     "#{claim.id}/steps/view_claim?section=adjustments#work_items\">" \
                     'Review adjustments to work items</a></li><li><a class="govuk-link govuk-link--no-visited-state" ' \
@@ -73,7 +73,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
                     'section=adjustments#letters_and_calls">Review adjustments to letters and calls</a></li>' \
                     '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/applications/' \
                     "#{claim.id}/steps/view_claim?section=adjustments#disbursements\">Review adjustments " \
-                    'to disbursements</a></li></ul><p></p><p><a class="govuk-button govuk-!-margin-bottom-0" ' \
+                    'to disbursements</a></li></ul></p><p><a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" ' \
                     "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim\">" \
                     'How to appeal this decision</a></p>'
             }
@@ -94,16 +94,17 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               },
               {
                 head_key: 'laa_response',
-                text: '<p>Fake LAA Response</p><p></p>' \
-                      '<ul class="govuk-list govuk-list--bullet">' \
+                text: '<p>Fake LAA Response</p><p>Second line</p>' \
+                      '<p><ul class="govuk-list govuk-list--bullet">' \
                       '<li><a class="govuk-link govuk-link--no-visited-state" ' \
                       "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim?" \
                       'section=adjustments#letters_and_calls">Review adjustments to letters and calls</a></li>' \
                       '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/' \
                       "applications/#{claim.id}/steps/view_claim?section=adjustments#disbursements\">Review " \
-                      'adjustments to disbursements</a></li></ul><p></p><p>' \
-                      '<a class="govuk-button govuk-!-margin-bottom-0" href="/non-standard-magistrates/applications/' \
-                      "#{claim.id}/steps/view_claim\">How to appeal this decision</a></p>"
+                      'adjustments to disbursements</a></li></ul></p><p>' \
+                      '<a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" ' \
+                      "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim\">How to appeal " \
+                      'this decision</a></p>'
               }
             ]
           )
@@ -119,10 +120,16 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
           [
             {
               head_key: 'application_status',
-              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong></p>' \
-                               '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
+              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow\">Update needed</strong></p><p>1 December 2023</p>' \
+                               '<br><p>£\d+\.\d\d claimed</p>')
+
             },
-            { head_key: 'laa_response', text: '<p>Fake LAA Response</p>' }
+            {
+              head_key: 'laa_response',
+              text: '<p>Fake LAA Response</p><p>Second line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
+                    '</p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">magsbilling@justice.gov.uk</a> ' \
+                    "with the LAA case reference in the subject of the email and include any supporting information requested.\n</p>"
+            }
           ]
         )
       end
@@ -138,10 +145,16 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
           [
             {
               head_key: 'application_status',
-              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong></p>' \
-                               '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
+              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow\">Update needed</strong></p><p>1 December 2023</p>' \
+                               '<br><p>£\d+\.\d\d claimed</p>')
+
             },
-            { head_key: 'laa_response', text: '<p>Fake LAA Response</p>' }
+            {
+              head_key: 'laa_response',
+              text: '<p>Fake LAA Response</p><p>Second line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
+                    '</p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">magsbilling@justice.gov.uk</a> ' \
+                    "with the LAA case reference in the subject of the email and include any supporting information requested.\n</p>"
+            }
           ]
         )
       end
@@ -157,10 +170,16 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
           [
             {
               head_key: 'application_status',
-              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow">Further Information Requested</strong></p>' \
-                               '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
+              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow">Provider request</strong></p>' \
+                               '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p>')
             },
-            { head_key: 'laa_response', text: '<p>Fake LAA Response</p>' }
+            {
+              head_key: 'laa_response',
+              text: '<p>Fake LAA Response</p><p>Second line</p><p><span class="govuk-!-font-weight-bold">Update your ' \
+                    'claim</span></p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">' \
+                    'magsbilling@justice.gov.uk</a> with the LAA case reference in the subject of the email and include ' \
+                    "your new information.\n</p>"
+            }
           ]
         )
       end
@@ -182,9 +201,10 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'laa_response',
-              text: '<p>Fake LAA Response</p>' \
-                    '<p><a class="govuk-button govuk-!-margin-bottom-0" href="/non-standard-magistrates/' \
-                    "applications/#{claim.id}/steps/view_claim\">How to appeal this decision</a></p>"
+              text: '<p>Fake LAA Response</p><p>Second line</p>' \
+                    '<p><a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" ' \
+                    "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim\">" \
+                    'How to appeal this decision</a></p>'
             }
           ]
         )

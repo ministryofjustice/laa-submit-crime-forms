@@ -131,6 +131,14 @@ en:
               work_items: Review adjustments to work items
               letters_and_calls: Review adjustments to letters and calls
               disbursements: Review adjustments to disbursements
+              update_claim: Update your claim
+              update_further_info: >
+                To update your claim, email %email% with the LAA case reference in the
+                subject of the email and include any supporting information requested.
+              update_provider_requested: >
+                To update your claim, email %email% with the LAA case reference in the
+                subject of the email and include your new information.
+
           claim_type:
             heading: What you are claiming for
             claim_type:
