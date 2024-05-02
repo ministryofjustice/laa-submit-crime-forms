@@ -70,11 +70,7 @@ module Nsm
       end
 
       def costs_section
-        [
-          WorkItemsCard.new(claim),
-          LettersCallsCard.new(claim),
-          DisbursementCostsCard.new(claim),
-        ]
+        [AdjustmentsCard.new(claim)]
       end
 
       def cost_summary_section

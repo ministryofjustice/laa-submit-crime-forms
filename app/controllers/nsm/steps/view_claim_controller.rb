@@ -8,6 +8,20 @@ module Nsm
         @claim = current_application
         @section = params.fetch(:section, :overview).to_sym
       end
+
+      def work_items
+        @work_items = current_application.work_items.map do
+          Nsm::Steps::WorkItemForm.build(_1, application: current_application)
+        end
+      end
+
+      def letters_and_calls
+        head :ok
+      end
+
+      def disbursements
+        head :ok
+      end
     end
   end
 end

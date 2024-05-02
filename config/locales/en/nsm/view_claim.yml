@@ -11,3 +11,19 @@ en:
             claimed_costs: Claimed costs
         section:
           page_title: Claim details
+        adjustments:
+          work_items: Work items
+          letters_and_calls: Letters and calls
+          disbursements: Disbursements
+        work_items:
+          page_title: Claim details
+          work_items: Work items
+          check_totals: Work item summary
+          view: View
+          item: Item
+          time: Time claimed
+          uplift: Uplift claimed
+          net_cost: Net cost claimed
+          action: Action
+          vat: VAT on claimed
+          gross_cost: Total claimed
