@@ -7,12 +7,14 @@ module PriorAuthority
       attribute :contact_first_name, :string
       attribute :contact_last_name, :string
       attribute :organisation, :string
+      attribute :town, :string
       attribute :postcode, :string
 
       validates :service_type_autocomplete, presence: true
       validates :contact_first_name, presence: true
       validates :contact_last_name, presence: true
       validates :organisation, presence: true
+      validates :town, presence: true
       validates :postcode, presence: true, uk_postcode: { allow_partial: true }
       include DocumentUploadable # Include this here so that validations appear in the correct order
 

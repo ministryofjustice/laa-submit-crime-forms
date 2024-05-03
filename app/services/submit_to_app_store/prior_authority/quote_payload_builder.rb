@@ -35,6 +35,7 @@ class SubmitToAppStore
         contact_first_name
         contact_last_name
         organisation
+        town
         postcode
         primary
         ordered_by_court

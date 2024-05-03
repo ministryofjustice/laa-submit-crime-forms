@@ -161,6 +161,8 @@ en:
               blank: Enter the service provider's last name
             organisation:
               blank: Enter the organisation name
+            town:
+              blank: Enter the town
             postcode:
               blank: Enter the postcode
               invalid: Enter a real postcode, or at least the first part of a real postcode, for example B1, CR1, SW11 or SW1A
