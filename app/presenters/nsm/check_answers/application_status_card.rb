@@ -122,8 +122,7 @@ module Nsm
         ].compact
       end
 
-      # TODO: allow below methods are pending adjustment data and comments being available
-      #       ticket TBC
+      # TODO: CRM457-1312 - allow below methods are pending adjustment data and comments being available
       def response
         @response ||= begin
           response_text = "Fake LAA Response\nSecond line"
