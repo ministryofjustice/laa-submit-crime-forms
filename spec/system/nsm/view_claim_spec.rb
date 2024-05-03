@@ -6,8 +6,8 @@ RSpec.describe 'View claim page', type: :system do
     [
       build(:work_item, :attendance_without_counsel, time_spent: 90, completed_on: 1.day.ago),
       build(:work_item, :advocacy, time_spent: 104, completed_on: 1.day.ago),
-      build(:work_item, :advocacy, time_spent: 86, completed_on: 2.day.ago),
-      build(:work_item, :waiting, time_spent: 23, completed_on: 3.day.ago),
+      build(:work_item, :advocacy, time_spent: 86, completed_on: 2.days.ago),
+      build(:work_item, :waiting, time_spent: 23, completed_on: 3.days.ago),
     ]
   end
   let(:disbursements) do
@@ -56,17 +56,17 @@ RSpec.describe 'View claim page', type: :system do
     expect(all('table caption, table td, table th').map(&:text)).to eq(
       [
         3.days.ago.strftime('%-d %B %Y'),
-        "Item", "Time claimed", "Uplift claimed", "Net cost claimed", "Action",
-        "Waiting", "0 hours 23 minutes", "10%", "£10.58", "View",
+        'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
+        'Waiting', '0 hours 23 minutes', '10%', '£10.58', 'View',
 
         2.days.ago.strftime('%-d %B %Y'),
-        "Item", "Time claimed", "Uplift claimed", "Net cost claimed", "Action",
-        "Advocacy", "1 hour 26 minutes", "0%", "£93.77", "View",
+        'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
+        'Advocacy', '1 hour 26 minutes', '0%', '£93.77', 'View',
 
-        1.days.ago.strftime('%-d %B %Y'),
-        "Item", "Time claimed", "Uplift claimed", "Net cost claimed", "Action",
-        "Advocacy", "1 hour 44 minutes", "0%", "£113.39", "View",
-        "Attendance without counsel", "1 hour 30 minutes", "0%", "£78.23", "View"
+        1.day.ago.strftime('%-d %B %Y'),
+        'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
+        'Advocacy', '1 hour 44 minutes', '0%', '£113.39', 'View',
+        'Attendance without counsel', '1 hour 30 minutes', '0%', '£78.23', 'View'
       ]
     )
 
@@ -74,10 +74,10 @@ RSpec.describe 'View claim page', type: :system do
     find('details').click
     expect(all('details table td, details table th').map(&:text)).to eq(
       [
-        "Item", "Net cost claimed", "VAT on claimed", "Total claimed",
-        "Advocacy", "£207.16", "£0.00", "£207.16",
-        "Attendance without counsel", "£78.23", "£0.00", "£78.23",
-        "Waiting", "£10.58", "£0.00", "£10.58"
+        'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed',
+        'Advocacy', '£207.16', '£0.00', '£207.16',
+        'Attendance without counsel', '£78.23', '£0.00', '£78.23',
+        'Waiting', '£10.58', '£0.00', '£10.58'
       ]
     )
   end

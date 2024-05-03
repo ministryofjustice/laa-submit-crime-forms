@@ -10,8 +10,8 @@ module Nsm
       end
 
       def work_items
-        @work_items = current_application.work_items.map do
-          Nsm::Steps::WorkItemForm.build(_1, application: current_application)
+        @work_items = current_application.work_items.map do |work_item|
+          Nsm::Steps::WorkItemForm.build(work_item, application: current_application)
         end
       end
 

@@ -17,7 +17,7 @@ module Nsm
       def custom
         {
           partial: 'nsm/steps/view_claim/adjustments',
-          locals: { claim: claim }
+          locals: { claim: }
         }
       end
     end
