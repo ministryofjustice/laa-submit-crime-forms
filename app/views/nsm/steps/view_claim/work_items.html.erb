@@ -26,7 +26,7 @@
 
       govuk_table do |table|
         table.with_head(rows: [head])
-        table.with_body(rows: rows.sort { _1[:text] }, first_cell_is_header: true)
+        table.with_body(rows: rows.sort_by { _1.dig(0, :text) }, first_cell_is_header: true)
       end
     %>
   <% end %>

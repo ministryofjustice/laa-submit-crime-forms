@@ -15,6 +15,7 @@ module Nsm
         end
       end
 
+      # :nocov:
       def letters_and_calls
         head :ok
       end
@@ -22,6 +23,7 @@ module Nsm
       def disbursements
         head :ok
       end
+      # :nocov:
     end
   end
 end

@@ -20,10 +20,6 @@ module Nsm
           locals: { claim: claim }
         }
       end
-
-      def change_link_controller_method
-        :show
-      end
     end
   end
 end
