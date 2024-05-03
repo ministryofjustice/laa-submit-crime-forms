@@ -4,8 +4,7 @@ import $ from 'jquery'
 window.$ = $
 
 MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
-    // Setting max file size to 10MB
-    const maxFileSize = 1024 * 1024 * 10;
+    const maxFileSize = document.querySelector('.moj-multi-file-upload').dataset.maxSize;
     this.params.uploadFileEntryHook(this, file);
     let formData = new FormData();
     formData.append('documents', file);
