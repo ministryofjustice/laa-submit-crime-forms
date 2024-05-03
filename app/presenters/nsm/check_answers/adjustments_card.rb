@@ -20,6 +20,10 @@ module Nsm
           locals: { claim: }
         }
       end
+
+      def title
+        nil
+      end
     end
   end
 end

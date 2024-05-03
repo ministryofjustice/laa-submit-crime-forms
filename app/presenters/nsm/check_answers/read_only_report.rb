@@ -94,6 +94,8 @@ module Nsm
       private
 
       def group_heading(group_key, **)
+        return nil if group_key == 'costs'
+
         I18n.t("nsm.steps.check_answers.groups.#{group_key}.heading", **)
       end
     end

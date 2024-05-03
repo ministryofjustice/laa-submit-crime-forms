@@ -13,7 +13,7 @@ RSpec.describe 'View claim page', type: :system do
   let(:disbursements) do
     [
       build(:disbursement, :valid, :car, age: 5, miles: 200),
-      build(:disbursement, :valid_other, :dna_testing, age: 4, total_cost_without_vat: 30),
+      build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 30),
       build(:disbursement, :valid_other, age: 3, other_type: 'Custom', total_cost_without_vat: 40),
       build(:disbursement, :valid, :car, age: 2, miles: 150),
     ]
@@ -49,7 +49,7 @@ RSpec.describe 'View claim page', type: :system do
     end
   end
 
-  it 'show the work items on the work items page' do
+  it 'show the work items and summary' do
     visit work_items_nsm_steps_view_claim_path(claim.id)
 
     # items
@@ -78,6 +78,39 @@ RSpec.describe 'View claim page', type: :system do
         'Advocacy', '£207.16', '£0.00', '£207.16',
         'Attendance without counsel', '£78.23', '£0.00', '£78.23',
         'Waiting', '£10.58', '£0.00', '£10.58'
+      ]
+    )
+  end
+
+  it 'show the letters and calls page' do
+    visit letters_and_calls_nsm_steps_view_claim_path(claim.id)
+
+    expect(all('table caption, table td, table th').map(&:text)).to eq(
+      [
+        "Item", "Number claimed", "Uplift claimed", "Net cost claimed", "Action",
+        "Letters", "2", "0%", "£8.18", "View",
+        "Calls", "3", "0%", "£12.27", "View"
+      ]
+    )
+  end
+
+  it 'show the disbursements page' do
+    visit disbursements_nsm_steps_view_claim_path(claim.id)
+
+    expect(all('table caption, table td, table th').map(&:text)).to eq(
+      [
+        5.days.ago.strftime('%-d %B %Y'),
+        "Item", "Net cost claimed", "VAT on claimed", "Total claimed", "Action",
+        "Car", "£90.00", "£18.00", "£108.00", "View",
+
+        3.days.ago.strftime('%-d %B %Y'),
+        "Item", "Net cost claimed", "VAT on claimed", "Total claimed", "Action",
+        "DNA Testing", "£30.00", "£0.00", "£30.00", "View",
+        "Custom", "£40.00", "£0.00", "£40.00", "View",
+
+        2.days.ago.strftime('%-d %B %Y'),
+        "Item", "Net cost claimed", "VAT on claimed", "Total claimed", "Action",
+        "Car", "£67.50", "£13.50", "£81.00", "View"
       ]
     )
   end

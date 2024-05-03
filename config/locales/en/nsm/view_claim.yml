@@ -27,3 +27,23 @@ en:
           action: Action
           vat: VAT on claimed
           gross_cost: Total claimed
+        letters_and_calls:
+          page_title: Claim details
+          letters_and_calls: Letters and calls
+          item: Item
+          number: Number claimed
+          uplift: Uplift claimed
+          net_cost: Net cost claimed
+          action: Action
+          view: View
+          letters: Letters
+          calls: Calls
+        disbursements:
+          page_title: Claim details
+          disbursements: Disbursements
+          item: Item
+          net_cost: Net cost claimed
+          vat: VAT on claimed
+          gross_cost: Total claimed
+          action: Action
+          view: View

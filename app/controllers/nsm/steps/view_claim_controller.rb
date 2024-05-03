@@ -15,15 +15,15 @@ module Nsm
         end
       end
 
-      # :nocov:
       def letters_and_calls
-        head :ok
+        @claim = current_application
       end
 
       def disbursements
-        head :ok
+        @disbursements = current_application.disbursements.by_age.map do |disbursement|
+          Nsm::Steps::DisbursementCostForm.build(disbursement, application: current_application)
+        end
       end
-      # :nocov:
     end
   end
 end
