@@ -5,9 +5,9 @@ module PriorAuthority
       attribute :client_detained, :boolean
       attribute :subject_to_poca, :boolean
 
-      validates :defendant, presence: true, nested: true
       validates :main_offence_autocomplete, presence: true
       validates :rep_order_date, presence: true, multiparam_date: { allow_past: true, allow_future: false }
+      validates :defendant, presence: true, nested: true
       validates :client_detained, inclusion: { in: [true, false] }
       validates :prison_autocomplete, presence: true, if: :client_detained
       validates :subject_to_poca, inclusion: { in: [true, false] }

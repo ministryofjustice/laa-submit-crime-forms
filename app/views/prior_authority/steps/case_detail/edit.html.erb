@@ -14,7 +14,10 @@
       <%= form.govuk_fully_validatable_date_field :rep_order_date, legend: { text: t(".rep_order_date"), size: 's' }, hint: { text: t(".rep_order_date_hint") } %>
 
       <%= form.fields_for :defendant, as: :defendant_form do |defendant_object| %>
-        <%= defendant_object.govuk_text_field :maat, width: 10, label: { text: t('.maat'), size: 's' } %>
+        <%= defendant_object.govuk_text_field :maat,
+                                              width: 10,
+                                              label: { text: t('.maat'), size: 's' },
+                                              hint: { text: t('.maat_hint')} %>
       <% end %>
 
       <%= form.govuk_radio_buttons_fieldset :client_detained, legend: { text: t('.client_detained'), size: 's' } do %>
