@@ -87,9 +87,9 @@ RSpec.describe 'View claim page', type: :system do
 
     expect(all('table caption, table td, table th').map(&:text)).to eq(
       [
-        "Item", "Number claimed", "Uplift claimed", "Net cost claimed", "Action",
-        "Letters", "2", "0%", "£8.18", "View",
-        "Calls", "3", "0%", "£12.27", "View"
+        'Item', 'Number claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
+        'Letters', '2', '0%', '£8.18', 'View',
+        'Calls', '3', '0%', '£12.27', 'View'
       ]
     )
   end
@@ -100,17 +100,17 @@ RSpec.describe 'View claim page', type: :system do
     expect(all('table caption, table td, table th').map(&:text)).to eq(
       [
         5.days.ago.strftime('%-d %B %Y'),
-        "Item", "Net cost claimed", "VAT on claimed", "Total claimed", "Action",
-        "Car", "£90.00", "£18.00", "£108.00", "View",
+        'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Action',
+        'Car', '£90.00', '£18.00', '£108.00', 'View',
 
         3.days.ago.strftime('%-d %B %Y'),
-        "Item", "Net cost claimed", "VAT on claimed", "Total claimed", "Action",
-        "DNA Testing", "£30.00", "£0.00", "£30.00", "View",
-        "Custom", "£40.00", "£0.00", "£40.00", "View",
+        'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Action',
+        'DNA Testing', '£30.00', '£0.00', '£30.00', 'View',
+        'Custom', '£40.00', '£0.00', '£40.00', 'View',
 
         2.days.ago.strftime('%-d %B %Y'),
-        "Item", "Net cost claimed", "VAT on claimed", "Total claimed", "Action",
-        "Car", "£67.50", "£13.50", "£81.00", "View"
+        'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Action',
+        'Car', '£67.50', '£13.50', '£81.00', 'View'
       ]
     )
   end
