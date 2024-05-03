@@ -24,7 +24,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   let(:contact_first_name) { 'Joe' }
   let(:contact_last_name) { 'Bloggs' }
   let(:organisation) { 'LAA' }
-  let(:postcode) { 'CR0 1RE' }
+  let(:postcode) { 'CR0' }
 
   describe '#validate' do
     context 'with valid quote details not including a file upload' do

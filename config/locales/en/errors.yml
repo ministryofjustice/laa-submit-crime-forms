@@ -163,7 +163,7 @@ en:
               blank: Enter the organisation name
             postcode:
               blank: Enter the postcode
-              invalid: Enter a real postcode
+              invalid: Enter a real postcode, or at least the first part of a real postcode, for example B1, CR1, SW11 or SW1A
             file_upload:
               blank: Upload the primary quote
         prior_authority/steps/youth_court_form:
