@@ -49,7 +49,7 @@ RSpec.describe TaskList::Task do
           '<li class="moj-task-list__item">' \
           '<span class="app-task-list__task-name">Foo Bar Task Locale</span>' \
           '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">' \
-          'Cannot yet start</strong>' \
+          'Cannot start yet</strong>' \
           '</li>'
         )
       end

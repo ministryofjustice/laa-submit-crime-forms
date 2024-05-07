@@ -6,7 +6,7 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
   end
 
   it 'cannot initially access form' do
-    expect(page).to have_content 'Primary quote Cannot yet start'
+    expect(page).to have_content 'Primary quote Cannot start yet'
   end
 
   context 'when I fill in a primary quote' do

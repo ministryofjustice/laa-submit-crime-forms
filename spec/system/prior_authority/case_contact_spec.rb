@@ -6,7 +6,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
   end
 
   it 'allows contact detail creation' do
-    expect(page).to have_content 'Case contactNot started'
+    expect(page).to have_content 'Case contactNot yet started'
 
     click_on 'Case contact'
     fill_in 'First name', with: 'John'
@@ -19,7 +19,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
   end
 
   it 'does validations' do
-    expect(page).to have_content 'Case contactNot started'
+    expect(page).to have_content 'Case contactNot yet started'
 
     click_on 'Case contact'
     click_on 'Save and continue'
@@ -28,7 +28,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
   end
 
   it 'allows save and come back later' do
-    expect(page).to have_content 'Case contactNot started'
+    expect(page).to have_content 'Case contactNot yet started'
 
     click_on 'Case contact'
     click_on 'Save and come back later'

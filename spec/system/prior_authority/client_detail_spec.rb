@@ -6,7 +6,7 @@ RSpec.describe 'Prior authority applications - add client details' do
   end
 
   it 'allows client detail creation' do
-    expect(page).to have_content 'Client detailsNot started'
+    expect(page).to have_content 'Client detailsNot yet started'
     click_on 'Client details'
     expect(page).to have_title 'Client details'
 
@@ -24,7 +24,7 @@ RSpec.describe 'Prior authority applications - add client details' do
   end
 
   it 'validates client detail fields' do
-    expect(page).to have_content 'Client detailsNot started'
+    expect(page).to have_content 'Client detailsNot yet started'
     click_on 'Client details'
 
     click_on 'Save and continue'
@@ -48,7 +48,7 @@ RSpec.describe 'Prior authority applications - add client details' do
   end
 
   it 'allows save and come back later' do
-    expect(page).to have_content 'Client detailsNot started'
+    expect(page).to have_content 'Client detailsNot yet started'
     click_on 'Client details'
 
     click_on 'Save and come back later'

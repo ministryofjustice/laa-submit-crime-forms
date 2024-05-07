@@ -34,7 +34,7 @@ RSpec.describe TaskList::StatusTag do
       it {
         expect(status_tag.render).to eq(
           '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">' \
-          'Not started</strong>'
+          'Not yet started</strong>'
         )
       }
     end
@@ -45,7 +45,7 @@ RSpec.describe TaskList::StatusTag do
       it {
         expect(status_tag.render).to eq(
           '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">' \
-          'Cannot yet start</strong>'
+          'Cannot start yet</strong>'
         )
       }
     end
