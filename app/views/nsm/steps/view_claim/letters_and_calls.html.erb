@@ -1,0 +1,40 @@
+<% title t('.page_title') %>
+
+<turbo-frame id="letters_and_calls">
+  <h3 class="govuk-heading-m">
+    <%= t('.letters_and_calls') %>
+  </h3>
+
+  <%=
+    head = [
+      { text: t('.item'), width: 'govuk-!-width-one-quarter' },
+      { text: t('.number'), numeric: true },
+      { text: t('.uplift'), numeric: true },
+      { text: t('.net_cost'), numeric: true },
+      { text: t('.action'), numeric: true }
+    ]
+    link = link_to(t('.view'), nsm_steps_view_claim_path(claim_id: current_application.id), data: { turbo: 'false' })
+    form = Nsm::Steps::LettersCallsForm.build(@claim)
+    rows = [
+      [
+        t(".letters"),
+        { text: form.letters, numeric: true },
+        { text: NumberTo.percentage(form.letters_uplift.to_f, multiplier: 1), numeric: true },
+        { text: NumberTo.pounds(form.letters_after_uplift), numeric: true },
+        { text: link, numeric: true }
+      ],
+      [
+        t(".calls"),
+        { text: form.calls, numeric: true },
+        { text: NumberTo.percentage(form.calls_uplift.to_f, multiplier: 1), numeric: true },
+        { text: NumberTo.pounds(form.calls_after_uplift), numeric: true },
+        { text: link, numeric: true }
+      ]
+    ]
+
+    govuk_table(classes: 'govuk-!-margin-bottom-0') do |table|
+      table.with_head(rows: [head])
+      table.with_body(rows: rows, first_cell_is_header: true)
+    end
+   %>
+</turbo-frame>

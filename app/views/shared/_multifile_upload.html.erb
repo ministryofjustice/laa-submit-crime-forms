@@ -1,6 +1,6 @@
 <% hint ||= nil %>
 <% field ||= :documents %>
-<div class="moj-multi-file-upload">
+<div class="moj-multi-file-upload" data-max-size="<%= ENV['MAX_UPLOAD_SIZE_BYTES'] %>">
   <div class="moj-multi-file-upload__upload">
     <%= form.govuk_file_field field,
                               label: { text: t("#{locale_prefix}.file_upload.heading"), size: 'm' },
