@@ -42,7 +42,9 @@ RSpec.describe TaskList::Section do
         section.render
       ).to eq(
         '<li>' \
-        '<h2 class="govuk-task-list__section"><span class="govuk-task-list__section-number">1.</span>Foo Bar Heading</h2>' \
+        '<h2 class="govuk-task-list__section">' \
+        '<span class="govuk-task-list__section-number">1.</span>Foo Bar Heading' \
+        '</h2>' \
         '<ul class="govuk-task-list__items">[task_markup][task_markup]</ul>' \
         '</li>'
       )
