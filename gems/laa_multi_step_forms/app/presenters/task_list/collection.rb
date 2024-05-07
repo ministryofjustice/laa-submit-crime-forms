@@ -14,7 +14,7 @@ module TaskList
     end
 
     def render
-      tag.ol class: 'moj-task-list' do
+      tag.ol class: 'govuk-task-list' do
         safe_join(map(&:render))
       end
     end

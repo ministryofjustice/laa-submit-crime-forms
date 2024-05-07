@@ -60,7 +60,7 @@ RSpec.describe TaskList::Collection do
 
       expect(
         collection.render
-      ).to match(%r{<ol class="moj-task-list">.*</ol>})
+      ).to match(%r{<ol class="govuk-task-list">.*</ol>})
     end
 
     context 'when show_index is false' do

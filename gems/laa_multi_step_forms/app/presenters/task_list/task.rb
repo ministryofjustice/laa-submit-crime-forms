@@ -11,7 +11,7 @@ module TaskList
     end
 
     def render
-      tag.li class: 'moj-task-list__item' do
+      tag.li class: 'govuk-task-list__item govuk-task-list__item--with-link' do
         safe_join(
           [task_name, status_tag]
         )

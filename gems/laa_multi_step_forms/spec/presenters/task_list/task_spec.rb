@@ -30,7 +30,7 @@ RSpec.describe TaskList::Task do
         expect(
           subject.render
         ).to eq(
-          '<li class="moj-task-list__item">' \
+          '<li class="govuk-task-list__item govuk-task-list__item--with-link">' \
           '<span class="app-task-list__task-name"><a href="/steps/foobar" aria-describedby="foobar_task-status">' \
           'Foo Bar Task Locale</a></span>' \
           '<div id="foobar_task-status" class="app-task-list__tag govuk-tag govuk-tag--light-blue">In progress</div>' \
@@ -46,7 +46,7 @@ RSpec.describe TaskList::Task do
         expect(
           subject.render
         ).to eq(
-          '<li class="moj-task-list__item">' \
+          '<li class="govuk-task-list__item govuk-task-list__item--with-link">' \
           '<span class="app-task-list__task-name">Foo Bar Task Locale</span>' \
           '<div id="foobar_task-status" class="app-task-list__tag">' \
           'Cannot start yet</div>' \
