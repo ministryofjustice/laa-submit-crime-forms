@@ -2,15 +2,14 @@ module TaskList
   class StatusTag < BaseRenderer
     attr_reader :status
 
-    DEFAULT_CLASSES = %w[govuk-tag app-task-list__tag].freeze
+    DEFAULT_CLASSES = %w[app-task-list__tag].freeze
 
-    GRAY_TAG = 'govuk-tag--grey'.freeze
-    STATUSES = {
+    STATUS_CLASSES = {
       ::TaskStatus::COMPLETED => nil,
-      ::TaskStatus::IN_PROGRESS => 'govuk-tag--blue',
-      ::TaskStatus::NOT_STARTED => GRAY_TAG,
-      ::TaskStatus::UNREACHABLE => GRAY_TAG,
-      ::TaskStatus::NOT_APPLICABLE => GRAY_TAG,
+      ::TaskStatus::IN_PROGRESS => 'govuk-tag govuk-tag--light-blue',
+      ::TaskStatus::NOT_STARTED => 'govuk-tag govuk-tag--blue',
+      ::TaskStatus::UNREACHABLE => nil,
+      ::TaskStatus::NOT_APPLICABLE => 'govuk-tag govuk-tag--grey',
     }.freeze
 
     def initialize(application, name:, status:)
@@ -19,7 +18,7 @@ module TaskList
     end
 
     def render
-      tag.strong id: tag_id, class: tag_classes do
+      tag.div id: tag_id, class: tag_classes do
         t!("tasklist.status.#{status}")
       end
     end
@@ -27,7 +26,7 @@ module TaskList
     private
 
     def tag_classes
-      DEFAULT_CLASSES | Array(STATUSES.fetch(status))
+      DEFAULT_CLASSES | Array(STATUS_CLASSES.fetch(status))
     end
   end
 end
