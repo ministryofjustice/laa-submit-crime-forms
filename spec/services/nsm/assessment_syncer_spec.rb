@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
   describe '.call' do
     let(:claim) do
-      create(:claim, :complete, status: status)
+      create(:claim, :complete, status:)
     end
 
     let(:status) { 'granted' }
@@ -18,9 +18,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
             details: { comment: 'Decision comment' }
           },
         ],
-        application: {
-
-        }
+        application: {}
       }.deep_stringify_keys
     end
 
@@ -34,6 +32,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
 
     context 'when there is an error' do
       let(:status) { 'rejected' }
+
       before do
         allow(claim).to receive(:update).and_raise 'Some problem!'
         allow(Sentry).to receive(:capture_message)

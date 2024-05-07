@@ -123,14 +123,12 @@ module Nsm
       end
 
       def response
-        @response ||= begin
-          if status.granted?
-            [I18n.t('nsm.steps.view_claim.granted_response')]
-          else
-            response_text = claim.assessment_comment
-            status.submitted? ? [] : response_text.split("\n").map { sanitize(_1) }
-          end
-        end
+        @response ||= if status.granted?
+                        [I18n.t('nsm.steps.view_claim.granted_response')]
+                      else
+                        response_text = claim.assessment_comment
+                        status.submitted? ? [] : response_text.split("\n").map { sanitize(_1) }
+                      end
       end
 
       def allowed_amount(status)

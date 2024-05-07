@@ -15,6 +15,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
   describe '#row data' do
     let(:assessment_comment) { "this is a comment\n2nd line" }
+
     context 'submitted' do
       let(:claim) { create(:claim, :completed_status, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
 
@@ -52,7 +53,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'part granted' do
       let(:claim) do
-        create(:claim, :part_granted_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment:)
+        create(:claim, :part_granted_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
       end
 
       it 'generates part granted rows' do
@@ -114,7 +115,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     end
 
     context 'review' do
-      let(:claim) { create(:claim, :review_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment:) }
+      let(:claim) { create(:claim, :review_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment) }
 
       it 'generates review rows' do
         expect(subject.row_data).to match(
@@ -138,7 +139,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'further info' do
       let(:claim) do
-        create(:claim, :further_info_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment:)
+        create(:claim, :further_info_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
       end
 
       it 'generates further info rows' do
@@ -163,7 +164,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'provider requested' do
       let(:claim) do
-        create(:claim, :provider_requested_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment:)
+        create(:claim, :provider_requested_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
       end
 
       it 'generates provider requested rows' do
@@ -188,7 +189,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'rejected' do
       let(:claim) do
-        create(:claim, :rejected_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment:)
+        create(:claim, :rejected_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
       end
 
       it 'generates rejected rows' do
