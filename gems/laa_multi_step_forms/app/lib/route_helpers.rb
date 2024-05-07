@@ -29,7 +29,9 @@ module RouteHelpers
     end
   end
 
-  def show_step(name)
-    resource name, only: [:show], controller: name
+  def show_step(name, &block)
+    resource name, only: [:show], controller: name do
+      yield if block
+    end
   end
 end

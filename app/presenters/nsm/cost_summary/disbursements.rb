@@ -28,8 +28,6 @@ module Nsm
         translate('disbursements')
       end
 
-      private
-
       def translated_text(form)
         if form.record.disbursement_type == DisbursementTypes::OTHER.to_s
           known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(form.record.other_type))
