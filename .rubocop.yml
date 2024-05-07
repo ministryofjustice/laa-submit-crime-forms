@@ -101,6 +101,7 @@ RSpec/FilePath:
 ##########################
 
 Metrics/ClassLength:
+  Max: 130
   Exclude:
     - app/services/decisions/**/*
     - app/services/submit_to_app_store/prior_authority/event_builder.rb
@@ -128,6 +129,7 @@ Layout/LineLength:
   Max: 125
   Exclude:
     - spec/decisions/**/*
+    - spec/presenters/nsm/check_answers/application_status_card_spec.rb
 
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:
