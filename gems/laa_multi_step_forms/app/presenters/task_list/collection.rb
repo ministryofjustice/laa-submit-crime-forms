@@ -5,7 +5,7 @@ module TaskList
     delegate :size, to: :all_tasks
     delegate :tag, :safe_join, to: :view
 
-    def initialize(view, application:, show_index: true)
+    def initialize(view, application:, show_index: false)
       @view = view
       @application = application
       @show_index = show_index
