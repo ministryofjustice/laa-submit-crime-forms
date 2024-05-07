@@ -280,6 +280,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
     t.string "travel_adjustment_comment"
     t.string "contact_first_name"
     t.string "contact_last_name"
+    t.string "town"
     t.index ["prior_authority_application_id"], name: "index_quotes_on_prior_authority_application_id"
   end
 

@@ -87,6 +87,7 @@ en:
           contact_first_name: First name
           contact_last_name: Last name
           organisation: Organisation
+          town: Town
           postcode: Postcode
           file_upload: Upload the quote
           file_upload_hint: |

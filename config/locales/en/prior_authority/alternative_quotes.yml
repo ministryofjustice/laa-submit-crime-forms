@@ -80,7 +80,7 @@ en:
               blank: Enter the organisation name
             postcode:
               blank: Enter the postcode
-              invalid: Enter a real postcode
+              invalid: Enter a real postcode, or at least the first part of a real postcode, for example B1, CR1, SW11 or SW1A
             user_chosen_cost_type:
               inclusion: Select how you are being charged
             period:
