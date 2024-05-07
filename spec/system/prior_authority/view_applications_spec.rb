@@ -25,7 +25,7 @@ RSpec.describe 'View reviewed applications' do
       expect(page).to have_content '£155.00 requested'
       expect(page).to have_content '£0.00 allowed'
       expect(page).to have_content 'You used the wrong form'
-      expect(page).to have_content 'How to appeal this decision'
+      expect(page).to have_content 'If you want to appeal the rejection, email CRM4appeal@justice.gov.uk'
     end
   end
 
@@ -76,7 +76,7 @@ RSpec.describe 'View reviewed applications' do
       expect(page).to have_content 'Review service cost adjustments'
       expect(page).to have_content 'Review travel cost adjustments'
       expect(page).to have_content 'Review additional cost adjustments'
-      expect(page).to have_content 'How to appeal this decision'
+      expect(page).to have_content 'If you want to appeal the adjustment, email CRM4appeal@justice.gov.uk'
     end
 
     it 'shows service cost adjustments' do

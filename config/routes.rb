@@ -104,7 +104,13 @@ Rails.application.routes.draw do
         edit_step :solicitor_declaration
         show_step :claim_confirmation
         show_step :check_answers
-        show_step :view_claim
+        show_step :view_claim do
+          member do
+            get :work_items
+            get :letters_and_calls
+            get :disbursements
+          end
+        end
       end
     end
   end

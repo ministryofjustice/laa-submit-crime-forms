@@ -1,0 +1,63 @@
+<% title t('.page_title') %>
+
+<turbo-frame id="work_items">
+  <h3 class="govuk-heading-m">
+    <%= t('.work_items') %>
+  </h3>
+
+  <%= govuk_details(summary_text: t('.check_totals')) do %>
+    <%=
+      head = [
+        { text: t('.item'), width: 'govuk-!-width-one-quarter' },
+        { text: t('.net_cost'), numeric: true },
+        { text: t('.vat'), numeric: true },
+        { text: t('.gross_cost'), numeric: true }
+      ]
+      vat_rate = current_application.firm_office.vat_registered == 'true' ? Pricing.new(@claim).vat : 0
+      rows = @work_items.group_by(&:work_type).map do |work_type, work_items_for_type|
+        net_cost = work_items_for_type.sum(&:total_cost)
+        [
+          { text: t("summary.nsm/cost_summary/work_items.#{work_type.to_s}"), width: 'govuk-!-width-one-quarter' },
+          { text: NumberTo.pounds(net_cost), numeric: true },
+          { text: NumberTo.pounds(net_cost * vat_rate), numeric: true },
+          { text: NumberTo.pounds(net_cost * (1.0 + vat_rate)), numeric: true },
+        ]
+      end
+
+      govuk_table do |table|
+        table.with_head(rows: [head])
+        table.with_body(rows: rows.sort_by { _1.dig(0, :text) }, first_cell_is_header: true)
+      end
+    %>
+  <% end %>
+  <%
+    head = [
+      { text: t('.item'), width: 'govuk-!-width-one-quarter' },
+      { text: t('.time'), numeric: true },
+      { text: t('.uplift'), numeric: true },
+      { text: t('.net_cost'), numeric: true },
+      { text: t('.action'), numeric: true }
+    ]
+    last_completed_on = @work_items.last.completed_on
+    @work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
+    <%=
+      rows = work_items_for_date.map do |work_item|
+        link = link_to(t('.view'), nsm_steps_view_claim_path(claim_id: current_application.id, id: work_item.record.id), data: { turbo: 'false' })
+
+        [
+          t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"),
+          { text: format_period(work_item.time_spent), numeric: true },
+          { text: NumberTo.percentage(work_item.uplift.to_f, multiplier: 1), numeric: true },
+          { text: NumberTo.pounds(work_item.total_cost), numeric: true },
+          { text: link, numeric: true }
+        ]
+      end
+
+      govuk_table(classes: ('govuk-!-margin-bottom-0' if completed_on == last_completed_on)) do |table|
+        table.with_caption(text: completed_on.strftime('%-d %B %Y'), size: 's')
+        table.with_head(rows: [head])
+        table.with_body(rows: rows, first_cell_is_header: true)
+      end
+    %>
+  <% end %>
+</turbo-frame>

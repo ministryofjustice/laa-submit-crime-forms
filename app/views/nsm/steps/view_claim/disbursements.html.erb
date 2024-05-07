@@ -1,0 +1,40 @@
+<% title t('.page_title') %>
+
+<turbo-frame id="disbursements">
+  <h3 class="govuk-heading-m">
+    <%= t('.disbursements') %>
+  </h3>
+
+  <%
+    head = [
+      { text: t('.item'), width: 'govuk-!-width-one-quarter' },
+      { text: t('.net_cost'), numeric: true },
+      { text: t('.vat'), numeric: true },
+      { text: t('.gross_cost'), numeric: true },
+      { text: t('.action'), numeric: true }
+    ]
+    # TODO: find a way to cleanly extract the translator_test method out of this class
+    translator = Nsm::CostSummary::Disbursements.new([], @claim)
+    last_disbursement_date = @disbursements.last.record.disbursement_date
+    @disbursements.group_by { _1.record.disbursement_date }.each do |disbursement_date, disbursements_for_date| %>
+    <%=
+      rows = disbursements_for_date.map do |disbursement|
+        link = link_to(t('.view'), nsm_steps_view_claim_path(claim_id: current_application.id, id: disbursement.record.id), data: { turbo: 'false' })
+
+        [
+          translator.translated_text(disbursement),
+          { text: NumberTo.pounds(disbursement.total_cost_without_vat), numeric: true },
+          { text: NumberTo.pounds(disbursement.vat), numeric: true },
+          { text: NumberTo.pounds(disbursement.total_cost), numeric: true },
+          { text: link, numeric: true }
+        ]
+      end
+
+      govuk_table(classes: ('govuk-!-margin-bottom-0' if disbursement_date == last_disbursement_date)) do |table|
+        table.with_caption(text: disbursement_date.strftime('%-d %B %Y'), size: 's')
+        table.with_head(rows: [head])
+        table.with_body(rows: rows, first_cell_is_header: true)
+      end
+    %>
+  <% end %>
+</turbo-frame>

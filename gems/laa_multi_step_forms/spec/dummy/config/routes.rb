@@ -18,6 +18,11 @@ Rails.application.routes.draw do
     namespace :steps do
       edit_step :claim_type
       show_step :start_page
+      show_step :stop_page do
+        member do
+          get :maybe
+        end
+      end
       crud_step :defendant, param: :defendant_id, except: [:destroy]
       crud_step :work_item, param: :work_item_id do
         member do

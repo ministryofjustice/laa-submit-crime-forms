@@ -70,11 +70,7 @@ module Nsm
       end
 
       def costs_section
-        [
-          WorkItemsCard.new(claim),
-          LettersCallsCard.new(claim),
-          DisbursementCostsCard.new(claim),
-        ]
+        [AdjustmentsCard.new(claim)]
       end
 
       def cost_summary_section
@@ -98,6 +94,8 @@ module Nsm
       private
 
       def group_heading(group_key, **)
+        return nil if group_key == 'costs'
+
         I18n.t("nsm.steps.check_answers.groups.#{group_key}.heading", **)
       end
     end
