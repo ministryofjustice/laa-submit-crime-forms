@@ -21,7 +21,7 @@ module PriorAuthority
         validates :contact_first_name, presence: true
         validates :contact_last_name, presence: true
         validates :organisation, presence: true
-        validates :postcode, presence: true, uk_postcode: true
+        validates :postcode, presence: true, uk_postcode: { allow_partial: true }
         include DocumentUploadable
         include QuoteCostValidations
 
