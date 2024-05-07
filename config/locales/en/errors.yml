@@ -75,8 +75,7 @@ en:
           attributes:
             maat:
               blank: Enter the MAAT number
-              invalid: The MAAT number must only contain numbers
-              wrong_length: The MAAT number must be a 7 digit number
+              invalid: The MAAT number must be a 7 digit number
           summary:
             maat:
               blank: Enter the MAAT number
@@ -210,7 +209,7 @@ en:
         prior_authority/steps/additional_costs/overview_form:
           attributes:
             additional_costs_still_to_add:
-              inclusion: Select yes if you want to add additional costs
+              inclusion: Select yes if you want to add another additional cost
         prior_authority/steps/additional_costs/detail_form:
           attributes:
             name:
@@ -310,8 +309,7 @@ en:
               blank: Last name cannot be blank
             maat:
               blank: MAAT ID cannot be blank
-              invalid: The MAAT number must only contain numbers
-              wrong_length: The MAAT number must be a 7 digit number
+              invalid: The MAAT number must be a 7 digit number
         nsm/steps/case_details_form:
           attributes:
             main_offence:
