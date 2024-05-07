@@ -4,7 +4,7 @@ class AppStoreUpdateProcessor
       case record['application_type']
       when 'crm7'
         update_claim(record['application_id'], convert_params(record),
-                                               record)
+                     record)
       when 'crm4'
         update_prior_authority_application(record['application_id'],
                                            convert_params(record),
