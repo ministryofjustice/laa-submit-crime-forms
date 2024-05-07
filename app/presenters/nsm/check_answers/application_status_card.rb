@@ -122,10 +122,9 @@ module Nsm
         ].compact
       end
 
-      # TODO: CRM457-1312 - allow below methods are pending adjustment data and comments being available
       def response
         @response ||= begin
-          response_text = "Fake LAA Response\nSecond line"
+          response_text = claim.assessment_comment
           status.submitted? ? [] : response_text.split("\n").map { sanitize(_1) }
         end
       end
