@@ -13,6 +13,7 @@ en:
               submitted: Date Submitted
               assessed: Date Assessed
               returned: Date Returned
+              laa_response: LAA response
             claim_type:
               laa_reference: LAA reference
               file_ufn: Unique file number
@@ -124,7 +125,20 @@ en:
           application_status:
             heading: Claim Status
             application_status:
-              title: Status
+              title: Claim status
+              awaiting_review: Awaiting LAA review
+              appeal: How to appeal this decision
+              work_items: Review adjustments to work items
+              letters_and_calls: Review adjustments to letters and calls
+              disbursements: Review adjustments to disbursements
+              update_claim: Update your claim
+              update_further_info: >
+                To update your claim, email %email% with the LAA case reference in the
+                subject of the email and include any supporting information requested.
+              update_provider_requested: >
+                To update your claim, email %email% with the LAA case reference in the
+                subject of the email and include your new information.
+
           claim_type:
             heading: What you are claiming for
             claim_type:

@@ -21,9 +21,9 @@ en:
           granted: Granted
           part_grant: Part Granted
           rejected: Rejected
-          further_info: Further Information Requested
-          provider_requested: Further Information Requested
-          review: Further Information Requested
+          further_info: Update needed
+          provider_requested: Provider request
+          review: Update needed
         status_colour:
           draft: govuk-tag--grey
           submitted: govuk-tag--primary
