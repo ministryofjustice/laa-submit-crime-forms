@@ -25,7 +25,7 @@ class AppStoreUpdateProcessor
       return unless claim
 
       claim&.update!(params)
-      Nam::AssessmentSyncer.call(claim, record:)
+      Nsm::AssessmentSyncer.call(claim, record:)
     end
 
     def update_prior_authority_application(application_id, params, record)
