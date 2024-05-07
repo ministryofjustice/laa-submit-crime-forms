@@ -125,7 +125,7 @@ module Nsm
       def response
         @response ||= begin
           if status.granted?
-            [t('nsm.steps.view_claim.granted_response')]
+            [I18n.t('nsm.steps.view_claim.granted_response')]
           elsif status.part_granted? || status.rejected?
             response_text = claim.assessment_comment
             response_text.split("\n").map { sanitize(_1) }

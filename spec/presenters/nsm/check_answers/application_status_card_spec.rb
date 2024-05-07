@@ -14,6 +14,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
   end
 
   describe '#row data' do
+    let(:assessment_comment) { "this is a comment\n2nd line" }
     context 'submitted' do
       let(:claim) { create(:claim, :completed_status, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
 
@@ -42,7 +43,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
                                '<p>1 December 2023</p><br><p>£(\d+\.\d\d) claimed</p><p>£\1 allowed</p>')
             },
             {
-              head_key: 'laa_response', text: '<p>Fake LAA Response</p><p>Second line</p>'
+              head_key: 'laa_response', text: '<p>The claim has been fully granted.</p>'
             }
           ]
         )
@@ -51,7 +52,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'part granted' do
       let(:claim) do
-        create(:claim, :part_granted_status, :firm_details, :build_associates, :updated_at, work_items_count: 1)
+        create(:claim, :part_granted_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment:)
       end
 
       it 'generates part granted rows' do
@@ -64,7 +65,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'laa_response',
-              text: '<p>Fake LAA Response</p><p>Second line</p>' \
+              text: '<p>this is a comment</p><p>2nd line</p>' \
                     '<p><ul class="govuk-list govuk-list--bullet">' \
                     '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/applications/' \
                     "#{claim.id}/steps/view_claim?section=adjustments#work_items\">" \
@@ -94,7 +95,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               },
               {
                 head_key: 'laa_response',
-                text: '<p>Fake LAA Response</p><p>Second line</p>' \
+                text: '<p>this is an assessment</p>' \
                       '<p><ul class="govuk-list govuk-list--bullet">' \
                       '<li><a class="govuk-link govuk-link--no-visited-state" ' \
                       "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim?" \
@@ -187,7 +188,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'rejected' do
       let(:claim) do
-        create(:claim, :rejected_status, :firm_details, :build_associates, :updated_at, work_items_count: 1)
+        create(:claim, :rejected_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment:)
       end
 
       it 'generates rejected rows' do
@@ -201,7 +202,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'laa_response',
-              text: '<p>Fake LAA Response</p><p>Second line</p>' \
+              text: '<p>this is a comment</p><p>2nd line</p>' \
                     '<p><a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" ' \
                     "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim\">" \
                     'How to appeal this decision</a></p>'
