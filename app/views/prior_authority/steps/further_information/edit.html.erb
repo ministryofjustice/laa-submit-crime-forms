@@ -15,7 +15,7 @@
       <%= form.govuk_text_area :information_supplied, label: { text: t(".information_supplied"), size: "s" }%>
 
       <h1 class="govuk-heading-s"><%= t(".supporting_documentation") %></h1>
-      <span class="govuk-caption-m govuk-!-margin-bottom-8"><%= t(".supporting_documentation_caption") %></span>
+      <span class="govuk-caption-m govuk-!-margin-bottom-8"><%= t(".supporting_documentation_caption_html") %></span>
 
       <%= render 'shared/multifile_upload', supporting_documents: @form_object.supporting_documents, form: form, locale_prefix: 'prior_authority.steps.further_information.edit' %>
       <%= form.continue_button %>

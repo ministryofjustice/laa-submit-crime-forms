@@ -21,7 +21,7 @@
       <%= form.govuk_text_area :reason_why,  max_chars: 2000, rows: 16, label: { size: 'xl', text: t(".page_title") }, hint: -> { content_for(:hint) }  %>
 
       <h1 class="govuk-heading-m"><%= t(".supporting_documentation") %></h1>
-      <span class="govuk-caption-m govuk-!-margin-bottom-8"><%= t(".supporting_documentation_caption") %></span>
+      <span class="govuk-caption-m govuk-!-margin-bottom-8"><%= t(".supporting_documentation_caption_html") %></span>
       <%= render 'shared/multifile_upload', supporting_documents: @form_object.supporting_documents, form: form, locale_prefix: 'prior_authority.steps.reason_why.edit' %>
       <%= form.continue_button %>
     <% end %>
