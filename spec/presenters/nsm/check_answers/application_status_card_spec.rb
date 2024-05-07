@@ -83,7 +83,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
       end
 
       context 'no work items' do
-        let(:claim) { create(:claim, :part_granted_status, :firm_details, :updated_at) }
+        let(:claim) { create(:claim, :part_granted_status, :firm_details, :updated_at, assessment_comment:) }
 
         it 'generates part granted rows' do
           expect(subject.row_data).to match(
@@ -95,7 +95,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               },
               {
                 head_key: 'laa_response',
-                text: '<p>this is an assessment</p>' \
+                text: '<p>this is a comment</p><p>2nd line</p>' \
                       '<p><ul class="govuk-list govuk-list--bullet">' \
                       '<li><a class="govuk-link govuk-link--no-visited-state" ' \
                       "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim?" \
@@ -114,7 +114,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     end
 
     context 'review' do
-      let(:claim) { create(:claim, :review_status, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
+      let(:claim) { create(:claim, :review_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment:) }
 
       it 'generates review rows' do
         expect(subject.row_data).to match(
@@ -127,7 +127,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'laa_response',
-              text: '<p>Fake LAA Response</p><p>Second line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
+              text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
                     '</p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">magsbilling@justice.gov.uk</a> ' \
                     "with the LAA case reference in the subject of the email and include any supporting information requested.\n</p>"
             }
@@ -138,7 +138,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'further info' do
       let(:claim) do
-        create(:claim, :further_info_status, :firm_details, :build_associates, :updated_at, work_items_count: 1)
+        create(:claim, :further_info_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment:)
       end
 
       it 'generates further info rows' do
@@ -152,7 +152,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'laa_response',
-              text: '<p>Fake LAA Response</p><p>Second line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
+              text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
                     '</p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">magsbilling@justice.gov.uk</a> ' \
                     "with the LAA case reference in the subject of the email and include any supporting information requested.\n</p>"
             }
@@ -163,7 +163,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'provider requested' do
       let(:claim) do
-        create(:claim, :provider_requested_status, :firm_details, :build_associates, :updated_at, work_items_count: 1)
+        create(:claim, :provider_requested_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment:)
       end
 
       it 'generates provider requested rows' do
@@ -176,7 +176,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'laa_response',
-              text: '<p>Fake LAA Response</p><p>Second line</p><p><span class="govuk-!-font-weight-bold">Update your ' \
+              text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your ' \
                     'claim</span></p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">' \
                     'magsbilling@justice.gov.uk</a> with the LAA case reference in the subject of the email and include ' \
                     "your new information.\n</p>"

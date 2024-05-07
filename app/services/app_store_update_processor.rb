@@ -24,7 +24,7 @@ class AppStoreUpdateProcessor
 
       return unless claim
 
-      claim&.update!(params)
+      claim.update!(params)
       Nsm::AssessmentSyncer.call(claim, record:)
     end
 

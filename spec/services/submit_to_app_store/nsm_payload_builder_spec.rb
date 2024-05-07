@@ -4,7 +4,8 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
   subject { described_class.new(claim:, scorer:) }
 
   let(:scorer) { double(:risk_assessment_scorer, calculate: 'high') }
-  let(:claim) { create(:claim, :complete, :case_type_magistrates) }
+  let(:assessment_comment) { 'this is an assessment' }
+  let(:claim) { create(:claim, :complete, :case_type_magistrates, assessment_comment:) }
   let(:defendant) { claim.defendants.first }
   let(:disbursement) { claim.disbursements.first }
   let(:work_item) { claim.work_items.first }

@@ -36,7 +36,6 @@ FactoryBot.define do
     end
 
     trait :complete do
-      assessment_comment { 'this is an assessment' }
       claim_details
       firm_details
       main_defendant
