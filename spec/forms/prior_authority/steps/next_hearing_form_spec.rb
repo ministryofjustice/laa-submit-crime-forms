@@ -50,6 +50,21 @@ RSpec.describe PriorAuthority::Steps::NextHearingForm do
       end
     end
 
+    context 'with next hearing date in the past' do
+      let(:next_hearing_attributes) do
+        {
+          next_hearing: true,
+          next_hearing_date: Date.yesterday,
+        }
+      end
+
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.messages.values.flatten)
+          .to contain_exactly('The next hearing date cannot be in the past')
+      end
+    end
+
     context 'with invalid combination of next hearing details' do
       let(:next_hearing_attributes) do
         {

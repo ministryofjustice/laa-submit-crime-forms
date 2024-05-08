@@ -134,7 +134,9 @@ en:
           attributes:
             next_hearing:
               inclusion: Select yes if you know the date of the next hearing
-            next_hearing_date: *shared_next_hearing_date_errors
+            next_hearing_date:
+              <<: *shared_next_hearing_date_errors
+              past_not_allowed: The next hearing date cannot be in the past
         prior_authority/steps/prison_law_form:
           attributes:
             prison_law:

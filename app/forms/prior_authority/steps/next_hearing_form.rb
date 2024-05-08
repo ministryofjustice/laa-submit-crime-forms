@@ -7,7 +7,7 @@ module PriorAuthority
       validates :next_hearing, inclusion: { in: [true, false] }
       validates :next_hearing_date,
                 presence: true,
-                multiparam_date: { allow_past: true, allow_future: true },
+                multiparam_date: { allow_past: false, allow_future: true },
                 if: :next_hearing
 
       private
