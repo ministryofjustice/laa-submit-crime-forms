@@ -116,6 +116,7 @@ en:
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
+              past_not_allowed: The next hearing date cannot be in the past
             plea:
               inclusion: Select the likely or actual plea
             court_type:
@@ -136,7 +137,6 @@ en:
               inclusion: Select yes if you know the date of the next hearing
             next_hearing_date:
               <<: *shared_next_hearing_date_errors
-              past_not_allowed: The next hearing date cannot be in the past
         prior_authority/steps/prison_law_form:
           attributes:
             prison_law:

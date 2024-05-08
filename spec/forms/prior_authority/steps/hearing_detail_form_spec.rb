@@ -91,6 +91,23 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
           .to include('Date is too far in the past')
       end
     end
+
+    context 'with next hearing date in the past' do
+      let(:hearing_detail_attributes) do
+        {
+          next_hearing: true,
+          next_hearing_date: Date.yesterday,
+          plea: 'not_guilty',
+          court_type: 'central_criminal_court',
+        }
+      end
+
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.messages.values.flatten)
+          .to contain_exactly('The next hearing date cannot be in the past')
+      end
+    end
   end
 
   describe '#save' do
