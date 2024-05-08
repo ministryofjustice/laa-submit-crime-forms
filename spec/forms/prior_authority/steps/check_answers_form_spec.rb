@@ -162,5 +162,16 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
         expect(SubmitToAppStore).not_to have_received(:perform_later)
       end
     end
+
+    context 'when application is not in a valid state' do
+      let(:application) { create(:prior_authority_application, status: 'expired') }
+      let(:confirm_excluding_vat) { 'true' }
+      let(:confirm_travel_expenditure) { 'true' }
+
+      it 'does not do a submission' do
+        expect { save }.not_to change(application, :status)
+        expect(SubmitToAppStore).not_to have_received(:perform_later)
+      end
+    end
   end
 end

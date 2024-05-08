@@ -13,6 +13,17 @@ module PriorAuthority
       def save!; end
 
       def persist!
+        application.with_lock do
+          update_application
+        end
+      end
+
+      def update_application
+        unless application.draft? || application.sent_back?
+          errors.add(:base, :application_already_submitted)
+          return false
+        end
+
         application.update!(attributes.merge({ status: new_status }))
         SubmitToAppStore.perform_later(submission: application)
         true
