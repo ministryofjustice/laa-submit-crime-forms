@@ -47,10 +47,6 @@ module PriorAuthority
           }
         ]
       end
-
-      def template
-        'prior_authority/steps/check_answers/application_details'
-      end
     end
   end
 end
