@@ -16,7 +16,7 @@ en:
       sent_back: Update needed
       submitted: Submitted
       expired: Expired
-      provider_updated: Re-submitted
+      provider_updated: Resubmitted
     applications:
       index:
         page_title: Your applications
