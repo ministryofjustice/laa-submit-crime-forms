@@ -19,7 +19,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
       choose 'No'
       fill_in 'Why did you not get other quotes?', with: 'Some reason'
       click_on 'Save and continue'
-      expect(page).to have_content 'Alternative quotesCompleted'
+      expect(page).to have_content 'Alternative quotes Completed'
     end
 
     it 'validates appropriately' do
@@ -111,7 +111,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
           choose 'No'
           click_on 'Save and continue'
 
-          expect(page).to have_content 'Alternative quotesCompleted'
+          expect(page).to have_content 'Alternative quotes Completed'
         end
 
         it 'allows me to remove a quote' do
@@ -142,7 +142,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
 
           # Leave primary quote summary screen
           click_on 'Save and continue'
-          expect(page).to have_content 'Alternative quotesIn progress'
+          expect(page).to have_content 'Alternative quotes In progress'
         end
       end
     end
@@ -156,7 +156,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
     it 'does not prompt me to add more' do
       click_on 'Alternative quotes'
       click_on 'Save and continue'
-      expect(page).to have_content 'Alternative quotesCompleted'
+      expect(page).to have_content 'Alternative quotes Completed'
     end
   end
 

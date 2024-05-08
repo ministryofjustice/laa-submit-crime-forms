@@ -29,9 +29,9 @@ module TaskList
     private
 
     def section_header
-      tag.h2 class: 'moj-task-list__section' do
+      tag.h2 class: 'govuk-task-list__section' do
         if index
-          tag.span class: 'moj-task-list__section-number' do
+          tag.span class: 'govuk-task-list__section-number' do
             "#{index}."
           end.concat t!("tasklist.heading.#{name}")
         else
@@ -41,7 +41,7 @@ module TaskList
     end
 
     def section_tasks
-      tag.ul class: 'moj-task-list__items' do
+      tag.ul class: 'govuk-task-list__items' do
         safe_join(
           items.map(&:render)
         )

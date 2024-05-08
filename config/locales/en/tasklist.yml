@@ -51,8 +51,6 @@ en:
         page_title: Your %{app_type} progress
         page_advisory: If you leave this page before submitting, you can return later to complete the %{app_type}.
         heading: Your %{app_type} progress
-        subheading: "%{app_type} incomplete"
-        progress_counter: You have completed %{completed} of %{total} sections.
         aside:
           reference: LAA reference
           title: Application reference

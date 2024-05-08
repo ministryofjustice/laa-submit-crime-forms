@@ -6,7 +6,7 @@ RSpec.describe 'Prior authority applications - add case details', :javascript, t
   end
 
   it 'allows case detail creation' do
-    expect(page).to have_content 'Case and hearing details Not started'
+    expect(page).to have_content 'Case and hearing details Not yet started'
 
     click_on 'Case and hearing details'
     expect(page).to have_title 'Case details'

@@ -10,7 +10,7 @@ RSpec.describe 'Prior authority applications - add youth court' do
       choose 'Yes'
       click_on 'Save and continue'
       expect(page).to have_title 'Your application progress'
-      expect(page).to have_content 'Case and hearing detailsCompleted'
+      expect(page).to have_content 'Case and hearing details Completed'
     end
   end
 
