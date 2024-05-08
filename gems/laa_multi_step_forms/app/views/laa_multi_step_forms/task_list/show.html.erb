@@ -19,16 +19,6 @@
 
     <%= @pre_tasklist&.render %>
 
-    <% unless local_assigns[:skip_progress] %>
-      <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
-        <%= t('.subheading', app_type: local_assigns[:app_type]).humanize %>
-      </h2>
-
-      <p class="govuk-body govuk-!-margin-bottom-7">
-        <%= t('.progress_counter', completed: @tasklist.completed.size, total: @tasklist.size) %>
-      </p>
-    <% end %>
-
     <%= @tasklist.render %>
 
     <% if @application.is_a?(PriorAuthorityApplication) %>
