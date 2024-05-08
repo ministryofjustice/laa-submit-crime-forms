@@ -19,7 +19,7 @@
         <dd class="govuk-summary-list__value">
           <%= quote.contact_full_name %>
           <br>
-          <%= [quote.organisation, quote.postcode].join(', ') %>
+          <%= [quote.organisation, quote.town, quote.postcode].join(', ') %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">

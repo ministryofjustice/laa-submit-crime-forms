@@ -84,7 +84,7 @@ module PriorAuthority
       delegate :primary_quote, to: :application
 
       def service_details_html
-        organisation_details = [primary_quote.organisation, primary_quote.postcode].compact.join(', ')
+        organisation_details = [primary_quote.organisation, primary_quote.town, primary_quote.postcode].compact.join(', ')
         service_details_html = [primary_quote.contact_full_name, organisation_details].compact.join('<br>')
 
         sanitize(service_details_html, tags: %w[br])

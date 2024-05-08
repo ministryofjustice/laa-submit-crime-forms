@@ -87,10 +87,12 @@ en:
           contact_first_name: First name
           contact_last_name: Last name
           organisation: Organisation
+          town: Town
           postcode: Postcode
           file_upload: Upload the quote
-          file_upload_hint: |
-            The maximum file size of the quote is %{size}.
+          file_upload_hint_html: |
+            Friendly file names make it easier for us to assess your case. For example, Client-case.pdf instead of File23.PDF.<br>
+            The maximum size for each file is %{size}.
             Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
         uploaded_file_summary:
           uploaded_files: Uploaded files
@@ -187,7 +189,9 @@ en:
           uploaded_files: Uploaded files
           upload_file: Upload file
           supporting_documentation: Supporting documentation (optional)
-          supporting_documentation_caption: Attach copies of any supporting documentation. The maximum file size is 70MB. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
+          supporting_documentation_caption_html: |
+            Friendly file names make it easier for us to assess your case. For example, Client-case.pdf instead of File23.PDF.<br>
+            The maximum size for each file is %{size}. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
       travel_detail:
         edit:
           caption: About the request
@@ -271,7 +275,9 @@ en:
           request_heading: Your application needs the following further information to proceed
           information_supplied: Enter the information requested
           supporting_documentation: Supporting documentation (optional)
-          supporting_documentation_caption: Attach copies of any supporting documentation. The maximum file size is 70MB. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
+          supporting_documentation_caption_html: |
+            Friendly file names make it easier for us to assess your case. For example, Client-case.pdf instead of File23.PDF.<br>
+            The maximum file size is %{size}. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
           file_upload:
             heading: Upload files
           upload_file: Choose files

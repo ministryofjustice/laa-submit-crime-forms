@@ -19,10 +19,11 @@
       <%= form.govuk_text_field :contact_first_name, width: 20, label: { text: t(".contact_first_name"), size: "s" } %>
       <%= form.govuk_text_field :contact_last_name, width: 20, label: { text: t(".contact_last_name"), size: "s" } %>
       <%= form.govuk_text_field :organisation, label: { text: t(".organisation"), size: "s" } %>
+      <%= form.govuk_text_field :town, label: { text: t(".town"), size: "s" } %>
       <%= form.govuk_text_field :postcode, width: 10, label: { text: t(".postcode"), size: "s" } %>
       <%= form.govuk_file_field :file_upload,
                                 label: { text: t(".file_upload"), size: "m" },
-                                hint: { text: t(".file_upload_hint", size: FileUpload::FileUploader.human_readable_max_file_size) },
+                                hint: { text: t(".file_upload_hint_html", size: FileUpload::FileUploader.human_readable_max_file_size) },
                                 accept: SupportedFileTypes::SUPPORTED_FILE_TYPES.join(',') %>
       <% if @form_object.document_already_uploaded? %>
         <%= render "uploaded_file_summary", document: @form_object.document %>

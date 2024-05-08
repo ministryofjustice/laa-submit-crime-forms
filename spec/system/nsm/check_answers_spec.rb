@@ -21,10 +21,11 @@ RSpec.describe 'Check answers page', type: :system do
 
   before do
     visit provider_saml_omniauth_callback_path
-    visit nsm_steps_check_answers_path(claim.id)
   end
 
-  it 'shows a cost summary' do
+  it 'shows a cost summary on the main page' do
+    visit nsm_steps_check_answers_path(claim.id)
+
     within('#cost-summary-table') do
       expect(page).to have_content('Item Net cost VAT Total')
         .and have_content('Profit costs £305.84 £61.17 £367.01')

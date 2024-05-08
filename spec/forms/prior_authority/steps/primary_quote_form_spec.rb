@@ -11,6 +11,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       contact_first_name:,
       contact_last_name:,
       organisation:,
+      town:,
       postcode:,
       file_upload:,
     }
@@ -24,7 +25,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   let(:contact_first_name) { 'Joe' }
   let(:contact_last_name) { 'Bloggs' }
   let(:organisation) { 'LAA' }
-  let(:postcode) { 'CR0 1RE' }
+  let(:town) { 'Townville' }
+  let(:postcode) { 'CR0' }
 
   describe '#validate' do
     context 'with valid quote details not including a file upload' do
@@ -69,8 +71,9 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       it 'has a validation errors on blank fields' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:postcode, :invalid)).to be(true)
-        expect(form.errors.messages.values.flatten)
-          .to include('Enter a real postcode')
+        expect(form.errors.messages.values.flatten).to include(
+          'Enter a real postcode, or at least the first part of a real postcode, for example B1, CR1, SW11 or SW1A'
+        )
       end
     end
 

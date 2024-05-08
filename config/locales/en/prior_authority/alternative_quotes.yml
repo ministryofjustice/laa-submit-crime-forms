@@ -48,8 +48,9 @@ en:
           organisation: Organisation
           postcode: Postcode
           file_upload: Upload the quote (optional)
-          file_upload_hint: |
-            The maximum file size of the quote is %{size}.
+          file_upload_hint_html: |
+            Friendly file names make it easier for us to assess your case. For example, Client-case.pdf instead of File23.PDF.<br>
+            The maximum size for each file is %{size}.
             Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
           cost: "%{service_name} cost"
           travel_cost: Travel cost (optional)
@@ -80,7 +81,7 @@ en:
               blank: Enter the organisation name
             postcode:
               blank: Enter the postcode
-              invalid: Enter a real postcode
+              invalid: Enter a real postcode, or at least the first part of a real postcode, for example B1, CR1, SW11 or SW1A
             user_chosen_cost_type:
               inclusion: Select how you are being charged
             period:
