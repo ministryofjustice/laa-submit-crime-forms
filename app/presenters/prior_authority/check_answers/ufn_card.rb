@@ -34,10 +34,6 @@ module PriorAuthority
         ]
       end
 
-      def actions
-        []
-      end
-
       def ufn_change_link
         helper = Rails.application.routes.url_helpers
 

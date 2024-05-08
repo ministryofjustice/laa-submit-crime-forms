@@ -52,8 +52,7 @@ module PriorAuthority
           },
           value: {
             text:
-          },
-          actions: actions
+          }
         }
       end
 
