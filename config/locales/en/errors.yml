@@ -67,6 +67,7 @@ en:
           attributes:
             base:
               application_not_corrected: Your application needs existing information corrected
+              application_already_submitted: Your application has already been submitted
             confirm_excluding_vat:
               accepted: Select if you confirm that all costs are exclusive of VAT
             confirm_travel_expenditure:

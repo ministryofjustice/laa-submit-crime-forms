@@ -71,7 +71,9 @@ module PriorAuthority
         return unless application.further_informations.any?
 
         if @verbose
-          application.further_informations.map { CompactFurtherInformationCard.new(_1) }
+          application.further_informations
+                     .order(requested_at: :desc)
+                     .map { CompactFurtherInformationCard.new(_1) }
         else
           FurtherInformationCard.new(application)
         end
