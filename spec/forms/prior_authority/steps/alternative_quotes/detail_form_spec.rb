@@ -31,13 +31,15 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
   let(:travel_cost_per_hour) { '' }
   let(:additional_cost_list) { '' }
   let(:record) { build(:quote, document: nil) }
-  let(:application) { build(:prior_authority_application, service_type: 'photocopying') }
+  let(:application) { build(:prior_authority_application, service_type:) }
+  let(:service_type) { 'photocopying' }
+
+  let(:file_upload) { instance_double(ActionDispatch::Http::UploadedFile, tempfile:, content_type:) }
+  let(:tempfile) { instance_double(File, size: 150) }
+  let(:content_type) { 'application/pdf' }
 
   describe '#save' do
-    let(:file_upload) { instance_double(ActionDispatch::Http::UploadedFile, tempfile:, content_type:) }
-    let(:tempfile) { instance_double(File, size: 150) }
     let(:uploader) { instance_double(FileUpload::FileUploader, scan_file: nil) }
-    let(:content_type) { 'application/pdf' }
 
     before do
       allow(FileUpload::FileUploader).to receive(:new).and_return(uploader)
@@ -141,6 +143,17 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
 
     it 'returns 0 if travel_time is invalid' do
       expect(form.travel_cost).to eq 0
+    end
+  end
+
+  describe '#total_cost' do
+    let(:period) { 30 }
+    let(:cost_per_hour) { '0.5' }
+    let(:user_chosen_cost_type) { 'per_hour' }
+    let(:service_type) { 'meteorologist' }
+
+    it 'handles <£1 values' do
+      expect(subject.total_cost).to eq 0.25
     end
   end
 end
