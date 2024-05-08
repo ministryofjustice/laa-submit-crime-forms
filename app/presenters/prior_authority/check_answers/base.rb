@@ -43,7 +43,7 @@ module PriorAuthority
       end
       # :nocov:
 
-      def row_content(head_key, text, actions = [], head_opts = {})
+      def row_content(head_key, text, head_opts = {})
         heading = translate_table_key(section, head_key, **head_opts)
 
         {
@@ -56,7 +56,7 @@ module PriorAuthority
         }
       end
 
-      def actions
+      def title_action
         helper = Rails.application.routes.url_helpers
 
         [
