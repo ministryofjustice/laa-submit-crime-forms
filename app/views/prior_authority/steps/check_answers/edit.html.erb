@@ -17,7 +17,7 @@
         <div class="govuk-inset-text">
           <strong><%= t('.incorrect_information_heading') %></strong><br>
           <br>
-          <p class="govuk-body"><%= @form_object.application.incorrect_information_explanation %></p>
+          <%= simple_format @form_object.application.incorrect_information_explanation %>
         </div>
       <% end %>
     <% end %>
