@@ -40,7 +40,7 @@ module PriorAuthority
           govuk_link_to(document.file_name,
                         Rails.application.routes.url_helpers.prior_authority_download_path(document))
         end
-        response = further_information.information_supplied
+        response = simple_format(further_information.information_supplied)
         parts = [response] + links.flat_map { [tag.br, _1] }
         safe_join(parts)
       end

@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
   describe '.call' do
-    let(:application) { create(:prior_authority_application, status:) }
+    let(:application) { create(:prior_authority_application, status:, prison_law:) }
     let(:new_data) do
       {
-        prison_law: true,
+        prison_law: prison_law,
         ufn: '120423/123',
         laa_reference: 'LAA-n4AohV',
         status: 'pre_draft',
@@ -87,6 +87,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
         ]
       }
     end
+    let(:prison_law) { true }
 
     let(:primary_quote) do
       {
@@ -298,7 +299,8 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
         end
       end
 
-      context 'when hearing detail has changed' do
+      context 'when hearing detail has changed for non-prison-law' do
+        let(:prison_law) { false }
         let(:changes) { { plea: 'something_else' } }
 
         it 'lists the change' do
@@ -311,6 +313,30 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
 
         it 'lists the change' do
           expect(listed_corrections).to eq [:next_hearing]
+        end
+      end
+
+      context 'when the application is prison law' do
+        let(:prison_law) { true }
+
+        context 'when hearing detail has changed' do
+          let(:changes) { { next_hearing: false, next_hearing_date: 1.month.from_now } }
+
+          it 'lists the change as next hearing' do
+            expect(listed_corrections).to eq [:next_hearing]
+          end
+        end
+      end
+
+      context 'when the application is NOT prison law' do
+        let(:prison_law) { false }
+
+        context 'when hearing detail has changed' do
+          let(:changes) { { next_hearing: false, next_hearing_date: 1.month.from_now } }
+
+          it 'lists the change as hearing detail' do
+            expect(listed_corrections).to eq [:hearing_detail]
+          end
         end
       end
 
