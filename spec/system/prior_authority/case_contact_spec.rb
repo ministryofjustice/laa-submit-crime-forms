@@ -6,7 +6,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
   end
 
   it 'allows contact detail creation' do
-    expect(page).to have_content 'Case contactNot started'
+    expect(page).to have_content 'Case contact Not yet started'
 
     click_on 'Case contact'
     fill_in 'First name', with: 'John'
@@ -15,11 +15,11 @@ RSpec.describe 'Prior authority applications - add case contact' do
     fill_in 'Firm name', with: 'LegalCorp Ltd'
     click_on 'Save and continue'
 
-    expect(page).to have_content 'Case contactCompleted'
+    expect(page).to have_content 'Case contact Completed'
   end
 
   it 'does validations' do
-    expect(page).to have_content 'Case contactNot started'
+    expect(page).to have_content 'Case contact Not yet started'
 
     click_on 'Case contact'
     click_on 'Save and continue'
@@ -28,7 +28,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
   end
 
   it 'allows save and come back later' do
-    expect(page).to have_content 'Case contactNot started'
+    expect(page).to have_content 'Case contact Not yet started'
 
     click_on 'Case contact'
     click_on 'Save and come back later'
@@ -47,7 +47,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
       fill_in 'First name', with: 'Jane'
       click_on 'Save and continue'
 
-      expect(page).to have_content 'Case contactCompleted'
+      expect(page).to have_content 'Case contact Completed'
     end
 
     it 'allows firm detail updating' do
@@ -55,7 +55,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
       fill_in 'Firm name', with: 'LegalCorp 2 Electic Boogaloo'
       click_on 'Save and continue'
 
-      expect(page).to have_content 'Case contactCompleted'
+      expect(page).to have_content 'Case contact Completed'
     end
   end
 
@@ -87,7 +87,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
       it 'saves the selection' do
         choose '1A123B'
         click_on 'Save and continue'
-        expect(page).to have_content 'Case contactCompleted'
+        expect(page).to have_content 'Case contact Completed'
         expect(PriorAuthorityApplication.first.office_code).to eq '1A123B'
       end
     end
