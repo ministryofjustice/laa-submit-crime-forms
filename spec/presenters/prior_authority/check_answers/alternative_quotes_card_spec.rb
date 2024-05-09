@@ -31,6 +31,7 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
     context 'when alternative quotes exist' do
       let(:quotes) do
         [
+          build(:quote, :primary),
           build(:quote, :alternative, contact_first_name: 'Jim', contact_last_name: 'Bob',
                 cost_per_hour: 20, period: 60, travel_cost_per_hour: 30, travel_time: 60),
           build(:quote, :alternative, contact_first_name: 'John', contact_last_name: 'Boy', document: nil,

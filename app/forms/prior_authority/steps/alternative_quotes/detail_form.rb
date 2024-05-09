@@ -70,6 +70,17 @@ module PriorAuthority
 
         delegate :contact_full_name, to: :record
 
+        def variable_cost_type?
+          false
+        end
+
+        def cost_type
+          @cost_type ||= ServiceCostForm.build(
+            application.primary_quote,
+            application:
+          ).cost_type
+        end
+
         private
 
         def persist!

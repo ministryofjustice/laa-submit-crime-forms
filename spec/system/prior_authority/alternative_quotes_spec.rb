@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Prior authority applications - alternative quote' do
   let(:application) do
-    create(:prior_authority_application, :with_primary_quote)
+    create(:prior_authority_application, :with_primary_quote, quotes: [build(:quote, :primary_per_item)])
   end
 
   before do
@@ -39,7 +39,6 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         fill_in 'Last name', with: 'Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'
         fill_in 'Postcode', with: 'SW1 1AA'
-        choose 'Charged per item'
         fill_in 'Number of items', with: '2'
         fill_in 'What is the cost per item?', with: '3'
         click_on 'Save and continue'
@@ -53,7 +52,6 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         fill_in 'Last name', with: 'Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'
         fill_in 'Postcode', with: 'SW1 1AA'
-        choose 'Charged per item'
         fill_in 'Number of items', with: '2'
         fill_in 'What is the cost per item?', with: '3'
         attach_file(file_fixture('test.png'))
@@ -68,7 +66,6 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         fill_in 'Last name', with: 'Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'
         fill_in 'Postcode', with: 'SW1 1AA'
-        choose 'Charged per item'
         fill_in 'Number of items', with: '1'
         fill_in 'What is the cost per item?', with: '100'
         fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_1', with: '1'
@@ -91,7 +88,6 @@ RSpec.describe 'Prior authority applications - alternative quote' do
           fill_in 'Last name', with: 'Expert'
           fill_in 'Organisation', with: 'ExpertiseCo'
           fill_in 'Postcode', with: 'SW1 1AA'
-          choose 'Charged per item'
           fill_in 'Number of items', with: '2'
           fill_in 'What is the cost per item?', with: '3'
           click_on 'Save and continue'
@@ -150,7 +146,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
 
   context 'when I already have 3 quotes' do
     before do
-      create_list(:quote, 3, :alternative, prior_authority_application: application)
+      create_list(:quote, 3, :alternative, :cost_per_item, prior_authority_application: application)
     end
 
     it 'does not prompt me to add more' do
