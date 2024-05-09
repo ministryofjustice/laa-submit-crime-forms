@@ -59,15 +59,13 @@ module PriorAuthority
       def title_action
         helper = Rails.application.routes.url_helpers
 
-        [
-          govuk_link_to(
-            I18n.t('generic.change'),
-            helper.url_for(controller: "prior_authority/steps/#{section}",
-                           action: request_method,
-                           application_id: application.id,
-                           only_path: true)
-          ),
-        ]
+        govuk_link_to(
+          I18n.t('generic.change'),
+          helper.url_for(controller: "prior_authority/steps/#{section}",
+                          action: request_method,
+                          application_id: application.id,
+                          only_path: true)
+        )
       end
     end
   end

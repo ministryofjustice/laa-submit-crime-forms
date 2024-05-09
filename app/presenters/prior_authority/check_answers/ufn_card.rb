@@ -47,6 +47,10 @@ module PriorAuthority
           }
         ]
       end
+
+      def title_action
+        nil
+      end
     end
   end
 end
