@@ -12,7 +12,7 @@ RSpec.describe TaskList::StatusTag do
 
       it {
         expect(status_tag.render).to eq(
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag">Completed</strong>'
+          '<div id="foobar_task-status" class="app-task-list__tag">Completed</div>'
         )
       }
     end
@@ -22,8 +22,8 @@ RSpec.describe TaskList::StatusTag do
 
       it {
         expect(status_tag.render).to eq(
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--blue">' \
-          'In progress</strong>'
+          '<div id="foobar_task-status" class="app-task-list__tag govuk-tag govuk-tag--light-blue">' \
+          'In progress</div>'
         )
       }
     end
@@ -33,8 +33,8 @@ RSpec.describe TaskList::StatusTag do
 
       it {
         expect(status_tag.render).to eq(
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">' \
-          'Not started</strong>'
+          '<div id="foobar_task-status" class="app-task-list__tag govuk-tag govuk-tag--blue">' \
+          'Not yet started</div>'
         )
       }
     end
@@ -44,8 +44,8 @@ RSpec.describe TaskList::StatusTag do
 
       it {
         expect(status_tag.render).to eq(
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">' \
-          'Cannot yet start</strong>'
+          '<div id="foobar_task-status" class="app-task-list__tag">' \
+          'Cannot start yet</div>'
         )
       }
     end
@@ -55,8 +55,8 @@ RSpec.describe TaskList::StatusTag do
 
       it {
         expect(status_tag.render).to eq(
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">' \
-          'Not applicable</strong>'
+          '<div id="foobar_task-status" class="app-task-list__tag govuk-tag govuk-tag--grey">' \
+          'Not applicable</div>'
         )
       }
     end

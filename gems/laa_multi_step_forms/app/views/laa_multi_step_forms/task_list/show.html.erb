@@ -12,22 +12,16 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%=t('.heading', app_type: local_assigns[:app_type]) %></h1>
+  </div>
+</div>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body govuk-!-margin-bottom-8">
       <%= t('.page_advisory', app_type: local_assigns[:app_type]) %>
     </p>
 
     <%= @pre_tasklist&.render %>
-
-    <% unless local_assigns[:skip_progress] %>
-      <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
-        <%= t('.subheading', app_type: local_assigns[:app_type]).humanize %>
-      </h2>
-
-      <p class="govuk-body govuk-!-margin-bottom-7">
-        <%= t('.progress_counter', completed: @tasklist.completed.size, total: @tasklist.size) %>
-      </p>
-    <% end %>
 
     <%= @tasklist.render %>
 
@@ -38,8 +32,8 @@
     <% end %>
   </div>
 
-  <div class="govuk-grid-column-one-third app-grid-column--sticky">
-    <aside class="app-aside__bar--blue aside-task-list" role="complementary" aria-labelledby="aside-title">
+  <div class="govuk-grid-column-one-third">
+    <aside class="aside-task-list" role="complementary" aria-labelledby="aside-title">
       <h3 id="aside-title" class="govuk-heading-s govuk-!-margin-bottom-4">
         <%= t('.aside.title') %>
       </h3>

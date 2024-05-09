@@ -104,7 +104,7 @@ en:
             client_detail: Client details
           statuses:
             complete: 'Complete'
-            not_started: 'Not started'
+            not_started: 'Not yet started'
             incomplete: 'Incomplete'
           status_colour:
             not_started: govuk-tag--grey

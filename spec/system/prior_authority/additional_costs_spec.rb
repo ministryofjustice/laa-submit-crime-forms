@@ -91,7 +91,7 @@ RSpec.describe 'Prior authority applications - additional costs' do
           click_on 'Save and continue'
           click_on 'Back' # to quote summary screen
           click_on 'Save and continue' # to application progress screen
-          expect(page).to have_content 'Primary quoteIn progress'
+          expect(page).to have_content 'Primary quote In progress'
         end
       end
 

@@ -11,7 +11,7 @@ module TaskList
     end
 
     def render
-      tag.li class: 'moj-task-list__item' do
+      tag.li class: 'govuk-task-list__item govuk-task-list__item--with-link' do
         safe_join(
           [task_name, status_tag]
         )
@@ -21,14 +21,17 @@ module TaskList
     private
 
     def task_name
-      tag.span class: 'app-task-list__task-name' do
+      tag.div class: 'app-task-list__task-name govuk-task-list__name-and-hint' do
         task_link
       end
     end
 
     def task_link
       if status.enabled?
-        tag.a t!("tasklist.task.#{name}"), href: task.path, aria: { describedby: tag_id }
+        tag.a t!("tasklist.task.#{name}"),
+              class: 'govuk-link govuk-task-list__link',
+              href: task.path,
+              aria: { describedby: tag_id }
       else
         t!("tasklist.task.#{name}")
       end
