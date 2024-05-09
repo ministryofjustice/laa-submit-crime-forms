@@ -127,7 +127,7 @@ module Nsm
                         [I18n.t('nsm.steps.view_claim.granted_response')]
                       else
                         response_text = claim.assessment_comment
-                        status.submitted? ? [] : response_text.split("\n").map { sanitize(_1) }
+                        status.submitted? ? '' : simple_format(response_text)
                       end
       end
 
