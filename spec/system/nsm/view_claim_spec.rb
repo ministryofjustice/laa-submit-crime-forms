@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'View claim page', type: :system do
-  let(:claim) { create(:claim, :firm_details, :letters_calls, work_items:, disbursements:) }
+  let(:claim) { create(:claim, :firm_details, :letters_calls, work_items:, disbursements:, assessment_comment:) }
+  let(:assessment_comment) { 'some random text' }
   let(:work_items) do
     [
       build(:work_item, :attendance_without_counsel, time_spent: 90, completed_on: 1.day.ago),
