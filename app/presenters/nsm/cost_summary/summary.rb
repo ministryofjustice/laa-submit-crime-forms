@@ -77,6 +77,7 @@ module Nsm
       end
 
       def letters_and_calls_form
+        debugger
         @letters_and_calls_form ||= Nsm::Steps::LettersCallsForm.build(@claim)
       end
 

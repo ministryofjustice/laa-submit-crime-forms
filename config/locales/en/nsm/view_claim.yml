@@ -48,3 +48,13 @@ en:
           action: Action
           view: View
         granted_response: The claim has been fully granted.
+        # view pages
+        work_item:
+          page_title: Claim details
+          date: Date
+          fee_earner: Fee earner initials
+          rate: Rate applied
+          hours: Number of hours
+          uplift: Uplift
+          net_cost: Net cost
+          your_costs: Your costs

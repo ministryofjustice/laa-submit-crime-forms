@@ -1,0 +1,27 @@
+<% title t('.page_title') %>
+<%
+  work_item = @claim.work_items.find(params[:item_id])
+  form = Nsm::Steps::WorkItemForm.build(work_item, application: @claim)
+%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl"><%= work_item.translated_work_type[I18n.locale] %></h1>
+
+    <%=
+      rows = [
+        [t(".date"), work_item.completed_on.strftime('%-d %B %Y')],
+        [t(".fee_earner"), work_item.fee_earner],
+        [t(".rate"), NumberTo.pounds(form.pricing[form.work_type])],
+        [t(".hours"), format_period(work_item.time_spent)],
+        [t(".uplift"), NumberTo.percentage(form.uplift.to_f, multiplier: 1)],
+        [t(".net_cost"), NumberTo.pounds(form.total_cost)]
+      ]
+
+      govuk_table do |table|
+        table.with_caption(text: t('.your_costs'))
+        table.with_body(rows: rows)
+      end
+    %>
+  </div>
+</div>

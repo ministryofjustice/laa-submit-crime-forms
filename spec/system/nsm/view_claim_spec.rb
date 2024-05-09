@@ -9,6 +9,7 @@ RSpec.describe 'View claim page', type: :system do
       build(:work_item, :advocacy, time_spent: 104, completed_on: 1.day.ago),
       build(:work_item, :advocacy, time_spent: 86, completed_on: 2.days.ago),
       build(:work_item, :waiting, time_spent: 23, completed_on: 3.days.ago),
+      build(:work_item, :travel, time_spent: 23, completed_on: 3.days.ago),
     ]
   end
   let(:disbursements) do
@@ -31,7 +32,7 @@ RSpec.describe 'View claim page', type: :system do
       expect(page).to have_content('Item Net cost VAT Total')
         .and have_content('Profit costs £305.84 £61.17 £367.01')
         .and have_content('Waiting £10.58 £2.12 £12.70')
-        .and have_content('Travel £0.00 £0.00 £0.00')
+        .and have_content('Travel £10.58 £2.12 £12.70')
         .and have_content('Disbursements £227.50 £31.50 £259.00')
         .and have_content('Total £543.92 £94.78 £638.70')
     end
@@ -44,7 +45,7 @@ RSpec.describe 'View claim page', type: :system do
       expect(page).to have_content('Item Net cost VAT Total')
         .and have_content('Profit costs £305.84 £61.17 £367.01')
         .and have_content('Waiting £10.58 £2.12 £12.70')
-        .and have_content('Travel £0.00 £0.00 £0.00')
+        .and have_content('Travel £10.58 £2.12 £12.70')
         .and have_content('Disbursements £227.50 £31.50 £259.00')
         .and have_content('Total £543.92 £94.78 £638.70')
     end
@@ -58,6 +59,7 @@ RSpec.describe 'View claim page', type: :system do
       [
         3.days.ago.strftime('%-d %B %Y'),
         'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
+        "Travel", "0 hours 23 minutes", "10%", "£10.58", "View",
         'Waiting', '0 hours 23 minutes', '10%', '£10.58', 'View',
 
         2.days.ago.strftime('%-d %B %Y'),

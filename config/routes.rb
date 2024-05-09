@@ -109,6 +109,8 @@ Rails.application.routes.draw do
             get :work_items
             get :letters_and_calls
             get :disbursements
+            get ':item_type/:item_id', as: :item, to: 'view_claim#item',
+                              constraints: { item_type: /(work_item|letter_or_call|disbursement)/ }
           end
         end
       end
