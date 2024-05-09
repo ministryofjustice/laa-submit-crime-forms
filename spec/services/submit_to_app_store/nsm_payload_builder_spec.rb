@@ -56,7 +56,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           }],
           'ethnic_group' => { en: 'White British', value: '01_white_british' },
           'firm_office' => {
-            'account_number' => '123ABC',
+            'account_number' => '1A123B',
             'address_line_1' => '2 Laywer Suite',
             'address_line_2' => nil,
             'name' => 'Firm A',

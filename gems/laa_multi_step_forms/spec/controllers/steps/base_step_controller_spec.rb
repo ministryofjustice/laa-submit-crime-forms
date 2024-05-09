@@ -270,7 +270,7 @@ RSpec.describe DummyStepController, type: :controller do
     end
 
     context 'when reloading (without save)' do
-      let(:form) { instance_double(Steps::BaseFormObject, application:, record:) }
+      let(:form) { instance_double(Steps::BaseFormObject, application: application, record: record, valid?: true) }
       let(:record) { application }
       let(:params) { { id: application.id, test_model: { first: 1, second: 2 }, reload: true } }
 

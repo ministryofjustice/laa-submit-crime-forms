@@ -15,8 +15,16 @@
         <li><%= link_to t('prior_authority.applications.show.review_additional_cost_adjustments'), '#additional-cost-0' %></li>
       <% end %>
     </ul>
-    <% if !@application.granted? %>
-      <%= govuk_button_link_to(t('prior_authority.applications.show.appeal'), '#') %>
+    <% if @application.rejected? %>
+      <h3 class="govuk-heading-s"><%= t('.appeal_the_rejection') %></h3>
+      <p>
+        <%= t('.rejection_explanation_html', email: link_to(t('.email'), "mailto:#{t('.email')}")) %>
+      </p>
+    <% elsif @application.part_grant? %>
+      <h3 class="govuk-heading-s"><%= t('.appeal_the_adjustment') %></h3>
+      <p>
+        <%= t('.adjustment_explanation_html', email: link_to(t('.email'), "mailto:#{t('.email')}")) %>
+      </p>
     <% end %>
   </dd>
 </div>

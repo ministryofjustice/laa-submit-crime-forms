@@ -40,7 +40,7 @@ module PriorAuthority
       end
 
       def firm_details_html
-        firm_details_html = [firm_office.name, firm_office.account_number].compact.join('<br>')
+        firm_details_html = [firm_office.name, application.office_code].compact.join('<br>')
 
         sanitize(firm_details_html, tags: %w[br])
       end

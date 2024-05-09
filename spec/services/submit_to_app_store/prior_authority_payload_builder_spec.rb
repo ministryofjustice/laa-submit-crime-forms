@@ -39,7 +39,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
           date_of_birth: /\A\d{4}-\d{2}-\d{2}\z/
         ),
         firm_office: {
-          account_number: '123ABC',
+          account_number: '1A123B',
           address_line_1: '2 Laywer Suite',
           address_line_2: nil,
           name: 'Firm A',
@@ -78,6 +78,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             contact_first_name: 'Joe',
             contact_last_name: 'Bloggs',
             organisation: 'LAA',
+            town: 'Slough',
             postcode: 'CR0 1RE',
             primary: true,
             cost_type: 'per_hour',
@@ -106,6 +107,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             contact_first_name: 'Joe',
             contact_last_name: 'Bloggs',
             organisation: 'LAA',
+            town: 'Slough',
             postcode: 'CR0 1RE',
             primary: false,
             cost_type: 'per_hour',

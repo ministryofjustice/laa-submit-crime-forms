@@ -9,7 +9,6 @@
       <%= f.fields_for :firm_office, as: :firm_details_form do |fo| %>
         <%= f.govuk_fieldset legend: { text: t(".firm_details"), size: 'm', is_page_heading: true } do %>
           <%= fo.govuk_text_field :name, width: 20, label: { size: 's' } %>
-          <%= fo.govuk_text_field :account_number, width: 20, label: { size: 's' } %>
           <%= fo.govuk_text_field :address_line_1, width: 20, label: { size: 's' } %>
           <%= fo.govuk_text_field :address_line_2, width: 20, label: { size: 's' } %>
           <%= fo.govuk_text_field :town, width: 10, label: { size: 's' } %>

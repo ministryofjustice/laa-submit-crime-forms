@@ -32,8 +32,6 @@ en:
           attributes:
             name:
               blank: "Enter a firm name"
-            account_number:
-              blank: "Enter an account number"
             address_line_1:
               blank: "Enter an address"
             town:

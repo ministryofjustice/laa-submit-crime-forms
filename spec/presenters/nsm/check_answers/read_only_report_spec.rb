@@ -12,7 +12,28 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
       context 'section groups' do
         it 'returns multiple groups' do
           expect(subject.section_groups).to be_an_instance_of Array
-          expect(subject.section_groups.count).to eq 8
+          expect(subject.section_groups.count).to eq 7
+        end
+
+        context 'when status section_group name is passed in' do
+          it 'returns multiple groups' do
+            expect(subject.section_groups(:status)).to be_an_instance_of Array
+            expect(subject.section_groups(:status).count).to eq 1
+          end
+        end
+
+        context 'when overview section_group name is passed in' do
+          it 'returns multiple groups' do
+            expect(subject.section_groups(:overview)).to be_an_instance_of Array
+            expect(subject.section_groups(:overview).count).to eq 7
+          end
+        end
+
+        context 'when claimed_costs section_group name is passed in' do
+          it 'returns multiple groups' do
+            expect(subject.section_groups(:claimed_costs)).to be_an_instance_of Array
+            expect(subject.section_groups(:claimed_costs).count).to eq 2
+          end
         end
       end
 
@@ -22,14 +43,6 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
         it 'returns a section object' do
           expect(section_group[:heading]).to eq 'What you are claiming for'
           expect(section_group[:sections].count).to eq 1
-        end
-      end
-
-      context 'sections' do
-        let(:section) { subject.sections(subject.claim_type_section) }
-
-        it 'returns group of cards' do
-          expect(section.count).to eq 1
         end
       end
 
@@ -65,7 +78,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
 
       context 'about claim section' do
         it 'returns multiple elements' do
-          expect(subject.about_claim_section.count).to eq 6
+          expect(subject.about_claim_section.count).to eq 4
         end
       end
 
@@ -84,7 +97,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
       context 'section groups' do
         it 'returns multiple groups' do
           expect(subject.section_groups).to be_an_instance_of Array
-          expect(subject.section_groups.count).to eq 8
+          expect(subject.section_groups.count).to eq 7
         end
       end
 
@@ -94,18 +107,6 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
         it 'returns a section object' do
           expect(section_group[:heading]).to eq 'What you are claiming for'
           expect(section_group[:sections].count).to eq 1
-        end
-      end
-
-      context 'sections' do
-        let(:section) { subject.sections(subject.claim_type_section) }
-
-        it 'returns group of cards' do
-          expect(section.count).to eq 1
-        end
-
-        it 'has option to change' do
-          expect(section[0][:card][:actions]).to eq []
         end
       end
 
@@ -141,7 +142,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
 
       context 'about claim section' do
         it 'returns multiple elements' do
-          expect(subject.about_claim_section.count).to eq 6
+          expect(subject.about_claim_section.count).to eq 4
         end
       end
 

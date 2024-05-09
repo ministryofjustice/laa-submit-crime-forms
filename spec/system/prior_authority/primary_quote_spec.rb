@@ -6,7 +6,7 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
   end
 
   it 'cannot initially access form' do
-    expect(page).to have_content 'Primary quote Cannot yet start'
+    expect(page).to have_content 'Primary quote Cannot start yet'
   end
 
   context 'when I fill in a primary quote' do
@@ -19,6 +19,7 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
       fill_in 'First name', with: 'Joe'
       fill_in 'Last name', with: 'Bloggs'
       fill_in 'Organisation', with: 'LAA'
+      fill_in 'Town', with: 'Royston Vasey'
       fill_in 'Postcode', with: 'CR0 1RE'
       page.attach_file(file_fixture('test.png')) do
         page.find('.govuk-file-upload').click

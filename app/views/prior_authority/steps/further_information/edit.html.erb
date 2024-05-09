@@ -4,18 +4,21 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <div class="moj-multi-file-upload__message"></div>
     <span class="govuk-caption-xl"><%= t(".caption") %></span>
     <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
     <div class="govuk-inset-text">
       <p><strong><%= t(".request_heading") %></strong></p>
-      <p><%= @form_object.explanation %></p>
+      <%= simple_format @form_object.explanation %>
     </div>
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |form| %>
       <%= form.govuk_text_area :information_supplied, label: { text: t(".information_supplied"), size: "s" }%>
 
       <h1 class="govuk-heading-s"><%= t(".supporting_documentation") %></h1>
-      <span class="govuk-caption-m govuk-!-margin-bottom-8"><%= t(".supporting_documentation_caption") %></span>
+      <span class="govuk-caption-m govuk-!-margin-bottom-8">
+        <%= t(".supporting_documentation_caption_html", size: FileUpload::FileUploader.human_readable_max_file_size) %>
+      </span>
 
       <%= render 'shared/multifile_upload', supporting_documents: @form_object.supporting_documents, form: form, locale_prefix: 'prior_authority.steps.further_information.edit' %>
       <%= form.continue_button %>

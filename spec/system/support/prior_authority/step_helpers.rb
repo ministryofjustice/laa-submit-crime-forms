@@ -97,7 +97,6 @@ module PriorAuthority
       fill_in 'Last name', with: 'Doe'
       fill_in 'Email address', with: 'john@does.com'
       fill_in 'Firm name', with: 'LegalCorp Ltd'
-      fill_in 'Firm account number', with: 'A12345'
       click_on 'Save and continue'
     end
 
@@ -176,6 +175,7 @@ module PriorAuthority
       fill_in 'First name', with: 'Joe'
       fill_in 'Last name', with: 'Bloggs'
       fill_in 'Organisation', with: 'LAA'
+      fill_in 'Town', with: 'Staines'
       fill_in 'Postcode', with: 'CR0 1RE'
 
       attach_file(file_fixture('test.png'))

@@ -20,6 +20,10 @@ module Nsm
       def base_rows
         [
           {
+            head_key: 'laa_reference',
+            text: claim.laa_reference
+          },
+          {
             head_key: 'file_ufn',
             text: claim.ufn
           },

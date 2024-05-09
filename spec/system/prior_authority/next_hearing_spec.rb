@@ -7,7 +7,7 @@ RSpec.describe 'Prior authority applications (prison law) - add next hearing' do
     end
 
     it 'allows next hearing detail creation' do
-      expect(page).to have_content 'Case and hearing detailsNot started'
+      expect(page).to have_content 'Case and hearing details Not yet started'
       click_on 'Case and hearing details'
       expect(page).to have_title 'Case and hearing details'
 
@@ -21,7 +21,7 @@ RSpec.describe 'Prior authority applications (prison law) - add next hearing' do
 
       click_on 'Save and continue'
       expect(page).to have_title 'Your application progress'
-      expect(page).to have_content 'Case and hearing detailsCompleted'
+      expect(page).to have_content 'Case and hearing details Completed'
     end
 
     it 'validates next hearing fields' do

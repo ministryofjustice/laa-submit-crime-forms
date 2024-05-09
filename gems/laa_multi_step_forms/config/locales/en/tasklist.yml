@@ -4,6 +4,6 @@ en:
     status:
       completed: Completed
       in_progress: In progress
-      not_started: Not started
-      unreachable: Cannot yet start
+      not_started: Not yet started
+      unreachable: Cannot start yet
       not_applicable: Not applicable

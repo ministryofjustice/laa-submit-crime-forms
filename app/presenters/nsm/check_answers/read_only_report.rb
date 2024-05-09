@@ -3,16 +3,19 @@ module Nsm
     class ReadOnlyReport
       include GovukLinkHelper
       include ActionView::Helpers::UrlHelper
-      GROUPS = %w[
-        application_status
-        claim_type
-        about_you
-        about_defendant
-        about_case
-        about_claim
-        supporting_evidence
-        equality_answers
-      ].freeze
+      GROUPS = {
+        status: %w[application_status].freeze,
+        overview: %w[
+          claim_type
+          about_you
+          about_defendant
+          about_case
+          about_claim
+          supporting_evidence
+          equality_answers
+        ].freeze,
+        claimed_costs: %w[cost_summary costs].freeze
+      }.freeze
 
       attr_reader :claim
 
@@ -20,8 +23,8 @@ module Nsm
         @claim = claim
       end
 
-      def section_groups
-        GROUPS.map do |group_name|
+      def section_groups(section = :overview)
+        GROUPS[section].map do |group_name|
           section_group(group_name, public_send(:"#{group_name}_section"))
         end
       end
@@ -29,20 +32,8 @@ module Nsm
       def section_group(name, section_list)
         {
           heading: group_heading(name),
-          sections: sections(section_list)
+          sections: section_list
         }
-      end
-
-      def sections(section_list)
-        section_list.map do |data|
-          {
-            card: {
-              title: data.title,
-              actions: actions(data.section)
-            },
-            rows: data.rows
-          }
-        end
       end
 
       def application_status_section
@@ -73,10 +64,18 @@ module Nsm
         [
           ClaimJustificationCard.new(claim),
           ClaimDetailsCard.new(claim),
-          WorkItemsCard.new(claim),
-          LettersCallsCard.new(claim),
-          DisbursementCostsCard.new(claim),
+          CostSummaryCard.new(claim),
           OtherInfoCard.new(claim)
+        ]
+      end
+
+      def costs_section
+        [AdjustmentsCard.new(claim)]
+      end
+
+      def cost_summary_section
+        [
+          CostSummaryCard.new(claim, has_card: false)
         ]
       end
 
@@ -94,11 +93,9 @@ module Nsm
 
       private
 
-      def actions(*)
-        []
-      end
-
       def group_heading(group_key, **)
+        return nil if group_key == 'costs'
+
         I18n.t("nsm.steps.check_answers.groups.#{group_key}.heading", **)
       end
     end

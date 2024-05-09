@@ -3,7 +3,7 @@ class Disbursement < ApplicationRecord
 
   validates :id, exclusion: { in: [Nsm::StartPage::NEW_RECORD] }
 
-  scope :by_age, -> { order(:disbursement_date, :created_at) }
+  scope :by_age, -> { reorder(:disbursement_date, :created_at) }
 
   def total_cost
     return unless total_cost_without_vat && vat_amount

@@ -100,6 +100,20 @@ RSpec.describe Nsm::CheckAnswers::WorkItemsCard do
           ]
         )
       end
+
+      it 'correctly formats the foot row' do
+        expect(subject.rows).to include(
+          {
+            key: {
+              text: 'Total'
+            },
+            value: {
+              text: '<strong>£496.82</strong>'
+            },
+            classes: 'govuk-summary-list__row-double-border'
+          }
+        )
+      end
     end
   end
 end

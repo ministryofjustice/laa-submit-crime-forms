@@ -171,6 +171,8 @@ spec:
                 secretKeyRef:
                   name: app-store-auth
                   key: provider_client_secret
+            - name: SEND_EMAILS
+              value: 'true'
 
       {{- with .Values.nodeSelector }}
       nodeSelector:

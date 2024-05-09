@@ -35,7 +35,7 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
     within('.govuk-summary-card', text: 'Case contact') do
       expect(page)
         .to have_css('.govuk-summary-card__content', text: 'Contact detailsJohn Doejohn@does.com')
-        .and have_css('.govuk-summary-card__content', text: 'Firm detailsLegalCorp LtdA12345')
+        .and have_css('.govuk-summary-card__content', text: 'Firm detailsLegalCorp Ltd1A123B')
 
       click_on 'Change'
       expect(page).to have_title('Case contact')
@@ -148,7 +148,7 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
     within('.govuk-summary-card', text: 'Primary quote') do
       expect(page)
         .to have_css('.govuk-summary-card__content', text: 'Service requiredMeteorologist')
-        .and have_css('.govuk-summary-card__content', text: 'Service provider detailsJoe BloggsLAA, CR0 1RE')
+        .and have_css('.govuk-summary-card__content', text: 'Service provider detailsJoe BloggsLAA, Staines, CR0 1RE')
         .and have_css('.govuk-summary-card__content', text: 'Quote uploadtest.png')
         .and have_css('.govuk-summary-card__content', text: 'Existing prior authority grantedYes')
         .and have_css('.govuk-summary-card__content', text: /Why travel costs are required.*Client lives in Wales/)

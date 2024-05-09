@@ -3,6 +3,7 @@ FactoryBot.define do
     contact_first_name { 'Joe' }
     contact_last_name { 'Bloggs' }
     organisation { 'LAA' }
+    town { 'Slough' }
     postcode { 'CR0 1RE' }
     cost_per_hour { 10 }
     period { 180 }

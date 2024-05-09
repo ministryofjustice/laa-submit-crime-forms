@@ -13,12 +13,12 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
     let(:additional_cost) { build(:additional_cost, :per_item) }
     let(:status) { 'granted' }
 
-    let(:payload) do
+    let(:record) do
       {
         events: [
           {
             event_type: 'decision',
-            created_at: 1.day.ago,
+            created_at: 1.day.ago.to_s,
             public: true,
             details: { comment: 'Decision comment' }
           },
@@ -61,30 +61,17 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
           updates_needed: %w[further_information incorrect_information],
           resubmission_deadline: 14.days.from_now,
         }
-      }
-    end
-
-    let(:app_store_stub) do
-      stub_request(:get, "http://localhost:8000/v1/application/#{application.id}").to_return(
-        status: 200,
-        body: payload.to_json,
-        headers: { 'Content-Type' => 'application/json; charset=utf-8' }
-      )
+      }.deep_stringify_keys
     end
 
     let(:arbitrary_fixed_date) { DateTime.new(2024, 2, 1, 15, 23, 27) }
 
     before do
       travel_to(arbitrary_fixed_date) do
-        app_store_stub
-        described_class.call(application)
+        described_class.call(application, record:)
         primary_quote.reload
         additional_cost.reload
       end
-    end
-
-    it 'calls the app store' do
-      expect(app_store_stub).to have_been_requested
     end
 
     it 'sets the overall comment' do
@@ -127,6 +114,18 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
       it 'syncs the additional cost adjustment comments' do
         expect(additional_cost.adjustment_comment).to eq 'Additional cost comment'
       end
+
+      context 'when there is an error' do
+        before do
+          allow(PriorAuthority::Steps::ServiceCostForm).to receive(:new).and_raise 'Some problem!'
+          allow(Sentry).to receive(:capture_message)
+          described_class.call(application, record:)
+        end
+
+        it 'notifies Sentry' do
+          expect(Sentry).to have_received(:capture_message)
+        end
+      end
     end
 
     context 'when app is sent back' do
@@ -144,7 +143,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
       end
 
       context 'with only further info' do
-        let(:payload) do
+        let(:record) do
           {
             application: {
               updates_needed: ['further_information'],
@@ -156,7 +155,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
                 }
               ],
             }
-          }
+          }.deep_stringify_keys
         end
 
         it 'nullifies the incorrect info' do
@@ -169,13 +168,13 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
       end
 
       context 'with only incorrect info' do
-        let(:payload) do
+        let(:record) do
           {
             application: {
               incorrect_information_explanation: 'This is incorrect',
               updates_needed: ['incorrect_information']
             }
-          }
+          }.deep_stringify_keys
         end
 
         it 'syncs the incorrect info' do

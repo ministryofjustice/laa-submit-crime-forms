@@ -1,5 +1,6 @@
 class SubmitToAppStore < ApplicationJob
   queue_as :default
+  retry_on StandardError, wait: :polynomially_longer, attempts: 10
 
   def perform(submission:)
     submit(submission)
@@ -18,6 +19,6 @@ class SubmitToAppStore < ApplicationJob
   end
 
   def notify(submission)
-    SendNotificationEmail.perform_later(submission)
+    SendNotificationEmail.perform_later(submission) if ENV.fetch('SEND_EMAILS', 'false') == 'true'
   end
 end

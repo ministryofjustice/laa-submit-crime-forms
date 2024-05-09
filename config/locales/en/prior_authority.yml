@@ -41,6 +41,7 @@ en:
           action: Action
           client: Client
           status: Status
+          office_code: Account
         delete: Delete
       confirm_delete:
         page_title: Are you sure you want to delete this draft application?
@@ -64,7 +65,6 @@ en:
         amount_requested: '%{amount} requested'
         amount_allowed: '%{amount} allowed'
         laa_response: LAA response
-        appeal: How to appeal this decision
         review_service_cost_adjustments: Review service cost adjustments
         review_travel_cost_adjustments: Review travel cost adjustments
         review_additional_cost_adjustments: Review additional cost adjustments
@@ -80,6 +80,13 @@ en:
       state_summaries:
         submitted:
           awaiting_review: Awaiting LAA review
+      response_summaries:
+        assessed:
+          appeal_the_rejection: Appeal the rejection
+          appeal_the_adjustment: Appeal the adjustment
+          rejection_explanation_html: If you want to appeal the rejection, email %{email} with the LAA case reference in the subject of the email and include any supporting information you believe will help the appeal.
+          adjustment_explanation_html: If you want to appeal the adjustment, email %{email} with the LAA case reference in the subject of the email and include any supporting information you believe will help the appeal.
+          email: CRM4appeal@justice.gov.uk
 
     steps:
       start_page:
@@ -97,7 +104,7 @@ en:
             client_detail: Client details
           statuses:
             complete: 'Complete'
-            not_started: 'Not started'
+            not_started: 'Not yet started'
             incomplete: 'Incomplete'
           status_colour:
             not_started: govuk-tag--grey

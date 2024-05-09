@@ -59,7 +59,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
           },
           {
             head_key: 'service_details',
-            text: 'Jim Bean<br>Post-mortems R us, SW1A 1AA',
+            text: 'Jim Bean<br>Post-mortems R us, Slough, SW1A 1AA',
           },
           {
             head_key: 'quote_upload',

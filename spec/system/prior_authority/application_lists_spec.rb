@@ -16,7 +16,8 @@ RSpec.describe 'Prior authority application lists' do
     create(:prior_authority_application, laa_reference: 'LAA-CCCC4', status: 'rejected', updated_at: 3.days.ago)
     create(:prior_authority_application, laa_reference: 'LAA-CCCC5', status: 'auto_grant', updated_at: 3.days.ago)
     create(:prior_authority_application, laa_reference: 'LAA-DDDDD', status: 'draft', updated_at: 4.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-EEEEE', status: 'draft', office_code: 'OTHER')
+    create(:prior_authority_application, laa_reference: 'LAA-EEEEE', status: 'draft',
+           office_code: 'OTHER', provider: create(:provider, :other))
 
     visit prior_authority_applications_path
   end

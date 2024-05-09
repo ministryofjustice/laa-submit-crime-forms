@@ -13,10 +13,13 @@ en:
           contact_last_name: Last name
           contact_email: Email address
           firm_name: Firm name
-          firm_account_number: Firm account number
-          hint: For example, 1A234B
           page_title: Case contact
           explanation: We’ll use these contact details if we need to ask you for more information or to tell you the outcome of your application.
+      office_code:
+        edit:
+          caption: Contact details
+          page_title: Which firm account number is this application for?
+          subheading: Your sign in details give you access to these firm account numbers. To get access to a different firm account number contact your firm's LAA account administrator.
       case_detail:
         edit:
           caption: About the case
@@ -24,6 +27,7 @@ en:
           client_detained_prison: Where is your client detained?
           client_detained_prison_hint: Enter the name of prison, or select one from the suggestions that appear when you start to enter the name.
           maat: MAAT number
+          maat_hint: This is a 7 digit number, for example 1234567
           main_offence: What was the main offence?
           main_offence_hint: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name.
           page_title: Case details
@@ -65,7 +69,7 @@ en:
           page_title: Case and hearing details
       ufn:
         edit:
-          hint: For example 310223/001
+          hint: For example 311223/001
           label: What is your unique file number (UFN)?
           page_title: Unique file number
       prison_law:
@@ -83,10 +87,12 @@ en:
           contact_first_name: First name
           contact_last_name: Last name
           organisation: Organisation
+          town: Town
           postcode: Postcode
           file_upload: Upload the quote
-          file_upload_hint: |
-            The maximum file size of the quote is %{size}.
+          file_upload_hint_html: |
+            Friendly file names make it easier for us to assess your case. For example, Client-case.pdf instead of File23.PDF.<br>
+            The maximum size for each file is %{size}.
             Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
         uploaded_file_summary:
           uploaded_files: Uploaded files
@@ -167,14 +173,12 @@ en:
         edit:
           caption: About the request
           page_title: Why is prior authority required?
-          reason_why_hint_html: |
-            <p>Provide a summary of:</p>
-            <ul>
-            <li>Why you are requesting this authority</li>
-            <li>Details of the prosecution case</li>
-            <li>The defence or mitigation</li>
-            </ul>
-            <p>If you do not include these, we may have to return your application to request more information, which will delay our decision.</p>
+          reason_why_hint_p1: 'Provide a summary of:'
+          reason_why_hints:
+            - why you are requesting this authority
+            - details of the prosecution case
+            - the defence or mitigation
+          reason_why_hint_p2: If you do not include these, we may have to return your application to request more information, which will delay our decision.
           file_upload:
             heading: Upload files
           action: Action
@@ -185,7 +189,9 @@ en:
           uploaded_files: Uploaded files
           upload_file: Upload file
           supporting_documentation: Supporting documentation (optional)
-          supporting_documentation_caption: Attach copies of any supporting documentation. The maximum file size is 70MB. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
+          supporting_documentation_caption_html: |
+            Friendly file names make it easier for us to assess your case. For example, Client-case.pdf instead of File23.PDF.<br>
+            The maximum size for each file is %{size}. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
       travel_detail:
         edit:
           caption: About the request
@@ -232,7 +238,7 @@ en:
           name: What is the additional cost for?
           name_hint: Only add one type of cost. Further costs can be added later.
           description: Why is the additional cost required?
-          unit_type: How are you being charged
+          unit_type: How are you being charged?
           per_item: Charged per item
           per_hour: Charged by the hour
           items: Number of items
@@ -269,7 +275,9 @@ en:
           request_heading: Your application needs the following further information to proceed
           information_supplied: Enter the information requested
           supporting_documentation: Supporting documentation (optional)
-          supporting_documentation_caption: Attach copies of any supporting documentation. The maximum file size is 70MB. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
+          supporting_documentation_caption_html: |
+            Friendly file names make it easier for us to assess your case. For example, Client-case.pdf instead of File23.PDF.<br>
+            The maximum file size is %{size}. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
           file_upload:
             heading: Upload files
           upload_file: Choose files

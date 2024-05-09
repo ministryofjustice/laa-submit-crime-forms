@@ -8,7 +8,6 @@ module AuthenticationHelpers
         provider
       else
         create(:provider)
-        # instance_double(Provider, id: SecureRandom.uuid, selected_office_code: 'AAA')
       end
     end
   end

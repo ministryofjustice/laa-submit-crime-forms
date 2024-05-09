@@ -11,7 +11,7 @@ PATH
     laa_multi_step_forms (0.1.0)
       devise (~> 4.8)
       govuk-components (>= 5.0.0)
-      govuk_design_system_formbuilder (>= 4.0, < 5.3)
+      govuk_design_system_formbuilder (>= 4.0, < 5.4)
       hmcts_common_platform
       omniauth-rails_csrf_protection (~> 1.0.1)
       omniauth-saml (~> 2.1.0)
@@ -242,30 +242,30 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.2.5)
-    rspec (3.12.0)
-      rspec-core (~> 3.12.0)
-      rspec-expectations (~> 3.12.0)
-      rspec-mocks (~> 3.12.0)
-    rspec-core (3.12.2)
-      rspec-support (~> 3.12.0)
-    rspec-expectations (3.12.3)
+    rspec (3.13.0)
+      rspec-core (~> 3.13.0)
+      rspec-expectations (~> 3.13.0)
+      rspec-mocks (~> 3.13.0)
+    rspec-core (3.13.0)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.12.0)
+      rspec-support (~> 3.13.0)
     rspec-html-matchers (0.10.0)
       nokogiri (~> 1)
       rspec (>= 3.0.0.a)
-    rspec-mocks (3.12.6)
+    rspec-mocks (3.13.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.12.0)
-    rspec-rails (6.0.1)
+      rspec-support (~> 3.13.0)
+    rspec-rails (6.1.2)
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       railties (>= 6.1)
-      rspec-core (~> 3.11)
-      rspec-expectations (~> 3.11)
-      rspec-mocks (~> 3.11)
-      rspec-support (~> 3.11)
-    rspec-support (3.12.1)
+      rspec-core (~> 3.13)
+      rspec-expectations (~> 3.13)
+      rspec-mocks (~> 3.13)
+      rspec-support (~> 3.13)
+    rspec-support (3.13.1)
     rspec_junit_formatter (0.6.0)
       rspec-core (>= 2, < 4, != 2.12.0)
     rubocop (1.49.0)
@@ -331,6 +331,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
+  arm64-darwin-23
   x86_64-darwin-21
   x86_64-darwin-22
   x86_64-darwin-23
@@ -344,7 +345,7 @@ DEPENDENCIES
   pry
   rails-controller-testing
   rspec-html-matchers
-  rspec-rails
+  rspec-rails (>= 6.1.2)
   rspec_junit_formatter
   rubocop
   rubocop-performance

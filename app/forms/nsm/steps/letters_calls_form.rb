@@ -1,6 +1,5 @@
 module Nsm
   module Steps
-    # rubocop:disable Metrics/ClassLength
     class LettersCallsForm < ::Steps::BaseFormObject
       attr_writer :apply_calls_uplift, :apply_letters_uplift
 
@@ -12,10 +11,10 @@ module Nsm
       validates :letters, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
       validates :calls, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
       validates :letters_uplift, presence: true,
-        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 },
+        numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
         if: :apply_letters_uplift
       validates :calls_uplift, presence: true,
-        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 },
+        numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
         if: :apply_calls_uplift
 
       def allow_uplift?
@@ -138,6 +137,5 @@ module Nsm
         calls.to_f * pricing.letters if calls && !calls.zero?
       end
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end
