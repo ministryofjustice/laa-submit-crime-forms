@@ -29,6 +29,15 @@ RSpec.describe ItemTypeDependantValidator do
     end
   end
 
+  context 'when attribute is a positive number less than one' do
+    let(:items) { 1 }
+    let(:cost_per_item) { 0.1 }
+
+    it 'form object is valid' do
+      expect(instance).to be_valid
+    end
+  end
+
   context 'when attribute is nil' do
     let(:items) { nil }
     let(:cost_per_item) { nil }
