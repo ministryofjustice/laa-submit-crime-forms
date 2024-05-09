@@ -26,7 +26,7 @@ module Nsm
             head_key: 'application_status',
             text: status_text
           },
-          (if response.present?
+          (if response.any?
              {
                head_key: 'laa_response',
                text: join_strings(*response, *edit_links, *appeal_button, *update_claim)
