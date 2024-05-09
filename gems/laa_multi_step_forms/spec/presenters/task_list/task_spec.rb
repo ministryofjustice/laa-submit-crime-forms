@@ -30,10 +30,11 @@ RSpec.describe TaskList::Task do
         expect(
           subject.render
         ).to eq(
-          '<li class="moj-task-list__item">' \
-          '<span class="app-task-list__task-name"><a href="/steps/foobar" aria-describedby="foobar_task-status">' \
-          'Foo Bar Task Locale</a></span>' \
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--blue">In progress</strong>' \
+          '<li class="govuk-task-list__item govuk-task-list__item--with-link">' \
+          '<div class="app-task-list__task-name govuk-task-list__name-and-hint">' \
+          '<a class="govuk-link govuk-task-list__link" href="/steps/foobar" aria-describedby="foobar_task-status">' \
+          'Foo Bar Task Locale</a></div>' \
+          '<div id="foobar_task-status" class="app-task-list__tag govuk-tag govuk-tag--light-blue">In progress</div>' \
           '</li>'
         )
       end
@@ -46,10 +47,10 @@ RSpec.describe TaskList::Task do
         expect(
           subject.render
         ).to eq(
-          '<li class="moj-task-list__item">' \
-          '<span class="app-task-list__task-name">Foo Bar Task Locale</span>' \
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">' \
-          'Cannot yet start</strong>' \
+          '<li class="govuk-task-list__item govuk-task-list__item--with-link">' \
+          '<div class="app-task-list__task-name govuk-task-list__name-and-hint">Foo Bar Task Locale</div>' \
+          '<div id="foobar_task-status" class="app-task-list__tag">' \
+          'Cannot start yet</div>' \
           '</li>'
         )
       end

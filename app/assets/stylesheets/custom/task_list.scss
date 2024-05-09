@@ -1,4 +1,4 @@
-// tweaks to the task list on top of the MOJ styles
+// tweaks to the task list on top of the GOVUK styles
 .app-task-list__task-name {
   display: block;
 
@@ -19,12 +19,11 @@
 }
 
 .aside-task-list {
-  @include govuk-responsive-margin(8, "top", $adjustment: 100px);
   border-top: 3px solid $govuk-brand-colour;
   @include govuk-responsive-margin(5, "left", $adjustment: 0);
   @include govuk-responsive-padding(5, "top", $adjustment: 0);
 }
 
-.moj-task-list__items {
+.govuk-task-list__items {
   padding-left: 0;
 }
