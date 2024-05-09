@@ -34,10 +34,6 @@ module PriorAuthority
         ]
       end
 
-      def actions
-        []
-      end
-
       def ufn_change_link
         helper = Rails.application.routes.url_helpers
 
@@ -50,6 +46,10 @@ module PriorAuthority
             visually_hidden_text: 'Change Unique file number',
           }
         ]
+      end
+
+      def title_actions
+        []
       end
     end
   end

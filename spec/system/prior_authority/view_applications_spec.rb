@@ -147,7 +147,7 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'shows uodate details' do
-      expect(page).to have_content('Re-submitted')
+      expect(page).to have_content('Resubmitted')
         .and have_content('Further information request 21 March 2024')
         .and have_content('Tell me more')
         .and have_content('More info')
