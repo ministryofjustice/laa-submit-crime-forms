@@ -10,7 +10,7 @@
       <li class="govuk-body"><%= hint %></li>
     <% end %>
   </ul>
-  <p><%= t('.reason_why_hint_p2') %></p>
+  <%= govuk_warning_text(text: t('.reason_why_hint_p2')) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -25,7 +25,7 @@
       <span class="govuk-caption-m govuk-!-margin-bottom-8">
         <%= t(".supporting_documentation_caption_html", size: FileUpload::FileUploader.human_readable_max_file_size) %>
       </span>
-    
+
       <%= render 'shared/multifile_upload', supporting_documents: @form_object.supporting_documents, form: form, locale_prefix: 'prior_authority.steps.reason_why.edit' %>
       <%= form.continue_button %>
     <% end %>

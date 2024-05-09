@@ -173,12 +173,12 @@ en:
         edit:
           caption: About the request
           page_title: Why is prior authority required?
-          reason_why_hint_p1: 'Provide a summary of:'
+          reason_why_hint_p1: 'We need a summary of:'
           reason_why_hints:
             - why you are requesting this authority
             - details of the prosecution case
             - the defence or mitigation
-          reason_why_hint_p2: If you do not include these, we may have to return your application to request more information, which will delay our decision.
+          reason_why_hint_p2: Without these details we may have to return your application to request more information, which will delay our decision.
           file_upload:
             heading: Upload files
           action: Action
