@@ -69,7 +69,7 @@ module PriorAuthority
 
       def time_cost
         return 0 if period.is_a?(Hash)
-        return 0 unless cost_per_hour.to_i.positive? && period.to_i.positive?
+        return 0 unless cost_per_hour.to_d.positive? && period.to_i.positive?
 
         (cost_per_hour * (period.hours + (period.minutes / 60.0))).round(2)
       end
