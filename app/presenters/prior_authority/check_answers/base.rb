@@ -23,7 +23,7 @@ module PriorAuthority
 
       def rows
         row_data.map do |row|
-          row_content(row[:head_key], row[:text], row[:head_opts] || {}, row[:actions] || nil)
+          row_content(row[:head_key], row[:text], row[:head_opts] || {}, row[:actions])
         end
       end
 
