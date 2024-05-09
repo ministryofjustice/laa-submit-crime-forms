@@ -80,7 +80,7 @@ RSpec.describe 'View claim page', type: :system do
         'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed',
         'Advocacy', '£207.16', '£0.00', '£207.16',
         'Attendance without counsel', '£78.23', '£0.00', '£78.23',
-        "Travel", "£10.58", "£0.00", "£10.58",
+        'Travel', '£10.58', '£0.00', '£10.58',
         'Waiting', '£10.58', '£0.00', '£10.58'
       ]
     )
@@ -143,10 +143,10 @@ RSpec.describe 'View claim page', type: :system do
     expect(all('table caption, table td').map(&:text)).to eq(
       [
         'Your costs',
-        "Rate applied", "£4.09",
-        "Number of letters", "2",
-        "Uplift", "0%",
-        "Net cost", "£8.18"
+        'Rate applied', '£4.09',
+        'Number of letters', '2',
+        'Uplift', '0%',
+        'Net cost', '£8.18'
       ]
     )
   end
@@ -158,10 +158,10 @@ RSpec.describe 'View claim page', type: :system do
     expect(all('table caption, table td').map(&:text)).to eq(
       [
         'Your costs',
-        "Rate applied", "£4.09",
-        "Number of calls", "3",
-        "Uplift", "0%",
-        "Net cost", "£12.27"
+        'Rate applied', '£4.09',
+        'Number of calls', '3',
+        'Uplift', '0%',
+        'Net cost', '£12.27'
       ]
     )
   end
@@ -173,12 +173,12 @@ RSpec.describe 'View claim page', type: :system do
     expect(all('table caption, table td').map(&:text)).to eq(
       [
         'Your costs',
-        'Date',	5.day.ago.strftime('%-d %B %Y'),
-        "Disbursement type", "Car",
-        "Disbursement description", "Details",
-        "Net cost", "£90.00",
-        "VAT", "£18.00",
-        "Total cost", "£108.00"
+        'Date',	5.days.ago.strftime('%-d %B %Y'),
+        'Disbursement type', 'Car',
+        'Disbursement description', 'Details',
+        'Net cost', '£90.00',
+        'VAT', '£18.00',
+        'Total cost', '£108.00'
       ]
     )
   end
@@ -190,13 +190,13 @@ RSpec.describe 'View claim page', type: :system do
     expect(all('table caption, table td').map(&:text)).to eq(
       [
         'Your costs',
-        'Date',	3.day.ago.strftime('%-d %B %Y'),
-        "Disbursement type", "DNA Testing",
-        "Disbursement description", "Details",
-        "Prior authority granted?", "Yes",
-        "Net cost", "£130.00",
-        "VAT", "£0.00",
-        "Total cost", "£130.00"
+        'Date',	3.days.ago.strftime('%-d %B %Y'),
+        'Disbursement type', 'DNA Testing',
+        'Disbursement description', 'Details',
+        'Prior authority granted?', 'Yes',
+        'Net cost', '£130.00',
+        'VAT', '£0.00',
+        'Total cost', '£130.00'
       ]
     )
   end
