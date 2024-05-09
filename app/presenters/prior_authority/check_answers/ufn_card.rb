@@ -48,8 +48,8 @@ module PriorAuthority
         ]
       end
 
-      def title_action
-        nil
+      def title_actions
+        []
       end
     end
   end

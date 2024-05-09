@@ -56,16 +56,18 @@ module PriorAuthority
         actions ? key_value.merge!(actions:) : key_value
       end
 
-      def title_action
+      def title_actions
         helper = Rails.application.routes.url_helpers
 
-        govuk_link_to(
-          I18n.t('generic.change'),
-          helper.url_for(controller: "prior_authority/steps/#{section}",
-                         action: request_method,
-                         application_id: application.id,
-                         only_path: true)
-        )
+        [
+          govuk_link_to(
+            I18n.t('generic.change'),
+            helper.url_for(controller: "prior_authority/steps/#{section}",
+                           action: request_method,
+                           application_id: application.id,
+                           only_path: true)
+          ),
+        ]
       end
     end
   end
