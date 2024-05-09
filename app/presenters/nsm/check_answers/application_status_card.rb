@@ -37,8 +37,8 @@ module Nsm
 
       private
 
-      def sanitize(value, tags: [])
-        ApplicationController.helpers.sanitize(value, tags:)
+      def simple_format(value)
+        ApplicationController.helpers.simple_format(value)
       end
 
       def status_text
