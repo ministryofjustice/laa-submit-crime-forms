@@ -19,10 +19,10 @@
     @disbursements.group_by { _1.record.disbursement_date }.each do |disbursement_date, disbursements_for_date| %>
     <%=
       rows = disbursements_for_date.map do |disbursement|
-        link = link_to(t('.view'), nsm_steps_view_claim_path(claim_id: current_application.id, id: disbursement.record.id), data: { turbo: 'false' })
+        link = link_to(t('.view'), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :disbursement, item_id: disbursement.record.id), data: { turbo: 'false' })
 
         [
-          translator.translated_text(disbursement),
+          disbursement.record.translated_disbursement_type,
           { text: NumberTo.pounds(disbursement.total_cost_without_vat), numeric: true },
           { text: NumberTo.pounds(disbursement.vat), numeric: true },
           { text: NumberTo.pounds(disbursement.total_cost), numeric: true },

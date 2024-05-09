@@ -5,12 +5,12 @@
 %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
+  <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= work_item.translated_work_type[I18n.locale] %></h1>
 
     <%=
       rows = [
-        [t(".date"), work_item.completed_on.strftime('%-d %B %Y')],
+        [{ text: t(".date"), width: 'govuk-!-width-one-half' }, work_item.completed_on.strftime('%-d %B %Y')],
         [t(".fee_earner"), work_item.fee_earner],
         [t(".rate"), NumberTo.pounds(form.pricing[form.work_type])],
         [t(".hours"), format_period(work_item.time_spent)],

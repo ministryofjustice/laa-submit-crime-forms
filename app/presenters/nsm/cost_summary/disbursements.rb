@@ -29,16 +29,7 @@ module Nsm
       end
 
       def translated_text(form)
-        if form.record.disbursement_type == DisbursementTypes::OTHER.to_s
-          known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(form.record.other_type))
-          return translate("other.#{form.record.other_type}") if known_other
-
-          check_missing(form.record.other_type)
-        else
-          check_missing(form.record.disbursement_type.present?) do
-            translate("standard.#{form.record.disbursement_type}")
-          end
-        end
+        check_missing(form.record.translated_disbursement_type)
       end
     end
   end
