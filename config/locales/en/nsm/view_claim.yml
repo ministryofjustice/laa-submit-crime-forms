@@ -47,3 +47,4 @@ en:
           gross_cost: Total claimed
           action: Action
           view: View
+        granted_response: The claim has been fully granted.

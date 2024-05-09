@@ -249,5 +249,9 @@ FactoryBot.define do
       gender { 'm' }
       ethnic_group { '01_white_british' }
     end
+
+    trait :with_assessment_comment do
+      assessment_comment { 'this is a comment' }
+    end
   end
 end
