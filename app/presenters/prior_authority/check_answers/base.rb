@@ -23,7 +23,7 @@ module PriorAuthority
 
       def rows
         row_data.map do |row|
-          row_content(row[:head_key], row[:text], row[:actions], row[:head_opts] || {})
+          row_content(row[:head_key], row[:text], row[:head_opts] || {}, row[:actions])
         end
       end
 
@@ -43,21 +43,20 @@ module PriorAuthority
       end
       # :nocov:
 
-      def row_content(head_key, text, actions = [], head_opts = {})
+      def row_content(head_key, text, head_opts = {}, actions = nil)
         heading = translate_table_key(section, head_key, **head_opts)
-
-        {
+        key_value = {
           key: {
             text: heading,
           },
           value: {
             text:
-          },
-          actions: actions
+          }
         }
+        actions ? key_value.merge!(actions:) : key_value
       end
 
-      def actions
+      def title_actions
         helper = Rails.application.routes.url_helpers
 
         [
