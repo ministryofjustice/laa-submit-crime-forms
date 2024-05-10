@@ -42,7 +42,7 @@
     @work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
     <%=
       rows = work_items_for_date.map do |work_item|
-        link = link_to(t('.view'), nsm_steps_view_claim_path(claim_id: current_application.id, id: work_item.record.id), data: { turbo: 'false' })
+        link = link_to(t('.view'), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.record.id), data: { turbo: 'false' })
 
         [
           t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"),
