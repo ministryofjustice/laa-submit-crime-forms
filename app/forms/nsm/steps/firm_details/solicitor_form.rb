@@ -12,6 +12,7 @@ module Nsm
         validates :first_name, presence: true
         validates :last_name, presence: true
         validates :reference_number, presence: true
+        validates :alternative_contact_details, presence: true
 
         with_options if: :alternative_contact_details? do
           validates :contact_first_name, presence: true
@@ -22,7 +23,10 @@ module Nsm
         def alternative_contact_details
           return @alternative_contact_details unless @alternative_contact_details.nil?
 
-          [contact_last_name, contact_first_name, contact_email].any?(&:present?) ? YesNoAnswer::YES : YesNoAnswer::NO
+          return YesNoAnswer::YES if [contact_last_name, contact_first_name, contact_email].any?(&:present?)
+          return YesNoAnswer::NO if application.solicitor&.persisted?
+
+          nil
         end
 
         def alternative_contact_details=(val)
