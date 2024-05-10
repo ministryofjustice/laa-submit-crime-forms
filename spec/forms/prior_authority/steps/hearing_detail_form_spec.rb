@@ -5,13 +5,14 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
 
   let(:arguments) do
     {
-      application:,
+      application: application,
+      record: application,
       **hearing_detail_attributes
     }
   end
 
   describe '#validate' do
-    let(:application) { instance_double(PriorAuthorityApplication) }
+    let(:application) { instance_double(PriorAuthorityApplication, next_hearing_date: nil) }
 
     context 'with hearing details including next hearing date' do
       let(:hearing_detail_attributes) do
@@ -107,6 +108,21 @@ RSpec.describe PriorAuthority::Steps::HearingDetailForm do
         expect(form.errors.messages.values.flatten)
           .to contain_exactly('The next hearing date cannot be in the past')
       end
+    end
+
+    context 'with next hearing date in the past but unchanged' do
+      let(:application) { create(:prior_authority_application, next_hearing: true, next_hearing_date: Date.yesterday) }
+
+      let(:hearing_detail_attributes) do
+        {
+          next_hearing: true,
+          next_hearing_date: Date.yesterday,
+          plea: 'not_guilty',
+          court_type: 'central_criminal_court',
+        }
+      end
+
+      it { is_expected.to be_valid }
     end
   end
 

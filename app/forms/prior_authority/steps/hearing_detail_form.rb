@@ -10,7 +10,7 @@ module PriorAuthority
       validates :next_hearing_date,
                 presence: true,
                 multiparam_date: { allow_past: false, allow_future: true },
-                if: :next_hearing
+                if: :validate_next_hearing_date?
 
       validates :plea, inclusion: { in: PleaOptions.values }
       validates :court_type, inclusion: { in: CourtTypeOptions.values }
@@ -24,6 +24,10 @@ module PriorAuthority
       end
 
       private
+
+      def validate_next_hearing_date?
+        next_hearing && (next_hearing_date.nil? || attribute_changed?(:next_hearing_date))
+      end
 
       def persist!
         application.update!(attributes_with_resets)
