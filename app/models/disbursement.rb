@@ -21,7 +21,7 @@ class Disbursement < ApplicationRecord
 
   def translated_disbursement_type
     if disbursement_type == DisbursementTypes::OTHER.to_s
-      known_other = OtherDisbursementTypes.value?(OtherDisbursementTypes.new(other_type))
+      known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(other_type))
       return translate("other.#{other_type}") if known_other
 
       other_type
