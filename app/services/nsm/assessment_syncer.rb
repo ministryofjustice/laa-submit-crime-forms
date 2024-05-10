@@ -20,11 +20,11 @@ module Nsm
     private
 
     def sync_overall_comment
-      comment_event = app_store_record['events'].select { _1['public'] && _1['event_type'] == 'decision' }
-                                                .max_by { DateTime.parse(_1['created_at']) }
-
       return if claim.status.in?(%w[submitted granted])
 
+      event_type = claim.send_back? ? 'send_back' : 'decision'
+      comment_event = app_store_record['events'].select { _1['public'] && _1['event_type'] == event_type }
+                                                .max_by { DateTime.parse(_1['created_at']) }
       claim.update(assessment_comment: comment_event.dig('details', 'comment'))
     end
   end
