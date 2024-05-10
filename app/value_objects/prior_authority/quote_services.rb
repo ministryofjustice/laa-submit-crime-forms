@@ -75,7 +75,6 @@ module PriorAuthority
       PHOTOCOPYING = new(:photocopying),
       PHOTOGRAPHER = new(:photographer),
       PHYSIOTHERAPIST = new(:physiotherapist),
-      PLANNING_EXPERT = new(:planning_expert),
       PLASTIC_SURGEON = new(:plastic_surgeon),
       PRIVATE_INVESTIGATOR = new(:private_investigator),
       PROCESS_SERVER = new(:process_server),
