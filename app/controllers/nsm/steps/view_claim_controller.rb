@@ -9,6 +9,12 @@ module Nsm
         @section = params.fetch(:section, :overview).to_sym
       end
 
+      def item
+        @claim = current_application
+
+        render params[:item_type]
+      end
+
       def work_items
         @work_items = current_application.work_items.map do |work_item|
           Nsm::Steps::WorkItemForm.build(work_item, application: current_application)

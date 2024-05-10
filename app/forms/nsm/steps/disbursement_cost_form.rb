@@ -67,6 +67,10 @@ if: :other_disbursement_type?
                         end
       end
 
+      def auth_required?
+        total_cost_pre_vat && total_cost_pre_vat >= 100
+      end
+
       private
 
       def translate(key)
@@ -84,10 +88,6 @@ if: :other_disbursement_type?
           'vat_amount' => vat,
           'apply_vat' => apply_vat ? 'true' : 'false'
         )
-      end
-
-      def auth_required?
-        total_cost_pre_vat && total_cost_pre_vat >= 100
       end
 
       def pricing
