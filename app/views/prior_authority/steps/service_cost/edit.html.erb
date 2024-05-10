@@ -12,6 +12,7 @@
             YesNoAnswer.radio_options,
             :value,
             :label,
+            inline: true,
             legend: { text: t('.prior_authority_granted'), size: 's' }
           ) %>
       <% if @form_object.court_order_relevant %>
@@ -20,6 +21,7 @@
             YesNoAnswer.radio_options,
             :value,
             :label,
+            inline: true,
             legend: { text: t('.ordered_by_court'), size: 's' }
           ) %>
       <% end %>
@@ -29,6 +31,7 @@
             YesNoAnswer.radio_options,
             :value,
             :label,
+            inline: true,
             legend: { text: t('.related_to_post_mortem'), size: 's' }
           ) %>
       <% end %>
