@@ -309,6 +309,7 @@ jobs:
           project: ministryofjustice/laa-submit-crime-forms
           severity-threshold: "high"
           fail-on-issues: true
+          additional-arguments: --policy-path=.snyk
 
   build-to-ecr:
     executor: aws-ecr/default
