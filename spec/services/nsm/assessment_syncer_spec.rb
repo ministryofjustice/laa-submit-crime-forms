@@ -44,8 +44,28 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       end
     end
 
-    context 'when status indicates there should be an assessment comment' do
-      let(:status) { 'rejected' }
+    context 'when status is from a decision event' do
+      let(:status) { 'provider_requested' }
+
+      it 'syncs the assessment_comment' do
+        expect(claim.assessment_comment).to eq 'Decision comment'
+      end
+    end
+
+    context 'when status is from a send_back event' do
+      let(:status) { 'provider_requested' }
+      let(:record) do
+        {
+          events: [
+            {
+              event_type: 'send_back',
+              created_at: 1.day.ago.to_s,
+              public: true,
+              details: { comment: 'Decision comment' }
+            },
+          ],
+          application: {}
+        }.deep_stringify_keys
 
       it 'syncs the assessment_comment' do
         expect(claim.assessment_comment).to eq 'Decision comment'
