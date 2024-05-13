@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_07_083700) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -124,6 +124,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_083700) do
     t.float "submitted_total_inc_vat"
     t.float "adjusted_total"
     t.float "adjusted_total_inc_vat"
+    t.string "assessment_comment"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"

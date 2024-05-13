@@ -47,3 +47,40 @@ en:
           gross_cost: Total claimed
           action: Action
           view: View
+        granted_response: The claim has been fully granted.
+        # view pages
+        work_item:
+          page_title: Claim details
+          date: Date
+          fee_earner: Fee earner initials
+          rate: Rate applied
+          hours: Number of hours
+          uplift: Uplift
+          net_cost: Net cost
+          your_costs: Your costs
+        letters:
+          page_title: Claim details
+          heading: Letters
+          rate: Rate applied
+          number: Number of letters
+          uplift: Uplift
+          net_cost: Net cost
+          your_costs: Your costs
+        calls:
+          page_title: Claim details
+          heading: Calls
+          rate: Rate applied
+          number: Number of calls
+          uplift: Uplift
+          net_cost: Net cost
+          your_costs: Your costs
+        disbursement:
+          page_title: Claim details
+          date: Date
+          type: Disbursement type
+          details: Disbursement description
+          prior_auth: Prior authority granted?
+          net_cost: Net cost
+          vat: VAT
+          gross_cost: Total cost
+          your_costs: Your costs

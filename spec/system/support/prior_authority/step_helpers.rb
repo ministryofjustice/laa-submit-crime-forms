@@ -222,7 +222,6 @@ module PriorAuthority
       fill_in 'Organisation', with: 'Experts Inc.'
       fill_in 'Postcode', with: 'SW1A 1AA'
 
-      choose 'Charged per item'
       fill_in 'Number of items', with: '1'
       fill_in 'What is the cost per item?', with: '100'
       fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_1', with: '1'

@@ -8,10 +8,10 @@ RSpec.describe Nsm::CostSummary::Disbursements do
   let(:in_area) { 'yes' }
   let(:disbursements) do
     [
-      instance_double(Disbursement, disbursement_type: 'car', other_type: nil),
-      instance_double(Disbursement, disbursement_type: 'other', other_type: 'dna_testing'),
-      instance_double(Disbursement, disbursement_type: 'other', other_type: 'Custom'),
-      instance_double(Disbursement, disbursement_type: 'car', other_type: nil)
+      instance_double(Disbursement, translated_disbursement_type: 'Car', other_type: nil),
+      instance_double(Disbursement, translated_disbursement_type: 'DNA Testing'),
+      instance_double(Disbursement, translated_disbursement_type: 'Custom'),
+      instance_double(Disbursement, translated_disbursement_type: 'Car', other_type: nil)
     ]
   end
   let(:form_car) do

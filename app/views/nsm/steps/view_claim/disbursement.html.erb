@@ -1,0 +1,28 @@
+<% title t('.page_title') %>
+<%
+  disbursement = @claim.disbursements.find(params[:item_id])
+  form = Nsm::Steps::DisbursementCostForm.build(disbursement, application: @claim)
+%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= disbursement.translated_disbursement_type %></h1>
+
+    <%=
+      rows = [
+        [{ text: t(".date"), width: 'govuk-!-width-one-half' }, disbursement.disbursement_date.strftime('%-d %B %Y')],
+        [t(".type"), disbursement.translated_disbursement_type],
+        [t(".details"), multiline_text(disbursement.details)],
+        ([t(".prior_auth"), disbursement.prior_authority.humanize] if form.auth_required?),
+        [t(".net_cost"), NumberTo.pounds(form.total_cost_pre_vat)],
+        [t(".vat"), NumberTo.pounds(form.vat)],
+        [t(".gross_cost"), NumberTo.pounds(form.total_cost)]
+      ]
+
+      govuk_table do |table|
+        table.with_caption(text: t('.your_costs'))
+        table.with_body(rows: rows)
+      end
+    %>
+  </div>
+</div>

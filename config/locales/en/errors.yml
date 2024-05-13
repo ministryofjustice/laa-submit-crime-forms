@@ -293,6 +293,8 @@ en:
 
             reference_number:
               blank: "Enter the solicitor's reference number"
+            alternative_contact_details:
+              blank: "Select yes if you want to add alternative contact details"
             contact_first_name:
               blank: "Enter the first name of the alternative contact"
             contact_last_name:

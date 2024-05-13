@@ -11,7 +11,7 @@ RSpec.describe 'Accessibility', :accessibility do
 
   let(:provider) { create(:provider) }
   let(:application) { create(:prior_authority_application) }
-  let(:claim) { create(:claim, :complete) }
+  let(:claim) { create(:claim, :complete, :with_assessment_comment) }
   let(:be_axe_clean_with_caveats) do
     # Ignoring known false positive around skip links, see: https://design-system.service.gov.uk/components/skip-link/#when-to-use-this-component
     # Ignoring known false positive around aria-expanded attributes on conditional reveal radios, see: https://github.com/alphagov/govuk-frontend/issues/979
