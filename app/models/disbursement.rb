@@ -18,4 +18,21 @@ class Disbursement < ApplicationRecord
       'other_type' => translations(other_type, 'helpers.other_disbursement_type')
     )
   end
+
+  def translated_disbursement_type
+    if disbursement_type == DisbursementTypes::OTHER.to_s
+      known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(other_type))
+      return translate("other.#{other_type}") if known_other
+
+      other_type
+    elsif disbursement_type
+      translate("standard.#{disbursement_type}")
+    end
+  end
+
+  private
+
+  def translate(key, **)
+    I18n.t("summary.nsm/cost_summary/disbursements.#{key}", **)
+  end
 end

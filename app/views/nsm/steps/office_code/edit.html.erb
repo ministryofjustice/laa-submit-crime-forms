@@ -6,7 +6,6 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :office_code, @form_object.options, :to_s, :to_s,
-                                           inline: false,
                                            legend: { tag: 'h1', size: 'xl', text: t('.page_title') },
                                            hint: { text: t('.subheading') } %>
       <%= f.continue_button %>

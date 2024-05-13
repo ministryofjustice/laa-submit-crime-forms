@@ -31,7 +31,8 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
   let(:travel_cost_per_hour) { '' }
   let(:additional_cost_list) { '' }
   let(:record) { build(:quote, document: nil) }
-  let(:application) { build(:prior_authority_application, service_type:) }
+  let(:quotes) { [build(:quote, :primary)] }
+  let(:application) { create(:prior_authority_application, service_type:, quotes:) }
   let(:service_type) { 'photocopying' }
 
   let(:file_upload) { instance_double(ActionDispatch::Http::UploadedFile, tempfile:, content_type:) }
@@ -113,7 +114,7 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
       let(:items) { '3' }
       let(:cost_per_item) { '20' }
       let(:user_chosen_cost_type) { 'per_hour' }
-      let(:application) { create(:prior_authority_application, service_type: 'custom') }
+      let(:application) { create(:prior_authority_application, service_type: 'custom', quotes: quotes) }
       let(:record) { build(:quote, document: nil, prior_authority_application: application) }
       let(:file_upload) { nil }
 
@@ -154,6 +155,17 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
 
     it 'handles <£1 values' do
       expect(subject.total_cost).to eq 0.25
+    end
+  end
+
+  describe '#cost_type' do
+    context 'when service has variable cost type' do
+      let(:service_type) { 'dna_report' }
+      let(:quotes) { [build(:quote, :primary_per_item)] }
+
+      it 'uses the same cost type as the user-chosen primary quote cost type' do
+        expect(subject.cost_type).to eq 'per_item'
+      end
     end
   end
 end

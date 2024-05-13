@@ -9,14 +9,14 @@
       <%= form.govuk_radio_buttons_fieldset :alternative_quotes_still_to_add,
                                             legend: { text: t('.page_title'), size: 'xl', tag: 'h1' } do %>
         <%= form.govuk_radio_button :alternative_quotes_still_to_add,
+                                    true,
+                                    link_errors: true,
+                                    label: { text: t('prior_authority.generic.yes_choice') } %>
+        <%= form.govuk_radio_button :alternative_quotes_still_to_add,
                                     false,
-                                    label: { text: t('prior_authority.generic.no_choice') },
-                                    link_errors: true do %>
+                                    label: { text: t('prior_authority.generic.no_choice') } do %>
           <%= form.govuk_text_area :no_alternative_quote_reason, label: { text: t('.why_not') } %>
         <% end %>
-        <%= form.govuk_radio_button :alternative_quotes_still_to_add,
-                                    true,
-                                    label: { text: t('prior_authority.generic.yes_choice') } %>
       <% end %>
 
       <%= form.continue_button %>

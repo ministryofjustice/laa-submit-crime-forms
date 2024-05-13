@@ -155,7 +155,7 @@ Style/HashEachMethods:
 
 Performance/InefficientHashSearch:
   Exclude:
-    - app/presenters/nsm/cost_summary/disbursements.rb
+    - app/models/disbursement.rb
 
 Naming/PredicateName:
   AllowedMethods:

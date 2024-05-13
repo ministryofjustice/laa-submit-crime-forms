@@ -2,7 +2,7 @@
 #
 # Temporary solution to allow us to onboard over the next few months.
 # Plan is to build an API to glean this info from other systems, but
-# in the intrim this this was agreed as a way to continue onboarding.
+# in the interim this was agreed as a way to continue onboarding.
 #
 # This is used by Provider::ActiveOfficeChecker to filter out inactive
 # offices from the array that Crime Apply receives from the portal auth_info
