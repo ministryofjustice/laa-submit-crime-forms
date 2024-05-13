@@ -45,7 +45,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
     end
 
     context 'when status is from a decision event' do
-      let(:status) { 'provider_requested' }
+      let(:status) { 'rejected' }
 
       it 'syncs the assessment_comment' do
         expect(claim.assessment_comment).to eq 'Decision comment'
@@ -67,6 +67,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
           application: {}
         }.deep_stringify_keys
       end
+
       it 'syncs the assessment_comment' do
         expect(claim.assessment_comment).to eq 'Decision comment'
       end
