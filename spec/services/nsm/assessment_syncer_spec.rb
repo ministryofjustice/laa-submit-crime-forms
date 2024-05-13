@@ -66,7 +66,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
           ],
           application: {}
         }.deep_stringify_keys
-
+      end
       it 'syncs the assessment_comment' do
         expect(claim.assessment_comment).to eq 'Decision comment'
       end
