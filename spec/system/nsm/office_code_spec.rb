@@ -52,7 +52,7 @@ RSpec.describe 'Office code selection', type: :system do
 
       it 'Allows me to save and come back later' do
         click_on 'Save and come back later'
-        expect(page).to have_content "Your details\nIn progress"
+        expect(page.find(:id, 'nsm/firm_details-status').text).to eq 'In progress'
         expect(claim.reload.office_code).to be_nil
       end
 
