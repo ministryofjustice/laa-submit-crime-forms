@@ -348,7 +348,7 @@ jobs:
       - crime-forms-end-to-end-tests/run-e2e-tests:
           e2e_current_image_var: NSCC_PROVIDER_IMAGE
           e2e_current_image: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${PROVIDER_ECR_REPOSITORY}:branch-${CIRCLE_SHA1}
-          e2e_branch: main # Change to work against a fixed e2e test repo branch if needed
+          e2e_branch: crm457-1386/fix-inline # Change to work against a fixed e2e test repo branch if needed
 
   e2e-test-main:
     executor: crime-forms-end-to-end-tests/e2e-test-executor
