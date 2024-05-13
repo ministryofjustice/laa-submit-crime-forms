@@ -21,12 +21,7 @@ if ENV.fetch('RUN_SIDEKIQ_IN_TEST_MODE', false) == "true"
   Sidekiq::Testing.inline!
 end
 
-if ENV['REDIS_HOST'].present? && ENV['REDIS_PASSWORD'].present?
-  protocol = ENV.fetch("REDIS_PROTOCOL", "rediss")
-  redis_url = "#{protocol}://:#{ENV.fetch('REDIS_PASSWORD',
-                                     nil)}@#{ENV.fetch('REDIS_HOST',
-                                                       nil)}:6379"
-end
+redis_url = Rails.configuration.x.redis_url
 
 module Dashboard; end
 

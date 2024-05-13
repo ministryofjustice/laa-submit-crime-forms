@@ -14,9 +14,8 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
     }
   end
 
-  let(:application) do
-    instance_double(Claim)
-  end
+  let(:application) { instance_double(Claim, solicitor:) }
+  let(:solicitor) { instance_double(Solicitor, persisted?: false) }
 
   let(:first_name) { 'James' }
   let(:last_name) { 'Roberts' }
@@ -44,6 +43,18 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
       end
     end
 
+    context 'when alternative contact has not been set in any way' do
+      let(:contact_first_name) { nil }
+      let(:contact_last_name) { nil }
+      let(:contact_email) { nil }
+      let(:alternative_contact_details) { nil }
+
+      it 'has a validation error on the alternative contact' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:alternative_contact_details, :blank)).to be(true)
+      end
+    end
+
     %i[contact_first_name contact_last_name contact_email].each do |field|
       context "when #{field} is missing and alternative_contact_details is NO" do
         let(field) { nil }
@@ -66,6 +77,10 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
   end
 
   describe '#alternative_contact_details' do
+    let(:solicitor) { instance_double(Solicitor, persisted?: persisted) }
+    let(:application) { instance_double(Claim, solicitor:) }
+    let(:persisted) { false }
+
     context 'when passed in as yes' do
       let(:alternative_contact_details) { 'yes' }
 
@@ -89,7 +104,7 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
       let(:contact_last_name) { nil }
 
       it 'determined based on presence of contact email and full anme' do
-        expect(form.alternative_contact_details).to eq(YesNoAnswer::NO)
+        expect(form.alternative_contact_details).to be_nil
       end
     end
 
@@ -119,8 +134,18 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
         let(:contact_first_name) { nil }
         let(:contact_last_name) { nil }
 
-        it 'return no value' do
-          expect(form.alternative_contact_details).to eq(YesNoAnswer::NO)
+        context 'when the form has previously been completed' do
+          let(:persisted) { true }
+
+          it 'return no value' do
+            expect(form.alternative_contact_details).to eq(YesNoAnswer::NO)
+          end
+        end
+
+        context 'when the form has not previously been completed' do
+          it 'return nil value' do
+            expect(form.alternative_contact_details).to be_nil
+          end
         end
       end
     end

@@ -13,7 +13,8 @@
       { text: t('.net_cost'), numeric: true },
       { text: t('.action'), numeric: true }
     ]
-    link = link_to(t('.view'), nsm_steps_view_claim_path(claim_id: current_application.id), data: { turbo: 'false' })
+    letters_link = link_to(t('.view'), letters_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
+    calls_link = link_to(t('.view'), calls_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
     form = Nsm::Steps::LettersCallsForm.build(@claim)
     rows = [
       [
@@ -21,14 +22,14 @@
         { text: form.letters, numeric: true },
         { text: NumberTo.percentage(form.letters_uplift.to_f, multiplier: 1), numeric: true },
         { text: NumberTo.pounds(form.letters_after_uplift), numeric: true },
-        { text: link, numeric: true }
+        { text: letters_link, numeric: true }
       ],
       [
         t(".calls"),
         { text: form.calls, numeric: true },
         { text: NumberTo.percentage(form.calls_uplift.to_f, multiplier: 1), numeric: true },
         { text: NumberTo.pounds(form.calls_after_uplift), numeric: true },
-        { text: link, numeric: true }
+        { text: calls_link, numeric: true }
       ]
     ]
 

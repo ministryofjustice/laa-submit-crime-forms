@@ -47,6 +47,13 @@ module Crm7restbackend
     config.x.nsm.feedback_url = 'https://eu.surveymonkey.com/r/PDDG6YB'
     config.x.prior_authority.feedback_url = 'https://eu.surveymonkey.com/r/authprior'
 
+    config.x.redis_url = if ENV['REDIS_HOST'].present? && ENV['REDIS_PASSWORD'].present?
+                           protocol = ENV.fetch("REDIS_PROTOCOL", "rediss")
+                           password = ENV.fetch('REDIS_PASSWORD')
+                           host = ENV.fetch('REDIS_HOST')
+                           "#{protocol}://:#{password}@#{host}:6379"
+                         end
+
     config.after_initialize do
       Rails.application.reload_routes!
       AppStoreSubscriber.call

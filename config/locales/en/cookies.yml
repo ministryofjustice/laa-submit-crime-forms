@@ -17,7 +17,7 @@ en:
         purpose: Purpose
         expires: Expires
         row:
-          name_1: _crm7restbackend_session
+          name_1: _session_id
           purpose_1: Saves your current progress on this device and tracks inactivity periods
           expires_1: When you close your browser
           purpose_2: Saves your cookie consent settings
