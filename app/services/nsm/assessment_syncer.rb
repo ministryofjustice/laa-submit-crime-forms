@@ -23,8 +23,7 @@ module Nsm
       return if claim.status.in?(%w[submitted granted])
 
       event_type = claim.status == 'provider_requested' ? 'send_back' : 'decision'
-      Rails.logger.debug(app_store_record['events'])
-      comment_event = app_store_record['events'].select { _1['public'] && _1['event_type'] == event_type }
+      comment_event = app_store_record['events'].select { _1['event_type'] == event_type }
                                                 .max_by { DateTime.parse(_1['created_at']) }
       claim.update(assessment_comment: comment_event.dig('details', 'comment'))
     end
