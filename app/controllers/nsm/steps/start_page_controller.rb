@@ -13,7 +13,7 @@ module Nsm
         # passed in separately to current_application to
         # allow it to be wrapped in a presenter in the future
         @application = current_application
-        render 'laa_multi_step_forms/task_list/show', locals: { header: -> { decision_step_header }, app_type: 'claim' }
+        render 'laa_multi_step_forms/task_list/show', locals: { app_type: 'claim' }
       end
 
       # we remove the check_answers entry from the list to reset the return
