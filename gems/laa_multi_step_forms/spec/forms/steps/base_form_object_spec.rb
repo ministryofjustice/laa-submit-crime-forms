@@ -48,6 +48,7 @@ RSpec.describe Steps::BaseFormObject do
         attribute :name
       end
     end
+
     let(:record) { { 'name' => 'James' } }
     let(:form) { klass.new(:record => record, 'name' => name) }
 
@@ -61,6 +62,42 @@ RSpec.describe Steps::BaseFormObject do
       let(:name) { 'Jim' }
 
       it { expect(form).to be_changed }
+    end
+  end
+
+  describe 'attribute_changed?' do
+    before do
+      stub_const('NameForm', form_klass)
+      stub_const('NameRecord', record_klass)
+    end
+
+    let(:form_klass) do
+      Class.new(described_class) do
+        attribute :first_name
+      end
+    end
+
+    let(:record_klass) do
+      Class.new(ApplicationRecord) do
+        attr_accessor :first_name
+
+        def self.load_schema! = @columns_hash = {}
+      end
+    end
+
+    let(:record) { record_klass.new('first_name' => 'James') }
+    let(:form) { form_klass.new(:record => record, 'first_name' => first_name) }
+
+    context 'when the attribute has not changed' do
+      let(:first_name) { 'James' }
+
+      it { expect(form.attribute_changed?(:first_name)).to be false }
+    end
+
+    context 'when attribute has changed' do
+      let(:first_name) { 'Jim' }
+
+      it { expect(form.attribute_changed?(:first_name)).to be true }
     end
   end
 
