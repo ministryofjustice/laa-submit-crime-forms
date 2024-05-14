@@ -34,7 +34,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       let(:status) { 'rejected' }
 
       before do
-        allow(claim).to receive(:update).and_raise 'Some problem!'
+        allow(claim).to receive(:status).and_raise 'Some problem!'
         allow(Sentry).to receive(:capture_message)
         described_class.call(claim, record:)
       end
