@@ -61,7 +61,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
               event_type: 'send_back',
               created_at: 1.day.ago.to_s,
               public: true,
-              details: { comment: 'Decision comment' }
+              details: { comment: 'More info needed' }
             },
           ],
           application: {}
@@ -69,7 +69,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       end
 
       it 'syncs the assessment_comment' do
-        expect(claim.assessment_comment).to eq 'Decision comment'
+        expect(claim.assessment_comment).to eq 'More info needed'
       end
     end
 
