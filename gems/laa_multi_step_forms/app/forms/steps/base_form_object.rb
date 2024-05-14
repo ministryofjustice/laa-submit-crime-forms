@@ -43,6 +43,10 @@ module Steps
       !record.slice(*attribute_names).eql?(attributes)
     end
 
+    def attribute_changed?(attribute)
+      self[attribute] != record.public_send(attribute)
+    end
+
     def to_key
       # Intentionally returns nil so the form builder picks up only
       # the class name to generate the HTML attributes

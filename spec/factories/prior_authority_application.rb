@@ -185,7 +185,7 @@ FactoryBot.define do
 
       # next hearing details
       next_hearing { true }
-      next_hearing_date { date + 1 }
+      next_hearing_date { 1.day.from_now }
 
       # quotes
       service_type { service_type_options.sample }
