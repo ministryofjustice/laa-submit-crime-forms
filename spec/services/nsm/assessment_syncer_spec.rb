@@ -101,7 +101,15 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
                 pricing: 3.56
               }
             ]
-          }
+          },
+          events: [
+            {
+              event_type: 'decision',
+              created_at: 1.day.ago.to_s,
+              public: true,
+              details: { comment: 'Part granted' }
+            },
+          ],
         }.deep_stringify_keys
       end
 
