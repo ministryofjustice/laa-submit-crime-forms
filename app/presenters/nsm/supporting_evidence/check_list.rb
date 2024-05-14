@@ -15,10 +15,6 @@ module Nsm
         @claim = claim
       end
 
-      def self.render(claim)
-        new(claim).render
-      end
-
       def render
         tag.ul safe_join(items), class: 'govuk-list govuk-list--bullet govuk-!-margin-bottom-6 govuk-!-padding-left-6'
       end
