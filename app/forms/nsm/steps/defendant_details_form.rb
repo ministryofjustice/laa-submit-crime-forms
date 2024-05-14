@@ -11,6 +11,8 @@ module Nsm
         validates :maat, presence: true, format: /\A\d{7}\z/
       end
 
+      delegate :id, to: :record
+
       def maat_required?
         application.claim_type != ClaimType::BREACH_OF_INJUNCTION.to_s
       end
@@ -21,6 +23,24 @@ module Nsm
 
       def index
         application.defendants.index(record)
+      end
+
+      def full_name_if_valid
+        valid?
+        "#{first_name} #{last_name}" unless errors[:first_name].any? || errors[:last_name].any?
+      end
+
+      def maat_if_valid
+        valid?
+        maat unless errors[:maat].any?
+      end
+
+      def main_record?
+        # check if it set on the DB record
+        return true if record.main
+
+        # DB query to check if any records in DB - ignoring this one which is unsaved
+        application.defendants.count.zero?
       end
 
       private
@@ -39,14 +59,6 @@ module Nsm
         else
           { position: 1, main: true }
         end
-      end
-
-      def main_record?
-        # check if it set on the DB record
-        return true if record.main
-
-        # DB query to check if any records in DB - ignoring this one which is unsaved
-        application.defendants.count.zero?
       end
     end
   end

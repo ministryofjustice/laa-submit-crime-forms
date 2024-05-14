@@ -177,4 +177,38 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
       end
     end
   end
+
+  describe '#maat_if_valid?' do
+    context 'when maat is valid' do
+      let(:maat) { '1234567' }
+
+      it 'returns the maat' do
+        expect(subject.maat_if_valid).to eq '1234567'
+      end
+    end
+
+    context 'when maat is invalid' do
+      let(:maat) { '123456' }
+
+      it 'returns nil' do
+        expect(subject.maat_if_valid).to be_nil
+      end
+    end
+  end
+
+  describe '#full_name_if_valid?' do
+    context 'when full name is valid' do
+      it 'returns the full name' do
+        expect(subject.full_name_if_valid).to eq 'James Smith'
+      end
+    end
+
+    context 'when full name is invalid' do
+      let(:first_name) { '' }
+
+      it 'returns nil' do
+        expect(subject.full_name_if_valid).to be_nil
+      end
+    end
+  end
 end
