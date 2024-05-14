@@ -16,7 +16,7 @@ module Nsm
       when 'part_grant'
         sync_overall_comment
         sync_letter_adjustments
-      when 'provider_requested', 'further_info'
+      when 'provider_requested', 'further_info', 'rejected'
         sync_overall_comment
       end
     rescue StandardError => e
