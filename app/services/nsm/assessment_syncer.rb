@@ -12,10 +12,7 @@ module Nsm
     end
 
     def call
-      Rails.logger.debug claim.status
       case claim.status
-      when 'submitted', 'granted'
-        return
       when 'part_grant'
         sync_overall_comment
         sync_letter_adjustments
@@ -36,13 +33,20 @@ module Nsm
     end
 
     def sync_letter_adjustments
-      claim.update(allowed_letters: letters['count']) if letters['count_original'].present?
-      claim.update(allowed_letters_uplift: letters['uplift']) if letters['uplift_original'].present?
+      if letters['count_original'].present?
+        claim.update(allowed_letters: letters['count'],
+                     letters: letters['count_original'])
+      end
+      if letters['uplift_original'].present?
+        claim.update(allowed_letters_uplift: letters['uplift'],
+                     letters_uplift: letters['uplift_original'])
+      end
       claim.update(letters_adjustment_comment: letters['adjustment_comment']) if letters['adjustment_comment'].present?
     end
 
     def letters
-      app_store_record['application']['letters_and_calls'].select { _1['type']['value'] == 'letters'}
+      app_store_record['application']['letters_and_calls'].select { _1['type']['value'] == 'letters' }
+                                                          .first
     end
   end
 end

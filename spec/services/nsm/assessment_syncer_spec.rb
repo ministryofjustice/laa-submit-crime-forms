@@ -73,6 +73,46 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       end
     end
 
+    context 'when part granted with letters adjusted' do
+      let(:status) { 'part_grant' }
+      let(:record) do
+        {
+          application: {
+            letters_and_calls: [
+              {
+                type: {
+                  en: 'Letters',
+                    value: 'letters'
+                },
+                count: 30,
+                uplift: 0,
+                pricing: 3.56,
+                uplift_original: 10,
+                count_original: 20,
+                adjustment_comment: 'Reduced letters and removed uplift'
+              },
+              {
+                type: {
+                  en: 'Calls',
+                    value: 'calls'
+                },
+                count: 100,
+                uplift: nil,
+                pricing: 3.56
+              }
+            ]
+          }
+        }.deep_stringify_keys
+      end
+
+      it 'syncs letters adjustment fields' do
+        expect(claim.allowed_letters).to eq 30
+        expect(claim.letters).to eq 20
+        expect(claim.letters_uplift).to eq 10
+        expect(claim.allowed_letters_uplift).to eq 0
+      end
+    end
+
     context 'when app has status that should not sync' do
       let(:status) { 'submitted' }
 
