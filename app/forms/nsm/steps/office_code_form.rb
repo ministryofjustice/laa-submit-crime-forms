@@ -12,7 +12,7 @@ module Nsm
       private
 
       def persist!
-        application.update!(attributes)
+        application.update!(office_code: office_code.presence)
       end
     end
   end

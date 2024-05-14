@@ -50,6 +50,12 @@ RSpec.describe 'Office code selection', type: :system do
         expect(claim.reload.office_code).to eq '1A123B'
       end
 
+      it 'Allows me to save and come back later' do
+        click_on 'Save and come back later'
+        expect(page.find(:id, 'nsm/firm_details-status').text).to eq 'In progress'
+        expect(claim.reload.office_code).to be_nil
+      end
+
       context 'when the claim already has a defendant' do
         let(:defendants) { [build(:defendant, :valid)] }
 
