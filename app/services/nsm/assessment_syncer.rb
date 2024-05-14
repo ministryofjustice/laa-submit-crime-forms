@@ -12,6 +12,7 @@ module Nsm
     end
 
     def call
+      Rails.logger.debug claim.status
       case claim.status
       when 'submitted', 'granted'
         return
@@ -35,8 +36,6 @@ module Nsm
     end
 
     def sync_letter_adjustments
-      #TODO REMOVE TESTING LOG
-      Rails.logger.debug(letters)
       claim.update(allowed_letters: letters['count']) if letters['count_original'].present?
       claim.update(allowed_letters_uplift: letters['uplift']) if letters['uplift_original'].present?
       claim.update(letters_adjustment_comment: letters['adjustment_comment']) if letters['adjustment_comment'].present?
