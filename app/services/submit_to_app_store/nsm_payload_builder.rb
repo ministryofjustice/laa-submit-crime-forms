@@ -1,7 +1,6 @@
 class SubmitToAppStore
   class NsmPayloadBuilder
     DEFAULT_IGNORE = %w[claim_id created_at updated_at].freeze
-    WORK_ITEM_IGNORE = %w[allowed_uplift allowed_time_spent].freeze
 
     attr_reader :claim, :scorer
 
@@ -64,7 +63,7 @@ class SubmitToAppStore
 
     def work_item_data
       claim.work_items.map do |work_item|
-        data = work_item.as_json(except: DEFAULT_IGNORE.concat(WORK_ITEM_IGNORE))
+        data = work_item.as_json(except: [*DEFAULT_IGNORE, 'allowed_uplift', 'allowed_time_spent'])
         data['completed_on'] = data['completed_on'].to_s
         data['pricing'] = pricing[work_item.work_type]
         data
