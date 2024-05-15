@@ -35,16 +35,25 @@ module Nsm
 
     def sync_letter_adjustments
       record = letters
-      update_letters_count(record)
-      update_letters_uplift(record)
+      claim.update(allowed_letters: letters['count']) if letters['count_original'].present?
+      claim.update(allowed_uplift: letters['uplift']) if letters['uplift_original'].present?
       claim.update(letters_adjustment_comment: record['adjustment_comment']) if record['adjustment_comment'].present?
     end
 
     def sync_call_adjustments
       record = calls
-      update_calls_count(record)
-      update_calls_uplift(record)
+      claim.update(allowed_calls: calls['count']) if calls['count_original'].present?
+      claim.update(allowed_calls_uplift: calls['uplift']) if calls['uplift_original'].present?
       claim.update(calls_adjustment_comment: record['adjustment_comment']) if record['adjustment_comment'].present?
+    end
+
+    def sync_work_items
+      work_items.each do |work_item|
+        record = WorkItem.find(work_item.id)
+        record.update(allowed_time_spent: record['time_spent']) if work_item['time_spent_original'].present?
+        record.update(allowed_uplift: record['uplift']) if work_item['uplift_original'].present?
+        record.update(adjustment_comment: record['adjustment_comment']) if work_item['adjustment_comment'].present?
+      end
     end
 
     def letters
@@ -52,37 +61,13 @@ module Nsm
                                                           .first
     end
 
-    def update_letters_count(letters)
-      return if letters['count_original'].blank?
-
-      claim.update(allowed_letters: letters['count'],
-                   letters: letters['count_original'])
-    end
-
-    def update_letters_uplift(letters)
-      return if letters['uplift_original'].blank?
-
-      claim.update(allowed_letters_uplift: letters['uplift'],
-                   letters_uplift: letters['uplift_original'])
-    end
-
     def calls
       app_store_record['application']['letters_and_calls'].select { _1['type']['value'] == 'calls' }
                                                           .first
     end
 
-    def update_calls_count(calls)
-      return if calls['count_original'].blank?
-
-      claim.update(allowed_calls: calls['count'],
-                   calls: calls['count_original'])
-    end
-
-    def update_calls_uplift(calls)
-      return if calls['uplift_original'].blank?
-
-      claim.update(allowed_calls_uplift: calls['uplift'],
-                   calls_uplift: calls['uplift_original'])
+    def work_items
+      app_store_record['application']['work_items']
     end
   end
 end
