@@ -17,6 +17,7 @@ module Nsm
         sync_letter_adjustments
         sync_call_adjustments
         sync_overall_comment
+        sync_work_items
       when 'provider_requested', 'further_info', 'rejected'
         sync_overall_comment
       end
@@ -48,6 +49,8 @@ module Nsm
     end
 
     def sync_work_items
+      return if work_items.nil?
+
       work_items.each do |work_item|
         record = WorkItem.find(work_item.id)
         record.update(allowed_time_spent: record['time_spent']) if work_item['time_spent_original'].present?
