@@ -29,7 +29,7 @@ module RiskAssessment
     end
 
     def uplift_applied?
-      @items[:work_items].work_item_forms.any? { _1.uplift&.positive? }
+      @items[:work_items].work_item_forms.any?(&:apply_uplift)
     end
 
     def extradition?
