@@ -124,7 +124,8 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
                     value: 'calls'
                 },
                 count: 100,
-                uplift: nil,
+                uplift: 0,
+                uplift_original: 10,
                 count_original: 200,
                 pricing: 3.56
               }
@@ -141,11 +142,11 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
         }.deep_stringify_keys
       end
 
-      it 'syncs letters adjustment fields' do
+      it 'syncs calls adjustment fields' do
         expect(claim.allowed_calls).to eq 100
         expect(claim.calls).to eq 200
-        expect(claim.allowed_calls_uplift).to be_nil
-        expect(claim.allowed_calls).to be_nil
+        expect(claim.allowed_calls_uplift).to eq 0
+        expect(claim.calls_uplift).to eq 10
       end
     end
 
