@@ -41,15 +41,6 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
         end
       end
 
-      context 'when there is workitem without an uplift' do
-        let(:uplifted_claim) { build(:claim, :one_work_item) }
-
-        it do
-          expect(described_class.new(uplifted_claim)).not_to be_uplift_applied
-          expect(described_class.new(uplifted_claim).assess).not_to be_truthy
-        end
-      end
-
       context 'when there is an extradition' do
         let(:extradition_claim) { build(:claim, :with_extradition) }
 
@@ -70,7 +61,7 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
     end
 
     context 'returns false' do
-      let(:claim) { build(:claim) }
+      let(:claim) { build(:claim, :one_work_item) }
 
       it 'when cost is under £5000' do
         expect(described_class.new(claim)).not_to be_high_cost
@@ -86,6 +77,7 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
 
       it 'when there is not an uplift' do
         expect(described_class.new(claim)).not_to be_uplift_applied
+        expect(described_class.new(claim).assess).not_to be_truthy
       end
 
       it 'when there is not an extradition' do
