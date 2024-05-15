@@ -1,7 +1,7 @@
 class SubmitToAppStore
   class NsmPayloadBuilder
     DEFAULT_IGNORE = %w[claim_id created_at updated_at].freeze
-    WORK_ITEM_IGNORE = %[allowed_uplift allowed_time_spent].freeze
+    WORK_ITEM_IGNORE = %w[allowed_uplift allowed_time_spent].freeze
 
     attr_reader :claim, :scorer
 
