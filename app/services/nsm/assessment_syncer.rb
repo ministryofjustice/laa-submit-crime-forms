@@ -14,8 +14,8 @@ module Nsm
     def call
       case claim.status
       when 'part_grant'
-        sync_overall_comment
         sync_letter_adjustments
+        sync_overall_comment
       when 'provider_requested', 'further_info', 'rejected'
         sync_overall_comment
       end
@@ -33,20 +33,28 @@ module Nsm
     end
 
     def sync_letter_adjustments
-      if letters['count_original'].present?
-        claim.update(allowed_letters: letters['count'],
-                     letters: letters['count_original'])
-      end
-      if letters['uplift_original'].present?
-        claim.update(allowed_letters_uplift: letters['uplift'],
-                     letters_uplift: letters['uplift_original'])
-      end
+      update_letters_count(letters)
+      update_letters_uplift(letters)
       claim.update(letters_adjustment_comment: letters['adjustment_comment']) if letters['adjustment_comment'].present?
     end
 
     def letters
       app_store_record['application']['letters_and_calls'].select { _1['type']['value'] == 'letters' }
                                                           .first
+    end
+
+    def update_letters_count(letters)
+      return if letters['count_original'].blank?
+
+      claim.update(allowed_letters: letters['count'],
+                   letters: letters['count_original'])
+    end
+
+    def update_letters_uplift(letters)
+      return if letters['uplift_original'].blank?
+
+      claim.update(allowed_letters_uplift: letters['uplift'],
+                   letters_uplift: letters['uplift_original'])
     end
   end
 end
