@@ -12,14 +12,11 @@ module Nsm
     end
 
     def call
-      Rails.logger.info "Calling NSM Assessment Syncer"
       case claim.status
       when 'part_grant'
-        Rails.logger.info "Part Grant"
         sync_letter_adjustments
         sync_overall_comment
       when 'provider_requested', 'further_info', 'rejected'
-        Rails.logger.info "Another State"
         sync_overall_comment
       end
     rescue StandardError => e
@@ -36,10 +33,8 @@ module Nsm
     end
 
     def sync_letter_adjustments
-      Rails.logger.info "Syncing Letter Adjustments"
       update_letters_count(letters)
       update_letters_uplift(letters)
-      Rails.logger.info "Syncing Comment"
       claim.update(letters_adjustment_comment: letters['adjustment_comment']) if letters['adjustment_comment'].present?
     end
 
@@ -49,7 +44,6 @@ module Nsm
     end
 
     def update_letters_count(letters)
-      Rails.logger.info "Syncing Letter Count"
       return if letters['count_original'].blank?
 
       claim.update(allowed_letters: letters['count'],
@@ -57,7 +51,6 @@ module Nsm
     end
 
     def update_letters_uplift(letters)
-      Rails.logger.info "Syncing Letter Uplift"
       return if letters['uplift_original'].blank?
 
       claim.update(allowed_letters_uplift: letters['uplift'],
