@@ -49,8 +49,6 @@ module Nsm
     end
 
     def sync_work_items
-      return if work_items.nil?
-
       work_items.each do |work_item|
         record = WorkItem.find(work_item.id)
         record.update(allowed_time_spent: record['time_spent']) if work_item['time_spent_original'].present?
