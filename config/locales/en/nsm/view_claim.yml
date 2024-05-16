@@ -27,7 +27,7 @@ en:
           action: Action
           vat: VAT on claimed
           gross_cost: Total claimed
-          table_info_item: work items
+          table_info_item: work item
         letters_and_calls:
           page_title: Claim details
           letters_and_calls: Letters and calls
@@ -48,7 +48,8 @@ en:
           gross_cost: Total claimed
           action: Action
           view: View
-          table_info_item: disbursements
+          table_info_item: disbursement
+          no_data: You do not have any disbursements
         granted_response: The claim has been fully granted.
         # view pages
         work_item:
