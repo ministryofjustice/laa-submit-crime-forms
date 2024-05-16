@@ -17,14 +17,9 @@ RSpec.describe RiskAssessment::RiskAssessmentScorer do
     context 'returns medium risk' do
       let(:claim) do
         build(:claim,
-              letters: 19,
-              calls: 1,
               prosecution_evidence: 50,
               defence_statement: 1,
               number_of_witnesses: 1,
-              time_spent: 24,
-              assigned_counsel: 'no',
-              reasons_for_claim: [ReasonForClaim::CORE_COSTS_EXCEED_HIGHER_LMTS.to_s],
               work_items: [
                 build(:work_item, work_type: WorkTypes::PREPARATION,
                   time_spent: '23',
@@ -53,14 +48,10 @@ RSpec.describe RiskAssessment::RiskAssessmentScorer do
     context 'returns low risk' do
       let(:claim) do
         build(:claim,
-              letters: 19,
-              calls: 1,
               prosecution_evidence: 50,
               defence_statement: 1,
               number_of_witnesses: 1,
               time_spent: 24,
-              assigned_counsel: 'no',
-              reasons_for_claim: [ReasonForClaim::CORE_COSTS_EXCEED_HIGHER_LMTS.to_s],
               work_items: [
                 build(:work_item, work_type: WorkTypes::PREPARATION,
                   time_spent: '552',
