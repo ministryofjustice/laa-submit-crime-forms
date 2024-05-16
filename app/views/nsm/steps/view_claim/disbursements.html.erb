@@ -30,7 +30,7 @@
         ]
       end
 
-      govuk_table(classes: ('govuk-!-margin-bottom-0' if disbursement_date == last_disbursement_date)) do |table|
+      govuk_table do |table|
         table.with_caption(text: disbursement_date.strftime('%-d %B %Y'), size: 's')
         table.with_head(rows: [head])
         table.with_body(rows: rows, first_cell_is_header: true)

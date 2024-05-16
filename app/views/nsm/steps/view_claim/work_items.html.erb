@@ -53,7 +53,7 @@
         ]
       end
 
-      govuk_table(classes: ('govuk-!-margin-bottom-0' if completed_on == last_completed_on)) do |table|
+      govuk_table do |table|
         table.with_caption(text: completed_on.strftime('%-d %B %Y'), size: 's')
         table.with_head(rows: [head])
         table.with_body(rows: rows, first_cell_is_header: true)
