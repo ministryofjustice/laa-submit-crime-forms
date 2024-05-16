@@ -61,7 +61,9 @@ module Nsm
     def sync_disbursements
       disbursements.each do |disbursement|
         record = Disbursement.find(disbursement['id'])
-        #TO DO: finish function
+        record.update(allowed_total_cost_without_vat: disbursement['allowed_total_cost_without_vat'])
+        record.update(allowed_vat_amount: disbursement['allowed_vat_amount'])
+        record.update(adjustment_comment: disbursement['details'])
       end
     end
 

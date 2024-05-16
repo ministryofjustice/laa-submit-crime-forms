@@ -40,10 +40,12 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       ]
     end
 
+
     let(:application) do
       {
         letters_and_calls: letters_and_calls,
-        work_items: []
+        work_items: [],
+        disbursements: []
       }
     end
 
@@ -214,6 +216,38 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
         expect(work_item.allowed_time_spent).to be_nil
         expect(work_item.allowed_uplift).to be_nil
         expect(work_item.adjustment_comment).to be_nil
+      end
+    end
+
+    context 'when part granted with disbursements adjusted' do
+      let(:status) { 'part_grant' }
+      let(:claim) { create(:claim, :mixed_vat_disbursement, status:) }
+      let(:record) do
+        {
+          application: {
+            letters_and_calls: letters_and_calls,
+            work_items: [],
+            disbursements: [
+              {
+                id: 'abc',
+                allowed_total_cost_without_vat: 20,
+                allowed_vat_amount: ,
+                adjustment_comment:
+              },
+              {
+
+              }
+            ]
+          },
+          events: [
+            {
+              event_type: 'decision',
+              created_at: 1.day.ago.to_s,
+              public: true,
+              details: { comment: 'Part granted' }
+            },
+          ],
+        }.deep_stringify_keys
       end
     end
 
