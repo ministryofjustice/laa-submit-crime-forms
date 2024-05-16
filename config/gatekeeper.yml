@@ -30,8 +30,11 @@ development:
     XXXXXX: ['crm7', 'crm4', 'crm5']
     ZZZZZZ: []
 
-    # Test office for A.CLARKE (see 1Password for login)
+    # Test office for A.CLARKE (see 1Password for login), has eforms role
     0X416R: ['crm5', 'crm4']
+
+    # Test office for 07RJONES (see 1Password for login), no eforms role
+    0Q316L: ['crm5', 'crm4']
 
 uat:
   office_codes:
