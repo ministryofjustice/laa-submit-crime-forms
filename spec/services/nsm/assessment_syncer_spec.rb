@@ -171,10 +171,10 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
 
     context 'when part granted with work items adjusted' do
       let(:status) { 'part_grant' }
-      let(:uplifted_work_item) { build(:work_item, :valid, :with_uplift)}
-      let(:work_item) { build(:work_item, :valid)}
+      let(:uplifted_work_item) { build(:work_item, :valid, :with_uplift) }
+      let(:work_item) { build(:work_item, :valid) }
       let(:claim) do
-        create(:claim, status:, work_items: [uplifted_work_item, work_item])
+        create(:claim, status: status, work_items: [uplifted_work_item, work_item])
       end
 
       let(:record) do
