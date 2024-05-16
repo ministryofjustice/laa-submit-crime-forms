@@ -171,16 +171,19 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
 
     context 'when part granted with work items adjusted' do
       let(:status) { 'part_grant' }
-      let(:claim) { create(:claim, :two_uplifted_work_items, status:) }
-      let(:adjusted_work_item) { claim.work_items[0] }
-      let(:work_item) { claim.work_items[1] }
+      let(:uplifted_work_item) { build(:work_item, :valid, :with_uplift)}
+      let(:work_item) { build(:work_item, :valid)}
+      let(:claim) do
+        create(:claim, status:, work_items: [uplifted_work_item, work_item])
+      end
+
       let(:record) do
         {
           application: {
             letters_and_calls: letters_and_calls,
             work_items: [
               {
-                id: adjusted_work_item.id,
+                id: uplifted_work_item.id,
                 uplift: 0,
                 time_spent: 20,
                 uplift_original: 15,
@@ -205,10 +208,15 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
         }.deep_stringify_keys
       end
 
+      before do
+        uplifted_work_item.reload
+        work_item.reload
+      end
+
       it 'syncs adjusted work item' do
-        expect(adjusted_work_item.allowed_uplift).to eq 0
-        expect(adjusted_work_item.adjustment_comment).to eq 'Test comment 1'
-        expect(adjusted_work_item.allowed_time_spent).to eq 20
+        expect(uplifted_work_item.allowed_uplift).to eq 0
+        expect(uplifted_work_item.adjustment_comment).to eq 'Test comment 1'
+        expect(uplifted_work_item.allowed_time_spent).to eq 20
       end
 
       it 'does not sync non adjusted work item' do
