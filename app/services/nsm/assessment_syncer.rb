@@ -36,24 +36,24 @@ module Nsm
 
     def sync_letter_adjustments
       record = letters
-      claim.update(allowed_letters: letters['count']) if letters['count_original'].present?
-      claim.update(allowed_uplift: letters['uplift']) if letters['uplift_original'].present?
+      claim.update(allowed_letters: record['count']) if record['count_original'].present?
+      claim.update(allowed_letters_uplift: record['uplift']) if record['uplift_original'].present?
       claim.update(letters_adjustment_comment: record['adjustment_comment']) if record['adjustment_comment'].present?
     end
 
     def sync_call_adjustments
       record = calls
-      claim.update(allowed_calls: calls['count']) if calls['count_original'].present?
-      claim.update(allowed_calls_uplift: calls['uplift']) if calls['uplift_original'].present?
+      claim.update(allowed_calls: record['count']) if record['count_original'].present?
+      claim.update(allowed_calls_uplift: record['uplift']) if record['uplift_original'].present?
       claim.update(calls_adjustment_comment: record['adjustment_comment']) if record['adjustment_comment'].present?
     end
 
     def sync_work_items
       work_items.each do |work_item|
-        record = WorkItem.find(work_item.id)
-        record.update(allowed_time_spent: record['time_spent']) if work_item['time_spent_original'].present?
-        record.update(allowed_uplift: record['uplift']) if work_item['uplift_original'].present?
-        record.update(adjustment_comment: record['adjustment_comment']) if work_item['adjustment_comment'].present?
+        record = WorkItem.find(work_item['id'])
+        record.update(allowed_time_spent: work_item['time_spent']) if work_item['time_spent_original'].present?
+        record.update(allowed_uplift: work_item['uplift']) if work_item['uplift_original'].present?
+        record.update(adjustment_comment: work_item['adjustment_comment']) if work_item['adjustment_comment'].present?
       end
     end
 

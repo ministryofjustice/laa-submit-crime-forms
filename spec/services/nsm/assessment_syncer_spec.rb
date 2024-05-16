@@ -8,17 +8,49 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
 
     let(:status) { 'granted' }
 
+    let(:events) do
+      [
+        {
+          event_type: 'decision',
+          created_at: 1.day.ago.to_s,
+          public: true,
+          details: { comment: 'Decision comment' }
+        },
+      ]
+    end
+
+    let(:letters_and_calls) do
+      [
+        {
+          type: {
+            en: 'Letters',
+              value: 'letters'
+          },
+          count: 1,
+          uplift: 0,
+        },
+        {
+          type: {
+            en: 'Letters',
+              value: 'calls'
+          },
+          count: 1,
+          uplift: 0,
+        }
+      ]
+    end
+
+    let(:application) do
+      {
+        letters_and_calls:,
+        work_items: []
+      }
+    end
+
     let(:record) do
       {
-        events: [
-          {
-            event_type: 'decision',
-            created_at: 1.day.ago.to_s,
-            public: true,
-            details: { comment: 'Decision comment' }
-          },
-        ],
-        application: {}
+        application:,
+        events:
       }.deep_stringify_keys
     end
 
@@ -56,6 +88,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       let(:status) { 'provider_requested' }
       let(:record) do
         {
+          application:,
           events: [
             {
               event_type: 'send_back',
@@ -63,8 +96,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
               public: true,
               details: { comment: 'More info needed' }
             },
-          ],
-          application: {}
+          ]
         }.deep_stringify_keys
       end
 
@@ -73,7 +105,11 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       end
     end
 
-    context 'when part granted with letters adjusted' do
+    context 'when part granted with letters and calls adjusted' do
+      let(:claim) do
+        create(:claim, :complete, :letters_calls_uplift, status:)
+      end
+
       let(:status) { 'part_grant' }
       let(:record) do
         {
@@ -84,14 +120,25 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
                   en: 'Letters',
                     value: 'letters'
                 },
-                count: 30,
+                count: 1,
                 uplift: 0,
-                pricing: 3.56,
                 uplift_original: 10,
-                count_original: 20,
+                count_original: 2,
                 adjustment_comment: 'Reduced letters and removed uplift'
+              },
+              {
+                type: {
+                  en: 'Calls',
+                    value: 'calls'
+                },
+                count: 2,
+                uplift: 0,
+                uplift_original: 20,
+                count_original: 3,
+                adjustment_comment: 'Reduced calls and removed uplift'
               }
-            ]
+            ],
+            work_items: []
           },
           events: [
             {
@@ -105,29 +152,44 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       end
 
       it 'syncs letters adjustment fields' do
-        expect(claim.allowed_letters).to eq 30
-        expect(claim.letters).to eq 20
+        expect(claim.allowed_letters).to eq 1
+        expect(claim.letters).to eq 2
         expect(claim.letters_uplift).to eq 10
         expect(claim.allowed_letters_uplift).to eq 0
+        expect(claim.letters_adjustment_comment).to eq 'Reduced letters and removed uplift'
+      end
+
+      it 'syncs calls adjustment fields' do
+        expect(claim.allowed_calls).to eq 2
+        expect(claim.calls).to eq 3
+        expect(claim.allowed_calls_uplift).to eq 0
+        expect(claim.calls_uplift).to eq 20
+        expect(claim.calls_adjustment_comment).to eq 'Reduced calls and removed uplift'
       end
     end
 
-    context 'when part granted with calls adjusted' do
+    context 'when part granted with work items adjusted' do
       let(:status) { 'part_grant' }
+      let(:claim) { create(:claim, :two_uplifted_work_items, status:) }
+      let(:adjusted_work_item) { claim.work_items[0] }
+      let(:work_item) { claim.work_items[1] }
       let(:record) do
         {
           application: {
-            letters_and_calls: [
+            letters_and_calls:,
+            work_items: [
               {
-                type: {
-                  en: 'Calls',
-                    value: 'calls'
-                },
-                count: 100,
+                id: adjusted_work_item.id,
                 uplift: 0,
-                uplift_original: 10,
-                count_original: 200,
-                pricing: 3.56
+                time_spent: 20,
+                uplift_original: 15,
+                adjustment_comment: 'Test comment 1',
+                time_spent_original: 40
+              },
+              {
+                id: work_item.id,
+                uplift: 0,
+                time_spent: 120
               }
             ]
           },
@@ -142,11 +204,16 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
         }.deep_stringify_keys
       end
 
-      it 'syncs calls adjustment fields' do
-        expect(claim.allowed_calls).to eq 100
-        expect(claim.calls).to eq 200
-        expect(claim.allowed_calls_uplift).to eq 0
-        expect(claim.calls_uplift).to eq 10
+      it 'syncs adjusted work item' do
+        expect(adjusted_work_item.allowed_uplift).to eq 0
+        expect(adjusted_work_item.adjustment_comment).to eq 'Test comment 1'
+        expect(adjusted_work_item.allowed_time_spent).to eq 20
+      end
+
+      it 'does not sync non adjusted work item' do
+        expect(work_item.allowed_time_spent).to be_nil
+        expect(work_item.allowed_uplift).to be_nil
+        expect(work_item.adjustment_comment).to be_nil
       end
     end
 
