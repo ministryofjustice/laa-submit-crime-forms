@@ -18,6 +18,7 @@ module Nsm
         sync_call_adjustments
         sync_overall_comment
         sync_work_items
+        sync_disbursements
       when 'provider_requested', 'further_info', 'rejected'
         sync_overall_comment
       end
@@ -57,6 +58,13 @@ module Nsm
       end
     end
 
+    def sync_disbursements
+      disbursements.each do |disbursement|
+        record = Disbursement.find(disbursement['id'])
+        #TO DO: finish function
+      end
+    end
+
     def letters
       app_store_record['application']['letters_and_calls'].select { _1['type']['value'] == 'letters' }
                                                           .first
@@ -69,6 +77,10 @@ module Nsm
 
     def work_items
       app_store_record['application']['work_items']
+    end
+
+    def disbursements
+      app_store_record['application']['disbursements']
     end
   end
 end

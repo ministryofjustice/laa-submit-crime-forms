@@ -42,7 +42,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
 
     let(:application) do
       {
-        letters_and_calls:,
+        letters_and_calls: letters_and_calls,
         work_items: []
       }
     end
@@ -88,7 +88,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       let(:status) { 'provider_requested' }
       let(:record) do
         {
-          application:,
+          application: application,
           events: [
             {
               event_type: 'send_back',
@@ -176,7 +176,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       let(:record) do
         {
           application: {
-            letters_and_calls:,
+            letters_and_calls: letters_and_calls,
             work_items: [
               {
                 id: adjusted_work_item.id,
