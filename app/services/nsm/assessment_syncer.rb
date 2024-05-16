@@ -63,7 +63,7 @@ module Nsm
         record = Disbursement.find(disbursement['id'])
         record.update(allowed_total_cost_without_vat: disbursement['total_cost_without_vat']) if disbursement['total_cost_without_vat_original'].present?
         record.update(allowed_vat_amount: disbursement['vat_amount']) if disbursement['vat_amount_original'].present?
-        record.update(adjustment_comment: disbursement['details'])
+        record.update(adjustment_comment: disbursement['adjustment_comment'])
       end
     end
 
