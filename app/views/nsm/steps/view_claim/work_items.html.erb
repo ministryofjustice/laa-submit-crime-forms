@@ -60,4 +60,5 @@
       end
     %>
   <% end %>
+  <%= render "shared/pagination",  { pagy: @pagy, item: t('.table_info_item') } %>
 </turbo-frame>
