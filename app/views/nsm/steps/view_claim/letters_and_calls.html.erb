@@ -5,7 +5,7 @@
     <%= t('.letters_and_calls') %>
   </h3>
 
-  <%=
+  <%
     head = [
       { text: t('.item'), width: 'govuk-!-width-one-quarter' },
       { text: t('.number'), numeric: true },
@@ -17,25 +17,31 @@
     calls_link = link_to(t('.view'), calls_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
     form = Nsm::Steps::LettersCallsForm.build(@claim)
     rows = [
-      [
+      ([
         t(".letters"),
         { text: form.letters, numeric: true },
         { text: NumberTo.percentage(form.letters_uplift.to_f, multiplier: 1), numeric: true },
         { text: NumberTo.pounds(form.letters_after_uplift), numeric: true },
         { text: letters_link, numeric: true }
-      ],
-      [
+      ] unless form.letters.zero?),
+      ([
         t(".calls"),
         { text: form.calls, numeric: true },
         { text: NumberTo.percentage(form.calls_uplift.to_f, multiplier: 1), numeric: true },
         { text: NumberTo.pounds(form.calls_after_uplift), numeric: true },
         { text: calls_link, numeric: true }
-      ]
-    ]
+      ] unless form.calls.zero?)
+    ].compact
+  %>
+  <% if rows.none? %>
+    <p><%= t('.no_data') %></p>
+  <% else %>
+    <%=
 
-    govuk_table(classes: 'govuk-!-margin-bottom-0') do |table|
-      table.with_head(rows: [head])
-      table.with_body(rows: rows, first_cell_is_header: true)
-    end
-   %>
+      govuk_table(classes: 'govuk-!-margin-bottom-0') do |table|
+        table.with_head(rows: [head])
+        table.with_body(rows: rows, first_cell_is_header: true)
+      end
+    %>
+  <% end %>
 </turbo-frame>
