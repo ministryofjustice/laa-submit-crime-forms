@@ -17,7 +17,11 @@ localhost:
     - 4C567D
 
 development:
-  inactive_office_codes: []
+  inactive_office_codes:
+    # Test office for A.CLARKE (see 1Password for login), has eforms role
+    - 0X416R
+    # Test office for 07RJONES (see 1Password for login), no eforms role
+    - 0Q316L
 
 uat:
   inactive_office_codes: []
