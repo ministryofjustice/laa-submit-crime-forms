@@ -17,26 +17,22 @@ RSpec.describe RiskAssessment::RiskAssessmentScorer do
     context 'returns medium risk' do
       let(:claim) do
         build(:claim,
-              prosecution_evidence: 50,
+              prosecution_evidence: 1,
               defence_statement: 1,
               number_of_witnesses: 1,
               work_items: [
                 build(:work_item, work_type: WorkTypes::PREPARATION,
-                  time_spent: '23',
+                  time_spent: '623',
                   completed_on: Time.zone.today,
                   fee_earner: fee_earner_initial),
                 build(:work_item, work_type: WorkTypes::ATTENDANCE_WITHOUT_COUNSEL,
-                  time_spent: '40',
+                  time_spent: '1240',
                   completed_on: Time.zone.yesterday,
                   fee_earner: fee_earner_initial),
                 build(:work_item, work_type: WorkTypes::ADVOCACY,
-                  time_spent: '26',
+                  time_spent: '2',
                   completed_on: Time.zone.yesterday,
-                  fee_earner: fee_earner_initial),
-                build(:work_item, work_type: WorkTypes::TRAVEL,
-                  time_spent: '156',
-                  completed_on: Time.zone.yesterday,
-                  fee_earner: fee_earner_initial),
+                  fee_earner: fee_earner_initial)
               ])
       end
 
