@@ -51,7 +51,8 @@ class SubmitToAppStore
 
     def disbursement_data
       claim.disbursements.map do |disbursement|
-        data = disbursement.as_json(except: [*DEFAULT_IGNORE, 'allowed_total_cost_without_vat', 'allowed_vat_amount', 'adjustment_comment'])
+        data = disbursement.as_json(except: [*DEFAULT_IGNORE, 'allowed_total_cost_without_vat', 'allowed_vat_amount',
+                                             'adjustment_comment'])
         data['disbursement_date'] = data['disbursement_date'].to_s
         data['pricing'] = pricing[disbursement.disbursement_type] || 1.0
         data['vat_rate'] = pricing[:vat]
