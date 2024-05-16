@@ -139,7 +139,8 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
                 adjustment_comment: 'Reduced calls and removed uplift'
               }
             ],
-            work_items: []
+            work_items: [],
+            disbursements: []
           },
           events: [
             {
@@ -187,7 +188,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
                 uplift: 0,
                 time_spent: 20,
                 uplift_original: 15,
-                adjustment_comment: 'Test comment 1',
+                adjustment_comment: 'Changed work item',
                 time_spent_original: 40
               },
               {
@@ -195,7 +196,8 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
                 uplift: 0,
                 time_spent: 120
               }
-            ]
+            ],
+            disbursements: []
           },
           events: [
             {
@@ -215,7 +217,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
 
       it 'syncs adjusted work item' do
         expect(uplifted_work_item.allowed_uplift).to eq 0
-        expect(uplifted_work_item.adjustment_comment).to eq 'Test comment 1'
+        expect(uplifted_work_item.adjustment_comment).to eq 'Changed work item'
         expect(uplifted_work_item.allowed_time_spent).to eq 20
       end
 
@@ -223,6 +225,64 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
         expect(work_item.allowed_time_spent).to be_nil
         expect(work_item.allowed_uplift).to be_nil
         expect(work_item.adjustment_comment).to be_nil
+      end
+    end
+
+    context 'when part granted with disbursements adjusted' do
+      let(:status) { 'part_grant' }
+      let(:disbursement_with_vat) { build(:disbursement, :valid) }
+      let(:disbursement_no_vat) { build(:disbursement, :no_vat) }
+      let(:claim) do
+        create(:claim, status: status, disbursements: [disbursement_with_vat, disbursement_no_vat])
+      end
+
+      let(:record) do
+        {
+          application: {
+            letters_and_calls: letters_and_calls,
+            work_items: [],
+            disbursements: [
+              {
+                id: disbursement_with_vat.id,
+                adjustment_comment: 'Removed disbursement',
+                vat_amount: 0,
+                vat_amount_original: 10,
+                total_cost_without_vat: 0,
+                total_cost_without_vat_original: 100
+              },
+              {
+                id: disbursement_no_vat.id,
+                vat_amount: 0,
+                total_cost_without_vat: 10
+              }
+            ]
+          },
+          events: [
+            {
+              event_type: 'decision',
+              created_at: 1.day.ago.to_s,
+              public: true,
+              details: { comment: 'Part granted' }
+            },
+          ],
+        }.deep_stringify_keys
+      end
+
+      before do
+        disbursement_with_vat.reload
+        disbursement_no_vat.reload
+      end
+
+      it 'syncs adjusted disbursement' do
+        expect(disbursement_with_vat.allowed_vat_amount).to eq 0
+        expect(disbursement_with_vat.adjustment_comment).to eq 'Removed disbursement'
+        expect(disbursement_with_vat.allowed_total_cost_without_vat).to eq 0
+      end
+
+      it 'does not sync non adjusted disbursement' do
+        expect(disbursement_no_vat.allowed_vat_amount).to be_nil
+        expect(disbursement_no_vat.adjustment_comment).to be_nil
+        expect(disbursement_no_vat.allowed_total_cost_without_vat).to be_nil
       end
     end
 
