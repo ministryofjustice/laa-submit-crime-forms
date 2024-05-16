@@ -24,7 +24,7 @@ class SubmitToAppStore
 
     def data
       data = claim.as_json(except: %w[navigation_stack firm_office_id solicitor_id submitter_id allowed_calls
-                                      allowed_calls_uplift allowed_letters allowed_letters_adjustment
+                                      allowed_calls_uplift allowed_letters allowed_letters_uplift
                                       calls_adjustment_comment letters_adjustment_comment])
       data.merge(
         'disbursements' => disbursement_data,
