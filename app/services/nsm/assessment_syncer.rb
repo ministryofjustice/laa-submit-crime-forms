@@ -14,7 +14,7 @@ module Nsm
     def call
       case claim.status
       when 'part_grant'
-        Claim.transaction
+        Claim.transaction do
           sync_letter_adjustments
           sync_call_adjustments
           sync_overall_comment
@@ -53,7 +53,7 @@ module Nsm
 
     def sync_work_items
       work_items.each do |work_item|
-        record = WorkItem.find(work_item['id'])
+        record = claim.work_items.find(work_item['id'])
         record.update(allowed_time_spent: work_item['time_spent']) if work_item['time_spent_original'].present?
         record.update(allowed_uplift: work_item['uplift']) if work_item['uplift_original'].present?
         record.update(adjustment_comment: work_item['adjustment_comment']) if work_item['adjustment_comment'].present?
@@ -62,7 +62,7 @@ module Nsm
 
     def sync_disbursements
       disbursements.each do |disbursement|
-        record = Disbursement.find(disbursement['id'])
+        record = claim.disbursements.find(disbursement['id'])
         if disbursement['total_cost_without_vat_original'].present?
           record.update(allowed_total_cost_without_vat: disbursement['total_cost_without_vat'])
         end
