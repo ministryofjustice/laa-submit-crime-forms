@@ -16,7 +16,8 @@ module Nsm
       end
 
       def work_items
-        @work_items = current_application.work_items.map do |work_item|
+        @pagy, items = pagy(current_application.work_items)
+        @work_items = items.map do |work_item|
           Nsm::Steps::WorkItemForm.build(work_item, application: current_application)
         end
       end
@@ -26,7 +27,8 @@ module Nsm
       end
 
       def disbursements
-        @disbursements = current_application.disbursements.by_age.map do |disbursement|
+        @pagy, items = pagy(current_application.disbursements.by_age)
+        @disbursements = items.map do |disbursement|
           Nsm::Steps::DisbursementCostForm.build(disbursement, application: current_application)
         end
       end
