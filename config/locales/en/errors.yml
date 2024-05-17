@@ -386,7 +386,7 @@ en:
             supplemental_claim:
               blank: Select yes or no for supplemental claim
             wasted_costs:
-              blank: Select yes or no for wasted costs
+              blank: Select yes if wasted costs have been applied to this case
             preparation_time:
               blank: Select yes or no for preparation time
             work_before:
