@@ -16,9 +16,6 @@
         { text: t('.gross_cost'), numeric: true },
         { text: t('.action'), numeric: true }
       ]
-      # TODO: find a way to cleanly extract the translator_test method out of this class
-      translator = Nsm::CostSummary::Disbursements.new([], @claim)
-      last_disbursement_date = @disbursements.last.record.disbursement_date
       @disbursements.group_by { _1.record.disbursement_date }.each do |disbursement_date, disbursements_for_date| %>
       <%=
         rows = disbursements_for_date.map do |disbursement|

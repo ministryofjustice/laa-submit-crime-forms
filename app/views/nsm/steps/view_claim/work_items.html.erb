@@ -39,7 +39,6 @@
       { text: t('.net_cost'), numeric: true },
       { text: t('.action'), numeric: true }
     ]
-    last_completed_on = @work_items.last.completed_on
     @work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
     <%=
       rows = work_items_for_date.map do |work_item|
