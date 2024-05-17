@@ -165,6 +165,11 @@ FactoryBot.define do
       end
     end
 
+    trait :letters_calls_uplift do
+      letters_uplift { 10 }
+      calls_uplift { 20 }
+    end
+
     trait :one_work_item do
       work_items { [build(:work_item, :valid)] }
     end
@@ -172,6 +177,14 @@ FactoryBot.define do
     trait :uplifted_work_item do
       with_enhanced_rates
       work_items { [build(:work_item, :with_uplift)] }
+    end
+
+    trait :two_uplifted_work_items do
+      with_enhanced_rates
+      after(:create) do |claim|
+        create(:work_item, :with_uplift, claim_id: claim.id)
+        create(:work_item, :with_uplift, claim_id: claim.id)
+      end
     end
 
     trait :medium_risk_work_item do
