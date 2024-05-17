@@ -30,6 +30,15 @@ module Nsm
 
       def persist!
         application.update(attributes)
+
+        remove_uplifts unless reasons_for_claim.include?(ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s)
+
+        true
+      end
+
+      def remove_uplifts
+        application.work_items.each { _1.update(uplift: nil) }
+        application.update(letters_uplift: nil, calls_uplift: nil)
       end
     end
   end
