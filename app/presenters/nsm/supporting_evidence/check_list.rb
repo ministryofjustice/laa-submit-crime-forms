@@ -27,7 +27,7 @@ module Nsm
         @items << li_for_translation('remittal') if remitted_to_magistrate?
         @items << li_for_translation('supplemental') if supplemental_claim?
         @items << li_for_translation('authority') if any_prior_authority?
-        # TODO: wasted_costs; CRM457-1464 and CRM457-1384
+        @items << li_for_translation('wasted_costs') if wasted_costs?
         @items
       end
 
@@ -66,6 +66,10 @@ module Nsm
 
       def any_prior_authority?
         claim.disbursements.any? { |disbursement| disbursement.prior_authority == 'yes' }
+      end
+
+      def wasted_costs?
+        claim.wasted_costs == 'yes'
       end
     end
   end

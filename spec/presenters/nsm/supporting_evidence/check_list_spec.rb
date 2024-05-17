@@ -73,5 +73,17 @@ RSpec.describe Nsm::SupportingEvidence::CheckList do
 
       it { is_expected.not_to include('prior authority') }
     end
+
+    context 'with wasted costs' do
+      before { claim.wasted_costs = 'yes' }
+
+      it { is_expected.to include('<li>wasted costs court order</li>') }
+    end
+
+    context 'without wasted costs' do
+      before { claim.wasted_costs = 'no' }
+
+      it { is_expected.not_to include('wasted costs') }
+    end
   end
 end
