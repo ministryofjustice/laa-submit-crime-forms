@@ -70,13 +70,11 @@ module Nsm
     end
 
     def letters
-      app_store_record['application']['letters_and_calls'].select { _1['type']['value'] == 'letters' }
-                                                          .first
+      app_store_record['application']['letters_and_calls'].detect { _1['type']['value'] == 'letters' }
     end
 
     def calls
-      app_store_record['application']['letters_and_calls'].select { _1['type']['value'] == 'calls' }
-                                                          .first
+      app_store_record['application']['letters_and_calls'].detect { _1['type']['value'] == 'calls' }
     end
 
     def work_items
