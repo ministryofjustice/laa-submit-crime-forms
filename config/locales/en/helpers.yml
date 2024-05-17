@@ -42,6 +42,7 @@ en:
         work_after_date: Date of last court hearing
         work_before: Did you do any work before the representation order date?
         work_after: Did you do any further work after the last court hearing?
+        wasted_costs: Have wasted costs been applied to this case?
       nsm_steps_other_info_form:
         concluded: Did the proceedings conclude over 3 months ago?
         is_other_info: Do you want to add any other information?
@@ -102,6 +103,11 @@ en:
         time_spent: For example, 1 hour and 30 minutes
         work_before_date: For example, 27 3 2023
         work_after_date: For example, 27 3 2023
+        wasted_costs: |
+          Wasted costs are applied when a judge has determined that the lawyer (solicitor or barrister)
+          or a third party has wasted the court‘s time.
+        wasted_costs_options:
+          'yes': We’ll ask you to upload the court order before you submit the claim
       nsm_steps_work_item_form:
         completed_on: For example, 27 3 2007
         fee_earner: For example, JMD
@@ -245,6 +251,9 @@ en:
           'yes': 'Yes'
           'no': 'No'
         work_after_options:
+          'yes': 'Yes'
+          'no': 'No'
+        wasted_costs_options:
           'yes': 'Yes'
           'no': 'No'
       nsm_steps_work_item_form:
