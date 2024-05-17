@@ -4,7 +4,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "laa-submit-crime-forms.fullname" . }}-worker
   labels:
-    {{- include "laa-submit-crime-forms.labels" . | nindent 4 }}
+    app: {{ include "laa-submit-crime-forms.fullname" . }}-worker
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
