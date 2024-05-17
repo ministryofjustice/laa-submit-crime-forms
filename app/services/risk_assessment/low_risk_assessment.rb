@@ -24,8 +24,9 @@ module RiskAssessment
       number_of_pages = (@claim.defence_statement || 0) * PAGE_MULTIPLIER
       number_of_witnesses = (@claim.number_of_witnesses || 0) * WITNESS_MULTIPLIER
       length_of_video = @claim.time_spent || 0
-
-      prosecution_evidence + number_of_pages + length_of_video - number_of_witnesses <= multiplied_total_advocacy_time
+      new_prep_time = prosecution_evidence + number_of_pages + length_of_video - number_of_witnesses
+      multiplied_advocacy_time = multiplied_total_advocacy_time
+      new_prep_time <= multiplied_advocacy_time && total_attendance_time <= multiplied_advocacy_time
     end
 
     def total_prep_time
