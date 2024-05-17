@@ -26,6 +26,7 @@ RSpec.describe 'User can fill in claim details', type: :system do
       fill_in 'Year', with: '2023'
     end
     find('.govuk-form-group', text: 'Did you do any further work after the last court hearing?').choose 'No'
+    find('.govuk-form-group', text: 'Have wasted costs been applied to this case?').choose 'Yes'
 
     click_on 'Save and continue'
     expect(claim.reload).to have_attributes(

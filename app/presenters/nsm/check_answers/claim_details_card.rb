@@ -43,7 +43,13 @@ module Nsm
           process_boolean_value(boolean_field: claim.work_after, value_field: claim.work_after_date,
                                 boolean_key: 'work_after', value_key: 'work_after_date') do
             claim.work_after_date.to_fs(:stamp)
-          end
+          end,
+          {
+            head_key: 'wasted_costs',
+            text: check_missing(claim.wasted_costs.present?) do
+              claim.wasted_costs.capitalize
+            end
+          },
         ].flatten
       end
       # rubocop:enable Metrics/AbcSize

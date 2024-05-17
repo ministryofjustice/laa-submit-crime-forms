@@ -7,18 +7,18 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
       <%= f.fields_for :firm_office, as: :firm_details_form do |fo| %>
+        <%= fo.govuk_radio_buttons_fieldset :vat_registered, legend: { text: t(".vat_registered"), size: 's', is_page_heading: false } do %>
+          <p><%= t("helpers.label.nsm_steps_firm_details_form.firm_office_attributes.vat_registered_info") %></p>
+          <p><%= t("helpers.label.nsm_steps_firm_details_form.firm_office_attributes.vat_registered_disbursements") %></p>
+          <%= fo.govuk_radio_button :vat_registered, YesNoAnswer::YES.to_s%>
+          <%= fo.govuk_radio_button :vat_registered, YesNoAnswer::NO.to_s %>
+        <% end%>
         <%= f.govuk_fieldset legend: { text: t(".firm_details"), size: 'm', is_page_heading: true } do %>
           <%= fo.govuk_text_field :name, width: 20, label: { size: 's' } %>
           <%= fo.govuk_text_field :address_line_1, width: 20, label: { size: 's' } %>
           <%= fo.govuk_text_field :address_line_2, width: 20, label: { size: 's' } %>
           <%= fo.govuk_text_field :town, width: 10, label: { size: 's' } %>
           <%= fo.govuk_text_field :postcode, width: 10, label: { size: 's' } %>
-          <%= fo.govuk_radio_buttons_fieldset :vat_registered, legend: { text: t(".vat_registered"), size: 's', is_page_heading: false } do %>
-            <p><%= t("helpers.label.nsm_steps_firm_details_form.firm_office_attributes.vat_registered_info") %></p>
-            <p><%= t("helpers.label.nsm_steps_firm_details_form.firm_office_attributes.vat_registered_disbursements") %></p>
-            <%= fo.govuk_radio_button :vat_registered, YesNoAnswer::YES.to_s%>
-            <%= fo.govuk_radio_button :vat_registered, YesNoAnswer::NO.to_s %>
-          <% end%>
         <% end %>
       <% end %>
 

@@ -129,6 +129,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'submitted_total_inc_vat' => nil,
           'submitter' => { 'description' => nil, 'email' => 'provider@example.com' },
           'supplemental_claim' => 'yes',
+          'wasted_costs' => 'yes',
           'time_spent' => 121,
           'ufn' => '120423/001',
           'unassigned_counsel' => 'no',

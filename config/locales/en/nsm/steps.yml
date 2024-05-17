@@ -12,9 +12,9 @@ en:
             line_3: To claim for a Crime Higher payment, please use CCCD via the CCCD portal.
       firm_details:
         edit:
-          page_title: Your details
-          heading: Your details
-          firm_details: Firm details
+          page_title: Firm details
+          heading: Firm details
+          firm_details: Correspondence address
           vat_registered: Is your firm VAT registered?
       office_code:
         edit:
@@ -219,6 +219,7 @@ en:
             remittal: evidence of remittal
             supplemental: evidence of supplemental claim
             authority: prior authority certification
+            wasted_costs: wasted costs court order
           para2:
             heading: "You might also want to upload:"
             file: file notes

@@ -142,6 +142,7 @@ FactoryBot.define do
       work_before_date { Date.new(2020, 12, 1) }
       work_after { 'yes' }
       work_after_date { Date.new(2020, 1, 1) }
+      wasted_costs { 'yes' }
     end
 
     trait :claim_details_no do
@@ -152,6 +153,7 @@ FactoryBot.define do
       work_before_date { nil }
       work_after { 'no' }
       work_after_date { nil }
+      wasted_costs { 'no' }
     end
 
     trait :letters_calls do
