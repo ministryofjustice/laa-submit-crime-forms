@@ -82,7 +82,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
 
   context 'when no supporting evidence required options chosen' do
     before do
-      claim.update!(assigned_counsel: 'no', remitted_to_magistrate: 'no', supplemental_claim: 'no')
+      claim.update!(assigned_counsel: 'no', remitted_to_magistrate: 'no', supplemental_claim: 'no', wasted_costs: 'no')
       claim.disbursements.map { |d| d.update!(prior_authority: 'no') }
 
       visit provider_saml_omniauth_callback_path

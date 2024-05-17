@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_14_135039) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_17_122619) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -131,6 +131,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_14_135039) do
     t.integer "allowed_calls_uplift"
     t.string "letters_adjustment_comment"
     t.string "calls_adjustment_comment"
+    t.string "wasted_costs"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"

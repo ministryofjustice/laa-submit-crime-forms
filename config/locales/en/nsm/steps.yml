@@ -219,6 +219,7 @@ en:
             remittal: evidence of remittal
             supplemental: evidence of supplemental claim
             authority: prior authority certification
+            wasted_costs: wasted costs court order
           para2:
             heading: "You might also want to upload:"
             file: file notes

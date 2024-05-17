@@ -12,7 +12,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
   end
 
   describe '#row_data' do
-    context 'all boolean field with yes values and additional fields' do
+    context 'when all boolean field have "Yes" values plus additional fields' do
       it 'generates case detail rows' do
         expect(subject.row_data).to eq(
           [
@@ -55,13 +55,17 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
             {
               head_key: 'work_after_date',
               text: '1 January 2020'
-            }
+            },
+            {
+              head_key: 'wasted_costs',
+              text: 'Yes'
+            },
           ]
         )
       end
     end
 
-    context 'all boolean field with no values' do
+    context 'when all boolean field have "No" values' do
       let(:claim) { build(:claim, :claim_details, :claim_details_no) }
 
       it 'generates case detail rows' do
@@ -94,7 +98,11 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
             {
               head_key: 'work_after',
               text: 'No'
-            }
+            },
+            {
+              head_key: 'wasted_costs',
+              text: 'No'
+            },
           ]
         )
       end
@@ -133,13 +141,17 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
             {
               head_key: 'work_after',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'wasted_costs',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             }
           ]
         )
       end
     end
 
-    context 'all boolean field with yes values, but missing addition data' do
+    context 'all boolean field with yes values, but missing additional data' do
       let(:claim) { build(:claim, :claim_details, time_spent: nil, work_before_date: nil, work_after_date: nil) }
 
       it 'generates case detail rows' do
@@ -184,6 +196,10 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
             {
               head_key: 'work_after_date',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'wasted_costs',
+              text: 'Yes'
             }
           ]
         )
