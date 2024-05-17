@@ -46,7 +46,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "laa-submit-crime-forms.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "laa-crime-application-store.name" . }}
+app.kubernetes.io/name: {{ include "laa-submit-crime-forms.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
