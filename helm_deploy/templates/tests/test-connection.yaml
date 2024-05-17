@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: "{{ include "laa-submit-crime-forms.fullname" . }}-test-connection"
   labels:
-    {{- include "laa-submit-crime-forms.labels" . | nindent 4 }}
+    app: {{ include "laa-submit-crime-forms.fullname" . }}
   annotations:
     "helm.sh/hook": test
 spec:

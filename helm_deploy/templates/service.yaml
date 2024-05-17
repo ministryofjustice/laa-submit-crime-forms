@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "laa-submit-crime-forms.fullname" . }}
   labels:
-    {{- include "laa-submit-crime-forms.labels" . | nindent 4 }}
+    app: {{ include "laa-submit-crime-forms.fullname" . }}
 spec:
   type: {{ .Values.service.type }}
   ports:

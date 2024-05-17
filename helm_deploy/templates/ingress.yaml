@@ -18,7 +18,7 @@ metadata:
   name: {{ $fullName }}
   namespace: {{ .Values.ingress.namespace}}
   labels:
-    {{- include "laa-submit-crime-forms.labels" . | nindent 4 }}
+    app: {{ include "laa-submit-crime-forms.fullname" . }}
   {{- with .Values.ingress.annotations }}
   annotations:
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
