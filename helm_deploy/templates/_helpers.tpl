@@ -35,9 +35,19 @@ Common labels
 */}}
 {{- define "laa-submit-crime-forms.labels" -}}
 helm.sh/chart: {{ include "laa-submit-crime-forms.chart" . }}
+{{ include "laa-submit-crime-forms.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "laa-submit-crime-forms.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "laa-crime-application-store.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*

@@ -12,4 +12,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: {{ include "laa-submit-crime-forms.fullname" . }}
+      {{- include "laa-crime-application-store.selectorLabels" . | nindent 6 }}
+
