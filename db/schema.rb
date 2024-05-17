@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_14_135039) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -125,6 +125,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
     t.float "adjusted_total"
     t.float "adjusted_total_inc_vat"
     t.string "assessment_comment"
+    t.integer "allowed_letters"
+    t.integer "allowed_calls"
+    t.integer "allowed_letters_uplift"
+    t.integer "allowed_calls_uplift"
+    t.string "letters_adjustment_comment"
+    t.string "calls_adjustment_comment"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
@@ -164,6 +170,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "vat_amount", precision: 10, scale: 2
+    t.decimal "allowed_total_cost_without_vat"
+    t.decimal "allowed_vat_amount"
+    t.string "adjustment_comment"
     t.index ["claim_id"], name: "index_disbursements_on_claim_id"
   end
 
@@ -320,6 +329,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
     t.integer "uplift"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "allowed_uplift"
+    t.integer "allowed_time_spent"
+    t.string "adjustment_comment"
     t.index ["claim_id"], name: "index_work_items_on_claim_id"
   end
 
