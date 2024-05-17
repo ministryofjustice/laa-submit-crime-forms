@@ -73,6 +73,7 @@ en:
               work_before_date: Date of work before order was granted
               work_after: Work after last hearing
               work_after_date: Date of work after order was granted
+              wasted_costs: Wasted costs
             letters_calls:
               items: Items
               items_total: <strong>Total per item</strong>
