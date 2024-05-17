@@ -14,11 +14,13 @@ module Nsm
     def call
       case claim.status
       when 'part_grant'
-        sync_letter_adjustments
-        sync_call_adjustments
-        sync_overall_comment
-        sync_work_items
-        sync_disbursements
+        Claim.transaction
+          sync_letter_adjustments
+          sync_call_adjustments
+          sync_overall_comment
+          sync_work_items
+          sync_disbursements
+        end
       when 'provider_requested', 'further_info', 'rejected'
         sync_overall_comment
       end
