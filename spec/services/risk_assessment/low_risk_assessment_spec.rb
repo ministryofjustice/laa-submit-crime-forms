@@ -38,4 +38,32 @@ RSpec.describe RiskAssessment::LowRiskAssessment do
       end
     end
   end
+
+  describe '#new_prep_advocacy?' do
+    let(:claim) do
+      build(:claim,
+            prosecution_evidence: 5,
+            defence_statement: 7,
+            number_of_witnesses: 3,
+            time_spent: 24,)
+    end
+
+    let(:low_risk_assessment) { described_class.new(claim) }
+
+    it 'returns true if new preparation time and total attendance time are less than or equal to double the advocacy time' do
+      allow(low_risk_assessment).to receive(:multiplied_total_advocacy_time).and_return(200)
+      expect(low_risk_assessment.new_prep_advocacy?).to be(true)
+    end
+
+    it 'returns false if new preparation time is greater than double the advocacy time' do
+      allow(low_risk_assessment).to receive(:multiplied_total_advocacy_time).and_return(20)
+      allow(claim).to receive(:prosecution_evidence).and_return(100)
+      expect(low_risk_assessment.new_prep_advocacy?).to be(false)
+    end
+
+    it 'returns false if total attendance time is greater than double the advocacy time' do
+      allow(low_risk_assessment).to receive_messages(multiplied_total_advocacy_time: 20, total_attendance_time: 100)
+      expect(low_risk_assessment.new_prep_advocacy?).to be(false)
+    end
+  end
 end

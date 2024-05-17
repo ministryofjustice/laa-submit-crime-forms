@@ -17,9 +17,7 @@ localhost:
     - 4C567D
 
 development:
-  inactive_office_codes:
-    # Test user office from portal A.CLARK - with eForms role - (see 1Password for login details)
-    - 0X416R
+  inactive_office_codes: []
 
 uat:
   inactive_office_codes: []
