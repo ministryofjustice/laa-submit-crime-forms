@@ -288,9 +288,9 @@ en:
       nsm_steps_disbursement_type_form:
         disbursement_type_options:
           missing: '*required'
-          car: Car
-          motorcycle: Motorcycle
-          bike: Bike
+          car: Car mileage
+          motorcycle: Motorcycle mileage
+          bike: Bike mileage
           other: Other disbursement type
       nsm_steps_disbursement_cost_form:
         miles: Number of miles
