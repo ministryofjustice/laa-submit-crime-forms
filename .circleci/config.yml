@@ -423,6 +423,11 @@ workflows:
           context: laa-submit-crime-forms-dev
           requires:
             - build-to-ecr
+      - deploy-prod:
+          context: laa-submit-crime-forms-production
+          requires:
+            - deploy-dev
+
 
   test-build-deploy-merged-pr:
     jobs:
