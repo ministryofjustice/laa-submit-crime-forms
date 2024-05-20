@@ -68,7 +68,7 @@ class SubmitToAppStore
       claim.work_items.map do |work_item|
         data = work_item.as_json(except: [*DEFAULT_IGNORE, 'allowed_uplift', 'allowed_time_spent', 'adjustment_comment'])
         data['completed_on'] = data['completed_on'].to_s
-        data['pricing'] = pricing[work_item.work_type]
+        data['pricing'] = pricing[work_item.work_type].to_f
         data
       end
     end
