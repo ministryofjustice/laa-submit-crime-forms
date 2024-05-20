@@ -41,7 +41,7 @@ RSpec.describe Disbursement do
     context 'when standard type' do
       let(:attributes) { { disbursement_type: 'car' } }
 
-      it { expect(subject.translated_disbursement_type).to eq('Car') }
+      it { expect(subject.translated_disbursement_type).to eq('Car mileage') }
     end
 
     context 'when other type' do
