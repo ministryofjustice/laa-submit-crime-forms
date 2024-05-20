@@ -32,7 +32,7 @@ deploy_main() {
                           --namespace=${K8S_NAMESPACE} \
                           --values ./helm_deploy/values-$ENVIRONMENT.yaml \
                           --set image.repository="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}" \
-                          --set image.tag="branch-$CIRCLE_SHA1" \
+                          --set image.tag="branch-$CIRCLE_SHA1"
 }
 
 deploy_main
