@@ -35,7 +35,7 @@ class SubmitToAppStore
         'submitter' => claim.submitter.attributes.slice('email', 'description'),
         'supporting_evidences' => supporting_evidence,
         'cost_totals' => costs_data,
-        'vat_rate' => pricing[:vat],
+        'vat_rate' => pricing[:vat].to_f,
       )
     end
 
@@ -51,24 +51,26 @@ class SubmitToAppStore
       )
     end
 
+    # rubocop:disable Metrics/AbcSize
     def disbursement_data
       claim.disbursements.map do |disbursement|
         data = disbursement.as_json(except: [*DEFAULT_IGNORE, 'allowed_total_cost_without_vat', 'allowed_vat_amount',
                                              'adjustment_comment'])
         data['disbursement_date'] = data['disbursement_date'].to_s
-        data['pricing'] = pricing[disbursement.disbursement_type] || 1.0
-        data['vat_rate'] = pricing[:vat]
+        data['pricing'] = pricing[disbursement.disbursement_type].to_f || 1.0
+        data['vat_rate'] = pricing[:vat].to_f
         data['vat_amount'] = data['vat_amount'].to_f
         data['total_cost_without_vat'] = data['total_cost_without_vat'].to_f
         data
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def work_item_data
       claim.work_items.map do |work_item|
         data = work_item.as_json(except: [*DEFAULT_IGNORE, 'allowed_uplift', 'allowed_time_spent', 'adjustment_comment'])
         data['completed_on'] = data['completed_on'].to_s
-        data['pricing'] = pricing[work_item.work_type]
+        data['pricing'] = pricing[work_item.work_type].to_f
         data
       end
     end
