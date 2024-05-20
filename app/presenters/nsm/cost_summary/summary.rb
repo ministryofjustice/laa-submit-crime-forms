@@ -70,10 +70,7 @@ module Nsm
       private
 
       def work_items_total(work_type)
-        total = @claim.work_items.where(work_type:).sum do |work_item|
-          Nsm::Steps::WorkItemForm.build(work_item, application: @claim).total_cost
-        end
-        total || 0
+        @claim.work_items.where(work_type:).sum(&:total_cost) || 0
       end
 
       def letters_and_calls_form

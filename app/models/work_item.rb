@@ -1,6 +1,8 @@
 class WorkItem < ApplicationRecord
   belongs_to :claim
 
+  include WorkItemCosts
+
   validates :id, exclusion: { in: [Nsm::StartPage::NEW_RECORD] }
 
   def as_json(*)

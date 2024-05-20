@@ -16,10 +16,7 @@ module Nsm
       end
 
       def work_items
-        @pagy, items = pagy(current_application.work_items)
-        @work_items = items.map do |work_item|
-          Nsm::Steps::WorkItemForm.build(work_item, application: current_application)
-        end
+        @pagy, @work_items = pagy(current_application.work_items)
       end
 
       def letters_and_calls

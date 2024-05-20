@@ -2,12 +2,11 @@ module Nsm
   module CostSummary
     class WorkItems < Base
       TRANSLATION_KEY = self
-      attr_reader :work_item_forms, :claim
+      attr_reader :work_items, :claim
 
       def initialize(work_items, claim)
         @claim = claim
-        @work_item_forms = work_items
-                           .map { |work_item| Nsm::Steps::WorkItemForm.build(work_item, application: claim) }
+        @work_items = work_items
       end
 
       def rows
@@ -23,19 +22,19 @@ module Nsm
       end
 
       def total_cost_for(work_type)
-        forms[work_type]&.sum(&:total_cost)
+        forms[work_type.to_s]&.sum(&:total_cost)
       end
 
       def time_spent_for(work_type)
-        forms[work_type]&.sum(&:time_spent) || 0
+        forms[work_type.to_s]&.sum(&:time_spent) || 0
       end
 
       def forms
-        @forms ||= work_item_forms.group_by(&:work_type)
+        @forms ||= work_items.group_by(&:work_type)
       end
 
       def total_cost
-        @total_cost ||= work_item_forms.sum(&:total_cost)
+        @total_cost ||= work_items.sum(&:total_cost)
       end
 
       def total_cost_inc_vat
