@@ -37,7 +37,10 @@ module Nsm
       def total_cost
         return unless !time_spent.nil? && time_spent.is_a?(IntegerTimePeriod) && pricing[work_type]
 
-        apply_uplift!(time_spent.to_f / 60) * pricing[work_type]
+        # We need to use a Rational because some numbers divided by 60 cannot be accurately represented as a decimal,
+        # and when summing up multiple work items with sub-penny precision, those small inaccuracies can lead to
+        # a larger inaccuracy when the total is eventually rounded to 2 decimal places.
+        Rational(apply_uplift!(time_spent.to_d) * pricing[work_type], 60)
       end
 
       def work_types_with_pricing
@@ -79,7 +82,7 @@ module Nsm
       private
 
       def apply_uplift!(val)
-        (1.0 + (apply_uplift ? (uplift.to_f / 100) : 0)) * val
+        (BigDecimal('1') + (apply_uplift ? (uplift.to_d / 100) : 0)) * val
       end
 
       def persist!
@@ -98,7 +101,7 @@ module Nsm
       def total_without_uplift
         return unless !time_spent.nil? && time_spent.is_a?(IntegerTimePeriod) && pricing[work_type]
 
-        time_spent.to_f / 60 * pricing[work_type]
+        time_spent.to_d / 60 * pricing[work_type]
       end
     end
   end

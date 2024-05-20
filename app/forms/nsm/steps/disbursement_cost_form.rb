@@ -42,21 +42,21 @@ if: :other_disbursement_type?
 
       # we return 1 here when no pricing data exists to simplify the FE
       def multiplier
-        pricing[record.disbursement_type] || 1.0
+        pricing[record.disbursement_type] || BigDecimal('1')
       end
 
       def total_cost_pre_vat
         @total_cost_pre_vat ||= if other_disbursement_type?
                                   total_cost_without_vat
                                 elsif miles
-                                  miles.to_f * multiplier
+                                  miles.to_d * multiplier
                                 end
       end
 
       def vat
         return nil unless total_cost_pre_vat
 
-        apply_vat ? (total_cost_pre_vat * vat_rate).round(2) : 0.0
+        apply_vat ? (total_cost_pre_vat * vat_rate).round(2) : BigDecimal('0')
       end
 
       def total_cost
