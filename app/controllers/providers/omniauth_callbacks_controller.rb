@@ -28,6 +28,7 @@ module Providers
 
     def check_provider_is_enrolled
       gatekeeper = Providers::Gatekeeper.new(auth_hash.info)
+      Rails.logger.info auth_hash
       return if gatekeeper.provider_enrolled?
 
       Rails.logger.warn "Not enrolled provider access attempt, UID: #{auth_hash.uid}, " \
