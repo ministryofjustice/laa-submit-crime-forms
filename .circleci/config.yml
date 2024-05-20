@@ -419,10 +419,6 @@ workflows:
             branches:
               ignore:
                 - main
-      - deploy-dev:
-          context: laa-submit-crime-forms-dev
-          requires:
-            - build-to-ecr
       - deploy-prod:
           context: laa-submit-crime-forms-production
           requires:
