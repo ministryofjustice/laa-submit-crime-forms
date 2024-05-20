@@ -422,7 +422,7 @@ workflows:
       - deploy-prod:
           context: laa-submit-crime-forms-production
           requires:
-            - deploy-dev
+            - e2e-test-branch
 
 
   test-build-deploy-merged-pr:
