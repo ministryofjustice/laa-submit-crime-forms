@@ -11,22 +11,22 @@ module LaaMultiStepForms
     end
 
     class << self
-      # TODO: we still need to confirm which courts to list.
-      #
-      # In the meantime use the CourtCentre csv from hmcts_common_platform gem
-      # and filters by oucode_l1_code to produce a list of magistrates' and crown courts.
-      #
       def all
         @all ||= begin
-          oucode_l1_code = %w[B C]
-
-          rows = ::HmctsCommonPlatform::Reference::CourtCentre.csv.select do |cc|
-            oucode_l1_code.include? cc['oucode_l1_code']
-          end
-
-          rows.map { |r| new(name: r['oucode_l3_name']) }
+          rows = csv_data
+          binding.pry
+          rows.map { |r| new(name: r['combined_court_name']) }
               .sort_by(&:name)
         end
+      end
+
+      def csv_file_path
+        file = File.join(File.dirname(__dir__), '../../config/courts.csv', filename)
+        File.read(file)
+      end
+
+      def csv_data
+        @csv_data ||= CSV.parse(csv_file_path, col_sep: ",", row_sep: :auto, headers: true, skip_blanks: true)
       end
     end
   end
