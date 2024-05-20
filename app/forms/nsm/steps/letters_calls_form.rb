@@ -41,7 +41,7 @@ module Nsm
 
       def letters_after_uplift
         if apply_letters_uplift && letters_before_uplift
-          letters_before_uplift * (1 + (letters_uplift.to_f / 100))
+          letters_before_uplift * (1 + (letters_uplift.to_d / 100))
         elsif letters_before_uplift&.positive?
           letters_before_uplift
         end
@@ -49,7 +49,7 @@ module Nsm
 
       def calls_after_uplift
         if apply_calls_uplift && calls_before_uplift
-          calls_before_uplift * (1 + (calls_uplift.to_f / 100))
+          calls_before_uplift * (1 + (calls_uplift.to_d / 100))
         elsif calls_before_uplift&.positive?
           calls_before_uplift
         end
@@ -58,7 +58,7 @@ module Nsm
       def total_cost
         return unless letters_after_uplift&.positive? || calls_after_uplift&.positive?
 
-        letters_after_uplift.to_f + calls_after_uplift.to_f
+        letters_after_uplift.to_d + calls_after_uplift.to_d
       end
 
       def total_cost_inc_vat
@@ -130,11 +130,11 @@ module Nsm
       end
 
       def letters_before_uplift
-        letters.to_f * pricing.letters if letters && !letters.zero?
+        letters.to_d * pricing.letters if letters && !letters.zero?
       end
 
       def calls_before_uplift
-        calls.to_f * pricing.letters if calls && !calls.zero?
+        calls.to_d * pricing.letters if calls && !calls.zero?
       end
     end
   end
