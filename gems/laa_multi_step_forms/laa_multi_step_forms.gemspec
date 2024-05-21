@@ -20,7 +20,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'govuk-components', '>= 5.0.0'
   spec.add_dependency 'govuk_design_system_formbuilder', '>= 4.0', '< 5.4'
-  spec.add_dependency 'hmcts_common_platform'
 
   # Authentication
   spec.add_dependency 'devise', '~> 4.8'

@@ -12,12 +12,7 @@ need to be added:
 
 ```
 gem 'laa_multi_step_forms', path: 'gems/laa_multi_step_forms'
-gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
 ```
-
-NOTE: hmcts_common_platform provides a list fo Court's and is generic enough it has
-been added to the  shared GEM - it may make sense to extract this from the shared
-GEM in the future.
 
 ### 2. Add the node modules
 
