@@ -3,11 +3,10 @@
 module Nsm
   module CheckAnswers
     class LettersCallsCard < Base
-      attr_reader :letters_calls_form
+      attr_reader :claim
 
       def initialize(claim)
         @claim = claim
-        @letters_calls_form = Nsm::Steps::LettersCallsForm.build(claim)
         @group = 'costs'
         @section = 'letters_calls'
       end
@@ -27,7 +26,7 @@ module Nsm
           [
             {
               head_key: 'letters_payment',
-              text: currency_value(letters_calls_form.letters_after_uplift)
+              text: currency_value(claim.letters_after_uplift)
             },
             {
               head_key: 'calls',
@@ -38,7 +37,7 @@ module Nsm
           [
             {
               head_key: 'calls_payment',
-              text: currency_value(letters_calls_form.calls_after_uplift)
+              text: currency_value(claim.calls_after_uplift)
             },
             {
               head_key: 'total',
@@ -51,29 +50,29 @@ module Nsm
       private
 
       def letters_uplift_fields
-        return [] unless letters_calls_form.allow_uplift?
+        return [] unless claim.allow_uplift?
 
         [
           {
             head_key: 'letters_uplift',
-            text: percent_value(letters_calls_form.letters_uplift)
+            text: percent_value(claim.letters_uplift)
           },
         ]
       end
 
       def calls_uplift_fields
-        return [] unless letters_calls_form.allow_uplift?
+        return [] unless claim.allow_uplift?
 
         [
           {
             head_key: 'calls_uplift',
-            text: percent_value(letters_calls_form.calls_uplift)
+            text: percent_value(claim.calls_uplift)
           },
         ]
       end
 
       def total_inc_vat_fields
-        return [] unless @claim.firm_office.vat_registered == YesNoAnswer::YES.to_s
+        return [] unless claim.firm_office.vat_registered == YesNoAnswer::YES.to_s
 
         [
           {
@@ -89,19 +88,19 @@ module Nsm
       end
 
       def total_cost
-        format_total(letters_calls_form.total_cost)
+        format_total(claim.letters_and_calls_total_cost)
       end
 
       def total_cost_inc_vat
-        format_total(letters_calls_form.total_cost_inc_vat)
+        format_total(claim.letters_and_calls_total_cost_inc_vat)
       end
 
       def letters
-        letters_calls_form.letters || 0
+        claim.letters || 0
       end
 
       def calls
-        letters_calls_form.calls || 0
+        claim.calls || 0
       end
     end
   end

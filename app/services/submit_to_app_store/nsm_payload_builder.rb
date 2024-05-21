@@ -34,15 +34,8 @@ class SubmitToAppStore
         'solicitor' => claim.solicitor.attributes.except('id', *DEFAULT_IGNORE),
         'submitter' => claim.submitter.attributes.slice('email', 'description'),
         'supporting_evidences' => supporting_evidence,
-        'cost_totals' => costs_data,
         'vat_rate' => pricing[:vat].to_f,
       )
-    end
-
-    def costs_data
-      claim.cost_totals.map do |cost|
-        cost.as_json(except: DEFAULT_IGNORE)
-      end
     end
 
     def firm_office_data

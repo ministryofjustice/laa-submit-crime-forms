@@ -8,48 +8,15 @@ RSpec.describe Nsm::CostSummary::Disbursements do
   let(:in_area) { 'yes' }
   let(:disbursements) do
     [
-      instance_double(Disbursement, translated_disbursement_type: 'Car', other_type: nil),
-      instance_double(Disbursement, translated_disbursement_type: 'DNA Testing'),
-      instance_double(Disbursement, translated_disbursement_type: 'Custom'),
-      instance_double(Disbursement, translated_disbursement_type: 'Car', other_type: nil)
-    ]
-  end
-  let(:form_car) do
-    instance_double(Nsm::Steps::DisbursementCostForm, record: disbursements[0], total_cost: 100.0,
-total_cost_pre_vat: 90.0)
-  end
-  let(:form_dna) do
-    instance_double(Nsm::Steps::DisbursementCostForm, record: disbursements[1], total_cost: 70.0,
-total_cost_pre_vat: 60.0)
-  end
-  let(:form_custom) do
-    instance_double(Nsm::Steps::DisbursementCostForm, record: disbursements[2], total_cost: 40.0,
-total_cost_pre_vat: 30.0)
-  end
-  let(:form_car2) do
-    instance_double(Nsm::Steps::DisbursementCostForm, record: disbursements[3], total_cost: 90.0,
+      instance_double(Disbursement, translated_disbursement_type: 'Car', other_type: nil, total_cost: 100.0,
+total_cost_pre_vat: 90.0),
+      instance_double(Disbursement, translated_disbursement_type: 'DNA Testing', total_cost: 70.0,
+total_cost_pre_vat: 60.0),
+      instance_double(Disbursement, translated_disbursement_type: 'Custom', total_cost: 40.0,
+total_cost_pre_vat: 30.0),
+      instance_double(Disbursement, translated_disbursement_type: 'Car', other_type: nil, total_cost: 90.0,
 total_cost_pre_vat: 80.0)
-  end
-
-  before do
-    allow(Nsm::Steps::DisbursementCostForm).to receive(:build).with(disbursements[0],
-                                                                    application: claim).and_return(form_car)
-    allow(Nsm::Steps::DisbursementCostForm).to receive(:build).with(disbursements[1],
-                                                                    application: claim).and_return(form_dna)
-    allow(Nsm::Steps::DisbursementCostForm).to receive(:build).with(disbursements[2],
-                                                                    application: claim).and_return(form_custom)
-    allow(Nsm::Steps::DisbursementCostForm).to receive(:build).with(disbursements[3],
-                                                                    application: claim).and_return(form_car2)
-  end
-
-  describe '#initialize' do
-    it 'creates the data instance' do
-      subject
-      expect(Nsm::Steps::DisbursementCostForm).to have_received(:build).with(disbursements[0], application: claim)
-      expect(Nsm::Steps::DisbursementCostForm).to have_received(:build).with(disbursements[1], application: claim)
-      expect(Nsm::Steps::DisbursementCostForm).to have_received(:build).with(disbursements[2], application: claim)
-      expect(Nsm::Steps::DisbursementCostForm).to have_received(:build).with(disbursements[3], application: claim)
-    end
+    ]
   end
 
   describe '#rows' do
