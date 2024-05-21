@@ -4,7 +4,8 @@ RSpec.describe Nsm::CostSummary::LettersCalls do
   subject { described_class.new(claim) }
 
   let(:claim) do
-    instance_double(Claim, firm_office:, letters_after_uplift:, calls_after_uplift:, letters_and_calls_total_cost:, letters_and_calls_total_cost_inc_vat:)
+    instance_double(Claim, firm_office:, letters_after_uplift:, calls_after_uplift:, letters_and_calls_total_cost:,
+letters_and_calls_total_cost_inc_vat:)
   end
   let(:firm_office) { build(:firm_office, :valid) }
   let(:letters_after_uplift) { 25.0 }
