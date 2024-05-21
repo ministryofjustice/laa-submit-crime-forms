@@ -1,6 +1,7 @@
 module Nsm
   module Steps
     class WorkItemForm < ::Steps::BaseFormObject
+      include WorkItemCosts
       attr_writer :apply_uplift
 
       attribute :work_type, :value_object, source: WorkTypes
@@ -20,25 +21,6 @@ module Nsm
       validates :uplift, presence: true,
               numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
               if: :apply_uplift
-
-      def allow_uplift?
-        application.reasons_for_claim.include?(ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s)
-      end
-
-      def apply_uplift
-        allow_uplift? &&
-          (@apply_uplift.nil? ? uplift.to_f.positive? : @apply_uplift == 'true')
-      end
-
-      def pricing
-        @pricing ||= Pricing.for(application)
-      end
-
-      def total_cost
-        return unless !time_spent.nil? && time_spent.is_a?(IntegerTimePeriod) && pricing[work_type]
-
-        apply_uplift!(time_spent.to_f / 60) * pricing[work_type]
-      end
 
       def work_types_with_pricing
         WorkTypes.values.filter_map do |work_type|
@@ -78,10 +60,6 @@ module Nsm
 
       private
 
-      def apply_uplift!(val)
-        (1.0 + (apply_uplift ? (uplift.to_f / 100) : 0)) * val
-      end
-
       def persist!
         record.id = nil if record.id == StartPage::NEW_RECORD
         record.update!(attributes_with_resets)
@@ -93,12 +71,6 @@ module Nsm
 
       def translate(key)
         I18n.t("nsm.steps.work_item.edit.#{key}")
-      end
-
-      def total_without_uplift
-        return unless !time_spent.nil? && time_spent.is_a?(IntegerTimePeriod) && pricing[work_type]
-
-        time_spent.to_f / 60 * pricing[work_type]
       end
     end
   end

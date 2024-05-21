@@ -1,7 +1,4 @@
 <% title t('.page_title') %>
-<%
-  form = Nsm::Steps::LettersCallsForm.build(@claim)
-%>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -9,10 +6,10 @@
 
     <%=
       rows = [
-        [{ text: t(".rate"), width: 'govuk-!-width-one-half' }, NumberTo.pounds(form.pricing.letters)],
-        [t(".number"), form.letters.to_s],
-        [t(".uplift"), NumberTo.percentage(form.letters_uplift.to_f, multiplier: 1)],
-        [t(".net_cost"), NumberTo.pounds(form.letters_after_uplift)]
+        [{ text: t(".rate"), width: 'govuk-!-width-one-half' }, NumberTo.pounds(@claim.pricing.letters)],
+        [t(".number"), @claim.letters.to_s],
+        [t(".uplift"), NumberTo.percentage(@claim.letters_uplift.to_f, multiplier: 1)],
+        [t(".net_cost"), NumberTo.pounds(@claim.letters_after_uplift)]
       ]
 
       govuk_table do |table|

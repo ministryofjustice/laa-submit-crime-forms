@@ -11,13 +11,6 @@ RSpec.describe Nsm::CheckAnswers::LettersCallsCard do
   let(:calls_uplift) { 15 }
   let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
 
-  describe '#initialize' do
-    it 'creates the data instance' do
-      expect(Nsm::Steps::LettersCallsForm).to receive(:build).with(claim)
-      subject
-    end
-  end
-
   describe '#title' do
     it 'shows correct title' do
       expect(subject.title).to eq('Letters and phone calls')

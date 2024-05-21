@@ -1,6 +1,7 @@
 module Nsm
   module Steps
     class LettersCallsForm < ::Steps::BaseFormObject
+      include LettersAndCallsCosts
       attr_writer :apply_calls_uplift, :apply_letters_uplift
 
       attribute :letters, :integer
@@ -17,52 +18,8 @@ module Nsm
         numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
         if: :apply_calls_uplift
 
-      def allow_uplift?
-        application.reasons_for_claim.include?(ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s)
-      end
-
-      def apply_calls_uplift
-        allow_uplift? &&
-          (@apply_calls_uplift.nil? ? calls_uplift.present? : @apply_calls_uplift == 'true')
-      end
-
-      def apply_letters_uplift
-        allow_uplift? &&
-          (@apply_letters_uplift.nil? ? letters_uplift.present? : @apply_letters_uplift == 'true')
-      end
-
-      def pricing
-        @pricing ||= Pricing.for(application)
-      end
-
       def calculation_rows
         [header_row, letters_row, calls_row]
-      end
-
-      def letters_after_uplift
-        if apply_letters_uplift && letters_before_uplift
-          letters_before_uplift * (1 + (letters_uplift.to_f / 100))
-        elsif letters_before_uplift&.positive?
-          letters_before_uplift
-        end
-      end
-
-      def calls_after_uplift
-        if apply_calls_uplift && calls_before_uplift
-          calls_before_uplift * (1 + (calls_uplift.to_f / 100))
-        elsif calls_before_uplift&.positive?
-          calls_before_uplift
-        end
-      end
-
-      def total_cost
-        return unless letters_after_uplift&.positive? || calls_after_uplift&.positive?
-
-        letters_after_uplift.to_f + calls_after_uplift.to_f
-      end
-
-      def total_cost_inc_vat
-        (total_cost * pricing.vat) + total_cost
       end
 
       private
@@ -127,14 +84,6 @@ module Nsm
           'letters_uplift' => apply_letters_uplift ? letters_uplift : nil,
           'calls_uplift' => apply_calls_uplift ? calls_uplift : nil,
         )
-      end
-
-      def letters_before_uplift
-        letters.to_f * pricing.letters if letters && !letters.zero?
-      end
-
-      def calls_before_uplift
-        calls.to_f * pricing.letters if calls && !calls.zero?
       end
     end
   end

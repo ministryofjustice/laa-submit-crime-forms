@@ -29,9 +29,6 @@ gem 'sidekiq-cron', '~> 1.12.0'
 gem 'turbo-rails', '~> 2.0.5'
 gem 'tzinfo-data'
 
-# required as can't specify github in gemspe for laa_multi_step_form
-gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
-
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'

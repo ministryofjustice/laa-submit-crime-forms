@@ -1,8 +1,9 @@
 class Claim < ApplicationRecord
+  include LettersAndCallsCosts
+
   belongs_to :submitter, class_name: 'Provider'
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
-  has_many :cost_totals, -> { order(:id) }, dependent: :destroy, inverse_of: :claim
   has_many :defendants, -> { order(:position) }, dependent: :destroy, as: :defendable, inverse_of: :defendable
   has_one :main_defendant, lambda {
                              where(main: true)
@@ -62,9 +63,9 @@ class Claim < ApplicationRecord
     pricing = Pricing.for(self)
     [
       { 'type' => translations('letters', 'helpers.label.nsm_steps_letters_calls_form.type_options'),
-        'count' => letters, 'pricing' => pricing.letters, 'uplift' => letters_uplift },
+        'count' => letters, 'pricing' => pricing.letters.to_f, 'uplift' => letters_uplift },
       { 'type' => translations('calls', 'helpers.label.nsm_steps_letters_calls_form.type_options'),
-        'count' => calls, 'pricing' => pricing.calls, 'uplift' => calls_uplift },
+        'count' => calls, 'pricing' => pricing.calls.to_f, 'uplift' => calls_uplift },
     ]
   end
 
