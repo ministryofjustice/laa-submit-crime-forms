@@ -44,15 +44,15 @@ module Nsm
       end
 
       def disbursements_net
-        @disbursements_net ||= disbursement_forms.sum(&:total_cost_pre_vat) || 0
+        @disbursements_net ||= disbursements.sum(&:total_cost_pre_vat) || 0
       end
 
       def disbursements_vat
-        @disbursements_vat ||= disbursement_forms.sum(&:vat) || 0
+        @disbursements_vat ||= disbursements.sum(&:vat) || 0
       end
 
       def disbursements_gross
-        @disbursements_gross ||= disbursement_forms.sum(&:total_cost) || 0
+        @disbursements_gross ||= disbursements.sum(&:total_cost) || 0
       end
 
       def total_net
@@ -77,10 +77,8 @@ module Nsm
         @letters_and_calls_form ||= Nsm::Steps::LettersCallsForm.build(@claim)
       end
 
-      def disbursement_forms
-        @disbursement_forms ||= @claim.disbursements.map do |disbursement|
-          Nsm::Steps::DisbursementCostForm.build(disbursement, application: @claim)
-        end
+      def disbursements
+        @disbursements ||= @claim.disbursements
       end
     end
   end

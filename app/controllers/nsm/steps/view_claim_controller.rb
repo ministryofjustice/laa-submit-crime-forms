@@ -24,10 +24,7 @@ module Nsm
       end
 
       def disbursements
-        @pagy, items = pagy(current_application.disbursements.by_age)
-        @disbursements = items.map do |disbursement|
-          Nsm::Steps::DisbursementCostForm.build(disbursement, application: current_application)
-        end
+        @pagy, @disbursements = pagy(current_application.disbursements.by_age)
       end
     end
   end
