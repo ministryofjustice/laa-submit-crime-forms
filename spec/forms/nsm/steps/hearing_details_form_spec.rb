@@ -66,7 +66,7 @@ RSpec.describe Nsm::Steps::HearingDetailsForm do
 
       let(:court_suggestion) { 'apples' }
 
-      it { expect(subject.court).to eq('apples') }
+      it { expect(subject.court).to eq('apples - n/a') }
     end
   end
 end
