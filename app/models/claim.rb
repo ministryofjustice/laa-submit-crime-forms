@@ -1,4 +1,6 @@
 class Claim < ApplicationRecord
+  include LettersAndCallsCosts
+
   belongs_to :submitter, class_name: 'Provider'
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true

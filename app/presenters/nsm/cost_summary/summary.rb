@@ -8,7 +8,7 @@ module Nsm
       end
 
       def profit_costs_net
-        @profit_costs_net ||= work_items_total(PROFIT_COSTS_WORK_TYPES) + (letters_and_calls_form.total_cost || 0)
+        @profit_costs_net ||= work_items_total(PROFIT_COSTS_WORK_TYPES) + (@claim.letters_and_calls_total_cost || 0)
       end
 
       def profit_costs_vat
@@ -71,10 +71,6 @@ module Nsm
 
       def work_items_total(work_type)
         @claim.work_items.where(work_type:).sum(&:total_cost) || 0
-      end
-
-      def letters_and_calls_form
-        @letters_and_calls_form ||= Nsm::Steps::LettersCallsForm.build(@claim)
       end
 
       def disbursements

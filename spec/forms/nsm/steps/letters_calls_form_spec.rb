@@ -383,7 +383,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
     end
   end
 
-  describe '#total_cost' do
+  describe '#letters_and_calls_total_cost' do
     let(:letters) { 2 }
     let(:calls) { 3 }
     let(:apply_calls_uplift) { 'false' }
@@ -393,7 +393,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
       let(:letters) { 0 }
 
       it 'only returns calls total' do
-        expect(subject.total_cost).to eq(12.27)
+        expect(subject.letters_and_calls_total_cost).to eq(12.27)
       end
     end
 
@@ -401,7 +401,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
       let(:letters) { nil }
 
       it 'only returns calls total' do
-        expect(subject.total_cost).to eq(12.27)
+        expect(subject.letters_and_calls_total_cost).to eq(12.27)
       end
     end
 
@@ -409,7 +409,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
       let(:calls) { 0 }
 
       it 'only returns letters total' do
-        expect(subject.total_cost).to eq(8.18)
+        expect(subject.letters_and_calls_total_cost).to eq(8.18)
       end
     end
 
@@ -417,7 +417,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
       let(:calls) { nil }
 
       it 'only returns letters total' do
-        expect(subject.total_cost).to eq(8.18)
+        expect(subject.letters_and_calls_total_cost).to eq(8.18)
       end
     end
 
@@ -426,7 +426,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
       let(:calls) { 0 }
 
       it 'only returns nil' do
-        expect(subject.total_cost).to be_nil
+        expect(subject.letters_and_calls_total_cost).to be_nil
       end
     end
 
@@ -435,7 +435,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
       let(:calls) { nil }
 
       it 'only returns nil' do
-        expect(subject.total_cost).to be_nil
+        expect(subject.letters_and_calls_total_cost).to be_nil
       end
     end
   end
