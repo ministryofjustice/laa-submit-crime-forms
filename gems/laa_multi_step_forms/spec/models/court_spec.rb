@@ -5,7 +5,7 @@ RSpec.describe LaaMultiStepForms::Court, type: :model do
     subject { described_class.all }
 
     it 'returns required courts as expected' do
-      digest_of_expected_court_names = '288c887f6a9965d43e9c6b8766424d5f'
+      digest_of_expected_court_names = '88aff34c81d39f306905cc7cbef807fa'
 
       expect(Digest::MD5.hexdigest(subject.map(&:name).join)).to eq digest_of_expected_court_names
     end
