@@ -15,7 +15,7 @@ module LaaMultiStepForms
       def all
         @all ||= begin
           rows = csv_data
-          rows.map { |r| new(name: r['combined_court_name']) }
+          rows.map { |r| new(name: r['combined_formatted']) }
               .sort_by(&:name)
         end
       end
