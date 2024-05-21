@@ -12,14 +12,7 @@ RSpec.describe Nsm::CheckAnswers::WorkItemsCard do
     ]
   end
 
-  describe '#initialize' do
-    it 'creates the data instance' do
-      expect(Nsm::Steps::WorkItemForm).to receive(:build).with(work_items[0], application: claim)
-      expect(Nsm::Steps::WorkItemForm).to receive(:build).with(work_items[1], application: claim)
-      expect(Nsm::Steps::WorkItemForm).to receive(:build).with(work_items[2], application: claim)
-      subject
-    end
-  end
+  before { work_items.each { _1.claim = claim } }
 
   describe '#title' do
     it 'shows correct title' do

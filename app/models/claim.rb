@@ -1,8 +1,9 @@
 class Claim < ApplicationRecord
+  include LettersAndCallsCosts
+
   belongs_to :submitter, class_name: 'Provider'
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
-  has_many :cost_totals, -> { order(:id) }, dependent: :destroy, inverse_of: :claim
   has_many :defendants, -> { order(:position) }, dependent: :destroy, as: :defendable, inverse_of: :defendable
   has_one :main_defendant, lambda {
                              where(main: true)

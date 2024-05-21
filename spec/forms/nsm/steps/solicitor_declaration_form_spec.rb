@@ -15,7 +15,6 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
   describe '#save the form' do
     before do
       allow(SubmitToAppStore).to receive(:perform_later)
-      allow(CostCalculator).to receive(:cost).and_return(100)
       allow(application).to receive(:status=).with(:submitted).and_return(true)
       allow(application).to receive(:update!).and_return(true)
     end

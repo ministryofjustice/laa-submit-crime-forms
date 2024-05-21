@@ -1,7 +1,6 @@
 <% title t('.page_title') %>
 <%
   work_item = @claim.work_items.find(params[:item_id])
-  form = Nsm::Steps::WorkItemForm.build(work_item, application: @claim)
 %>
 
 <div class="govuk-grid-row">
@@ -12,10 +11,10 @@
       rows = [
         [{ text: t(".date"), width: 'govuk-!-width-one-half' }, work_item.completed_on.strftime('%-d %B %Y')],
         [t(".fee_earner"), work_item.fee_earner],
-        [t(".rate"), NumberTo.pounds(form.pricing[form.work_type])],
+        [t(".rate"), NumberTo.pounds(work_item.pricing[work_item.work_type])],
         [t(".hours"), format_period(work_item.time_spent)],
-        [t(".uplift"), NumberTo.percentage(form.uplift.to_f, multiplier: 1)],
-        [t(".net_cost"), NumberTo.pounds(form.total_cost)]
+        [t(".uplift"), NumberTo.percentage(work_item.uplift.to_f, multiplier: 1)],
+        [t(".net_cost"), NumberTo.pounds(work_item.total_cost)]
       ]
 
       govuk_table do |table|

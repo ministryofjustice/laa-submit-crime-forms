@@ -55,7 +55,7 @@ module Nsm
       end
 
       def disbursement_total
-        disbursements.disbursement_forms.filter_map(&:total_cost_pre_vat).sum
+        disbursements.disbursements.filter_map(&:total_cost_pre_vat).sum
       end
     end
   end

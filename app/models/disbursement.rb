@@ -1,15 +1,11 @@
 class Disbursement < ApplicationRecord
   belongs_to :claim
 
+  include DisbursementCosts
+
   validates :id, exclusion: { in: [Nsm::StartPage::NEW_RECORD] }
 
   scope :by_age, -> { reorder(:disbursement_date, :created_at) }
-
-  def total_cost
-    return unless total_cost_without_vat && vat_amount
-
-    total_cost_without_vat + vat_amount
-  end
 
   def as_json(*)
     super.merge(
