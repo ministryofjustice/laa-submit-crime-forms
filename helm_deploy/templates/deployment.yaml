@@ -38,12 +38,7 @@ spec:
               containerPort: 3310
               protocol: TCP
           resources:
-            limits:
-              cpu: 500m
-              memory: 5Gi
-            requests:
-              cpu: 10m
-              memory: 1Gi
+            {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
             runAsNonRoot: true
             allowPrivilegeEscalation: false
