@@ -53,7 +53,7 @@ ingress:
 resources:
   limits:
     cpu: 500m
-    memory: 500Mi
+    memory: 4Gi
   requests:
     cpu: 10m
     memory: 500Mi
@@ -62,8 +62,8 @@ autoscaling:
   enabled: true
   minReplicas: 2
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 80
+  targetCPUUtilizationPercentage: 95
+  targetMemoryUtilizationPercentage: 95
 
 variables:
   environment: production
