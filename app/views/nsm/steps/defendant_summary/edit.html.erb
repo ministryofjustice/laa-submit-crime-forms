@@ -4,8 +4,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.defendants.count) %></h1>
-    <%= render(SummaryErrorComponent.new(records: @form_object.application.defendants, form: Nsm::Steps::DefendantDetailsForm)) %>
-
     <%= govuk_error_summary(@form_object) %>
 
     <table class="govuk-table">
@@ -22,18 +20,18 @@
       <tbody class="govuk-table__body">
 
         <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><%= check_missing(@main_defendant.full_name) %></td>
-            <% if maat_required?(@form_object) %>
-              <td class="govuk-table__cell"><%= check_missing(@main_defendant.maat) %></td>
-            <% end %>
-            <td class="govuk-table__cell">
-              <%= link_to t('.change'), edit_nsm_steps_defendant_details_path(@form_object.application, defendant_id: @main_defendant.id) %>
-            </td>
+          <td class="govuk-table__cell"><%= check_missing(@form_object.main_defendant.full_name_if_valid) %></td>
+          <% if maat_required?(@form_object) %>
+            <td class="govuk-table__cell"><%= check_missing(@form_object.main_defendant.maat_if_valid) %></td>
+          <% end %>
+          <td class="govuk-table__cell">
+            <%= link_to t('.change'), edit_nsm_steps_defendant_details_path(@form_object.application, defendant_id: @form_object.main_defendant.id) %>
+          </td>
         </tr>
       </tbody>
     </table>
 
-    <% if @additional_defendants.any? %>
+    <% if @form_object.additional_defendants.any? %>
       <table class="govuk-table">
         <caption class="govuk-table__caption govuk-table__caption--m"><%=  t('.additional_defendant') %></caption>
         <thead class="govuk-table__head">
@@ -47,12 +45,12 @@
         </tr>
         </thead>
         <tbody class="govuk-table__body">
-          <% @additional_defendants.each do |defendant| %>
+          <% @form_object.additional_defendants.each do |defendant| %>
 
             <tr class="govuk-table__row">
-                <td class="govuk-table__cell"><%= check_missing(defendant.full_name) %></td>
+                <td class="govuk-table__cell"><%= check_missing(defendant.full_name_if_valid) %></td>
                 <% if maat_required?(@form_object) %>
-                  <td class="govuk-table__cell"><%= check_missing(defendant.maat) %></td>
+                  <td class="govuk-table__cell"><%= check_missing(defendant.maat_if_valid) %></td>
                 <% end %>
                 <td class="govuk-table__cell">
                   <%= link_to t('.change'), edit_nsm_steps_defendant_details_path(@form_object.application, defendant_id: defendant.id) %>
@@ -65,16 +63,14 @@
         </tbody>
       </table>
     <% end %>
-
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: t('.add_another'), size: 'm' } do %>
-        <%= f.govuk_radio_button :add_another, YesNoAnswer::YES.to_s %>
-        <%= f.govuk_radio_button :add_another, YesNoAnswer::NO.to_s %>
-      <% end%>
-
+      <% if @form_object.defendants.all?(&:valid?) %>
+        <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: t('.add_another'), size: 'm' } do %>
+          <%= f.govuk_radio_button :add_another, YesNoAnswer::YES.to_s %>
+          <%= f.govuk_radio_button :add_another, YesNoAnswer::NO.to_s %>
+        <% end %>
+      <% end %>
       <%= f.continue_button %>
     <% end %>
   </div>
 </div>
-
-
