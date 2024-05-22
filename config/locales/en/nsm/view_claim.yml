@@ -9,6 +9,7 @@ en:
           tabs:
             overview: Overview
             claimed_costs: Claimed costs
+            adjustments: Adjusted costs
         section:
           page_title: Claim details
         adjustments:
@@ -28,6 +29,23 @@ en:
           vat: VAT on claimed
           gross_cost: Total claimed
           table_info_item: work item
+          total: Total
+        allowed_work_items:
+          page_title: Claim details
+          work_items: Work items
+          check_totals: Work item summary
+          view: View
+          item: Item
+          time: Time claimed
+          uplift: Uplift claimed
+          net_cost: Net cost claimed
+          action: Action
+          allowed_time: Time allowed
+          allowed_net_cost: Net cost allowed
+          vat: VAT on claimed
+          gross_cost: Total claimed
+          table_info_item: work item
+          total: Total
         letters_and_calls:
           page_title: Claim details
           letters_and_calls: Letters and calls

@@ -40,6 +40,11 @@ FactoryBot.define do
       fee_earner { 'test' }
     end
 
+    trait :with_adjustment do
+      allowed_time_spent { time_spent / 2 }
+      adjusted_comment { 'WI adjustment' }
+    end
+
     WorkTypes.values.each do |value|
       trait value.to_s.to_sym do
         work_type { value.to_s }

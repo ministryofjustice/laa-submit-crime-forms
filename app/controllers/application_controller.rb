@@ -2,6 +2,7 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
   include Pagy::Backend
   include ApplicationHelper
   include CookieConcern
+  helper_method :pagy
 
   before_action :set_default_cookies
   before_action :can_access_service

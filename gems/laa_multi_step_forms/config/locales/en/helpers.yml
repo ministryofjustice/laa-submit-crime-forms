@@ -22,11 +22,25 @@ en:
       apply_in_eforms: Apply in eForms
       update_calculation: Update the calculation
       update_calculation_no_article: Update calculation
-    time_period: &period
+    time_period:
       hours:
-        one: '%{count} hour '
-        other: '%{count} hours '
+        short:
+          one: '%{count} hour '
+          other: '%{count} hours '
+        long_html:
+          one: '%{count} hour<br>'
+          other: '%{count} hours<br>'
+        line_html:
+          one: '<nobr>%{count} hour '
+          other: '<nobr>%{count} hours '
       minutes:
-        one: '%{count} minute'
-        other: '%{count} minutes'
+        short:
+          one: '%{count} minute'
+          other: '%{count} minutes'
+        long_html:
+          one: '<nobr>%{count} minute</nobr>'
+          other: '<nobr>%{count} minutes</nobr>'
+        line_html:
+          one: '%{count} minute</nobr>'
+          other: '%{count} minutes</nobr>'
     missing_data: Incomplete

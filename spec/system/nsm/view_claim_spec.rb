@@ -200,4 +200,57 @@ RSpec.describe 'View claim page', type: :system do
       ]
     )
   end
+
+  context 'when adjustments exist' do
+    let(:claim) { create(:claim, :firm_details, :letters_calls, work_items:, disbursements:, assessment_comment:) }
+    let(:work_items) do
+      [
+        build(:work_item, :attendance_without_counsel, :with_adjustment, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
+        build(:work_item, :advocacy, :with_adjustment, time_spent: 104, completed_on: 1.day.ago),
+      ]
+    end
+    let(:disbursements) do
+      [
+        build(:disbursement, :valid, :car, age: 5, miles: 200),
+        build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130, prior_authority: 'yes'),
+      ]
+    end
+
+    it 'show the work items and summary' do
+      visit work_items_nsm_steps_view_claim_path(claim.id)
+
+      # items
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          3.days.ago.strftime('%-d %B %Y'),
+          'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
+          'Travel', '0 hours 23 minutes', '10%', '£10.58', 'View',
+          'Waiting', '0 hours 23 minutes', '10%', '£10.58', 'View',
+
+          2.days.ago.strftime('%-d %B %Y'),
+          'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
+          'Advocacy', '1 hour 26 minutes', '0%', '£93.77', 'View',
+
+          1.day.ago.strftime('%-d %B %Y'),
+          'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
+          'Advocacy', '1 hour 44 minutes', '0%', '£113.39', 'View',
+          'Attendance without counsel', '1 hour 30 minutes', '0%', '£78.23', 'View'
+        ]
+      )
+
+      # summary
+      find('details').click
+      expect(all('details table td, details table th').map(&:text)).to eq(
+        [
+          'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed',
+          'Advocacy', '£207.16', '£0.00', '£207.16',
+          'Attendance without counsel', '£78.23', '£0.00', '£78.23',
+          'Travel', '£10.58', '£0.00', '£10.58',
+          'Waiting', '£10.58', '£0.00', '£10.58'
+        ]
+      )
+    end
+
+
+  end
 end
