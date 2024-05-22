@@ -148,3 +148,18 @@ The task menu represent a generic type of step that shows the progress
 through the form as well as allow users to backtrack previous progress.
 
 This is documented separately.
+
+## 7. HTML View
+
+To use the form in the the view there is a shortcut helper `step_form` that should be
+used instead of the default `form_with` rails helper as without doing this the screen
+will have multiple errors when attempting to render which are NOT easy to debug.
+
+> NOTE: The `step_form` helper is just a wrapper around `form_with` as such the object `f` can be
+> used in the same way as as normal.
+
+```
+<%= step_form @form_object do |f| %>
+  # form stuff
+<% end >
+```
