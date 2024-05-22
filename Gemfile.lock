@@ -4,7 +4,7 @@ PATH
     laa_multi_step_forms (0.1.0)
       devise (~> 4.8)
       govuk-components (>= 5.0.0)
-      govuk_design_system_formbuilder (>= 4.0, < 5.5)
+      govuk_design_system_formbuilder (>= 5.4, < 5.5)
       omniauth-rails_csrf_protection (~> 1.0.1)
       omniauth-saml (~> 2.1.0)
       rails (>= 7.0.4.3)
