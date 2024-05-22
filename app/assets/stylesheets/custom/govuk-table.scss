@@ -4,7 +4,8 @@
 
 .govuk-table .govuk-table__foot {
   font-weight: 700;
-  border-top: 3px solid #b1b4b6;
+  border-top: 2px solid #b1b4b6;
+  border-bottom: 2px solid #b1b4b6;
 }
 
 .govuk-table .govuk-table__foot .govuk-table__row .govuk-table__footer {
@@ -14,10 +15,6 @@
 
 .govuk-table .govuk-table__foot .govuk-table__row .govuk-table__footer--numeric {
   text-align: right;
-}
-
-.govuk-table .govuk-table__foot .govuk-table__row:last-of-type .govuk-table__header {
-  border-bottom: none;
 }
 
 .govuk-table .govuk-table__foot .govuk-table__row .govuk-table__footer:last-child {

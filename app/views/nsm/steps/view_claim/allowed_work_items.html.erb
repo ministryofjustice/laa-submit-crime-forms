@@ -26,9 +26,9 @@
         allowed_total_cost += allowed_net_cost
         [
           { text: t("summary.nsm/cost_summary/work_items.#{work_type.to_s}"), width: 'govuk-!-width-one-quarter' },
-          { text: format_period(time, style: :line_html), numeric: true },
+          { text: format_period(time), numeric: true },
           { text: NumberTo.pounds(net_cost), numeric: true },
-          { text: format_period(allowed_time, style: :line_html), numeric: true },
+          { text: format_period(allowed_time), numeric: true },
           { text: NumberTo.pounds(allowed_net_cost), numeric: true },
         ]
       end
