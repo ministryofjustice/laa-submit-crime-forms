@@ -7,7 +7,7 @@ en:
         start_claim: Start a new claim
         table_info_item: claims
         header:
-          ufn: Your UFN
+          ufn: UFN
           defendant: Defendant
           account: Account
           last_updated: Last updated

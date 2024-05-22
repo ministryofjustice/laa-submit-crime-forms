@@ -84,6 +84,10 @@ FactoryBot.define do
       defendants { [build(:defendant, :partial)] }
     end
 
+    trait :with_named_defendant do
+      defendants { [build(:defendant, :valid_nsm, first_name: 'Jim', last_name: 'Bob')] }
+    end
+
     trait :case_details do
       main_offence { MainOffence.all.sample.name }
       main_offence_date { Date.yesterday }
