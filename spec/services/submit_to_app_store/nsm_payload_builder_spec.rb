@@ -9,7 +9,6 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
   let(:defendant) { claim.defendants.first }
   let(:disbursement) { claim.disbursements.first }
   let(:work_item) { claim.work_items.first }
-  let(:cost_total) { claim.cost_totals.first }
   let(:pricing) { Pricing.for(claim) }
 
   it 'generates and send the data message for a claim' do
@@ -163,15 +162,6 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
                'id' => an_instance_of(String),
                'updated_at' => '2023-08-17T12:13:14.000Z'
             }],
-          'cost_totals' =>
-          [
-            {
-              'id' => cost_total.id,
-              'cost_type' => 'travel_and_waiting',
-              'amount' => 100.0,
-              'amount_with_vat' => 110.0
-            }
-          ]
         },
         application_id: claim.id,
         application_state: 'submitted',

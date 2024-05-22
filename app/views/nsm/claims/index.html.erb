@@ -59,12 +59,14 @@
       </caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.ufn') %></th>
-          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.defendant') %></th>
-          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.account') %></th>
-          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.last_updated') %></th>
-          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.laa_reference') %></th>
-          <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.header.status') %></th>
+          <% ['ufn', 'defendant', 'account', 'last_updated', 'laa_reference', 'status'].each_with_index do |key, index| %>
+            <%= table_header(key,
+                            'nsm.claims.index.header',
+                            index,
+                            nsm_applications_path,
+                            @sort_by,
+                            @sort_direction) %>
+          <% end %>
         </tr>
       </thead>
 

@@ -8,7 +8,7 @@ module Nsm
       end
 
       def profit_costs_net
-        @profit_costs_net ||= work_items_total(PROFIT_COSTS_WORK_TYPES) + (letters_and_calls_form.total_cost || 0)
+        @profit_costs_net ||= work_items_total(PROFIT_COSTS_WORK_TYPES) + (@claim.letters_and_calls_total_cost || 0)
       end
 
       def profit_costs_vat
@@ -44,15 +44,15 @@ module Nsm
       end
 
       def disbursements_net
-        @disbursements_net ||= disbursement_forms.sum(&:total_cost_pre_vat) || 0
+        @disbursements_net ||= disbursements.sum(&:total_cost_pre_vat) || 0
       end
 
       def disbursements_vat
-        @disbursements_vat ||= disbursement_forms.sum(&:vat) || 0
+        @disbursements_vat ||= disbursements.sum(&:vat) || 0
       end
 
       def disbursements_gross
-        @disbursements_gross ||= disbursement_forms.sum(&:total_cost) || 0
+        @disbursements_gross ||= disbursements.sum(&:total_cost) || 0
       end
 
       def total_net
@@ -70,20 +70,11 @@ module Nsm
       private
 
       def work_items_total(work_type)
-        total = @claim.work_items.where(work_type:).sum do |work_item|
-          Nsm::Steps::WorkItemForm.build(work_item, application: @claim).total_cost
-        end
-        total || 0
+        @claim.work_items.where(work_type:).sum(&:total_cost) || 0
       end
 
-      def letters_and_calls_form
-        @letters_and_calls_form ||= Nsm::Steps::LettersCallsForm.build(@claim)
-      end
-
-      def disbursement_forms
-        @disbursement_forms ||= @claim.disbursements.map do |disbursement|
-          Nsm::Steps::DisbursementCostForm.build(disbursement, application: @claim)
-        end
+      def disbursements
+        @disbursements ||= @claim.disbursements
       end
     end
   end

@@ -48,7 +48,6 @@ FactoryBot.define do
       one_disbursement
       with_evidence
       with_equality
-      one_cost
       is_other_info { 'no' }
       concluded { 'no' }
       signatory_name { Faker::Name.name }
@@ -83,6 +82,10 @@ FactoryBot.define do
 
     trait :breach_defendant do
       defendants { [build(:defendant, :partial)] }
+    end
+
+    trait :with_named_defendant do
+      defendants { [build(:defendant, :valid_nsm, first_name: 'Jim', last_name: 'Bob')] }
     end
 
     trait :case_details do
@@ -212,10 +215,6 @@ FactoryBot.define do
 
     trait :high_cost_disbursement do
       disbursements { [build(:disbursement, :valid_high_cost)] }
-    end
-
-    trait :one_cost do
-      cost_totals { [build(:cost_total, :travel_and_waiting)] }
     end
 
     trait :completed_status do
