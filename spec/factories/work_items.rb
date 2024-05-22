@@ -42,7 +42,7 @@ FactoryBot.define do
 
     trait :with_adjustment do
       allowed_time_spent { time_spent / 2 }
-      adjusted_comment { 'WI adjustment' }
+      adjustment_comment { 'WI adjustment' }
     end
 
     WorkTypes.values.each do |value|

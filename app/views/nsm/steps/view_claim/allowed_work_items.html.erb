@@ -11,37 +11,33 @@
         { text: t('.item'), width: 'govuk-!-width-one-third' },
         { text: t('.time'), numeric: true },
         { text: t('.net_cost'), numeric: true },
+        { text: t('.allowed_time'), numeric: true },
+        { text: t('.allowed_net_cost'), numeric: true },
       ]
       vat_rate = current_application.firm_office.vat_registered == 'true' ? Pricing.new(@claim).vat : 0
-      total_cost = BigDecimal('0')
       rows = @work_items.group_by(&:work_type).map do |work_type, work_items_for_type|
         time = work_items_for_type.sum(&:time_spent)
         net_cost = work_items_for_type.sum(&:total_cost)
-        total_cost += net_cost
+        allowed_time = work_items_for_type.sum { _1.allowed_time_spent || _1.time_spent }
+        allowed_net_cost = work_items_for_type.sum(&:allowed_total_cost)
         [
           { text: t("summary.nsm/cost_summary/work_items.#{work_type.to_s}"), width: 'govuk-!-width-one-quarter' },
           { text: format_period(time, style: :line_html), numeric: true },
           { text: NumberTo.pounds(net_cost), numeric: true },
+          { text: format_period(allowed_time, style: :line_html), numeric: true },
+          { text: NumberTo.pounds(allowed_net_cost), numeric: true },
         ]
       end
-
-      foot = [
-        { text: t(".total"), width: 'govuk-!-width-one-quarter' },
-        { text: '', numeric: true },
-        { text: NumberTo.pounds(total_cost), numeric: true },
-      ]
-
 
       govuk_table do |table|
         table.with_head(rows: [head])
         table.with_body(rows: rows.sort_by { _1.dig(0, :text) }, first_cell_is_header: true)
-        table.with_foot(rows: foot)
       end
     %>
   <% end %>
 
   <%
-    pagy, work_items = pagy(@work_items)
+    pagy, work_items = pagy(@work_items.where.not(adjustment_comment: nil))
     head = [
       { text: t('.item'), width: 'govuk-!-width-one-quarter' },
       { text: t('.time'), numeric: true },
@@ -52,16 +48,20 @@
     work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
     <%=
       rows = work_items_for_date.map do |work_item|
+        next unless work_item.adjustment_comment
+
         link = link_to(t('.view'), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.id), data: { turbo: 'false' })
 
         [
           t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"),
-          { text: format_period(work_item.time_spent), numeric: true },
-          { text: NumberTo.percentage(work_item.uplift.to_f, multiplier: 1), numeric: true },
-          { text: NumberTo.pounds(work_item.total_cost), numeric: true },
+          { text: format_period(work_item.allowed_time_spent || work_item.time_spent), numeric: true },
+          { text: NumberTo.percentage((work_item.allowed_uplift || work_item.uplift).to_f, multiplier: 1), numeric: true },
+          { text: NumberTo.pounds(work_item.allowed_total_cost), numeric: true },
           { text: link, numeric: true }
         ]
       end
+
+      next if rows.none?
 
       govuk_table do |table|
         table.with_caption(text: completed_on.strftime('%-d %B %Y'), size: 's')
