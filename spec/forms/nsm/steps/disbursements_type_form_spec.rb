@@ -78,6 +78,13 @@ RSpec.describe Nsm::Steps::DisbursementTypeForm do
 
         it { expect(subject.other_type).to eq(OtherDisbursementTypes.new('Apples')) }
       end
+
+      context 'and the previously entered other type was something custom' do
+        let(:other_type_suggestion) { 'Apples' }
+        let(:other_type) { 'Apples' }
+
+        it { expect { subject }.not_to raise_error }
+      end
     end
   end
 
