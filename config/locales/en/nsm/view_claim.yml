@@ -41,6 +41,7 @@ en:
           net_cost: Net cost claimed
           action: Action
           allowed_time: Time allowed
+          allowed_uplift: Uplift allowed
           allowed_net_cost: Net cost allowed
           vat: VAT on claimed
           gross_cost: Total claimed

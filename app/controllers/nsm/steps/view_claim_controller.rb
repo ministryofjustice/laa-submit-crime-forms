@@ -20,7 +20,6 @@ module Nsm
       def work_items
         @work_items = current_application.work_items
 
-
         render "#{params[:prefix]}work_items"
       end
 
