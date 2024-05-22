@@ -461,6 +461,7 @@ en:
           attributes:
             add_another:
               blank: "Select yes if you want to add another defendant"
+              invalid_item: "You cannot save and continue if any defendant details are incomplete"
         nsm/steps/work_items_form:
           attributes:
             add_another:

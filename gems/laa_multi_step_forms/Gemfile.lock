@@ -1,18 +1,10 @@
-GIT
-  remote: https://github.com/ministryofjustice/hmcts_common_platform.git
-  revision: f45aa2fddd05e238493c0c3e202de309ae93acb4
-  tag: v0.2.0
-  specs:
-    hmcts_common_platform (0.1.0)
-
 PATH
   remote: .
   specs:
     laa_multi_step_forms (0.1.0)
       devise (~> 4.8)
       govuk-components (>= 5.0.0)
-      govuk_design_system_formbuilder (>= 4.0, < 5.4)
-      hmcts_common_platform
+      govuk_design_system_formbuilder (>= 5.4, < 5.5)
       omniauth-rails_csrf_protection (~> 1.0.1)
       omniauth-saml (~> 2.1.0)
       rails (>= 7.0.4.3)
@@ -126,7 +118,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (~> 6.0)
       view_component (>= 3.9, < 3.10)
-    govuk_design_system_formbuilder (5.0.0)
+    govuk_design_system_formbuilder (5.4.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -341,7 +333,6 @@ PLATFORMS
 
 DEPENDENCIES
   debug
-  hmcts_common_platform!
   laa_multi_step_forms!
   pg (~> 1.5)
   pry

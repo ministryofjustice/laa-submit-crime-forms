@@ -2,9 +2,10 @@ module Nsm
   class ClaimsController < ApplicationController
     layout 'nsm'
 
+    before_action :set_default_table_sort_options
+
     def index
-      filtered_claims = Claim.for(current_provider).where.not(ufn: nil).order('updated_at DESC')
-      @pagy, @claims = pagy(filtered_claims)
+      @pagy, @claims = order_and_paginate(Claim.for(current_provider).where.not(ufn: nil))
     end
 
     def create
@@ -14,6 +15,31 @@ module Nsm
     end
 
     private
+
+    ORDERS = {
+      'ufn' => 'ufn ?',
+      'defendant' => 'defendants.first_name ?, defendants.last_name ?',
+      'last_updated' => 'updated_at ?',
+      'laa_reference' => 'laa_reference ?',
+      'status' => 'status ?',
+      'account' => 'office_code ?'
+    }.freeze
+
+    DIRECTIONS = {
+      'descending' => 'DESC',
+      'ascending' => 'ASC',
+    }.freeze
+
+    def order_and_paginate(query)
+      order_template = ORDERS[@sort_by]
+      direction = DIRECTIONS[@sort_direction]
+      pagy(query.includes(:main_defendant).order(order_template.gsub('?', direction)))
+    end
+
+    def set_default_table_sort_options
+      @sort_by = params.fetch(:sort_by, 'last_updated')
+      @sort_direction = params.fetch(:sort_direction, 'descending')
+    end
 
     def initialize_application(attributes = {}, &block)
       attributes.merge!(

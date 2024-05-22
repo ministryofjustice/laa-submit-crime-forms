@@ -3,7 +3,6 @@
 # form helpers so can be coupled to application business and logic.
 #
 require_relative '../../lib/govuk_design_system_formbuilder/elements/period'
-require_relative '../../lib/govuk_design_system_formbuilder/elements/fully_validatable_date'
 
 module LaaMultiStepForms
   module FormBuilderHelper
@@ -18,9 +17,10 @@ module LaaMultiStepForms
 
     def govuk_fully_validatable_date_field(attribute_name, hint: {}, legend: {}, caption: {}, date_of_birth: false,
                                            omit_day: false, maxlength_enabled: false, form_group: {}, **, &block)
-      GOVUKDesignSystemFormBuilder::Elements::FullyValidatableDate.new(
+      segments = { day: '3', month: '2', year: '1' }
+      GOVUKDesignSystemFormBuilder::Elements::Date.new(
         self, object_name, attribute_name,
-        hint:, legend:, caption:, date_of_birth:, omit_day:, maxlength_enabled:, form_group:, **, &block
+        segments:, hint:, legend:, caption:, date_of_birth:, omit_day:, maxlength_enabled:, form_group:, **, &block
       ).html
     end
     # rubocop:enable Metrics/ParameterLists

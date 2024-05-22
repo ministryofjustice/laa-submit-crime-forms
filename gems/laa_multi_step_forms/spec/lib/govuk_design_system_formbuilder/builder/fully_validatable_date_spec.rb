@@ -22,7 +22,7 @@ describe GOVUKDesignSystemFormBuilder::FormBuilder do
 
   before { object.valid? }
 
-  describe '#govuk_fully_validatable_date_feld' do
+  describe '#govuk_fully_validatable_date_field' do
     subject { builder.send(*args) }
 
     let(:method) { :govuk_fully_validatable_date_field }
