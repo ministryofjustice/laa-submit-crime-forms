@@ -42,10 +42,10 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
       .and have_content('Phone calls£12.27') # 4.09 * 3
       .and have_content('Total£20.45')
       # Disbursements
-      .and have_content('Car£90.00')
+      .and have_content('Car mileage£90.00')
       .and have_content('DNA Testing£30.00')
       .and have_content('Custom£40.00')
-      .and have_content('Car£67.50')
+      .and have_content('Car mileage£67.50')
       .and have_content('Total£227.50')
   end
 

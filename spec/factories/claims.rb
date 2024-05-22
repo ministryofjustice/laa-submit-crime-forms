@@ -48,7 +48,6 @@ FactoryBot.define do
       one_disbursement
       with_evidence
       with_equality
-      one_cost
       is_other_info { 'no' }
       concluded { 'no' }
       signatory_name { Faker::Name.name }
@@ -142,6 +141,7 @@ FactoryBot.define do
       work_before_date { Date.new(2020, 12, 1) }
       work_after { 'yes' }
       work_after_date { Date.new(2020, 1, 1) }
+      wasted_costs { 'yes' }
     end
 
     trait :claim_details_no do
@@ -152,6 +152,7 @@ FactoryBot.define do
       work_before_date { nil }
       work_after { 'no' }
       work_after_date { nil }
+      wasted_costs { 'no' }
     end
 
     trait :letters_calls do
@@ -165,6 +166,11 @@ FactoryBot.define do
       end
     end
 
+    trait :letters_calls_uplift do
+      letters_uplift { 10 }
+      calls_uplift { 20 }
+    end
+
     trait :one_work_item do
       work_items { [build(:work_item, :valid)] }
     end
@@ -172,6 +178,14 @@ FactoryBot.define do
     trait :uplifted_work_item do
       with_enhanced_rates
       work_items { [build(:work_item, :with_uplift)] }
+    end
+
+    trait :two_uplifted_work_items do
+      with_enhanced_rates
+      after(:create) do |claim|
+        create(:work_item, :with_uplift, claim_id: claim.id)
+        create(:work_item, :with_uplift, claim_id: claim.id)
+      end
     end
 
     trait :medium_risk_work_item do
@@ -197,10 +211,6 @@ FactoryBot.define do
 
     trait :high_cost_disbursement do
       disbursements { [build(:disbursement, :valid_high_cost)] }
-    end
-
-    trait :one_cost do
-      cost_totals { [build(:cost_total, :travel_and_waiting)] }
     end
 
     trait :completed_status do

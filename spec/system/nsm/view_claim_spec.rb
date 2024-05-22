@@ -86,6 +86,24 @@ RSpec.describe 'View claim page', type: :system do
     )
   end
 
+  context 'when there are more work items than will fit on a page' do
+    let(:work_items) do
+      build_list(:work_item, 12, :attendance_without_counsel, fee_earner: 'AB', time_spent: 60, completed_on: 1.day.ago)
+    end
+
+    it 'shows the sum of all work items in the summary' do
+      visit work_items_nsm_steps_view_claim_path(claim.id)
+
+      find('details').click
+      expect(all('details table td, details table th').map(&:text)).to eq(
+        [
+          'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed',
+          'Attendance without counsel', '£625.80', '£0.00', '£625.80' # 12 * 52.15
+        ]
+      )
+    end
+  end
+
   it 'show the letters and calls page' do
     visit letters_and_calls_nsm_steps_view_claim_path(claim.id)
 
@@ -105,7 +123,7 @@ RSpec.describe 'View claim page', type: :system do
       [
         5.days.ago.strftime('%-d %B %Y'),
         'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Action',
-        'Car', '£90.00', '£18.00', '£108.00', 'View',
+        'Car mileage', '£90.00', '£18.00', '£108.00', 'View',
 
         3.days.ago.strftime('%-d %B %Y'),
         'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Action',
@@ -114,7 +132,7 @@ RSpec.describe 'View claim page', type: :system do
 
         2.days.ago.strftime('%-d %B %Y'),
         'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Action',
-        'Car', '£67.50', '£13.50', '£81.00', 'View'
+        'Car mileage', '£67.50', '£13.50', '£81.00', 'View'
       ]
     )
   end
@@ -169,12 +187,12 @@ RSpec.describe 'View claim page', type: :system do
   it 'show a disbursement' do
     visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :disbursement, item_id: disbursements.first.id)
 
-    expect(find('h1').text).to eq('Car')
+    expect(find('h1').text).to eq('Car mileage')
     expect(all('table caption, table td').map(&:text)).to eq(
       [
         'Your costs',
         'Date',	5.days.ago.strftime('%-d %B %Y'),
-        'Disbursement type', 'Car',
+        'Disbursement type', 'Car mileage',
         'Disbursement description', 'Details',
         'Net cost', '£90.00',
         'VAT', '£18.00',

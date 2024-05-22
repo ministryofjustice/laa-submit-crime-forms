@@ -8,32 +8,12 @@ RSpec.describe Nsm::CostSummary::WorkItems do
   let(:assigned_counsel) { 'no' }
   let(:in_area) { 'yes' }
   let(:date) { Date.new(2008, 11, 22) }
-  let(:work_items) { [instance_double(WorkItem), instance_double(WorkItem), instance_double(WorkItem)] }
-  let(:form_advocacy) do
-    instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 100.0, time_spent: 180)
-  end
-  let(:form_advocacy2) do
-    instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::ADVOCACY, total_cost: 70.0, time_spent: 180)
-  end
-  let(:form_preparation) do
-    instance_double(Nsm::Steps::WorkItemForm, work_type: WorkTypes::PREPARATION, total_cost: 40.0, time_spent: 180)
-  end
-
-  before do
-    allow(Nsm::Steps::WorkItemForm).to receive(:build).with(work_items[0], application: claim).and_return(form_advocacy)
-    allow(Nsm::Steps::WorkItemForm).to receive(:build).with(work_items[1],
-                                                            application: claim).and_return(form_advocacy2)
-    allow(Nsm::Steps::WorkItemForm).to receive(:build).with(work_items[2],
-                                                            application: claim).and_return(form_preparation)
-  end
-
-  describe '#initialize' do
-    it 'creates the data instance' do
-      subject
-      expect(Nsm::Steps::WorkItemForm).to have_received(:build).with(work_items[0], application: claim)
-      expect(Nsm::Steps::WorkItemForm).to have_received(:build).with(work_items[1], application: claim)
-      expect(Nsm::Steps::WorkItemForm).to have_received(:build).with(work_items[2], application: claim)
-    end
+  let(:work_items) do
+    [
+      instance_double(WorkItem, work_type: WorkTypes::ADVOCACY.to_s, total_cost: 100.0, time_spent: 180),
+      instance_double(WorkItem, work_type: WorkTypes::ADVOCACY.to_s, total_cost: 70.0, time_spent: 180),
+      instance_double(WorkItem, work_type: WorkTypes::PREPARATION.to_s, total_cost: 40.0, time_spent: 180)
+    ]
   end
 
   describe '#rows' do

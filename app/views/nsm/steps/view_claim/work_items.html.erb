@@ -14,7 +14,7 @@
         { text: t('.gross_cost'), numeric: true }
       ]
       vat_rate = current_application.firm_office.vat_registered == 'true' ? Pricing.new(@claim).vat : 0
-      rows = @work_items.group_by(&:work_type).map do |work_type, work_items_for_type|
+      rows = current_application.work_items.group_by(&:work_type).map do |work_type, work_items_for_type|
         net_cost = work_items_for_type.sum(&:total_cost)
         [
           { text: t("summary.nsm/cost_summary/work_items.#{work_type.to_s}"), width: 'govuk-!-width-one-quarter' },
@@ -30,6 +30,7 @@
       end
     %>
   <% end %>
+
   <%
     head = [
       { text: t('.item'), width: 'govuk-!-width-one-quarter' },
@@ -38,11 +39,10 @@
       { text: t('.net_cost'), numeric: true },
       { text: t('.action'), numeric: true }
     ]
-    last_completed_on = @work_items.last.completed_on
     @work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
     <%=
       rows = work_items_for_date.map do |work_item|
-        link = link_to(t('.view'), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.record.id), data: { turbo: 'false' })
+        link = link_to(t('.view'), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.id), data: { turbo: 'false' })
 
         [
           t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"),
@@ -53,11 +53,12 @@
         ]
       end
 
-      govuk_table(classes: ('govuk-!-margin-bottom-0' if completed_on == last_completed_on)) do |table|
+      govuk_table do |table|
         table.with_caption(text: completed_on.strftime('%-d %B %Y'), size: 's')
         table.with_head(rows: [head])
         table.with_body(rows: rows, first_cell_is_header: true)
       end
     %>
   <% end %>
+  <%= render "shared/pagination",  { pagy: @pagy, item: t('.table_info_item') } %>
 </turbo-frame>

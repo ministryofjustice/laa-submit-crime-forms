@@ -37,7 +37,7 @@ class Pricing
 
   def initialize(data = {})
     FIELDS.each do |field|
-      instance_variable_set(:"@#{field}", data.fetch(field, nil)&.to_f)
+      instance_variable_set(:"@#{field}", data.fetch(field, nil)&.to_d)
     end
     @name = data.fetch('name', nil)
   end

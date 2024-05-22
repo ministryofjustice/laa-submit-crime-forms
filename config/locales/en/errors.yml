@@ -385,6 +385,8 @@ en:
               greater_than_or_equal_to: Number of witnesses cannot be less than 0
             supplemental_claim:
               blank: Select yes or no for supplemental claim
+            wasted_costs:
+              blank: Select yes if wasted costs have been applied to this case
             preparation_time:
               blank: Select yes or no for preparation time
             work_before:

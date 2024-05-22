@@ -9,9 +9,10 @@
       <%= f.govuk_number_field :prosecution_evidence,label:{ size: 's'}, min: 1, step: 1, width: 3 %>
       <%= f.govuk_number_field :defence_statement,label:{ size: 's'}, min: 1, step: 1, width: 3 %>
       <%= f.govuk_number_field :number_of_witnesses,label:{ size: 's'}, min: 1, step: 1, width: 3 %>
+
       <% @form_object.boolean_fields.each do |field| %>
         <%= f.govuk_radio_buttons_fieldset field, legend: { size: 's' } do %>
-          <%= f.govuk_radio_button field, YesNoAnswer::YES do%>
+          <%= f.govuk_radio_button field, YesNoAnswer::YES do %>
             <% if field == :preparation_time %>
               <%= f.govuk_period_field :time_spent,legend: { size: 's', class: 'govuk-!-font-weight-regular' }, width: 'one-third' %>
             <% elsif %i[work_before work_after].include?(field) %>
@@ -19,7 +20,7 @@
             <% end %>
           <% end %>
           <%= f.govuk_radio_button field, YesNoAnswer::NO %>
-        <% end%>
+        <% end %>
       <% end%>
       <%= f.continue_button %>
     <% end %>

@@ -4,8 +4,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Specify your gem's dependencies in laa_multi_step_forms.gemspec.
 gemspec
 
-gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
-
 gem 'sqlite3'
 
 group :development, :test do

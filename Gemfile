@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.149'
+gem 'aws-sdk-s3', '~> 1.151'
 gem 'bootsnap', '~> 1.18.3', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
@@ -28,9 +28,6 @@ gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron', '~> 1.12.0'
 gem 'turbo-rails', '~> 2.0.5'
 gem 'tzinfo-data'
-
-# required as can't specify github in gemspe for laa_multi_step_form
-gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]

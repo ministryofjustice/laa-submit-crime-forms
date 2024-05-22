@@ -27,7 +27,7 @@ en:
       nsm/claim_type:
         non_standard_magistrate: Non-standard magistrates’ court payment
         breach_of_injunction: Breach of injunction court payment
-      nsm/firm_details: Your details
+      nsm/firm_details: Firm details
       nsm/defendants: Defendant details
       nsm/case_details: Case details
       nsm/case_disposal: Case disposal

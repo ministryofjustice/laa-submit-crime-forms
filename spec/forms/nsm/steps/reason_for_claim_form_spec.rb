@@ -111,4 +111,23 @@ RSpec.describe Nsm::Steps::ReasonForClaimForm do
       end
     end
   end
+
+  describe '#save' do
+    context 'when uplifts have previously been applied' do
+      let(:application) do
+        create(:claim, letters_uplift: 10, calls_uplift: 50, work_items: [build(:work_item, :with_uplift)])
+      end
+
+      context 'and enhanced rates are no longer claimed' do
+        let(:reasons_for_claim) { [ReasonForClaim::EXTRADITION.to_s] }
+
+        before { subject.save }
+
+        it 'removes all now-redundant uplift data' do
+          expect(application.reload).to have_attributes(letters_uplift: nil, calls_uplift: nil)
+          expect(application.work_items.first).to have_attributes(uplift: nil)
+        end
+      end
+    end
+  end
 end

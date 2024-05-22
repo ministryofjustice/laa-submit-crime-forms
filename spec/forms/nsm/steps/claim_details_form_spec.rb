@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::Steps::ClaimDetailsForm do
-  subject { described_class.new(application:, **arguments) }
+  subject(:form) { described_class.new(application:, **arguments) }
 
   let(:arguments) do
     {
@@ -16,6 +16,7 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
       work_after:,
       work_before_date:,
       work_after_date:,
+      wasted_costs:,
     }
   end
 
@@ -33,6 +34,7 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
   let(:time_spent) { { 1 => hours, 2 => minutes } }
   let(:hours) { 2 }
   let(:minutes) { 40 }
+  let(:wasted_costs) { 'yes' }
 
   describe '#save' do
     let(:application) do
@@ -49,7 +51,7 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
       let(:work_after) { 'yes' }
 
       it 'is stores the values in the database' do
-        expect(subject.save).to be_truthy
+        expect(form.save).to be_truthy
         expect(application.reload).to have_attributes(
           time_spent: 160
         )
@@ -67,7 +69,7 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
         let(:work_after_date_in_db) { Date.yesterday }
 
         it 'clears the database field' do
-          expect(subject.save).to be_truthy
+          expect(form.save).to be_truthy
           expect(application.reload).to have_attributes(
             time_spent: nil,
             work_before_date: nil,
@@ -79,20 +81,58 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
   end
 
   describe '#validations' do
+    context 'with nil boolean fields' do
+      let(:supplemental_claim) { nil }
+      let(:preparation_time) { nil }
+      let(:work_before) { nil }
+      let(:work_after) { nil }
+      let(:wasted_costs) { nil }
+
+      it 'they must be present' do
+        expect(form).not_to be_valid
+        expect(form.errors).to include(:supplemental_claim, :preparation_time, :work_before, :work_after, :wasted_costs)
+      end
+    end
+
+    context 'with invalid value boolean fields' do
+      let(:supplemental_claim) { 1 }
+      let(:preparation_time) { 'y' }
+      let(:work_before) { true }
+      let(:work_after) { false }
+      let(:wasted_costs) { 'f' }
+
+      it 'they can only be yes or no' do
+        expect(form).not_to be_valid
+        expect(form.errors).to include(:supplemental_claim, :preparation_time, :work_before, :work_after, :wasted_costs)
+      end
+    end
+
+    context 'with valid value boolean fields' do
+      let(:supplemental_claim) { 'yes' }
+      let(:preparation_time) { 'yes' }
+      let(:work_before) { 'no' }
+      let(:work_after) { 'no' }
+      let(:wasted_costs) { 'no' }
+
+      it 'they can only be yes or no' do
+        expect(form).to be_valid
+      end
+    end
+
     context 'work_before_date' do
       context 'and work_before is nil' do
         let(:work_before) { nil }
 
         it 'is not valid' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:work_before, :inclusion)).to be(true)
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:work_before, :inclusion)).to be(true)
         end
       end
 
       context 'and work_before is no' do
         let(:work_before) { 'no' }
 
-        it { expect(subject).to be_valid }
+        it { expect(form).to be_valid }
       end
 
       context 'and work_before is yes' do
@@ -100,8 +140,8 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
         let(:work_before_date) { nil }
 
         it 'is not valid' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:work_before_date, :blank)).to be(true)
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:work_before_date, :blank)).to be(true)
         end
       end
     end
@@ -111,15 +151,15 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
         let(:work_after) { nil }
 
         it 'is invalid' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:work_after, :inclusion)).to be(true)
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:work_after, :inclusion)).to be(true)
         end
       end
 
       context 'and work_after is no' do
         let(:work_after) { 'no' }
 
-        it { expect(subject).to be_valid }
+        it { expect(form).to be_valid }
       end
 
       context 'and work_after is yes' do
@@ -127,8 +167,8 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
         let(:work_after_date) { nil }
 
         it 'is not valid' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:work_after_date, :blank)).to be(true)
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:work_after_date, :blank)).to be(true)
         end
       end
     end

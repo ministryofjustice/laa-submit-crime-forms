@@ -25,9 +25,9 @@ en:
     nsm/cost_summary/disbursements:
       disbursements: Disbursements
       standard:
-        car: Car
-        motorcycle: Motorcycle
-        bike: Bike
+        car: Car mileage
+        motorcycle: Motorcycle mileage
+        bike: Bike mileage
         other: Other
       other:
         accident_reconstruction_report: Accident Reconstruction Report

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_20_165443) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -125,17 +125,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
     t.float "adjusted_total"
     t.float "adjusted_total_inc_vat"
     t.string "assessment_comment"
+    t.string "wasted_costs"
+    t.integer "allowed_letters"
+    t.integer "allowed_calls"
+    t.integer "allowed_letters_uplift"
+    t.integer "allowed_calls_uplift"
+    t.string "letters_adjustment_comment"
+    t.string "calls_adjustment_comment"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
-  end
-
-  create_table "cost_totals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "claim_id", null: false
-    t.string "cost_type", null: false
-    t.float "amount", null: false
-    t.float "amount_with_vat"
-    t.index ["claim_id"], name: "index_cost_totals_on_claim_id"
   end
 
   create_table "defendants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -164,6 +163,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "vat_amount", precision: 10, scale: 2
+    t.decimal "allowed_total_cost_without_vat"
+    t.decimal "allowed_vat_amount"
+    t.string "adjustment_comment"
     t.index ["claim_id"], name: "index_disbursements_on_claim_id"
   end
 
@@ -204,17 +206,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "reason_why"
-    t.date "rep_order_date"
-    t.boolean "client_detained"
-    t.boolean "subject_to_poca"
+    t.boolean "next_hearing"
     t.date "next_hearing_date"
     t.string "plea"
     t.string "court_type"
     t.boolean "youth_court"
     t.boolean "psychiatric_liaison"
     t.string "psychiatric_liaison_reason_not"
-    t.boolean "next_hearing"
+    t.date "rep_order_date"
+    t.boolean "client_detained"
+    t.boolean "subject_to_poca"
+    t.text "reason_why"
     t.boolean "additional_costs_still_to_add"
     t.boolean "prior_authority_granted"
     t.text "no_alternative_quote_reason"
@@ -320,6 +322,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
     t.integer "uplift"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "allowed_uplift"
+    t.integer "allowed_time_spent"
+    t.string "adjustment_comment"
     t.index ["claim_id"], name: "index_work_items_on_claim_id"
   end
 
@@ -329,7 +334,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_131933) do
   add_foreign_key "claims", "firm_offices"
   add_foreign_key "claims", "providers", column: "submitter_id"
   add_foreign_key "claims", "solicitors"
-  add_foreign_key "cost_totals", "claims"
   add_foreign_key "disbursements", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
   add_foreign_key "further_informations", "prior_authority_applications"
