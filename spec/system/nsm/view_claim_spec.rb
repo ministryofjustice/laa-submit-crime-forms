@@ -112,8 +112,8 @@ RSpec.describe 'View claim page', type: :system do
       find('details').click
       expect(all('details table td, details table th').map(&:text)).to eq(
         [
-          'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed',
-          'Attendance without counsel', '£625.80', '£0.00', '£625.80' # 12 * 52.15
+          'Item', 'Time claimed', 'Net cost claimed',
+          'Attendance without counsel', '12 hours 0 minutes', '£625.80', 'Total', '', '£625.80'
         ]
       )
     end
