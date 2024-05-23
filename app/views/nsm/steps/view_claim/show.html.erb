@@ -21,7 +21,7 @@
         <li class="moj-sub-navigation__item">
           <%= link_to t('.tabs.claimed_costs'), nsm_steps_view_claim_path(@claim, section: 'claimed_costs'), class: 'moj-sub-navigation__link', 'aria-current': (@section == :claimed_costs ? "page" : nil) %>
         </li>
-        <% if @claim.status == 'part_grant' %>
+        <% if @claim.part_grant? %>
           <li class="moj-sub-navigation__item">
             <%= link_to t('.tabs.adjustments'), nsm_steps_view_claim_path(@claim, section: 'adjustments'), class: 'moj-sub-navigation__link', 'aria-current': (@section == :adjustments ? "page" : nil) %>
           </li>
