@@ -25,10 +25,14 @@ module Nsm
 
       def letters_and_calls
         @claim = current_application
+
+        render "#{params[:prefix]}letters_and_calls"
       end
 
       def disbursements
-        @pagy, @disbursements = pagy(current_application.disbursements.by_age)
+        @disbursements = current_application.disbursements.by_age
+
+        render "#{params[:prefix]}disbursements"
       end
 
       private

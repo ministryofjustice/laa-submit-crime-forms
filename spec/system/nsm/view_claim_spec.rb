@@ -241,7 +241,7 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   context 'when adjustments exist' do
-    let(:claim) { create(:claim, :firm_details, :letters_calls, work_items:, disbursements:, assessment_comment:) }
+    let(:claim) { create(:claim, :firm_details, :adjusted_letters_calls, work_items:, disbursements:, assessment_comment:) }
     let(:work_items) do
       [
         build(:work_item, :attendance_without_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
@@ -276,6 +276,19 @@ RSpec.describe 'View claim page', type: :system do
           'Advocacy', '1 hour 44 minutes', '£113.39', '0 hours 52 minutes', '£56.70',
           'Attendance without counsel', '1 hour 30 minutes', '£78.23', '1 hour 30 minutes', '£78.23',
           'Total', '', '£191.62', '', '£134.92'
+        ]
+      )
+    end
+
+    it 'show the letters and calls page' do
+      visit letters_and_calls_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Number claimed', 'Uplift claimed', 'Net cost claimed', 'Number allowed', 'Uplift allowed',
+          'Net cost allowed', 'Action',
+          'Letters', '2', '0%', '£8.18', '1', '0%', '£4.09', 'View',
+          'Calls', '3', '0%', '£12.27', '1', '0%', '£4.09', 'View'
         ]
       )
     end
