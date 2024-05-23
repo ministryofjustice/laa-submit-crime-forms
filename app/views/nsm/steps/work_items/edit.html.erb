@@ -3,13 +3,12 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
-    <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.work_items.count) %></h1>
-    <%= render(SummaryErrorComponent.new(records: @form_object.application.work_items, form: Nsm::Steps::WorkItemForm)) %>
     <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.work_items.count) %></h1>
 
     <% @work_items_by_date.each do |date, work_items| %>
       <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m"><%= check_missing(date) { date.to_fs(:long) } %></caption>
+        <caption class="govuk-table__caption govuk-table__caption--m"><%= date&.to_fs(:long) || t('.unknown_date') %></caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.work_type') %></th>
@@ -24,7 +23,7 @@
           <% work_items.each do |work_item| %>
             <tr class="govuk-table__row">
               <td class="govuk-table__cell"><%= check_missing(work_item.work_type) { t("helpers.label.nsm_steps_work_item_form.work_type_options.#{work_item.work_type}") } %></td>
-              <td class="govuk-table__cell"><%= check_missing(format_period(work_item.time_spent))  %></td>
+              <td class="govuk-table__cell"><%= check_missing(work_item.completed_on.present? && format_period(work_item.time_spent)) %></td>
               <td class="govuk-table__cell"><%= check_missing(work_item.fee_earner) %></td>
               <td class="govuk-table__cell govuk-table__nowrap">
                 <%= link_to t('.change'), edit_nsm_steps_work_item_path(@form_object.application, work_item_id: work_item.id) %>
@@ -42,14 +41,14 @@
     <% end %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: t('.add_another'), size: 'm' } do %>
-        <%= f.govuk_radio_button :add_another, YesNoAnswer::YES.to_s %>
-        <%= f.govuk_radio_button :add_another, YesNoAnswer::NO.to_s %>
-      <% end%>
+      <% if @form_object.all_work_items_valid? %>
+        <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: t('.add_another'), size: 'm' } do %>
+          <%= f.govuk_radio_button :add_another, YesNoAnswer::YES.to_s %>
+          <%= f.govuk_radio_button :add_another, YesNoAnswer::NO.to_s %>
+        <% end %>
+      <% end %>
 
       <%= f.continue_button %>
     <% end %>
   </div>
 </div>
-
-

@@ -167,4 +167,43 @@ RSpec.describe 'User can manage work items', type: :system do
 
     expect(page).to have_content('Advocacy', count: 2)
   end
+
+  it 'forces me to complete work items before continuing' do
+    work_item = claim.work_items.create
+
+    visit edit_nsm_steps_work_item_path(id: claim.id, work_item_id: work_item.id)
+
+    choose 'Advocacy'
+
+    fill_in 'Hours', with: 1
+    fill_in 'Minutes', with: 1
+
+    click_on 'Save and come back later'
+
+    click_on 'Work items'
+
+    expect(page).to have_no_content 'Do you want to add another work item?'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_content 'You cannot save and continue if any work items are incomplete'
+
+    click_on 'Change'
+
+    within('.govuk-fieldset', text: 'Completion date') do
+      fill_in 'Day', with: '20'
+      fill_in 'Month', with: '4'
+      fill_in 'Year', with: '2023'
+    end
+
+    fill_in 'Fee earner initials', with: 'JBJ'
+    click_on 'Save and continue'
+
+    expect(page).to have_content 'Do you want to add another work item?'
+
+    choose 'No'
+    click_on 'Save and continue'
+
+    expect(page).to have_no_content 'You cannot save and continue if any work items are incomplete'
+  end
 end
