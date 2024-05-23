@@ -80,7 +80,7 @@ en:
           summary:
             maat:
               blank: Enter the MAAT number
-              invalid: The MAAT number must only contain numbers
+              invalid: The MAAT number must be a 7 digit number
         prior_authority/steps/client_detail_form:
           attributes:
             first_name:
@@ -457,10 +457,12 @@ en:
           attributes:
             add_another:
               blank: "Select yes if you want to add another disbursement"
+              invalid_item: "You cannot save and continue if any disbursements are incomplete"
         nsm/steps/defendant_summary_form:
           attributes:
             add_another:
               blank: "Select yes if you want to add another defendant"
+              invalid_item: "You cannot save and continue if any defendant details are incomplete"
         nsm/steps/work_items_form:
           attributes:
             add_another:

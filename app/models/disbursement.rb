@@ -15,6 +15,10 @@ class Disbursement < ApplicationRecord
     )
   end
 
+  def date_and_prior_authority_valid?
+    disbursement_date.present? && (prior_authority.present? || !auth_required?)
+  end
+
   def translated_disbursement_type
     if disbursement_type == DisbursementTypes::OTHER.to_s
       known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(other_type))
