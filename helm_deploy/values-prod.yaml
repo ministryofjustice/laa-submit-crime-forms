@@ -50,7 +50,23 @@ ingress:
       - submit-crime-forms.service.justice.gov.uk
       secretName: laa-submit-crime-forms-cert
 
-resources:
+app_resources:
+  limits:
+    cpu: 500m
+    memory: 4Gi
+  requests:
+    cpu: 10m
+    memory: 500Mi
+
+clamav_resources:
+  limits:
+    cpu: 500m
+    memory: 4Gi
+  requests:
+    cpu: 10m
+    memory: 500Mi
+
+worker_resources:
   limits:
     cpu: 500m
     memory: 4Gi
