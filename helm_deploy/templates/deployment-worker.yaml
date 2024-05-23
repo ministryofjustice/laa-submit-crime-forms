@@ -59,7 +59,7 @@ spec:
             initialDelaySeconds: 20
             periodSeconds: 30
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.worker_resources | nindent 12 }}
           env:
           {{ if .Values.redis.enabled }}
             - name: REDIS_PROTOCOL
