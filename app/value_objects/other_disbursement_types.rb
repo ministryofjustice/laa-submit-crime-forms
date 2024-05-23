@@ -39,6 +39,8 @@ class OtherDisbursementTypes < ValueObject
   ].freeze
 
   def translated
+    return value unless value.in?(VALUES.map(&:value))
+
     I18n.t("helpers.other_disbursement_type.#{value}")
   end
 end

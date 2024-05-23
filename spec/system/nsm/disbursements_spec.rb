@@ -115,4 +115,44 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
     expect(page).to have_content('Check your payment claim')
   end
+
+  it 'forces me to complete disbursements before continuing' do
+    visit edit_nsm_steps_disbursement_add_path(claim.id)
+
+    choose 'Yes'
+
+    click_on 'Save and continue'
+
+    within('.govuk-fieldset', text: 'Date') do
+      fill_in 'Day', with: '20'
+      fill_in 'Month', with: '4'
+      fill_in 'Year', with: '2023'
+    end
+
+    choose 'Car'
+
+    click_on 'Save and come back later'
+
+    click_on 'Disbursements'
+
+    expect(page).to have_no_content 'Do you want to add another disbursement?'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_content 'You cannot save and continue if any disbursements are incomplete'
+
+    click_on 'Change'
+    click_on 'Save and continue'
+
+    fill_in 'Number of miles', with: 100
+    fill_in 'Enter details of this disbursement', with: 'details'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_content 'Do you want to add another disbursement?'
+    choose 'No'
+
+    click_on 'Save and continue'
+    expect(page).to have_no_content 'You cannot save and continue if any disbursements are incomplete'
+  end
 end

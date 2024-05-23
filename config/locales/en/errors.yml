@@ -457,6 +457,7 @@ en:
           attributes:
             add_another:
               blank: "Select yes if you want to add another disbursement"
+              invalid_item: "You cannot save and continue if any disbursements are incomplete"
         nsm/steps/defendant_summary_form:
           attributes:
             add_another:
