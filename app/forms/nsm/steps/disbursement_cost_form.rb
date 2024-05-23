@@ -33,10 +33,6 @@ if: :other_disbursement_type?
         ]
       end
 
-      def auth_required?
-        total_cost_pre_vat && total_cost_pre_vat >= 100
-      end
-
       private
 
       def translate(key)

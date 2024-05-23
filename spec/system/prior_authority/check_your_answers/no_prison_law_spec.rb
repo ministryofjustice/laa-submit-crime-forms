@@ -69,9 +69,9 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
         .and have_css('.govuk-summary-card__content', text: 'Subject to POCAYes')
 
       click_on 'Change'
-      expect(page).to have_title('Case details')
     end
-
+    expect(page).to have_title('Case details')
+    select 'Robbery', from: 'What was the main offence'
     click_on 'Save and continue'
     expect(page).to have_title('Check your answers')
   end
