@@ -178,6 +178,8 @@ en:
               title: Letters and phone calls
             disbursements:
               title: Disbursement costs
+          adjusted_costs:
+            heading: About the claim
           supporting_evidence:
             heading:  Supporting evidence
             supporting_evidence:

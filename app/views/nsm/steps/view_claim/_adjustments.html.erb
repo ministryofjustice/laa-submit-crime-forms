@@ -18,17 +18,17 @@
   </ul>
 
   <div class="govuk-tabs__panel" id="work-items-tab">
-    <%= turbo_frame_tag 'work_items', src: work_items_nsm_steps_view_claim_path(claim), loading: :lazy do %>
+    <%= turbo_frame_tag 'work_items', src: work_items_nsm_steps_view_claim_path(claim, prefix:), loading: :lazy do %>
       Loading
     <% end %>
   </div>
   <div class="govuk-tabs__panel" id="letters-and-calls-tab">
-    <%= turbo_frame_tag 'letters_and_calls', src: letters_and_calls_nsm_steps_view_claim_path(claim), loading: :lazy do %>
+    <%= turbo_frame_tag 'letters_and_calls', src: letters_and_calls_nsm_steps_view_claim_path(claim, prefix:), loading: :lazy do %>
       Loading
     <% end %>
   </div>
   <div class="govuk-tabs__panel" id="disbursements-tab">
-    <%= turbo_frame_tag 'disbursements', src: disbursements_nsm_steps_view_claim_path(claim), loading: :lazy do %>
+    <%= turbo_frame_tag 'disbursements', src: disbursements_nsm_steps_view_claim_path(claim, prefix:), loading: :lazy do %>
       Loading
     <% end %>
   </div>

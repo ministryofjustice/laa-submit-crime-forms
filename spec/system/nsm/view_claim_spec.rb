@@ -51,6 +51,20 @@ RSpec.describe 'View claim page', type: :system do
     end
   end
 
+  # TODO: update this to have adjusted values as well...
+  it 'shows an adjusted cost summary on the adjustments page' do
+    visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
+
+    within('#cost-summary-table') do
+      expect(page).to have_content('Item Net cost VAT Total')
+        .and have_content('Profit costs £305.84 £61.17 £367.01')
+        .and have_content('Waiting £10.58 £2.12 £12.70')
+        .and have_content('Travel £10.58 £2.12 £12.70')
+        .and have_content('Disbursements £327.50 £31.50 £359.00')
+        .and have_content('Total £654.50 £96.90 £751.40')
+    end
+  end
+
   it 'show the work items and summary' do
     visit work_items_nsm_steps_view_claim_path(claim.id)
 
@@ -77,11 +91,12 @@ RSpec.describe 'View claim page', type: :system do
     find('details').click
     expect(all('details table td, details table th').map(&:text)).to eq(
       [
-        'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed',
-        'Advocacy', '£207.16', '£0.00', '£207.16',
-        'Attendance without counsel', '£78.23', '£0.00', '£78.23',
-        'Travel', '£10.58', '£0.00', '£10.58',
-        'Waiting', '£10.58', '£0.00', '£10.58'
+        'Item', 'Time claimed', 'Net cost claimed',
+        'Advocacy', '3 hours 10 minutes', '£207.16',
+        'Attendance without counsel', '1 hour 30 minutes', '£78.23',
+        'Travel', '0 hours 23 minutes', '£10.58',
+        'Waiting', '0 hours 23 minutes', '£10.58',
+        'Total', '', '£306.55'
       ]
     )
   end
@@ -97,8 +112,8 @@ RSpec.describe 'View claim page', type: :system do
       find('details').click
       expect(all('details table td, details table th').map(&:text)).to eq(
         [
-          'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed',
-          'Attendance without counsel', '£625.80', '£0.00', '£625.80' # 12 * 52.15
+          'Item', 'Time claimed', 'Net cost claimed',
+          'Attendance without counsel', '12 hours 0 minutes', '£625.80', 'Total', '', '£625.80'
         ]
       )
     end
@@ -217,5 +232,52 @@ RSpec.describe 'View claim page', type: :system do
         'Total cost', '£130.00'
       ]
     )
+  end
+
+  context 'when visiting with an invalid prefix' do
+    it 'raises an error' do
+      expect { visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'fake') }.to raise_error('Invalid prefix: fake')
+    end
+  end
+
+  context 'when adjustments exist' do
+    let(:claim) { create(:claim, :firm_details, :letters_calls, work_items:, disbursements:, assessment_comment:) }
+    let(:work_items) do
+      [
+        build(:work_item, :attendance_without_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
+        build(:work_item, :advocacy, :with_adjustment, time_spent: 104, completed_on: 1.day.ago),
+      ]
+    end
+    let(:disbursements) do
+      [
+        build(:disbursement, :valid, :car, age: 5, miles: 200),
+        build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130, prior_authority: 'yes'),
+      ]
+    end
+
+    it 'show the work items and summary' do
+      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      # items
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          1.day.ago.strftime('%-d %B %Y'),
+          'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Time allowed', 'Uplift allowed',
+          'Net cost allowed', 'Action',
+          'Advocacy', '1 hour 44 minutes', '0%', '£113.39', '0 hours 52 minutes', '0%', '£56.70', 'View'
+        ]
+      )
+
+      # summary
+      find('details').click
+      expect(all('details table td, details table th').map(&:text)).to eq(
+        [
+          'Item', 'Time claimed', 'Net cost claimed', 'Time allowed', 'Net cost allowed',
+          'Advocacy', '1 hour 44 minutes', '£113.39', '0 hours 52 minutes', '£56.70',
+          'Attendance without counsel', '1 hour 30 minutes', '£78.23', '1 hour 30 minutes', '£78.23',
+          'Total', '', '£191.62', '', '£134.92'
+        ]
+      )
+    end
   end
 end
