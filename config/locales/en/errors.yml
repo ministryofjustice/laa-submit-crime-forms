@@ -473,6 +473,7 @@ en:
           attributes:
             add_another:
               blank: "Select yes if you want to add another work item"
+              invalid_item: "You cannot save and continue if any work items are incomplete"
         nsm/steps/supporting_evidence_form:
           attributes:
             supporting_evidence:

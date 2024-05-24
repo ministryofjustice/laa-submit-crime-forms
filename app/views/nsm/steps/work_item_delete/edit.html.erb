@@ -7,7 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m"><%= check_missing(@form_object.record.completed_on) { @form_object.record.completed_on.to_fs(:long) } %></caption>
+      <caption class="govuk-table__caption govuk-table__caption--m"><%=  @form_object.record.completed_on&.to_fs(:long) || t('.unknown_date') %></caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.work_type') %></th>
