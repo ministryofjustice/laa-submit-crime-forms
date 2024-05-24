@@ -333,5 +333,45 @@ RSpec.describe 'View claim page', type: :system do
         ]
       )
     end
+
+    it 'show letters' do
+      visit letters_nsm_steps_view_claim_path(id: claim.id)
+
+      expect(find('h1').text).to eq('Letters')
+      expect(all('table caption, table td').map(&:text)).to eq(
+        [
+          'Adjusted claim',
+          'Number of letters allowed', '1',
+          'Uplift allowed', '0%',
+          'Net cost allowed', '£4.09',
+          'Reason for adjustment', 'Letters adjusted',
+          'Your costs',
+          'Rate applied', '£4.09',
+          'Number of letters', '2',
+          'Uplift', '0%',
+          'Net cost', '£8.18'
+        ]
+      )
+    end
+
+    it 'show calls' do
+      visit calls_nsm_steps_view_claim_path(id: claim.id)
+
+      expect(find('h1').text).to eq('Calls')
+      expect(all('table caption, table td').map(&:text)).to eq(
+        [
+          'Adjusted claim',
+          'Number of calls allowed', '1',
+          'Uplift allowed', '0%',
+          'Net cost allowed', '£4.09',
+          'Reason for adjustment', 'Calls adjusted',
+          'Your costs',
+          'Rate applied', '£4.09',
+          'Number of calls', '3',
+          'Uplift', '0%',
+          'Net cost', '£12.27'
+        ]
+      )
+    end
   end
 end

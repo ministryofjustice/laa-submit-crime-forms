@@ -64,7 +64,7 @@ en:
           no_data: You do not have any letters or calls
         allowed_letters_and_calls:
           page_title: Claim details
-          letters_and_calls: Letters and calls
+          letters_and_calls: Adjusted letters and calls
           item: Item
           number: Number claimed
           uplift: Uplift claimed
@@ -125,7 +125,12 @@ en:
           number: Number of letters
           uplift: Uplift
           net_cost: Net cost
+          allowed_number: Number of letters allowed
+          allowed_uplift: Uplift allowed
+          allowed_net_cost: Net cost allowed
+          adjustment_comment: Reason for adjustment
           your_costs: Your costs
+          adjusted: Adjusted claim
         calls:
           page_title: Claim details
           heading: Calls
@@ -133,7 +138,12 @@ en:
           number: Number of calls
           uplift: Uplift
           net_cost: Net cost
+          allowed_number: Number of calls allowed
+          allowed_uplift: Uplift allowed
+          allowed_net_cost: Net cost allowed
+          adjustment_comment: Reason for adjustment
           your_costs: Your costs
+          adjusted: Adjusted claim
         disbursement:
           page_title: Claim details
           date: Date
