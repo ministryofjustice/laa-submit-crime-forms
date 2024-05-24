@@ -248,7 +248,11 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
                 vat_amount: 0,
                 vat_amount_original: 10,
                 total_cost_without_vat: 0,
-                total_cost_without_vat_original: 100
+                total_cost_without_vat_original: 100,
+                apply_vat: 'false',
+                apply_vat_original: 'true',
+                miles: 100,
+                miles_original: 110
               },
               {
                 id: disbursement_no_vat.id,

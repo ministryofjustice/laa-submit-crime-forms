@@ -374,5 +374,27 @@ prior_authority: 'yes'),
         ]
       )
     end
+
+    it 'show a disbursement' do
+      visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :disbursement, item_id: disbursements.first.id)
+
+      expect(find('h1').text).to eq('Car mileage')
+      expect(all('table caption, table td').map(&:text)).to eq(
+        [
+          'Adjusted claim',
+          'Net cost allowed', '£0.00',
+          'VAT allowed', '£0.00',
+          'Total cost allowed', '£0.00',
+          'Reason for adjustment', 'Disbursement Test',
+          'Your costs',
+          'Date',	5.days.ago.strftime('%-d %B %Y'),
+          'Disbursement type', 'Car mileage',
+          'Disbursement description', 'Details',
+          'Net cost', '£90.00',
+          'VAT', '£18.00',
+          'Total cost', '£108.00'
+        ]
+      )
+    end
   end
 end
