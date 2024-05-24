@@ -245,13 +245,14 @@ RSpec.describe 'View claim page', type: :system do
     let(:work_items) do
       [
         build(:work_item, :attendance_without_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
-        build(:work_item, :advocacy, :with_adjustment, time_spent: 104, completed_on: 1.day.ago),
+        build(:work_item, :advocacy, :with_adjustment, fee_earner: 'BC', time_spent: 104, completed_on: 1.day.ago),
       ]
     end
     let(:disbursements) do
       [
-        build(:disbursement, :valid, :car, age: 5, miles: 200),
+        build(:disbursement, :valid, :with_adjustment, :car, age: 5, miles: 200),
         build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130, prior_authority: 'yes'),
+        build(:disbursement, :valid_other, :with_adjustment, :dna_testing, age: 4, total_cost_without_vat: 100, prior_authority: 'yes'),
       ]
     end
 
@@ -306,6 +307,29 @@ RSpec.describe 'View claim page', type: :system do
           'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Net cost allowed', 'VAT on allowed',
           'Total allowed', 'Action',
           'DNA Testing', '£100.00', '£0.00', '£100.00', '£0.00', '£0.00', '£0.00', 'View'
+        ]
+      )
+    end
+
+    it 'show a work item' do
+      visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :work_item, item_id: work_items.last.id)
+
+      expect(find('h1').text).to eq('Advocacy')
+      expect(all('table caption, table td').map(&:text)).to eq(
+        [
+          'Adjusted claim',
+          'Number of hours allowed', '0 hours 52 minutes',
+          'Uplift allowed', '0%',
+          'Net cost allowed', '£56.70',
+          'Reason for adjustment', 'WI adjustment',
+
+          'Your costs',
+          'Date',	1.day.ago.strftime('%-d %B %Y'),
+          'Fee earner initials', 'BC',
+          'Rate applied', '£65.42',
+          'Number of hours', '1 hour 44 minutes',
+          'Uplift', '0%',
+          'Net cost', '£113.39'
         ]
       )
     end

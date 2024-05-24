@@ -8,6 +8,21 @@
     <h1 class="govuk-heading-xl"><%= work_item.translated_work_type[I18n.locale] %></h1>
 
     <%=
+      if work_item.adjustment_comment
+        rows = [
+          [{ text: t(".allowed_hours"), width: 'govuk-!-width-one-half' }, format_period(work_item.allowed_time_spent || work_item.time_spent)],
+          [t(".allowed_uplift"), NumberTo.percentage((work_item.allowed_uplift || work_item.uplift).to_f, multiplier: 1)],
+          [t(".allowed_net_cost"), NumberTo.pounds(work_item.allowed_total_cost)],
+          [t(".adjustment_comment"), work_item.adjustment_comment]
+        ]
+
+        govuk_table do |table|
+          table.with_caption(text: t('.adjusted'))
+          table.with_body(rows: rows)
+        end
+      end
+    %>
+    <%=
       rows = [
         [{ text: t(".date"), width: 'govuk-!-width-one-half' }, work_item.completed_on.strftime('%-d %B %Y')],
         [t(".fee_earner"), work_item.fee_earner],

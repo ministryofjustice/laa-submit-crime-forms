@@ -35,7 +35,7 @@ en:
           total: Total
         allowed_work_items:
           page_title: Claim details
-          work_items: Work items
+          work_items: Adjusted work items
           check_totals: Work item summary
           view: View
           item: Item
@@ -112,7 +112,12 @@ en:
           hours: Number of hours
           uplift: Uplift
           net_cost: Net cost
+          allowed_hours: Number of hours allowed
+          allowed_uplift: Uplift allowed
+          allowed_net_cost: Net cost allowed
+          adjustment_comment: Reason for adjustment
           your_costs: Your costs
+          adjusted: Adjusted claim
         letters:
           page_title: Claim details
           heading: Letters
