@@ -170,6 +170,14 @@ FactoryBot.define do
       end
     end
 
+    trait :adjusted_letters_calls do
+      letters_calls
+      allowed_letters { letters && (letters / 2) }
+      allowed_calls { calls && (calls / 2) }
+      letters_adjustment_comment { 'Letters adjusted' }
+      calls_adjustment_comment { 'Calls adjusted' }
+    end
+
     trait :letters_calls_uplift do
       letters_uplift { 10 }
       calls_uplift { 20 }

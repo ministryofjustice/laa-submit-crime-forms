@@ -32,11 +32,11 @@ module LaaMultiStepForms
       ENV.fetch('ENV', 'local').capitalize
     end
 
-    def format_period(period)
-      return if period.nil?
+    def format_period(period, style: :short)
+      return period if period.blank?
 
-      t('helpers.time_period.hours', count: period / 60) +
-        t('helpers.time_period.minutes', count: period % 60)
+      t("helpers.time_period.hours.#{style}", count: period / 60) +
+        t("helpers.time_period.minutes.#{style}", count: period % 60)
     end
 
     def gbp_field_value(value)

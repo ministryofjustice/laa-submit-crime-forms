@@ -9,6 +9,7 @@
     <p><%= t('.no_data') %></p>
   <% else %>
     <%
+      pagy, disbursements = pagy(@disbursements)
       head = [
         { text: t('.item'), width: 'govuk-!-width-one-quarter' },
         { text: t('.net_cost'), numeric: true },
@@ -16,7 +17,7 @@
         { text: t('.gross_cost'), numeric: true },
         { text: t('.action'), numeric: true }
       ]
-      @disbursements.group_by { _1.record.disbursement_date }.each do |disbursement_date, disbursements_for_date| %>
+      disbursements.group_by { _1.record.disbursement_date }.each do |disbursement_date, disbursements_for_date| %>
       <%=
         rows = disbursements_for_date.map do |disbursement|
           link = link_to(t('.view'), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :disbursement, item_id: disbursement.record.id), data: { turbo: 'false' })

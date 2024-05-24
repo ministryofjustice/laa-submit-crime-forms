@@ -9,12 +9,16 @@ en:
           tabs:
             overview: Overview
             claimed_costs: Claimed costs
+            adjustments: Adjusted costs
         section:
           page_title: Claim details
         adjustments:
           work_items: Work items
           letters_and_calls: Letters and calls
           disbursements: Disbursements
+          allowed_work_items: Adjusted work items
+          allowed_letters_and_calls: Adjusted letters and calls
+          allowed_disbursements: Adjusted disbursements
         work_items:
           page_title: Claim details
           work_items: Work items
@@ -28,6 +32,24 @@ en:
           vat: VAT on claimed
           gross_cost: Total claimed
           table_info_item: work item
+          total: Total
+        allowed_work_items:
+          page_title: Claim details
+          work_items: Work items
+          check_totals: Work item summary
+          view: View
+          item: Item
+          time: Time claimed
+          uplift: Uplift claimed
+          net_cost: Net cost claimed
+          action: Action
+          allowed_time: Time allowed
+          allowed_uplift: Uplift allowed
+          allowed_net_cost: Net cost allowed
+          vat: VAT on claimed
+          gross_cost: Total claimed
+          table_info_item: work item
+          total: Total
         letters_and_calls:
           page_title: Claim details
           letters_and_calls: Letters and calls
@@ -35,6 +57,21 @@ en:
           number: Number claimed
           uplift: Uplift claimed
           net_cost: Net cost claimed
+          action: Action
+          view: View
+          letters: Letters
+          calls: Calls
+          no_data: You do not have any letters or calls
+        allowed_letters_and_calls:
+          page_title: Claim details
+          letters_and_calls: Letters and calls
+          item: Item
+          number: Number claimed
+          uplift: Uplift claimed
+          net_cost: Net cost claimed
+          allowed_number: Number allowed
+          allowed_uplift: Uplift allowed
+          allowed_net_cost: Net cost allowed
           action: Action
           view: View
           letters: Letters

@@ -3,11 +3,12 @@
 module Nsm
   module CheckAnswers
     class AdjustmentsCard < Base
-      attr_reader :claim, :work_items
+      attr_reader :claim, :work_items, :prefix
 
-      def initialize(claim)
+      def initialize(claim, prefix: '')
         @claim = claim
         @has_card = false
+        @prefix = prefix
       end
 
       def rows
@@ -17,7 +18,7 @@ module Nsm
       def custom
         {
           partial: 'nsm/steps/view_claim/adjustments',
-          locals: { claim: }
+          locals: { claim:, prefix: }
         }
       end
 

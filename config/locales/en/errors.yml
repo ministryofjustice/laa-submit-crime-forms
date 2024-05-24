@@ -42,6 +42,12 @@ en:
         sign_in_button: Sign in with LAA Portal
       not_enrolled:
         page_title: Account not enrolled
+        heading: Your account cannot use this service yet
+        body_html: |
+          We will contact you to let you know when you can start using this service.<br>
+          <br>
+          Until then you should <a class="govuk-link" rel="external" href="https://portal.legalservices.gov.uk/oamfed/idp/initiatesso?providerid=eForms">continue using eForms</a>.
+
 
   activemodel:
     errors:
