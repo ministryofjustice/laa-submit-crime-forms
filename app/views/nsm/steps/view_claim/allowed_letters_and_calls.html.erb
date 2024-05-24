@@ -1,0 +1,55 @@
+<% title t('.page_title') %>
+
+<turbo-frame id="letters_and_calls">
+  <h3 class="govuk-heading-m">
+    <%= t('.letters_and_calls') %>
+  </h3>
+
+  <%
+    head = [
+      { text: t('.item'), width: 'govuk-!-width-one-quarter' },
+      { text: t('.number'), numeric: true },
+      { text: t('.uplift'), numeric: true },
+      { text: t('.net_cost'), numeric: true },
+      { text: t('.allowed_number'), numeric: true },
+      { text: t('.allowed_uplift'), numeric: true },
+      { text: t('.allowed_net_cost'), numeric: true },
+      { text: t('.action'), numeric: true }
+    ]
+    letters_link = link_to(t('.view'), letters_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
+    calls_link = link_to(t('.view'), calls_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
+    rows = [
+      ([
+        t(".letters"),
+        { text: @claim.letters, numeric: true },
+        { text: NumberTo.percentage(@claim.letters_uplift.to_f, multiplier: 1), numeric: true },
+        { text: NumberTo.pounds(@claim.letters_after_uplift), numeric: true },
+        { text: @claim.allowed_letters || @claim.letters, numeric: true },
+        { text: NumberTo.percentage((@claim.allowed_letters_uplift || @claim.letters_uplift).to_f, multiplier: 1), numeric: true },
+        { text: NumberTo.pounds(@claim.allowed_letters_after_uplift), numeric: true },
+        { text: letters_link, numeric: true }
+      ] if @claim.letters_adjustment_comment),
+      ([
+        t(".calls"),
+        { text: @claim.calls, numeric: true },
+        { text: NumberTo.percentage(@claim.calls_uplift.to_f, multiplier: 1), numeric: true },
+        { text: NumberTo.pounds(@claim.calls_after_uplift), numeric: true },
+        { text: @claim.allowed_calls || @claim.calls, numeric: true },
+        { text: NumberTo.percentage((@claim.allowed_calls_uplift || @claim.calls_uplift).to_f, multiplier: 1), numeric: true },
+        { text: NumberTo.pounds(@claim.allowed_calls_after_uplift), numeric: true },
+        { text: calls_link, numeric: true }
+      ] if @claim.calls_adjustment_comment)
+    ].compact
+  %>
+  <% if rows.none? %>
+    <p><%= t('.no_data') %></p>
+  <% else %>
+    <%=
+
+      govuk_table(classes: 'govuk-!-margin-bottom-0') do |table|
+        table.with_head(rows: [head])
+        table.with_body(rows: rows, first_cell_is_header: true)
+      end
+    %>
+  <% end %>
+</turbo-frame>
