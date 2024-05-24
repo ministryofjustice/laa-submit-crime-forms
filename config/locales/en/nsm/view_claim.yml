@@ -88,6 +88,20 @@ en:
           view: View
           table_info_item: disbursement
           no_data: You do not have any disbursements
+        allowed_disbursements:
+          page_title: Claim details
+          disbursements: Adjusted disbursements
+          item: Item
+          net_cost: Net cost claimed
+          vat: VAT on claimed
+          gross_cost: Total claimed
+          allowed_net_cost: Net cost allowed
+          allowed_vat: VAT on allowed
+          allowed_gross_cost: Total allowed
+          action: Action
+          view: View
+          table_info_item: disbursement
+          no_data: You do not have any disbursements
         granted_response: The claim has been fully granted.
         # view pages
         work_item:

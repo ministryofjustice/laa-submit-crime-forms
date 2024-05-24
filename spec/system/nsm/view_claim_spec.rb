@@ -292,5 +292,22 @@ RSpec.describe 'View claim page', type: :system do
         ]
       )
     end
+
+    it 'show the disbursements page' do
+      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          5.days.ago.strftime('%-d %B %Y'),
+          'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Net cost allowed', 'VAT on allowed',
+          'Total allowed', 'Action',
+          'Car mileage', '£90.00', '£18.00', '£108.00', '£0.00', '£0.00', '£0.00', 'View',
+          4.days.ago.strftime('%-d %B %Y'),
+          'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Net cost allowed', 'VAT on allowed',
+          'Total allowed', 'Action',
+          'DNA Testing', '£100.00', '£0.00', '£100.00', '£0.00', '£0.00', '£0.00', 'View'
+        ]
+      )
+    end
   end
 end
