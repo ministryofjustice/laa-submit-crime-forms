@@ -20,6 +20,8 @@ module Nsm
           sync_overall_comment
           sync_work_items
           sync_disbursements
+          # save here to avoid multiple DB updates on claim during the process
+          claim.save
         end
       when 'provider_requested', 'further_info', 'rejected'
         sync_overall_comment
@@ -34,29 +36,30 @@ module Nsm
       event_type = claim.provider_requested? || claim.further_info? ? 'send_back' : 'decision'
       comment_event = app_store_record['events'].select { _1['event_type'] == event_type }
                                                 .max_by { DateTime.parse(_1['created_at']) }
-      claim.update(assessment_comment: comment_event.dig('details', 'comment'))
+      claim.assessment_comment = comment_event.dig('details', 'comment')
     end
 
     def sync_letter_adjustments
       record = letters
-      claim.update(allowed_letters: record['count']) if record['count_original'].present?
-      claim.update(allowed_letters_uplift: record['uplift']) if record['uplift_original'].present?
-      claim.update(letters_adjustment_comment: record['adjustment_comment']) if record['adjustment_comment'].present?
+      claim.allowed_letters = record['count'] if record['count_original'].present?
+      claim.allowed_letters_uplift = record['uplift'] if record['uplift_original'].present?
+      claim.letters_adjustment_comment = record['adjustment_comment'] if record['adjustment_comment'].present?
     end
 
     def sync_call_adjustments
       record = calls
-      claim.update(allowed_calls: record['count']) if record['count_original'].present?
-      claim.update(allowed_calls_uplift: record['uplift']) if record['uplift_original'].present?
-      claim.update(calls_adjustment_comment: record['adjustment_comment']) if record['adjustment_comment'].present?
+      claim.allowed_calls = record['count'] if record['count_original'].present?
+      claim.allowed_calls_uplift = record['uplift'] if record['uplift_original'].present?
+      claim.calls_adjustment_comment = record['adjustment_comment'] if record['adjustment_comment'].present?
     end
 
     def sync_work_items
       work_items.each do |work_item|
         record = claim.work_items.find(work_item['id'])
-        record.update(allowed_time_spent: work_item['time_spent']) if work_item['time_spent_original'].present?
-        record.update(allowed_uplift: work_item['uplift']) if work_item['uplift_original'].present?
-        record.update(adjustment_comment: work_item['adjustment_comment']) if work_item['adjustment_comment'].present?
+        record.allowed_time_spent = work_item['time_spent'] if work_item['time_spent_original'].present?
+        record.allowed_uplift = work_item['uplift'] if work_item['uplift_original'].present?
+        record.adjustment_comment = work_item['adjustment_comment'] if work_item['adjustment_comment'].present?
+        record.save
       end
     end
 
