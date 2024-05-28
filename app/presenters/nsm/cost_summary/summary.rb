@@ -67,6 +67,14 @@ module Nsm
         profit_costs_gross + waiting_gross + travel_gross + disbursements_gross
       end
 
+      def total_gross_allowed
+        [
+          @claim.work_items.sum(&:allowed_total_cost) || 0,
+          @claim.disbursements.sum(&:allowed_total_cost) || 0,
+          @claim.allowed_letters_and_calls_total_cost || 0
+        ].sum
+      end
+
       private
 
       def work_items_total(work_type)
