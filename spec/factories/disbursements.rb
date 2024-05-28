@@ -12,7 +12,7 @@ FactoryBot.define do
       total_cost_without_vat do |disb|
         Pricing.for(Claim.new)[disb.disbursement_type] * disb.miles
       end
-      prior_authority { total_cost_without_vat >= 100 ? 'yes' : nil }
+      prior_authority { total_cost_without_vat >= 100 ? 'yes' : 'no' }
       details { 'Details' }
       apply_vat { 'true' }
       vat_amount { apply_vat == 'true' ? total_cost_without_vat * 0.2 : nil }
@@ -63,7 +63,7 @@ FactoryBot.define do
     trait :authed do
       total_cost_without_vat { 100.0 }
       details { 'Details' }
-      prior_authority { 'true' }
+      prior_authority { 'yes' }
     end
 
     trait :partial do
@@ -71,6 +71,7 @@ FactoryBot.define do
     end
 
     trait :with_adjustment do
+      allowed_miles { 0 }
       allowed_total_cost_without_vat { 0 }
       allowed_vat_amount { apply_vat ? 0 : nil }
       adjustment_comment { 'Disbursement Test' }

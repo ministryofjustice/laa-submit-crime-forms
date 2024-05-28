@@ -9,7 +9,9 @@
 
     <%=
       if disbursement.adjustment_comment
+        allowed_miles = disbursement.allowed_miles || disbursement.miles
         rows = [
+          ([{ text: t(".allowed_miles"), width: 'govuk-!-width-one-half' }, t(".mileage", count: allowed_miles, miles: NumberTo.formatted(allowed_miles))] if disbursement.miles),
           [{ text: t(".allowed_net_cost"), width: 'govuk-!-width-one-half' }, NumberTo.pounds(disbursement.allowed_total_cost_pre_vat)],
           [t(".allowed_vat"), NumberTo.pounds(disbursement.allowed_vat)],
           [t(".allowed_gross_cost"), NumberTo.pounds(disbursement.allowed_total_cost)],
@@ -27,7 +29,8 @@
         [{ text: t(".date"), width: 'govuk-!-width-one-half' }, disbursement.disbursement_date.strftime('%-d %B %Y')],
         [t(".type"), disbursement.translated_disbursement_type],
         [t(".details"), multiline_text(disbursement.details)],
-        ([t(".prior_auth"), disbursement.prior_authority.humanize] if disbursement.auth_required?),
+        [t(".prior_auth"), disbursement.prior_authority.humanize],
+        ([t(".miles"), t(".mileage", count: disbursement.miles, miles: NumberTo.formatted(disbursement.miles))] if disbursement.miles),
         [t(".net_cost"), NumberTo.pounds(disbursement.total_cost_pre_vat)],
         [t(".vat"), NumberTo.pounds(disbursement.vat)],
         [t(".gross_cost"), NumberTo.pounds(disbursement.total_cost)]

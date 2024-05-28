@@ -15,7 +15,7 @@ RSpec.describe 'View claim page', type: :system do
   let(:disbursements) do
     [
       build(:disbursement, :valid, :car, age: 5, miles: 200),
-      build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130, prior_authority: 'yes'),
+      build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130),
       build(:disbursement, :valid_other, age: 3, other_type: 'Custom', total_cost_without_vat: 40),
       build(:disbursement, :valid, :car, age: 2, miles: 150),
     ]
@@ -209,27 +209,11 @@ RSpec.describe 'View claim page', type: :system do
         'Date',	5.days.ago.strftime('%-d %B %Y'),
         'Disbursement type', 'Car mileage',
         'Disbursement description', 'Details',
+        'Prior authority granted?', 'No',
+        'Mileage', '200 miles',
         'Net cost', '£90.00',
         'VAT', '£18.00',
         'Total cost', '£108.00'
-      ]
-    )
-  end
-
-  it 'show a disbursement - with prior auth' do
-    visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :disbursement, item_id: disbursements[1].id)
-
-    expect(find('h1').text).to eq('DNA Testing')
-    expect(all('table caption, table td').map(&:text)).to eq(
-      [
-        'Your costs',
-        'Date',	3.days.ago.strftime('%-d %B %Y'),
-        'Disbursement type', 'DNA Testing',
-        'Disbursement description', 'Details',
-        'Prior authority granted?', 'Yes',
-        'Net cost', '£130.00',
-        'VAT', '£0.00',
-        'Total cost', '£130.00'
       ]
     )
   end
@@ -376,9 +360,9 @@ prior_authority: 'yes'),
     end
 
     it 'show a disbursement' do
-      visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :disbursement, item_id: disbursements.first.id)
+      visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :disbursement, item_id: disbursements.last.id)
 
-      expect(find('h1').text).to eq('Car mileage')
+      expect(find('h1').text).to eq('DNA Testing')
       expect(all('table caption, table td').map(&:text)).to eq(
         [
           'Adjusted claim',
@@ -387,9 +371,35 @@ prior_authority: 'yes'),
           'Total cost allowed', '£0.00',
           'Reason for adjustment', 'Disbursement Test',
           'Your costs',
+          'Date',	4.days.ago.strftime('%-d %B %Y'),
+          'Disbursement type', 'DNA Testing',
+          'Disbursement description', 'Details',
+          'Prior authority granted?', 'Yes',
+          'Net cost', '£100.00',
+          'VAT', '£0.00',
+          'Total cost', '£100.00'
+        ]
+      )
+    end
+
+    it 'show a disbursement - with miles' do
+      visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :disbursement, item_id: disbursements.first.id)
+
+      expect(find('h1').text).to eq('Car mileage')
+      expect(all('table caption, table td').map(&:text)).to eq(
+        [
+          'Adjusted claim',
+          'Mileage allowed', '0 miles',
+          'Net cost allowed', '£0.00',
+          'VAT allowed', '£0.00',
+          'Total cost allowed', '£0.00',
+          'Reason for adjustment', 'Disbursement Test',
+          'Your costs',
           'Date',	5.days.ago.strftime('%-d %B %Y'),
           'Disbursement type', 'Car mileage',
           'Disbursement description', 'Details',
+          'Prior authority granted?', 'No',
+          'Mileage', '200 miles',
           'Net cost', '£90.00',
           'VAT', '£18.00',
           'Total cost', '£108.00'

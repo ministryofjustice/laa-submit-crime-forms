@@ -89,10 +89,10 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
         )
       end
 
-      context 'no work items' do
+      context 'no adjustements' do
         let(:claim) { create(:claim, :part_granted_status, :firm_details, :updated_at, assessment_comment:) }
 
-        it 'generates part granted rows' do
+        it 'generates no links in text' do
           expect(subject.row_data).to match(
             [
               {
