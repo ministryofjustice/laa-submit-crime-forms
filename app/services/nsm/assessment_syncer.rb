@@ -61,13 +61,14 @@ module Nsm
     end
 
     def sync_disbursements
+      fields = %w[total_cost_without_vat miles apply_vat vat_amount]
       disbursements.each do |disbursement|
         record = claim.disbursements.find(disbursement['id'])
-        if disbursement['total_cost_without_vat_original'].present?
-          record.update(allowed_total_cost_without_vat: disbursement['total_cost_without_vat'])
+        fields.each do |field|
+          record["allowed_#{field}"] = disbursement[field] if disbursement["#{field}_original"]
         end
-        record.update(allowed_vat_amount: disbursement['vat_amount']) if disbursement['vat_amount_original'].present?
-        record.update(adjustment_comment: disbursement['adjustment_comment'])
+        record.adjustment_comment = disbursement['adjustment_comment']
+        record.save
       end
     end
 
