@@ -248,7 +248,11 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
                 vat_amount: 0,
                 vat_amount_original: 10,
                 total_cost_without_vat: 0,
-                total_cost_without_vat_original: 100
+                total_cost_without_vat_original: 100,
+                apply_vat: 'false',
+                apply_vat_original: 'true',
+                miles: 100,
+                miles_original: 110
               },
               {
                 id: disbursement_no_vat.id,
@@ -274,15 +278,23 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       end
 
       it 'syncs adjusted disbursement' do
-        expect(disbursement_with_vat.allowed_vat_amount).to eq 0
-        expect(disbursement_with_vat.adjustment_comment).to eq 'Removed disbursement'
-        expect(disbursement_with_vat.allowed_total_cost_without_vat).to eq 0
+        expect(disbursement_with_vat).to have_attributes(
+          allowed_vat_amount: 0,
+          adjustment_comment: 'Removed disbursement',
+          allowed_total_cost_without_vat: 0,
+          allowed_miles: 100,
+          allowed_apply_vat: 'false'
+        )
       end
 
       it 'does not sync non adjusted disbursement' do
-        expect(disbursement_no_vat.allowed_vat_amount).to be_nil
-        expect(disbursement_no_vat.adjustment_comment).to be_nil
-        expect(disbursement_no_vat.allowed_total_cost_without_vat).to be_nil
+        expect(disbursement_no_vat).to have_attributes(
+          allowed_vat_amount: nil,
+          adjustment_comment: nil,
+          allowed_total_cost_without_vat: nil,
+          allowed_miles: nil,
+          allowed_apply_vat: nil
+        )
       end
     end
 
