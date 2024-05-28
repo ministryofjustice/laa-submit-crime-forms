@@ -245,13 +245,15 @@ RSpec.describe 'View claim page', type: :system do
     let(:work_items) do
       [
         build(:work_item, :attendance_without_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
-        build(:work_item, :advocacy, :with_adjustment, time_spent: 104, completed_on: 1.day.ago),
+        build(:work_item, :advocacy, :with_adjustment, fee_earner: 'BC', time_spent: 104, completed_on: 1.day.ago),
       ]
     end
     let(:disbursements) do
       [
-        build(:disbursement, :valid, :car, age: 5, miles: 200),
+        build(:disbursement, :valid, :with_adjustment, :car, age: 5, miles: 200),
         build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130, prior_authority: 'yes'),
+        build(:disbursement, :valid_other, :with_adjustment, :dna_testing, age: 4, total_cost_without_vat: 100,
+prior_authority: 'yes'),
       ]
     end
 
@@ -289,6 +291,86 @@ RSpec.describe 'View claim page', type: :system do
           'Net cost allowed', 'Action',
           'Letters', '2', '0%', '£8.18', '1', '0%', '£4.09', 'View',
           'Calls', '3', '0%', '£12.27', '1', '0%', '£4.09', 'View'
+        ]
+      )
+    end
+
+    it 'show the disbursements page' do
+      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          5.days.ago.strftime('%-d %B %Y'),
+          'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Net cost allowed', 'VAT on allowed',
+          'Total allowed', 'Action',
+          'Car mileage', '£90.00', '£18.00', '£108.00', '£0.00', '£0.00', '£0.00', 'View',
+          4.days.ago.strftime('%-d %B %Y'),
+          'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Net cost allowed', 'VAT on allowed',
+          'Total allowed', 'Action',
+          'DNA Testing', '£100.00', '£0.00', '£100.00', '£0.00', '£0.00', '£0.00', 'View'
+        ]
+      )
+    end
+
+    it 'show a work item' do
+      visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :work_item, item_id: work_items.last.id)
+
+      expect(find('h1').text).to eq('Advocacy')
+      expect(all('table caption, table td').map(&:text)).to eq(
+        [
+          'Adjusted claim',
+          'Number of hours allowed', '0 hours 52 minutes',
+          'Uplift allowed', '0%',
+          'Net cost allowed', '£56.70',
+          'Reason for adjustment', 'WI adjustment',
+
+          'Your costs',
+          'Date',	1.day.ago.strftime('%-d %B %Y'),
+          'Fee earner initials', 'BC',
+          'Rate applied', '£65.42',
+          'Number of hours', '1 hour 44 minutes',
+          'Uplift', '0%',
+          'Net cost', '£113.39'
+        ]
+      )
+    end
+
+    it 'show letters' do
+      visit letters_nsm_steps_view_claim_path(id: claim.id)
+
+      expect(find('h1').text).to eq('Letters')
+      expect(all('table caption, table td').map(&:text)).to eq(
+        [
+          'Adjusted claim',
+          'Number of letters allowed', '1',
+          'Uplift allowed', '0%',
+          'Net cost allowed', '£4.09',
+          'Reason for adjustment', 'Letters adjusted',
+          'Your costs',
+          'Rate applied', '£4.09',
+          'Number of letters', '2',
+          'Uplift', '0%',
+          'Net cost', '£8.18'
+        ]
+      )
+    end
+
+    it 'show calls' do
+      visit calls_nsm_steps_view_claim_path(id: claim.id)
+
+      expect(find('h1').text).to eq('Calls')
+      expect(all('table caption, table td').map(&:text)).to eq(
+        [
+          'Adjusted claim',
+          'Number of calls allowed', '1',
+          'Uplift allowed', '0%',
+          'Net cost allowed', '£4.09',
+          'Reason for adjustment', 'Calls adjusted',
+          'Your costs',
+          'Rate applied', '£4.09',
+          'Number of calls', '3',
+          'Uplift', '0%',
+          'Net cost', '£12.27'
         ]
       )
     end
