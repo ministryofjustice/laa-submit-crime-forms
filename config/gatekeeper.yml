@@ -51,7 +51,7 @@ uat:
 
 production:
   office_codes:
-    2N232W: ['crm7', 'crm4', 'crm5'] # dummy user/office
+    2N232W: ['crm5'] # dummy user/office
 
     # First CRM5 onboarding tranche - 29/05/2024
     2L672A: ['crm5']
