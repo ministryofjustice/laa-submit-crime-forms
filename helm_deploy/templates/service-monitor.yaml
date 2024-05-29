@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: laa-submit-crime-forms-app
+      app: {{ include "laa-submit-crime-forms.fullname" . }}
   endpoints:
   - port: http
     interval: 15s
