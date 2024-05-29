@@ -5,16 +5,19 @@
     <%= t('.disbursements') %>
   </h3>
 
-  <% if @disbursements.size.zero? %>
+  <% pagy, disbursements = pagy(@disbursements.where.not(adjustment_comment: nil)) %>
+  <% if disbursements.size.zero? %>
     <p><%= t('.no_data') %></p>
   <% else %>
     <%
-      pagy, disbursements = pagy(@disbursements)
       head = [
         { text: t('.item'), width: 'govuk-!-width-one-quarter' },
         { text: t('.net_cost'), numeric: true },
         { text: t('.vat'), numeric: true },
         { text: t('.gross_cost'), numeric: true },
+        { text: t('.allowed_net_cost'), numeric: true },
+        { text: t('.allowed_vat'), numeric: true },
+        { text: t('.allowed_gross_cost'), numeric: true },
         { text: t('.action'), numeric: true }
       ]
       disbursements.group_by { _1.record.disbursement_date }.each do |disbursement_date, disbursements_for_date| %>
@@ -27,6 +30,9 @@
             { text: NumberTo.pounds(disbursement.total_cost_without_vat), numeric: true },
             { text: NumberTo.pounds(disbursement.vat), numeric: true },
             { text: NumberTo.pounds(disbursement.total_cost), numeric: true },
+            { text: NumberTo.pounds(disbursement.allowed_total_cost_without_vat), numeric: true },
+            { text: NumberTo.pounds(disbursement.allowed_vat), numeric: true },
+            { text: NumberTo.pounds(disbursement.allowed_total_cost), numeric: true },
             { text: link, numeric: true }
           ]
         end

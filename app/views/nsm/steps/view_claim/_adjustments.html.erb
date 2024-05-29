@@ -2,33 +2,33 @@
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
       <a class="govuk-tabs__tab" href="#work-items-tab">
-        <%= t('.work_items') %>
+        <%= t(".#{prefix}work_items") %>
       </a>
     </li>
     <li class="govuk-tabs__list-item">
       <a class="govuk-tabs__tab" href="#letters-and-calls-tab">
-        <%= t('.letters_and_calls') %>
+        <%= t(".#{prefix}letters_and_calls") %>
       </a>
     </li>
     <li class="govuk-tabs__list-item">
       <a class="govuk-tabs__tab" href="#disbursements-tab">
-        <%= t('.disbursements') %>
+        <%= t(".#{prefix}disbursements") %>
       </a>
     </li>
   </ul>
 
   <div class="govuk-tabs__panel" id="work-items-tab">
-    <%= turbo_frame_tag 'work_items', src: work_items_nsm_steps_view_claim_path(claim), loading: :lazy do %>
+    <%= turbo_frame_tag 'work_items', src: work_items_nsm_steps_view_claim_path(claim, prefix:), loading: :lazy do %>
       Loading
     <% end %>
   </div>
   <div class="govuk-tabs__panel" id="letters-and-calls-tab">
-    <%= turbo_frame_tag 'letters_and_calls', src: letters_and_calls_nsm_steps_view_claim_path(claim), loading: :lazy do %>
+    <%= turbo_frame_tag 'letters_and_calls', src: letters_and_calls_nsm_steps_view_claim_path(claim, prefix:), loading: :lazy do %>
       Loading
     <% end %>
   </div>
   <div class="govuk-tabs__panel" id="disbursements-tab">
-    <%= turbo_frame_tag 'disbursements', src: disbursements_nsm_steps_view_claim_path(claim), loading: :lazy do %>
+    <%= turbo_frame_tag 'disbursements', src: disbursements_nsm_steps_view_claim_path(claim, prefix:), loading: :lazy do %>
       Loading
     <% end %>
   </div>

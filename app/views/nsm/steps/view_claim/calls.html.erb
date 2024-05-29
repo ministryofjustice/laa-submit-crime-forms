@@ -5,6 +5,21 @@
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
     <%=
+      if @claim.calls_adjustment_comment
+        rows = [
+          [{ text: t(".allowed_number"), width: 'govuk-!-width-one-half' }, (@claim.allowed_calls || @claim.calls).to_s],
+          [t(".allowed_uplift"), NumberTo.percentage((@claim.allowed_calls_uplift || @claim.calls_uplift).to_f, multiplier: 1)],
+          [t(".allowed_net_cost"), NumberTo.pounds(@claim.allowed_calls_after_uplift)],
+          [t(".adjustment_comment"), @claim.calls_adjustment_comment]
+        ]
+
+        govuk_table do |table|
+          table.with_caption(text: t('.adjusted'))
+          table.with_body(rows: rows)
+        end
+      end
+    %>
+    <%=
       rows = [
         [{ text: t(".rate"), width: 'govuk-!-width-one-half' }, NumberTo.pounds(@claim.pricing.calls)],
         [t(".number"), @claim.calls.to_s],

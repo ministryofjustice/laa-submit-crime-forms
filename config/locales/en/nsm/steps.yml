@@ -124,7 +124,7 @@ en:
             change: Change
             duplicate: Duplicate
             delete: Delete
-          completed_date_blank: Completed date not set
+          unknown_date: Unknown date
       work_item_delete:
         edit:
           page_title: Are you sure you want to delete this work item?
@@ -134,8 +134,8 @@ en:
             period: Time spent
             fee_earner: Fee earner
           total_cost: Total cost
-          completed_date_blank: Completed date not set
           deleted_flash: The work item was deleted
+          unknown_date: Unknown date
       disbursement_add:
         edit:
           page_title: Do you need to claim a disbursement
@@ -163,18 +163,18 @@ en:
             details: Details
             change: Change
             delete: Delete
-          disbursement_date_blank: '*required'
+          unknown_date: Unknown date
           add_another: Do you want to add another disbursement?
           change: Change
           delete: Delete
       disbursement_delete:
         edit:
+          page_title: Are you sure you want to delete this disbursement?
           heading: Are you sure you want to delete this disbursement?
           headers:
             type: Type
             cost: Cost
             details: Details
-          disbursement_date_blank: '*required'
           deleted_flash: The disbursement was deleted
       cost_summary:
         show:

@@ -70,6 +70,12 @@ FactoryBot.define do
       disbursement_date { Date.yesterday }
     end
 
+    trait :with_adjustment do
+      allowed_total_cost_without_vat { 0 }
+      allowed_vat_amount { apply_vat ? 0 : nil }
+      adjustment_comment { 'Disbursement Test' }
+    end
+
     DisbursementTypes.values.each do |type|
       trait type.to_s.to_sym do
         disbursement_type { type.to_s }

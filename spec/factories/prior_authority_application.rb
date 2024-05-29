@@ -33,7 +33,7 @@ FactoryBot.define do
     end
 
     trait :with_case_details do
-      main_offence_id { 'jaywalking' }
+      main_offence_id { 'robbery' }
       rep_order_date { date - rand(10..365) }
       client_detained { false }
       subject_to_poca { false }

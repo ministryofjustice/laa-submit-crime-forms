@@ -14,7 +14,8 @@ module Nsm
           supporting_evidence
           equality_answers
         ].freeze,
-        claimed_costs: %w[cost_summary costs].freeze
+        claimed_costs: %w[cost_summary costs].freeze,
+        adjustments: %w[cost_summary adjusted_costs].freeze
       }.freeze
 
       attr_reader :claim
@@ -71,6 +72,10 @@ module Nsm
 
       def costs_section
         [AdjustmentsCard.new(claim)]
+      end
+
+      def adjusted_costs_section
+        [AdjustmentsCard.new(claim, prefix: 'allowed_')]
       end
 
       def cost_summary_section

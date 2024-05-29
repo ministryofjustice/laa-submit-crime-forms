@@ -39,6 +39,14 @@ module LettersAndCallsCosts
     end
   end
 
+  def allowed_letters_after_uplift
+    (allowed_letters || letters).to_d * pricing.letters * (1 + ((allowed_letters_uplift || letters_uplift).to_d / 100))
+  end
+
+  def allowed_calls_after_uplift
+    (allowed_calls || calls).to_d * pricing.calls * (1 + ((allowed_calls_uplift || calls_uplift).to_d / 100))
+  end
+
   def letters_and_calls_total_cost
     return unless letters_after_uplift&.positive? || calls_after_uplift&.positive?
 

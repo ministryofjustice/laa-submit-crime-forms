@@ -9,12 +9,16 @@ en:
           tabs:
             overview: Overview
             claimed_costs: Claimed costs
+            adjustments: Adjusted costs
         section:
           page_title: Claim details
         adjustments:
           work_items: Work items
           letters_and_calls: Letters and calls
           disbursements: Disbursements
+          allowed_work_items: Adjusted work items
+          allowed_letters_and_calls: Adjusted letters and calls
+          allowed_disbursements: Adjusted disbursements
         work_items:
           page_title: Claim details
           work_items: Work items
@@ -28,6 +32,24 @@ en:
           vat: VAT on claimed
           gross_cost: Total claimed
           table_info_item: work item
+          total: Total
+        allowed_work_items:
+          page_title: Claim details
+          work_items: Adjusted work items
+          check_totals: Work item summary
+          view: View
+          item: Item
+          time: Time claimed
+          uplift: Uplift claimed
+          net_cost: Net cost claimed
+          action: Action
+          allowed_time: Time allowed
+          allowed_uplift: Uplift allowed
+          allowed_net_cost: Net cost allowed
+          vat: VAT on claimed
+          gross_cost: Total claimed
+          table_info_item: work item
+          total: Total
         letters_and_calls:
           page_title: Claim details
           letters_and_calls: Letters and calls
@@ -35,6 +57,21 @@ en:
           number: Number claimed
           uplift: Uplift claimed
           net_cost: Net cost claimed
+          action: Action
+          view: View
+          letters: Letters
+          calls: Calls
+          no_data: You do not have any letters or calls
+        allowed_letters_and_calls:
+          page_title: Claim details
+          letters_and_calls: Adjusted letters and calls
+          item: Item
+          number: Number claimed
+          uplift: Uplift claimed
+          net_cost: Net cost claimed
+          allowed_number: Number allowed
+          allowed_uplift: Uplift allowed
+          allowed_net_cost: Net cost allowed
           action: Action
           view: View
           letters: Letters
@@ -51,6 +88,20 @@ en:
           view: View
           table_info_item: disbursement
           no_data: You do not have any disbursements
+        allowed_disbursements:
+          page_title: Claim details
+          disbursements: Adjusted disbursements
+          item: Item
+          net_cost: Net cost claimed
+          vat: VAT on claimed
+          gross_cost: Total claimed
+          allowed_net_cost: Net cost allowed
+          allowed_vat: VAT on allowed
+          allowed_gross_cost: Total allowed
+          action: Action
+          view: View
+          table_info_item: disbursement
+          no_data: You do not have any disbursements
         granted_response: The claim has been fully granted.
         # view pages
         work_item:
@@ -61,7 +112,12 @@ en:
           hours: Number of hours
           uplift: Uplift
           net_cost: Net cost
+          allowed_hours: Number of hours allowed
+          allowed_uplift: Uplift allowed
+          allowed_net_cost: Net cost allowed
+          adjustment_comment: Reason for adjustment
           your_costs: Your costs
+          adjusted: Adjusted claim
         letters:
           page_title: Claim details
           heading: Letters
@@ -69,7 +125,12 @@ en:
           number: Number of letters
           uplift: Uplift
           net_cost: Net cost
+          allowed_number: Number of letters allowed
+          allowed_uplift: Uplift allowed
+          allowed_net_cost: Net cost allowed
+          adjustment_comment: Reason for adjustment
           your_costs: Your costs
+          adjusted: Adjusted claim
         calls:
           page_title: Claim details
           heading: Calls
@@ -77,7 +138,12 @@ en:
           number: Number of calls
           uplift: Uplift
           net_cost: Net cost
+          allowed_number: Number of calls allowed
+          allowed_uplift: Uplift allowed
+          allowed_net_cost: Net cost allowed
+          adjustment_comment: Reason for adjustment
           your_costs: Your costs
+          adjusted: Adjusted claim
         disbursement:
           page_title: Claim details
           date: Date
@@ -87,4 +153,9 @@ en:
           net_cost: Net cost
           vat: VAT
           gross_cost: Total cost
+          allowed_net_cost: Net cost allowed
+          allowed_vat: VAT allowed
+          allowed_gross_cost: Total cost allowed
+          adjustment_comment: Reason for adjustment
           your_costs: Your costs
+          adjusted: Adjusted claim
