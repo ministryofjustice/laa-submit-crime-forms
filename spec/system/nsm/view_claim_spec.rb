@@ -240,7 +240,7 @@ RSpec.describe 'View claim page', type: :system do
     let(:disbursements) do
       [
         build(:disbursement, :valid, :with_adjustment, :car, age: 5, miles: 200),
-        build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130, prior_authority: 'yes'),
+        build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130),
         build(:disbursement, :valid_other, :with_adjustment, :dna_testing, age: 4, total_cost_without_vat: 100),
       ]
     end
