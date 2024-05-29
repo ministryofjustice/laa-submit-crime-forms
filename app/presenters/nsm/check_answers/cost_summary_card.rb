@@ -1,7 +1,7 @@
 module Nsm
   module CheckAnswers
     class CostSummaryCard < Base
-      PROFIT_COSTS = 'profit_costs'
+      PROFIT_COSTS = 'profit_costs'.freeze
       # NOTE: nil values do NOT render a table cell
       SKIP_CELL = nil
 
@@ -20,18 +20,13 @@ module Nsm
       end
 
       def custom
-        {
-          partial: 'nsm/steps/view_claim/cost_summary',
-          locals: { section: self }
-        }
+        { partial: 'nsm/steps/view_claim/cost_summary', locals: { section: self } }
       end
 
       def headers
         [
           t('items', numeric: false, width: 'govuk-!-width-one-quarter'),
-          t('request_net'),
-          t('request_vat'),
-          t('request_gross'),
+          t('request_net'), t('request_vat'), t('request_gross'),
           show_adjustments && t('allowed_net'),
           show_adjustments && t('allowed_vat'),
           show_adjustments && t('allowed_gross')
@@ -40,10 +35,8 @@ module Nsm
 
       def table_fields(formatted: true)
         [
-          calculate_profit_costs(formatted:),
-          calculate_waiting(formatted:),
-          calculate_travel(formatted:),
-          calculate_disbursements(formatted:)
+          calculate_profit_costs(formatted:), calculate_waiting(formatted:),
+          calculate_travel(formatted:), calculate_disbursements(formatted:)
         ]
       end
 
@@ -71,18 +64,8 @@ module Nsm
         show_adjustments && data.sum { _1[field] }
       end
 
-      class TotalCostAlias < SimpleDelegator
-        def total_cost
-          letters_and_calls_total_cost
-        end
-
-        def allowed_total_cost
-          allowed_letters_and_calls_total_cost
-        end
-      end
-
       def calculate_profit_costs(formatted:)
-        letters_calls = TotalCostAlias.new(claim)
+        letters_calls = LettersAndCallsCosts::TotalCostAlias.new(claim)
 
         calculate_row((work_items[PROFIT_COSTS] || []) + [letters_calls], 'profit_costs', formatted:)
       end
@@ -148,18 +131,11 @@ module Nsm
       end
 
       def group_type(work_type)
-        return work_type if work_type.in?(%w[travel waiting])
-
-        PROFIT_COSTS
+        work_type.in?(%w[travel waiting]) ? work_type : PROFIT_COSTS
       end
 
       def vat_rate
-        @vat_rate ||=
-          if claim.firm_office.vat_registered == 'yes'
-            Pricing.for(claim).vat
-          else
-            0.0
-          end
+        @vat_rate ||= claim.firm_office.vat_registered == 'yes' ? Pricing.for(claim).vat : 0.0
       end
 
       def format(value, formatted: true)
@@ -173,8 +149,7 @@ module Nsm
         scope = show_adjustments ? 'with_adjustments' : 'base'
         {
           text: I18n.t("nsm.steps.check_answers.groups.cost_summary.#{scope}.#{key}"),
-          numeric: numeric,
-          width: width
+          numeric: numeric, width: width
         }
       end
     end
