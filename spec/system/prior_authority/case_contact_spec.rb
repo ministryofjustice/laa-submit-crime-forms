@@ -85,10 +85,17 @@ RSpec.describe 'Prior authority applications - add case contact' do
       end
 
       it 'saves the selection' do
-        choose '1A123B'
+        choose '1K022G'
         click_on 'Save and continue'
         expect(page).to have_content 'Case contact Completed'
-        expect(PriorAuthorityApplication.first.office_code).to eq '1A123B'
+        expect(PriorAuthorityApplication.first.office_code).to eq '1K022G'
+      end
+
+      it 'allows save and come back later' do
+        expect(page).to have_content 'Which firm account number is this application for?'
+        click_on 'Save and come back later'
+
+        expect(page).to have_title 'Your applications'
       end
     end
   end
