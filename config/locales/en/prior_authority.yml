@@ -84,8 +84,18 @@ en:
         assessed:
           appeal_the_rejection: Appeal the rejection
           appeal_the_adjustment: Appeal the adjustment
-          rejection_explanation_html: If you want to appeal the rejection, email %{email} with the LAA case reference in the subject of the email and include any supporting information you believe will help the appeal.
-          adjustment_explanation_html: If you want to appeal the adjustment, email %{email} with the LAA case reference in the subject of the email and include any supporting information you believe will help the appeal.
+          rejection_explanation_html: |
+            If you want to appeal the rejection, email %{email} with the LAA case reference in the subject of the email.<br>
+            <br>
+            You should include a detailed explanation of the grounds of your appeal and any supporting documents.<br>
+            <br>
+            You will only be able to appeal once. The Independent Costs Assessor's decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).
+          adjustment_explanation_html: |
+            If you want to appeal the adjustment, email %{email} with the LAA case reference in the subject of the email.<br>
+            <br>
+            You should include a detailed explanation of the grounds of your appeal and any supporting documents.<br>
+            <br>
+            You will only be able to appeal once. The Independent Costs Assessor's decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).
           email: CRM4appeal@justice.gov.uk
 
     steps:
