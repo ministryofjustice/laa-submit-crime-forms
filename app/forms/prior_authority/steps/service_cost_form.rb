@@ -11,8 +11,7 @@ module PriorAuthority
 
         # This will be nil when loaded on edit, populated on updated
         attrs[:prior_authority_granted] = attrs[:application].prior_authority_granted if attrs[:prior_authority_granted].nil?
-
-        super(attrs)
+        super
       end
 
       attribute :prior_authority_granted, :boolean
