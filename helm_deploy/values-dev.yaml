@@ -64,7 +64,7 @@ app_resources:
 
 clamav_resources:
   limits:
-    cpu: 500m
+    cpu: 2000m
     memory: 4Gi
   requests:
     cpu: 10m
