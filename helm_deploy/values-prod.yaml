@@ -6,6 +6,9 @@ replicaCount: 2
 
 namespace: laa-submit-crime-forms-prod
 
+serviceMonitor:
+  enabled: true
+
 image:
   repository: nginx
   pullPolicy: Always
