@@ -12,5 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    matchLabels:
-      app: {{ include "laa-submit-crime-forms.fullname" . }}
+    app: {{ include "laa-submit-crime-forms.fullname" . }}
