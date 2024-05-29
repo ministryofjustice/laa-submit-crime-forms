@@ -6,18 +6,18 @@ RSpec.describe 'View claim page', type: :system do
   let(:work_items) do
     [
       build(:work_item, :attendance_without_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
-      build(:work_item, :advocacy, time_spent: 104, completed_on: 1.day.ago),
+      build(:work_item, :advocacy, :with_adjustment, time_spent: 104, completed_on: 1.day.ago),
       build(:work_item, :advocacy, time_spent: 86, completed_on: 2.days.ago),
       build(:work_item, :waiting, time_spent: 23, completed_on: 3.days.ago),
-      build(:work_item, :travel, time_spent: 23, completed_on: 3.days.ago),
+      build(:work_item, :travel, :with_adjustment, time_spent: 23, completed_on: 3.days.ago),
     ]
   end
   let(:disbursements) do
     [
       build(:disbursement, :valid, :car, age: 5, miles: 200),
       build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130),
-      build(:disbursement, :valid_other, age: 3, other_type: 'Custom', total_cost_without_vat: 40),
-      build(:disbursement, :valid, :car, age: 2, miles: 150),
+      build(:disbursement, :valid_other, :with_adjustment, age: 3, other_type: 'Custom', total_cost_without_vat: 40),
+      build(:disbursement, :valid, :car, :with_adjustment, allowed_apply_vat: 'false', age: 2, miles: 150),
     ]
   end
 
@@ -28,41 +28,46 @@ RSpec.describe 'View claim page', type: :system do
   it 'shows a cost summary on the main page' do
     visit nsm_steps_view_claim_path(claim.id)
 
-    within('#cost-summary-table') do
-      expect(page).to have_content('Item Net cost VAT Total')
-        .and have_content('Profit costs £305.84 £61.17 £367.01')
-        .and have_content('Waiting £10.58 £2.12 £12.70')
-        .and have_content('Travel £10.58 £2.12 £12.70')
-        .and have_content('Disbursements £327.50 £31.50 £359.00')
-        .and have_content('Total £654.50 £96.90 £751.40')
-    end
+    expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
+      [
+        'Item', 'Net cost', 'VAT', 'Total',
+        'Profit costs', '£305.84', '£61.17', '£367.01',
+        'Waiting', '£10.58', '£2.12', '£12.70',
+        'Travel', '£10.58', '£2.12', '£12.70',
+        'Disbursements', '£327.50', '£31.50', '£359.00',
+        'Total', '£654.50', '£96.90', '£751.40'
+      ]
+    )
   end
 
   it 'shows a cost summary on the claim costs page' do
     visit nsm_steps_view_claim_path(claim.id, section: :claimed_costs)
 
-    within('#cost-summary-table') do
-      expect(page).to have_content('Item Net cost VAT Total')
-        .and have_content('Profit costs £305.84 £61.17 £367.01')
-        .and have_content('Waiting £10.58 £2.12 £12.70')
-        .and have_content('Travel £10.58 £2.12 £12.70')
-        .and have_content('Disbursements £327.50 £31.50 £359.00')
-        .and have_content('Total £654.50 £96.90 £751.40')
-    end
+    expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
+      [
+        'Item', 'Net cost', 'VAT', 'Total',
+        'Profit costs', '£305.84', '£61.17', '£367.01',
+        'Waiting', '£10.58', '£2.12', '£12.70',
+        'Travel', '£10.58', '£2.12', '£12.70',
+        'Disbursements', '£327.50', '£31.50', '£359.00',
+        'Total', '£654.50', '£96.90', '£751.40'
+      ]
+    )
   end
 
-  # TODO: update this to have adjusted values as well...
   it 'shows an adjusted cost summary on the adjustments page' do
     visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
 
-    within('#cost-summary-table') do
-      expect(page).to have_content('Item Net cost VAT Total')
-        .and have_content('Profit costs £305.84 £61.17 £367.01')
-        .and have_content('Waiting £10.58 £2.12 £12.70')
-        .and have_content('Travel £10.58 £2.12 £12.70')
-        .and have_content('Disbursements £327.50 £31.50 £359.00')
-        .and have_content('Total £654.50 £96.90 £751.40')
-    end
+    expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
+      [
+        'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+        'Profit costs', '£305.84', '£61.17', '£367.01', '£249.14', '£49.83', '£298.97',
+        'Waiting', '£10.58', '£2.12', '£12.70', '£10.58', '£2.12', '£12.70',
+        'Travel', '£10.58', '£2.12', '£12.70', '£5.06', '£1.01', '£6.07',
+        'Disbursements', '£327.50', '£31.50', '£359.00', "£220.00", "£18.00", "£238.00",
+        'Total', '£654.50', '£96.90', '£751.40', "£484.78", "£70.96", "£555.74"
+      ]
+    )
   end
 
   it 'show the work items and summary' do
@@ -236,8 +241,7 @@ RSpec.describe 'View claim page', type: :system do
       [
         build(:disbursement, :valid, :with_adjustment, :car, age: 5, miles: 200),
         build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130, prior_authority: 'yes'),
-        build(:disbursement, :valid_other, :with_adjustment, :dna_testing, age: 4, total_cost_without_vat: 100,
-prior_authority: 'yes'),
+        build(:disbursement, :valid_other, :with_adjustment, :dna_testing, age: 4, total_cost_without_vat: 100),
       ]
     end
 

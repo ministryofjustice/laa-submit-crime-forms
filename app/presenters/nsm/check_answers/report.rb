@@ -70,7 +70,7 @@ module Nsm
         [
           ClaimJustificationCard.new(claim),
           ClaimDetailsCard.new(claim),
-          CostSummaryCard.new(claim),
+          AdjustedCostSummaryCard.new(claim),
           OtherInfoCard.new(claim)
         ]
       end

@@ -27,7 +27,7 @@ module DisbursementCosts
 
   # TODO: update the required adjustments are synced from CW
   def allowed_total_cost_pre_vat
-    @allowed_total_cost_pre_vat ||= allowed_total_cost_without_vat
+    @allowed_total_cost_pre_vat ||= allowed_total_cost_without_vat || total_cost_pre_vat
   end
 
   def vat_rate
@@ -43,11 +43,11 @@ module DisbursementCosts
   # we alias here to have consistent naming with the `vat` method which exists to
   # avoid overlap with the `vat_amount` method in the form object.
   def allowed_vat
-    allowed_vat_amount.to_d
+    allowed_apply_vat? ? (allowed_total_cost_pre_vat * vat_rate).round(2) : BigDecimal('0')
   end
 
   def total_cost
-    @total_cost ||= if apply_vat && total_cost_pre_vat
+    @total_cost ||= if apply_vat? && total_cost_pre_vat
                       total_cost_pre_vat + vat
                     else
                       total_cost_pre_vat
@@ -55,7 +55,7 @@ module DisbursementCosts
   end
 
   def allowed_total_cost
-    @allowed_total_cost ||= if apply_vat? && allowed_total_cost_pre_vat
+    @allowed_total_cost ||= if allowed_apply_vat? && allowed_total_cost_pre_vat
                               allowed_total_cost_pre_vat + allowed_vat
                             else
                               allowed_total_cost_pre_vat
@@ -69,6 +69,12 @@ module DisbursementCosts
   # complicates theis feature
   def apply_vat?
     apply_vat.in?([true, 'true'])
+  end
+
+  def allowed_apply_vat?
+    return apply_vat? if allowed_apply_vat.nil?
+
+    allowed_apply_vat == 'true'
   end
 
   def pricing
