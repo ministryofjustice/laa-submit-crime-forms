@@ -1,9 +1,8 @@
 <div id="cost-summary-table">
-  <%=
-    head = section.headers
-    rows = section.table_fields.map(&:values)
-    foot = section.summed_fields.values
-
-    govuk_table(first_cell_is_header: true, head:, rows:, foot:)
-  %>
+  <%= govuk_table(
+        first_cell_is_header: true,
+        head: section.headers,
+        rows: section.table_fields.map(&:values),
+        foot: section.summed_fields.values
+      ) %>
 </div>

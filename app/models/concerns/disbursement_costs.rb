@@ -25,7 +25,6 @@ module DisbursementCosts
                             end
   end
 
-  # TODO: update the required adjustments are synced from CW
   def allowed_total_cost_pre_vat
     @allowed_total_cost_pre_vat ||= allowed_total_cost_without_vat || total_cost_pre_vat
   end
