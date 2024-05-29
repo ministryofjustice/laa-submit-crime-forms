@@ -11,6 +11,7 @@ spec:
   selector:
     matchLabels:
       {{- include "laa-submit-crime-forms.selectorLabels" . | nindent 6 }}
+      app: {{ include "laa-submit-crime-forms.fullname" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,7 +20,7 @@ spec:
       {{- end }}
       labels:
         {{- include "laa-submit-crime-forms.selectorLabels" . | nindent 8 }}
-        app: web
+        app: {{ include "laa-submit-crime-forms.fullname" . }}
     spec:
       serviceAccountName: {{ .Values.service_account.name }}
       {{- with .Values.imagePullSecrets }}
