@@ -26,13 +26,15 @@ RSpec.describe 'Check answers page', type: :system do
   it 'shows a cost summary on the main page' do
     visit nsm_steps_check_answers_path(claim.id)
 
-    within('#cost-summary-table') do
-      expect(page).to have_content('Item Net cost VAT Total')
-        .and have_content('Profit costs £305.84 £61.17 £367.01')
-        .and have_content('Waiting £10.58 £2.12 £12.70')
-        .and have_content('Travel £0.00 £0.00 £0.00')
-        .and have_content('Disbursements £227.50 £31.50 £259.00')
-        .and have_content('Total £543.92 £94.78 £638.70')
-    end
+    expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
+      [
+        'Item', 'Net cost', 'VAT', 'Total',
+        'Profit costs', '£305.84', '£61.17', '£367.01',
+        'Waiting', '£10.58', '£2.12', '£12.70',
+        'Travel', '£0.00', '£0.00', '£0.00',
+        'Disbursements', '£227.50', '£31.50', '£259.00',
+        'Total', '£543.92', '£94.78', '£638.70'
+      ]
+    )
   end
 end

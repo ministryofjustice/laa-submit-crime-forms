@@ -167,8 +167,6 @@ en:
             claim_details:
               title: Claim details
             cost_summary:
-              title: Costs summary
-            adjusted_cost_summary:
               title: Cost summary
             other_info:
               title: Other information
@@ -190,9 +188,9 @@ en:
             heading: Equal Monitoring
             equal_monitoring:
               title: Equality Monitoring
-          cost_summary:
-            heading: Cost Summary
           adjusted_cost_summary:
+            heading: Cost summary
+          cost_summary:
             heading: Cost summary
             base:
               items: Item

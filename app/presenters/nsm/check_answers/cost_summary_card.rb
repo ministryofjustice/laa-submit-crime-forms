@@ -1,6 +1,6 @@
 module Nsm
   module CheckAnswers
-    class AdjustedCostSummaryCard < Base
+    class CostSummaryCard < Base
       PROFIT_COSTS = 'profit_costs'
       # NOTE: nil values do NOT render a table cell
       SKIP_CELL = nil
@@ -12,7 +12,7 @@ module Nsm
         @show_adjustments = show_adjustments
         @has_card = has_card
         @group = 'about_claim'
-        @section = 'adjusted_cost_summary'
+        @section = 'cost_summary'
       end
 
       def title(**)
@@ -59,6 +59,10 @@ module Nsm
           allowed_vat: format(sum_allowed(data, :allowed_vat)),
           allowed_gross_cost: format(sum_allowed(data, :allowed_gross_cost)),
         }
+      end
+
+      def change_link_controller_method
+        :show
       end
 
       private
@@ -168,7 +172,7 @@ module Nsm
       def t(key, numeric: true, width: nil)
         scope = show_adjustments ? 'with_adjustments' : 'base'
         {
-          text: I18n.t("nsm.steps.check_answers.groups.adjusted_cost_summary.#{scope}.#{key}"),
+          text: I18n.t("nsm.steps.check_answers.groups.cost_summary.#{scope}.#{key}"),
           numeric: numeric,
           width: width
         }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Nsm::CheckAnswers::AdjustedCostSummaryCard do
+RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
   subject { described_class.new(claim) }
 
   let(:claim) do

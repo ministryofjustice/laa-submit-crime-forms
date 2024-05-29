@@ -65,7 +65,7 @@ module Nsm
         [
           ClaimJustificationCard.new(claim),
           ClaimDetailsCard.new(claim),
-          AdjustedCostSummaryCard.new(claim),
+          CostSummaryCard.new(claim),
           OtherInfoCard.new(claim)
         ]
       end
@@ -82,13 +82,13 @@ module Nsm
 
       def adjusted_cost_summary_section
         [
-          AdjustedCostSummaryCard.new(claim, show_adjustments: true)
+          CostSummaryCard.new(claim, show_adjustments: true)
         ]
       end
 
       def cost_summary_section
         [
-          AdjustedCostSummaryCard.new(claim)
+          CostSummaryCard.new(claim)
         ]
       end
 
