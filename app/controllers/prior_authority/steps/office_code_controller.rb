@@ -8,13 +8,17 @@ module PriorAuthority
       end
 
       def update
-        update_and_advance(OfficeCodeForm, as: :pa_office_code)
+        update_and_advance(OfficeCodeForm, as:, after_commit_redirect_path:)
       end
 
       private
 
       def decision_tree_class
         Decisions::DecisionTree
+      end
+
+      def as
+        :pa_office_code
       end
     end
   end
