@@ -49,6 +49,12 @@ uat:
     XXXXXX: ['crm7', 'crm4', 'crm5']
     ZZZZZZ: []
 
+    # Test user office from portal A.CLARK - with eForms role - (see 1Password for login details)
+    0X416R: ['crm5', 'crm4']
+
+    # Test user office from portal 07RJONES - without eForms role - (see 1Password for login details)
+    0Q316L: ['crm5', 'crm4']
+
 production:
   office_codes:
     2N232W: ['crm5'] # dummy user/office
