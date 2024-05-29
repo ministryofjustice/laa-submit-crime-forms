@@ -150,12 +150,17 @@ en:
           type: Disbursement type
           details: Disbursement description
           prior_auth: Prior authority granted?
+          miles: Mileage
           net_cost: Net cost
           vat: VAT
           gross_cost: Total cost
+          allowed_miles: Mileage allowed
           allowed_net_cost: Net cost allowed
           allowed_vat: VAT allowed
           allowed_gross_cost: Total cost allowed
           adjustment_comment: Reason for adjustment
           your_costs: Your costs
           adjusted: Adjusted claim
+          mileage:
+            one: "%{miles} mile"
+            other: "%{miles} miles"
