@@ -4,6 +4,8 @@
 
 replicaCount: 1
 
+namespace: laa-submit-crime-forms-dev
+
 image:
   repository: nginx
   pullPolicy: Always
@@ -31,7 +33,6 @@ service:
 
 ingress:
   enabled: true
-  namespace: laa-submit-crime-forms-dev
   className: modsec
   annotations:
     external-dns.alpha.kubernetes.io/set-identifier: laa-submit-crime-forms-app-laa-submit-crime-forms-dev-green
