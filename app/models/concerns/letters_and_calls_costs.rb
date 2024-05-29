@@ -53,6 +53,10 @@ module LettersAndCallsCosts
     letters_after_uplift.to_d + calls_after_uplift.to_d
   end
 
+  def allowed_letters_and_calls_total_cost
+    allowed_letters_after_uplift.to_d + allowed_calls_after_uplift.to_d
+  end
+
   def letters_and_calls_total_cost_inc_vat
     (letters_and_calls_total_cost * pricing.vat) + letters_and_calls_total_cost
   end
