@@ -7,7 +7,9 @@ FactoryBot.define do
     transient do
       date { Date.new(2023, 4, 12) }
       work_items_count { 0 }
+      work_items_adjusted { false }
       disbursements_count { 0 }
+      disbursements_adjusted { false }
     end
 
     trait :build_associates do
@@ -18,6 +20,7 @@ FactoryBot.define do
           has_uplift = [false, false, uplift_enabled].sample # max 1/3 of entries
           args = [:work_item, :valid]
           args << :with_uplift if has_uplift
+          args << :with_adjustment if work_items_adjusted
           build(*args, completed_on:)
         end
       end
@@ -25,10 +28,11 @@ FactoryBot.define do
       disbursements do
         Array.new(disbursements_count) do
           disbursement_date = date - rand(40)
-          type = rand > 0.2 ? :valid : :valid_other
+          args = [:disbursement, rand > 0.2 ? :valid : :valid_other]
+          args << :with_adjustment if disbursements_adjusted
           apply_vat = rand > 0.5 ? 'true' : 'false'
 
-          build(:disbursement, type, disbursement_date:, apply_vat:)
+          build(*args, disbursement_date:, apply_vat:)
         end
       end
 

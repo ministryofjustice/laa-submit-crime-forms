@@ -60,9 +60,11 @@ module Nsm
         "#{NumberTo.pounds(total_gross)} claimed"
       end
 
-      def total_gross
-        @total_gross ||= Nsm::CostSummary::Summary.new(claim).total_gross
+      def cost_summary
+        @cost_summary ||= Nsm::CostSummary::Summary.new(claim)
       end
+
+      delegate :total_gross, :total_gross_allowed, to: :cost_summary
 
       def translate(key)
         I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.#{key}")
@@ -133,19 +135,19 @@ module Nsm
 
       def allowed_amount(status)
         return '£0.00 allowed' if status.rejected?
-        return "#{NumberTo.pounds(total_gross)} allowed" if status.granted?
+        return "#{NumberTo.pounds(total_gross_allowed)} allowed" if status.part_grant?
 
-        'Pending Data'
+        "#{NumberTo.pounds(total_gross)} allowed"
       end
 
       def any_changes?(type)
         case type
         when 'work_items'
-          claim.work_items.any?
+          claim.work_items.any?(&:adjustment_comment)
         when 'letters_and_calls'
-          claim
+          claim.letters_adjustment_comment || claim.calls_adjustment_comment
         else # 'disbursements'
-          true
+          claim.disbursements.any?(&:adjustment_comment)
         end
       end
     end

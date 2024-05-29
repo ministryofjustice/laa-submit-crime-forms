@@ -53,7 +53,13 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'part granted' do
       let(:claim) do
-        create(:claim, :part_granted_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
+        create(
+          :claim,
+          :part_granted_status, :firm_details, :build_associates, :updated_at, :adjusted_letters_calls,
+          work_items_count: 1, work_items_adjusted: true,
+          disbursements_count: 1, disbursements_adjusted: true,
+          assessment_comment: assessment_comment
+        )
       end
 
       it 'generates part granted rows' do
@@ -62,7 +68,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'application_status',
               text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
-                               '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
+                               '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>£\d+\.\d\d allowed</p>')
             },
             {
               head_key: 'laa_response',
@@ -92,21 +98,14 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               {
                 head_key: 'application_status',
                 text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
-                                 '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>Pending Data</p>')
+                                 '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>£\d+\.\d\d allowed</p>')
               },
               {
                 head_key: 'laa_response',
-                text: '<p>this is a comment</p><p>2nd line</p>' \
-                      '<p><ul class="govuk-list govuk-list--bullet">' \
-                      '<li><a class="govuk-link govuk-link--no-visited-state" ' \
-                      "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim?" \
-                      'section=adjustments#letters_and_calls">Review adjustments to letters and calls</a></li>' \
-                      '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/' \
-                      "applications/#{claim.id}/steps/view_claim?section=adjustments#disbursements\">Review " \
-                      'adjustments to disbursements</a></li></ul></p><p>' \
-                      '<a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" ' \
-                      "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim\">How to appeal " \
-                      'this decision</a></p>'
+                text: '<p>this is a comment</p><p>2nd line</p><p><ul class="govuk-list govuk-list--bullet"></ul></p>' \
+                      '<p><a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" ' \
+                      "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim\">" \
+                      'How to appeal this decision</a></p>'
               }
             ]
           )
