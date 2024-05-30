@@ -41,7 +41,7 @@ module PriorAuthority
       end
 
       def travel_costs_complete?
-        # return true here as no record is the same as no data wchih is true
+        # return true here as no record is the same as no data which is true
         return true unless record
 
         form = ::PriorAuthority::Steps::TravelDetailForm.build(record, application:)
