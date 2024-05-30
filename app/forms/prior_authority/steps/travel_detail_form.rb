@@ -28,6 +28,10 @@ module PriorAuthority
         record.travel_cost_allowed
       end
 
+      def empty?
+        !valid? && travel_cost_reason.blank? && travel_time.blank? && travel_cost_per_hour.blank?
+      end
+
       private
 
       def persist!
