@@ -7,6 +7,7 @@ FactoryBot.define do
     postcode { 'CR0 1RE' }
     cost_per_hour { 10 }
     period { 180 }
+    travel_cost_reason { 'Reasons' }
     travel_cost_per_hour { 50.0 }
     travel_time { 150 }
     user_chosen_cost_type { 'per_hour' }
