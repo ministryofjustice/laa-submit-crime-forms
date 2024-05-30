@@ -20,7 +20,9 @@ development:
   inactive_office_codes: []
 
 uat:
-  inactive_office_codes: []
+  inactive_office_codes:
+    # Test office for A.CLARKE (see 1Password for login), has eforms role
+    - 0X416R
 
 production:
   inactive_office_codes:
