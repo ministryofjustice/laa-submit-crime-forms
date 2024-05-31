@@ -204,23 +204,17 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       context 'when response code is 409 - conflict' do
         let(:code) { 409 }
 
-        it 'returns a warning status' do
-          expect(subject.post(message)).to eq(:warning)
-        end
-
-        it 'sends a Sentry message' do
-          expect(Sentry).to receive(:capture_message).with(
+        it 'raises an error' do
+          expect { subject.post(message) }.to raise_error(
             "Application ID already exists in AppStore for '#{message[:application_id]}'"
           )
-
-          subject.post(message)
         end
       end
 
       context 'when response code is unexpected (neither 201 or 209)' do
         let(:code) { 501 }
 
-        it 'raises and error' do
+        it 'raises an error' do
           expect { subject.post(message) }.to raise_error(
             "Unexpected response from AppStore - status 501 for '#{message[:application_id]}'"
           )
