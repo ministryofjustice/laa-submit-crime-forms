@@ -84,11 +84,11 @@ module PriorAuthority
       end
 
       def offence_list
-        I18n.t('prior_authority.offences').transform_keys(&:to_s).to_a
+        I18n.t('prior_authority.offences').transform_keys(&:to_s).to_a.sort
       end
 
       def prison_list
-        I18n.t('prior_authority.prisons').transform_keys(&:to_s).to_a
+        I18n.t('prior_authority.prisons').transform_keys(&:to_s).to_a.sort
       end
 
       private
