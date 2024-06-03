@@ -11,7 +11,7 @@
       <% if @form_object.errors.of_kind?(:base, :application_not_corrected) %>
         <div class="govuk-form-group--error">
           <p class="govuk-error-message" id="prior-authority-steps-check-answers-form-base-field-error"><%= t('.incorrect_information_heading') %></p>
-          <p class="govuk-body"><%= @form_object.application.incorrect_information_explanation %></p>
+          <p class="govuk-body"><%= simple_format @form_object.application.incorrect_information_explanation %></p>
         </div>
       <% else %>
         <div class="govuk-inset-text">
