@@ -31,7 +31,10 @@ module PriorAuthority
       end
 
       def update_incorrect_information
-        sections_changed = ::PriorAuthority::ChangeLister.call(@application, @new_data)
+        builder = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:)
+        events = SubmitToAppStore::PriorAuthority::EventBuilder.new(application, builder.data)
+        sections_changed = events.corrected_info
+
         latest_incorrect_info = application.incorrect_informations.order(requested_at: :desc).first
         latest_incorrect_info.update(sections_changed:)
       end
