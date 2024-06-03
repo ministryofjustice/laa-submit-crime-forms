@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "laa-submit-crime-forms.fullname" . }}-sidekiq-metrics
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ include "laa-submit-crime-forms.fullname" . }}-sidekiq-metrics
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: {{ include "laa-submit-crime-forms.fullname" . }}-sidekiq-metrics
+    spec:
+      serviceAccountName: {{ .Values.service_account.name }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-sidekiq-metrics
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: strech/sidekiq-prometheus-exporter:0.2.0-4
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop: [ "ALL" ]
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.sidekiqMetricsPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.sidekiqMetricsPort }}
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.sidekiqMetricsPort }}
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          resources:
+            {{- toYaml .Values.worker_resources | nindent 12 }}
+          env:
+          {{ if .Values.redis.enabled }}
+            - name: REDIS_HOST
+              value: {{ template "helm_deploy.redisUatHost" . }}
+            - name: REDIS_PASSWORD
+              value: redis
+          {{ else }}
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: crm-elasticache
+                  key: primary_endpoint_address
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: crm-elasticache
+                  key: auth_token
+          {{ end }}
+            - name: REDIS_URL
+              value: "{{ printf "redis://:$(REDIS_PASSWORD)@$(REDIS_HOST):6379" }}"
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
