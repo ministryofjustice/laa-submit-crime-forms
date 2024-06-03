@@ -69,7 +69,7 @@ class SubmitToAppStore
     end
 
     def incorrect_information
-      PriorAuthority::IncorrectInformationsPayloadBuilder.new(application).payload
+      PriorAuthority::IncorrectInformationsPayloadBuilder.new(application, data).payload
     end
 
     DIRECT_ATTRIBUTES = %i[
