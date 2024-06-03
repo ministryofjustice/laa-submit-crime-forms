@@ -32,7 +32,8 @@ module PriorAuthority
 
       def update_incorrect_information
         sections_changed = ::PriorAuthority::ChangeLister.call(@application, @new_data)
-        application.incorrect_informations.order(requested_at: :desc).update(sections_changed:)
+        latest_incorrect_info = application.incorrect_informations.order(requested_at: :desc).first
+        latest_incorrect_info.update(sections_changed:)
       end
 
       def application_corrected

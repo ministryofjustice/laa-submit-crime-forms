@@ -10,6 +10,7 @@ class CreateIncorrectInformations < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
+    # avoid creation of invalid data due to migration
     caseworker_ids = FurtherInformation.pluck(:caseworker_id)
     PriorAuthorityApplication.where.not(incorrect_information_explanation: nil).each do |paa|
       paa.incorrect_informations.create(
