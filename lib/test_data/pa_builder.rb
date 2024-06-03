@@ -14,8 +14,9 @@ module TestData
 
     def build(**options)
       ActiveRecord::Base.transaction do
-        args, kwargs = *options(**options).values.sample
-        paa = FactoryBot.create(*args, kwargs.call)
+        args, kwfct = *options(**options).values.sample
+        kwargs = kwfct.call
+        paa = FactoryBot.create(*args, further_informations: [], incorrect_informations: [], **kwargs)
         paa.update!(status: :submitted, updated_at: paa.updated_at + 1.minute)
 
         invalid_tasks = check_tasks(paa)
@@ -29,7 +30,7 @@ module TestData
 
     # we use tasks here as they already know how to build all the required forms for the more complicated scenarios
     def check_tasks(paa)
-      skipped_tasks = %w[Base]
+      skipped_tasks = %w[Base FurtherInformation]
       tasks = (PriorAuthority::Tasks.constants.map(&:to_s) - skipped_tasks)
               .map { |name| [name, PriorAuthority::Tasks.const_get(name)] }
 

@@ -151,7 +151,14 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             information_supplied: 'here is the extra information you requested',
             requested_at: DateTime.new(2024, 1, 1, 1, 1, 1),
           }
-        ]
+        ],
+        incorrect_information: [
+          {
+            caseworker_id: '87e88ac6-d89a-4180-80d4-e03285023fb0',
+            information_requested: 'Please update the case details',
+            requested_at: DateTime.new(2024, 1, 1, 1, 1, 1),
+            sections_changed: ['case_details']}
+        ],
       },
       application_id: application.id,
       application_state: 'submitted',

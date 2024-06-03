@@ -25,7 +25,7 @@ module Nsm
         sync_overall_comment
       end
       # save here to avoid multiple DB updates on claim during the process
-      claim.save
+      claim.save!
     rescue StandardError => e
       Sentry.capture_message("#{self.class.name} encountered error '#{e}' for claim '#{claim.id}'")
     end
