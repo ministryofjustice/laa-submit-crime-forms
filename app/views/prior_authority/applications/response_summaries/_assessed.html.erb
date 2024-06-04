@@ -3,7 +3,9 @@
     <%= t("prior_authority.applications.show.laa_response") %>
   </dt>
   <dd class="govuk-summary-list__value">
-    <p><%= @application.assessment_comment %></p>
+    <% if @application.assessment_comment.present? %>
+      <p><%= @application.assessment_comment %></p>
+    <% end %>
     <ul class="govuk-list govuk-list--bullet">
       <% if @application.primary_quote.service_adjustment_comment.present? %>
         <li><%= link_to t('prior_authority.applications.show.review_service_cost_adjustments'), '#service-cost' %></li>
