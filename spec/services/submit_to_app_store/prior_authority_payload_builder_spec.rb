@@ -98,7 +98,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
               file_type: 'image/png'
             },
             travel_cost_per_hour: '50.0',
-            travel_cost_reason: nil,
+            travel_cost_reason: 'Reasons',
             travel_time: 150,
             additional_cost_list: nil,
             additional_cost_total: nil,
@@ -121,7 +121,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             id: application.alternative_quotes.first.id,
             document: nil,
             travel_cost_per_hour: '50.0',
-            travel_cost_reason: nil,
+            travel_cost_reason: 'Reasons',
             travel_time: 150,
             additional_cost_list: nil,
             additional_cost_total: nil,
