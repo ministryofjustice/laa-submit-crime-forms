@@ -25,7 +25,7 @@
               <%= render "prior_authority/applications/state_summaries/#{@application.status}" %>
             </dd>
           </div>
-          <% if @application.assessment_comment.present? %>
+          <% if @application.assessment_comment.present? || @application.part_grant? %>
             <%= render "prior_authority/applications/response_summaries/assessed" %>
           <% elsif @application.sent_back? %>
             <%= render "prior_authority/applications/response_summaries/sent_back" %>
