@@ -18,6 +18,10 @@ module PriorAuthority
         end
       end
 
+      # NOTE: POtential race condition when `SubmitToAppStore` started before the lock is released
+      # have resolved this by retrying in AppStoreClient#post when existing ID, due to risk
+      # moving the sidekiq caller out of the transaction as unsure if this would introduce other
+      # errors
       def update_application
         unless application.draft? || application.sent_back?
           errors.add(:base, :application_already_submitted)

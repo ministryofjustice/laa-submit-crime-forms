@@ -89,13 +89,13 @@ en:
             <br>
             You should include a detailed explanation of the grounds of your appeal and any supporting documents.<br>
             <br>
-            You will only be able to appeal once. The Independent Costs Assessor's decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).
+            Appeals may be considered by LAA caseworkers or sent to an independent costs assessor (ICA). You can only appeal once. The ICA’s decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).
           adjustment_explanation_html: |
             If you want to appeal the adjustment, email %{email} with the LAA case reference in the subject of the email.<br>
             <br>
             You should include a detailed explanation of the grounds of your appeal and any supporting documents.<br>
             <br>
-            You will only be able to appeal once. The Independent Costs Assessor's decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).
+            Appeals may be considered by LAA caseworkers or sent to an independent costs assessor (ICA). You can only appeal once. The ICA’s decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).
           email: CRM4appeal@justice.gov.uk
 
     steps:

@@ -9,9 +9,10 @@ class AppStoreClient
     when 200..204
       :success
     when 409
-      # can be ignored but should be notified so we can track when it occurs
-      Sentry.capture_message("Application ID already exists in AppStore for '#{message[:application_id]}'")
-      :warning
+      # Changed from a warning to an error due to race condition when updating from sent_back to provider_updated
+      # which can result in incorrectly trying to POST the data - Changing to an error here will allow a retry
+      # using a PUT
+      raise "Application ID already exists in AppStore for '#{message[:application_id]}'"
     else
       raise "Unexpected response from AppStore - status #{response.code} for '#{message[:application_id]}'"
     end
