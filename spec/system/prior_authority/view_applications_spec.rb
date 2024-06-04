@@ -49,11 +49,12 @@ RSpec.describe 'View reviewed applications' do
       create(:prior_authority_application,
              :full,
              status: 'part_grant',
-             assessment_comment: 'Too much',
+             assessment_comment: assessment_comment,
              app_store_updated_at: 1.day.ago,
              quotes: [quote],
              additional_costs: [additional_cost])
     end
+    let(:assessment_comment) { 'Too much' }
 
     let(:quote) do
       build(:quote, :primary,
@@ -92,6 +93,20 @@ RSpec.describe 'View reviewed applications' do
     it 'shows additional cost adjustments' do
       expect(page).to have_content 'Nearly right'
       expect(page).to have_content '£20.00 £119.00'
+    end
+
+    context 'when no assessment comment exists (part-grant)' do
+      let(:assessment_comment) { nil }
+
+      it 'shows overall details' do
+        expect(page).to have_content 'Part granted'
+        expect(page).to have_content '£175.00 requested'
+        expect(page).to have_content '£274.00 allowed'
+        expect(page).to have_content 'Review service cost adjustments'
+        expect(page).to have_content 'Review travel cost adjustments'
+        expect(page).to have_content 'Review additional cost adjustments'
+        expect(page).to have_content 'If you want to appeal the adjustment, email CRM4appeal@justice.gov.uk'
+      end
     end
   end
 
