@@ -6,6 +6,7 @@ class SupportedFileTypes
     application/vnd.openxmlformats-officedocument.wordprocessingml.document
     application/vnd.oasis.opendocument.text
     application/rtf
+    text/rtf
     application/pdf
     image/jpeg
     image/bmp
