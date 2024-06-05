@@ -7,14 +7,22 @@ class SubmitToAppStore
 
       def payload
         @application.quotes.map do |quote|
-          form = ::PriorAuthority::Steps::ServiceCostForm.build(quote, application: @application)
-
           quote.as_json(only: ATTRIBUTES).merge(
-            cost_type: form.cost_type,
-            item_type: form.item_type,
+            cost_type: primary_cost_type,
+            item_type: primary_item_type,
             document: document(quote)
           )
         end
+      end
+
+      def primary_cost_type
+        form = ::::PriorAuthority::Steps::ServiceCostForm.build(@application.primary_quote, application: @application)
+        form.cost_type
+      end
+
+      def primary_item_type
+        form = ::::PriorAuthority::Steps::ServiceCostForm.build(@application.primary_quote, application: @application)
+        form.cost_type
       end
 
       def document(quote)
