@@ -86,6 +86,7 @@ module PriorAuthority
         def persist!
           return false unless save_file
 
+          attributes.merge(cost_type:)
           record.update!(attributes.except('id', 'service_type', 'file_upload').merge(reset_attributes))
         end
 
