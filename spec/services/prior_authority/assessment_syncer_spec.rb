@@ -6,7 +6,9 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
       create(:prior_authority_application, :full,
              status: status,
              quotes: [primary_quote],
-             additional_costs: [additional_cost])
+             additional_costs: [additional_cost],
+             further_informations: [],
+             incorrect_informations: [])
     end
 
     let(:primary_quote) { build(:quote, :primary) }
@@ -54,6 +56,13 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
             {
               caseworker_id: 'case-worker-uuid',
               information_requested: 'Need more evidence',
+              requested_at: DateTime.current
+            }
+          ],
+          incorrect_information: [
+            {
+              caseworker_id: 'case-worker-uuid',
+              information_requested: 'This is incorrect',
               requested_at: DateTime.current
             }
           ],
@@ -134,6 +143,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
       context 'with further info and incorrect info' do
         it 'syncs the incorrect info' do
           expect(application.incorrect_information_explanation).to eq 'This is incorrect'
+          expect(application.incorrect_informations.exists?).to be true
         end
 
         it 'syncs dates' do
@@ -160,6 +170,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
 
         it 'nullifies the incorrect info' do
           expect(application.incorrect_information_explanation).to be_nil
+          expect(application.incorrect_informations.exists?).to be false
         end
 
         it 'syncs the further info' do

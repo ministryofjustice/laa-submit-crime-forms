@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_24_140044) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_03_125345) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -195,6 +195,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_140044) do
     t.index ["prior_authority_application_id"], name: "index_further_informations_on_prior_authority_application_id"
   end
 
+  create_table "incorrect_informations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "information_requested"
+    t.jsonb "sections_changed"
+    t.string "caseworker_id"
+    t.datetime "requested_at"
+    t.uuid "prior_authority_application_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["prior_authority_application_id"], name: "index_incorrect_informations_on_prior_authority_application_id"
+  end
+
   create_table "prior_authority_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "provider_id"
     t.uuid "firm_office_id"
@@ -339,6 +350,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_140044) do
   add_foreign_key "disbursements", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
   add_foreign_key "further_informations", "prior_authority_applications"
+  add_foreign_key "incorrect_informations", "prior_authority_applications"
   add_foreign_key "prior_authority_applications", "firm_offices"
   add_foreign_key "prior_authority_applications", "solicitors"
   add_foreign_key "quotes", "prior_authority_applications"

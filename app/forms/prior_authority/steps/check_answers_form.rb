@@ -29,8 +29,18 @@ module PriorAuthority
         end
 
         application.update!(attributes.merge({ status: new_status }))
+        update_incorrect_information if application.incorrect_information_explanation.present?
         SubmitToAppStore.perform_later(submission: application)
         true
+      end
+
+      def update_incorrect_information
+        builder = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:)
+        events = SubmitToAppStore::PriorAuthority::EventBuilder.new(application, builder.data)
+        sections_changed = events.corrected_info
+
+        latest_incorrect_info = application.incorrect_informations.order(requested_at: :desc).first
+        latest_incorrect_info.update(sections_changed:)
       end
 
       def application_corrected
