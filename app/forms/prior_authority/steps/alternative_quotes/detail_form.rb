@@ -11,6 +11,7 @@ module PriorAuthority
         attribute :id, :string
         attribute :contact_first_name, :string
         attribute :contact_last_name, :string
+        attribute :cost_type, :string
         attribute :organisation, :string
         attribute :postcode, :string
         attribute :travel_time, :time_period
@@ -86,8 +87,11 @@ module PriorAuthority
         def persist!
           return false unless save_file
 
-          all_attributes = attributes.merge({cost_type:})
-          record.update!(all_attributes.except('id', 'service_type', 'file_upload').merge(reset_attributes))
+          record.update!(attributes_to_reset.except('id', 'service_type', 'file_upload').merge(reset_attributes))
+        end
+
+        def attributes_to_reset
+          attributes.merge{cost_type:}
         end
 
         def file_is_optional?
