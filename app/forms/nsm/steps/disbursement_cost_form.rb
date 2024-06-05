@@ -9,11 +9,11 @@ module Nsm
       attribute :details, :string
       attribute :prior_authority, :value_object, source: YesNoAnswer
 
-      validates :miles, presence: true, numericality: { greater_than: 1 }, unless: :other_disbursement_type?
-      validates :total_cost_without_vat, presence: true, numericality: { greater_than: 1 },
+      validates :miles, presence: true, numericality: { greater_than: 0 }, unless: :other_disbursement_type?
+      validates :total_cost_without_vat, presence: true, numericality: { greater_than: 0 },
 if: :other_disbursement_type?
       validates :details, presence: true
-      validates :prior_authority, presence: true, inclusion: { in: YesNoAnswer.values }, if: :auth_required?
+      validates :prior_authority, presence: true, inclusion: { in: YesNoAnswer.values }
 
       def apply_vat
         @apply_vat.nil? ? record.vat_amount.to_f.positive? : @apply_vat == 'true'

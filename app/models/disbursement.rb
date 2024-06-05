@@ -16,7 +16,7 @@ class Disbursement < ApplicationRecord
   end
 
   def date_and_prior_authority_valid?
-    disbursement_date.present? && (prior_authority.present? || !auth_required?)
+    disbursement_date.present? && prior_authority.present?
   end
 
   def translated_disbursement_type
