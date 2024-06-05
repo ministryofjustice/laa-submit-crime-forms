@@ -16,12 +16,12 @@ class SubmitToAppStore
       end
 
       def primary_cost_type
-        form = ::::PriorAuthority::Steps::ServiceCostForm.build(@application.primary_quote, application: @application)
+        form = ::PriorAuthority::Steps::ServiceCostForm.build(@application.primary_quote, application: @application)
         form.cost_type
       end
 
       def primary_item_type
-        form = ::::PriorAuthority::Steps::ServiceCostForm.build(@application.primary_quote, application: @application)
+        form = ::PriorAuthority::Steps::ServiceCostForm.build(@application.primary_quote, application: @application)
         form.cost_type
       end
 
