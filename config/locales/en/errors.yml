@@ -452,13 +452,15 @@ en:
         nsm/steps/disbursement_cost_form:
           attributes:
             miles:
-              blank: Enter the number of miles travels
+              blank: Enter the number of miles travelled
+              greater_than: The number of miles must be more than 0
             total_cost_without_vat:
               blank: Set total cost
+              greater_than: The total cost must be more than 0
             details:
-              blank: Provdie details of disbursement
+              blank: Provide details of disbursement
             prior_authority:
-              blank: Confirm if you have prior authority
+              blank: Select yes if you have been granted prior authority for this disbursement
         nsm/steps/disbursements_form:
           attributes:
             add_another:

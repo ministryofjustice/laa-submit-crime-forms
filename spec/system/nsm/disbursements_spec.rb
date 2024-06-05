@@ -145,6 +145,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
     click_on 'Save and continue'
 
     fill_in 'Number of miles', with: 100
+    choose 'Yes'
     fill_in 'Enter details of this disbursement', with: 'details'
 
     click_on 'Save and continue'
