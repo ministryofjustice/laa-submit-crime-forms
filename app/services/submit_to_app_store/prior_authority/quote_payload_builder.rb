@@ -22,7 +22,7 @@ class SubmitToAppStore
 
       def primary_item_type
         form = ::PriorAuthority::Steps::ServiceCostForm.build(@application.primary_quote, application: @application)
-        form.cost_type
+        form.item_type
       end
 
       def document(quote)
