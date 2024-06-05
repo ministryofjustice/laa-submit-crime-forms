@@ -73,9 +73,8 @@ module PriorAuthority
         resubmission_requested: DateTime.current
       )
 
-      return unless further_info_required?
-
-      sync_further_info_request
+      sync_further_info_request if further_info_required?
+      sync_incorrect_info_request if info_correction_required?
     end
 
     def further_info_required?
@@ -102,6 +101,18 @@ module PriorAuthority
           caseworker_id: latest_further_info['caseworker_id'],
           information_requested: latest_further_info['information_requested'],
           requested_at: latest_further_info['requested_at']
+        }
+      )
+    end
+
+    def sync_incorrect_info_request
+      latest_incorrect_info = data['incorrect_information'].max_by { _1['requested_at'] }
+
+      application.incorrect_informations.create(
+        {
+          caseworker_id: latest_incorrect_info['caseworker_id'],
+          information_requested: latest_incorrect_info['information_requested'],
+          requested_at: latest_incorrect_info['requested_at']
         }
       )
     end

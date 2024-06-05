@@ -132,6 +132,8 @@ FactoryBot.define do
         create(:quote, :primary, prior_authority_application_id: paa.id)
         create(:quote, :alternative, document: nil, prior_authority_application_id: paa.id)
       end
+      
+      incorrect_informations { [build(:incorrect_information, :with_edits)] }
     end
 
     trait :sent_back_for_incorrect_info do

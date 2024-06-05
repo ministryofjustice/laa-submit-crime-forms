@@ -20,12 +20,12 @@ module Nsm
           sync_overall_comment
           sync_work_items
           sync_disbursements
-          # save here to avoid multiple DB updates on claim during the process
-          claim.save
         end
       when 'provider_requested', 'further_info', 'rejected'
         sync_overall_comment
       end
+      # save here to avoid multiple DB updates on claim during the process
+      claim.save!
     rescue StandardError => e
       Sentry.capture_message("#{self.class.name} encountered error '#{e}' for claim '#{claim.id}'")
     end
