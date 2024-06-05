@@ -123,6 +123,7 @@ FactoryBot.define do
       service_type { 'pathologist_report' }
       custom_service_name { nil }
       further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
+      incorrect_informations { [build(:incorrect_information, :with_edits)] }
       after(:build) do |paa|
         build(:quote, :primary, prior_authority_application_id: paa.id)
         build(:quote, :alternative, document: nil, prior_authority_application_id: paa.id)
@@ -132,7 +133,6 @@ FactoryBot.define do
         create(:quote, :primary, prior_authority_application_id: paa.id)
         create(:quote, :alternative, document: nil, prior_authority_application_id: paa.id)
       end
-      incorrect_informations { [build(:incorrect_information, :with_edits)] }
     end
 
     trait :sent_back_for_incorrect_info do
