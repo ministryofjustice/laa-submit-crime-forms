@@ -9,8 +9,8 @@ module Nsm
       attribute :details, :string
       attribute :prior_authority, :value_object, source: YesNoAnswer
 
-      validates :miles, presence: true, numericality: { greater_than: 1 }, unless: :other_disbursement_type?
-      validates :total_cost_without_vat, presence: true, numericality: { greater_than: 1 },
+      validates :miles, presence: true, numericality: { greater_than: 0 }, unless: :other_disbursement_type?
+      validates :total_cost_without_vat, presence: true, numericality: { greater_than: 0 },
 if: :other_disbursement_type?
       validates :details, presence: true
       validates :prior_authority, presence: true, inclusion: { in: YesNoAnswer.values }
