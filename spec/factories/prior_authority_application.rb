@@ -125,11 +125,12 @@ FactoryBot.define do
       further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
       after(:build) do |paa|
         build(:quote, :primary, prior_authority_application_id: paa.id)
-        build(:quote, :alternative, document: nil)
+        build(:quote, :alternative, document: nil, prior_authority_application_id: paa.id)
       end
+
       after(:create) do |paa|
         create(:quote, :primary, prior_authority_application_id: paa.id)
-        create(:quote, :alternative, document: nil)
+        create(:quote, :alternative, document: nil, prior_authority_application_id: paa.id)
       end
     end
 
