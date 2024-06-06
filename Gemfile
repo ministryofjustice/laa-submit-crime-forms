@@ -15,7 +15,7 @@ gem 'jsbundling-rails'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'logstasher', '~> 2.1'
 gem 'oauth2', '~> 2.0'
-gem 'pagy', '~> 8.4.0'
+gem 'pagy', '~> 8.4.2'
 gem 'pg', '~> 1.5'
 gem 'prometheus-client'
 gem 'propshaft'
@@ -44,6 +44,7 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem 'meta_request'
 end
 
 group :test do

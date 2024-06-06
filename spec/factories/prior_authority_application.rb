@@ -124,6 +124,7 @@ FactoryBot.define do
       service_type { 'pathologist_report' }
       custom_service_name { nil }
       further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
+      incorrect_informations { [build(:incorrect_information, :with_edits)] }
     end
 
     trait :sent_back_for_incorrect_info do

@@ -28,6 +28,7 @@ FactoryBot.define do
       disbursement_type { DisbursementTypes::OTHER.to_s }
       other_type { OtherDisbursementTypes.values.sample }
       total_cost_without_vat { 90.0 }
+      prior_authority { 'yes' }
       details { 'Details' }
       apply_vat { 'false' }
       vat_amount { apply_vat == 'true' ? total_cost_without_vat * 0.2 : nil }
@@ -38,6 +39,7 @@ FactoryBot.define do
       disbursement_type { DisbursementTypes::OTHER.to_s }
       other_type { OtherDisbursementTypes.values[0] }
       total_cost_without_vat { 90.0 }
+      prior_authority { 'yes' }
       details { 'Details' }
       apply_vat { 'true' }
     end
@@ -47,6 +49,7 @@ FactoryBot.define do
       disbursement_type { DisbursementTypes::OTHER.to_s }
       other_type { OtherDisbursementTypes.values[0] }
       total_cost_without_vat { 90.0 }
+      prior_authority { 'yes' }
       details { 'Details' }
       apply_vat { 'false' }
     end
@@ -56,6 +59,7 @@ FactoryBot.define do
       disbursement_type { DisbursementTypes::OTHER.to_s }
       other_type { OtherDisbursementTypes.values[0] }
       total_cost_without_vat { 5000.1 }
+      prior_authority { 'yes' }
       details { 'Details' }
       apply_vat { 'true' }
     end
