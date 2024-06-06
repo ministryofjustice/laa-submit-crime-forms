@@ -26,7 +26,6 @@ FactoryBot.define do
     trait :valid_other do
       disbursement_date { age.days.ago.to_date }
       disbursement_type { DisbursementTypes::OTHER.to_s }
-      prior_authority { 'yes' }
       other_type { OtherDisbursementTypes.values.sample }
       total_cost_without_vat { 90.0 }
       prior_authority { 'yes' }

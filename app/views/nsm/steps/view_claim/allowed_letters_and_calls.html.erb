@@ -16,8 +16,8 @@
       { text: t('.allowed_net_cost'), numeric: true },
       { text: t('.action'), numeric: true }
     ]
-    letters_link = link_to(t('.view'), letters_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
-    calls_link = link_to(t('.view'), calls_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
+    letters_link = link_to(t('.view'), letters_nsm_steps_view_claim_path(id: current_application.id, section: 'adjustments'), data: { turbo: 'false' })
+    calls_link = link_to(t('.view'), calls_nsm_steps_view_claim_path(id: current_application.id, section: 'adjustments'), data: { turbo: 'false' })
     rows = [
       ([
         t(".letters"),

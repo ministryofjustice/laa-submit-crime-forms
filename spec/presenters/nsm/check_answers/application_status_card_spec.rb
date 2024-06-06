@@ -89,6 +89,33 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
         )
       end
 
+      context 'when firm is NOT VAT registered' do
+        before do
+          claim.firm_office.update(vat_registered: 'no')
+        end
+
+        let(:claim) { create(:claim, :part_granted_status, :firm_details, :updated_at, assessment_comment:) }
+
+        it 'generates no links in text' do
+          expect(subject.row_data).to match(
+            [
+              {
+                head_key: 'application_status',
+                text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
+                                 '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>£\d+\.\d\d allowed</p>')
+              },
+              {
+                head_key: 'laa_response',
+                text: '<p>this is a comment</p><p>2nd line</p><p><ul class="govuk-list govuk-list--bullet"></ul></p>' \
+                      '<p><a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" ' \
+                      "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim\">" \
+                      'How to appeal this decision</a></p>'
+              }
+            ]
+          )
+        end
+      end
+
       context 'no adjustements' do
         let(:claim) { create(:claim, :part_granted_status, :firm_details, :updated_at, assessment_comment:) }
 

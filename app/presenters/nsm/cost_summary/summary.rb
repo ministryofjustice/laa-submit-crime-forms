@@ -68,10 +68,11 @@ module Nsm
       end
 
       def total_gross_allowed
+        multiplier = (vat_registered ? (BigDecimal('1.0') * vat_rate) : BigDecimal('1.0'))
         [
-          @claim.work_items.sum(&:allowed_total_cost) || 0,
+          multiplier * (@claim.work_items.sum(&:allowed_total_cost) || 0),
           @claim.disbursements.sum(&:allowed_total_cost) || 0,
-          @claim.allowed_letters_and_calls_total_cost || 0
+          multiplier * (@claim.allowed_letters_and_calls_total_cost || 0)
         ].sum
       end
 
