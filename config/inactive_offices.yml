@@ -17,7 +17,9 @@ localhost:
     - 4C567D
 
 development:
-  inactive_office_codes: []
+  inactive_office_codes:
+    - 1K022G
+    - 0A719G
 
 uat:
   inactive_office_codes:
