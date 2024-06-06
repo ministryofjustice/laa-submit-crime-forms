@@ -2,9 +2,21 @@ require 'rails_helper'
 
 RSpec.describe 'System Access', type: :system do
   before do
+    allow(Rails.configuration.x.gatekeeper)
+      .to receive(:office_codes)
+      .and_return(office_codes_from_config)
+
     visit provider_saml_omniauth_callback_path(
       info: { name: 'Test User', email: 'provider@example.com', office_codes: provider.office_codes }
     )
+  end
+
+  let(:office_codes_from_config) do
+    {
+      AAAAAA: ['crm7'],
+      BBBBBB: ['crm4'],
+      CCCCCC: ['crm5']
+    }
   end
 
   context 'user with office codes with access to NSM and PAA' do

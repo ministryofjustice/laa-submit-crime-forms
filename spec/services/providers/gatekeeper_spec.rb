@@ -11,7 +11,7 @@ RSpec.describe Providers::Gatekeeper do
 
   let(:auth_info) do
     double(
-      email:'test@example.com',
+      email: 'test@example.com',
       office_codes: user_office_codes,
     )
   end
@@ -20,7 +20,7 @@ RSpec.describe Providers::Gatekeeper do
 
   describe '#provider_enrolled?' do
     context 'when no service is allowed for their office' do
-      let(:office_codes_from_config) { { :"9A999B" => ["crm4"] } }
+      let(:office_codes_from_config) { { '9A999B': ['crm4'] } }
 
       it 'checks if the email is enrolled' do
         expect(gatekeeper).to receive(:email_enrolled?)
@@ -51,8 +51,8 @@ RSpec.describe Providers::Gatekeeper do
     context 'when ALL have access to crm5 BUT only crm4 for their office code' do
       let(:office_codes_from_config) do
         {
-          :ALL => ["crm5"],
-          :"1A123B" => ["crm4"]
+          ALL: ['crm5'],
+          '1A123B': ['crm4']
         }
       end
 
@@ -76,7 +76,7 @@ RSpec.describe Providers::Gatekeeper do
 
   describe '#all_enrolled?' do
     context 'when ALL is specified for one service' do
-      let(:office_codes_from_config) { { :ALL => ['crm5'] } }
+      let(:office_codes_from_config) { { ALL: ['crm5'] } }
 
       it 'returns true when no service is specified' do
         expect(gatekeeper.all_enrolled?).to be(true)
@@ -92,7 +92,7 @@ RSpec.describe Providers::Gatekeeper do
     end
 
     context 'when ALL is NOT specified in the allow list and their office code has none' do
-      let(:office_codes_from_config) { { :"9A999B" => ["crm7", "crm4", "crm5"] } }
+      let(:office_codes_from_config) { { '9A999B': %w[crm7 crm4 crm5] } }
 
       it 'returns false when no service is specified' do
         expect(gatekeeper.all_enrolled?).to be(false)
@@ -121,7 +121,7 @@ RSpec.describe Providers::Gatekeeper do
   end
 
   describe '#office_enrolled?' do
-    let(:office_codes_from_config) { { :"1A123B" => ["crm4"] } }
+    let(:office_codes_from_config) { { '1A123B': ['crm4'] } }
 
     context 'when any of the office codes are in the allow list' do
       it 'returns true when no service is specified' do
