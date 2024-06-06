@@ -47,8 +47,32 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
     context 'when enhanced rates are claimed' do
       before { claim.reasons_for_claim = [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
 
-      it 'returns true' do
-        expect(assessment).to be_truthy
+      it 'returns false by default' do
+        expect(assessment).to be_falsey
+      end
+
+      context 'when there is an uplift to a work item' do
+        before { claim.work_items.first.update(uplift: 100) }
+
+        it 'returns true' do
+          expect(assessment).to be_truthy
+        end
+      end
+
+      context 'when there is a letters uplift' do
+        before { claim.letters_uplift = 100 }
+
+        it 'returns true' do
+          expect(assessment).to be_truthy
+        end
+      end
+
+      context 'when there is a calls uplift' do
+        before { claim.calls_uplift = 100 }
+
+        it 'returns true' do
+          expect(assessment).to be_truthy
+        end
       end
     end
 
