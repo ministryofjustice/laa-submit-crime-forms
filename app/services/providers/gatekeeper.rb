@@ -13,7 +13,15 @@ module Providers
     end
 
     def provider_enrolled?(service: ANY_SERVICE)
-      email_enrolled? || office_enrolled?(service:)
+      email_enrolled? || all_enrolled?(service:) || office_enrolled?(service:)
+    end
+
+    def all_enrolled?(service: ANY_SERVICE)
+      if service == ANY_SERVICE
+        allowed_office_codes.fetch(:ALL, []).any?
+      else
+        allowed_office_codes.fetch(:ALL, []).include?(service.to_s)
+      end
     end
 
     def office_enrolled?(service: ANY_SERVICE)
