@@ -14,14 +14,6 @@ class SubmitToAppStore
         end
       end
 
-      def primary_quote_attributes
-        form = ::PriorAuthority::Steps::ServiceCostForm.build(@primary_quote, application: @application)
-        {
-          cost_type: form.cost_type,
-          item_type: form.item_type
-        }
-      end
-
       def document(quote)
         return nil unless quote.document
 
@@ -30,6 +22,17 @@ class SubmitToAppStore
                                         file_size
                                         file_path
                                         document_type])
+      end
+
+      def primary_quote_attributes
+        {
+          cost_type: service_cost_form.cost_type,
+          item_type: service_cost_form.item_type
+        }
+      end
+
+      def service_cost_form
+        @service_cost_form ||= ::PriorAuthority::Steps::ServiceCostForm.build(@primary_quote, application: @application)
       end
 
       ATTRIBUTES = %i[
