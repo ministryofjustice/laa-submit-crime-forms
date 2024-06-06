@@ -21,8 +21,8 @@ development:
   office_codes:
     1A123B: ['crm7', 'crm4', 'crm5']
     2A555X: ['crm7', 'crm4', 'crm5']
-    1K022G: ['crm7', 'crm4', 'crm5']
-    0A719G: ['crm7', 'crm4', 'crm5']
+    # 1K022G: ['crm7', 'crm4', 'crm5']
+    # 0A719G: ['crm7', 'crm4', 'crm5']
     0Z981E: ['crm7', 'crm4', 'crm5']
     AAAAAA: ['crm7']
     BBBBBB: ['crm4']
