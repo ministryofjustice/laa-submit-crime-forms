@@ -19,18 +19,6 @@ RSpec.describe 'System Access', type: :system do
       visit prior_authority_applications_path
       expect(page).to have_content('Your applications')
     end
-
-    context 'selectes an alternative office code that does not have access' do
-      it 'can access NSM' do
-        visit nsm_applications_path
-        expect(page).to have_content('Your claims')
-      end
-
-      it 'can access PAA' do
-        visit prior_authority_applications_path
-        expect(page).to have_content('Your applications')
-      end
-    end
   end
 
   context 'user with office codes with access to NSM only' do
@@ -60,19 +48,6 @@ RSpec.describe 'System Access', type: :system do
     it 'cannot view EOL link on home page' do
       visit root_path
       expect(page).to have_no_content 'Apply for extension of upper limits'
-    end
-
-    context 'selects an alternative office code that does not have access' do
-      it 'can access NSM' do
-        visit nsm_applications_path
-        expect(page).to have_content('Your claims')
-      end
-
-      it 'can access PAA' do
-        visit prior_authority_applications_path
-        expect(page).to have_no_content('Your applications')
-        expect(page).to have_current_path(root_path)
-      end
     end
   end
 
@@ -104,19 +79,6 @@ RSpec.describe 'System Access', type: :system do
       visit root_path
       expect(page).to have_no_content 'Apply for extension of upper limits'
     end
-
-    context 'selectes an alternative office code that does not have access' do
-      it 'can not access NSM' do
-        visit nsm_applications_path
-        expect(page).to have_no_content('Your claims')
-        expect(page).to have_current_path(root_path)
-      end
-
-      it 'can access PAA' do
-        visit prior_authority_applications_path
-        expect(page).to have_content('Your applications')
-      end
-    end
   end
 
   context 'user with office codes with access to neither NSM, PAA nor EOL' do
@@ -132,20 +94,6 @@ RSpec.describe 'System Access', type: :system do
       visit prior_authority_applications_path
       expect(page).to have_no_content('Your Applications')
       expect(page).to have_current_path(new_provider_session_path)
-    end
-
-    context 'selectes an alternative office code that does not have access' do
-      it 'can not access NSM' do
-        visit nsm_applications_path
-        expect(page).to have_no_content('Your claims')
-        expect(page).to have_current_path(new_provider_session_path)
-      end
-
-      it 'can not access PAA' do
-        visit prior_authority_applications_path
-        expect(page).to have_no_content('Your Applications')
-        expect(page).to have_current_path(new_provider_session_path)
-      end
     end
   end
 
