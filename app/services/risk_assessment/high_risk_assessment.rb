@@ -13,7 +13,7 @@ module RiskAssessment
     end
 
     def assess
-      high_cost? || counsel_assigned? || uplift_applied? || extradition? || rep_order_withdrawn?
+      high_cost? || counsel_assigned? || enhanced_rates_claimed? || extradition? || rep_order_withdrawn?
     end
 
     def high_cost?
@@ -24,8 +24,8 @@ module RiskAssessment
       [@claim.assigned_counsel, @claim.unassigned_counsel, @claim.agent_instructed].include?('yes')
     end
 
-    def uplift_applied?
-      @items[:work_items].work_items.any?(&:apply_uplift) || @claim.apply_calls_uplift || @claim.apply_letters_uplift
+    def enhanced_rates_claimed?
+      @claim.reasons_for_claim.include? 'enhanced_rates_claimed'
     end
 
     def extradition?
