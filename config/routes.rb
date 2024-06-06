@@ -51,6 +51,10 @@ Rails.application.routes.draw do
     get :accessibility
   end
 
+  namespace :errors do
+    get :inactive_offices
+  end
+
   namespace :nsm, path: 'non-standard-magistrates' do
     resources :claims, except: [:edit, :show, :new, :update], as: :applications do
       member do

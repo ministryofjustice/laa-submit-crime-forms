@@ -5,11 +5,15 @@ module Providers
     before_action :check_provider_is_enrolled, only: [:saml]
 
     def saml
-      provider = Provider.from_omniauth(auth_hash)
+      if Provider.active_offices?(auth_hash)
+        provider = Provider.from_omniauth(auth_hash)
 
-      sign_in_and_redirect(
-        provider, event: :authentication
-      )
+        sign_in_and_redirect(
+          provider, event: :authentication
+        )
+      else
+        redirect_to inactive_offices_path
+      end
     end
 
     private
