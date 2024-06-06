@@ -1,4 +1,5 @@
 <% title t('.page_title') %>
+<% decision_step_header(path: nsm_steps_view_claim_path(current_application.id, section: 'claimed_costs', work_items_page: params[:page],  anchor: 'work-items-tab')) %>
 <%
   work_item = @claim.work_items.find(params[:item_id])
 %>
