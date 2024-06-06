@@ -3,17 +3,14 @@ class SubmitToAppStore
     class QuotePayloadBuilder
       def initialize(application)
         @application = application
+        @primary_quote = application.primary_quote
       end
 
       def payload
         @application.quotes.map do |quote|
-          form = ::PriorAuthority::Steps::ServiceCostForm.build(quote, application: @application)
-
           quote.as_json(only: ATTRIBUTES).merge(
-            cost_type: form.cost_type,
-            item_type: form.item_type,
             document: document(quote)
-          )
+          ).merge(primary_quote_attributes)
         end
       end
 
@@ -25,6 +22,17 @@ class SubmitToAppStore
                                         file_size
                                         file_path
                                         document_type])
+      end
+
+      def primary_quote_attributes
+        {
+          cost_type: service_cost_form.cost_type,
+          item_type: service_cost_form.item_type
+        }
+      end
+
+      def service_cost_form
+        @service_cost_form ||= ::PriorAuthority::Steps::ServiceCostForm.build(@primary_quote, application: @application)
       end
 
       ATTRIBUTES = %i[
