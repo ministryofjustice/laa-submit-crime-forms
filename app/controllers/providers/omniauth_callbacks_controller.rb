@@ -12,7 +12,7 @@ module Providers
           provider, event: :authentication
         )
       else
-        redirect_to inactive_offices_path
+        redirect_to errors_inactive_offices_path
       end
     end
 
