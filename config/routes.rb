@@ -52,7 +52,7 @@ Rails.application.routes.draw do
   end
 
   namespace :errors do
-    get :inactive_offices
+    resources :inactive_offices, only: [:index]
   end
 
   namespace :nsm, path: 'non-standard-magistrates' do
