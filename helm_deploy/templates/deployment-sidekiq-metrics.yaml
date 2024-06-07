@@ -43,18 +43,6 @@ spec:
             - name: http
               containerPort: {{ .Values.service.sidekiqMetricsPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.service.sidekiqMetricsPort }}
-            initialDelaySeconds: 20
-            periodSeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.service.sidekiqMetricsPort }}
-            initialDelaySeconds: 20
-            periodSeconds: 30
           resources:
             {{- toYaml .Values.worker_resources | nindent 12 }}
           env:
