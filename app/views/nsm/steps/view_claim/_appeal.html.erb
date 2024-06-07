@@ -1,0 +1,7 @@
+<h3 class="govuk-heading-s"><%= t(".heading", outcome: t(".#{status}_outcome")) %></h3>
+<p><%= t(".p1", outcome: t(".#{status}_outcome")) %></p>
+<ul class="govuk-list govuk-list--bullet">
+  <li><%= t(".b1_html", email: link_to(t(".email"), "mailto:#{t(".email")}")) %></li>
+  <li><%= t(".b2") %></li>
+</ul>
+<p><%= t(".p2") %></p>
