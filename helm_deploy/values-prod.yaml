@@ -33,7 +33,6 @@ service:
   port: 80
   internalPort: 3000
   workerPort: 7433
-  sidekiqMetricsPort: 9292
 
 ingress:
   enabled: true
