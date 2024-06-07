@@ -4,9 +4,17 @@ RSpec.describe Providers::Gatekeeper do
   subject(:gatekeeper) { described_class.new(auth_info) }
 
   before do
-    allow(Rails.configuration.x.gatekeeper)
+    allow(Rails.configuration.x.gatekeeper.crm4)
       .to receive(:office_codes)
-      .and_return(office_codes_from_config)
+      .and_return(office_codes_from_crm4_config)
+
+    allow(Rails.configuration.x.gatekeeper.crm5)
+      .to receive(:office_codes)
+      .and_return(office_codes_from_crm5_config)
+
+    allow(Rails.configuration.x.gatekeeper.crm7)
+      .to receive(:office_codes)
+      .and_return(office_codes_from_crm7_config)
   end
 
   let(:auth_info) do
@@ -20,7 +28,9 @@ RSpec.describe Providers::Gatekeeper do
 
   describe '#provider_enrolled?' do
     context 'when no service is allowed for their office' do
-      let(:office_codes_from_config) { { '9A999B': ['crm4'] } }
+      let(:office_codes_from_crm4_config) { ['9A999B'] }
+      let(:office_codes_from_crm5_config) { ['9A999B'] }
+      let(:office_codes_from_crm7_config) { ['9A999B'] }
 
       it 'checks if the email is enrolled' do
         expect(gatekeeper).to receive(:email_enrolled?)
@@ -49,12 +59,9 @@ RSpec.describe Providers::Gatekeeper do
     end
 
     context 'when ALL have access to crm5 BUT only crm4 for their office code' do
-      let(:office_codes_from_config) do
-        {
-          ALL: ['crm5'],
-          '1A123B': ['crm4']
-        }
-      end
+      let(:office_codes_from_crm4_config) { ['1A123B'] }
+      let(:office_codes_from_crm5_config) { ['ALL'] }
+      let(:office_codes_from_crm7_config) { [] }
 
       it 'returns true when no service is specified' do
         expect(gatekeeper.provider_enrolled?).to be(true)
@@ -76,7 +83,9 @@ RSpec.describe Providers::Gatekeeper do
 
   describe '#all_enrolled?' do
     context 'when ALL is specified for one service' do
-      let(:office_codes_from_config) { { ALL: ['crm5'] } }
+      let(:office_codes_from_crm4_config) { [] }
+      let(:office_codes_from_crm5_config) { ['ALL'] }
+      let(:office_codes_from_crm7_config) { [] }
 
       it 'returns true when no service is specified' do
         expect(gatekeeper.all_enrolled?).to be(true)
@@ -92,21 +101,9 @@ RSpec.describe Providers::Gatekeeper do
     end
 
     context 'when ALL is NOT specified in the allow list and their office code has none' do
-      let(:office_codes_from_config) { { '9A999B': %w[crm7 crm4 crm5] } }
-
-      it 'returns false when no service is specified' do
-        expect(gatekeeper.all_enrolled?).to be(false)
-      end
-
-      it 'returns false when service is specified' do
-        expect(gatekeeper.all_enrolled?(service: :crm4)).to be(false)
-        expect(gatekeeper.all_enrolled?(service: :crm5)).to be(false)
-        expect(gatekeeper.all_enrolled?(service: :crm7)).to be(false)
-      end
-    end
-
-    context 'when ALL is specified with no services and their office code has none' do
-      let(:office_codes_from_config) { { ALL: [] } }
+      let(:office_codes_from_crm4_config) { ['9A999B'] }
+      let(:office_codes_from_crm5_config) { ['9A999B'] }
+      let(:office_codes_from_crm7_config) { ['9A999B'] }
 
       it 'returns false when no service is specified' do
         expect(gatekeeper.all_enrolled?).to be(false)
@@ -122,8 +119,11 @@ RSpec.describe Providers::Gatekeeper do
 
   describe '#office_enrolled?' do
     let(:office_codes_from_config) { { '1A123B': ['crm4'] } }
+    let(:office_codes_from_crm4_config) { ['1A123B'] }
+    let(:office_codes_from_crm5_config) { ['9A999B'] }
+    let(:office_codes_from_crm7_config) { ['9A999B'] }
 
-    context 'when any of the office codes are in the allow list' do
+    context 'when any of the office codes are in any allow list' do
       it 'returns true when no service is specified' do
         expect(gatekeeper.office_enrolled?).to be(true)
       end
@@ -133,12 +133,16 @@ RSpec.describe Providers::Gatekeeper do
       end
 
       it 'returns false when a disallowed service is specified' do
+        expect(gatekeeper.office_enrolled?(service: :crm5)).to be(false)
         expect(gatekeeper.office_enrolled?(service: :crm7)).to be(false)
       end
     end
 
     context 'when no office codes are in the allow list' do
       let(:user_office_codes) { %w[1X000X] }
+      let(:office_codes_from_crm4_config) { ['1A123B'] }
+      let(:office_codes_from_crm5_config) { ['1A123B'] }
+      let(:office_codes_from_crm7_config) { ['1A123B'] }
 
       it 'returns false when no service is specified' do
         expect(gatekeeper.office_enrolled?).to be(false)
