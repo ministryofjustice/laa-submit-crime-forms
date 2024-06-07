@@ -32,4 +32,11 @@ end
 
 Sidekiq.configure_server do |config|
   config.redis = { url: redis_url } if redis_url
+  config.on :startup do
+    require 'prometheus_exporter/instrumentation'
+    PrometheusExporter::Instrumentation::ActiveRecord.start(
+      custom_labels: { type: "sidekiq" },
+      config_labels: [:database, :host]
+    )
+  end
 end
