@@ -71,5 +71,6 @@ If branch name contains "redis" then the redis-release-name appends "-master", o
   {{- printf "%s-master.%s.svc.cluster.local" $redis_fullName .Release.Namespace -}}
 {{- end -}}
 {{- define "helm_deploy.redisUatUrl" -}}
-  {{- printf "redis://:redis@%s:6379" $redisUatHost }}
+  {{- $redis_fullName := (include "common.names.fullname" .Subcharts.redis) -}}
+  {{- printf "redis://:redis@%s-master.%s.svc.cluster.local:6379" $redis_fullName .Release.Namespace }}
 {{- end -}}
