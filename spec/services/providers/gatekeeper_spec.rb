@@ -79,6 +79,22 @@ RSpec.describe Providers::Gatekeeper do
         expect(gatekeeper.provider_enrolled?(service: :crm7)).to be(false)
       end
     end
+
+    context 'when one or more services has no office_codes' do
+      let(:office_codes_from_crm4_config) { nil }
+      let(:office_codes_from_crm5_config) { nil }
+      let(:office_codes_from_crm7_config) { nil }
+
+      it 'returns false' do
+        expect(gatekeeper.provider_enrolled?).to be(false)
+      end
+
+      it 'returns false for any of the services' do
+        expect(gatekeeper.provider_enrolled?(service: :crm4)).to be(false)
+        expect(gatekeeper.provider_enrolled?(service: :crm5)).to be(false)
+        expect(gatekeeper.provider_enrolled?(service: :crm7)).to be(false)
+      end
+    end
   end
 
   describe '#all_enrolled?' do
@@ -110,6 +126,22 @@ RSpec.describe Providers::Gatekeeper do
       end
 
       it 'returns false when service is specified' do
+        expect(gatekeeper.all_enrolled?(service: :crm4)).to be(false)
+        expect(gatekeeper.all_enrolled?(service: :crm5)).to be(false)
+        expect(gatekeeper.all_enrolled?(service: :crm7)).to be(false)
+      end
+    end
+
+    context 'when one or more services has no office_codes' do
+      let(:office_codes_from_crm4_config) { nil }
+      let(:office_codes_from_crm5_config) { nil }
+      let(:office_codes_from_crm7_config) { nil }
+
+      it 'returns false' do
+        expect(gatekeeper.all_enrolled?).to be(false)
+      end
+
+      it 'returns false for any of the services' do
         expect(gatekeeper.all_enrolled?(service: :crm4)).to be(false)
         expect(gatekeeper.all_enrolled?(service: :crm5)).to be(false)
         expect(gatekeeper.all_enrolled?(service: :crm7)).to be(false)

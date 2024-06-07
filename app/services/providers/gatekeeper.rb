@@ -37,14 +37,18 @@ module Providers
       if service == ANY_SERVICE
         all_office_codes
       else
-        Rails.configuration.x.gatekeeper.send(service).office_codes
+        offices_codes_for(service)
       end
     end
 
     def all_office_codes
-      @all_office_codes ||= Rails.configuration.x.gatekeeper.crm4.office_codes |
-                            Rails.configuration.x.gatekeeper.crm5.office_codes |
-                            Rails.configuration.x.gatekeeper.crm7.office_codes
+      @all_office_codes ||= offices_codes_for(:crm4) |
+                            offices_codes_for(:crm5) |
+                            offices_codes_for(:crm7)
+    end
+
+    def offices_codes_for(service)
+      Rails.configuration.x.gatekeeper.send(service).office_codes || []
     end
   end
 end
