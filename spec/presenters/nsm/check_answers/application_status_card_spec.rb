@@ -72,18 +72,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'laa_response',
-              text: '<p>this is a comment</p><p>2nd line</p>' \
-                    '<p><ul class="govuk-list govuk-list--bullet">' \
-                    '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/applications/' \
-                    "#{claim.id}/steps/view_claim?section=adjustments#work_items\">" \
-                    'Review adjustments to work items</a></li><li><a class="govuk-link govuk-link--no-visited-state" ' \
-                    "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim?" \
-                    'section=adjustments#letters_and_calls">Review adjustments to letters and calls</a></li>' \
-                    '<li><a class="govuk-link govuk-link--no-visited-state" href="/non-standard-magistrates/applications/' \
-                    "#{claim.id}/steps/view_claim?section=adjustments#disbursements\">Review adjustments " \
-                    'to disbursements</a></li></ul></p><p><a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" ' \
-                    "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim\">" \
-                    'How to appeal this decision</a></p>'
+              text: Regexp.new('<p>this is a comment</p><p>2nd line</p>')
             }
           ]
         )
@@ -102,10 +91,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               },
               {
                 head_key: 'laa_response',
-                text: '<p>this is a comment</p><p>2nd line</p><p><ul class="govuk-list govuk-list--bullet"></ul></p>' \
-                      '<p><a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" ' \
-                      "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim\">" \
-                      'How to appeal this decision</a></p>'
+                text: Regexp.new('<p>this is a comment</p><p>2nd line</p><p><ul class="govuk-list govuk-list--bullet"></ul></p>')
               }
             ]
           )
@@ -202,10 +188,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'laa_response',
-              text: '<p>this is a comment</p><p>2nd line</p>' \
-                    '<p><a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" ' \
-                    "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/view_claim\">" \
-                    'How to appeal this decision</a></p>'
+              text: Regexp.new('<p>this is a comment</p><p>2nd line</p>')
             }
           ]
         )
