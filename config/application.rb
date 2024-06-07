@@ -26,7 +26,6 @@ module Crm7restbackend
     config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
 
     # gatekeeper/authorization config for onboarding users
-    config.x.gatekeeper = config_for(:gatekeeper, env: ENV.fetch('ENV', 'localhost'))
     config.x.gatekeeper.crm4 = config_for(:gatekeeper_crm4, env: ENV.fetch('ENV', 'localhost'))
     config.x.gatekeeper.crm5 = config_for(:gatekeeper_crm5, env: ENV.fetch('ENV', 'localhost'))
     config.x.gatekeeper.crm7 = config_for(:gatekeeper_crm7, env: ENV.fetch('ENV', 'localhost'))
