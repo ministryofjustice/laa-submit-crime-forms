@@ -17,13 +17,19 @@ module Providers
     end
 
     def all_enrolled?(service: ANY_SERVICE)
-      allowed_office_codes = allowed_office_codes(service:)
-      allowed_office_codes.include?('ALL')
+      if service == ANY_SERVICE
+        allowed_office_codes.fetch(:ALL, []).any?
+      else
+        allowed_office_codes.fetch(:ALL, []).include?(service.to_s)
+      end
     end
 
     def office_enrolled?(service: ANY_SERVICE)
-      allowed_office_codes = allowed_office_codes(service:)
-      auth_info.office_codes.any? { |el| allowed_office_codes.include?(el) }
+      if service == ANY_SERVICE
+        auth_info.office_codes.any? { allowed_office_codes[_1.to_sym] }
+      else
+        auth_info.office_codes.any? { allowed_office_codes[_1.to_sym]&.include?(service.to_s) }
+      end
     end
 
     # TODO: implement separately once decided if this is required
@@ -33,18 +39,8 @@ module Providers
 
     private
 
-    def allowed_office_codes(service: ANY_SERVICE)
-      if service == ANY_SERVICE
-        all_office_codes
-      else
-        Rails.configuration.x.gatekeeper.send(service).office_codes
-      end
-    end
-
-    def all_office_codes
-      @all_office_codes ||= Rails.configuration.x.gatekeeper.crm4.office_codes |
-                            Rails.configuration.x.gatekeeper.crm5.office_codes |
-                            Rails.configuration.x.gatekeeper.crm7.office_codes
+    def allowed_office_codes
+      Rails.configuration.x.gatekeeper.office_codes
     end
   end
 end
