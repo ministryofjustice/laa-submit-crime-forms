@@ -34,9 +34,17 @@ Sidekiq.configure_server do |config|
   config.redis = { url: redis_url } if redis_url
   config.on :startup do
     require 'prometheus_exporter/instrumentation'
+    config.server_middleware do |chain|
+      chain.add PrometheusExporter::Instrumentation::Sidekiq
+    end
+    config.death_handlers << PrometheusExporter::Instrumentation::Sidekiq.death_handler
     PrometheusExporter::Instrumentation::ActiveRecord.start(
       custom_labels: { type: "sidekiq" },
       config_labels: [:database, :host]
     )
+    PrometheusExporter::Instrumentation::Process.start type: 'sidekiq'
+    PrometheusExporter::Instrumentation::SidekiqProcess.start
+    PrometheusExporter::Instrumentation::SidekiqQueue.start
+    PrometheusExporter::Instrumentation::SidekiqStats.start
   end
 end
