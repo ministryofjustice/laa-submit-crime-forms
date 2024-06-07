@@ -210,6 +210,24 @@ spec:
               value: '{{ .Values.variables.allowIndexing }}'
             - name: SEND_EMAILS
               value: 'true'
+        - name: {{ include "laa-submit-crime-forms.fullname" . }}-metrics
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: Always
+          command: ['sh', '-c', "bundle exec prometheus_exporter --bind 0.0.0.0"]
+          ports:
+          - containerPort: 9394
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9394
+            initialDelaySeconds: 10
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 9394
+            initialDelaySeconds: 10
+            periodSeconds: 60
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
