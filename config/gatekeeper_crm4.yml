@@ -1,0 +1,71 @@
+# List of providers (office codes and/or emails)
+# who can use the crm4/PA service (phased private MVP access).
+#
+# If a provider has more than one office code, then
+# access is granted if any code is allowed.
+#
+# If ALL is specified then any authenticated user
+# can access that service
+#
+localhost:
+  office_codes:
+    # dummy/testing office codes
+    - 1A123B
+    - 2A555X
+    - 1K022G
+    - 0A719G
+    - 0Z981E
+    - BBBBBB
+    - XXXXXX
+
+development:
+  office_codes:
+    # dummy/testing office codes
+    - 1A123B
+    - 2A555X
+    - 1K022G
+    - 0A719G
+    - 0Z981E
+    - BBBBBB
+    - XXXXXX
+
+    # Test user office from portal A.CLARK - with eForms role - (see 1Password for login details)
+    - 0X416R
+
+    # Test user office from portal 07RJONES - without eForms role - (see 1Password for login details)
+    - 0Q316L
+
+uat:
+  office_codes:
+    - 1A123B
+    - 2A555X
+    - 1K022G
+    - 0A719G
+    - 0Z981E
+    - BBBBBB
+    - XXXXXX
+
+    # Test user office from portal A.CLARK - with eForms role - (see 1Password for login details)
+    - 0X416R
+
+    # Test user office from portal 07RJONES - without eForms role - (see 1Password for login details)
+    - 0Q316L
+
+production:
+  office_codes:
+    # dummy user/office
+    - 2N232W
+
+    # First CRM4 onboarding tranche - 04/06/2024
+    - 1U002F
+    - 2M122P
+    - 2M129X
+    - 2M132A
+    - 2M926N
+    - 2P533K
+    - 2P536N
+    - 2Q241E
+    - 2Q258Y
+    - 2Q510X
+    - 2Q511Y
+    - 2Q512Z
