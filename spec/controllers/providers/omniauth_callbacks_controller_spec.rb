@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
-  let(:office_codes) { %w[BBBBBB CCCCCC AAAAAA]}
+  let(:office_codes) { %w[BBBBBB CCCCCC AAAAAA] }
 
   let(:office_codes_from_crm4_config) { ['BBBBBB'] }
   let(:office_codes_from_crm5_config) { ['CCCCCC'] }
@@ -9,21 +9,21 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
 
   before do
     # Mimic the router behavior of setting the Devise scope through the env.
-    @request.env['devise.mapping'] = Devise.mappings[:provider]
+    request.env['devise.mapping'] = Devise.mappings[:provider]
 
     request.env['omniauth.auth'] = OmniAuth::AuthHash.new({
-      provider: 'saml',
+                                                            provider: 'saml',
       uid: 'test-user',
       info: {
         email: 'provider@example.com',
         roles: 'EFORMS,EFORMS_eFormsAuthor,CRIMEAPPLY',
-        office_codes:
+        office_codes: office_codes
       }
-    })
+                                                          })
 
     allow(Rails.configuration.x.gatekeeper.crm4)
-    .to receive(:office_codes)
-    .and_return(office_codes_from_crm4_config)
+      .to receive(:office_codes)
+      .and_return(office_codes_from_crm4_config)
 
     allow(Rails.configuration.x.gatekeeper.crm5)
       .to receive(:office_codes)
