@@ -29,7 +29,7 @@ module Nsm
           (if response.any?
              {
                head_key: 'laa_response',
-               text: join_strings(*response, *edit_links, *appeal_button, *update_claim)
+               text: join_strings(*response, *edit_links, appeal_info, *update_claim)
              }
            end)
         ].compact
@@ -81,17 +81,10 @@ module Nsm
         claim.updated_at.to_fs(:stamp)
       end
 
-      def appeal_button
-        return [] unless status.part_grant? || status.rejected?
+      def appeal_info
+        return unless claim.part_grant? || claim.rejected?
 
-        helper = Rails.application.routes.url_helpers
-        [
-          govuk_button_link_to(
-            translate('appeal'),
-            helper.url_for(controller: 'nsm/steps/view_claim', action: :show, id: claim.id, only_path: true),
-            class: 'govuk-!-margin-bottom-0'
-          )
-        ]
+        ApplicationController.new.render_to_string(partial: 'nsm/steps/view_claim/appeal', locals: { status: claim.status })
       end
 
       def edit_links

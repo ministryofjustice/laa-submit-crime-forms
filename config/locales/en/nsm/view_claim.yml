@@ -164,3 +164,12 @@ en:
           mileage:
             one: "%{miles} mile"
             other: "%{miles} miles"
+        appeal:
+          rejected_outcome: rejection
+          part_grant_outcome: adjustment
+          heading: Appeal the %{outcome}
+          p1: "If you want to appeal the %{outcome}, email or post a detailed explanation of the grounds of your appeal and any supporting documents to:"
+          b1_html: "%{email}, with the LAA case reference in the subject of the email"
+          b2: Nottingham Office, 3rd Floor B3.20, 1 Unity Square, Queensbridge Road, Nottingham NG2 1AW, or DX 10035 Nottingham 1
+          email: CRM7appeal@justice.gov.uk
+          p2: Appeals may be considered by LAA caseworkers or sent to an independent costs assessor (ICA). You can only appeal once. The ICA’s decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).

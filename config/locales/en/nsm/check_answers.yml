@@ -128,7 +128,6 @@ en:
             application_status:
               title: Claim status
               awaiting_review: Awaiting LAA review
-              appeal: How to appeal this decision
               work_items: Review adjustments to work items
               letters_and_calls: Review adjustments to letters and calls
               disbursements: Review adjustments to disbursements

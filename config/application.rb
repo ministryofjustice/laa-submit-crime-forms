@@ -25,12 +25,11 @@ module Crm7restbackend
     # config.eager_load_paths << Rails.root.join("extras")
     config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
 
-    config.x.gatekeeper = config_for(
-      :gatekeeper, env: ENV.fetch('ENV', 'localhost')
-    )
-    config.x.inactive_offices = config_for(
-      :inactive_offices, env: ENV.fetch('ENV', 'localhost')
-    )
+    # gatekeeper/authorization config for onboarding users
+    config.x.gatekeeper.crm4 = config_for(:gatekeeper_crm4, env: ENV.fetch('ENV', 'localhost'))
+    config.x.gatekeeper.crm5 = config_for(:gatekeeper_crm5, env: ENV.fetch('ENV', 'localhost'))
+    config.x.gatekeeper.crm7 = config_for(:gatekeeper_crm7, env: ENV.fetch('ENV', 'localhost'))
+    config.x.inactive_offices = config_for(:inactive_offices, env: ENV.fetch('ENV', 'localhost'))
 
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = :mailers
