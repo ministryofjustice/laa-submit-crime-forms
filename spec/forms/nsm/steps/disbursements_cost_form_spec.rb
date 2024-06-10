@@ -170,42 +170,69 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
   describe '#save!' do
     let(:application) { create(:claim) }
     let(:record) { Disbursement.create!(disbursement_type: disbursement_type, claim: application) }
-    let(:disbursement_type) { DisbursementTypes::Car.to_s }
+    let(:disbursement_type) { DisbursementTypes::CAR.to_s }
 
     context 'when disbursement_type is car' do
       let(:disbursement_type) { DisbursementTypes::CAR.to_s }
 
       it 'calculates and stores the total_cost_without_vat' do
-        form.save!
-        expect(record.reload).to have_attributes(
-          miles: 10,
-          total_cost_without_vat: 4.5,
-          vat_amount: 0.0
-        )
+        expect { form.save! }.to change { record.reload.attributes }
+          .from(
+            hash_including(
+              'miles' => nil,
+              'total_cost_without_vat' => nil,
+              'vat_amount' => nil,
+            )
+          )
+          .to(
+            hash_including(
+              'miles' => 10,
+              'total_cost_without_vat' => 4.5,
+              'vat_amount' => 0.0,
+            )
+          )
       end
 
       context 'when apply_vat is true' do
         let(:apply_vat) { 'true' }
 
         it 'calculates and stores the total_cost_without_vat and vat_amount' do
-          form.save!
-          expect(record.reload).to have_attributes(
-            miles: 10,
-            total_cost_without_vat: 4.5,
-            vat_amount: 0.9
-          )
+          expect { form.save! }.to change { record.reload.attributes }
+            .from(
+              hash_including(
+                'miles' => nil,
+                'total_cost_without_vat' => nil,
+                'vat_amount' => nil,
+              )
+            )
+            .to(
+              hash_including(
+                'miles' => 10,
+                'total_cost_without_vat' => 4.5,
+                'vat_amount' => 0.9,
+              )
+            )
         end
 
-        context 'and vat_amount has a part penny' do
+        context 'when vat_amount has a part penny' do
           let(:miles) { 11.5 }
 
           it 'calculates and stores the total_cost_without_vat and vat_amount rounded to the nearest penny' do
-            form.save!
-            expect(record.reload).to have_attributes(
-              miles: 11.5,
-              total_cost_without_vat: 5.18,
-              vat_amount: 1.04
-            )
+            expect { form.save! }.to change { record.reload.attributes }
+              .from(
+                hash_including(
+                  'miles' => nil,
+                  'total_cost_without_vat' => nil,
+                  'vat_amount' => nil,
+                )
+              )
+              .to(
+                hash_including(
+                  'miles' => 11.5,
+                  'total_cost_without_vat' => 5.18,
+                  'vat_amount' => 1.04,
+                )
+              )
           end
         end
       end
@@ -216,24 +243,96 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
       let(:total_cost_without_vat) { 50 }
 
       it 'stores the total_cost_without_vat' do
-        form.save!
-        expect(record.reload).to have_attributes(
-          miles: nil,
-          total_cost_without_vat: 50.0,
-          vat_amount: 0.0
-        )
+        expect { form.save! }.to change { record.reload.attributes }
+          .from(
+            hash_including(
+              'miles' => nil,
+              'total_cost_without_vat' => nil,
+              'vat_amount' => nil,
+            )
+          )
+          .to(
+            hash_including(
+              'miles' => nil,
+              'total_cost_without_vat' => 50.0,
+              'vat_amount' => 0.0,
+            )
+          )
       end
 
       context 'when apply_vat is true' do
         let(:apply_vat) { 'true' }
 
         it 'stores the total_cost_without_vat and vat_amount' do
-          form.save!
-          expect(record.reload).to have_attributes(
-            miles: nil,
-            total_cost_without_vat: 50.0,
-            vat_amount: 10.0
+          expect { form.save! }.to change { record.reload.attributes }
+            .from(
+              hash_including(
+                'miles' => nil,
+                'total_cost_without_vat' => nil,
+                'vat_amount' => nil,
+              )
+            )
+            .to(
+              hash_including(
+                'miles' => nil,
+                'total_cost_without_vat' => 50.0,
+                'vat_amount' => 10.0,
+              )
+            )
+        end
+      end
+    end
+
+    context 'when a "mileage" disbursement type changed to other' do
+      let(:application) { create(:claim) }
+      let(:record) { Disbursement.create!(disbursement_type: disbursement_type, claim: application) }
+      let(:disbursement_type) { DisbursementTypes::CAR.to_s }
+      let(:miles) { 101 }
+      let(:prior_authority) { nil }
+
+      before do
+        form.save!
+        record.update!(disbursement_type: DisbursementTypes::OTHER.to_s)
+      end
+
+      it 'clears the miles value' do
+        expect { form.save! }.to change { record.reload.attributes }
+          .from(
+            hash_including(
+              'miles' => 101,
+            )
           )
+          .to(
+            hash_including(
+              'miles' => nil,
+            )
+          )
+      end
+
+      context 'when an "other" disbursement type changed to a "mileage" type' do
+        let(:application) { create(:claim) }
+        let(:record) { Disbursement.create!(disbursement_type: disbursement_type, claim: application) }
+        let(:disbursement_type) { DisbursementTypes::OTHER.to_s }
+        let(:miles) { nil }
+        let(:prior_authority) { 'yes' }
+
+        before do
+          form.save!
+          record.update!(disbursement_type: DisbursementTypes::CAR.to_s)
+        end
+
+        it 'clears the prior_authority value' do
+          expect { form.save! }.to change { record.reload.attributes }
+            .from(
+              hash_including(
+                'prior_authority' => 'yes',
+              )
+            )
+            .to(
+              hash_including(
+                'prior_authority' => nil,
+              )
+            )
         end
       end
     end

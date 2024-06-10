@@ -46,6 +46,7 @@ if: :other_disbursement_type?
       def attributes_with_resets
         attributes.merge(
           'miles' => other_disbursement_type? ? nil : miles,
+          'prior_authority' => other_disbursement_type? ? prior_authority : nil,
           'total_cost_without_vat' => total_cost_pre_vat,
           'vat_amount' => vat,
           'apply_vat' => apply_vat ? 'true' : 'false'
