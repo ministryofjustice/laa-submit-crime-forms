@@ -44,7 +44,7 @@ module Providers
     end
 
     def offices_in_list?
-      return true if Providers::Gatekeeper.new(current_provider).provider_enrolled?(service:)
+      return true if Providers::Gatekeeper.new(auth_hash.info).provider_enrolled?(service:)
     end
   end
 end
