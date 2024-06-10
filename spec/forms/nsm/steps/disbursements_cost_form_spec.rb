@@ -28,33 +28,68 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
   let(:apply_vat) { 'false' }
   let(:vat_amount) { nil }
 
-  describe '#validations' do
+  describe '#validate' do
     context 'when disbursement_type is not other' do
-      %w[miles details].each do |field|
-        describe "#when #{field} is blank" do
-          let(field) { nil }
+      context 'and miles are blank' do
+        let(:miles) { nil }
 
-          it 'has an error' do
-            expect(form).not_to be_valid
-            expect(form.errors.of_kind?(field, :blank)).to be(true)
-          end
+        it 'has an error' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:miles, :blank)).to be(true)
         end
+      end
+
+      context 'and details are blank' do
+        let(:details) { nil }
+
+        it 'has an error' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:details, :blank)).to be(true)
+        end
+      end
+
+      context 'and prior_authority is blank' do
+        let(:prior_authority) { nil }
+
+        it { is_expected.to be_valid }
       end
     end
 
     context 'when disbursement_type is other' do
       let(:disbursement_type) { DisbursementTypes::OTHER.to_s }
-      let(:miles) { nil }
+      let(:prior_authority) { YesNoAnswer::YES }
       let(:total_cost_without_vat) { 10.0 }
 
-      %w[total_cost_without_vat details].each do |field|
-        describe "#when #{field} is blank" do
-          let(field) { nil }
+      context 'and miles are blank' do
+        let(:miles) { nil }
 
-          it 'has an error' do
-            expect(form).not_to be_valid
-            expect(form.errors.of_kind?(field, :blank)).to be(true)
-          end
+        it { is_expected.to be_valid }
+      end
+
+      context 'and details are blank' do
+        let(:details) { nil }
+
+        it 'has an error' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:details, :blank)).to be(true)
+        end
+      end
+
+      context 'and prior_authority is blank' do
+        let(:prior_authority) { nil }
+
+        it 'has an error' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:prior_authority, :blank)).to be(true)
+        end
+      end
+
+      context 'and total_cost_without_vat is blank' do
+        let(:total_cost_without_vat) { nil }
+
+        it 'has an error' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:total_cost_without_vat, :blank)).to be(true)
         end
       end
     end
@@ -132,7 +167,7 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
     end
   end
 
-  describe 'save!' do
+  describe '#save!' do
     let(:application) { create(:claim) }
     let(:record) { Disbursement.create!(disbursement_type: disbursement_type, claim: application) }
     let(:disbursement_type) { DisbursementTypes::Car.to_s }
