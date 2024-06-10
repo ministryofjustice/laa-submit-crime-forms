@@ -14,10 +14,6 @@ module Providers
       end
     end
 
-    def offices_in_list?
-      return true if Providers::Gatekeeper.new(current_provider).provider_enrolled?(service:)
-    end
-
     private
 
     def calculate_active_office_codes

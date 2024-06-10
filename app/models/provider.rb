@@ -33,10 +33,6 @@ class Provider < ApplicationRecord
       active_office_codes(auth).count.positive?
     end
 
-    def offices_in_list?(auth)
-      Providers::ActiveOfficeChecker.new(auth.info).offices_in_list?
-    end
-
     private
 
     def active_office_codes(auth)
