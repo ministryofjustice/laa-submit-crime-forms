@@ -116,9 +116,8 @@ RSpec.describe 'User can manage disbursements', type: :system do
     expect(page).to have_content('Check your payment claim')
   end
 
-  it 'forces me to complete disbursements before continuing' do
+  it 'forces me to complete "mileage" disbursements before continuing' do
     visit edit_nsm_steps_disbursement_add_path(claim.id)
-
     choose 'Yes'
 
     click_on 'Save and continue'
@@ -132,7 +131,6 @@ RSpec.describe 'User can manage disbursements', type: :system do
     choose 'Car'
 
     click_on 'Save and come back later'
-
     click_on 'Disbursements'
 
     expect(page).to have_no_content 'Do you want to add another disbursement?'
@@ -145,7 +143,6 @@ RSpec.describe 'User can manage disbursements', type: :system do
     click_on 'Save and continue'
 
     fill_in 'Number of miles', with: 100
-    choose 'Yes'
     fill_in 'Enter details of this disbursement', with: 'details'
 
     click_on 'Save and continue'
@@ -155,5 +152,6 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
     click_on 'Save and continue'
     expect(page).to have_no_content 'You cannot save and continue if any disbursements are incomplete'
+    expect(page).to have_title 'Check your payment claim'
   end
 end
