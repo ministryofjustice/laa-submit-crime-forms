@@ -328,7 +328,13 @@ en:
           attributes:
             main_offence:
               blank: "Enter the name of the offence"
-            main_offence_date: *shared_date_errors
+            main_offence_date:
+              blank: Enter the date of the main offence
+              invalid: The date of the main offence must be a real date
+              invalid_day: The date of the main offence must be a real date
+              invalid_month: The date of the main offence must be a real date
+              invalid_year: The date of the main offence must be a real date
+              future_not_allowed: The date of the main offence must be in the past
             assigned_counsel:
               blank: "Assigned counsel cannot be blank"
             unassigned_counsel:
@@ -337,7 +343,14 @@ en:
               blank: "Agent instructed cannot be blank"
             remitted_to_magistrate:
               blank: "Remitted to magistrate cannot be blank"
-            invalid: You must select at least one option
+              invalid: You must select at least one option
+            remitted_to_magistrate_date:
+              blank: Enter the remittal date
+              invalid: The remittal date must be a real date
+              invalid_day: The remittal date must be a real date
+              invalid_month: The remittal date must be a real date
+              invalid_year: The remittal date must be a real date
+              future_not_allowed: The remittal date must be in the past
         nsm/steps/case_disposal_form:
           attributes:
             plea:
