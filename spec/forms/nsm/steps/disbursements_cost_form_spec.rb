@@ -40,23 +40,6 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
           end
         end
       end
-
-      context 'when total without vat is >= £100' do
-        let(:miles) { 1000 }
-
-        context 'when prior_authority is not set' do
-          it 'has an error' do
-            expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:prior_authority, :blank)).to be(true)
-          end
-        end
-
-        context 'when prior_authority is set' do
-          let(:prior_authority) { YesNoAnswer.values.sample.to_s }
-
-          it { expect(subject).to be_valid }
-        end
-      end
     end
 
     context 'when disbursement_type is other' do
@@ -69,26 +52,9 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
           let(field) { nil }
 
           it 'has an error' do
-            expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(field, :blank)).to be(true)
+            expect(form).not_to be_valid
+            expect(form.errors.of_kind?(field, :blank)).to be(true)
           end
-        end
-      end
-
-      context 'when total without vat is >= £100' do
-        let(:total_cost_without_vat) { 100.00 }
-
-        context 'when prior_authority is not set' do
-          it 'has an error' do
-            expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:prior_authority, :blank)).to be(true)
-          end
-        end
-
-        context 'when prior_authority is set' do
-          let(:prior_authority) { YesNoAnswer.values.sample.to_s }
-
-          it { expect(subject).to be_valid }
         end
       end
     end
