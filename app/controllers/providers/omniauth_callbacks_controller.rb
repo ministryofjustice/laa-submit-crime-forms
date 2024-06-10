@@ -11,7 +11,7 @@ module Providers
         sign_in_and_redirect(
           provider, event: :authentication
         )
-      elsif Provider.any_offices?(auth_hash)
+      elsif Provider.offices_in_list?(auth_hash)
         redirect_to errors_inactive_offices_path
       else
         redirect_to laa_msf.not_enrolled_errors_path
