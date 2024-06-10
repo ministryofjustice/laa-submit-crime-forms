@@ -1,5 +1,9 @@
 ---
 en:
+  errors:
+    inactive_offices:
+      title: Your office code is inactive
+      message: Contact your firm's LAA account administrator to get a new office code
   shared:
     shared_date_errors: &shared_date_errors
       blank: Date cannot be blank
