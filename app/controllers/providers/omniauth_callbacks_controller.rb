@@ -13,8 +13,6 @@ module Providers
         )
       elsif offices_in_list?
         redirect_to errors_inactive_offices_path
-      else
-        redirect_to laa_msf.not_enrolled_errors_path
       end
     end
 
