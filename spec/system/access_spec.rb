@@ -101,7 +101,7 @@ RSpec.describe 'System Access', type: :system do
     before do
       allow(Rails.configuration.x.inactive_offices)
         .to_receive(inactive_office_codes)
-        .and_return(['BBBBB', 'CCCCC', 'AAAAA'])
+        .and_return(%w[BBBBB CCCCC AAAAA])
     end
 
     let(:provider) { create(:provider, :paa_access, :nsm_access, :eol_access) }
