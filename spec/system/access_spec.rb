@@ -97,6 +97,18 @@ RSpec.describe 'System Access', type: :system do
     end
   end
 
+  context 'user with office codes deactivated for all services' do
+    before do
+      allow(Rails.configuration.x.inactive_offices)
+        .to_receive(inactive_office_codes)
+        .and_return(['BBBBB', 'CCCCC', 'AAAAA'])
+    end
+
+    let(:provider) { create(:provider, :paa_access, :nsm_access, :eol_access) }
+
+    it ''
+  end
+
   context 'user with office codes with access to neither NSM, PAA nor EOL' do
     let(:provider) { create(:provider, office_codes: ['DDDDD']) }
 
@@ -110,6 +122,11 @@ RSpec.describe 'System Access', type: :system do
       visit prior_authority_applications_path
       expect(page).to have_no_content('Your Applications')
       expect(page).to have_current_path(new_provider_session_path)
+    end
+
+    it 'shows inactive offices error page' do
+      visit root_path
+      expect(page).to have_title('Your office code is inactive')
     end
   end
 
