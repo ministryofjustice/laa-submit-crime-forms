@@ -35,8 +35,8 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
           let(field) { nil }
 
           it 'has an error' do
-            expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(field, :blank)).to be(true)
+            expect(form).not_to be_valid
+            expect(form.errors.of_kind?(field, :blank)).to be(true)
           end
         end
       end
@@ -65,13 +65,13 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
       context 'and is the true string' do
         let(:apply_vat) { 'true' }
 
-        it { expect(subject.apply_vat).to be(true) }
+        it { expect(form.apply_vat).to be(true) }
       end
 
       context 'and is the false string' do
         let(:apply_vat) { 'false' }
 
-        it { expect(subject.apply_vat).to be(false) }
+        it { expect(form.apply_vat).to be(false) }
       end
     end
 
@@ -81,13 +81,13 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
       context 'and a vat_amount exists on the record' do
         let(:vat_amount) { 10 }
 
-        it { expect(subject.apply_vat).to be(true) }
+        it { expect(form.apply_vat).to be(true) }
       end
 
       context 'and a vat_amount does not exist on the record' do
         let(:vat_amount) { nil }
 
-        it { expect(subject.apply_vat).to be(false) }
+        it { expect(form.apply_vat).to be(false) }
       end
     end
   end
@@ -98,7 +98,7 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
       let(:total_cost_without_vat) { 150 }
 
       it 'is equal to total_cost_witout_vat' do
-        expect(subject.total_cost).to eq(150.0)
+        expect(form.total_cost).to eq(150.0)
       end
     end
 
@@ -108,14 +108,14 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
       context 'when miles are nil' do
         let(:miles) { nil }
 
-        it { expect(subject.total_cost).to be_nil }
+        it { expect(form.total_cost).to be_nil }
       end
 
       context 'when miles are not nil' do
         let(:miles) { 100 }
 
         it 'equal to miles times rate/mile' do
-          expect(subject.total_cost).to eq(25.0)
+          expect(form.total_cost).to eq(25.0)
         end
       end
     end
@@ -127,7 +127,7 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
       let(:total_cost_without_vat) { nil }
 
       it 'returns a nil total cost' do
-        expect(subject.send(:vat)).to be_nil
+        expect(form.send(:vat)).to be_nil
       end
     end
   end
@@ -141,7 +141,7 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
       let(:disbursement_type) { DisbursementTypes::CAR.to_s }
 
       it 'calculates and stores the total_cost_without_vat' do
-        subject.save!
+        form.save!
         expect(record.reload).to have_attributes(
           miles: 10,
           total_cost_without_vat: 4.5,
@@ -153,7 +153,7 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
         let(:apply_vat) { 'true' }
 
         it 'calculates and stores the total_cost_without_vat and vat_amount' do
-          subject.save!
+          form.save!
           expect(record.reload).to have_attributes(
             miles: 10,
             total_cost_without_vat: 4.5,
@@ -165,7 +165,7 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
           let(:miles) { 11.5 }
 
           it 'calculates and stores the total_cost_without_vat and vat_amount rounded to the nearest penny' do
-            subject.save!
+            form.save!
             expect(record.reload).to have_attributes(
               miles: 11.5,
               total_cost_without_vat: 5.18,
@@ -181,7 +181,7 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
       let(:total_cost_without_vat) { 50 }
 
       it 'stores the total_cost_without_vat' do
-        subject.save!
+        form.save!
         expect(record.reload).to have_attributes(
           miles: nil,
           total_cost_without_vat: 50.0,
@@ -193,7 +193,7 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
         let(:apply_vat) { 'true' }
 
         it 'stores the total_cost_without_vat and vat_amount' do
-          subject.save!
+          form.save!
           expect(record.reload).to have_attributes(
             miles: nil,
             total_cost_without_vat: 50.0,
