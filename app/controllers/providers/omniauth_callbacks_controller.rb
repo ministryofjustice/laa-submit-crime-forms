@@ -11,7 +11,7 @@ module Providers
         sign_in_and_redirect(
           provider, event: :authentication
         )
-      elsif offices_in_list?
+      elsif office_enrolled?
         redirect_to errors_inactive_offices_path
       else
         redirect_to laa_msf.not_enrolled_errors_path
@@ -42,8 +42,8 @@ module Providers
       redirect_to laa_msf.not_enrolled_errors_path
     end
 
-    def offices_in_list?
-      true if Providers::Gatekeeper.new(auth_hash.info).provider_enrolled?
+    def office_enrolled?
+      Providers::Gatekeeper.new(auth_hash.info).provider_enrolled?
     end
   end
 end
