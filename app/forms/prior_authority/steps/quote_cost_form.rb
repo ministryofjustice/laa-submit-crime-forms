@@ -47,6 +47,10 @@ module PriorAuthority
         service_rule.item
       end
 
+      def cost_item_type
+        service_rule.cost_item
+      end
+
       def service_name
         if service_type == QuoteServices.new(:custom)
           application.custom_service_name
