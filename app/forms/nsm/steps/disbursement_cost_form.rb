@@ -13,7 +13,7 @@ module Nsm
       validates :total_cost_without_vat, presence: true, numericality: { greater_than: 0 },
 if: :other_disbursement_type?
       validates :details, presence: true
-      validates :prior_authority, presence: true, inclusion: { in: YesNoAnswer.values }
+      validates :prior_authority, presence: true, inclusion: { in: YesNoAnswer.values }, if: :other_disbursement_type?
 
       def apply_vat
         @apply_vat.nil? ? record.vat_amount.to_f.positive? : @apply_vat == 'true'
@@ -46,6 +46,7 @@ if: :other_disbursement_type?
       def attributes_with_resets
         attributes.merge(
           'miles' => other_disbursement_type? ? nil : miles,
+          'prior_authority' => other_disbursement_type? ? prior_authority : nil,
           'total_cost_without_vat' => total_cost_pre_vat,
           'vat_amount' => vat,
           'apply_vat' => apply_vat ? 'true' : 'false'

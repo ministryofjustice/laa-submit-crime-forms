@@ -29,8 +29,8 @@ RSpec.describe Nsm::Steps::DisbursementTypeForm do
           let(field) { nil }
 
           it 'have an error' do
-            expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(field, :blank)).to be(true)
+            expect(form).not_to be_valid
+            expect(form.errors.of_kind?(field, :blank)).to be(true)
           end
         end
       end
@@ -42,15 +42,15 @@ RSpec.describe Nsm::Steps::DisbursementTypeForm do
       context 'when other_type is set' do
         let(:other_type) { OtherDisbursementTypes.values.sample.to_s }
 
-        it { expect(subject).to be_valid }
+        it { expect(form).to be_valid }
       end
 
       context 'when other_type is not set' do
         let(:other_type) { '' }
 
         it 'have an error' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:other_type, :blank)).to be(true)
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:other_type, :blank)).to be(true)
         end
       end
     end
@@ -61,7 +61,7 @@ RSpec.describe Nsm::Steps::DisbursementTypeForm do
     let(:other_type) { other_disbursement_type.to_s }
 
     context 'when other_type_suggestion is not passed in' do
-      it { expect(subject.other_type).to eq(other_disbursement_type) }
+      it { expect(form.other_type).to eq(other_disbursement_type) }
     end
 
     context 'when other_type_suggestion is passed in' do
@@ -70,20 +70,20 @@ RSpec.describe Nsm::Steps::DisbursementTypeForm do
       context 'and it matches the translation of other type' do
         let(:other_type_suggestion) { other_disbursement_type.translated }
 
-        it { expect(subject.other_type).to eq(other_disbursement_type) }
+        it { expect(form.other_type).to eq(other_disbursement_type) }
       end
 
       context 'and it does not match the translation of other type' do
         let(:other_type_suggestion) { 'Apples' }
 
-        it { expect(subject.other_type).to eq(OtherDisbursementTypes.new('Apples')) }
+        it { expect(form.other_type).to eq(OtherDisbursementTypes.new('Apples')) }
       end
 
       context 'and the previously entered other type was something custom' do
         let(:other_type_suggestion) { 'Apples' }
         let(:other_type) { 'Apples' }
 
-        it { expect { subject }.not_to raise_error }
+        it { expect { form }.not_to raise_error }
       end
     end
   end
@@ -96,7 +96,7 @@ RSpec.describe Nsm::Steps::DisbursementTypeForm do
       let(:disbursement_type) { DisbursementTypes::CAR.to_s }
 
       it 'resets the uplift value' do
-        subject.save!
+        form.save!
         expect(record.reload).to have_attributes(
           other_type: nil
         )
@@ -108,10 +108,53 @@ RSpec.describe Nsm::Steps::DisbursementTypeForm do
       let(:other_type) { OtherDisbursementTypes::ACCOUNTANTS.to_s }
 
       it 'sets the uplift value' do
-        subject.save!
+        form.save!
         expect(record.reload).to have_attributes(
           other_type: 'accountants'
         )
+      end
+    end
+
+    context 'when a "mileage" disbursement type changed to other' do
+      let(:record) { Disbursement.create!(disbursement_type: DisbursementTypes::CAR.to_s, claim: application, miles: 101) }
+      let(:disbursement_type) { DisbursementTypes::OTHER.to_s }
+
+      it 'clears the miles value' do
+        expect { form.save! }.to change { record.reload.attributes }
+          .from(
+            hash_including(
+              'miles' => 101,
+            )
+          )
+          .to(
+            hash_including(
+              'miles' => nil,
+            )
+          )
+      end
+    end
+
+    context 'when an "other" disbursement type changed to "mileage" type' do
+      let(:record) do
+        Disbursement.create!(disbursement_type: DisbursementTypes::OTHER.to_s,
+                             claim: application,
+                             prior_authority: 'yes')
+      end
+
+      let(:disbursement_type) { DisbursementTypes::CAR.to_s }
+
+      it 'clears the prior_authority value' do
+        expect { form.save! }.to change { record.reload.attributes }
+          .from(
+            hash_including(
+              'prior_authority' => 'yes',
+            )
+          )
+          .to(
+            hash_including(
+              'prior_authority' => nil,
+            )
+          )
       end
     end
   end
