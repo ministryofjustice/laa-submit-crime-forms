@@ -51,6 +51,10 @@ module PriorAuthority
         service_rule.cost_item
       end
 
+      def cost_multiplier
+        service_rule.cost_multiplier
+      end
+
       def service_name
         if service_type == QuoteServices.new(:custom)
           application.custom_service_name
@@ -68,7 +72,7 @@ module PriorAuthority
       def item_cost
         return 0 unless cost_per_item.to_f.positive? && items.to_i.positive?
 
-        cost_per_item * items * service_rule.cost_multiplier
+        cost_per_item * items * cost_multiplier
       end
 
       def time_cost

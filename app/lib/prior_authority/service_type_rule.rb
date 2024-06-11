@@ -14,7 +14,7 @@ module PriorAuthority
            QuoteServices::TRANSLATION_AND_TRANSCRIPTION
         new(cost_type: :per_item, item: 'minute')
       when QuoteServices::TRANSLATION_DOCUMENTS
-        new(cost_type: :per_item, item: 'word', cost_item: 'thousand_words', cost_multiplier: 0.001)
+        new(cost_type: :per_item, item: 'word', cost_item: 'thousand_words', cost_multiplier: BigDecimal('0.001'))
       when QuoteServices::PHOTOCOPYING
         new(cost_type: :per_item, item: 'page')
       when QuoteServices::DNA_REPORT,
