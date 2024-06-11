@@ -68,7 +68,7 @@ module PriorAuthority
       def item_cost
         return 0 unless cost_per_item.to_f.positive? && items.to_i.positive?
 
-        cost_per_item * items
+        cost_per_item * items * service_rule.cost_multiplier
       end
 
       def time_cost

@@ -14,7 +14,7 @@ module PriorAuthority
            QuoteServices::TRANSLATION_AND_TRANSCRIPTION
         new(cost_type: :per_item, item: 'minute')
       when QuoteServices::TRANSLATION_DOCUMENTS
-        new(cost_type: :per_item, item: 'word', cost_item: 'thousand_words')
+        new(cost_type: :per_item, item: 'word', cost_item: 'thousand_words', cost_multiplier: 0.001)
       when QuoteServices::PHOTOCOPYING
         new(cost_type: :per_item, item: 'page')
       when QuoteServices::DNA_REPORT,
@@ -28,14 +28,15 @@ module PriorAuthority
     end
     # rubocop:enable Metrics/MethodLength
 
-    def initialize(court_order_relevant: false, post_mortem_relevant: false, cost_type: :per_hour, item: 'item', cost_item: item)
+    def initialize(court_order_relevant: false, post_mortem_relevant: false, cost_type: :per_hour, item: 'item', cost_item: item, cost_multiplier: 1)
       @court_order_relevant = court_order_relevant
       @post_mortem_relevant = post_mortem_relevant
       @cost_type = cost_type
       @item = item
       @cost_item = cost_item
+      @cost_multiplier = cost_multiplier
     end
 
-    attr_reader :court_order_relevant, :post_mortem_relevant, :cost_type, :item, :cost_item
+    attr_reader :court_order_relevant, :post_mortem_relevant, :cost_type, :item, :cost_item, :cost_multiplier
   end
 end
