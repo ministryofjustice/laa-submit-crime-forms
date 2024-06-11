@@ -8,18 +8,17 @@
     <%= govuk_error_summary(@form_object) %>
     <div class="moj-multi-file-upload__message"></div>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-6"><%= t('.heading') %></h1>
-    <%# Answers upload list %>
+
     <%= render template: 'nsm/steps/supporting_evidence/_content' %>
 
-    <%# Additional upload list %>
     <%= step_form @form_object do |f| %>
-      <%# File upload component %>
       <%= render 'shared/multifile_upload',
           supporting_documents: @supporting_documents,
           field: :supporting_evidence,
           form: f,
           locale_prefix: 'nsm.steps.supporting_evidence.edit',
           hint: t('.upload_hint', size: FileUpload::FileUploader.human_readable_max_file_size) %>
+
       <% if FeatureFlags.postal_evidence.enabled? %>
         <%# Postal address component %>
         <%= f.govuk_check_boxes_fieldset :send_by_post, multiple: false, legend: nil do %>
@@ -28,7 +27,7 @@
           <% end -%>
         <% end -%>
       <% end %>
-      <%# Continue %>
+
       <%= f.continue_button %>
     <% end -%>
   </div>
