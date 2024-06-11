@@ -27,6 +27,7 @@ gem 'sentry-ruby', '~> 5.17.3'
 gem 'sidekiq', '~> 7.2'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron', '~> 1.12.0'
+gem 'sidekiq_prometheus'
 gem 'turbo-rails', '~> 2.0.5'
 gem 'tzinfo-data'
 
