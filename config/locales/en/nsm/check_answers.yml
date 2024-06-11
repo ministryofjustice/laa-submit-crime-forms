@@ -166,7 +166,7 @@ en:
             claim_details:
               title: Claim details
             cost_summary:
-              title: Costs summary
+              title: Cost summary
             other_info:
               title: Other information
           costs:
@@ -187,6 +187,30 @@ en:
             heading: Equal Monitoring
             equal_monitoring:
               title: Equality Monitoring
+          adjusted_cost_summary:
+            heading: Cost summary
           cost_summary:
-            heading: Cost Summary
-
+            heading: Cost summary
+            base:
+              items: Item
+              request_net: Net cost
+              request_vat: VAT
+              request_gross: Total
+              profit_costs: Profit costs
+              waiting: Waiting
+              travel: Travel
+              disbursements: Disbursements
+              total: Total
+            with_adjustments:
+              items: Item
+              request_net: Net cost claimed
+              request_vat: VAT claimed
+              request_gross: Total claimed
+              allowed_net: Net cost allowed
+              allowed_vat: VAT allowed
+              allowed_gross: Total allowed
+              profit_costs: Profit costs
+              waiting: Waiting
+              travel: Travel
+              disbursements: Disbursements
+              total: Total

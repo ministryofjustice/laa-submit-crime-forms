@@ -6,18 +6,18 @@ RSpec.describe 'View claim page', type: :system do
   let(:work_items) do
     [
       build(:work_item, :attendance_without_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
-      build(:work_item, :advocacy, time_spent: 104, completed_on: 1.day.ago),
+      build(:work_item, :advocacy, :with_adjustment, time_spent: 104, completed_on: 1.day.ago),
       build(:work_item, :advocacy, time_spent: 86, completed_on: 2.days.ago),
       build(:work_item, :waiting, time_spent: 23, completed_on: 3.days.ago),
-      build(:work_item, :travel, time_spent: 23, completed_on: 3.days.ago),
+      build(:work_item, :travel, :with_adjustment, time_spent: 23, completed_on: 3.days.ago),
     ]
   end
   let(:disbursements) do
     [
       build(:disbursement, :valid, :car, age: 5, miles: 200),
       build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130),
-      build(:disbursement, :valid_other, age: 3, other_type: 'Custom', total_cost_without_vat: 40),
-      build(:disbursement, :valid, :car, age: 2, miles: 150),
+      build(:disbursement, :valid_other, :with_adjustment, age: 3, other_type: 'Custom', total_cost_without_vat: 40),
+      build(:disbursement, :valid, :car, :with_adjustment, allowed_apply_vat: 'false', age: 2, miles: 150),
     ]
   end
 
@@ -28,41 +28,52 @@ RSpec.describe 'View claim page', type: :system do
   it 'shows a cost summary on the main page' do
     visit nsm_steps_view_claim_path(claim.id)
 
-    within('#cost-summary-table') do
-      expect(page).to have_content('Item Net cost VAT Total')
-        .and have_content('Profit costs £305.84 £61.17 £367.01')
-        .and have_content('Waiting £10.58 £2.12 £12.70')
-        .and have_content('Travel £10.58 £2.12 £12.70')
-        .and have_content('Disbursements £327.50 £31.50 £359.00')
-        .and have_content('Total £654.50 £96.90 £751.40')
+    expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
+      [
+        'Item', 'Net cost', 'VAT', 'Total',
+        'Profit costs', '£305.84', '£61.17', '£367.01',
+        'Waiting', '£10.58', '£2.12', '£12.70',
+        'Travel', '£10.58', '£2.12', '£12.70',
+        'Disbursements', '£327.50', '£31.50', '£359.00',
+        'Total', '£654.50', '£96.90', '£751.40'
+      ]
+    )
+  end
+
+  context 'when firm is NOT VAT registered' do
+    before do
+      claim.firm_office.update(vat_registered: 'no')
+    end
+
+    it 'shows a cost summary on the main page' do
+      visit nsm_steps_view_claim_path(claim.id)
+
+      expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
+        [
+          'Item', 'Net cost', 'VAT', 'Total',
+          'Profit costs', '£305.84', '£0.00', '£305.84',
+          'Waiting', '£10.58', '£0.00', '£10.58',
+          'Travel', '£10.58', '£0.00', '£10.58',
+          'Disbursements', '£327.50', '£31.50', '£359.00',
+          'Total', '£654.50', '£31.50', '£686.00'
+        ]
+      )
     end
   end
 
   it 'shows a cost summary on the claim costs page' do
     visit nsm_steps_view_claim_path(claim.id, section: :claimed_costs)
 
-    within('#cost-summary-table') do
-      expect(page).to have_content('Item Net cost VAT Total')
-        .and have_content('Profit costs £305.84 £61.17 £367.01')
-        .and have_content('Waiting £10.58 £2.12 £12.70')
-        .and have_content('Travel £10.58 £2.12 £12.70')
-        .and have_content('Disbursements £327.50 £31.50 £359.00')
-        .and have_content('Total £654.50 £96.90 £751.40')
-    end
-  end
-
-  # TODO: update this to have adjusted values as well...
-  it 'shows an adjusted cost summary on the adjustments page' do
-    visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
-
-    within('#cost-summary-table') do
-      expect(page).to have_content('Item Net cost VAT Total')
-        .and have_content('Profit costs £305.84 £61.17 £367.01')
-        .and have_content('Waiting £10.58 £2.12 £12.70')
-        .and have_content('Travel £10.58 £2.12 £12.70')
-        .and have_content('Disbursements £327.50 £31.50 £359.00')
-        .and have_content('Total £654.50 £96.90 £751.40')
-    end
+    expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
+      [
+        'Item', 'Net cost', 'VAT', 'Total',
+        'Profit costs', '£305.84', '£61.17', '£367.01',
+        'Waiting', '£10.58', '£2.12', '£12.70',
+        'Travel', '£10.58', '£2.12', '£12.70',
+        'Disbursements', '£327.50', '£31.50', '£359.00',
+        'Total', '£654.50', '£96.90', '£751.40'
+      ]
+    )
   end
 
   it 'show the work items and summary' do
@@ -158,7 +169,7 @@ RSpec.describe 'View claim page', type: :system do
     expect(find('h1').text).to eq('Attendance without counsel')
     expect(all('table caption, table td').map(&:text)).to eq(
       [
-        'Your costs',
+        'Your claimed costs',
         'Date',	1.day.ago.strftime('%-d %B %Y'),
         'Fee earner initials', 'AB',
         'Rate applied', '£52.15',
@@ -175,7 +186,7 @@ RSpec.describe 'View claim page', type: :system do
     expect(find('h1').text).to eq('Letters')
     expect(all('table caption, table td').map(&:text)).to eq(
       [
-        'Your costs',
+        'Your claimed costs',
         'Rate applied', '£4.09',
         'Number of letters', '2',
         'Uplift', '0%',
@@ -190,7 +201,7 @@ RSpec.describe 'View claim page', type: :system do
     expect(find('h1').text).to eq('Calls')
     expect(all('table caption, table td').map(&:text)).to eq(
       [
-        'Your costs',
+        'Your claimed costs',
         'Rate applied', '£4.09',
         'Number of calls', '3',
         'Uplift', '0%',
@@ -205,7 +216,7 @@ RSpec.describe 'View claim page', type: :system do
     expect(find('h1').text).to eq('Car mileage')
     expect(all('table caption, table td').map(&:text)).to eq(
       [
-        'Your costs',
+        'Your claimed costs',
         'Date',	5.days.ago.strftime('%-d %B %Y'),
         'Disbursement type', 'Car mileage',
         'Disbursement description', 'Details',
@@ -235,10 +246,45 @@ RSpec.describe 'View claim page', type: :system do
     let(:disbursements) do
       [
         build(:disbursement, :valid, :with_adjustment, :car, age: 5, miles: 200),
-        build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130, prior_authority: 'yes'),
-        build(:disbursement, :valid_other, :with_adjustment, :dna_testing, age: 4, total_cost_without_vat: 100,
-prior_authority: 'yes'),
+        build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130),
+        build(:disbursement, :valid_other, :with_adjustment, :dna_testing, age: 4, total_cost_without_vat: 100),
       ]
+    end
+
+    it 'shows an adjusted cost summary' do
+      visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
+
+      expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
+        [
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£212.07', '£42.41', '£254.48', '£143.10', '£28.62', '£171.72',
+          'Waiting', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
+          'Travel', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
+          'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
+          'Total', '£532.07', '£60.41', '£592.48', '£273.10', '£28.62', '£301.72'
+        ]
+      )
+    end
+
+    context 'when firm is NOT VAT registered' do
+      before do
+        claim.firm_office.update(vat_registered: 'no')
+      end
+
+      it 'shows an adjusted cost summary' do
+        visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
+
+        expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
+          [
+            'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+            'Profit costs', '£212.07', '£0.00', '£212.07', '£143.10', '£0.00', '£143.10',
+            'Waiting', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
+            'Travel', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
+            'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
+            'Total', '£532.07', '£18.00', '£550.07', '£273.10', '£0.00', '£273.10'
+          ]
+        )
+      end
     end
 
     it 'show the work items and summary' do
@@ -308,7 +354,7 @@ prior_authority: 'yes'),
           'Net cost allowed', '£56.70',
           'Reason for adjustment', 'WI adjustment',
 
-          'Your costs',
+          'Your claimed costs',
           'Date',	1.day.ago.strftime('%-d %B %Y'),
           'Fee earner initials', 'BC',
           'Rate applied', '£65.42',
@@ -330,7 +376,7 @@ prior_authority: 'yes'),
           'Uplift allowed', '0%',
           'Net cost allowed', '£4.09',
           'Reason for adjustment', 'Letters adjusted',
-          'Your costs',
+          'Your claimed costs',
           'Rate applied', '£4.09',
           'Number of letters', '2',
           'Uplift', '0%',
@@ -350,7 +396,7 @@ prior_authority: 'yes'),
           'Uplift allowed', '0%',
           'Net cost allowed', '£4.09',
           'Reason for adjustment', 'Calls adjusted',
-          'Your costs',
+          'Your claimed costs',
           'Rate applied', '£4.09',
           'Number of calls', '3',
           'Uplift', '0%',
@@ -370,7 +416,7 @@ prior_authority: 'yes'),
           'VAT allowed', '£0.00',
           'Total cost allowed', '£0.00',
           'Reason for adjustment', 'Disbursement Test',
-          'Your costs',
+          'Your claimed costs',
           'Date',	4.days.ago.strftime('%-d %B %Y'),
           'Disbursement type', 'DNA Testing',
           'Disbursement description', 'Details',
@@ -394,7 +440,7 @@ prior_authority: 'yes'),
           'VAT allowed', '£0.00',
           'Total cost allowed', '£0.00',
           'Reason for adjustment', 'Disbursement Test',
-          'Your costs',
+          'Your claimed costs',
           'Date',	5.days.ago.strftime('%-d %B %Y'),
           'Disbursement type', 'Car mileage',
           'Disbursement description', 'Details',
