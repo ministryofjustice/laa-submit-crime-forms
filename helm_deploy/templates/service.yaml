@@ -12,5 +12,10 @@ spec:
       targetPort: {{ .Values.service.internalPort }}
       protocol: TCP
       name: http
+    {{- if .Values.serviceMonitor.enabled -}}
+    - port: {{ .Values.service.metricsPort }}
+      targetPort: {{ .Values.service.metricsPort }}
+      name: sidekiq-metrics
+    {{- end }}
   selector:
     app: {{ include "laa-submit-crime-forms.fullname" . }}
