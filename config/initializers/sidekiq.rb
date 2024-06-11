@@ -38,3 +38,5 @@ SidekiqPrometheus.configure do |config|
   config.preset_labels = { service: 'laa-submit-crime-forms' }
   config.periodic_reporting_interval   = 15
 end
+
+SidekiqPrometheus.setup
