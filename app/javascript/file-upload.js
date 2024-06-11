@@ -54,7 +54,7 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
 
 MOJFrontend.MultiFileUpload.prototype.getFileRowHtml = function (file, fileListLength) {
     return `<tr class="govuk-table__row moj-multi-file-upload__row" id="${fileListLength}">
-            <td class="govuk-table__cell moj-multi-file-upload__filename">
+            <td class="govuk-table__cell moj-multi-file-upload__filename_progress">
                 <span class="moj-multi-file-upload__filename"> ${file.name}</span>
                 <span class="moj-multi-file-upload__progress">(0%)</span></td>
             <td class="govuk-table__cell moj-multi-file-upload__actions">
@@ -69,7 +69,11 @@ MOJFrontend.MultiFileUpload.prototype.onFileDeleteClick = function (e) {
     e.preventDefault(); // if user refreshes page and then deletes
     let button = $(e.currentTarget);
     let feedback = $(".moj-multi-file-upload__message");
-    let fileName = button.parents('.govuk-table__row.moj-multi-file-upload__row').attr('id')
+
+    let fileName = button
+                    .parents('.govuk-table__row.moj-multi-file-upload__row')
+                    .find('.moj-multi-file-upload__filename')
+                    .text()
 
     $.ajax({
         url: `${this.params.deleteUrl}?evidence_id=${button.attr('value')}`,
