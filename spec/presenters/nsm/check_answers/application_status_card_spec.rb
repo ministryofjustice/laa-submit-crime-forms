@@ -78,7 +78,11 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
         )
       end
 
-      context 'no adjustements' do
+      context 'when firm is NOT VAT registered' do
+        before do
+          claim.firm_office.update(vat_registered: 'no')
+        end
+
         let(:claim) { create(:claim, :part_granted_status, :firm_details, :updated_at, assessment_comment:) }
 
         it 'generates no links in text' do
@@ -91,7 +95,43 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               },
               {
                 head_key: 'laa_response',
-                text: Regexp.new('<p>this is a comment</p><p>2nd line</p><p><ul class="govuk-list govuk-list--bullet"></ul></p>')
+                text: '<p>this is a comment</p><p>2nd line</p><p><ul class="govuk-list govuk-list--bullet"></ul></p><p>' \
+                      "<h3 class=\"govuk-heading-s\">Appeal the adjustment</h3>\n<p>If you want to appeal the adjustment, " \
+                      'email or post a detailed explanation of the grounds of your appeal and any supporting documents to:' \
+                      "</p>\n<ul class=\"govuk-list govuk-list--bullet\">\n  <li><a href=\"mailto:CRM7appeal" \
+                      '@justice.gov.uk">CRM7appeal@justice.gov.uk</a>, with the LAA case reference in the subject of the ' \
+                      "email</li>\n  <li>Nottingham Office, 3rd Floor B3.20, 1 Unity Square, Queensbridge Road, " \
+                      "Nottingham NG2 1AW, or DX 10035 Nottingham 1</li>\n</ul>\n<p>Appeals may be considered by LAA " \
+                      'caseworkers or sent to an independent costs assessor (ICA). You can only appeal once. The ICA’s ' \
+                      "decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).</p>\n</p>"
+              }
+            ]
+          )
+        end
+      end
+
+      context 'no adjustements' do
+        let(:claim) { create(:claim, :part_granted_status, :firm_details, :updated_at, assessment_comment:) }
+
+        it 'generates no links in text' do
+          expect(subject.row_data).to match(
+            [
+              {
+                head_key: 'application_status',
+                text: '<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
+                      '<p>1 December 2023</p><br><p>£0.00 claimed</p><p>£0.00 allowed</p>'
+              },
+              {
+                head_key: 'laa_response',
+                text: '<p>this is a comment</p><p>2nd line</p><p><ul class="govuk-list govuk-list--bullet"></ul></p><p>' \
+                      "<h3 class=\"govuk-heading-s\">Appeal the adjustment</h3>\n<p>If you want to appeal the adjustment, " \
+                      'email or post a detailed explanation of the grounds of your appeal and any supporting documents to:' \
+                      "</p>\n<ul class=\"govuk-list govuk-list--bullet\">\n  <li><a href=\"mailto:CRM7appeal" \
+                      '@justice.gov.uk">CRM7appeal@justice.gov.uk</a>, with the LAA case reference in the subject of the ' \
+                      "email</li>\n  <li>Nottingham Office, 3rd Floor B3.20, 1 Unity Square, Queensbridge Road, " \
+                      "Nottingham NG2 1AW, or DX 10035 Nottingham 1</li>\n</ul>\n<p>Appeals may be considered by LAA " \
+                      'caseworkers or sent to an independent costs assessor (ICA). You can only appeal once. The ICA’s ' \
+                      "decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).</p>\n</p>"
               }
             ]
           )

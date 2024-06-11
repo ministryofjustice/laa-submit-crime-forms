@@ -15,7 +15,7 @@ module Nsm
           equality_answers
         ].freeze,
         claimed_costs: %w[cost_summary costs].freeze,
-        adjustments: %w[cost_summary adjusted_costs].freeze
+        adjustments: %w[adjusted_cost_summary adjusted_costs].freeze
       }.freeze
 
       attr_reader :claim
@@ -75,12 +75,20 @@ module Nsm
       end
 
       def adjusted_costs_section
-        [AdjustmentsCard.new(claim, prefix: 'allowed_')]
+        [
+          AdjustmentsCard.new(claim, prefix: 'allowed_')
+        ]
+      end
+
+      def adjusted_cost_summary_section
+        [
+          CostSummaryCard.new(claim, show_adjustments: true)
+        ]
       end
 
       def cost_summary_section
         [
-          CostSummaryCard.new(claim, has_card: false)
+          CostSummaryCard.new(claim)
         ]
       end
 

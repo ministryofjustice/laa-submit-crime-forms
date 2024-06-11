@@ -20,7 +20,7 @@
       disbursements.group_by { _1.record.disbursement_date }.each do |disbursement_date, disbursements_for_date| %>
       <%=
         rows = disbursements_for_date.map do |disbursement|
-          link = link_to(t('.view'), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :disbursement, item_id: disbursement.record.id), data: { turbo: 'false' })
+          link = link_to(t('.view'), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :disbursement, item_id: disbursement.record.id, page: pagy.page), data: { turbo: 'false' })
 
           [
             disbursement.record.translated_disbursement_type,
@@ -38,6 +38,6 @@
         end
       %>
     <% end %>
-    <%= render "shared/pagination",  { pagy: @pagy, item: t('.table_info_item') } %>
+    <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
   <% end %>
 </turbo-frame>
