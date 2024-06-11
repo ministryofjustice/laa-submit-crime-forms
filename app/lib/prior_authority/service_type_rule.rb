@@ -28,7 +28,8 @@ module PriorAuthority
     end
     # rubocop:enable Metrics/MethodLength
 
-    def initialize(court_order_relevant: false, post_mortem_relevant: false, cost_type: :per_hour, item: 'item', cost_item: item, cost_multiplier: 1)
+    def initialize(court_order_relevant: false, post_mortem_relevant: false, cost_type: :per_hour, item: 'item',
+                   cost_item: item, cost_multiplier: 1)
       @court_order_relevant = court_order_relevant
       @post_mortem_relevant = post_mortem_relevant
       @cost_type = cost_type

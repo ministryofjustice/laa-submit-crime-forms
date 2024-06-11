@@ -51,9 +51,7 @@ module PriorAuthority
         service_rule.cost_item
       end
 
-      def cost_multiplier
-        service_rule.cost_multiplier
-      end
+      delegate :cost_multiplier, to: :service_rule
 
       def service_name
         if service_type == QuoteServices.new(:custom)
