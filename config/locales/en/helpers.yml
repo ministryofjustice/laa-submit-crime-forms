@@ -62,8 +62,8 @@ en:
     hint:
       nsm_steps_claim_type_form:
         ufn: For example 120223/001
-        rep_order_date: For example, 27 3 2007
-        cntp_date: For example, 27 3 2007
+        rep_order_date: For example, 27 3 2023
+        cntp_date: For example, 27 3 2023
         cntp_order: For example CNTP1234
       nsm_steps_firm_details_form:
         solicitor_details: Enter the details of the solicitor managing this case
@@ -77,14 +77,14 @@ en:
           'yes': We’ll ask you to upload evidence of this before you submit this claim
         assigned_counsel_options:
           'yes': We'll ask you to upload your CRM8 form before you submit this claim
-        main_offence_date: For example, 27 3 2007
+        main_offence_date: For example, 27 3 2023
         main_offence: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name
-        remitted_to_magistrate_date: For example, 27 3 2007
+        remitted_to_magistrate_date: For example, 27 3 2023
       nsm_steps_case_disposal_form:
-        arrest_warrant_date: For example, 27 3 2007
-        cracked_trial_date: For example, 27 3 2007
+        arrest_warrant_date: For example, 27 3 2023
+        cracked_trial_date: For example, 27 3 2023
       nsm_steps_hearing_details_form:
-        first_hearing_date: For example, 27 3 2007
+        first_hearing_date: For example, 27 3 2023
         court: Enter the name of a court, or select one from the suggestions that appear when you start to enter the name.
         in_area_options:
           'yes': You will not be able to claim for travel expenses and waiting time
@@ -92,7 +92,7 @@ en:
         matter_type: Select a matter type from the suggestions that appear when you start to enter it, for example, offences against the person
       nsm_steps_reason_for_claim_form:
         reasons_for_claim: Select all that apply
-        representation_order_withdrawn_date: For example, 27 3 2007
+        representation_order_withdrawn_date: For example, 27 3 2023
       nsm_steps_claim_details_form:
         defence_statement: For example the total number of pages of defence evidence including any
           statements by the defendant and defence witnesses
@@ -108,7 +108,7 @@ en:
         wasted_costs_options:
           'yes': We’ll ask you to upload the court order before you submit the claim
       nsm_steps_work_item_form:
-        completed_on: For example, 27 3 2007
+        completed_on: For example, 27 3 2023
         fee_earner: For example, JMD
         period: For example, 1 hour and 30 minutes
       nsm_steps_letters_calls_form:
@@ -119,7 +119,7 @@ en:
           from_start: You will get £3.56 for each call
           from_20220930: You will get £4.09 for each call
       nsm_steps_disbursement_type_form:
-        disbursement_date: For example, 27 3 2007
+        disbursement_date: For example, 27 3 2023
         disbursement_type_options:
           car: '%{rate} per mile'
           motorcycle: '%{rate} per mile'
