@@ -29,6 +29,10 @@ class Provider < ApplicationRecord
       end
     end
 
+    def active_offices?(auth)
+      active_office_codes(auth).count.positive?
+    end
+
     private
 
     def active_office_codes(auth)

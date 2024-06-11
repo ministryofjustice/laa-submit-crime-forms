@@ -11,4 +11,6 @@ spec:
   endpoints:
   - port: http
     interval: 15s
+  - targetPort: {{ .Values.service.workerPort }}
+    interval: 15s
 {{- end }}
