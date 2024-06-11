@@ -15,8 +15,9 @@ class Disbursement < ApplicationRecord
     )
   end
 
-  def date_and_prior_authority_valid?
-    disbursement_date.present? && prior_authority.present?
+  def type_and_cost_valid?
+    Nsm::Steps::DisbursementTypeForm.build(self, application: claim).valid? &&
+      Nsm::Steps::DisbursementCostForm.build(self, application: claim).valid?
   end
 
   def translated_disbursement_type

@@ -25,7 +25,11 @@ module Nsm
       end
 
       def attributes_with_resets
-        attributes.merge('other_type' => other_disbursement_type? ? other_type : nil)
+        attributes.merge(
+          'other_type' => other_disbursement_type? ? other_type : nil,
+          'miles' => other_disbursement_type? ? nil : record.miles,
+          'prior_authority' => other_disbursement_type? ? record.prior_authority : nil,
+        )
       end
 
       def other_disbursement_type?
