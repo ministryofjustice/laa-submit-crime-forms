@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'system_helper'
 
 RSpec.describe 'User can provide supporting evidence', type: :system do
   let(:claim) { create(:claim, :complete) }
