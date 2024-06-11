@@ -33,3 +33,10 @@ end
 Sidekiq.configure_server do |config|
   config.redis = { url: redis_url } if redis_url
 end
+
+SidekiqPrometheus.configure do |config|
+  config.preset_labels = { service: 'laa-submit-crime-forms' }
+  config.periodic_reporting_interval   = 15
+end
+
+SidekiqPrometheus.setup

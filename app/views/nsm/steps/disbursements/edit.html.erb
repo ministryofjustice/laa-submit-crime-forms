@@ -33,7 +33,7 @@
                 <% end %>
               </td>
               <td class="govuk-table__cell"><%= check_missing(disbursement.total_cost) { NumberTo.pounds(disbursement.total_cost) } %></td>
-              <td class="govuk-table__cell"><%= check_missing(disbursement.date_and_prior_authority_valid? && disbursement.details) %></td>
+              <td class="govuk-table__cell"><%= check_missing(disbursement.type_and_cost_valid? && disbursement.details) %></td>
               <td class="govuk-table__cell govuk-table__nowrap">
                 <%= link_to t('.change'), edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id) %>
               </td>

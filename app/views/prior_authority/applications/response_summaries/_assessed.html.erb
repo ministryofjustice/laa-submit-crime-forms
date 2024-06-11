@@ -4,7 +4,7 @@
   </dt>
   <dd class="govuk-summary-list__value">
     <% if @application.assessment_comment.present? %>
-      <p><%= @application.assessment_comment %></p>
+      <p><%= simple_format @application.assessment_comment %></p>
     <% end %>
     <ul class="govuk-list govuk-list--bullet">
       <% if @application.primary_quote.service_adjustment_comment.present? %>

@@ -7,7 +7,7 @@ replicaCount: 2
 namespace: laa-submit-crime-forms-uat
 
 serviceMonitor:
-  enabled: true
+  enabled: false
 
 image:
   repository: nginx

@@ -5,11 +5,17 @@ module Providers
     before_action :check_provider_is_enrolled, only: [:saml]
 
     def saml
-      provider = Provider.from_omniauth(auth_hash)
+      if Provider.active_offices?(auth_hash)
+        provider = Provider.from_omniauth(auth_hash)
 
-      sign_in_and_redirect(
-        provider, event: :authentication
-      )
+        sign_in_and_redirect(
+          provider, event: :authentication
+        )
+      elsif office_enrolled?
+        redirect_to errors_inactive_offices_path
+      else
+        redirect_to laa_msf.not_enrolled_errors_path
+      end
     end
 
     private
@@ -34,6 +40,10 @@ module Providers
                         "accounts: #{auth_hash.info.office_codes}, "
 
       redirect_to laa_msf.not_enrolled_errors_path
+    end
+
+    def office_enrolled?
+      Providers::Gatekeeper.new(auth_hash.info).provider_enrolled?
     end
   end
 end

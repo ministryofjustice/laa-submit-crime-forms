@@ -4,7 +4,7 @@
 <% if section.service_adjustment_comment %>
   <div class="govuk-inset-text">
     <strong><%= t('.laa_adjustment') %></strong><br>
-    <%= section.service_adjustment_comment %>
+    <%= simple_format section.service_adjustment_comment %>
   </div>
 <% end %>
 <%= render 'prior_authority/steps/primary_quote_summary/service_cost_subtable',
@@ -15,7 +15,7 @@
   <% if section.travel_adjustment_comment %>
     <div class="govuk-inset-text">
       <strong><%= t('.laa_adjustment') %></strong><br>
-      <%= section.travel_adjustment_comment %>
+      <%= simple_format section.travel_adjustment_comment %>
     </div>
   <% end %>
   <% if section.travel_detail_form.travel_cost_reason.present? %>
@@ -33,7 +33,7 @@
   <% if additional_cost.adjustment_comment %>
     <div class="govuk-inset-text">
       <strong><%= t('.laa_adjustment') %></strong><br>
-      <%= additional_cost.adjustment_comment %>
+      <%= simple_format additional_cost.adjustment_comment %>
     </div>
   <% end %>
   <p>

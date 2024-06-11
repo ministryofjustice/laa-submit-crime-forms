@@ -8,10 +8,10 @@
       <h2 class="govuk-heading-l"><%= section_group[:heading] %></h2>
       <% section_group[:sections].each do |section| %>
         <%= govuk_summary_card(**section[:card]) do %>
-          <% if section[:rows] %>
-            <%= govuk_summary_list(rows: section[:rows]) %>
-          <% elsif section[:custom] %>
+          <% if section[:custom] %>
             <%= render section[:custom][:partial], **section[:custom][:locals] %>
+          <% elsif section[:rows] %>
+            <%= govuk_summary_list(rows: section[:rows]) %>
           <% end %>
         <% end %>
       <% end %>

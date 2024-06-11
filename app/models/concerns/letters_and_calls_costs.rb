@@ -1,4 +1,14 @@
 module LettersAndCallsCosts
+  class TotalCostAlias < SimpleDelegator
+    def total_cost
+      letters_and_calls_total_cost
+    end
+
+    def allowed_total_cost
+      allowed_letters_and_calls_total_cost
+    end
+  end
+
   extend ActiveSupport::Concern
 
   included do

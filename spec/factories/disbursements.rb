@@ -77,7 +77,8 @@ FactoryBot.define do
     trait :with_adjustment do
       allowed_miles { 0 }
       allowed_total_cost_without_vat { 0 }
-      allowed_vat_amount { apply_vat ? 0 : nil }
+      allowed_apply_vat { apply_vat }
+      allowed_vat_amount { (allowed_apply_vat || apply_vat) == 'true' ? 0 : nil }
       adjustment_comment { 'Disbursement Test' }
     end
 
