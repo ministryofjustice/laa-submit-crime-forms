@@ -68,7 +68,6 @@ en:
       nsm_steps_firm_details_form:
         solicitor_details: Enter the details of the solicitor managing this case
         solicitor_attributes:
-          reference_number: For example, 2P341B
           alternative_contact_details: |
             We’ll use the contact details on your account if we need to ask you for
             more information to complete your claim. If you add alternative contact
