@@ -12,10 +12,12 @@
         <%= f.govuk_number_field :miles, min: 1, step: 1, width: 3, suffix_text: 'Miles', label: { tag: 'strong' }, data: { selector: 'valueField', multipler: @form_object.multiplier } %>
       <% end %>
       <%= f.govuk_text_area :details , label: { tag: 'strong' } %>
-      <%= f.govuk_radio_buttons_fieldset :prior_authority, legend: { size: 's' } do %>
-        <%= f.govuk_radio_button :prior_authority, YesNoAnswer::YES.to_s %>
-        <%= f.govuk_radio_button :prior_authority, YesNoAnswer::NO.to_s %>
-      <% end%>
+      <% if @form_object.other_disbursement_type? %>
+        <%= f.govuk_radio_buttons_fieldset :prior_authority, legend: { size: 's' } do %>
+          <%= f.govuk_radio_button :prior_authority, YesNoAnswer::YES.to_s %>
+          <%= f.govuk_radio_button :prior_authority, YesNoAnswer::NO.to_s %>
+        <% end%>
+      <% end %>
       <%= f.govuk_check_box :apply_vat, 'true', 'false', multiple: false, data: { selector: 'vatField', multipler: @form_object.vat_rate } %>
 
       <%= f.refresh_button %>
