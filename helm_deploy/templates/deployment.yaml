@@ -56,6 +56,7 @@ spec:
             - name: http
               containerPort: {{ .Values.service.internalPort }}
               protocol: TCP
+            - containerPort: 9394
           livenessProbe:
             httpGet:
               path: /ping
@@ -209,6 +210,8 @@ spec:
             - name: ALLOW_INDEXING
               value: '{{ .Values.variables.allowIndexing }}'
             - name: SEND_EMAILS
+              value: 'true'
+            - name: ENABLE_PROMETHEUS_EXPORTER
               value: 'true'
       {{- with .Values.nodeSelector }}
       nodeSelector:
