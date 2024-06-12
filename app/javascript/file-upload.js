@@ -25,19 +25,22 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
         data: formData,
         processData: false,
         contentType: false,
-        success: $.proxy(function (response) {
+
+        success: function (response) {
             feedback.html(this.getSuccessHtml(`${response.success.file_name} has been uploaded`));
             this.status.html(`${response.success.file_name} has been uploaded`);
             item.find(`a.remove-link.moj-multi-file-upload__delete`).attr("value", response.success.evidence_id ?? file.name)
             item.find(`a.remove-link.moj-multi-file-upload__delete`).removeClass('govuk-!-display-none')
             this.params.uploadFileExitHook(this, file, response);
-        }, this),
-        error: $.proxy(function (jqXHR, textStatus, errorThrown) {
+        }.bind(this),
+
+        error: function (jqXHR, textStatus, errorThrown) {
             feedback.html(this.getErrorHtml(jqXHR.responseJSON.error.message));
             this.status.html(jqXHR.responseJSON.error.message);
             this.feedbackContainer.find(`#${fileListLength}`).remove();
             this.params.uploadFileErrorHook(this, file, jqXHR, textStatus, errorThrown);
-        }, this),
+        }.bind(this),
+
         xhr: function () {
             var xhr = new XMLHttpRequest();
             xhr.upload.addEventListener('progress', function (e) {
@@ -78,19 +81,21 @@ MOJFrontend.MultiFileUpload.prototype.onFileDeleteClick = function (e) {
     $.ajax({
         url: `${this.params.deleteUrl}?evidence_id=${button.attr('value')}`,
         type: 'delete',
-        success: $.proxy(function (response) {
+
+        success: function (response) {
             feedback.html(this.getSuccessHtml(`${fileName} has been deleted`));
             button.parents('.moj-multi-file-upload__row').remove();
             if (this.feedbackContainer.find('.moj-multi-file-upload__row').length === 0) {
                 this.feedbackContainer.addClass('moj-hidden');
             }
             this.params.fileDeleteHook(this, response);
-        }, this),
-        error: $.proxy(function (jqXHR, textStatus, errorThrown) {
+        }.bind(this),
+
+        error: function (jqXHR, textStatus, errorThrown) {
             feedback.html(this.getErrorHtml(jqXHR.responseJSON.error.message));
             this.status.html(jqXHR.responseJSON.error.message);
             this.params.fileDeleteHook(this, jqXHR, textStatus, errorThrown);
-        }, this),
+        }.bind(this),
     });
 };
 MOJFrontend.MultiFileUpload.prototype.onDrop = function (e) {
@@ -143,4 +148,3 @@ $(function(){
     headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }
   });
 });
-
