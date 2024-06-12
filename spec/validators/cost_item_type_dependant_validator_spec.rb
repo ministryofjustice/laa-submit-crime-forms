@@ -101,7 +101,7 @@ RSpec.describe CostItemTypeDependantValidator do
     context 'when attribute is nil' do
       let(:items) { nil }
       let(:cost_per_item) { nil }
-      let(:cost_item_type) { 'thousand_word' }
+      let(:cost_item_type) { 'thousand_words' }
 
       it 'include item type option from model, pluralizing if option set' do
         instance.validate
