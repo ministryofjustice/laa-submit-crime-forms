@@ -37,7 +37,7 @@ RSpec.describe 'Prior authority applications - add case contact', :javascript, t
 
     find('.moj-multi-file-upload__dropzone').drop(file_fixture('test.png'))
 
-    within('.govuk-table') { expect(page).to have_content(/test.png\s+100%\s+Delete/) }
+    within('.govuk-table') { expect(page).to have_content(/test.png.*Delete/) }
 
     click_on 'Delete'
 

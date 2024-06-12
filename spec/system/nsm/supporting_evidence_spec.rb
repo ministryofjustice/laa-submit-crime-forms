@@ -108,7 +108,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
 
       find('.moj-multi-file-upload__dropzone').drop(file_fixture('test_2.png'))
 
-      within('.govuk-table') { expect(page).to have_content(/test_2.png\s+100%\s+Delete/) }
+      within('.govuk-table') { expect(page).to have_content(/test_2.png.*Delete/) }
 
       click_on 'Delete'
 

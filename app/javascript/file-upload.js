@@ -9,9 +9,14 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
     let formData = new FormData();
     formData.append('documents', file);
     let fileListLength = this.feedbackContainer.find('.govuk-table__row.moj-multi-file-upload__row').length
-    let item = $(this.getFileRowHtml(file, fileListLength));
+    let fileRow = $(this.getFileRowHtml(file, fileListLength, 0));
     let feedback = $(".moj-multi-file-upload__message");
-    this.feedbackContainer.find('.moj-multi-file-upload__list').append(item);
+    this.feedbackContainer.find('.moj-multi-file-upload__list').append(fileRow);
+
+    let checkSvg =
+      `<svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
+          <path d="M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z"></path>
+      </svg>`
 
     if (file.size > maxFileSize) {
         this.feedbackContainer.find(`#${fileListLength}`).remove();
@@ -29,8 +34,9 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
         success: function (response) {
             feedback.html(this.getSuccessHtml(`${response.success.file_name} has been uploaded`));
             this.status.html(`${response.success.file_name} has been uploaded`);
-            item.find(`a.remove-link.moj-multi-file-upload__delete`).attr("value", response.success.evidence_id ?? file.name)
-            item.find(`a.remove-link.moj-multi-file-upload__delete`).removeClass('govuk-!-display-none')
+            fileRow.find(`a.remove-link.moj-multi-file-upload__delete`).attr("value", response.success.evidence_id ?? file.name)
+            fileRow.find(`a.remove-link.moj-multi-file-upload__delete`).removeClass('govuk-!-display-none')
+            fileRow.find('progress').replaceWith(checkSvg)
             this.params.uploadFileExitHook(this, file, response);
         }.bind(this),
 
@@ -45,9 +51,9 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
             var xhr = new XMLHttpRequest();
             xhr.upload.addEventListener('progress', function (e) {
                 if (e.lengthComputable) {
-                    var percentComplete = e.loaded / e.total;
-                    percentComplete = parseInt(percentComplete * 100, 10);
-                    item.find('.moj-multi-file-upload__progress').text(' ' + percentComplete + '%');
+                  var percentComplete = e.loaded / e.total;
+                  percentComplete = parseInt(percentComplete * 100, 10);
+                  fileRow.find('progress').prop('value', percentComplete).text(percentComplete + '%');
                 }
             }, false);
             return xhr;
@@ -55,15 +61,18 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
     });
 };
 
-MOJFrontend.MultiFileUpload.prototype.getFileRowHtml = function (file, fileListLength) {
+MOJFrontend.MultiFileUpload.prototype.getFileRowHtml = function (file, fileListLength, percentComplete) {
     return `<tr class="govuk-table__row moj-multi-file-upload__row" id="${fileListLength}">
-            <td class="govuk-table__cell moj-multi-file-upload__filename_progress">
-                <span class="moj-multi-file-upload__filename"> ${file.name}</span>
-                <span class="moj-multi-file-upload__progress">(0%)</span></td>
+            <td class="govuk-table__cell moj-multi-file-upload__filename" data-label="File name">
+              <span class="file-name">${file.name}</span>
+            </td>
+            <td class="govuk-table__cell moj-multi-file-upload__progress" data-label="Upload Progress">
+              <progress value="0" max="100">0%</progress>
+            </td>
             <td class="govuk-table__cell moj-multi-file-upload__actions">
-                <a class="remove-link moj-multi-file-upload__delete govuk-!-display-none" href="#0" value="${file.name}">Delete
+              <a class="remove-link moj-multi-file-upload__delete govuk-!-display-none" href="#0" value="${file.name}">Delete
                 <span class="govuk-visually-hidden">${file.name}</span>
-                </a>
+              </a>
             </td>
         </tr>`;
 };
