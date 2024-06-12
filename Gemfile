@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.151'
+gem 'aws-sdk-s3', '~> 1.152'
 gem 'bootsnap', '~> 1.18.3', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
@@ -15,7 +15,7 @@ gem 'jsbundling-rails'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'logstasher', '~> 2.1'
 gem 'oauth2', '~> 2.0'
-gem 'pagy', '~> 8.4.2'
+gem 'pagy', '~> 8.4.4'
 gem 'pg', '~> 1.5'
 gem 'prometheus-client'
 gem 'propshaft'
