@@ -52,7 +52,7 @@ RSpec.describe 'Prior authority applications - add service costs' do
       click_on 'Save and continue'
       expect(page)
         .to have_content('Enter the number of words')
-        .and have_content('Enter the cost per word')
+        .and have_content('Enter the cost per thousand words')
     end
   end
 
