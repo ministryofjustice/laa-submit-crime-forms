@@ -84,9 +84,6 @@ RSpec/StubbedMock:
 RSpec/NoExpectationExample:
   Enabled: false
 
-RSpecRails/InferredSpecType:
-  Enabled: false
-
 RSpec/MessageChain:
   Enabled: false
 
@@ -94,7 +91,7 @@ Naming/VariableNumber:
   Enabled: false
 
 # fully disabled as could not exclude spec/steps/ directory
-RSpec/FilePath:
+Rails/FilePath:
   Enabled: false
 
 # Enabled but tweaked cops
