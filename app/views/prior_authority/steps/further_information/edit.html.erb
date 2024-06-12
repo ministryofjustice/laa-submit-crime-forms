@@ -20,7 +20,11 @@
         <%= t(".supporting_documentation_caption_html", size: FileUpload::FileUploader.human_readable_max_file_size) %>
       </span>
 
-      <%= render 'shared/multifile_upload', supporting_documents: @form_object.supporting_documents, form: form, locale_prefix: 'prior_authority.steps.further_information.edit' %>
+      <%= render 'shared/multifile_upload',
+          supporting_documents: @form_object.supporting_documents,
+          form: form,
+          locale_prefix: 'prior_authority.steps.further_information.edit' %>
+
       <%= form.continue_button %>
     <% end %>
   </div>

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'system_helper'
 
 RSpec.describe 'User can provide supporting evidence', type: :system do
   let(:claim) { create(:claim, :complete) }
@@ -92,6 +92,28 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
     it 'does not display the supporting evidence requirements' do
       expect(page).to have_no_content 'Based on your answers'
       expect(page).to have_no_content 'If you do not upload this evidence'
+    end
+  end
+
+  context 'when submitting evidence', :javascript, type: :system do
+    let(:claim) { create(:claim) }
+
+    before do
+      visit provider_saml_omniauth_callback_path
+      visit edit_nsm_steps_supporting_evidence_path(claim.id)
+    end
+
+    it 'Allows me to upload and delete evidence' do
+      expect(page).to have_no_content('test_2.png')
+
+      find('.moj-multi-file-upload__dropzone').drop(file_fixture('test_2.png'))
+
+      within('.govuk-table') { expect(page).to have_content(/test_2.png\s+100%\s+Delete/) }
+
+      click_on 'Delete'
+
+      within('.moj-banner') { expect(page).to have_content('test_2.png has been deleted') }
+      expect(page).to have_no_css('.govuk-table')
     end
   end
 end

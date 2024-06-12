@@ -40,7 +40,7 @@ RSpec.describe PriorAuthority::CheckAnswers::FurtherInformationCard do
           [
             {
               head_key: 'information_requested',
-              text: '<p>please provider further evidence</p>',
+              text: '<p>please provide further evidence</p>',
             },
             {
               head_key: 'information_supplied',

@@ -3,8 +3,6 @@ module PriorAuthority
     class ReasonWhyController < BaseController
       include MultiFileUploadable
 
-      skip_before_action :verify_authenticity_token, only: [:destroy]
-
       def edit
         @form_object = ReasonWhyForm.build(
           current_application
