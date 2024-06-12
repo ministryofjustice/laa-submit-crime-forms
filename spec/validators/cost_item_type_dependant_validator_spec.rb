@@ -105,7 +105,7 @@ RSpec.describe CostItemTypeDependantValidator do
 
       it 'include item type option from model, pluralizing if option set' do
         instance.validate
-        expect(instance.errors.details[:items].flat_map(&:values)).to include('words')
+        expect(instance.errors.details[:items].flat_map(&:values)).to include('1000 words')
         expect(instance.errors.details[:cost_per_item].flat_map(&:values)).to include('1000 words')
       end
     end
