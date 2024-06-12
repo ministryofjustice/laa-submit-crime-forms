@@ -171,7 +171,7 @@ RSpec.describe 'Prior authority applications - alternative quote' do
       let(:service_type) { 'translation_documents' }
 
       it 'asks a question about words' do
-        expect(page).to have_content 'What is the cost per thousand words?'
+        expect(page).to have_content 'What is the cost per 1000 words?'
       end
 
       it 'validates appropriately with partial data' do
