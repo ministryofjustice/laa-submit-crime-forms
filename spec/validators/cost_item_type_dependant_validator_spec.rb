@@ -88,7 +88,7 @@ RSpec.describe CostItemTypeDependantValidator do
           ActiveModel::Name.new(self, nil, 'temp')
         end
 
-        attribute :item_type, :string
+        attribute :cost_item_type, :string
 
         attribute :items
         attribute :cost_per_item, :gbp
@@ -106,7 +106,7 @@ RSpec.describe CostItemTypeDependantValidator do
       it 'include item type option from model, pluralizing if option set' do
         instance.validate
         expect(instance.errors.details[:items].flat_map(&:values)).to include('words')
-        expect(instance.errors.details[:cost_per_item].flat_map(&:values)).to include('thousand words')
+        expect(instance.errors.details[:cost_per_item].flat_map(&:values)).to include('1000 words')
       end
     end
   end
