@@ -12,7 +12,7 @@ spec:
       targetPort: {{ .Values.service.internalPort }}
       protocol: TCP
       name: http
-    {{- if .Values.serviceMonitor.enabled -}}
+    {{- if .Values.serviceMonitor.enabled }}
     - port: {{ .Values.service.metricsPort }}
       targetPort: {{ .Values.service.metricsPort }}
       name: sidekiq-metrics
