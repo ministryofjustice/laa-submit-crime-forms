@@ -19,3 +19,18 @@ spec:
     {{- end }}
   selector:
     app: {{ include "laa-submit-crime-forms.fullname" . }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "laa-submit-crime-forms.fullname" . }}-prometheus
+  labels:
+    app: laa-submit-crime-forms-prometheus
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 9394
+      name: metrics
+      targetPort: 9394
+  selector:
+    {{- include "laa-submit-crime-forms.selectorLabels" . | nindent 4 }}
