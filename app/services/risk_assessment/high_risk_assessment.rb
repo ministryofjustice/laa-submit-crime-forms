@@ -13,23 +13,19 @@ module RiskAssessment
     end
 
     def assess
-      high_cost? || assigned_counsel? || enhancement_applied? || uplift_applied? || extradition? || rep_order_withdrawn?
+      high_cost? || counsel_assigned? || enhanced_rates_claimed? || extradition? || rep_order_withdrawn?
     end
 
     def high_cost?
       @items.values.filter_map(&:total_cost).sum > 5000
     end
 
-    def assigned_counsel?
-      @claim.assigned_counsel == 'yes'
+    def counsel_assigned?
+      [@claim.assigned_counsel, @claim.unassigned_counsel, @claim.agent_instructed].include?('yes')
     end
 
-    def enhancement_applied?
+    def enhanced_rates_claimed?
       @claim.reasons_for_claim.include? 'enhanced_rates_claimed'
-    end
-
-    def uplift_applied?
-      @items[:work_items].work_items.any?(&:apply_uplift)
     end
 
     def extradition?
