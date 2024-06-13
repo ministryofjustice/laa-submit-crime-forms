@@ -22,7 +22,6 @@ spec:
         image: registry.k8s.io/ingress-nginx/nginx-errors:v20230505@sha256:3600dcd1bbd0d05959bb01af4b272714e94d22d24a64e91838e7183c80e53f7f
         ports:
         - containerPort: 8080
-        # Mounting custom error page from configMap
         volumeMounts:
         - name: custom-error-pages
           mountPath: /www
@@ -35,7 +34,7 @@ spec:
             drop: [ "ALL" ]
           runAsUser: 999
 
-      # Mounting custom error page from configMap
+      # Mount custom error page from configMap
       volumes:
       - name: custom-error-pages
         configMap:
@@ -43,15 +42,3 @@ spec:
           items:
           - key: "403"
             path: "403.html"
-      # - name: nginx-error-server
-      #   image: "{{ .Values.image.repository }}:custom-errors"
-      #   ports:
-      #   - containerPort: 8080
-      #   securityContext:
-      #     runAsNonRoot: true
-      #     allowPrivilegeEscalation: false
-      #     seccompProfile:
-      #       type: RuntimeDefault
-      #     capabilities:
-      #       drop: [ "ALL" ]
-      #     runAsUser: 999
