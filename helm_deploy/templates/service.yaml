@@ -34,6 +34,7 @@ spec:
       targetPort: 9394
   selector:
     {{- include "laa-submit-crime-forms.selectorLabels" . | nindent 4 }}
+{{ if .Values.customErrorService.enabled }}
 ---
 apiVersion: v1
 kind: Service
@@ -50,3 +51,4 @@ spec:
   - port: 80
     targetPort: 8080
     name: http
+{{ end }}
