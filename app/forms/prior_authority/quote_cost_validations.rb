@@ -11,7 +11,7 @@ module PriorAuthority
 
       with_options if: :per_item? do
         validates :items, item_type_dependant: { pluralize: true }
-        validates :cost_per_item, item_type_dependant: true
+        validates :cost_per_item, cost_item_type_dependant: true
       end
 
       with_options if: :per_hour? do

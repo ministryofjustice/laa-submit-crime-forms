@@ -45,14 +45,14 @@ RSpec.describe 'Prior authority applications - add service costs' do
     let(:service_type) { 'Translation (documents)' }
 
     it 'asks a question about words' do
-      expect(page).to have_content 'What is the cost per word?'
+      expect(page).to have_content 'What is the cost per 1000 words?'
     end
 
     it 'validates appropriately with partial data' do
       click_on 'Save and continue'
       expect(page)
         .to have_content('Enter the number of words')
-        .and have_content('Enter the cost per word')
+        .and have_content('Enter the cost per 1000 words')
     end
   end
 

@@ -127,6 +127,7 @@ en:
           item: item
           minute: minute
           word: word
+          thousand_words: 1000 words
           page: page
         time:
           period: Time
