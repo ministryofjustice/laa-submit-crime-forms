@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Nsm::SubmissionMailer, type: :mailer do
   let(:feedback_template) { '0403454c-47a5-4540-804c-cb614e77dc22' }
-  let(:claim) { create(:claim, :case_type_magistrates, :main_defendant, :letters_calls) }
+  let(:claim) { create(:claim, :firm_details, :case_type_magistrates, :main_defendant, :letters_calls) }
 
   describe '#notify' do
     subject(:mail) { described_class.notify(claim) }
@@ -13,8 +13,16 @@ RSpec.describe Nsm::SubmissionMailer, type: :mailer do
       expect(mail.delivery_method).to be_a(GovukNotifyRails::Delivery)
     end
 
-    it 'sets the recipient from config' do
-      expect(mail.to).to eq(['provider@example.com'])
+    it 'sets the recipient from claim provider' do
+      expect(mail.to).to eq([claim.submitter.email])
+    end
+
+    context 'when there are alternative contact emails' do
+      before { claim.solicitor.update(contact_email: 'alternative@example.com') }
+
+      it 'uses the alternative email' do
+        expect(mail.to).to eq(['alternative@example.com'])
+      end
     end
 
     it 'sets the template' do
@@ -39,7 +47,7 @@ RSpec.describe Nsm::SubmissionMailer, type: :mailer do
     end
 
     context 'defendant with cntp id' do
-      let(:claim) { create(:claim, :case_type_breach, :breach_defendant, :letters_calls) }
+      let(:claim) { create(:claim, :firm_details, :case_type_breach, :breach_defendant, :letters_calls) }
 
       it 'sets personalisation from args' do
         expect(
