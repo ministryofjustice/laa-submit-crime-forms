@@ -9,8 +9,14 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
     let formData = new FormData();
     formData.append('documents', file);
     let fileListLength = this.feedbackContainer.find('.govuk-table__row.moj-multi-file-upload__row').length
-    let fileRow = $(this.getFileRowHtml(file, fileListLength, 0));
+    let fileRow = $(this.getFileRowHtml(file, fileListLength));
     let feedback = $(".moj-multi-file-upload__message");
+    let saveButtons = $('button[type="submit"]')
+
+    console.log(saveButtons[0].ariaDisabled);
+    saveButtons.prop("disabled", true)
+    saveButtons.prop("aria-disabled", true);
+    console.log(saveButtons[0].ariaDisabled);
     this.feedbackContainer.find('.moj-multi-file-upload__list').append(fileRow);
 
     let checkSvg =
@@ -37,6 +43,8 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
             fileRow.find(`a.remove-link.moj-multi-file-upload__delete`).attr("value", response.success.evidence_id ?? file.name)
             fileRow.find(`a.remove-link.moj-multi-file-upload__delete`).removeClass('govuk-!-display-none')
             fileRow.find('progress').replaceWith(checkSvg)
+            saveButtons.prop("disabled", false)
+            saveButtons.prop("aria-disabled", false)
             this.params.uploadFileExitHook(this, file, response);
         }.bind(this),
 
@@ -45,29 +53,34 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
             this.status.html(jqXHR.responseJSON.error.message);
             this.feedbackContainer.find(`#${fileListLength}`).remove();
             this.params.uploadFileErrorHook(this, file, jqXHR, textStatus, errorThrown);
+            saveButtons.prop("disabled", false)
+            saveButtons.prop("aria-disabled", false)
         }.bind(this),
 
         xhr: function () {
-            var xhr = new XMLHttpRequest();
-            xhr.upload.addEventListener('progress', function (e) {
-                if (e.lengthComputable) {
-                  var percentComplete = e.loaded / e.total;
-                  percentComplete = parseInt(percentComplete * 100, 10);
-                  fileRow.find('progress').prop('value', percentComplete).text(percentComplete + '%');
-                }
-            }, false);
-            return xhr;
+          var xhr = new XMLHttpRequest();
+          xhr.upload.addEventListener('progress', function (e) {
+            //
+            // For multifile uploads we use this event to
+            // keep disabling until all successful or errored.
+            // This avoids the first success/error for renabling the
+            // buttons.
+            //
+            saveButtons.prop("disabled", true)
+            saveButtons.prop("aria-disabled", true);
+          }, false);
+          return xhr;
         }
     });
 };
 
-MOJFrontend.MultiFileUpload.prototype.getFileRowHtml = function (file, fileListLength, percentComplete) {
+MOJFrontend.MultiFileUpload.prototype.getFileRowHtml = function (file, fileListLength) {
     return `<tr class="govuk-table__row moj-multi-file-upload__row" id="${fileListLength}">
             <td class="govuk-table__cell moj-multi-file-upload__filename" data-label="File name">
               <span class="file-name">${file.name}</span>
             </td>
             <td class="govuk-table__cell moj-multi-file-upload__progress" data-label="Upload Progress">
-              <progress value="0" max="100">0%</progress>
+              <progress>working</progress>
             </td>
             <td class="govuk-table__cell moj-multi-file-upload__actions">
               <a class="remove-link moj-multi-file-upload__delete govuk-!-display-none" href="#0" value="${file.name}">Delete
