@@ -19,7 +19,7 @@ module Nsm
     private
 
     def email_recipient
-      @claim.submitter.email
+      @claim.solicitor.contact_email.presence || @claim.submitter.email
     end
 
     def case_reference
