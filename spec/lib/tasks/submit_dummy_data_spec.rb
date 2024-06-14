@@ -22,24 +22,18 @@ describe 'submit_dummy_data:', type: :task do
 
     before do
       Rails.application.load_tasks if Rake::Task.tasks.empty?
+      allow($stdin).to receive(:gets).and_return 'y'
       allow(TestData::PaBuilder).to receive(:new).and_return(builder)
     end
 
-    it 'builds the test data' do
+    it 'builds the test data with defaults' do
       Rake::Task['submit_dummy_data:bulk_prior_authority'].execute
-      expect(builder).to have_received(:build_many).with(bulk: 100_000, year: 2023)
+      expect(builder).to have_received(:build_many).with(bulk: 100, year: 2023)
     end
 
-    context 'when year is set' do
-      before do
-        allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with('YEAR', 2023).and_return('2020')
-      end
-
-      it 'builds the test data for the specified YEAR' do
-        Rake::Task['submit_dummy_data:bulk_prior_authority'].execute
-        expect(builder).to have_received(:build_many).with(bulk: 100_000, year: 2020)
-      end
+    it 'builds the test data for the specified args' do
+      Rake::Task['submit_dummy_data:bulk_prior_authority'].invoke(200, 2020)
+      expect(builder).to have_received(:build_many).with(bulk: 200, year: 2020)
     end
   end
 
@@ -48,24 +42,18 @@ describe 'submit_dummy_data:', type: :task do
 
     before do
       Rails.application.load_tasks if Rake::Task.tasks.empty?
+      allow($stdin).to receive(:gets).and_return 'y'
       allow(TestData::NsmBuilder).to receive(:new).and_return(builder)
     end
 
-    it 'builds the test data' do
+    it 'builds the test data with defaults' do
       Rake::Task['submit_dummy_data:bulk_nsm'].execute
-      expect(builder).to have_received(:build_many).with(bulk: 24_000, large: 20, year: 2023)
+      expect(builder).to have_received(:build_many).with(bulk: 100, large: 4, year: 2023)
     end
 
-    context 'when year is set' do
-      before do
-        allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with('YEAR', 2023).and_return('2020')
-      end
-
-      it 'builds the test data for the specified YEAR' do
-        Rake::Task['submit_dummy_data:bulk_nsm'].execute
-        expect(builder).to have_received(:build_many).with(bulk: 24_000, large: 20, year: 2020)
-      end
+    it 'builds the test data for the specified args' do
+      Rake::Task['submit_dummy_data:bulk_nsm'].invoke(300, 30, 2020)
+      expect(builder).to have_received(:build_many).with(bulk: 300, large: 30, year: 2020)
     end
   end
 end
