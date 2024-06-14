@@ -19,6 +19,7 @@
       <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header">File name</th>
+        <th scope="col" class="govuk-table__header">Upload progress</th>
         <th scope="col" class="govuk-table__header">Action</th>
       </tr>
       </thead>
@@ -26,9 +27,14 @@
       <tbody class="govuk-table__body moj-multi-file-upload__list">
       <% supporting_documents.each_with_index do |record, index| %>
         <tr class="govuk-table__row moj-multi-file-upload__row" id="<%= index %>" >
-          <td class="govuk-table__cell moj-multi-file-upload__filename_progress">
-            <span class="moj-multi-file-upload__filename"><%= record.file_name %></span>
-            <span class="moj-multi-file-upload__progress">100%</span></td>
+          <td class="govuk-table__cell moj-multi-file-upload__filename" data-label="File name">
+            <span class="file-name"><%= record.file_name %></span>
+          </td>
+          <td class="govuk-table__cell moj-multi-file-upload__progress" data-label="Upload Progress">
+            <svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
+              <path d="M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z"></path>
+            </svg>
+          </td>
           <td class="govuk-table__cell moj-multi-file-upload__actions">
             <a class="remove-link moj-multi-file-upload__delete" href="#0" value="<%= record.id %>">Delete
               <span class="govuk-visually-hidden"><%= record.id %></span>
