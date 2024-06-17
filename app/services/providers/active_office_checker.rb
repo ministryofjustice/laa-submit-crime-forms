@@ -7,18 +7,10 @@ module Providers
     end
 
     def active_office_codes
-      if inactive_office_codes && auth_info.office_codes.size > 1
-        calculate_active_office_codes
-      else
-        auth_info.office_codes
-      end
+      auth_info.office_codes - inactive_office_codes
     end
 
     private
-
-    def calculate_active_office_codes
-      auth_info.office_codes - inactive_office_codes
-    end
 
     def inactive_office_codes
       Rails.configuration.x.inactive_offices.inactive_office_codes
