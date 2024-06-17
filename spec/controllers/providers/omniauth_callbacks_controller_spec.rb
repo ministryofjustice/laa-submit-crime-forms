@@ -69,5 +69,20 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
         expect(response).to redirect_to '/errors/inactive_offices'
       end
     end
+
+    context 'just one office code and it is deactivated' do
+      let(:office_codes) { %w[BBBBBB] }
+
+      before do
+        allow(Rails.configuration.x.inactive_offices)
+          .to receive(:inactive_office_codes)
+          .and_return(%w[BBBBBB])
+      end
+
+      it 'redirects to inactive offices error page' do
+        get :saml
+        expect(response).to redirect_to '/errors/inactive_offices'
+      end
+    end
   end
 end
