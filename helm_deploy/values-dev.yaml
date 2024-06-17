@@ -80,7 +80,7 @@ worker_resources:
     memory: 1Gi
 
 autoscaling:
-  enabled: true
+  enabled: false
   minReplicas: 1
   maxReplicas: 5
   targetCPUUtilizationPercentage: 95
