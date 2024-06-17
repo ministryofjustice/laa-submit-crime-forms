@@ -3,9 +3,12 @@ kind: Deployment
 metadata:
   name: {{ include "laa-submit-crime-forms.fullname" . }}-worker
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 100%
   selector:
     matchLabels:
       app: {{ include "laa-submit-crime-forms.fullname" . }}-worker

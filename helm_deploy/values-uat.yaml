@@ -78,13 +78,6 @@ worker_resources:
     cpu: 10m
     memory: 500Mi
 
-autoscaling:
-  enabled: true
-  minReplicas: 2
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 95
-  targetMemoryUtilizationPercentage: 95
-
 variables:
   environment: uat
   portalIDPMetadataFile: config/laa_portal/metadata/uat.xml
