@@ -5,16 +5,16 @@ module Providers
     before_action :check_provider_is_enrolled, only: [:saml]
 
     def saml
-      if Provider.active_offices?(auth_hash)
-        provider = Provider.from_omniauth(auth_hash)
+      active_office_codes = gatekeeper.active_office_codes
+
+      if active_office_codes.any?
+        provider = Provider.from_omniauth(auth_hash, active_office_codes)
 
         sign_in_and_redirect(
           provider, event: :authentication
         )
-      elsif office_enrolled?
-        redirect_to errors_inactive_offices_path
       else
-        redirect_to laa_msf.not_enrolled_errors_path
+        redirect_to errors_inactive_offices_path
       end
     end
 
@@ -33,7 +33,6 @@ module Providers
     end
 
     def check_provider_is_enrolled
-      gatekeeper = Providers::Gatekeeper.new(auth_hash.info)
       return if gatekeeper.provider_enrolled?
 
       Rails.logger.warn "Not enrolled provider access attempt, UID: #{auth_hash.uid}, " \
@@ -42,8 +41,8 @@ module Providers
       redirect_to laa_msf.not_enrolled_errors_path
     end
 
-    def office_enrolled?
-      Providers::Gatekeeper.new(auth_hash.info).provider_enrolled?
+    def gatekeeper
+      @gatekeeper ||= Providers::Gatekeeper.new(auth_hash.info)
     end
   end
 end

@@ -6,7 +6,7 @@ module Nsm
       validates :office_code, inclusion: { in: :options, allow_blank: false }
 
       def options
-        application.submitter.office_codes
+        Providers::Gatekeeper.new(application.submitter).active_office_codes(service: Providers::Gatekeeper::NSM)
       end
 
       private

@@ -11,12 +11,16 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
 
   def can_access_service
     return unless current_provider
-    return if Providers::Gatekeeper.new(current_provider).provider_enrolled?(service:)
+    return if Providers::Gatekeeper.new(current_provider).provider_enrolled_and_active?(service:)
 
     Rails.logger.warn "Not enrolled provider access attempt, UID: #{current_provider.id}, " \
                       "accounts: #{current_provider.office_codes}, service: #{service}"
 
-    redirect_to root_path
+    if service == Providers::Gatekeeper::ANY_SERVICE
+      redirect_to errors_inactive_offices_path
+    else
+      redirect_to root_path
+    end
   end
 
   def service

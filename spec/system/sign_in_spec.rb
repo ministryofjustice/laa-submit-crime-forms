@@ -72,5 +72,21 @@ RSpec.describe 'Sign in user journey' do
         expect(page).to have_current_path(prior_authority_applications_path)
       end
     end
+
+    context 'when office codes are deactivated when user is already signed in' do
+      before do
+        allow(Rails.configuration.x.inactive_offices)
+          .to receive(:inactive_office_codes)
+          .and_return(['1A123B'])
+      end
+
+      context 'when I start NSM journey' do
+        before { click_on "Claim non-standard magistrates' court payments, previously CRM7" }
+
+        it 'takes me to an error page' do
+          expect(page).to have_current_path(errors_inactive_offices_path)
+        end
+      end
+    end
   end
 end
