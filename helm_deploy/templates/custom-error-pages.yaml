@@ -55,9 +55,13 @@ data:
           <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
             <div class="govuk-grid-row">
               <div class="govuk-grid-column-two-thirds">
-                <h1 class="govuk-heading-l">Sorry, the service is unavailable</h1>
-                <p class="govuk-body">You are seeing this message because our automated systems have detected unusual activity from your browser and blocked your access to this URL as a precaution.</p>
-                <p class="govuk-body">Any answers you have previously entered will be saved. If you continue to see this message, try clearing your browser's cookies.</p>
+                <h1 class="govuk-heading-l">Sorry, there is a problem with the service</h1>
+                <p class="govuk-body">You should be able to use the service again if you clear your browser cookies.</p>
+                <p class="govuk-body">If this does not work, contact our technical support team:</p>
+                <ul class="govuk-list govuk-list--bullet">
+                  <li>email: <a href="mailto:CRM457@digital.justice.gov.uk">CRM457@digital.justice.gov.uk</a></li>
+                  <li>9am to 5pm, Monday to Friday (excluding bank holidays)</li>
+                </ul>
               </div>
             </div>
           </main>
