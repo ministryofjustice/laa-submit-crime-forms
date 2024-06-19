@@ -38,7 +38,13 @@ module Nsm
       private
 
       def persist!
-        application.update!(attributes)
+        application.update!(attributes.merge(attributes_to_reset))
+      end
+
+      def attributes_to_reset
+        {
+          'remitted_to_magistrate_date' => remitted_to_magistrate? ? remitted_to_magistrate_date : nil,
+        }
       end
     end
   end

@@ -27,11 +27,23 @@ RSpec.describe Nsm::Steps::CaseDetailsForm do
   let(:remitted_to_magistrate_date) { nil }
 
   describe '#save' do
+    let(:application) { build(:claim) }
+
     context 'when all fields are set' do
       it 'is valid' do
         expect(form.save).to be_truthy
-        expect(application).to have_received(:update!)
-        expect(form).to be_valid
+      end
+    end
+
+    context 'when remitted_to_magistrate with invalid remitted_to_magistrate_date' do
+      let(:remitted_to_magistrate_date) { { 1 => '1', 2 => '13', 3 => '2024' } }
+
+      it 'is valid' do
+        expect(form.save).to be_truthy
+        expect(application.reload).to have_attributes(
+          remitted_to_magistrate: 'no',
+          remitted_to_magistrate_date: nil
+        )
       end
     end
   end
