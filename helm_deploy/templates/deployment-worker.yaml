@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "laa-submit-crime-forms.fullname" . }}-worker
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount.worker }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
