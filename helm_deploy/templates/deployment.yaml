@@ -24,6 +24,7 @@ spec:
       labels:
         {{- include "laa-submit-crime-forms.selectorLabels" . | nindent 8 }}
         app: {{ include "laa-submit-crime-forms.fullname" . }}
+        metrics-target: {{ include "laa-submit-crime-forms.fullname" . }}-metrics-target
     spec:
       serviceAccountName: {{ .Values.service_account.name }}
       {{- with .Values.imagePullSecrets }}
