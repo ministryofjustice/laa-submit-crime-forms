@@ -9,7 +9,8 @@ localhost:
     - 4C567D
 
 development:
-  inactive_office_codes: []
+  inactive_office_codes:
+    - AAAAAA
 
 uat:
   inactive_office_codes:
