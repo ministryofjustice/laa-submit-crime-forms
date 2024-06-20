@@ -30,7 +30,7 @@
         [{ text: t(".date"), width: 'govuk-!-width-one-half' }, disbursement.disbursement_date.strftime('%-d %B %Y')],
         [t(".type"), disbursement.translated_disbursement_type],
         [t(".details"), multiline_text(disbursement.details)],
-        [t(".prior_auth"), disbursement.prior_authority.humanize],
+        ([t(".prior_auth"), disbursement.prior_authority.humanize] if disbursement.prior_authority),
         ([t(".miles"), t(".mileage", count: disbursement.miles, miles: NumberTo.formatted(disbursement.miles))] if disbursement.miles),
         [t(".net_cost"), NumberTo.pounds(disbursement.total_cost_pre_vat)],
         [t(".vat"), NumberTo.pounds(disbursement.vat)],
