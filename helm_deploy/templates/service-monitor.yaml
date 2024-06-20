@@ -1,16 +1,14 @@
-{{- if .Values.serviceMonitor.enabled -}}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: application-metrics-monitor
-  namespace: {{ .Values.namespace }}
+  name: {{ include "laa-submit-crime-forms.fullname" . }}-monitor
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
-      app: {{ include "laa-submit-crime-forms.fullname" . }}
+      service: {{ include "laa-submit-crime-forms.fullname" . }}-metrics-svc
   endpoints:
   - port: http
     interval: 15s
-  - targetPort: {{ .Values.service.metricsPort }}
+  - port: metrics
     interval: 15s
-{{- end }}
