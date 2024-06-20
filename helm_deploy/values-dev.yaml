@@ -11,9 +11,6 @@ namespace: laa-submit-crime-forms-dev
 serviceMonitor:
   enabled: true
 
-customErrorService:
-  enabled: true
-
 image:
   repository: nginx
   pullPolicy: Always

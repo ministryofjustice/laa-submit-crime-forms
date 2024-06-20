@@ -34,21 +34,3 @@ spec:
       targetPort: 9394
   selector:
     {{- include "laa-submit-crime-forms.selectorLabels" . | nindent 4 }}
-{{ if .Values.customErrorService.enabled }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-errors
-  labels:
-    app.kubernetes.io/name: nginx-errors
-    app.kubernetes.io/part-of: ingress-nginx
-spec:
-  selector:
-    app.kubernetes.io/name: nginx-errors
-    app.kubernetes.io/part-of: ingress-nginx
-  ports:
-  - port: 80
-    targetPort: 8080
-    name: http
-{{ end }}
