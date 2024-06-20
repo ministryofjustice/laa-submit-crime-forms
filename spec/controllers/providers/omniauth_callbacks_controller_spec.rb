@@ -44,13 +44,6 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
     context 'cannot access services' do
       let(:office_codes) { [] }
 
-      before do
-        # this is for coverage purposes
-        allow(subject)
-          .to receive(:check_provider_is_enrolled)
-          .and_return(true)
-      end
-
       it 'redirects to root path' do
         get :saml
         expect(response).to redirect_to '/errors/not_enrolled'
