@@ -23,8 +23,7 @@ deploy_branch() {
                 --set ingress.tls[0].host="$RELEASE_HOST" \
                 --set nameOverride="$BRANCH_RELEASE_NAME"\
                 --set fullnameOverride="$BRANCH_RELEASE_NAME"\
-                --set serviceMonitor.enabled=false\
-                --set customErrorService.enabled=false
+                --set serviceMonitor.enabled=false
 
 }
 
