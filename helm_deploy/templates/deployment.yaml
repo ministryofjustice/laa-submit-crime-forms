@@ -5,9 +5,12 @@ metadata:
   labels:
     {{- include "laa-submit-crime-forms.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: {{ .Values.replicaCount.app }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 100%
   selector:
     matchLabels:
       {{- include "laa-submit-crime-forms.selectorLabels" . | nindent 6 }}
