@@ -25,7 +25,7 @@ module Nsm
 
         return_success({ deleted: true })
       rescue StandardError => e
-        return_error(e, { message: 'Unable to delete file at this time' })
+        return_error('shared.shared_upload_errors.unable_delete', e)
       end
 
       def download

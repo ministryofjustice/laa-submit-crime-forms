@@ -6,17 +6,14 @@ module MultiFileUploadable
   end
 
   def create
-    unless supported_filetype(params[:documents])
-      return return_error(nil,
-                          { message: t('activemodel.errors.messages.forbidden_document_type') })
-    end
+    return return_error('activemodel.errors.messages.forbidden_document_type') unless supported_filetype(params[:documents])
 
     evidence = upload_file(params)
     return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
   rescue FileUpload::FileUploader::PotentialMalwareError => e
-    return_error(e, { message: t('activemodel.errors.messages.suspected_malware') })
+    return_error('activemodel.errors.messages.suspected_malware', e)
   rescue StandardError => e
-    return_error(e, { message: t('activemodel.errors.messages.upload_failed') })
+    return_error('activemodel.errors.messages.upload_failed', e)
   end
 
   private
@@ -50,10 +47,10 @@ module MultiFileUploadable
     }, status: :ok
   end
 
-  def return_error(exception, dict)
-    Sentry.capture_exception(exception)
+  def return_error(key, exception = nil)
+    Sentry.capture_exception(exception) if exception
     render json: {
-      error: dict
+      error: { message: t(key) }
     }, status: :bad_request
   end
 end
