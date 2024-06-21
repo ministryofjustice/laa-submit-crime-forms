@@ -4,6 +4,7 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
   include CookieConcern
   helper_method :pagy
 
+  before_action :check_maintenance_mode
   before_action :set_default_cookies
   before_action :can_access_service
 
@@ -25,5 +26,11 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
 
   def service
     Providers::Gatekeeper::ANY_SERVICE
+  end
+
+  def check_maintenance_mode
+    return unless FeatureFlags.maintenance_mode.enabled?
+
+    render file: 'public/maintenance.html', layout: false
   end
 end
