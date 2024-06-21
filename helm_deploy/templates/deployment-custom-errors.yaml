@@ -43,4 +43,6 @@ spec:
           items:
           - key: "423"
             path: "423.html"
+          - key: "5xx"
+            path: "5xx.html"
 {{ end }}

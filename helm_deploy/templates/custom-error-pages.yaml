@@ -5,6 +5,8 @@ kind: ConfigMap
 metadata:
   name: custom-error-pages
 data:
+  5xx: |
+    <h1>I am a banana</h1>
   423: |
     <!DOCTYPE html>
     <html lang="en" class="govuk-template ">
