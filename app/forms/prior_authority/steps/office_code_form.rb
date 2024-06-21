@@ -6,7 +6,7 @@ module PriorAuthority
       validates :office_code, inclusion: { in: :options, allow_blank: false }
 
       def options
-        application.provider.office_codes
+        Providers::Gatekeeper.new(application.provider).active_office_codes(service: Providers::Gatekeeper::PAA)
       end
 
       private

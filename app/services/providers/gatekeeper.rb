@@ -13,8 +13,18 @@ module Providers
     end
 
     def provider_enrolled?(service: ANY_SERVICE)
-      email_enrolled? || all_enrolled?(service:) || office_enrolled?(service:)
+      all_enrolled?(service:) || office_enrolled?(service:)
     end
+
+    def provider_enrolled_and_active?(service: ANY_SERVICE)
+      active_office_codes(service:).any?
+    end
+
+    def active_office_codes(service: ANY_SERVICE)
+      provider_office_codes_for(service:) - inactive_office_codes
+    end
+
+    private
 
     def all_enrolled?(service: ANY_SERVICE)
       allowed_office_codes = allowed_office_codes(service:)
@@ -22,16 +32,12 @@ module Providers
     end
 
     def office_enrolled?(service: ANY_SERVICE)
-      allowed_office_codes = allowed_office_codes(service:)
-      auth_info.office_codes.any? { |el| allowed_office_codes.include?(el) }
+      provider_office_codes_for(service:).any?
     end
 
-    # TODO: implement separately once decided if this is required
-    def email_enrolled?
-      false
+    def provider_office_codes_for(service: ANY_SERVICE)
+      auth_info.office_codes & allowed_office_codes(service:)
     end
-
-    private
 
     def allowed_office_codes(service: ANY_SERVICE)
       if service == ANY_SERVICE
@@ -42,13 +48,17 @@ module Providers
     end
 
     def all_office_codes
-      @all_office_codes ||= offices_codes_for(:crm4) |
-                            offices_codes_for(:crm5) |
-                            offices_codes_for(:crm7)
+      @all_office_codes ||= offices_codes_for(PAA) |
+                            offices_codes_for(EOL) |
+                            offices_codes_for(NSM)
     end
 
     def offices_codes_for(service)
       Rails.configuration.x.gatekeeper.send(service).office_codes || []
+    end
+
+    def inactive_office_codes
+      Rails.configuration.x.inactive_offices.inactive_office_codes
     end
   end
 end
