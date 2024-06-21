@@ -41,6 +41,6 @@ spec:
         configMap:
           name: custom-error-pages
           items:
-          - key: "403"
-            path: "403.html"
+          - key: "423"
+            path: "423.html"
 {{ end }}
