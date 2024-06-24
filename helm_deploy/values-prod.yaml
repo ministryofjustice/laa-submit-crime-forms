@@ -8,9 +8,6 @@ replicaCount:
 
 namespace: laa-submit-crime-forms-prod
 
-serviceMonitor:
-  enabled: false
-
 customErrorService:
   enabled: true
 
