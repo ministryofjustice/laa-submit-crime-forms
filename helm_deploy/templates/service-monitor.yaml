@@ -8,7 +8,5 @@ spec:
     matchLabels:
       service: {{ include "laa-submit-crime-forms.fullname" . }}-metrics-svc
   endpoints:
-  - port: http
-    interval: 15s
   - port: metrics
     interval: 15s
