@@ -20,7 +20,7 @@ module PriorAuthority
 
         return_success({ deleted: true })
       rescue StandardError => e
-        return_error(e, { message: t('shared.shared_upload_errors.unable_delete') })
+        return_error('shared.shared_upload_errors.unable_delete', e)
       end
 
       private

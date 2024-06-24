@@ -1,15 +1,7 @@
 # List of providers office codes that are inactive.
 #
-# Temporary solution to allow us to onboard over the next few months.
-# Plan is to build an API to glean this info from other systems, but
-# in the interim this was agreed as a way to continue onboarding.
-#
-# This is used by Provider::ActiveOfficeChecker to filter out inactive
-# offices from the array that Crime Apply receives from the portal auth_info
-#
-# This happens after the Providers::Gatekeeper has filtered out providers
-# that have not been onboarded yet in Providers::OmniauthCallbacksController.
-#
+# In the absence of an API to get up-to-date information, we are using a static file
+# with a list of all offices that have been deactivated.
 #
 localhost:
   inactive_office_codes:
@@ -26,10 +18,11 @@ uat:
 
 production:
   inactive_office_codes:
-    # Inactive codes up to sixth onboarding tranche - 07/09/23
+    # The following were already inactive when we copy-pasted this list from Crime Apply
+    # Since we did our lift-and-shift, a bunch more have been marked as inactive by them.
+    # We are taking it on trust that none of the below offices have been reactivated.
     - 0R918C
     - 2M353Q
-    # Inactive codes for seventh onboarding tranche - 20/09/23
     - 2M410C
     - 2M412E
     - 2N826R
@@ -47,23 +40,19 @@ production:
     - 2Q538C
     - 2Q539D
     - 2Q573Q
-    # Inactive codes for eighth onboarding tranche - 04/10/2023
     - 0J683N
     - 0Q806U
     - 2M861T
     - 0R178Y
-    # Inactive codes for ninth onboarding tranche - 09/10/2023
     - 2Q420Z
     - 2Q421A
     - 166YR
     - 5872H
-    # Inactive codes for tenth onboarding tranche - 19/10/2023
     - 2E301A
     - 0J981M
     - 1F021H
     - 2M415H
     - 2P425T
-    # Inactive codes for eleventh onboarding tranche - 24/10/2023
     - 0F080X
     - 0F919J
     - 0J975F
@@ -92,7 +81,6 @@ production:
     - 2P397M
     - 2N952D
     - 2M127V
-    # Inactive codes for twelfth onboarding tranche - 06/11/2023
     - 2N854X
     - 2Q213Z
     - 2P571B
@@ -114,7 +102,6 @@ production:
     - 2P449U
     - 0H348M
     - 0L863H
-    # Inactive codes for thirteenth onboarding tranche - 20/11/2023
     - 1N641Q
     - 0N065P
     - 2M545Z
@@ -143,10 +130,11 @@ production:
     - 2A561K
     - 2E841M
     - 2L866L
-    # Deactivate codes 20/11/2023
     - 0N019P
     - 0N581A
     - 2L982M
     - 2M286T
     - 2Q102D
     - 2Q103E
+    - 2P398N
+    - 2Q506T

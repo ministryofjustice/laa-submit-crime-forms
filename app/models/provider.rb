@@ -18,25 +18,15 @@ class Provider < ApplicationRecord
   has_many :prior_authority_applications, dependent: :destroy
 
   class << self
-    def from_omniauth(auth)
+    def from_omniauth(auth, office_codes)
       find_or_initialize_by(auth_provider: auth.provider, uid: auth.uid).tap do |record|
         record.update(
           email: auth.info.email,
           description: auth.info.description,
           roles: auth.info.roles,
-          office_codes: active_office_codes(auth),
+          office_codes: office_codes,
         )
       end
-    end
-
-    def active_offices?(auth)
-      active_office_codes(auth).count.positive?
-    end
-
-    private
-
-    def active_office_codes(auth)
-      Providers::ActiveOfficeChecker.new(auth.info).active_office_codes
     end
   end
 end

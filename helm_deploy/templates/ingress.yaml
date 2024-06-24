@@ -21,12 +21,18 @@ metadata:
     {{- include "laa-submit-crime-forms.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
+    nginx.ingress.kubernetes.io/default-backend: nginx-errors
+    nginx.ingress.kubernetes.io/custom-http-errors: "423"
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecRequestBodyNoFilesLimit 524288
-      SecDefaultAction "phase:2,pass,log,tag:github_team=ministryofjustice/laa-crime-forms-team"
+      SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-forms-team,status:423"
+      SecDefaultAction "phase:4,pass,log,tag:github_team=laa-crime-forms-team,status:423"
       SecAction "id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=6"
+      SecRuleRemoveById 921110
+      SecRuleRemoveById 933210
+      SecRuleRemoveById 942230
     external-dns.alpha.kubernetes.io/aws-weight: "100"
     {{- toYaml . | nindent 4 }}
   {{- end }}

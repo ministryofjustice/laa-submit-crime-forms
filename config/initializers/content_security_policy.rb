@@ -15,9 +15,8 @@ Rails.application.configure do
     # policy.script_src  "'sha256-<sha 1 here>'", "'sha256-<sha 2 here>'", :self, :https, :report_sample
     policy.script_src  :self, :https, :report_sample
 
-    # If there are any un-nonceable styles that need to be added to the page, add their SHAs here in the format
-    # policy.style_src  "'sha256-<sha 1 here>'", "'sha256-<sha 2 here>'", :self, :https, :report_sample
-    policy.style_src :self, :https, :report_sample
+    # The below sha is for the styles used by the static maintenance mode page
+    policy.style_src "'sha256-SKk0A/cx4rPskCI+pT65OEYkqpmpNRbLvwc1gsUtf6s='", :self, :https, :report_sample
 
     # Sentry creates workers from "blobs" in order to report on errors, so we allow that
     policy.worker_src :blob
