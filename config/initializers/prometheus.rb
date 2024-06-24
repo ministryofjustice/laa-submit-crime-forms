@@ -44,17 +44,17 @@ PrometheusExporter::Metric::Base.default_prefix = DEFAULT_PREFIX
 #
 Rails.application.middleware.unshift PrometheusExporter::Middleware
 
-# This reports basic process stats like RSS and GC info, type master
-# means it is instrumenting the master process.
-# see config/puma.rb  after_work_boot for more
-#
-PrometheusExporter::Instrumentation::Process.start(type: "master")
-
 # NOTE: if running Puma in cluster mode, the following instrumentation will need to be
 # moved to an after_worker_boot block in puma config.
 # NOTE: attempting to instrument puma prom export on sidekiq servers will result in lots of error logs
 #
 unless Sidekiq.server?
+  # This reports basic process stats like RSS and GC info, type master
+  # means it is instrumenting the master process.
+  # see config/puma.rb  after_work_boot for more
+  #
+  PrometheusExporter::Instrumentation::Process.start(type: "master")
+
   PrometheusExporter::Instrumentation::Puma.start unless PrometheusExporter::Instrumentation::Puma.started?
   PrometheusExporter::Instrumentation::ActiveRecord.start
 end
