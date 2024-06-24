@@ -4,6 +4,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: custom-error-pages
+  labels:
+    {{- include "laa-submit-crime-forms.labels" . | nindent 4 }}
 data:
   5xx: |
     <!DOCTYPE html>
