@@ -29,9 +29,9 @@ end
 
 Rails.logger.info("[PrometheusExporter] Starting server....")
 server = start_prometheus_server
-
-Rails.logger.info "[PrometheusExporter] server #{JSON.parse(server.to_json).fetch_values('port', 'bind')}...."
 return unless server
+
+Rails.logger.info "[PrometheusExporter] server started on #{JSON.parse(server.to_json).fetch_values('port', 'bind')}!"
 
 PrometheusExporter::Client.default = PrometheusExporter::LocalClient.new(collector: server.collector)
 
