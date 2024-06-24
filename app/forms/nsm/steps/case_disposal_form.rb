@@ -29,13 +29,14 @@ module Nsm
 
       # ensure we reset any date fields when not the plea
       def attributes_with_resets
-        PleaOptions.values.each_with_object(attributes) do |plea_inst, result|
-          next unless plea_inst.requires_date_field?
-          next if plea_inst == plea
+        results = attributes.dup
+        PleaOptions.values.each do |plea_inst|
+          next if plea_inst == plea || !plea_inst.requires_date_field?
 
-          result["#{plea_inst.value}_date"] = nil
-          result['plea_category'] = PleaOptions.new(result['plea']).category
+          results["#{plea_inst.value}_date"] = nil
         end
+        results['plea_category'] = PleaOptions.new(results['plea']).category
+        results
       end
     end
   end
