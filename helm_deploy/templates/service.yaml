@@ -12,28 +12,25 @@ spec:
       targetPort: {{ .Values.service.internalPort }}
       protocol: TCP
       name: http
-    {{- if .Values.serviceMonitor.enabled }}
-    - port: {{ .Values.service.metricsPort }}
-      targetPort: {{ .Values.service.metricsPort }}
-      name: sidekiq-metrics
-    {{- end }}
   selector:
     app: {{ include "laa-submit-crime-forms.fullname" . }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "laa-submit-crime-forms.fullname" . }}-prometheus
+  name: {{ include "laa-submit-crime-forms.fullname" . }}-metrics-svc
   labels:
-    app: laa-submit-crime-forms-prometheus
+    {{- include "laa-submit-crime-forms.labels" . | nindent 4 }}
+    service: {{ include "laa-submit-crime-forms.fullname" . }}-metrics-svc
+    app: {{ include "laa-submit-crime-forms.fullname" . }}
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: 9394
+      protocol: TCP
       name: metrics
-      targetPort: 9394
   selector:
-    {{- include "laa-submit-crime-forms.selectorLabels" . | nindent 4 }}
+    metrics-target: {{ include "laa-submit-crime-forms.fullname" . }}-metrics-target
 {{ if .Values.customErrorService.enabled }}
 ---
 apiVersion: v1

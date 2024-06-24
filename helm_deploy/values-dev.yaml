@@ -8,9 +8,6 @@ replicaCount:
 
 namespace: laa-submit-crime-forms-dev
 
-serviceMonitor:
-  enabled: true
-
 customErrorService:
   enabled: true
 
@@ -38,7 +35,6 @@ service:
   port: 80
   internalPort: 3000
   workerPort: 7433
-  metricsPort: 9359
 
 ingress:
   enabled: true
