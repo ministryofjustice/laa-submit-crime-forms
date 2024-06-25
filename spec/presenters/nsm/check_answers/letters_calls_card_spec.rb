@@ -65,7 +65,7 @@ RSpec.describe Nsm::CheckAnswers::LettersCallsCard do
     end
 
     context 'when claim justification does not include enhanced rate' do
-      let(:reasons_for_claim) { [ReasonForClaim::COUNCEL_OR_AGENT_ASSIGNED.to_s] }
+      let(:reasons_for_claim) { [ReasonForClaim::COUNSEL_OR_AGENT_ASSIGNED.to_s] }
 
       it 'does not include the uplift rows' do
         expect(subject.row_data).to eq(

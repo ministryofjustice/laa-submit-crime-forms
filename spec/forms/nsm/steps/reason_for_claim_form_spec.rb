@@ -57,7 +57,7 @@ RSpec.describe Nsm::Steps::ReasonForClaimForm do
       [
         ReasonForClaim::CORE_COSTS_EXCEED_HIGHER_LMTS.to_s,
         ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s,
-        ReasonForClaim::COUNCEL_OR_AGENT_ASSIGNED.to_s,
+        ReasonForClaim::COUNSEL_OR_AGENT_ASSIGNED.to_s,
         ReasonForClaim::EXTRADITION.to_s,
       ].each do |field|
         context 'and field is set' do

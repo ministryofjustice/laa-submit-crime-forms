@@ -13,7 +13,7 @@ RSpec.describe ReasonForClaim do
         %w[
           core_costs_exceed_higher_limit
           enhanced_rates_claimed
-          councel_or_agent_assigned
+          counsel_or_agent_assigned
           representation_order_withdrawn
           extradition
           other

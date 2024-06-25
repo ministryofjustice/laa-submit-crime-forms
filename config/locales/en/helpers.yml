@@ -219,7 +219,7 @@ en:
         reasons_for_claim_options:
           core_costs_exceed_higher_limit: Core costs exceed higher limit
           enhanced_rates_claimed: Enhanced rates claimed
-          councel_or_agent_assigned: Councel or agent assigned
+          counsel_or_agent_assigned: Counsel or agent assigned
           representation_order_withdrawn: Representation order withdrawn
           extradition: Extradition
           other: Other
