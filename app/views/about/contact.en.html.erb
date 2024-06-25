@@ -4,9 +4,17 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Contact us</h1>
     <h2 class="govuk-heading-m">Case enquiries</h2>
-    <p class="govuk-body">Telephone: <%= Rails.configuration.x.contact.case_enquiries_tel %></p>
-    <p class="govuk-body">9am to 5pm, Monday to Friday (excluding bank holidays)</p>
+    <p class="govuk-body">It normally takes up to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>5 working days to assess a prior authority application</li>
+      <li>10 working days to assess a non-standard magistrates' claim</li>
+    </ul>
+    <p class="govuk-body">After this you can contact us to check the status of your claim:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>telephone: <%= Rails.configuration.x.contact.case_enquiries_tel %></li>
+      <li>email: <%= mail_to Rails.configuration.x.contact.support_email, class: 'govuk-link--no-visited-state' %></li>
+    </ul>
     <h2 class="govuk-heading-m">Technical support</h2>
-    <p class="govuk-body">Email: <%= mail_to Rails.configuration.x.contact.support_email, class: 'govuk-link--no-visited-state' %></p>
+    <p class="govuk-body">Email: <%= mail_to Rails.configuration.x.contact.technical_support_email, class: 'govuk-link--no-visited-state' %></p>
   </div>
 </div>
