@@ -1,7 +1,6 @@
 # The below is heavily cribbed from ministryofjustice/laa-apply-for-criminal-legal-aid
 return unless ENV.fetch("ENABLE_PROMETHEUS_EXPORTER", "false") == "true"
 
-require 'prometheus_exporter/client'
 require "prometheus_exporter/server"
 require "prometheus_exporter/instrumentation"
 require "prometheus_exporter/middleware"
@@ -33,15 +32,12 @@ return unless server
 
 Rails.logger.info "[PrometheusExporter] server started on #{JSON.parse(server.to_json).fetch_values('port', 'bind')}!"
 
-PrometheusExporter::Client.default = PrometheusExporter::LocalClient.new(collector: server.collector)
-
 Rails.logger.info("[PrometheusExporter] Initialising standard instrumentation middleware...")
 
 # Metrics will be prefixed, for example `ruby_http_requests_total`
 PrometheusExporter::Metric::Base.default_prefix = DEFAULT_PREFIX
 
 # This reports stats per request like HTTP status and timings
-#
 Rails.application.middleware.unshift PrometheusExporter::Middleware
 
 # NOTE: if running Puma in cluster mode, the following instrumentation will need to be
