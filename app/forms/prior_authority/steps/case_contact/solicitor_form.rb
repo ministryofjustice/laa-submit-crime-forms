@@ -8,7 +8,7 @@ module PriorAuthority
 
         validates :contact_first_name, presence: true
         validates :contact_last_name, presence: true
-        validates :contact_email, presence: true, format: { with: /\A.*@.*\..*\z/ }
+        validates :contact_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
         private
 
