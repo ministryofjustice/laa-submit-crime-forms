@@ -70,6 +70,18 @@ RSpec.describe PriorAuthority::Steps::CaseContact::SolicitorForm do
         expect(form.errors.messages[:contact_email]).to include('Enter a valid email address')
       end
     end
+
+    context 'with an invalid contact_email that contains a valid email address' do
+      let(:contact_first_name) { 'Joe' }
+      let(:contact_last_name) { 'Bloggs' }
+      let(:contact_email) { 'joe@bloggsatlegalcorp.com-jim@bloggsatlegalcorp.com' }
+
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:contact_email, :invalid)).to be(true)
+        expect(form.errors.messages[:contact_email]).to include('Enter a valid email address')
+      end
+    end
   end
 
   describe '#save' do

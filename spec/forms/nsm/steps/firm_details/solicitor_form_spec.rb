@@ -74,6 +74,26 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
         end
       end
     end
+
+    context 'when email is invalid' do
+      let(:contact_email) { 'job.bob.com' }
+      let(:alternative_contact_details) { 'yes' }
+
+      it 'has validation error on email address' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:contact_email, :invalid)).to be(true)
+      end
+    end
+
+    context 'when email is invalid but contains a valid email address' do
+      let(:contact_email) { 'job@bob.com-jim@bob.com' }
+      let(:alternative_contact_details) { 'yes' }
+
+      it 'has validation error on email address' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:contact_email, :invalid)).to be(true)
+      end
+    end
   end
 
   describe '#alternative_contact_details' do
