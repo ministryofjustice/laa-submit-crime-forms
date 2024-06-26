@@ -4,15 +4,15 @@
   </dt>
   <dd class="govuk-summary-list__value">
     <% t('prior_authority.applications.show.sent_back_explanations_html',
-        deadline: tag.strong(@application.resubmission_deadline.to_fs(:stamp))).each do |paragraph| %>
+        deadline: tag.strong(application.resubmission_deadline.to_fs(:stamp))).each do |paragraph| %>
       <p><%= paragraph %></p>
     <% end %>
-    <% if @further_info_review_needed %>
+    <% if further_information_needed %>
       <%= govuk_button_link_to(t('prior_authority.applications.show.update_application'),
-                               edit_prior_authority_steps_further_information_path(@application)) %>
+                               edit_prior_authority_steps_further_information_path(application)) %>
     <% else %>
       <%= govuk_button_link_to(t('prior_authority.applications.show.update_application'),
-                               edit_prior_authority_steps_check_answers_path(@application)) %>
+                               edit_prior_authority_steps_check_answers_path(application)) %>
     <% end %>
   </dd>
 </div>

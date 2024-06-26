@@ -108,6 +108,13 @@ commands:
       - *install-assets
       - *save-assets
 
+  install-puppeteer:
+    steps:
+      - run:
+          name: Install Puppeteer with Chromium
+          command: |
+            yarn add puppeteer@19.2.0
+
   build-base:
     steps:
       - install-gems
@@ -260,6 +267,7 @@ jobs:
           install-firefox: false
           install-geckodriver: false
           install-chromedriver: false
+      - install-puppeteer
       - save_cache:
           name: Saving assets and dependencies cache for use in later steps
           key: nsmf-claim-repo-{{ .Environment.CIRCLE_SHA1 }}

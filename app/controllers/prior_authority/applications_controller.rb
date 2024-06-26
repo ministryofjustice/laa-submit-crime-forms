@@ -11,13 +11,7 @@ module PriorAuthority
     end
 
     def show
-      @application = PriorAuthorityApplication.for(current_provider).find(params[:id])
-      @further_info_review_needed = further_information_needed
-      @primary_quote_summary = PriorAuthority::PrimaryQuoteSummary.new(@application)
-      @report = CheckAnswers::Report.new(@application, verbose: true)
-      @allowance_type = { 'granted' => :original,
-                          'part_grant' => :dynamic,
-                          'rejected' => :na }[@application.status]
+      render locals: application_locals
     end
 
     def create
@@ -50,6 +44,14 @@ module PriorAuthority
 
     def offboard
       @model = PriorAuthorityApplication.for(current_provider).find(params[:id])
+    end
+
+    def download
+      pdf = PdfService.prior_authority(application_locals, request.url)
+
+      send_data pdf,
+                filename: "#{current_application.laa_reference}.pdf",
+                type: 'application/pdf'
     end
 
     private
@@ -100,6 +102,18 @@ module PriorAuthority
     def set_default_table_sort_options
       @sort_by = params.fetch(:sort_by, 'last_updated')
       @sort_direction = params.fetch(:sort_direction, 'descending')
+    end
+
+    def application_locals
+      application = PriorAuthorityApplication.for(current_provider).find(params[:id])
+      {
+        application: application,
+        primary_quote_summary: PriorAuthority::PrimaryQuoteSummary.new(application),
+        report: CheckAnswers::Report.new(application, verbose: true),
+        allowance_type: { 'granted' => :original,
+                          'part_grant' => :dynamic,
+                          'rejected' => :na }[application.status]
+      }
     end
   end
 end
