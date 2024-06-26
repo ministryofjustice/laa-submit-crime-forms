@@ -113,7 +113,7 @@ commands:
       - run:
           name: Install Puppeteer with Chromium
           command: |
-            yarn add puppeteer@19.2.0
+            yarn add puppeteer
 
   build-base:
     steps:
