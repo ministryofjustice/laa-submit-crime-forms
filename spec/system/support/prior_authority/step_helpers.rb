@@ -201,7 +201,7 @@ module PriorAuthority
       if cost_type == :per_hour
         fill_in 'Hours', with: '1'
         fill_in 'Minutes', with: '0'
-        fill_in 'Hourly cost', with: '100'
+        fill_in 'What is the cost per hour?', with: '100'
       else
         fill_in 'Number of items', with: '5'
         fill_in 'What is the cost per item?', with: '1.23'
