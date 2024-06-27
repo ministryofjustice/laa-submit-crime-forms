@@ -1,3 +1,4 @@
+<% skip_buttons ||= false %>
 <div class="govuk-summary-card">
   <div class="govuk-summary-card__title-wrapper">
     <h2 class="govuk-summary-card__title"><%= t("prior_authority.applications.show.application_status") %></h2>
@@ -17,7 +18,7 @@
       <% if application.assessment_comment.present? || application.part_grant? %>
         <%= render "prior_authority/applications/response_summaries/assessed", application: %>
       <% elsif application.sent_back? %>
-        <%= render "prior_authority/applications/response_summaries/sent_back", application: %>
+        <%= render "prior_authority/applications/response_summaries/sent_back", application:, skip_buttons: %>
       <% elsif application.expired? %>
         <%= render "prior_authority/applications/response_summaries/expired", application: %>
       <% end %>
