@@ -2,66 +2,32 @@
 <% content_for(:back_link) do %>
   <%= link_to t('helpers.back_link'),
               prior_authority_applications_path(
-                anchor: relevant_prior_authority_list_anchor(@application)
+                anchor: relevant_prior_authority_list_anchor(application)
               ),
               class: 'govuk-back-link hide-on-print' %>
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
-    <div class="govuk-summary-card">
-      <div class="govuk-summary-card__title-wrapper">
-        <h2 class="govuk-summary-card__title"><%= t(".application_status") %></h2>
-      </div>
-      <div class="govuk-summary-card__content">
-        <dl class="govuk-summary-list">
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              <%= t(".status") %>
-            </dt>
-            <dd class="govuk-summary-list__value">
-              <p><strong class="govuk-tag <%= prior_authority_tag_colour(@application.status) %>"><%= t("prior_authority.statuses.#{@application.status}") %></strong></p>
-              <%= render "prior_authority/applications/state_summaries/#{@application.status}" %>
-            </dd>
-          </div>
-          <% if @application.assessment_comment.present? || @application.part_grant? %>
-            <%= render "prior_authority/applications/response_summaries/assessed" %>
-          <% elsif @application.sent_back? %>
-            <%= render "prior_authority/applications/response_summaries/sent_back" %>
-          <% elsif @application.expired? %>
-            <%= render "prior_authority/applications/response_summaries/expired" %>
-          <% end %>
-        </dl>
-      </div>
-    </div>
-
-    <% @report.section_groups.each do |section_group| %>
-      <h2 class="govuk-heading-m"><%= section_group[:heading] %></h2>
-      <% section_group[:sections].each do |section| %>
-        <% if section.template %>
-          <%= render(section.template, section: section, show_actions: false, show_adjustments: @allowance_type) %>
-        <% else %>
-          <%= govuk_summary_list(
-                card: {
-                  title: section.title,
-                },
-                rows: section.rows,
-                actions: false
-              ) %>
-        <% end %>
-      <% end %>
-    <% end %>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render "application_details", application:, primary_quote_summary:, report:, allowance_type: %>
   </div>
 
   <div class="govuk-grid-column-one-third">
     <aside class="app-aside__bar--blue aside-generic" role="complementary" aria-labelledby="aside-title">
-      <h3 id="aside-title" class="govuk-heading-s govuk-!-margin-bottom-4">
+      <h2 id="aside-title" class="govuk-heading-s govuk-!-margin-bottom-4">
         <%= t('.email_us') %>
-      </h3>
-      <p class="govuk-body govuk-!-margin-0">
+      </h2>
+      <p class="govuk-body-s">
         <%= link_to t('.email'), "mailto:#{t('.email')}" %>
       </p>
+      <h2 class="govuk-heading-s" id="subsection-title"><%= t('.print_a_pdf') %></h2>
+      <p class="govuk-body-s"><%= t('.print_hint') %></p>
+      <%= govuk_button_link_to t('.create_pdf'), download_prior_authority_application_path(application), secondary: true, target: '_blank' %>
     </aside>
   </div>
 </div>

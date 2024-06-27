@@ -3,26 +3,26 @@
     <%= t("prior_authority.applications.show.laa_response") %>
   </dt>
   <dd class="govuk-summary-list__value">
-    <% if @application.assessment_comment.present? %>
-      <p><%= simple_format @application.assessment_comment %></p>
+    <% if application.assessment_comment.present? %>
+      <p><%= simple_format application.assessment_comment %></p>
     <% end %>
     <ul class="govuk-list govuk-list--bullet">
-      <% if @application.primary_quote.service_adjustment_comment.present? %>
+      <% if application.primary_quote.service_adjustment_comment.present? %>
         <li><%= link_to t('prior_authority.applications.show.review_service_cost_adjustments'), '#service-cost' %></li>
       <% end %>
-      <% if @application.primary_quote.travel_adjustment_comment.present? %>
+      <% if application.primary_quote.travel_adjustment_comment.present? %>
         <li><%= link_to t('prior_authority.applications.show.review_travel_cost_adjustments'), '#travel-cost' %></li>
       <% end %>
-      <% if @application.additional_costs.any? { _1.adjustment_comment.present? } %>
+      <% if application.additional_costs.any? { _1.adjustment_comment.present? } %>
         <li><%= link_to t('prior_authority.applications.show.review_additional_cost_adjustments'), '#additional-cost-0' %></li>
       <% end %>
     </ul>
-    <% if @application.rejected? %>
+    <% if application.rejected? %>
       <h3 class="govuk-heading-s"><%= t('.appeal_the_rejection') %></h3>
       <p>
         <%= t('.rejection_explanation_html', email: link_to(t('.email'), "mailto:#{t('.email')}")) %>
       </p>
-    <% elsif @application.part_grant? %>
+    <% elsif application.part_grant? %>
       <h3 class="govuk-heading-s"><%= t('.appeal_the_adjustment') %></h3>
       <p>
         <%= t('.adjustment_explanation_html', email: link_to(t('.email'), "mailto:#{t('.email')}")) %>
