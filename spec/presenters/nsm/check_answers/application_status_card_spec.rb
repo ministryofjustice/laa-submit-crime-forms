@@ -49,6 +49,14 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
           ]
         )
       end
+
+      context 'with a comment' do
+        before { claim.update(assessment_comment: "Foo\n<b>Bar</b>") }
+
+        it 'shows the comment, escaped appropriately' do
+          expect(subject.row_data[1][:text]).to eq('<p>Foo</p><p>&lt;b&gt;Bar&lt;/b&gt;</p>')
+        end
+      end
     end
 
     context 'part granted' do
