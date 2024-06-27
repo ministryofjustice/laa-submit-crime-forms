@@ -11,7 +11,7 @@ en:
     start_new_application: Start new application
     start_new_claim: Start a new claim
     view_applications: View your applications
-    view_claims: View my claims
+    view_claims: View your claims
     submit:
       accept_and_send: Accept and send
       save_and_continue: Save and continue

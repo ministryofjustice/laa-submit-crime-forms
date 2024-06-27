@@ -12,8 +12,8 @@ RSpec.describe 'User can see an application status', type: :system do
     expect(page).to have_css('div.govuk-panel__body', text: claim.laa_reference)
   end
 
-  it 'can show all claims for a provider when clicking on view my claims button' do
-    click_on 'View my claims'
+  it 'can show all claims for a provider when clicking on view your claims button' do
+    click_on 'View your claims'
     expect(page).to have_current_path(nsm_applications_path)
     expect(claim.reload).to have_attributes(
       laa_reference: 'ABC123',
