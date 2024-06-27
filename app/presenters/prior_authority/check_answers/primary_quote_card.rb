@@ -49,7 +49,7 @@ module PriorAuthority
           },
           {
             head_key: 'quote_upload',
-            text: primary_quote.document.file_name,
+            text: document_link,
           },
           *related_to_post_mortem,
           *ordered_by_court,
@@ -88,6 +88,11 @@ module PriorAuthority
         service_details_html = [primary_quote.contact_full_name, organisation_details].compact.join('<br>')
 
         sanitize(service_details_html, tags: %w[br])
+      end
+
+      def document_link
+        govuk_link_to(primary_quote.document.file_name,
+                      url_helper.prior_authority_download_path(primary_quote.document))
       end
 
       def related_to_post_mortem

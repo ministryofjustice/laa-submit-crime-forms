@@ -29,10 +29,11 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
     end
 
     context 'when alternative quotes exist' do
+      let(:document) { build(:quote_document) }
       let(:quotes) do
         [
           build(:quote, :primary),
-          build(:quote, :alternative, contact_first_name: 'Jim', contact_last_name: 'Bob',
+          build(:quote, :alternative, contact_first_name: 'Jim', contact_last_name: 'Bob', document: document,
                 cost_per_hour: 20, period: 60, travel_cost_per_hour: 30, travel_time: 60),
           build(:quote, :alternative, contact_first_name: 'John', contact_last_name: 'Boy', document: nil,
                 cost_per_hour: 20, period: 120, travel_cost_per_hour: 30, travel_time: 120),
@@ -45,7 +46,8 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
             {
               head_key: 'quote_summary',
               head_opts: { count: 1 },
-              text: 'Jim Bob<br>test.png<br>£50.00'
+              text: "Jim Bob<br><a class=\"govuk-link\" href=\"/prior-authority/downloads/#{document.id}\">test.png</a>" \
+                    '<br>£50.00'
             },
             {
               head_key: 'quote_summary',

@@ -158,7 +158,7 @@ RSpec.describe 'View reviewed applications' do
             information_requested: 'Tell me more',
             information_supplied: 'More info',
             created_at: 1.day.ago,
-            supporting_documents: [build(:supporting_document)])
+            supporting_documents: [build(:supporting_document, file_name: 'evidence.pdf')])
     end
 
     it 'shows uodate details' do
@@ -169,7 +169,7 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'lets me download my uploaded file' do
-      click_on 'test.png'
+      click_on 'evidence.pdf'
       expect(page).to have_current_path(%r{/test_path})
     end
   end

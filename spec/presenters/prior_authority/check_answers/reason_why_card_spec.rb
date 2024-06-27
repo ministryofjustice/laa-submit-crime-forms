@@ -15,16 +15,15 @@ RSpec.describe PriorAuthority::CheckAnswers::ReasonWhyCard do
 
   describe '#row_data' do
     let(:application) do
-      build(:prior_authority_application,
-            reason_why: "reason 1\nreason 2",
-            supporting_documents: supporting_documents)
+      create(:prior_authority_application,
+             reason_why: "reason 1\nreason 2",
+             supporting_documents: supporting_documents)
     end
 
+    let(:first_doc) { build(:supporting_document, file_name: 'reason_why1.pdf') }
+    let(:second_doc) { build(:supporting_document, file_name: 'reason_why2.pdf') }
     let(:supporting_documents) do
-      [
-        build(:supporting_document, file_name: 'reason_why1.pdf'),
-        build(:supporting_document, file_name: 'reason_why2.pdf'),
-      ]
+      [first_doc, second_doc]
     end
 
     it 'generates expected rows' do
@@ -36,7 +35,8 @@ RSpec.describe PriorAuthority::CheckAnswers::ReasonWhyCard do
           },
           {
             head_key: 'supporting_documents',
-            text: 'reason_why1.pdf<br>reason_why2.pdf',
+            text: "<a class=\"govuk-link\" href=\"/prior-authority/downloads/#{first_doc.id}\">reason_why1.pdf</a><br>" \
+                  "<a class=\"govuk-link\" href=\"/prior-authority/downloads/#{second_doc.id}\">reason_why2.pdf</a>",
           },
         ]
       )
