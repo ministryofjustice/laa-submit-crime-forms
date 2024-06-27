@@ -1,9 +1,84 @@
-<%# CONTNENT NEEDS CREATING %>
-
 <% title 'Accessibility statement' %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Accessibility statement</h2>
+    <h1 class="govuk-heading-xl">Accessibility statement</h1>
+    <p class="govuk-body">
+      This accessibility statement applies to the following services:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= link_to 'Submit a crime form', root_path %></li>
+      <li><%= link_to 'Apply for prior authority to incur disbursements', prior_authority_applications_path %></li>
+      <li><%= link_to "Claim non-standard magistrates' court payments", nsm_applications_path %></li>
+    </ul>
+
+    <p class="govuk-body">
+      This website is run by the Legal Aid Agency.
+      We want as many people as possible to be able to use this website.
+      For example, that means you should be able to:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>change colours, contrast levels and fonts</li>
+      <li>zoom in up to 300% without the text spilling off the screen</li>
+      <li>navigate most of the website using just a keyboard</li>
+      <li>navigate most of the website using speech recognition software</li>
+      <li>listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)</li>
+    </ul>
+    <p class="govuk-body">We’ve also made the website text as simple as possible to understand.</p>
+    <p class="govuk-body">
+      <a href="https://mcmw.abilitynet.org.uk/" target="_blank" rel="noreferrer noopener">AbilityNet</a>
+      has advice on making your device easier to use if you have a disability.
+    </p>
+
+    <h2 class="govuk-heading-m">How accessible this website is</h2>
+    <p class="govuk-body">
+      This website is fully compliant with levels A and AA of the
+      <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noreferrer noopener">Web Content Accessibility Guidelines version 2.1</a>.
+    </p>
+
+    <h2 class="govuk-heading-m">Feedback and contact information</h2>
+    <p class="govuk-body">
+      If you find any problems on this page or think we’re not meeting accessibility requirements, contact us:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>telephone: 0300 200 2020</li>
+      <li>email: <%= link_to "NSCC@Justice.gov.uk", "mailto:NSCC@Justice.gov.uk" %></li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Enforcement procedure</h2>
+    <p class="govuk-body">
+      The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’).
+    </p>
+    <p class="govuk-body">
+      If you’re not happy with how we respond to your complaint,
+      <a href="https://www.equalityadvisoryservice.com/" target="_blank" rel="noreferrer noopener">contact the Equality Advisory and Support Service (<abbr title="Equality Advisory and Support Service">EASS</abbr>)</a>.
+    </p>
+
+    <h2 class="govuk-heading-l">Technical information about this website’s accessibility</h2>
+    <p class="govuk-body">
+      The Legal Aid Agency is committed to making its websites accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+    </p>
+
+    <h2 class="govuk-heading-m">Compliance status</h2>
+    <p class="govuk-body">
+      This website is fully compliant with the
+      <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noreferrer noopener">Web Content Accessibility Guidelines version 2.1</a>
+      AA standard.
+    </p>
+
+    <h2 class="govuk-heading-l">Preparation of this accessibility statement</h2>
+    <p class="govuk-body">
+      This statement was prepared on 7 June 2024.
+    </p>
+    <p class="govuk-body">
+      This website was last tested on 5 June 2024 against the WCAG 2.1  AA standard.
+    </p>
+    <p class="govuk-body">
+      The test was carried out by our website team. The most viewed pages were tested using automated testing tools. A further audit of the website was carried out to the WCAG 2.2 AA standard.
+    </p>
+    <p class="govuk-body">
+      An independent test will be carried out before these services go into public beta.
+    </p>
   </div>
 </div>

@@ -169,6 +169,7 @@ Rails.application.routes.draw do
       member do
         get 'offboard'
         get :confirm_delete, path: 'confirm-delete'
+        get :download
       end
     end
 
