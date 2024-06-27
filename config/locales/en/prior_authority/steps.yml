@@ -124,6 +124,7 @@ en:
         items:
           items: Number of %{items}
           cost_per_item: What is the cost per %{item}?
+          cost_per_item_hint: Costs should be exclusive of VAT
           item: item
           minute: minute
           word: word
@@ -131,7 +132,8 @@ en:
           page: page
         time:
           period: Time
-          cost_per_hour: Hourly cost
+          cost_per_hour: What is the cost per hour?
+          cost_per_hour_hint: Costs should be exclusive of VAT
       primary_quote_summary:
         show:
           caption: About the request
