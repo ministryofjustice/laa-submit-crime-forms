@@ -27,7 +27,7 @@
       </p>
       <h2 class="govuk-heading-s" id="subsection-title"><%= t('.print_a_pdf') %></h2>
       <p class="govuk-body-s"><%= t('.print_hint') %></p>
-      <%= govuk_button_link_to t('.create_pdf'), download_prior_authority_application_path(application), secondary: true %>
+      <%= govuk_button_link_to t('.create_pdf'), download_prior_authority_application_path(application), secondary: true, target: '_blank' %>
     </aside>
   </div>
 </div>
