@@ -32,7 +32,7 @@
         <dt class="govuk-summary-list__key"><%= t('.quote_upload') %></dt>
         <dd class="govuk-summary-list__value">
           <% if alternative_quote.document&.file_name.present? %>
-            <%= alternative_quote.document.file_name %>
+            <%= govuk_link_to alternative_quote.document.file_name, prior_authority_download_path(alternative_quote.document) %>
           <% else %>
             <%= t('.none') %>
           <% end %>

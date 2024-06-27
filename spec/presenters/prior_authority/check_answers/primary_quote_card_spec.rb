@@ -31,7 +31,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
   describe '#row_data' do
     context 'with service type without special rules' do
       let(:application) do
-        build(
+        create(
           :prior_authority_application,
           client_detained: true,
           prior_authority_granted: true,
@@ -63,7 +63,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
           },
           {
             head_key: 'quote_upload',
-            text: 'test.png',
+            text: "<a class=\"govuk-link\" href=\"/prior-authority/downloads/#{primary_quote.document.id}\">test.png</a>",
           },
           {
             head_key: 'prior_authority_granted',
@@ -75,7 +75,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
 
     context 'with post mortem relevant service type' do
       let(:application) do
-        build(
+        create(
           :prior_authority_application,
           service_type: 'pathologist_report',
           primary_quote: primary_quote,
@@ -103,7 +103,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
 
     context 'without post mortem relevant service type' do
       let(:application) do
-        build(
+        create(
           :prior_authority_application,
           service_type: 'telecommunications_expert',
           primary_quote: primary_quote,
@@ -127,7 +127,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
 
     context 'with court order[ed] relevant service type' do
       let(:application) do
-        build(
+        create(
           :prior_authority_application,
           service_type: 'interpreter',
           primary_quote: primary_quote,
@@ -151,7 +151,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
 
     context 'without court order[ed] relevant service type' do
       let(:application) do
-        build(
+        create(
           :prior_authority_application,
           service_type: 'telecommunications_expert',
           primary_quote: primary_quote,
@@ -175,7 +175,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
 
     context 'when client detained' do
       let(:application) do
-        build(
+        create(
           :prior_authority_application,
           client_detained: true,
           service_type: 'telecommunications_expert',
@@ -198,7 +198,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
 
     context 'when travel costs require justification (not prison law, client not detained)' do
       let(:application) do
-        build(
+        create(
           :prior_authority_application,
           prison_law: false,
           client_detained: false,
@@ -224,7 +224,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
 
     context 'when travel costs do NOT require justification (prison law)' do
       let(:application) do
-        build(
+        create(
           :prior_authority_application,
           prison_law: true,
           client_detained: nil,

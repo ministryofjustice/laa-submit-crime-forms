@@ -35,8 +35,11 @@ module PriorAuthority
         @supporting_documents ||= if application.supporting_documents.none?
                                     I18n.t('prior_authority.generic.none')
                                   else
-                                    text = application.supporting_documents.map(&:file_name).join('<br>')
-                                    sanitize(text, tags: %w[br])
+                                    links = application.supporting_documents.map do |document|
+                                      govuk_link_to(document.file_name,
+                                                    url_helper.prior_authority_download_path(document))
+                                    end
+                                    sanitize(links.join(tag.br), tags: %w[a br])
                                   end
       end
     end

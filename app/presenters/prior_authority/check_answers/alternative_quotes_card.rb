@@ -70,15 +70,22 @@ module PriorAuthority
 
         alternative_quote_summary_html = [
           quote.contact_full_name,
-          quote.document&.file_name,
+          document_link(quote),
           NumberTo.pounds(form.total_cost)
         ].compact.join('<br>')
 
-        sanitize(alternative_quote_summary_html, tags: %w[br])
+        sanitize(alternative_quote_summary_html, tags: %w[a br])
       end
 
       def alternative_quote_form(quote)
         PriorAuthority::Steps::AlternativeQuotes::DetailForm.build(quote, application:)
+      end
+
+      def document_link(quote)
+        return if quote.document&.file_name.blank?
+
+        govuk_link_to(quote.document.file_name,
+                      url_helper.prior_authority_download_path(quote.document))
       end
     end
   end

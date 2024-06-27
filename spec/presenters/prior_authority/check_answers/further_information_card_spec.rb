@@ -28,11 +28,10 @@ RSpec.describe PriorAuthority::CheckAnswers::FurtherInformationCard do
 
   describe '#row_data' do
     context 'with supporting documents' do
+      let(:first_doc) { build(:supporting_document, file_name: 'further_info1.pdf') }
+      let(:second_doc) { build(:supporting_document, file_name: 'further_info2.pdf') }
       let(:supporting_documents) do
-        [
-          build(:supporting_document, file_name: 'further_info1.pdf'),
-          build(:supporting_document, file_name: 'further_info2.pdf'),
-        ]
+        [first_doc, second_doc]
       end
 
       it 'generates expected rows' do
@@ -48,7 +47,8 @@ RSpec.describe PriorAuthority::CheckAnswers::FurtherInformationCard do
             },
             {
               head_key: 'supporting_documents',
-              text: 'further_info1.pdf<br>further_info2.pdf',
+              text: "<a class=\"govuk-link\" href=\"/prior-authority/downloads/#{first_doc.id}\">further_info1.pdf</a><br>" \
+                    "<a class=\"govuk-link\" href=\"/prior-authority/downloads/#{second_doc.id}\">further_info2.pdf</a>",
             },
           ]
         )
