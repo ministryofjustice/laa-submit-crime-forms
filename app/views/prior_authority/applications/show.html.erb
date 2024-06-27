@@ -19,15 +19,15 @@
 
   <div class="govuk-grid-column-one-third">
     <aside class="app-aside__bar--blue aside-generic" role="complementary" aria-labelledby="aside-title">
-      <h3 id="aside-title" class="govuk-heading-s govuk-!-margin-bottom-4">
+      <h2 id="aside-title" class="govuk-heading-s govuk-!-margin-bottom-4">
         <%= t('.email_us') %>
-      </h3>
-      <p class="govuk-body">
+      </h2>
+      <p class="govuk-body-s">
         <%= link_to t('.email'), "mailto:#{t('.email')}" %>
       </p>
       <h2 class="govuk-heading-s" id="subsection-title"><%= t('.print_a_pdf') %></h2>
       <p class="govuk-body-s"><%= t('.print_hint') %></p>
-      <%= govuk_button_link_to t('.create_pdf'), download_prior_authority_application_path(application), secondary: true, target: "_blank" %>
+      <%= govuk_button_link_to t('.create_pdf'), download_prior_authority_application_path(application), secondary: true %>
     </aside>
   </div>
 </div>

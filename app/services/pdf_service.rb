@@ -12,7 +12,7 @@ class PdfService
       height: 4800,
     },
     emulate_media: 'print',
-
+    scale: 0.9,
     launch_args: ['--font-render-hinting=medium', '--no-sandbox', '--force-renderer-accessibility'],
   }.freeze
 
