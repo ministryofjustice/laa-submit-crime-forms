@@ -83,7 +83,7 @@ RSpec.describe 'Prior authority applications - add service costs' do
     let(:service_type) { 'Cardiologist' }
 
     it 'asks a question about hours' do
-      expect(page).to have_content 'Hourly cost'
+      expect(page).to have_content 'What is the cost per hour?'
     end
   end
 
@@ -108,7 +108,7 @@ RSpec.describe 'Prior authority applications - add service costs' do
     choose 'Charged by the hour'
     fill_in 'Hours', with: '1'
     fill_in 'Minutes', with: '61'
-    fill_in 'Hourly cost', with: '1'
+    fill_in 'What is the cost per hour?', with: '1'
     click_on 'Save and continue'
     expect(page).to have_content 'The number of minutes must be between 0 and 59'
   end
@@ -125,7 +125,7 @@ RSpec.describe 'Prior authority applications - add service costs' do
     choose 'Charged by the hour'
     fill_in 'Hours', with: '1'
     fill_in 'Minutes', with: '15'
-    fill_in 'Hourly cost', with: '60'
+    fill_in 'What is the cost per hour?', with: '60'
     click_on 'Update calculation'
     expect(page).to have_content '£75'
   end
