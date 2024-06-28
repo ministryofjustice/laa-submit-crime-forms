@@ -67,7 +67,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       let(:status) { 'rejected' }
 
       before do
-        allow(claim).to receive(:status).and_raise 'Some problem!'
+        allow(claim).to receive(:part_grant?).and_raise 'Some problem!'
         allow(Sentry).to receive(:capture_message)
         described_class.call(claim, record:)
       end
@@ -295,14 +295,6 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
           allowed_miles: nil,
           allowed_apply_vat: nil
         )
-      end
-    end
-
-    context 'when app has status that should not sync' do
-      let(:status) { 'submitted' }
-
-      it 'does not sync any new data' do
-        expect(claim.assessment_comment).to be_nil
       end
     end
   end

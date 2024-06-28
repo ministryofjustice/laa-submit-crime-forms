@@ -37,10 +37,6 @@ module Nsm
 
       private
 
-      def sanitize(value, tags: [])
-        ApplicationController.helpers.sanitize(value, tags:)
-      end
-
       def status_text
         items = [status_tag(status), submitted_date]
         if status.submitted?
@@ -118,11 +114,12 @@ module Nsm
       end
 
       def response
-        @response ||= if status.granted?
+        @response ||= if claim.submitted?
+                        []
+                      elsif claim.granted? && claim.assessment_comment.blank?
                         [I18n.t('nsm.steps.view_claim.granted_response')]
                       else
-                        response_text = claim.assessment_comment
-                        status.submitted? ? [] : response_text.split("\n").map { sanitize(_1) }
+                        claim.assessment_comment.split("\n")
                       end
       end
 
