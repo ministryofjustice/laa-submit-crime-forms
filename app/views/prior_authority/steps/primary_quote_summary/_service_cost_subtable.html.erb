@@ -5,18 +5,8 @@
   </caption>
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <% if costs.per_item? %>
-        <th scope="col" class="govuk-table__header">
-          <%= t("prior_authority.steps.service_cost.items.#{costs.item_type}").pluralize(2).capitalize %>
-        </th>
-        <th scope="col" class="govuk-table__header">
-          <%= t('prior_authority.steps.service_cost.items.cost_per_item',
-                item: t("prior_authority.steps.service_cost.items.#{costs.cost_item_type}")) %>
-        </th>
-      <% else %>
-        <th scope="col" class="govuk-table__header"><%= t('.period') %></th>
-        <th scope="col" class="govuk-table__header"><%= t('.cost_per_hour') %></th>
-      <% end %>
+      <th scope="col" class="govuk-table__header"><%= t('.period') %></th>
+      <th scope="col" class="govuk-table__header"><%= t('.cost_per_hour') %></th>
       <% if show_adjustments %>
         <th scope="col" class="govuk-table__header"><%= t('.requested') %></th>
         <th scope="col" class="govuk-table__header"><%= t('.laa_allowed') %></th>
@@ -28,11 +18,13 @@
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
       <% if costs.per_item? %>
-        <td class="govuk-table__cell"><%= costs.items %></td>
-        <td class="govuk-table__cell"><%= NumberTo.pounds(costs.cost_per_item) %></td>
+        <td class="govuk-table__cell"><%= costs.items.to_s + " " + t("prior_authority.steps.service_cost.items.#{costs.item_type}").pluralize(2) %></td>
+        <td class="govuk-table__cell"><%= NumberTo.pounds(costs.cost_per_item) + t('.per_item',
+                item: t("prior_authority.steps.service_cost.items.#{costs.cost_item_type}")) %></td>
       <% else %>
           <td class="govuk-table__cell"><%= format_period(costs.period) %></td>
-          <td class="govuk-table__cell"><%= NumberTo.pounds(costs.cost_per_hour) %></td>
+          <td class="govuk-table__cell"><%= NumberTo.pounds(costs.cost_per_hour) + t('.per_item',
+                item: t("prior_authority.steps.service_cost.items.#{costs.cost_item_type}")) %></td>
       <% end %>
       <% if show_adjustments %>
         <td class="govuk-table__cell"><%= costs.formatted_total_cost %></th>
