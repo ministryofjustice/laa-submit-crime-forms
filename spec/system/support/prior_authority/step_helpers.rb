@@ -190,7 +190,7 @@ module PriorAuthority
 
       fill_in 'Hours', with: 0
       fill_in 'Minutes', with: 30
-      fill_in 'Hourly cost', with: 3.21
+      fill_in 'What is the cost per hour?', with: 3.21
       click_on 'Save and continue'
     end
 
