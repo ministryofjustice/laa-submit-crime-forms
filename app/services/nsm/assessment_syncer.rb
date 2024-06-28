@@ -12,17 +12,14 @@ module Nsm
     end
 
     def call
-      case claim.status
-      when 'part_grant'
+      sync_overall_comment
+      if claim.part_grant?
         Claim.transaction do
           sync_letter_adjustments
           sync_call_adjustments
-          sync_overall_comment
           sync_work_items
           sync_disbursements
         end
-      when 'provider_requested', 'further_info', 'rejected'
-        sync_overall_comment
       end
       # save here to avoid multiple DB updates on claim during the process
       claim.save!
