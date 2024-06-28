@@ -38,4 +38,8 @@ class WorkItem < ApplicationRecord
 
     WorkTypes::VALUES.detect { _1.to_s == work_type }.display?(application)
   end
+
+  def assessed_work_type
+    allowed_work_type.presence || work_type
+  end
 end

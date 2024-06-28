@@ -6,7 +6,12 @@ RSpec.describe 'View claim page', type: :system do
 
   let(:work_items) do
     [
-      build(:work_item, :attendance_without_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
+      build(:work_item,
+            :attendance_without_counsel,
+            fee_earner: 'AB',
+            time_spent: 90,
+            completed_on: 1.day.ago,
+            allowed_work_type: :attendance_with_counsel),
       build(:work_item, :advocacy, :with_adjustment, time_spent: 104, completed_on: 1.day.ago),
       build(:work_item, :advocacy, time_spent: 86, completed_on: 2.days.ago),
       build(:work_item, :waiting, time_spent: 23, completed_on: 3.days.ago),

@@ -153,7 +153,9 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
                 time_spent: 20,
                 uplift_original: 15,
                 adjustment_comment: 'Changed work item',
-                time_spent_original: 40
+                time_spent_original: 40,
+                work_type: { en: 'Bananas', value: 'bananas' },
+                work_type_original: { en: 'Pyjamas', value: 'pyjamas' },
               },
               {
                 id: work_item.id,
@@ -175,12 +177,14 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
         expect(uplifted_work_item.allowed_uplift).to eq 0
         expect(uplifted_work_item.adjustment_comment).to eq 'Changed work item'
         expect(uplifted_work_item.allowed_time_spent).to eq 20
+        expect(uplifted_work_item.allowed_work_type).to eq 'bananas'
       end
 
       it 'does not sync non adjusted work item' do
         expect(work_item.allowed_time_spent).to be_nil
         expect(work_item.allowed_uplift).to be_nil
         expect(work_item.adjustment_comment).to be_nil
+        expect(work_item.allowed_work_type).to be_nil
       end
     end
 

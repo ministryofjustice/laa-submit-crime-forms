@@ -153,6 +153,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'time_spent' => an_instance_of(Integer),
             'uplift' => nil,
             'work_type' => { en: an_instance_of(String), value: work_item.work_type },
+            'attendance_with_counsel_pricing' => 35.68,
           }],
           'youth_court' => 'no',
           'supporting_evidences' =>

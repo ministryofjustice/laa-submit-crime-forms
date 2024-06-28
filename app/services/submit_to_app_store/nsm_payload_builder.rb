@@ -62,9 +62,11 @@ class SubmitToAppStore
 
     def work_item_data
       claim.work_items.map do |work_item|
-        data = work_item.as_json(except: [*DEFAULT_IGNORE, 'allowed_uplift', 'allowed_time_spent', 'adjustment_comment'])
+        data = work_item.as_json(except: [*DEFAULT_IGNORE, 'allowed_uplift', 'allowed_time_spent', 'adjustment_comment',
+                                          'allowed_work_type'])
         data['completed_on'] = data['completed_on'].to_s
         data['pricing'] = pricing[work_item.work_type].to_f
+        data['attendance_with_counsel_pricing'] = pricing['attendance_with_counsel'].to_f
         data
       end
     end
