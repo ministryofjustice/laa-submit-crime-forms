@@ -466,16 +466,19 @@ workflows:
             - rspec-gem-tests
       - build-to-ecr:
           context: laa-submit-crime-forms-dev
-          requires:
-            - linter-tests
-            - rspec-tests
-            - rspec-gem-tests
+          filters:
+            branches:
+              only:
+                - main
       - e2e-test-main:
           context:
             - laa-crime-forms-e2e-tests
             - laa-non-standard-crime-claims-alerting
           requires:
             - build-to-ecr
+            - linter-tests
+            - rspec-tests
+            - rspec-gem-tests
           filters:
             branches:
               only:
