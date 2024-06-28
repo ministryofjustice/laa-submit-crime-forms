@@ -29,7 +29,7 @@ RSpec.describe 'Prior authority applications - travel costs' do
         fill_in 'Why are there travel costs if your client is not detained?', with: 'because'
         fill_in 'Hours', with: 0
         fill_in 'Minutes', with: 30
-        fill_in 'Hourly cost', with: 3.21
+        fill_in 'What is the cost per hour?', with: 3.21
       end
 
       it 'allows user to enter information and progress' do
@@ -52,7 +52,7 @@ RSpec.describe 'Prior authority applications - travel costs' do
       fill_in 'Why are there travel costs if your client is not detained?', with: 'because'
       fill_in 'Hours', with: 0
       fill_in 'Minutes', with: 30
-      fill_in 'Hourly cost', with: 3.22
+      fill_in 'What is the cost per hour?', with: 3.22
       click_on 'Save and continue'
     end
 

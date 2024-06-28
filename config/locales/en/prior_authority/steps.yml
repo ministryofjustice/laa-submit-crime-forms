@@ -215,6 +215,7 @@ en:
           total: Total requested
           yes_delete: Yes, delete it
           no_delete: No, do not delete it
+          per_hour: ' per hour'
       additional_costs:
         edit:
           caption: About the request
