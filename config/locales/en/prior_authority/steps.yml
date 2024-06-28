@@ -148,11 +148,12 @@ en:
           prior_authority_granted: Existing prior authority granted
         service_cost_subtable:
           service_costs: Service costs
-          total: Total
-          period: Time
-          cost_per_hour: Cost per hour
-          requested: Requested
+          total: Total requested
+          period: Amount
+          cost_per_hour: Rate
+          requested: Total requested
           laa_allowed: LAA allowed
+          per_item: ' per %{item} '
         travel_cost_card:
           travel_costs: Travel costs
           change: Change
@@ -161,17 +162,17 @@ en:
           none_added: No travel costs added
         travel_cost_subtable:
           travel_costs: Travel costs
-          total: Total
-          period: Travel time
-          cost_per_hour: Hourly cost
-          requested: Requested
+          total: Total requested
+          period: Amount
+          cost_per_hour: Rate
+          requested: Total requested
           laa_allowed: LAA allowed
         additional_cost_card:
           additional_costs: Additional costs
           change: Change
           none_added: No additional costs added
           cost: Cost
-          total: Total
+          total: Total requested
       reason_why:
         edit:
           caption: About the request
@@ -227,12 +228,12 @@ en:
           description: Why required
         subtable:
           additional_cost: Additional cost
-          items: Items
-          cost_per_item: Cost per item
-          period: Time
-          cost_per_hour: Rate per hour
-          total: Total
-          requested: Requested
+          items: Amount
+          cost_per_item: Rate
+          period: Amount
+          cost_per_hour: Rate
+          total: Total requested
+          requested: Total requested
           laa_allowed: LAA allowed
       additional_cost_details:
         edit:
