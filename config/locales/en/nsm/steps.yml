@@ -312,7 +312,12 @@ en:
           next_steps:
             title: What happens next
             process_1: "We'll assess your claim."
-            process_2: "We’ll send you an email to either accept your claim or to ask for more information."
+            process_2_html: "<p class='govuk-body'>We’ll send you an email to let you know the outcome of your claim or to ask for more information.</p>
+              <p class='govuk-body'>It normally takes up to 10 working days to assess a claim. After this you can contact us to check the status of your claim:</p>
+              <ul class='govuk-list govuk-list--bullet'><li>telephone: 0300 200 2020</li><li>email: magsbilling@justice.gov.uk</li></ul>"
+          print_application:
+            title: View, save and print your application
+            instructions: You can view your submitted application and save it as a printable PDF.
           feedback:
             link_text: What did you think of this service?
             description: takes 30 seconds

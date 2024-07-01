@@ -27,6 +27,12 @@ RSpec.describe 'View reviewed applications' do
       expect(page).to have_content 'You used the wrong form'
       expect(page).to have_content 'If you want to appeal the rejection, email CRM4appeal@justice.gov.uk'
     end
+
+    it 'lets me download a PDF' do
+      click_on 'Create a printable PDF'
+      expect(page).to have_current_path download_prior_authority_application_path(application)
+      expect(page.driver.response.headers['Content-Type']).to eq 'application/pdf'
+    end
   end
 
   context 'when application has been granted' do
@@ -158,7 +164,7 @@ RSpec.describe 'View reviewed applications' do
             information_requested: 'Tell me more',
             information_supplied: 'More info',
             created_at: 1.day.ago,
-            supporting_documents: [build(:supporting_document)])
+            supporting_documents: [build(:supporting_document, file_name: 'evidence.pdf')])
     end
 
     it 'shows uodate details' do
@@ -169,7 +175,7 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'lets me download my uploaded file' do
-      click_on 'test.png'
+      click_on 'evidence.pdf'
       expect(page).to have_current_path(%r{/test_path})
     end
   end

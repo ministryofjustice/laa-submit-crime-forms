@@ -69,6 +69,10 @@ module PriorAuthority
           ),
         ]
       end
+
+      def url_helper
+        Rails.application.routes.url_helpers
+      end
     end
   end
 end

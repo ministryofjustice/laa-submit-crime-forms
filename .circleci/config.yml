@@ -11,6 +11,7 @@ orbs:
   aws-cli: circleci/aws-cli@4.1.3
   aws-ecr: circleci/aws-ecr@9.0.2
   crime-forms-end-to-end-tests: ministryofjustice/crime-forms-end-to-end-tests@volatile
+  slack: circleci/slack@4.13.3
 
 # ------------------
 # EXECUTORS
@@ -107,6 +108,13 @@ commands:
       - *restore-assets
       - *install-assets
       - *save-assets
+
+  install-puppeteer:
+    steps:
+      - run:
+          name: Install Puppeteer with Chromium
+          command: |
+            yarn add puppeteer
 
   build-base:
     steps:
@@ -260,6 +268,7 @@ jobs:
           install-firefox: false
           install-geckodriver: false
           install-chromedriver: false
+      - install-puppeteer
       - save_cache:
           name: Saving assets and dependencies cache for use in later steps
           key: nsmf-claim-repo-{{ .Environment.CIRCLE_SHA1 }}
@@ -354,6 +363,10 @@ jobs:
     executor: crime-forms-end-to-end-tests/e2e-test-executor
     steps:
       - crime-forms-end-to-end-tests/run-e2e-tests
+      - slack/notify:
+          channel: laa-non-standard-crime-claims-prod-alerts
+          event: fail
+          template: basic_fail_1
 
   deploy-dev:
     executor: cloud-platform-executor
@@ -366,12 +379,20 @@ jobs:
     steps:
       - deploy-to-environment:
           environment: uat
+      - slack/notify:
+          channel: laa-non-standard-crime-claims-preprod-alerts
+          event: fail
+          template: basic_fail_1
 
   deploy-prod:
     executor: cloud-platform-executor
     steps:
       - deploy-to-environment:
           environment: prod
+      - slack/notify:
+          channel: laa-non-standard-crime-claims-prod-alerts
+          event: fail
+          template: basic_fail_1
 
   configure-dashboards:
     executor: cloud-platform-executor
@@ -460,14 +481,19 @@ workflows:
             - rspec-gem-tests
       - build-to-ecr:
           context: laa-submit-crime-forms-dev
+          filters:
+            branches:
+              only:
+                - main
+      - e2e-test-main:
+          context:
+            - laa-crime-forms-e2e-tests
+            - laa-non-standard-crime-claims-alerting
           requires:
+            - build-to-ecr
             - linter-tests
             - rspec-tests
             - rspec-gem-tests
-      - e2e-test-main:
-          context: laa-crime-forms-e2e-tests
-          requires:
-            - build-to-ecr
           filters:
             branches:
               only:
@@ -477,7 +503,9 @@ workflows:
           requires:
             - e2e-test-main
       - deploy-uat:
-          context: laa-submit-crime-forms-uat
+          context:
+            - laa-submit-crime-forms-uat
+            - laa-non-standard-crime-claims-alerting
           requires:
             - e2e-test-main
           filters:
@@ -485,7 +513,9 @@ workflows:
               only:
                 - main
       - deploy-prod:
-          context: laa-submit-crime-forms-production
+          context:
+            - laa-submit-crime-forms-production
+            - laa-non-standard-crime-claims-alerting
           requires:
             - deploy-uat
           filters:
