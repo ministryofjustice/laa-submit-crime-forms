@@ -40,7 +40,6 @@ Sidekiq.configure_server do |config|
   return unless ENV.fetch("ENABLE_PROMETHEUS_EXPORTER", "false") == "true"
 
   Rails.logger.info("[SidekiqPrometheusExporter] Instrumentation for sidekiq server...")
-  require "sidekiq/api"
   require 'prometheus_exporter/client'
   require 'prometheus_exporter/instrumentation'
 

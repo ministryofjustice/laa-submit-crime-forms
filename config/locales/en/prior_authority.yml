@@ -60,6 +60,9 @@ en:
         page_title: Application details
         email_us: Email the LAA case team
         email: magsbilling@justice.gov.uk
+        print_a_pdf: Print a PDF of this application
+        print_hint: It will include the answers you input into this application and its current status.
+        create_pdf: Create a printable PDF
         application_status: Application status
         status: Status
         amount_requested: '%{amount} requested'

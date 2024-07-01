@@ -32,9 +32,6 @@ server = start_prometheus_server
 return unless server
 
 Rails.logger.info "[PrometheusExporter] server started on #{JSON.parse(server.to_json).fetch_values('port', 'bind')}!"
-
-PrometheusExporter::Client.default = PrometheusExporter::LocalClient.new(collector: server.collector)
-
 Rails.logger.info("[PrometheusExporter] Initialising standard instrumentation middleware...")
 
 # Metrics will be prefixed, for example `ruby_http_requests_total`

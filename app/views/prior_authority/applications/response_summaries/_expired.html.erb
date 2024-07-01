@@ -4,8 +4,8 @@
   </dt>
   <dd class="govuk-summary-list__value">
     <% t('prior_authority.applications.show.expiry_explanations',
-          requested: @application.resubmission_requested.to_fs(:stamp),
-          deadline: @application.resubmission_deadline.to_fs(:stamp)).each do |paragraph| %>
+          requested: application.resubmission_requested.to_fs(:stamp),
+          deadline: application.resubmission_deadline.to_fs(:stamp)).each do |paragraph| %>
       <p><%= paragraph %></p>
     <% end %>
   </dt>

@@ -38,7 +38,7 @@ module PriorAuthority
       def supporting_documents
         links = further_information.supporting_documents.map do |document|
           govuk_link_to(document.file_name,
-                        Rails.application.routes.url_helpers.prior_authority_download_path(document))
+                        url_helper.prior_authority_download_path(document))
         end
         response = simple_format(further_information.information_supplied)
         parts = [response] + links.flat_map { [tag.br, _1] }

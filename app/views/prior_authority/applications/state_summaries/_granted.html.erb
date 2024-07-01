@@ -1,4 +1,4 @@
-<p><%= @application.app_store_updated_at.to_fs(:stamp) %></p>
+<p><%= application.app_store_updated_at.to_fs(:stamp) %></p>
 <br>
-<p><%= t('prior_authority.applications.show.amount_requested', amount: @primary_quote_summary.formatted_total_cost) %></p>
-<p><%= t('prior_authority.applications.show.amount_allowed', amount: @primary_quote_summary.formatted_total_cost) %></p>
+<p><%= t('prior_authority.applications.show.amount_requested', amount: primary_quote_summary.formatted_total_cost) %></p>
+<p><%= t('prior_authority.applications.show.amount_allowed', amount: primary_quote_summary.formatted_total_cost) %></p>
