@@ -121,6 +121,7 @@ postgresql:
 
 # see https://artifacthub.io/packages/helm/bitnami/redis for parameters
 redis:
+  override: false
   enabled: true
   architecture: standalone
   master:

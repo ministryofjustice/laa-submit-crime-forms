@@ -29,5 +29,5 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
   - name: redis
     version: "17.15.2"
-    condition: redis.enabled
+    condition: redis.override
     repository: https://charts.bitnami.com/bitnami
