@@ -373,6 +373,16 @@ jobs:
       - deploy-to-environment:
           environment: prod
 
+  configure-dashboards:
+    executor: cloud-platform-executor
+    steps:
+      - checkout
+      - *authenticate_k8s
+      - run:
+          name: Apply dashboard config
+          command: |
+            kubectl apply -f ./helm_deploy/dashboards/
+
 # ------------------
 # WORKFLOWS
 # ------------------
@@ -422,6 +432,11 @@ workflows:
           context: laa-submit-crime-forms-dev
           requires:
             - build-to-ecr
+      - configure-dashboards:
+        filters:
+          branches:
+            ignore:
+              - main
 
   test-build-deploy-merged-pr:
     jobs:
