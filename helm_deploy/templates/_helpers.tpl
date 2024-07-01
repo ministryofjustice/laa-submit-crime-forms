@@ -67,6 +67,5 @@ This duplicates bitnami/redis chart's internal logic whereby
 If branch name contains "redis" then the redis-release-name appends "-master", otherwise it appends "-redis-master"
 */}}
 {{- define "helm_deploy.redisUatHost" -}}
-  {{- $redis_fullName := (include "common.names.fullname" .Subcharts.redis) -}}
-  {{- printf "%s-master.%s.svc.cluster.local" $redis_fullName .Release.Namespace -}}
+  {{- printf "crm457-redis-fails-master.%s.svc.cluster.local" $redis_fullName .Release.Namespace -}}
 {{- end -}}
