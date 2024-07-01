@@ -36,17 +36,6 @@ executors:
     docker:
       - image: ministryofjustice/cloud-platform-tools
 
-references:
-  authenticate_k8s: &authenticate_k8s
-    run:
-      name: Authenticate K8s
-      command: |
-          echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
-          kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_NAME}
-          kubectl config set-credentials circleci --token=${K8S_TOKEN}
-          kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
-          kubectl config use-context ${K8S_CLUSTER_NAME}
-          kubectl --namespace=${K8S_NAMESPACE} get pods
 
 # ------------------
 # REFERENCES
@@ -104,6 +93,17 @@ references:
   _attach-tmp-workspace: &attach-tmp-workspace
     attach_workspace:
       at: ~/repo/tmp
+
+  _authenticate_k8s: &authenticate_k8s
+  run:
+    name: Authenticate K8s
+    command: |
+        echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+        kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_NAME}
+        kubectl config set-credentials circleci --token=${K8S_TOKEN}
+        kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
+        kubectl config use-context ${K8S_CLUSTER_NAME}
+        kubectl --namespace=${K8S_NAMESPACE} get pods
 
 # ------------------
 # COMMANDS
