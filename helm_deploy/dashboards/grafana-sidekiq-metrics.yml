@@ -675,7 +675,7 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate(ruby_sidekiq_jobs_processed[1m]))",
+              "expr": "sum(rate(ruby_sidekiq_stats_processed{namespace=\"$namespace\"}[1m]))",
               "format": "time_series",
               "hide": false,
               "intervalFactor": 2,
@@ -683,7 +683,7 @@ data:
               "refId": "A"
             },
             {
-              "expr": "sum(rate(ruby_sidekiq_jobs_failed[1m]))",
+              "expr": "sum(rate(ruby_sidekiq_stats_failed{namespace=\"$namespace\"}[1m]))",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Failed jobs",
