@@ -1,4 +1,4 @@
-<% skip_buttons ||= false %>
+<% skip_links ||= false %>
 <div class="govuk-summary-card">
   <div class="govuk-summary-card__title-wrapper">
     <h2 class="govuk-summary-card__title"><%= t("prior_authority.applications.show.application_status") %></h2>
@@ -18,7 +18,7 @@
       <% if application.assessment_comment.present? || application.part_grant? %>
         <%= render "prior_authority/applications/response_summaries/assessed", application: %>
       <% elsif application.sent_back? %>
-        <%= render "prior_authority/applications/response_summaries/sent_back", application:, skip_buttons: %>
+        <%= render "prior_authority/applications/response_summaries/sent_back", application:, skip_links: %>
       <% elsif application.expired? %>
         <%= render "prior_authority/applications/response_summaries/expired", application: %>
       <% end %>
@@ -30,7 +30,7 @@
   <h2 class="govuk-heading-m"><%= section_group[:heading] %></h2>
   <% section_group[:sections].each do |section| %>
     <% if section.template %>
-      <%= render(section.template, section: section, show_actions: false, show_adjustments: allowance_type) %>
+      <%= render(section.template, section: section, show_actions: false, show_adjustments: allowance_type, skip_download_links: skip_links) %>
     <% else %>
       <%= govuk_summary_list(
             card: {

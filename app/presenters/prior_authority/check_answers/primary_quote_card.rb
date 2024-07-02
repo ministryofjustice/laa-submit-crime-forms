@@ -5,11 +5,12 @@ module PriorAuthority
     class PrimaryQuoteCard < Base
       attr_reader :application, :service_cost_form, :travel_detail_form, :verbose
 
-      def initialize(application, verbose: false)
+      def initialize(application, verbose: false, skip_links: false)
         @group = 'about_request'
         @section = 'primary_quote_summary'
         @application = application
         @verbose = verbose
+        @skip_links = skip_links
 
         @service_cost_form = PriorAuthority::Steps::ServiceCostForm.build(
           application.primary_quote,
@@ -91,8 +92,12 @@ module PriorAuthority
       end
 
       def document_link
-        govuk_link_to(primary_quote.document.file_name,
-                      url_helper.prior_authority_download_path(primary_quote.document))
+        if @skip_links
+          primary_quote.document.file_name
+        else
+          govuk_link_to(primary_quote.document.file_name,
+                        url_helper.prior_authority_download_path(primary_quote.document))
+        end
       end
 
       def related_to_post_mortem
