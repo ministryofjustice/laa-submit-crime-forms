@@ -242,18 +242,17 @@ commands:
               ./bin/deploy << parameters.environment >>
 
   configure-dashboards-to-environment:
-    parameters:
-      environment:
-        description: Name of environment to deploy to
-        type: string
-    executor: cloud-platform-executor
-    steps:
-      - checkout
-      - *authenticate_k8s
-      - run:
-          name: Apply dashboard config
-          command: |
-            kubectl apply -f ./helm_deploy/dashboards/ << parameters.environment >>
+      parameters:
+        environment:
+          description: Name of environment to deploy to
+          type: string
+      steps:
+        - checkout
+        - *authenticate_k8s
+        - run:
+            name: Apply dashboard config
+            command: |
+              kubectl apply -f ./helm_deploy/dashboards/ << parameters.environment >>
 
 # ------------------
 # JOBS
@@ -411,11 +410,11 @@ jobs:
           event: fail
           template: basic_fail_1
 
-  configure-dashboards-dev:
+  generate-dashboards-dev:
     executor: cloud-platform-executor
     steps:
       - configure-dashboards-to-environment:
-        environment: dev
+          environment: dev
 
 # ------------------
 # WORKFLOWS
@@ -466,12 +465,8 @@ workflows:
           context: laa-submit-crime-forms-dev
           requires:
             - build-to-ecr
-      - configure-dashboards-dev:
-        context: laa-submit-crime-forms-dev
-        filters:
-          branches:
-            ignore:
-              - main
+      - generate-dashboards-dev:
+          context: laa-submit-crime-forms-dev
 
   test-build-deploy-merged-pr:
     jobs:
