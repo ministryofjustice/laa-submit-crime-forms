@@ -24,7 +24,7 @@ data:
           }
         ]
       },
-      "description": "Visual Sidekiq Metrics"
+      "description": "Visual Sidekiq Metrics",
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
