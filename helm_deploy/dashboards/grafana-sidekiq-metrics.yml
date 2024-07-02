@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana-sidekiq-metrics
-  namespace: {{ .Values.namespace }}
+  namespace: laa-submit-crime-forms-dev
   labels:
     grafana_dashboard: ""
 data:

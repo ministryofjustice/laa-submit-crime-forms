@@ -241,19 +241,6 @@ commands:
             command: |
               ./bin/deploy << parameters.environment >>
 
-  configure-dashboards-to-environment:
-      parameters:
-        environment:
-          description: Name of environment to deploy to
-          type: string
-      steps:
-        - checkout
-        - *authenticate_k8s
-        - run:
-            name: Apply dashboard config to << parameters.environment >>
-            command: |
-              kubectl apply -f ./helm_deploy/dashboards/ << parameters.environment >>
-
 # ------------------
 # JOBS
 # ------------------
@@ -413,8 +400,12 @@ jobs:
   generate-dashboards-dev:
     executor: cloud-platform-executor
     steps:
-      - configure-dashboards-to-environment:
-          environment: dev
+      - checkout
+      - *authenticate_k8s
+      - run:
+          name: Apply dashboard config to dev
+          command: |
+            kubectl apply -f ./helm_deploy/dashboards/
 
 # ------------------
 # WORKFLOWS
