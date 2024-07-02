@@ -683,7 +683,7 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "rate(ruby_sidekiq_queue_latency_seconds[1m])",
+              "expr": "avg(rate(ruby_sidekiq_queue_latency_seconds{namespace=\"$namespace\"}[1m]))",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{name}}",
