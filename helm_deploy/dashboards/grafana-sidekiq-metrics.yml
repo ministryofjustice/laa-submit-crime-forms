@@ -670,37 +670,30 @@ data:
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "processing rate",
-              "color": "#447ebc",
-              "fill": 0,
-              "yaxis": 2
-            }
-          ],
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "avg(rate(ruby_sidekiq_queue_latency_seconds{namespace=\"$namespace\"}[1m]))",
+              "expr": "sum(rate(ruby_sidekiq_jobs_success_total[1m]))",
               "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "{{name}}",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "Successful jobs",
               "refId": "A"
             },
             {
-              "expr": "avg(rate(ruby_sidekiq_stats_processed{namespace=\"$namespace\"}[1m]))",
+              "expr": "sum(rate(ruby_sidekiq_jobs_failed_total[1m]))",
               "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "processing rate",
+              "intervalFactor": 2,
+              "legendFormat": "Failed jobs",
               "refId": "B"
             }
           ],
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Queues latency",
+          "title": "Jobs processed every second",
           "tooltip": {
             "shared": true,
             "sort": 0,
