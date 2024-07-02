@@ -93,7 +93,7 @@ references:
     attach_workspace:
       at: ~/repo/tmp
 
-  _authenticate_k8s: &authenticate_k8s
+  authenticate_k8s: &authenticate_k8s
     run:
       name: Authenticate K8s
       command: |
