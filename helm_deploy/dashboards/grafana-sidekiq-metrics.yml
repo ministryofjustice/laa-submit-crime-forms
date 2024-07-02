@@ -690,7 +690,7 @@ data:
               "refId": "A"
             },
             {
-              "expr": "rate(ruby_sidekiq_stats_processed[1m])",
+              "expr": "avg(rate(ruby_sidekiq_stats_processed{namespace=\"$namespace\"}[1m]))",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "processing rate",
