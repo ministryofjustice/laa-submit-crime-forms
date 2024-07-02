@@ -654,13 +654,17 @@ data:
           },
           "id": 2,
           "legend": {
-            "avg": false,
-            "current": false,
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
             "max": false,
             "min": false,
+            "rightSide": true,
             "show": true,
+            "sort": "current",
+            "sortDesc": true,
             "total": false,
-            "values": false
+            "values": true
           },
           "lines": true,
           "linewidth": 1,
@@ -724,7 +728,11 @@ data:
               "min": null,
               "show": false
             }
-          ]
+          ],
+          "yaxis": {
+          "align": false,
+          "alignLevel": null
+          }
         },
         {
           "aliasColors": {},
