@@ -465,6 +465,8 @@ workflows:
           context: laa-submit-crime-forms-dev
           requires:
             - build-to-ecr
+      - generate-dashboards-dev:
+          context: laa-submit-crime-forms-dev
 
   test-build-deploy-merged-pr:
     jobs:
