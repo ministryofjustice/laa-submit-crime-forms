@@ -783,7 +783,7 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate(ruby_sidekiq_jobs_total[1m])) by (worker)",
+              "expr": "sum(rate(ruby_sidekiq_jobs_total{namespace=\"$namespace\"}[1m])) by (worker)",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{worker}}",
