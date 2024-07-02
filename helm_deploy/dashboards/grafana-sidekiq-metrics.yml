@@ -88,14 +88,14 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "rate(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\"}[1m])",
+              "expr": "ruby_sidekiq_stats_enqueued{namespace=\"$namespace\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
             }
           ],
           "thresholds": "",
-          "title": "Enqueuing rate",
+          "title": "Number of enqueued jobs",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -789,7 +789,7 @@ data:
           "steppedLine":false,
           "targets":[
             {
-                "expr":"max(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\"}) by (queue)",
+                "expr":"max(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\"})",
                 "format":"time_series",
                 "intervalFactor":2,
                 "legendFormat":"{{queue}}",
