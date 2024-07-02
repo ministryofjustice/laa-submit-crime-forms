@@ -709,7 +709,7 @@ data:
           },
           "yaxes": [
             {
-              "format": "s",
+              "format": "ops",
               "label": null,
               "logBase": 1,
               "max": null,
