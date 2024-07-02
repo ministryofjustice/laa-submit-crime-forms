@@ -35,6 +35,9 @@ executors:
     resource_class: small
     docker:
       - image: ministryofjustice/cloud-platform-tools
+        environment:
+          GITHUB_TEAM_NAME_SLUG: laa-crime-forms-team
+          REPO_NAME: laa-submit-crime-forms
 
 # ------------------
 # REFERENCES
@@ -93,7 +96,7 @@ references:
     attach_workspace:
       at: ~/repo/tmp
 
-  authenticate_k8s: &authenticate_k8s
+  _authenticate_k8s: &authenticate_k8s
     run:
       name: Authenticate K8s
       command: |
