@@ -14,4 +14,8 @@ class WorkItem < ApplicationRecord
   def translated_work_type
     translations(work_type, 'nsm.steps.check_answers.show.sections.work_items')
   end
+
+  def assessed_work_type
+    allowed_work_type.presence || work_type
+  end
 end
