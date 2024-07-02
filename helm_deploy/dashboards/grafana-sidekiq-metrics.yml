@@ -88,7 +88,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\"})",
+              "expr": "last_over_time(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\"}[1m]",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
