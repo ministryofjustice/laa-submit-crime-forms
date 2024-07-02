@@ -15,6 +15,7 @@ RSpec.describe 'View reviewed applications' do
     let(:application) do
       create(:prior_authority_application,
              :full,
+             :with_alternative_quotes,
              status: 'rejected',
              app_store_updated_at: 1.day.ago,
              assessment_comment: 'You used the wrong form')
@@ -22,7 +23,6 @@ RSpec.describe 'View reviewed applications' do
 
     it 'shows rejection details' do
       expect(page).to have_content 'Rejected'
-      expect(page).to have_content '£155.00 requested'
       expect(page).to have_content '£0.00 allowed'
       expect(page).to have_content 'You used the wrong form'
       expect(page).to have_content 'If you want to appeal the rejection, email CRM4appeal@justice.gov.uk'

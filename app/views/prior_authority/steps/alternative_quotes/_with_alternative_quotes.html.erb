@@ -14,7 +14,7 @@
     <span class="govuk-caption-xl"><%= t(".caption") %></span>
     <h1 class="govuk-heading-xl"><%= title_string %></h1>
     <% @form_object.alternative_quotes.each do |alternative_quote| %>
-      <%= render 'quote_summary', alternative_quote: alternative_quote, links: true %>
+      <%= render 'quote_summary', alternative_quote: alternative_quote, edit_links: true %>
     <% end %>
 
     <%= step_form @form_object do |form| %>

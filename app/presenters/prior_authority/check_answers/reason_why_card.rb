@@ -5,10 +5,11 @@ module PriorAuthority
     class ReasonWhyCard < Base
       attr_reader :application
 
-      def initialize(application)
+      def initialize(application, skip_links: false)
         @group = 'about_request'
         @section = 'reason_why'
         @application = application
+        @skip_links = skip_links
         super()
       end
 
@@ -36,8 +37,12 @@ module PriorAuthority
                                     I18n.t('prior_authority.generic.none')
                                   else
                                     links = application.supporting_documents.map do |document|
-                                      govuk_link_to(document.file_name,
-                                                    url_helper.prior_authority_download_path(document))
+                                      if @skip_links
+                                        document.file_name
+                                      else
+                                        govuk_link_to(document.file_name,
+                                                      url_helper.prior_authority_download_path(document))
+                                      end
                                     end
                                     sanitize(links.join(tag.br), tags: %w[a br])
                                   end

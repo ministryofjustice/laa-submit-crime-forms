@@ -1,11 +1,12 @@
 <% counter ||= nil %>
+<% skip_download_links ||= false %>
 <div class="govuk-summary-card">
   <div class="govuk-summary-card__title-wrapper">
     <h2 class="govuk-summary-card__title">
       <%= t('.alternative_quote') %>
       <%= counter %>
     </h2>
-    <% if links %>
+    <% if edit_links %>
       <ul class="govuk-summary-card__actions">
         <li class="govuk-summary-card__action">
           <%= govuk_link_to(t('.change'), edit_prior_authority_steps_alternative_quote_detail_path(current_application, alternative_quote.id)) %>
@@ -32,7 +33,11 @@
         <dt class="govuk-summary-list__key"><%= t('.quote_upload') %></dt>
         <dd class="govuk-summary-list__value">
           <% if alternative_quote.document&.file_name.present? %>
-            <%= govuk_link_to alternative_quote.document.file_name, prior_authority_download_path(alternative_quote.document) %>
+            <% if skip_download_links %>
+              <%= alternative_quote.document.file_name %>
+            <% else %>
+              <%= govuk_link_to alternative_quote.document.file_name, prior_authority_download_path(alternative_quote.document) %>
+            <% end %>
           <% else %>
             <%= t('.none') %>
           <% end %>
