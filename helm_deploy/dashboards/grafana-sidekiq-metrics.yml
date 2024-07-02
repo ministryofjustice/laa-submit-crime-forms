@@ -741,51 +741,63 @@ data:
           "dashes": false,
           "datasource": null,
           "fill": 1,
+          "fillGradient": 0,
           "gridPos": {
-            "h": 14,
-            "w": 11,
-            "x": 13,
-            "y": 4
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 6
           },
-          "id": 16,
+          "hiddenSeries": false,
+          "id": 30,
           "legend": {
-            "avg": false,
-            "current": false,
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "hideEmpty": true,
+            "hideZero": true,
             "max": false,
             "min": false,
+            "rightSide": true,
             "show": true,
+            "sort": "current",
+            "sortDesc": true,
             "total": false,
-            "values": false
+            "values": true
           },
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "nullPointMode": "null",
+          "nullPointMode": "null as zero",
+          "options": {
+            "dataLinks": []
+          },
+          "paceLength": 10,
           "percentage": false,
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": false,
+          "stack": true,
           "steppedLine": false,
           "targets": [
             {
-              "$$hashKey": "object:957",
-              "expr": "ruby_sidekiq_stats_enqueued",
+              "expr": "sum(rate(ruby_sidekiq_jobs_total[1m])) by (worker)",
               "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "{{name}}",
+              "intervalFactor": 2,
+              "legendFormat": "{{worker}}",
               "refId": "A"
             }
           ],
           "thresholds": [],
           "timeFrom": null,
+          "timeRegions": [],
           "timeShift": null,
-          "title": "Queue enqueued jobs",
+          "title": "Jobs processed by job type",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -798,25 +810,27 @@ data:
           },
           "yaxes": [
             {
-              "$$hashKey": "object:1150",
-              "format": "none",
+              "format": "ops",
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": "0",
               "show": true
             },
             {
-              "$$hashKey": "object:1151",
               "format": "short",
               "label": null,
               "logBase": 1,
               "max": null,
               "min": null,
-              "show": false
+              "show": true
             }
-          ]
-        }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
       ],
       "refresh": "5s",
       "schemaVersion": 16,
