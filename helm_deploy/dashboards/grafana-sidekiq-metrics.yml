@@ -743,11 +743,11 @@ data:
           "description":"Number of jobs waiting in queues to be executed",
           "fill":1,
           "fillGradient":0,
-          "gridPos":{
-            "h":8,
-            "w":12,
-            "x":0,
-            "y":13
+          "gridPos": {
+            "h": 14,
+            "w": 11,
+            "x": 13,
+            "y": 4
           },
           "hiddenSeries":false,
           "id":1,
