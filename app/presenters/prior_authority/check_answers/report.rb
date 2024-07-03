@@ -8,11 +8,12 @@ module PriorAuthority
         about_request
       ].freeze
 
-      attr_reader :application
+      attr_reader :application, :skip_links, :verbose
 
-      def initialize(application, verbose: false)
+      def initialize(application, verbose: false, skip_links: false)
         @application = application
         @verbose = verbose
+        @skip_links = skip_links
       end
 
       def section_groups
@@ -58,9 +59,9 @@ module PriorAuthority
 
       def about_request_section
         [
-          PrimaryQuoteCard.new(application, verbose: @verbose),
-          AlternativeQuotesCard.new(application, verbose: @verbose),
-          ReasonWhyCard.new(application),
+          PrimaryQuoteCard.new(application, verbose:, skip_links:),
+          AlternativeQuotesCard.new(application, verbose:),
+          ReasonWhyCard.new(application, skip_links:),
           further_information_cards,
         ].flatten.compact
       end
@@ -73,7 +74,7 @@ module PriorAuthority
         if @verbose
           application.further_informations
                      .order(requested_at: :desc)
-                     .map { CompactFurtherInformationCard.new(_1) }
+                     .map { CompactFurtherInformationCard.new(_1, skip_links:) }
         else
           FurtherInformationCard.new(application)
         end
