@@ -67,8 +67,6 @@
       work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
       <%=
         rows = work_items_for_date.map do |work_item|
-          next unless work_item.adjustment_comment
-
           link = link_to(t('.view'), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.id, page: pagy.page, section: 'adjustments'), data: { turbo: 'false' })
 
           [
