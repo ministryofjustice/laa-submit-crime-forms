@@ -24,7 +24,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
           [
             {
               head_key: 'application_status',
-              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--primary">Submitted</strong></p>' \
+              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--light-blue">Submitted</strong></p>' \
                                '<p>1 December 2023</p><p>Awaiting LAA review</p><br><p>£\d+\.\d\d claimed</p>')
             }
           ]
