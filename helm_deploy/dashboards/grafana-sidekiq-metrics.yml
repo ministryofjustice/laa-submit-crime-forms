@@ -240,14 +240,14 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "increase(ruby_sidekiq_stats_failed[1m])",
+              "expr": "sum(ruby_sidekiq_stats_processed{namespace=\"$namespace\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
             }
           ],
           "thresholds": "1,10",
-          "title": "Failed growth",
+          "title": "Number of processed jobs",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
