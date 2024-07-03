@@ -31,43 +31,36 @@ SIDEKIQ_WEB_UI_PASSWORD=sidekiq
 
 ## Running e2e development stack
 
-### Run the provider App:
-  - Follow above readme to setup the development requirements
-
-  - Amend Procfile.dev to run rails server on a unique port of your choice
-    ```
-      web: bin/rails server -p 3001
-    ```
-    *The default of 3001 is intended to work with the caseworker app's default of 3002*
+### Run the app store (must be first):
+  - Setup the [app as per its readme](https://github.com/ministryofjustice/laa-crime-application-store) \*
   - Run the app using `bin/dev`
 
-### Run the app store:
-  - Setup the application store app as per its readme. Note that the `APP_CLIENT_ID` and `TENANT_ID` must match the values used in the provider and caseworker app's `APP_STORE_CLIENT_ID` and `APP_STORE_TENANT_ID` respectively
-
-  - Run the app using
-    ```sh
-    pipenv run uvicorn laa_crime_application_store_app.main:app --reload
-    ```
+### Run the provider App:
+  - Setup the [app as per its readme](https://github.com/ministryofjustice/laa-submit-crime-forms) \*
+  - Run the app using `bin/dev`
 
 ### Run the caseworker app:
-  - Setup the app as per its readme. Note that the `APP_STORE_CLIENT_ID` and `APP_STORE_TENANT_ID` must match the values used in the provider. The `APP_STORE_CLIENT_SECRET` should be specific to the caseworker app.
-
-  - Amend Procfile.dev to run rails server on a unique port of your choice. This port will need to be different to the provider app's, above.
-    ```
-    # Profile.dev
-    web: bin/rails server -p 3002
-    ```
-    *The default of 3002 is intended to work with the provider app's default of 3001*
+  - Setup the [app as per its readme](https://github.com/ministryofjustice/laa-assess-crime-forms) \*
 
   - Run the app using `bin/dev`
+
+\* *If using actual EntraID authentication then note that the AppStore's `APP_CLIENT_ID` and `TENANT_ID` must match the values used in the provider and caseworker app's `APP_STORE_CLIENT_ID` and `APP_STORE_TENANT_ID` respectively.*
 
 ### You should now be able to:
 
 - Submit a claim or prior authority application in the provider app
-- See a successful cron job being processed in the Sidekiq WebUI (at http://localhost/sidekiq).
+- See a successful job being processed in the Sidekiq WebUI (at http://localhost:[3001|3002|8000]/sidekiq).
 - See the successful authentication and processing in the app store server output.
 - See the submitted claim or application in the caseworker app list of claims or list of applications.
 
+### To generate some example data
+
+To generate submitted claims and/or applications you can, from the root of this repo, run the dummy data generation tasks:
+
+```sh
+bin/rails submit_dummy_data:bulk_prior_authority[10]
+bin/rails submit_dummy_data:bulk_nsm[10]
+```
 
 ## Trouble shooting
 
