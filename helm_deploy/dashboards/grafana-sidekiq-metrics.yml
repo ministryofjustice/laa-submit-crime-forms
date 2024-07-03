@@ -316,14 +316,14 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "ruby_sidekiq_stats_retry_size",
+              "expr": "ruby_sidekiq_stats_retry_size{namespace=\"$namespace\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
             }
           ],
           "thresholds": "1,10",
-          "title": "Retry jobs",
+          "title": "Size of retries queue",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
