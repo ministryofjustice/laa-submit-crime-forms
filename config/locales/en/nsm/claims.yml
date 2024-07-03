@@ -28,7 +28,7 @@ en:
           review: Update needed
         status_colour:
           draft: govuk-tag--grey
-          submitted: govuk-tag--primary
+          submitted: govuk-tag--light-blue
           accessed: govuk-tag--green
           granted: govuk-tag--green
           part_grant: govuk-tag--blue
