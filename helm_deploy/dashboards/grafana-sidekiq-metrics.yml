@@ -789,10 +789,10 @@ data:
           "steppedLine":false,
           "targets":[
             {
-                "expr":"max(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\"})",
+                "expr":"sum(ruby_sidekiq_stats_workers_size{namespace=\"$namespace\"})",
                 "format":"time_series",
                 "intervalFactor":2,
-                "legendFormat":"{{queue}}",
+                "legendFormat":"Jobs being processed",
                 "refId":"A"
             }
           ],
@@ -804,7 +804,7 @@ data:
 
           ],
           "timeShift":null,
-          "title":"Queue sizes",
+          "title":"Number of jobs actively being processed",
           "tooltip":{
             "shared":true,
             "sort":2,
