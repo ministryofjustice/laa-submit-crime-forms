@@ -23,11 +23,11 @@
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
       <% if additional_cost.per_item? %>
-        <td class="govuk-table__cell"><%= additional_cost.items %></td>
-        <td class="govuk-table__cell"><%= NumberTo.pounds(additional_cost.cost_per_item) %></td>
+        <td class="govuk-table__cell"><%= t('.item_count', n: additional_cost.items, items: t('.item').pluralize(additional_cost.items)) %></td>
+        <td class="govuk-table__cell"><%= t('.per_item', cost: NumberTo.pounds(additional_cost.cost_per_item)) %></td>
       <% else %>
           <td class="govuk-table__cell"><%= format_period(additional_cost.period) %></td>
-          <td class="govuk-table__cell"><%= NumberTo.pounds(additional_cost.cost_per_hour) %></td>
+          <td class="govuk-table__cell"><%= t('.per_hour', cost: NumberTo.pounds(additional_cost.cost_per_hour)) %></td>
       <% end %>
       <% if show_adjustments %>
         <td class="govuk-table__cell"><%= additional_cost.formatted_total_cost %></td>

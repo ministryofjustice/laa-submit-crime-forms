@@ -124,6 +124,7 @@ en:
         items:
           items: Number of %{items}
           cost_per_item: What is the cost per %{item}?
+          cost_per_item_hint: Costs should be exclusive of VAT
           item: item
           minute: minute
           word: word
@@ -131,7 +132,8 @@ en:
           page: page
         time:
           period: Time
-          cost_per_hour: Hourly cost
+          cost_per_hour: What is the cost per hour?
+          cost_per_hour_hint: Costs should be exclusive of VAT
       primary_quote_summary:
         show:
           caption: About the request
@@ -146,11 +148,13 @@ en:
           prior_authority_granted: Existing prior authority granted
         service_cost_subtable:
           service_costs: Service costs
-          total: Total
-          period: Time
-          cost_per_hour: Cost per hour
-          requested: Requested
+          total: Total requested
+          amount: Amount
+          rate: Rate
+          requested: Total requested
           laa_allowed: LAA allowed
+          per_item: '%{cost} per %{item}'
+          hour: hour
         travel_cost_card:
           travel_costs: Travel costs
           change: Change
@@ -159,17 +163,18 @@ en:
           none_added: No travel costs added
         travel_cost_subtable:
           travel_costs: Travel costs
-          total: Total
-          period: Travel time
-          cost_per_hour: Hourly cost
-          requested: Requested
+          total: Total requested
+          period: Amount
+          cost_per_hour: Rate
+          requested: Total requested
           laa_allowed: LAA allowed
+          per_hour: '%{cost} per hour'
         additional_cost_card:
           additional_costs: Additional costs
           change: Change
           none_added: No additional costs added
           cost: Cost
-          total: Total
+          total: Total requested
       reason_why:
         edit:
           caption: About the request
@@ -200,17 +205,18 @@ en:
           explanation: Only include the hourly rate cost. Any other travel expenditure (such as mileage, parking and travel fares) can be added later as additional costs.
           travel_cost_reason: Why are there travel costs if your client is not detained?
           travel_time: Travel time
-          hourly_cost: Hourly cost
+          hourly_cost: What is the cost per hour?
           hourly_cost_hint: Costs should be exclusive of VAT
           total_cost: Total cost
       delete_travel:
         edit:
           page_title: Are you sure you want to delete this travel cost?
-          travel_time: Travel time
-          hourly_cost: Hourly cost
-          total: Total
+          travel_time: Amount
+          hourly_cost: Rate
+          total: Total requested
           yes_delete: Yes, delete it
           no_delete: No, do not delete it
+          per_hour: '%{cost} per hour'
       additional_costs:
         edit:
           caption: About the request
@@ -225,13 +231,17 @@ en:
           description: Why required
         subtable:
           additional_cost: Additional cost
-          items: Items
-          cost_per_item: Cost per item
-          period: Time
-          cost_per_hour: Rate per hour
-          total: Total
-          requested: Requested
+          items: Amount
+          cost_per_item: Rate
+          period: Amount
+          cost_per_hour: Rate
+          total: Total requested
+          requested: Total requested
           laa_allowed: LAA allowed
+          per_item: '%{cost} per item'
+          per_hour: '%{cost} per hour'
+          item_count: '%{n} %{items}'
+          item: item
       additional_cost_details:
         edit:
           caption: About the request

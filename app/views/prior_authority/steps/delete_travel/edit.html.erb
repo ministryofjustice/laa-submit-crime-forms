@@ -13,7 +13,7 @@
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <td class="govuk-table__cell"><%= format_period(@form_object.travel_time) %></td>
-          <td class="govuk-table__cell"><%= NumberTo.pounds(@form_object.travel_cost_per_hour) %></td>
+          <td class="govuk-table__cell"><%= t('.per_hour', cost: NumberTo.pounds(@form_object.travel_cost_per_hour)) %></td>
           <td class="govuk-table__cell"><%= @form_object.formatted_total_cost %></td>
         </tr>
       </tbody>

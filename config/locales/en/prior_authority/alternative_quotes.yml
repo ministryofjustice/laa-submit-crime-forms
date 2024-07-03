@@ -25,7 +25,7 @@ en:
           additional_items: Additional items
           none: None
           costs: Costs
-          total: Total
+          total: Total requested
           service: Service
           travel: Travel
           additional: Additional
@@ -57,6 +57,7 @@ en:
           travel_cost_hint: Only include the hourly rate cost. Any other travel expenditure (such as mileage, parking and travel fares) can be added as additional costs.
           travel_time: Time
           hourly_cost: What is the hourly cost?
+          vat_hint: Costs should be exclusive of VAT
           additional_costs: Additional costs (optional)
           additional_costs_hint: For example, other costs such as extra fees, travel mileage, parking charges or travel fares.
           additional_cost_list: List additional costs

@@ -34,7 +34,8 @@
                                 prefix_text: "&pound;".html_safe,
                                 inputmode: "decimal",
                                 value: gbp_field_value(@form_object.travel_cost_per_hour),
-                                label: { text: t('.hourly_cost'), size: 's' } %>
+                                label: { text: t('.hourly_cost'), size: 's' },
+                                hint: {text: t('.vat_hint') } %>
 
       <h2 class="govuk-heading-m"><%= t('.additional_costs') %></h2>
       <p class="govuk-text"><%= t('.additional_costs_hint') %></p>
@@ -44,7 +45,8 @@
                                 prefix_text: "&pound;".html_safe,
                                 inputmode: "decimal",
                                 value: gbp_field_value(@form_object.additional_cost_total),
-                                label: { text: t('.additional_cost_total'), size: 's' } %>
+                                label: { text: t('.additional_cost_total'), size: 's' },
+                                hint: {text: t('.vat_hint') } %>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
       <%= form.reload_button(button: :update_calculation_no_article) %>
