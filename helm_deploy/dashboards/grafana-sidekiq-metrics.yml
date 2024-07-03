@@ -35,7 +35,7 @@ data:
           "cacheTimeout": null,
           "colorBackground": false,
           "colorValue": false,
-          "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
+          "colors": ["rgba(237, 129, 40, 0.89)"],
           "datasource": null,
           "format": "none",
           "gauge": {
