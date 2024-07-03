@@ -164,7 +164,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(ruby_sidekiq_stats_failed{namespace=\"$namespace\"}[1m])",
+              "expr": "sum(ruby_sidekiq_stats_failed{namespace=\"$namespace\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
