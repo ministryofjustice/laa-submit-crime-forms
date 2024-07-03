@@ -88,7 +88,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\"})",
+              "expr": "avg(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -164,7 +164,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(ruby_sidekiq_stats_failed{namespace=\"$namespace\"})",
+              "expr": "avg(ruby_sidekiq_stats_failed{namespace=\"$namespace\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -240,7 +240,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(ruby_sidekiq_stats_processed{namespace=\"$namespace\"})",
+              "expr": "avg(ruby_sidekiq_stats_processed{namespace=\"$namespace\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -316,7 +316,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(ruby_sidekiq_stats_retry_size{namespace=\"$namespace\"})",
+              "expr": "avg(ruby_sidekiq_stats_retry_size{namespace=\"$namespace\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
