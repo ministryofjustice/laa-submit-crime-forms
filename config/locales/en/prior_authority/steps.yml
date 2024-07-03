@@ -149,11 +149,12 @@ en:
         service_cost_subtable:
           service_costs: Service costs
           total: Total requested
-          period: Amount
-          cost_per_hour: Rate
+          amount: Amount
+          rate: Rate
           requested: Total requested
           laa_allowed: LAA allowed
-          per_item: ' per %{item}'
+          per_item: '%{cost} per %{item}'
+          hour: hour
         travel_cost_card:
           travel_costs: Travel costs
           change: Change
@@ -167,7 +168,7 @@ en:
           cost_per_hour: Rate
           requested: Total requested
           laa_allowed: LAA allowed
-          per_hour: ' per hour'
+          per_hour: '%{cost} per hour'
         additional_cost_card:
           additional_costs: Additional costs
           change: Change
@@ -215,7 +216,7 @@ en:
           total: Total requested
           yes_delete: Yes, delete it
           no_delete: No, do not delete it
-          per_hour: ' per hour'
+          per_hour: '%{cost} per hour'
       additional_costs:
         edit:
           caption: About the request
@@ -237,8 +238,10 @@ en:
           total: Total requested
           requested: Total requested
           laa_allowed: LAA allowed
-          per_item: ' per item'
-          per_hour: ' per hour'
+          per_item: '%{cost} per item'
+          per_hour: '%{cost} per hour'
+          item_count: '%{n} %{items}'
+          item: item
       additional_cost_details:
         edit:
           caption: About the request
