@@ -1,6 +1,8 @@
+<% skip_download_links ||= false %>
 <% section.alternative_quote_forms.each_with_index do |quote, index| %>
   <%= render 'prior_authority/steps/alternative_quotes/quote_summary',
              alternative_quote: quote,
-             links: false,
-             counter: (index + 1) %>
+             edit_links: false,
+             counter: (index + 1),
+             skip_download_links: skip_download_links %>
 <% end %>

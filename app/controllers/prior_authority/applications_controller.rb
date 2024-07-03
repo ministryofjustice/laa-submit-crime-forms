@@ -47,7 +47,7 @@ module PriorAuthority
     end
 
     def download
-      pdf = PdfService.prior_authority(application_locals, request.url)
+      pdf = PdfService.prior_authority(application_locals(skip_links: true), request.url)
 
       send_data pdf,
                 filename: "#{current_application.laa_reference}.pdf",
@@ -104,12 +104,12 @@ module PriorAuthority
       @sort_direction = params.fetch(:sort_direction, 'descending')
     end
 
-    def application_locals
+    def application_locals(skip_links: false)
       application = PriorAuthorityApplication.for(current_provider).find(params[:id])
       {
         application: application,
         primary_quote_summary: PriorAuthority::PrimaryQuoteSummary.new(application),
-        report: CheckAnswers::Report.new(application, verbose: true),
+        report: CheckAnswers::Report.new(application, verbose: true, skip_links: skip_links),
         allowance_type: { 'granted' => :original,
                           'part_grant' => :dynamic,
                           'rejected' => :na }[application.status]
