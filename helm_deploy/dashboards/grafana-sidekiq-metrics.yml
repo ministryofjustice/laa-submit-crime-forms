@@ -316,7 +316,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "ruby_sidekiq_stats_retry_size{namespace=\"$namespace\"}",
+              "expr": "sum(ruby_sidekiq_stats_retry_size{namespace=\"$namespace\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
