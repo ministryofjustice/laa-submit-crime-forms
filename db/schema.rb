@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_14_154401) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_28_134832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -338,6 +338,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_14_154401) do
     t.integer "allowed_uplift"
     t.integer "allowed_time_spent"
     t.string "adjustment_comment"
+    t.string "allowed_work_type"
     t.index ["claim_id"], name: "index_work_items_on_claim_id"
   end
 
