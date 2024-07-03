@@ -26,24 +26,55 @@ data:
       },
       "description": "Visual Sidekiq Metrics",
       "editable": true,
-      "gnetId": null,
+      "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 5,
+      "id": 166,
       "links": [],
+      "liveNow": false,
       "panels": [
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": ["rgba(237, 129, 40, 0.89)"],
-          "datasource": null,
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 1
+                  },
+                  {
+                    "color": "#d44a3a",
+                    "value": 10
+                  }
+                ]
+              },
+              "unit": "none",
+              "unitScale": true
+            },
+            "overrides": []
           },
           "gridPos": {
             "h": 4,
@@ -51,75 +82,82 @@ data:
             "x": 0,
             "y": 0
           },
-          "id": 12,
-          "interval": null,
+          "id": 10,
           "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
           "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "tableColumn": "",
+          "pluginVersion": "10.3.3",
           "targets": [
             {
-              "expr": "avg(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\"})",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "avg(ruby_sidekiq_stats_processed{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format": "time_series",
               "intervalFactor": 1,
+              "range": true,
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Number of enqueued jobs",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "title": "Processed",
+          "type": "stat"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": ["#d44a3a", "rgba(237, 129, 40, 0.89)", "#299c46"],
-          "datasource": null,
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none",
+              "unitScale": true
+            },
+            "overrides": []
           },
           "gridPos": {
             "h": 4,
@@ -128,74 +166,82 @@ data:
             "y": 0
           },
           "id": 13,
-          "interval": null,
           "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
           "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
+          "options": {
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "tableColumn": "",
+          "pluginVersion": "10.3.3",
           "targets": [
             {
-              "expr": "avg(ruby_sidekiq_stats_failed{namespace=\"$namespace\"})",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "avg(ruby_sidekiq_stats_failed{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format": "time_series",
               "intervalFactor": 1,
+              "range": true,
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Number of failed jobs",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "title": "Failed",
+          "type": "stat"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-          "datasource": null,
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none",
+              "unitScale": true
+            },
+            "overrides": []
           },
           "gridPos": {
             "h": 4,
@@ -203,75 +249,82 @@ data:
             "x": 6,
             "y": 0
           },
-          "id": 10,
-          "interval": null,
+          "id": 4,
           "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
           "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
+          "options": {
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "tableColumn": "",
+          "pluginVersion": "10.3.3",
           "targets": [
             {
-              "expr": "avg(ruby_sidekiq_stats_processed{namespace=\"$namespace\"})",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "avg(ruby_sidekiq_process_busy{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format": "time_series",
               "intervalFactor": 1,
+              "range": true,
               "refId": "A"
             }
           ],
-          "thresholds": "1,10",
-          "title": "Number of processed jobs",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "title": "Busy",
+          "type": "stat"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-          "datasource": null,
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none",
+              "unitScale": true
+            },
+            "overrides": []
           },
           "gridPos": {
             "h": 4,
@@ -279,75 +332,85 @@ data:
             "x": 9,
             "y": 0
           },
-          "id": 14,
-          "interval": null,
+          "id": 12,
           "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
           "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
+          "options": {
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "tableColumn": "",
+          "pluginVersion": "10.3.3",
           "targets": [
             {
-              "expr": "avg(ruby_sidekiq_stats_retry_size{namespace=\"$namespace\"})",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "avg(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format": "time_series",
               "intervalFactor": 1,
+              "range": true,
               "refId": "A"
             }
           ],
-          "thresholds": "1,10",
-          "title": "Size of retries queue",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "title": "Enqueued",
+          "type": "stat"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-          "datasource": null,
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 1
+                  },
+                  {
+                    "color": "#d44a3a",
+                    "value": 10
+                  }
+                ]
+              },
+              "unit": "none",
+              "unitScale": true
+            },
+            "overrides": []
           },
           "gridPos": {
             "h": 4,
@@ -355,75 +418,82 @@ data:
             "x": 12,
             "y": 0
           },
-          "id": 8,
-          "interval": null,
+          "id": 14,
           "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
           "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "tableColumn": "",
+          "pluginVersion": "10.3.3",
           "targets": [
             {
-              "expr": "ruby_sidekiq_stats_dead_size",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "avg(ruby_sidekiq_stats_retry_size{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format": "time_series",
               "intervalFactor": 1,
+              "range": true,
               "refId": "A"
             }
           ],
-          "thresholds": "10,20",
-          "title": "Dead jobs",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "title": "Retries",
+          "type": "stat"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-          "datasource": null,
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none",
+              "unitScale": true
+            },
+            "overrides": []
           },
           "gridPos": {
             "h": 4,
@@ -431,75 +501,85 @@ data:
             "x": 15,
             "y": 0
           },
-          "id": 9,
-          "interval": null,
+          "id": 6,
           "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
           "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
+          "options": {
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "tableColumn": "",
+          "pluginVersion": "10.3.3",
           "targets": [
             {
-              "expr": "ruby_sidekiq_stats_enqueued",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "avg(ruby_sidekiq_stats_scheduled_size{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format": "time_series",
               "intervalFactor": 1,
+              "range": true,
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Enqueued jobs",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "title": "Scheduled",
+          "type": "stat"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-          "datasource": null,
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 10
+                  },
+                  {
+                    "color": "#d44a3a",
+                    "value": 20
+                  }
+                ]
+              },
+              "unit": "none",
+              "unitScale": true
+            },
+            "overrides": []
           },
           "gridPos": {
             "h": 4,
@@ -507,151 +587,67 @@ data:
             "x": 18,
             "y": 0
           },
-          "id": 4,
-          "interval": null,
+          "id": 8,
           "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
           "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "tableColumn": "",
+          "pluginVersion": "10.3.3",
           "targets": [
             {
-              "expr": "ruby_sidekiq_process_busy",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "avg(ruby_sidekiq_stats_dead_size{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format": "time_series",
               "intervalFactor": 1,
+              "range": true,
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Busy workers",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-          "datasource": null,
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "gridPos": {
-            "h": 4,
-            "w": 3,
-            "x": 21,
-            "y": 0
-          },
-          "id": 6,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "tableColumn": "",
-          "targets": [
-            {
-              "expr": "ruby_sidekiq_stats_scheduled_size",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "refId": "A"
-            }
-          ],
-          "thresholds": "",
-          "title": "Scheduled jobs",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "title": "Dead",
+          "type": "stat"
         },
         {
           "aliasColors": {},
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unitScale": true
+            },
+            "overrides": []
+          },
           "fill": 1,
+          "fillGradient": 0,
           "gridPos": {
             "h": 14,
             "w": 13,
             "x": 0,
             "y": 4
           },
+          "hiddenSeries": false,
           "id": 2,
           "legend": {
             "alignAsTable": true,
@@ -670,15 +666,24 @@ data:
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
+          "pluginVersion": "10.3.3",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
+          "seriesOverrides": [],
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
               "expr": "sum(rate(ruby_sidekiq_jobs_total{namespace=\"$namespace\"}[1m]))",
               "format": "time_series",
               "hide": false,
@@ -687,6 +692,10 @@ data:
               "refId": "A"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
               "expr": "sum(rate(ruby_sidekiq_failed_jobs_total{namespace=\"$namespace\"}[1m]))",
               "format": "time_series",
               "intervalFactor": 2,
@@ -695,8 +704,7 @@ data:
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
+          "timeRegions": [],
           "title": "Jobs processed every second",
           "tooltip": {
             "shared": true,
@@ -705,156 +713,140 @@ data:
           },
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "time",
-            "name": null,
             "show": true,
             "values": []
           },
           "yaxes": [
             {
               "format": "ops",
-              "label": null,
               "logBase": 1,
-              "max": null,
               "min": "0",
               "show": true
             },
             {
               "format": "short",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": false
             }
           ],
           "yaxis": {
-          "align": false,
-          "alignLevel": null
+            "align": false
           }
         },
         {
-          "aliasColors":{},
-          "bars":false,
-          "dashLength":10,
-          "dashes":false,
-          "datasource":null,
-          "description":"Number of jobs waiting in queues to be executed",
-          "fill":1,
-          "fillGradient":0,
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "description": "Number of jobs waiting in queues to be executed",
+          "fieldConfig": {
+            "defaults": {
+              "links": [],
+              "unitScale": true
+            },
+            "overrides": []
+          },
+          "fill": 1,
+          "fillGradient": 0,
           "gridPos": {
             "h": 14,
             "w": 11,
             "x": 13,
             "y": 4
           },
-          "hiddenSeries":false,
-          "id":1,
-          "legend":{
-            "alignAsTable":true,
-            "avg":false,
-            "current":true,
-            "hideEmpty":true,
-            "max":false,
-            "min":false,
-            "rightSide":true,
-            "show":true,
-            "sort":"current",
-            "sortDesc":true,
-            "total":false,
-            "values":true
+          "hiddenSeries": false,
+          "id": 1,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "hideEmpty": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
           },
-          "lines":true,
-          "linewidth":1,
-          "links":[
-
-          ],
-          "nullPointMode":"null",
-          "options":{
-            "dataLinks":[
-
-            ]
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
           },
-          "paceLength":10,
-          "percentage":false,
-          "pointradius":5,
-          "points":false,
-          "renderer":"flot",
-          "seriesOverrides":[
-
-          ],
-          "spaceLength":10,
-          "stack":true,
-          "steppedLine":false,
-          "targets":[
+          "paceLength": 10,
+          "percentage": false,
+          "pluginVersion": "10.3.3",
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
             {
-                "expr":"sum(ruby_sidekiq_stats_workers_size{namespace=\"$namespace\"})",
-                "format":"time_series",
-                "intervalFactor":2,
-                "legendFormat":"Jobs being processed",
-                "refId":"A"
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "sum(ruby_sidekiq_stats_workers_size{namespace=\"$namespace\"})",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "legendFormat": "Jobs being processed",
+              "refId": "A"
             }
           ],
-          "thresholds":[
-
-          ],
-          "timeFrom":null,
-          "timeRegions":[
-
-          ],
-          "timeShift":null,
-          "title":"Number of jobs actively being processed",
-          "tooltip":{
-            "shared":true,
-            "sort":2,
-            "value_type":"individual"
+          "thresholds": [],
+          "timeRegions": [],
+          "title": "Number of jobs actively being processed",
+          "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
           },
-          "type":"graph",
-          "xaxis":{
-            "buckets":null,
-            "mode":"time",
-            "name":null,
-            "show":true,
-            "values":[
-
-            ]
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "show": true,
+            "values": []
           },
-          "yaxes":[
+          "yaxes": [
             {
-                "format":"short",
-                "label":null,
-                "logBase":1,
-                "max":null,
-                "min":"0",
-                "show":true
+              "format": "short",
+              "logBase": 1,
+              "min": "0",
+              "show": true
             },
             {
-                "format":"short",
-                "label":null,
-                "logBase":1,
-                "max":null,
-                "min":null,
-                "show":true
+              "format": "short",
+              "logBase": 1,
+              "show": true
             }
           ],
-          "yaxis":{
-            "align":false,
-            "alignLevel":null
+          "yaxis": {
+            "align": false
           }
         }
       ],
-      "refresh": "5s",
-      "schemaVersion": 16,
-      "style": "dark",
+      "refresh": "1m",
+      "schemaVersion": 39,
       "tags": [],
       "templating": {
         "list": [
           {
             "current": {
-              "selected": false,
-              "text": "laa-submit-crime-forms-prod",
-              "value": "laa-submit-crime-forms-prod"
+              "selected": true,
+              "text": "laa-submit-crime-forms-uat",
+              "value": "laa-submit-crime-forms-uat"
             },
             "datasource": {
               "type": "prometheus",
@@ -882,7 +874,7 @@ data:
         ]
       },
       "time": {
-        "from": "now-30m",
+        "from": "now-6h",
         "to": "now"
       },
       "timepicker": {
@@ -913,6 +905,6 @@ data:
       "timezone": "browser",
       "title": "LAA non-standard crime claims / Provider sidekiq metrics",
       "uid": "laa-submit-crime-forms-sidekiq-metrics",
-      "version": 1,
+      "version": 25,
       "weekStart": ""
     }
