@@ -60,4 +60,19 @@ describe 'submit_dummy_data:', type: :task do
       expect(builder).to have_received(:build_many).with(bulk: 300, large: 30, year: 2020)
     end
   end
+
+  describe 'prior_authority_rfi' do
+    let(:resubmitter) { instance_double(TestData::PaResubmitter, resubmit: true) }
+
+    before do
+      Rails.application.load_tasks if Rake::Task.tasks.empty?
+      allow($stdin).to receive(:gets).and_return 'y'
+      allow(TestData::PaResubmitter).to receive(:new).and_return(resubmitter)
+    end
+
+    it 'passes arguments to the resubmitter' do
+      Rake::Task['submit_dummy_data:prior_authority_rfi'].invoke('50')
+      expect(resubmitter).to have_received(:resubmit).with(50)
+    end
+  end
 end

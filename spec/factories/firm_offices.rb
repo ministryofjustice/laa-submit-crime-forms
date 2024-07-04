@@ -13,5 +13,9 @@ FactoryBot.define do
       address_line_2 { 'Unit B' }
       vat_registered { 'no' }
     end
+
+    trait :randomised do
+      name { Faker::Company.name }
+    end
   end
 end

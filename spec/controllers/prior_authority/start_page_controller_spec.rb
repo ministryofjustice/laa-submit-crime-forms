@@ -13,16 +13,18 @@ RSpec.describe PriorAuthority::Steps::StartPageController, type: :controller do
       let(:current_application) { create(:prior_authority_application, status: 'draft') }
 
       it 'creates an instance of TaskList presenter' do
-        expect(controller.further_information_needed).to be_falsey
+        expect(controller.instance_values['tasklist']).to be_a PriorAuthority::StartPage::TaskList
       end
     end
 
     context 'a sent back application' do
       let(:app_store_updated_at) { DateTime.current - 1.day }
-      let(:current_application) { create(:prior_authority_application, :with_further_information, app_store_updated_at:) }
+      let(:current_application) do
+        create(:prior_authority_application, :with_further_information_request, app_store_updated_at:)
+      end
 
       it 'creates an instance of FurtherInformationTaskList presenter' do
-        expect(controller.further_information_needed).to be_truthy
+        expect(controller.instance_values['tasklist']).to be_a PriorAuthority::StartPage::FurtherInformationTaskList
       end
     end
 
@@ -30,7 +32,7 @@ RSpec.describe PriorAuthority::Steps::StartPageController, type: :controller do
       let(:current_application) { create(:prior_authority_application, status: 'sent_back') }
 
       it 'creates an instance of TaskList presenter' do
-        expect(controller.further_information_needed).to be_falsey
+        expect(controller.instance_values['tasklist']).to be_a PriorAuthority::StartPage::TaskList
       end
     end
   end

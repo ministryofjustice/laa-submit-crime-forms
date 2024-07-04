@@ -145,6 +145,10 @@ FactoryBot.define do
 
     trait :with_further_information_request do
       further_informations { [build(:further_information)] }
+      status { 'sent_back' }
+      app_store_updated_at { 1.minute.ago }
+      resubmission_deadline { 14.days.from_now }
+      resubmission_requested { DateTime.current }
     end
 
     trait :with_further_information_supplied do
@@ -285,11 +289,10 @@ FactoryBot.define do
       end
     end
 
-    trait :with_further_information do
-      status { 'sent_back' }
-      after(:create) do |paa|
-        create(:further_information, prior_authority_application_id: paa.id)
-      end
+    trait :randomised do
+      laa_reference { "LAA-#{SecureRandom.alphanumeric(6)}" }
+      ufn { "#{date.strftime('%d%m%y')}/#{SecureRandom.rand(1000).to_s.rjust(3, '0')}" }
+      firm_office factory: %i[firm_office valid randomised]
     end
   end
 end

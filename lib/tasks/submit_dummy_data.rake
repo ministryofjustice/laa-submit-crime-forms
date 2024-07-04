@@ -18,6 +18,16 @@ namespace :submit_dummy_data do
     end
   end
 
+  desc "Resubmit a proportion of sent-back prior authority applications"
+  task :prior_authority_rfi, [:percentage] => :environment do |_task, args|
+    STDOUT.print "Will resubmit #{args[:percentage]}% of PA/CRM4's in the sent_back state: Are you sure? (y/n): "
+    input = STDIN.gets.strip
+
+    if input.downcase.in?(['yes','y'])
+      TestData::PaResubmitter.new.resubmit(args[:percentage].to_i)
+    end
+  end
+
   desc "Submit bulk dummy NSM data to the app store for a given year"
   task :bulk_nsm, [:bulk, :large, :year] => :environment do |_task, args|
     args.with_defaults(bulk: 100, large: 4, year: 2023)
