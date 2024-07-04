@@ -27,7 +27,7 @@ module TestData
     def build(**options)
       ActiveRecord::Base.transaction do
         args, kwargs = *options(**options).values.sample
-        claim = FactoryBot.create(*args, kwargs.call)
+        claim = FactoryBot.create(*args, :randomised, kwargs.call)
         claim.update!(status: :submitted, updated_at: claim.updated_at + 1.minute)
 
         invalid_tasks = check_tasks(claim)

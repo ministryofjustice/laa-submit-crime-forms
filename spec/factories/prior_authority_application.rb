@@ -291,7 +291,10 @@ FactoryBot.define do
 
     trait :randomised do
       laa_reference { "LAA-#{SecureRandom.alphanumeric(6)}" }
-      ufn { "#{date.strftime('%d%m%y')}/#{SecureRandom.rand(1000).to_s.rjust(3, '0')}" }
+      ufn do
+        random_date = Faker::Date.between(from: 10.years.ago, to: 1.day.ago)
+        "#{random_date.strftime('%d%m%y')}/#{SecureRandom.rand(1000).to_s.rjust(3, '0')}"
+      end
       firm_office factory: %i[firm_office valid randomised]
     end
   end
