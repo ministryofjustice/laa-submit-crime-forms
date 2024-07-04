@@ -101,7 +101,7 @@ RSpec.describe 'Accessibility', :accessibility do
 
   context 'when viewing PA further information screen' do
     describe 'edit_prior_authority_steps_further_information screen' do
-      let(:application) { create(:prior_authority_application, :with_further_information) }
+      let(:application) { create(:prior_authority_application, :with_further_information_request) }
 
       before { visit send(:edit_prior_authority_steps_further_information_path, application) }
 

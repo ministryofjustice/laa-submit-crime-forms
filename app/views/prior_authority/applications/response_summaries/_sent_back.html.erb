@@ -8,7 +8,7 @@
       <p><%= paragraph %></p>
     <% end %>
     <% unless skip_links %>
-      <% if further_information_needed(application) %>
+      <% if application.further_information_needed? %>
         <%= govuk_button_link_to(t('prior_authority.applications.show.update_application'),
                                 edit_prior_authority_steps_further_information_path(application)) %>
       <% else %>

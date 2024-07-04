@@ -60,4 +60,13 @@ class PriorAuthorityApplication < ApplicationRecord
   def total_cost_gbp
     total_cost ? NumberTo.pounds(total_cost) : nil
   end
+
+  def further_information_needed?
+    if further_informations.empty?
+      false
+    else
+      last_further_info = further_informations.order(:created_at).last.created_at
+      sent_back? && (last_further_info >= app_store_updated_at)
+    end
+  end
 end

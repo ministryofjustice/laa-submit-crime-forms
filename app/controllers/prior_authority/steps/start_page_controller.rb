@@ -16,7 +16,7 @@ module PriorAuthority
       end
 
       def start_page_tasklist
-        if further_information_needed
+        if current_application.further_information_needed?
           @tasklist || StartPage::FurtherInformationTaskList.new(
             view_context, application: current_application
           )
