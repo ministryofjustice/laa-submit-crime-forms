@@ -303,21 +303,28 @@ jobs:
 
   scan-docker-image:
     executor: test-executor
-    parallelism: 1
     steps:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
       - build-docker-image-for-scan
-      - snyk/scan:
+      - snyk/install:
           token-variable: SNYK_TOKEN
-          docker-image-name: app
-          target-file: ./Dockerfile
-          organization: 'legal-aid-agency'
-          project: ministryofjustice/laa-submit-crime-forms
-          severity-threshold: "high"
-          fail-on-issues: true
-          additional-arguments: --policy-path=.snyk
+      - run:
+          name: Run static code analysis
+          command: snyk code test --severity-threshold=high
+      - run:
+          name: Test open source dependencies
+          command: snyk test --all-projects --policy-path=.snyk --severity-threshold=high
+      - run:
+          name: Monitor for open source vulnerabilities and license issues
+          command: snyk monitor --all-projects
+      - run:
+          name: Scan container image for vulnerabilities
+          command: snyk container test app --file=./Dockerfile --policy-path=.snyk --severity-threshold=high
+      - run:
+          name: Monitor container image for vulnerabilities
+          command: snyk container monitor app
 
   build-to-ecr:
     executor: aws-ecr/default

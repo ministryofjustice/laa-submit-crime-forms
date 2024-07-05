@@ -14,28 +14,39 @@ module Nsm
       def item
         @claim = current_application
 
-        render params[:item_type]
+        render report_params[:item_type]
       end
 
       def work_items
         @work_items = current_application.work_items
 
-        render "#{params[:prefix]}work_items"
+        render prefixed_view_for('work_items')
       end
 
       def letters_and_calls
         @claim = current_application
 
-        render "#{params[:prefix]}letters_and_calls"
+        render prefixed_view_for('letters_and_calls')
       end
 
       def disbursements
         @disbursements = current_application.disbursements.by_age
 
-        render "#{params[:prefix]}disbursements"
+        render prefixed_view_for('disbursements')
       end
 
       private
+
+      def prefixed_view_for(item_type)
+        "#{report_params[:prefix]}#{item_type}"
+      end
+
+      def report_params
+        params.permit(
+          :item_type,
+          :prefix,
+        )
+      end
 
       def validate_prefix
         raise "Invalid prefix: #{params[:prefix]}" unless params[:prefix].in?(['allowed_', '', nil])
