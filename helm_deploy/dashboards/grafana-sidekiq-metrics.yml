@@ -814,7 +814,7 @@ data:
               "format":"time_series",
               "instant":false,
               "intervalFactor":2,
-              "legendFormat":"{{pod}}",
+              "legendFormat":"{{job_name}}",
               "range":true,
               "refId":"A"
             }
@@ -894,6 +894,31 @@ data:
             "tagsQuery":"",
             "type":"query",
             "useTags":false
+          },
+          {
+            "current": {
+              "selected": false,
+              "text": "SidekiqAlive::Worker",
+              "value": "SidekiqAlive::Worker"
+            },
+            "definition": "label_values({namespace=\"$namespace\"},job_name)",
+            "description": "name of label job_name in metric",
+            "hide": 0,
+            "includeAll": false,
+            "label": "job name",
+            "multi": false,
+            "name": "job",
+            "options": [],
+            "query": {
+              "qryType": 1,
+              "query": "label_values({namespace=\"$namespace\"},job_name)",
+              "refId": "PrometheusVariableQueryEditor-VariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
           }
         ]
       },
