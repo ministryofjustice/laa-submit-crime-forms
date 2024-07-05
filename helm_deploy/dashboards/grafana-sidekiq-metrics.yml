@@ -110,7 +110,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_stats_processed{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\",job_name=\"$job\"})",
+              "expr":"avg(ruby_sidekiq_stats_processed{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
@@ -193,7 +193,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_stats_failed{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\",job_name=\"$job\"})",
+              "expr":"avg(ruby_sidekiq_stats_failed{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
@@ -277,7 +277,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_process_busy{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\",job_name=\"$job\"})",
+              "expr":"avg(ruby_sidekiq_process_busy{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
@@ -360,7 +360,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\",job_name=\"$job\"})",
+              "expr":"avg(ruby_sidekiq_stats_enqueued{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
@@ -446,7 +446,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_stats_retry_size{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\",job_name=\"$job\"})",
+              "expr":"avg(ruby_sidekiq_stats_retry_size{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
@@ -529,7 +529,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_stats_scheduled_size{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\",job_name=\"$job\"})",
+              "expr":"avg(ruby_sidekiq_stats_scheduled_size{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
@@ -615,7 +615,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_stats_dead_size{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\",job_name=\"$job\"})",
+              "expr":"avg(ruby_sidekiq_stats_dead_size{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
