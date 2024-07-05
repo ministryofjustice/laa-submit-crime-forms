@@ -839,7 +839,7 @@ data:
         ]
       },
       "timezone":"browser",
-      "title":"LAA non-standard crime claims / Provider sidekiq metrics",
+      "title":"LAA non-standard crime claims / Sidekiq metrics",
       "uid":"laa-submit-crime-forms-sidekiq-metrics",
       "version":1,
       "weekStart":""
