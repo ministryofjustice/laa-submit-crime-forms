@@ -110,7 +110,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_jobs_total{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\",job_name!="SidekiqAlive::Worker"})",
+              "expr":"avg(ruby_sidekiq_jobs_total{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\",job_name!=\"SidekiqAlive::Worker\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
@@ -193,7 +193,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_failed_jobs_total{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\",job_name!="SidekiqAlive::Worker"})",
+              "expr":"avg(ruby_sidekiq_failed_jobs_total{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\",job_name!=\"SidekiqAlive::Worker\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
@@ -446,7 +446,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_restarted_jobs_total{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\",job_name!="SidekiqAlive::Worker"})",
+              "expr":"avg(ruby_sidekiq_restarted_jobs_total{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\",job_name!=\"SidekiqAlive::Worker\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
