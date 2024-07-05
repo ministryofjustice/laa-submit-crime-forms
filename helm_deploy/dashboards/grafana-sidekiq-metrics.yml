@@ -814,7 +814,7 @@ data:
               "format":"time_series",
               "instant":false,
               "intervalFactor":2,
-              "legendFormat":"Average job processing time",
+              "legendFormat":"Average job processing time (seconds)",
               "range":true,
               "refId":"A"
             }
