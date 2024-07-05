@@ -810,7 +810,7 @@ data:
               },
               "editorMode":"code",
               "exemplar":false,
-              "expr":"avg by (job_name) (ruby_sidekiq_job_duration_seconds{namespace=\"$namespace\",job_name=\"$job\",quantile="0.5"})",
+              "expr":"ruby_sidekiq_job_duration_seconds{namespace=\"$namespace\",job_name=\"$job\",quantile="0.5"}",
               "format":"time_series",
               "instant":false,
               "intervalFactor":2,
