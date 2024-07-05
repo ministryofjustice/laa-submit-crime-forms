@@ -749,7 +749,7 @@ data:
             "type":"prometheus",
             "uid":"prometheus"
           },
-          "description":"Number of time spent executing jobs",
+          "description":"Time spent executing jobs",
           "fieldConfig":{
             "defaults":{
               "links":[
@@ -810,11 +810,11 @@ data:
               },
               "editorMode":"code",
               "exemplar":false,
-              "expr":"avg(ruby_sidekiq_job_duration_seconds{namespace=\"$namespace\"})",
+              "expr":"ruby_sidekiq_job_duration_seconds{namespace=\"$namespace\"}",
               "format":"time_series",
               "instant":false,
               "intervalFactor":2,
-              "legendFormat":"Average job processing time (seconds)",
+              "legendFormat":"{{pod}}",
               "range":true,
               "refId":"A"
             }
