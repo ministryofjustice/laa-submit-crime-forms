@@ -825,7 +825,7 @@ data:
           "timeRegions":[
 
           ],
-          "title":"Average job duration time",
+          "title":"Job duration time",
           "tooltip":{
             "shared":true,
             "sort":2,
