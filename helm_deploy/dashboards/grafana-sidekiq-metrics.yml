@@ -615,7 +615,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_stats_dead_size{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\",job_name=\"$job\"})",
+              "expr":"avg(ruby_sidekiq_stats_dead_size{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
@@ -810,7 +810,7 @@ data:
               },
               "editorMode":"code",
               "exemplar":false,
-              "expr":"ruby_sidekiq_job_duration_seconds{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\",job_name=\"$job\"}",
+              "expr":"avg by (job_name) (ruby_sidekiq_job_duration_seconds{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\",job_name=\"$job\"})",
               "format":"time_series",
               "instant":false,
               "intervalFactor":2,
