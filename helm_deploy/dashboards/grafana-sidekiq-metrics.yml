@@ -615,7 +615,7 @@ data:
                 "uid":"prometheus"
               },
               "editorMode":"code",
-              "expr":"avg(ruby_sidekiq_stats_dead_size{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\"})",
+              "expr":"avg(ruby_sidekiq_stats_dead_size{namespace=\"$namespace\",pod=~\"laa-.+-app-.+\",job_name=\"$job\"})",
               "format":"time_series",
               "intervalFactor":1,
               "range":true,
