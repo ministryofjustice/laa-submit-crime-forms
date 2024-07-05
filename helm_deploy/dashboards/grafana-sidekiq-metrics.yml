@@ -636,119 +636,6 @@ data:
             "type":"prometheus",
             "uid":"prometheus"
           },
-          "fill":1,
-          "fillGradient":0,
-          "gridPos":{
-            "h":14,
-            "w":13,
-            "x":0,
-            "y":4
-          },
-          "hiddenSeries":false,
-          "id":2,
-          "legend":{
-            "alignAsTable":true,
-            "avg":true,
-            "current":true,
-            "max":false,
-            "min":false,
-            "rightSide":true,
-            "show":true,
-            "sort":"current",
-            "sortDesc":true,
-            "total":false,
-            "values":true
-          },
-          "lines":true,
-          "linewidth":1,
-          "nullPointMode":"null",
-          "options":{
-            "alertThreshold":true
-          },
-          "percentage":false,
-          "pluginVersion":"10.4.0",
-          "pointradius":5,
-          "points":false,
-          "renderer":"flot",
-          "seriesOverrides":[
-
-          ],
-          "spaceLength":10,
-          "stack":false,
-          "steppedLine":false,
-          "targets":[
-            {
-              "datasource":{
-                "type":"prometheus",
-                "uid":"prometheus"
-              },
-              "expr":"sum(rate(ruby_sidekiq_jobs_total{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\",job_name=\"$job\"}[1m]))",
-              "format":"time_series",
-              "hide":false,
-              "intervalFactor":2,
-              "legendFormat":"All jobs",
-              "refId":"A"
-            },
-            {
-              "datasource":{
-                "type":"prometheus",
-                "uid":"prometheus"
-              },
-              "expr":"sum(rate(ruby_sidekiq_failed_jobs_total{namespace=\"$namespace\",pod=~\"laa-.+-worker-.+\",job_name=\"$job\"}[1m]))",
-              "format":"time_series",
-              "intervalFactor":2,
-              "legendFormat":"Failed jobs",
-              "refId":"B"
-            }
-          ],
-          "thresholds":[
-
-          ],
-          "timeRegions":[
-
-          ],
-          "title":"Jobs processed every second",
-          "tooltip":{
-            "shared":true,
-            "sort":0,
-            "value_type":"individual"
-          },
-          "type":"graph",
-          "xaxis":{
-            "mode":"time",
-            "show":true,
-            "values":[
-
-            ]
-          },
-          "yaxes":[
-            {
-              "format":"ops",
-              "logBase":1,
-              "min":"0",
-              "show":true
-            },
-            {
-              "format":"short",
-              "logBase":1,
-              "show":false
-            }
-          ],
-          "yaxis":{
-            "align":false
-          }
-        },
-        {
-          "aliasColors":{
-
-          },
-          "bars":false,
-          "dashLength":10,
-          "dashes":false,
-          "datasource":{
-            "type":"prometheus",
-            "uid":"prometheus"
-          },
           "description":"Time spent executing jobs",
           "fieldConfig":{
             "defaults":{
@@ -764,8 +651,8 @@ data:
           "fillGradient":0,
           "gridPos":{
             "h":14,
-            "w":11,
-            "x":13,
+            "w":26,
+            "x":0,
             "y":4
           },
           "hiddenSeries":false,
