@@ -36,7 +36,11 @@ module Providers
     end
 
     def provider_office_codes_for(service: ANY_SERVICE)
-      auth_info.office_codes & allowed_office_codes(service:)
+      if all_enrolled?(service:)
+        auth_info.office_codes
+      else
+        auth_info.office_codes & allowed_office_codes(service:)
+      end
     end
 
     def allowed_office_codes(service: ANY_SERVICE)

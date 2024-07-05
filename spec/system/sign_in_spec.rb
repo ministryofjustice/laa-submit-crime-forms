@@ -89,4 +89,19 @@ RSpec.describe 'Sign in user journey' do
       end
     end
   end
+
+  context 'user has implicit permission from an all' do
+    before do
+      visit provider_saml_omniauth_callback_path
+    end
+
+    # NOTE: test relies on mock_auth having office code of "1A123B"
+    let(:office_codes_from_crm4_config) { ['AAAAA'] }
+    let(:office_codes_from_crm5_config) { ['ALL'] }
+    let(:office_codes_from_crm7_config) { ['BBBBB'] }
+
+    it 'authenticates the user and redirects to the dashboard' do
+      expect(page).to have_current_path(root_path)
+    end
+  end
 end
