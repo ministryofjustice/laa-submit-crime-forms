@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Office code selection', type: :system do
-  let(:office_code_question) { 'Which firm account number is this application for?' }
+  let(:office_code_question) { 'Which firm account number is this claim for?' }
   let(:provider) { Provider.first }
 
   context 'when I complete the firm details screen' do
