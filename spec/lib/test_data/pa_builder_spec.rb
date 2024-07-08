@@ -19,7 +19,7 @@ RSpec.describe TestData::PaBuilder do
       expect(data.count).to eq(2)
 
       data.all? do |ufn|
-        expect(ufn).to match(%r{\A\d{4}20/\d{3}\z})
+        expect(ufn).to match(%r{\A\d{6}/\d{3}\z})
       end
     end
 

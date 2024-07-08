@@ -27,7 +27,7 @@ RSpec.describe TestData::NsmBuilder do
       expect(data.count).to eq(2)
 
       data.each do |ufn, rep_order_date, cntp_date|
-        expect(ufn).to match(%r{\A\d{4}20/00\d\z})
+        expect(ufn).to match(%r{\A\d{6}/\d{3}\z})
         date = rep_order_date || cntp_date
         expect(date.year).to eq(2020)
       end

@@ -39,4 +39,28 @@ RSpec.describe PriorAuthorityApplication do
       end
     end
   end
+
+  describe '#further_information_needed?' do
+    context 'a draft application' do
+      subject(:prior_authority_application) { create(:prior_authority_application, status: 'draft') }
+
+      it { expect(prior_authority_application).not_to be_further_information_needed }
+    end
+
+    context 'a sent back application' do
+      subject(:prior_authority_application) do
+        create(:prior_authority_application, :with_further_information_request, app_store_updated_at:)
+      end
+
+      let(:app_store_updated_at) { DateTime.current - 1.day }
+
+      it { expect(prior_authority_application).to be_further_information_needed }
+    end
+
+    context 'a sent back application with no further information' do
+      subject(:prior_authority_application)  { create(:prior_authority_application, status: 'sent_back') }
+
+      it { expect(prior_authority_application).not_to be_further_information_needed }
+    end
+  end
 end

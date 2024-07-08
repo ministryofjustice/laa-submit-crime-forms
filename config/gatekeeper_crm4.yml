@@ -54,7 +54,7 @@ uat:
 production:
   office_codes:
     # dummy user/office
-    - 2N232W
+    # - 2N232W
 
     # First CRM4 onboarding tranche - 04/06/2024
     - 1U002F

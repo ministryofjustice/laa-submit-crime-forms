@@ -16,7 +16,7 @@ module TestData
       ActiveRecord::Base.transaction do
         args, kwfct = *options(**options).values.sample
         kwargs = kwfct.call
-        paa = FactoryBot.create(*args, further_informations: [], incorrect_informations: [], **kwargs)
+        paa = FactoryBot.create(*args, :randomised, further_informations: [], incorrect_informations: [], **kwargs)
         paa.update!(status: :submitted, updated_at: paa.updated_at + 1.minute)
 
         invalid_tasks = check_tasks(paa)
