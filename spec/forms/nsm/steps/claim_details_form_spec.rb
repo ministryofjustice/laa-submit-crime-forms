@@ -94,7 +94,8 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
 
       it 'they must be present' do
         expect(form).not_to be_valid
-        expect(form.errors).to include(:supplemental_claim, :preparation_time, :work_before, :work_after, :wasted_costs, :work_completed_date)
+        expect(form.errors).to include(:supplemental_claim, :preparation_time, :work_before, :work_after, :wasted_costs,
+                                       :work_completed_date)
       end
     end
 
