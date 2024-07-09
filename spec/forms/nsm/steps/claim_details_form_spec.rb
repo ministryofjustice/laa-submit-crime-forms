@@ -16,6 +16,7 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
       work_after:,
       work_before_date:,
       work_after_date:,
+      work_completed_date:,
       wasted_costs:,
     }
   end
@@ -31,6 +32,7 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
   let(:work_after) { 'yes' }
   let(:work_before_date) { Date.yesterday }
   let(:work_after_date) { Date.yesterday }
+  let(:work_completed_date) { Date.yesterday }
   let(:time_spent) { { 1 => hours, 2 => minutes } }
   let(:hours) { 2 }
   let(:minutes) { 40 }
@@ -39,11 +41,12 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
   describe '#save' do
     let(:application) do
       create(:claim, time_spent: time_spent_in_db, work_before_date: work_before_date_in_db,
-     work_after_date: work_after_date_in_db)
+     work_after_date: work_after_date_in_db, work_completed_date: work_completed_date_in_db)
     end
     let(:time_spent_in_db) { nil }
     let(:work_before_date_in_db) { nil }
     let(:work_after_date_in_db) { nil }
+    let(:work_completed_date_in_db) { nil }
 
     context 'when values are yes' do
       let(:preparation_time) { 'yes' }
@@ -87,10 +90,11 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
       let(:work_before) { nil }
       let(:work_after) { nil }
       let(:wasted_costs) { nil }
+      let(:work_completed_date) { nil }
 
       it 'they must be present' do
         expect(form).not_to be_valid
-        expect(form.errors).to include(:supplemental_claim, :preparation_time, :work_before, :work_after, :wasted_costs)
+        expect(form.errors).to include(:supplemental_claim, :preparation_time, :work_before, :work_after, :wasted_costs, :work_completed_date)
       end
     end
 

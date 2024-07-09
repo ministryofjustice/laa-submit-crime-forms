@@ -45,6 +45,12 @@ module Nsm
             claim.work_after_date.to_fs(:stamp)
           end,
           {
+            head_key: 'work_completed_date',
+            text: check_missing(claim.work_completed_date) do
+              claim.work_completed_date.to_fs(:stamp)
+            end
+          },
+          {
             head_key: 'wasted_costs',
             text: check_missing(claim.wasted_costs.present?) do
               claim.wasted_costs.capitalize

@@ -9,6 +9,7 @@ module Nsm
       attribute :time_spent, :time_period
       attribute :work_before_date, :multiparam_date
       attribute :work_after_date, :multiparam_date
+      attribute :work_completed_date, :multiparam_date
 
       validates :prosecution_evidence, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
       validates :defence_statement, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
@@ -19,6 +20,7 @@ module Nsm
         if: -> { work_before == YesNoAnswer::YES }
       validates :work_after_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
         if: -> { work_after == YesNoAnswer::YES }
+      validates :work_completed_date, presence: true, multiparam_date: { allow_past: true, allow_future: false }
 
       BOOLEAN_FIELDS.each do |field|
         attribute field, :value_object, source: YesNoAnswer

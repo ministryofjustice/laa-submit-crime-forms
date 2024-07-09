@@ -427,6 +427,7 @@ en:
               invalid: Period must be valid
             work_before_date: *shared_date_errors
             work_after_date: *shared_date_errors
+
         nsm/steps/work_item_form:
           attributes:
             completed_on: *shared_date_errors

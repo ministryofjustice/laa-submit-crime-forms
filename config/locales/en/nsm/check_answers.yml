@@ -72,7 +72,8 @@ en:
               work_before: Work before order was granted
               work_before_date: Date of work before order was granted
               work_after: Work after last hearing
-              work_after_date: Date of work after order was granted
+              work_after_date: Date of last hearing
+              work_completed_date: Date work was completed
               wasted_costs: Wasted costs
             letters_calls:
               items: Items

@@ -26,6 +26,11 @@ RSpec.describe 'User can fill in claim details', type: :system do
       fill_in 'Year', with: '2023'
     end
     find('.govuk-form-group', text: 'Did you do any further work after the last court hearing?').choose 'No'
+    within('.govuk-form-group', text: 'Date work was completed') do
+      fill_in 'Day', with: '28'
+      fill_in 'Month', with: '3'
+      fill_in 'Year', with: '2023'
+    end
     find('.govuk-form-group', text: 'Have wasted costs been applied to this case?').choose 'Yes'
 
     click_on 'Save and continue'
@@ -35,6 +40,7 @@ RSpec.describe 'User can fill in claim details', type: :system do
       number_of_witnesses: 3,
       time_spent: (10 * 60) + 30,
       work_before_date: Date.new(2023, 3, 26),
+      work_completed_date: Date.new(2023, 3, 28),
     )
   end
 end
