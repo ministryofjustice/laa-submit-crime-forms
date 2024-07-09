@@ -70,3 +70,10 @@ If branch name contains "redis" then the redis-release-name appends "-master", o
   {{- $redis_fullName := (include "common.names.fullname" .Subcharts.redis) -}}
   {{- printf "%s-master.%s.svc.cluster.local" $redis_fullName .Release.Namespace -}}
 {{- end -}}
+
+{{/*
+Function to return the internal host name of the current service
+*/}}
+{{- define "helm_deploy.internalHostName" -}}
+  {{- printf "%s.%s.svc.cluster.local" .Values.nameOverride .Release.Namespace -}}
+{{- end -}}

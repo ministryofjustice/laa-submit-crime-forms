@@ -6,11 +6,12 @@ class AppStoreSubscriber
   end
 
   def subscribe
-    return if ENV['HOSTS'].blank?
+    hostname = ENV.fetch('INTERNAL_HOST_NAME', ENV.fetch('HOSTS', nil)&.split(',')&.first)
+    return if hostname.blank?
 
     url = app_store_webhook_url(
-      host: ENV.fetch('HOSTS', nil),
-      protocol: ENV.fetch('PROTOCOL', 'https')
+      host: hostname,
+      protocol: 'http'
     )
 
     AppStoreClient.new.post(
