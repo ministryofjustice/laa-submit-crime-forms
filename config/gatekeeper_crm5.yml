@@ -37,20 +37,23 @@ development:
 
 uat:
   office_codes:
-    # dummy/testing office codes
-    - 1A123B
-    - 2A555X
-    - 1K022G
-    - 0A719G
-    - 0Z981E
-    - CCCCCC
-    - XXXXXX
+    # Sixth CRM5 onboarding tranche - 04/07/2024
+    - ALL
 
-    # Test user office from portal A.CLARK - with eForms role - (see 1Password for login details)
-    - 0X416R
+    # # dummy/testing office codes
+    # - 1A123B
+    # - 2A555X
+    # - 1K022G
+    # - 0A719G
+    # - 0Z981E
+    # - CCCCCC
+    # - XXXXXX
 
-    # Test user office from portal 07RJONES - without eForms role - (see 1Password for login details)
-    - 0Q316L
+    # # Test user office from portal A.CLARK - with eForms role - (see 1Password for login details)
+    # - 0X416R
+
+    # # Test user office from portal 07RJONES - without eForms role - (see 1Password for login details)
+    # - 0Q316L
 
 production:
   office_codes:

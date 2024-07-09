@@ -13,7 +13,7 @@
     </ul>
   </div>
   <div class="govuk-summary-card__content">
-    <% if form.valid? %>
+    <% if form.additional_costs.any? %>
       <table class="govuk-table">
         <caption class="govuk-table__caption govuk-visually-hidden">
           <%= t('.additional_costs') %>

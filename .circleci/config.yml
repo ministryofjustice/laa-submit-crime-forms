@@ -12,6 +12,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@9.0.2
   crime-forms-end-to-end-tests: ministryofjustice/crime-forms-end-to-end-tests@volatile
   slack: circleci/slack@4.13.3
+  helm: circleci/helm@3.0.2
 
 # ------------------
 # EXECUTORS
@@ -325,6 +326,15 @@ jobs:
       - run:
           name: Monitor container image for vulnerabilities
           command: snyk container monitor app
+      - helm/install_helm_client:
+          version: 3.7.2
+      - run:
+          name: Test IaC files
+          command: |
+            # render k8s manifests from helm templates
+            helm template ./helm_deploy --output-dir ./output --values helm_deploy/values-prod.yaml
+
+            snyk iac test ./output --report --policy-path=.snyk --severity-threshold=high
 
   build-to-ecr:
     executor: aws-ecr/default
