@@ -427,7 +427,13 @@ en:
               invalid: Period must be valid
             work_before_date: *shared_date_errors
             work_after_date: *shared_date_errors
-
+            work_completed_date:
+              blank: Enter the date work completeed
+              invalid: Enter a valid date work completed
+              invalid_day: Enter a valid day work completed
+              invalid_month: Enter a valid month work completed
+              invalid_year: Enter a valid year work completed
+              future_not_allowed: Date work completed cannot be in the future
         nsm/steps/work_item_form:
           attributes:
             completed_on: *shared_date_errors
