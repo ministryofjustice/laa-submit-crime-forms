@@ -36,4 +36,16 @@ updates:
       patterns:
         - "*"
   open-pull-requests-limit: 10
+- package-ecosystem: docker
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: wednesday
+    time: "03:00"
+    timezone: Europe/London
+  groups:
+    docker:
+      patterns:
+        - "*"
+  open-pull-requests-limit: 10
 
