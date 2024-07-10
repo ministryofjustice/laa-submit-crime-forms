@@ -2,7 +2,7 @@
 #  A service to apply for a claim for a  non standard magistrate fee
 
 * Ruby version
-ruby 3.3.3
+ruby 3.3.4
 
 * Rails version
 rails 7.0.42.0
