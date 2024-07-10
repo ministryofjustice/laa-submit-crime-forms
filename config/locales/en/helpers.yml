@@ -40,6 +40,7 @@ en:
         time_spent: Running time of the recording
         work_before_date: Date you started this work
         work_after_date: Date of last court hearing
+        work_completed_date: Date work was completed
         work_before: Did you do any work before the representation order date?
         work_after: Did you do any further work after the last court hearing?
         wasted_costs: Have wasted costs been applied to this case?
@@ -102,6 +103,7 @@ en:
         time_spent: For example, 1 hour and 30 minutes
         work_before_date: For example, 27 3 2023
         work_after_date: For example, 27 3 2023
+        work_completed_date: For example, 27 3 2023
         wasted_costs: |
           Wasted costs are applied when a judge has determined that the lawyer (solicitor or barrister)
           or a third party has wasted the court‘s time.

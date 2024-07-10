@@ -57,6 +57,10 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
               text: '1 January 2020'
             },
             {
+              head_key: 'work_completed_date',
+              text: '2 January 2020'
+            },
+            {
               head_key: 'wasted_costs',
               text: 'Yes'
             },
@@ -100,6 +104,10 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
               text: 'No'
             },
             {
+              head_key: 'work_completed_date',
+              text: '2 January 2020'
+            },
+            {
               head_key: 'wasted_costs',
               text: 'No'
             },
@@ -140,6 +148,10 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
             },
             {
               head_key: 'work_after',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'work_completed_date',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
@@ -196,6 +208,10 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
             {
               head_key: 'work_after_date',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'work_completed_date',
+              text: '2 January 2020'
             },
             {
               head_key: 'wasted_costs',

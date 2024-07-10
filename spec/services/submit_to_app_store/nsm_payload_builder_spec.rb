@@ -136,6 +136,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'vat_rate' => 0.2,
           'work_after' => 'yes',
           'work_after_date' => '2020-01-01',
+          'work_completed_date' => '2020-01-02',
           'work_before' => 'yes',
           'work_before_date' => '2020-12-01',
           'work_items' =>

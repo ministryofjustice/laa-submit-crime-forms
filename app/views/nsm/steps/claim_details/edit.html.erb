@@ -11,6 +11,8 @@
       <%= f.govuk_number_field :number_of_witnesses,label:{ size: 's'}, min: 1, step: 1, width: 3 %>
 
       <% @form_object.boolean_fields.each do |field| %>
+        <% next if field == :wasted_costs %>
+
         <%= f.govuk_radio_buttons_fieldset field, legend: { size: 's' } do %>
           <%= f.govuk_radio_button field, YesNoAnswer::YES do %>
             <% if field == :preparation_time %>
@@ -22,6 +24,13 @@
           <%= f.govuk_radio_button field, YesNoAnswer::NO %>
         <% end %>
       <% end%>
+
+      <%= f.govuk_fully_validatable_date_field :work_completed_date,legend: { size: 's' }, width: 'one-third' %>
+
+      <%= f.govuk_radio_buttons_fieldset :wasted_costs, legend: { size: 's' } do %>
+        <%= f.govuk_radio_button :wasted_costs, YesNoAnswer::YES %>
+        <%= f.govuk_radio_button :wasted_costs, YesNoAnswer::NO %>
+      <% end %>
       <%= f.continue_button %>
     <% end %>
   </div>

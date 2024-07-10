@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_14_154401) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_09_103203) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -125,13 +125,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_14_154401) do
     t.float "adjusted_total"
     t.float "adjusted_total_inc_vat"
     t.string "assessment_comment"
-    t.string "wasted_costs"
     t.integer "allowed_letters"
     t.integer "allowed_calls"
     t.integer "allowed_letters_uplift"
     t.integer "allowed_calls_uplift"
     t.string "letters_adjustment_comment"
     t.string "calls_adjustment_comment"
+    t.string "wasted_costs"
+    t.date "work_completed_date"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
@@ -219,17 +220,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_14_154401) do
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "next_hearing"
+    t.text "reason_why"
+    t.date "rep_order_date"
+    t.boolean "client_detained"
+    t.boolean "subject_to_poca"
     t.date "next_hearing_date"
     t.string "plea"
     t.string "court_type"
     t.boolean "youth_court"
     t.boolean "psychiatric_liaison"
     t.string "psychiatric_liaison_reason_not"
-    t.date "rep_order_date"
-    t.boolean "client_detained"
-    t.boolean "subject_to_poca"
-    t.text "reason_why"
+    t.boolean "next_hearing"
     t.boolean "additional_costs_still_to_add"
     t.boolean "prior_authority_granted"
     t.text "no_alternative_quote_reason"
