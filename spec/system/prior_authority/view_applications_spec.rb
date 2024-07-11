@@ -164,7 +164,7 @@ RSpec.describe 'View reviewed applications' do
             information_requested: 'Tell me more',
             information_supplied: 'More info',
             created_at: 1.day.ago,
-            supporting_documents: [build(:supporting_document, file_name: 'evidence.pdf')])
+            supporting_documents: [build(:supporting_document, file_name: 'evidence–with-weird-char.pdf')])
     end
 
     it 'shows uodate details' do
@@ -175,8 +175,11 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'lets me download my uploaded file' do
-      click_on 'evidence.pdf'
+      click_on 'evidence–with-weird-char.pdf'
       expect(page).to have_current_path(%r{/test_path})
+      expect(page.driver.request.params['response-content-disposition']).to eq(
+        'attachment; filename="evidencewith-weird-char.pdf"'
+      )
     end
   end
 end
