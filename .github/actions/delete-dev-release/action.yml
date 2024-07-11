@@ -82,6 +82,7 @@ runs:
 
         if [[ ! -z "$found" ]]
         then
+          kubectl exec deploy/$release_name -it -- bundle exec rails app_store:unsubscribe
           helm delete $release_name
           kubectl delete pvc data-$release_name-postgresql-0
           kubectl delete pvc redis-data-$release_name-redis-master-0

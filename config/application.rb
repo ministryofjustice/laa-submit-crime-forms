@@ -56,7 +56,7 @@ module Crm7restbackend
 
     config.after_initialize do
       Rails.application.reload_routes!
-      AppStoreSubscriber.call
+      AppStoreSubscriber.subscribe
     end
   end
 end
