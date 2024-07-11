@@ -267,4 +267,43 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       expect(http_stub).to have_been_requested
     end
   end
+
+  describe '#delete' do
+    let(:message) { { foo: :bar } }
+    let(:path) { 'v1/something' }
+
+    let(:stub) do
+      stub_request(:delete, "http://some.url/#{path}").with(
+        body: message.to_json,
+      ).to_return(status:)
+    end
+
+    before do
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with('APP_STORE_TENANT_ID', nil).and_return(nil)
+      allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000').and_return('http://some.url')
+
+      stub
+    end
+
+    context 'when HTTP request succeeds' do
+      let(:status) { 204 }
+
+      it 'posts the message without headers' do
+        expect(subject.delete(message, path:)).to eq :success
+
+        expect(stub).to have_been_requested
+      end
+    end
+
+    context 'when HTTP request fails' do
+      let(:status) { 500 }
+
+      it 'raises an error' do
+        expect { subject.delete(message, path:) }.to raise_error(
+          'Unexpected response from AppStore - status 500 from delete v1/something'
+        )
+      end
+    end
+  end
 end

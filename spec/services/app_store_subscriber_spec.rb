@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AppStoreSubscriber do
-  describe '.call' do
+  describe '.subscribe' do
     let(:client) { instance_double(AppStoreClient) }
 
     before do
@@ -12,7 +12,7 @@ RSpec.describe AppStoreSubscriber do
     context 'when there is no defined host' do
       it 'does not make a request' do
         expect(AppStoreClient).not_to receive(:new)
-        described_class.call
+        described_class.subscribe
       end
     end
 
@@ -24,7 +24,7 @@ RSpec.describe AppStoreSubscriber do
       end
 
       it 'makes a request' do
-        described_class.call
+        described_class.subscribe
         expect(client).to have_received(:post).with(
           { webhook_url: 'http://example.com/app_store_webhook', subscriber_type: :provider },
           path: 'v1/subscriber'
@@ -38,7 +38,7 @@ RSpec.describe AppStoreSubscriber do
         end
 
         it 'passes the error to Sentry' do
-          expect { described_class.call }.not_to raise_error
+          expect { described_class.subscribe }.not_to raise_error
           expect(Sentry).to have_received(:capture_exception)
         end
       end
@@ -52,7 +52,7 @@ RSpec.describe AppStoreSubscriber do
       end
 
       it 'picks the first one' do
-        described_class.call
+        described_class.subscribe
         expect(client).to have_received(:post).with(
           { webhook_url: 'http://other.com/app_store_webhook', subscriber_type: :provider },
           path: 'v1/subscriber'
@@ -68,12 +68,35 @@ RSpec.describe AppStoreSubscriber do
       end
 
       it 'uses that' do
-        described_class.call
+        described_class.subscribe
         expect(client).to have_received(:post).with(
           { webhook_url: 'http://internal.svc.local/app_store_webhook', subscriber_type: :provider },
           path: 'v1/subscriber'
         )
       end
+    end
+  end
+
+  describe '.unsubscribe' do
+    let(:client) { instance_double(AppStoreClient) }
+
+    before do
+      allow(AppStoreClient).to receive(:new).and_return(client)
+      allow(client).to receive(:delete)
+    end
+
+    around do |example|
+      ENV['HOSTS'] = 'example.com'
+      example.run
+      ENV['HOSTS'] = nil
+    end
+
+    it 'makes an appropriate request' do
+      described_class.unsubscribe
+      expect(client).to have_received(:delete).with(
+        { webhook_url: 'http://example.com/app_store_webhook', subscriber_type: :provider },
+        path: 'v1/subscriber'
+      )
     end
   end
 end

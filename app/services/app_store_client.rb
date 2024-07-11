@@ -37,6 +37,17 @@ class AppStoreClient
     process_get("/v1/application/#{submission_id}")
   end
 
+  def delete(message, path:)
+    response = self.class.delete("#{host}/#{path}", **options(message))
+
+    case response.code
+    when 200..204
+      :success
+    else
+      raise "Unexpected response from AppStore - status #{response.code} from delete #{path}"
+    end
+  end
+
   private
 
   def process_get(path)
