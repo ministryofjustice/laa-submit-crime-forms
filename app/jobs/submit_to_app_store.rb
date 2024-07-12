@@ -7,8 +7,8 @@ class SubmitToAppStore < ApplicationJob
     notify(submission)
   end
 
-  def submit(submission)
-    payload = PayloadBuilder.call(submission)
+  def submit(submission, include_events: true)
+    payload = PayloadBuilder.call(submission, include_events:)
     client = AppStoreClient.new
 
     if submission.is_a?(PriorAuthorityApplication)
