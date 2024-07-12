@@ -31,13 +31,13 @@ module Steps
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def update_and_advance(form_class, opts = {})
-      current_application.transaction do
-        hash = permitted_params(form_class).to_h
-        record = opts.fetch(:record, current_application)
-        @form_object = form_class.new(
-          hash.merge(application: current_application, record: record)
-        )
+      hash = permitted_params(form_class).to_h
+      record = opts.fetch(:record, current_application)
+      @form_object = form_class.new(
+        hash.merge(application: current_application, record: record)
+      )
 
+      current_application.transaction do
         if params.key?(:commit_draft)
           # Validations will not be run when saving a draft
           @form_object.save!
