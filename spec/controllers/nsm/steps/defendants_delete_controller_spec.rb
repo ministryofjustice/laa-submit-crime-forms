@@ -94,7 +94,6 @@ RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
 
       before do
         allow(Nsm::Steps::DefendantDeleteForm).to receive(:build).and_return(form)
-        allow(current_application).to receive(:transaction)
       end
 
       context 'when defendant id is passes in' do

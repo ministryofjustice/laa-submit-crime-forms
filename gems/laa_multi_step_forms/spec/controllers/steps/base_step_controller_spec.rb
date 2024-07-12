@@ -8,7 +8,7 @@ class FakeApp < Steps::BaseFormObject
     true
   end
 
-  def transaction(&block)
+  def transaction
     true
   end
 end
