@@ -39,29 +39,29 @@ module Steps
 
       begin
         current_application.transaction do
-          if params.key?(:commit_draft)
-            # Validations will not be run when saving a draft
-            @form_object.save!
-            redirect_to opts[:after_commit_redirect_path] || nsm_after_commit_path(id: current_application.id)
-          elsif params.key?(:reload)
-            reload
-          elsif params.key?(:save_and_refresh)
-            @form_object.save!
-            redirect_to_current_object
-          else
-            @form_object.save
-          end
+          process_form(@form_object)
         end
       rescue StandardError => e
         render opts.fetch(:render, :edit)
         Sentry.capture_exception(e)
-      else
-        if !params.key?(:commit_draft) && !params.key?(:reload) && !params.key?(:save_and_refresh)
-          redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
-        end
       end
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+    def process_form(form_object)
+      if params.key?(:commit_draft)
+        # Validations will not be run when saving a draft
+        form_object.save!
+        redirect_to opts[:after_commit_redirect_path] || nsm_after_commit_path(id: current_application.id)
+      elsif params.key?(:reload)
+        reload
+      elsif params.key?(:save_and_refresh)
+        form_object.save!
+        redirect_to_current_object
+      elsif form_object.save
+        redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
+      end
+    end
 
     # This deals with the case when it is called from the NEW_RECORD endpoint
     # to avoid creating a new record on each click
