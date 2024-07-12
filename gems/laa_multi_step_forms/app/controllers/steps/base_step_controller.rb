@@ -37,21 +37,23 @@ module Steps
         hash.merge(application: current_application, record: record)
       )
 
-      current_application.transaction do
-        if params.key?(:commit_draft)
-          # Validations will not be run when saving a draft
-          @form_object.save!
-          redirect_to opts[:after_commit_redirect_path] || nsm_after_commit_path(id: current_application.id)
-        elsif params.key?(:reload)
-          reload
-        elsif params.key?(:save_and_refresh)
-          @form_object.save!
-          redirect_to_current_object
-        elsif @form_object.save
-          redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
-        else
-          render opts.fetch(:render, :edit)
+      begin
+        current_application.transaction do
+          if params.key?(:commit_draft)
+            # Validations will not be run when saving a draft
+            @form_object.save!
+            redirect_to opts[:after_commit_redirect_path] || nsm_after_commit_path(id: current_application.id)
+          elsif params.key?(:reload)
+            reload
+          elsif params.key?(:save_and_refresh)
+            @form_object.save!
+            redirect_to_current_object
+          end
         end
+      rescue StandardError => e
+        render opts.fetch(:render, :edit)
+      else
+        redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       end
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
