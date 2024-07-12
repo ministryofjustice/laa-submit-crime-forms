@@ -48,13 +48,17 @@ module Steps
           elsif params.key?(:save_and_refresh)
             @form_object.save!
             redirect_to_current_object
+          else
+            @form_object.save
           end
         end
       rescue StandardError => e
         render opts.fetch(:render, :edit)
         Sentry.capture_exception(e)
       else
-        redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
+        if !params.key?(:commit_draft) && !params.key?(:reload) && !params.key?(:save_and_refresh)
+          redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
+        end
       end
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
