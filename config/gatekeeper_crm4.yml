@@ -51,6 +51,11 @@ uat:
     # Test user office from portal 07RJONES - without eForms role - (see 1Password for login details)
     - 0Q316L
 
+    #Test user off codes from portal zoebooker with eForms role - (see 1Password for login details)
+    - 0C002B
+    - 1B762Q
+    - 1B763R
+
 production:
   office_codes:
     # dummy user/office
