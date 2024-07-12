@@ -52,6 +52,7 @@ module Steps
         end
       rescue StandardError => e
         render opts.fetch(:render, :edit)
+        Sentry.capture_exception(e)
       else
         redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       end
