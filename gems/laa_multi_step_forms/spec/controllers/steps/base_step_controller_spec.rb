@@ -7,6 +7,10 @@ class FakeApp < Steps::BaseFormObject
   def save!(*)
     true
   end
+
+  def transaction(**options, &block)
+    true
+  end
 end
 
 RSpec.describe DummyStepController, type: :controller do
