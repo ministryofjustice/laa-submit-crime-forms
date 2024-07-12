@@ -5,7 +5,7 @@ RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
     # Needed because some specs that include these examples stub current_application,
     # which is undesirable for this particular test
     allow(controller).to receive(:current_application).and_return(current_application)
-    allow(current_application).to receive(:transaction)
+    allow(current_application).to receive(:transaction).and_return(true)
   end
 
   describe '#edit' do
