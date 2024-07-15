@@ -35,7 +35,6 @@ module Steps
       @form_object = form_class.new(
         hash.merge(application: current_application, record: record)
       )
-
       current_application.transaction do
         process_form(@form_object, opts)
       end
