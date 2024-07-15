@@ -39,7 +39,7 @@ module Steps
 
       begin
         current_application.transaction do
-          process_form(@form_object)
+          process_form(@form_object, opts)
         end
       rescue StandardError => e
         render opts.fetch(:render, :edit)
@@ -49,7 +49,7 @@ module Steps
     # rubocop:enable Metrics/MethodLength
 
     # rubocop:disable Metrics/AbcSize
-    def process_form(form_object)
+    def process_form(form_object, opts)
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
         form_object.save!
