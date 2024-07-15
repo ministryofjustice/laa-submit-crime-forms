@@ -19,7 +19,7 @@ RSpec.describe SubmitToAppStore::PayloadBuilder do
 
     it 'delegates to NsmPayloadBuilder' do
       expect(SubmitToAppStore::PriorAuthorityPayloadBuilder).to(
-        receive(:new).with(application: submission).and_return(builder)
+        receive(:new).with(application: submission, include_events: true).and_return(builder)
       )
       subject
     end
