@@ -129,7 +129,7 @@ RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
 
             it 'renders the question page again' do
               put :update, params: expected_params
-              expect(response).to have_http_status(:redirect)
+              expect(response).to have_http_status(:ok)
             end
           end
         end
