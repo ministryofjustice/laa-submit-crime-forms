@@ -29,7 +29,7 @@ module Steps
       raise 'implement this action, in subclasses'
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def update_and_advance(form_class, opts = {})
       hash = permitted_params(form_class).to_h
       record = opts.fetch(:record, current_application)
@@ -46,8 +46,9 @@ module Steps
         Sentry.capture_exception(e)
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
+    # rubocop:disable Metrics/AbcSize
     def process_form(form_object)
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
@@ -62,6 +63,7 @@ module Steps
         redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     # This deals with the case when it is called from the NEW_RECORD endpoint
     # to avoid creating a new record on each click
