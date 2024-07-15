@@ -39,12 +39,12 @@ module Steps
         current_application.transaction do
           process_form(@form_object, opts)
         end
-      rescue ActiveRecord::RecordInvalid => record
+      rescue ActiveRecord::RecordInvalid
         render opts.fetch(:render, :edit)
       end
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def process_form(form_object, opts)
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
@@ -59,7 +59,7 @@ module Steps
         redirect_to decision_tree_class.new(form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       end
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
 
     # This deals with the case when it is called from the NEW_RECORD endpoint
     # to avoid creating a new record on each click
