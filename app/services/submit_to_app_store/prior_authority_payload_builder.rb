@@ -100,6 +100,8 @@ class SubmitToAppStore
       no_alternative_quote_reason
       confirm_excluding_vat
       confirm_travel_expenditure
+      created_at
+      updated_at
     ].freeze
   end
 end

@@ -164,13 +164,15 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             sections_changed: ['case_details']
           }
         ],
+        created_at: DateTime.new(2024, 1, 15, 0, 0, 0),
+        updated_at: DateTime.new(2024, 1, 15, 0, 0, 0)
       },
       application_id: application.id,
       application_state: 'submitted',
       application_type: 'crm4',
       json_schema_version: 1,
       application_risk: 'N/A',
-      events: []
+      events: [],
     }
   end
   let(:provider) { create(:provider) }
