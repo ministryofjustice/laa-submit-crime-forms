@@ -60,7 +60,7 @@ module Steps
         form_object.save!
         redirect_to_current_object
       elsif form_object.save
-        redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
+        redirect_to decision_tree_class.new(form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       end
     end
     # rubocop:enable Metrics/AbcSize
