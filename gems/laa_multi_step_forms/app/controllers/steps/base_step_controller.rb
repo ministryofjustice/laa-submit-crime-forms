@@ -29,7 +29,6 @@ module Steps
       raise 'implement this action, in subclasses'
     end
 
-    # rubocop:disable Metrics/MethodLength
     def update_and_advance(form_class, opts = {})
       hash = permitted_params(form_class).to_h
       record = opts.fetch(:record, current_application)
@@ -41,9 +40,8 @@ module Steps
         process_form(@form_object, opts)
       end
     end
-    # rubocop:enable Metrics/MethodLength
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def process_form(form_object, opts)
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
@@ -60,7 +58,7 @@ module Steps
         render opts.fetch(:render, :edit)
       end
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
     # This deals with the case when it is called from the NEW_RECORD endpoint
     # to avoid creating a new record on each click
