@@ -35,9 +35,12 @@ module Steps
       @form_object = form_class.new(
         hash.merge(application: current_application, record: record)
       )
-
-      current_application.transaction do
-        process_form(@form_object, opts)
+      begin
+        current_application.transaction do
+          process_form(@form_object, opts)
+        end
+      rescue ActiveRecord::RecordInvalid => record
+        render opts.fetch(:render, :edit)
       end
     end
 
@@ -54,8 +57,6 @@ module Steps
         redirect_to_current_object
       elsif form_object.save
         redirect_to decision_tree_class.new(form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
-      else
-        render opts.fetch(:render, :edit)
       end
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
