@@ -35,12 +35,13 @@ module Steps
       @form_object = form_class.new(
         hash.merge(application: current_application, record: record)
       )
+
       current_application.transaction do
         process_form(@form_object, opts)
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def process_form(form_object, opts)
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
@@ -57,7 +58,7 @@ module Steps
         render opts.fetch(:render, :edit)
       end
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
     # This deals with the case when it is called from the NEW_RECORD endpoint
     # to avoid creating a new record on each click
