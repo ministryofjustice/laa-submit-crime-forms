@@ -5,6 +5,7 @@ RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
     # Needed because some specs that include these examples stub current_application,
     # which is undesirable for this particular test
     allow(controller).to receive(:current_application).and_return(current_application)
+    allow(current_application).to receive(:with_lock).and_yield
   end
 
   describe '#edit' do
@@ -108,7 +109,7 @@ RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
 
           context 'when the form saves successfully' do
             before do
-              expect(form_object).to receive(:save).and_return(true)
+              allow(form_object).to receive(:save).and_return(true)
             end
 
             let(:decision_tree) { instance_double(Decisions::DecisionTree, destination: '/expected_destination') }
@@ -123,7 +124,7 @@ RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
 
           context 'when the form fails to save' do
             before do
-              expect(form_object).to receive(:save).and_return(false)
+              allow(form_object).to receive(:save).and_return(false)
             end
 
             it 'renders the question page again' do

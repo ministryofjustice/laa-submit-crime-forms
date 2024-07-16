@@ -1,6 +1,7 @@
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'
 import accessibleAutocomplete from 'accessible-autocomplete'
+import './handle-forms'
 import '@hotwired/turbo-rails'
 import $ from 'jquery'
 

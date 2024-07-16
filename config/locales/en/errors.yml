@@ -428,7 +428,7 @@ en:
             work_before_date: *shared_date_errors
             work_after_date: *shared_date_errors
             work_completed_date:
-              blank: Enter the date work completeed
+              blank: Enter the date work completed
               invalid: Enter a valid date work completed
               invalid_day: Enter a valid day work completed
               invalid_month: Enter a valid month work completed
