@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
-  subject { described_class.new(application:) }
+  subject(:builder) { described_class.new(application:) }
 
   let(:expected_output) do
     {
       application: {
+        created_at: fixed_arbitrary_date.utc,
+        updated_at: fixed_arbitrary_date.utc,
         prison_law: true,
         ufn: '120423/123',
         laa_reference: 'LAA-n4AohV',
@@ -33,10 +35,10 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         confirm_excluding_vat: true,
         confirm_travel_expenditure: true,
         defendant: hash_including(
-          first_name: an_instance_of(String),
-          last_name: an_instance_of(String),
-          maat: '1234567',
-          date_of_birth: /\A\d{4}-\d{2}-\d{2}\z/
+          first_name: application.defendant.first_name,
+          last_name: application.defendant.last_name,
+          maat: application.defendant.maat,
+          date_of_birth: application.defendant.date_of_birth.iso8601,
         ),
         firm_office: {
           account_number: '1A123B',
@@ -153,14 +155,14 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             ],
             information_requested: 'please provide further evidence',
             information_supplied: 'here is the extra information you requested',
-            requested_at: DateTime.new(2024, 1, 1, 1, 1, 1),
+            requested_at: DateTime.new(2024, 1, 1, 1, 1, 1).utc,
           }
         ],
         incorrect_information: [
           {
             caseworker_id: '87e88ac6-d89a-4180-80d4-e03285023fb0',
             information_requested: 'Please update the case details',
-            requested_at: DateTime.new(2024, 1, 1, 1, 1, 1),
+            requested_at: DateTime.new(2024, 1, 1, 1, 1, 1).utc,
             sections_changed: ['case_details']
           }
         ],
@@ -175,7 +177,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
   end
   let(:provider) { create(:provider) }
   let(:application) { create(:prior_authority_application, :full, :with_confirmations, status: :submitted) }
-  let(:fixed_arbitrary_date) { Date.new(2024, 1, 15) }
+  let(:fixed_arbitrary_date) { DateTime.new(2024, 1, 15, 0, 0, 0) }
 
   before do
     travel_to(fixed_arbitrary_date)
@@ -183,6 +185,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
   end
 
   it 'generates the payload for an application' do
-    check_json(subject.payload.deep_symbolize_keys).matches(expected_output)
+    check_json(builder.payload.deep_symbolize_keys).matches(expected_output)
   end
 end
