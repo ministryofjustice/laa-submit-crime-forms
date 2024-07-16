@@ -11,6 +11,10 @@ class FakeApp < Steps::BaseFormObject
   def transaction
     true
   end
+
+  def with_lock
+    true
+  end
 end
 
 RSpec.describe DummyStepController, type: :controller do
