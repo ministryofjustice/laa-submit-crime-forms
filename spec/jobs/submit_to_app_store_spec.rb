@@ -22,7 +22,7 @@ RSpec.describe SubmitToAppStore do
 
     it 'generates a payload' do
       expect(described_class::PayloadBuilder).to receive(:call)
-        .with(submission)
+        .with(submission, include_events: true)
 
       subject.perform(submission:)
     end
