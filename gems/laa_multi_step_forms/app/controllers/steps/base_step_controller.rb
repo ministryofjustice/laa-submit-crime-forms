@@ -36,10 +36,8 @@ module Steps
         hash.merge(application: current_application, record: record)
       )
 
-      ActiveRecord::Base.transaction do
-        current_application.with_lock do
-          process_form(@form_object, opts)
-        end
+      current_application.with_lock do
+        process_form(@form_object, opts)
       end
     end
 

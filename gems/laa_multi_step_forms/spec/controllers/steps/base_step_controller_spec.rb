@@ -8,10 +8,6 @@ class FakeApp < Steps::BaseFormObject
     true
   end
 
-  def transaction
-    true
-  end
-
   def with_lock
     true
   end
@@ -39,7 +35,6 @@ RSpec.describe DummyStepController, type: :controller do
   let(:destination) { { action: :show, id: application.id, controller: :dummy_step } }
 
   before do
-    allow(application).to receive(:transaction).and_yield
     allow(application).to receive(:with_lock).and_yield
     allow(DummyStepImplementation).to receive_messages(form_class: form_class, current_application: application,
                                                        options: options, decision_tree_class: decision_tree_class)
