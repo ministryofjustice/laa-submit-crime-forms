@@ -3,12 +3,19 @@ import $ from 'jquery'
 window.$ = $
 
 $(function() {
-  $('form').on("submit", function(e) {
-    e.preventDefault();
-    let submitButtons = $(this).find('button[type="submit"]')
-    submitButtons.each(function(){
-      $( this ).attr('disabled', true);
+  $('button[type="submit"]').on("click", function(e) {
+    e.preventDefault()
+    let form = $(this).closest("form")
+    let formButtons = form.find('button[type="submit"]')
+    formButtons.each(function(){
+      $(this).attr("disabled", true)
     })
-    $( this ).trigger('submit.rails');
+
+    let buttonAction = $(this).attr("name")
+    if(buttonAction){
+      form.append(`<input type="hidden" name="${buttonAction}" value="" >`)
+    }
+
+    form.trigger('submit.rails')
   })
 })
