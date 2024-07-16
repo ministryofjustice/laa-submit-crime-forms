@@ -40,6 +40,7 @@ RSpec.describe DummyStepController, type: :controller do
 
   before do
     allow(application).to receive(:transaction).and_yield
+    allow(application).to receive(:with_lock).and_yield
     allow(DummyStepImplementation).to receive_messages(form_class: form_class, current_application: application,
                                                        options: options, decision_tree_class: decision_tree_class)
   end

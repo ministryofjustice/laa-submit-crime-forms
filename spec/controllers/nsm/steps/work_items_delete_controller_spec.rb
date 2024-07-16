@@ -6,6 +6,7 @@ RSpec.describe Nsm::Steps::WorkItemDeleteController, type: :controller do
     # which is undesirable for this particular test
     allow(controller).to receive(:current_application).and_return(current_application)
     allow(current_application).to receive(:transaction).and_yield
+    allow(current_application).to receive(:with_lock).and_yield
   end
 
   describe '#edit' do
