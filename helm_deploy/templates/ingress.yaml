@@ -34,6 +34,8 @@ metadata:
       SecRuleRemoveById 921110
       SecRuleRemoveById 933210
       SecRuleRemoveById 942230
+      SecRuleRemoveById 951220
+      SecRuleRemoveById 952100
     external-dns.alpha.kubernetes.io/aws-weight: "100"
     {{- toYaml . | nindent 4 }}
   {{- end }}
