@@ -17,10 +17,10 @@ group :test do
   gem 'pg', '~> 1.5'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
-  gem 'rubocop', require: false
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rspec', require: false
+  gem 'rubocop', '>= 1.50.0', require: false
+  gem 'rubocop-performance', '>= 1.17.0', require: false
+  gem 'rubocop-rails', '>= 2.19.0', require: false
+  gem 'rubocop-rspec', '>= 2.20.0', require: false
   gem 'simplecov'
   gem 'simplecov-rcov'
 end
