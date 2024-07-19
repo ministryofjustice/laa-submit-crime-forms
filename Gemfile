@@ -29,7 +29,7 @@ gem 'sidekiq', '~> 7.3', '>= 7.3.0'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron', '~> 1.12.0'
 gem 'table_print'
-gem 'turbo-rails', '~> 2.0.5'
+gem 'turbo-rails', '~> 2.0.6'
 gem 'tzinfo-data'
 
 group :development, :test do
