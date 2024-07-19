@@ -5,6 +5,7 @@ RSpec.describe Nsm::Steps::WorkItemDeleteController, type: :controller do
     # Needed because some specs that include these examples stub current_application,
     # which is undesirable for this particular test
     allow(controller).to receive(:current_application).and_return(current_application)
+    allow(current_application).to receive(:with_lock).and_yield
   end
 
   describe '#edit' do
@@ -111,6 +112,7 @@ RSpec.describe Nsm::Steps::WorkItemDeleteController, type: :controller do
 
             it 'asks the decision tree for the next destination and redirects there' do
               expect(Decisions::DecisionTree).to receive(:new).and_return(decision_tree)
+
               put :update, params: expected_params
               expect(response).to have_http_status(:redirect)
               expect(subject).to redirect_to('/expected_destination')
