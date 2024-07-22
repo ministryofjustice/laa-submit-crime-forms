@@ -40,14 +40,14 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
         let(:letters) { '' }
 
         it 'have an error' do
-          expect(subject).to be_valid
+          expect(subject).not_to be_valid
         end
       end
 
       context 'is zero' do
         let(:letters) { 0 }
 
-        it { expect(subject).to be_valid }
+        it { expect(subject).not_to be_valid }
       end
 
       context 'is positive' do
@@ -71,14 +71,14 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
         let(:calls) { '' }
 
         it 'have an error' do
-          expect(subject).to be_valid
+          expect(subject).not_to be_valid
         end
       end
 
       context 'is zero' do
         let(:calls) { 0 }
 
-        it { expect(subject).to be_valid }
+        it { expect(subject).not_to be_valid }
       end
 
       context 'is positive' do

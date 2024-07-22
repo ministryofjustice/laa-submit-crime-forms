@@ -10,7 +10,11 @@ module Nsm
       attribute :calls_uplift, :integer
 
       validates :letters, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
+      validates :letters, numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_blank: false },
+        if: :apply_letters_uplift
       validates :calls, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
+      validates :calls, numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_blank: false },
+        if: :apply_calls_uplift
       validates :letters_uplift, presence: true,
         numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
         if: :apply_letters_uplift
