@@ -45,7 +45,7 @@ en:
           work_items: Adjusted work items
           check_totals: Work item summary
           view: View
-          item: Item
+          item: ''
           time: Time claimed
           uplift: Uplift claimed
           net_cost: Net cost claimed
