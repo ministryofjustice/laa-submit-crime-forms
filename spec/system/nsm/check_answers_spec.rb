@@ -30,9 +30,9 @@ RSpec.describe 'Check answers page', type: :system do
       [
         '', 'Net cost', 'VAT', 'Total',
         'Profit costs', '£305.84', '£61.17', '£367.01',
+        'Disbursements', '£227.50', '£31.50', '£259.00',
         'Waiting', '£10.58', '£2.12', '£12.70',
         'Travel', '£0.00', '£0.00', '£0.00',
-        'Disbursements', '£227.50', '£31.50', '£259.00',
         'Total',
         'Sum of net cost claimed: £543.92',
         'Sum of VAT on claimed: £94.78',
