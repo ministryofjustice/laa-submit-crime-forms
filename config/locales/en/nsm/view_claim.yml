@@ -24,10 +24,14 @@ en:
           work_items: Work items
           check_totals: Work item summary
           view: View
-          item: Item
+          line_item: Line item
+          item: Cost type
+          date: Date
+          fee_earner: Fee earner
           time: Time claimed
           uplift: Uplift claimed
           net_cost: Net cost claimed
+          net_cost_description: 'Sum of net cost claimed: '
           action: Action
           vat: VAT on claimed
           gross_cost: Total claimed
@@ -70,6 +74,7 @@ en:
           number: Number claimed
           uplift: Uplift claimed
           net_cost: Net cost claimed
+          net_cost_description: 'Sum of net cost claimed: '
           allowed_number: Number allowed
           allowed_uplift: Uplift allowed
           allowed_net_cost: Net cost allowed

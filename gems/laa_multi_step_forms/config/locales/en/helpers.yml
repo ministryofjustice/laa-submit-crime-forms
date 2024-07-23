@@ -24,6 +24,9 @@ en:
       update_calculation_no_article: Update calculation
     time_period:
       hours:
+        minimal_html:
+          one: '%{count}<span class="govuk-visually-hidden"> hour</span>:'
+          other: '%{count}<span class="govuk-visually-hidden"> hours</span>:'
         short:
           one: '%{count} hour '
           other: '%{count} hours '
@@ -43,4 +46,7 @@ en:
         line_html:
           one: '%{count} minute</nobr>'
           other: '%{count} minutes</nobr>'
+        minimal_html:
+          one: '%{minutes}<span class="govuk-visually-hidden"> minute</span>'
+          other: '%{minutes}<span class="govuk-visually-hidden"> minutes</span>'
     missing_data: Incomplete

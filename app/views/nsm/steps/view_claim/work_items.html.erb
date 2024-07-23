@@ -14,13 +14,22 @@
       ]
       vat_rate = current_application.firm_office.vat_registered == 'true' ? Pricing.new(@claim).vat : 0
       total_cost = BigDecimal('0')
-      rows = @work_items.group_by(&:work_type).map do |work_type, work_items_for_type|
+      work_type_order = {
+        'travel' => 0,
+        'waiting' => 1,
+        'attendance_with_counsel' => 2,
+        'attendance_without_counsel' => 3,
+        'preparation' => 4,
+        'advocacy' => 5
+      }
+      sorted_work_items = @work_items.sort_by { |item| work_type_order[item.work_type.to_s] }
+      rows = sorted_work_items.group_by(&:work_type).map do |work_type, work_items_for_type|
         time = work_items_for_type.sum(&:time_spent)
         net_cost = work_items_for_type.sum(&:total_cost)
         total_cost += net_cost
         [
           { text: t("summary.nsm/cost_summary/work_items.#{work_type.to_s}"), width: 'govuk-!-width-one-quarter' },
-          { text: format_period(time), numeric: true },
+          { text: format_period(time, style: :minimal_html), numeric: true },
           { text: NumberTo.pounds(net_cost), numeric: true },
         ]
       end
@@ -28,13 +37,13 @@
       foot = [
         { text: t(".total"), width: 'govuk-!-width-one-quarter' },
         { text: '', numeric: true },
-        { text: NumberTo.pounds(total_cost), numeric: true },
+        { text: govuk_visually_hidden(t('.net_cost_description')) + NumberTo.pounds(total_cost), numeric: true },
       ]
 
 
       govuk_table do |table|
         table.with_head(rows: [head])
-        table.with_body(rows: rows.sort_by { _1.dig(0, :text) }, first_cell_is_header: true)
+        table.with_body(rows: rows, first_cell_is_header: true)
         table.with_foot(rows: foot)
       end
     %>
@@ -42,33 +51,45 @@
 
   <%
     pagy, work_items = pagy(@work_items)
-    head = [
-      { text: t('.item'), width: 'govuk-!-width-one-quarter' },
-      { text: t('.time'), numeric: true },
-      { text: t('.uplift'), numeric: true },
-      { text: t('.net_cost'), numeric: true },
-      { text: t('.action'), numeric: true }
-    ]
-    work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
-    <%=
-      rows = work_items_for_date.map do |work_item|
-        link = link_to(t('.view'), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.id, page: pagy.page), data: { turbo: 'false' })
+    head = {
+      'line_item' => false,
+      'item' => false,
+      'date' => false,
+      'fee_earner' => false,
+      'time' => [],
+      'uplift' => [],
+      'net_cost' => []
+    }
 
-        [
-          t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"),
-          { text: format_period(work_item.time_spent), numeric: true },
-          { text: NumberTo.percentage(work_item.uplift.to_f, multiplier: 1), numeric: true },
-          { text: NumberTo.pounds(work_item.total_cost), numeric: true },
-          { text: link, numeric: true }
-        ]
+  %>
+  <%=
+    rows = work_items.each_with_index.map do |work_item, index|
+      item_with_link = link_to(t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.id, page: pagy.page), data: { turbo: 'false' })
+
+      [
+        { text: index + 1, numeric: false },
+        { text: item_with_link, numeric: false },
+        { text: work_item.completed_on&.strftime("%-d %b %Y"), numeric: false},
+        { text: work_item.fee_earner, numeric: false},
+        { text: format_period(work_item.time_spent, style: :minimal_html), numeric: true },
+        { text: NumberTo.percentage(work_item.uplift.to_f, multiplier: 1), numeric: true },
+        { text: NumberTo.pounds(work_item.total_cost), numeric: true }
+      ]
+    end
+
+    header_row = head.map.with_index do |(column_key, numeric), index|
+      aria_sort, next_direction = sort_variable(column_key, @sort_by, @sort_direction)
+        {
+          text: reorder_form(work_items_nsm_steps_view_claim_path(current_application), column_key, next_direction, "nsm.steps.view_claim.work_items", index),
+          numeric: numeric,
+          html_attributes: { 'aria-sort': aria_sort}
+        }
       end
 
-      govuk_table do |table|
-        table.with_caption(text: completed_on.strftime('%-d %B %Y'), size: 's')
-        table.with_head(rows: [head])
-        table.with_body(rows: rows, first_cell_is_header: true)
-      end
-    %>
-  <% end %>
+    govuk_table(html_attributes: { 'data-module':"moj-sortable-table"}) do |table|
+      table.with_head(rows: [header_row])
+      table.with_body(rows: rows, first_cell_is_header: true)
+    end
+  %>
   <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
 </turbo-frame>
