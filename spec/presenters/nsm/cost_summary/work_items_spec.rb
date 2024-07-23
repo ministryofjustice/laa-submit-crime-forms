@@ -19,15 +19,23 @@ RSpec.describe Nsm::CostSummary::WorkItems do
   describe '#rows' do
     it 'generates letters and calls rows' do
       expect(subject.rows).to eq(
-        [[{ classes: 'govuk-table__header', text: 'Attendance without counsel' },
-          { text: '0 hours 0 minutes' },
-          { classes: 'govuk-table__cell--numeric', text: '£0.00' }],
-         [{ classes: 'govuk-table__header', text: 'Preparation' },
-          { text: '3 hours 0 minutes' },
-          { classes: 'govuk-table__cell--numeric', text: '£40.00' }],
-         [{ classes: 'govuk-table__header', text: 'Advocacy' },
-          { text: '6 hours 0 minutes' },
-          { classes: 'govuk-table__cell--numeric', text: '£170.00' }]]
+        [
+          [
+            { classes: 'govuk-table__header', text: 'Without counsel assigned' },
+            { text: '0 hours 0 minutes' },
+            { classes: 'govuk-table__cell--numeric', text: '£0.00' }
+          ],
+          [
+            { classes: 'govuk-table__header', text: 'Preparation' },
+            { text: '3 hours 0 minutes' },
+            { classes: 'govuk-table__cell--numeric', text: '£40.00' }
+          ],
+          [
+            { classes: 'govuk-table__header', text: 'Advocacy' },
+            { text: '6 hours 0 minutes' },
+            { classes: 'govuk-table__cell--numeric', text: '£170.00' }
+          ]
+        ]
       )
     end
 
@@ -37,7 +45,7 @@ RSpec.describe Nsm::CostSummary::WorkItems do
       it 'includes ATTENDANCE_WITH_COUNSEL in data' do
         row_keys = subject.rows.map(&:first).pluck(:text)
         expect(row_keys).to eq(
-          ['Attendance with counsel', 'Attendance without counsel', 'Preparation', 'Advocacy']
+          ['With counsel assigned', 'Without counsel assigned', 'Preparation', 'Advocacy']
         )
       end
     end
@@ -48,7 +56,7 @@ RSpec.describe Nsm::CostSummary::WorkItems do
       it 'includes WAITING and TRAVEL in data' do
         row_keys = subject.rows.map(&:first).pluck(:text)
         expect(row_keys).to eq(
-          ['Attendance without counsel', 'Preparation', 'Advocacy', 'Travel', 'Waiting']
+          ['Without counsel assigned', 'Preparation', 'Advocacy', 'Travel', 'Waiting']
         )
       end
     end
