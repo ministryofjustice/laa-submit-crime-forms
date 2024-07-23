@@ -51,6 +51,14 @@ RSpec.configure do |config|
   # Use the faster rack test by default for system specs if possible
   config.before(:each, type: :system) { driven_by :rack_test }
 
+  # silence warning about "allow[ing] expectations on `nil`" without disabling entirely
+  config.around(:each, :allow_message_expectations_on_nil) do |example|
+    previous_value = RSpec::Mocks.configuration.allow_message_expectations_on_nil
+    RSpec::Mocks.configuration.allow_message_expectations_on_nil = true
+    example.run
+    RSpec::Mocks.configuration.allow_message_expectations_on_nil = previous_value
+  end
+
   config.expect_with :rspec do |c|
     c.max_formatted_output_length = nil
   end
