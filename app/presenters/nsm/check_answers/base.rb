@@ -3,6 +3,8 @@ module Nsm
     class Base
       include LaaMultiStepForms::CheckMissingHelper
       include ActionView::Helpers::TagHelper
+      include GovukVisuallyHiddenHelper
+      include ActionView::Helpers::TextHelper
 
       attr_accessor :group, :section, :has_card
 
