@@ -30,7 +30,7 @@ RSpec.describe 'View claim page', type: :system do
 
     expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
       [
-        'Item', 'Net cost', 'VAT', 'Total',
+        '', 'Net cost', 'VAT', 'Total',
         'Profit costs', '£305.84', '£61.17', '£367.01',
         'Waiting', '£10.58', '£2.12', '£12.70',
         'Travel', '£10.58', '£2.12', '£12.70',
@@ -50,7 +50,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
         [
-          'Item', 'Net cost', 'VAT', 'Total',
+          '', 'Net cost', 'VAT', 'Total',
           'Profit costs', '£305.84', '£0.00', '£305.84',
           'Waiting', '£10.58', '£0.00', '£10.58',
           'Travel', '£10.58', '£0.00', '£10.58',
@@ -66,7 +66,7 @@ RSpec.describe 'View claim page', type: :system do
 
     expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
       [
-        'Item', 'Net cost', 'VAT', 'Total',
+        '', 'Net cost', 'VAT', 'Total',
         'Profit costs', '£305.84', '£61.17', '£367.01',
         'Waiting', '£10.58', '£2.12', '£12.70',
         'Travel', '£10.58', '£2.12', '£12.70',
@@ -256,7 +256,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
         [
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          '', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
           'Profit costs', '£212.07', '£42.41', '£254.48', '£143.10', '£28.62', '£171.72',
           'Waiting', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
           'Travel', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
@@ -276,7 +276,7 @@ RSpec.describe 'View claim page', type: :system do
 
         expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
           [
-            'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+            '', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
             'Profit costs', '£212.07', '£0.00', '£212.07', '£143.10', '£0.00', '£143.10',
             'Waiting', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
             'Travel', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
@@ -294,7 +294,7 @@ RSpec.describe 'View claim page', type: :system do
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
           1.day.ago.strftime('%-d %B %Y'),
-          'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Time allowed', 'Uplift allowed',
+          '', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Time allowed', 'Uplift allowed',
           'Net cost allowed', 'Action',
           'Advocacy', '1 hour 44 minutes', '0%', '£113.39', '0 hours 52 minutes', '0%', '£56.70', 'View'
         ]
@@ -304,7 +304,7 @@ RSpec.describe 'View claim page', type: :system do
       find('details').click
       expect(all('details table td, details table th').map(&:text)).to eq(
         [
-          'Item', 'Time claimed', 'Net cost claimed', 'Time allowed', 'Net cost allowed',
+          '', 'Time claimed', 'Net cost claimed', 'Time allowed', 'Net cost allowed',
           'Advocacy', '1 hour 44 minutes', '£113.39', '0 hours 52 minutes', '£56.70',
           'Attendance without counsel', '1 hour 30 minutes', '£78.23', '1 hour 30 minutes', '£78.23',
           'Total', '', '£191.62', '', '£134.92'
