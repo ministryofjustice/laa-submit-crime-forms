@@ -31,4 +31,3 @@ module Sorters
     end
   end
 end
-

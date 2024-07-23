@@ -25,11 +25,10 @@ module SortableTableHelper
         sort_direction == 'ascending' ? 'descending' : 'ascending'
       ]
     else
-      [
-        'none',
-        'descending'
+      %w[
+        none
+        descending
       ]
     end
   end
-
 end
