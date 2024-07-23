@@ -126,7 +126,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'they are returned' do
-          expect(subject.table_fields[1]).to eq(
+          expect(subject.table_fields[2]).to eq(
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£276.00' },
@@ -134,7 +134,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
               vat: { numeric: true, text: '£0.00' }
             }
           )
-          expect(subject.table_fields[2]).to eq(
+          expect(subject.table_fields[3]).to eq(
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£276.00' },
@@ -174,7 +174,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'summs them all together in profit costs' do
-          expect(subject.table_fields[3]).to eq(
+          expect(subject.table_fields[1]).to eq(
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£720.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
@@ -192,7 +192,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'summs them all together in profit costs' do
-          expect(subject.table_fields[3]).to eq(
+          expect(subject.table_fields[1]).to eq(
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£600.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
@@ -385,7 +385,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'summs them all together in profit costs' do
-          expect(subject.table_fields[3]).to eq(
+          expect(subject.table_fields[1]).to eq(
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£720.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
