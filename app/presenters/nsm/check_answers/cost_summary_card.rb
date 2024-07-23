@@ -36,9 +36,9 @@ module Nsm
       def table_fields(formatted: true)
         [
           calculate_profit_costs(formatted:),
+          calculate_disbursements(formatted:),
           calculate_waiting(formatted:),
           calculate_travel(formatted:),
-          calculate_disbursements(formatted:),
         ]
       end
 
