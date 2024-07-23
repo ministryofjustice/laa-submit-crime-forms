@@ -35,7 +35,10 @@ RSpec.describe 'View claim page', type: :system do
         'Waiting', '£10.58', '£2.12', '£12.70',
         'Travel', '£10.58', '£2.12', '£12.70',
         'Disbursements', '£327.50', '£31.50', '£359.00',
-        'Total', '£654.50', '£96.90', '£751.40'
+        'Total',
+        'Sum of net cost claimed: £654.50',
+        'Sum of VAT on claimed: £96.90',
+        'Sum of net cost and VAT on claimed: £751.40'
       ]
     )
   end
@@ -55,7 +58,10 @@ RSpec.describe 'View claim page', type: :system do
           'Waiting', '£10.58', '£0.00', '£10.58',
           'Travel', '£10.58', '£0.00', '£10.58',
           'Disbursements', '£327.50', '£31.50', '£359.00',
-          'Total', '£654.50', '£31.50', '£686.00'
+          'Total',
+          'Sum of net cost claimed: £654.50',
+          'Sum of VAT on claimed: £31.50',
+          'Sum of net cost and VAT on claimed: £686.00'
         ]
       )
     end
@@ -71,7 +77,10 @@ RSpec.describe 'View claim page', type: :system do
         'Waiting', '£10.58', '£2.12', '£12.70',
         'Travel', '£10.58', '£2.12', '£12.70',
         'Disbursements', '£327.50', '£31.50', '£359.00',
-        'Total', '£654.50', '£96.90', '£751.40'
+        'Total',
+        'Sum of net cost claimed: £654.50',
+        'Sum of VAT on claimed: £96.90',
+        'Sum of net cost and VAT on claimed: £751.40'
       ]
     )
   end
@@ -261,7 +270,13 @@ RSpec.describe 'View claim page', type: :system do
           'Waiting', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
           'Travel', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
           'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
-          'Total', '£532.07', '£60.41', '£592.48', '£273.10', '£28.62', '£301.72'
+          'Total',
+          'Sum of net cost claimed: £532.07',
+          'Sum of VAT on claimed: £60.41',
+          'Sum of net cost and VAT on claimed: £592.48',
+          'Sum of net cost allowed: £273.10',
+          'Sum of VAT on allowed: £28.62',
+          'Sum of net cost and VAT on allowed: £301.72'
         ]
       )
     end
@@ -281,7 +296,13 @@ RSpec.describe 'View claim page', type: :system do
             'Waiting', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
             'Travel', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
             'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
-            'Total', '£532.07', '£18.00', '£550.07', '£273.10', '£0.00', '£273.10'
+            'Total',
+            'Sum of net cost claimed: £532.07',
+            'Sum of VAT on claimed: £18.00',
+            'Sum of net cost and VAT on claimed: £550.07',
+            'Sum of net cost allowed: £273.10',
+            'Sum of VAT on allowed: £0.00',
+            'Sum of net cost and VAT on allowed: £273.10'
           ]
         )
       end
