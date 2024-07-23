@@ -82,19 +82,12 @@ RSpec.describe 'View claim page', type: :system do
     # items
     expect(all('table caption, table td, table th').map(&:text)).to eq(
       [
-        3.days.ago.strftime('%-d %B %Y'),
-        'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
-        'Travel', '0 hours 23 minutes', '10%', '£10.58', 'View',
-        'Waiting', '0 hours 23 minutes', '10%', '£10.58', 'View',
-
-        2.days.ago.strftime('%-d %B %Y'),
-        'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
-        'Advocacy', '1 hour 26 minutes', '0%', '£93.77', 'View',
-
-        1.day.ago.strftime('%-d %B %Y'),
-        'Item', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
-        'Advocacy', '1 hour 44 minutes', '0%', '£113.39', 'View',
-        'Attendance without counsel', '1 hour 30 minutes', '0%', '£78.23', 'View'
+        'Line item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
+        '1', 'Travel', 3.days.ago.strftime('%-d %b %Y'), 'test', '0 hours:23 minutes', '10%', '£10.58',
+        '2', 'Waiting', 3.days.ago.strftime('%-d %b %Y'), 'test', '0 hours:23 minutes', '10%', '£10.58',
+        '3', 'Advocacy', 2.days.ago.strftime('%-d %b %Y'), '', '1 hour:26 minutes', '0%', '£93.77',
+        '4', 'Advocacy', 1.day.ago.strftime('%-d %b %Y'), '', '1 hour:44 minutes', '0%', '£113.39',
+        '5', 'Without counsel assigned', 1.day.ago.strftime('%-d %b %Y'), 'AB', '1 hour:30 minutes', '0%', '£78.23'
       ]
     )
 
@@ -102,12 +95,12 @@ RSpec.describe 'View claim page', type: :system do
     find('details').click
     expect(all('details table td, details table th').map(&:text)).to eq(
       [
-        'Item', 'Time claimed', 'Net cost claimed',
-        'Advocacy', '3 hours 10 minutes', '£207.16',
-        'Attendance without counsel', '1 hour 30 minutes', '£78.23',
-        'Travel', '0 hours 23 minutes', '£10.58',
-        'Waiting', '0 hours 23 minutes', '£10.58',
-        'Total', '', '£306.55'
+        '', 'Time claimed', 'Net cost claimed',
+        'Travel', '0 hours:23 minutes', '£10.58',
+        'Waiting', '0 hours:23 minutes', '£10.58',
+        'Without counsel assigned', '1 hour:30 minutes', '£78.23',
+        'Advocacy', '3 hours:10 minutes', '£207.16',
+        'Total', '', 'Sum of net cost claimed: £306.55'
       ]
     )
   end
@@ -123,8 +116,9 @@ RSpec.describe 'View claim page', type: :system do
       find('details').click
       expect(all('details table td, details table th').map(&:text)).to eq(
         [
-          'Item', 'Time claimed', 'Net cost claimed',
-          'Attendance without counsel', '12 hours 0 minutes', '£625.80', 'Total', '', '£625.80'
+          '', 'Time claimed', 'Net cost claimed',
+          'Without counsel assigned', '12 hours:00 minutes', '£625.80',
+          'Total', '', 'Sum of net cost claimed: £625.80'
         ]
       )
     end
