@@ -59,8 +59,8 @@
       item_with_link = link_to(t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.id, page: pagy.page), data: { turbo: 'false' })
 
       [
-        { text: index + 1, numeric: false },
-        { text: item_with_link, numeric: false },
+        { header: true, text: index + 1, numeric: false},
+        { header: true, text: item_with_link, numeric: false},
         { text: work_item.completed_on&.strftime("%-d %b %Y"), numeric: false},
         { text: work_item.fee_earner, numeric: false},
         { text: format_period(work_item.time_spent, style: :minimal_html), numeric: true },
@@ -78,9 +78,17 @@
         }
       end
 
-    govuk_table(html_attributes: { 'data-module':"moj-sortable-table"}) do |table|
+    govuk_table do |table|
       table.with_head(rows: [header_row])
-      table.with_body(rows: rows, first_cell_is_header: true)
+      table.with_body do |body|
+        rows.each do |work_item_row| # Iterate over each row
+          body.with_row do |row|
+            work_item_row.each do |cell| # Iterate over each cell in the row
+              row.with_cell(text: cell[:text], header: cell[:header], numeric: cell[:numeric])
+            end
+          end
+        end
+      end
     end
   %>
   <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
