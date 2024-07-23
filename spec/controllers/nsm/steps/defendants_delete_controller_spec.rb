@@ -9,7 +9,7 @@ RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
   end
 
   describe '#edit' do
-    context 'when application is not found' do
+    context 'when application is not found', :allow_message_expectations_on_nil do
       let(:current_application) { nil }
 
       it 'redirects to the application not found error page' do
