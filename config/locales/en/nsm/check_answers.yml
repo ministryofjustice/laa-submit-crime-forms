@@ -193,7 +193,7 @@ en:
           cost_summary:
             heading: Cost summary
             base:
-              items: Item
+              items: ''
               request_net: Net cost
               request_vat: VAT
               request_gross: Total
@@ -203,7 +203,7 @@ en:
               disbursements: Disbursements
               total: Total
             with_adjustments:
-              items: Item
+              items: ''
               request_net: Net cost claimed
               request_vat: VAT claimed
               request_gross: Total claimed
