@@ -14,8 +14,8 @@ en:
       work_items: Work items
       preparation: Preparation
       advocacy: Advocacy
-      attendance_with_counsel: Attendance with counsel
-      attendance_without_counsel: Attendance without counsel
+      attendance_with_counsel: With counsel assigned
+      attendance_without_counsel: Without counsel assigned
       travel: Travel
       waiting: Waiting
     nsm/cost_summary/letters_calls:
