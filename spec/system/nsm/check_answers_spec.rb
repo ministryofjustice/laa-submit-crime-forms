@@ -33,7 +33,10 @@ RSpec.describe 'Check answers page', type: :system do
         'Waiting', '£10.58', '£2.12', '£12.70',
         'Travel', '£0.00', '£0.00', '£0.00',
         'Disbursements', '£227.50', '£31.50', '£259.00',
-        'Total', '£543.92', '£94.78', '£638.70'
+        'Total',
+        'Sum of net cost claimed: £543.92',
+        'Sum of VAT on claimed: £94.78',
+        'Sum of net cost and VAT on claimed: £638.70'
       ]
     )
   end

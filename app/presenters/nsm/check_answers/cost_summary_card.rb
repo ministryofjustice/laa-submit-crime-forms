@@ -35,8 +35,10 @@ module Nsm
 
       def table_fields(formatted: true)
         [
-          calculate_profit_costs(formatted:), calculate_waiting(formatted:),
-          calculate_travel(formatted:), calculate_disbursements(formatted:)
+          calculate_profit_costs(formatted:),
+          calculate_waiting(formatted:),
+          calculate_travel(formatted:),
+          calculate_disbursements(formatted:),
         ]
       end
 
@@ -45,12 +47,12 @@ module Nsm
 
         {
           name: t('total', numeric: false),
-          net_cost: format(data.sum { _1[:net_cost] }),
-          vat: format(data.sum { _1[:vat] }),
-          gross_cost: format(data.sum { _1[:gross_cost] }),
-          allowed_net_cost: format(sum_allowed(data, :allowed_net_cost)),
-          allowed_vat: format(sum_allowed(data, :allowed_vat)),
-          allowed_gross_cost: format(sum_allowed(data, :allowed_gross_cost)),
+          net_cost: format(data.sum { _1[:net_cost] }, accessibility_key: 'net_cost'),
+          vat: format(data.sum { _1[:vat] }, accessibility_key: 'vat'),
+          gross_cost: format(data.sum { _1[:gross_cost] }, accessibility_key: 'gross_cost'),
+          allowed_net_cost: format(sum_allowed(data, :allowed_net_cost), accessibility_key: 'allowed_net_cost'),
+          allowed_vat: format(sum_allowed(data, :allowed_vat), accessibility_key: 'allowed_vat'),
+          allowed_gross_cost: format(sum_allowed(data, :allowed_gross_cost), accessibility_key: 'allowed_gross_cost'),
         }
       end
 
@@ -138,11 +140,22 @@ module Nsm
         @vat_rate ||= claim.firm_office.vat_registered == 'yes' ? Pricing.for(claim).vat : 0.0
       end
 
-      def format(value, formatted: true)
+      def format(value, formatted: true, accessibility_key: '')
         return value unless formatted
         return nil if value.nil?
 
-        { text: NumberTo.pounds(value), numeric: true }
+        if accessibility_key.present?
+          { text: accessible_text(accessibility_key, NumberTo.pounds(value)), numeric: true }
+        else
+          { text: NumberTo.pounds(value), numeric: true }
+        end
+      end
+
+      def accessible_text(key, value)
+        scope = show_adjustments ? 'with_adjustments' : 'base'
+
+        text = I18n.t("nsm.steps.check_answers.groups.cost_summary.#{scope}.accessibility.#{key}")
+        sanitize("#{govuk_visually_hidden(text)} #{value}")
       end
 
       def t(key, numeric: true, width: nil)

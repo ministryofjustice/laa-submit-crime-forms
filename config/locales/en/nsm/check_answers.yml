@@ -193,6 +193,13 @@ en:
           cost_summary:
             heading: Cost summary
             base:
+              accessibility:
+                net_cost: 'Sum of net cost claimed:'
+                vat: 'Sum of VAT on claimed:'
+                gross_cost: 'Sum of net cost and VAT on claimed:'
+                allowed_net_cost: 'Sum of net cost allowed:'
+                allowed_vat: 'Sum of VAT on allowed:'
+                allowed_gross_cost: 'Sum of net cost and VAT on allowed:'
               items: ''
               request_net: Net cost
               request_vat: VAT
@@ -203,6 +210,13 @@ en:
               disbursements: Disbursements
               total: Total
             with_adjustments:
+              accessibility:
+                net_cost: 'Sum of net cost claimed: '
+                vat: 'Sum of VAT on claimed: '
+                gross_cost: 'Sum of net cost and VAT on claimed: '
+                allowed_net_cost: 'Sum of net cost allowed: '
+                allowed_vat: 'Sum of VAT on allowed: '
+                allowed_gross_cost: 'Sum of net cost and VAT on allowed: '
               items: ''
               request_net: Net cost claimed
               request_vat: VAT claimed
