@@ -17,13 +17,13 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
     context 'for a blank value' do
       let(:value) { '' }
 
-      it { expect(title).to eq('Claim a non-standard magistrates&#39; court payment - GOV.UK') }
+      it { expect(title).to eq('Submit a crime form - GOV.UK') }
     end
 
     context 'for a provided value' do
       let(:value) { 'Test page' }
 
-      it { expect(title).to eq('Test page - Claim a non-standard magistrates&#39; court payment - GOV.UK') }
+      it { expect(title).to eq('Test page - Submit a crime form - GOV.UK') }
     end
   end
 
@@ -103,11 +103,41 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
       it { expect(helper.format_period(nil)).to be_nil }
     end
 
-    context 'when period is not nil' do
+    context 'when period is not nil and short style specified' do
       it 'formats the value in hours and minutes' do
         expect(helper.format_period(62)).to eq('1 hour 2 minutes')
         expect(helper.format_period(1)).to eq('0 hours 1 minute')
         expect(helper.format_period(120)).to eq('2 hours 0 minutes')
+      end
+    end
+
+    context 'when period is not nil and long style specified' do
+      it 'formats the value in hours and minutes' do
+        expect(helper.format_period(62, style: :long_html)).to eq('1 hour<br><nobr>2 minutes</nobr>')
+        expect(helper.format_period(1, style: :long_html)).to eq('0 hours<br><nobr>1 minute</nobr>')
+        expect(helper.format_period(120, style: :long_html)).to eq('2 hours<br><nobr>0 minutes</nobr>')
+      end
+    end
+
+    context 'when period is not nil and line style specified' do
+      it 'formats the value in hours and minutes' do
+        expect(helper.format_period(62, style: :line_html)).to eq('<nobr>1 hour 2 minutes</nobr>')
+        expect(helper.format_period(1, style: :line_html)).to eq('<nobr>0 hours 1 minute</nobr>')
+        expect(helper.format_period(120, style: :line_html)).to eq('<nobr>2 hours 0 minutes</nobr>')
+      end
+    end
+
+    context 'when period is not nil and minimal style specified' do
+      it 'formats the value in hours and minutes' do
+        expect(helper.format_period(62, style: :minimal_html)).to eq(
+          '1<span class="govuk-visually-hidden"> hour</span>:02<span class="govuk-visually-hidden"> minutes</span>'
+        )
+        expect(helper.format_period(1, style: :minimal_html)).to eq(
+          '0<span class="govuk-visually-hidden"> hours</span>:01<span class="govuk-visually-hidden"> minute</span>'
+        )
+        expect(helper.format_period(120, style: :minimal_html)).to eq(
+          '2<span class="govuk-visually-hidden"> hours</span>:00<span class="govuk-visually-hidden"> minutes</span>'
+        )
       end
     end
   end
