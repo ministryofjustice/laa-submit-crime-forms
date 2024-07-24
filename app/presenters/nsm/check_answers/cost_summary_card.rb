@@ -25,7 +25,7 @@ module Nsm
 
       def headers
         [
-          t('items', numeric: false, width: 'govuk-!-width-one-quarter'),
+          t('items_html', numeric: false, width: 'govuk-!-width-one-quarter'),
           t('request_net'), t('request_vat'), t('request_gross'),
           show_adjustments && t('allowed_net'),
           show_adjustments && t('allowed_vat'),
@@ -161,7 +161,7 @@ module Nsm
       def t(key, numeric: true, width: nil)
         scope = show_adjustments ? 'with_adjustments' : 'base'
         {
-          text: I18n.t("nsm.steps.check_answers.groups.cost_summary.#{scope}.#{key}"),
+          text: sanitize(I18n.t("nsm.steps.check_answers.groups.cost_summary.#{scope}.#{key}")),
           numeric: numeric, width: width
         }
       end
