@@ -7,28 +7,28 @@
 
   <%
     head = [
+      { text: t('.line_item') },
       { text: t('.item'), width: 'govuk-!-width-one-quarter' },
       { text: t('.number'), numeric: true },
       { text: t('.uplift'), numeric: true },
-      { text: t('.net_cost'), numeric: true },
-      { text: t('.action'), numeric: true }
+      { text: t('.net_cost'), numeric: true }
     ]
-    letters_link = link_to(t('.view'), letters_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
-    calls_link = link_to(t('.view'), calls_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
+    letters_link = link_to(t('.letters'), letters_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
+    calls_link = link_to(t('.calls'), calls_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
     rows = [
       ([
-        t(".letters"),
+        { header: true, text: '1', numeric: false},
+        { header: true, text: letters_link },
         { text: @claim.letters, numeric: true },
         { text: NumberTo.percentage(@claim.letters_uplift.to_f, multiplier: 1), numeric: true },
-        { text: NumberTo.pounds(@claim.letters_after_uplift), numeric: true },
-        { text: letters_link, numeric: true }
+        { text: NumberTo.pounds(@claim.letters_after_uplift), numeric: true }
       ] unless @claim.letters.zero?),
       ([
-        t(".calls"),
+        { header: true, text: "#{@claim.letters.zero? ? 1 : 2}", numeric: false},
+        { header: true, text: calls_link },
         { text: @claim.calls, numeric: true },
         { text: NumberTo.percentage(@claim.calls_uplift.to_f, multiplier: 1), numeric: true },
-        { text: NumberTo.pounds(@claim.calls_after_uplift), numeric: true },
-        { text: calls_link, numeric: true }
+        { text: NumberTo.pounds(@claim.calls_after_uplift), numeric: true }
       ] unless @claim.calls.zero?)
     ].compact
   %>
@@ -39,7 +39,16 @@
 
       govuk_table(classes: 'govuk-!-margin-bottom-0') do |table|
         table.with_head(rows: [head])
-        table.with_body(rows: rows, first_cell_is_header: true)
+        # table.with_body(rows: rows, first_cell_is_header: true)
+        table.with_body do |body|
+          rows.each do |item_row| # Iterate over each row
+            body.with_row do |row|
+              item_row.each do |cell| # Iterate over each cell in the row
+                row.with_cell(text: cell[:text], header: cell[:header], numeric: cell[:numeric])
+              end
+            end
+          end
+        end
       end
     %>
   <% end %>
