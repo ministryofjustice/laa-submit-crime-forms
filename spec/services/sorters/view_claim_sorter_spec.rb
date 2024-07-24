@@ -10,13 +10,12 @@ RSpec.shared_examples 'a correctly ordered results (both ascending and descendin
   end
 end
 
-RSpec.describe Sorters::ViewClaimSorter do
-  subject { described_class.call(items, sort_by, sort_direction, type).map(&:id) }
-
+RSpec.describe 'Sorters' do
   let(:sort_direction) { 'ascending' }
 
-  context 'when sorting disbursements' do
-    let(:type) { 'disbursements' }
+  context 'Sorters::DisbursementsSorter' do
+    subject { Sorters::DisbursementsSorter.call(items, sort_by, sort_direction).map(&:id) }
+
     let(:items) do
       [
         instance_double(Disbursement, id: 'D1', position: 1, disbursement_date: Date.new(2023, 1, 2),
@@ -35,8 +34,9 @@ RSpec.describe Sorters::ViewClaimSorter do
     end
   end
 
-  context 'when sorting work items' do
-    let(:type) { 'work_items' }
+  context 'Sorters::WorkItemsSorter' do
+    subject { Sorters::WorkItemsSorter.call(items, sort_by, sort_direction).map(&:id) }
+
     let(:items) do
       [
         instance_double(WorkItem, id: 'W1', position: 1, completed_on: Date.new(2023, 1, 2),
