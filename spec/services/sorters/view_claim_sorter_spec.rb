@@ -19,11 +19,11 @@ RSpec.describe 'Sorters' do
     let(:items) do
       [
         instance_double(Disbursement, id: 'D1', position: 1, disbursement_date: Date.new(2023, 1, 2),
-          total_cost_without_vat: 100),
+          total_cost_without_vat: 100, disbursement_type: 'TypeC'),
         instance_double(Disbursement, id: 'D2', position: 2, disbursement_date: Date.new(2023, 1, 4),
-          total_cost_without_vat: 200),
+          total_cost_without_vat: 200, disbursement_type: 'TypeA'),
         instance_double(Disbursement, id: 'D3', position: 3, disbursement_date: Date.new(2023, 1, 1),
-          total_cost_without_vat: 50),
+          total_cost_without_vat: 50, disbursement_type: 'TypeB'),
       ]
     end
 
@@ -31,6 +31,12 @@ RSpec.describe 'Sorters' do
       let(:sort_by) { 'date' }
 
       it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[D3 D1 D2]
+    end
+
+    context 'when sorting by item (disbursement_type)' do
+      let(:sort_by) { 'item' }
+
+      it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[D2 D3 D1]
     end
   end
 
@@ -46,6 +52,20 @@ RSpec.describe 'Sorters' do
         instance_double(WorkItem, id: 'W3', position: 3, completed_on: Date.new(2023, 1, 1),
           total_cost: 50, work_type: 'Review', fee_earner: 'Jim Beam', time_spent: 1, uplift: 2.0),
       ]
+    end
+
+    let(:sort_direction) { 'ascending' }
+
+    context 'when sorting by item (work_type)' do
+      let(:sort_by) { 'item' }
+
+      it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[W2 W1 W3]
+    end
+
+    context 'when sorting by uplift' do
+      let(:sort_by) { 'uplift' }
+
+      it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[W2 W1 W3]
     end
 
     context 'when sorting by date' do
