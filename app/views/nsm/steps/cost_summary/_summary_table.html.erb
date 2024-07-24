@@ -17,6 +17,12 @@
       <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.profit_costs_gross %></td>
     </tr>
     <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><%= t('.disbursements') %></td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.disbursements_net %></td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.disbursements_vat %></td>
+      <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.disbursements_gross %></td>
+    </tr>
+    <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><%= t('.waiting') %></td>
       <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.waiting_net %></td>
       <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.waiting_vat %></td>
@@ -27,12 +33,6 @@
       <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.travel_net %></td>
       <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.travel_vat %></td>
       <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.travel_gross %></td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header"><%= t('.disbursements') %></td>
-      <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.disbursements_net %></td>
-      <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.disbursements_vat %></td>
-      <td class="govuk-table__cell govuk-table__cell--numeric"><%= NumberTo.pounds summary.disbursements_gross %></td>
     </tr>
   </tbody>
   <tfoot class="govuk-table__foot">
