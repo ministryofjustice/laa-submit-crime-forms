@@ -127,11 +127,11 @@ RSpec.describe 'View claim page', type: :system do
   it 'show the letters and calls page' do
     visit letters_and_calls_nsm_steps_view_claim_path(claim.id)
 
-    expect(all('table caption, table td, table th').map(&:text)).to eq(
+    expect(all('table td, table th').map(&:text)).to eq(
       [
-        'Item', 'Number claimed', 'Uplift claimed', 'Net cost claimed', 'Action',
-        'Letters', '2', '0%', '£8.18', 'View',
-        'Calls', '3', '0%', '£12.27', 'View'
+        'Item', 'Cost Type', 'Number claimed', 'Uplift claimed', 'Net cost claimed',
+        '1', 'Letters', '2', '0%', '£8.18',
+        '2', 'Calls', '3', '0%', '£12.27'
       ]
     )
   end
@@ -139,20 +139,13 @@ RSpec.describe 'View claim page', type: :system do
   it 'show the disbursements page' do
     visit disbursements_nsm_steps_view_claim_path(claim.id)
 
-    expect(all('table caption, table td, table th').map(&:text)).to eq(
+    expect(all('table td, table th').map(&:text)).to eq(
       [
-        5.days.ago.strftime('%-d %B %Y'),
-        'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Action',
-        'Car mileage', '£90.00', '£18.00', '£108.00', 'View',
-
-        3.days.ago.strftime('%-d %B %Y'),
-        'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Action',
-        'DNA Testing', '£130.00', '£0.00', '£130.00', 'View',
-        'Custom', '£40.00', '£0.00', '£40.00', 'View',
-
-        2.days.ago.strftime('%-d %B %Y'),
-        'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Action',
-        'Car mileage', '£67.50', '£13.50', '£81.00', 'View'
+        'Item', 'Cost type', 'Date', 'Net cost claimed', 'VAT on claimed', 'Total claimed',
+        '1', 'Car mileage', 5.days.ago.strftime('%-d %b %Y'), '£90.00', '£18.00', '£108.00',
+        '2', 'DNA Testing', 3.days.ago.strftime('%-d %b %Y'), '£130.00', '£0.00', '£130.00',
+        '3', 'Custom', 3.days.ago.strftime('%-d %b %Y'), '£40.00', '£0.00', '£40.00',
+        '4', 'Car mileage', 2.days.ago.strftime('%-d %b %Y'), '£67.50', '£13.50', '£81.00'
       ]
     )
   end
