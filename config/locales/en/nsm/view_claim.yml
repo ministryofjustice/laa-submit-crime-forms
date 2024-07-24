@@ -58,7 +58,8 @@ en:
         letters_and_calls:
           page_title: Claim details
           letters_and_calls: Letters and calls
-          item: Item
+          line_item: Item
+          item: Cost Type
           number: Number claimed
           uplift: Uplift claimed
           net_cost: Net cost claimed
