@@ -28,7 +28,7 @@ RSpec.describe 'Check answers page', type: :system do
 
     expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
       [
-        '', 'Net cost', 'VAT', 'Total',
+        'Item', 'Net cost', 'VAT', 'Total',
         'Profit costs', '£305.84', '£61.17', '£367.01',
         'Disbursements', '£227.50', '£31.50', '£259.00',
         'Waiting', '£10.58', '£2.12', '£12.70',

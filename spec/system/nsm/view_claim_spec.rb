@@ -30,7 +30,7 @@ RSpec.describe 'View claim page', type: :system do
 
     expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
       [
-        '', 'Net cost', 'VAT', 'Total',
+        'Item', 'Net cost', 'VAT', 'Total',
         'Profit costs', '£305.84', '£61.17', '£367.01',
         'Disbursements', '£327.50', '£31.50', '£359.00',
         'Waiting', '£10.58', '£2.12', '£12.70',
@@ -53,7 +53,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
         [
-          '', 'Net cost', 'VAT', 'Total',
+          'Item', 'Net cost', 'VAT', 'Total',
           'Profit costs', '£305.84', '£0.00', '£305.84',
           'Disbursements', '£327.50', '£31.50', '£359.00',
           'Waiting', '£10.58', '£0.00', '£10.58',
@@ -72,7 +72,7 @@ RSpec.describe 'View claim page', type: :system do
 
     expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
       [
-        '', 'Net cost', 'VAT', 'Total',
+        'Item', 'Net cost', 'VAT', 'Total',
         'Profit costs', '£305.84', '£61.17', '£367.01',
         'Disbursements', '£327.50', '£31.50', '£359.00',
         'Waiting', '£10.58', '£2.12', '£12.70',
@@ -252,7 +252,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
         [
-          '', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
           'Profit costs', '£212.07', '£42.41', '£254.48', '£143.10', '£28.62', '£171.72',
           'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
           'Waiting', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
@@ -278,7 +278,7 @@ RSpec.describe 'View claim page', type: :system do
 
         expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
           [
-            '', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+            'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
             'Profit costs', '£212.07', '£0.00', '£212.07', '£143.10', '£0.00', '£143.10',
             'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
             'Waiting', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',

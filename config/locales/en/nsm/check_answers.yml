@@ -200,7 +200,7 @@ en:
                 allowed_net_cost: 'Sum of net cost allowed:'
                 allowed_vat: 'Sum of VAT on allowed:'
                 allowed_gross_cost: 'Sum of net cost and VAT on allowed:'
-              items: ''
+              items_html: '<span class="govuk-visually-hidden">Item</span>'
               request_net: Net cost
               request_vat: VAT
               request_gross: Total
@@ -217,7 +217,7 @@ en:
                 allowed_net_cost: 'Sum of net cost allowed: '
                 allowed_vat: 'Sum of VAT on allowed: '
                 allowed_gross_cost: 'Sum of net cost and VAT on allowed: '
-              items: ''
+              items_html: '<span class="govuk-visually-hidden">Item</span>'
               request_net: Net cost claimed
               request_vat: VAT claimed
               request_gross: Total claimed
