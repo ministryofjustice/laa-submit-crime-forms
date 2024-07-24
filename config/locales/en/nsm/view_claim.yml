@@ -22,7 +22,7 @@ en:
         work_items:
           page_title: Claim details
           work_items: Work items
-          check_totals: Work item summary
+          check_totals: Work items summary
           view: View
           line_item: Line item
           item: Cost type
@@ -43,7 +43,7 @@ en:
         allowed_work_items:
           page_title: Claim details
           work_items: Adjusted work items
-          check_totals: Work item summary
+          check_totals: Adjusted work items summary
           view: View
           item: ''
           time: Time claimed
