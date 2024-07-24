@@ -52,7 +52,6 @@
       'uplift' => [],
       'net_cost' => []
     }
-
   %>
   <%=
     rows = work_items.each_with_index.map do |work_item, index|
@@ -76,7 +75,7 @@
           numeric: numeric,
           html_attributes: { 'aria-sort': aria_sort}
         }
-      end
+    end
 
     govuk_table_with_cell(header_row, rows)
   %>

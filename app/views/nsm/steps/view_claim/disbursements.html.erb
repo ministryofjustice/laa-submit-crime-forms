@@ -9,15 +9,15 @@
     <p><%= t('.no_data') %></p>
   <% else %>
     <%
-      pagy, disbursements = pagy(@disbursements)
-      head = [
-        { text: t('.line_item')},
-        { text: t('.item'), width: 'govuk-!-width-one-quarter' },
-        { text: t('.date')},
-        { text: t('.net_cost'), numeric: true },
-        { text: t('.vat'), numeric: true },
-        { text: t('.gross_cost'), numeric: true },
-      ]
+      pagy, disbursements = pagy_array(@disbursements)
+      head = {
+      'line_item' => false,
+      'item' => false,
+      'date' => false,
+      'net_cost' => false,
+      'vat' => [],
+      'gross_cost' => []
+    }
     %>
 
     <%=
@@ -34,8 +34,16 @@
           { text: NumberTo.pounds(disbursement.total_cost), numeric: true },
         ]
       end
+      header_row = head.map.with_index do |(column_key, numeric), index|
+        aria_sort, next_direction = sort_variable(column_key, @sort_by, @sort_direction)
+          {
+            text: reorder_form(disbursements_nsm_steps_view_claim_path(current_application), column_key, next_direction, "nsm.steps.view_claim.disbursements", index),
+            numeric: numeric,
+            html_attributes: { 'aria-sort': aria_sort}
+          }
+      end
 
-      govuk_table_with_cell(head, rows)
+      govuk_table_with_cell(header_row, rows)
     %>
   <% end %>
   <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
