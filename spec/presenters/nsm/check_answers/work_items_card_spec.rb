@@ -38,7 +38,7 @@ RSpec.describe Nsm::CheckAnswers::WorkItemsCard do
               text: '<strong>Total per item</strong>'
             },
             {
-              head_opts: { text: 'Attendance without counsel' },
+              head_opts: { text: 'Without counsel assigned' },
               text: '£0.00'
             },
             {
@@ -74,7 +74,7 @@ RSpec.describe Nsm::CheckAnswers::WorkItemsCard do
               text: '<strong>Total per item</strong>'
             },
             {
-              head_opts: { text: 'Attendance without counsel' },
+              head_opts: { text: 'Without counsel assigned' },
               text: '£0.00'
             },
             {
