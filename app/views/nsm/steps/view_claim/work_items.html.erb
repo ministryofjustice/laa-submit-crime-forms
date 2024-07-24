@@ -78,18 +78,7 @@
         }
       end
 
-    govuk_table do |table|
-      table.with_head(rows: [header_row])
-      table.with_body do |body|
-        rows.each do |work_item_row| # Iterate over each row
-          body.with_row do |row|
-            work_item_row.each do |cell| # Iterate over each cell in the row
-              row.with_cell(text: cell[:text], header: cell[:header], numeric: cell[:numeric])
-            end
-          end
-        end
-      end
-    end
+    govuk_table_with_cell(header_row, rows)
   %>
   <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
 </turbo-frame>

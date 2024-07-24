@@ -17,7 +17,7 @@
     calls_link = link_to(t('.calls'), calls_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
     rows = [
       ([
-        { header: true, text: '1', numeric: false},
+        { header: true, text: '1', numeric: false },
         { header: true, text: letters_link },
         { text: @claim.letters, numeric: true },
         { text: NumberTo.percentage(@claim.letters_uplift.to_f, multiplier: 1), numeric: true },
@@ -35,21 +35,6 @@
   <% if rows.none? %>
     <p><%= t('.no_data') %></p>
   <% else %>
-    <%=
-
-      govuk_table(classes: 'govuk-!-margin-bottom-0') do |table|
-        table.with_head(rows: [head])
-        # table.with_body(rows: rows, first_cell_is_header: true)
-        table.with_body do |body|
-          rows.each do |item_row| # Iterate over each row
-            body.with_row do |row|
-              item_row.each do |cell| # Iterate over each cell in the row
-                row.with_cell(text: cell[:text], header: cell[:header], numeric: cell[:numeric])
-              end
-            end
-          end
-        end
-      end
-    %>
+    <%= govuk_table_with_cell(head, rows) %>
   <% end %>
 </turbo-frame>

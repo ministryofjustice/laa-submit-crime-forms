@@ -36,4 +36,46 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.relevant_prior_authority_list_anchor(application)).to eq(:reviewed)
     end
   end
+
+  describe '#govuk_table_with_cell' do
+    let(:head) { [{ text: 'Header 1' }, { text: 'Header 2' }] }
+    let(:rows) do
+      [
+        [{ text: 'Row 1, Cell 1' }, { text: 'Row 1, Cell 2' }],
+        [{ text: 'Row 2, Cell 1' }, { text: 'Row 2, Cell 2' }]
+      ]
+    end
+
+    it 'renders a table with specified head' do
+      rendered_table = helper.govuk_table_with_cell(head, rows)
+      expect(rendered_table).to have_selector('table')
+      expect(rendered_table).to have_selector('thead tr th', text: 'Header 1')
+      expect(rendered_table).to have_selector('thead tr th', text: 'Header 2')
+    end
+
+    it 'renders a table with specified rows' do
+      rendered_table = helper.govuk_table_with_cell(head, rows)
+      expect(rendered_table).to have_selector('tbody tr', count: 2)
+      expect(rendered_table).to have_selector('tbody tr:first-child td', text: 'Row 1, Cell 1')
+      expect(rendered_table).to have_selector('tbody tr:last-child td', text: 'Row 2, Cell 2')
+    end
+
+    it 'applies html attributes to a cell' do
+      rows_with_attributes = [
+        [{ text: 'Row 1, Cell 1', html_attributes: { class: 'starter-pokemon-weights' } }, { text: 'Row 1, Cell 2' }],
+        rows[1]
+      ]
+      rendered_table = helper.govuk_table_with_cell(head, rows_with_attributes)
+      expect(rendered_table).to have_selector('tbody tr:first-child td.starter-pokemon-weights', text: 'Row 1, Cell 1')
+    end
+
+    it 'treats a cell as a header if header: true' do
+      rows_with_header = [
+        [{ text: 'Row 1, Cell 1', header: true }, { text: 'Row 1, Cell 2' }],
+        rows[1]
+      ]
+      rendered_table = helper.govuk_table_with_cell(head, rows_with_header)
+      expect(rendered_table).to have_selector('tbody tr:first-child th', text: 'Row 1, Cell 1')
+    end
+  end
 end

@@ -87,7 +87,9 @@ en:
         disbursements:
           page_title: Claim details
           disbursements: Disbursements
-          item: Item
+          line_item: Item
+          item: Cost type
+          date: Date
           net_cost: Net cost claimed
           vat: VAT on claimed
           gross_cost: Total claimed
