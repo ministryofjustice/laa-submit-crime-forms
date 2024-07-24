@@ -31,6 +31,10 @@ class Disbursement < ApplicationRecord
     end
   end
 
+  def position
+    1
+  end
+
   private
 
   def translate(key, **)

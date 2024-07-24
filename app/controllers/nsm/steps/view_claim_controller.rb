@@ -19,7 +19,9 @@ module Nsm
       end
 
       def work_items
-        @work_items = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
+        @work_items = Sorters::ViewClaimSorter.call(
+          current_application.work_items, @sort_by, @sort_direction, 'work_items'
+        )
 
         render prefixed_view_for('work_items')
       end
@@ -31,7 +33,9 @@ module Nsm
       end
 
       def disbursements
-        @disbursements = current_application.disbursements.by_age
+        @disbursements = Sorters::ViewClaimSorter.call(
+          current_application.disbursements.by_age, @sort_by, @sort_direction, 'disbursements'
+        )
 
         render prefixed_view_for('disbursements')
       end
