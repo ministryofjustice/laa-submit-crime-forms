@@ -49,7 +49,7 @@
     %>
   <% end %>
 
-  <% pagy, work_items = pagy(@work_items.where.not(adjustment_comment: nil)) %>
+  <% pagy, work_items = pagy_array(@work_items.filter{_1.adjustment_comment.present?}) %>
     <% if work_items.size.zero? %>
       <p><%= t('.no_data') %></p>
     <% else %>
