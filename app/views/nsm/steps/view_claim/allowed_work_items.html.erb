@@ -30,9 +30,9 @@
 
         [
           { text: t("summary.nsm/cost_summary/work_items.#{work_type.to_s}"), width: 'govuk-!-width-one-quarter' },
-          { text: format_period(time), numeric: true },
+          { text: format_period(time, style: :minimal_html), numeric: true },
           { text: NumberTo.pounds(net_cost), numeric: true },
-          { text: format_period(allowed_time), numeric: true },
+          { text: format_period(allowed_time, style: :minimal_html), numeric: true },
           { text: NumberTo.pounds(allowed_net_cost), numeric: true },
         ]
       end
@@ -75,10 +75,10 @@
 
           [
             t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"),
-            { text: format_period(work_item.time_spent), numeric: true },
+            { text: format_period(work_item.time_spent, style: :minimal_html), numeric: true },
             { text: NumberTo.percentage(work_item.uplift.to_f, multiplier: 1), numeric: true },
             { text: NumberTo.pounds(work_item.total_cost), numeric: true },
-            { text: format_period(work_item.allowed_time_spent || work_item.time_spent), numeric: true },
+            { text: format_period(work_item.allowed_time_spent || work_item.time_spent, style: :minimal_html), numeric: true },
             { text: NumberTo.percentage((work_item.allowed_uplift || work_item.uplift).to_f, multiplier: 1), numeric: true },
             { text: NumberTo.pounds(work_item.allowed_total_cost), numeric: true },
             { text: link, numeric: true }
