@@ -14,16 +14,20 @@
         { text: t('.allowed_time'), numeric: true },
         { text: t('.allowed_net_cost'), numeric: true },
       ]
+
       total_cost = BigDecimal('0')
       allowed_total_cost = BigDecimal('0')
       vat_rate = current_application.firm_office.vat_registered == 'true' ? Pricing.new(@claim).vat : 0
-      rows = @work_items.group_by(&:work_type).map do |work_type, work_items_for_type|
+      sorted_work_items = @work_items.sort_by(&:sort_position)
+
+      rows = sorted_work_items.group_by(&:work_type).map do |work_type, work_items_for_type|
         time = work_items_for_type.sum(&:time_spent)
         net_cost = work_items_for_type.sum(&:total_cost)
         allowed_time = work_items_for_type.sum { _1.allowed_time_spent || _1.time_spent }
         allowed_net_cost = work_items_for_type.sum(&:allowed_total_cost)
         total_cost += net_cost
         allowed_total_cost += allowed_net_cost
+
         [
           { text: t("summary.nsm/cost_summary/work_items.#{work_type.to_s}"), width: 'govuk-!-width-one-quarter' },
           { text: format_period(time), numeric: true },
@@ -43,7 +47,7 @@
 
       govuk_table do |table|
         table.with_head(rows: [head])
-        table.with_body(rows: rows.sort_by { _1.dig(0, :text) }, first_cell_is_header: true)
+        table.with_body(rows: rows, first_cell_is_header: true)
         table.with_foot(rows: foot)
       end
     %>

@@ -233,12 +233,18 @@ RSpec.describe 'View claim page', type: :system do
 
   context 'when adjustments exist' do
     let(:claim) { create(:claim, :firm_details, :adjusted_letters_calls, work_items:, disbursements:, assessment_comment:) }
+
     let(:work_items) do
       [
+        build(:work_item, :travel, :with_adjustment, fee_earner: 'BC', time_spent: 60, completed_on: 1.day.ago),
+        build(:work_item, :waiting, :with_adjustment, fee_earner: 'BC', time_spent: 60, completed_on: 1.day.ago),
+        build(:work_item, :attendance_with_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
         build(:work_item, :attendance_without_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
+        build(:work_item, :preparation, :with_adjustment, fee_earner: 'BC', time_spent: 104, completed_on: 1.day.ago),
         build(:work_item, :advocacy, :with_adjustment, fee_earner: 'BC', time_spent: 104, completed_on: 1.day.ago),
       ]
     end
+
     let(:disbursements) do
       [
         build(:disbursement, :valid, :with_adjustment, :car, age: 5, miles: 200),
@@ -247,23 +253,23 @@ RSpec.describe 'View claim page', type: :system do
       ]
     end
 
-    it 'shows an adjusted cost summary' do
+    it 'shows an adjusted cost summary with VAT' do
       visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
 
       expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
         [
           'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£212.07', '£42.41', '£254.48', '£143.10', '£28.62', '£171.72',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£241.82', '£48.36', '£290.18',
           'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
-          'Waiting', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
-          'Travel', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
           'Total',
-          'Sum of net cost claimed: £532.07',
-          'Sum of VAT on claimed: £60.41',
-          'Sum of net cost and VAT on claimed: £592.48',
-          'Sum of net cost allowed: £273.10',
-          'Sum of VAT on allowed: £28.62',
-          'Sum of net cost and VAT on allowed: £301.72'
+          'Sum of net cost claimed: £731.18',
+          'Sum of VAT on claimed: £100.24',
+          'Sum of net cost and VAT on claimed: £831.42',
+          'Sum of net cost allowed: £399.42',
+          'Sum of VAT on allowed: £53.88',
+          'Sum of net cost and VAT on allowed: £453.30'
         ]
       )
     end
@@ -273,49 +279,61 @@ RSpec.describe 'View claim page', type: :system do
         claim.firm_office.update(vat_registered: 'no')
       end
 
-      it 'shows an adjusted cost summary' do
+      it 'shows an adjusted cost summary without VAT' do
         visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
 
         expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
           [
             'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-            'Profit costs', '£212.07', '£0.00', '£212.07', '£143.10', '£0.00', '£143.10',
+            'Profit costs', '£355.98', '£0.00', '£355.98', '£241.82', '£0.00', '£241.82',
             'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
-            'Waiting', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
-            'Travel', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00', '£0.00',
+            'Waiting', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
+            'Travel', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
             'Total',
-            'Sum of net cost claimed: £532.07',
+            'Sum of net cost claimed: £731.18',
             'Sum of VAT on claimed: £18.00',
-            'Sum of net cost and VAT on claimed: £550.07',
-            'Sum of net cost allowed: £273.10',
+            'Sum of net cost and VAT on claimed: £749.18',
+            'Sum of net cost allowed: £399.42',
             'Sum of VAT on allowed: £0.00',
-            'Sum of net cost and VAT on allowed: £273.10'
+            'Sum of net cost and VAT on allowed: £399.42'
           ]
         )
       end
     end
 
-    it 'show the work items and summary' do
+    it 'show the adjusted work item summary' do
+      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      # open summary
+      find('details').click
+
+      expect(all('details table td, details table th').map(&:text)).to eq(
+        [
+          '', 'Time claimed', 'Net cost claimed', 'Time allowed', 'Net cost allowed',
+          'Travel', '1 hour 0 minutes', '£27.60', '0 hours 30 minutes', '£13.80',
+          'Waiting', '1 hour 0 minutes', '£27.60', '0 hours 30 minutes', '£13.80',
+          'Attendance with counsel', '1 hour 30 minutes', '£53.52', '1 hour 30 minutes', '£53.52',
+          'Attendance without counsel', '1 hour 30 minutes', '£78.23', '1 hour 30 minutes', '£78.23',
+          'Preparation', '1 hour 44 minutes', '£90.39', '0 hours 52 minutes', '£45.20',
+          'Advocacy', '1 hour 44 minutes', '£113.39', '0 hours 52 minutes', '£56.70',
+          'Total', '', '£390.73', '', '£261.24'
+        ]
+      )
+    end
+
+    it 'show the adjusted work items' do
       visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
 
       # items
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
           1.day.ago.strftime('%-d %B %Y'),
-          '', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Time allowed', 'Uplift allowed',
-          'Net cost allowed', 'Action',
-          'Advocacy', '1 hour 44 minutes', '0%', '£113.39', '0 hours 52 minutes', '0%', '£56.70', 'View'
-        ]
-      )
-
-      # summary
-      find('details').click
-      expect(all('details table td, details table th').map(&:text)).to eq(
-        [
-          '', 'Time claimed', 'Net cost claimed', 'Time allowed', 'Net cost allowed',
-          'Advocacy', '1 hour 44 minutes', '£113.39', '0 hours 52 minutes', '£56.70',
-          'Attendance without counsel', '1 hour 30 minutes', '£78.23', '1 hour 30 minutes', '£78.23',
-          'Total', '', '£191.62', '', '£134.92'
+          '', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+          'Action',
+          'Advocacy', '1 hour 44 minutes', '0%', '£113.39', '0 hours 52 minutes', '0%', '£56.70', 'View',
+          'Preparation', '1 hour 44 minutes', '0%', '£90.39', '0 hours 52 minutes', '0%', '£45.20', 'View',
+          'Travel', '1 hour 0 minutes', '10%', '£27.60', '0 hours 30 minutes', '10%', '£13.80', 'View',
+          'Waiting', '1 hour 0 minutes', '10%', '£27.60', '0 hours 30 minutes', '10%', '£13.80', 'View'
         ]
       )
     end
