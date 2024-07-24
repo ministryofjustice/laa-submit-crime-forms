@@ -31,7 +31,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
       it 'retruns the translated headers' do
         expect(subject.headers).to eq(
           [
-            { numeric: false, text: '', width: 'govuk-!-width-one-quarter' },
+            { numeric: false, text: '<span class="govuk-visually-hidden">Item</span>', width: 'govuk-!-width-one-quarter' },
             { numeric: true, text: 'Net cost', width: nil },
             { numeric: true, text: 'VAT', width: nil },
             { numeric: true, text: 'Total', width: nil },
@@ -47,7 +47,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
       it 'retruns the translated headers' do
         expect(subject.headers).to eq(
           [
-            { numeric: false, text: '', width: 'govuk-!-width-one-quarter' },
+            { numeric: false, text: '<span class="govuk-visually-hidden">Item</span>', width: 'govuk-!-width-one-quarter' },
             { numeric: true, text: 'Net cost claimed', width: nil },
             { numeric: true, text: 'VAT claimed', width: nil },
             { numeric: true, text: 'Total claimed', width: nil },
