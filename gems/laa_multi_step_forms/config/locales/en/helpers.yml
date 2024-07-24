@@ -36,6 +36,9 @@ en:
         line_html:
           one: '<nobr>%{count} hour '
           other: '<nobr>%{count} hours '
+        minimal_html:
+          one: '%{count}<span class="govuk-visually-hidden"> hour</span>:'
+          other: '%{count}<span class="govuk-visually-hidden"> hours</span>:'
       minutes:
         short:
           one: '%{count} minute'
