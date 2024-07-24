@@ -5,7 +5,7 @@
     <%= t('.disbursements') %>
   </h3>
 
-  <% pagy, disbursements = pagy(@disbursements.where.not(adjustment_comment: nil)) %>
+  <% pagy, disbursements = pagy_array(@disbursements.filter{_1.adjustment_comment.present?}) %>
   <% if disbursements.size.zero? %>
     <p><%= t('.no_data') %></p>
   <% else %>

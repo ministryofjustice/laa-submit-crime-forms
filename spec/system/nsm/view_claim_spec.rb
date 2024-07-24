@@ -293,7 +293,7 @@ RSpec.describe 'View claim page', type: :system do
         [
           'Item', 'Time claimed', 'Net cost claimed', 'Time allowed', 'Net cost allowed',
           'Advocacy', '1 hour 44 minutes', '£113.39', '0 hours 52 minutes', '£56.70',
-          'Attendance without counsel', '1 hour 30 minutes', '£78.23', '1 hour 30 minutes', '£78.23',
+          'Without counsel assigned', '1 hour 30 minutes', '£78.23', '1 hour 30 minutes', '£78.23',
           'Total', '', '£191.62', '', '£134.92'
         ]
       )
