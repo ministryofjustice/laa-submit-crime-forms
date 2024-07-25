@@ -114,13 +114,15 @@ en:
         allowed_disbursements:
           page_title: Claim details
           disbursements: Adjusted disbursements
-          item: Item
+          item: Cost type
+          line_item: Item
           net_cost: Net cost claimed
           vat: VAT on claimed
           gross_cost: Total claimed
           allowed_net_cost: Net cost allowed
           allowed_vat: VAT on allowed
-          allowed_gross_cost: Total allowed
+          allowed_gross_cost: Total cost allowed
+          adjustment_comment: Reason for adjustment
           action: Action
           view: View
           table_info_item: disbursement
