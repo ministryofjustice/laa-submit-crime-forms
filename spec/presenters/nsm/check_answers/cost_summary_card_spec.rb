@@ -261,28 +261,28 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
             {
               allowed_gross_cost: {
                 numeric: true,
-                text: '<span class="govuk-visually-hidden">Sum of net cost and VAT on allowed: </span> £654.20'
+                text: '<span class="govuk-visually-hidden">Sum of net cost and VAT on allowed:</span> £654.20'
               },
               allowed_net_cost: {
                 numeric: true,
-                text: '<span class="govuk-visually-hidden">Sum of net cost allowed: </span> £654.20'
+                text: '<span class="govuk-visually-hidden">Sum of net cost allowed:</span> £654.20'
               },
               allowed_vat: {
                 numeric: true,
-                text: '<span class="govuk-visually-hidden">Sum of VAT on allowed: </span> £0.00'
+                text: '<span class="govuk-visually-hidden">Sum of VAT on allowed:</span> £0.00'
               },
               gross_cost: {
                 numeric: true,
-                text: '<span class="govuk-visually-hidden">Sum of net cost and VAT on claimed: </span> £654.20'
+                text: '<span class="govuk-visually-hidden">Sum of net cost and VAT on claimed:</span> £654.20'
               },
               name: { numeric: false, text: 'Total', width: nil },
               net_cost: {
                 numeric: true,
-                text: '<span class="govuk-visually-hidden">Sum of net cost claimed: </span> £654.20'
+                text: '<span class="govuk-visually-hidden">Sum of net cost claimed:</span> £654.20'
               },
               vat: {
                 numeric: true,
-                text: '<span class="govuk-visually-hidden">Sum of VAT on claimed: </span> £0.00'
+                text: '<span class="govuk-visually-hidden">Sum of VAT on claimed:</span> £0.00'
               }
             }
           )
