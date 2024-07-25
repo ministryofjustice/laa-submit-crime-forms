@@ -5,7 +5,7 @@ RSpec.describe Nsm::Steps::DisbursementDeleteController, type: :controller do
     # Needed because some specs that include these examples stub current_application,
     # which is undesirable for this particular test
     allow(controller).to receive(:current_application).and_return(current_application)
-    allow(current_application).to receive(:with_lock).and_yield
+    allow(current_application).to receive(:with_lock).and_yield if current_application
   end
 
   describe '#edit' do
