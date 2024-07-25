@@ -253,9 +253,12 @@ RSpec.describe 'View claim page', type: :system do
 
     let(:disbursements) do
       [
-        build(:disbursement, :valid, :with_adjustment, :car, age: 5, miles: 200),
         build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130),
-        build(:disbursement, :valid_other, :with_adjustment, :dna_testing, age: 4, total_cost_without_vat: 100),
+        build(:disbursement, :valid, :with_adjustment, :bike, age: 5,
+              miles: 200, allowed_miles: 100,
+              total_cost_without_vat: 130, allowed_total_cost_without_vat: 110),
+        build(:disbursement, :valid_other, :with_adjustment, :dna_testing, age: 4,
+              total_cost_without_vat: 150, allowed_total_cost_without_vat: 100),
       ]
     end
 
@@ -268,16 +271,16 @@ RSpec.describe 'View claim page', type: :system do
         [
           'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
           'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
           'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
           'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
           'Total',
-          'Sum of net cost claimed: £731.18',
-          'Sum of VAT on claimed: £100.24',
-          'Sum of net cost and VAT on claimed: £831.42',
-          'Sum of net cost allowed: £333.55',
-          'Sum of VAT on allowed: £40.71',
-          'Sum of net cost and VAT on allowed: £374.26'
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26'
         ]
       )
     end
@@ -296,16 +299,16 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
             'Profit costs', '£355.98', '£0.00', '£355.98', '£175.95', '£0.00', '£175.95',
-            'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
+            'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
             'Waiting', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
             'Travel', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
             'Total',
-            'Sum of net cost claimed: £731.18',
-            'Sum of VAT on claimed: £18.00',
-            'Sum of net cost and VAT on claimed: £749.18',
-            'Sum of net cost allowed: £333.55',
-            'Sum of VAT on allowed: £0.00',
-            'Sum of net cost and VAT on allowed: £333.55'
+            'Sum of net cost claimed: £741.18',
+            'Sum of VAT on claimed: £10.00',
+            'Sum of net cost and VAT on claimed: £751.18',
+            'Sum of net cost allowed: £543.55',
+            'Sum of VAT on allowed: £22.00',
+            'Sum of net cost and VAT on allowed: £565.55'
           ]
         )
       end
@@ -442,14 +445,105 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
-          5.days.ago.strftime('%-d %B %Y'),
-          'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Net cost allowed', 'VAT on allowed',
-          'Total allowed', 'Action',
-          'Car mileage', '£90.00', '£18.00', '£108.00', '£0.00', '£0.00', '£0.00', 'View',
-          4.days.ago.strftime('%-d %B %Y'),
-          'Item', 'Net cost claimed', 'VAT on claimed', 'Total claimed', 'Net cost allowed', 'VAT on allowed',
-          'Total allowed', 'Action',
-          'DNA Testing', '£100.00', '£0.00', '£100.00', '£0.00', '£0.00', '£0.00', 'View'
+          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00'
+        ]
+      )
+    end
+
+    it 'allows me to sort adjusted disbursements by Cost type' do
+      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      click_on 'Cost type'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+          '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+          '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
+        ]
+      )
+
+      click_on 'Cost type'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+        ]
+      )
+    end
+
+    it 'allows me to sort adjusted disbursements by Net cost allowed' do
+      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      click_on 'Net cost allowed'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00'
+        ]
+      )
+
+      click_on 'Net cost allowed'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+          '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+          '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
+        ]
+      )
+    end
+
+    it 'allows me to sort adjusted disbursements by VAT on allowed' do
+      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      click_on 'VAT on allowed'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+        ]
+      )
+
+      click_on 'VAT on allowed'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+          '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+          '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+        ]
+      )
+    end
+
+    it 'allows me to sort adjusted disbursements by Total cost allowed' do
+      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      click_on 'Total cost allowed'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+        ]
+      )
+
+      click_on 'Total cost allowed'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+          '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+          '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
         ]
       )
     end
@@ -521,46 +615,49 @@ RSpec.describe 'View claim page', type: :system do
       visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :disbursement, item_id: disbursements.last.id)
 
       expect(find('h1').text).to eq('DNA Testing')
+
       expect(all('table caption, table td').map(&:text)).to eq(
         [
           'Adjusted claim',
-          'Net cost allowed', '£0.00',
+          'Net cost allowed', '£100.00',
           'VAT allowed', '£0.00',
-          'Total cost allowed', '£0.00',
+          'Total cost allowed', '£100.00',
           'Reason for adjustment', 'Disbursement Test',
           'Your claimed costs',
-          'Date',	4.days.ago.strftime('%-d %B %Y'),
+          'Date', 4.days.ago.strftime('%-d %B %Y'),
           'Disbursement type', 'DNA Testing',
           'Disbursement description', 'Details',
           'Prior authority granted?', 'Yes',
-          'Net cost', '£100.00',
+          'Net cost', '£150.00',
           'VAT', '£0.00',
-          'Total cost', '£100.00'
+          'Total cost', '£150.00'
         ]
       )
     end
 
     it 'show a disbursement - with miles' do
-      visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :disbursement, item_id: disbursements.first.id)
+      disbursement = claim.disbursements.find_by(disbursement_type: :bike)
+      visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :disbursement, item_id: disbursement.id)
 
-      expect(find('h1').text).to eq('Car mileage')
+      expect(find('h1').text).to eq('Bike mileage')
+
       expect(all('table caption, table td').map(&:text)).to eq(
         [
           'Adjusted claim',
-          'Mileage allowed', '0 miles',
-          'Net cost allowed', '£0.00',
-          'VAT allowed', '£0.00',
-          'Total cost allowed', '£0.00',
+          'Mileage allowed', '100 miles',
+          'Net cost allowed', '£110.00',
+          'VAT allowed', '£22.00',
+          'Total cost allowed', '£132.00',
           'Reason for adjustment', 'Disbursement Test',
           'Your claimed costs',
-          'Date',	5.days.ago.strftime('%-d %B %Y'),
-          'Disbursement type', 'Car mileage',
+          'Date', 5.days.ago.strftime('%-d %B %Y'),
+          'Disbursement type', 'Bike mileage',
           'Disbursement description', 'Details',
-          'Prior authority granted?', 'No',
+          'Prior authority granted?', 'Yes',
           'Mileage', '200 miles',
-          'Net cost', '£90.00',
-          'VAT', '£18.00',
-          'Total cost', '£108.00'
+          'Net cost', '£50.00',
+          'VAT', '£10.00',
+          'Total cost', '£60.00'
         ]
       )
     end
