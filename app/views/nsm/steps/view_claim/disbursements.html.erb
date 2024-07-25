@@ -9,7 +9,7 @@
     <p><%= t('.no_data') %></p>
   <% else %>
     <%
-      pagy, disbursements = pagy_array(@disbursements)
+      pagy, disbursements = pagy_array(@disbursements, items: 100)
       head = {
       'line_item' => false,
       'item' => false,

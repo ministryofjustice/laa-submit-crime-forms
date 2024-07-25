@@ -42,7 +42,7 @@
   <% end %>
 
   <%
-    pagy, work_items = pagy_array(@work_items)
+    pagy, work_items = pagy_array(@work_items, items: 100)
     head = {
       'line_item' => false,
       'item' => false,
