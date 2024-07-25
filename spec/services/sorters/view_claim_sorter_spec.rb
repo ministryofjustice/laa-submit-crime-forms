@@ -19,11 +19,11 @@ RSpec.describe 'Sorters' do
     let(:items) do
       [
         instance_double(Disbursement, id: 'D1', position: 1, disbursement_date: Date.new(2023, 1, 2),
-          total_cost_without_vat: 100, disbursement_type: 'TypeC'),
+          total_cost_without_vat: 100, translated_disbursement_type: 'TypeC'),
         instance_double(Disbursement, id: 'D2', position: 2, disbursement_date: Date.new(2023, 1, 4),
-          total_cost_without_vat: 200, disbursement_type: 'TypeA'),
+          total_cost_without_vat: 200, translated_disbursement_type: 'TypeA'),
         instance_double(Disbursement, id: 'D3', position: 3, disbursement_date: Date.new(2023, 1, 1),
-          total_cost_without_vat: 50, disbursement_type: 'TypeB'),
+          total_cost_without_vat: 50, translated_disbursement_type: 'TypeB'),
       ]
     end
 
