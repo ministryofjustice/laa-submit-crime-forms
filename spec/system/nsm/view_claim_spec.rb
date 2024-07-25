@@ -425,15 +425,14 @@ RSpec.describe 'View claim page', type: :system do
       )
     end
 
-    it 'show the letters and calls page' do
+    it 'shows the letters and calls page' do
       visit letters_and_calls_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
-          'Item', 'Number claimed', 'Uplift claimed', 'Net cost claimed', 'Number allowed', 'Uplift allowed',
-          'Net cost allowed', 'Action',
-          'Letters', '2', '0%', '£8.18', '1', '0%', '£4.09', 'View',
-          'Calls', '3', '0%', '£12.27', '1', '0%', '£4.09', 'View'
+          'Line item', 'Cost type', 'Reasons for adjustment', 'Number allowed', 'Uplift allowed', 'Net cost allowed',
+          '1', 'Letters', 'Letters adjusted', '1', '0%', '£4.09',
+          '1', 'Calls', 'Calls adjusted', '1', '0%', '£4.09'
         ]
       )
     end

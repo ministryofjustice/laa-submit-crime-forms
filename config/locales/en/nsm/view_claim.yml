@@ -81,7 +81,8 @@ en:
         allowed_letters_and_calls:
           page_title: Claim details
           letters_and_calls: Adjusted letters and calls
-          item: Item
+          line_item: Line item
+          item: Cost type
           number: Number claimed
           uplift: Uplift claimed
           net_cost: Net cost claimed
@@ -89,6 +90,7 @@ en:
           allowed_number: Number allowed
           allowed_uplift: Uplift allowed
           allowed_net_cost: Net cost allowed
+          adjustment_comment: Reasons for adjustment
           action: Action
           view: View
           letters: Letters
