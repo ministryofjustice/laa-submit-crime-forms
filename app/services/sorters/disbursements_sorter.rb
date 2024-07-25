@@ -4,7 +4,7 @@ module Sorters
 
     PRIMARY_SORT_FIELDS = {
       'line_item' => :position,
-      'item' => ->(item) { item.disbursement_type.to_s },
+      'item' => :translated_disbursement_type,
       'date' => :disbursement_date,
       'net_cost' => :total_cost_without_vat,
       'vat' => :vat,
