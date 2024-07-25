@@ -82,13 +82,13 @@ module Nsm
 
       def adjusted_cost_summary_section
         [
-          CostSummaryCard.new(claim, show_adjustments: true)
+          CostSummaryCard.new(claim, show_adjustments: true, has_card: false)
         ]
       end
 
       def cost_summary_section
         [
-          CostSummaryCard.new(claim)
+          CostSummaryCard.new(claim, has_card: false)
         ]
       end
 
