@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :work_item do
+    completed_on { Time.zone.today }
+
     trait :valid do
       work_type { WorkTypes.values.sample.to_s }
       time_spent { 50 + (400**rand).to_i } # range: 50 -> 450 with logorithmic distribution

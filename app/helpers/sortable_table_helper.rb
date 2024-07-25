@@ -9,12 +9,15 @@ module SortableTableHelper
   end
 
   def reorder_form(path, column, next_direction, i18n_stem, index)
-    tag.form(action: path, method: 'get') do
-      safe_join([tag.input(type: 'hidden', name: 'sort_by', value: column),
-                 tag.input(type: 'hidden', name: 'sort_direction', value: next_direction),
-                 tag.button(type: 'submit', 'data-index': index) do
-                   I18n.t(column, scope: i18n_stem)
-                 end])
+    tag.form(action: path, params: params, method: 'get') do
+      safe_join([
+                  tag.input(type: 'hidden', name: 'prefix', value: params['prefix']),
+                  tag.input(type: 'hidden', name: 'sort_by', value: column),
+                  tag.input(type: 'hidden', name: 'sort_direction', value: next_direction),
+                  tag.button(type: 'submit', 'data-index': index) do
+                    I18n.t(column, scope: i18n_stem)
+                  end
+                ])
     end
   end
 

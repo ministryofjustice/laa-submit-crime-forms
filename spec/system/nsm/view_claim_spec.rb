@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'View claim page', type: :system do
   let(:claim) { create(:claim, :firm_details, :letters_calls, work_items:, disbursements:, assessment_comment:) }
   let(:assessment_comment) { 'some random text' }
+
   let(:work_items) do
     [
       build(:work_item, :attendance_without_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
@@ -12,6 +13,7 @@ RSpec.describe 'View claim page', type: :system do
       build(:work_item, :travel, :with_adjustment, time_spent: 23, completed_on: 3.days.ago),
     ]
   end
+
   let(:disbursements) do
     [
       build(:disbursement, :valid, :car, age: 5, miles: 200),
@@ -240,12 +242,12 @@ RSpec.describe 'View claim page', type: :system do
 
     let(:work_items) do
       [
-        build(:work_item, :travel, :with_adjustment, fee_earner: 'BC', time_spent: 60, completed_on: 1.day.ago),
-        build(:work_item, :waiting, :with_adjustment, fee_earner: 'BC', time_spent: 60, completed_on: 1.day.ago),
-        build(:work_item, :attendance_with_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
-        build(:work_item, :attendance_without_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
-        build(:work_item, :preparation, :with_adjustment, fee_earner: 'BC', time_spent: 104, completed_on: 1.day.ago),
-        build(:work_item, :advocacy, :with_adjustment, fee_earner: 'BC', time_spent: 104, completed_on: 1.day.ago),
+        build(:work_item, :travel, :with_adjustment, fee_earner: 'BC', time_spent: 60),
+        build(:work_item, :waiting, :with_adjustment, fee_earner: 'BC', time_spent: 60),
+        build(:work_item, :attendance_with_counsel, :with_adjustment, fee_earner: 'AB', time_spent: 90),
+        build(:work_item, :attendance_without_counsel, :with_adjustment, fee_earner: 'AB', time_spent: 90),
+        build(:work_item, :preparation, :with_adjustment, fee_earner: 'BC', time_spent: 104),
+        build(:work_item, :advocacy, :with_adjustment, fee_earner: 'BC', time_spent: 104),
       ]
     end
 
@@ -265,7 +267,7 @@ RSpec.describe 'View claim page', type: :system do
       expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
         [
           'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£241.82', '£48.36', '£290.18',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
           'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
           'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
           'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
@@ -273,9 +275,9 @@ RSpec.describe 'View claim page', type: :system do
           'Sum of net cost claimed: £731.18',
           'Sum of VAT on claimed: £100.24',
           'Sum of net cost and VAT on claimed: £831.42',
-          'Sum of net cost allowed: £399.42',
-          'Sum of VAT on allowed: £53.88',
-          'Sum of net cost and VAT on allowed: £453.30'
+          'Sum of net cost allowed: £333.55',
+          'Sum of VAT on allowed: £40.71',
+          'Sum of net cost and VAT on allowed: £374.26'
         ]
       )
     end
@@ -293,7 +295,7 @@ RSpec.describe 'View claim page', type: :system do
         expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
           [
             'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-            'Profit costs', '£355.98', '£0.00', '£355.98', '£241.82', '£0.00', '£241.82',
+            'Profit costs', '£355.98', '£0.00', '£355.98', '£175.95', '£0.00', '£175.95',
             'Disbursements', '£320.00', '£18.00', '£338.00', '£130.00', '£0.00', '£130.00',
             'Waiting', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
             'Travel', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
@@ -301,9 +303,9 @@ RSpec.describe 'View claim page', type: :system do
             'Sum of net cost claimed: £731.18',
             'Sum of VAT on claimed: £18.00',
             'Sum of net cost and VAT on claimed: £749.18',
-            'Sum of net cost allowed: £399.42',
+            'Sum of net cost allowed: £333.55',
             'Sum of VAT on allowed: £0.00',
-            'Sum of net cost and VAT on allowed: £399.42'
+            'Sum of net cost and VAT on allowed: £333.55'
           ]
         )
       end
@@ -320,11 +322,11 @@ RSpec.describe 'View claim page', type: :system do
           '', 'Time claimed', 'Net cost claimed', 'Time allowed', 'Net cost allowed',
           'Travel', '1 hour:00 minutes', '£27.60', '0 hours:30 minutes', '£13.80',
           'Waiting', '1 hour:00 minutes', '£27.60', '0 hours:30 minutes', '£13.80',
-          'Attendance with counsel', '1 hour:30 minutes', '£53.52', '1 hour:30 minutes', '£53.52',
-          'Attendance without counsel', '1 hour:30 minutes', '£78.23', '1 hour:30 minutes', '£78.23',
+          'Attendance with counsel', '1 hour:30 minutes', '£53.52', '0 hours:45 minutes', '£26.76',
+          'Attendance without counsel', '1 hour:30 minutes', '£78.23', '0 hours:45 minutes', '£39.11',
           'Preparation', '1 hour:44 minutes', '£90.39', '0 hours:52 minutes', '£45.20',
           'Advocacy', '1 hour:44 minutes', '£113.39', '0 hours:52 minutes', '£56.70',
-          'Total', '', 'Sum of net cost claimed: £390.73', '', 'Sum of net cost allowed: £261.24'
+          'Total', '', 'Sum of net cost claimed: £390.73', '', 'Sum of net cost allowed: £195.37'
         ]
       )
     end
@@ -332,16 +334,93 @@ RSpec.describe 'View claim page', type: :system do
     it 'show the adjusted work items' do
       visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
 
-      # items
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
-          1.day.ago.strftime('%-d %B %Y'),
-          '', 'Time claimed', 'Uplift claimed', 'Net cost claimed', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-          'Action',
-          'Advocacy', '1 hour:44 minutes', '0%', '£113.39', '0 hours:52 minutes', '0%', '£56.70', 'View',
-          'Preparation', '1 hour:44 minutes', '0%', '£90.39', '0 hours:52 minutes', '0%', '£45.20', 'View',
-          'Travel', '1 hour:00 minutes', '10%', '£27.60', '0 hours:30 minutes', '10%', '£13.80', 'View',
-          'Waiting', '1 hour:00 minutes', '10%', '£27.60', '0 hours:30 minutes', '10%', '£13.80', 'View'
+          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+          '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+          '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+          '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+          '4', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+          '5', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+          '6', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80'
+        ]
+      )
+    end
+
+    it 'shows expected pagination' do
+      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      expect(page).to have_content("Showing #{claim.work_items.size} of #{claim.work_items.size} work items")
+    end
+
+    it 'allows me to sort adjusted work items by Cost type' do
+      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      click_on 'Cost type'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+          '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+          '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+          '3', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+          '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+          '5', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+          '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+        ]
+      )
+    end
+
+    it 'allows me to sort adjusted work items by Time allowed' do
+      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      click_on 'Time allowed'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+          '1', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+          '2', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+          '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+          '4', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+          '5', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+          '6', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        ]
+      )
+    end
+
+    it 'allows me to sort adjusted work items by Uplift allowed' do
+      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      click_on 'Uplift allowed'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+          '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+          '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+          '3', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+          '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+          '5', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+          '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+        ]
+      )
+    end
+
+    it 'allows me to sort adjusted work items by Net cost allowed' do
+      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+
+      click_on 'Net cost allowed'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+          '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+          '2', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+          '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+          '4', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+          '5', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+          '6', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
         ]
       )
     end
@@ -389,7 +468,7 @@ RSpec.describe 'View claim page', type: :system do
           'Reason for adjustment', 'WI adjustment',
 
           'Your claimed costs',
-          'Date',	1.day.ago.strftime('%-d %B %Y'),
+          'Date',	Time.current.strftime('%-d %B %Y'),
           'Fee earner initials', 'BC',
           'Rate applied', '£65.42',
           'Number of hours', '1 hour 44 minutes',
