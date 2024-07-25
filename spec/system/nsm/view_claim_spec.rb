@@ -129,7 +129,7 @@ RSpec.describe 'View claim page', type: :system do
 
     expect(all('table td, table th').map(&:text)).to eq(
       [
-        'Item', 'Cost Type', 'Number claimed', 'Uplift claimed', 'Net cost claimed',
+        'Item', 'Cost type', 'Number claimed', 'Uplift claimed', 'Net cost claimed',
         '1', 'Letters', '2', '0%', '£8.18',
         '2', 'Calls', '3', '0%', '£12.27'
       ]
