@@ -25,8 +25,10 @@ RSpec.describe 'View claim page', type: :system do
     visit provider_saml_omniauth_callback_path
   end
 
-  it 'shows a cost summary on the main page' do
+  it 'shows a cost summary card on the main page (overview)' do
     visit nsm_steps_view_claim_path(claim.id)
+
+    expect(page).to have_selector('.govuk-summary-card', text: 'Cost summary')
 
     expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
       [
@@ -67,8 +69,10 @@ RSpec.describe 'View claim page', type: :system do
     end
   end
 
-  it 'shows a cost summary on the claim costs page' do
+  it 'shows a cost summary table on the claimed costs page' do
     visit nsm_steps_view_claim_path(claim.id, section: :claimed_costs)
+
+    expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
 
     expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
       [
@@ -253,8 +257,10 @@ RSpec.describe 'View claim page', type: :system do
       ]
     end
 
-    it 'shows an adjusted cost summary with VAT' do
+    it 'shows an adjusted cost summary table with VAT' do
       visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
+
+      expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
 
       expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
         [
@@ -279,8 +285,10 @@ RSpec.describe 'View claim page', type: :system do
         claim.firm_office.update(vat_registered: 'no')
       end
 
-      it 'shows an adjusted cost summary without VAT' do
+      it 'shows an adjusted cost summary table without VAT' do
         visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
+
+        expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
 
         expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
           [

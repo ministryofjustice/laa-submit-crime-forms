@@ -34,7 +34,13 @@
 
       <% section_group[:sections].each do |section| %>
         <% if section.custom %>
-          <%= render section.custom[:partial], **section.custom[:locals] %>
+          <% if section.has_card %>
+            <%= govuk_summary_card(title: section.title) do %>
+              <%= render section.custom[:partial], **section.custom[:locals] %>
+            <% end %>
+          <% else %>
+            <%= render section.custom[:partial], **section.custom[:locals] %>
+          <% end %>
         <% else %>
           <%= govuk_summary_list(
             card: { title: section.title },
