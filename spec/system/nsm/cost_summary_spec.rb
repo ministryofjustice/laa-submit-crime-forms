@@ -33,7 +33,7 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
       .and have_content('Disbursements £227.50 £31.50 £259.00')
       .and have_content('Total £533.34 £92.67 £626.01')
       # Work items
-      .and have_content('Without counsel assigned1 hour 30 minutes£78.23') # 52.15 * 90 / 60
+      .and have_content('Attendance without counsel1 hour 30 minutes£78.23') # 52.15 * 90 / 60
       .and have_content('Preparation0 hours 0 minutes£0.00')
       .and have_content('Advocacy3 hours 10 minutes£207.16')
       .and have_content('Total£285.39')

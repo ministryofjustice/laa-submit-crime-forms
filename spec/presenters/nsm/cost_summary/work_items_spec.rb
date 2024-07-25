@@ -21,7 +21,7 @@ RSpec.describe Nsm::CostSummary::WorkItems do
       expect(subject.rows).to eq(
         [
           [
-            { classes: 'govuk-table__header', text: 'Without counsel assigned' },
+            { classes: 'govuk-table__header', text: 'Attendance without counsel' },
             { text: '0 hours 0 minutes' },
             { classes: 'govuk-table__cell--numeric', text: '£0.00' }
           ],
@@ -45,7 +45,7 @@ RSpec.describe Nsm::CostSummary::WorkItems do
       it 'includes ATTENDANCE_WITH_COUNSEL in data' do
         row_keys = subject.rows.map(&:first).pluck(:text)
         expect(row_keys).to eq(
-          ['With counsel assigned', 'Without counsel assigned', 'Preparation', 'Advocacy']
+          ['Attendance with counsel', 'Attendance without counsel', 'Preparation', 'Advocacy']
         )
       end
     end
@@ -56,7 +56,7 @@ RSpec.describe Nsm::CostSummary::WorkItems do
       it 'includes WAITING and TRAVEL in data' do
         row_keys = subject.rows.map(&:first).pluck(:text)
         expect(row_keys).to eq(
-          ['Without counsel assigned', 'Preparation', 'Advocacy', 'Travel', 'Waiting']
+          ['Attendance without counsel', 'Preparation', 'Advocacy', 'Travel', 'Waiting']
         )
       end
     end

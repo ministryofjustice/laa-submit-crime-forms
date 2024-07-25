@@ -87,7 +87,7 @@ RSpec.describe 'View claim page', type: :system do
         '2', 'Waiting', 3.days.ago.strftime('%-d %b %Y'), 'test', '0 hours:23 minutes', '10%', '£10.58',
         '3', 'Advocacy', 2.days.ago.strftime('%-d %b %Y'), '', '1 hour:26 minutes', '0%', '£93.77',
         '4', 'Advocacy', 1.day.ago.strftime('%-d %b %Y'), '', '1 hour:44 minutes', '0%', '£113.39',
-        '5', 'Without counsel assigned', 1.day.ago.strftime('%-d %b %Y'), 'AB', '1 hour:30 minutes', '0%', '£78.23'
+        '5', 'Attendance without counsel', 1.day.ago.strftime('%-d %b %Y'), 'AB', '1 hour:30 minutes', '0%', '£78.23'
       ]
     )
 
@@ -98,7 +98,7 @@ RSpec.describe 'View claim page', type: :system do
         '', 'Time claimed', 'Net cost claimed',
         'Travel', '0 hours:23 minutes', '£10.58',
         'Waiting', '0 hours:23 minutes', '£10.58',
-        'Without counsel assigned', '1 hour:30 minutes', '£78.23',
+        'Attendance without counsel', '1 hour:30 minutes', '£78.23',
         'Advocacy', '3 hours:10 minutes', '£207.16',
         'Total', '', 'Sum of net cost claimed: £306.55'
       ]
@@ -117,7 +117,7 @@ RSpec.describe 'View claim page', type: :system do
       expect(all('details table td, details table th').map(&:text)).to eq(
         [
           '', 'Time claimed', 'Net cost claimed',
-          'Without counsel assigned', '12 hours:00 minutes', '£625.80',
+          'Attendance without counsel', '12 hours:00 minutes', '£625.80',
           'Total', '', 'Sum of net cost claimed: £625.80'
         ]
       )
@@ -293,7 +293,7 @@ RSpec.describe 'View claim page', type: :system do
         [
           'Item', 'Time claimed', 'Net cost claimed', 'Time allowed', 'Net cost allowed',
           'Advocacy', '1 hour 44 minutes', '£113.39', '0 hours 52 minutes', '£56.70',
-          'Without counsel assigned', '1 hour 30 minutes', '£78.23', '1 hour 30 minutes', '£78.23',
+          'Attendance without counsel', '1 hour 30 minutes', '£78.23', '1 hour 30 minutes', '£78.23',
           'Total', '', '£191.62', '', '£134.92'
         ]
       )
