@@ -8,7 +8,7 @@
   <%= govuk_details(summary_text: t('.check_totals')) do %>
     <%=
       head = [
-        { text: t('.item'), width: 'govuk-!-width-one-third' },
+        { text: '', width: 'govuk-!-width-one-third' },
         { text: t('.time'), numeric: true },
         { text: t('.net_cost'), numeric: true },
         { text: t('.allowed_time'), numeric: true },
@@ -53,47 +53,56 @@
     %>
   <% end %>
 
-  <% pagy, work_items = pagy_array(@work_items.filter{_1.adjustment_comment.present?}) %>
-    <% if work_items.size.zero? %>
-      <p><%= t('.no_data') %></p>
-    <% else %>
-    <%
-      head = [
-        { text: t('.item'), width: 'govuk-!-width-one-quarter' },
-        { text: t('.time'), numeric: true },
-        { text: t('.uplift'), numeric: true },
-        { text: t('.net_cost'), numeric: true },
-        { text: t('.allowed_time'), numeric: true },
-        { text: t('.allowed_uplift'), numeric: true },
-        { text: t('.allowed_net_cost'), numeric: true },
-        { text: t('.action'), numeric: true }
-      ]
-      work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
-      <%=
-        rows = work_items_for_date.map do |work_item|
-          link = link_to(t('.view'), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.id, page: pagy.page, section: 'adjustments'), data: { turbo: 'false' })
+  <%
+    pagy, work_items = pagy_array(@work_items.filter{_1.adjustment_comment.present?}, items: 100)
+    head = {
+      'line_item' => { numeric: false },
+      'item' => { numeric: false },
+      'adjustment_comment' => { sortable: false, numeric: false },
+      'allowed_time' => { numeric: [] },
+      'allowed_uplift' => { numeric: [] },
+      'allowed_net_cost' => { numeric: [] },
+    }
+  %>
 
-          [
-            t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"),
-            { text: format_period(work_item.time_spent, style: :minimal_html), numeric: true },
-            { text: NumberTo.percentage(work_item.uplift.to_f, multiplier: 1), numeric: true },
-            { text: NumberTo.pounds(work_item.total_cost), numeric: true },
-            { text: format_period(work_item.allowed_time_spent || work_item.time_spent, style: :minimal_html), numeric: true },
-            { text: NumberTo.percentage((work_item.allowed_uplift || work_item.uplift).to_f, multiplier: 1), numeric: true },
-            { text: NumberTo.pounds(work_item.allowed_total_cost), numeric: true },
-            { text: link, numeric: true }
-          ]
+  <% if work_items.size.zero? %>
+    <p><%= t('.no_data') %></p>
+  <% else %>
+    <%=
+      rows = work_items.each_with_index.map do |work_item, index|
+        item_with_link = link_to(t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"),
+                                 item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.id, page: pagy.page),
+                                 data: { turbo: 'false' })
+
+        [
+          { header: true, text: index + 1, numeric: false},
+          { header: true, text: item_with_link, numeric: false},
+          { text: work_item.adjustment_comment, numeric: false},
+          { text: format_period(work_item.allowed_time_spent || work_item.time_spent, style: :minimal_html), numeric: true },
+          { text: NumberTo.percentage((work_item.allowed_uplift || work_item.uplift).to_f, multiplier: 1), numeric: true },
+          { text: NumberTo.pounds(work_item.allowed_total_cost), numeric: true },
+        ]
+      end
+
+      header_row = head.map.with_index do |(column_key, properties), index|
+        unless properties[:sortable] == false
+          aria_sort, next_direction = sort_variable(column_key, @sort_by, @sort_direction)
+          {
+            text: reorder_form(work_items_nsm_steps_view_claim_path(current_application), column_key, next_direction, "nsm.steps.view_claim.allowed_work_items", index),
+            numeric: properties[:numeric],
+            html_attributes: { 'aria-sort': aria_sort}
+          }
+        else
+          {
+            text: t("nsm.steps.view_claim.allowed_work_items.#{column_key}"),
+            numeric: properties[:numeric],
+          }
         end
+      end
 
-        next if rows.none?
+      govuk_table_with_cell(header_row, rows)
+    %>
+  <% end %>
 
-        govuk_table do |table|
-          table.with_caption(text: completed_on.strftime('%-d %B %Y'), size: 's')
-          table.with_head(rows: [head])
-          table.with_body(rows: rows, first_cell_is_header: true)
-        end
-      %>
-    <% end %>
   <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
-<% end %>
 </turbo-frame>
