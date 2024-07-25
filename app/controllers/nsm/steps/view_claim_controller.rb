@@ -48,6 +48,8 @@ module Nsm
         params.permit(
           :item_type,
           :prefix,
+          :sort_by,
+          :sort_direction,
         )
       end
 
@@ -57,8 +59,8 @@ module Nsm
 
       def set_default_table_sort_options
         default = 'line_item'
-        @sort_by = params.fetch(:sort_by, default)
-        @sort_direction = params.fetch(:sort_direction, 'ascending')
+        @sort_by = report_params.fetch(:sort_by, default)
+        @sort_direction = report_params.fetch(:sort_direction, 'ascending')
       end
     end
   end
