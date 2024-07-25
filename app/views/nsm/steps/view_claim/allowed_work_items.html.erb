@@ -40,9 +40,9 @@
       foot = [
         { text: t(".total"), width: 'govuk-!-width-one-quarter' },
         { text: '', numeric: true },
-        { text: NumberTo.pounds(total_cost), numeric: true },
+        { text: govuk_visually_hidden(t('.accessibility.net_cost')) + ' ' + NumberTo.pounds(total_cost), numeric: true },
         { text: '', numeric: true },
-        { text: NumberTo.pounds(allowed_total_cost), numeric: true },
+        { text: govuk_visually_hidden(t('.accessibility.allowed_net_cost')) + ' ' + NumberTo.pounds(allowed_total_cost), numeric: true },
       ]
 
       govuk_table do |table|
