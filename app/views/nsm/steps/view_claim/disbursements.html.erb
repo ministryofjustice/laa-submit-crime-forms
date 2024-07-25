@@ -28,7 +28,7 @@
         [
           { header: true, text: index + 1, numeric: false},
           { header: true, text: link, numeric: false},
-          { text: disbursement.disbursement_date&.strftime("%-d %b %Y"), numeric: false },
+          { text: disbursement.disbursement_date&.to_fs(:short_stamp), numeric: false },
           { text: NumberTo.pounds(disbursement.total_cost_without_vat), numeric: true },
           { text: NumberTo.pounds(disbursement.vat), numeric: true },
           { text: NumberTo.pounds(disbursement.total_cost), numeric: true },
