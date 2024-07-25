@@ -12,14 +12,16 @@ module PriorAuthority
     end
 
     def call
-      case application.status
-      when 'rejected', 'granted'
-        sync_overall_comment
-      when 'part_grant'
-        sync_overall_comment
-        sync_allowances
-      when 'sent_back'
-        sync_sent_back_request
+      application.with_lock do
+        case application.status
+        when 'rejected', 'granted'
+          sync_overall_comment
+        when 'part_grant'
+          sync_overall_comment
+          sync_allowances
+        when 'sent_back'
+          sync_sent_back_request
+        end
       end
     rescue StandardError => e
       Sentry.capture_message("#{self.class.name} encountered error '#{e}' for application '#{application.id}'")
@@ -94,15 +96,13 @@ module PriorAuthority
     end
 
     def sync_further_info_request
-      latest_further_info = data['further_information'].max_by { _1['requested_at'] }
-
-      application.further_informations.create(
-        {
-          caseworker_id: latest_further_info['caseworker_id'],
-          information_requested: latest_further_info['information_requested'],
-          requested_at: latest_further_info['requested_at']
-        }
-      )
+      data['further_information'].each do |further_info|
+        application.further_informations.find_or_create_by(
+          caseworker_id: further_info['caseworker_id'],
+          information_requested: further_info['information_requested'],
+          requested_at: further_info['requested_at']
+        )
+      end
     end
 
     def sync_incorrect_info_request
