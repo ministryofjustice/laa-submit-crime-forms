@@ -77,5 +77,16 @@ RSpec.describe ApplicationHelper, type: :helper do
       rendered_table = helper.govuk_table_with_cell(head, rows_with_header)
       expect(rendered_table).to have_selector('tbody tr:first-child th', text: 'Row 1, Cell 1')
     end
+
+    it 'renders a table with a caption' do
+      caption = {
+        text: 'Summary of work items',
+      }
+      rendered_table = helper.govuk_table_with_cell(head, rows, caption:)
+      expect(rendered_table).to have_selector(
+        'caption',
+        text: 'Summary of work items'
+      )
+    end
   end
 end
