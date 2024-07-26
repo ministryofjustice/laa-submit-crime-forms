@@ -35,15 +35,7 @@ RSpec.describe Nsm::Steps::SupportingEvidenceController, type: :controller do
         end
 
         context 'and files exist' do
-          before do
-            file = Rails.root.join('spec/fixtures/files/test.png')
-            image = ActiveStorage::Blob.create_and_upload!(
-              io: File.open(file, 'rb'),
-              filename: 'test.png',
-              content_type: 'image/png'
-            )
-            @file_upload = create(:supporting_evidence, documentable_id: current_application.id, file: image)
-          end
+          before { create(:supporting_evidence, documentable_id: current_application.id) }
 
           it 'responds with HTTP Success' do
             get :edit, params: { id: current_application }
