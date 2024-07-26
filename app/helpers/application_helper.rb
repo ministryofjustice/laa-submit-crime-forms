@@ -25,8 +25,9 @@ module ApplicationHelper
     end
   end
 
-  def govuk_table_with_cell(head, rows)
+  def govuk_table_with_cell(head, rows, caption: {})
     govuk_table do |table|
+      table.with_caption(**caption) if caption[:text]
       table.with_head(rows: [head])
       table.with_body do |body|
         rows.each do |item_row|
