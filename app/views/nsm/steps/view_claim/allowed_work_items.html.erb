@@ -55,6 +55,7 @@
 
   <%
     pagy, work_items = pagy_array(@work_items.filter{ _1.adjustment_comment.present? }, items: 100)
+
     head = {
       'line_item' => { numeric: false },
       'item' => { numeric: false },
@@ -102,7 +103,6 @@
 
       govuk_table_with_cell(header_row, rows)
     %>
+    <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
   <% end %>
-
-  <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
 </turbo-frame>

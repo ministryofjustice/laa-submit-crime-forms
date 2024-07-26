@@ -52,7 +52,8 @@
       end
 
       govuk_table_with_cell(header_row, rows)
+
     %>
+    <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
   <% end %>
-  <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
 </turbo-frame>

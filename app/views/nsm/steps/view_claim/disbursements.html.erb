@@ -5,11 +5,12 @@
     <%= t('.disbursements') %>
   </h3>
 
-  <% if @disbursements.size.zero? %>
+  <% if @disbursements.none? %>
     <p><%= t('.no_data') %></p>
   <% else %>
     <%
       pagy, disbursements = pagy_array(@disbursements, items: 100)
+
       head = {
         'line_item' => false,
         'item' => false,
@@ -45,6 +46,6 @@
 
       govuk_table_with_cell(header_row, rows, caption: { text: t('.accessible_text.disbursements_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} })
     %>
+    <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
   <% end %>
-  <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
 </turbo-frame>

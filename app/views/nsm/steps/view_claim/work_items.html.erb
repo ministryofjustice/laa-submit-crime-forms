@@ -32,7 +32,6 @@
         { text: govuk_visually_hidden(t('.accessible_text.net_cost')) + NumberTo.pounds(total_cost), numeric: true },
       ]
 
-
       govuk_table do |table|
         table.with_caption(text: t('.accessible_text.work_summary_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} )
         table.with_head(rows: [head])
@@ -44,6 +43,7 @@
 
   <%
     pagy, work_items = pagy_array(@work_items, items: 100)
+
     head = {
       'line_item' => false,
       'item' => false,
@@ -54,6 +54,7 @@
       'net_cost' => []
     }
   %>
+
   <%=
     rows = work_items.each_with_index.map do |work_item, index|
       item_with_link = link_to(t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.id, page: pagy.page), data: { turbo: 'false' })
