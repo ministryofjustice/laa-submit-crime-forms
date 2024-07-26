@@ -99,10 +99,6 @@ Rails/FilePath:
 
 Metrics/ClassLength:
   Max: 130
-  Exclude:
-    - app/services/decisions/**/*
-    - app/services/submit_to_app_store/prior_authority/event_builder.rb
-    - app/presenters/nsm/check_answers/cost_summary_card.rb
 
 # To be tweaked until we find the right balance
 Metrics/MethodLength:
