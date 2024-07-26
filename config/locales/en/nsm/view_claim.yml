@@ -36,10 +36,11 @@ en:
           gross_cost: Total claimed
           table_info_item: work item
           total: Total
-          accessible_text:
+          accessibility:
+            item: Item
             work_items_caption: Claimed work items
             work_summary_caption: 'Summary of work items'
-            net_cost: 'Sum of net cost claimed: '
+            net_cost: 'Sum of net cost claimed:'
         allowed_work_items:
           page_title: Claim details
           work_items: Adjusted work items
@@ -58,6 +59,7 @@ en:
           accessibility:
             allowed_net_cost: 'Sum of net cost allowed:'
             net_cost: 'Sum of net cost claimed:'
+            work_items_caption: Adjusted work items
           vat: VAT on claimed
           gross_cost: Total claimed
           table_info_item: work item
@@ -76,7 +78,7 @@ en:
           letters: Letters
           calls: Calls
           no_data: You do not have any letters or calls
-          accessible_text:
+          accessibility:
             letters_and_calls_caption: Claimed letter and calls
         allowed_letters_and_calls:
           page_title: Claim details
@@ -96,6 +98,8 @@ en:
           letters: Letters
           calls: Calls
           no_data: You do not have any adjusted letter or calls
+          accessibility:
+            letters_and_calls_caption: Adjusted letter and calls
         disbursements:
           page_title: Claim details
           disbursements: Disbursements
@@ -109,8 +113,8 @@ en:
           view: View
           table_info_item: disbursement
           no_data: You do not have any disbursements
-          accessible_text:
-            disbursements_caption: Disbursements
+          accessibility:
+            disbursements_caption: Claimed disbursements
         allowed_disbursements:
           page_title: Claim details
           disbursements: Adjusted disbursements
@@ -127,6 +131,8 @@ en:
           view: View
           table_info_item: disbursement
           no_data: You do not have any adjusted disbursements
+          accessibility:
+            disbursements_caption: Adjusted disbursements
         granted_response: The claim has been fully granted.
         # view pages
         work_item:
