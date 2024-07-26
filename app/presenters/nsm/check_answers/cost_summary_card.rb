@@ -161,7 +161,7 @@ module Nsm
       def t(key, numeric: true, width: nil)
         scope = show_adjustments ? 'with_adjustments' : 'base'
         {
-          text: sanitize(I18n.t("nsm.steps.check_answers.groups.cost_summary.#{scope}.#{key}")),
+          text: I18n.t("nsm.steps.check_answers.groups.cost_summary.#{scope}.#{key}").html_safe,
           numeric: numeric, width: width
         }
       end
