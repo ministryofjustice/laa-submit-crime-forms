@@ -62,7 +62,7 @@ en:
           gross_cost: Total claimed
           table_info_item: work item
           total: Total
-          no_data: No work items have been adjusted
+          no_data: You do not have any adjusted work items
         letters_and_calls:
           page_title: Claim details
           letters_and_calls: Letters and calls
@@ -95,7 +95,7 @@ en:
           view: View
           letters: Letters
           calls: Calls
-          no_data: No letters or calls have been adjusted
+          no_data: You do not have any adjusted letter or calls
         disbursements:
           page_title: Claim details
           disbursements: Disbursements
@@ -126,7 +126,7 @@ en:
           action: Action
           view: View
           table_info_item: disbursement
-          no_data: No disbursements have been adjusted
+          no_data: You do not have any adjusted disbursements
         granted_response: The claim has been fully granted.
         # view pages
         work_item:
