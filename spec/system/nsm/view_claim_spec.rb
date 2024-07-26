@@ -82,6 +82,7 @@ RSpec.describe 'View claim page', type: :system do
     # items
     expect(all('table caption, table td, table th').map(&:text)).to eq(
       [
+        'Claimed work items',
         'Line item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
         '1', 'Travel', 3.days.ago.strftime('%-d %b %Y'), 'test', '0 hours:23 minutes', '10%', '£10.58',
         '2', 'Waiting', 3.days.ago.strftime('%-d %b %Y'), 'test', '0 hours:23 minutes', '10%', '£10.58',

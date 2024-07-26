@@ -31,12 +31,15 @@ en:
           time: Time claimed
           uplift: Uplift claimed
           net_cost: Net cost claimed
-          net_cost_description: 'Sum of net cost claimed: '
           action: Action
           vat: VAT on claimed
           gross_cost: Total claimed
           table_info_item: work item
           total: Total
+          accessible_text:
+            work_items_caption: Claimed work items
+            work_summary_caption: 'Summary of work items'
+            net_cost: 'Sum of net cost claimed: '
         allowed_work_items:
           page_title: Claim details
           work_items: Adjusted work items
@@ -68,6 +71,8 @@ en:
           letters: Letters
           calls: Calls
           no_data: You do not have any letters or calls
+          accessible_text:
+            letters_and_calls_caption: Claimed letter and calls
         allowed_letters_and_calls:
           page_title: Claim details
           letters_and_calls: Adjusted letters and calls
@@ -97,6 +102,8 @@ en:
           view: View
           table_info_item: disbursement
           no_data: You do not have any disbursements
+          accessible_text:
+            disbursements_caption: Disbursements
         allowed_disbursements:
           page_title: Claim details
           disbursements: Adjusted disbursements
