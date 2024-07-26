@@ -3,6 +3,15 @@ class WorkItem < ApplicationRecord
 
   include WorkItemCosts
 
+  SORT_POSITION = {
+    'travel' => 0,
+    'waiting' => 1,
+    'attendance_with_counsel' => 2,
+    'attendance_without_counsel' => 3,
+    'preparation' => 4,
+    'advocacy' => 5
+  }.freeze
+
   validates :id, exclusion: { in: [Nsm::StartPage::NEW_RECORD] }
 
   def as_json(*)
@@ -16,16 +25,10 @@ class WorkItem < ApplicationRecord
   end
 
   def sort_position
-    {
-      'travel' => 0,
-      'waiting' => 1,
-      'attendance_with_counsel' => 2,
-      'attendance_without_counsel' => 3,
-      'preparation' => 4,
-      'advocacy' => 5
-    }[work_type.to_s]
+    SORT_POSITION[work_type.to_s]
   end
 
+  # TODO: this will need removing once we are storing indexes against work items and disbursements
   def position
     1
   end
