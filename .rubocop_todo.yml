@@ -11,3 +11,9 @@
 # Include: **/*_spec.rb
 RSpec/SpecFilePathFormat:
   Enabled: false
+
+Metrics/ClassLength:
+  Exclude:
+    - app/services/decisions/**/*
+    - app/services/submit_to_app_store/prior_authority/event_builder.rb
+    - app/presenters/nsm/check_answers/cost_summary_card.rb

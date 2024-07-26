@@ -25,7 +25,7 @@ module Nsm
 
       def headers
         [
-          t('items_html', numeric: false, width: 'govuk-!-width-one-quarter'),
+          t('items_html', numeric: false),
           t('request_net'), t('request_vat'), t('request_gross'),
           show_adjustments && t('allowed_net'),
           show_adjustments && t('allowed_vat'),
