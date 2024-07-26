@@ -42,7 +42,7 @@
     <p><%= t('.no_data') %></p>
   <% else %>
     <%=
-      govuk_table_with_cell(head, rows)
+      govuk_table_with_cell(head, rows, caption: { text: t('.accessibility.letters_and_calls_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} })
     %>
   <% end %>
 </turbo-frame>

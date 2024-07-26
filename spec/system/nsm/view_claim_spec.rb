@@ -116,7 +116,7 @@ RSpec.describe 'View claim page', type: :system do
     find('details').click
     expect(all('details table td, details table th').map(&:text)).to eq(
       [
-        '', 'Time claimed', 'Net cost claimed',
+        'Item', 'Time claimed', 'Net cost claimed',
         'Travel', '0 hours:23 minutes', '£10.58',
         'Waiting', '0 hours:23 minutes', '£10.58',
         'Attendance without counsel', '1 hour:30 minutes', '£78.23',
@@ -137,7 +137,7 @@ RSpec.describe 'View claim page', type: :system do
       find('details').click
       expect(all('details table td, details table th').map(&:text)).to eq(
         [
-          '', 'Time claimed', 'Net cost claimed',
+          'Item', 'Time claimed', 'Net cost claimed',
           'Attendance without counsel', '12 hours:00 minutes', '£625.80',
           'Total', '', 'Sum of net cost claimed: £625.80'
         ]
@@ -347,6 +347,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted work items',
           'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
           '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
@@ -371,6 +372,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted work items',
           'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
           '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
@@ -389,6 +391,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted work items',
           'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
           '2', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
@@ -407,6 +410,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted work items',
           'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
           '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
@@ -425,6 +429,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted work items',
           'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
           '2', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
@@ -441,6 +446,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted letter and calls',
           'Line item', 'Cost type', 'Reasons for adjustment', 'Number allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Letters', 'Letters adjusted', '1', '0%', '£4.09',
           '1', 'Calls', 'Calls adjusted', '1', '0%', '£4.09'
@@ -453,6 +459,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
           '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00'
@@ -467,6 +474,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
           '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
@@ -477,6 +485,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
           '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
@@ -491,6 +500,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
           '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00'
@@ -501,6 +511,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
           '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
@@ -515,6 +526,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
           '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
@@ -525,6 +537,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
           '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
@@ -539,6 +552,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
           '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
@@ -549,6 +563,7 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
           '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',

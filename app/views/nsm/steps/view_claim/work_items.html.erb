@@ -8,7 +8,7 @@
   <%= govuk_details(summary_text: t('.check_totals')) do %>
     <%=
       head = [
-        { text: nil },
+        { text: govuk_visually_hidden(t('.accessibility.item')) },
         { text: t('.time'), numeric: true },
         { text: t('.net_cost'), numeric: true },
       ]
@@ -29,11 +29,11 @@
       foot = [
         { text: t(".total") },
         { text: '', numeric: true },
-        { text: govuk_visually_hidden(t('.accessible_text.net_cost')) + NumberTo.pounds(total_cost), numeric: true },
+        { text: safe_join([govuk_visually_hidden(t('.accessibility.net_cost')), NumberTo.pounds(total_cost)], ' '), numeric: true },
       ]
 
       govuk_table do |table|
-        table.with_caption(text: t('.accessible_text.work_summary_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} )
+        table.with_caption(text: t('.accessibility.work_summary_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} )
         table.with_head(rows: [head])
         table.with_body(rows: rows, first_cell_is_header: true)
         table.with_foot(rows: foot, first_cell_is_header: true)
@@ -79,7 +79,7 @@
         }
     end
 
-    govuk_table_with_cell(header_row, rows, caption: { text: t('.accessible_text.work_items_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} })
+    govuk_table_with_cell(header_row, rows, caption: { text: t('.accessibility.work_items_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} })
   %>
   <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
 </turbo-frame>
