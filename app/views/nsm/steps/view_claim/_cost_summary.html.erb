@@ -1,5 +1,6 @@
 <div id="cost-summary-table">
   <%= govuk_table(
+        caption: (section.has_card ? nil : section.title),
         first_cell_is_header: true,
         head: section.headers,
         rows: section.table_fields.map(&:values),

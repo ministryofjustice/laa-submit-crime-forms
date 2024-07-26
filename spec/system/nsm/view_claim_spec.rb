@@ -32,6 +32,10 @@ RSpec.describe 'View claim page', type: :system do
 
     expect(page).to have_selector('.govuk-summary-card', text: 'Cost summary')
 
+    within('.govuk-summary-card', text: 'Cost summary') do
+      expect(page).to have_no_selector('.govuk-table__caption')
+    end
+
     expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
       [
         'Item', 'Net cost', 'VAT', 'Total',
@@ -75,6 +79,7 @@ RSpec.describe 'View claim page', type: :system do
     visit nsm_steps_view_claim_path(claim.id, section: :claimed_costs)
 
     expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
+    expect(page).to have_selector('.govuk-table__caption', text: 'Cost summary')
 
     expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
       [
@@ -267,6 +272,7 @@ RSpec.describe 'View claim page', type: :system do
       visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
 
       expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
+      expect(page).to have_selector('.govuk-table__caption', text: 'Cost summary')
 
       expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
         [
@@ -295,6 +301,7 @@ RSpec.describe 'View claim page', type: :system do
         visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
 
         expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
+        expect(page).to have_selector('.govuk-table__caption', text: 'Cost summary')
 
         expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
           [
