@@ -40,9 +40,9 @@
       foot = [
         { text: t(".total"), width: 'govuk-!-width-one-quarter' },
         { text: '', numeric: true },
-        { text: govuk_visually_hidden(t('.accessibility.net_cost')) + ' ' + NumberTo.pounds(total_cost), numeric: true },
+        { text: safe_join([govuk_visually_hidden(t('.accessibility.net_cost')) , NumberTo.pounds(total_cost)], ' '), numeric: true },
         { text: '', numeric: true },
-        { text: govuk_visually_hidden(t('.accessibility.allowed_net_cost')) + ' ' + NumberTo.pounds(allowed_total_cost), numeric: true },
+        { text: safe_join([govuk_visually_hidden(t('.accessibility.allowed_net_cost')) , NumberTo.pounds(allowed_total_cost)], ' '), numeric: true },
       ]
 
       govuk_table do |table|
@@ -54,7 +54,7 @@
   <% end %>
 
   <%
-    pagy, work_items = pagy_array(@work_items.filter{_1.adjustment_comment.present?}, items: 100)
+    pagy, work_items = pagy_array(@work_items.filter{ _1.adjustment_comment.present? }, items: 100)
     head = {
       'line_item' => { numeric: false },
       'item' => { numeric: false },
@@ -65,7 +65,7 @@
     }
   %>
 
-  <% if work_items.size.zero? %>
+  <% if work_items.none? %>
     <p><%= t('.no_data') %></p>
   <% else %>
     <%=

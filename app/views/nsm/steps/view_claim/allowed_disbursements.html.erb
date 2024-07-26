@@ -6,7 +6,7 @@
   </h3>
 
   <%
-    pagy, disbursements = pagy_array(@disbursements.filter{_1.adjustment_comment.present?}, items: 100)
+    pagy, disbursements = pagy_array(@disbursements.filter{ _1.adjustment_comment.present? }, items: 100)
 
     head = {
       'line_item' => { numeric: false },
@@ -18,7 +18,7 @@
     }
   %>
 
-  <% if disbursements.size.zero? %>
+  <% if disbursements.none? %>
     <p><%= t('.no_data') %></p>
   <% else %>
     <%=
