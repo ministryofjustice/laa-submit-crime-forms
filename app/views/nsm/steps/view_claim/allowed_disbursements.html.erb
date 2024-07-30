@@ -23,7 +23,13 @@
   <% else %>
     <%=
       rows = disbursements.each_with_index.map do |disbursement, index|
-        link = link_to(disbursement.record.translated_disbursement_type, item_nsm_steps_view_claim_path(id: current_application.id, item_type: :disbursement, item_id: disbursement.record.id, page: pagy.page), data: { turbo: 'false' })
+        link = link_to(disbursement.record.translated_disbursement_type,
+                       item_nsm_steps_view_claim_path(id: current_application.id,
+                                                      item_type: :disbursement,
+                                                      item_id: disbursement.record.id,
+                                                      page: pagy.page,
+                                                      section: 'adjustments'),
+                       data: { turbo: 'false' })
 
         [
           { header: true, text: index + 1, numeric: false},

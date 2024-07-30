@@ -46,7 +46,10 @@ module Nsm
 
       def report_params
         params.permit(
+          :id,
+          :item_id,
           :item_type,
+          :page,
           :prefix,
           :sort_by,
           :sort_direction,

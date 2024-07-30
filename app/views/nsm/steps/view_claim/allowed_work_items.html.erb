@@ -73,7 +73,11 @@
     <%=
       rows = work_items.each_with_index.map do |work_item, index|
         item_with_link = link_to(t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"),
-                                 item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.id, page: pagy.page),
+                                 item_nsm_steps_view_claim_path(id: current_application.id,
+                                                                item_type: :work_item,
+                                                                item_id: work_item.id,
+                                                                page: pagy.page,
+                                                                section: 'adjustments'),
                                  data: { turbo: 'false' })
 
         [
