@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
-  subject { described_class.new(claim) }
+  subject(:card) { described_class.new(claim) }
 
   describe '#title' do
     let(:claim) { build(:claim) }
@@ -118,7 +118,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
         end
       end
 
-      context 'no adjustements' do
+      context 'with no adjustements' do
         let(:claim) { create(:claim, :part_granted_status, :firm_details, :updated_at, assessment_comment:) }
 
         it 'generates no links in text' do
@@ -143,6 +143,33 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               }
             ]
           )
+        end
+      end
+
+      context 'with adjustements' do
+        let(:claim) do
+          create(
+            :claim,
+            :part_granted_status,
+            :firm_details,
+            :updated_at,
+            :adjusted_letters_calls,
+            :build_associates,
+            assessment_comment: assessment_comment,
+            work_items_count: 1,
+            work_items_adjusted: true,
+            disbursements_count: 1,
+            disbursements_adjusted: true,
+          )
+        end
+
+        it 'generates links to adjusted items tabs' do
+          all_text = card.row_data.pluck(:text).join
+
+          expect(all_text)
+            .to match(%r{<a class="govuk-link.*" href=".*/steps/view_claim\?section=adjustments#work-items-tab">Review adjustments to work items</a>})
+            .and match(%r{<a class="govuk-link.*" href=".*/steps/view_claim\?section=adjustments#letters-and-calls-tab">Review adjustments to letters and calls</a>})
+            .and match(%r{<a class="govuk-link.*" href=".*/steps/view_claim\?section=adjustments#disbursements-tab">Review adjustments to disbursements</a>})
         end
       end
     end
