@@ -24,7 +24,7 @@ en:
           work_items: Work items
           check_totals: Work items summary
           view: View
-          line_item: Line item
+          line_item: Item
           item: Cost type
           date: Date
           fee_earner: Fee earner
@@ -83,7 +83,7 @@ en:
         allowed_letters_and_calls:
           page_title: Claim details
           letters_and_calls: Adjusted letters and calls
-          line_item: Line item
+          line_item: Item
           item: Cost type
           number: Number claimed
           uplift: Uplift claimed
