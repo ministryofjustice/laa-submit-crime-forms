@@ -103,7 +103,7 @@ RSpec.describe 'View claim page', type: :system do
     expect(all('table caption, table td, table th').map(&:text)).to eq(
       [
         'Claimed work items',
-        'Line item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
+        'Item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
         '1', 'Travel', 3.days.ago.strftime('%-d %b %Y'), 'test', '0 hours:23 minutes', '10%', '£10.58',
         '2', 'Waiting', 3.days.ago.strftime('%-d %b %Y'), 'test', '0 hours:23 minutes', '10%', '£10.58',
         '3', 'Advocacy', 2.days.ago.strftime('%-d %b %Y'), '', '1 hour:26 minutes', '0%', '£93.77',
@@ -447,7 +447,7 @@ RSpec.describe 'View claim page', type: :system do
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
           'Adjusted letter and calls',
-          'Line item', 'Cost type', 'Reasons for adjustment', 'Number allowed', 'Uplift allowed', 'Net cost allowed',
+          'Item', 'Cost type', 'Reasons for adjustment', 'Number allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Letters', 'Letters adjusted', '1', '0%', '£4.09',
           '1', 'Calls', 'Calls adjusted', '1', '0%', '£4.09'
         ]
