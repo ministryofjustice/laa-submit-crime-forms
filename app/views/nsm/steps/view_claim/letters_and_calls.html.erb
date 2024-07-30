@@ -7,7 +7,6 @@
 
   <%
     head = [
-      { text: t('.line_item') },
       { text: t('.item'), width: 'govuk-!-width-one-quarter' },
       { text: t('.number'), numeric: true },
       { text: t('.uplift'), numeric: true },
@@ -17,14 +16,12 @@
     calls_link = link_to(t('.calls'), calls_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
     rows = [
       ([
-        { header: true, text: '1', numeric: false },
         { header: true, text: letters_link },
         { text: @claim.letters, numeric: true },
         { text: NumberTo.percentage(@claim.letters_uplift.to_f, multiplier: 1), numeric: true },
         { text: NumberTo.pounds(@claim.letters_after_uplift), numeric: true }
       ] unless @claim.letters.zero?),
       ([
-        { header: true, text: "#{@claim.letters.zero? ? 1 : 2}", numeric: false},
         { header: true, text: calls_link },
         { text: @claim.calls, numeric: true },
         { text: NumberTo.percentage(@claim.calls_uplift.to_f, multiplier: 1), numeric: true },

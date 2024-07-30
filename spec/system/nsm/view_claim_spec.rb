@@ -152,9 +152,9 @@ RSpec.describe 'View claim page', type: :system do
 
     expect(all('table td, table th').map(&:text)).to eq(
       [
-        'Item', 'Cost type', 'Number claimed', 'Uplift claimed', 'Net cost claimed',
-        '1', 'Letters', '2', '0%', '£8.18',
-        '2', 'Calls', '3', '0%', '£12.27'
+        'Cost type', 'Number claimed', 'Uplift claimed', 'Net cost claimed',
+        'Letters', '2', '0%', '£8.18',
+        'Calls', '3', '0%', '£12.27'
       ]
     )
   end
@@ -450,9 +450,9 @@ RSpec.describe 'View claim page', type: :system do
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
           'Adjusted letter and calls',
-          'Item', 'Cost type', 'Reasons for adjustment', 'Number allowed', 'Uplift allowed', 'Net cost allowed',
-          '1', 'Letters', 'Letters adjusted', '1', '0%', '£4.09',
-          '1', 'Calls', 'Calls adjusted', '1', '0%', '£4.09'
+          'Cost type', 'Reasons for adjustment', 'Number allowed', 'Uplift allowed', 'Net cost allowed',
+          'Letters', 'Letters adjusted', '1', '0%', '£4.09',
+          'Calls', 'Calls adjusted', '1', '0%', '£4.09'
         ]
       )
     end

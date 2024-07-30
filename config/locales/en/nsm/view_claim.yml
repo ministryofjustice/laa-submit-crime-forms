@@ -69,7 +69,6 @@ en:
         letters_and_calls:
           page_title: Claim details
           letters_and_calls: Letters and calls
-          line_item: Item
           item: Cost type
           number: Number claimed
           uplift: Uplift claimed
@@ -84,7 +83,6 @@ en:
         allowed_letters_and_calls:
           page_title: Claim details
           letters_and_calls: Adjusted letters and calls
-          line_item: Item
           item: Cost type
           number: Number claimed
           uplift: Uplift claimed

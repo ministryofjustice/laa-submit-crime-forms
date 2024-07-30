@@ -7,7 +7,6 @@
 
   <%
     head = [
-      { text: t('.line_item') },
       { text: t('.item')},
       { text: t('.adjustment_comment') },
       { text: t('.allowed_number'), numeric: true },
@@ -20,7 +19,6 @@
 
     rows = [
       ([
-        { header: true, text: '1', numeric: false },
         { header: true, text: letters_link },
         { text: simple_format(@claim.letters_adjustment_comment), numeric: false },
         { text: @claim.allowed_letters || @claim.letters, numeric: true },
@@ -28,7 +26,6 @@
         { text: NumberTo.pounds(@claim.allowed_letters_after_uplift), numeric: true },
       ] if @claim.letters_adjustment_comment),
       ([
-        { header: true, text: '1', numeric: false },
         { header: true, text: calls_link },
         { text: simple_format(@claim.calls_adjustment_comment), numeric: false },
         { text: @claim.allowed_calls || @claim.calls, numeric: true },
