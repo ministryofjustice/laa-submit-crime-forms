@@ -2,48 +2,84 @@
 <% decision_step_header %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <%= govuk_error_summary(@form_object) %>
-    <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.disbursements.count) %></h1>
-
-    <% @disbursements_by_date.each do |date, disbursements| %>
-      <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m"><%= date&.to_fs(:long) || t('.unknown_date') %></caption>
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.type') %></th>
-            <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.cost') %></th>
-            <th scope="col" class="govuk-table__header govuk-table__space-40"><%= t('.headers.details') %></th>
-            <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.change') %></th>
-            <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.delete') %></th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <% disbursements.each do |disbursement| %>
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">
-                <% if disbursement.disbursement_type == DisbursementTypes::OTHER.to_s %>
-                  <% if OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(disbursement.other_type)) %>
-                    <%= t("helpers.other_disbursement_type.#{disbursement.other_type}") %>
-                  <% else %>
-                    <%= check_missing(disbursement.other_type) %>
-                  <% end %>
-                <% else %>
-                  <%= check_missing(disbursement.disbursement_type) { t("helpers.label.nsm_steps_disbursement_type_form.disbursement_type_options.#{disbursement.disbursement_type}") } %>
-                <% end %>
-              </td>
-              <td class="govuk-table__cell"><%= check_missing(disbursement.total_cost) { NumberTo.pounds(disbursement.total_cost) } %></td>
-              <td class="govuk-table__cell"><%= check_missing(disbursement.type_and_cost_valid? && disbursement.details) %></td>
-              <td class="govuk-table__cell govuk-table__nowrap">
-                <%= link_to t('.change'), edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id) %>
-              </td>
-              <td class="govuk-table__cell govuk-table__nowrap">
-                <%= link_to t('.delete'), edit_nsm_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id) %>
-              </td>
-            </tr>
+    <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.disbursements.count) %> </h1>
+    <%
+      header_row = {
+      'item' => false,
+      'type' => false,
+      'date' => false,
+      'net_cost' => true,
+      'total_cost' => true
+    }
+    %>
+    <%= govuk_table do |table| %>
+      <%# Table header starts %>
+      <% table.with_head do |head| %>
+        <% head.with_row do |row| %>
+          <% header_row.map.with_index do |(column_key, numeric), index| %>
+            <% aria_sort, next_direction = sort_variable(column_key, @sort_by, @sort_direction) %>
+            <%= row.with_cell(
+                  text: reorder_form(disbursements_nsm_steps_view_claim_path(current_application), column_key, next_direction, "nsm.steps.disbursements.edit.headers", index),
+                  numeric: numeric,
+                  html_attributes: { 'aria-sort': aria_sort }
+                ) %>
           <% end %>
-        </tbody>
-      </table>
+          <%# Action header %>
+          <%= row.with_cell(text: t('.headers.action'), numeric: true) %>
+        <% end %>
+      <% end %>
+      <%# Table header ends %>
+      <%# Table body starts %>
+      <% table.with_body do |body| %>
+        <% @disbursements.each_with_index do |disbursement, index| %>
+          <%
+            disbursement_type_text = if disbursement.disbursement_type == DisbursementTypes::OTHER.to_s
+                                        other_type = disbursement.other_type
+                                        if OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(other_type))
+                                          t("helpers.other_disbursement_type.#{other_type}")
+                                        else
+                                          check_missing(other_type)
+                                        end
+                                      else
+                                        check_missing(disbursement.disbursement_type) do
+                                          t("helpers.label.nsm_steps_disbursement_type_form.disbursement_type_options.#{disbursement.disbursement_type}")
+                                        end
+                                      end
+            item_with_link =  govuk_link_to(disbursement_type_text, edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id))
+          %>
+          <% body.with_row do |row| %>
+            <%= row.with_cell(header: true, html_attributes: { id: 'item1' }) do %>
+              <%= index + 1 %>
+            <% end %>
+            <%= row.with_cell(header: true) do %>
+              <%= item_with_link %>
+            <% end %>
+            <%= row.with_cell do %>
+              <%= disbursement.disbursement_date.to_fs(:short_stamp) %>
+            <% end %>
+            <%= row.with_cell(numeric: true) do %>
+              <%= check_missing(disbursement.total_cost) { NumberTo.pounds(disbursement.total_cost_without_vat) } %>
+            <% end %>
+            <%= row.with_cell(numeric: true) do %>
+              <%= check_missing(disbursement.total_cost) { NumberTo.pounds(disbursement.total_cost) } %>
+            <% end %>
+            <%# Action Buttons %>
+            <%= row.with_cell(numeric: true) do %>
+              <ul class="govuk-summary-list__actions-list">
+                <li class="govuk-summary-list__actions-list-item">
+                  <%= govuk_link_to(t('.duplicate'), edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id), 'aria-labelledby': 'X', id: 1) %>
+                </li>
+                <li class="govuk-summary-list__actions-list-item">
+                  <%= govuk_link_to(t('.delete'), edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id), 'aria-labelledby': 'X', id: 2) %>
+                </li>
+              </ul>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <%# Table body ends %>
     <% end %>
 
     <%= step_form @form_object do |f| %>
