@@ -21,15 +21,6 @@ imagePullSecrets: []
 nameOverride: laa-submit-crime-forms-app
 fullnameOverride: laa-submit-crime-forms-app
 
-securityContext:
-  #  capabilities:
-  #    drop:
-  #    - ALL
-  #  readOnlyRootFilesystem: true
-  #  runAsNonRoot: true
-  #  runAsUser: 10000
-  #  allowPrivilegeEscalation: false
-
 service:
   type: ClusterIP
   port: 80
