@@ -31,8 +31,6 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      securityContext:
-        {{- include "helm_deploy.defaultSecurityContext" . | nindent 8 }}
       containers:
           # https://github.com/ministryofjustice/hmpps-utility-container-images
         - name: clamav
