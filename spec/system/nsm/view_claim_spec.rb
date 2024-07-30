@@ -114,6 +114,8 @@ RSpec.describe 'View claim page', type: :system do
 
     # summary
     find('details').click
+    expect(page).to have_selector('caption.govuk-visually-hidden', text: 'Summary of work items')
+
     expect(all('details table td, details table th').map(&:text)).to eq(
       [
         'Item', 'Time claimed', 'Net cost claimed',
@@ -327,6 +329,7 @@ RSpec.describe 'View claim page', type: :system do
 
       # open summary
       find('details').click
+      expect(page).to have_selector('caption.govuk-visually-hidden', text: 'Summary of adjusted work items')
 
       expect(all('details table td, details table th').map(&:text)).to eq(
         [
