@@ -27,8 +27,6 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      securityContext:
-        {{- include "helm_deploy.defaultSecurityContext" . | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}-worker
           securityContext:
