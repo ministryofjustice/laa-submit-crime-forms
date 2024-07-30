@@ -60,6 +60,7 @@ en:
             allowed_net_cost: 'Sum of net cost allowed:'
             net_cost: 'Sum of net cost claimed:'
             work_items_caption: Adjusted work items
+            work_summary_caption: Summary of adjusted work items
           vat: VAT on claimed
           gross_cost: Total claimed
           table_info_item: work item
