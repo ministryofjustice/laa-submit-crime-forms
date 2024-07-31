@@ -30,6 +30,6 @@ class WorkItem < ApplicationRecord
 
   # TODO: this will need removing once we are storing indexes against work items and disbursements
   def position
-    1
+    super || claim.work_item_position(self)
   end
 end

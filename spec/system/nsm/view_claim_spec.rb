@@ -100,14 +100,16 @@ RSpec.describe 'View claim page', type: :system do
     visit claimed_costs_work_items_nsm_steps_view_claim_path(claim.id)
 
     # items
-    expect(all('table caption, table td, table th').map(&:text)).to include(
-      'Claimed work items',
-      'Item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
-      '1', 'Travel', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
-      '2', 'Waiting', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
-      '3', 'Advocacy', 2.days.ago.to_fs(:short_stamp), '', '1 hour:26 minutes', '0%', '£93.77',
-      '4', 'Advocacy', 1.day.ago.to_fs(:short_stamp), '', '1 hour:44 minutes', '0%', '£113.39',
-      '5', 'Attendance without counsel', 1.day.ago.to_fs(:short_stamp), 'AB', '1 hour:30 minutes', '0%', '£78.23'
+    expect(all('table caption, table td, table th').map(&:text)).to eq(
+      [
+        'Claimed work items',
+        'Item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
+        '1', 'Travel', 3.days.ago.to_fs(:short_stamp), 'TT', '0 hours:23 minutes', '10%', '£10.58',
+        '2', 'Waiting', 3.days.ago.to_fs(:short_stamp), 'TT', '0 hours:23 minutes', '10%', '£10.58',
+        '3', 'Advocacy', 2.days.ago.to_fs(:short_stamp), '', '1 hour:26 minutes', '0%', '£93.77',
+        '4', 'Advocacy', 1.day.ago.to_fs(:short_stamp), '', '1 hour:44 minutes', '0%', '£113.39',
+        '5', 'Attendance without counsel', 1.day.ago.to_fs(:short_stamp), 'AB', '1 hour:30 minutes', '0%', '£78.23'
+      ]
     )
 
     # summary

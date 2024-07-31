@@ -98,6 +98,11 @@ class Claim < ApplicationRecord
     sorted_disbursement_ids.index(disbursement.id) + 1
   end
 
+  def work_item_position(work_item)
+    @work_item_positions ||= work_items.sort_by { [_1.completed_on, _1.work_type, _1.created_at] }.map(&:id)
+    @work_item_positions.index(work_item.id) + 1
+  end
+
   def update_disbursement_positions!
     updated_attributes = sorted_disbursement_positions.index_by { |d| d[:id] }
 
