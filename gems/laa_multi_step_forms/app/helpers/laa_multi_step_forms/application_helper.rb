@@ -35,8 +35,10 @@ module LaaMultiStepForms
     def format_period(period, style: :short)
       return period if period.blank?
 
+      minutes = style == :minimal_html ? format('%02d', (period % 60)) : (period % 60)
+
       t("helpers.time_period.hours.#{style}", count: period / 60) +
-        t("helpers.time_period.minutes.#{style}", count: period % 60)
+        t("helpers.time_period.minutes.#{style}", count: period % 60, minutes: minutes)
     end
 
     def gbp_field_value(value)

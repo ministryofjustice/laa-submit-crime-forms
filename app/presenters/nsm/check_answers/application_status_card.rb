@@ -90,11 +90,12 @@ module Nsm
         li_elements = %w[work_items letters_and_calls disbursements].map do |type|
           next unless any_changes?(type)
 
+          tab_anchor = safe_join([type.dasherize, 'tab'], '-')
           tag.li do
             govuk_link_to(
               translate(type),
               helper.url_for(controller: 'nsm/steps/view_claim', action: :show, id: claim.id, section: 'adjustments',
-                             anchor: type, only_path: true),
+                             anchor: tab_anchor, only_path: true),
               class: 'govuk-link--no-visited-state'
             )
           end

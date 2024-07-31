@@ -19,15 +19,23 @@ RSpec.describe Nsm::CostSummary::WorkItems do
   describe '#rows' do
     it 'generates letters and calls rows' do
       expect(subject.rows).to eq(
-        [[{ classes: 'govuk-table__header', text: 'Attendance without counsel' },
-          { text: '0 hours 0 minutes' },
-          { classes: 'govuk-table__cell--numeric', text: '£0.00' }],
-         [{ classes: 'govuk-table__header', text: 'Preparation' },
-          { text: '3 hours 0 minutes' },
-          { classes: 'govuk-table__cell--numeric', text: '£40.00' }],
-         [{ classes: 'govuk-table__header', text: 'Advocacy' },
-          { text: '6 hours 0 minutes' },
-          { classes: 'govuk-table__cell--numeric', text: '£170.00' }]]
+        [
+          [
+            { classes: 'govuk-table__header', text: 'Attendance without counsel' },
+            { text: '0 hours 0 minutes' },
+            { classes: 'govuk-table__cell--numeric', text: '£0.00' }
+          ],
+          [
+            { classes: 'govuk-table__header', text: 'Preparation' },
+            { text: '3 hours 0 minutes' },
+            { classes: 'govuk-table__cell--numeric', text: '£40.00' }
+          ],
+          [
+            { classes: 'govuk-table__header', text: 'Advocacy' },
+            { text: '6 hours 0 minutes' },
+            { classes: 'govuk-table__cell--numeric', text: '£170.00' }
+          ]
+        ]
       )
     end
 

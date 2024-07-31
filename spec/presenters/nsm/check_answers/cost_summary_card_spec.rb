@@ -31,7 +31,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
       it 'retruns the translated headers' do
         expect(subject.headers).to eq(
           [
-            { numeric: false, text: 'Item', width: 'govuk-!-width-one-quarter' },
+            { numeric: false, text: '<span class="govuk-visually-hidden">Item</span>', width: nil },
             { numeric: true, text: 'Net cost', width: nil },
             { numeric: true, text: 'VAT', width: nil },
             { numeric: true, text: 'Total', width: nil },
@@ -47,7 +47,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
       it 'retruns the translated headers' do
         expect(subject.headers).to eq(
           [
-            { numeric: false, text: 'Item', width: 'govuk-!-width-one-quarter' },
+            { numeric: false, text: '<span class="govuk-visually-hidden">Item</span>', width: nil },
             { numeric: true, text: 'Net cost claimed', width: nil },
             { numeric: true, text: 'VAT claimed', width: nil },
             { numeric: true, text: 'Total claimed', width: nil },
@@ -126,7 +126,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'they are returned' do
-          expect(subject.table_fields[1]).to eq(
+          expect(subject.table_fields[2]).to eq(
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£276.00' },
@@ -134,7 +134,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
               vat: { numeric: true, text: '£0.00' }
             }
           )
-          expect(subject.table_fields[2]).to eq(
+          expect(subject.table_fields[3]).to eq(
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£276.00' },
@@ -174,7 +174,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'summs them all together in profit costs' do
-          expect(subject.table_fields[3]).to eq(
+          expect(subject.table_fields[1]).to eq(
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£720.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
@@ -192,7 +192,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'summs them all together in profit costs' do
-          expect(subject.table_fields[3]).to eq(
+          expect(subject.table_fields[1]).to eq(
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£600.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
@@ -229,12 +229,25 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'returns the summed cost' do
-          expect(subject.summed_fields).to eq(
+          expect(subject.summed_fields).to eql(
             {
-              allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
-              gross_cost: { numeric: true, text: '£654.20' },
-              name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£654.20' },
-              vat: { numeric: true, text: '£0.00' }
+              allowed_gross_cost: nil,
+              allowed_net_cost: nil,
+              allowed_vat: nil,
+              gross_cost: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of net cost and VAT on claimed:</span> £654.20'
+              },
+              name: { numeric: false,
+                      text: 'Total', width: nil },
+              net_cost: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of net cost claimed:</span> £654.20'
+              },
+              vat: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of VAT on claimed:</span> £0.00'
+              }
             }
           )
         end
@@ -246,11 +259,31 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
         it 'returns the summed cost' do
           expect(subject.summed_fields).to eq(
             {
-              allowed_gross_cost: { numeric: true, text: '£654.20' }, allowed_net_cost: { numeric: true, text: '£654.20' },
-              allowed_vat: { numeric: true, text: '£0.00' },
-              gross_cost: { numeric: true, text: '£654.20' },
-              name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£654.20' },
-              vat: { numeric: true, text: '£0.00' }
+              allowed_gross_cost: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of net cost and VAT on allowed:</span> £654.20'
+              },
+              allowed_net_cost: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of net cost allowed:</span> £654.20'
+              },
+              allowed_vat: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of VAT on allowed:</span> £0.00'
+              },
+              gross_cost: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of net cost and VAT on claimed:</span> £654.20'
+              },
+              name: { numeric: false, text: 'Total', width: nil },
+              net_cost: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of net cost claimed:</span> £654.20'
+              },
+              vat: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of VAT on claimed:</span> £0.00'
+              }
             }
           )
         end
@@ -267,10 +300,22 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
         it 'returns the summed time and cost' do
           expect(subject.summed_fields).to eq(
             {
-              allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
-              gross_cost: { numeric: true, text: '£785.04' },
-              name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£654.20' },
-              vat: { numeric: true, text: '£130.84' }
+              allowed_gross_cost: nil,
+              allowed_net_cost: nil,
+              allowed_vat: nil,
+              gross_cost: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of net cost and VAT on claimed:</span> £785.04'
+              },
+              name: { numeric: false, text: 'Total', width: nil },
+              net_cost: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of net cost claimed:</span> £654.20'
+              },
+              vat: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of VAT on claimed:</span> £130.84'
+              }
             }
           )
         end
@@ -289,10 +334,22 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
         it 'returns the summed cost' do
           expect(subject.summed_fields).to eq(
             {
-              allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
-              gross_cost: { numeric: true, text: '£930.20' },
-              name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£930.20' },
-              vat: { numeric: true, text: '£0.00' }
+              allowed_gross_cost: nil,
+              allowed_net_cost: nil,
+              allowed_vat: nil,
+              gross_cost: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of net cost and VAT on claimed:</span> £930.20'
+              },
+              name: { numeric: false, text: 'Total', width: nil },
+              net_cost: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of net cost claimed:</span> £930.20'
+              },
+              vat: {
+                numeric: true,
+                text: '<span class="govuk-visually-hidden">Sum of VAT on claimed:</span> £0.00'
+              }
             }
           )
         end
@@ -306,11 +363,16 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
       it 'returns the summed cost' do
         expect(subject.summed_fields).to eq(
           {
-            allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
-            gross_cost: { numeric: true, text: '£61.35' },
+            allowed_gross_cost: nil,
+            allowed_net_cost: nil,
+            allowed_vat: nil,
+            gross_cost: { numeric: true,
+                          text: '<span class="govuk-visually-hidden">Sum of net cost and VAT on claimed:</span> £61.35' },
             name: { numeric: false, text: 'Total', width: nil },
-            net_cost: { numeric: true, text: '£61.35' },
-            vat: { numeric: true, text: '£0.00' }
+            net_cost: { numeric: true,
+                        text: '<span class="govuk-visually-hidden">Sum of net cost claimed:</span> £61.35' },
+            vat: { numeric: true,
+                   text: '<span class="govuk-visually-hidden">Sum of VAT on claimed:</span> £0.00' }
           }
         )
       end
@@ -323,7 +385,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'summs them all together in profit costs' do
-          expect(subject.table_fields[3]).to eq(
+          expect(subject.table_fields[1]).to eq(
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£720.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
