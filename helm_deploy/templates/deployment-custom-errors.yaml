@@ -27,7 +27,7 @@ spec:
         - name: custom-error-pages
           mountPath: /www
         securityContext:
-          {{- include "helm_deploy.defaultSecurityContext" . | nindent 8 }}
+          {{- include "helm_deploy.defaultSecurityContext" . | nindent 10 }}
           runAsUser: 999
 
       # Mount custom error page from configMap
