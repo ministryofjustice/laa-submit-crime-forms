@@ -50,7 +50,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
     )
   end
 
-  it 'can add a other disbursement' do
+  it 'can add another disbursement' do
     disbursement = claim.disbursements.create
     visit edit_nsm_steps_disbursement_type_path(claim.id, disbursement_id: disbursement.id)
 
@@ -139,7 +139,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
     expect(page).to have_content 'You cannot save and continue if any disbursements are incomplete'
 
-    click_on 'Change'
+    click_on 'Car mileage'
     click_on 'Save and continue'
 
     fill_in 'Number of miles', with: 100

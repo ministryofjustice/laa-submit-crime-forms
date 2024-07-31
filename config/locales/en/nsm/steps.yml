@@ -152,10 +152,10 @@ en:
             one: You added %{count} disbursement
             other: You added %{count} disbursements
           headers:
-            item: Item
-            type: Cost type
+            line_item: Item
+            item: Cost type
             net_cost: Net cost
-            total_cost: Total cost
+            gross_cost: Total cost
             date: Date
             action: Action
           unknown_date: Unknown date
