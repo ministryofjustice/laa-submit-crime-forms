@@ -154,4 +154,137 @@ RSpec.describe 'User can manage disbursements', type: :system do
     expect(page).to have_no_content 'You cannot save and continue if any disbursements are incomplete'
     expect(page).to have_title 'Check your payment claim'
   end
+
+  context 'when disbursements exist' do
+    before { claim }
+
+    let(:claim) { create(:claim, :firm_details, disbursements:) }
+
+    let(:disbursements) do
+      [
+        build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 129),
+        build(:disbursement, :valid, :bike, age: 5, miles: 200),
+        build(:disbursement, :valid_other, :dna_testing, age: 4, total_cost_without_vat: 150,),
+      ]
+    end
+
+    # TODO: expect caption 'Claimed disbursements'
+    # TODO: expect order to be by "date" (most recent first) then "alphanumeric type"
+    it 'lists all disbursements (TODO: in date, type order)' do
+      visit edit_nsm_steps_disbursements_path(claim.id)
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
+          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
+        ]
+      )
+    end
+
+    it 'allows me to sort disbursements by Cost type' do
+      visit edit_nsm_steps_disbursements_path(claim.id)
+
+      click_on 'Cost type'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '3', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
+        ]
+      )
+
+      click_on 'Cost type'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
+          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
+        ]
+      )
+    end
+
+    it 'allows me to sort disbursements by Date' do
+      visit edit_nsm_steps_disbursements_path(claim.id)
+
+      click_on 'Date'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '3', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
+        ]
+      )
+
+      click_on 'Date'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
+          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
+        ]
+      )
+    end
+
+    it 'allows me to sort adjusted work items by Net cost' do
+      visit edit_nsm_steps_disbursements_path(claim.id)
+
+      click_on 'Net cost'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '2', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
+        ]
+      )
+
+      click_on 'Net cost'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
+          '2', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+        ]
+      )
+    end
+
+    it 'allows me to sort adjusted work items by Total cost' do
+      visit edit_nsm_steps_disbursements_path(claim.id)
+
+      click_on 'Total cost'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '2', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
+        ]
+      )
+
+      click_on 'Total cost'
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
+          '2', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+        ]
+      )
+    end
+  end
 end
