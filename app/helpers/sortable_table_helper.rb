@@ -9,7 +9,7 @@ module SortableTableHelper
   end
 
   def reorder_form(path, column, next_direction, i18n_stem, index)
-    tag.form(action: path, params: params, method: 'get') do
+    tag.form(action: path, method: 'get') do
       safe_join([
                   tag.input(type: 'hidden', name: 'prefix', value: params['prefix']),
                   tag.input(type: 'hidden', name: 'sort_by', value: column),
