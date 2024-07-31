@@ -94,6 +94,14 @@ references:
     attach_workspace:
       at: ~/repo/tmp
 
+  _install-yamllint: &install-yamllint
+    run:
+      name: Install yamllint to use to check yaml formatting issues
+      command: |
+        sudo apt update
+        sudo apt install -y python3-pip
+        pip install yamllint
+
 # ------------------
 # COMMANDS
 # ------------------
@@ -127,6 +135,26 @@ commands:
       - run:
           name: Run rubocop
           command: bundle exec rubocop
+
+  # using a more recent version of yamllink so we can use the key_duplicates rule
+  # https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.key_duplicates
+
+  lint-and-verify-helm-config:
+      description:
+      parameters:
+        environment:
+          description: Name of environment to check helm template of
+          type: string
+      steps:
+        - helm/install_helm_client:
+            version: 3.7.2
+        - *install-yamllint
+        - run:
+            name: Lint helm chart for <<parameters.environment>>
+            command: helm lint helm_deploy --values helm_deploy/values-<<parameters.environment>>.yaml
+        - run:
+            name: Check helm template for <<parameters.environment>>
+            command: helm template --debug helm_deploy --values helm_deploy/values-<<parameters.environment>>.yaml | yamllint -
 
   db-setup:
     steps:
@@ -255,6 +283,12 @@ jobs:
       - checkout
       - install-gems
       - rubocop
+      - lint-and-verify-helm-config:
+          environment: dev
+      - lint-and-verify-helm-config:
+          environment: uat
+      - lint-and-verify-helm-config:
+          environment: prod
 
   rspec-tests:
     parallelism: 2
