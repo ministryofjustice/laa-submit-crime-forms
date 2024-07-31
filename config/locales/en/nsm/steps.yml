@@ -162,6 +162,7 @@ en:
           add_another: Do you want to add another disbursement?
           duplicate: Duplicate
           delete: Delete
+          add_another_button: Add another disbursement
           accessibility:
             disbursements_caption: Claimed disbursements
       disbursement_delete:
