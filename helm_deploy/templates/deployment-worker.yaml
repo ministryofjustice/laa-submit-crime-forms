@@ -30,7 +30,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}-worker
           securityContext:
-            {{- include "helm_deploy.defaultSecurityContext" . | nindent 12 }}
+            {{- include "laa-submit-crime-forms.defaultSecurityContext" . | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:

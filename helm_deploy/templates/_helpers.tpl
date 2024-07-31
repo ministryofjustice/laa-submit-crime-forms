@@ -53,7 +53,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{/*
 Default Security Context
 */}}
-{{- define "helm_deploy.defaultSecurityContext" -}}
+{{- define "laa-submit-crime-forms.defaultSecurityContext" -}}
 runAsNonRoot: true
 allowPrivilegeEscalation: false
 seccompProfile:
