@@ -43,10 +43,20 @@ spec:
           resources:
             {{- toYaml .Values.clamav_resources | nindent 12 }}
           securityContext:
-            {{- include "laa-submit-crime-forms.defaultSecurityContext" . | nindent 12 }}
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop: [ "ALL" ]
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- include "laa-submit-crime-forms.defaultSecurityContext" . | nindent 12 }}
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop: [ "ALL" ]
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

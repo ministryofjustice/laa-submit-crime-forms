@@ -27,7 +27,12 @@ spec:
         - name: custom-error-pages
           mountPath: /www
         securityContext:
-          {{- include "laa-submit-crime-forms.defaultSecurityContext" . | nindent 8 }}
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop: [ "ALL" ]
           runAsUser: 999
 
       # Mount custom error page from configMap
