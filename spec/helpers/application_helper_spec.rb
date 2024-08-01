@@ -89,4 +89,26 @@ RSpec.describe ApplicationHelper, type: :helper do
       )
     end
   end
+
+  describe '#generate_aria_labelledby' do
+    let(:item_title) { 'itemType' }
+    let(:position) { 1 }
+    let(:type) { 'disbursementType' }
+
+    context 'when additional_variable is not provided' do
+      it 'returns the correct aria-labelledby string' do
+        expected_result = 'itemType item1 disbursementType1'
+        expect(helper.generate_aria_labelledby(item_title, position, type)).to eq(expected_result)
+      end
+    end
+
+    context 'when additional_variable is provided' do
+      let(:additional_variable) { 'delete' }
+
+      it 'returns the correct aria-labelledby string with additional_variable' do
+        expected_result = 'delete1 itemType item1 disbursementType1'
+        expect(helper.generate_aria_labelledby(item_title, position, type, additional_variable)).to eq(expected_result)
+      end
+    end
+  end
 end
