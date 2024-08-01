@@ -28,52 +28,14 @@
           aria_sort, next_direction = sort_variable(column_key, @sort_by, @sort_direction)
 
           {
-            text: reorder_form(work_items_nsm_steps_view_claim_path(current_application), column_key, next_direction, "nsm.steps.view_claim.work_items", index),
+            text: reorder_form(edit_nsm_steps_work_items_path(current_application), column_key, next_direction, "nsm.steps.view_claim.work_items", index),
             **options.deep_merge(html_attributes: { 'aria-sort': aria_sort})
           }
         end
       end
 
       rows = @work_items.map do |work_item|
-        item_with_link = link_to(
-                           t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"),
-                           edit_nsm_steps_work_item_path(@form_object.application, work_item_id: work_item.id),
-                           data: { turbo: 'false' },
-                           'aria-labelledby': "itemTitle item#{work_item.position} workType#{work_item.position}",
-                           id: "workType#{work_item.position}"
-                         )
-
-        action_links =
-          tag.uk(class: 'govuk-summary-list__actions-list') do
-            tag.li(class: "govuk-summary-list__actions-list-item") do
-              link_to(
-                t('.duplicate'),
-                duplicate_nsm_steps_work_item_path(@form_object.application, work_item_id: work_item.id),
-                data: { turbo: 'false' },
-                'aria-labelledby': "duplicate#{work_item.position} itemTitle item#{work_item.position} workType#{work_item.position}",
-                id: "duplicate#{work_item.position}"
-              )
-            end +
-            tag.li(class: "govuk-summary-list__actions-list-item") do
-              link_to(
-                t('.delete'),
-                edit_nsm_steps_work_item_delete_path(@form_object.application, work_item_id: work_item.id),
-                data: { turbo: 'false' },
-                'aria-labelledby': "delete#{work_item.position} itemTitle item#{work_item.position} workType#{work_item.position}",
-                id: "workType#{work_item.position}"
-              )
-            end
-          end
-
-        [
-          { header: true, text: work_item.position, numeric: false, html_attributes: { id: "item#{work_item.position}" } },
-          { header: true, text: item_with_link, numeric: false},
-          { text: work_item.completed_on&.to_fs(:short_stamp), numeric: false},
-          { text: work_item.fee_earner, numeric: false},
-          { text: format_period(work_item.time_spent, style: :minimal_html), numeric: true },
-          ({ text: NumberTo.percentage(work_item.uplift.to_f, multiplier: 1), numeric: true } if @form_object.application.allow_uplift?),
-          { text: action_links, numeric: true }
-        ].compact
+        Nsm::WorkItemsRow.new(work_item, self)
       end
 
       govuk_table_with_cell(header_row, rows, caption: { text: t('.accessibility.work_items_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} })
