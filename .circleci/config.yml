@@ -146,9 +146,6 @@ commands:
           description: Name of environment to check helm template of
           type: string
       steps:
-        - helm/install_helm_client:
-            version: 3.7.2
-        - *install-yamllint
         - run:
             name: Lint helm chart for <<parameters.environment>>
             command: helm lint helm_deploy --values helm_deploy/values-<<parameters.environment>>.yaml
@@ -283,6 +280,9 @@ jobs:
       - checkout
       - install-gems
       - rubocop
+      - helm/install_helm_client:
+        version: 3.7.2
+      - *install-yamllint
       - lint-and-verify-helm-config:
           environment: dev
       - lint-and-verify-helm-config:
