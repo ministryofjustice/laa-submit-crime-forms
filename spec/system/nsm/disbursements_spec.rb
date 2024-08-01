@@ -168,13 +168,13 @@ RSpec.describe 'User can manage disbursements', type: :system do
       ]
     end
 
-    # TODO: expect caption 'Claimed disbursements'
     # TODO: expect order to be by "date" (most recent first) then "alphanumeric type"
     it 'lists all disbursements (TODO: in date, type order)' do
       visit edit_nsm_steps_disbursements_path(claim.id)
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Claimed disbursements',
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
           '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
@@ -188,7 +188,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
       click_on 'Cost type'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
+      expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
@@ -199,7 +199,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
       click_on 'Cost type'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
+      expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
@@ -214,7 +214,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
       click_on 'Date'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
+      expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
@@ -225,7 +225,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
       click_on 'Date'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
+      expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
@@ -240,7 +240,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
       click_on 'Net cost'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
+      expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
@@ -251,7 +251,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
       click_on 'Net cost'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
+      expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
@@ -266,7 +266,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
       click_on 'Total cost'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
+      expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
@@ -277,7 +277,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
       click_on 'Total cost'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
+      expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
