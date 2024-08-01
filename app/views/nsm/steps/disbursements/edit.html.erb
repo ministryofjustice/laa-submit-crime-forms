@@ -46,7 +46,9 @@
                                           t("helpers.label.nsm_steps_disbursement_type_form.disbursement_type_options.#{disbursement.disbursement_type}")
                                         end
                                       end
-            position = index + 1
+
+            position = disbursement.position
+
             item_with_link =  govuk_link_to(
                                 disbursement_type_text,
                                 edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id),
@@ -65,7 +67,7 @@
               <%= disbursement.disbursement_date.to_fs(:short_stamp) %>
             <% end %>
             <%= row.with_cell(numeric: true) do %>
-              <%= check_missing(disbursement.total_cost) { NumberTo.pounds(disbursement.total_cost_without_vat) } %>
+              <%= check_missing(disbursement.total_cost_without_vat) { NumberTo.pounds(disbursement.total_cost_without_vat) } %>
             <% end %>
             <%= row.with_cell(numeric: true) do %>
               <%= check_missing(disbursement.total_cost) { NumberTo.pounds(disbursement.total_cost) } %>
@@ -74,10 +76,14 @@
             <%= row.with_cell(numeric: true) do %>
               <ul class="govuk-summary-list__actions-list">
                 <li class="govuk-summary-list__actions-list-item">
-                  <%= govuk_link_to(t('.duplicate'), duplicate_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id), 'aria-labelledby': generate_aria_labelledby(t('.accessibility.item_id'), position, t('.accessibility.disbursement_type'), t('.accessibility.duplicate')), id: "#{t('.accessibility.duplicate')}#{position}") %>
+                  <%= govuk_link_to(t('.duplicate'),
+                                    duplicate_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id),
+                                    'aria-labelledby': generate_aria_labelledby(t('.accessibility.item_id'), position, t('.accessibility.disbursement_type'), t('.accessibility.duplicate')), id: "#{t('.accessibility.duplicate')}#{position}") %>
                 </li>
                 <li class="govuk-summary-list__actions-list-item">
-                  <%= govuk_link_to(t('.delete'), edit_nsm_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id), 'aria-labelledby': generate_aria_labelledby(t('.accessibility.item_id'), position, t('.accessibility.disbursement_type'), t('.accessibility.delete')), id: "#{t('.accessibility.delete')}#{position}") %>
+                  <%= govuk_link_to(t('.delete'),
+                                    edit_nsm_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id),
+                                    'aria-labelledby': generate_aria_labelledby(t('.accessibility.item_id'), position, t('.accessibility.disbursement_type'), t('.accessibility.delete')), id: "#{t('.accessibility.delete')}#{position}") %>
                 </li>
               </ul>
             <% end %>

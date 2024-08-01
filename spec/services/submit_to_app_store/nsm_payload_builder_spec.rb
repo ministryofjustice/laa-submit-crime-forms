@@ -49,6 +49,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'id' => disbursement.id,
             'miles' => disbursement.miles.to_s,
             'other_type' => { en: nil, value: nil },
+            'position' => an_instance_of(Integer),
             'pricing' => pricing[disbursement.disbursement_type],
             'prior_authority' => disbursement.prior_authority,
             'total_cost_without_vat' => disbursement.total_cost_without_vat.to_f,

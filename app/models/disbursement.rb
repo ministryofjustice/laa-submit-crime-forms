@@ -32,7 +32,7 @@ class Disbursement < ApplicationRecord
   end
 
   def position
-    1
+    super || claim.disbursement_position(self)
   end
 
   private

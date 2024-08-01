@@ -104,11 +104,11 @@ RSpec.describe 'View claim page', type: :system do
       [
         'Claimed work items',
         'Item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
-        '1', 'Travel', 3.days.ago.strftime('%-d %b %Y'), 'test', '0 hours:23 minutes', '10%', '£10.58',
-        '2', 'Waiting', 3.days.ago.strftime('%-d %b %Y'), 'test', '0 hours:23 minutes', '10%', '£10.58',
-        '3', 'Advocacy', 2.days.ago.strftime('%-d %b %Y'), '', '1 hour:26 minutes', '0%', '£93.77',
-        '4', 'Advocacy', 1.day.ago.strftime('%-d %b %Y'), '', '1 hour:44 minutes', '0%', '£113.39',
-        '5', 'Attendance without counsel', 1.day.ago.strftime('%-d %b %Y'), 'AB', '1 hour:30 minutes', '0%', '£78.23'
+        '1', 'Travel', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
+        '2', 'Waiting', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
+        '3', 'Advocacy', 2.days.ago.to_fs(:short_stamp), '', '1 hour:26 minutes', '0%', '£93.77',
+        '4', 'Advocacy', 1.day.ago.to_fs(:short_stamp), '', '1 hour:44 minutes', '0%', '£113.39',
+        '5', 'Attendance without counsel', 1.day.ago.to_fs(:short_stamp), 'AB', '1 hour:30 minutes', '0%', '£78.23'
       ]
     )
 
@@ -165,10 +165,10 @@ RSpec.describe 'View claim page', type: :system do
     expect(all('table td, table th').map(&:text)).to eq(
       [
         'Item', 'Cost type', 'Date', 'Net cost claimed', 'VAT on claimed', 'Total claimed',
-        '1', 'Car mileage', 5.days.ago.strftime('%-d %b %Y'), '£90.00', '£18.00', '£108.00',
-        '2', 'DNA Testing', 3.days.ago.strftime('%-d %b %Y'), '£130.00', '£0.00', '£130.00',
-        '3', 'Custom', 3.days.ago.strftime('%-d %b %Y'), '£40.00', '£0.00', '£40.00',
-        '4', 'Car mileage', 2.days.ago.strftime('%-d %b %Y'), '£67.50', '£13.50', '£81.00'
+        '1', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£18.00', '£108.00',
+        '2', 'Custom', 3.days.ago.to_fs(:short_stamp), '£40.00', '£0.00', '£40.00',
+        '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£130.00', '£0.00', '£130.00',
+        '4', 'Car mileage', 2.days.ago.to_fs(:short_stamp), '£67.50', '£13.50', '£81.00'
       ]
     )
   end
@@ -180,7 +180,7 @@ RSpec.describe 'View claim page', type: :system do
     expect(all('table caption, table td').map(&:text)).to eq(
       [
         'Your claimed costs',
-        'Date',	1.day.ago.strftime('%-d %B %Y'),
+        'Date',	1.day.ago.to_fs(:stamp),
         'Fee earner initials', 'AB',
         'Rate applied', '£52.15',
         'Number of hours', '1 hour 30 minutes',
@@ -227,7 +227,7 @@ RSpec.describe 'View claim page', type: :system do
     expect(all('table caption, table td').map(&:text)).to eq(
       [
         'Your claimed costs',
-        'Date',	5.days.ago.strftime('%-d %B %Y'),
+        'Date',	5.days.ago.to_fs(:stamp),
         'Disbursement type', 'Car mileage',
         'Disbursement description', 'Details',
         'Prior authority granted?', 'No',
@@ -587,7 +587,7 @@ RSpec.describe 'View claim page', type: :system do
           'Reason for adjustment', 'WI adjustment',
 
           'Your claimed costs',
-          'Date',	Time.current.strftime('%-d %B %Y'),
+          'Date',	Time.current.to_fs(:stamp),
           'Fee earner initials', 'BC',
           'Rate applied', '£65.42',
           'Number of hours', '1 hour 44 minutes',
@@ -650,7 +650,7 @@ RSpec.describe 'View claim page', type: :system do
           'Total cost allowed', '£100.00',
           'Reason for adjustment', 'Disbursement Test',
           'Your claimed costs',
-          'Date', 4.days.ago.strftime('%-d %B %Y'),
+          'Date', 4.days.ago.to_fs(:stamp),
           'Disbursement type', 'DNA Testing',
           'Disbursement description', 'Details',
           'Prior authority granted?', 'Yes',
@@ -676,7 +676,7 @@ RSpec.describe 'View claim page', type: :system do
           'Total cost allowed', '£132.00',
           'Reason for adjustment', 'Disbursement Test',
           'Your claimed costs',
-          'Date', 5.days.ago.strftime('%-d %B %Y'),
+          'Date', 5.days.ago.to_fs(:stamp),
           'Disbursement type', 'Bike mileage',
           'Disbursement description', 'Details',
           'Prior authority granted?', 'Yes',
