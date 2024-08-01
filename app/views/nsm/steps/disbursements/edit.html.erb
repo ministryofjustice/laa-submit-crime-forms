@@ -9,7 +9,7 @@
 
     <%
       header_row = {
-        'line_item' => { numeric: false, id: 'itemTitle' },
+        'line_item' => { numeric: false, id: t('.accessibility.item_id') },
         'item' => { numeric: false },
         'date' => { numeric: false },
         'net_cost' => { numeric: true },
@@ -47,12 +47,10 @@
                                         end
                                       end
             position = index + 1
-            disbursement_id = "disbursementType#{position}"
-            aria_labelledby = "itemTitle item#{position} #{disbursement_id}"
             item_with_link =  govuk_link_to(
                                 disbursement_type_text,
                                 edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id),
-                                'id':disbursement_id, 'aria-labelledby': generate_aria_labelledby('itemTitle', position, 'disbursementType'),
+                                'id':"#{t('.accessibility.disbursement_type')}#{position}", 'aria-labelledby': generate_aria_labelledby(t('.accessibility.item_id'), position, t('.accessibility.disbursement_type')),
                                 )
 
           %>
@@ -76,10 +74,10 @@
             <%= row.with_cell(numeric: true) do %>
               <ul class="govuk-summary-list__actions-list">
                 <li class="govuk-summary-list__actions-list-item">
-                  <%= govuk_link_to(t('.duplicate'), edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id), 'aria-labelledby': generate_aria_labelledby('itemTitle', position, 'disbursementType', 'duplicate'), id: "duplicate#{position}") %>
+                  <%= govuk_link_to(t('.duplicate'), edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id), 'aria-labelledby': generate_aria_labelledby(t('.accessibility.item_id'), position, t('.accessibility.disbursement_type'), t('.accessibility.duplicate')), id: "duplicate#{position}") %>
                 </li>
                 <li class="govuk-summary-list__actions-list-item">
-                  <%= govuk_link_to(t('.delete'), edit_nsm_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id), 'aria-labelledby': generate_aria_labelledby('itemTitle', position, 'disbursementType', 'delete'), id: "delete#{position}") %>
+                  <%= govuk_link_to(t('.delete'), edit_nsm_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id), 'aria-labelledby': generate_aria_labelledby(t('.accessibility.item_id'), position, t('.accessibility.disbursement_type'), t('.accessibility.delete')), id: "delete#{position}") %>
                 </li>
               </ul>
             <% end %>
@@ -101,5 +99,3 @@
     <% end %>
   </div>
 </div>
-
-
