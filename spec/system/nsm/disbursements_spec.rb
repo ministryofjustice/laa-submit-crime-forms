@@ -156,7 +156,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
   end
 
   context 'when disbursements exist' do
-    before { claim }
+    before { visit edit_nsm_steps_disbursements_path(claim.id) }
 
     let(:claim) { create(:claim, :firm_details, disbursements:) }
 
@@ -170,8 +170,6 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
     # TODO: expect order to be by "date" (most recent first) then "alphanumeric type"
     it 'lists all disbursements (TODO: in date, type order)' do
-      visit edit_nsm_steps_disbursements_path(claim.id)
-
       expect(page).to have_selector('h1', text: "You've added 3 disbursements")
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
@@ -186,8 +184,6 @@ RSpec.describe 'User can manage disbursements', type: :system do
     end
 
     it 'allows me to sort disbursements by Cost type' do
-      visit edit_nsm_steps_disbursements_path(claim.id)
-
       click_on 'Cost type'
 
       expect(all('table td, table th').map(&:text)).to eq(
@@ -212,8 +208,6 @@ RSpec.describe 'User can manage disbursements', type: :system do
     end
 
     it 'allows me to sort disbursements by Date' do
-      visit edit_nsm_steps_disbursements_path(claim.id)
-
       click_on 'Date'
 
       expect(all('table td, table th').map(&:text)).to eq(
@@ -238,8 +232,6 @@ RSpec.describe 'User can manage disbursements', type: :system do
     end
 
     it 'allows me to sort adjusted work items by Net cost' do
-      visit edit_nsm_steps_disbursements_path(claim.id)
-
       click_on 'Net cost'
 
       expect(all('table td, table th').map(&:text)).to eq(
@@ -264,8 +256,6 @@ RSpec.describe 'User can manage disbursements', type: :system do
     end
 
     it 'allows me to sort adjusted work items by Total cost' do
-      visit edit_nsm_steps_disbursements_path(claim.id)
-
       click_on 'Total cost'
 
       expect(all('table td, table th').map(&:text)).to eq(
@@ -285,6 +275,39 @@ RSpec.describe 'User can manage disbursements', type: :system do
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
           '2', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
           '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+        ]
+      )
+    end
+
+    it 'allows me to duplicate a disbursement' do
+      expect(page).to have_selector('h1', text: "You've added 3 disbursements")
+
+      within('table tr', text: 'Bike mileage') do
+        click_on 'Duplicate'
+      end
+
+      expect(page)
+        .to have_title('Disbursement type')
+        .and have_selector('.govuk-notification-banner', text: 'Disbursement successfully duplicated')
+
+      click_on 'Save and continue'
+
+      expect(page).to have_title('Disbursement cost')
+
+      fill_in 'Number of miles', with: '100.0'
+      click_on 'Save and continue'
+
+      expect(page)
+        .to have_title('Disbursements')
+        .and have_selector('h1', text: "You've added 4 disbursements")
+
+      expect(all('table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
+          '2', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£25.00', '£30.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
         ]
       )
     end

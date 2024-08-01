@@ -99,8 +99,7 @@ en:
           before_uplift: Before uplift
           after_uplift: After uplift
           total: Total
-        duplicate:
-          duplicate: Work item successfully duplicated
+        duplicate_success: Work item successfully duplicated
       work_items:
         edit:
           page_title: Work Items
@@ -138,6 +137,7 @@ en:
         edit:
           page_title: Disbursement type
           heading: Disbursement type
+        duplicate_success: Disbursement successfully duplicated
       disbursement_cost:
         edit:
           page_title: Disbursement cost

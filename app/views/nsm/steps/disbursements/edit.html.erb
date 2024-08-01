@@ -68,7 +68,7 @@
             <%= row.with_cell(numeric: true) do %>
               <ul class="govuk-summary-list__actions-list">
                 <li class="govuk-summary-list__actions-list-item">
-                  <%= govuk_link_to(t('.duplicate'), edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id), 'aria-labelledby': 'X', id: 1) %>
+                  <%= govuk_link_to(t('.duplicate'), duplicate_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id), 'aria-labelledby': 'X', id: 1) %>
                 </li>
                 <li class="govuk-summary-list__actions-list-item">
                   <%= govuk_link_to(t('.delete'), edit_nsm_steps_disbursement_delete_path(@form_object.application, disbursement_id: disbursement.id), 'aria-labelledby': 'X', id: 2) %>
