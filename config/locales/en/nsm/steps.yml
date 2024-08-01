@@ -49,8 +49,8 @@ en:
         edit:
           page_title: Defendant summary
           heading:
-            one: You added 1 defendant
-            other: You added %{count} defendants
+            one: You've added 1 defendant
+            other: You've added %{count} defendants
           main_defendant: Main defendant details
           additional_defendant: Additional defendant details
           headers:
@@ -105,8 +105,8 @@ en:
         edit:
           page_title: Work Items
           heading:
-            one: You added %{count} work item
-            other: You added %{count} work items
+            one: You've added %{count} work item
+            other: You've added %{count} work items
           change: Change
           duplicate: Duplicate
           delete: Delete
@@ -149,8 +149,8 @@ en:
         edit:
           page_title: Disbursements
           heading:
-            one: You added %{count} disbursement
-            other: You added %{count} disbursements
+            one: You've added %{count} disbursement
+            other: You've added %{count} disbursements
           headers:
             line_item: Item
             item: Cost type

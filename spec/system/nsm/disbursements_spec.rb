@@ -172,6 +172,8 @@ RSpec.describe 'User can manage disbursements', type: :system do
     it 'lists all disbursements (TODO: in date, type order)' do
       visit edit_nsm_steps_disbursements_path(claim.id)
 
+      expect(page).to have_selector('h1', text: "You've added 3 disbursements")
+
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
           'Claimed disbursements',

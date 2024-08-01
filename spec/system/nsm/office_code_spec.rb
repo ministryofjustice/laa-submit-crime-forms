@@ -62,7 +62,7 @@ RSpec.describe 'Office code selection', type: :system do
         it 'Takes me to the defendant summary path' do
           choose '1A123B'
           click_on 'Save and continue'
-          expect(page).to have_content 'You added 1 defendant'
+          expect(page).to have_content 'You\'ve added 1 defendant'
         end
       end
     end
