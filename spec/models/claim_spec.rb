@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Claim do
-  subject { described_class.new(attributes) }
+  let(:claim) { described_class.new(attributes) }
 
   describe '#date' do
     context 'when rep_order_date is set' do
@@ -9,7 +9,7 @@ RSpec.describe Claim do
       let(:rep_order_date) { Date.yesterday }
 
       it 'returns the rep_order_date' do
-        expect(subject.date).to eq(rep_order_date)
+        expect(claim.date).to eq(rep_order_date)
       end
     end
 
@@ -18,7 +18,7 @@ RSpec.describe Claim do
       let(:cntp_date) { Date.yesterday }
 
       it 'returns the cntp_date' do
-        expect(subject.date).to eq(cntp_date)
+        expect(claim.date).to eq(cntp_date)
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe Claim do
       let(:attributes) { {} }
 
       it 'returns nil' do
-        expect(subject.date).to be_nil
+        expect(claim.date).to be_nil
       end
     end
   end
@@ -35,15 +35,15 @@ RSpec.describe Claim do
     let(:attributes) { { id: SecureRandom.uuid } }
 
     it 'returns the first 8 characters of the id' do
-      expect(subject.short_id).to eq(subject.id.first(8))
+      expect(claim.short_id).to eq(claim.id.first(8))
     end
   end
 
   describe '#main_defendant' do
-    subject(:saved_claim) { create(:claim, :main_defendant) }
+    let(:claim) { create(:claim, :main_defendant) }
 
     it 'returns the main defendant' do
-      expect(saved_claim.main_defendant).to eq saved_claim.defendants.find_by(main: true)
+      expect(claim.main_defendant).to eq claim.defendants.find_by(main: true)
     end
   end
 
