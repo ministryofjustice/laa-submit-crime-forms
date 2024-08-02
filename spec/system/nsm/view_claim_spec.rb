@@ -409,7 +409,7 @@ RSpec.describe 'View claim page', type: :system do
           '5', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
           '6', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
           '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-          '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+          '2', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
           '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
           '4', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
         ]
