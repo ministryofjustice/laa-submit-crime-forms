@@ -94,14 +94,32 @@ class Claim < ApplicationRecord
   end
 
   def disbursement_position(disbursement)
-    @disbursement_positions ||= disbursements.sort_by do |disb|
+    sorted_disbursement_ids.index(disbursement.id) + 1
+  end
+
+  def update_disbursement_positions!
+    updated_attributes = sorted_disbursement_positions.index_by { |d| d[:id] }
+
+    Disbursement.transaction do
+      Disbursement.update(updated_attributes.keys, updated_attributes.values)
+    end
+  end
+
+  private
+
+  def sorted_disbursement_ids
+    @sorted_disbursement_ids ||= disbursements.sort_by do |disb|
       [
         disb.disbursement_date || 100.years.ago,
         disb.translated_disbursement_type&.downcase,
         disb.created_at
       ]
     end.map(&:id)
+  end
 
-    @disbursement_positions.index(disbursement.id) + 1
+  def sorted_disbursement_positions
+    @sorted_disbursement_positions ||= sorted_disbursement_ids.each_with_object([]).with_index do |(id, memo), idx|
+      memo << { id: id, position: idx + 1 }
+    end
   end
 end
