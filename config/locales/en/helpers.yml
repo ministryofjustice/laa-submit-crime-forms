@@ -276,8 +276,8 @@ en:
           'true': Apply an uplift to this work
         apply_calls_uplift_options:
           'true': Apply an uplift to this work
-        letters_uplift: For example, from any percentage from 1 to 100
-        calls_uplift: For example, from any percentage from 1 to 100
+        letters_uplift: Enter a letters uplift percentage from 1 to 100
+        calls_uplift: Enter a calls uplift percentage from 1 to 100
       nsm_steps_disbursement_add_form:
         has_disbursements_options:
           'yes': 'Yes'
