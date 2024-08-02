@@ -17,12 +17,12 @@ RSpec.describe 'User can fill in claim type details', type: :system do
 
     within '[data-cy=apply-letters-uplift]' do
       check 'Apply an uplift to this work'
-      fill_in 'For example, from any percentage from 1 to 100', with: 10
+      fill_in 'Enter a letters uplift percentage from 1 to 100', with: 10
     end
 
     within '[data-cy=apply-calls-uplift]' do
       check 'Apply an uplift to this work'
-      fill_in 'For example, from any percentage from 1 to 100', with: 20
+      fill_in 'Enter a calls uplift percentage from 1 to 100', with: 20
     end
 
     click_on 'Save and continue'
