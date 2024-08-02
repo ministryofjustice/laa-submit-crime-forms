@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :work_item do
     completed_on { Time.zone.today }
-    position { WorkItem.count + 1 }
 
     trait :valid do
       work_type { WorkTypes.values.sample.to_s }
