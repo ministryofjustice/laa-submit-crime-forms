@@ -479,8 +479,8 @@ RSpec.describe 'View claim page', type: :system do
         [
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
+          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
         ]
       )
 
@@ -516,8 +516,8 @@ RSpec.describe 'View claim page', type: :system do
         [
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
+          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
         ]
       )
     end
@@ -542,8 +542,8 @@ RSpec.describe 'View claim page', type: :system do
         [
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
         ]
       )
     end
@@ -568,8 +568,8 @@ RSpec.describe 'View claim page', type: :system do
         [
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '2', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
         ]
       )
     end
