@@ -348,6 +348,23 @@ RSpec.describe 'User can manage disbursements', type: :system do
       )
     end
 
+    it 'allows me to sort by any header without error' do
+      click_on 'Item'
+      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+
+      click_on 'Cost type'
+      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+
+      click_on 'Date'
+      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+
+      click_on 'Net cost'
+      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+
+      click_on 'Total cost'
+      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+    end
+
     it 'errors render incompletes in expected order' do
       expect(page).to have_selector('h1', text: "You've added 2 disbursement")
 
