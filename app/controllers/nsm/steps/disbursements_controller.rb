@@ -1,7 +1,7 @@
 module Nsm
   module Steps
     class DisbursementsController < Nsm::Steps::BaseController
-      before_action :set_default_table_sort_options, only: :edit
+      before_action :set_default_table_sort_options, only: [:edit, :update]
 
       def edit
         @disbursements = Sorters::DisbursementsSorter.call(
@@ -14,7 +14,10 @@ module Nsm
       end
 
       def update
-        @disbursements = current_application.disbursements.by_age
+        @disbursements = Sorters::DisbursementsSorter.call(
+          current_application.disbursements.by_age, @sort_by, @sort_direction
+        )
+
         update_and_advance(DisbursementsForm, as: :disbursements)
       end
 

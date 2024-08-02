@@ -95,7 +95,11 @@ class Claim < ApplicationRecord
 
   def disbursement_position(disbursement)
     @disbursement_positions ||= disbursements.sort_by do |disb|
-      [disb.disbursement_date, disb.translated_disbursement_type.downcase, disb.created_at]
+      [
+        disb.disbursement_date || 100.years.ago,
+        disb.translated_disbursement_type&.downcase,
+        disb.created_at
+      ]
     end.map(&:id)
 
     @disbursement_positions.index(disbursement.id) + 1

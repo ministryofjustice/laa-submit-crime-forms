@@ -164,21 +164,22 @@ RSpec.describe 'User can manage disbursements', type: :system do
       [
         build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 129),
         build(:disbursement, :valid, :bike, age: 5, miles: 200),
+        build(:disbursement, :valid, :car, age: 5, miles: 200),
         build(:disbursement, :valid_other, :dna_testing, age: 4, total_cost_without_vat: 150,),
       ]
     end
 
-    # TODO: expect order to be by "date" (most recent first) then "alphanumeric type"
-    it 'lists all disbursements (TODO: in date, type order)' do
-      expect(page).to have_selector('h1', text: "You've added 3 disbursements")
+    it 'lists all disbursements' do
+      expect(page).to have_selector('h1', text: "You've added 4 disbursements")
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
           'Claimed disbursements',
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
-          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
         ]
       )
     end
@@ -189,8 +190,9 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
-          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
         ]
       )
@@ -201,8 +203,9 @@ RSpec.describe 'User can manage disbursements', type: :system do
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
-          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
         ]
       )
     end
@@ -213,8 +216,9 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
-          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
         ]
       )
@@ -225,8 +229,9 @@ RSpec.describe 'User can manage disbursements', type: :system do
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
-          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
         ]
       )
     end
@@ -237,8 +242,9 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
         ]
       )
@@ -249,8 +255,9 @@ RSpec.describe 'User can manage disbursements', type: :system do
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
-          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete'
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete'
         ]
       )
     end
@@ -261,8 +268,9 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
         ]
       )
@@ -273,14 +281,15 @@ RSpec.describe 'User can manage disbursements', type: :system do
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
-          '2', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete'
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete'
         ]
       )
     end
 
     it 'allows me to duplicate a disbursement' do
-      expect(page).to have_selector('h1', text: "You've added 3 disbursements")
+      expect(page).to have_selector('h1', text: "You've added 4 disbursements")
 
       within('table tr', text: 'Bike mileage') do
         click_on 'Duplicate'
@@ -299,15 +308,60 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
       expect(page)
         .to have_title('Disbursements')
-        .and have_selector('h1', text: "You've added 4 disbursements")
+        .and have_selector('h1', text: "You've added 5 disbursements")
 
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
           '2', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£25.00', '£30.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
-          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
+          '3', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '5', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
+        ]
+      )
+    end
+  end
+
+  context 'when incomplete disbursements exist' do
+    before { visit edit_nsm_steps_disbursements_path(claim.id) }
+
+    let(:claim) { create(:claim, :firm_details, disbursements:) }
+
+    let(:disbursements) do
+      [
+        build(:disbursement, :valid, :bike, age: 5, miles: 200),
+        build(:disbursement, :bike, disbursement_date: nil, disbursement_type: nil, total_cost_without_vat: nil),
+      ]
+    end
+
+    it 'lists incomplete disbursements' do
+      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Claimed disbursements',
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'Incomplete', 'Incomplete', 'Incomplete', 'Incomplete', 'Duplicate Delete',
+          '2', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
+        ]
+      )
+    end
+
+    it 'errors render incompletes in expected order' do
+      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+
+      click_on 'Save and continue'
+
+      expect(page).to have_selector('.govuk-error-summary',
+                                    text: 'You cannot save and continue if any disbursements are incomplete')
+
+      expect(all('table caption, table td, table th').map(&:text)).to eq(
+        [
+          'Claimed disbursements',
+          'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
+          '1', 'Incomplete', 'Incomplete', 'Incomplete', 'Incomplete', 'Duplicate Delete',
+          '2', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
         ]
       )
     end

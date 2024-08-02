@@ -11,9 +11,9 @@ module Sorters
 
       items.sort_by do |item|
         if sort_field.respond_to?(:call)
-          [sort_field.call(item), item.position]
+          [sort_field.call(item) || 0, item.position]
         else
-          [item.send(sort_field), item.position]
+          [item.send(sort_field) || 0, item.position]
         end
       end
     end
