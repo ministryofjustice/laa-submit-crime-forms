@@ -38,16 +38,16 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
 
       context 'is blank' do
         let(:letters) { '' }
+        let(:apply_letters_uplift) { 'false' }
 
-        it 'have an error' do
-          expect(subject).not_to be_valid
-        end
+        it { expect(subject).to be_valid }
       end
 
       context 'is zero' do
         let(:letters) { 0 }
+        let(:apply_letters_uplift) { 'false' }
 
-        it { expect(subject).not_to be_valid }
+        it { expect(subject).to be_valid }
       end
 
       context 'is positive' do
@@ -69,10 +69,9 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
 
       context 'is blank' do
         let(:calls) { '' }
+        let(:apply_calls_uplift) { 'false' }
 
-        it 'have an error' do
-          expect(subject).not_to be_valid
-        end
+        it { expect(subject).to be_valid }
       end
 
       context 'is zero and apply_calls_uplift false' do
@@ -90,7 +89,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
 
         it 'has an error' do
           expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:calls, :greater_than_or_equal_to)).to be(true)
+          expect(subject.errors.of_kind?(:calls_uplift, :uplift_on_zero)).to be(true)
         end
       end
 
@@ -136,7 +135,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
 
           it 'has an error' do
             expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:letters, :greater_than_or_equal_to)).to be(true)
+            expect(subject.errors.of_kind?(:letters_uplift, :uplift_on_zero)).to be(true)
           end
         end
 
