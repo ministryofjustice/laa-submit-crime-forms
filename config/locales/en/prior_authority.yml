@@ -18,6 +18,12 @@ en:
       expired: Expired
       provider_updated: Resubmitted
     applications:
+      reviewed:
+        page_title: Reviewed
+      submitted:
+        page_title: Submitted
+      drafts:
+        page_title: Submitted
       index:
         page_title: Your applications
         none: You have not started any applications.

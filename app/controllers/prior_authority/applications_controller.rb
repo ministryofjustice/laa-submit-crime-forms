@@ -1,12 +1,11 @@
 module PriorAuthority
   class ApplicationsController < ApplicationController
     before_action :set_default_table_sort_options
-    before_action :load_drafts, only: %i[index draft]
-    before_action :load_reviewed, only: %i[index reviewed]
-    before_action :load_submitted, only: %i[index submitted]
     layout 'prior_authority'
 
     def index
+      @pagy, @model = order_and_paginate(PriorAuthorityApplication.for(current_provider).reviewed)
+      @scope = :reviewed
       @empty = PriorAuthorityApplication.for(current_provider).none?
     end
 
@@ -31,15 +30,23 @@ module PriorAuthority
     end
 
     def draft
-      render layout: nil
+      @pagy, @model = order_and_paginate(PriorAuthorityApplication.for(current_provider).draft)
+      @scope = :drafts
+      render 'index'
     end
 
     def reviewed
-      render layout: nil
+      @pagy, @model = order_and_paginate(PriorAuthorityApplication.for(current_provider).reviewed)
+      @scope = :reviewed
+      render 'index'
     end
 
     def submitted
-      render layout: nil
+      @pagy, @model = order_and_paginate(
+        PriorAuthorityApplication.for(current_provider).submitted_or_resubmitted
+      )
+      @scope = :submitted
+      render 'index'
     end
 
     def offboard
@@ -55,20 +62,6 @@ module PriorAuthority
     end
 
     private
-
-    def load_drafts
-      @draft_pagy, @draft_model = order_and_paginate(PriorAuthorityApplication.for(current_provider).draft)
-    end
-
-    def load_reviewed
-      @reviewed_pagy, @reviewed_model = order_and_paginate(PriorAuthorityApplication.for(current_provider).reviewed)
-    end
-
-    def load_submitted
-      @submitted_pagy, @submitted_model = order_and_paginate(
-        PriorAuthorityApplication.for(current_provider).submitted_or_resubmitted
-      )
-    end
 
     def initialize_application(attributes = {}, &block)
       attributes[:office_code] = current_provider.office_codes.first unless current_provider.multiple_offices?

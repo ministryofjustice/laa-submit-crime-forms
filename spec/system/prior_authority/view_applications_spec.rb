@@ -7,8 +7,6 @@ RSpec.describe 'View reviewed applications' do
     travel_to arbitrary_fixed_date
     visit provider_saml_omniauth_callback_path
     application
-    visit prior_authority_applications_path
-    click_on application.ufn
   end
 
   context 'when application has been rejected' do
@@ -22,6 +20,9 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'shows rejection details' do
+      visit reviewed_prior_authority_applications_path
+      click_on application.ufn
+
       expect(page).to have_content 'Rejected'
       expect(page).to have_content '£0.00 allowed'
       expect(page).to have_content 'You used the wrong form'
@@ -29,6 +30,9 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'lets me download a PDF' do
+      visit reviewed_prior_authority_applications_path
+      click_on application.ufn
+
       click_on 'Create a printable PDF'
       expect(page).to have_current_path download_prior_authority_application_path(application)
       expect(page.driver.response.headers['Content-Type']).to eq 'application/pdf'
@@ -44,6 +48,9 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'shows grant details' do
+      visit reviewed_prior_authority_applications_path
+      click_on application.ufn
+
       expect(page).to have_content 'Granted'
       expect(page).to have_content '£155.00 requested'
       expect(page).to have_content '£155.00 allowed'
@@ -77,6 +84,9 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'shows overall details' do
+      visit reviewed_prior_authority_applications_path
+      click_on application.ufn
+
       expect(page).to have_content 'Part granted'
       expect(page).to have_content '£175.00 requested'
       expect(page).to have_content '£274.00 allowed'
@@ -87,16 +97,25 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'shows service cost adjustments' do
+      visit reviewed_prior_authority_applications_path
+      click_on application.ufn
+
       expect(page).to have_content 'Too much'
       expect(page).to have_content '£30.00 £29.00'
     end
 
     it 'shows travel cost adjustments' do
+      visit reviewed_prior_authority_applications_path
+      click_on application.ufn
+
       expect(page).to have_content 'Not enough'
       expect(page).to have_content '£125.00 £126.00'
     end
 
     it 'shows additional cost adjustments' do
+      visit reviewed_prior_authority_applications_path
+      click_on application.ufn
+
       expect(page).to have_content 'Nearly right'
       expect(page).to have_content '£20.00 £119.00'
     end
@@ -105,6 +124,9 @@ RSpec.describe 'View reviewed applications' do
       let(:assessment_comment) { nil }
 
       it 'shows overall details' do
+        visit reviewed_prior_authority_applications_path
+        click_on application.ufn
+
         expect(page).to have_content 'Part granted'
         expect(page).to have_content '£175.00 requested'
         expect(page).to have_content '£274.00 allowed'
@@ -127,6 +149,9 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'shows expiry details' do
+      visit reviewed_prior_authority_applications_path
+      click_on application.ufn
+
       expect(page).to have_content 'Update needed'
       expect(page).to have_content '£155.00 requested'
       expect(page).to have_content 'Review the requests and resubmit your application by 3 April 2024'
@@ -144,6 +169,9 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'shows expiry details' do
+      visit reviewed_prior_authority_applications_path
+      click_on application.ufn
+
       expect(page).to have_content('Expired')
         .and have_content('£155.00 requested')
         .and have_content('On 8 March 2024 we asked you to update your application')
@@ -169,6 +197,9 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'shows uodate details' do
+      visit submitted_prior_authority_applications_path
+      click_on application.ufn
+
       expect(page).to have_content('Resubmitted')
         .and have_content('Further information request 21 March 2024')
         .and have_content('Tell me more')
@@ -176,6 +207,9 @@ RSpec.describe 'View reviewed applications' do
     end
 
     it 'lets me download my uploaded file' do
+      visit submitted_prior_authority_applications_path
+      click_on application.ufn
+
       click_on 'evidence–with-weird-char.pdf'
       expect(page).to have_current_path(%r{/test_path})
       expect(page.driver.request.params['response-content-disposition']).to eq(

@@ -18,17 +18,19 @@ RSpec.describe 'Prior authority application lists' do
     create(:prior_authority_application, laa_reference: 'LAA-DDDDD', status: 'draft', updated_at: 4.days.ago)
     create(:prior_authority_application, laa_reference: 'LAA-EEEEE', status: 'draft',
            office_code: 'OTHER', provider: create(:provider, :other))
-
-    visit prior_authority_applications_path
   end
 
-  it 'only shows right applications in the right tabs' do
-    within '#submitted' do
+  context 'only shows right applications in the right tabs' do
+    it 'for submitted' do
+      visit submitted_prior_authority_applications_path
+
       expect(page).to have_content 'AAAAA'
       expect(page).to have_content 'BBBBB'
     end
 
-    within '#reviewed' do
+    it 'for reviewed' do
+      visit reviewed_prior_authority_applications_path
+
       expect(page)
         .to have_content('CCCC1')
         .and have_content('CCCC2')
@@ -37,24 +39,26 @@ RSpec.describe 'Prior authority application lists' do
         .and have_content('CCCC5')
     end
 
-    within '#drafts' do
+    it 'for drafts' do
+      visit draft_prior_authority_applications_path
+
       expect(page).to have_content 'DDDDD'
     end
   end
 
   it 'shows most recently updated at the top by default' do
-    within '#submitted' do
-      expect(page.body).to match(/AAAAA.*BBBBB.*/m)
-    end
+    visit submitted_prior_authority_applications_path
+
+    expect(page.body).to match(/AAAAA.*BBBBB.*/m)
   end
 
   it 'allows sorting by columns in ascending and descending order' do
-    within '#submitted' do
-      click_on 'LAA reference'
-    end
-    expect(page.body).to match(/AAAAA.*BBBBB.*/m)
+    visit submitted_prior_authority_applications_path
+
+    expect(page).to have_content(/AAAAA.*BBBBB.*/m)
     click_on 'LAA reference'
-    expect(page.body).to match(/BBBBB.*AAAAA.*/m)
+    click_on 'LAA reference'
+    expect(page).to have_content(/BBBBB.*AAAAA.*/m)
   end
 
   it 'does not show applications from other offices' do
@@ -62,6 +66,8 @@ RSpec.describe 'Prior authority application lists' do
   end
 
   it 'links through to a readonly summary page for submitted applications' do
+    visit submitted_prior_authority_applications_path
+
     click_on '120423/818'
     expect(page).to have_content 'Application details'
     expect(page).to have_content 'LAA-AAAAA'
