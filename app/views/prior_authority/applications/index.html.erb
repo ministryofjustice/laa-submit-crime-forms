@@ -1,22 +1,22 @@
-<% title t('.page_title') %>
+<% title t(".page_title") %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
+    <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
   </div>
 </div>
 
 <% if @empty %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-text"><%= t('.none') %></p>
+      <p class="govuk-text"><%= t(".none") %></p>
     </div>
   </div>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= govuk_button_to t('.start_application'), prior_authority_applications_path %>
+    <%= govuk_button_to t(".start_application"), prior_authority_applications_path %>
   </div>
 </div>
 
@@ -24,20 +24,51 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <div class="govuk-tabs" data-module="govuk-tabs">
-        <ul class="govuk-tabs__list">
-          <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :reviewed %>">
-            <%= link_to t(".tabs.reviewed"), reviewed_prior_authority_applications_path(anchor: 'claim_nav') %>
+        <ul class="govuk-tabs__list" role="tablist">
+          <li
+            class="
+              govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :reviewed %>
+            "
+            role="presentation"
+          >
+            <%= link_to t(".tabs.reviewed"),
+            reviewed_prior_authority_applications_path(anchor: "claim_nav"),
+            role: "tab",
+            "aria-controls": :reviewed,
+            "aria-selected": @scope == :reviewed %>
           </li>
-          <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :submitted %>">
-            <%= link_to t(".tabs.submitted"), submitted_prior_authority_applications_path(anchor: 'claim_nav') %>
+          <li
+            class="
+              govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :submitted %>
+            "
+            role="presentation"
+          >
+            <%= link_to t(".tabs.submitted"),
+            submitted_prior_authority_applications_path(anchor: "claim_nav"),
+            role: "tab",
+            "aria-controls": :submitted,
+            "aria-selected": @scope == :submitted %>
           </li>
-          <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :drafts %>">
-            <%= link_to t(".tabs.drafts"), draft_prior_authority_applications_path(anchor: 'claim_nav')%>
+          <li
+            class="
+              govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :drafts %>
+            "
+            role="presentation"
+          >
+            <%= link_to t(".tabs.drafts"),
+            draft_prior_authority_applications_path(anchor: "claim_nav"),
+            role: "tab",
+            "aria-controls": :drafts,
+            "aria-selected": @scope == :drafts %>
           </li>
         </ul>
 
         <div class="govuk-tabs__panel">
-          <%= render partial: "prior_authority/applications/#{@scope}", locals: { model: @model, pagy: @pagy } %>
+          <%= render partial: "prior_authority/applications/#{@scope}",
+          locals: {
+            model: @model,
+            pagy: @pagy,
+          } %>
         </div>
       </div>
     </div>
