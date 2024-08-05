@@ -10,14 +10,12 @@ module Nsm
       attribute :calls_uplift, :integer
 
       validates :letters, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
-      validates :letters, numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_blank: false },
-        if: :apply_letters_uplift
       validates :calls, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
-      validates :calls, numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_blank: false },
-        if: :apply_calls_uplift
+      validate :zero_letters_uplift_applied
       validates :letters_uplift, presence: true,
         numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
         if: :apply_letters_uplift
+      validate :zero_calls_uplift_applied
       validates :calls_uplift, presence: true,
         numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
         if: :apply_calls_uplift
@@ -88,6 +86,14 @@ module Nsm
           'letters_uplift' => apply_letters_uplift ? letters_uplift : nil,
           'calls_uplift' => apply_calls_uplift ? calls_uplift : nil,
         )
+      end
+
+      def zero_letters_uplift_applied
+        errors.add(:letters_uplift, :uplift_on_zero) if apply_letters_uplift && letters.to_i.zero?
+      end
+
+      def zero_calls_uplift_applied
+        errors.add(:calls_uplift, :uplift_on_zero) if apply_calls_uplift && calls.to_i.zero?
       end
     end
   end
