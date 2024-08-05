@@ -40,7 +40,7 @@ module Nsm
     end
 
     def action_links
-      tag.uk(class: 'govuk-summary-list__actions-list') do
+      tag.ul(class: 'govuk-summary-list__actions-list') do
         tag.li(duplicate_link, class: 'govuk-summary-list__actions-list-item') +
           tag.li(delete_link, class: 'govuk-summary-list__actions-list-item')
       end
