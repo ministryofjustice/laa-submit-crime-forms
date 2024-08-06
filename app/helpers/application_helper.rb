@@ -43,4 +43,9 @@ module ApplicationHelper
       end
     end
   end
+
+  def generate_aria_labelledby(item_title, position, type, additional_variable = nil)
+    base_string = "#{item_title} item#{position} #{type}#{position}"
+    additional_variable ? "#{additional_variable}#{position} #{base_string}" : base_string
+  end
 end

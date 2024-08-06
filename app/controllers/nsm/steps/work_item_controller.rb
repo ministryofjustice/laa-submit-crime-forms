@@ -22,7 +22,7 @@ module Nsm
           new_work_item = work_item.dup
           new_work_item.save!
           redirect_to edit_nsm_steps_work_item_path(current_application, work_item_id: new_work_item.id),
-                      flash: { success: t('.duplicate') }
+                      flash: { success: t('.duplicate_success') }
         end
       end
 

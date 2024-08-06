@@ -15,11 +15,6 @@ class Disbursement < ApplicationRecord
     )
   end
 
-  def type_and_cost_valid?
-    Nsm::Steps::DisbursementTypeForm.build(self, application: claim).valid? &&
-      Nsm::Steps::DisbursementCostForm.build(self, application: claim).valid?
-  end
-
   def translated_disbursement_type
     if disbursement_type == DisbursementTypes::OTHER.to_s
       known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(other_type))
@@ -32,7 +27,7 @@ class Disbursement < ApplicationRecord
   end
 
   def position
-    1
+    super || claim.disbursement_position(self)
   end
 
   private
