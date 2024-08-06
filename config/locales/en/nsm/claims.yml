@@ -8,6 +8,7 @@ en:
         heading: Your claims
         start_claim: Start a new claim
         table_info_item: claims
+        delete: Delete
         header:
           ufn: UFN
           defendant: Defendant
@@ -36,3 +37,7 @@ en:
           sent_back: govuk-tag--yellow
           provider_requested: govuk-tag--yellow
           review: govuk-tag--yellow
+        tabs:
+          reviewed: Reviewed
+          submitted: Submitted
+          drafts: Drafts
