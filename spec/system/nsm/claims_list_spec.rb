@@ -54,7 +54,28 @@ RSpec.describe 'NSM claims lists' do
            office_code: 'OTHER',
            submitter: create(:provider, :other))
 
-    visit nsm_applications_path
+    visit submitted_nsm_applications_path
+  end
+
+  it 'only shows reviewed claims on reviewed tab' do
+    visit reviewed_nsm_applications_path
+
+    expect(page).to have_content(%r{120423/006.*120423/005.*120423/004.*120423/003}m)
+    expect(page).to have_content('Showing 4 of 4 claims')
+  end
+
+  it 'only shows submitted claims on submitted tab' do
+    visit submitted_nsm_applications_path
+
+    expect(page).to have_content(%r{120423/001.*120423/002}m)
+    expect(page).to have_content('Showing 2 of 2 claims')
+  end
+
+  it 'only shows draft claims on draft tab' do
+    visit draft_nsm_applications_path
+
+    expect(page).to have_content('120423/008')
+    expect(page).to have_content('Showing 1 of 1 claims')
   end
 
   it 'shows most recently updated at the top by default' do
@@ -75,7 +96,7 @@ RSpec.describe 'NSM claims lists' do
 
     click_on 'UFN'
     within top_row_selector do
-      expect(page).to have_content('120423/008')
+      expect(page).to have_content('120423/002')
     end
   end
 
@@ -87,7 +108,7 @@ RSpec.describe 'NSM claims lists' do
 
     click_on 'Defendant'
     within top_row_selector do
-      expect(page).to have_content('Zoe Zeigler')
+      expect(page).to have_content('Jim Bob')
     end
   end
 
@@ -99,7 +120,7 @@ RSpec.describe 'NSM claims lists' do
 
     click_on 'Account'
     within top_row_selector do
-      expect(page).to have_content('9A123B')
+      expect(page).to have_content('1A123B')
     end
   end
 
@@ -111,19 +132,21 @@ RSpec.describe 'NSM claims lists' do
 
     click_on 'LAA reference'
     within top_row_selector do
-      expect(page).to have_content('DDDDD')
+      expect(page).to have_content('BBBBB')
     end
   end
 
-  it 'allows sorting by Status' do
+  it 'allows sorting by Status in "Reviewed"' do
+    visit nsm_applications_path
+
     click_on 'Status'
     within top_row_selector do
-      expect(page).to have_content('Draft')
+      expect(page).to have_content('Update needed')
     end
 
     click_on 'Status'
     within top_row_selector do
-      expect(page).to have_content('Submitted')
+      expect(page).to have_content('Rejected')
     end
   end
 

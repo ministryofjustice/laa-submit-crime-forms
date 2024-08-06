@@ -2,16 +2,34 @@ module Nsm
   class ClaimsController < ApplicationController
     layout 'nsm'
 
+    before_action :set_scope, only: %i[submitted draft reviewed]
     before_action :set_default_table_sort_options
 
     def index
-      @pagy, @claims = order_and_paginate(Claim.for(current_provider).where.not(ufn: nil))
+      @pagy, @claims = order_and_paginate(Claim.for(current_provider).reviewed.where.not(ufn: nil))
+      @scope = :reviewed
+      render 'index'
     end
 
     def create
       initialize_application do |claim|
         redirect_to edit_nsm_steps_claim_type_path(claim.id)
       end
+    end
+
+    def reviewed
+      @pagy, @claims = order_and_paginate(Claim.for(current_provider).reviewed.where.not(ufn: nil))
+      render 'index'
+    end
+
+    def submitted
+      @pagy, @claims = order_and_paginate(Claim.for(current_provider).submitted_or_resubmitted.where.not(ufn: nil))
+      render 'index'
+    end
+
+    def draft
+      @pagy, @claims = order_and_paginate(Claim.for(current_provider).draft.where.not(ufn: nil))
+      render 'index'
     end
 
     private
@@ -39,6 +57,10 @@ module Nsm
     def set_default_table_sort_options
       @sort_by = params.fetch(:sort_by, 'last_updated')
       @sort_direction = params.fetch(:sort_direction, 'descending')
+    end
+
+    def set_scope
+      @scope = params[:action].to_sym
     end
 
     def initialize_application(attributes = {}, &block)

@@ -57,6 +57,11 @@ Rails.application.routes.draw do
 
   namespace :nsm, path: 'non-standard-magistrates' do
     resources :claims, except: [:edit, :show, :new, :update], as: :applications do
+      collection do
+        get :draft
+        get :submitted
+        get :reviewed
+      end
       member do
         get :delete
       end
