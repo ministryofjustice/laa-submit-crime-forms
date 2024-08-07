@@ -23,9 +23,9 @@
           <% header_row.map.with_index do |(column_key, attributes), index| %>
             <% aria_sort, next_direction = sort_variable(column_key, @sort_by, @sort_direction) %>
             <%= row.with_cell(
-                  text: reorder_form(edit_nsm_steps_disbursements_path(current_application), column_key, next_direction, "nsm.steps.disbursements.edit.headers", index),
+                  text: reorder_form(edit_nsm_steps_disbursements_path(current_application), column_key, next_direction, "nsm.steps.disbursements.edit.headers", index, button_id: attributes[:id] ),
                   numeric:  attributes[:numeric],
-                  html_attributes: attributes[:id] ? { 'aria-sort': aria_sort, id: attributes[:id] } : { 'aria-sort': aria_sort }
+                  html_attributes: { 'aria-sort': aria_sort },
                 ) %>
           <% end %>
           <%= row.with_cell(text: t('.headers.action'), numeric: true) %>
