@@ -13,7 +13,7 @@ class PdfService
     },
     emulate_media: 'print',
     scale: 0.9,
-    launch_args: ['--font-render-hinting=medium', '--no-sandbox', '--force-renderer-accessibility'],
+    launch_args: ['--font-render-hinting=medium', '--no-sandbox', '--force-renderer-accessibility', '--disable-gpu'],
   }.freeze
 
   class << self
