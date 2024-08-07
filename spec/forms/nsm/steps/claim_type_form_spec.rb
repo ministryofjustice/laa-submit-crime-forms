@@ -14,7 +14,12 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
     }
   end
 
-  let(:application) { instance_double(Claim) }
+  let(:application) do
+    instance_double(Claim,
+                    office_in_undesignated_area: true,
+                    court_in_undesignated_area: true,
+                    transferred_from_undesignated_area: true)
+  end
   let(:ufn) { '230801/001' }
   let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
   let(:rep_order_date) { Date.new(2023, 4, 1) }
@@ -70,10 +75,18 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
 
         it 'can reset CNTP fields (leave rep order date)' do
           attributes = subject.send(:attributes_to_reset)
-          expect(attributes).to eq(
+          expect(attributes).to include(
             'rep_order_date' => rep_order_date,
             'cntp_order' => nil,
             'cntp_date' => nil,
+          )
+        end
+
+        it 'leaves prog/prom fields unchanged' do
+          expect(subject.send(:attributes_to_reset)).to include(
+            'court_in_undesignated_area' => true,
+            'office_in_undesignated_area' => true,
+            'transferred_from_undesignated_area' => true,
           )
         end
       end
@@ -102,10 +115,18 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
 
         it 'can reset rep order date (leave CNTP fields)' do
           attributes = subject.send(:attributes_to_reset)
-          expect(attributes).to eq(
+          expect(attributes).to include(
             'rep_order_date' => nil,
             'cntp_order' => cntp_order,
             'cntp_date' => cntp_date,
+          )
+        end
+
+        it 'resets prog/prom fields' do
+          expect(subject.send(:attributes_to_reset)).to include(
+            'court_in_undesignated_area' => nil,
+            'office_in_undesignated_area' => nil,
+            'transferred_from_undesignated_area' => nil,
           )
         end
       end

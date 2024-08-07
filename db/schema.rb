@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_06_082652) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_07_155517) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -105,6 +105,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_06_082652) do
     t.string "calls_adjustment_comment"
     t.string "wasted_costs"
     t.date "work_completed_date"
+    t.boolean "office_in_undesignated_area"
+    t.boolean "court_in_undesignated_area"
+    t.boolean "transferred_from_undesignated_area"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"

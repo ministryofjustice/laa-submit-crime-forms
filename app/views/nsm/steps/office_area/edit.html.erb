@@ -1,0 +1,23 @@
+<% title t('.page_title') %>
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |form| %>
+     <%= form.govuk_collection_radio_buttons(
+            :office_in_undesignated_area,
+            YesNoAnswer.radio_options,
+            :value,
+            :label,
+            legend: { text: t('.page_title'), size: 'xl', tag: 'h1' },
+            hint: { text: t('.hint') }
+          ) %>
+
+      <%= form.continue_button(secondary: false) %>
+    <% end %>
+  </div>
+</div>
+
+

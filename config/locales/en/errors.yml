@@ -272,6 +272,18 @@ en:
             cntp_order:
               blank: Enter a CNTP number
             cntp_date: *shared_date_errors
+        nsm/steps/office_area_form:
+          attributes:
+            office_in_undesignated_area:
+              inclusion: Select yes if this case was worked on in an office in an undesignated area
+        nsm/steps/court_area_form:
+          attributes:
+            court_in_undesignated_area:
+              inclusion: Select yes if the court that heard this case is in an undesignated area
+        nsm/steps/case_transfer_form:
+          attributes:
+            transferred_from_undesignated_area:
+              inclusion: Select yes if the case was transferred from a court in an undesignated area
         nsm/steps/firm_details_form:
           attributes:
             firm_office:

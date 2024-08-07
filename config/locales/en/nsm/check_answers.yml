@@ -18,11 +18,14 @@ en:
               laa_reference: LAA reference
               file_ufn: Unique file number
               type_of_claim: Type of claim
-              rep_order_date: Representation order date
-              cntp_number: Client's CNTP number
-              cntp_rep_order: Date CNTP representation order was issued
+              rep_order_date: Date of representation order
+              cntp_number: CNTP (contempt) number
+              cntp_rep_order: Date of CNTP representation order
               non_standard_magistrate: Non-standard magistrates' court payment
               breach_of_injunction: Breach of injunction
+              stage_reached: Stage reached
+              prog: PROG
+              prom: PROM
             firm_details:
               firm_name: Firm name
               firm_account_number: Firm account number
@@ -141,9 +144,8 @@ en:
                 subject of the email and include your new information.
 
           claim_type:
-            heading: What you are claiming for
             claim_type:
-              title: What you are claiming for
+              title: Claim details
           about_you:
             heading: About you
             firm_details:

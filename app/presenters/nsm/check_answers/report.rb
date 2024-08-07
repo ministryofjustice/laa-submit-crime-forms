@@ -13,6 +13,8 @@ module Nsm
         supporting_evidence
       ].freeze
 
+      GROUPS_WITHOUT_HEADING = %w[claim_type].freeze
+
       attr_reader :claim
 
       def initialize(claim, read_only: false)
@@ -95,8 +97,10 @@ module Nsm
         ]
       end
 
-      def group_heading(group_key, **)
-        I18n.t("nsm.steps.check_answers.groups.#{group_key}.heading", **)
+      def group_heading(group_name)
+        return if GROUPS_WITHOUT_HEADING.include?(group_name)
+
+        I18n.t("nsm.steps.check_answers.groups.#{group_name}.heading")
       end
     end
   end

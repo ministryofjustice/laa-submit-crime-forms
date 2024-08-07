@@ -9,7 +9,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
     let(:claim) { build(:claim) }
 
     it 'shows correct title' do
-      expect(subject.title).to eq('What you are claiming for')
+      expect(subject.title).to eq('Claim details')
     end
   end
 
@@ -36,6 +36,10 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
             {
               head_key: 'rep_order_date',
               text: '1 March 2024'
+            },
+            {
+              head_key: 'stage_reached',
+              text: 'PROM'
             }
           ]
         )
@@ -78,6 +82,10 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
             {
               head_key: 'cntp_rep_order',
               text: '10 February 2024'
+            },
+            {
+              head_key: 'stage_reached',
+              text: 'PROG'
             }
           ]
         )

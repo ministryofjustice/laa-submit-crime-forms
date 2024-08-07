@@ -61,6 +61,7 @@ FactoryBot.define do
       ufn { "#{date.strftime('%d%m%y')}/001" }
       claim_type { 'non_standard_magistrate' }
       rep_order_date { date.strftime('%Y-%m-%d') }
+      office_in_undesignated_area { false }
     end
 
     trait :case_type_breach do

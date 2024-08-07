@@ -2,7 +2,7 @@
 en:
   tasklist:
     heading:
-      nsm/what: What you are claiming
+      nsm/what: Claim details
       nsm/about_you: About you
       nsm/case: About the case
       nsm/defendant: About the defendant
@@ -24,9 +24,7 @@ en:
       prior_authority/reason_why: Reason for prior authority
       prior_authority/check_answers: Submit application
       prior_authority/further_information: Further information
-      nsm/claim_type:
-        non_standard_magistrate: Non-standard magistrates’ court payment
-        breach_of_injunction: Breach of injunction court payment
+      nsm/claim_type: What are you claiming for
       nsm/firm_details: Firm details
       nsm/defendants: Defendant details
       nsm/case_details: Case details
@@ -53,6 +51,16 @@ en:
         heading: Your %{app_type} progress
         aside:
           reference: LAA reference
-          title: Application reference
-          prison_law: Under Prison Law
           ufn: Unique file number
+          paa:
+            title: Application reference
+            prison_law: Under Prison Law
+          nsm:
+            title: Claim reference
+            claim_type: Claim type
+            non_standard_magistrate: Non-standard magistrates' court payment
+            breach_of_injunction: Breach of injunction
+            stage_reached: Stage reached
+            prog: PROG
+            prom: PROM
+

@@ -10,6 +10,18 @@ en:
             line_1: This form can only be used to claim for a Non-standard magistrate or a Breach for injunction payment.
             line_2: To claim for a Crime Lower standard payment, please use CWA via the LAA online portal.
             line_3: To claim for a Crime Higher payment, please use CCCD via the CCCD portal.
+      office_area:
+        edit:
+          page_title: Was this case worked on in an office in an undesignated area?
+          hint: You may be able to claim travel time and waiting time if the office is in an undesignated area
+      court_area:
+        edit:
+          page_title: Is the court that heard this case in an undesignated area?
+          hint: You can claim travel time and waiting time if the court the case was heard in is in an undesignated area
+      case_transfer:
+        edit:
+          page_title: Was the case transferred from a court in an undesignated area?
+          hint: You can claim travel time and waiting time if the case was transferred from a court in an undesignated area
       firm_details:
         edit:
           page_title: Firm details

@@ -28,6 +28,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'concluded' => 'no',
           'conclusion' => nil,
           'court' => 'A Court',
+          'court_in_undesignated_area' => nil,
           'cracked_trial_date' => nil,
           'created_at' => '2023-08-17T12:13:14.000Z',
           'defence_statement' => 10,
@@ -91,6 +92,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'number_of_hearing' => 1,
           'number_of_witnesses' => 2,
           'office_code' => '1A123B',
+          'office_in_undesignated_area' => false,
           'other_info' => nil,
           'plea' => {
             value: claim.plea,
@@ -124,6 +126,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'previous_id' => nil,
             'reference_number' => '111222'
           },
+          'stage_reached' => :prom,
           'status' => 'draft',
           'submitted_total' => nil,
           'submitted_total_inc_vat' => nil,
@@ -131,6 +134,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'supplemental_claim' => 'yes',
           'wasted_costs' => 'yes',
           'time_spent' => 121,
+          'transferred_from_undesignated_area' => nil,
           'ufn' => '120423/001',
           'unassigned_counsel' => 'no',
           'updated_at' => '2023-08-17T12:13:14.000Z',

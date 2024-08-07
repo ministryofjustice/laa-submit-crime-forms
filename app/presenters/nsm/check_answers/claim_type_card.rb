@@ -14,7 +14,7 @@ module Nsm
       def row_data
         claim_rows = magistrates_claim? ? magistrates_rows : breach_rows
 
-        base_rows + claim_rows
+        base_rows + claim_rows + final_rows
       end
 
       def base_rows
@@ -30,6 +30,15 @@ module Nsm
           {
             head_key: 'type_of_claim',
             text: translate_table_key(section, claim.claim_type)
+          }
+        ]
+      end
+
+      def final_rows
+        [
+          {
+            head_key: 'stage_reached',
+            text: translate_table_key(section, claim.stage_reached)
           }
         ]
       end
