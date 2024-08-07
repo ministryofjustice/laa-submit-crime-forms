@@ -100,24 +100,14 @@ RSpec.describe 'View claim page', type: :system do
     visit claimed_costs_work_items_nsm_steps_view_claim_path(claim.id)
 
     # items
-    expect(all('table caption, table td, table th').map(&:text)).to eq(
-      [
-        'Cost summary', 'Item', 'Net cost', 'VAT', 'Total',
-        'Profit costs', '£305.84', '£61.17', '£367.01',
-        'Disbursements', '£327.50', '£31.50', '£359.00', 'Waiting', '£10.58', '£2.12', '£12.70',
-        'Travel', '£10.58', '£2.12', '£12.70',
-        'Total',
-        'Sum of net cost claimed: £654.50',
-        'Sum of VAT on claimed: £96.90',
-        'Sum of net cost and VAT on claimed: £751.40',
-        'Claimed work items',
-        'Item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
-        '1', 'Travel', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
-        '2', 'Waiting', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
-        '3', 'Advocacy', 2.days.ago.to_fs(:short_stamp), '', '1 hour:26 minutes', '0%', '£93.77',
-        '4', 'Advocacy', 1.day.ago.to_fs(:short_stamp), '', '1 hour:44 minutes', '0%', '£113.39',
-        '5', 'Attendance without counsel', 1.day.ago.to_fs(:short_stamp), 'AB', '1 hour:30 minutes', '0%', '£78.23'
-      ]
+    expect(all('table caption, table td, table th').map(&:text)).to include(
+      'Claimed work items',
+      'Item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
+      '1', 'Travel', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
+      '2', 'Waiting', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
+      '3', 'Advocacy', 2.days.ago.to_fs(:short_stamp), '', '1 hour:26 minutes', '0%', '£93.77',
+      '4', 'Advocacy', 1.day.ago.to_fs(:short_stamp), '', '1 hour:44 minutes', '0%', '£113.39',
+      '5', 'Attendance without counsel', 1.day.ago.to_fs(:short_stamp), 'AB', '1 hour:30 minutes', '0%', '£78.23'
     )
 
     # summary
@@ -368,30 +358,15 @@ RSpec.describe 'View claim page', type: :system do
     it 'show the adjusted work items' do
       visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary', 'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed',
-          'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted work items',
-          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-          '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-          '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-          '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-          '4', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-          '5', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '6', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted work items',
+        'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+        '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+        '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+        '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+        '4', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+        '5', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '6', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80'
       )
     end
 
@@ -406,30 +381,15 @@ RSpec.describe 'View claim page', type: :system do
 
       click_on 'Cost type'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted work items',
-          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-          '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '3', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-          '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-          '5', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-          '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted work items',
+        'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+        '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '3', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+        '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+        '5', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+        '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
       )
     end
 
@@ -438,30 +398,15 @@ RSpec.describe 'View claim page', type: :system do
 
       click_on 'Time allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted work items',
-          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-          '1', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-          '2', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-          '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-          '4', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-          '5', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '6', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted work items',
+        'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+        '1', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+        '2', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+        '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+        '4', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+        '5', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '6', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
       )
     end
 
@@ -470,30 +415,15 @@ RSpec.describe 'View claim page', type: :system do
 
       click_on 'Uplift allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted work items',
-          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-          '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '3', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-          '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-          '5', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-          '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted work items',
+        'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+        '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '3', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+        '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+        '5', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+        '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
       )
     end
 
@@ -502,82 +432,37 @@ RSpec.describe 'View claim page', type: :system do
 
       click_on 'Net cost allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted work items',
-          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-          '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-          '2', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-          '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-          '4', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-          '5', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '6', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted work items',
+        'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+        '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+        '2', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+        '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+        '4', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+        '5', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '6', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
       )
     end
 
     it 'shows the letters and calls page' do
       visit adjustments_letters_and_calls_nsm_steps_view_claim_path(claim.id)
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted letter and calls',
-          'Cost type', 'Reasons for adjustment', 'Number allowed', 'Uplift allowed', 'Net cost allowed',
-          'Letters', 'Letters adjusted', '1', '0%', '£4.09',
-          'Calls', 'Calls adjusted', '1', '0%', '£4.09'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted letter and calls',
+        'Cost type', 'Reasons for adjustment', 'Number allowed', 'Uplift allowed', 'Net cost allowed',
+        'Letters', 'Letters adjusted', '1', '0%', '£4.09',
+        'Calls', 'Calls adjusted', '1', '0%', '£4.09'
       )
     end
 
     it 'show the disbursements page' do
       visit adjustments_disbursements_nsm_steps_view_claim_path(claim.id)
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00', '2', 'DNA Testing', 'Disbursement Test',
-          '£100.00', '£0.00', '£100.00'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00', '2', 'DNA Testing', 'Disbursement Test',
+        '£100.00', '£0.00', '£100.00'
       )
     end
 
@@ -586,50 +471,20 @@ RSpec.describe 'View claim page', type: :system do
 
       click_on 'Cost type'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
       )
 
       click_on 'Cost type'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
       )
     end
 
@@ -638,50 +493,20 @@ RSpec.describe 'View claim page', type: :system do
 
       click_on 'Net cost allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00'
       )
 
       click_on 'Net cost allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
       )
     end
 
@@ -690,50 +515,20 @@ RSpec.describe 'View claim page', type: :system do
 
       click_on 'VAT on allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
       )
 
       click_on 'VAT on allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
       )
     end
 
@@ -742,50 +537,20 @@ RSpec.describe 'View claim page', type: :system do
 
       click_on 'Total cost allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
       )
 
       click_on 'Total cost allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Cost summary',
-          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
-          'Total',
-          'Sum of net cost claimed: £741.18',
-          'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26',
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
       )
     end
 

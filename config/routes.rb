@@ -178,7 +178,7 @@ Rails.application.routes.draw do
 
     resources :applications, only: %i[index show create destroy] do
       collection do
-        get :draft
+        get :drafts
         get :submitted
         get :reviewed
       end

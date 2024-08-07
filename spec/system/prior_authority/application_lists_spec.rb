@@ -20,15 +20,15 @@ RSpec.describe 'Prior authority application lists' do
            office_code: 'OTHER', provider: create(:provider, :other))
   end
 
-  context 'only shows right applications in the right tabs' do
-    it 'for submitted' do
+  describe 'only shows right applications in the right tabs' do
+    it 'for submitted applications' do
       visit submitted_prior_authority_applications_path
 
       expect(page).to have_content 'AAAAA'
       expect(page).to have_content 'BBBBB'
     end
 
-    it 'for reviewed' do
+    it 'for reviewed applications' do
       visit reviewed_prior_authority_applications_path
 
       expect(page)
@@ -39,8 +39,8 @@ RSpec.describe 'Prior authority application lists' do
         .and have_content('CCCC5')
     end
 
-    it 'for drafts' do
-      visit draft_prior_authority_applications_path
+    it 'for draft applications' do
+      visit drafts_prior_authority_applications_path
 
       expect(page).to have_content 'DDDDD'
     end
