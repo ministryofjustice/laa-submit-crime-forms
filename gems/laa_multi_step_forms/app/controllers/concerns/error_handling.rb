@@ -14,6 +14,9 @@ module ErrorHandling
       else
         raise unless ENV.fetch('RAILS_ENV', nil) == 'production'
 
+        Rails.logger.error("BANANA. Sentry DSN is: #{ENV.fetch('SENTRY_DSN', nil)}")
+        Sentry.capture_message("Sentry should be about to capture an exception here for #{exception}")
+
         Sentry.capture_exception(exception) if ENV.fetch('SENTRY_DSN', nil).present?
         Rails.logger.error(exception)
         redirect_to laa_msf.unhandled_errors_path
