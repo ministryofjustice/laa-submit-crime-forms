@@ -8,13 +8,13 @@ module SortableTableHelper
     end
   end
 
-  def reorder_form(path, column, next_direction, i18n_stem, index)
+  def reorder_form(path, column, next_direction, i18n_stem, index, options = {})
     tag.form(action: path, method: 'get') do
       safe_join([
                   tag.input(type: 'hidden', name: 'prefix', value: params['prefix']),
                   tag.input(type: 'hidden', name: 'sort_by', value: column),
                   tag.input(type: 'hidden', name: 'sort_direction', value: next_direction),
-                  tag.button(type: 'submit', 'data-index': index) do
+                  tag.button(type: 'submit', 'data-index': index, id: options[:button_id]) do
                     I18n.t(column, scope: i18n_stem)
                   end
                 ])
