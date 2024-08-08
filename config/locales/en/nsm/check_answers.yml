@@ -28,7 +28,7 @@ en:
               prom: PROM
             firm_details:
               firm_name: Firm name
-              firm_account_number: Firm account number
+              firm_account_number: Firm office account number
               firm_address: Firm address
               vat_registered: Firm VAT registered
               solicitor_first_name: Solicitor first name
