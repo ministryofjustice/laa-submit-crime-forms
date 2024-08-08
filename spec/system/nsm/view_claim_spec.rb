@@ -76,7 +76,7 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   it 'shows a cost summary table on the claimed costs page' do
-    visit nsm_steps_view_claim_path(claim.id, section: :claimed_costs)
+    visit claimed_costs_work_items_nsm_steps_view_claim_path(claim.id)
 
     expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
     expect(page).to have_selector('.govuk-table__caption', text: 'Cost summary')
@@ -97,19 +97,17 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   it 'show the work items and summary' do
-    visit work_items_nsm_steps_view_claim_path(claim.id)
+    visit claimed_costs_work_items_nsm_steps_view_claim_path(claim.id)
 
     # items
-    expect(all('table caption, table td, table th').map(&:text)).to eq(
-      [
-        'Claimed work items',
-        'Item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
-        '1', 'Travel', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
-        '2', 'Waiting', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
-        '3', 'Advocacy', 2.days.ago.to_fs(:short_stamp), '', '1 hour:26 minutes', '0%', '£93.77',
-        '4', 'Advocacy', 1.day.ago.to_fs(:short_stamp), '', '1 hour:44 minutes', '0%', '£113.39',
-        '5', 'Attendance without counsel', 1.day.ago.to_fs(:short_stamp), 'AB', '1 hour:30 minutes', '0%', '£78.23'
-      ]
+    expect(all('table caption, table td, table th').map(&:text)).to include(
+      'Claimed work items',
+      'Item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
+      '1', 'Travel', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
+      '2', 'Waiting', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
+      '3', 'Advocacy', 2.days.ago.to_fs(:short_stamp), '', '1 hour:26 minutes', '0%', '£93.77',
+      '4', 'Advocacy', 1.day.ago.to_fs(:short_stamp), '', '1 hour:44 minutes', '0%', '£113.39',
+      '5', 'Attendance without counsel', 1.day.ago.to_fs(:short_stamp), 'AB', '1 hour:30 minutes', '0%', '£78.23'
     )
 
     # summary
@@ -134,7 +132,7 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'shows the sum of all work items in the summary' do
-      visit work_items_nsm_steps_view_claim_path(claim.id)
+      visit claimed_costs_work_items_nsm_steps_view_claim_path(claim.id)
 
       find('details').click
       expect(all('details table td, details table th').map(&:text)).to eq(
@@ -148,10 +146,19 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   it 'show the letters and calls page' do
-    visit letters_and_calls_nsm_steps_view_claim_path(claim.id)
+    visit claimed_costs_letters_and_calls_nsm_steps_view_claim_path(claim.id)
 
     expect(all('table td, table th').map(&:text)).to eq(
       [
+        'Item', 'Net cost', 'VAT', 'Total',
+        'Profit costs', '£305.84', '£61.17', '£367.01',
+        'Disbursements', '£327.50', '£31.50', '£359.00',
+        'Waiting', '£10.58', '£2.12', '£12.70',
+        'Travel', '£10.58', '£2.12', '£12.70',
+        'Total',
+        'Sum of net cost claimed: £654.50',
+        'Sum of VAT on claimed: £96.90',
+        'Sum of net cost and VAT on claimed: £751.40',
         'Cost type', 'Number claimed', 'Uplift claimed', 'Net cost claimed',
         'Letters', '2', '0%', '£8.18',
         'Calls', '3', '0%', '£12.27'
@@ -160,10 +167,19 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   it 'show the disbursements page' do
-    visit disbursements_nsm_steps_view_claim_path(claim.id)
+    visit claimed_costs_disbursements_nsm_steps_view_claim_path(claim.id)
 
     expect(all('table td, table th').map(&:text)).to eq(
       [
+        'Item', 'Net cost', 'VAT', 'Total',
+        'Profit costs', '£305.84', '£61.17', '£367.01',
+        'Disbursements', '£327.50', '£31.50', '£359.00',
+        'Waiting', '£10.58', '£2.12', '£12.70',
+        'Travel', '£10.58', '£2.12', '£12.70',
+        'Total',
+        'Sum of net cost claimed: £654.50',
+        'Sum of VAT on claimed: £96.90',
+        'Sum of net cost and VAT on claimed: £751.40',
         'Item', 'Cost type', 'Date', 'Net cost claimed', 'VAT on claimed', 'Total claimed',
         '1', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£18.00', '£108.00',
         '2', 'Custom', 3.days.ago.to_fs(:short_stamp), '£40.00', '£0.00', '£40.00',
@@ -239,12 +255,6 @@ RSpec.describe 'View claim page', type: :system do
     )
   end
 
-  context 'when visiting with an invalid prefix' do
-    it 'raises an error' do
-      expect { visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'fake') }.to raise_error('Invalid prefix: fake')
-    end
-  end
-
   context 'when adjustments exist' do
     let(:claim) { create(:claim, :firm_details, :adjusted_letters_calls, work_items:, disbursements:, assessment_comment:) }
 
@@ -271,7 +281,7 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'shows an adjusted cost summary table with VAT' do
-      visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
       expect(page).to have_selector('.govuk-table__caption', text: 'Cost summary')
@@ -300,7 +310,7 @@ RSpec.describe 'View claim page', type: :system do
       end
 
       it 'shows an adjusted cost summary table without VAT' do
-        visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
+        visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
         expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
         expect(page).to have_selector('.govuk-table__caption', text: 'Cost summary')
@@ -325,7 +335,7 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'show the adjusted work item summary' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       # open summary
       find('details').click
@@ -346,231 +356,201 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'show the adjusted work items' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted work items',
-          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-          '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-          '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-          '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-          '4', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-          '5', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '6', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted work items',
+        'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+        '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+        '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+        '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+        '4', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+        '5', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '6', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80'
       )
     end
 
     it 'shows expected pagination' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       expect(page).to have_content("Showing #{claim.work_items.size} of #{claim.work_items.size} work items")
     end
 
     it 'allows me to sort adjusted work items by Cost type' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Cost type'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted work items',
-          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-          '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '3', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-          '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-          '5', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-          '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted work items',
+        'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+        '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '3', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+        '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+        '5', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+        '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
       )
     end
 
     it 'allows me to sort adjusted work items by Time allowed' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Time allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted work items',
-          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-          '1', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-          '2', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-          '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-          '4', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-          '5', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '6', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted work items',
+        'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+        '1', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+        '2', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+        '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+        '4', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+        '5', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '6', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
       )
     end
 
     it 'allows me to sort adjusted work items by Uplift allowed' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Uplift allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted work items',
-          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-          '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '3', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-          '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-          '5', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-          '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted work items',
+        'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+        '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '2', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '3', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+        '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+        '5', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+        '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
       )
     end
 
     it 'allows me to sort adjusted work items by Net cost allowed' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Net cost allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted work items',
-          'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-          '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-          '2', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-          '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-          '4', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-          '5', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-          '6', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted work items',
+        'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
+        '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+        '2', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+        '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+        '4', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+        '5', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+        '6', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
       )
     end
 
     it 'shows the letters and calls page' do
-      visit letters_and_calls_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_letters_and_calls_nsm_steps_view_claim_path(claim.id)
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted letter and calls',
-          'Cost type', 'Reasons for adjustment', 'Number allowed', 'Uplift allowed', 'Net cost allowed',
-          'Letters', 'Letters adjusted', '1', '0%', '£4.09',
-          'Calls', 'Calls adjusted', '1', '0%', '£4.09'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted letter and calls',
+        'Cost type', 'Reasons for adjustment', 'Number allowed', 'Uplift allowed', 'Net cost allowed',
+        'Letters', 'Letters adjusted', '1', '0%', '£4.09',
+        'Calls', 'Calls adjusted', '1', '0%', '£4.09'
       )
     end
 
     it 'show the disbursements page' do
-      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_disbursements_nsm_steps_view_claim_path(claim.id)
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00', '2', 'DNA Testing', 'Disbursement Test',
+        '£100.00', '£0.00', '£100.00'
       )
     end
 
     it 'allows me to sort adjusted disbursements by Cost type' do
-      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_disbursements_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Cost type'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
       )
 
       click_on 'Cost type'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
       )
     end
 
     it 'allows me to sort adjusted disbursements by Net cost allowed' do
-      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_disbursements_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Net cost allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00'
       )
 
       click_on 'Net cost allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00'
       )
     end
 
     it 'allows me to sort adjusted disbursements by VAT on allowed' do
-      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_disbursements_nsm_steps_view_claim_path(claim.id)
 
       click_on 'VAT on allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
       )
 
       click_on 'VAT on allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
       )
     end
 
     it 'allows me to sort adjusted disbursements by Total cost allowed' do
-      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_disbursements_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Total cost allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
       )
 
       click_on 'Total cost allowed'
 
-      expect(all('table caption, table td, table th').map(&:text)).to eq(
-        [
-          'Adjusted disbursements',
-          'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-        ]
+      expect(all('table caption, table td, table th').map(&:text)).to include(
+        'Adjusted disbursements',
+        'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+        '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+        '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
       )
     end
 

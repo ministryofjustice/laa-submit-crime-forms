@@ -1,4 +1,6 @@
-<% if model.none? %>
+<% title t('.page_title') %>
+
+<% if @model.none? %>
   <p><%= t('prior_authority.applications.tabs.no_reviewed') %></p>
 <% else %>
   <h2 class="govuk-heading-m"><%= t('prior_authority.applications.tabs.reviewed') %></h2>
@@ -17,10 +19,10 @@
     </thead>
 
     <tbody class="govuk-table__body app-task-list__items">
-      <% model.each do |application| %>
+      <% @model.each do |application| %>
         <tr class="govuk-table__row app-task-list__item">
           <td class="govuk-table__cell">
-            <%= link_to prior_authority_application_path(application), data: { turbo: false } do %>
+            <%= link_to prior_authority_application_path(application) do %>
               <%= application.ufn %>
             <% end %>
           </td>

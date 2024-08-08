@@ -62,7 +62,7 @@ RSpec.describe 'Prior authority applications, check your answers, submission' do
     end
 
     it 'can be seen on the list of submitted applications' do
-      visit prior_authority_applications_path(anchor: 'submitted')
+      visit submitted_prior_authority_applications_path
 
       expect(page).to have_title('Your applications')
       expect(page).to have_css('.govuk-table__row', text: '111111/123')
