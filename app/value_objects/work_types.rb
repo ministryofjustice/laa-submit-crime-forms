@@ -17,11 +17,7 @@ class WorkTypes < ValueObject
     ATTENDANCE_WITHOUT_COUNSEL = new(:attendance_without_counsel),
     PREPARATION = new(:preparation),
     ADVOCACY = new(:advocacy),
-    TRAVEL = new(:travel) do |application|
-      application.in_area == YesNoAnswer::NO.to_s
-    end,
-    WAITING = new(:waiting) do |application|
-      application.in_area == YesNoAnswer::NO.to_s
-    end,
+    TRAVEL = new(:travel, &:prog_stage_reached?),
+    WAITING = new(:waiting, &:prog_stage_reached?),
   ].freeze
 end

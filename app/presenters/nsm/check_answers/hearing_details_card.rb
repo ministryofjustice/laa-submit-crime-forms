@@ -31,12 +31,6 @@ module Nsm
             end
           },
           {
-            head_key: 'in_area',
-            text: check_missing(hearing_details_form.in_area.present?) do
-              hearing_details_form.in_area.to_s.capitalize
-            end
-          },
-          {
             head_key: 'youth_court',
             text: check_missing(hearing_details_form.youth_court.present?) do
               hearing_details_form.youth_court.to_s.capitalize

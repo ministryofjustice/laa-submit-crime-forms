@@ -18,7 +18,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
 
   let(:application) do
     instance_double(Claim, work_items: work_items, update!: true, date: date, assigned_counsel: assigned_counsel,
-   in_area: in_area, reasons_for_claim: reasons_for_claim)
+   prog_stage_reached?: prog_stage_reached, reasons_for_claim: reasons_for_claim)
   end
   let(:work_items) { [double(:record), record] }
   let(:date) { Date.new(2023, 1, 1) }
@@ -32,7 +32,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
   let(:apply_uplift) { 'true' }
   let(:uplift) { 10 }
   let(:assigned_counsel) { 'yes' }
-  let(:in_area) { 'no' }
+  let(:prog_stage_reached) { true }
   let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
 
   describe '#validations' do
@@ -267,8 +267,8 @@ RSpec.describe Nsm::Steps::WorkItemForm do
         end
       end
 
-      context 'when in_area is yes' do
-        let(:in_area) { 'yes' }
+      context 'when prog stage not reached' do
+        let(:prog_stage_reached) { false }
 
         it 'does not include TRAVEL or WAITING' do
           expect(subject.work_types_with_pricing).to eq([
@@ -307,8 +307,8 @@ RSpec.describe Nsm::Steps::WorkItemForm do
         end
       end
 
-      context 'when in_area is yes' do
-        let(:in_area) { 'yes' }
+      context 'when prog stage not reached' do
+        let(:prog_stage_reached) { false }
 
         it 'does not include TRAVEL or WAITING' do
           expect(subject.work_types_with_pricing).to eq([

@@ -20,7 +20,6 @@ RSpec.describe 'User can fill in claim type details', type: :system do
 
     select 'Aberconwy PSD - C3237', from: 'Which court was the last case hearing heard at?'
 
-    find('.govuk-form-group', text: 'Is this court in a designated area of your firm?').choose 'Yes'
     find('.govuk-form-group', text: 'Is this court a youth court?').choose 'No'
 
     select 'CP03 - Representation order withdrawn', from: 'Hearing outcome'
@@ -33,7 +32,6 @@ RSpec.describe 'User can fill in claim type details', type: :system do
       first_hearing_date: Date.new(2023, 4, 20),
       number_of_hearing: 2,
       court: 'Aberconwy PSD - C3237',
-      in_area: 'yes',
       youth_court: 'no',
       hearing_outcome: 'CP03',
       matter_type: '1',
