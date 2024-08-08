@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Claim do
-  subject { described_class.new(attributes) }
+  let(:claim) { described_class.new(attributes) }
 
   describe '#date' do
     context 'when rep_order_date is set' do
@@ -9,7 +9,7 @@ RSpec.describe Claim do
       let(:rep_order_date) { Date.yesterday }
 
       it 'returns the rep_order_date' do
-        expect(subject.date).to eq(rep_order_date)
+        expect(claim.date).to eq(rep_order_date)
       end
     end
 
@@ -18,7 +18,7 @@ RSpec.describe Claim do
       let(:cntp_date) { Date.yesterday }
 
       it 'returns the cntp_date' do
-        expect(subject.date).to eq(cntp_date)
+        expect(claim.date).to eq(cntp_date)
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe Claim do
       let(:attributes) { {} }
 
       it 'returns nil' do
-        expect(subject.date).to be_nil
+        expect(claim.date).to be_nil
       end
     end
   end
@@ -35,15 +35,15 @@ RSpec.describe Claim do
     let(:attributes) { { id: SecureRandom.uuid } }
 
     it 'returns the first 8 characters of the id' do
-      expect(subject.short_id).to eq(subject.id.first(8))
+      expect(claim.short_id).to eq(claim.id.first(8))
     end
   end
 
   describe '#main_defendant' do
-    subject(:saved_claim) { create(:claim, :main_defendant) }
+    let(:claim) { create(:claim, :main_defendant) }
 
     it 'returns the main defendant' do
-      expect(saved_claim.main_defendant).to eq saved_claim.defendants.find_by(main: true)
+      expect(claim.main_defendant).to eq claim.defendants.find_by(main: true)
     end
   end
 
@@ -70,6 +70,37 @@ RSpec.describe Claim do
       ]
 
       expect(sorted_positions).to eql [1, 2, 3, 4, 5, 6]
+    end
+  end
+
+  describe '#update_disbursement_position!' do
+    let(:claim) { create(:claim, disbursements:) }
+
+    let(:disbursements) { [disbursement_a, disbursement_b, disbursement_c, disbursement_d, disbursement_e, disbursement_f] }
+    let(:disbursement_a) { build(:disbursement, :valid_other, :dna_testing, age: 3) }
+    let(:disbursement_b) { build(:disbursement, :valid, :bike, age: 5) }
+    let(:disbursement_c) { build(:disbursement, :valid_other, :dna_testing, age: 4) }
+    let(:disbursement_d) { build(:disbursement, :valid_other, other_type: 'testerization', age: 4) }
+    let(:disbursement_e) { build(:disbursement, :valid_other, other_type: 'Witness', age: 4, created_at: 1.day.ago) }
+    let(:disbursement_f) { build(:disbursement, :valid_other, other_type: 'witness', age: 4, created_at: 2.days.ago) }
+
+    it 'updates all position database values from nil' do
+      expect { claim.update_disbursement_positions! }
+        .to change { claim.disbursements.where.not(position: nil).count }
+        .from(0)
+        .to(6)
+    end
+
+    it 'updates all position database values to their expected value' do
+      claim.update_disbursement_positions!
+
+      # read the database attribute value, not position method's call result
+      expect(disbursement_b.reload.read_attribute(:position)).to be 1
+      expect(disbursement_c.reload.read_attribute(:position)).to be 2
+      expect(disbursement_d.reload.read_attribute(:position)).to be 3
+      expect(disbursement_f.reload.read_attribute(:position)).to be 4
+      expect(disbursement_e.reload.read_attribute(:position)).to be 5
+      expect(disbursement_a.reload.read_attribute(:position)).to be 6
     end
   end
 end

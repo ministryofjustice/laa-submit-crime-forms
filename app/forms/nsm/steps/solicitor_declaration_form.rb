@@ -9,6 +9,7 @@ module Nsm
       def persist!
         Claim.transaction do
           application.status = :submitted
+          application.update_disbursement_positions!
           application.update!(attributes)
           SubmitToAppStore.perform_later(submission: application)
           true
