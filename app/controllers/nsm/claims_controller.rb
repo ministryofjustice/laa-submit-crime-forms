@@ -32,6 +32,16 @@ module Nsm
       render 'index'
     end
 
+    def confirm_delete
+      @model = Claim.for(current_provider).find(params[:id])
+    end
+
+    def destroy
+      @model = Claim.for(current_provider).find(params[:id])
+      @model.destroy
+      redirect_to draft_nsm_applications_path
+    end
+
     private
 
     ORDERS = {

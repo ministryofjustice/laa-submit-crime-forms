@@ -64,6 +64,7 @@ Rails.application.routes.draw do
       end
       member do
         get :delete
+        get :confirm_delete, path: 'confirm-delete'
       end
     end
 
