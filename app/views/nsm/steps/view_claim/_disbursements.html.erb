@@ -23,7 +23,7 @@
   <%=
     rows = disbursements.map do |disbursement|
 
-      link = link_to(disbursement.record.translated_disbursement_type, item_nsm_steps_view_claim_path(id: current_application.id, item_type: :disbursement, item_id: disbursement.record.id, page: pagy.page), data: { turbo: 'false' })
+      link = link_to(disbursement.record.translated_disbursement_type, item_nsm_steps_view_claim_path(id: current_application.id, item_type: :disbursement, item_id: disbursement.record.id, page: pagy.page))
 
       [
         { header: true, text: disbursement.position, numeric: true},

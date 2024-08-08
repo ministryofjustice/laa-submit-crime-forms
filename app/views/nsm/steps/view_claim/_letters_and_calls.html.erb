@@ -11,8 +11,8 @@
     { text: t('.uplift'), numeric: true },
     { text: t('.net_cost'), numeric: true }
   ]
-  letters_link = link_to(t('.letters'), letters_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
-  calls_link = link_to(t('.calls'), calls_nsm_steps_view_claim_path(id: current_application.id), data: { turbo: 'false' })
+  letters_link = link_to(t('.letters'), letters_nsm_steps_view_claim_path(id: current_application.id))
+  calls_link = link_to(t('.calls'), calls_nsm_steps_view_claim_path(id: current_application.id))
   rows = [
     ([
       { header: true, text: letters_link },

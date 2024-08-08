@@ -26,8 +26,7 @@
                      item_nsm_steps_view_claim_path(id: current_application.id,
                                                     item_type: :disbursement,
                                                     item_id: disbursement.record.id,
-                                                    page: pagy.page),
-                     data: { turbo: 'false' })
+                                                    page: pagy.page))
 
       [
         { header: true, text: disbursement.position, numeric: true},
