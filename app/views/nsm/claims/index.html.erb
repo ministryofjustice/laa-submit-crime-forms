@@ -65,6 +65,31 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
+    <nav class="moj-sub-navigation" aria-label="Sub navigation">
+      <ul class="moj-sub-navigation__list">
+        <li class="moj-sub-navigation__item">
+          <%= link_to t(".tabs.reviewed"),
+          nsm_applications_path(),
+          "aria-current": %i[submitted draft].include?(@scope) ? nil : "page",
+          class: "moj-sub-navigation__link" %>
+        </li>
+
+        <li class="moj-sub-navigation__item">
+          <%= link_to t(".tabs.submitted"),
+          submitted_nsm_applications_path(),
+          "aria-current": @scope == :submitted ? "page" : nil,
+          class: "moj-sub-navigation__link" %>
+        </li>
+
+        <li class="moj-sub-navigation__item">
+          <%= link_to t(".tabs.drafts"),
+          draft_nsm_applications_path(),
+          "aria-current": @scope == :draft ? "page" : nil,
+          class: "moj-sub-navigation__link" %>
+        </li>
+      </ul>
+    </nav>
+
     <table class="govuk-table">
       <caption class="govuk-table__caption govuk-visually-hidden">
         <%= t('.heading') %>
@@ -72,12 +97,19 @@
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <% ['ufn', 'defendant', 'account', 'last_updated', 'laa_reference', 'status'].each_with_index do |key, index| %>
-            <%= table_header(key,
-                            'nsm.claims.index.header',
-                            index,
-                            nsm_applications_path,
-                            @sort_by,
-                            @sort_direction) %>
+            <%= next if key == 'status' and %i[submitted draft].include?(@scope) %>
+            <%= table_header(
+              key,
+              "nsm.claims.index.header",
+              index,
+              polymorphic_path([@scope, :nsm_applications]),
+              @sort_by,
+              @sort_direction,
+            ) %>
+          <% end %>
+
+          <% if @scope == :draft %>
+            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('prior_authority.applications.tabs.header.action') %></th>
           <% end %>
         </tr>
       </thead>
@@ -94,11 +126,18 @@
             <td class="govuk-table__cell"><%= claim.office_code.presence || I18n.t('helpers.missing_data') %></td>
             <td class="govuk-table__cell"><%= claim.updated_at.to_fs(:stamp) %></td>
             <td class="govuk-table__cell"><%= claim.laa_reference %></td>
-            <td class="govuk-table__cell">
-              <strong class="govuk-tag <%= t(".status_colour.#{claim.status}") %>">
-                <%= t(".status.#{claim.status}") %>
-              </strong>
-            </td>
+            <% if @scope == :draft %>
+              <td class="govuk-table__cell">
+                <%= link_to t(".delete"), confirm_delete_nsm_application_path(claim) %>
+              </td>
+            <% end %>
+            <% if @scope == :reviewed %>
+              <td class="govuk-table__cell">
+                <strong class="govuk-tag <%= t(".status_colour.#{claim.status}") %>">
+                  <%= t(".status.#{claim.status}") %>
+                </strong>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
