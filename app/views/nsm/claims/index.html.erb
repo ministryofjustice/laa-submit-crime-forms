@@ -96,9 +96,8 @@
       </caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <% ['ufn', 'defendant', 'account', 'last_updated', 'laa_reference', 'status', 'actions'].each_with_index do |key, index| %>
+          <% ['ufn', 'defendant', 'account', 'last_updated', 'laa_reference', 'status'].each_with_index do |key, index| %>
             <%= next if key == 'status' and %i[submitted draft].include?(@scope) %>
-            <%= next if key == 'actions' and %i[submitted reviewed].include?(@scope) %>
             <%= table_header(
               key,
               "nsm.claims.index.header",
@@ -107,6 +106,10 @@
               @sort_by,
               @sort_direction,
             ) %>
+          <% end %>
+
+          <% if @scope == :draft %>
+            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('prior_authority.applications.tabs.header.action') %></th>
           <% end %>
         </tr>
       </thead>
@@ -125,7 +128,7 @@
             <td class="govuk-table__cell"><%= claim.laa_reference %></td>
             <% if @scope == :draft %>
               <td class="govuk-table__cell">
-                <%= link_to t(".delete"), "#" %>
+                <%= link_to t(".delete"), confirm_delete_nsm_application_path(claim) %>
               </td>
             <% end %>
             <% if @scope == :reviewed %>
