@@ -22,7 +22,7 @@ class Claim < ApplicationRecord
   scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(office_code: nil, submitter: provider)) }
 
   enum status: { draft: 'draft', submitted: 'submitted', granted: 'granted', part_grant: 'part_grant',
-                 review: 'review', further_info: 'further_info', provider_requested: 'provider_requested',
+                 review: 'review', sent_back: 'sent_back', provider_requested: 'provider_requested',
                  rejected: 'rejected' }
 
   def date

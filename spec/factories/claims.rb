@@ -248,7 +248,7 @@ FactoryBot.define do
     end
 
     trait :further_info_status do
-      status { :further_info }
+      status { :sent_back }
     end
 
     trait :provider_requested_status do

@@ -43,7 +43,7 @@ module Nsm
           items += [translate(:awaiting_review), tag.br, claimed_amount]
         else
           items += [tag.br, claimed_amount]
-          items += [allowed_amount(status)] unless status.further_info? || status.provider_requested? || status.review?
+          items += [allowed_amount(status)] unless status.sent_back? || status.provider_requested? || status.review?
         end
         join_strings(*items)
       end
@@ -104,7 +104,7 @@ module Nsm
       end
 
       def update_claim
-        return [] unless status.further_info? || status.provider_requested? || status.review?
+        return [] unless status.sent_back? || status.provider_requested? || status.review?
 
         key = status.provider_requested? ? 'update_provider_requested' : 'update_further_info'
         email = tag.a(EMAIL, href: "mailto:#{EMAIL}")

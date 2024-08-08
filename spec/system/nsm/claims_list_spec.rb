@@ -24,7 +24,7 @@ RSpec.describe 'NSM claims lists' do
            status: 'granted', updated_at: 3.days.ago)
 
     create(:claim, :with_named_defendant, ufn: '120423/004', laa_reference: 'LAA-CCCC2',
-           status: 'further_info', updated_at: 3.days.ago)
+           status: 'sent_back', updated_at: 3.days.ago)
 
     create(:claim, :with_named_defendant, ufn: '120423/005', laa_reference: 'LAA-CCCC3',
            status: 'part_grant', updated_at: 3.days.ago)
