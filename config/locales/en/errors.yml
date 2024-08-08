@@ -116,7 +116,7 @@ en:
         prior_authority/steps/office_code_form:
           attributes:
             office_code:
-              inclusion: Select a firm account number
+              inclusion: Select a firm office account number
         prior_authority/steps/hearing_detail_form:
           attributes:
             next_hearing:
@@ -331,7 +331,7 @@ en:
         nsm/steps/office_code_form:
           attributes:
             office_code:
-              inclusion: Select your firm account number
+              inclusion: Select your firm office account number
         nsm/steps/defendant_details_form:
           attributes:
             first_name:
