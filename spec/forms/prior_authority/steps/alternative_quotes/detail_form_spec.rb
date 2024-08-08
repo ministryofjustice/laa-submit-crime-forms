@@ -36,7 +36,7 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
   let(:service_type) { 'photocopying' }
 
   let(:file_upload) { instance_double(ActionDispatch::Http::UploadedFile, tempfile:, content_type:) }
-  let(:tempfile) { instance_double(File, size: 150) }
+  let(:tempfile) { Rails.root.join('spec/fixtures/files/test.png').open }
   let(:content_type) { 'application/pdf' }
 
   describe '#save' do
@@ -47,7 +47,7 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
     end
 
     context 'when file for upload is invalid' do
-      let(:content_type) { 'application/dodgy-executable' }
+      let(:tempfile) { Rails.root.join('spec/fixtures/files/actually_a_zip.pdf').open }
 
       it 'returns false' do
         expect(subject.save).to be false
