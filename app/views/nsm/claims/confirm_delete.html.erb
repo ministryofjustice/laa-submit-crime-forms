@@ -1,0 +1,29 @@
+<% title t(".page_title") %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
+    <ul class="govuk-list">
+      <li>
+        <strong><%= t(".ufn_reference") %></strong>
+        <%= @model.ufn %>
+      </li>
+      <li>
+        <strong><%= t(".laa_reference") %></strong>
+        <%= @model.laa_reference %>
+      </li>
+    </ul>
+    <div class="govuk-button-group">
+      <%= govuk_button_to(
+        t(".yes_delete"),
+        nsm_application_path(@model),
+        warning: true,
+        method: :delete,
+      ) %>
+      <%= govuk_button_to(
+        t(".no_delete"),
+        draft_nsm_applications_path(@model),
+        method: :get,
+      ) %>
+    </div>
+  </div>
+</div>
