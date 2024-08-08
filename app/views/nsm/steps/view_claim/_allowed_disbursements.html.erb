@@ -1,0 +1,61 @@
+<% title t('.page_title') %>
+
+<h3 class="govuk-heading-m">
+  <%= t('.disbursements') %>
+</h3>
+
+<%
+  pagy, disbursements = pagy_array(@disbursements.filter{ _1.adjustment_comment.present? }, items: 100)
+
+  head = {
+    'line_item' => { numeric: false },
+    'item' => { numeric: false },
+    'adjustment_comment' => { sortable: false, numeric: false },
+    'allowed_net_cost' => { numeric: [] },
+    'allowed_vat' => { numeric: [] },
+    'allowed_gross_cost' => { numeric: [] },
+  }
+%>
+
+<% if disbursements.none? %>
+  <p><%= t('.no_data') %></p>
+<% else %>
+  <%=
+    rows = disbursements.map do |disbursement|
+      link = link_to(disbursement.record.translated_disbursement_type,
+                     item_nsm_steps_view_claim_path(id: current_application.id,
+                                                    item_type: :disbursement,
+                                                    item_id: disbursement.record.id,
+                                                    page: pagy.page))
+
+      [
+        { header: true, text: disbursement.position, numeric: true},
+        { header: true, text: link, numeric: true},
+        { text: simple_format(disbursement.adjustment_comment), numeric: false},
+        { text: NumberTo.pounds(disbursement.allowed_total_cost_without_vat), numeric: true },
+        { text: NumberTo.pounds(disbursement.allowed_vat), numeric: true },
+        { text: NumberTo.pounds(disbursement.allowed_total_cost), numeric: true },
+      ]
+    end
+
+    header_row = head.map.with_index do |(column_key, properties), index|
+      unless properties[:sortable] == false
+        aria_sort, next_direction = sort_variable(column_key, @sort_by, @sort_direction)
+        {
+          text: reorder_form(adjustments_disbursements_nsm_steps_view_claim_path(current_application, anchor: "claim_nav"), column_key, next_direction, "nsm.steps.view_claim.allowed_disbursements", index),
+          numeric: properties[:numeric],
+          html_attributes: { 'aria-sort': aria_sort}
+        }
+      else
+        {
+          text: t("nsm.steps.view_claim.allowed_disbursements.#{column_key}"),
+          numeric: properties[:numeric],
+        }
+      end
+    end
+
+    govuk_table_with_cell(header_row, rows, caption: { text: t('.accessibility.disbursements_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} })
+
+  %>
+  <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
+<% end %>

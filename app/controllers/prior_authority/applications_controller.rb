@@ -1,12 +1,12 @@
 module PriorAuthority
   class ApplicationsController < ApplicationController
+    before_action :set_scope, only: %i[reviewed submitted drafts]
     before_action :set_default_table_sort_options
-    before_action :load_drafts, only: %i[index draft]
-    before_action :load_reviewed, only: %i[index reviewed]
-    before_action :load_submitted, only: %i[index submitted]
     layout 'prior_authority'
 
     def index
+      @pagy, @model = order_and_paginate(&:reviewed)
+      @scope = :reviewed
       @empty = PriorAuthorityApplication.for(current_provider).none?
     end
 
@@ -30,16 +30,19 @@ module PriorAuthority
       redirect_to prior_authority_applications_path(anchor: 'drafts')
     end
 
-    def draft
-      render layout: nil
+    def drafts
+      @pagy, @model = order_and_paginate(&:draft)
+      render 'index'
     end
 
     def reviewed
-      render layout: nil
+      @pagy, @model = order_and_paginate(&:reviewed)
+      render 'index'
     end
 
     def submitted
-      render layout: nil
+      @pagy, @model = order_and_paginate(&:submitted_or_resubmitted)
+      render 'index'
     end
 
     def offboard
@@ -55,20 +58,6 @@ module PriorAuthority
     end
 
     private
-
-    def load_drafts
-      @draft_pagy, @draft_model = order_and_paginate(PriorAuthorityApplication.for(current_provider).draft)
-    end
-
-    def load_reviewed
-      @reviewed_pagy, @reviewed_model = order_and_paginate(PriorAuthorityApplication.for(current_provider).reviewed)
-    end
-
-    def load_submitted
-      @submitted_pagy, @submitted_model = order_and_paginate(
-        PriorAuthorityApplication.for(current_provider).submitted_or_resubmitted
-      )
-    end
 
     def initialize_application(attributes = {}, &block)
       attributes[:office_code] = current_provider.office_codes.first unless current_provider.multiple_offices?
@@ -93,10 +82,15 @@ module PriorAuthority
       'ascending' => 'ASC',
     }.freeze
 
-    def order_and_paginate(query)
+    def order_and_paginate
+      query = yield PriorAuthorityApplication.for(current_provider)
       order_template = ORDERS[@sort_by]
       direction = DIRECTIONS[@sort_direction]
       pagy(query.includes(:defendant).order(order_template.gsub('?', direction)))
+    end
+
+    def set_scope
+      @scope = params[:action].to_sym
     end
 
     def set_default_table_sort_options
