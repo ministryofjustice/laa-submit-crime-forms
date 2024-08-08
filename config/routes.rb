@@ -117,9 +117,18 @@ Rails.application.routes.draw do
         show_step :check_answers
         show_step :view_claim do
           member do
-            get :work_items
-            get :letters_and_calls
-            get :disbursements
+            scope "claimed_costs" do
+              get "work_items", to: "view_claim#claimed_work_items", as: :claimed_costs_work_items
+              get "letters_and_calls", to: "view_claim#claimed_letters_and_calls", as: :claimed_costs_letters_and_calls
+              get "disbursements", to: "view_claim#claimed_disbursements", as: :claimed_costs_disbursements
+            end
+
+            scope "adjusted" do
+              get "work_items", to: "view_claim#adjusted_work_items", as: :adjustments_work_items
+              get "letters_and_calls", to: "view_claim#adjusted_letters_and_calls", as: :adjustments_letters_and_calls
+              get "disbursements", to: "view_claim#adjusted_disbursements", as: :adjustments_disbursements
+            end
+
             get ':item_type/:item_id', as: :item, to: 'view_claim#item',
                               constraints: { item_type: /(work_item|disbursement)/ }
             get :letters, to: 'view_claim#item', defaults: { item_type: 'letters' }

@@ -76,7 +76,7 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   it 'shows a cost summary table on the claimed costs page' do
-    visit nsm_steps_view_claim_path(claim.id, section: :claimed_costs)
+    visit claimed_costs_work_items_nsm_steps_view_claim_path(claim.id)
 
     expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
     expect(page).to have_selector('.govuk-table__caption', text: 'Cost summary')
@@ -97,11 +97,19 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   it 'show the work items and summary' do
-    visit work_items_nsm_steps_view_claim_path(claim.id)
+    visit claimed_costs_work_items_nsm_steps_view_claim_path(claim.id)
 
     # items
     expect(all('table caption, table td, table th').map(&:text)).to eq(
       [
+        'Cost summary', 'Item', 'Net cost', 'VAT', 'Total',
+        'Profit costs', '£305.84', '£61.17', '£367.01',
+        'Disbursements', '£327.50', '£31.50', '£359.00', 'Waiting', '£10.58', '£2.12', '£12.70',
+        'Travel', '£10.58', '£2.12', '£12.70',
+        'Total',
+        'Sum of net cost claimed: £654.50',
+        'Sum of VAT on claimed: £96.90',
+        'Sum of net cost and VAT on claimed: £751.40',
         'Claimed work items',
         'Item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
         '1', 'Travel', 3.days.ago.to_fs(:short_stamp), 'test', '0 hours:23 minutes', '10%', '£10.58',
@@ -134,7 +142,7 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'shows the sum of all work items in the summary' do
-      visit work_items_nsm_steps_view_claim_path(claim.id)
+      visit claimed_costs_work_items_nsm_steps_view_claim_path(claim.id)
 
       find('details').click
       expect(all('details table td, details table th').map(&:text)).to eq(
@@ -148,10 +156,19 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   it 'show the letters and calls page' do
-    visit letters_and_calls_nsm_steps_view_claim_path(claim.id)
+    visit claimed_costs_letters_and_calls_nsm_steps_view_claim_path(claim.id)
 
     expect(all('table td, table th').map(&:text)).to eq(
       [
+        'Item', 'Net cost', 'VAT', 'Total',
+        'Profit costs', '£305.84', '£61.17', '£367.01',
+        'Disbursements', '£327.50', '£31.50', '£359.00',
+        'Waiting', '£10.58', '£2.12', '£12.70',
+        'Travel', '£10.58', '£2.12', '£12.70',
+        'Total',
+        'Sum of net cost claimed: £654.50',
+        'Sum of VAT on claimed: £96.90',
+        'Sum of net cost and VAT on claimed: £751.40',
         'Cost type', 'Number claimed', 'Uplift claimed', 'Net cost claimed',
         'Letters', '2', '0%', '£8.18',
         'Calls', '3', '0%', '£12.27'
@@ -160,10 +177,19 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   it 'show the disbursements page' do
-    visit disbursements_nsm_steps_view_claim_path(claim.id)
+    visit claimed_costs_disbursements_nsm_steps_view_claim_path(claim.id)
 
     expect(all('table td, table th').map(&:text)).to eq(
       [
+        'Item', 'Net cost', 'VAT', 'Total',
+        'Profit costs', '£305.84', '£61.17', '£367.01',
+        'Disbursements', '£327.50', '£31.50', '£359.00',
+        'Waiting', '£10.58', '£2.12', '£12.70',
+        'Travel', '£10.58', '£2.12', '£12.70',
+        'Total',
+        'Sum of net cost claimed: £654.50',
+        'Sum of VAT on claimed: £96.90',
+        'Sum of net cost and VAT on claimed: £751.40',
         'Item', 'Cost type', 'Date', 'Net cost claimed', 'VAT on claimed', 'Total claimed',
         '1', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£18.00', '£108.00',
         '2', 'Custom', 3.days.ago.to_fs(:short_stamp), '£40.00', '£0.00', '£40.00',
@@ -239,12 +265,6 @@ RSpec.describe 'View claim page', type: :system do
     )
   end
 
-  context 'when visiting with an invalid prefix' do
-    it 'raises an error' do
-      expect { visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'fake') }.to raise_error('Invalid prefix: fake')
-    end
-  end
-
   context 'when adjustments exist' do
     let(:claim) { create(:claim, :firm_details, :adjusted_letters_calls, work_items:, disbursements:, assessment_comment:) }
 
@@ -271,7 +291,7 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'shows an adjusted cost summary table with VAT' do
-      visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
       expect(page).to have_selector('.govuk-table__caption', text: 'Cost summary')
@@ -300,7 +320,7 @@ RSpec.describe 'View claim page', type: :system do
       end
 
       it 'shows an adjusted cost summary table without VAT' do
-        visit nsm_steps_view_claim_path(claim.id, section: :adjustments)
+        visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
         expect(page).to have_no_selector('.govuk-summary-card', text: 'Cost summary')
         expect(page).to have_selector('.govuk-table__caption', text: 'Cost summary')
@@ -325,7 +345,7 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'show the adjusted work item summary' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       # open summary
       find('details').click
@@ -346,10 +366,23 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'show the adjusted work items' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary', 'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed',
+          'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted work items',
           'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
@@ -363,18 +396,31 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'shows expected pagination' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       expect(page).to have_content("Showing #{claim.work_items.size} of #{claim.work_items.size} work items")
     end
 
     it 'allows me to sort adjusted work items by Cost type' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Cost type'
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted work items',
           'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
@@ -388,12 +434,25 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'allows me to sort adjusted work items by Time allowed' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Time allowed'
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted work items',
           'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
@@ -407,12 +466,25 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'allows me to sort adjusted work items by Uplift allowed' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Uplift allowed'
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted work items',
           'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
@@ -426,12 +498,25 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'allows me to sort adjusted work items by Net cost allowed' do
-      visit work_items_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Net cost allowed'
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted work items',
           'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
           '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
@@ -445,10 +530,23 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'shows the letters and calls page' do
-      visit letters_and_calls_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_letters_and_calls_nsm_steps_view_claim_path(claim.id)
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted letter and calls',
           'Cost type', 'Reasons for adjustment', 'Number allowed', 'Uplift allowed', 'Net cost allowed',
           'Letters', 'Letters adjusted', '1', '0%', '£4.09',
@@ -458,25 +556,51 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'show the disbursements page' do
-      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_disbursements_nsm_steps_view_claim_path(claim.id)
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
-          '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00'
+          '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00', '2', 'DNA Testing', 'Disbursement Test',
+          '£100.00', '£0.00', '£100.00'
         ]
       )
     end
 
     it 'allows me to sort adjusted disbursements by Cost type' do
-      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_disbursements_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Cost type'
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
@@ -488,6 +612,19 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
@@ -497,12 +634,25 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'allows me to sort adjusted disbursements by Net cost allowed' do
-      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_disbursements_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Net cost allowed'
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
@@ -514,6 +664,19 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
@@ -523,12 +686,25 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'allows me to sort adjusted disbursements by VAT on allowed' do
-      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_disbursements_nsm_steps_view_claim_path(claim.id)
 
       click_on 'VAT on allowed'
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
@@ -540,6 +716,19 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
@@ -549,12 +738,25 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     it 'allows me to sort adjusted disbursements by Total cost allowed' do
-      visit disbursements_nsm_steps_view_claim_path(claim.id, prefix: 'allowed_')
+      visit adjustments_disbursements_nsm_steps_view_claim_path(claim.id)
 
       click_on 'Total cost allowed'
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
@@ -566,6 +768,19 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td, table th').map(&:text)).to eq(
         [
+          'Cost summary',
+          'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
+          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Total',
+          'Sum of net cost claimed: £741.18',
+          'Sum of VAT on claimed: £92.24',
+          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost allowed: £543.55',
+          'Sum of VAT on allowed: £62.71',
+          'Sum of net cost and VAT on allowed: £606.26',
           'Adjusted disbursements',
           'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
           '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
