@@ -4,7 +4,10 @@ RSpec.describe Nsm::WorkItemsRow do
   subject { described_class.new(work_item, view) }
 
   let(:claim) { build(:claim, id: SecureRandom.uuid) }
-  let(:work_item) { build(:work_item, :medium_risk_values, position: 1, id: SecureRandom.uuid) }
+  let(:work_item) do
+    build(:work_item, :medium_risk_values, uplift: '100', position: 1, id: SecureRandom.uuid,
+   completed_on: Date.new(2024, 8, 2))
+  end
   let(:view) { build_view_context(claim, 'nsm.steps.work_items.edit') }
 
   context 'when uplift is not allowed' do
@@ -21,13 +24,13 @@ RSpec.describe Nsm::WorkItemsRow do
           { numeric: true,
   text: '1<span class="govuk-visually-hidden"> hour</span>:40<span class="govuk-visually-hidden"> minutes</span>' },
           { numeric: true,
-            text: '<uk class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item">' \
+            text: '<ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item">' \
                   '<a data-turbo="false" aria-labelledby="duplicate1 itemTitle item1 workType1" id="duplicate1" ' \
                   "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item/#{work_item.id}/" \
                   'duplicate">Duplicate</a></li><li class="govuk-summary-list__actions-list-item">' \
                   '<a data-turbo="false" aria-labelledby="delete1 itemTitle item1 workType1" id="workType1" ' \
                   "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item_delete/#{work_item.id}\">" \
-                  'Delete</a></li></uk>' }
+                  'Delete</a></li></ul>' }
         ]
       )
     end
@@ -35,7 +38,6 @@ RSpec.describe Nsm::WorkItemsRow do
 
   context 'when uplift is allowed' do
     let(:claim) { build(:claim, :with_enhanced_rates, id: SecureRandom.uuid) }
-    let(:work_item) { build(:work_item, :medium_risk_values, uplift: '100', position: 1, id: SecureRandom.uuid) }
 
     it 'renders a row' do
       expect(subject.cells).to eq(
@@ -52,13 +54,13 @@ RSpec.describe Nsm::WorkItemsRow do
                   '40<span class="govuk-visually-hidden"> minutes</span>' },
           { numeric: true, text: '100%' },
           { numeric: true,
-            text: '<uk class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item">' \
+            text: '<ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item">' \
                   '<a data-turbo="false" aria-labelledby="duplicate1 itemTitle item1 workType1" id="duplicate1" ' \
                   "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item/#{work_item.id}/" \
                   'duplicate">Duplicate</a></li><li class="govuk-summary-list__actions-list-item">' \
                   '<a data-turbo="false" aria-labelledby="delete1 itemTitle item1 workType1" id="workType1" ' \
                   "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item_delete/" \
-                  "#{work_item.id}\">Delete</a></li></uk>" }
+                  "#{work_item.id}\">Delete</a></li></ul>" }
         ]
       )
     end

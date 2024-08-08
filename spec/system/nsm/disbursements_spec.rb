@@ -190,10 +190,10 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
           '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
-          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
         ]
       )
 
@@ -202,10 +202,10 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
-          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
           '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
-          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
         ]
       )
     end
@@ -216,10 +216,10 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
           '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
-          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
         ]
       )
 
@@ -228,10 +228,10 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
-          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
           '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
-          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete'
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
         ]
       )
     end
@@ -242,10 +242,10 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
-          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
           '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
-          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete'
         ]
       )
 
@@ -254,10 +254,10 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
-          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
           '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete'
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
         ]
       )
     end
@@ -268,10 +268,10 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
-          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
           '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
-          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
+          '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete'
         ]
       )
 
@@ -280,10 +280,10 @@ RSpec.describe 'User can manage disbursements', type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
-          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete',
           '4', 'DNA Testing', 3.days.ago.to_fs(:short_stamp), '£129.00', '£129.00', 'Duplicate Delete',
-          '3', 'DNA Testing', 4.days.ago.to_fs(:short_stamp), '£150.00', '£150.00', 'Duplicate Delete'
+          '2', 'Car mileage', 5.days.ago.to_fs(:short_stamp), '£90.00', '£108.00', 'Duplicate Delete',
+          '1', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete'
         ]
       )
     end
