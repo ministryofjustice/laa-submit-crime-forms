@@ -127,6 +127,16 @@ RSpec.describe Nsm::Steps::WorkItemForm do
         end
       end
     end
+
+    describe 'invalid work item type' do
+      let(:work_type) { WorkTypes::TRAVEL }
+      let(:prog_stage_reached) { false }
+
+      it 'has an error' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:work_type, :inclusion)).to be(true)
+      end
+    end
   end
 
   describe '#allow_uplift?' do

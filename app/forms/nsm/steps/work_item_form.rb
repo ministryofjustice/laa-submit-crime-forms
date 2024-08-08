@@ -10,10 +10,8 @@ module Nsm
       attribute :fee_earner, :string
       attribute :uplift, :integer
 
-      # TODO: limit this to displayed WorkTypes - this could lead to issues if conditions
-      # are changed as the validation would fail without clearly showing on the summary
-      # page
       validates :work_type, presence: true, inclusion: { in: WorkTypes.values }
+      validate :work_type_allowed
       validates :time_spent, presence: true, time_period: true
       validates :completed_on, presence: true,
               multiparam_date: { allow_past: true, allow_future: false }
@@ -71,6 +69,13 @@ module Nsm
 
       def translate(key)
         I18n.t("nsm.steps.work_item.edit.#{key}")
+      end
+
+      def work_type_allowed
+        return unless work_type
+        return if WorkTypes::VALUES.detect { _1 == work_type }.display?(application)
+
+        errors.add(:work_type, :inclusion)
       end
     end
   end
