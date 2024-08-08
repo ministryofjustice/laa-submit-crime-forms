@@ -1,5 +1,6 @@
 class Claim < ApplicationRecord
   include LettersAndCallsCosts
+  include StageReachedCalculatable
 
   belongs_to :submitter, class_name: 'Provider'
   belongs_to :firm_office, optional: true

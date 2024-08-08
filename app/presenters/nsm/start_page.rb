@@ -5,7 +5,7 @@ module Nsm
     NEW_RECORD = '00000000-0000-0000-0000-000000000000'.freeze
 
     class PreTaskList < TaskList::Collection
-      SECTIONS = [['nsm/what', [->(app) { "nsm/claim_type.#{app.claim_type}" }]]].freeze
+      SECTIONS = [['nsm/what', ['nsm/claim_type']]].freeze
     end
 
     class TaskList < TaskList::Collection

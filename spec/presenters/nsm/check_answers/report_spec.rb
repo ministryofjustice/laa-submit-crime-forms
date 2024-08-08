@@ -20,7 +20,6 @@ RSpec.describe Nsm::CheckAnswers::Report do
         let(:section_group) { subject.section_group('claim_type', subject.claim_type_section) }
 
         it 'returns a section object' do
-          expect(section_group[:heading]).to eq 'What you are claiming for'
           expect(section_group[:sections].count).to eq 1
         end
       end
@@ -93,7 +92,6 @@ RSpec.describe Nsm::CheckAnswers::Report do
         let(:section_group) { subject.section_group('claim_type', subject.claim_type_section) }
 
         it 'returns a section object' do
-          expect(section_group[:heading]).to eq 'What you are claiming for'
           expect(section_group[:sections].count).to eq 1
         end
       end

@@ -25,24 +25,52 @@
 
   <div class="govuk-grid-column-one-third">
     <aside class="aside-task-list" role="complementary" aria-labelledby="aside-title">
-      <h3 id="aside-title" class="govuk-heading-s govuk-!-margin-bottom-4">
-        <%= t('.aside.title') %>
-      </h3>
-      <h3 class="govuk-heading-s govuk-!-margin-0">
-        <%= t('.aside.ufn') %>
-      </h3>
-      <p class="govuk-body govuk-!-margin-0">
-        <%= @application.ufn %>
-      </p>
-      <h3 class="govuk-heading-s govuk-!-margin-0">
-        <%= t('.aside.reference') %>
-      </h3>
-      <p class="govuk-body govuk-!-margin-0">
-        <%= @application.laa_reference %>
-      </p>
-      <% if @application.respond_to?(:prison_law) %>
+      <% if @application.is_a?(Claim) %>
+        <h3 id="aside-title" class="govuk-heading-s govuk-!-margin-bottom-4">
+          <%= t('.aside.nsm.title') %>
+        </h3>
         <h3 class="govuk-heading-s govuk-!-margin-0">
-          <%= t('.aside.prison_law') %>
+          <%= t('.aside.ufn') %>
+        </h3>
+        <p class="govuk-body govuk-!-margin-0">
+          <%= @application.ufn %>
+        </p>
+        <h3 class="govuk-heading-s govuk-!-margin-0">
+          <%= t('.aside.reference') %>
+        </h3>
+        <p class="govuk-body govuk-!-margin-0">
+          <%= @application.laa_reference %>
+        </p>
+        <h3 class="govuk-heading-s govuk-!-margin-0">
+          <%= t('.aside.nsm.claim_type') %>
+        </h3>
+        <p class="govuk-body govuk-!-margin-0">
+          <%= t(".aside.nsm.#{@application.claim_type}") %>
+        </p>
+        <h3 class="govuk-heading-s govuk-!-margin-0">
+          <%= t('.aside.nsm.stage_reached') %>
+        </h3>
+        <p class="govuk-body govuk-!-margin-0">
+          <%= t(".aside.nsm.#{@application.stage_reached}") %>
+        </p>
+      <% else %>
+        <h3 id="aside-title" class="govuk-heading-s govuk-!-margin-bottom-4">
+          <%= t('.aside.paa.title') %>
+        </h3>
+        <h3 class="govuk-heading-s govuk-!-margin-0">
+          <%= t('.aside.ufn') %>
+        </h3>
+        <p class="govuk-body govuk-!-margin-0">
+          <%= @application.ufn %>
+        </p>
+        <h3 class="govuk-heading-s govuk-!-margin-0">
+          <%= t('.aside.reference') %>
+        </h3>
+        <p class="govuk-body govuk-!-margin-0">
+          <%= @application.laa_reference %>
+        </p>
+        <h3 class="govuk-heading-s govuk-!-margin-0">
+          <%= t('.aside.paa.prison_law') %>
         </h3>
         <p class="govuk-body govuk-!-margin-0">
           <%= t("generic.#{@application.prison_law}") %>

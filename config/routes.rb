@@ -72,6 +72,9 @@ Rails.application.routes.draw do
 
       namespace :steps do
         edit_step :claim_type
+        edit_step :office_area
+        edit_step :court_area
+        edit_step :case_transfer
         show_step :start_page
         edit_step :firm_details
         edit_step :office_code

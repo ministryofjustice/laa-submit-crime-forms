@@ -9,7 +9,6 @@ RSpec.describe Decisions::BackDecisionTree do
   let(:work_items) { [] }
   let(:disbursements) { [] }
 
-  it_behaves_like 'a generic decision', from: 'nsm/steps/start_page', goto: { action: :edit, controller: 'nsm/steps/claim_type' }
   it_behaves_like 'a generic decision', from: 'nsm/steps/firm_details', goto: { action: :show, controller: 'nsm/steps/start_page' }
 
   context 'when no defendants' do

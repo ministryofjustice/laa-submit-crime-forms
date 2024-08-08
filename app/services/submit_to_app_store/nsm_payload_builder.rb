@@ -35,6 +35,7 @@ class SubmitToAppStore
         'submitter' => claim.submitter.attributes.slice('email', 'description'),
         'supporting_evidences' => supporting_evidence,
         'vat_rate' => pricing[:vat].to_f,
+        'stage_reached' => claim.stage_reached,
       )
     end
 

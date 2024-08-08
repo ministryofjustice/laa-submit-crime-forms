@@ -3,6 +3,11 @@ module Decisions
     # used to add custom methods to filter/query the data
     WRAPPER_CLASS = CustomWrapper
 
+    NSM_CLAIM_TYPE = 'nsm/steps/claim_type'.freeze
+    NSM_OFFICE_AREA = 'nsm/steps/office_area'.freeze
+    NSM_COURT_AREA = 'nsm/steps/court_area'.freeze
+    NSM_CASE_TRANSFER = 'nsm/steps/case_transfer'.freeze
+    NSM_START_PAGE = 'nsm/steps/start_page'.freeze
     NSM_FIRM_DETAILS = 'nsm/steps/firm_details'.freeze
     NSM_WORK_ITEMS = 'nsm/steps/work_items'.freeze
     NSM_WORK_ITEM = 'nsm/steps/work_item'.freeze
@@ -14,7 +19,24 @@ module Decisions
     NSM_DISBURSEMENT_ADD = 'nsm/steps/disbursement_add'.freeze
     NSM_EQUALITY = 'nsm/steps/equality'.freeze
 
-    from(:claim_type).goto(show: 'nsm/steps/start_page')
+    from(:claim_type)
+      .when(-> { application.claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s })
+      .goto(edit: NSM_OFFICE_AREA)
+      .goto(show: NSM_START_PAGE)
+
+    from(:office_area)
+      .when(-> { application.office_in_undesignated_area })
+      .goto(edit: NSM_COURT_AREA)
+      .goto(show: NSM_START_PAGE)
+
+    from(:court_area)
+      .when(-> { application.court_in_undesignated_area })
+      .goto(show: NSM_START_PAGE)
+      .goto(edit: NSM_CASE_TRANSFER)
+
+    from(:case_transfer)
+      .goto(show: NSM_START_PAGE)
+
     # start_page to firm_details is a hard coded link as show page
     from(:firm_details)
       .when(-> { application.submitter.multiple_offices? })
