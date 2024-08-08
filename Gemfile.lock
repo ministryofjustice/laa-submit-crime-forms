@@ -565,6 +565,7 @@ DEPENDENCIES
   lograge
   logstash-event
   logstasher (~> 2.1)
+  marcel
   oauth2 (~> 2.0)
   overcommit
   pagy (~> 8.6.3)

@@ -79,9 +79,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
     context 'with a file upload' do
       let(:file_upload) { instance_double(ActionDispatch::Http::UploadedFile, tempfile:, content_type:) }
-      let(:tempfile) { instance_double(File, size:) }
-      let(:size) { 150 }
-      let(:content_type) { 'application/msword' }
+      let(:tempfile) { Rails.root.join('spec/fixtures/files/test.png').open }
+      let(:content_type) { 'image/png' }
       let(:uploader) { instance_double(FileUpload::FileUploader, scan_file: nil) }
 
       before do
@@ -93,7 +92,12 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       end
 
       context 'with an overly large file' do
+        let(:tempfile) { instance_double(File, size:) }
         let(:size) { ENV['MAX_UPLOAD_SIZE_BYTES'].to_i + 1 }
+
+        before do
+          allow(Marcel::MimeType).to receive(:for).and_return(content_type)
+        end
 
         it 'adds an appropriate error message' do
           expect(form).not_to be_valid
@@ -103,8 +107,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         end
       end
 
-      context 'with an unsupported file type' do
-        let(:content_type) { 'application/dodgy_executable' }
+      context 'with unsupported file masquering as supported one' do
+        let(:tempfile) { Rails.root.join('spec/fixtures/files/actually_a_zip.pdf').open }
 
         it 'adds an appropriate error message' do
           expect(form).not_to be_valid
@@ -217,10 +221,10 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       let(:file_upload) do
         instance_double(ActionDispatch::Http::UploadedFile,
                         tempfile: tempfile,
-                        content_type: 'application/msword',
+                        content_type: 'image/png',
                         original_filename: 'foo.png')
       end
-      let(:tempfile) { instance_double(File, size: 150, path: '/tmp/foo.com') }
+      let(:tempfile) { Rails.root.join('spec/fixtures/files/test.png').open }
       let(:uploader) { instance_double(FileUpload::FileUploader, scan_file: nil) }
 
       before do
@@ -237,8 +241,8 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
         save
         expect(record.document).to have_attributes(
           file_name: 'foo.png',
-          file_type: 'application/msword',
-          file_size: 150,
+          file_type: 'image/png',
+          file_size: 2875,
           file_path: '/cloud/url'
         )
       end

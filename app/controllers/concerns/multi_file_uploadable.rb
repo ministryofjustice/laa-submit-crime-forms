@@ -38,7 +38,9 @@ module MultiFileUploadable
   end
 
   def supported_filetype(params)
-    SupportedFileTypes::SUPPORTED_FILE_TYPES.include? params.content_type
+    SupportedFileTypes::SUPPORTED_FILE_TYPES.include?(
+      Marcel::MimeType.for(params.tempfile)
+    )
   end
 
   def return_success(dict)
