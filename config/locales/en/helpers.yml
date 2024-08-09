@@ -26,7 +26,6 @@ en:
         cracked_trial_date: Date guilty plea indicated to solicitor
       nsm_steps_hearing_details_form:
         first_hearing_date: Date of first hearing
-        in_area: Is this court in a designated area of your firm?
         youth_court: Is this court a youth court?
       nsm_steps_reason_for_claim_form:
         representation_order_withdrawn_date: Withdrawn date
@@ -87,8 +86,6 @@ en:
       nsm_steps_hearing_details_form:
         first_hearing_date: For example, 27 3 2023
         court: Enter the name of a court, or select one from the suggestions that appear when you start to enter the name.
-        in_area_options:
-          'yes': You will not be able to claim for travel expenses and waiting time
         hearing_outcome: Select a hearing outcome from the suggestions that appear when you start to enter it, for example, Change of solicitor (CP02)
         matter_type: Select a matter type from the suggestions that appear when you start to enter it, for example, offences against the person
       nsm_steps_reason_for_claim_form:
@@ -205,9 +202,6 @@ en:
       nsm_steps_hearing_details_form:
         number_of_hearing: How many hearings were held for this case?
         court: Which court was the last case hearing heard at?
-        in_area_options:
-          'yes': 'Yes'
-          'no': 'No'
         youth_court_options:
           'yes': 'Yes'
           'no': 'No'

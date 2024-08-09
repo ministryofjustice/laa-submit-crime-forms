@@ -10,4 +10,8 @@ module StageReachedCalculatable
 
     transferred_from_undesignated_area ? :prog : :prom
   end
+
+  def prog_stage_reached?
+    stage_reached == :prog
+  end
 end

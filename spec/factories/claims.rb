@@ -112,7 +112,6 @@ FactoryBot.define do
       first_hearing_date { date - rand(40) }
       number_of_hearing { 1 }
       youth_court { 'no' }
-      in_area { 'yes' }
       court { 'A Court' }
       hearing_outcome { OutcomeCode.all.sample.id }
       matter_type { '1' }

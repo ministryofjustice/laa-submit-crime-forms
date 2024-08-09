@@ -3,10 +3,16 @@ require 'rails_helper'
 RSpec.describe Nsm::CostSummary::WorkItems do
   subject { described_class.new(work_items, claim) }
 
-  let(:claim) { instance_double(Claim, assigned_counsel:, in_area:, date:, firm_office:) }
+  let(:claim) do
+    instance_double(Claim,
+                    assigned_counsel: assigned_counsel,
+                    prog_stage_reached?: prog_stage_reached,
+                    date: date,
+                    firm_office: firm_office)
+  end
   let(:firm_office) { build(:firm_office, :valid) }
   let(:assigned_counsel) { 'no' }
-  let(:in_area) { 'yes' }
+  let(:prog_stage_reached) { false }
   let(:date) { Date.new(2008, 11, 22) }
   let(:work_items) do
     [
@@ -50,8 +56,8 @@ RSpec.describe Nsm::CostSummary::WorkItems do
       end
     end
 
-    context 'when in area is false' do
-      let(:in_area) { 'no' }
+    context 'when prog stage reached' do
+      let(:prog_stage_reached) { true }
 
       it 'includes WAITING and TRAVEL in data' do
         row_keys = subject.rows.map(&:first).pluck(:text)
