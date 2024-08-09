@@ -8,17 +8,6 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
 
     let(:status) { 'granted' }
 
-    let(:events) do
-      [
-        {
-          event_type: 'decision',
-          created_at: 1.day.ago.to_s,
-          public: true,
-          details: { comment: 'Decision comment' }
-        },
-      ]
-    end
-
     let(:letters_and_calls) do
       [
         {
@@ -51,7 +40,6 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
     let(:record) do
       {
         application:,
-        events:
       }.deep_stringify_keys
     end
 
@@ -77,31 +65,15 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       end
     end
 
-    context 'when status is from a decision event' do
-      let(:status) { 'rejected' }
-
-      it 'syncs the assessment_comment' do
-        expect(claim.assessment_comment).to eq 'Decision comment'
-      end
-    end
-
-    context 'when status is from a send_back event' do
+    context 'when there is an assessment comment' do
       let(:status) { 'sent_back' }
       let(:record) do
         {
-          application: application,
-          events: [
-            {
-              event_type: 'send_back',
-              created_at: 1.day.ago.to_s,
-              public: true,
-              details: { comment: 'More info needed' }
-            },
-          ]
-        }.deep_stringify_keys
+          'application' => application.merge('assessment_comment' => 'More info needed')
+        }
       end
 
-      it 'syncs the assessment_comment' do
+      it 'syncs the assessment comment' do
         expect(claim.assessment_comment).to eq 'More info needed'
       end
     end
@@ -141,15 +113,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
             ],
             work_items: [],
             disbursements: []
-          },
-          events: [
-            {
-              event_type: 'decision',
-              created_at: 1.day.ago.to_s,
-              public: true,
-              details: { comment: 'Part granted' }
-            },
-          ],
+          }
         }.deep_stringify_keys
       end
 
@@ -199,14 +163,6 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
             ],
             disbursements: []
           },
-          events: [
-            {
-              event_type: 'decision',
-              created_at: 1.day.ago.to_s,
-              public: true,
-              details: { comment: 'Part granted' }
-            },
-          ],
         }.deep_stringify_keys
       end
 
@@ -260,15 +216,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
                 total_cost_without_vat: 10
               }
             ]
-          },
-          events: [
-            {
-              event_type: 'decision',
-              created_at: 1.day.ago.to_s,
-              public: true,
-              details: { comment: 'Part granted' }
-            },
-          ],
+          }
         }.deep_stringify_keys
       end
 
