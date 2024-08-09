@@ -17,14 +17,6 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
 
     let(:record) do
       {
-        events: [
-          {
-            event_type: 'decision',
-            created_at: 1.day.ago.to_s,
-            public: true,
-            details: { comment: 'Decision comment' }
-          },
-        ],
         application: {
           quotes: [
             {
@@ -68,6 +60,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
           ],
           incorrect_information_explanation: 'This is incorrect',
           updates_needed: %w[further_information incorrect_information],
+          assessment_comment: 'Decision comment',
           resubmission_deadline: 14.days.from_now,
         }
       }.deep_stringify_keys

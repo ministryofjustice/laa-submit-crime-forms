@@ -36,7 +36,7 @@ RSpec.describe PullUpdates do
     let(:id) { SecureRandom.uuid }
     let(:claim) do
       instance_double(Claim, id: id, status: 'submitted', save!: true, update!: true,
-                      provider_requested?: false, sent_back?: false)
+                      provider_requested?: false, sent_back?: false, 'assessment_comment=': nil, part_grant?: false)
     end
 
     before do
@@ -145,14 +145,7 @@ RSpec.describe PullUpdates do
                 'application_risk' => 'N/A',
                 'application_type' => application_type,
                 'updated_at' => arbitrary_fixed_date,
-                'events' => [
-                  {
-                    'details' => { 'comment' => 'All good, granting...' },
-                    'created_at' => '2024-03-26T16:56:27.039Z',
-                    'public' => true,
-                    'event_type' => 'decision'
-                  }
-                ]
+                'application' => { 'assessment_comment' => 'All good, granting...' },
               },
               {
                 'application_id' => paa_two.id,
@@ -161,14 +154,7 @@ RSpec.describe PullUpdates do
                 'application_risk' => 'N/A',
                 'application_type' => application_type,
                 'updated_at' => arbitrary_fixed_date,
-                'events' => [
-                  {
-                    'details' => { 'comment' => 'Sorry have to reject this because...' },
-                    'created_at' => '2024-03-26T16:56:27.039Z',
-                    'public' => true,
-                    'event_type' => 'decision'
-                  }
-                ],
+                'application' => { 'assessment_comment' => 'Sorry have to reject this because...' },
               },
             ]
         }
