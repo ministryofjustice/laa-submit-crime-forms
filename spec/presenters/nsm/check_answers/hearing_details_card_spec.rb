@@ -36,10 +36,6 @@ RSpec.describe Nsm::CheckAnswers::HearingDetailsCard do
             text: 'A Court'
           },
           {
-            head_key: 'in_area',
-            text: 'Yes'
-          },
-          {
             head_key: 'youth_court',
             text: 'No'
           },
@@ -71,10 +67,6 @@ RSpec.describe Nsm::CheckAnswers::HearingDetailsCard do
             },
             {
               head_key: 'court',
-              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
-            },
-            {
-              head_key: 'in_area',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {

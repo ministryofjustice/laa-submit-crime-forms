@@ -12,19 +12,14 @@
       <%= suggestion_select f, :court, LaaMultiStepForms::Court.all, :name, :name, width: 20,
                               options: { include_blank: true }, label: { size: 's' }, data: { autoselect: false } %>
 
-      <%= f.govuk_radio_buttons_fieldset :in_area, legend: { size: 's' } do %>
-        <%= f.govuk_radio_button :in_area, YesNoAnswer::YES.to_s %>
-        <%= f.govuk_radio_button :in_area, YesNoAnswer::NO.to_s %>
-      <% end%>
       <%= f.govuk_radio_buttons_fieldset :youth_court, legend: { size: 's' } do %>
         <%= f.govuk_radio_button :youth_court, YesNoAnswer::YES.to_s %>
         <%= f.govuk_radio_button :youth_court, YesNoAnswer::NO.to_s %>
-      <% end%>
+      <% end %>
 
       <%= f.govuk_collection_select :hearing_outcome, OutcomeCode.all, :id, :name,
                               data: { module: 'accessible-autocomplete', autoselect: true }, width: 20,
                               options: { include_blank: true }, label: { size: 's' } %>
-
 
       <%= f.govuk_collection_select :matter_type, MatterType.all, :id, :name,
                               data: { module: 'accessible-autocomplete', autoselect: true }, width: 20,
@@ -34,5 +29,3 @@
     <% end %>
   </div>
 </div>
-
-

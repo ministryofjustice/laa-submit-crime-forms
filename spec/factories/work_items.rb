@@ -3,7 +3,7 @@ FactoryBot.define do
     completed_on { Time.zone.today }
 
     trait :valid do
-      work_type { WorkTypes.values.sample.to_s }
+      work_type { [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, WorkTypes::PREPARATION, WorkTypes::ADVOCACY].sample.to_s }
       time_spent { 50 + (400**rand).to_i } # range: 50 -> 450 with logorithmic distribution
       completed_on { rand(40).days.ago.to_date }
       fee_earner { Faker::Name.name }

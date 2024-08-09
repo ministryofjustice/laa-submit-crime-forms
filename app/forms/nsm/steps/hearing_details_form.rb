@@ -4,7 +4,6 @@ module Nsm
       attribute :first_hearing_date, :multiparam_date
       attribute :number_of_hearing, :integer
       attribute :court, :string
-      attribute :in_area, :value_object, source: YesNoAnswer
       attribute :youth_court, :value_object, source: YesNoAnswer
       attribute :hearing_outcome, :string
       attribute :matter_type, :string
@@ -13,7 +12,6 @@ module Nsm
               multiparam_date: { allow_past: true, allow_future: false }
       validates :number_of_hearing, presence: true, numericality: { only_integer: true, greater_than: 0 }
       validates :court, presence: true
-      validates :in_area, presence: true, inclusion: { in: YesNoAnswer.values }
       validates :youth_court, presence: true, inclusion: { in: YesNoAnswer.values }
       validates :hearing_outcome, presence: true
       validates :matter_type, presence: true

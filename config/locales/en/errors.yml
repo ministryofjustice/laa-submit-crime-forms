@@ -381,8 +381,6 @@ en:
               blank: Number of hearings held cannot be blank
             court:
               blank: Count cannot be blank
-            in_area:
-              blank: Is this court in a designated area cannot be blank
             youth_court:
               blank: Is it a youth court cannot be blank
             hearing_outcome:
@@ -460,7 +458,8 @@ en:
               invalid_period: Period must be greater than 0
               invalid: Period must be valid
             work_type:
-              blank: Type of work must be choosen
+              blank: Type of work must be chosen
+              inclusion: Type of work must be chosen
             uplift:
               blank: Uplift amount must be set
               less_than_or_equal_to: You can only apply an uplift from 1 to 100
