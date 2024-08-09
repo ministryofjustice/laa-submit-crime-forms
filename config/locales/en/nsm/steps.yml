@@ -30,8 +30,8 @@ en:
           vat_registered: Is your firm VAT registered?
       office_code:
         edit:
-          page_title: Which firm account number is this claim for?
-          subheading: Your sign in details give you access to these firm account numbers. To get access to a different firm account number contact your firm's LAA account administrator.
+          page_title: Which firm office account number is this claim for?
+          subheading: Your sign in details give you access to these firm office account numbers. To get access to a different firm office account number contact your firm's LAA account administrator.
       case_details:
         edit:
           page_title: Case details

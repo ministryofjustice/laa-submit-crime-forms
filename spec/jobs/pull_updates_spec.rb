@@ -36,7 +36,7 @@ RSpec.describe PullUpdates do
     let(:id) { SecureRandom.uuid }
     let(:claim) do
       instance_double(Claim, id: id, status: 'submitted', save!: true, update!: true,
-                      provider_requested?: false, further_info?: false)
+                      provider_requested?: false, sent_back?: false)
     end
 
     before do

@@ -86,7 +86,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
     end
 
     context 'when status is from a send_back event' do
-      let(:status) { 'provider_requested' }
+      let(:status) { 'sent_back' }
       let(:record) do
         {
           application: application,

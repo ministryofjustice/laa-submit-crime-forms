@@ -8,6 +8,7 @@ en:
         heading: Your claims
         start_claim: Start a new claim
         table_info_item: claims
+        delete: Delete
         header:
           ufn: UFN
           defendant: Defendant
@@ -23,7 +24,7 @@ en:
           granted: Granted
           part_grant: Part Granted
           rejected: Rejected
-          further_info: Update needed
+          sent_back: Update needed
           provider_requested: Provider request
           review: Update needed
         status_colour:
@@ -33,6 +34,16 @@ en:
           granted: govuk-tag--green
           part_grant: govuk-tag--blue
           rejected: govuk-tag--red
-          further_info: govuk-tag--yellow
+          sent_back: govuk-tag--yellow
           provider_requested: govuk-tag--yellow
           review: govuk-tag--yellow
+        tabs:
+          reviewed: Reviewed
+          submitted: Submitted
+          drafts: Drafts
+      confirm_delete:
+        page_title: Are you sure you want to delete this draft application?
+        laa_reference: "LAA reference:"
+        ufn_reference: "UFN reference:"
+        yes_delete: "Yes, delete it"
+        no_delete: "No, do not delete it"

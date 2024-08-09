@@ -104,15 +104,15 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
     end
 
     it 'Allows me to upload and delete evidence' do
-      expect(page).to have_no_content('test_2.png')
+      expect(page).to have_no_content('test.png')
 
-      find('.moj-multi-file-upload__dropzone').drop(file_fixture('test_2.png'))
+      find('.moj-multi-file-upload__dropzone').drop(file_fixture('test.png'))
 
-      within('.govuk-table') { expect(page).to have_content(/test_2.png.*Delete/) }
+      within('.govuk-table') { expect(page).to have_content(/test.png.*Delete/) }
 
       click_on 'Delete'
 
-      within('.moj-banner') { expect(page).to have_content('test_2.png has been deleted') }
+      within('.moj-banner') { expect(page).to have_content('test.png has been deleted') }
       expect(page).to have_no_css('.govuk-table')
     end
   end

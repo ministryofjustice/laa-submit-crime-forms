@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Office code selection', type: :system do
-  let(:office_code_question) { 'Which firm account number is this claim for?' }
+  let(:office_code_question) { 'Which firm office account number is this claim for?' }
   let(:provider) { Provider.first }
 
   context 'when I complete the firm details screen' do
@@ -40,7 +40,7 @@ RSpec.describe 'Office code selection', type: :system do
 
       it "validates if I don't make a selection" do
         click_on 'Save and continue'
-        expect(page).to have_content 'Select your firm account number'
+        expect(page).to have_content 'Select your firm office account number'
       end
 
       it 'Saves my choice' do

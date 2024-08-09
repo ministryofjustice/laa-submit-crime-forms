@@ -76,12 +76,12 @@ RSpec.describe 'Prior authority applications - add case contact' do
       end
 
       it 'shows me the office code selection screen' do
-        expect(page).to have_content 'Which firm account number is this application for?'
+        expect(page).to have_content 'Which firm office account number is this application for?'
       end
 
       it 'validates the selection' do
         click_on 'Save and continue'
-        expect(page).to have_content 'Select a firm account number'
+        expect(page).to have_content 'Select a firm office account number'
       end
 
       it 'saves the selection' do
@@ -92,7 +92,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
       end
 
       it 'allows save and come back later' do
-        expect(page).to have_content 'Which firm account number is this application for?'
+        expect(page).to have_content 'Which firm office account number is this application for?'
         click_on 'Save and come back later'
 
         expect(page).to have_title 'Your applications'

@@ -67,7 +67,9 @@ module DocumentUploadable
   end
 
   def supported_filetype?
-    SupportedFileTypes::SUPPORTED_FILE_TYPES.include? file_upload.content_type
+    SupportedFileTypes::SUPPORTED_FILE_TYPES.include?(
+      Marcel::MimeType.for(file_upload.tempfile)
+    )
   end
 
   def suspected_malware?
