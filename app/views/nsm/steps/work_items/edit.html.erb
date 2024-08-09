@@ -6,7 +6,7 @@
     <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.work_items.count) %></h1>
 
-    <%= govuk_button_to(t('.add_now'), edit_nsm_steps_work_item_path(current_application, work_item_id: Nsm::StartPage::NEW_RECORD), secondary: true) %>
+    <%= govuk_button_to(t('.add_now'), edit_nsm_steps_work_item_path(current_application, work_item_id: Nsm::StartPage::NEW_RECORD), secondary: true, method: :get) %>
 
     <%=
       head = {
