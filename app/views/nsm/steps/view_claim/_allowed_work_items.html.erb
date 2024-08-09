@@ -70,7 +70,7 @@
   <p><%= t('.no_data') %></p>
 <% else %>
   <%=
-    rows = work_items.each_with_index.map do |work_item, index|
+    rows = work_items.map do |work_item|
       item_with_link = link_to(t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"),
                                item_nsm_steps_view_claim_path(id: current_application.id,
                                                               item_type: :work_item,
@@ -78,7 +78,7 @@
                                                               page: pagy.page))
 
       [
-        { header: true, text: index + 1, numeric: false},
+        { header: true, text: work_item.position, numeric: false},
         { header: true, text: item_with_link, numeric: false},
         { text: work_item.adjustment_comment, numeric: false},
         { text: format_period(work_item.allowed_time_spent || work_item.time_spent, style: :minimal_html), numeric: true },

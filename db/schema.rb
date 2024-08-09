@@ -314,6 +314,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_08_140456) do
     t.integer "allowed_uplift"
     t.integer "allowed_time_spent"
     t.string "adjustment_comment"
+    t.integer "position"
     t.index ["claim_id"], name: "index_work_items_on_claim_id"
   end
 

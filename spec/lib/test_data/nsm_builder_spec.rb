@@ -64,6 +64,18 @@ RSpec.describe TestData::NsmBuilder do
     end
   end
 
+  describe '#build' do
+    context 'when submit is passed in as false' do
+      it 'does not submit the claim' do
+        id = subject.build(submit: false, min: 2, max: 2)
+
+        expect(Claim.find(id)).to have_attributes(
+          status: 'draft'
+        )
+      end
+    end
+  end
+
   describe '#options' do
     subject(:options) { described_class.new.options[key] }
 

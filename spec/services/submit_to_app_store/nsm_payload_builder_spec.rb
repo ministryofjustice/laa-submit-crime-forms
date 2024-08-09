@@ -148,6 +148,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'completed_on' => /\A\d{4}-\d{2}-\d{2}\z/,
             'fee_earner' => an_instance_of(String),
             'id' => work_item.id,
+            'position' => 1,
             'pricing' => pricing[work_item.work_type],
             'time_spent' => an_instance_of(Integer),
             'uplift' => nil,

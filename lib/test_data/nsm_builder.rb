@@ -24,16 +24,16 @@ module TestData
       Rails.logger.info "Created large examples: #{large_ids.to_sentence}"
     end
 
-    def build(**options)
+    def build(submit: true, **options)
       ActiveRecord::Base.transaction do
         args, kwargs = *options(**options).values.sample
         claim = FactoryBot.create(*args, :randomised, kwargs.call)
-        claim.update!(status: :submitted, updated_at: claim.updated_at + 1.minute)
+        claim.update!(status: submit ? :submitted : claim.status, updated_at: claim.updated_at + 1.minute)
 
         invalid_tasks = check_tasks(claim)
         raise "Invalid for #{invalid_tasks.map(&:first).join(', ')}" if invalid_tasks.any?
 
-        SubmitToAppStore.new.submit(claim)
+        SubmitToAppStore.new.submit(claim) if submit
         claim.id
       end
     end

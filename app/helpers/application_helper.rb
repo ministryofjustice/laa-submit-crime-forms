@@ -31,7 +31,7 @@ module ApplicationHelper
       table.with_head(rows: [head])
       table.with_body do |body|
         rows.each do |item_row|
-          body.with_row do |row|
+          body.with_row(html_attributes: item_row.try(:tr_html_attributes) || {}) do |row|
             item_row.each do |cell|
               # Slice to extract only the known keys to ensure compatibility (https://www.rubydoc.info/gems/govuk-components/GovukComponent/TableComponent/CellComponent)
               cell_options = cell.slice(:header, :numeric, :text, :width, :parent,
