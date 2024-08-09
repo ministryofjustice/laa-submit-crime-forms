@@ -38,14 +38,14 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
 
       context 'is blank' do
         let(:letters) { '' }
+        let(:apply_letters_uplift) { 'false' }
 
-        it 'have an error' do
-          expect(subject).to be_valid
-        end
+        it { expect(subject).to be_valid }
       end
 
       context 'is zero' do
         let(:letters) { 0 }
+        let(:apply_letters_uplift) { 'false' }
 
         it { expect(subject).to be_valid }
       end
@@ -69,16 +69,28 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
 
       context 'is blank' do
         let(:calls) { '' }
+        let(:apply_calls_uplift) { 'false' }
 
-        it 'have an error' do
+        it { expect(subject).to be_valid }
+      end
+
+      context 'is zero and apply_calls_uplift false' do
+        let(:calls) { 0 }
+        let(:apply_calls_uplift) { 'false' }
+
+        it 'has no error' do
           expect(subject).to be_valid
         end
       end
 
-      context 'is zero' do
+      context 'is zero and apply_calls_uplift is true' do
         let(:calls) { 0 }
+        let(:apply_calls_uplift) { 'true' }
 
-        it { expect(subject).to be_valid }
+        it 'has an error' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:calls_uplift, :uplift_on_zero)).to be(true)
+        end
       end
 
       context 'is positive' do
@@ -108,10 +120,23 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
           end
         end
 
-        context 'is zero' do
-          let(:letters_uplift) { 0 }
+        context 'is zero and apply_letter_uplift false' do
+          let(:letters) { 0 }
+          let(:apply_letters_uplift) { 'false' }
 
-          it { expect(subject).not_to be_valid }
+          it 'has no error' do
+            expect(subject).to be_valid
+          end
+        end
+
+        context 'is zero and apply_letter_uplift is true' do
+          let(:letters) { 0 }
+          let(:apply_letters_uplift) { 'true' }
+
+          it 'has an error' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:letters_uplift, :uplift_on_zero)).to be(true)
+          end
         end
 
         context 'is positive' do
