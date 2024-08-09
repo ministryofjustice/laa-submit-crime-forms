@@ -76,7 +76,6 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             en: an_instance_of(String)
           },
           'id' => claim.id,
-          'in_area' => 'yes',
           'is_other_info' => 'no',
           'laa_reference' => 'LAA-n4AohV',
           'letters_and_calls' => [

@@ -72,7 +72,7 @@ RSpec.describe 'User can manage work items', type: :system do
 
   it 'can add additional work items' do
     claim.work_items.create!(
-      work_type: 'waiting',
+      work_type: 'preparation',
       time_spent: 122,
       completed_on: Date.new(2022, 4, 20),
       fee_earner: 'BJB',
@@ -102,7 +102,7 @@ RSpec.describe 'User can manage work items', type: :system do
 
     expect(claim.reload.work_items).to contain_exactly(
       have_attributes(
-        work_type: 'waiting',
+        work_type: 'preparation',
         time_spent: 122,
         completed_on: Date.new(2022, 4, 20),
         fee_earner: 'BJB',
@@ -173,8 +173,6 @@ RSpec.describe 'User can manage work items', type: :system do
 
     visit edit_nsm_steps_work_item_path(id: claim.id, work_item_id: work_item.id)
 
-    choose 'Advocacy'
-
     fill_in 'Hours', with: 1
     fill_in 'Minutes', with: 1
 
@@ -188,7 +186,9 @@ RSpec.describe 'User can manage work items', type: :system do
 
     expect(page).to have_content 'You cannot save and continue if any work items are incomplete'
 
-    click_on 'Advocacy'
+    click_on 'Incomplete'
+
+    choose 'Advocacy'
 
     within('.govuk-fieldset', text: 'Completion date') do
       fill_in 'Day', with: '20'

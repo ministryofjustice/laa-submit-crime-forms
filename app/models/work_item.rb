@@ -32,4 +32,10 @@ class WorkItem < ApplicationRecord
   def position
     super || (@position ||= claim.work_item_position(self))
   end
+
+  def valid_work_type?
+    return false if work_type.blank?
+
+    WorkTypes::VALUES.detect { _1.to_s == work_type }.display?(application)
+  end
 end

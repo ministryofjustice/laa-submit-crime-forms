@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::CheckAnswers::WorkItemsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { build(:claim, :firm_details, work_items:) }
+  let(:claim) { build(:claim, :case_type_magistrates, :firm_details, work_items:) }
   let(:work_items) do
     [
       build(:work_item, work_type: WorkTypes::ADVOCACY.to_s, time_spent: 180),
@@ -64,7 +64,7 @@ RSpec.describe Nsm::CheckAnswers::WorkItemsCard do
     end
 
     context 'when not vat registered' do
-      let(:claim) { build(:claim, :full_firm_details, work_items:) }
+      let(:claim) { build(:claim, :case_type_magistrates, :full_firm_details, work_items:) }
 
       it 'generates work items rows' do
         expect(subject.row_data).to eq(

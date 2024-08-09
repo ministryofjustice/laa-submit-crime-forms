@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe Nsm::CostSummary::Disbursements do
   subject { described_class.new(disbursements, claim) }
 
-  let(:claim) { instance_double(Claim, assigned_counsel:, in_area:) }
+  let(:claim) { instance_double(Claim, assigned_counsel: assigned_counsel, prog_stage_reached?: prog_stage_reached) }
   let(:assigned_counsel) { 'no' }
-  let(:in_area) { 'yes' }
+  let(:prog_stage_reached) { false }
   let(:disbursements) do
     [
       instance_double(Disbursement, translated_disbursement_type: 'Car', other_type: nil, total_cost: 100.0,
