@@ -37,7 +37,7 @@ RSpec.describe DummyStepController, type: :controller do
   end
 
   context 'when Errors::ApplicationNotFound is raised' do
-    let(:error_class) { Errors::ApplicationNotFound }
+    let(:error_class) { Errors::ApplicationNotFoundRedux }
 
     it 'redirects to the error contrller' do
       put :update, params: { id: application.id }

@@ -6,7 +6,7 @@ module ErrorHandling
       case exception
       when Errors::InvalidSession, ActionController::InvalidAuthenticityToken
         redirect_to laa_msf.invalid_session_errors_path
-      when Errors::ApplicationNotFound
+      when Errors::ApplicationNotFoundRedux
         redirect_to laa_msf.application_not_found_errors_path
       # NOTE: Add more custom errors as they are needed, for instance:
       # when Errors::ApplicationSubmitted
@@ -14,8 +14,6 @@ module ErrorHandling
       else
         raise unless ENV.fetch('RAILS_ENV', nil) == 'production'
 
-        exception2 = Errors::Arbitrary.new('PLEASE PLEASE SENTRY NOTICE THIS')
-        Sentry.capture_exception(exception2)
         Sentry.capture_exception(exception)
         Rails.logger.error(exception)
         redirect_to laa_msf.unhandled_errors_path
@@ -26,6 +24,6 @@ module ErrorHandling
   private
 
   def check_application_presence
-    raise Errors::ApplicationNotFound unless current_application
+    raise Errors::ApplicationNotFoundRedux unless current_application
   end
 end
