@@ -61,4 +61,16 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     click_on 'Save and come back later'
     expect(page).to have_content 'Your applications'
   end
+
+  it 'validates file size client side before attempting upload and save' do
+    fill_in_until_step(:primary_quote)
+    click_on 'Primary quote'
+
+    page.attach_file(file_fixture('1_byte_over_10_mb_exactly.png')) do
+      page.find('.govuk-file-upload').click
+    end
+
+    click_on 'Save and continue'
+    expect(page).to have_content(/The selected file must be smaller than \d+MB/i)
+  end
 end
