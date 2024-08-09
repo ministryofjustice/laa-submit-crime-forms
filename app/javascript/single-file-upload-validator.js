@@ -4,27 +4,73 @@
 window.addEventListener("DOMContentLoaded", (event) => {
   const fileUploader = document.querySelector('.govuk-file-upload');
   const maxFileSize = fileUploader.dataset.maxSize;
+  const humanMaxFileSize = (maxFileSize / 1024 / 1024).toFixed(0)
   const feedback = $(".single-file-upload__message");
+  const saveButtons = document.querySelectorAll('button[type="submit"]');
 
-  if (fileUploader) {
-    fileUploader.addEventListener('change', function (event) {
-      event.preventDefault()
-      feedback.html('');
-      const file = event.target.files[0]
+  if (saveButtons) {
+    for(var i = 0; i < saveButtons.length; i++) {
+      saveButtons[i].addEventListener('click', function (event) {
 
-      if (file && file.size > maxFileSize) {
-        event.target.value = null
-        feedback.html(getErrorHtml("The file " + file.name + " is too big. Unable to upload."));
-      }
-    })
+        // error if an uploaded file is larger than permitted
+        if (fileUploader) {
+          feedback.html('');
+          const file = fileUploader.files[0]
+
+          if (file && file.size > maxFileSize) {
+            feedback.html(govukErrorSummary('link-todo', `The selected file must be smaller than ${humanMaxFileSize}MB`));
+            errorSummary = document.querySelector('.govuk-error-summary');
+            errorSummary.scrollIntoView();
+            errorSummary.focus();
+            event.preventDefault();
+            event.stopImmediatePropagation()
+          }
+        }
+      })
+    }
   }
 });
 
-function getErrorHtml (message) {
-  return `<div class="moj-banner moj-banner--warning" role="region" aria-label="Warning">
-            <svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
-              <path d="M13.6,15.4h-2.3v-4.5h2.3V15.4z M13.6,19.8h-2.3v-2.2h2.3V19.8z M0,23.2h25L12.5,2L0,23.2z" />
-            </svg>
-          <div class="moj-banner__message">${message}</div>
-          </div>`;
+function govukErrorSummary (href, message) {
+  return `<div class="govuk-error-summary" data-module="govuk-error-summary">
+            <div role="alert"><h2 class="govuk-error-summary__title">There is a problem on this page</h2>
+              <div class="govuk-error-summary__body">
+                <ul class="govuk-list govuk-error-summary__list">
+                  <li>
+                    <a data-turbo="false" href="#${href}">${message}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>`
 };
+
+// function addErrorMessage (msg) {
+//   // this adds an error message to the gov uk error summary and shows the errors
+//   const errorSummary = document.querySelector('.govuk-error-summary')
+//   const ul = errorSummary.querySelector('ul')
+//   const li = document.createElement('li')
+//   const a = document.createElement('a')
+//   li.appendChild(a)
+//   ul.appendChild(li)
+
+//   // add text and link to field
+//   a.innerText += msg
+//   a.setAttribute('aria-label', msg)
+//   a.setAttribute('data-turbolinks', false) # NOT NEEDED?
+//   a.setAttribute('href', '#dz-upload-button') # TODO
+
+//   // show error message on the dropzone form field
+//   const dropzoneElem = document.querySelector('#dropzone-form-group')
+//   dropzoneElem.classList.add('govuk-form-group--error')
+//   const fieldErrorMsg = document.querySelector('#dropzone-file-error')
+//   const div = document.createElement('div')
+//   div.innerText = msg
+//   fieldErrorMsg.appendChild(div)
+//   fieldErrorMsg.classList.remove('hidden')
+
+//   // show the error summary and move focus to it
+//   errorSummary.classList.remove('hidden')
+//   errorSummary.scrollIntoView()
+//   errorSummary.focus()
+// }
