@@ -13,7 +13,7 @@ RSpec.describe 'User can manage defendants', type: :system do
     within('.govuk-fieldset', text: 'Main defendant') do
       fill_in 'First name', with: 'Jim'
       fill_in 'Last name', with: 'Bob'
-      fill_in 'MAAT ID', with: '1234567'
+      fill_in 'MAAT ID number', with: '1234567'
     end
 
     click_on 'Save and continue'
@@ -40,7 +40,7 @@ RSpec.describe 'User can manage defendants', type: :system do
     within('.govuk-fieldset', text: 'Additional defendant') do
       fill_in 'First name', with: 'Bob'
       fill_in 'Last name', with: 'Jim'
-      fill_in 'MAAT ID', with: '9876543'
+      fill_in 'MAAT ID number', with: '9876543'
     end
 
     click_on 'Save and continue'

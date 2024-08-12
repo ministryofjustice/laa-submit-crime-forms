@@ -47,7 +47,7 @@ module Nsm
       if maat_id.nil?
         "Client's CNTP number: #{cntp_order}"
       else
-        "MAAT ID: #{maat_id}"
+        "MAAT ID number: #{maat_id}"
       end
     end
 

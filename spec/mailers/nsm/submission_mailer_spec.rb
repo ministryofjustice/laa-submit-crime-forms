@@ -31,7 +31,7 @@ RSpec.describe Nsm::SubmissionMailer, type: :mailer do
       ).to eq feedback_template
     end
 
-    context 'defendant with maat id' do
+    context 'defendant with maat id number' do
       it 'sets personalisation from args' do
         expect(
           mail.govuk_notify_personalisation
@@ -39,7 +39,7 @@ RSpec.describe Nsm::SubmissionMailer, type: :mailer do
           LAA_case_reference: 'LAA-n4AohV',
           UFN: '120423/001',
           main_defendant_name: an_instance_of(String),
-          defendant_reference: 'MAAT ID: 1234567',
+          defendant_reference: 'MAAT ID number: 1234567',
           claim_total: '£20.45',
           date: DateTime.now.to_fs(:stamp),
         )
