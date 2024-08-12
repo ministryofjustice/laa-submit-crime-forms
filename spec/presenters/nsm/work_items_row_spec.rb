@@ -28,7 +28,7 @@ RSpec.describe Nsm::WorkItemsRow do
                   '<a data-turbo="false" aria-labelledby="duplicate1 itemTitle item1 workType1" id="duplicate1" ' \
                   "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item/#{work_item.id}/" \
                   'duplicate">Duplicate</a></li><li class="govuk-summary-list__actions-list-item">' \
-                  '<a data-turbo="false" aria-labelledby="delete1 itemTitle item1 workType1" id="workType1" ' \
+                  '<a data-turbo="false" aria-labelledby="delete1 itemTitle item1 workType1" id="delete1" ' \
                   "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item_delete/#{work_item.id}\">" \
                   'Delete</a></li></ul>' }
         ]
@@ -58,7 +58,7 @@ RSpec.describe Nsm::WorkItemsRow do
                   '<a data-turbo="false" aria-labelledby="duplicate1 itemTitle item1 workType1" id="duplicate1" ' \
                   "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item/#{work_item.id}/" \
                   'duplicate">Duplicate</a></li><li class="govuk-summary-list__actions-list-item">' \
-                  '<a data-turbo="false" aria-labelledby="delete1 itemTitle item1 workType1" id="workType1" ' \
+                  '<a data-turbo="false" aria-labelledby="delete1 itemTitle item1 workType1" id="delete1" ' \
                   "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item_delete/" \
                   "#{work_item.id}\">Delete</a></li></ul>" }
         ]
