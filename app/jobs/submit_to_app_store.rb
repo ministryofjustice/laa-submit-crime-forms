@@ -1,6 +1,5 @@
 class SubmitToAppStore < ApplicationJob
   queue_as :default
-  retry_on StandardError, wait: :polynomially_longer, attempts: 10
 
   def perform(submission:)
     submit(submission)
