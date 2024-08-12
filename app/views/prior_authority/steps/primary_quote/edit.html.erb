@@ -1,9 +1,12 @@
+<%= javascript_include_tag 'single-file-upload-validator', nonce: true %>
+
 <% title t(".page_title") %>
 <% decision_step_header %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
+    <div class=single-file-upload__message></div>
     <span class="govuk-caption-xl"><%= t(".caption") %></span>
     <h1 class="govuk-heading-xl"><%= t(".page_title") %></h1>
 
@@ -24,7 +27,11 @@
       <%= form.govuk_file_field :file_upload,
                                 label: { text: t(".file_upload"), size: "m" },
                                 hint: { text: t(".file_upload_hint_html", size: FileUpload::FileUploader.human_readable_max_file_size) },
-                                accept: SupportedFileTypes::SUPPORTED_FILE_TYPES.join(',') %>
+                                accept: SupportedFileTypes::SUPPORTED_FILE_TYPES.join(','),
+                                data: { max_size: ENV['MAX_UPLOAD_SIZE_BYTES'],
+                                        error_heading: I18n.t('laa_multi_step_forms.errors.error_summary.heading'),
+                                        size_error_message: I18n.t('shared.shared_upload_errors.attachment_too_large',
+                                                                    size: FileUpload::FileUploader.human_readable_max_file_size) } %>
       <% if @form_object.document_already_uploaded? %>
         <%= render "uploaded_file_summary", document: @form_object.document %>
       <% end %>
