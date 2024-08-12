@@ -64,7 +64,7 @@ module Nsm
         view.edit_nsm_steps_work_item_delete_path(current_application, work_item_id: id),
         data: { turbo: 'false' },
         'aria-labelledby': "delete#{position} itemTitle item#{position} workType#{position}",
-        id: "workType#{position}"
+        id: "delete#{position}"
       )
     end
   end
