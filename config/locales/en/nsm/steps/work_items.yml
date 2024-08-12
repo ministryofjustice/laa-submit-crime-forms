@@ -18,8 +18,8 @@ en:
         edit:
           page_title: Work Items
           heading:
-            one: You’ve added %{count} work item
-            other: You’ve added %{count} work items
+            one: You've added %{count} work item
+            other: You've added %{count} work items
           change: Change
           duplicate: Duplicate
           delete: Delete

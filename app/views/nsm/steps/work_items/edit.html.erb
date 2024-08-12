@@ -10,7 +10,7 @@
 
     <%=
       head = {
-        'line_item' => { html_attributes: { id: 'itemTitle' }, classes: 'govuk-!-width-one-zero' },
+        'line_item' => { id: 'itemTitle', classes: 'govuk-!-width-one-zero' },
         'item' => {},
         'date' => {},
         'fee_earner' => { classes: 'govuk-!-width-one-zero' },
@@ -28,7 +28,7 @@
           aria_sort, next_direction = sort_variable(column_key, @sort_by, @sort_direction)
 
           {
-            text: reorder_form(edit_nsm_steps_work_items_path(current_application), column_key, next_direction, "nsm.steps.view_claim.work_items", index),
+            text: reorder_form(edit_nsm_steps_work_items_path(current_application), column_key, next_direction, "nsm.steps.view_claim.work_items", index, button_id: options.delete(:id)),
             **options.deep_merge(html_attributes: { 'aria-sort': aria_sort})
           }
         end
