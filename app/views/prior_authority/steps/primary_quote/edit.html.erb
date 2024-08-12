@@ -28,7 +28,10 @@
                                 label: { text: t(".file_upload"), size: "m" },
                                 hint: { text: t(".file_upload_hint_html", size: FileUpload::FileUploader.human_readable_max_file_size) },
                                 accept: SupportedFileTypes::SUPPORTED_FILE_TYPES.join(','),
-                                data: { 'max-size': ENV['MAX_UPLOAD_SIZE_BYTES'] } %>
+                                data: { max_size: ENV['MAX_UPLOAD_SIZE_BYTES'],
+                                        error_heading: I18n.t('laa_multi_step_forms.errors.error_summary.heading'),
+                                        size_error_message: I18n.t('shared.shared_upload_errors.attachment_too_large',
+                                                                    size: FileUpload::FileUploader.human_readable_max_file_size) } %>
       <% if @form_object.document_already_uploaded? %>
         <%= render "uploaded_file_summary", document: @form_object.document %>
       <% end %>
