@@ -2,6 +2,7 @@ module Nsm
   module CostSummary
     class Base
       include ActionView::Helpers::NumberHelper
+      include ActionView::Helpers::TagHelper
       include LaaMultiStepForms::CheckMissingHelper
 
       def translate(key, **)
@@ -18,6 +19,10 @@ module Nsm
 
       def vat_registered
         @claim.firm_office.vat_registered == YesNoAnswer::YES.to_s
+      end
+
+      def caption
+        translate('caption')
       end
     end
   end

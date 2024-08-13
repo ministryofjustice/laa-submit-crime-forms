@@ -31,15 +31,15 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
       .and have_content('Waiting £0.00 £0.00 £0.00')
       .and have_content('Travel £0.00 £0.00 £0.00')
       .and have_content('Disbursements £227.50 £31.50 £259.00')
-      .and have_content('Total £533.34 £92.67 £626.01')
+      .and have_content('Sum of net cost: £533.34 Sum of VAT on claimed: £92.67 Sum of net cost and VAT on claimed: £626.01')
       # Work items
-      .and have_content('Attendance without counsel1 hour 30 minutes£78.23') # 52.15 * 90 / 60
-      .and have_content('Preparation0 hours 0 minutes£0.00')
-      .and have_content('Advocacy3 hours 10 minutes£207.16')
-      .and have_content('Total£285.39')
+      .and have_content('Attendance without counsel1 hour:30 minutes£78.23') # 52.15 * 90 / 60
+      .and have_content('Preparation0 hours:00 minutes£0.00')
+      .and have_content('Advocacy3 hours:10 minutes£207.16')
+      .and have_content('TotalSum of net cost: £285.39')
       # Letters and calls
-      .and have_content('Letters£8.18') # 4.09 * 2
-      .and have_content('Phone calls£12.27') # 4.09 * 3
+      .and have_content('Letters2£8.18') # 4.09 * 2
+      .and have_content('Phone calls3£12.27') # 4.09 * 3
       .and have_content('Total£20.45')
       # Disbursements
       .and have_content('Car mileage£90.00')
@@ -61,7 +61,8 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
         .and have_content('Waiting £0.00 £0.00 £0.00')
         .and have_content('Travel £0.00 £0.00 £0.00')
         .and have_content('Disbursements £227.50 £31.50 £259.00')
-        .and have_content('Total £533.34 £31.50 £564.84')
+        .and have_content('Sum of net cost: £533.34 Sum of VAT on claimed: £31.50')
+        .and have_content('Sum of net cost and VAT on claimed: £564.84')
     end
   end
 end

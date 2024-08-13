@@ -22,6 +22,10 @@ module Nsm
         @total_cost ||= disbursements.filter_map(&:total_cost_pre_vat).sum
       end
 
+      def total_cost_cell
+        NumberTo.pounds(total_cost)
+      end
+
       def title
         translate('disbursements')
       end

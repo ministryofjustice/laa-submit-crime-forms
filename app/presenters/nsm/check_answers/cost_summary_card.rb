@@ -37,8 +37,8 @@ module Nsm
         [
           calculate_profit_costs(formatted:),
           calculate_disbursements(formatted:),
-          calculate_waiting(formatted:),
           calculate_travel(formatted:),
+          calculate_waiting(formatted:),
         ]
       end
 

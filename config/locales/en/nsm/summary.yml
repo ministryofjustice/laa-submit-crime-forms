@@ -5,6 +5,7 @@ en:
     header:
       item: Item
       time: Time
+      number: Number
       net_cost: Net cost
     footer:
       total: Total
@@ -18,10 +19,13 @@ en:
       attendance_without_counsel: Attendance without counsel
       travel: Travel
       waiting: Waiting
+      caption: Summary of work items
+      net_cost: 'Sum of net cost: '
     nsm/cost_summary/letters_calls:
       letters_calls: Letters and phone calls
       letters: Letters
       calls: Phone calls
+      caption: Summary of letters and calls
     nsm/cost_summary/disbursements:
       disbursements: Disbursements
       standard:
@@ -66,3 +70,4 @@ en:
         travel_expenses_excl_car: Travel expenses (excl car)
         veterinarian_report: Veterinarian Report
         voice_recognition_experts: Voice Recognition
+      caption: Summary of disbursements
