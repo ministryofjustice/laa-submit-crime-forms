@@ -13,15 +13,15 @@ module PriorAuthority
       def save!; end
 
       def persist!
+        updated = false
         application.with_lock do
-          update_application
+          updated = update_application
         end
+        SubmitToAppStore.perform_later(submission: application) if updated
+
+        true
       end
 
-      # NOTE: POtential race condition when `SubmitToAppStore` started before the lock is released
-      # have resolved this by retrying in AppStoreClient#post when existing ID, due to risk
-      # moving the sidekiq caller out of the transaction as unsure if this would introduce other
-      # errors
       def update_application
         unless application.draft? || application.sent_back?
           errors.add(:base, :application_already_submitted)
@@ -30,7 +30,7 @@ module PriorAuthority
 
         application.update!(attributes.merge({ status: new_status }))
         update_incorrect_information if application.incorrect_information_explanation.present?
-        SubmitToAppStore.perform_later(submission: application)
+
         true
       end
 

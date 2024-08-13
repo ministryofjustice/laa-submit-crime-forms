@@ -11,9 +11,9 @@ module Nsm
           application.status = :submitted
           application.update_disbursement_positions!
           application.update!(attributes)
-          SubmitToAppStore.perform_later(submission: application)
-          true
         end
+        SubmitToAppStore.perform_later(submission: application)
+        true
       end
     end
   end
