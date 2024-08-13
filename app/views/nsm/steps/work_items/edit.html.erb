@@ -10,12 +10,12 @@
 
     <%=
       head = {
-        'line_item' => { id: 'itemTitle', classes: 'govuk-!-width-one-zero' },
+        'line_item' => { id: 'itemTitle', classes: 'govuk-!-width-zero' },
         'item' => {},
         'date' => {},
-        'fee_earner' => { classes: 'govuk-!-width-one-zero' },
-        'time' => { numeric: true, classes: 'govuk-!-width-one-zero' },
-        **(@form_object.application.allow_uplift? ? { 'uplift' => { numeric: true, classes: 'govuk-!-width-one-zero' } } : {}),
+        'fee_earner' => { classes: 'govuk-!-width-zero' },
+        'time' => { numeric: true, classes: 'govuk-!-width-zero' },
+        **(@form_object.application.allow_uplift? ? { 'uplift' => { numeric: true, classes: 'govuk-!-width-zero' } } : {}),
         'action' => { numeric: true }
       }
       header_row = head.map.with_index do |(column_key, options), index|
