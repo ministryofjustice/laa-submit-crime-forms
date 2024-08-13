@@ -61,4 +61,25 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     click_on 'Save and come back later'
     expect(page).to have_content 'Your applications'
   end
+
+  describe 'client-side size validation' do
+    around do |example|
+      default_size = ENV.fetch('MAX_UPLOAD_SIZE_BYTES')
+      ENV['MAX_UPLOAD_SIZE_BYTES'] = (Rails.root.join('spec/fixtures/files/test_2.png').open.size - 1).to_s
+      example.run
+      ENV['MAX_UPLOAD_SIZE_BYTES'] = default_size
+    end
+
+    it 'validates file size client side before attempting upload and save' do
+      fill_in_until_step(:primary_quote)
+      click_on 'Primary quote'
+
+      page.attach_file(file_fixture('test_2.png')) do
+        page.find('.govuk-file-upload').click
+      end
+
+      click_on 'Save and continue'
+      expect(page).to have_content(/The selected file must be smaller than \d+MB/i)
+    end
+  end
 end
