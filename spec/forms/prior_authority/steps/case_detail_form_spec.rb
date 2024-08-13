@@ -45,7 +45,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetailForm do
         expect(form.errors.messages.values.flatten)
           .to include('Enter the main offence',
                       'Date cannot be blank',
-                      'Enter the MAAT number',
+                      'Enter the MAAT ID number',
                       'Select yes if your client is detained',
                       'Select yes if this case is subject to POCA (Proceeds of Crime Act 2002)?')
       end

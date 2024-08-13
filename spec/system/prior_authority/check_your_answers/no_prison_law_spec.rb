@@ -64,7 +64,7 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
       expect(page)
         .to have_css('.govuk-summary-card__content', text: 'Main offenceSupply a controlled drug of Class A - Heroin')
         .and have_css('.govuk-summary-card__content', text: 'Date of representation order27 December 2023')
-        .and have_css('.govuk-summary-card__content', text: 'MAAT number123456')
+        .and have_css('.govuk-summary-card__content', text: 'MAAT ID number123456')
         .and have_css('.govuk-summary-card__content', text: 'Client detainedNo')
         .and have_css('.govuk-summary-card__content', text: 'Subject to POCAYes')
 

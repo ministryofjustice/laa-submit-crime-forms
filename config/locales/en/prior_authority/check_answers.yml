@@ -27,7 +27,7 @@ en:
             case_detail:
               main_offence: Main offence
               rep_order_date: Date of representation order
-              maat: MAAT number
+              maat: MAAT ID number
               client_detained: Client detained
               subject_to_poca: Subject to POCA
             client_detail:
