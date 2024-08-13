@@ -339,7 +339,7 @@ en:
             last_name:
               blank: Last name cannot be blank
             maat:
-              blank: MAAT ID cannot be blank
+              blank: MAAT ID number cannot be blank
               invalid: The MAAT ID number must be a 7 digit number
         nsm/steps/case_details_form:
           attributes:

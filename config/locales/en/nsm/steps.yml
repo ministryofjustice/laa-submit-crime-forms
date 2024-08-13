@@ -67,7 +67,7 @@ en:
           additional_defendant: Additional defendant details
           headers:
             full_name: Full name
-            maat: MAAT ID
+            maat: MAAT ID number
             change: Change
             delete: Delete
           add_another: Do you want to add another defendant?
@@ -81,7 +81,7 @@ en:
           additional_defendant: Additional defendant details
           headers:
             full_name: Full name
-            maat: MAAT ID
+            maat: MAAT ID number
           deleted_flash: The defendant was deleted
       letters_calls:
         edit:

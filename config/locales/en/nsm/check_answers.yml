@@ -40,10 +40,10 @@ en:
             defendant_summary:
               main_defendant_first_name: Main defendant first name
               main_defendant_last_name: Main defendant last name
-              main_defendant_maat: Main defendant MAAT ID
+              main_defendant_maat: Main defendant MAAT ID number
               additional_defendant_first_name: Additional defendant %{count} first name
               additional_defendant_last_name: Additional defendant %{count} last name
-              additional_defendant_maat: Additional defendant %{count} MAAT ID
+              additional_defendant_maat: Additional defendant %{count} MAAT ID number
             case_details:
               main_offence: Main offence name
               main_offence_date: Offence date
