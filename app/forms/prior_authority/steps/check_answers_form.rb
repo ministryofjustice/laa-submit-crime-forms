@@ -19,7 +19,7 @@ module PriorAuthority
         end
         SubmitToAppStore.perform_later(submission: application) if updated
 
-        true
+        updated
       end
 
       def update_application
