@@ -28,9 +28,9 @@ class WorkItem < ApplicationRecord
     SORT_POSITION[work_type.to_s]
   end
 
-  # TODO: this will need removing once we are storing indexes against work items and disbursements
+  # Cache the value if looking at a runtime
   def position
-    1
+    super || (@position ||= claim.work_item_position(self))
   end
 
   def valid_work_type?

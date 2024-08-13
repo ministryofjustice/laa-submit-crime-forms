@@ -2,43 +2,44 @@
 <% decision_step_header %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
+  <div class="govuk-grid-column-full">
     <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.work_items.count) %></h1>
 
-    <% @work_items_by_date.each do |date, work_items| %>
-      <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m"><%= date&.to_fs(:long) || t('.unknown_date') %></caption>
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.work_type') %></th>
-            <th scope="col" class="govuk-table__header govuk-table__space-20"><%= t('.headers.period') %></th>
-            <th scope="col" class="govuk-table__header govuk-table__space-20"><%= t('.headers.fee_earner') %></th>
-            <th scope="col" class="govuk-table__header govuk-table__space-10"><%= t('.headers.change') %></th>
-            <th scope="col" class="govuk-table__header govuk-table__space-10"><%= t('.headers.duplicate') %></th>
-            <th scope="col" class="govuk-table__header govuk-table__space-10"><%= t('.headers.delete') %></th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <% work_items.each do |work_item| %>
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= check_missing(work_item.valid_work_type? && work_item.work_type) { t("helpers.label.nsm_steps_work_item_form.work_type_options.#{work_item.work_type}") } %></td>
-              <td class="govuk-table__cell"><%= check_missing(work_item.completed_on.present? && format_period(work_item.time_spent)) %></td>
-              <td class="govuk-table__cell"><%= check_missing(work_item.fee_earner) %></td>
-              <td class="govuk-table__cell govuk-table__nowrap">
-                <%= link_to t('.change'), edit_nsm_steps_work_item_path(@form_object.application, work_item_id: work_item.id) %>
-              </td>
-              <td class="govuk-table__cell govuk-table__nowrap">
-                <%= link_to t('.duplicate'), duplicate_nsm_steps_work_item_path(@form_object.application, work_item_id: work_item.id) %>
-              </td>
-              <td class="govuk-table__cell govuk-table__nowrap">
-                <%= link_to t('.delete'), edit_nsm_steps_work_item_delete_path(@form_object.application, work_item_id: work_item.id) %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% end %>
+    <%= govuk_button_to(t('.add_now'), edit_nsm_steps_work_item_path(current_application, work_item_id: Nsm::StartPage::NEW_RECORD), secondary: true, method: :get) %>
+
+    <%=
+      head = {
+        'line_item' => { id: 'itemTitle', classes: 'govuk-!-width-zero' },
+        'item' => {},
+        'date' => {},
+        'fee_earner' => { classes: 'govuk-!-width-zero' },
+        'time' => { numeric: true, classes: 'govuk-!-width-zero' },
+        **(@form_object.application.allow_uplift? ? { 'uplift' => { numeric: true, classes: 'govuk-!-width-zero' } } : {}),
+        'action' => { numeric: true }
+      }
+      header_row = head.map.with_index do |(column_key, options), index|
+        if column_key == 'action'
+          {
+            text: t(column_key, scope: "nsm.steps.view_claim.work_items"),
+            **options
+          }
+        else
+          aria_sort, next_direction = sort_variable(column_key, @sort_by, @sort_direction)
+
+          {
+            text: reorder_form(edit_nsm_steps_work_items_path(current_application), column_key, next_direction, "nsm.steps.view_claim.work_items", index, button_id: options.delete(:id)),
+            **options.deep_merge(html_attributes: { 'aria-sort': aria_sort})
+          }
+        end
+      end
+
+      rows = @work_items.map do |work_item|
+        Nsm::WorkItemsRow.new(work_item, self)
+      end
+
+      govuk_table_with_cell(header_row, rows, caption: { text: t('.accessibility.work_items_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} })
+    %>
 
     <%= step_form @form_object do |f| %>
       <% if @form_object.all_work_items_valid? %>
