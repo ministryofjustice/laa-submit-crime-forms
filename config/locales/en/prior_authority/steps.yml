@@ -26,7 +26,7 @@ en:
           client_detained: Is your client detained?
           client_detained_prison: Where is your client detained?
           client_detained_prison_hint: Enter the name of prison, or select one from the suggestions that appear when you start to enter the name.
-          maat: MAAT number
+          maat: MAAT ID number
           maat_hint: This is a 7 digit number, for example 1234567
           main_offence: What was the main offence?
           main_offence_hint: Enter the name of an offence, or select one from the suggestions that appear when you start to enter the name.

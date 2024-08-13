@@ -116,7 +116,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
 
       it 'has the appropriate error messages' do
         expect(subject).not_to be_valid
-        expect(subject.errors.messages[:maat]).to include('The MAAT number must be a 7 digit number')
+        expect(subject.errors.messages[:maat]).to include('The MAAT ID number must be a 7 digit number')
       end
     end
   end

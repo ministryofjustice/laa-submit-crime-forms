@@ -18,7 +18,7 @@ RSpec.describe 'Prior authority applications - add case details', :javascript, t
       fill_in 'Year', with: '2023'
     end
 
-    fill_in 'MAAT number', with: '1234567'
+    fill_in 'MAAT ID number', with: '1234567'
     within('.govuk-form-group', text: 'Is your client detained?') do
       choose 'Yes'
       fill_in 'Where is your client detained?', with: 'HMP Bedford'
@@ -38,7 +38,7 @@ RSpec.describe 'Prior authority applications - add case details', :javascript, t
     expect(page)
       .to have_content('Enter the main offence')
       .and have_content('Date cannot be blank')
-      .and have_content('Enter the MAAT number')
+      .and have_content('Enter the MAAT ID number')
       .and have_content('Select yes if your client is detained')
       .and have_no_content('Enter the name of the prison')
       .and have_content('Select yes if this case is subject to POCA (Proceeds of Crime Act 2002)?')

@@ -13,29 +13,29 @@ RSpec.describe PriorAuthority::Steps::CaseDetail::DefendantForm do
   describe '#validate' do
     let(:application) { instance_double(PriorAuthorityApplication) }
 
-    context 'with valid MAAT number' do
+    context 'with valid MAAT ID number' do
       let(:maat) { '1234567' }
 
       it { is_expected.to be_valid }
     end
 
-    context 'with blank MAAT number' do
+    context 'with blank MAAT ID number' do
       let(:maat) { '' }
 
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:maat, :blank)).to be(true)
-        expect(form.errors.messages[:maat]).to include('Enter the MAAT number')
+        expect(form.errors.messages[:maat]).to include('Enter the MAAT ID number')
       end
     end
 
-    context 'with invalid format of MAAT number' do
+    context 'with invalid format of MAAT ID number' do
       let(:maat) { 'A12345' }
 
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:maat, :invalid)).to be(true)
-        expect(form.errors.messages[:maat]).to include('The MAAT number must be a 7 digit number')
+        expect(form.errors.messages[:maat]).to include('The MAAT ID number must be a 7 digit number')
       end
     end
   end
@@ -55,7 +55,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetail::DefendantForm do
       end
     end
 
-    context 'with blank MAAT number details' do
+    context 'with blank MAAT ID number details' do
       let(:maat) { '' }
 
       it 'does not persists to persist the defendant' do
@@ -63,7 +63,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetail::DefendantForm do
       end
     end
 
-    context 'with invalid format of MAAT number' do
+    context 'with invalid format of MAAT ID number' do
       let(:maat) { 'A23456' }
 
       it 'does not persist the defendant' do
