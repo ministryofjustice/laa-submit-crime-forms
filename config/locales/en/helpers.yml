@@ -88,6 +88,8 @@ en:
         court: Enter the name of a court, or select one from the suggestions that appear when you start to enter the name.
         hearing_outcome: Select a hearing outcome from the suggestions that appear when you start to enter it, for example, Change of solicitor (CP02)
         matter_type: Select a matter type from the suggestions that appear when you start to enter it, for example, offences against the person
+      nsm_steps_defendant_details_form:
+        maat: This is a 7 digit number, for example 1234567
       nsm_steps_reason_for_claim_form:
         reasons_for_claim: Select all that apply
         representation_order_withdrawn_date: For example, 27 3 2023
@@ -210,7 +212,7 @@ en:
       nsm_steps_defendant_details_form:
         first_name: First name
         last_name: Last name
-        maat: MAAT ID
+        maat: MAAT ID number
       nsm_steps_reason_for_claim_form:
         reasons_for_claim_options:
           core_costs_exceed_higher_limit: Core costs exceed higher limit

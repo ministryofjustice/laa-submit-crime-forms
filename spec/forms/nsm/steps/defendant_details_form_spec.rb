@@ -85,7 +85,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
       end
     end
 
-    context 'when MAAT ID is not set' do
+    context 'when MAAT ID number is not set' do
       let(:maat) { nil }
 
       context 'when claim_type is NOT BREACH_OF_INJUNCTION' do
@@ -102,7 +102,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
       end
     end
 
-    context 'when MAAT ID contains letters' do
+    context 'when MAAT ID number contains letters' do
       let(:maat) { '123456A' }
 
       it 'has the appropriate error messages' do
@@ -111,7 +111,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
       end
     end
 
-    context 'when MAAT ID is too short' do
+    context 'when MAAT ID number is too short' do
       let(:maat) { '12345' }
 
       it 'has the appropriate error messages' do
