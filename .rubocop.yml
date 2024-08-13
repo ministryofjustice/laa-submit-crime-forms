@@ -121,7 +121,7 @@ Metrics/ParameterLists:
   Max: 7
 
 Layout/LineLength:
-  Max: 125
+  Max: 130
   Exclude:
     - spec/decisions/**/*
     - spec/presenters/nsm/check_answers/application_status_card_spec.rb

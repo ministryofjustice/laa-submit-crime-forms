@@ -186,7 +186,7 @@ RSpec.describe 'User can manage work items', type: :system do
 
     expect(page).to have_content 'You cannot save and continue if any work items are incomplete'
 
-    click_on 'Change'
+    click_on 'Incomplete'
 
     choose 'Advocacy'
 

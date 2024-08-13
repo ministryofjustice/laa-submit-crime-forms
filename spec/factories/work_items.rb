@@ -6,7 +6,7 @@ FactoryBot.define do
       work_type { [WorkTypes::ATTENDANCE_WITHOUT_COUNSEL, WorkTypes::PREPARATION, WorkTypes::ADVOCACY].sample.to_s }
       time_spent { 50 + (400**rand).to_i } # range: 50 -> 450 with logorithmic distribution
       completed_on { rand(40).days.ago.to_date }
-      fee_earner { Faker::Name.name }
+      fee_earner { Faker::Name.name.split.map(&:first).join }
     end
 
     trait :partial do
@@ -23,7 +23,7 @@ FactoryBot.define do
       work_type { WorkTypes::PREPARATION }
       time_spent { '100' }
       completed_on { Time.zone.today }
-      fee_earner { 'test' }
+      fee_earner { 'TT' }
     end
 
     trait :travel do
@@ -31,7 +31,7 @@ FactoryBot.define do
       time_spent { '100' }
       uplift { 10 }
       completed_on { Time.zone.today }
-      fee_earner { 'test' }
+      fee_earner { 'TT' }
     end
 
     trait :waiting do
@@ -39,7 +39,7 @@ FactoryBot.define do
       time_spent { '100' }
       uplift { 10 }
       completed_on { Time.zone.today }
-      fee_earner { 'test' }
+      fee_earner { 'TT' }
     end
 
     trait :with_adjustment do
