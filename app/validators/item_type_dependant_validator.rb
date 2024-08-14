@@ -4,6 +4,10 @@ class ItemTypeDependantValidator < ActiveModel::EachValidator
 
     record.errors.add(attribute, :blank, item_type:) if value.blank?
     if value.is_a?(String)
+      # The value will only be a string when the automatic type conversion in Type::FullyValidatableInteger has failed.
+      # This is because the value entered by the user is either:
+      # * not a number at all
+      # * a non-integer number. In this case, `.to_f.to_s should yield the original value`
       error = value.to_f.to_s == value ? :not_a_whole_number : :not_a_number
       record.errors.add(attribute, error, item_type:)
     end
