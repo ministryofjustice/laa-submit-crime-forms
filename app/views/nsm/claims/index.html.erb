@@ -90,58 +90,62 @@
       </ul>
     </nav>
 
-    <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-visually-hidden">
-        <%= t('.heading') %>
-      </caption>
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <% ['ufn', 'defendant', 'account', 'last_updated', 'laa_reference', 'status'].each_with_index do |key, index| %>
-            <%= next if key == 'status' and %i[submitted draft].include?(@scope) %>
-            <%= table_header(
-              key,
-              "nsm.claims.index.header",
-              index,
-              polymorphic_path([@scope, :nsm_applications]),
-              @sort_by,
-              @sort_direction,
-            ) %>
-          <% end %>
-
-          <% if @scope == :draft %>
-            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('prior_authority.applications.tabs.header.action') %></th>
-          <% end %>
-        </tr>
-      </thead>
-
-      <tbody class="govuk-table__body app-task-list__items">
-        <% @claims.each do |claim| %>
-          <tr class="govuk-table__row app-task-list__item">
-            <td class="govuk-table__cell">
-              <%= link_to nsm_steps_start_page_path(claim.id) do %>
-                <%= claim.ufn %>
-              <% end %>
-            </td>
-            <td class="govuk-table__cell"><%= claim.main_defendant&.full_name.presence || I18n.t('helpers.missing_data') %></td>
-            <td class="govuk-table__cell"><%= claim.office_code.presence || I18n.t('helpers.missing_data') %></td>
-            <td class="govuk-table__cell"><%= claim.updated_at.to_fs(:stamp) %></td>
-            <td class="govuk-table__cell"><%= claim.laa_reference %></td>
-            <% if @scope == :draft %>
-              <td class="govuk-table__cell">
-                <%= link_to t(".delete"), confirm_delete_nsm_application_path(claim) %>
-              </td>
+    <% if false && @claims.any? %>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-visually-hidden">
+          <%= t('.heading') %>
+        </caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <% ['ufn', 'defendant', 'account', 'last_updated', 'laa_reference', 'status'].each_with_index do |key, index| %>
+              <%= next if key == 'status' and %i[submitted draft].include?(@scope) %>
+              <%= table_header(
+                key,
+                "nsm.claims.index.header",
+                index,
+                polymorphic_path([@scope, :nsm_applications]),
+                @sort_by,
+                @sort_direction,
+              ) %>
             <% end %>
-            <% if @scope == :reviewed %>
-              <td class="govuk-table__cell">
-                <strong class="govuk-tag <%= t(".status_colour.#{claim.status}") %>">
-                  <%= t(".status.#{claim.status}") %>
-                </strong>
-              </td>
+
+            <% if @scope == :draft %>
+              <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('prior_authority.applications.tabs.header.action') %></th>
             <% end %>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <%= render "shared/pagination",  { pagy: @pagy, item: t('.table_info_item') } %>
+        </thead>
+
+        <tbody class="govuk-table__body app-task-list__items">
+          <% @claims.each do |claim| %>
+            <tr class="govuk-table__row app-task-list__item">
+              <td class="govuk-table__cell">
+                <%= link_to nsm_steps_start_page_path(claim.id) do %>
+                  <%= claim.ufn %>
+                <% end %>
+              </td>
+              <td class="govuk-table__cell"><%= claim.main_defendant&.full_name.presence || I18n.t('helpers.missing_data') %></td>
+              <td class="govuk-table__cell"><%= claim.office_code.presence || I18n.t('helpers.missing_data') %></td>
+              <td class="govuk-table__cell"><%= claim.updated_at.to_fs(:stamp) %></td>
+              <td class="govuk-table__cell"><%= claim.laa_reference %></td>
+              <% if @scope == :draft %>
+                <td class="govuk-table__cell">
+                  <%= link_to t(".delete"), confirm_delete_nsm_application_path(claim) %>
+                </td>
+              <% end %>
+              <% if @scope == :reviewed %>
+                <td class="govuk-table__cell">
+                  <strong class="govuk-tag <%= t(".status_colour.#{claim.status}") %>">
+                    <%= t(".status.#{claim.status}") %>
+                  </strong>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= render "shared/pagination",  { pagy: @pagy, item: t('.table_info_item') } %>
+    <% else %>
+      <p><%= t(".no_data.#{@scope}") %></p>
+    <% end %>
   </div>
 </div>
