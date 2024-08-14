@@ -20,8 +20,8 @@ class WorkItem < ApplicationRecord
     )
   end
 
-  def translated_work_type
-    translations(work_type, 'nsm.steps.check_answers.show.sections.work_items')
+  def translated_work_type(value: :original)
+    translations(value == :assessed ? assessed_work_type : work_type, 'nsm.steps.check_answers.show.sections.work_items')
   end
 
   def sort_position
@@ -37,9 +37,5 @@ class WorkItem < ApplicationRecord
     return false if work_type.blank?
 
     WorkTypes::VALUES.detect { _1.to_s == work_type }.display?(application)
-  end
-
-  def assessed_work_type
-    allowed_work_type.presence || work_type
   end
 end

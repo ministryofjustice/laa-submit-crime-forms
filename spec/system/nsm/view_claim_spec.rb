@@ -201,10 +201,10 @@ RSpec.describe 'View claim page', type: :system do
   it 'show a work item' do
     visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :work_item, item_id: work_items.first.id)
 
-    expect(find('h1').text).to eq('Attendance without counsel')
     expect(all('table caption, table td').map(&:text)).to eq(
       [
         'Your claimed costs',
+        'Work type', 'Attendance without counsel',
         'Date',	1.day.ago.to_fs(:stamp),
         'Fee earner initials', 'AB',
         'Rate applied', '£52.15',
@@ -626,16 +626,17 @@ RSpec.describe 'View claim page', type: :system do
     it 'show a work item' do
       visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :work_item, item_id: work_items.last.id)
 
-      expect(find('h1').text).to eq('Advocacy')
       expect(all('table caption, table td').map(&:text)).to eq(
         [
           'Adjusted claim',
+          'Allowed work type', 'Advocacy',
           'Number of hours allowed', '0 hours 52 minutes',
           'Uplift allowed', '0%',
           'Net cost allowed', '£56.70',
           'Reason for adjustment', 'WI adjustment',
 
           'Your claimed costs',
+          'Work type', 'Advocacy',
           'Date',	Time.current.to_fs(:stamp),
           'Fee earner initials', 'BC',
           'Rate applied', '£65.42',

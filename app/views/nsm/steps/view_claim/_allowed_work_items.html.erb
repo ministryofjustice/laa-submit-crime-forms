@@ -80,7 +80,6 @@
                                                               item_type: :work_item,
                                                               item_id: work_item.id,
                                                               page: pagy.page))
-
       to_display = work_item.allowed_work_type.present? ? safe_join([item_with_link, " *"]) : item_with_link
 
       [

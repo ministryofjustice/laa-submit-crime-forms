@@ -6,12 +6,13 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= work_item.translated_work_type[I18n.locale] %></h1>
+    <h1 class="govuk-heading-xl"><%=  %></h1>
 
     <%=
       if work_item.adjustment_comment
         rows = [
-          [{ text: t(".allowed_hours"), width: 'govuk-!-width-one-half' }, format_period(work_item.allowed_time_spent || work_item.time_spent)],
+          [{ text: t(".allowed_work_type"), width: 'govuk-!-width-one-half'}, work_item.translated_work_type(value: :assessed)[I18n.locale]],
+          [t(".allowed_hours"), format_period(work_item.allowed_time_spent || work_item.time_spent)],
           [t(".allowed_uplift"), NumberTo.percentage((work_item.allowed_uplift || work_item.uplift).to_f, multiplier: 1)],
           [t(".allowed_net_cost"), NumberTo.pounds(work_item.allowed_total_cost)],
           [t(".adjustment_comment"), work_item.adjustment_comment]
@@ -25,7 +26,8 @@
     %>
     <%=
       rows = [
-        [{ text: t(".date"), width: 'govuk-!-width-one-half' }, work_item.completed_on.strftime('%-d %B %Y')],
+        [{ text:  t('.work_type'), width: 'govuk-!-width-one-half' }, work_item.translated_work_type[I18n.locale]],
+        [t(".date"), work_item.completed_on.strftime('%-d %B %Y')],
         [t(".fee_earner"), work_item.fee_earner],
         [t(".rate"), NumberTo.pounds(work_item.pricing[work_item.work_type])],
         [t(".hours"), format_period(work_item.time_spent)],

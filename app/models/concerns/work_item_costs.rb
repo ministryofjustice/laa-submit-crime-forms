@@ -24,7 +24,7 @@ module WorkItemCosts
   end
 
   def allowed_total_cost
-    return total_cost if allowed_time_spent.nil? && allowed_uplift.nil?
+    return total_cost if allowed_time_spent.nil? && allowed_uplift.nil? && allowed_work_type.nil?
 
     uplifted_time_spent = apply_uplift!((allowed_time_spent || time_spent).to_d, allowed_uplift || uplift)
     # We need to use a Rational because some numbers divided by 60 cannot be accurately represented as a decimal,
@@ -39,6 +39,10 @@ module WorkItemCosts
 
   def pricing
     @pricing ||= Pricing.for(application)
+  end
+
+  def assessed_work_type
+    allowed_work_type.presence || work_type
   end
 
   private
