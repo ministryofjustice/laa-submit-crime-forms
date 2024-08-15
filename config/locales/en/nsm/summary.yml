@@ -26,6 +26,7 @@ en:
       letters: Letters
       calls: Phone calls
       caption: Summary of letters and calls
+      net_cost: Total cost of letters and calls
     nsm/cost_summary/disbursements:
       disbursements: Disbursements
       standard:
@@ -71,3 +72,4 @@ en:
         veterinarian_report: Veterinarian Report
         voice_recognition_experts: Voice Recognition
       caption: Summary of disbursements
+      net_cost: Total cost of disbursements

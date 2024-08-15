@@ -39,11 +39,6 @@ module Nsm
         @total_cost ||= work_items.sum(&:total_cost)
       end
 
-      def total_cost_cell
-        safe_join([tag.span(translate('net_cost'), class: 'govuk-visually-hidden'),
-                   tag.strong(NumberTo.pounds(total_cost))])
-      end
-
       def total_cost_inc_vat
         @total_cost_inc_vat ||= calculate_vat
       end
@@ -56,6 +51,14 @@ module Nsm
 
       def title
         translate('work_items')
+      end
+
+      def header_row
+        [
+          { text: tag.span(translate('.header.item'), class: 'govuk-visually-hidden') },
+          { text: translate('.header.time') },
+          { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
+        ]
       end
     end
   end

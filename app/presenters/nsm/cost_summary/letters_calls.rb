@@ -27,12 +27,16 @@ module Nsm
         claim.letters_and_calls_total_cost || 0
       end
 
-      def total_cost_cell
-        NumberTo.pounds(total_cost)
-      end
-
       def title
         translate('letters_calls')
+      end
+
+      def header_row
+        [
+          { text: translate('.header.item') },
+          { text: translate('.header.number'), classes: 'govuk-table__header--numeric' },
+          { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
+        ]
       end
     end
   end

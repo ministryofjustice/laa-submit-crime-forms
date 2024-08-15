@@ -25,10 +25,11 @@ module Nsm
               actions: actions(name)
             },
             table: {
-              head: header_row(time_column: name == :work_items, number_column: name == :letters_calls),
+              head: data.header_row,
               rows: [*data.rows, footer_row(data, middle_column: name != :disbursements)],
-              caption: tag.span(data.caption, class: 'govuk-visually-hidden')
-            }
+              first_cell_is_header: true,
+            },
+            caption: { text: data.caption, classes: 'govuk-visually-hidden' },
           }
         end
       end
@@ -47,15 +48,6 @@ module Nsm
             helper.url_for(controller: "nsm/steps/#{key}", action: :edit, id: claim.id, only_path: true)
           ),
         ]
-      end
-
-      def header_row(time_column: false, number_column: false)
-        [
-          { text: translate('.header.item') },
-          ({ text: translate('.header.time') } if time_column),
-          ({ text: translate('.header.number'), classes: 'govuk-table__header--numeric' } if number_column),
-          { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
-        ].compact
       end
 
       def footer_row(data, middle_column: false)

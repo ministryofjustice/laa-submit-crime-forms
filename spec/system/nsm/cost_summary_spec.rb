@@ -40,13 +40,13 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
       # Letters and calls
       .and have_content('Letters2£8.18') # 4.09 * 2
       .and have_content('Phone calls3£12.27') # 4.09 * 3
-      .and have_content('Total£20.45')
+      .and have_content('Total cost of letters and calls£20.45')
       # Disbursements
       .and have_content('Car mileage£90.00')
       .and have_content('DNA Testing£30.00')
       .and have_content('Custom£40.00')
       .and have_content('Car mileage£67.50')
-      .and have_content('Total£227.50')
+      .and have_content('Total cost of disbursements£227.50')
   end
 
   context 'when claimant is not vat registered' do

@@ -4,11 +4,15 @@
     <%= t('.your_cost_summary') %>
   </caption>
   <thead class="govuk-table__head">
-    <tr><th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.item') %></th>
+    <tr>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">
+        <span class="govuk-visually-hidden"><%= t('.item') %></span>
+      </th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-quarter govuk-table__header--numeric"><%= t('.net_cost') %> </th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-quarter govuk-table__header--numeric"><%= t('.vat') %></th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-quarter govuk-table__header--numeric"><%= t('.total') %></th>
-  </tr></thead>
+    </tr>
+  </thead>
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><%= t('.profit_costs') %></td>

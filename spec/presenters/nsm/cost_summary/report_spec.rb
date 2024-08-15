@@ -10,15 +10,16 @@ RSpec.describe Nsm::CostSummary::Report do
   let(:id) { SecureRandom.uuid }
   let(:letters_calls) do
     instance_double(Nsm::CostSummary::LettersCalls, title: l_title, rows: l_rows, total_cost: l_total_cost,
-                    total_cost_cell: 'TOTAL', caption: 'CAPTION')
+                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: l_header)
   end
   let(:work_items) do
     instance_double(Nsm::CostSummary::WorkItems, title: wi_title, rows: wi_rows, total_cost: wi_total_cost,
-                    total_cost_inc_vat: wi_total_cost_inc_vat, total_cost_cell: 'TOTAL', caption: 'CAPTION')
+                    total_cost_inc_vat: wi_total_cost_inc_vat, total_cost_cell: 'TOTAL', caption: 'CAPTION',
+                    header_row: wi_header)
   end
   let(:disbursements) do
     instance_double(Nsm::CostSummary::Disbursements, title: d_title, rows: d_rows, total_cost: d_total_cost,
-                    total_cost_cell: 'TOTAL', caption: 'CAPTION')
+                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: d_header)
   end
   let(:summary) do
     instance_double(Nsm::CostSummary::Summary, total_gross: 230)
@@ -26,13 +27,16 @@ RSpec.describe Nsm::CostSummary::Report do
   let(:l_title) { 'Letters and Calls' }
   let(:l_rows) { double(:l_row_data) }
   let(:l_total_cost) { 100.00 }
+  let(:l_header) { double(:l_header_data) }
   let(:wi_title) { 'Work Items' }
   let(:wi_rows) { double(:wi_row_data) }
   let(:wi_total_cost) { 75.00 }
   let(:wi_total_cost_inc_vat) { 85.00 }
+  let(:wi_header) { double(:wi_header_data) }
   let(:d_title) { 'Disbursements' }
   let(:d_rows) { double(:d_row_data) }
   let(:d_total_cost) { 55.00 }
+  let(:d_header) { double(:d_header_data) }
 
   before do
     allow(Nsm::CostSummary::WorkItems).to receive(:new).and_return(work_items)
@@ -56,7 +60,7 @@ RSpec.describe Nsm::CostSummary::Report do
     end
 
     it 'returns a section for work items' do
-      expect(subject.sections).to include(
+      expect(subject.sections[0]).to eq(
         {
           card: {
             actions: [
@@ -65,12 +69,7 @@ RSpec.describe Nsm::CostSummary::Report do
             title: 'Work Items'
           },
           table: {
-            caption: '<span class="govuk-visually-hidden">CAPTION</span>',
-            head: [
-              { text: 'Item' },
-              { text: 'Time' },
-              { classes: 'govuk-table__header--numeric', text: 'Net cost' }
-            ],
+            head: wi_header,
             rows: [
               wi_rows,
               [
@@ -78,14 +77,16 @@ RSpec.describe Nsm::CostSummary::Report do
                 {},
                 { classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold', text: 'TOTAL' }
               ]
-            ]
-          }
+            ],
+            first_cell_is_header: true,
+          },
+          caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
         }
       )
     end
 
     it 'returns a section for letters and calls' do
-      expect(subject.sections).to include(
+      expect(subject.sections[1]).to eq(
         {
           card: {
             actions: [
@@ -94,12 +95,7 @@ RSpec.describe Nsm::CostSummary::Report do
             title: 'Letters and Calls'
           },
            table: {
-             caption: '<span class="govuk-visually-hidden">CAPTION</span>',
-             head: [
-               { text: 'Item' },
-               { classes: 'govuk-table__header--numeric', text: 'Number' },
-               { classes: 'govuk-table__header--numeric', text: 'Net cost' }
-             ],
+             head: l_header,
              rows: [
                l_rows,
                [
@@ -107,14 +103,16 @@ RSpec.describe Nsm::CostSummary::Report do
                  {},
                  { classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold', text: 'TOTAL' }
                ]
-             ]
-           }
+             ],
+             first_cell_is_header: true,
+           },
+           caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
         }
       )
     end
 
     it 'returns a section for disbursements' do
-      expect(subject.sections).to include(
+      expect(subject.sections[2]).to eq(
         {
           card: {
             actions: [
@@ -123,19 +121,17 @@ RSpec.describe Nsm::CostSummary::Report do
             title: 'Disbursements'
           },
           table: {
-            caption: '<span class="govuk-visually-hidden">CAPTION</span>',
-            head: [
-              { text: 'Item' },
-              { classes: 'govuk-table__header--numeric', text: 'Net cost' }
-            ],
+            head: d_header,
             rows: [
               d_rows,
               [
                 { classes: 'govuk-table__header', text: 'Total' },
                 { classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold', text: 'TOTAL' }
               ]
-            ]
-          }
+            ],
+            first_cell_is_header: true,
+          },
+          caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
         }
       )
     end

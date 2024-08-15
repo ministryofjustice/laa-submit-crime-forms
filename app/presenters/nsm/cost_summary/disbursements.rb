@@ -22,16 +22,19 @@ module Nsm
         @total_cost ||= disbursements.filter_map(&:total_cost_pre_vat).sum
       end
 
-      def total_cost_cell
-        NumberTo.pounds(total_cost)
-      end
-
       def title
         translate('disbursements')
       end
 
       def translated_text(disbursement)
         check_missing(disbursement.translated_disbursement_type)
+      end
+
+      def header_row
+        [
+          { text: translate('.header.item') },
+          { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
+        ]
       end
     end
   end
