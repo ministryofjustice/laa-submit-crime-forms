@@ -28,7 +28,7 @@ gem 'rails', '~> 7.2.0'
 gem 'redis'
 gem 'sentry-rails', '~> 5.19.0'
 gem 'sentry-ruby', '~> 5.19.0'
-gem 'sidekiq', '~> 7.3', '>= 7.3.0'
+gem 'sidekiq', '~> 7.3', '>= 7.3.1'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron', '~> 1.12.0'
 gem 'table_print'
@@ -43,7 +43,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec_junit_formatter', require: false
-  gem 'rspec-rails', '~> 6.1.3'
+  gem 'rspec-rails', '~> 6.1.4'
 end
 
 group :development do
