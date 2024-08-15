@@ -18,6 +18,14 @@ RSpec.describe AdditionalCost do
       it 'calculates total_cost correctly' do
         expect(subject.total_cost).to eq(20.00)
       end
+
+      context 'and item count is negative' do
+        let(:attributes) { { unit_type: 'per_item', cost_per_item: '10', items: '-2' } }
+
+        it 'calculates the cost as 0' do
+          expect(subject.total_cost).to eq(0.00)
+        end
+      end
     end
 
     context 'no unit type' do
