@@ -75,7 +75,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
           [
             {
               head_key: 'application_status',
-              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
+              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part granted</strong></p>' \
                                '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>£\d+\.\d\d allowed</p>')
             },
             {
@@ -98,7 +98,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             [
               {
                 head_key: 'application_status',
-                text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
+                text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part granted</strong></p>' \
                                  '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>£\d+\.\d\d allowed</p>')
               },
               {
@@ -126,7 +126,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             [
               {
                 head_key: 'application_status',
-                text: '<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
+                text: '<p><strong class="govuk-tag govuk-tag--blue">Part granted</strong></p>' \
                       '<p>1 December 2023</p><br><p>£0.00 claimed</p><p>£0.00 allowed</p>'
               },
               {

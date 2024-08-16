@@ -130,7 +130,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£276.00' },
-              name: { numeric: false, text: 'Waiting', width: nil }, net_cost: { numeric: true, text: '£276.00' },
+              name: { numeric: false, text: 'Travel', width: nil }, net_cost: { numeric: true, text: '£276.00' },
               vat: { numeric: true, text: '£0.00' }
             }
           )
@@ -138,7 +138,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
             {
               allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£276.00' },
-              name: { numeric: false, text: 'Travel', width: nil }, net_cost: { numeric: true, text: '£276.00' },
+              name: { numeric: false, text: 'Waiting', width: nil }, net_cost: { numeric: true, text: '£276.00' },
               vat: { numeric: true, text: '£0.00' }
             }
           )

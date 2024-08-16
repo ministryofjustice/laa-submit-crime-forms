@@ -22,7 +22,7 @@ en:
           submitted: Submitted
           accessed: Accessed
           granted: Granted
-          part_grant: Part Granted
+          part_grant: Part granted
           rejected: Rejected
           sent_back: Update needed
           provider_requested: Provider request

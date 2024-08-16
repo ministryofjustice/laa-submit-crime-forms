@@ -4,21 +4,25 @@ RSpec.describe Nsm::CostSummary::LettersCalls do
   subject { described_class.new(claim) }
 
   let(:claim) do
-    instance_double(Claim, firm_office:, letters_after_uplift:, calls_after_uplift:, letters_and_calls_total_cost:,
-letters_and_calls_total_cost_inc_vat:)
+    instance_double(Claim, firm_office:, letters_after_uplift:, calls_after_uplift:,
+                    letters_and_calls_total_cost:, letters_and_calls_total_cost_inc_vat:, letters:, calls:)
   end
   let(:firm_office) { build(:firm_office, :valid) }
   let(:letters_after_uplift) { 25.0 }
   let(:calls_after_uplift) { 75.0 }
   let(:letters_and_calls_total_cost) { 100.00 }
   let(:letters_and_calls_total_cost_inc_vat) { 120.00 }
+  let(:letters) { 2 }
+  let(:calls) { 3 }
 
   describe '#rows' do
     it 'generates letters and calls rows' do
       expect(subject.rows).to eq(
         [[{ classes: 'govuk-table__header', text: 'Letters' },
+          { classes: 'govuk-table__cell--numeric', text: 2 },
           { classes: 'govuk-table__cell--numeric', text: '£25.00' }],
          [{ classes: 'govuk-table__header', text: 'Phone calls' },
+          { classes: 'govuk-table__cell--numeric', text: 3 },
           { classes: 'govuk-table__cell--numeric', text: '£75.00' }]]
       )
     end
