@@ -12,8 +12,8 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
       organisation: 'Acme Ltd',
       postcode: 'SW1 1AA',
       file_upload: file_upload,
-      items: '1',
-      cost_per_item: '1',
+      items: items,
+      cost_per_item: cost_per_item,
       period: period,
       cost_per_hour: cost_per_hour,
       user_chosen_cost_type: user_chosen_cost_type,
@@ -27,6 +27,8 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
 
   let(:period) { nil }
   let(:cost_per_hour) { nil }
+  let(:cost_per_item) { '1' }
+  let(:items) { '1' }
   let(:user_chosen_cost_type) { nil }
   let(:travel_cost_per_hour) { '' }
   let(:additional_cost_list) { '' }
@@ -190,7 +192,7 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
     let(:items) { 30 }
     let(:cost_per_item) { '10' }
     let(:user_chosen_cost_type) { 'per_item' }
-    let(:service_type) { 'translation_documents' }
+    let(:service_type) { 'photocopying' }
 
     it 'calculates correctly' do
       expect(subject.total_cost).to eq 300.0
@@ -206,6 +208,14 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
 
     context 'when cost_per_hours is invalid' do
       let(:cost_per_item) { '1apple' }
+
+      it 'returns 0' do
+        expect(subject.total_cost).to eq 0
+      end
+    end
+
+    context 'when items is negative' do
+      let(:items) { '-1' }
 
       it 'returns 0' do
         expect(subject.total_cost).to eq 0
