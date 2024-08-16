@@ -208,6 +208,9 @@ en:
           waiting: Waiting
           travel: Travel
           disbursements: Disbursements
+          total_net: 'Sum of net cost:'
+          total_vat: 'Sum of VAT on claimed:'
+          total_gross: 'Sum of net cost and VAT on claimed:'
       other_info:
         edit:
           page_title: Other relevant information
