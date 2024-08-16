@@ -12,8 +12,8 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
       organisation: 'Acme Ltd',
       postcode: 'SW1 1AA',
       file_upload: file_upload,
-      items: '1',
-      cost_per_item: '1',
+      items: items,
+      cost_per_item: cost_per_item,
       period: period,
       cost_per_hour: cost_per_hour,
       user_chosen_cost_type: user_chosen_cost_type,
@@ -27,6 +27,8 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
 
   let(:period) { nil }
   let(:cost_per_hour) { nil }
+  let(:cost_per_item) { '1' }
+  let(:items) { '1' }
   let(:user_chosen_cost_type) { nil }
   let(:travel_cost_per_hour) { '' }
   let(:additional_cost_list) { '' }
@@ -135,26 +137,89 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
         application: application,
         'travel_time(1)': travel_hours,
         'travel_time(2)': travel_minutes,
-        travel_cost_per_hour: '1'
+        travel_cost_per_hour: travel_cost_per_hour
       }
     end
-
     let(:travel_hours) { '1' }
-    let(:travel_minutes) { '' }
+    let(:travel_minutes) { '10' }
+    let(:travel_cost_per_hour) { '1' }
 
-    it 'returns 0 if travel_time is invalid' do
-      expect(form.travel_cost).to eq 0
+    context 'when travel_time is invalid' do
+      let(:travel_minutes) { '' }
+
+      it 'returns 0' do
+        expect(form.travel_cost).to eq 0
+      end
+    end
+
+    context 'when travel_cost_per_hour is invalid' do
+      let(:travel_cost_per_hour) { '1apple' }
+
+      it 'returns 0' do
+        expect(form.travel_cost).to eq 0
+      end
     end
   end
 
-  describe '#total_cost' do
+  describe '#total_cost (per hour)' do
     let(:period) { 30 }
-    let(:cost_per_hour) { '0.5' }
+    let(:cost_per_hour) { '10' }
     let(:user_chosen_cost_type) { 'per_hour' }
     let(:service_type) { 'meteorologist' }
 
-    it 'handles <£1 values' do
-      expect(subject.total_cost).to eq 0.25
+    it 'calculates correctly' do
+      expect(subject.total_cost).to eq 5.0
+    end
+
+    context 'when cost_per_hours is < £1' do
+      let(:cost_per_hour) { '0.5' }
+
+      it 'calculates correctly' do
+        expect(subject.total_cost).to eq 0.25
+      end
+    end
+
+    context 'when cost_per_hours is invalid' do
+      let(:cost_per_hour) { '1apple' }
+
+      it 'returns 0' do
+        expect(subject.total_cost).to eq 0
+      end
+    end
+  end
+
+  describe '#total_cost (per item)' do
+    let(:items) { 30 }
+    let(:cost_per_item) { '10' }
+    let(:user_chosen_cost_type) { 'per_item' }
+    let(:service_type) { 'photocopying' }
+
+    it 'calculates correctly' do
+      expect(subject.total_cost).to eq 300.0
+    end
+
+    context 'when cost_per_hours is < £1' do
+      let(:cost_per_item) { '0.5' }
+
+      it 'calculates correctly' do
+        expect(subject.total_cost).to eq 15.0
+      end
+    end
+
+    context 'when cost_per_hours is invalid' do
+      let(:cost_per_item) { '1apple' }
+
+      it 'returns 0' do
+        expect(subject.total_cost).to eq 0
+      end
+    end
+
+    context 'when items is negative' do
+      let(:items) { '-1' }
+
+      it 'returns 0' do
+        expect(subject.total_cost).to eq 0
+      end
     end
   end
 
