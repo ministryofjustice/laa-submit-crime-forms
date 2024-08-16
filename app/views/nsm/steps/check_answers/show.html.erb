@@ -9,13 +9,26 @@
         <h2 class="govuk-heading-l"><%= section_group[:heading] %></h2>
       <% end %>
       <% section_group[:sections].each do |section| %>
-        <%= govuk_summary_card(**section[:card]) do %>
-          <% if section[:custom] %>
-            <%= render section[:custom][:partial], **section[:custom][:locals] %>
-          <% elsif section[:rows] %>
-            <%= govuk_summary_list(rows: section[:rows]) %>
-          <% end %>
-        <% end %>
+        <div class="govuk-summary-card">
+          <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title"><%= section[:card][:title] %></h2>
+            <ul class="govuk-summary-card__actions">
+              <% section[:card][:actions].each do |action| %>
+                <li class="govuk-summary-card__action">
+                  <%= action %>
+                  <span class="govuk-visually-hidden"><%= section[:card][:title] %></span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="govuk-summary-card__content">
+            <% if section[:custom] %>
+              <%= render section[:custom][:partial], **section[:custom][:locals] %>
+            <% elsif section[:rows] %>
+              <%= govuk_summary_list(rows: section[:rows]) %>
+            <% end %>
+          </div>
+        </div>
       <% end %>
     <% end %>
     <div class="govuk-button-group">

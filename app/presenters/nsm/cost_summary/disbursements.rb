@@ -29,6 +29,13 @@ module Nsm
       def translated_text(disbursement)
         check_missing(disbursement.translated_disbursement_type)
       end
+
+      def header_row
+        [
+          { text: translate('.header.item') },
+          { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
+        ]
+      end
     end
   end
 end

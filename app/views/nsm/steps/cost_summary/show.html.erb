@@ -10,9 +10,24 @@
     <%= render 'summary_table', summary: @report.summary %>
 
     <% @report.sections.each do |section| %>
-      <%= govuk_summary_card(**section[:card]) do %>
-        <%= govuk_table(**section[:table]) %>
-      <% end %>
+      <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+          <h2 class="govuk-summary-card__title"><%= section[:card][:title] %></h2>
+          <ul class="govuk-summary-card__actions">
+            <% section[:card][:actions].each do |action| %>
+              <li class="govuk-summary-card__action">
+                <%= action %>
+                <span class="govuk-visually-hidden"><%= section[:card][:title] %></span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="govuk-summary-card__content">
+          <%= govuk_table(**section[:table]) do |table|
+            table.with_caption(**section[:caption])
+          end %>
+        </div>
+      </div>
     <% end %>
 
     <div class="govuk-button-group">
