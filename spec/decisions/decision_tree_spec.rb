@@ -116,7 +116,7 @@ RSpec.describe Decisions::DecisionTree do
   it_behaves_like 'a generic decision', from: :disbursement_cost, goto: { action: :edit, controller: 'nsm/steps/disbursements' }
 
   context 'when no disbursements' do
-    it_behaves_like 'a generic decision', from: :disbursement_delete, goto: { action: :edit, controller: 'nsm/steps/disbursement_type', disbursement_id: Nsm::StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: :disbursement_delete, goto: { action: :edit, controller: 'nsm/steps/disbursements' }
   end
 
   context 'when disbursements' do
