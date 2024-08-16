@@ -19,7 +19,7 @@ module Providers
     end
 
     def failure
-      redirect_to new_provider_session_path, flash: { notice: t('errors.generic_login_failed') }
+      redirect_to after_omniauth_failure_path_for, flash: { notice: t('errors.generic_login_failed') }
     end
 
     private
