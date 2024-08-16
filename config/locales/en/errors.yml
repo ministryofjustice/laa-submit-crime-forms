@@ -469,16 +469,20 @@ en:
           attributes:
             letters:
               blank: Set the number of letters
+              greater_than_or_equal_to: You cannot apply an uplift if there are 0 letters
             calls:
               blank: Set the number of calls
+              greater_than_or_equal_to: You cannot apply an uplift if there are 0 calls
             letters_uplift:
-              blank: Letters uplift percentage must be set
-              less_than_or_equal_to: You can only apply an uplift from 1 to 100
-              greater_than_or_equal_to: You can only apply an uplift from 1 to 100
+              blank: Letters uplift percentage must be from 1 to 100
+              less_than_or_equal_to: Letters uplift percentage must be from 1 to 100
+              greater_than_or_equal_to: Letters uplift percentage must be from 1 to 100
+              uplift_on_zero: You cannot add an uplift if there are 0 letters
             calls_uplift:
-              blank: Calls uplift percentage must be set
-              less_than_or_equal_to: You can only apply an uplift from 1 to 100
-              greater_than_or_equal_to: You can only apply an uplift from 1 to 100
+              blank: Phone calls uplift percentage must be from 1 to 100
+              less_than_or_equal_to: Phone calls uplift percentage must be from 1 to 100
+              greater_than_or_equal_to: Phone calls uplift percentage must be from 1 to 100
+              uplift_on_zero: You cannot add an uplift if there are 0 phone calls
         nsm/steps/disbursement_type_form:
           attributes:
             disbursement_date: *shared_date_errors
