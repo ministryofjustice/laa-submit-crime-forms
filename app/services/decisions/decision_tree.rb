@@ -87,8 +87,6 @@ module Decisions
       .goto(edit: 'nsm/steps/disbursement_cost', disbursement_id: -> { record.id })
     from(:disbursement_cost).goto(edit: NSM_DISBURSEMENTS)
     from(:disbursement_delete)
-      .when(-> { application.disbursements.none? })
-      .goto(edit: NSM_DISBURSEMENT_TYPE, disbursement_id: Nsm::StartPage::NEW_RECORD)
       .goto(edit: NSM_DISBURSEMENTS)
     from(:disbursements)
       .when(-> { add_another.yes? })
