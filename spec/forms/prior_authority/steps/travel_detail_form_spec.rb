@@ -126,5 +126,15 @@ RSpec.describe PriorAuthority::Steps::TravelDetailForm do
         expect(subject.formatted_total_cost).to eq '£0.00'
       end
     end
+
+    context 'when rate is not a valid number' do
+      let(:travel_hours) { '2' }
+      let(:travel_minutes) { '1' }
+      let(:travel_cost_per_hour) { '1apple' }
+
+      it 'returns 0' do
+        expect(subject.formatted_total_cost).to eq '£0.00'
+      end
+    end
   end
 end

@@ -9,13 +9,15 @@ module Nsm
         @work_items = work_items
       end
 
+      ORDER = %w[travel waiting attendance_with_counsel attendance_without_counsel preparation advocacy].freeze
+
       def rows
-        work_types = WorkTypes.values.filter { |work_type| work_type.display?(claim) }
+        work_types = WorkTypes.values.sort_by { ORDER.index(_1.to_s) }.filter { |work_type| work_type.display?(claim) }
 
         work_types.map do |work_type|
           [
             { text: translate(work_type.to_s), classes: 'govuk-table__header' },
-            { text: ApplicationController.helpers.format_period(time_spent_for(work_type)) },
+            { text: ApplicationController.helpers.format_period(time_spent_for(work_type), style: :minimal_html) },
             { text: NumberTo.pounds(total_cost_for(work_type) || 0), classes: 'govuk-table__cell--numeric' },
           ]
         end
@@ -49,6 +51,14 @@ module Nsm
 
       def title
         translate('work_items')
+      end
+
+      def header_row
+        [
+          { text: tag.span(translate('.header.item'), class: 'govuk-visually-hidden') },
+          { text: translate('.header.time') },
+          { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
+        ]
       end
     end
   end

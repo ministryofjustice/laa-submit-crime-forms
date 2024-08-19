@@ -189,7 +189,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'laa_response',
               text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
-                    '</p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">magsbilling@justice.gov.uk</a> ' \
+                    '</p><p>To update your claim, email <a href="mailto:CRM7fi@justice.gov.uk">CRM7fi@justice.gov.uk</a> ' \
                     "with the LAA case reference in the subject of the email and include any supporting information requested.\n</p>"
             }
           ]
@@ -214,7 +214,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'laa_response',
               text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
-                    '</p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">magsbilling@justice.gov.uk</a> ' \
+                    '</p><p>To update your claim, email <a href="mailto:CRM7fi@justice.gov.uk">CRM7fi@justice.gov.uk</a> ' \
                     "with the LAA case reference in the subject of the email and include any supporting information requested.\n</p>"
             }
           ]
@@ -238,8 +238,8 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'laa_response',
               text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your ' \
-                    'claim</span></p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">' \
-                    'magsbilling@justice.gov.uk</a> with the LAA case reference in the subject of the email and include ' \
+                    'claim</span></p><p>To update your claim, email <a href="mailto:CRM7fi@justice.gov.uk">' \
+                    'CRM7fi@justice.gov.uk</a> with the LAA case reference in the subject of the email and include ' \
                     "your new information.\n</p>"
             }
           ]

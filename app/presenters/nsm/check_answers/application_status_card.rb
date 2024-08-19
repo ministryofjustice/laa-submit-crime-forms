@@ -3,7 +3,7 @@
 module Nsm
   module CheckAnswers
     class ApplicationStatusCard < Base
-      EMAIL = 'magsbilling@justice.gov.uk'
+      EMAIL = 'CRM7fi@justice.gov.uk'
       include GovukLinkHelper
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
