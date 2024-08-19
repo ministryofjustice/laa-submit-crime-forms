@@ -47,7 +47,7 @@ module PriorAuthority
         if scope.send(:"#{field_type}_id") == 'custom'
           scope.send(:"custom_#{field_type}_name")
         elsif scope.send(:"#{field_type}_id").present?
-          I18n.t("prior_authority.#{list_type}.#{scope.send(:"#{field_type}_id")}")
+          scope.send(:"#{field_type}_id")
         end
       end
 
