@@ -66,6 +66,7 @@ en:
           table_info_item: work item
           total: Total
           no_data: You do not have any adjusted work items
+          type_change_explanation: '* denotes that a work item has been adjusted from one type to another'
         letters_and_calls:
           page_title: Claim details
           letters_and_calls: Letters and calls
@@ -136,12 +137,14 @@ en:
         # view pages
         work_item:
           page_title: Claim details
+          work_type: Work type
           date: Date
           fee_earner: Fee earner initials
           rate: Rate applied
           hours: Number of hours
           uplift: Uplift
           net_cost: Net cost
+          allowed_work_type: Allowed work type
           allowed_hours: Number of hours allowed
           allowed_uplift: Uplift allowed
           allowed_net_cost: Net cost allowed
