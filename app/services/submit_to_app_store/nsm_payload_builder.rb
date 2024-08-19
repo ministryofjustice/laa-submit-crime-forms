@@ -31,11 +31,12 @@ class SubmitToAppStore
         'work_items' => work_item_data,
         'defendants' => defendant_data,
         'firm_office' => firm_office_data,
-        'solicitor' => claim.solicitor.attributes.except('id', *DEFAULT_IGNORE),
-        'submitter' => claim.submitter.attributes.slice('email', 'description'),
+        'solicitor' => solicitor_data,
+        'submitter' => submitter_data,
         'supporting_evidences' => supporting_evidence,
         'vat_rate' => pricing[:vat].to_f,
         'stage_reached' => claim.stage_reached,
+        'work_item_pricing' => work_item_pricing_data,
       )
     end
 
@@ -43,6 +44,14 @@ class SubmitToAppStore
       claim.firm_office.attributes.except('id', 'account_number', *DEFAULT_IGNORE).merge(
         'account_number' => claim.office_code
       )
+    end
+
+    def solicitor_data
+      claim.solicitor.attributes.except('id', *DEFAULT_IGNORE)
+    end
+
+    def submitter_data
+      claim.submitter.attributes.slice('email', 'description')
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -62,7 +71,8 @@ class SubmitToAppStore
 
     def work_item_data
       claim.work_items.map do |work_item|
-        data = work_item.as_json(except: [*DEFAULT_IGNORE, 'allowed_uplift', 'allowed_time_spent', 'adjustment_comment'])
+        data = work_item.as_json(except: [*DEFAULT_IGNORE, 'allowed_uplift', 'allowed_time_spent', 'adjustment_comment',
+                                          'allowed_work_type'])
         data['completed_on'] = data['completed_on'].to_s
         data['pricing'] = pricing[work_item.work_type].to_f
         data
@@ -83,6 +93,11 @@ class SubmitToAppStore
       claim.supporting_evidence.map do |evidence|
         evidence.as_json.slice!('claim_id')
       end
+    end
+
+    def work_item_pricing_data
+      work_types = WorkTypes.values.select { _1.display?(claim) }.map(&:to_s)
+      pricing.as_json.select { |k, _v| k.in?(work_types) }.transform_values(&:to_f)
     end
   end
 end

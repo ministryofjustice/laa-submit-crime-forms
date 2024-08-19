@@ -20,8 +20,8 @@ class WorkItem < ApplicationRecord
     )
   end
 
-  def translated_work_type
-    translations(work_type, 'nsm.steps.check_answers.show.sections.work_items')
+  def translated_work_type(value: :original)
+    translations(value == :assessed ? assessed_work_type : work_type, 'nsm.steps.check_answers.show.sections.work_items')
   end
 
   def sort_position

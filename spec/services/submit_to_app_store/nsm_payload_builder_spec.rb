@@ -168,6 +168,11 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
                'id' => an_instance_of(String),
                'updated_at' => '2023-08-17T12:13:14.000Z'
             }],
+            'work_item_pricing' => {
+              'advocacy' => 65.42,
+              'attendance_without_counsel' => 52.15,
+              'preparation' => 52.15
+            },
         },
         application_id: claim.id,
         application_state: 'submitted',

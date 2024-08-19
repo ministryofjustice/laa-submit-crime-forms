@@ -13,12 +13,12 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
 
     click_on 'Save and continue'
 
-    fill_in 'Which court was the last case hearing heard at?', with: 'Aberconwy'
+    fill_in 'Which court was the first case hearing heard at?', with: 'Aberconwy'
 
     # Click the first autocomplete suggestion
     find_by_id('nsm-steps-hearing-details-form-court-field__option--0').click
 
-    expect(page).to have_field('Which court was the last case hearing heard at?', with: 'Aberconwy PSD - C3237')
+    expect(page).to have_field('Which court was the first case hearing heard at?', with: 'Aberconwy PSD - C3237')
 
     click_on 'Save and come back later'
 
@@ -32,7 +32,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
 
     click_on 'Save and continue'
 
-    fill_in 'Which court was the last case hearing heard at?', with: 'Apples'
+    fill_in 'Which court was the first case hearing heard at?', with: 'Apples'
 
     click_on 'Save and come back later'
 
@@ -49,7 +49,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
 
       visit edit_nsm_steps_hearing_details_path(id: claim)
 
-      expect(page).to have_field('Which court was the last case hearing heard at?',
+      expect(page).to have_field('Which court was the first case hearing heard at?',
                                  with: 'Aberconwy PSD - C3237')
     end
 
@@ -60,7 +60,7 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
 
       visit edit_nsm_steps_hearing_details_path(id: claim)
 
-      expect(page).to have_field('Which court was the last case hearing heard at?', with: 'Apples')
+      expect(page).to have_field('Which court was the first case hearing heard at?', with: 'Apples')
     end
   end
 end
