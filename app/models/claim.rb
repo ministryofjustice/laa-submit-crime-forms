@@ -126,7 +126,7 @@ class Claim < ApplicationRecord
   def sorted_work_item_ids
     @sorted_work_item_ids ||= work_items.sort_by do |workitem|
       [
-        workitem.completed_on || 100.years.ago,
+        workitem.completed_on || Time.new(2000, 1, 1).in_time_zone.to_date,
         workitem.work_type&.downcase,
         workitem.created_at
       ]
@@ -142,7 +142,7 @@ class Claim < ApplicationRecord
   def sorted_disbursement_ids
     @sorted_disbursement_ids ||= disbursements.sort_by do |disb|
       [
-        disb.disbursement_date || 100.years.ago,
+        disb.disbursement_date || Time.new(2000, 1, 1).in_time_zone.to_date,
         disb.translated_disbursement_type&.downcase,
         disb.created_at
       ]
