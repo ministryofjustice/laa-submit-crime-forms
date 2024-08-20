@@ -3,12 +3,13 @@
 module Nsm
   module CheckAnswers
     class ClaimTypeCard < Base
-      attr_reader :claim
+      attr_reader :claim, :firm_details_form
 
       def initialize(claim)
         @group = 'claim_type'
         @section = 'claim_type'
         @claim = claim
+        @firm_details_form = Nsm::Steps::FirmDetailsForm.build(claim)
       end
 
       def row_data
@@ -39,7 +40,12 @@ module Nsm
           {
             head_key: 'stage_reached',
             text: translate_table_key(section, claim.stage_reached)
-          }
+          },
+          {
+            head_key: 'firm_account_number',
+            text: check_missing(firm_details_form.application.office_code)
+          },
+
         ]
       end
 
