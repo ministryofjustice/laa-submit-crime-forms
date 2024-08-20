@@ -22,7 +22,7 @@ en:
           submitted: Submitted
           accessed: Accessed
           granted: Granted
-          part_grant: Part Granted
+          part_grant: Part granted
           rejected: Rejected
           sent_back: Update needed
           provider_requested: Provider request
@@ -44,7 +44,7 @@ en:
         no_data:
           reviewed: You do not have any reviewed claims
           submitted: You do not have any submitted claims
-          draft: You have not started any claims.
+          draft: You do not have any draft claims
       confirm_delete:
         page_title: Are you sure you want to delete this draft application?
         laa_reference: "LAA reference:"

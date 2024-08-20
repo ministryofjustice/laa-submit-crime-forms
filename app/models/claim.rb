@@ -24,9 +24,9 @@ class Claim < ApplicationRecord
 
   scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(office_code: nil, submitter: provider)) }
 
-  enum status: { draft: 'draft', submitted: 'submitted', granted: 'granted', part_grant: 'part_grant',
-                 review: 'review', sent_back: 'sent_back', provider_requested: 'provider_requested',
-                 rejected: 'rejected' }
+  enum :status, { draft: 'draft', submitted: 'submitted', granted: 'granted', part_grant: 'part_grant',
+                  review: 'review', sent_back: 'sent_back', provider_requested: 'provider_requested',
+                  rejected: 'rejected' }
 
   def date
     rep_order_date || cntp_date
@@ -97,13 +97,20 @@ class Claim < ApplicationRecord
       ).slice!('letters', 'letters_uplift', 'calls', 'calls_uplift', 'app_store_updated_at')
   end
 
-  def disbursement_position(disbursement)
-    sorted_disbursement_ids.index(disbursement.id) + 1
+  def work_item_position(work_item)
+    sorted_work_item_ids.index(work_item.id) + 1
   end
 
-  def work_item_position(work_item)
-    @work_item_positions ||= work_items.sort_by { [_1.completed_on, _1.work_type, _1.created_at] }.map(&:id)
-    @work_item_positions.index(work_item.id) + 1
+  def update_work_item_positions!
+    updated_attributes = sorted_work_item_positions.index_by { |d| d[:id] }
+
+    WorkItem.transaction do
+      WorkItem.update(updated_attributes.keys, updated_attributes.values)
+    end
+  end
+
+  def disbursement_position(disbursement)
+    sorted_disbursement_ids.index(disbursement.id) + 1
   end
 
   def update_disbursement_positions!
@@ -116,10 +123,26 @@ class Claim < ApplicationRecord
 
   private
 
+  def sorted_work_item_ids
+    @sorted_work_item_ids ||= work_items.sort_by do |workitem|
+      [
+        workitem.completed_on || Time.new(2000, 1, 1).in_time_zone.to_date,
+        workitem.work_type&.downcase,
+        workitem.created_at
+      ]
+    end.map(&:id)
+  end
+
+  def sorted_work_item_positions
+    @sorted_work_item_positions ||= sorted_work_item_ids.each_with_object([]).with_index do |(id, memo), idx|
+      memo << { id: id, position: idx + 1 }
+    end
+  end
+
   def sorted_disbursement_ids
     @sorted_disbursement_ids ||= disbursements.sort_by do |disb|
       [
-        disb.disbursement_date || 100.years.ago,
+        disb.disbursement_date || Time.new(2000, 1, 1).in_time_zone.to_date,
         disb.translated_disbursement_type&.downcase,
         disb.created_at
       ]

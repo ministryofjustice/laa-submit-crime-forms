@@ -203,7 +203,7 @@ en:
           not_guilty_pleas: Category 2
       nsm_steps_hearing_details_form:
         number_of_hearing: How many hearings were held for this case?
-        court: Which court was the last case hearing heard at?
+        court: Which court was the first case hearing heard at?
         youth_court_options:
           'yes': 'Yes'
           'no': 'No'
@@ -276,8 +276,8 @@ en:
           'true': Apply an uplift to this work
         apply_calls_uplift_options:
           'true': Apply an uplift to this work
-        letters_uplift: For example, from any percentage from 1 to 100
-        calls_uplift: For example, from any percentage from 1 to 100
+        letters_uplift: Enter a letters uplift percentage from 1 to 100
+        calls_uplift: Enter a calls uplift percentage from 1 to 100
       nsm_steps_disbursement_add_form:
         has_disbursements_options:
           'yes': 'Yes'

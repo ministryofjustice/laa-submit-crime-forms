@@ -6,7 +6,12 @@ RSpec.describe 'View claim page', type: :system do
 
   let(:work_items) do
     [
-      build(:work_item, :attendance_without_counsel, fee_earner: 'AB', time_spent: 90, completed_on: 1.day.ago),
+      build(:work_item,
+            :attendance_without_counsel,
+            fee_earner: 'AB',
+            time_spent: 90,
+            completed_on: 1.day.ago,
+            allowed_work_type: :attendance_with_counsel),
       build(:work_item, :advocacy, :with_adjustment, time_spent: 104, completed_on: 1.day.ago),
       build(:work_item, :advocacy, time_spent: 86, completed_on: 2.days.ago),
       build(:work_item, :waiting, time_spent: 23, completed_on: 3.days.ago),
@@ -41,8 +46,8 @@ RSpec.describe 'View claim page', type: :system do
         'Item', 'Net cost', 'VAT', 'Total',
         'Profit costs', '£305.84', '£61.17', '£367.01',
         'Disbursements', '£327.50', '£31.50', '£359.00',
-        'Waiting', '£10.58', '£2.12', '£12.70',
         'Travel', '£10.58', '£2.12', '£12.70',
+        'Waiting', '£10.58', '£2.12', '£12.70',
         'Total',
         'Sum of net cost claimed: £654.50',
         'Sum of VAT on claimed: £96.90',
@@ -64,8 +69,8 @@ RSpec.describe 'View claim page', type: :system do
           'Item', 'Net cost', 'VAT', 'Total',
           'Profit costs', '£305.84', '£0.00', '£305.84',
           'Disbursements', '£327.50', '£31.50', '£359.00',
-          'Waiting', '£10.58', '£0.00', '£10.58',
           'Travel', '£10.58', '£0.00', '£10.58',
+          'Waiting', '£10.58', '£0.00', '£10.58',
           'Total',
           'Sum of net cost claimed: £654.50',
           'Sum of VAT on claimed: £31.50',
@@ -86,8 +91,8 @@ RSpec.describe 'View claim page', type: :system do
         'Item', 'Net cost', 'VAT', 'Total',
         'Profit costs', '£305.84', '£61.17', '£367.01',
         'Disbursements', '£327.50', '£31.50', '£359.00',
-        'Waiting', '£10.58', '£2.12', '£12.70',
         'Travel', '£10.58', '£2.12', '£12.70',
+        'Waiting', '£10.58', '£2.12', '£12.70',
         'Total',
         'Sum of net cost claimed: £654.50',
         'Sum of VAT on claimed: £96.90',
@@ -157,8 +162,8 @@ RSpec.describe 'View claim page', type: :system do
         'Item', 'Net cost', 'VAT', 'Total',
         'Profit costs', '£305.84', '£61.17', '£367.01',
         'Disbursements', '£327.50', '£31.50', '£359.00',
-        'Waiting', '£10.58', '£2.12', '£12.70',
         'Travel', '£10.58', '£2.12', '£12.70',
+        'Waiting', '£10.58', '£2.12', '£12.70',
         'Total',
         'Sum of net cost claimed: £654.50',
         'Sum of VAT on claimed: £96.90',
@@ -178,8 +183,8 @@ RSpec.describe 'View claim page', type: :system do
         'Item', 'Net cost', 'VAT', 'Total',
         'Profit costs', '£305.84', '£61.17', '£367.01',
         'Disbursements', '£327.50', '£31.50', '£359.00',
-        'Waiting', '£10.58', '£2.12', '£12.70',
         'Travel', '£10.58', '£2.12', '£12.70',
+        'Waiting', '£10.58', '£2.12', '£12.70',
         'Total',
         'Sum of net cost claimed: £654.50',
         'Sum of VAT on claimed: £96.90',
@@ -196,10 +201,10 @@ RSpec.describe 'View claim page', type: :system do
   it 'show a work item' do
     visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :work_item, item_id: work_items.first.id)
 
-    expect(find('h1').text).to eq('Attendance without counsel')
     expect(all('table caption, table td').map(&:text)).to eq(
       [
         'Your claimed costs',
+        'Work type', 'Attendance without counsel',
         'Date',	1.day.ago.to_fs(:stamp),
         'Fee earner initials', 'AB',
         'Rate applied', '£52.15',
@@ -295,8 +300,8 @@ RSpec.describe 'View claim page', type: :system do
           'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
           'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
           'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
           'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
+          'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
           'Total',
           'Sum of net cost claimed: £741.18',
           'Sum of VAT on claimed: £92.24',
@@ -324,8 +329,8 @@ RSpec.describe 'View claim page', type: :system do
             'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
             'Profit costs', '£355.98', '£0.00', '£355.98', '£175.95', '£0.00', '£175.95',
             'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
-            'Waiting', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
             'Travel', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
+            'Waiting', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
             'Total',
             'Sum of net cost claimed: £741.18',
             'Sum of VAT on claimed: £10.00',
@@ -621,16 +626,17 @@ RSpec.describe 'View claim page', type: :system do
     it 'show a work item' do
       visit item_nsm_steps_view_claim_path(id: claim.id, item_type: :work_item, item_id: work_items.last.id)
 
-      expect(find('h1').text).to eq('Advocacy')
       expect(all('table caption, table td').map(&:text)).to eq(
         [
           'Adjusted claim',
+          'Allowed work type', 'Advocacy',
           'Number of hours allowed', '0 hours 52 minutes',
           'Uplift allowed', '0%',
           'Net cost allowed', '£56.70',
           'Reason for adjustment', 'WI adjustment',
 
           'Your claimed costs',
+          'Work type', 'Advocacy',
           'Date',	Time.current.to_fs(:stamp),
           'Fee earner initials', 'BC',
           'Rate applied', '£65.42',

@@ -19,6 +19,7 @@ module PriorAuthority
 
       def total_cost
         return 0 if travel_time.is_a?(Hash)
+        return 0 if travel_cost_per_hour.is_a?(String)
         return 0 unless travel_cost_per_hour.to_i.positive? && travel_time.to_i.positive?
 
         (travel_cost_per_hour * (travel_time.hours + (travel_time.minutes / 60.0))).round(2)

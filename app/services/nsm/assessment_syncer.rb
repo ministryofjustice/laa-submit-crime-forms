@@ -48,13 +48,18 @@ module Nsm
     end
 
     def sync_work_items
-      work_items.each do |work_item|
-        record = claim.work_items.find(work_item['id'])
-        record.allowed_time_spent = work_item['time_spent'] if work_item['time_spent_original'].present?
-        record.allowed_uplift = work_item['uplift'] if work_item['uplift_original'].present?
-        record.adjustment_comment = work_item['adjustment_comment'] if work_item['adjustment_comment'].present?
-        record.save
+      work_items.each do |work_item_payload|
+        record = claim.work_items.find(work_item_payload['id'])
+        sync_work_item(record, work_item_payload)
       end
+    end
+
+    def sync_work_item(record, payload)
+      record.allowed_time_spent = payload['time_spent'] if payload['time_spent_original'].present?
+      record.allowed_uplift = payload['uplift'] if payload['uplift_original'].present?
+      record.adjustment_comment = payload['adjustment_comment'] if payload['adjustment_comment'].present?
+      record.allowed_work_type = payload.dig('work_type', 'value') if payload['work_type_original'].present?
+      record.save
     end
 
     def sync_disbursements

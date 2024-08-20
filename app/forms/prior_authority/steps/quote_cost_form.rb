@@ -68,13 +68,16 @@ module PriorAuthority
       private
 
       def item_cost
-        return 0 unless cost_per_item.to_f.positive? && items.to_i.positive?
+        return 0 unless cost_per_item.to_f.positive?
+        return 0 unless items.to_i.positive?
+        return 0 if cost_per_item.is_a?(String)
 
         cost_per_item * items * cost_multiplier
       end
 
       def time_cost
         return 0 if period.is_a?(Hash)
+        return 0 if cost_per_hour.is_a?(String)
         return 0 unless cost_per_hour.to_d.positive? && period.to_i.positive?
 
         (cost_per_hour * (period.hours + (period.minutes / 60.0))).round(2)

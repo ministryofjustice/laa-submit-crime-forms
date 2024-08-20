@@ -28,17 +28,20 @@ RSpec.describe Nsm::CostSummary::WorkItems do
         [
           [
             { classes: 'govuk-table__header', text: 'Attendance without counsel' },
-            { text: '0 hours 0 minutes' },
+            { text: '0<span class="govuk-visually-hidden"> hours</span>:00' \
+                    '<span class="govuk-visually-hidden"> minutes</span>' },
             { classes: 'govuk-table__cell--numeric', text: '£0.00' }
           ],
           [
             { classes: 'govuk-table__header', text: 'Preparation' },
-            { text: '3 hours 0 minutes' },
+            { text: '3<span class="govuk-visually-hidden"> hours</span>:00' \
+                    '<span class="govuk-visually-hidden"> minutes</span>' },
             { classes: 'govuk-table__cell--numeric', text: '£40.00' }
           ],
           [
             { classes: 'govuk-table__header', text: 'Advocacy' },
-            { text: '6 hours 0 minutes' },
+            { text: '6<span class="govuk-visually-hidden"> hours</span>:00' \
+                    '<span class="govuk-visually-hidden"> minutes</span>' },
             { classes: 'govuk-table__cell--numeric', text: '£170.00' }
           ]
         ]
@@ -62,7 +65,7 @@ RSpec.describe Nsm::CostSummary::WorkItems do
       it 'includes WAITING and TRAVEL in data' do
         row_keys = subject.rows.map(&:first).pluck(:text)
         expect(row_keys).to eq(
-          ['Attendance without counsel', 'Preparation', 'Advocacy', 'Travel', 'Waiting']
+          ['Travel', 'Waiting', 'Attendance without counsel', 'Preparation', 'Advocacy']
         )
       end
     end

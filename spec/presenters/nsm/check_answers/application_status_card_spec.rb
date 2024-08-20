@@ -75,7 +75,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
           [
             {
               head_key: 'application_status',
-              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
+              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part granted</strong></p>' \
                                '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>£\d+\.\d\d allowed</p>')
             },
             {
@@ -98,7 +98,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             [
               {
                 head_key: 'application_status',
-                text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
+                text: Regexp.new('<p><strong class="govuk-tag govuk-tag--blue">Part granted</strong></p>' \
                                  '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p><p>£\d+\.\d\d allowed</p>')
               },
               {
@@ -126,7 +126,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             [
               {
                 head_key: 'application_status',
-                text: '<p><strong class="govuk-tag govuk-tag--blue">Part Granted</strong></p>' \
+                text: '<p><strong class="govuk-tag govuk-tag--blue">Part granted</strong></p>' \
                       '<p>1 December 2023</p><br><p>£0.00 claimed</p><p>£0.00 allowed</p>'
               },
               {
@@ -189,7 +189,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'laa_response',
               text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
-                    '</p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">magsbilling@justice.gov.uk</a> ' \
+                    '</p><p>To update your claim, email <a href="mailto:CRM7fi@justice.gov.uk">CRM7fi@justice.gov.uk</a> ' \
                     "with the LAA case reference in the subject of the email and include any supporting information requested.\n</p>"
             }
           ]
@@ -214,7 +214,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'laa_response',
               text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
-                    '</p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">magsbilling@justice.gov.uk</a> ' \
+                    '</p><p>To update your claim, email <a href="mailto:CRM7fi@justice.gov.uk">CRM7fi@justice.gov.uk</a> ' \
                     "with the LAA case reference in the subject of the email and include any supporting information requested.\n</p>"
             }
           ]
@@ -238,8 +238,8 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             {
               head_key: 'laa_response',
               text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your ' \
-                    'claim</span></p><p>To update your claim, email <a href="mailto:magsbilling@justice.gov.uk">' \
-                    'magsbilling@justice.gov.uk</a> with the LAA case reference in the subject of the email and include ' \
+                    'claim</span></p><p>To update your claim, email <a href="mailto:CRM7fi@justice.gov.uk">' \
+                    'CRM7fi@justice.gov.uk</a> with the LAA case reference in the subject of the email and include ' \
                     "your new information.\n</p>"
             }
           ]

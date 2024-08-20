@@ -18,6 +18,10 @@ module Providers
       end
     end
 
+    def failure
+      redirect_to after_omniauth_failure_path_for, flash: { notice: t('errors.generic_login_failed') }
+    end
+
     private
 
     def after_sign_in_path_for(*)

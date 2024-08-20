@@ -25,9 +25,11 @@ module Nsm
               actions: actions(name)
             },
             table: {
-              head: header_row(time_column: name == :work_items),
-              rows: [*data.rows, footer_row(data, time_column: name == :work_items)],
-            }
+              head: data.header_row,
+              rows: [*data.rows, footer_row(data, middle_column: name != :disbursements)],
+              first_cell_is_header: true,
+            },
+            caption: { text: data.caption, classes: 'govuk-visually-hidden' },
           }
         end
       end
@@ -48,19 +50,11 @@ module Nsm
         ]
       end
 
-      def header_row(time_column: false)
-        [
-          { text: translate('.header.item') },
-          ({ text: translate('.header.time') } if time_column),
-          { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
-        ].compact
-      end
-
-      def footer_row(data, time_column: false)
+      def footer_row(data, middle_column: false)
         [
           { text: translate('.footer.total'), classes: 'govuk-table__header' },
-          ({} if time_column),
-          { text: NumberTo.pounds(data.total_cost), classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
+          ({} if middle_column),
+          { text: data.total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
         ].compact
       end
     end
