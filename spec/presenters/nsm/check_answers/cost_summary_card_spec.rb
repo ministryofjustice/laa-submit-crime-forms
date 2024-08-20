@@ -91,6 +91,42 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
             }
           )
         end
+
+        context 'when the work item has changed to a different group' do
+          let(:work_items) do
+            [build(:work_item, work_type: 'advocacy', time_spent: 600, allowed_work_type: 'travel')]
+          end
+
+          it 'shows claimed amount in profit costs' do
+            expected_title = '<span title="One or more of these items were adjusted to be a different work item type.">' \
+                             'Profit costs</span> <sup><a href="#fn*">[*]</a></sup>'
+            expect(subject.table_fields[0]).to eq(
+              {
+                allowed_gross_cost: { numeric: true, text: '£0.00' },
+                allowed_net_cost: { numeric: true, text: '£0.00' },
+                allowed_vat: { numeric: true, text: '£0.00' },
+                gross_cost: { numeric: true, text: '£654.20' },
+                name: { numeric: false, text: expected_title },
+                net_cost: { numeric: true, text: '£654.20' },
+                vat: { numeric: true, text: '£0.00' }
+              }
+            )
+          end
+
+          it 'shows allowed amount in travel' do
+            expect(subject.table_fields).to include(
+              {
+                allowed_gross_cost: { numeric: true, text: '£276.00' },
+                allowed_net_cost: { numeric: true, text: '£276.00' },
+                allowed_vat: { numeric: true, text: '£0.00' },
+                gross_cost: { numeric: true, text: '£0.00' },
+                name: { numeric: false, text: 'Travel', width: nil },
+                net_cost: { numeric: true, text: '£0.00' },
+                vat: { numeric: true, text: '£0.00' }
+              }
+            )
+          end
+        end
       end
     end
 

@@ -69,15 +69,15 @@ module Nsm
       def calculate_profit_costs(formatted:)
         letters_calls = LettersAndCallsCosts::TotalCostAlias.new(claim)
 
-        calculate_row((work_items[PROFIT_COSTS] || []) + [letters_calls], 'profit_costs', formatted:)
+        calculate_work_item_row('profit_costs', formatted: formatted, extra_rows: [letters_calls])
       end
 
       def calculate_waiting(formatted:)
-        calculate_row(work_items['waiting'] || [], 'waiting', formatted:)
+        calculate_work_item_row('waiting', formatted:)
       end
 
       def calculate_travel(formatted:)
-        calculate_row(work_items['travel'] || [], 'travel', formatted:)
+        calculate_work_item_row('travel', formatted:)
       end
 
       def calculate_disbursements(formatted:)
@@ -89,7 +89,7 @@ module Nsm
         allowed_vat = show_adjustments && (allowed_gross_cost - allowed_net_cost)
 
         build_hash(
-          name: 'disbursements',
+          name: t('disbursements', numeric: false),
           net_cost: net_cost,
           vat: vat,
           allowed_net_cost: allowed_net_cost,
@@ -98,12 +98,15 @@ module Nsm
         )
       end
 
-      def calculate_row(rows, name, formatted:)
-        net_cost = rows.sum { _1.total_cost || 0 }
-        allowed_net_cost = show_adjustments ? rows.sum { _1.allowed_total_cost || 0 } : nil
+      def calculate_work_item_row(name, formatted:, extra_rows: [])
+        claimed_rows = work_items_matching(name, type_type: :claimed) + extra_rows
+        allowed_rows = work_items_matching(name, type_type: :assessed) + extra_rows
+
+        net_cost = claimed_rows.sum { _1.total_cost || 0 }
+        allowed_net_cost = show_adjustments ? allowed_rows.sum { _1.allowed_total_cost || 0 } : nil
 
         build_hash(
-          name: name,
+          name: name_row(name, claimed_rows.any? { !_1.in?(allowed_rows) }),
           net_cost: net_cost,
           vat: net_cost * vat_rate,
           allowed_net_cost: allowed_net_cost,
@@ -114,7 +117,7 @@ module Nsm
 
       def build_hash(name:, net_cost:, vat:, allowed_net_cost:, allowed_vat:, formatted:)
         {
-          name: t(name, numeric: false),
+          name: name,
           net_cost: format(net_cost, formatted:),
           vat: format(vat, formatted:),
           gross_cost: format(net_cost + vat, formatted:),
@@ -124,16 +127,17 @@ module Nsm
         }
       end
 
-      def work_items
-        @work_items ||= claim.work_items.group_by { |work_item| group_type(work_item.work_type.to_s) }
-      end
-
       def disbursements
         @disbursements ||= claim.disbursements
       end
 
-      def group_type(work_type)
-        work_type.in?(%w[travel waiting]) ? work_type : PROFIT_COSTS
+      def work_items_matching(group_type, type_type:)
+        field = type_type == :assessed ? :assessed_work_type : :work_type
+        claim.work_items.select do |work_item|
+          relevant_type = work_item.send(field)
+          candidate_group_type = relevant_type.in?(%w[travel waiting]) ? relevant_type : PROFIT_COSTS
+          candidate_group_type == group_type
+        end
       end
 
       def vat_rate
@@ -163,6 +167,21 @@ module Nsm
         {
           text: I18n.t("nsm.steps.check_answers.groups.cost_summary.#{scope}.#{key}").html_safe,
           numeric: numeric, width: width
+        }
+      end
+
+      def name_row(name, work_type_changed)
+        return t(name, numeric: false) unless work_type_changed
+
+        span = tag.span(I18n.t("nsm.steps.check_answers.groups.cost_summary.with_adjustments.#{name}"),
+                        title: I18n.t('nsm.work_items.type_changes.types_changed'))
+        sup = tag.sup do
+          tag.a(I18n.t('nsm.work_items.type_changes.asterisk'), href: '#fn*')
+        end
+
+        {
+          text:  safe_join([span, ' ', sup]),
+          numeric: false
         }
       end
     end

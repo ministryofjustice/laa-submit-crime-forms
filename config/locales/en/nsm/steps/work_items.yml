@@ -42,3 +42,10 @@ en:
           total_cost: Total cost
           deleted_flash: The work item was deleted
           unknown_date: Unknown date
+    work_items:
+      type_changes:
+        types_changed: One or more of these items were adjusted to be a different work item type.
+        type_changed: This item was adjusted to be a different work item type.
+        asterisk: '[*]'
+        see: 'See: '
+        item: Item %{position}
