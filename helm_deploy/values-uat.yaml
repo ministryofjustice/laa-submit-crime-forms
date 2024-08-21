@@ -91,6 +91,3 @@ postgresql:
 # Instead of a temporary redis pod we use Elasticache
 redis:
   enabled: false
-
-configmap:
-  maintenance_mode: false
