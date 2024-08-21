@@ -96,11 +96,6 @@ FactoryBot.define do
       primary_quote factory: %i[quote primary_per_item], strategy: :build
     end
 
-    trait :with_confirmations do
-      confirm_excluding_vat { true }
-      confirm_travel_expenditure { true }
-    end
-
     trait :full do
       with_firm_and_solicitor
       with_defendant

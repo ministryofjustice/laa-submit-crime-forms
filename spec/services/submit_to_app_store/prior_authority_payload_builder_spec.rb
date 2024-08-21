@@ -32,8 +32,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         custom_service_name: nil,
         prior_authority_granted: false,
         no_alternative_quote_reason: 'a reason',
-        confirm_excluding_vat: true,
-        confirm_travel_expenditure: true,
         defendant: hash_including(
           first_name: application.defendant.first_name,
           last_name: application.defendant.last_name,
@@ -176,7 +174,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
     }
   end
   let(:provider) { create(:provider) }
-  let(:application) { create(:prior_authority_application, :full, :with_confirmations, status: :submitted) }
+  let(:application) { create(:prior_authority_application, :full, status: :submitted) }
   let(:fixed_arbitrary_date) { DateTime.new(2024, 1, 15, 0, 0, 0) }
 
   before do

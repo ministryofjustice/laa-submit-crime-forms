@@ -32,6 +32,10 @@ RSpec.describe Steps::BaseFormObject do
     context 'for an active record argument' do
       let(:record) { FooBarRecord.new(favourite_meal: 'pizza') }
 
+      before do
+        allow(record).to receive(:attribute_names).and_return(['favourite_meal'])
+      end
+
       it 'instantiates the form object using the declared attributes' do
         form = FavouriteMealForm.build(record)
 
