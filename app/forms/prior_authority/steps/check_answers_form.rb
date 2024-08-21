@@ -18,7 +18,7 @@ module PriorAuthority
           return false
         end
 
-        application.update!(attributes.merge({ status: new_status }))
+        application.update!(status: new_status)
         update_incorrect_information if application.incorrect_information_explanation.present?
         SubmitToAppStore.perform_later(submission: application)
 

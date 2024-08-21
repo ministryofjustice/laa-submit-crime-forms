@@ -15,7 +15,7 @@ module Steps
       raise ArgumentError, "expected `ApplicationRecord`, got `#{record.class}`" unless record.is_a?(ApplicationRecord)
 
       attrs = record.slice(
-        attribute_names
+        attribute_names & record.attribute_names
       ).merge!(
         application: application || record,
         record: record

@@ -24,9 +24,6 @@ class PriorAuthorityApplication < ApplicationRecord
   has_many :further_informations, dependent: :destroy, inverse_of: :prior_authority_application
   has_many :incorrect_informations, dependent: :destroy, inverse_of: :prior_authority_application
 
-  attribute :confirm_excluding_vat, :boolean
-  attribute :confirm_travel_expenditure, :boolean
-
   enum :status, {
     pre_draft: 'pre_draft',
     draft: 'draft',
