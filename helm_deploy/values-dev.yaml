@@ -133,3 +133,6 @@ redis:
     enabled: true
     password: redis
 
+configmap:
+  maintenance_mode: false
+
