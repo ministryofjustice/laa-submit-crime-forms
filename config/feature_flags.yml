@@ -11,7 +11,7 @@ feature_flags:
     production: false
   maintenance_mode:
     local: <%= ENV.fetch("MAINTENANCE_MODE", false) %>
-    development: false
-    uat: false
-    production: false
+    development: <%= ENV.fetch("MAINTENANCE_MODE", false) %>
+    uat: <%= ENV.fetch("MAINTENANCE_MODE", false) %>
+    production: <%= ENV.fetch("MAINTENANCE_MODE", false) %>
 

@@ -205,6 +205,11 @@ spec:
               value: 'true'
             - name: ENABLE_PROMETHEUS_EXPORTER
               value: 'true'
+            - name: MAINTENANCE_MODE
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: maintenance_mode
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
