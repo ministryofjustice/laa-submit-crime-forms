@@ -40,7 +40,7 @@ RSpec.describe About::CookiesController do
         end
 
         it 'returns the cookie set to true' do
-          expect(response.cookies).to(include { 'analytics_cookies_set' => 'true' })
+          expect(response.cookies).to include({ 'analytics_cookies_set' => 'true' })
         end
 
         it 'flashes notice' do
@@ -58,7 +58,7 @@ RSpec.describe About::CookiesController do
         end
 
         it 'returns the cookie set to false' do
-          expect(response.cookies).to(include { 'analytics_cookies_set' => 'false' })
+          expect(response.cookies).to include({ 'analytics_cookies_set' => 'false' })
         end
 
         it 'flashes notice' do
