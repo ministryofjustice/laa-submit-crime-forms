@@ -27,6 +27,32 @@ RSpec.describe 'Prior authority applications - add case contact' do
     expect(page).to have_content "Enter the contact's first name"
   end
 
+  it 'validates emails correctly for missing top-level domain' do
+    expect(page).to have_content 'Case contact Not yet started'
+
+    click_on 'Case contact'
+    fill_in 'First name', with: 'John'
+    fill_in 'Last name', with: 'Doe'
+    fill_in 'Email address', with: 'john@does'
+    fill_in 'Firm name', with: 'LegalCorp Ltd'
+    click_on 'Save and continue'
+
+    expect(page).to have_content 'Enter a valid email address'
+  end
+
+  it 'validates emails correctly for invalid top-level domain' do
+    expect(page).to have_content 'Case contact Not yet started'
+
+    click_on 'Case contact'
+    fill_in 'First name', with: 'John'
+    fill_in 'Last name', with: 'Doe'
+    fill_in 'Email address', with: 'john@does.'
+    fill_in 'Firm name', with: 'LegalCorp Ltd'
+    click_on 'Save and continue'
+
+    expect(page).to have_content 'Enter a valid email address'
+  end
+
   it 'allows save and come back later' do
     expect(page).to have_content 'Case contact Not yet started'
 
