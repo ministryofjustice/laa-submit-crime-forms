@@ -10,6 +10,7 @@ RSpec.describe SubmitToAppStore do
     allow(described_class::PayloadBuilder).to receive(:call)
       .and_return(payload)
     allow(SendNotificationEmail).to receive(:perform_later)
+    allow(submission).to receive(:with_lock).and_yield
   end
 
   describe '#perform' do
