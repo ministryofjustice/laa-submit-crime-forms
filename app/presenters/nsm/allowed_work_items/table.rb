@@ -17,7 +17,8 @@ module Nsm
           [
             { header: true, text: work_item.position, numeric: false },
             { header: true, text: name(work_item), numeric: false },
-            { text: work_item.adjustment_comment, numeric: false },
+            { text: work_item.adjustment_comment, numeric: false,
+html_attributes: { class: 'govuk-!-text-break-anywhere govuk-!-width-one-quarter' } },
             { text: ApplicationController.helpers.format_period(work_item.assessed_time_spent, style: :minimal_html),
                     numeric: true },
             { text: NumberTo.percentage(work_item.assessed_uplift.to_f, multiplier: 1), numeric: true },
