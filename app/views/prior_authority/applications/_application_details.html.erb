@@ -1,17 +1,17 @@
 <% skip_links ||= false %>
 <div class="govuk-summary-card">
   <div class="govuk-summary-card__title-wrapper">
-    <h2 class="govuk-summary-card__title"><%= t("prior_authority.applications.show.application_status") %></h2>
+    <h2 class="govuk-summary-card__title"><%= t("prior_authority.applications.show.application_state") %></h2>
   </div>
   <div class="govuk-summary-card__content">
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= t("prior_authority.applications.show.status") %>
+          <%= t("prior_authority.applications.show.state") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <p><strong class="govuk-tag <%= prior_authority_tag_colour(application.status) %>"><%= t("prior_authority.statuses.#{application.status}") %></strong></p>
-          <%= render "prior_authority/applications/state_summaries/#{application.status}",
+          <p><strong class="govuk-tag <%= prior_authority_tag_colour(application.state) %>"><%= t("prior_authority.states.#{application.state}") %></strong></p>
+          <%= render "prior_authority/applications/state_summaries/#{application.state}",
                       primary_quote_summary:, application: %>
         </dd>
       </div>

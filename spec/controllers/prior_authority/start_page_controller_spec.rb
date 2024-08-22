@@ -10,7 +10,7 @@ RSpec.describe PriorAuthority::Steps::StartPageController, type: :controller do
     end
 
     context 'a draft application' do
-      let(:current_application) { create(:prior_authority_application, status: 'draft') }
+      let(:current_application) { create(:prior_authority_application, state: 'draft') }
 
       it 'creates an instance of TaskList presenter' do
         expect(controller.instance_values['tasklist']).to be_a PriorAuthority::StartPage::TaskList
@@ -29,7 +29,7 @@ RSpec.describe PriorAuthority::Steps::StartPageController, type: :controller do
     end
 
     context 'a sent back application with no further information' do
-      let(:current_application) { create(:prior_authority_application, status: 'sent_back') }
+      let(:current_application) { create(:prior_authority_application, state: 'sent_back') }
 
       it 'creates an instance of TaskList presenter' do
         expect(controller.instance_values['tasklist']).to be_a PriorAuthority::StartPage::TaskList

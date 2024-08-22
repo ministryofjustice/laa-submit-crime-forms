@@ -15,7 +15,7 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
   describe '#save the form' do
     before do
       allow(SubmitToAppStore).to receive(:perform_later)
-      allow(application).to receive(:status=).with(:submitted).and_return(true)
+      allow(application).to receive(:state=).with(:submitted).and_return(true)
       allow(application).to receive(:update!).and_return(true)
     end
 
@@ -24,7 +24,7 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
 
       it 'is valid' do
         expect(form.save).to be_truthy
-        expect(application).to have_received(:status=).with(:submitted)
+        expect(application).to have_received(:state=).with(:submitted)
         expect(application).to have_received(:update!)
       end
 

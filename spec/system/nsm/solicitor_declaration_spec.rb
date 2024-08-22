@@ -17,7 +17,7 @@ RSpec.describe 'User can fill in solicitor declaration', type: :system do
 
     expect(claim.reload).to have_attributes(
       signatory_name: 'John Doe',
-      status: 'submitted'
+      state: 'submitted'
     )
 
     expect(SubmitToAppStore).to have_received(:perform_later)

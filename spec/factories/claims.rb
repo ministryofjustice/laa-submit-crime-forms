@@ -230,32 +230,24 @@ FactoryBot.define do
       disbursements { [build(:disbursement, :valid_high_cost)] }
     end
 
-    trait :completed_status do
-      status { :submitted }
+    trait :completed_state do
+      state { :submitted }
     end
 
-    trait :granted_status do
-      status { :granted }
+    trait :granted_state do
+      state { :granted }
     end
 
-    trait :part_granted_status do
-      status { :part_grant }
+    trait :part_granted_state do
+      state { :part_grant }
     end
 
-    trait :review_status do
-      status { :review }
+    trait :sent_back_state do
+      state { :sent_back }
     end
 
-    trait :further_info_status do
-      status { :sent_back }
-    end
-
-    trait :provider_requested_status do
-      status { :provider_requested }
-    end
-
-    trait :rejected_status do
-      status { :rejected }
+    trait :rejected_state do
+      state { :rejected }
     end
 
     trait :updated_at do

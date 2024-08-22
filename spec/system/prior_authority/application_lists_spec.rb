@@ -7,16 +7,16 @@ RSpec.describe 'Prior authority application lists' do
            :full,
            laa_reference: 'LAA-AAAAA',
            ufn: '120423/818',
-           status: 'submitted',
+           state: 'submitted',
            updated_at: 1.day.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-BBBBB', status: 'submitted', updated_at: 2.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-CCCC1', status: 'granted', updated_at: 3.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-CCCC2', status: 'sent_back', updated_at: 3.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-CCCC3', status: 'part_grant', updated_at: 3.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-CCCC4', status: 'rejected', updated_at: 3.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-CCCC5', status: 'auto_grant', updated_at: 3.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-DDDDD', status: 'draft', updated_at: 4.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-EEEEE', status: 'draft',
+    create(:prior_authority_application, laa_reference: 'LAA-BBBBB', state: 'submitted', updated_at: 2.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-CCCC1', state: 'granted', updated_at: 3.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-CCCC2', state: 'sent_back', updated_at: 3.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-CCCC3', state: 'part_grant', updated_at: 3.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-CCCC4', state: 'rejected', updated_at: 3.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-CCCC5', state: 'auto_grant', updated_at: 3.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-DDDDD', state: 'draft', updated_at: 4.days.ago)
+    create(:prior_authority_application, laa_reference: 'LAA-EEEEE', state: 'draft',
            office_code: 'OTHER', provider: create(:provider, :other))
   end
 

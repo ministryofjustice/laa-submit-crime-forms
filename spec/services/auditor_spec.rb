@@ -39,15 +39,15 @@ RSpec.describe Auditor do
           =======================
           | NSM claims updated: |
           =======================
-          ID                                   | STATUS
-          -------------------------------------|-------
+          ID                                   | STATE
+          -------------------------------------|------
           #{new_claim.id} | draft
 
 
           ============================
           | PA applications updated: |
           ============================
-          ID                                   | STATUS
+          ID                                   | STATE
           -------------------------------------|----------
           #{application.id} | pre_draft
 
