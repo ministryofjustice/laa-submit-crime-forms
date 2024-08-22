@@ -171,7 +171,7 @@ module Nsm
       end
 
       def name_row(name, work_type_changed)
-        return t(name, numeric: false) unless work_type_changed
+        return t(name, numeric: false) unless work_type_changed && show_adjustments
 
         span = tag.span(I18n.t("nsm.steps.check_answers.groups.cost_summary.with_adjustments.#{name}"),
                         title: I18n.t('nsm.work_items.type_changes.types_changed'))
