@@ -317,19 +317,18 @@ en:
               blank: "Enter the solicitor's first name"
             last_name:
               blank: "Enter the solicitor's last name"
-
             reference_number:
               blank: "Enter the solicitor's reference number"
-            alternative_contact_details:
-              blank: "Select yes if you want to add alternative contact details"
-            contact_first_name:
-              blank: "Enter the first name of the alternative contact"
-            contact_last_name:
-              blank: "Enter the last name of the alternative contact"
-            contact_email:
-              blank: "Enter the email address of the alternative contact"
-              invalid: "Enter a valid email address"
           attributes: *solicitor_form
+        nsm/steps/contact_details_form:
+          attributes:
+            contact_first_name:
+              blank: "Enter the contact's first name"
+            contact_last_name:
+              blank: "Enter the contact's last name"
+            contact_email:
+              blank: "Enter the email address of the contact"
+              invalid: "Enter an email address in the correct format, like name@example.com"
         nsm/steps/office_code_form:
           attributes:
             office_code:

@@ -3,9 +3,10 @@
 module Nsm
   module CheckAnswers
     class YourDetailsCard < Base
-      attr_reader :firm_details_form
+      attr_reader :firm_details_form, :solicitor
 
       def initialize(claim)
+        @solicitor = claim.solicitor
         @firm_details_form = Nsm::Steps::FirmDetailsForm.build(claim)
         @group = 'about_you'
         @section = 'firm_details'
@@ -13,7 +14,7 @@ module Nsm
 
       # rubocop:disable Metrics/AbcSize
       def row_data
-        data = [
+        [
           {
             head_key: 'firm_name',
             text: check_missing(firm_details_form.firm_office.name)
@@ -42,28 +43,15 @@ module Nsm
             head_key: 'solicitor_reference_number',
             text: check_missing(firm_details_form.solicitor.reference_number)
           },
+          {
+            head_key: 'contact_full_name',
+            text: check_missing(solicitor.contact_full_name)
+          },
+          {
+            head_key: 'contact_email',
+            text: check_missing(solicitor.contact_email)
+          }
         ]
-
-        if firm_details_form.solicitor.contact_first_name ||
-           firm_details_form.solicitor.contact_last_name ||
-           firm_details_form.solicitor.contact_email
-          data += [
-            {
-              head_key: 'contact_first_name',
-              text: check_missing(firm_details_form.solicitor.contact_first_name)
-            },
-            {
-              head_key: 'contact_last_name',
-              text: check_missing(firm_details_form.solicitor.contact_last_name)
-            },
-            {
-              head_key: 'contact_email',
-              text: check_missing(firm_details_form.solicitor.contact_email)
-            }
-          ]
-        end
-
-        data
       end
       # rubocop:enable Metrics/AbcSize
 
