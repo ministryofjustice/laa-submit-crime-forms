@@ -1,0 +1,7 @@
+notifications:
+  - message: This is a test
+    date_from: 22/08/2024
+    date_to: 23/08/2024
+    development: true
+    uat: false
+    production: false
