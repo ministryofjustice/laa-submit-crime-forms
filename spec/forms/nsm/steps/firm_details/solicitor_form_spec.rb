@@ -85,6 +85,26 @@ RSpec.describe Nsm::Steps::FirmDetails::SolicitorForm do
       end
     end
 
+    context 'when email is missing the top-level domain' do
+      let(:contact_email) { 'job@bob' }
+      let(:alternative_contact_details) { 'yes' }
+
+      it 'has validation error on email address' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:contact_email, :invalid)).to be(true)
+      end
+    end
+
+    context 'when email has an invalid top-level domain' do
+      let(:contact_email) { 'job@bob.' }
+      let(:alternative_contact_details) { 'yes' }
+
+      it 'has validation error on email address' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:contact_email, :invalid)).to be(true)
+      end
+    end
+
     context 'when email is invalid but contains a valid email address' do
       let(:contact_email) { 'job@bob.com-jim@bob.com' }
       let(:alternative_contact_details) { 'yes' }
