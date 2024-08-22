@@ -98,8 +98,6 @@ class SubmitToAppStore
       custom_service_name
       prior_authority_granted
       no_alternative_quote_reason
-      confirm_excluding_vat
-      confirm_travel_expenditure
       created_at
       updated_at
     ].freeze

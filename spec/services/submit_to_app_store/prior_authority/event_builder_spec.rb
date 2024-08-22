@@ -29,8 +29,6 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
         custom_service_name: nil,
         prior_authority_granted: false,
         no_alternative_quote_reason: 'a reason',
-        confirm_excluding_vat: true,
-        confirm_travel_expenditure: true,
         defendant: {
           first_name: 'bob',
           last_name: 'jim',
