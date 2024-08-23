@@ -42,7 +42,7 @@ module PriorAuthority
 
       # The value returned by this is used to prepopulate the form field
       # and validate the form
-      def construct_autocomplete_value(field_type, list_type)
+      def construct_autocomplete_value(field_type, _list_type)
         scope = send(:"local_#{field_type}_values") ? self : application
         if scope.send(:"#{field_type}_id") == 'custom'
           scope.send(:"custom_#{field_type}_name")

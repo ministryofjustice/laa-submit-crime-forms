@@ -54,6 +54,8 @@ module LaaMultiStepForms
 
       value = form.object[field]
 
+      # as the values ID can be a symbol or a string we check on both instead
+      # of converting the keys as this is easier
       if (values.map(&id_field) & [value, value&.to_sym].compact).none?
         values = values.dup.unshift(fake_record(id_field, value_field, value))
       end

@@ -16,7 +16,7 @@
                               options: { include_blank: true }, label: { size: "m" }, hint: { size: "s", text: t(".service_name_hint")},
                               data: { autoselect: false } %>
       <% else %>
-        <h2 class="govuk-heading-l"><%= @form_object.service_type_autocomplete %></h2>
+        <h2 class="govuk-heading-l"><%= @form_object.service_type_translation %></h2>
       <% end %>
       <h2 class="govuk-heading-m"><%= t(".service_details") %></h2>
       <%= form.govuk_text_field :contact_first_name, width: 20, label: { text: t(".contact_first_name"), size: "s" } %>

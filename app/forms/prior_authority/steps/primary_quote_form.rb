@@ -31,6 +31,14 @@ module PriorAuthority
         end
       end
 
+      def service_type_translation
+        if application.service_type == 'custom'
+          application.custom_service_name
+        elsif application.service_type.present?
+          QuoteServices.new(application.service_type).translated
+        end
+      end
+
       # this should only be used when JS is disabled - otherwise overwritten by service_type_autocomplete_suggestion
       def service_type_autocomplete=(value)
         # ensure that if the suggestion is set first it cannot be overwritten
