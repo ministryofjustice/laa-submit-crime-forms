@@ -8,7 +8,11 @@ RSpec.describe 'Ensure no duplicates in list' do
   end
 
   it 'for primary quote service_type' do
-    submission = create(:prior_authority_application, :with_primary_quote, quotes: [build(:quote, :primary_per_item)])
+    submission = create(
+      :prior_authority_application, :with_primary_quote,
+      service_type: 'meteorologist',
+      quotes: [build(:quote, :primary_per_item)]
+    )
 
     visit edit_prior_authority_steps_primary_quote_path(submission)
 
