@@ -6,39 +6,39 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%=  %></h1>
-
-    <%=
-      if work_item.adjustment_comment
-        rows = [
-          [{ text: t(".allowed_work_type"), width: 'govuk-!-width-one-half'}, work_item.translated_work_type(value: :assessed)[I18n.locale]],
-          [t(".allowed_hours"), format_period(work_item.allowed_time_spent || work_item.time_spent)],
-          [t(".allowed_uplift"), NumberTo.percentage((work_item.allowed_uplift || work_item.uplift).to_f, multiplier: 1)],
-          [t(".allowed_net_cost"), NumberTo.pounds(work_item.allowed_total_cost)],
-          [t(".adjustment_comment"), work_item.adjustment_comment]
-        ]
-
-        govuk_table do |table|
-          table.with_caption(text: t('.adjusted'))
-          table.with_body(rows: rows)
-        end
-      end
-    %>
+    <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
+    <h2 class='govuk-heading-l'><%= t('.your_costs') %></h2>
     <%=
       rows = [
         [{ text:  t('.work_type'), width: 'govuk-!-width-one-half' }, work_item.translated_work_type[I18n.locale]],
         [t(".date"), work_item.completed_on.strftime('%-d %B %Y')],
         [t(".fee_earner"), work_item.fee_earner],
-        [t(".rate"), NumberTo.pounds(work_item.pricing[work_item.work_type])],
         [t(".hours"), format_period(work_item.time_spent)],
         [t(".uplift"), NumberTo.percentage(work_item.uplift.to_f, multiplier: 1)],
         [t(".net_cost"), NumberTo.pounds(work_item.total_cost)]
       ]
-
       govuk_table do |table|
-        table.with_caption(text: t('.your_costs'))
+        table.with_caption(text: t('.your_costs'), classes: 'govuk-visually-hidden')
         table.with_body(rows: rows)
       end
     %>
+
+    <% if work_item.adjustment_comment %>
+      <h2 class='govuk-heading-l'><%= t('.adjusted') %></h2>
+
+      <%=
+          rows = [
+            [{ text: t(".allowed_work_type"), width: 'govuk-!-width-one-half'}, work_item.translated_work_type(value: :assessed)[I18n.locale]],
+            [t(".allowed_hours"), format_period(work_item.assessed_time_spent)],
+            [t(".allowed_uplift"), NumberTo.percentage((work_item.assessed_uplift).to_f, multiplier: 1)],
+            [t(".allowed_net_cost"), NumberTo.pounds(work_item.allowed_total_cost)],
+            [t(".adjustment_comment"), simple_format(work_item.adjustment_comment)]
+          ]
+
+          govuk_table do |table|
+            table.with_caption(text: t('.adjusted'), classes: 'govuk-visually-hidden')
+            table.with_body(rows: rows)
+          end %>
+    <% end %>
   </div>
 </div>
