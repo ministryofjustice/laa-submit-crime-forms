@@ -83,6 +83,7 @@ Rails.application.routes.draw do
         edit_step :case_transfer
         show_step :start_page
         edit_step :firm_details
+        edit_step :contact_details
         edit_step :office_code
         edit_step :case_details
         edit_step :case_disposal

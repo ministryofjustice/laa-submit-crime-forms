@@ -61,12 +61,12 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'firm_office' => {
             'account_number' => '1A123B',
             'address_line_1' => '2 Laywer Suite',
-            'address_line_2' => nil,
+            'address_line_2' => 'Unit B',
             'name' => 'Firm A',
             'postcode' => 'CR0 1RE',
             'previous_id' => nil,
             'town' => 'Lawyer Town',
-            'vat_registered' => 'yes'
+            'vat_registered' => 'no'
           },
           'first_hearing_date' => /\A\d{4}-\d{2}-\d{2}\z/,
           'gender' => { en: 'Male', value: 'm' },
@@ -117,9 +117,9 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'send_by_post' => nil,
           'signatory_name' => an_instance_of(String),
           'solicitor' => {
-            'contact_email' => nil,
-            'contact_first_name' => nil,
-            'contact_last_name' => nil,
+            'contact_email' => 'james@email.com',
+            'contact_first_name' => 'James',
+            'contact_last_name' => 'Blake',
             'first_name' => 'Richard',
             'last_name' => 'Jenkins',
             'previous_id' => nil,
