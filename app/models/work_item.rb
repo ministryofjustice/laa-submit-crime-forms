@@ -3,14 +3,14 @@ class WorkItem < ApplicationRecord
 
   include WorkItemCosts
 
-  SORT_POSITION = {
-    'travel' => 0,
-    'waiting' => 1,
-    'attendance_with_counsel' => 2,
-    'attendance_without_counsel' => 3,
-    'preparation' => 4,
-    'advocacy' => 5
-  }.freeze
+  WORK_TYPE_SUMMARY_ORDER = %w[
+    travel
+    waiting
+    attendance_with_counsel
+    attendance_without_counsel
+    preparation
+    advocacy
+  ].freeze
 
   validates :id, exclusion: { in: [Nsm::StartPage::NEW_RECORD] }
 
@@ -22,10 +22,6 @@ class WorkItem < ApplicationRecord
 
   def translated_work_type(value: :original)
     translations(value == :assessed ? assessed_work_type : work_type, 'nsm.steps.check_answers.show.sections.work_items')
-  end
-
-  def sort_position
-    SORT_POSITION[work_type.to_s]
   end
 
   # Cache the value if looking at a runtime

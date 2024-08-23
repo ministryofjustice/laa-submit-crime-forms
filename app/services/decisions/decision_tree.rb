@@ -9,6 +9,8 @@ module Decisions
     NSM_CASE_TRANSFER = 'nsm/steps/case_transfer'.freeze
     NSM_START_PAGE = 'nsm/steps/start_page'.freeze
     NSM_FIRM_DETAILS = 'nsm/steps/firm_details'.freeze
+    NSM_CONTACT_DETAILS = 'nsm/steps/contact_details'.freeze
+    NSM_OFFICE_CODE = 'nsm/steps/office_code'.freeze
     NSM_WORK_ITEMS = 'nsm/steps/work_items'.freeze
     NSM_WORK_ITEM = 'nsm/steps/work_item'.freeze
     NSM_DEFENDANT_SUMMARY = 'nsm/steps/defendant_summary'.freeze
@@ -38,9 +40,10 @@ module Decisions
       .goto(show: NSM_START_PAGE)
 
     # start_page to firm_details is a hard coded link as show page
-    from(:firm_details)
+    from(:firm_details).goto(edit: NSM_CONTACT_DETAILS)
+    from(:contact_details)
       .when(-> { application.submitter.multiple_offices? })
-      .goto(edit: 'nsm/steps/office_code')
+      .goto(edit: NSM_OFFICE_CODE)
       .when(-> { application.defendants.none? })
       .goto(edit: 'nsm/steps/defendant_details', defendant_id: Nsm::StartPage::NEW_RECORD)
       .goto(edit: NSM_DEFENDANT_SUMMARY)

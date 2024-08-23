@@ -34,8 +34,7 @@ en:
               solicitor_first_name: Solicitor first name
               solicitor_last_name: Solicitor last name
               solicitor_reference_number: Solicitor reference number
-              contact_first_name: Contact first name
-              contact_last_name: Contact last name
+              contact_full_name: Contact full name
               contact_email: Contact email address
             defendant_summary:
               main_defendant_first_name: Main defendant first name
@@ -145,7 +144,7 @@ en:
           about_you:
             heading: About you
             firm_details:
-              title: Your details
+              title: Firm details
           about_defendant:
             heading: About the defendant
             defendant_summary:
