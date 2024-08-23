@@ -16,7 +16,7 @@ RSpec.describe Nsm::AllowedWorkItems::Table do
               numeric: false,
               text: "<a href=\"/non-standard-magistrates/applications/#{work_item.claim_id}/" \
                     "steps/view_claim/work_item/#{work_item.id}\">Advocacy</a>" },
-            { numeric: false, text: nil },
+            { numeric: false, text: nil, html_attributes: { class: 'govuk-!-text-break-anywhere govuk-!-width-one-quarter' } },
             { numeric: true,
               text: '1<span class="govuk-visually-hidden"> hour</span>:40<span class="govuk-visually-hidden"> minutes</span>' },
             { numeric: true, text: '0%' },
@@ -46,7 +46,8 @@ RSpec.describe Nsm::AllowedWorkItems::Table do
                 text: '<span id="changed-1" title="This item was adjusted to be a different work item type.">' \
                       "<a href=\"/non-standard-magistrates/applications/#{work_item.claim_id}/steps/view_claim/" \
                       "work_item/#{work_item.id}\">Travel</a></span> <sup><a href=\"#fn1\">[1]</a></sup>" },
-              { numeric: false, text: 'wrong type' },
+              { numeric: false, text: 'wrong type',
+html_attributes: { class: 'govuk-!-text-break-anywhere govuk-!-width-one-quarter' } },
               { numeric: true,
                 text: '1<span class="govuk-visually-hidden"> hour</span>:40<span class="govuk-visually-hidden"> minutes</span>' },
               { numeric: true, text: '0%' },
