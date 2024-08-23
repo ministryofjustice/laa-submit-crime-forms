@@ -19,14 +19,13 @@ class Claim < ApplicationRecord
            class_name: 'SupportingDocument',
            as: :documentable
 
-  scope :reviewed, -> { where(status: %i[granted part_grant rejected sent_back expired further_info]) }
-  scope :submitted_or_resubmitted, -> { where(status: %i[submitted provider_updated]) }
+  scope :reviewed, -> { where(state: %i[granted part_grant rejected sent_back expired further_info]) }
+  scope :submitted_or_resubmitted, -> { where(state: %i[submitted provider_updated]) }
 
   scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(office_code: nil, submitter: provider)) }
 
-  enum :status, { draft: 'draft', submitted: 'submitted', granted: 'granted', part_grant: 'part_grant',
-                  review: 'review', sent_back: 'sent_back', provider_requested: 'provider_requested',
-                  rejected: 'rejected' }
+  enum :state, { draft: 'draft', submitted: 'submitted', granted: 'granted', part_grant: 'part_grant',
+                 sent_back: 'sent_back', rejected: 'rejected' }
 
   def date
     rep_order_date || cntp_date

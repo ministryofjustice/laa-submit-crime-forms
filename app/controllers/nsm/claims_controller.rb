@@ -49,7 +49,7 @@ module Nsm
       'defendant' => 'defendants.first_name ?, defendants.last_name ?',
       'last_updated' => 'updated_at ?',
       'laa_reference' => 'laa_reference ?',
-      'status' => 'status ?',
+      'state' => 'state ?',
       'account' => 'office_code ?'
     }.freeze
 

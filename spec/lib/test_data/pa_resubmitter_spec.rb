@@ -31,7 +31,7 @@ RSpec.describe TestData::PaResubmitter do
     end
 
     context 'when there is a normal app' do
-      let(:application) { create :prior_authority_application, :full, status: :submitted }
+      let(:application) { create :prior_authority_application, :full, state: :submitted }
 
       it 'does not touch it' do
         subject.resubmit(100)

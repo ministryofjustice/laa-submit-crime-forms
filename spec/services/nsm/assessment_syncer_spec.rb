@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
   describe '.call' do
     let(:claim) do
-      create(:claim, :complete, status:)
+      create(:claim, :complete, state:)
     end
 
-    let(:status) { 'granted' }
+    let(:state) { 'granted' }
 
     let(:letters_and_calls) do
       [
@@ -52,7 +52,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
     end
 
     context 'when there is an error' do
-      let(:status) { 'rejected' }
+      let(:state) { 'rejected' }
 
       before do
         allow(claim).to receive(:part_grant?).and_raise 'Some problem!'
@@ -66,7 +66,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
     end
 
     context 'when there is an assessment comment' do
-      let(:status) { 'sent_back' }
+      let(:state) { 'sent_back' }
       let(:record) do
         {
           'application' => application.merge('assessment_comment' => 'More info needed')
@@ -80,10 +80,10 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
 
     context 'when part granted with letters and calls adjusted' do
       let(:claim) do
-        create(:claim, :complete, :letters_calls_uplift, status:)
+        create(:claim, :complete, :letters_calls_uplift, state:)
       end
 
-      let(:status) { 'part_grant' }
+      let(:state) { 'part_grant' }
       let(:record) do
         {
           application: {
@@ -135,11 +135,11 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
     end
 
     context 'when part granted with work items adjusted' do
-      let(:status) { 'part_grant' }
+      let(:state) { 'part_grant' }
       let(:uplifted_work_item) { build(:work_item, :valid, :with_uplift) }
       let(:work_item) { build(:work_item, :valid) }
       let(:claim) do
-        create(:claim, status: status, work_items: [uplifted_work_item, work_item])
+        create(:claim, state: state, work_items: [uplifted_work_item, work_item])
       end
 
       let(:record) do
@@ -189,11 +189,11 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
     end
 
     context 'when part granted with disbursements adjusted' do
-      let(:status) { 'part_grant' }
+      let(:state) { 'part_grant' }
       let(:disbursement_with_vat) { build(:disbursement, :valid) }
       let(:disbursement_no_vat) { build(:disbursement, :no_vat) }
       let(:claim) do
-        create(:claim, status: status, disbursements: [disbursement_with_vat, disbursement_no_vat])
+        create(:claim, state: state, disbursements: [disbursement_with_vat, disbursement_no_vat])
       end
 
       let(:record) do

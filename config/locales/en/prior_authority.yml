@@ -8,7 +8,7 @@ en:
       save_and_come_back_later: 'Save and come back later'
       none: None
       not_applicable: N/A
-    statuses:
+    states:
       granted: Granted
       auto_grant: Granted
       part_grant: Part granted
@@ -46,7 +46,7 @@ en:
           last_updated: Last updated
           action: Action
           client: Client
-          status: Status
+          state: Status
           office_code: Account
         delete: Delete
       confirm_delete:
@@ -69,8 +69,8 @@ en:
         print_a_pdf: Print a PDF of this application
         print_hint: It will include the answers you input into this application and its current status.
         create_pdf: Create a printable PDF
-        application_status: Application status
-        status: Status
+        application_state: Application status
+        state: Status
         amount_requested: '%{amount} requested'
         amount_allowed: '%{amount} allowed'
         laa_response: LAA response

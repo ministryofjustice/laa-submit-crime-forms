@@ -13,7 +13,7 @@ module PriorAuthority
 
     def call
       application.with_lock do
-        case application.status
+        case application.state
         when 'rejected', 'granted'
           sync_overall_comment
         when 'part_grant'

@@ -3,7 +3,7 @@ module Fixes
     # We discovered that by multi-clicking the primary quote submit screen, users
     # could cause multiple primary quotes to be registered on our system
     def identify
-      PriorAuthorityApplication.where(id: affected_application_ids).pluck(:id, :status, :laa_reference)
+      PriorAuthorityApplication.where(id: affected_application_ids).pluck(:id, :state, :laa_reference)
     end
 
     def fix
@@ -36,14 +36,14 @@ module Fixes
     end
 
     def update_app_store(application)
-      old_status = application.status
+      old_state = application.state
 
       # The app store will only allow updates from "sent_back" to "provider_updated"
       # We assume that any affected submissions will be manually put into "sent_back"
       #  before this job runs, and then put into their intended state after it runs.
       application.provider_updated!
       SubmitToAppStore.new.submit(application, include_events: false)
-      application.update(status: old_status)
+      application.update(state: old_state)
     end
 
     def file_uploader

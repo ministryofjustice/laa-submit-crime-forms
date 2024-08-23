@@ -10,10 +10,6 @@ module Nsm
       include ActionView::Helpers::OutputSafetyHelper
       attr_reader :claim
 
-      def status
-        claim.status.inquiry
-      end
-
       def initialize(claim)
         @claim = claim
         @group = 'application_status'
@@ -24,7 +20,7 @@ module Nsm
         [
           {
             head_key: 'application_status',
-            text: status_text
+            text: state_text
           },
           (if response.any?
              {
@@ -37,13 +33,13 @@ module Nsm
 
       private
 
-      def status_text
-        items = [status_tag(status), submitted_date]
-        if status.submitted?
+      def state_text
+        items = [state_tag, submitted_date]
+        if claim.submitted?
           items += [translate(:awaiting_review), tag.br, claimed_amount]
         else
           items += [tag.br, claimed_amount]
-          items += [allowed_amount(status)] unless status.sent_back? || status.provider_requested? || status.review?
+          items += [allowed_amount] unless claim.sent_back?
         end
         join_strings(*items)
       end
@@ -66,10 +62,10 @@ module Nsm
         I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.#{key}")
       end
 
-      def status_tag(status)
+      def state_tag
         tag.strong(
-          I18n.t("nsm.claims.index.status.#{status}"),
-          class: ['govuk-tag', I18n.t("nsm.claims.index.status_colour.#{status}")]
+          I18n.t("nsm.claims.index.state.#{claim.state}"),
+          class: ['govuk-tag', I18n.t("nsm.claims.index.state_colour.#{claim.state}")]
         )
       end
 
@@ -80,11 +76,11 @@ module Nsm
       def appeal_info
         return unless claim.part_grant? || claim.rejected?
 
-        ApplicationController.new.render_to_string(partial: 'nsm/steps/view_claim/appeal', locals: { status: claim.status })
+        ApplicationController.new.render_to_string(partial: 'nsm/steps/view_claim/appeal', locals: { state: claim.state })
       end
 
       def edit_links
-        return [] unless status.part_grant?
+        return [] unless claim.part_grant?
 
         helper = Rails.application.routes.url_helpers
         li_elements = %w[work_items letters_and_calls disbursements].map do |type|
@@ -104,9 +100,9 @@ module Nsm
       end
 
       def update_claim
-        return [] unless status.sent_back? || status.provider_requested? || status.review?
+        return [] unless claim.sent_back?
 
-        key = status.provider_requested? ? 'update_provider_requested' : 'update_further_info'
+        key = 'update_further_info'
         email = tag.a(EMAIL, href: "mailto:#{EMAIL}")
         [
           tag.span(translate('update_claim'), class: 'govuk-!-font-weight-bold'),
@@ -124,9 +120,9 @@ module Nsm
                       end
       end
 
-      def allowed_amount(status)
-        return '£0.00 allowed' if status.rejected?
-        return "#{NumberTo.pounds(total_gross_allowed)} allowed" if status.part_grant?
+      def allowed_amount
+        return '£0.00 allowed' if claim.rejected?
+        return "#{NumberTo.pounds(total_gross_allowed)} allowed" if claim.part_grant?
 
         "#{NumberTo.pounds(total_gross)} allowed"
       end

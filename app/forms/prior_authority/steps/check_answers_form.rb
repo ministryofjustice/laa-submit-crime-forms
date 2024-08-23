@@ -18,7 +18,7 @@ module PriorAuthority
           return false
         end
 
-        application.update!(status: new_status)
+        application.update!(state: new_state)
         update_incorrect_information if application.incorrect_information_explanation.present?
         SubmitToAppStore.perform_later(submission: application)
 
@@ -48,7 +48,7 @@ module PriorAuthority
           application.incorrect_information_explanation.present?
       end
 
-      def new_status
+      def new_state
         application.sent_back? ? :provider_updated : :submitted
       end
     end

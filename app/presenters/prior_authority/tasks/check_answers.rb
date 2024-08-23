@@ -16,7 +16,7 @@ module PriorAuthority
       end
 
       def completed?
-        application.status == PriorAuthorityApplication.statuses[:submitted]
+        application.submitted?
       end
     end
   end

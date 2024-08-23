@@ -20,7 +20,7 @@ RSpec.describe 'View applications' do
         create(:prior_authority_application,
                :full,
                :with_alternative_quotes,
-               status: 'rejected',
+               state: 'rejected',
                app_store_updated_at: 1.day.ago,
                assessment_comment: 'You used the wrong form')
       end
@@ -43,7 +43,7 @@ RSpec.describe 'View applications' do
       let(:application) do
         create(:prior_authority_application,
                :full,
-               status: 'granted',
+               state: 'granted',
                app_store_updated_at: 1.day.ago)
       end
 
@@ -58,7 +58,7 @@ RSpec.describe 'View applications' do
       let(:application) do
         create(:prior_authority_application,
                :full,
-               status: 'part_grant',
+               state: 'part_grant',
                assessment_comment: assessment_comment,
                app_store_updated_at: 1.day.ago,
                quotes: [quote],
@@ -124,7 +124,7 @@ RSpec.describe 'View applications' do
       let(:application) do
         create(:prior_authority_application,
                :full,
-               status: 'sent_back',
+               state: 'sent_back',
                app_store_updated_at: 1.day.ago,
                resubmission_requested: 1.day.ago,
                resubmission_deadline: 12.days.from_now)
@@ -141,7 +141,7 @@ RSpec.describe 'View applications' do
       let(:application) do
         create(:prior_authority_application,
                :full,
-               status: 'expired',
+               state: 'expired',
                app_store_updated_at: 1.day.ago,
                resubmission_requested: 14.days.ago,
                resubmission_deadline: 1.day.ago)
@@ -166,7 +166,7 @@ RSpec.describe 'View applications' do
       let(:application) do
         create(:prior_authority_application,
                :full,
-               status: 'provider_updated',
+               state: 'provider_updated',
                further_informations: [further_information])
       end
 

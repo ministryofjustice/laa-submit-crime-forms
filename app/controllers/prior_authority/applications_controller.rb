@@ -73,7 +73,7 @@ module PriorAuthority
       'client' => 'defendants.first_name ?, defendants.last_name ?',
       'last_updated' => 'updated_at ?',
       'laa_reference' => 'laa_reference ?',
-      'status' => 'status ?',
+      'state' => 'state ?',
       'office_code' => 'office_code ?'
     }.freeze
 
@@ -106,7 +106,7 @@ module PriorAuthority
         report: CheckAnswers::Report.new(application, verbose: true, skip_links: skip_links),
         allowance_type: { 'granted' => :original,
                           'part_grant' => :dynamic,
-                          'rejected' => :na }[application.status]
+                          'rejected' => :na }[application.state]
       }
     end
   end

@@ -4,7 +4,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
   describe '.call' do
     let(:application) do
       create(:prior_authority_application, :full,
-             status: status,
+             state: state,
              quotes: [primary_quote],
              additional_costs: [additional_cost],
              further_informations: [],
@@ -13,7 +13,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
 
     let(:primary_quote) { build(:quote, :primary) }
     let(:additional_cost) { build(:additional_cost, :per_item) }
-    let(:status) { 'granted' }
+    let(:state) { 'granted' }
 
     let(:record) do
       {
@@ -81,7 +81,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
     end
 
     context 'when app is granted' do
-      let(:status) { 'granted' }
+      let(:state) { 'granted' }
 
       it 'syncs the assessment comment' do
         expect(application.assessment_comment).to eq 'Decision comment'
@@ -89,7 +89,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
     end
 
     context 'when app is rejected' do
-      let(:status) { 'rejected' }
+      let(:state) { 'rejected' }
 
       it 'syncs the assessment comment' do
         expect(application.assessment_comment).to eq 'Decision comment'
@@ -97,7 +97,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
     end
 
     context 'when the app is part granted' do
-      let(:status) { 'part_grant' }
+      let(:state) { 'part_grant' }
 
       it 'syncs the primary quote' do
         expect(primary_quote.base_cost_allowed).to eq 60
@@ -131,7 +131,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
     end
 
     context 'when app is sent back' do
-      let(:status) { 'sent_back' }
+      let(:state) { 'sent_back' }
 
       context 'with further info and incorrect info' do
         it 'syncs the incorrect info' do
@@ -187,8 +187,8 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
       end
     end
 
-    context 'when app has status that should not sync' do
-      let(:status) { nil }
+    context 'when app has state that should not sync' do
+      let(:state) { nil }
 
       it 'does not sync any new data' do
         expect(application.assessment_comment).to be_nil
