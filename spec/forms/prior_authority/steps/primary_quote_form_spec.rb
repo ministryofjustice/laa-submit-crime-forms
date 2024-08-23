@@ -429,7 +429,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       let(:service_type) { 'custom' }
       let(:custom_service_name) { 'apples' }
 
-      it { expect(subject.service_type_translation).to eq('apple') }
+      it { expect(subject.service_type_translation).to eq('apples') }
     end
 
     context 'when noservice type' do
