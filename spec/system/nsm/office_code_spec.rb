@@ -4,7 +4,7 @@ RSpec.describe 'Office code selection', type: :system do
   let(:office_code_question) { 'Which firm office account number is this claim for?' }
   let(:provider) { Provider.first }
 
-  context 'when I complete the firm details screen' do
+  context 'when I complete the firm and contact details screen' do
     before do
       visit provider_saml_omniauth_callback_path
       provider.update(office_codes:)
@@ -20,17 +20,19 @@ RSpec.describe 'Office code selection', type: :system do
       fill_in 'Solicitor last name', with: 'Robert'
       fill_in 'Solicitor reference number', with: '2222'
 
-      choose 'nsm-steps-firm-details-form-solicitor-attributes-alternative-contact-details-yes-field'
+      click_on 'Save and continue'
 
-      fill_in 'First name of alternative contact', with: 'Jim'
-      fill_in 'Last name of alternative contact', with: 'Bob'
-      fill_in 'Email address of alternative contact', with: 'jim@bob.com'
+      fill_in 'First name', with: 'Jim'
+      fill_in 'Last name', with: 'Bob'
+      fill_in 'Email address', with: 'jim@bob.com'
 
       click_on 'Save and continue'
     end
 
     context 'when the provider has multiple office codes' do
-      let(:claim) { create(:claim, office_code: nil, submitter: provider, defendants: defendants) }
+      let(:claim) do
+        create(:claim, office_code: nil, submitter: provider, defendants: defendants, claim_type: :breach_of_injunction)
+      end
       let(:defendants) { [] }
       let(:office_codes) { %w[1A123B 1K022G] }
 

@@ -9,8 +9,6 @@ en:
         rep_order_date: Representation order date
         cntp_date: Date the CNTP rep order was issued
       nsm_steps_firm_details_form:
-        solicitor_attributes:
-          alternative_contact_details: Do you want to add alternative contact details?
         solicitor_details: Solicitor details
       nsm_steps_case_details_form:
         main_offence_date: Main offence date
@@ -67,11 +65,6 @@ en:
         cntp_order: For example CNTP1234
       nsm_steps_firm_details_form:
         solicitor_details: Enter the details of the solicitor managing this case
-        solicitor_attributes:
-          alternative_contact_details: |
-            We’ll use the contact details on your account if we need to ask you for
-            more information to complete your claim. If you add alternative contact
-            details we’ll use those instead.
       nsm_steps_case_details_form:
         remitted_to_magistrate_options:
           'yes': We’ll ask you to upload evidence of this before you submit this claim
@@ -164,12 +157,10 @@ en:
           first_name: Solicitor first name
           last_name: Solicitor last name
           reference_number: Solicitor reference number
-          contact_first_name: First name of alternative contact
-          contact_last_name: Last name of alternative contact
-          contact_email: Email address of alternative contact
-          alternative_contact_details_options:
-            'yes': 'Yes'
-            'no': 'No'
+      nsm_steps_contact_details_form:
+        contact_first_name: First name
+        contact_last_name: Last name
+        contact_email: Email address
       nsm_steps_case_details_form:
         main_offence: Main offence
         assigned_counsel_options:

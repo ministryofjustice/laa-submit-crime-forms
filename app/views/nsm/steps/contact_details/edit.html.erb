@@ -1,0 +1,19 @@
+<% title t('.page_title') %>
+<% decision_step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-l"><%= t('.page_title') %></h1>
+    <p><%= t('.explanation') %>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_text_field :contact_first_name, maxlength_enabled: true %>
+      <%= f.govuk_text_field :contact_last_name, maxlength_enabled: true %>
+      <%= f.govuk_text_field :contact_email, maxlength_enabled: true %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
+
+
