@@ -14,7 +14,7 @@
       'line_item' => false,
       'item' => false,
       'date' => false,
-      'net_cost' => false,
+      'net_cost' => [],
       'vat' => [],
       'gross_cost' => []
     }
@@ -27,7 +27,7 @@
 
       [
         { header: true, text: disbursement.position, numeric: true},
-        { header: true, text: link, numeric: true},
+        { header: true, text: link, numeric: false},
         { text: disbursement.disbursement_date&.to_fs(:short_stamp), numeric: false },
         { text: NumberTo.pounds(disbursement.total_cost_without_vat), numeric: true },
         { text: NumberTo.pounds(disbursement.vat), numeric: true },
