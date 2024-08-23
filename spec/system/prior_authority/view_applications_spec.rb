@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'system_helper'
 
 RSpec.describe 'View applications' do
   let(:arbitrary_fixed_date) { DateTime.new(2024, 3, 22, 15, 23, 11) }
@@ -127,13 +127,17 @@ RSpec.describe 'View applications' do
                state: 'sent_back',
                app_store_updated_at: 1.day.ago,
                resubmission_requested: 1.day.ago,
-               resubmission_deadline: 12.days.from_now)
+               resubmission_deadline: 12.days.from_now,
+               further_informations: [build(:further_information, information_requested: 'Tell me more')],
+               incorrect_informations: [build(:incorrect_information, information_requested: 'Fix it')])
       end
 
-      it 'shows expiry details' do
-        expect(page).to have_content 'Update needed'
-        expect(page).to have_content '£155.00 requested'
-        expect(page).to have_content 'Review the requests and resubmit your application by 3 April 2024'
+      it 'shows send back details' do
+        expect(page).to have_content('Update needed')
+          .and have_content('£155.00 requested')
+          .and have_content('Review the requests and resubmit your application by 3 April 2024')
+          .and have_content('Further information request Tell me more')
+          .and have_content('Amendment request Fix it')
       end
     end
 
@@ -167,7 +171,8 @@ RSpec.describe 'View applications' do
         create(:prior_authority_application,
                :full,
                state: 'provider_updated',
-               further_informations: [further_information])
+               further_informations: [further_information],
+               incorrect_informations: [incorrect_information])
       end
 
       let(:further_information) do
@@ -179,11 +184,20 @@ RSpec.describe 'View applications' do
               supporting_documents: [build(:supporting_document, file_name: 'evidence–with-weird-char.pdf')])
       end
 
-      it 'shows uodate details' do
+      let(:incorrect_information) do
+        build(:incorrect_information,
+              information_requested: 'Fix it',
+              sections_changed: [:client_detail, :alternative_quote_1],
+              created_at: 1.day.ago)
+      end
+
+      it 'shows update details' do
         expect(page).to have_content('Resubmitted')
           .and have_content('Further information request 21 March 2024')
           .and have_content('Tell me more')
           .and have_content('More info')
+          .and have_content('Fix it')
+          .and have_content('Client details and alternative quote 1 amended')
       end
 
       it 'lets me download my uploaded file' do
