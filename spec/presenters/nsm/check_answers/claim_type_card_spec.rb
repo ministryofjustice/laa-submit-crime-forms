@@ -9,7 +9,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
     let(:claim) { build(:claim) }
 
     it 'shows correct title' do
-      expect(subject.title).to eq('Claim details')
+      expect(subject.title).to eq('Claim summary')
     end
   end
 
