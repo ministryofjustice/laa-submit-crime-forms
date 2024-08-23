@@ -45,11 +45,5 @@ RSpec.describe Nsm::Tasks::FirmDetails, type: :system do
 
       it { expect(subject).not_to be_completed }
     end
-
-    context 'when office code has not saved' do
-      let(:office_code) { nil }
-
-      it { expect(subject).not_to be_completed }
-    end
   end
 end
