@@ -41,7 +41,7 @@ FactoryBot.define do
 
     trait :complete do
       claim_details
-      firm_details
+      full_firm_details
       main_defendant
       case_details
       hearing_details
