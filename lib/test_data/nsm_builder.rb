@@ -28,7 +28,7 @@ module TestData
       ActiveRecord::Base.transaction do
         args, kwargs = *options(**options).values.sample
         claim = FactoryBot.create(*args, :randomised, kwargs.call)
-        claim.update!(status: submit ? :submitted : claim.status, updated_at: claim.updated_at + 1.minute)
+        claim.update!(state: submit ? :submitted : claim.state, updated_at: claim.updated_at + 1.minute)
 
         invalid_tasks = check_tasks(claim)
         raise "Invalid for #{invalid_tasks.map(&:first).join(', ')}" if invalid_tasks.any?

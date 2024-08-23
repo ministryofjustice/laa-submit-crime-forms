@@ -79,7 +79,7 @@ RSpec.describe Nsm::CheckAnswers::Report do
     context 'in a complete state' do
       subject { described_class.new(claim, read_only: true) }
 
-      let(:claim) { build(:claim, :complete, :completed_status) }
+      let(:claim) { build(:claim, :complete, :completed_state) }
 
       context 'section groups' do
         it 'returns multiple groups' do

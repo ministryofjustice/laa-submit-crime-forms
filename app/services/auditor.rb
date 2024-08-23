@@ -28,14 +28,14 @@ class Auditor
     append '======================='
     append '| NSM claims updated: |'
     append '======================='
-    append_table updated_claims, [:id, :status]
+    append_table updated_claims, [:id, :state]
   end
 
   def list_updated_applications
     append '============================'
     append '| PA applications updated: |'
     append '============================'
-    append_table updated_applications, [:id, :status]
+    append_table updated_applications, [:id, :state]
   end
 
   def list_updated_documents

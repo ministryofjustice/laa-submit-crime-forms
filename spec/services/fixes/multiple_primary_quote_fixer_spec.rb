@@ -14,13 +14,13 @@ RSpec.describe Fixes::MultiplePrimaryQuoteFixer do
     end
 
     it 'correctly identifies' do
-      expect(described_class.new.identify).to eq([[application.id, application.status, application.laa_reference]])
+      expect(described_class.new.identify).to eq([[application.id, application.state, application.laa_reference]])
     end
   end
 
   describe '#fix' do
-    let(:application) { create :prior_authority_application, :with_complete_prison_law, quotes: [], status: status }
-    let(:status) { 'submitted' }
+    let(:application) { create :prior_authority_application, :with_complete_prison_law, quotes: [], state: state }
+    let(:state) { 'submitted' }
     let(:first_primary) { create :quote, :primary, prior_authority_application: application }
 
     let(:second_primary) do
@@ -44,7 +44,7 @@ RSpec.describe Fixes::MultiplePrimaryQuoteFixer do
       expect(application.reload.primary_quote).to eq first_primary
     end
 
-    it 'preserves the status' do
+    it 'preserves the state' do
       expect(application.reload).to be_submitted
     end
 
@@ -52,15 +52,15 @@ RSpec.describe Fixes::MultiplePrimaryQuoteFixer do
       expect(uploader).to have_received(:destroy).with(second_primary.document.file_path)
     end
 
-    it 'triggers a PUT to the app store with a status the app store will accept' do
+    it 'triggers a PUT to the app store with a state the app store will accept' do
       expect(client).to have_received(:put) do |args|
         expect(args[:application_id]).to eq application.id
         expect(args[:application_state]).to eq 'provider_updated'
       end
     end
 
-    context 'when status is draft' do
-      let(:status) { 'draft' }
+    context 'when state is draft' do
+      let(:state) { 'draft' }
 
       it 'does not bother the app store' do
         expect(client).not_to have_received(:put)

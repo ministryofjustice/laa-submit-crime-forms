@@ -10,7 +10,7 @@ module TagHelper
     provider_updated: 'govuk-tag--light-blue',
   }.freeze
 
-  def prior_authority_tag_colour(status)
-    TAG_COLOURS[status.to_sym]
+  def prior_authority_tag_colour(state)
+    TAG_COLOURS[state.to_sym]
   end
 end

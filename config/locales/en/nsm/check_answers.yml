@@ -9,7 +9,7 @@ en:
           sections:
             application_status:
               application_status: Status
-              status: Status
+              state: Status
               submitted: Date Submitted
               assessed: Date Assessed
               returned: Date Returned
@@ -137,9 +137,6 @@ en:
               update_further_info: >
                 To update your claim, email %email% with the LAA case reference in the
                 subject of the email and include any supporting information requested.
-              update_provider_requested: >
-                To update your claim, email %email% with the LAA case reference in the
-                subject of the email and include your new information.
 
           claim_type:
             claim_type:

@@ -17,7 +17,7 @@ module TestData
         args, kwfct = *options(**options).values.sample
         kwargs = kwfct.call
         paa = FactoryBot.create(*args, :randomised, further_informations: [], incorrect_informations: [], **kwargs)
-        paa.update!(status: :submitted, updated_at: paa.updated_at + 1.minute)
+        paa.update!(state: :submitted, updated_at: paa.updated_at + 1.minute)
 
         invalid_tasks = check_tasks(paa)
 

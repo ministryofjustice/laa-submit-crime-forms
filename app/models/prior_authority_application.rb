@@ -24,7 +24,7 @@ class PriorAuthorityApplication < ApplicationRecord
   has_many :further_informations, dependent: :destroy, inverse_of: :prior_authority_application
   has_many :incorrect_informations, dependent: :destroy, inverse_of: :prior_authority_application
 
-  enum :status, {
+  enum :state, {
     pre_draft: 'pre_draft',
     draft: 'draft',
     submitted: 'submitted',
@@ -37,8 +37,8 @@ class PriorAuthorityApplication < ApplicationRecord
     expired: 'expired'
   }
 
-  scope :reviewed, -> { where(status: %i[granted part_grant rejected auto_grant sent_back expired]) }
-  scope :submitted_or_resubmitted, -> { where(status: %i[submitted provider_updated]) }
+  scope :reviewed, -> { where(state: %i[granted part_grant rejected auto_grant sent_back expired]) }
+  scope :submitted_or_resubmitted, -> { where(state: %i[submitted provider_updated]) }
 
   scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(office_code: nil, provider: provider)) }
 

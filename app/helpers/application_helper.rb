@@ -15,7 +15,7 @@ module ApplicationHelper
   end
 
   def relevant_prior_authority_list_anchor(prior_authority_application)
-    case prior_authority_application.status
+    case prior_authority_application.state
     when 'submitted'
       :submitted
     when 'draft'

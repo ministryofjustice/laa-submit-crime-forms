@@ -69,7 +69,7 @@ module PriorAuthority
       end
 
       def draft?
-        application.status.in?(%w[pre_draft draft])
+        application.state.in?(%w[pre_draft draft])
       end
 
       delegate :contact_full_name, to: :record

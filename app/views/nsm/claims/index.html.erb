@@ -97,8 +97,8 @@
         </caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <% ['ufn', 'defendant', 'account', 'last_updated', 'laa_reference', 'status'].each_with_index do |key, index| %>
-              <%= next if key == 'status' and %i[submitted draft].include?(@scope) %>
+            <% ['ufn', 'defendant', 'account', 'last_updated', 'laa_reference', 'state'].each_with_index do |key, index| %>
+              <%= next if key == 'state' and %i[submitted draft].include?(@scope) %>
               <%= table_header(
                 key,
                 "nsm.claims.index.header",
@@ -134,8 +134,8 @@
               <% end %>
               <% if @scope == :reviewed %>
                 <td class="govuk-table__cell">
-                  <strong class="govuk-tag <%= t(".status_colour.#{claim.status}") %>">
-                    <%= t(".status.#{claim.status}") %>
+                  <strong class="govuk-tag <%= t(".state_colour.#{claim.state}") %>">
+                    <%= t(".state.#{claim.state}") %>
                   </strong>
                 </td>
               <% end %>
