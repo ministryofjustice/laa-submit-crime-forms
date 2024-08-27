@@ -391,7 +391,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
     end
   end
 
-  describe '#¢draft?' do
+  describe '#draft?' do
     let(:application) { instance_double(PriorAuthorityApplication, state:) }
 
     context 'when state is draft' do
@@ -410,6 +410,33 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
       let(:state) { 'apples' }
 
       it { is_expected.not_to be_draft }
+    end
+  end
+
+  describe '#service_type_translation' do
+    subject { described_class.new(application:) }
+
+    let(:application) { create(:prior_authority_application, service_type:, custom_service_name:) }
+
+    context 'when standard service type' do
+      let(:service_type) { 'meteorologist' }
+      let(:custom_service_name) { nil }
+
+      it { expect(subject.service_type_translation).to eq('Meteorologist') }
+    end
+
+    context 'when custom service type' do
+      let(:service_type) { 'custom' }
+      let(:custom_service_name) { 'apples' }
+
+      it { expect(subject.service_type_translation).to eq('apples') }
+    end
+
+    context 'when noservice type' do
+      let(:service_type) { nil }
+      let(:custom_service_name) { nil }
+
+      it { expect(subject.service_type_translation).to be_nil }
     end
   end
 end

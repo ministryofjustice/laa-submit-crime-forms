@@ -253,6 +253,41 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
             )
           end
         end
+
+        context 'when the key is a symbol' do
+          let(:values) { [data_class.new(:apples, 'Apples'), data_class.new(:pears, 'Pears')] }
+          let(:value) { :apples }
+
+          it 'does not update the array of options' do
+            helper.suggestion_select(form, field, values, id_field, value_field)
+
+            expect(form).to have_received(:govuk_collection_select) do |_f, vals, _id_f, _value_f, **_kwargs|
+              expect(vals.map(&:to_h)).to eq(
+                [
+                  { id: :apples, name: 'Apples' },
+                  { id: :pears, name: 'Pears' },
+                ]
+              )
+            end
+          end
+        end
+      end
+
+      context 'when the value is nil' do
+        let(:value) { nil }
+
+        it 'does not update the array of options' do
+          helper.suggestion_select(form, field, values, id_field, value_field)
+
+          expect(form).to have_received(:govuk_collection_select) do |_f, vals, _id_f, _value_f, **_kwargs|
+            expect(vals.map(&:to_h)).to eq(
+              [
+                { id: 'app', name: 'Apples' },
+                { id: 'pea', name: 'Pears' },
+              ]
+            )
+          end
+        end
       end
     end
   end

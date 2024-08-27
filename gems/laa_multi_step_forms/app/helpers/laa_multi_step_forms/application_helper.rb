@@ -53,7 +53,10 @@ module LaaMultiStepForms
       data[:name] = "#{form.object_name}[#{field}_suggestion]"
 
       value = form.object[field]
-      unless values.map(&id_field).include?(value)
+
+      # as the values ID can be a symbol or a string we check on both instead
+      # of converting the keys as this is easier
+      if value && (values.map(&id_field) & [value, value.to_sym].compact).none?
         values = values.dup.unshift(fake_record(id_field, value_field, value))
       end
 

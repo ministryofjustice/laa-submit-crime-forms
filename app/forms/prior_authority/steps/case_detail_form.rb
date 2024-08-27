@@ -17,11 +17,11 @@ module PriorAuthority
                     :defendant_attributes
 
       def main_offence_autocomplete
-        construct_autocomplete_value(:main_offence, :offences)
+        construct_autocomplete_value(:main_offence)
       end
 
       def prison_autocomplete
-        construct_autocomplete_value(:prison, :prisons)
+        construct_autocomplete_value(:prison)
       end
 
       def main_offence_autocomplete=(value)
@@ -42,12 +42,12 @@ module PriorAuthority
 
       # The value returned by this is used to prepopulate the form field
       # and validate the form
-      def construct_autocomplete_value(field_type, list_type)
+      def construct_autocomplete_value(field_type)
         scope = send(:"local_#{field_type}_values") ? self : application
         if scope.send(:"#{field_type}_id") == 'custom'
           scope.send(:"custom_#{field_type}_name")
         elsif scope.send(:"#{field_type}_id").present?
-          I18n.t("prior_authority.#{list_type}.#{scope.send(:"#{field_type}_id")}")
+          scope.send(:"#{field_type}_id")
         end
       end
 
