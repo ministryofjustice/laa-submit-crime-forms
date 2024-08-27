@@ -1,4 +1,4 @@
-class NotificationBanners
+class NotificationBanner
   include Singleton
   attr_reader :message
 
