@@ -5,6 +5,7 @@ module PriorAuthority
     layout 'prior_authority'
 
     def index
+      @notification_banner = NotificationBanner.active_banner
       @pagy, @model = order_and_paginate(&:reviewed)
       @scope = :reviewed
       @empty = PriorAuthorityApplication.for(current_provider).none?

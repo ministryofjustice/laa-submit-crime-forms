@@ -6,9 +6,7 @@
       <%= t('.page_title') %>
     </h1>
 
-    <% if @notification_banner %>
-      <%= govuk_notification_banner(title_text: t(".notifications.title"), text: @notification_banner) %>
-    <% end %>
+    <%= render partial: 'shared/notifications' %>
 
     <p>
       <%= t('.introduction_html', eforms_link: link_to(t('.eforms'), "https://portal.legalservices.gov.uk/")) %>
