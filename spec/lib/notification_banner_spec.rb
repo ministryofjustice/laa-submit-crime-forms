@@ -38,10 +38,36 @@ describe NotificationBanner do
       end
     end
 
-    context 'no notification provided' do
+    context 'when no config provided' do
       let(:config) { nil }
 
       it 'correctly returns no notification message' do
+        expect(described_class.active_banner).to be_nil
+      end
+    end
+
+    # context 'when date_from present but not date_to' do
+    #   let(:config) do
+    #     {
+    #       message: 'This is a test 1',
+    #       date_from: 2.days.ago.to_s,
+    #       date_to: nil
+    #     }
+    #   end
+
+    #   it 'correctly returns no notification message' do
+    #     expect(described_class.active_banner).to be_nil
+    #   end
+    # end
+
+    context 'when no notification_banner config' do
+      before do
+        allow(Rails.configuration.x)
+          .to receive(:notification_banner)
+          .and_return(nil)
+      end
+
+      it 'correctly returns no notification' do
         expect(described_class.active_banner).to be_nil
       end
     end
