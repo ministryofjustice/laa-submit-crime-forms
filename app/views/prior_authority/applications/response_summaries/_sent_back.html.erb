@@ -7,6 +7,15 @@
         deadline: tag.strong(application.resubmission_deadline.to_fs(:stamp))).each do |paragraph| %>
       <p><%= paragraph %></p>
     <% end %>
+
+    <% if application.further_information_needed? %>
+      <h3 class="govuk-heading-s"><%= t('.further_information_request') %></h3>
+      <%= simple_format(application.pending_further_information.information_requested) %>
+    <% end %>
+    <% if application.correction_needed? %>
+      <h3 class="govuk-heading-s"><%= t('.amendment_request') %></h3>
+      <%= simple_format(application.pending_incorrect_information.information_requested) %>
+    <% end %>
     <% unless skip_links %>
       <% if application.further_information_needed? %>
         <%= govuk_button_link_to(t('prior_authority.applications.show.update_application'),

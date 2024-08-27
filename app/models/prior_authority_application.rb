@@ -59,11 +59,18 @@ class PriorAuthorityApplication < ApplicationRecord
   end
 
   def further_information_needed?
-    if further_informations.empty?
-      false
-    else
-      last_further_info = further_informations.order(:created_at).last.created_at
-      sent_back? && (last_further_info >= app_store_updated_at)
-    end
+    pending_further_information.present?
+  end
+
+  def correction_needed?
+    pending_incorrect_information.present?
+  end
+
+  def pending_further_information
+    further_informations.where('created_at > ?', app_store_updated_at).order(:created_at).last
+  end
+
+  def pending_incorrect_information
+    incorrect_informations.where('created_at > ?', app_store_updated_at).order(:created_at).last
   end
 end

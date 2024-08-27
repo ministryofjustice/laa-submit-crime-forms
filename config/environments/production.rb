@@ -69,7 +69,20 @@ Rails.application.configure do
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
   # Use a different cache store in production.
-  config.cache_store = :redis_cache_store, { url: Rails.configuration.x.redis_url }
+  config.cache_store = :redis_cache_store, {
+    url: Rails.configuration.x.redis_url,
+    error_handler: -> (method:, returning:, exception:) do
+      # We want to make sure that if something goes wrong retrieving information from the
+      # session/cache both we and the end user know that something is amiss - we definitely
+      # don't want to just treat it as a cache miss and move on, as that's a poor UX.
+      # Our normal error handling involves showing the user an error page that uses the session,
+      # and therefore the cache to see is the user is logged and if so display their email
+      # in the nav. Since the cache is unavailable, we can't do that here so instead we
+      # let the error bubble up so that it is reported to Sentry and the static 500.html is rendered.
+      raise exception
+    end,
+  }
+
   config.session_store :cache_store, secure: true
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
@@ -95,7 +108,7 @@ Rails.application.configure do
   # Enable DNS rebinding protection and other `Host` header attacks.
   config.hosts = (ENV["HOSTS"]&.split(',') || []) + [ENV.fetch('INTERNAL_HOST_NAME', nil)].compact
   # Skip DNS rebinding protection for the default health check endpoint.
-  config.host_authorization = { exclude: ->(request) { request.path == '/ping' } }
+  config.host_authorization = { exclude: ->(request) { request.path.in?(['/ping', '/ready']) } }
 
   config.logstasher.enabled = true
   config.logstasher.logger_path = 'log/logstasher.log'

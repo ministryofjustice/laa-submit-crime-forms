@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   extend RouteHelpers
 
   get :ping, to: 'healthcheck#ping'
+  get :ready, to: 'healthcheck#ready'
 
   # mount this at the route
   mount LaaMultiStepForms::Engine, at: '/'

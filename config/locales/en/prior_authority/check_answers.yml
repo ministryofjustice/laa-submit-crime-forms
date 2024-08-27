@@ -64,6 +64,20 @@ en:
             compact_further_information:
               information_request: Information request
               your_response: Your response
+            incorrect_information:
+              information_requested: Information request
+              information_supplied: Your response
+              details_amended: "%{changes} amended"
+              sections:
+                ufn: UFN
+                case_contact: case contact
+                client_detail: client details
+                case_detail: case details
+                hearing_detail: hearing details
+                next_hearing: next hearing
+                primary_quote: primary quote
+                reason_why: reason for prior authority
+                alternative_quote: alternative quote %{n}
           subheading: Now send your application
 
         groups:
@@ -89,6 +103,8 @@ en:
               title: Further information requested
             compact_further_information:
               title: Further information request %{date}
+            incorrect_information:
+              title: Amendment request %{date}
           application_detail:
             heading: ''
             ufn:
