@@ -6,7 +6,7 @@ FactoryBot.define do
     created_at { DateTime.current }
 
     trait :with_edits do
-      sections_changed { ['case_details'] }
+      sections_changed { ['case_detail'] }
     end
   end
 end

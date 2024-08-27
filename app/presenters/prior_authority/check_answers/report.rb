@@ -62,26 +62,46 @@ module PriorAuthority
           PrimaryQuoteCard.new(application, verbose:, skip_links:),
           AlternativeQuotesCard.new(application, verbose:),
           ReasonWhyCard.new(application, skip_links:),
-          further_information_cards,
+          rfi_cards,
         ].flatten.compact
       end
 
       private
 
-      def further_information_cards
-        return unless application.further_informations.any?
-
+      def rfi_cards
         if @verbose
-          application.further_informations
-                     .order(requested_at: :desc)
-                     .map { CompactFurtherInformationCard.new(_1, skip_links:) }
-        else
+          (compact_further_information_cards + incorrect_information_cards).sort_by { _1[:date] }
+                                                                           .reverse
+                                                                           .pluck(:card)
+        elsif application.further_information_needed?
           FurtherInformationCard.new(application)
         end
       end
 
       def group_heading(group_key, **)
         I18n.t("prior_authority.steps.check_answers.groups.#{group_key}.heading", **)
+      end
+
+      def compact_further_information_cards
+        application.further_informations
+                   .order(requested_at: :desc)
+                   .map do |further_information|
+          {
+            date: further_information.requested_at,
+            card: CompactFurtherInformationCard.new(further_information, skip_links:),
+          }
+        end
+      end
+
+      def incorrect_information_cards
+        application.incorrect_informations
+                   .order(requested_at: :desc)
+                   .map do |incorrect_information|
+          {
+            date: incorrect_information.requested_at,
+            card: IncorrectInformationCard.new(incorrect_information),
+          }
+        end
       end
     end
   end
