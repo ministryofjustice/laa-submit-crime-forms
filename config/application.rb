@@ -54,6 +54,8 @@ module Crm7restbackend
                            "#{protocol}://:#{password}@#{host}:6379"
                          end
 
+    config.x.notification_banner = config_for(:notification_banner, env: ENV.fetch('ENV', 'localhost'))
+
     config.after_initialize do
       Rails.application.reload_routes!
       AppStoreSubscriber.subscribe

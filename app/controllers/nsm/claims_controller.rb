@@ -6,6 +6,7 @@ module Nsm
     before_action :set_default_table_sort_options
 
     def index
+      @notification_banner = NotificationBanner.active_banner
       @pagy, @claims = order_and_paginate(Claim.for(current_provider).reviewed.where.not(ufn: nil))
       @scope = :reviewed
       render 'index'

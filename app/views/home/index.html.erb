@@ -6,6 +6,8 @@
       <%= t('.page_title') %>
     </h1>
 
+    <%= render partial: 'shared/notifications' %>
+
     <p>
       <%= t('.introduction_html', eforms_link: link_to(t('.eforms'), "https://portal.legalservices.gov.uk/")) %>
     </p>
