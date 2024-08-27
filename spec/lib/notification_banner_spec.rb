@@ -14,8 +14,8 @@ describe NotificationBanner do
       let(:config) do
         {
           message: 'This is a test 1',
-          date_from: 1.day.ago,
-          date_to: 1.day.since
+          date_from: 1.day.ago.to_s,
+          date_to: 1.day.since.to_s
         }
       end
 
@@ -28,8 +28,8 @@ describe NotificationBanner do
       let(:config) do
         {
           message: 'This is a test 1',
-          date_from: 2.days.ago,
-          date_to: 1.day.ago
+          date_from: 2.days.ago.to_s,
+          date_to: 1.day.ago.to_s
         }
       end
 

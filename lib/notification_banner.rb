@@ -1,9 +1,7 @@
 class NotificationBanner
   def self.active_banner
     current_date = DateTime.now
-    return unless date_from <= current_date && date_to >= current_date
-
-    banner_config[:message]
+    banner_config && date_from <= current_date && date_to >= current_date ? banner_config[:message] : nil
   end
 
   def self.banner_config
