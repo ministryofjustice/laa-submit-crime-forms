@@ -1,7 +1,7 @@
-# example notification
+# example notification - date time is in UTC
 # localhost:
 #   notification:
-#     message: Insery message here
+#     message: Insert message here
 #     date_from: "2024-08-27T18:00:00"
 #     date_to: "2024-08-28T19:00:00"
 
