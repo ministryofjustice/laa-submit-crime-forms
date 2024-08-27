@@ -1,7 +1,21 @@
 notifications:
-  - message: This is a test
-    date_from: 22/08/2024
-    date_to: 23/08/2024
+  - message: This is a test 1
+    date_from: "2024-08-27T14:20:00"
+    date_to: "2024-08-27T14:55:00"
+    local: true
+    development: true
+    uat: false
+    production: false
+  - message: This is a test 2
+    date_from: "2024-08-27T14:20:00"
+    date_to: "2024-08-27T14:55:00"
+    local: false
+    development: true
+    uat: false
+    production: false
+  - message: This is a test 3
+    date_from: "2024-08-27T11:20:00"
+    date_to: "2024-08-27T12:50:00"
     local: true
     development: true
     uat: false
