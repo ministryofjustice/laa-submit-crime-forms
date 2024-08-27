@@ -37,5 +37,13 @@ describe NotificationBanner do
         expect(described_class.active_banner).to be_nil
       end
     end
+
+    context 'no notification provided' do
+      let(:config) { nil }
+
+      it 'correctly returns no notification message' do
+        expect(described_class.active_banner).to be_nil
+      end
+    end
   end
 end
