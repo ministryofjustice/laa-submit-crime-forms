@@ -6,12 +6,8 @@
       <%= t('.page_title') %>
     </h1>
 
-    <% if @notification_banners %>
-      <%= govuk_notification_banner(title_text: t(".notifications.title")) do %>
-        <% @notification_banners.each do |banner| %>
-          <p><%= banner["message"] %></p>
-        <% end %>
-      <% end %>
+    <% if @notification_banner %>
+      <%= govuk_notification_banner(title_text: t(".notifications.title"), text: @notification_banner) %>
     <% end %>
 
     <p>

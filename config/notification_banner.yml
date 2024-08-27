@@ -1,0 +1,8 @@
+notification:
+  message: This is a test 1
+  date_from: "2024-08-27T14:20:00"
+  date_to: "2024-08-27T19:55:00"
+  local: true
+  development: true
+  uat: false
+  production: false
