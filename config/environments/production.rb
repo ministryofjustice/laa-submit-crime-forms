@@ -72,14 +72,13 @@ Rails.application.configure do
   config.cache_store = :redis_cache_store, {
     url: Rails.configuration.x.redis_url,
     error_handler: -> (method:, returning:, exception:) do
-      # We want to make sure that if something goes wrong retrieving information from the cache,
-      # both we and the end user know that something is amiss - we don't want to just treat it
-      # as a cache miss and move on, as that's a poor UX.
-      # Our normal error handling rescues errors, reports them to Sentry manually, then redirects
-      # to the unhandled errors page (see the ErrorHandling module). Sadly, errors raised here aren't
-      # rescuable via the controller layer, so we don't have a way of forcing a redirect. Instead,
-      # the best we can do is bubble up the error to the very top, so that it is reported to
-      # Sentry and the static 500.html is rendered.
+      # We want to make sure that if something goes wrong retrieving information from the
+      # session/cache both we and the end user know that something is amiss - we definitely
+      # don't want to just treat it as a cache miss and move on, as that's a poor UX.
+      # Our normal error handling involves showing the user an error page that uses the session,
+      # and therefore the cache to see is the user is logged and if so display their email
+      # in the nav. Since the cache is unavailable, we can't do that here so instead we
+      # let the error bubble up so that it is reported to Sentry and the static 500.html is rendered.
       raise exception
     end,
   }
