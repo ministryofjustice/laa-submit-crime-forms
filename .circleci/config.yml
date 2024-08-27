@@ -7,7 +7,7 @@ version: 2.1
 # ------------------
 orbs:
   browser-tools: circleci/browser-tools@1.4.7
-  snyk: snyk/snyk@2.1.0
+  snyk: snyk/snyk@2.2.0
   aws-cli: circleci/aws-cli@4.1.3
   aws-ecr: circleci/aws-ecr@9.0.2
   crime-forms-end-to-end-tests: ministryofjustice/crime-forms-end-to-end-tests@volatile
@@ -356,10 +356,10 @@ jobs:
           command: snyk monitor --all-projects
       - run:
           name: Scan container image for vulnerabilities
-          command: snyk container test app --file=./Dockerfile --policy-path=.snyk --severity-threshold=high
+          command: snyk container test --prune-repeated-subdependencies app --file=./Dockerfile --policy-path=.snyk --severity-threshold=high
       - run:
           name: Monitor container image for vulnerabilities
-          command: snyk container monitor app
+          command: snyk container monitor --prune-repeated-subdependencies app
       - helm/install_helm_client:
           version: 3.7.2
       - run:
