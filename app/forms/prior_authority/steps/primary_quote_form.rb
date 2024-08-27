@@ -27,7 +27,15 @@ module PriorAuthority
         if scope.service_type == 'custom'
           scope.custom_service_name
         elsif scope.service_type.present?
-          QuoteServices.new(scope.service_type).translated
+          scope.service_type
+        end
+      end
+
+      def service_type_translation
+        if application.service_type == 'custom'
+          application.custom_service_name
+        elsif application.service_type.present?
+          QuoteServices.new(application.service_type).translated
         end
       end
 
@@ -61,7 +69,7 @@ module PriorAuthority
       end
 
       def draft?
-        application.status.in?(%w[pre_draft draft])
+        application.state.in?(%w[pre_draft draft])
       end
 
       delegate :contact_full_name, to: :record

@@ -13,44 +13,36 @@ RSpec.describe 'NSM claims lists' do
            :complete,
            laa_reference: 'LAA-AAAAA',
            ufn: '120423/001',
-           status: 'submitted',
+           state: 'submitted',
            updated_at: 1.day.ago,
            defendants: [build(:defendant, :valid_nsm, first_name: 'Burt', last_name: 'Bacharach')])
 
     create(:claim, :with_named_defendant, ufn: '120423/002', laa_reference: 'LAA-BBBBB',
-           status: 'submitted', updated_at: 2.days.ago)
+           state: 'submitted', updated_at: 2.days.ago)
 
     create(:claim, :with_named_defendant, ufn: '120423/003', laa_reference: 'LAA-CCCC1',
-           status: 'granted', updated_at: 3.days.ago)
+           state: 'granted', updated_at: 3.days.ago)
 
     create(:claim, :with_named_defendant, ufn: '120423/004', laa_reference: 'LAA-CCCC2',
-           status: 'sent_back', updated_at: 3.days.ago)
+           state: 'sent_back', updated_at: 3.days.ago)
 
     create(:claim, :with_named_defendant, ufn: '120423/005', laa_reference: 'LAA-CCCC3',
-           status: 'part_grant', updated_at: 3.days.ago)
+           state: 'part_grant', updated_at: 3.days.ago)
 
     create(:claim, :with_named_defendant, ufn: '120423/006', laa_reference: 'LAA-CCCC4',
-           status: 'rejected', updated_at: 3.days.ago)
-
-    create(:claim,
-           :with_named_defendant,
-           ufn: '120423/007',
-           laa_reference: 'LAA-CCCC5',
-           office_code: '9A123B',
-           status: 'provider_requested',
-           updated_at: 3.days.ago)
+           state: 'rejected', updated_at: 3.days.ago)
 
     create(:claim,
            ufn: '120423/008',
            laa_reference: 'LAA-DDDDD',
            defendants: [build(:defendant, :valid_nsm, first_name: 'Zoe', last_name: 'Zeigler')],
-           status: 'draft',
+           state: 'draft',
            updated_at: 4.days.ago)
 
     create(:claim,
            ufn: '111111/111',
            laa_reference: 'LAA-EEEEE',
-           status: 'draft',
+           state: 'draft',
            office_code: 'OTHER',
            submitter: create(:provider, :other))
 

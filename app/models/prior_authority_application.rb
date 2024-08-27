@@ -24,7 +24,7 @@ class PriorAuthorityApplication < ApplicationRecord
   has_many :further_informations, dependent: :destroy, inverse_of: :prior_authority_application
   has_many :incorrect_informations, dependent: :destroy, inverse_of: :prior_authority_application
 
-  enum :status, {
+  enum :state, {
     pre_draft: 'pre_draft',
     draft: 'draft',
     submitted: 'submitted',
@@ -37,8 +37,8 @@ class PriorAuthorityApplication < ApplicationRecord
     expired: 'expired'
   }
 
-  scope :reviewed, -> { where(status: %i[granted part_grant rejected auto_grant sent_back expired]) }
-  scope :submitted_or_resubmitted, -> { where(status: %i[submitted provider_updated]) }
+  scope :reviewed, -> { where(state: %i[granted part_grant rejected auto_grant sent_back expired]) }
+  scope :submitted_or_resubmitted, -> { where(state: %i[submitted provider_updated]) }
 
   scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(office_code: nil, provider: provider)) }
 
@@ -59,11 +59,18 @@ class PriorAuthorityApplication < ApplicationRecord
   end
 
   def further_information_needed?
-    if further_informations.empty?
-      false
-    else
-      last_further_info = further_informations.order(:created_at).last.created_at
-      sent_back? && (last_further_info >= app_store_updated_at)
-    end
+    pending_further_information.present?
+  end
+
+  def correction_needed?
+    pending_incorrect_information.present?
+  end
+
+  def pending_further_information
+    further_informations.where('created_at > ?', app_store_updated_at).order(:created_at).last
+  end
+
+  def pending_incorrect_information
+    incorrect_informations.where('created_at > ?', app_store_updated_at).order(:created_at).last
   end
 end

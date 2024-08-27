@@ -17,7 +17,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     let(:assessment_comment) { "this is a comment\n2nd line" }
 
     context 'submitted' do
-      let(:claim) { create(:claim, :completed_status, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
+      let(:claim) { create(:claim, :completed_state, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
 
       it 'generates submitted rows' do
         expect(subject.row_data).to match(
@@ -33,7 +33,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     end
 
     context 'granted' do
-      let(:claim) { create(:claim, :granted_status, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
+      let(:claim) { create(:claim, :granted_state, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
 
       it 'generates granted rows' do
         expect(subject.row_data).to match(
@@ -63,7 +63,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
       let(:claim) do
         create(
           :claim,
-          :part_granted_status, :firm_details, :build_associates, :updated_at, :adjusted_letters_calls,
+          :part_granted_state, :firm_details, :build_associates, :updated_at, :adjusted_letters_calls,
           work_items_count: 1, work_items_adjusted: true,
           disbursements_count: 1, disbursements_adjusted: true,
           assessment_comment: assessment_comment
@@ -91,7 +91,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
           claim.firm_office.update(vat_registered: 'no')
         end
 
-        let(:claim) { create(:claim, :part_granted_status, :firm_details, :updated_at, assessment_comment:) }
+        let(:claim) { create(:claim, :part_granted_state, :firm_details, :updated_at, assessment_comment:) }
 
         it 'generates no links in text' do
           expect(subject.row_data).to match(
@@ -119,7 +119,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
       end
 
       context 'with no adjustements' do
-        let(:claim) { create(:claim, :part_granted_status, :firm_details, :updated_at, assessment_comment:) }
+        let(:claim) { create(:claim, :part_granted_state, :firm_details, :updated_at, assessment_comment:) }
 
         it 'generates no links in text' do
           expect(subject.row_data).to match(
@@ -150,7 +150,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
         let(:claim) do
           create(
             :claim,
-            :part_granted_status,
+            :part_granted_state,
             :firm_details,
             :updated_at,
             :adjusted_letters_calls,
@@ -174,65 +174,17 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
       end
     end
 
-    context 'review' do
-      let(:claim) { create(:claim, :review_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment) }
-
-      it 'generates review rows' do
-        expect(subject.row_data).to match(
-          [
-            {
-              head_key: 'application_status',
-              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow\">Update needed</strong></p><p>1 December 2023</p>' \
-                               '<br><p>£\d+\.\d\d claimed</p>')
-
-            },
-            {
-              head_key: 'laa_response',
-              text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
-                    '</p><p>To update your claim, email <a href="mailto:CRM7fi@justice.gov.uk">CRM7fi@justice.gov.uk</a> ' \
-                    "with the LAA case reference in the subject of the email and include any supporting information requested.\n</p>"
-            }
-          ]
-        )
-      end
-    end
-
-    context 'further info' do
-      let(:claim) do
-        create(:claim, :further_info_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
-      end
-
-      it 'generates further info rows' do
-        expect(subject.row_data).to match(
-          [
-            {
-              head_key: 'application_status',
-              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow\">Update needed</strong></p><p>1 December 2023</p>' \
-                               '<br><p>£\d+\.\d\d claimed</p>')
-
-            },
-            {
-              head_key: 'laa_response',
-              text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your claim</span>' \
-                    '</p><p>To update your claim, email <a href="mailto:CRM7fi@justice.gov.uk">CRM7fi@justice.gov.uk</a> ' \
-                    "with the LAA case reference in the subject of the email and include any supporting information requested.\n</p>"
-            }
-          ]
-        )
-      end
-    end
-
     context 'provider requested' do
       let(:claim) do
-        create(:claim, :provider_requested_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
+        create(:claim, :sent_back_state, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
       end
 
-      it 'generates provider requested rows' do
+      it 'generates sent back rows' do
         expect(subject.row_data).to match(
           [
             {
               head_key: 'application_status',
-              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow">Provider request</strong></p>' \
+              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow">Update needed</strong></p>' \
                                '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p>')
             },
             {
@@ -240,7 +192,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               text: '<p>this is a comment</p><p>2nd line</p><p><span class="govuk-!-font-weight-bold">Update your ' \
                     'claim</span></p><p>To update your claim, email <a href="mailto:CRM7fi@justice.gov.uk">' \
                     'CRM7fi@justice.gov.uk</a> with the LAA case reference in the subject of the email and include ' \
-                    "your new information.\n</p>"
+                    "any supporting information requested.\n</p>"
             }
           ]
         )
@@ -249,7 +201,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'rejected' do
       let(:claim) do
-        create(:claim, :rejected_status, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
+        create(:claim, :rejected_state, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
       end
 
       it 'generates rejected rows' do

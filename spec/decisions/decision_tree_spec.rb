@@ -7,15 +7,16 @@ RSpec.describe Decisions::DecisionTree do
   let(:form) { double(:form, application:, record:) }
 
   it_behaves_like 'a generic decision', from: :claim_type, goto: { action: :show, controller: 'nsm/steps/start_page' }
+  it_behaves_like 'a generic decision', from: :firm_details, goto: { action: :edit, controller: 'nsm/steps/contact_details' }
 
   context 'no existing defendants' do
-    it_behaves_like 'a generic decision', from: :firm_details, goto: { action: :edit, controller: 'nsm/steps/defendant_details', defendant_id: Nsm::StartPage::NEW_RECORD }
+    it_behaves_like 'a generic decision', from: :contact_details, goto: { action: :edit, controller: 'nsm/steps/defendant_details', defendant_id: Nsm::StartPage::NEW_RECORD }
   end
 
   context 'existing valid defendants' do
     let(:application) { build(:claim, defendants: [build(:defendant, :valid)]) }
 
-    it_behaves_like 'a generic decision', from: :firm_details, goto: { action: :edit, controller: 'nsm/steps/defendant_summary' }
+    it_behaves_like 'a generic decision', from: :contact_details, goto: { action: :edit, controller: 'nsm/steps/defendant_summary' }
   end
 
   it_behaves_like 'a generic decision', from: :defendant_details, goto: { action: :edit, controller: 'nsm/steps/defendant_summary' }

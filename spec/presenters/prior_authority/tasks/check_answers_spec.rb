@@ -30,17 +30,17 @@ RSpec.describe PriorAuthority::Tasks::CheckAnswers, type: :presenter do
   describe '#completed?' do
     subject(:completed?) { presenter.completed? }
 
-    context 'when application status is submitted' do
+    context 'when application state is submitted' do
       before do
-        allow(application).to receive(:status).and_return('submitted')
+        allow(application).to receive(:submitted?).and_return(true)
       end
 
       it { is_expected.to be true }
     end
 
-    context 'when application status is not submitted' do
+    context 'when application state is not submitted' do
       before do
-        allow(application).to receive(:status).and_return('draft')
+        allow(application).to receive(:submitted?).and_return(false)
       end
 
       it { is_expected.to be false }

@@ -14,7 +14,7 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
 
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Your details')
+      expect(subject.title).to eq('Firm details')
     end
   end
 
@@ -26,10 +26,6 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
             {
               head_key: 'firm_name',
               text: 'Firm A'
-            },
-            {
-              head_key: 'firm_account_number',
-              text: '1A123B'
             },
             {
               head_key: 'firm_address',
@@ -52,12 +48,8 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: '111222'
             },
             {
-              head_key: 'contact_first_name',
-              text: 'James'
-            },
-            {
-              head_key: 'contact_last_name',
-              text: 'Blake'
+              head_key: 'contact_full_name',
+              text: 'James Blake'
             },
             {
               head_key: 'contact_email',
@@ -68,47 +60,8 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
       end
     end
 
-    context 'without optional infomation' do
-      let(:claim) { build(:claim, :firm_details) }
-
-      it 'generates case detail rows for required fields' do
-        expect(subject.row_data).to eq(
-          [
-            {
-              head_key: 'firm_name',
-              text: 'Firm A'
-            },
-            {
-              head_key: 'firm_account_number',
-              text: '1A123B'
-            },
-            {
-              head_key: 'firm_address',
-              text: '2 Laywer Suite<br>Lawyer Town<br>CR0 1RE'
-            },
-            {
-              head_key: 'vat_registered',
-              text: 'Yes'
-            },
-            {
-              head_key: 'solicitor_first_name',
-              text: 'Richard'
-            },
-            {
-              head_key: 'solicitor_last_name',
-              text: 'Jenkins'
-            },
-            {
-              head_key: 'solicitor_reference_number',
-              text: '111222'
-            },
-          ]
-        )
-      end
-    end
-
     context 'with no data' do
-      let(:claim) { build(:claim, office_code: nil) }
+      let(:claim) { build(:claim, office_code: nil, solicitor: build(:solicitor)) }
 
       it 'generates missing data rows for required fields' do
         expect(subject.row_data).to eq(
@@ -118,10 +71,6 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
-              head_key: 'firm_account_number',
-              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
-            },
-            {
               head_key: 'firm_address',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
@@ -139,6 +88,14 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
             },
             {
               head_key: 'solicitor_reference_number',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'contact_full_name',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'contact_email',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
           ]
@@ -156,10 +113,6 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
             {
               head_key: 'firm_name',
               text: 'Firm A'
-            },
-            {
-              head_key: 'firm_account_number',
-              text: '1A123B'
             },
             {
               head_key: 'firm_address',
@@ -181,6 +134,14 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
               head_key: 'solicitor_reference_number',
               text: '111222'
             },
+            {
+              head_key: 'contact_full_name',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'contact_email',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
           ]
         )
       end
@@ -196,10 +157,6 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
             {
               head_key: 'firm_name',
               text: 'Firm A'
-            },
-            {
-              head_key: 'firm_account_number',
-              text: '1A123B'
             },
             {
               head_key: 'firm_address',
@@ -220,6 +177,14 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
             {
               head_key: 'solicitor_reference_number',
               text: '111222'
+            },
+            {
+              head_key: 'contact_full_name',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'contact_email',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
           ]
         )

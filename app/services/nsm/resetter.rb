@@ -3,7 +3,7 @@ module Nsm
     def call
       raise 'NEVER do this with real-life data' if HostEnv.production?
 
-      Claim.where.not(status: :draft).find_each do |claim|
+      Claim.where.not(state: :draft).find_each do |claim|
         reset_claim_fields(claim)
         reset_work_item_fields(claim)
         reset_disbursement_fields(claim)
@@ -13,7 +13,7 @@ module Nsm
 
     def reset_claim_fields(claim)
       claim.update!(
-        status: 'submitted',
+        state: 'submitted',
         assessment_comment: nil,
         allowed_letters: nil,
         allowed_letters_uplift: nil,

@@ -3,7 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe HealthcheckController do
-  context 'index' do
+  let(:parsed_body) { response.parsed_body.with_indifferent_access }
+
+  describe 'ping' do
     before do
       get :ping
     end
@@ -21,9 +23,23 @@ RSpec.describe HealthcheckController do
     end
   end
 
-  private
+  describe 'ready' do
+    context 'when Clamby is up and running' do
+      before { allow(Clamby).to receive(:safe?).and_return(true) }
 
-  def parsed_body
-    response.parsed_body.with_indifferent_access
+      it 'renders successfully with 200' do
+        get :ready
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when Clamby is not ready' do
+      before { allow(Clamby).to receive(:safe?).and_raise(Clamby::ClamscanClientError) }
+
+      it 'returns a 503' do
+        get :ready
+        expect(response).to have_http_status(:service_unavailable)
+      end
+    end
   end
 end

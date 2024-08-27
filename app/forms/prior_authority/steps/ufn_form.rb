@@ -11,7 +11,7 @@ module PriorAuthority
       end
 
       def extended_attributes
-        attributes.merge(status: new_status,
+        attributes.merge(state: new_state,
                          laa_reference: generate_laa_reference)
       end
 
@@ -22,8 +22,8 @@ module PriorAuthority
         end
       end
 
-      def new_status
-        application.pre_draft? ? :draft : application.status
+      def new_state
+        application.pre_draft? ? :draft : application.state
       end
     end
   end

@@ -19,7 +19,7 @@ describe 'reset_data:', type: :task do
     end
 
     context 'when there is a draft claim' do
-      let(:claim) { create(:claim, :complete, status: :draft) }
+      let(:claim) { create(:claim, :complete, state: :draft) }
 
       before { claim }
 
@@ -31,7 +31,7 @@ describe 'reset_data:', type: :task do
     end
 
     context 'when there is a submitted claim' do
-      let(:claim) { create(:claim, :complete, status: :submitted) }
+      let(:claim) { create(:claim, :complete, state: :submitted) }
 
       before { claim }
 
@@ -46,7 +46,7 @@ describe 'reset_data:', type: :task do
       let(:claim) do
         create(:claim,
                :complete,
-               status: :part_grant,
+               state: :part_grant,
                assessment_comment: 'Only allowing some of this',
                allowed_letters: 1,
                allowed_letters_uplift: 10,
@@ -80,7 +80,7 @@ describe 'reset_data:', type: :task do
         subject
         expect(dummy_submitter).to have_received(:perform).with(submission: claim)
         expect(claim.reload).to have_attributes(
-          status: 'submitted',
+          state: 'submitted',
           assessment_comment: nil,
           allowed_letters: nil,
           allowed_letters_uplift: nil,

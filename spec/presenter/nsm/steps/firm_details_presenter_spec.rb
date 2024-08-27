@@ -9,11 +9,13 @@ RSpec.describe Nsm::Tasks::FirmDetails, type: :system do
       id:,
       firm_office:,
       solicitor:,
+      office_code:,
     }
   end
   let(:id) { SecureRandom.uuid }
   let(:firm_office) { nil }
   let(:solicitor) { nil }
+  let(:office_code) { nil }
 
   describe '#path' do
     it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/firm_details") }
@@ -24,5 +26,24 @@ RSpec.describe Nsm::Tasks::FirmDetails, type: :system do
   end
 
   it_behaves_like 'a task with generic can_start?', Nsm::Tasks::ClaimType
-  it_behaves_like 'a task with generic complete?', Nsm::Steps::FirmDetailsForm
+
+  describe '#complete?' do
+    let(:solicitor) { create :solicitor, :full }
+    let(:firm_office) { create :firm_office, :full }
+    let(:office_code) { '12345' }
+
+    it { expect(subject).to be_completed }
+
+    context 'when contact details have not been saved' do
+      let(:solicitor) { create :solicitor, :valid }
+
+      it { expect(subject).not_to be_completed }
+    end
+
+    context 'when firm details have not been saved' do
+      let(:solicitor) { create :solicitor }
+
+      it { expect(subject).not_to be_completed }
+    end
+  end
 end

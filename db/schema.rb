@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_19_104601) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_22_142103) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_19_104601) do
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "ufn"
     t.string "office_code"
-    t.string "status", default: "draft"
+    t.string "state", default: "draft"
     t.jsonb "navigation_stack", default: [], array: true
     t.string "claim_type"
     t.date "rep_order_date"
@@ -191,21 +191,21 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_19_104601) do
     t.boolean "authority_value"
     t.string "ufn"
     t.string "laa_reference"
-    t.string "status", default: "pre_draft"
+    t.string "state", default: "pre_draft"
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "next_hearing"
+    t.text "reason_why"
+    t.date "rep_order_date"
+    t.boolean "client_detained"
+    t.boolean "subject_to_poca"
     t.date "next_hearing_date"
     t.string "plea"
     t.string "court_type"
     t.boolean "youth_court"
     t.boolean "psychiatric_liaison"
     t.string "psychiatric_liaison_reason_not"
-    t.date "rep_order_date"
-    t.boolean "client_detained"
-    t.boolean "subject_to_poca"
-    t.text "reason_why"
+    t.boolean "next_hearing"
     t.boolean "additional_costs_still_to_add"
     t.boolean "prior_authority_granted"
     t.text "no_alternative_quote_reason"

@@ -13,7 +13,7 @@ module PriorAuthority
 
     def call
       application.with_lock do
-        case application.status
+        case application.state
         when 'rejected', 'granted'
           sync_overall_comment
         when 'part_grant'
@@ -105,12 +105,10 @@ module PriorAuthority
     def sync_incorrect_info_request
       latest_incorrect_info = data['incorrect_information'].max_by { _1['requested_at'] }
 
-      application.incorrect_informations.create(
-        {
-          caseworker_id: latest_incorrect_info['caseworker_id'],
-          information_requested: latest_incorrect_info['information_requested'],
-          requested_at: latest_incorrect_info['requested_at']
-        }
+      application.incorrect_informations.find_or_create_by(
+        caseworker_id: latest_incorrect_info['caseworker_id'],
+        information_requested: latest_incorrect_info['information_requested'],
+        requested_at: latest_incorrect_info['requested_at']
       )
     end
 

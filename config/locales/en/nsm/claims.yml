@@ -15,28 +15,22 @@ en:
           account: Account
           last_updated: Last updated
           laa_reference: LAA reference
-          status: Status
+          state: Status
           actions: Actions
-        status:
+        state:
           draft: Draft
           submitted: Submitted
-          accessed: Accessed
           granted: Granted
           part_grant: Part granted
           rejected: Rejected
           sent_back: Update needed
-          provider_requested: Provider request
-          review: Update needed
-        status_colour:
+        state_colour:
           draft: govuk-tag--grey
           submitted: govuk-tag--light-blue
-          accessed: govuk-tag--green
           granted: govuk-tag--green
           part_grant: govuk-tag--blue
           rejected: govuk-tag--red
           sent_back: govuk-tag--yellow
-          provider_requested: govuk-tag--yellow
-          review: govuk-tag--yellow
         tabs:
           reviewed: Reviewed
           submitted: Submitted

@@ -71,7 +71,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
   describe '#save! ("Save and come back later")' do
     subject(:save) { form.save! }
 
-    let(:application) { create(:prior_authority_application, status: 'draft') }
+    let(:application) { create(:prior_authority_application, state: 'draft') }
     let(:confirm_excluding_vat) { '' }
     let(:confirm_travel_expenditure) { '' }
 
@@ -82,8 +82,8 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
       expect(form.errors).to be_empty
     end
 
-    it 'does NOT update the status of the application' do
-      expect { save }.not_to change(application, :status).from('draft')
+    it 'does NOT update the state of the application' do
+      expect { save }.not_to change(application, :state).from('draft')
     end
 
     it 'does NOT submit the application to the app store' do
@@ -95,7 +95,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
   describe '#save ("Accept and send")', :stub_oauth_token do
     subject(:save) { form.save }
 
-    let(:application) { create(:prior_authority_application, status: 'draft') }
+    let(:application) { create(:prior_authority_application, state: 'draft') }
 
     before { allow(SubmitToAppStore).to receive(:perform_later).and_return(nil) }
 
@@ -103,8 +103,8 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
       let(:confirm_excluding_vat) { 'true' }
       let(:confirm_travel_expenditure) { 'true' }
 
-      it 'updates the status of the application to submitted' do
-        expect { save }.to change(application, :status).from('draft').to('submitted')
+      it 'updates the state of the application to submitted' do
+        expect { save }.to change(application, :state).from('draft').to('submitted')
       end
 
       it 'submits the application to the appstore' do
@@ -134,8 +134,8 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
         expect(form.errors.messages).to include(:confirm_excluding_vat, :confirm_travel_expenditure)
       end
 
-      it 'does NOT update the status of the application' do
-        expect { save }.not_to change(application, :status).from('draft')
+      it 'does NOT update the state of the application' do
+        expect { save }.not_to change(application, :state).from('draft')
       end
 
       it 'does NOT submit the application to the app store' do
@@ -153,8 +153,8 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
         expect(form.errors.messages).to include(:confirm_excluding_vat, :confirm_travel_expenditure)
       end
 
-      it 'does NOT update the status of the application' do
-        expect { save }.not_to change(application, :status).from('draft')
+      it 'does NOT update the state of the application' do
+        expect { save }.not_to change(application, :state).from('draft')
       end
 
       it 'does NOT submit the application to the app store' do
@@ -164,12 +164,12 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     end
 
     context 'when application is not in a valid state' do
-      let(:application) { create(:prior_authority_application, status: 'expired') }
+      let(:application) { create(:prior_authority_application, state: 'expired') }
       let(:confirm_excluding_vat) { 'true' }
       let(:confirm_travel_expenditure) { 'true' }
 
       it 'does not do a submission' do
-        expect { save }.not_to change(application, :status)
+        expect { save }.not_to change(application, :state)
         expect(SubmitToAppStore).not_to have_received(:perform_later)
       end
     end

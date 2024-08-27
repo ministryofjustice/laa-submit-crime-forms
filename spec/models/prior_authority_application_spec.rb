@@ -42,7 +42,7 @@ RSpec.describe PriorAuthorityApplication do
 
   describe '#further_information_needed?' do
     context 'a draft application' do
-      subject(:prior_authority_application) { create(:prior_authority_application, status: 'draft') }
+      subject(:prior_authority_application) { create(:prior_authority_application, state: 'draft') }
 
       it { expect(prior_authority_application).not_to be_further_information_needed }
     end
@@ -58,7 +58,7 @@ RSpec.describe PriorAuthorityApplication do
     end
 
     context 'a sent back application with no further information' do
-      subject(:prior_authority_application)  { create(:prior_authority_application, status: 'sent_back') }
+      subject(:prior_authority_application)  { create(:prior_authority_application, state: 'sent_back') }
 
       it { expect(prior_authority_application).not_to be_further_information_needed }
     end

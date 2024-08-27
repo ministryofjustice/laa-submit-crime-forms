@@ -1,6 +1,6 @@
 require Rails.root.join('lib/host_env')
 
-EXCLUDE_PATHS = %w[/ping /ping.json /health /health.json].freeze
+EXCLUDE_PATHS = %w[/ping /ping.json /ready /ready.json].freeze
 
 if ENV.fetch('SENTRY_DSN', nil).present?
   Sentry.init do |config|

@@ -10,9 +10,10 @@ RSpec.describe 'Prior authority applications, sent back for further info - check
     create(
       :prior_authority_application,
       :full,
-      status: 'sent_back',
+      state: 'sent_back',
       resubmission_deadline: 14.days.from_now,
       resubmission_requested: DateTime.current,
+      app_store_updated_at: 1.minute.ago,
       further_informations: [
         build(
           :further_information,

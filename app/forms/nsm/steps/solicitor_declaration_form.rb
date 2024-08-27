@@ -8,7 +8,7 @@ module Nsm
 
       def persist!
         Claim.transaction do
-          application.status = :submitted
+          application.state = :submitted
           application.update_work_item_positions!
           application.update_disbursement_positions!
           application.update!(attributes)
