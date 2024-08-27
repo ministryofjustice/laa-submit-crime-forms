@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
   describe '.call' do
-    let(:application) { create(:prior_authority_application, status:, prison_law:) }
+    let(:application) { create(:prior_authority_application, state:, prison_law:) }
     let(:new_data) do
       {
         prison_law: prison_law,
@@ -29,8 +29,6 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
         custom_service_name: nil,
         prior_authority_granted: false,
         no_alternative_quote_reason: 'a reason',
-        confirm_excluding_vat: true,
-        confirm_travel_expenditure: true,
         defendant: {
           first_name: 'bob',
           last_name: 'jim',
@@ -146,7 +144,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
     end
 
     context 'when application is in submitted state' do
-      let(:status) { :submitted }
+      let(:state) { :submitted }
 
       it 'returns an empty array' do
         expect(described_class.call(application, new_data)).to eq []
@@ -154,7 +152,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
     end
 
     context 'when application is provider_updated' do
-      let(:status) { :provider_updated }
+      let(:state) { :provider_updated }
       let(:dummy_client) { instance_double(AppStoreClient) }
       let(:old_data) { new_data.merge(changes).deep_stringify_keys }
       let(:listed_corrections) { described_class.call(application, new_data).first.dig(:details, :corrected_info) }
@@ -191,7 +189,7 @@ RSpec.describe SubmitToAppStore::PriorAuthority::EventBuilder do
         let(:application) do
           create(:prior_authority_application, :with_further_information_supplied,
                  app_store_updated_at: DateTime.now - 1.day,
-                 status: status)
+                 state: state)
         end
         let(:further_info_documents) { application.further_informations.order(:created_at).last.supporting_documents }
 

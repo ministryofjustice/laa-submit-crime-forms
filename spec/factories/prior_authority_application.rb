@@ -96,11 +96,6 @@ FactoryBot.define do
       primary_quote factory: %i[quote primary_per_item], strategy: :build
     end
 
-    trait :with_confirmations do
-      confirm_excluding_vat { true }
-      confirm_travel_expenditure { true }
-    end
-
     trait :full do
       with_firm_and_solicitor
       with_defendant
@@ -136,7 +131,7 @@ FactoryBot.define do
     end
 
     trait :sent_back_for_incorrect_info do
-      status { 'sent_back' }
+      state { 'sent_back' }
       incorrect_information_explanation { 'Please correct the following information...' }
       resubmission_deadline { 14.days.from_now }
       resubmission_requested { DateTime.current }
@@ -145,7 +140,7 @@ FactoryBot.define do
 
     trait :with_further_information_request do
       further_informations { [build(:further_information)] }
-      status { 'sent_back' }
+      state { 'sent_back' }
       app_store_updated_at { 1.minute.ago }
       resubmission_deadline { 14.days.from_now }
       resubmission_requested { DateTime.current }

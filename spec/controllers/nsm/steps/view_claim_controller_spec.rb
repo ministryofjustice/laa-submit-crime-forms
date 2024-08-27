@@ -4,7 +4,7 @@ RSpec.describe Nsm::Steps::ViewClaimController, type: :controller do
   it_behaves_like 'a show step controller'
 
   describe '#show' do
-    let(:claim) { create(:claim, :complete, :completed_status) }
+    let(:claim) { create(:claim, :complete, :completed_state) }
 
     before { claim.update(navigation_stack:) }
 

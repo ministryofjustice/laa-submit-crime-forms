@@ -13,23 +13,14 @@ module PriorAuthority
       def save!; end
 
       def persist!
-        updated = false
-        application.with_lock do
-          updated = update_application
-        end
-        SubmitToAppStore.perform_later(submission: application) if updated
-
-        updated
-      end
-
-      def update_application
         unless application.draft? || application.sent_back?
           errors.add(:base, :application_already_submitted)
           return false
         end
 
-        application.update!(attributes.merge({ status: new_status }))
+        application.update!(state: new_state)
         update_incorrect_information if application.incorrect_information_explanation.present?
+        SubmitToAppStore.perform_later(submission: application)
 
         true
       end
@@ -57,7 +48,7 @@ module PriorAuthority
           application.incorrect_information_explanation.present?
       end
 
-      def new_status
+      def new_state
         application.sent_back? ? :provider_updated : :submitted
       end
     end

@@ -128,7 +128,9 @@ RSpec.describe 'View claim page', type: :system do
         'Item', 'Time claimed', 'Net cost claimed',
         'Travel', '0 hours:23 minutes', '£10.58',
         'Waiting', '0 hours:23 minutes', '£10.58',
+        'Attendance with counsel', '0 hours:00 minutes', '£0.00',
         'Attendance without counsel', '1 hour:30 minutes', '£78.23',
+        'Preparation', '0 hours:00 minutes', '£0.00',
         'Advocacy', '3 hours:10 minutes', '£207.16',
         'Total', '', 'Sum of net cost claimed: £306.55'
       ]
@@ -144,12 +146,9 @@ RSpec.describe 'View claim page', type: :system do
       visit claimed_costs_work_items_nsm_steps_view_claim_path(claim.id)
 
       find('details').click
-      expect(all('details table td, details table th').map(&:text)).to eq(
-        [
-          'Item', 'Time claimed', 'Net cost claimed',
-          'Attendance without counsel', '12 hours:00 minutes', '£625.80',
-          'Total', '', 'Sum of net cost claimed: £625.80'
-        ]
+      expect(all('details table td, details table th').map(&:text).join).to include(
+        'Attendance without counsel12 hours:00 minutes£625.80',
+        'TotalSum of net cost claimed: £625.80'
       )
     end
   end
@@ -203,14 +202,19 @@ RSpec.describe 'View claim page', type: :system do
 
     expect(all('table caption, table td').map(&:text)).to eq(
       [
-        'Your claimed costs',
-        'Work type', 'Attendance without counsel',
-        'Date',	1.day.ago.to_fs(:stamp),
-        'Fee earner initials', 'AB',
-        'Rate applied', '£52.15',
-        'Number of hours', '1 hour 30 minutes',
-        'Uplift', '0%',
-        'Net cost', '£78.23'
+        'Provider submission',
+        'Work type',
+        'Attendance without counsel',
+        'Date',
+        1.day.ago.to_fs(:stamp),
+        'Fee earner initials',
+        'AB',
+        'Time claimed',
+        '1 hour 30 minutes',
+        'Uplift claimed',
+        '0%',
+        'Net cost claimed',
+        '£78.23'
       ]
     )
   end
@@ -628,21 +632,19 @@ RSpec.describe 'View claim page', type: :system do
 
       expect(all('table caption, table td').map(&:text)).to eq(
         [
-          'Adjusted claim',
-          'Allowed work type', 'Advocacy',
-          'Number of hours allowed', '0 hours 52 minutes',
+          'Provider submission',
+          'Work type', 'Advocacy',
+          'Date', Time.current.to_fs(:stamp),
+          'Fee earner initials', 'BC',
+          'Time claimed', '1 hour 44 minutes',
+          'Uplift claimed', '0%',
+          'Net cost claimed', '£113.39',
+          'LAA adjustments',
+          'Work type', 'Advocacy',
+          'Time allowed', '0 hours 52 minutes',
           'Uplift allowed', '0%',
           'Net cost allowed', '£56.70',
-          'Reason for adjustment', 'WI adjustment',
-
-          'Your claimed costs',
-          'Work type', 'Advocacy',
-          'Date',	Time.current.to_fs(:stamp),
-          'Fee earner initials', 'BC',
-          'Rate applied', '£65.42',
-          'Number of hours', '1 hour 44 minutes',
-          'Uplift', '0%',
-          'Net cost', '£113.39'
+          'Reason for adjustment', 'WI adjustment'
         ]
       )
     end

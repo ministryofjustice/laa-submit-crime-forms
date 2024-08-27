@@ -4,11 +4,13 @@ module Decisions
     WRAPPER_CLASS = CustomWrapper
 
     NSM_CLAIM_TYPE = 'nsm/steps/claim_type'.freeze
+    NSM_OFFICE_CODE = 'nsm/steps/office_code'.freeze
     NSM_OFFICE_AREA = 'nsm/steps/office_area'.freeze
     NSM_COURT_AREA = 'nsm/steps/court_area'.freeze
     NSM_CASE_TRANSFER = 'nsm/steps/case_transfer'.freeze
     NSM_START_PAGE = 'nsm/steps/start_page'.freeze
     NSM_FIRM_DETAILS = 'nsm/steps/firm_details'.freeze
+    NSM_CONTACT_DETAILS = 'nsm/steps/contact_details'.freeze
     NSM_WORK_ITEMS = 'nsm/steps/work_items'.freeze
     NSM_WORK_ITEM = 'nsm/steps/work_item'.freeze
     NSM_DEFENDANT_SUMMARY = 'nsm/steps/defendant_summary'.freeze
@@ -20,6 +22,13 @@ module Decisions
     NSM_EQUALITY = 'nsm/steps/equality'.freeze
 
     from(:claim_type)
+      .when(-> { application.submitter.multiple_offices? })
+      .goto(edit: NSM_OFFICE_CODE)
+      .when(-> { application.claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s })
+      .goto(edit: NSM_OFFICE_AREA)
+      .goto(show: NSM_START_PAGE)
+
+    from(:office_code)
       .when(-> { application.claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s })
       .goto(edit: NSM_OFFICE_AREA)
       .goto(show: NSM_START_PAGE)
@@ -38,16 +47,12 @@ module Decisions
       .goto(show: NSM_START_PAGE)
 
     # start_page to firm_details is a hard coded link as show page
-    from(:firm_details)
-      .when(-> { application.submitter.multiple_offices? })
-      .goto(edit: 'nsm/steps/office_code')
+    from(:firm_details).goto(edit: NSM_CONTACT_DETAILS)
+    from(:contact_details)
       .when(-> { application.defendants.none? })
       .goto(edit: 'nsm/steps/defendant_details', defendant_id: Nsm::StartPage::NEW_RECORD)
       .goto(edit: NSM_DEFENDANT_SUMMARY)
-    from(:office_code)
-      .when(-> { application.defendants.none? })
-      .goto(edit: 'nsm/steps/defendant_details', defendant_id: Nsm::StartPage::NEW_RECORD)
-      .goto(edit: NSM_DEFENDANT_SUMMARY)
+
     from(:defendant_details).goto(edit: NSM_DEFENDANT_SUMMARY)
     from(:defendant_delete).goto(edit: NSM_DEFENDANT_SUMMARY)
     from(:defendant_summary)

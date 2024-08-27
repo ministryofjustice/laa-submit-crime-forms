@@ -4,16 +4,21 @@ module Decisions
     WRAPPER_CLASS = CustomWrapper
 
     # start_page - takes use back to previous page
-    from(DecisionTree::NSM_CASE_TRANSFER).goto(edit: DecisionTree::NSM_COURT_AREA)
+    from(DecisionTree::NSM_OFFICE_CODE).goto(edit: DecisionTree::NSM_CLAIM_TYPE)
+    from(DecisionTree::NSM_OFFICE_AREA)
+      .when(-> { application.submitter.multiple_offices? })
+      .goto(edit: DecisionTree::NSM_OFFICE_CODE)
+      .goto(edit: DecisionTree::NSM_CLAIM_TYPE)
     from(DecisionTree::NSM_COURT_AREA).goto(edit: DecisionTree::NSM_OFFICE_AREA)
-    from(DecisionTree::NSM_OFFICE_AREA).goto(edit: DecisionTree::NSM_CLAIM_TYPE)
+    from(DecisionTree::NSM_CASE_TRANSFER).goto(edit: DecisionTree::NSM_COURT_AREA)
 
     from(DecisionTree::NSM_FIRM_DETAILS).goto(show: DecisionTree::NSM_START_PAGE)
+    from(DecisionTree::NSM_CONTACT_DETAILS).goto(edit: DecisionTree::NSM_FIRM_DETAILS)
     from('nsm/steps/defendant_details')
       .when(-> { application.defendants.exists? })
       .goto(edit: DecisionTree::NSM_DEFENDANT_SUMMARY)
-      .goto(edit: DecisionTree::NSM_FIRM_DETAILS)
-    from(DecisionTree::NSM_DEFENDANT_SUMMARY).goto(edit: DecisionTree::NSM_FIRM_DETAILS)
+      .goto(edit: DecisionTree::NSM_CONTACT_DETAILS)
+    from(DecisionTree::NSM_DEFENDANT_SUMMARY).goto(edit: DecisionTree::NSM_CONTACT_DETAILS)
     from('nsm/steps/defendant_delete').goto(edit: DecisionTree::NSM_DEFENDANT_SUMMARY)
     from('nsm/steps/case_details').goto(edit: DecisionTree::NSM_DEFENDANT_SUMMARY)
     from('nsm/steps/hearing_details').goto(edit: 'nsm/steps/case_details')
@@ -57,7 +62,7 @@ module Decisions
     from('prior_authority/steps/prison_law').goto(edit: 'prior_authority/applications')
     from('prior_authority/steps/authority_value').goto(edit: 'prior_authority/steps/prison_law')
     from('prior_authority/steps/ufn')
-      .when(-> { application.status == PriorAuthorityApplication.statuses[:pre_draft] })
+      .when(-> { application.pre_draft? })
       .goto(edit: 'prior_authority/steps/authority_value')
       .goto { overwrite_to_cya }
 

@@ -9,7 +9,8 @@ module Nsm
       end
 
       def completed?
-        super && application.office_code.present?
+        super &&
+          Nsm::Steps::ContactDetailsForm.build(application.solicitor, application:).valid?
       end
     end
   end

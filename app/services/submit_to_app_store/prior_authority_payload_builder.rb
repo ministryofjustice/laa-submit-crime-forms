@@ -8,7 +8,7 @@ class SubmitToAppStore
     def payload
       { application_id: application.id,
         json_schema_version: 1,
-        application_state: application.status,
+        application_state: application.state,
         application: data,
         application_type: 'crm4',
         application_risk: 'N/A',
@@ -26,6 +26,7 @@ class SubmitToAppStore
         additional_costs:,
         further_information:,
         incorrect_information:,
+        status:,
       )
     end
 
@@ -73,12 +74,15 @@ class SubmitToAppStore
       PriorAuthority::IncorrectInformationsPayloadBuilder.new(application).payload
     end
 
+    def status
+      application.state
+    end
+
     DIRECT_ATTRIBUTES = %i[
       office_code
       prison_law
       ufn
       laa_reference
-      status
       rep_order_date
       reason_why
       main_offence_id
@@ -98,8 +102,6 @@ class SubmitToAppStore
       custom_service_name
       prior_authority_granted
       no_alternative_quote_reason
-      confirm_excluding_vat
-      confirm_travel_expenditure
       created_at
       updated_at
     ].freeze

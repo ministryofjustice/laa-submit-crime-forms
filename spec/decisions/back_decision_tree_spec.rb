@@ -10,9 +10,10 @@ RSpec.describe Decisions::BackDecisionTree do
   let(:disbursements) { [] }
 
   it_behaves_like 'a generic decision', from: 'nsm/steps/firm_details', goto: { action: :show, controller: 'nsm/steps/start_page' }
+  it_behaves_like 'a generic decision', from: 'nsm/steps/contact_details', goto: { action: :edit, controller: 'nsm/steps/firm_details' }
 
   context 'when no defendants' do
-    it_behaves_like 'a generic decision', from: 'nsm/steps/defendant_details', goto: { action: :edit, controller: 'nsm/steps/firm_details' }
+    it_behaves_like 'a generic decision', from: 'nsm/steps/defendant_details', goto: { action: :edit, controller: 'nsm/steps/contact_details' }
   end
 
   context 'when any defendants' do
@@ -21,7 +22,7 @@ RSpec.describe Decisions::BackDecisionTree do
     it_behaves_like 'a generic decision', from: 'nsm/steps/defendant_details', goto: { action: :edit, controller: 'nsm/steps/defendant_summary' }
   end
 
-  it_behaves_like 'a generic decision', from: 'nsm/steps/defendant_summary', goto: { action: :edit, controller: 'nsm/steps/firm_details' }
+  it_behaves_like 'a generic decision', from: 'nsm/steps/defendant_summary', goto: { action: :edit, controller: 'nsm/steps/contact_details' }
   it_behaves_like 'a generic decision', from: 'nsm/steps/defendant_delete', goto: { action: :edit, controller: 'nsm/steps/defendant_summary' }
   it_behaves_like 'a generic decision', from: 'nsm/steps/case_details', goto: { action: :edit, controller: 'nsm/steps/defendant_summary' }
   it_behaves_like 'a generic decision', from: 'nsm/steps/hearing_details', goto: { action: :edit, controller: 'nsm/steps/case_details' }

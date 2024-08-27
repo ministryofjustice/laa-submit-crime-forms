@@ -13,6 +13,7 @@ RSpec.describe Nsm::Tasks::ClaimType, type: :system do
       office_in_undesignated_area:,
       transferred_from_undesignated_area:,
       claim_type:,
+      office_code:,
     }
   end
   let(:id) { SecureRandom.uuid }
@@ -22,6 +23,7 @@ RSpec.describe Nsm::Tasks::ClaimType, type: :system do
   let(:office_in_undesignated_area) { nil }
   let(:transferred_from_undesignated_area) { nil }
   let(:claim_type) { nil }
+  let(:office_code) { '12356' }
 
   describe '#path' do
     it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/claim_type") }
@@ -42,6 +44,12 @@ RSpec.describe Nsm::Tasks::ClaimType, type: :system do
       let(:claim_type) { 'breach_of_injunction' }
 
       it { expect(subject).to be_completed }
+
+      context 'when office code not selected' do
+        let(:office_code) { nil }
+
+        it { expect(subject).not_to be_completed }
+      end
     end
 
     context 'when court payment' do

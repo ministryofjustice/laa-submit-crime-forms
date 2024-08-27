@@ -11,7 +11,7 @@ class AppStoreUpdateProcessor
 
     def convert_params(record)
       {
-        status: record['application_state'],
+        state: record['application_state'],
         app_store_updated_at: record['updated_at']
       }
     end

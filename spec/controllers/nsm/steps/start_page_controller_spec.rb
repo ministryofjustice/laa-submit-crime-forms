@@ -6,11 +6,11 @@ RSpec.describe Nsm::Steps::StartPageController, type: :controller do
   describe '#show' do
     let(:claim) { create(:claim) }
 
-    before { claim.update(navigation_stack:, status:) }
+    before { claim.update(navigation_stack:, state:) }
 
     context 'when page is already in navigation stack' do
       let(:navigation_stack) { ["/non-standard-magistrates/applications/#{claim.id}/steps/start_page", '/foo'] }
-      let(:status) { 'draft' }
+      let(:state) { 'draft' }
 
       it 'does not change the navigation stack' do
         get :show, params: { id: claim }
@@ -22,7 +22,7 @@ RSpec.describe Nsm::Steps::StartPageController, type: :controller do
 
     context 'when page is not in the navigation stack' do
       let(:navigation_stack) { ['/foo'] }
-      let(:status) { 'draft' }
+      let(:state) { 'draft' }
 
       it 'adds the page to the navigation stack' do
         get :show, params: { id: claim }
@@ -34,7 +34,7 @@ RSpec.describe Nsm::Steps::StartPageController, type: :controller do
 
     context 'when claim is in a submitted state' do
       let(:navigation_stack) { ['/foo'] }
-      let(:status) { 'submitted' }
+      let(:state) { 'submitted' }
 
       it 'redirects to the read only view' do
         get :show, params: { id: claim }

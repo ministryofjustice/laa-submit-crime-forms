@@ -23,10 +23,8 @@ class SubmitToAppStore
     private
 
     def data
-      data = claim.as_json(except: %w[navigation_stack firm_office_id solicitor_id submitter_id allowed_calls
-                                      allowed_calls_uplift allowed_letters allowed_letters_uplift
-                                      calls_adjustment_comment letters_adjustment_comment])
-      data.merge(
+      direct_attributes.merge(
+        'status' => claim.state,
         'disbursements' => disbursement_data,
         'work_items' => work_item_data,
         'defendants' => defendant_data,
@@ -38,6 +36,12 @@ class SubmitToAppStore
         'stage_reached' => claim.stage_reached,
         'work_item_pricing' => work_item_pricing_data,
       )
+    end
+
+    def direct_attributes
+      claim.as_json(except: %w[navigation_stack firm_office_id solicitor_id submitter_id allowed_calls
+                               allowed_calls_uplift allowed_letters allowed_letters_uplift
+                               calls_adjustment_comment letters_adjustment_comment state])
     end
 
     def firm_office_data

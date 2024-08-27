@@ -70,7 +70,7 @@ RSpec.describe TestData::NsmBuilder do
         id = subject.build(submit: false, min: 2, max: 2)
 
         expect(Claim.find(id)).to have_attributes(
-          status: 'draft'
+          state: 'draft'
         )
       end
     end

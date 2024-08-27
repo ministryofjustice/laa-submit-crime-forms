@@ -8,7 +8,7 @@ RSpec.describe 'NSM application deletion' do
            ufn: '120423/008',
            laa_reference: 'LAA-DDDDD',
            defendants: [build(:defendant, :valid_nsm, first_name: 'Zoe', last_name: 'Zeigler')],
-           status: 'draft',
+           state: 'draft',
            updated_at: 4.days.ago)
     visit draft_nsm_applications_path
   end

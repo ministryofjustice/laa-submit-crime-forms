@@ -9,7 +9,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
     let(:claim) { build(:claim) }
 
     it 'shows correct title' do
-      expect(subject.title).to eq('Claim details')
+      expect(subject.title).to eq('Claim summary')
     end
   end
 
@@ -40,7 +40,8 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
             {
               head_key: 'stage_reached',
               text: 'PROM'
-            }
+            },
+            { head_key: 'firm_account_number', text: '1A123B' }
           ]
         )
       end
@@ -86,7 +87,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
             {
               head_key: 'stage_reached',
               text: 'PROG'
-            }
+            }, { head_key: 'firm_account_number', text: '1A123B' }
           ]
         )
       end

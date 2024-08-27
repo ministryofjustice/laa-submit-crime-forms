@@ -66,7 +66,6 @@ en:
           table_info_item: work item
           total: Total
           no_data: You do not have any adjusted work items
-          type_change_explanation: '* denotes that a work item has been adjusted from one type to another'
         letters_and_calls:
           page_title: Claim details
           letters_and_calls: Letters and calls
@@ -136,21 +135,21 @@ en:
         granted_response: The claim has been fully granted.
         # view pages
         work_item:
-          page_title: Claim details
+          page_title: Work item
           work_type: Work type
           date: Date
           fee_earner: Fee earner initials
           rate: Rate applied
-          hours: Number of hours
-          uplift: Uplift
-          net_cost: Net cost
-          allowed_work_type: Allowed work type
-          allowed_hours: Number of hours allowed
+          hours: Time claimed
+          uplift: Uplift claimed
+          net_cost: Net cost claimed
+          allowed_work_type: Work type
+          allowed_hours: Time allowed
           allowed_uplift: Uplift allowed
           allowed_net_cost: Net cost allowed
           adjustment_comment: Reason for adjustment
-          your_costs: Your claimed costs
-          adjusted: Adjusted claim
+          your_costs: Provider submission
+          adjusted: LAA adjustments
         letters:
           page_title: Claim details
           heading: Letters

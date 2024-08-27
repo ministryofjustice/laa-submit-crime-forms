@@ -32,8 +32,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         custom_service_name: nil,
         prior_authority_granted: false,
         no_alternative_quote_reason: 'a reason',
-        confirm_excluding_vat: true,
-        confirm_travel_expenditure: true,
         defendant: hash_including(
           first_name: application.defendant.first_name,
           last_name: application.defendant.last_name,
@@ -163,7 +161,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             caseworker_id: '87e88ac6-d89a-4180-80d4-e03285023fb0',
             information_requested: 'Please update the case details',
             requested_at: DateTime.new(2024, 1, 1, 1, 1, 1).utc,
-            sections_changed: ['case_details']
+            sections_changed: ['case_detail']
           }
         ],
       },
@@ -176,7 +174,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
     }
   end
   let(:provider) { create(:provider) }
-  let(:application) { create(:prior_authority_application, :full, :with_confirmations, status: :submitted) }
+  let(:application) { create(:prior_authority_application, :full, state: :submitted) }
   let(:fixed_arbitrary_date) { DateTime.new(2024, 1, 15, 0, 0, 0) }
 
   before do

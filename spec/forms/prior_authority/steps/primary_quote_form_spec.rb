@@ -392,22 +392,22 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
   end
 
   describe '#¢draft?' do
-    let(:application) { instance_double(PriorAuthorityApplication, status:) }
+    let(:application) { instance_double(PriorAuthorityApplication, state:) }
 
-    context 'when status is draft' do
-      let(:status) { 'draft' }
-
-      it { is_expected.to be_draft }
-    end
-
-    context 'when status is pre_draft' do
-      let(:status) { 'pre_draft' }
+    context 'when state is draft' do
+      let(:state) { 'draft' }
 
       it { is_expected.to be_draft }
     end
 
-    context 'when status is anything else' do
-      let(:status) { 'apples' }
+    context 'when state is pre_draft' do
+      let(:state) { 'pre_draft' }
+
+      it { is_expected.to be_draft }
+    end
+
+    context 'when state is anything else' do
+      let(:state) { 'apples' }
 
       it { is_expected.not_to be_draft }
     end

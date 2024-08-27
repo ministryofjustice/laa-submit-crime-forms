@@ -31,6 +31,10 @@ RSpec.describe Steps::HasOneAssociation do
       let(:child) { FooBarRecord.new(favourite_meal: 'fast') }
       let(:record) { FooBarRecord.new(favourite_meal: 'pizza', child: child) }
 
+      before do
+        allow(child).to receive(:attribute_names).and_return(['favourite_meal'])
+      end
+
       context 'when child exixts' do
         it 'overrides the record to be the child' do
           form = FavouriteMealForm.build(record)

@@ -10,6 +10,7 @@ RSpec.describe SubmitToAppStore do
     allow(described_class::PayloadBuilder).to receive(:call)
       .and_return(payload)
     allow(SendNotificationEmail).to receive(:perform_later)
+    allow(submission).to receive(:with_lock).and_yield
   end
 
   describe '#perform' do
@@ -46,7 +47,7 @@ RSpec.describe SubmitToAppStore do
 
   describe '#submit' do
     context 'when submission is PriorAuthorityApplication already in app store' do
-      let(:submission) { create(:prior_authority_application, status: :provider_updated) }
+      let(:submission) { create(:prior_authority_application, state: :provider_updated) }
       let(:http_client) { instance_double(AppStoreClient, post: true, put: true) }
 
       before do
@@ -62,7 +63,7 @@ RSpec.describe SubmitToAppStore do
     end
 
     context 'when submission is PriorAuthorityApplication not already in app store' do
-      let(:submission) { create(:prior_authority_application, status: :submitted) }
+      let(:submission) { create(:prior_authority_application, state: :submitted) }
       let(:http_client) { instance_double(AppStoreClient, post: true, put: true) }
 
       before do

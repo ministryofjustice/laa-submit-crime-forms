@@ -35,8 +35,8 @@ RSpec.describe PullUpdates do
   context 'when mocking claim' do
     let(:id) { SecureRandom.uuid }
     let(:claim) do
-      instance_double(Claim, id: id, status: 'submitted', save!: true, update!: true,
-                      provider_requested?: false, sent_back?: false, 'assessment_comment=': nil, part_grant?: false)
+      instance_double(Claim, id: id, state: 'submitted', save!: true, update!: true,
+                      sent_back?: false, 'assessment_comment=': nil, part_grant?: false)
     end
 
     before do
@@ -58,7 +58,7 @@ RSpec.describe PullUpdates do
 
         expect(Claim).to have_received(:find_by).with(id:)
         expect(claim).to have_received(:update!).with(
-          status: 'granted',
+          state: 'granted',
           app_store_updated_at: Time.zone.parse(arbitrary_fixed_date)
         )
       end
@@ -92,7 +92,7 @@ RSpec.describe PullUpdates do
       expect { subject.perform }.not_to raise_error
 
       expect(claim.reload).to have_attributes(
-        status: 'granted'
+        state: 'granted'
       )
     end
   end
@@ -119,7 +119,7 @@ RSpec.describe PullUpdates do
       it 'processes the update' do
         subject.perform
         expect(application.reload).to have_attributes(
-          status: 'granted',
+          state: 'granted',
           app_store_updated_at: Time.zone.parse(arbitrary_fixed_date)
         )
       end
@@ -131,8 +131,8 @@ RSpec.describe PullUpdates do
     end
 
     context 'with multiple updates' do
-      let(:paa_one) { create(:prior_authority_application, :full, status: 'submitted') }
-      let(:paa_two) { create(:prior_authority_application, :full, status: 'submitted') }
+      let(:paa_one) { create(:prior_authority_application, :full, state: 'submitted') }
+      let(:paa_two) { create(:prior_authority_application, :full, state: 'submitted') }
 
       let(:http_response) do
         {
@@ -160,10 +160,10 @@ RSpec.describe PullUpdates do
         }
       end
 
-      it 'updates both application statuses' do
+      it 'updates both application states' do
         expect { subject.perform }
-          .to change { paa_one.reload.status }.from('submitted').to('granted')
-          .and change { paa_two.reload.status }.from('submitted').to('rejected')
+          .to change { paa_one.reload.state }.from('submitted').to('granted')
+          .and change { paa_two.reload.state }.from('submitted').to('rejected')
       end
 
       context 'when syncing successufully' do

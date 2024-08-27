@@ -28,6 +28,10 @@ en:
           heading: Firm details
           firm_details: Correspondence address
           vat_registered: Is your firm VAT registered?
+      contact_details:
+        edit:
+          page_title: Contact details
+          explanation: We’ll use these contact details if we need to ask you for more information or to tell you the outcome of your application.
       office_code:
         edit:
           page_title: Which firm office account number is this claim for?
