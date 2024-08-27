@@ -108,7 +108,7 @@ Rails.application.configure do
   # Enable DNS rebinding protection and other `Host` header attacks.
   config.hosts = (ENV["HOSTS"]&.split(',') || []) + [ENV.fetch('INTERNAL_HOST_NAME', nil)].compact
   # Skip DNS rebinding protection for the default health check endpoint.
-  config.host_authorization = { exclude: ->(request) { request.path == '/ping' } }
+  config.host_authorization = { exclude: ->(request) { request.path.in?('/ping', '/ready') } }
 
   config.logstasher.enabled = true
   config.logstasher.logger_path = 'log/logstasher.log'
