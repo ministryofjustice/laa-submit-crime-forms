@@ -1,5 +1,12 @@
-localhost:
+# example notification
+# localhost:
+#   notification:
+#     message: Insery message here
+#     date_from: "2024-08-27T18:00:00"
+#     date_to: "2024-08-28T19:00:00"
+
+production:
   notification:
-    message: This is a test 1
-    date_from: "2024-08-27T14:20:00"
-    date_to: "2024-08-27T20:55:00"
+    message: This service will be down on Wednesday 27th August between 6 and 8pm for security updates
+    date_from: "2024-08-27T18:00:00"
+    date_to: "2024-08-28T19:00:00"
