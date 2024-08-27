@@ -8,6 +8,19 @@ class HealthcheckController < ApplicationController
     render json: build_args, status: :ok
   end
 
+  def ready
+    # A pod is only ready for traffic once the Clamby container attached to it
+    # is able to scan files. So by scanning a file that will always be there
+    # and is known to be safe, we trigger an error if Clamby isn't ready,
+    # causing this endpoint to return a 503, telling K8s that the pod
+    # isn't ready yet.
+    Clamby.safe?(Rails.root.join('Gemfile'))
+
+    render json: build_args, status: :ok
+  rescue Clamby::ClamscanClientError
+    head :service_unavailable
+  end
+
   private
 
   def build_args
