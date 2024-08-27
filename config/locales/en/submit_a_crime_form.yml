@@ -12,4 +12,6 @@ en:
       nsm_text: Submit a claim for a non-standard magistrates fee or for a breach of injunction.
       introduction_html: You can only use these services if you have been invited to take part in the private pilot. If you do not have access continue using %{eforms_link}.
       eforms: eForms
+      notifications:
+        title: Important
 
