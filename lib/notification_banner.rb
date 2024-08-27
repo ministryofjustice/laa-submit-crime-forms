@@ -1,22 +1,20 @@
 class NotificationBanner
-  include Singleton
-  attr_reader :message
+  def self.active_banner
+    current_date = DateTime.now
+    return unless date_from <= current_date && date_to >= current_date
 
-  def load_config
-    config = YAML.load(
-      Rails.root.join('config/notification_banner.yml').read
-    ).fetch('notification', {})
-
-    @message = config[HostEnv.env_name].present? && within_date_range(config) ? config['message'] : nil
+    banner_config[:message]
   end
 
-  private
+  def self.banner_config
+    Rails.configuration.x.notification_banner.notification
+  end
 
-  def within_date_range(config)
-    date_from = DateTime.parse(config['date_from'])
-    date_to = DateTime.parse(config['date_to'])
-    current_date = DateTime.now
+  def self.date_from
+    DateTime.parse(banner_config[:date_from])
+  end
 
-    date_from <= current_date && current_date <= date_to
+  def self.date_to
+    DateTime.parse(banner_config[:date_to])
   end
 end

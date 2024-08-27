@@ -5,7 +5,7 @@ class HomeController < ApplicationController
 
   def index
     @gatekeeper = Providers::Gatekeeper.new(current_provider)
-    @notification_banner = NotificationBanner.instance.message
+    @notification_banner = NotificationBanner.active_banner
   end
 
   def dev_login; end
