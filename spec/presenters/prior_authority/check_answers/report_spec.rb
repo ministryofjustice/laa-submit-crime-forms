@@ -28,7 +28,6 @@ RSpec.describe PriorAuthority::CheckAnswers::Report do
             'Case contact',
             'Client details',
             'Case details',
-            'Further information requested',
             'Hearing details',
             'Primary quote',
             'Alternative quotes',
@@ -59,7 +58,6 @@ RSpec.describe PriorAuthority::CheckAnswers::Report do
             'Case contact',
             'Client details',
             'Case and hearing details',
-            'Further information requested',
             'Primary quote',
             'Alternative quotes',
             'Reason for prior authority',
@@ -69,9 +67,9 @@ RSpec.describe PriorAuthority::CheckAnswers::Report do
 
     context 'with further informations present' do
       let(:application) do
-        build(:prior_authority_application,
-              :with_complete_non_prison_law,
-              :with_further_information_request)
+        create(:prior_authority_application,
+               :with_complete_non_prison_law,
+               :with_further_information_request)
       end
 
       it 'contains expected section headings' do

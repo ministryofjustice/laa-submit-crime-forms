@@ -106,6 +106,9 @@ en:
             <br>
             Appeals may be considered by LAA caseworkers or sent to an independent costs assessor (ICA). You can only appeal once. The ICA’s decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).
           email: CRM4appeal@justice.gov.uk
+        sent_back:
+          further_information_request: Further information request
+          amendment_request: Amendment request
 
     steps:
       start_page:

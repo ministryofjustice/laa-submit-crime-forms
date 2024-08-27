@@ -14,10 +14,6 @@ module PriorAuthority
       end
 
       def row_data
-        base_rows
-      end
-
-      def base_rows
         [
           {
             head_key: 'information_requested',
