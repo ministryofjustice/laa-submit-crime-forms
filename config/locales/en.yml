@@ -2,7 +2,9 @@
 en:
   service:
     name: Submit a crime form
-
+  shared:
+    notifications:
+      title: Important
   views:
     pagination:
       title: "Pagination navigation"
