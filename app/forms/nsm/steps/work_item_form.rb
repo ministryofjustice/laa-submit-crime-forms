@@ -8,7 +8,7 @@ module Nsm
       attribute :time_spent, :time_period
       attribute :completed_on, :multiparam_date
       attribute :fee_earner, :string
-      attribute :uplift, :integer
+      attribute :uplift, :fully_validatable_integer
 
       validates :work_type, presence: true, inclusion: { in: WorkTypes.values }
       validate :work_type_allowed
@@ -16,9 +16,11 @@ module Nsm
       validates :completed_on, presence: true,
               multiparam_date: { allow_past: true, allow_future: false }
       validates :fee_earner, presence: true
-      validates :uplift, presence: true,
-              numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
-              if: :apply_uplift
+      validates :uplift,
+                presence: true,
+                numericality: { allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
+                is_a_number: true,
+                if: :apply_uplift
 
       def work_types_with_pricing
         WorkTypes.values.filter_map do |work_type|
