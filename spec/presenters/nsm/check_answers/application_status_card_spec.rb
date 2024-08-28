@@ -146,7 +146,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
         end
       end
 
-      context 'with adjustements' do
+      context 'with adjustments' do
         let(:claim) do
           create(
             :claim,
@@ -167,9 +167,9 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
           all_text = card.row_data.pluck(:text).join
 
           expect(all_text)
-            .to match(%r{<a class="govuk-link.*" href=".*/steps/view_claim\?section=adjustments#work-items-tab">Review adjustments to work items</a>})
-            .and match(%r{<a class="govuk-link.*" href=".*/steps/view_claim\?section=adjustments#letters-and-calls-tab">Review adjustments to letters and calls</a>})
-            .and match(%r{<a class="govuk-link.*" href=".*/steps/view_claim\?section=adjustments#disbursements-tab">Review adjustments to disbursements</a>})
+            .to match(%r{<a class="govuk-link.*" href=".*/steps/view_claim/adjusted/work_items#cost-summary-table">Review adjustments to work items</a>})
+            .and match(%r{<a class="govuk-link.*" href=".*/steps/view_claim/adjusted/letters_and_calls#cost-summary-table">Review adjustments to letters and calls</a>})
+            .and match(%r{<a class="govuk-link.*" href=".*/steps/view_claim/adjusted/disbursements#cost-summary-table">Review adjustments to disbursements</a>})
         end
       end
     end
