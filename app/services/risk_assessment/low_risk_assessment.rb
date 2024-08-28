@@ -12,35 +12,39 @@ module RiskAssessment
     end
 
     def assess
-      prep_attendance_advocacy? || new_prep_advocacy?
+      attendance_low_enough? && prep_low_enough?
     end
 
-    def prep_attendance_advocacy?
-      total_prep_time + total_attendance_time <= multiplied_total_advocacy_time
+    def attendance_low_enough?
+      total_attendance_time < multiplied_total_advocacy_time
     end
 
-    def new_prep_advocacy?
+    def prep_low_enough?
+      total_prep_time < multiplied_total_advocacy_time ||
+        alternative_prep_time < multiplied_total_advocacy_time
+    end
+
+    def alternative_prep_time
       prosecution_evidence = (@claim.prosecution_evidence || 0) * EVIDENCE_MULTIPLIER
       number_of_pages = (@claim.defence_statement || 0) * PAGE_MULTIPLIER
       number_of_witnesses = (@claim.number_of_witnesses || 0) * WITNESS_MULTIPLIER
       length_of_video = @claim.time_spent || 0
-      new_prep_time = prosecution_evidence + number_of_pages + length_of_video - number_of_witnesses
-      multiplied_advocacy_time = multiplied_total_advocacy_time
-      new_prep_time <= multiplied_advocacy_time && total_attendance_time <= multiplied_advocacy_time
+      prosecution_evidence + number_of_pages + length_of_video - number_of_witnesses
     end
 
     def total_prep_time
-      @claim.work_items.filter { |item| item.work_type == 'preparation' }.sum(&:time_spent)
+      @claim.work_items.where(work_type: WorkTypes::PREPARATION.to_s).sum(:time_spent)
     end
 
     def total_attendance_time
-      @claim.work_items.filter do |item|
-        item.work_type == 'attendance_without_counsel' || item.work_type == 'attendance_with_counsel'
-      end.sum(&:time_spent)
+      @claim.work_items
+            .where(work_type: [WorkTypes::ATTENDANCE_WITH_COUNSEL.to_s, WorkTypes::ATTENDANCE_WITHOUT_COUNSEL.to_s])
+            .sum(:time_spent)
     end
 
     def multiplied_total_advocacy_time
-      ADVOCACY_MULTIPLIER * @claim.work_items.filter { |item| item.work_type == 'advocacy' }.sum(&:time_spent)
+      @multiplied_total_advocacy_time ||=
+        ADVOCACY_MULTIPLIER * @claim.work_items.where(work_type: WorkTypes::ADVOCACY.to_s).sum(:time_spent)
     end
   end
 end

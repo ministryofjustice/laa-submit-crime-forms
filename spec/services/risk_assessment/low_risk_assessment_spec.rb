@@ -3,67 +3,71 @@
 require 'rails_helper'
 
 RSpec.describe RiskAssessment::LowRiskAssessment do
+  subject { described_class.new(claim) }
+
+  let(:claim) { create(:claim, work_items:, prosecution_evidence:) }
+  let(:work_items) { [attendance_work_item, advocacy_work_item, preparation_work_item] }
+  let(:attendance_work_item) { build(:work_item, work_type: 'attendance_with_counsel', time_spent: attendance_time_spent) }
+  let(:preparation_work_item) { build(:work_item, work_type: 'preparation', time_spent: preparation_time_spent) }
+  let(:advocacy_work_item) { build(:work_item, work_type: 'advocacy', time_spent: advocacy_time_spent) }
+  let(:attendance_time_spent) { nil }
+  let(:advocacy_time_spent) { nil }
+  let(:preparation_time_spent) { nil }
+  let(:prosecution_evidence) { nil } # Multiplied by 4 to get alternative prep time
+
   describe '#assess' do
-    context 'returns true' do
-      context 'when prep and attendance is less than twice the advocacy' do
-        let(:claim) { build(:claim) }
+    context 'when raw prep time is less than twice advocacy' do
+      let(:preparation_time_spent) { 39 }
+      let(:advocacy_time_spent) { 20 }
 
-        it do
-          expect(described_class.new(claim)).to be_prep_attendance_advocacy
-          expect(described_class.new(claim).assess).to be_truthy
+      context 'when attendance is less than twice advocacy' do
+        let(:attendance_time_spent) { 39 }
+
+        it { expect(subject.assess).to be_truthy }
+      end
+
+      context 'when attendance is more than twice advocacy' do
+        let(:attendance_time_spent) { 41 }
+
+        it { expect(subject.assess).to be_falsey }
+      end
+    end
+
+    context 'when raw prep time is greater than advocacy' do
+      let(:preparation_time_spent) { 41 }
+      let(:advocacy_time_spent) { 20 }
+
+      context 'when attendance is less than twice advocacy' do
+        let(:attendance_time_spent) { 39 }
+
+        context 'when alternative prep time is less than twice advocacy' do
+          let(:prosecution_evidence) { 9 }
+
+          it { expect(subject.assess).to be_truthy }
+        end
+
+        context 'when alternative prep time is greater than twice advocacy' do
+          let(:prosecution_evidence) { 11 }
+
+          it { expect(subject.assess).to be_falsey }
         end
       end
 
-      context 'when prep time is less than double the advocacy time' do
-        let(:claim) { build(:claim) }
+      context 'when attendance is more than twice advocacy' do
+        let(:attendance_time_spent) { 41 }
 
-        it do
-          expect(described_class.new(claim)).to be_new_prep_advocacy
-          expect(described_class.new(claim).assess).to be_truthy
+        context 'when alternative prep time is less than twice advocacy' do
+          let(:prosecution_evidence) { 9 }
+
+          it { expect(subject.assess).to be_falsey }
+        end
+
+        context 'when alternative prep time is greater than twice advocacy' do
+          let(:prosecution_evidence) { 11 }
+
+          it { expect(subject.assess).to be_falsey }
         end
       end
-    end
-
-    context 'returns false' do
-      let(:claim) { build(:claim, :medium_risk_work_item) }
-
-      it 'when prep and attendance is more than twice the advocacy' do
-        expect(described_class.new(claim)).not_to be_prep_attendance_advocacy
-        expect(described_class.new(claim).assess).to be_falsey
-      end
-
-      it 'when prep time is more than double the advocacy time' do
-        expect(described_class.new(claim)).not_to be_new_prep_advocacy
-        expect(described_class.new(claim).assess).to be_falsey
-      end
-    end
-  end
-
-  describe '#new_prep_advocacy?' do
-    let(:claim) do
-      build(:claim,
-            prosecution_evidence: 5,
-            defence_statement: 7,
-            number_of_witnesses: 3,
-            time_spent: 24,)
-    end
-
-    let(:low_risk_assessment) { described_class.new(claim) }
-
-    it 'returns true if new preparation time and total attendance time are less than or equal to double the advocacy time' do
-      allow(low_risk_assessment).to receive(:multiplied_total_advocacy_time).and_return(200)
-      expect(low_risk_assessment.new_prep_advocacy?).to be(true)
-    end
-
-    it 'returns false if new preparation time is greater than double the advocacy time' do
-      allow(low_risk_assessment).to receive(:multiplied_total_advocacy_time).and_return(20)
-      allow(claim).to receive(:prosecution_evidence).and_return(100)
-      expect(low_risk_assessment.new_prep_advocacy?).to be(false)
-    end
-
-    it 'returns false if total attendance time is greater than double the advocacy time' do
-      allow(low_risk_assessment).to receive_messages(multiplied_total_advocacy_time: 20, total_attendance_time: 100)
-      expect(low_risk_assessment.new_prep_advocacy?).to be(false)
     end
   end
 end
