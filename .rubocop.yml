@@ -18,6 +18,8 @@ AllCops:
     - 'features/**/*'
     - 'vendor/**/*'
     - 'gems/laa_multi_step_forms/spec/dummy/**/*'
+    - 'tmp/**/*'
+    - 'node_modules/**/*'
 
 ####################################
 ## Customization for this project ##
