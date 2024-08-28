@@ -33,7 +33,16 @@ RSpec.describe HealthcheckController do
       end
     end
 
-    context 'when Clamby is not ready' do
+    context 'when Clamby is not ready and returns nil' do
+      before { allow(Clamby).to receive(:safe?).and_return(nil) }
+
+      it 'returns a 503' do
+        get :ready
+        expect(response).to have_http_status(:service_unavailable)
+      end
+    end
+
+    context 'when Clamby is not ready and raises an error' do
       before { allow(Clamby).to receive(:safe?).and_raise(Clamby::ClamscanClientError) }
 
       it 'returns a 503' do
