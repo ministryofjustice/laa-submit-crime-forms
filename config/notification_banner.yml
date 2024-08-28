@@ -7,18 +7,18 @@ localhost:
 
 development:
   notification:
-    message: This service will be down on Wednesday 27th August between 6 and 8pm for security updates
+    message: This service will be unavailable on Wednesday 28th August between 6 and 8pm for security updates
     date_from: "2024-08-27T18:00:00"
     date_to: "2024-08-28T19:00:00"
 
 uat:
   notification:
-    message: This service will be down on Wednesday 27th August between 6 and 8pm for security updates
+    message: This service will be unavailable on Wednesday 28th August between 6 and 8pm for security updates
     date_from: "2024-08-27T18:00:00"
     date_to: "2024-08-28T19:00:00"
 
 production:
   notification:
-    message: This service will be down on Wednesday 27th August between 6 and 8pm for security updates
+    message: This service will be unavailable on Wednesday 28th August between 6 and 8pm for security updates
     date_from: "2024-08-27T18:00:00"
     date_to: "2024-08-28T19:00:00"
