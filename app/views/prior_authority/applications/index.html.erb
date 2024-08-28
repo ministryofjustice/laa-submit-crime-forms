@@ -25,43 +25,28 @@
 <% unless @empty %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <div class="govuk-tabs" data-module="govuk-tabs">
-        <ul class="govuk-tabs__list" role="tablist">
-          <li
-            class="
-              govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :reviewed %>
-            "
-            role="presentation"
-          >
+      <nav class="moj-sub-navigation" aria-label="Sub navigation">
+        <ul class="moj-sub-navigation__list">
+          <li class="moj-sub-navigation__item">
             <%= link_to t(".tabs.reviewed"),
             reviewed_prior_authority_applications_path(anchor: "claim_nav"),
             role: "tab",
-            "aria-controls": :reviewed,
-            "aria-selected": @scope == :reviewed %>
+            class: "moj-sub-navigation__link",
+            "aria-current": @scope == :reviewed ? "page" : nil %>
           </li>
-          <li
-            class="
-              govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :submitted %>
-            "
-            role="presentation"
-          >
+          <li class="moj-sub-navigation__item">
             <%= link_to t(".tabs.submitted"),
             submitted_prior_authority_applications_path(anchor: "claim_nav"),
             role: "tab",
-            "aria-controls": :submitted,
-            "aria-selected": @scope == :submitted %>
+            class: "moj-sub-navigation__link",
+            "aria-current": @scope == :submitted ? "page" : nil %>
           </li>
-          <li
-            class="
-              govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :drafts %>
-            "
-            role="presentation"
-          >
+          <li class="moj-sub-navigation__item">
             <%= link_to t(".tabs.drafts"),
             drafts_prior_authority_applications_path(anchor: "claim_nav"),
             role: "tab",
-            "aria-controls": :drafts,
-            "aria-selected": @scope == :drafts %>
+            class: "moj-sub-navigation__link",
+            "aria-current": @scope == :drafts ? "page" : nil %>
           </li>
         </ul>
 
@@ -72,7 +57,7 @@
             pagy: @pagy,
           } %>
         </div>
-      </div>
+      </nav>
     </div>
   </div>
 <% end %>
