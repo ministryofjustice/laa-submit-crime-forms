@@ -18,6 +18,8 @@ module Nsm
       validates :fee_earner, presence: true
       validates :uplift,
                 presence: true,
+                # allow_blank here, while technically redundant, makes explicit that when the field is blank,
+                # it will be the `presence` validation that fails, not the `numericality` one
                 numericality: { allow_blank: true, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
                 is_a_number: true,
                 if: :apply_uplift
