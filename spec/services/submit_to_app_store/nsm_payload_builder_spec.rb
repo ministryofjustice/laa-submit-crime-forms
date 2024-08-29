@@ -170,6 +170,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             }],
             'work_item_pricing' => {
               'advocacy' => 65.42,
+              'attendance_with_counsel' => 35.68,
               'attendance_without_counsel' => 52.15,
               'preparation' => 52.15
             },
