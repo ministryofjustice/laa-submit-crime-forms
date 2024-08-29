@@ -26,6 +26,35 @@ RSpec.describe RiskAssessment::LowRiskAssessment do
         it { expect(subject.assess).to be_truthy }
       end
 
+      context 'when attendance is equal to twice advocacy' do
+        let(:attendance_time_spent) { 40 }
+
+        it { expect(subject.assess).to be_truthy }
+      end
+
+      context 'when attendance is more than twice advocacy' do
+        let(:attendance_time_spent) { 41 }
+
+        it { expect(subject.assess).to be_falsey }
+      end
+    end
+
+    context 'when raw prep time is equal to twice advocacy' do
+      let(:preparation_time_spent) { 40 }
+      let(:advocacy_time_spent) { 20 }
+
+      context 'when attendance is less than twice advocacy' do
+        let(:attendance_time_spent) { 39 }
+
+        it { expect(subject.assess).to be_truthy }
+      end
+
+      context 'when attendance is equal to twice advocacy' do
+        let(:attendance_time_spent) { 40 }
+
+        it { expect(subject.assess).to be_truthy }
+      end
+
       context 'when attendance is more than twice advocacy' do
         let(:attendance_time_spent) { 41 }
 
@@ -46,6 +75,34 @@ RSpec.describe RiskAssessment::LowRiskAssessment do
           it { expect(subject.assess).to be_truthy }
         end
 
+        context 'when alternative prep time is equal to twice advocacy' do
+          let(:prosecution_evidence) { 10 }
+
+          it { expect(subject.assess).to be_truthy }
+        end
+
+        context 'when alternative prep time is greater than twice advocacy' do
+          let(:prosecution_evidence) { 11 }
+
+          it { expect(subject.assess).to be_falsey }
+        end
+      end
+
+      context 'when attendance is equal to twice advocacy' do
+        let(:attendance_time_spent) { 40 }
+
+        context 'when alternative prep time is less than twice advocacy' do
+          let(:prosecution_evidence) { 9 }
+
+          it { expect(subject.assess).to be_truthy }
+        end
+
+        context 'when alternative prep time is equal to twice advocacy' do
+          let(:prosecution_evidence) { 10 }
+
+          it { expect(subject.assess).to be_truthy }
+        end
+
         context 'when alternative prep time is greater than twice advocacy' do
           let(:prosecution_evidence) { 11 }
 
@@ -58,6 +115,12 @@ RSpec.describe RiskAssessment::LowRiskAssessment do
 
         context 'when alternative prep time is less than twice advocacy' do
           let(:prosecution_evidence) { 9 }
+
+          it { expect(subject.assess).to be_falsey }
+        end
+
+        context 'when alternative prep time is equal to twice advocacy' do
+          let(:prosecution_evidence) { 10 }
 
           it { expect(subject.assess).to be_falsey }
         end

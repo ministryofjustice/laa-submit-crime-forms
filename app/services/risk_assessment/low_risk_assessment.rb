@@ -16,12 +16,12 @@ module RiskAssessment
     end
 
     def attendance_low_enough?
-      total_attendance_time < multiplied_total_advocacy_time
+      total_attendance_time <= multiplied_total_advocacy_time
     end
 
     def prep_low_enough?
-      total_prep_time < multiplied_total_advocacy_time ||
-        alternative_prep_time < multiplied_total_advocacy_time
+      total_prep_time <= multiplied_total_advocacy_time ||
+        alternative_prep_time <= multiplied_total_advocacy_time
     end
 
     def alternative_prep_time
