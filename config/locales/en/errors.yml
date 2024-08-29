@@ -462,9 +462,10 @@ en:
               blank: Type of work must be chosen
               inclusion: Type of work must be chosen
             uplift:
-              blank: Uplift amount must be set
-              less_than_or_equal_to: You can only apply an uplift from 1 to 100
-              greater_than_or_equal_to: You can only apply an uplift from 1 to 100
+              blank: Uplift percentage must be from 1 to 100
+              not_a_number: Uplift percentage must be a number from 1 to 100
+              less_than_or_equal_to: Uplift percentage must be from 1 to 100
+              greater_than_or_equal_to: Uplift percentage must be from 1 to 100
         nsm/steps/letters_calls_form:
           attributes:
             letters:

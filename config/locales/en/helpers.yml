@@ -256,7 +256,7 @@ en:
         fee_earner: Fee earner initials
         apply_uplift_options:
           'true': Apply an uplift to this work
-        uplift: For example, from any percentage from 1 to 100
+        uplift: Enter an uplift percentage from 1 to 100
       nsm_steps_letters_calls_form:
         type_options:
           letters: Letters
