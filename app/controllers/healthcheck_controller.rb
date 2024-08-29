@@ -14,7 +14,7 @@ class HealthcheckController < ApplicationController
     # and is known to be safe, we trigger an error if Clamby isn't ready,
     # causing this endpoint to return a 503, telling K8s that the pod
     # isn't ready yet.
-    Clamby.safe?(Rails.root.join('Gemfile'))
+    return head :service_unavailable unless Clamby.safe?(Rails.root.join('Gemfile'))
 
     render json: build_args, status: :ok
   rescue Clamby::ClamscanClientError
