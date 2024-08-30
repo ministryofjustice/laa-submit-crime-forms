@@ -7,18 +7,18 @@ localhost:
 
 development:
   notification:
-    message: This service will be unavailable on Wednesday 28 August 2024 between 6pm and 8pm.
-    date_from: "2024-08-27T18:00:00"
-    date_to: "2024-08-28T19:00:00"
+    message: This service will be unavailable on Wednesday 4 September 2024 between 6pm and 8pm.
+    date_from: "2024-08-30T16:00:00"
+    date_to: "2024-09-04T19:00:00"
 
 uat:
   notification:
-    message: This service will be unavailable on Wednesday 28 August 2024 between 6pm and 8pm.
-    date_from: "2024-08-27T18:00:00"
-    date_to: "2024-08-28T19:00:00"
+    message: This service will be unavailable on Wednesday 4 September 2024 between 6pm and 8pm.
+    date_from: "2024-08-30T16:00:00"
+    date_to: "2024-09-04T19:00:00"
 
 production:
   notification:
-    message: This service will be unavailable on Wednesday 28 August 2024 between 6pm and 8pm.
-    date_from: "2024-08-27T18:00:00"
-    date_to: "2024-08-28T19:00:00"
+    message: This service will be unavailable on Wednesday 4 September 2024 between 6pm and 8pm.
+    date_from: "2024-08-30T16:00:00"
+    date_to: "2024-09-04T19:00:00"
