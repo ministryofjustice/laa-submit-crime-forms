@@ -55,7 +55,8 @@ uat:
 production:
   office_codes:
     # dummy user/office
-    # - 2N232W
+    - 2N232W
+
     # First CRM7 onboarding tranche - 19/08/24
     - 0W160B
     - 2M075N

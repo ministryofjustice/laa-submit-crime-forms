@@ -94,6 +94,21 @@ RSpec.describe TestData::NsmBuilder do
           updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31))
         )
       end
+
+      context 'when year is set to the current year' do
+        subject(:options) { described_class.new.options(year: 2024)[key] }
+
+        before { travel_to Date.new(2024, 8, 1) }
+
+        it 'uses appropriate date ranges' do
+          expect(options[1].call).to match(
+            date: (Date.new(2024, 1, 1)...Date.current),
+            updated_at: (Date.new(2024, 1, 1)...Date.current),
+            disbursements_count: (0..25),
+            work_items_count: (1..50),
+          )
+        end
+      end
     end
 
     context 'breach' do
