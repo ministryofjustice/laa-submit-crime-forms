@@ -57,7 +57,7 @@ production:
     # dummy user/office
     - 2N232W
 
-    # First CRM7 onboarding tranche - 19/08/24
+    # First CRM7 onboarding tranche - 19/08/2024
     - 0W160B
     - 2M075N
     - 2M847C
@@ -89,7 +89,7 @@ production:
     - 2Q511Y
     - 2Q512Z
 
-    # Second CRM7 onboarding tranche - 22/08/24
+    # Second CRM7 onboarding tranche - 22/08/2024
     - 0W953N
     - 1W341Y
     - 2M402U
@@ -140,7 +140,7 @@ production:
     - 2P304L
     - 2A041V
 
-    # Second (and a half) CRM7 onboarding tranche - 27/08/24
+    # Second (and a half) CRM7 onboarding tranche - 27/08/2024
     - 0R360W
     - 0R532H
     - 1P401R
@@ -158,3 +158,21 @@ production:
     - 2Q570M
     - 1T985M
     - 1Q921U
+
+    # Third CRM7 onboarding tranche - 03/09/2024
+    - 1V481N
+    - 2L813D
+    - 2Q343Q
+    - 0M767Q
+    - 2M850F
+    - 2L963R
+    - 0X218B
+    - 2M435E
+    - 2Q561C
+    - 2P410B
+    - 0L783W
+    - 1N042P
+    - 2M884T
+    - 2Q207T
+    - 2Q263D
+    - 2Q278V
