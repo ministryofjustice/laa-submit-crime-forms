@@ -71,6 +71,20 @@ RSpec.describe TestData::PaBuilder do
           service_type_cost_type: be_one_of(:per_item, :per_hour)
         )
       end
+
+      context 'when year is set to the current year' do
+        subject(:options) { described_class.new.options(year: 2024)[key] }
+
+        before { travel_to Date.new(2024, 8, 1) }
+
+        it 'uses appropriate date ranges' do
+          expect(options[1].call).to match(
+            date: (Date.new(2024, 1, 1)...Date.current),
+            updated_at: (Date.new(2024, 1, 1)...Date.current),
+            service_type_cost_type: be_one_of(:per_item, :per_hour),
+          )
+        end
+      end
     end
 
     context 'simple_prision' do

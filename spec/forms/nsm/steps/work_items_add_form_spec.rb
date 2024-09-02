@@ -107,12 +107,12 @@ RSpec.describe Nsm::Steps::WorkItemForm do
           end
         end
 
-        context 'is not an integer' do
-          let(:uplift) { 1.6 }
+        context 'is not an integer-y string' do
+          let(:uplift) { '1.6' }
 
-          it 'casts the value to abn integer' do
-            expect(subject).to be_valid
-            expect(subject.uplift).to eq(1)
+          it 'does not modify the invalid value' do
+            expect(subject).not_to be_valid
+            expect(subject.uplift).to eq('1.6')
           end
         end
       end

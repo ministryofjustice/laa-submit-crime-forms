@@ -56,7 +56,7 @@ RSpec.describe 'User can manage work items', type: :system do
 
     fill_in 'Fee earner initials', with: 'JBJ'
     check 'Apply an uplift to this work'
-    fill_in 'For example, from any percentage from 1 to 100', with: 10
+    fill_in 'Enter an uplift percentage from 1 to 100', with: 10
     click_on 'Save and continue'
 
     expect(claim.reload.work_items).to contain_exactly(
