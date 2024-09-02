@@ -14,7 +14,7 @@ module Nsm
           letters_calls: LettersCalls.new(claim),
           disbursements: Disbursements.new(claim.disbursements.by_age, claim)
         }
-        @summary = Summary.new(claim)
+        @summary = CheckAnswers::CostSummaryCard.new(claim, has_card: false, title_key: 'your_cost_summary')
       end
 
       def sections

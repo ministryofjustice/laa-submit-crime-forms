@@ -165,6 +165,7 @@ en:
               title: Claim details
             cost_summary:
               title: Cost summary
+              your_cost_summary: Your cost summary
             other_info:
               title: Other information
           costs:

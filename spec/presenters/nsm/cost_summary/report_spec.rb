@@ -22,7 +22,7 @@ RSpec.describe Nsm::CostSummary::Report do
                     total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: d_header)
   end
   let(:summary) do
-    instance_double(Nsm::CostSummary::Summary, total_gross: 230)
+    instance_double(Nsm::CheckAnswers::CostSummaryCard, total_gross: 230)
   end
   let(:l_title) { 'Letters and Calls' }
   let(:l_rows) { double(:l_row_data) }
@@ -42,7 +42,7 @@ RSpec.describe Nsm::CostSummary::Report do
     allow(Nsm::CostSummary::WorkItems).to receive(:new).and_return(work_items)
     allow(Nsm::CostSummary::LettersCalls).to receive(:new).and_return(letters_calls)
     allow(Nsm::CostSummary::Disbursements).to receive(:new).and_return(disbursements)
-    allow(Nsm::CostSummary::Summary).to receive(:new).and_return(summary)
+    allow(Nsm::CheckAnswers::CostSummaryCard).to receive(:new).and_return(summary)
   end
 
   describe '#initialize' do

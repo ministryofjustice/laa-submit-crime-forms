@@ -7,7 +7,7 @@
     <span class="govuk-caption-xl"><%= t('.estimate') %></span>
     <h2 class="govuk-heading-xl"><%= @report.total_cost %></h2>
 
-    <%= render 'summary_table', summary: @report.summary %>
+    <%= render 'nsm/steps/view_claim/cost_summary', section: @report.summary %>
 
     <% @report.sections.each do |section| %>
       <div class="govuk-summary-card">
