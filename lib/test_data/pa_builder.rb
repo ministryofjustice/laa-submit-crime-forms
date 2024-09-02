@@ -81,7 +81,8 @@ module TestData
     private
 
     def date_for(year)
-      (Date.new(year, 1, 1) + rand(350)).next_weekday
+      last_day = year == Date.current.year ? [Date.current.yday - 7, 0].max : 350
+      (Date.new(year, 1, 1) + rand(last_day)).next_weekday
     end
 
     # rubocop:disable Rails/Output
