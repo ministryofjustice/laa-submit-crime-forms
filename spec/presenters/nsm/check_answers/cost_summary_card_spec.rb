@@ -257,7 +257,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
     end
   end
 
-  describe '#summed_fields' do
+  describe '#footer_fields' do
     context 'when a single work item exists' do
       let(:work_items) do
         [build(:work_item, work_type: 'advocacy', time_spent: 600)]
@@ -265,7 +265,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'returns the summed cost' do
-          expect(subject.summed_fields).to eql(
+          expect(subject.footer_fields).to eql(
             {
               allowed_gross_cost: nil,
               allowed_net_cost: nil,
@@ -293,7 +293,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
         subject { described_class.new(claim, show_adjustments: true) }
 
         it 'returns the summed cost' do
-          expect(subject.summed_fields).to eq(
+          expect(subject.footer_fields).to eq(
             {
               allowed_gross_cost: {
                 numeric: true,
@@ -334,7 +334,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'returns the summed time and cost' do
-          expect(subject.summed_fields).to eq(
+          expect(subject.footer_fields).to eq(
             {
               allowed_gross_cost: nil,
               allowed_net_cost: nil,
@@ -368,7 +368,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
       context 'when show_adjustments is not passed in' do
         it 'returns the summed cost' do
-          expect(subject.summed_fields).to eq(
+          expect(subject.footer_fields).to eq(
             {
               allowed_gross_cost: nil,
               allowed_net_cost: nil,
@@ -397,7 +397,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
       let(:calls) { 5 }
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.footer_fields).to eq(
           {
             allowed_gross_cost: nil,
             allowed_net_cost: nil,

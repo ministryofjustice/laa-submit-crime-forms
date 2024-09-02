@@ -7,16 +7,17 @@ module Nsm
 
       attr_reader :claim, :show_adjustments, :has_card
 
-      def initialize(claim, show_adjustments: SKIP_CELL, has_card: true)
+      def initialize(claim, show_adjustments: SKIP_CELL, has_card: true, title_key: 'title')
         @claim = claim
         @show_adjustments = show_adjustments
         @has_card = has_card
         @group = 'about_claim'
         @section = 'cost_summary'
+        @title_key = title_key
       end
 
       def title(**)
-        I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.title", **)
+        I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.#{@title_key}", **)
       end
 
       def custom
@@ -42,17 +43,15 @@ module Nsm
         ]
       end
 
-      def summed_fields
-        data = table_fields(formatted: false)
-
+      def footer_fields
         {
           name: t('total', numeric: false),
-          net_cost: format(data.sum { _1[:net_cost] }, accessibility_key: 'net_cost'),
-          vat: format(data.sum { _1[:vat] }, accessibility_key: 'vat'),
-          gross_cost: format(data.sum { _1[:gross_cost] }, accessibility_key: 'gross_cost'),
-          allowed_net_cost: format(sum_allowed(data, :allowed_net_cost), accessibility_key: 'allowed_net_cost'),
-          allowed_vat: format(sum_allowed(data, :allowed_vat), accessibility_key: 'allowed_vat'),
-          allowed_gross_cost: format(sum_allowed(data, :allowed_gross_cost), accessibility_key: 'allowed_gross_cost'),
+          net_cost: format(data_for_footer.sum { _1[:net_cost] }, accessibility_key: 'net_cost'),
+          vat: format(data_for_footer.sum { _1[:vat] }, accessibility_key: 'vat'),
+          gross_cost: format(total_gross, accessibility_key: 'gross_cost'),
+          allowed_net_cost: format(sum_allowed(data_for_footer, :allowed_net_cost), accessibility_key: 'allowed_net_cost'),
+          allowed_vat: format(sum_allowed(data_for_footer, :allowed_vat), accessibility_key: 'allowed_vat'),
+          allowed_gross_cost: format(total_gross_allowed, accessibility_key: 'allowed_gross_cost'),
         }
       end
 
@@ -60,7 +59,19 @@ module Nsm
         :show
       end
 
+      def total_gross
+        data_for_footer.sum { _1[:gross_cost] }
+      end
+
+      def total_gross_allowed
+        sum_allowed(data_for_footer, :allowed_gross_cost)
+      end
+
       private
+
+      def data_for_footer
+        @data_for_footer ||= table_fields(formatted: false)
+      end
 
       def sum_allowed(data, field)
         show_adjustments && data.sum { _1[field] }

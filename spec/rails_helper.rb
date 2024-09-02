@@ -10,7 +10,7 @@ require 'sidekiq/testing'
 require 'axe-rspec'
 Sidekiq::Testing.inline!
 
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Rails.root.glob('spec/support/**/*.rb').each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -50,6 +50,8 @@ RSpec.configure do |config|
   config.before(:each, type: :controller) { sign_in }
   # Use the faster rack test by default for system specs if possible
   config.before(:each, type: :system) { driven_by :rack_test }
+  # swallow sdtdout to keep output from rspec clean
+  config.before(:each, type: :task) { allow($stdout).to receive(:write) }
 
   config.expect_with :rspec do |c|
     c.max_formatted_output_length = nil
