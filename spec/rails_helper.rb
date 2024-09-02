@@ -50,6 +50,8 @@ RSpec.configure do |config|
   config.before(:each, type: :controller) { sign_in }
   # Use the faster rack test by default for system specs if possible
   config.before(:each, type: :system) { driven_by :rack_test }
+  # swallow sdtdout to keep output from rspec clean
+  config.before(:each, type: :task) { allow($stdout).to receive(:write) }
 
   config.expect_with :rspec do |c|
     c.max_formatted_output_length = nil

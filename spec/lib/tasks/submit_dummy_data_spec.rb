@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 describe 'submit_dummy_data:', type: :task do
-  before do
-    allow($stdout).to receive(:print)
-  end
-
   describe 'prior_authority' do
     let(:dummy_client) { instance_double(AppStoreClient) }
 
