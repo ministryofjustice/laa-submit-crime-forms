@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'system_helper'
 
 RSpec.describe 'User can see cost breakdowns', type: :system do
   let(:claim) { create(:claim, :firm_details, :letters_calls, work_items:, disbursements:) }
@@ -26,12 +26,13 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
     visit nsm_steps_cost_summary_path(claim.id)
 
     expect(page)
-      .to have_content('Item Net cost VAT Total')
-      .and have_content('Profit costs £305.84 £61.17 £367.01')
-      .and have_content('Waiting £0.00 £0.00 £0.00')
-      .and have_content('Travel £0.00 £0.00 £0.00')
-      .and have_content('Disbursements £227.50 £31.50 £259.00')
-      .and have_content('Sum of net cost: £533.34 Sum of VAT on claimed: £92.67 Sum of net cost and VAT on claimed: £626.01')
+      .to have_content('ItemNet costVATTotal')
+      .and have_content('Profit costs£305.84£61.17£367.01')
+      .and have_content('Waiting£0.00£0.00£0.00')
+      .and have_content('Travel£0.00£0.00£0.00')
+      .and have_content('Disbursements£227.50£31.50£259.00')
+      .and have_content('Sum of net cost claimed: £533.34Sum of VAT on claimed: £92.67')
+      .and have_content('Sum of net cost and VAT on claimed: £626.01')
       # Work items
       .and have_content('Attendance without counsel1 hour:30 minutes£78.23') # 52.15 * 90 / 60
       .and have_content('Preparation0 hours:00 minutes£0.00')
@@ -56,12 +57,12 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
       visit nsm_steps_cost_summary_path(claim.id)
 
       expect(page)
-        .to have_content('Item Net cost VAT Total')
-        .and have_content('Profit costs £305.84 £0.00 £305.84')
-        .and have_content('Waiting £0.00 £0.00 £0.00')
-        .and have_content('Travel £0.00 £0.00 £0.00')
-        .and have_content('Disbursements £227.50 £31.50 £259.00')
-        .and have_content('Sum of net cost: £533.34 Sum of VAT on claimed: £31.50')
+        .to have_content('ItemNet costVATTotal')
+        .and have_content('Profit costs£305.84£0.00£305.84')
+        .and have_content('Waiting£0.00£0.00£0.00')
+        .and have_content('Travel£0.00£0.00£0.00')
+        .and have_content('Disbursements£227.50£31.50£259.00')
+        .and have_content('Sum of net cost claimed: £533.34Sum of VAT on claimed: £31.50')
         .and have_content('Sum of net cost and VAT on claimed: £564.84')
     end
   end

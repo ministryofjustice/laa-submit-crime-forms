@@ -53,7 +53,7 @@ module Nsm
       end
 
       def cost_summary
-        @cost_summary ||= Nsm::CostSummary::Summary.new(claim)
+        @cost_summary ||= Nsm::CheckAnswers::CostSummaryCard.new(claim, show_adjustments: true)
       end
 
       delegate :total_gross, :total_gross_allowed, to: :cost_summary

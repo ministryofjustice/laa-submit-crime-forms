@@ -202,19 +202,6 @@ en:
           total_inc_vat: Cost (including VAT)
           heading: Check your payment claim
           estimate: 'Total estimated'
-        summary_table:
-          your_cost_summary: Your cost summary
-          item: Item
-          net_cost: Net cost
-          vat: VAT
-          total: Total
-          profit_costs: Profit costs
-          waiting: Waiting
-          travel: Travel
-          disbursements: Disbursements
-          total_net: 'Sum of net cost:'
-          total_vat: 'Sum of VAT on claimed:'
-          total_gross: 'Sum of net cost and VAT on claimed:'
       other_info:
         edit:
           page_title: Other relevant information
