@@ -2,8 +2,7 @@
 
 module RiskAssessment
   class LowRiskAssessment
-    EVIDENCE_MULTIPLIER = 4
-    PAGE_MULTIPLIER = 2
+    EVIDENCE_MULTIPLIER = 2
     WITNESS_MULTIPLIER = 30
     ADVOCACY_MULTIPLIER = 2
 
@@ -20,16 +19,15 @@ module RiskAssessment
     end
 
     def prep_low_enough?
-      total_prep_time <= multiplied_total_advocacy_time ||
-        alternative_prep_time <= multiplied_total_advocacy_time
+      total_prep_time - prep_allowances <= multiplied_total_advocacy_time
     end
 
-    def alternative_prep_time
-      prosecution_evidence = (@claim.prosecution_evidence || 0) * EVIDENCE_MULTIPLIER
-      number_of_pages = (@claim.defence_statement || 0) * PAGE_MULTIPLIER
-      number_of_witnesses = (@claim.number_of_witnesses || 0) * WITNESS_MULTIPLIER
-      length_of_video = @claim.time_spent || 0
-      prosecution_evidence + number_of_pages + length_of_video - number_of_witnesses
+    def prep_allowances
+      evidence_allowance = (@claim.prosecution_evidence || 0) * EVIDENCE_MULTIPLIER
+      statement_allowance = (@claim.defence_statement || 0) * EVIDENCE_MULTIPLIER
+      video_allowance = (@claim.time_spent || 0) * EVIDENCE_MULTIPLIER
+      witness_allowance = (@claim.number_of_witnesses || 0) * WITNESS_MULTIPLIER
+      evidence_allowance + statement_allowance + video_allowance + witness_allowance
     end
 
     def total_prep_time
