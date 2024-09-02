@@ -269,7 +269,12 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   context 'when adjustments exist' do
-    let(:claim) { create(:claim, :firm_details, :adjusted_letters_calls, work_items:, disbursements:, assessment_comment:) }
+    let(:claim) do
+      create(:claim, :firm_details, :adjusted_letters_calls,
+             state:, work_items:, disbursements:, assessment_comment:)
+    end
+
+    let(:state) { :part_grant }
 
     let(:work_items) do
       [
@@ -291,6 +296,41 @@ RSpec.describe 'View claim page', type: :system do
         build(:disbursement, :valid_other, :with_adjustment, :dna_testing, age: 4,
               total_cost_without_vat: 150, allowed_total_cost_without_vat: 100),
       ]
+    end
+
+    it 'shows the Overview, Claimed and Adjusted tabs' do
+      visit nsm_steps_view_claim_path(claim.id)
+
+      expect(page)
+        .to have_link('Overview')
+        .and have_link('Claimed costs')
+        .and have_link('Adjusted costs')
+    end
+
+    context 'with granted claims' do
+      let(:state) { :granted }
+
+      it 'shows the Overview, Claimed and Adjusted tabs' do
+        visit nsm_steps_view_claim_path(claim.id)
+
+        expect(page)
+          .to have_link('Overview')
+          .and have_link('Claimed costs')
+          .and have_link('Adjusted costs')
+      end
+    end
+
+    context 'with rejected claims' do
+      let(:state) { :rejected }
+
+      it 'shows the Overview and Claimed tabs (only)' do
+        visit nsm_steps_view_claim_path(claim.id)
+
+        expect(page)
+          .to have_link('Overview')
+          .and have_link('Claimed costs')
+          .and have_no_link('Adjusted costs')
+      end
     end
 
     it 'shows an adjusted cost summary table with VAT' do

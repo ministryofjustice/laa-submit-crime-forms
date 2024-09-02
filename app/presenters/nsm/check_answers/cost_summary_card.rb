@@ -67,6 +67,12 @@ module Nsm
         sum_allowed(data_for_footer, :allowed_gross_cost)
       end
 
+      def total_gross_adjusted?
+        return false unless claim.granted? || claim.part_grant?
+
+        total_gross_allowed != total_gross
+      end
+
       private
 
       def data_for_footer

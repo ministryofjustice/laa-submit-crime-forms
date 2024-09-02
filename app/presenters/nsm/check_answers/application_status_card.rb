@@ -55,7 +55,7 @@ module Nsm
         @cost_summary ||= Nsm::CheckAnswers::CostSummaryCard.new(claim, show_adjustments: true)
       end
 
-      delegate :total_gross, :total_gross_allowed, to: :cost_summary
+      delegate :total_gross, :total_gross_allowed, :total_gross_adjusted?, to: :cost_summary
 
       def translate(key)
         I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.#{key}")
@@ -123,7 +123,7 @@ module Nsm
 
       def allowed_amount
         return '£0.00 allowed' if claim.rejected?
-        return "#{NumberTo.pounds(total_gross_allowed)} allowed" if claim.part_grant?
+        return "#{NumberTo.pounds(total_gross_allowed)} allowed" if total_gross_adjusted?
 
         "#{NumberTo.pounds(total_gross)} allowed"
       end
