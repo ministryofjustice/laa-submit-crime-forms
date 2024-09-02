@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe PullUpdates do
+  subject(:job) { described_class.new }
+
   let(:id) { SecureRandom.uuid }
   let(:last_update) { Date.new(2021, 11, 30) }
   let(:http_puller) { instance_double(AppStoreClient) }
@@ -35,7 +37,8 @@ RSpec.describe PullUpdates do
   context 'when mocking claim' do
     let(:id) { SecureRandom.uuid }
     let(:claim) do
-      instance_double(Claim, id: id, state: 'submitted', save!: true, update!: true,
+      instance_double(Claim, id: id, state: 'submitted',
+                      save!: true, update!: true,
                       sent_back?: false, 'assessment_comment=': nil, part_grant?: false)
     end
 
@@ -47,14 +50,14 @@ RSpec.describe PullUpdates do
       let(:http_response) { { 'applications' => [] } }
 
       it 'do nothing' do
-        subject.perform
+        job.perform
         expect(Claim).not_to have_received(:find_by)
       end
     end
 
     context 'when data exists' do
       it 'updates the claim' do
-        subject.perform
+        job.perform
 
         expect(Claim).to have_received(:find_by).with(id:)
         expect(claim).to have_received(:update!).with(
@@ -67,7 +70,7 @@ RSpec.describe PullUpdates do
         let(:claim) { nil }
 
         it 'skips the update' do
-          expect { subject.perform }.not_to raise_error
+          expect { job.perform }.not_to raise_error
         end
       end
     end
@@ -79,7 +82,7 @@ RSpec.describe PullUpdates do
       end
 
       it 'does not get stuck due to non-integer timetamps' do
-        expect { Timeout.timeout(1) { subject.perform } }.not_to raise_error
+        expect { Timeout.timeout(1) { job.perform } }.not_to raise_error
       end
     end
   end
@@ -89,7 +92,7 @@ RSpec.describe PullUpdates do
     let(:claim) { create(:claim) }
 
     it 'the claim is updated' do
-      expect { subject.perform }.not_to raise_error
+      expect { job.perform }.not_to raise_error
 
       expect(claim.reload).to have_attributes(
         state: 'granted'
@@ -108,7 +111,7 @@ RSpec.describe PullUpdates do
       let(:id) { 'unknown' }
 
       it 'does not raise an error' do
-        expect { subject.perform }.not_to raise_error
+        expect { job.perform }.not_to raise_error
       end
     end
 
@@ -117,7 +120,7 @@ RSpec.describe PullUpdates do
       let(:application) { create(:prior_authority_application) }
 
       it 'processes the update' do
-        subject.perform
+        job.perform
         expect(application.reload).to have_attributes(
           state: 'granted',
           app_store_updated_at: Time.zone.parse(arbitrary_fixed_date)
@@ -125,7 +128,7 @@ RSpec.describe PullUpdates do
       end
 
       it 'triggers a sync' do
-        subject.perform
+        job.perform
         expect(PriorAuthority::AssessmentSyncer).to have_received(:call).with(application, record:)
       end
     end
@@ -161,7 +164,7 @@ RSpec.describe PullUpdates do
       end
 
       it 'updates both application states' do
-        expect { subject.perform }
+        expect { job.perform }
           .to change { paa_one.reload.state }.from('submitted').to('granted')
           .and change { paa_two.reload.state }.from('submitted').to('rejected')
       end
@@ -172,7 +175,7 @@ RSpec.describe PullUpdates do
         end
 
         it 'syncs both applications' do
-          expect { subject.perform }
+          expect { job.perform }
             .to change { paa_one.reload.assessment_comment }.from(nil).to('All good, granting...')
             .and change { paa_two.reload.assessment_comment }.from(nil).to('Sorry have to reject this because...')
         end
@@ -185,7 +188,7 @@ RSpec.describe PullUpdates do
     let(:id) { 'unknown-id' }
 
     it 'does not raise an error' do
-      expect { subject.perform }.not_to raise_error
+      expect { job.perform }.not_to raise_error
     end
   end
 end
