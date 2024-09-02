@@ -76,6 +76,10 @@ module Nsm
         ].sum
       end
 
+      def total_gross_adjusted?
+        total_gross_allowed != total_gross
+      end
+
       private
 
       def work_items_total(work_type)
