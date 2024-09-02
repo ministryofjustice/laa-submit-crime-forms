@@ -34,12 +34,12 @@ RSpec.describe PullUpdates do
                                            .and_return(http_response)
   end
 
-  context 'when mocking claim' do
+  context 'with a mocked claim' do
     let(:id) { SecureRandom.uuid }
     let(:claim) do
       instance_double(Claim, id: id, state: 'submitted',
-                      save!: true, update!: true,
-                      sent_back?: false, 'assessment_comment=': nil, part_grant?: false)
+                      save!: true, update!: true, 'assessment_comment=': nil,
+                      sent_back?: false, part_grant?: false, granted?: false)
     end
 
     before do
