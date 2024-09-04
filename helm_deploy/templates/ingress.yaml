@@ -24,7 +24,6 @@ metadata:
     nginx.ingress.kubernetes.io/default-backend: nginx-errors
     nginx.ingress.kubernetes.io/custom-http-errors: "423"
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: "80m"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecRequestBodyNoFilesLimit 524288
