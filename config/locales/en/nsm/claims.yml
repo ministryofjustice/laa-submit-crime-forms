@@ -9,6 +9,7 @@ en:
         start_claim: Start a new claim
         table_info_item: claims
         delete: Delete
+        claim: claim
         header:
           ufn: UFN
           defendant: Defendant

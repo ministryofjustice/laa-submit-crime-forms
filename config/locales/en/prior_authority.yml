@@ -24,6 +24,7 @@ en:
         page_title: Submitted
       drafts:
         page_title: Drafts
+        application: application
       index:
         page_title: Your applications
         none: You have not started any applications.
