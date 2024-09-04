@@ -131,10 +131,15 @@
               <td class="govuk-table__cell"><%= claim.laa_reference %></td>
               <% if @scope == :draft %>
                 <td class="govuk-table__cell">
-                  <%= link_to t(".delete"), confirm_delete_nsm_application_path(claim) %>
+                  <%= link_to confirm_delete_nsm_application_path(claim), class: "govuk-link--no-visited-state" do %>
+                    <%= t(".delete") %>
+                    <span class="govuk-visually-hidden">
+                      <%= t(".claim") %>
+                      <%= claim.laa_reference %>
+                    </span>
+                  <% end %>
                 </td>
-              <% end %>
-              <% if @scope == :reviewed %>
+              <% elsif @scope == :reviewed %>
                 <td class="govuk-table__cell">
                   <strong class="govuk-tag <%= t(".state_colour.#{claim.state}") %>">
                     <%= t(".state.#{claim.state}") %>
