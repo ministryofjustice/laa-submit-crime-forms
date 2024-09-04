@@ -12,10 +12,12 @@ module PriorAuthority
 
       def extended_attributes
         attributes.merge(state: new_state,
-                         laa_reference: generate_laa_reference)
+                         laa_reference: laa_reference)
       end
 
-      def generate_laa_reference
+      def laa_reference
+        return application.laa_reference if application.laa_reference.present?
+
         loop do
           proposed_reference = "LAA-#{SecureRandom.alphanumeric(6)}"
           break proposed_reference unless PriorAuthorityApplication.exists?(laa_reference: proposed_reference)
