@@ -76,7 +76,7 @@ variables:
   portalIDPMetadataFile: config/laa_portal/metadata/dev.xml
   spEntityId: LAA_Portal_CRM7_Dev
   appStore: https://main-nscc-store-dev.cloud-platform.service.justice.gov.uk
-  maxFileUploadBytes: 83886080
+  maxFileUploadBytes: 26214400
   eolUrl: https://apply-for-extension-of-upper-limits.dev.form.service.justice.gov.uk/
   enableSyncTriggerEndpoint: 'true'
   allowIndexing: 'false'
