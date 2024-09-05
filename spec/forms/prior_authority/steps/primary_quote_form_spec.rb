@@ -93,7 +93,7 @@ RSpec.describe PriorAuthority::Steps::PrimaryQuoteForm do
 
       context 'with an overly large file' do
         let(:tempfile) { instance_double(File, size:) }
-        let(:size) { ENV['MAX_UPLOAD_SIZE_BYTES'].to_i + 1 }
+        let(:size) { ENV['PA_MAX_UPLOAD_SIZE_BYTES'].to_i + 1 }
 
         before do
           allow(Marcel::MimeType).to receive(:for).and_return(content_type)
