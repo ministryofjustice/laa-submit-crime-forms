@@ -123,7 +123,7 @@ class Claim < ApplicationRecord
   def cost_summary
     @cost_summary ||= Nsm::CheckAnswers::CostSummaryCard.new(self, show_adjustments: true)
   end
-  delegate :total_gross_adjusted?, to: :cost_summary
+  delegate :show_adjusted?, to: :cost_summary
 
   private
 
