@@ -35,11 +35,14 @@ RSpec.describe AppStoreSubscriber do
         before do
           allow(client).to receive(:post).and_raise(StandardError)
           allow(Sentry).to receive(:capture_exception)
+          allow(described_class).to receive(:sleep)
         end
 
-        it 'passes the error to Sentry' do
+        it 'retries 3 times then passes the error to Sentry' do
           expect { described_class.subscribe }.not_to raise_error
-          expect(Sentry).to have_received(:capture_exception)
+          expect(client).to have_received(:post).exactly(3).times
+          expect(described_class).to have_received(:sleep).with(3).exactly(2).times
+          expect(Sentry).to have_received(:capture_exception).exactly(1).times
         end
       end
     end
