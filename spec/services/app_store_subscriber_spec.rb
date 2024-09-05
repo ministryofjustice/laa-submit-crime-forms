@@ -35,11 +35,14 @@ RSpec.describe AppStoreSubscriber do
         before do
           allow(client).to receive(:post).and_raise(StandardError)
           allow(Sentry).to receive(:capture_exception)
+          allow(described_class).to receive(:sleep)
         end
 
-        it 'passes the error to Sentry' do
+        it 'retries 3 times then passes the error to Sentry' do
           expect { described_class.subscribe }.not_to raise_error
-          expect(Sentry).to have_received(:capture_exception)
+          expect(client).to have_received(:post).exactly(3).times
+          expect(described_class).to have_received(:sleep).with(3).exactly(2).times
+          expect(Sentry).to have_received(:capture_exception).exactly(1).times
         end
       end
     end
@@ -97,6 +100,18 @@ RSpec.describe AppStoreSubscriber do
         { webhook_url: 'http://example.com/app_store_webhook', subscriber_type: :provider },
         path: 'v1/subscriber'
       )
+    end
+
+    context 'when app store client errors out' do
+      before do
+        allow(client).to receive(:delete).and_raise(StandardError)
+        allow(Sentry).to receive(:capture_exception)
+      end
+
+      it 'reports the error to Sentry' do
+        described_class.unsubscribe
+        expect(Sentry).to have_received(:capture_exception)
+      end
     end
   end
 end
