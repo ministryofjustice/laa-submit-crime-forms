@@ -3,7 +3,6 @@
 module Nsm
   module CheckAnswers
     class ApplicationStatusCard < Base
-      EMAIL = 'CRM7fi@justice.gov.uk'
       include GovukLinkHelper
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
@@ -104,11 +103,11 @@ module Nsm
       def update_claim
         return [] unless claim.sent_back?
 
-        key = 'update_further_info'
-        email = tag.a(EMAIL, href: "mailto:#{EMAIL}")
+        rfi_email = Rails.configuration.x.contact.nsm_rfi_email
+        email = tag.a(rfi_email, href: "mailto:#{rfi_email}")
         [
           tag.span(translate('update_claim'), class: 'govuk-!-font-weight-bold'),
-          translate(key).sub('%email%', email).html_safe
+          translate('update_further_info').sub('%email%', email).html_safe
         ].compact
       end
 
