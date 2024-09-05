@@ -15,6 +15,18 @@ namespace :fixes do
     end
   end
 
+  desc "Find mismatched LAA references for sent back CRM4 applications"
+  task find_mismatched_references: :environment do
+    sent_back_submissions = PriorAuthorityApplication.where(state: "sent_back")
+    sent_back_submissions.each do |submission|
+      app_store_data = AppStoreClient.new.get(submission.id)
+      app_store_reference = app_store_data['application']['laa_reference']
+      if submission.laa_reference != app_store_reference
+        puts "Submission ID: #{submission.id} App Store Reference: #{app_store_reference} Provider Reference: #{submission.laa_reference}"
+      end
+    end
+  end
+
   desc "Amend a contact email address. Typically because user has added a valid but undeliverable address"
   task :update_contact_email, [:id, :new_contact_email] => :environment do |_, args|
     submission = PriorAuthorityApplication.find_by(id: args[:id]) || Claim.find_by(id: args[:id])
