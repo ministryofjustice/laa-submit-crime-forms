@@ -35,7 +35,9 @@ describe 'fixes:find_mismatched_references', type: :task do
   end
 
   it 'prints out the correct information' do
+    # rubocop:disable Layout/LineLength
     expected_output = "Submission ID: #{unmatched_application.id} App Store Reference: LAA-654321 Provider Reference: LAA-ABCDEF\n"
+    # rubocop:enable Layout/LineLength
     expect { Rake::Task['fixes:find_mismatched_references'].execute }.to output(expected_output).to_stdout
   end
 end
