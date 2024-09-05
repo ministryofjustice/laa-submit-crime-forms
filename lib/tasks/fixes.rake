@@ -25,6 +25,9 @@ namespace :fixes do
         puts "Submission ID: #{submission.id} App Store Reference: #{app_store_reference} Provider Reference: #{submission.laa_reference}"
       end
     end
+  rescue StandardError => e
+    puts "Error fetching details"
+    puts e
   end
 
   desc "Amend a contact email address. Typically because user has added a valid but undeliverable address"
