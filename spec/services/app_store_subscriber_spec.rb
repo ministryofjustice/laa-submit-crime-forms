@@ -101,5 +101,17 @@ RSpec.describe AppStoreSubscriber do
         path: 'v1/subscriber'
       )
     end
+
+    context 'when app store client errors out' do
+      before do
+        allow(client).to receive(:delete).and_raise(StandardError)
+        allow(Sentry).to receive(:capture_exception)
+      end
+
+      it 'reports the error to Sentry' do
+        described_class.unsubscribe
+        expect(Sentry).to have_received(:capture_exception)
+      end
+    end
   end
 end
