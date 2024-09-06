@@ -7,22 +7,20 @@ module Nsm
       before_action :set_section_and_scope
       before_action :set_default_table_sort_options
 
-      def show
-        @work_items = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
-      end
+      def show; end
 
       def item
         render report_params[:item_type]
       end
 
       def claimed_work_items
-        @work_items = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
+        @records = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
 
         render 'show'
       end
 
       def adjusted_work_items
-        @work_items = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
+        @records = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
 
         render 'show'
       end
@@ -36,7 +34,7 @@ module Nsm
       end
 
       def claimed_disbursements
-        @disbursements = Sorters::DisbursementsSorter.call(
+        @records = Sorters::DisbursementsSorter.call(
           current_application.disbursements.by_age, @sort_by, @sort_direction
         )
 
@@ -44,11 +42,19 @@ module Nsm
       end
 
       def adjusted_disbursements
-        @disbursements = Sorters::DisbursementsSorter.call(
+        @records = Sorters::DisbursementsSorter.call(
           current_application.disbursements.by_age, @sort_by, @sort_direction
         )
 
         render 'show'
+      end
+
+      def download
+        pdf = PdfService.nsm({ claim: @claim, report: @report }, request.url)
+
+        send_data pdf,
+                  filename: "#{@claim.laa_reference}.pdf",
+                  type: 'application/pdf'
       end
 
       private

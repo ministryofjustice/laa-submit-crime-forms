@@ -4,8 +4,9 @@ module Nsm
       include ActionView::Helpers::OutputSafetyHelper
       include ActionView::Helpers::TagHelper
 
-      def initialize(work_items)
+      def initialize(work_items, skip_links: false)
         @work_items = work_items
+        @skip_links = skip_links
       end
 
       def rows
@@ -35,7 +36,11 @@ module Nsm
 
         span = tag.span(work_type_name, title: I18n.t('nsm.work_items.type_changes.types_changed'))
         sup = tag.sup do
-          tag.a(I18n.t('nsm.work_items.type_changes.asterisk'), href: '#fn*')
+          if @skip_links
+            I18n.t('nsm.work_items.type_changes.asterisk')
+          else
+            tag.a(I18n.t('nsm.work_items.type_changes.asterisk'), href: '#fn*')
+          end
         end
 
         safe_join([span, ' ', sup])

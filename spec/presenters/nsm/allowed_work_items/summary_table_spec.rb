@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::AllowedWorkItems::SummaryTable do
-  subject { described_class.new(work_items) }
+  subject { described_class.new(work_items, skip_links:) }
 
   let(:work_items) { [work_item] }
+  let(:skip_links) { false }
   let(:work_item) { create(:work_item, work_type: 'advocacy', time_spent: 100, claim: create(:claim)) }
 
   describe '#rows' do
@@ -51,6 +52,17 @@ RSpec.describe Nsm::AllowedWorkItems::SummaryTable do
             { numeric: true, text: '£0.00' }
           ]
         )
+      end
+
+      context 'when skipping links' do
+        let(:skip_links) { true }
+
+        it 'shows appropriate text' do
+          expect(subject.rows.last.first[:text]).to eq(
+            '<span title="One or more of these items were adjusted to be a different work item type.">Advocacy</span> ' \
+            '<sup>[*]</sup>'
+          )
+        end
       end
 
       it 'shows the relevant details in the row for the new type' do

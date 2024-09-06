@@ -42,6 +42,15 @@ module Nsm
         [ApplicationStatusCard.new(claim)]
       end
 
+      def status_sections_for_print
+        [
+          ApplicationStatusCard.new(claim, skip_links: true),
+          CostSummaryCard.new(claim,
+                              show_adjustments: @claim.part_grant? || @claim.granted? || CostSummaryCard::SKIP_CELL,
+                              skip_links: true)
+        ]
+      end
+
       def claim_type_section
         [ClaimTypeCard.new(claim)]
       end

@@ -761,4 +761,11 @@ RSpec.describe 'View claim page', type: :system do
       )
     end
   end
+
+  it 'lets me download a PDF' do
+    visit nsm_steps_view_claim_path(claim.id)
+    click_on 'Create a printable PDF'
+    expect(page).to have_current_path download_nsm_steps_view_claim_path(claim)
+    expect(page.driver.response.headers['Content-Type']).to eq 'application/pdf'
+  end
 end

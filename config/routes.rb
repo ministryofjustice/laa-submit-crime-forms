@@ -141,6 +141,7 @@ Rails.application.routes.draw do
                               constraints: { item_type: /(work_item|disbursement)/ }
             get :letters, to: 'view_claim#item', defaults: { item_type: 'letters' }
             get :calls, to: 'view_claim#item', defaults: { item_type: 'calls' }
+            get :download
           end
         end
       end

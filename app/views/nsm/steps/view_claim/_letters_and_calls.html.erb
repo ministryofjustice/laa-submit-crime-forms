@@ -1,3 +1,4 @@
+<% skip_links ||= false %>
 <% title t('.page_title') %>
 
 <h3 class="govuk-heading-m">
@@ -11,21 +12,26 @@
     { text: t('.uplift'), numeric: true },
     { text: t('.net_cost'), numeric: true }
   ]
-  letters_link = link_to(t('.letters'), letters_nsm_steps_view_claim_path(id: current_application.id))
-  calls_link = link_to(t('.calls'), calls_nsm_steps_view_claim_path(id: current_application.id))
+  if skip_links
+    letters_link = t('.letters')
+    calls_link = t('.calls')
+  else
+    letters_link = link_to(t('.letters'), letters_nsm_steps_view_claim_path(id: claim.id))
+    calls_link = link_to(t('.calls'), calls_nsm_steps_view_claim_path(id: claim.id))
+  end
   rows = [
     ([
       { header: true, text: letters_link },
-      { text: @claim.letters, numeric: true },
-      { text: NumberTo.percentage(@claim.letters_uplift.to_f, multiplier: 1), numeric: true },
-      { text: NumberTo.pounds(@claim.letters_after_uplift), numeric: true }
-    ] unless @claim.letters.zero?),
+      { text: claim.letters, numeric: true },
+      { text: NumberTo.percentage(claim.letters_uplift.to_f, multiplier: 1), numeric: true },
+      { text: NumberTo.pounds(claim.letters_after_uplift), numeric: true }
+    ] unless claim.letters.zero?),
     ([
       { header: true, text: calls_link },
-      { text: @claim.calls, numeric: true },
-      { text: NumberTo.percentage(@claim.calls_uplift.to_f, multiplier: 1), numeric: true },
-      { text: NumberTo.pounds(@claim.calls_after_uplift), numeric: true }
-    ] unless @claim.calls.zero?)
+      { text: claim.calls, numeric: true },
+      { text: NumberTo.percentage(claim.calls_uplift.to_f, multiplier: 1), numeric: true },
+      { text: NumberTo.pounds(claim.calls_after_uplift), numeric: true }
+    ] unless claim.calls.zero?)
   ].compact
 %>
 <% if rows.none? %>
