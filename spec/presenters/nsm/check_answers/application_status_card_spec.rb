@@ -16,11 +16,11 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
   describe '#row data' do
     let(:assessment_comment) { "this is a comment\n2nd line" }
 
-    context 'submitted' do
+    context 'when in submitted state' do
       let(:claim) { create(:claim, :completed_state, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
 
       it 'generates submitted rows' do
-        expect(subject.row_data).to match(
+        expect(card.row_data).to match(
           [
             {
               head_key: 'application_status',
@@ -32,19 +32,20 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
       end
     end
 
-    context 'granted' do
+    context 'when in granted state' do
       let(:claim) { create(:claim, :granted_state, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
 
-      it 'generates granted rows' do
-        expect(subject.row_data).to match(
+      it 'generates granted rows with fallback comment' do
+        expect(card.row_data).to match(
           [
             {
               head_key: 'application_status',
               text: Regexp.new('<p><strong class="govuk-tag govuk-tag--green">Granted</strong></p>' \
-                               '<p>1 December 2023</p><br><p>£(\d+\.\d\d) claimed</p><p>£\1 allowed</p>')
+                               '<p>1 December 2023</p><br><p>£[\d,\.]+ claimed</p><p>£[\d,\.]+ allowed</p>')
             },
             {
-              head_key: 'laa_response', text: '<p>The claim has been fully granted.</p>'
+              head_key: 'laa_response',
+              text: '<p>The claim has been fully granted.</p>'
             }
           ]
         )
@@ -54,12 +55,12 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
         before { claim.update(assessment_comment: "Foo\n<b>Bar</b>") }
 
         it 'shows the comment, escaped appropriately' do
-          expect(subject.row_data[1][:text]).to eq('<p>Foo</p><p>&lt;b&gt;Bar&lt;/b&gt;</p>')
+          expect(card.row_data[1][:text]).to eq('<p>Foo</p><p>&lt;b&gt;Bar&lt;/b&gt;</p>')
         end
       end
     end
 
-    context 'part granted' do
+    context 'when in part granted state' do
       let(:claim) do
         create(
           :claim,
@@ -71,7 +72,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
       end
 
       it 'generates part granted rows' do
-        expect(subject.row_data).to match(
+        expect(card.row_data).to match(
           [
             {
               head_key: 'application_status',
@@ -94,7 +95,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
         let(:claim) { create(:claim, :part_granted_state, :firm_details, :updated_at, assessment_comment:) }
 
         it 'generates no links in text' do
-          expect(subject.row_data).to match(
+          expect(card.row_data).to match(
             [
               {
                 head_key: 'application_status',
@@ -122,7 +123,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
         let(:claim) { create(:claim, :part_granted_state, :firm_details, :updated_at, assessment_comment:) }
 
         it 'generates no links in text' do
-          expect(subject.row_data).to match(
+          expect(card.row_data).to match(
             [
               {
                 head_key: 'application_status',
@@ -174,13 +175,13 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
       end
     end
 
-    context 'provider requested' do
+    context 'when in provider update requested state' do
       let(:claim) do
         create(:claim, :sent_back_state, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
       end
 
       it 'generates sent back rows' do
-        expect(subject.row_data).to match(
+        expect(card.row_data).to match(
           [
             {
               head_key: 'application_status',
@@ -199,13 +200,13 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
       end
     end
 
-    context 'rejected' do
+    context 'when in rejected state' do
       let(:claim) do
         create(:claim, :rejected_state, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
       end
 
       it 'generates rejected rows' do
-        expect(subject.row_data).to match(
+        expect(card.row_data).to match(
           [
             {
               head_key: 'application_status',

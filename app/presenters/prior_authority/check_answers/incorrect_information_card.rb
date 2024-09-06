@@ -30,7 +30,7 @@ module PriorAuthority
       private
 
       def response
-        return nil if application.pending_incorrect_information == incorrect_information
+        return nil if incorrect_information.sections_changed.blank?
 
         {
           head_key: 'information_supplied',
