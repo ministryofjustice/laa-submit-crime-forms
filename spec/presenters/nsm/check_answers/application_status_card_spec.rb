@@ -33,12 +33,9 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     end
 
     context 'when in granted state' do
-      let(:claim) do
-        create(:claim, :granted_state, :firm_details, :build_associates, :updated_at,
-               assessment_comment: 'The claim has been fully granted.')
-      end
+      let(:claim) { create(:claim, :granted_state, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
 
-      it 'generates granted rows' do
+      it 'generates granted rows with fallback comment' do
         expect(card.row_data).to match(
           [
             {
