@@ -13,7 +13,8 @@ module Nsm
 
     def call
       sync_overall_comment
-      if claim.part_grant?
+
+      if claim.part_grant? || claim.granted?
         Claim.transaction do
           sync_letter_adjustments
           sync_call_adjustments

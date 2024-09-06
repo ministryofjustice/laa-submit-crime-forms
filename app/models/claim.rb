@@ -120,6 +120,11 @@ class Claim < ApplicationRecord
     end
   end
 
+  def cost_summary
+    @cost_summary ||= Nsm::CheckAnswers::CostSummaryCard.new(self, show_adjustments: true)
+  end
+  delegate :show_adjusted?, to: :cost_summary
+
   private
 
   def sorted_work_item_ids
