@@ -1,9 +1,12 @@
 require 'rails_helper'
 
 describe 'fixes:mismatched_references:fix', type: :task do
-  let(:unmatched_application) { create(:prior_authority_application, id: '8db79c28-35fd-42ae-aef8-156fbe28631a', state: 'sent_back', laa_reference: 'LAA-ABCDEF') }
+  let(:unmatched_application) do
+    create(:prior_authority_application, id: '8db79c28-35fd-42ae-aef8-156fbe28631a', state: 'sent_back',
+   laa_reference: 'LAA-ABCDEF')
+  end
   let(:records) do
-    [{submission_id: unmatched_application.id, laa_reference: 'LAA-Xcoqqz'}]
+    [{ submission_id: unmatched_application.id, laa_reference: 'LAA-Xcoqqz' }]
   end
 
   before do
