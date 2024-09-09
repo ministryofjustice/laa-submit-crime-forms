@@ -38,18 +38,17 @@ namespace :fixes do
           {submission_id: '8db79c28-35fd-42ae-aef8-156fbe28631a', laa_reference: 'LAA-Xcoqqz'}
         ]
 
-        records.each do |record|
-          id = record['submission_id']
-          submission = PriorAuthorityApplication.find(id)
-          if submission
-            old_reference = submission.laa_reference
-            new_reference = record['laa_reference']
-            submission.laa_reference = new_reference
-            submission.save!(touch: false)
-            puts "Fixed LAA Reference for Submission: #{id}. Old Reference: #{old_reference}, New Reference: #{new_reference}"
-          else
-            puts "Could not find Submission: #{id}"
-          end
+      records.each do |record|
+        id = record['submission_id']
+        submission = PriorAuthorityApplication.find(id)
+        if submission
+          old_reference = submission.laa_reference
+          new_reference = record['laa_reference']
+          submission.laa_reference = new_reference
+          submission.save!(touch: false)
+          puts "Fixed LAA Reference for Submission: #{id}. Old Reference: #{old_reference}, New Reference: #{new_reference}"
+        else
+          puts "Could not find Submission: #{id}"
         end
       end
     end
