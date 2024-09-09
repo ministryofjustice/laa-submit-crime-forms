@@ -39,8 +39,8 @@ namespace :fixes do
         ]
 
       records.each do |record|
-        id = record['submission_id']
-        new_reference = record['laa_reference']
+        id = record[:submission_id]
+        new_reference = record[:laa_reference]
         fix_laa_reference(id, new_reference)
       end
     end
