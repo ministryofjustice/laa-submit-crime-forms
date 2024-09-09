@@ -40,16 +40,21 @@ namespace :fixes do
 
       records.each do |record|
         id = record['submission_id']
-        submission = PriorAuthorityApplication.find(id)
-        if submission
-          old_reference = submission.laa_reference
-          new_reference = record['laa_reference']
-          submission.laa_reference = new_reference
-          submission.save!(touch: false)
-          puts "Fixed LAA Reference for Submission: #{id}. Old Reference: #{old_reference}, New Reference: #{new_reference}"
-        else
-          puts "Could not find Submission: #{id}"
-        end
+        new_reference = record['laa_reference']
+        fix_laa_reference(id, new_reference)
+      end
+    end
+
+    def fix_laa_reference(id, new_reference)
+      submission = PriorAuthorityApplication.find(id)
+      if submission
+        old_reference = submission.laa_reference
+
+        submission.laa_reference = new_reference
+        submission.save!(touch: false)
+        puts "Fixed LAA Reference for Submission: #{id}. Old Reference: #{old_reference}, New Reference: #{new_reference}"
+      else
+        puts "Could not find Submission: #{id}"
       end
     end
   end
