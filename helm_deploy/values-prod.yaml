@@ -76,7 +76,8 @@ variables:
   portalIDPMetadataFile: config/laa_portal/metadata/prod.xml
   spEntityId: LAA_Portal_CRM7_Prod
   appStore: http://laa-crime-application-store-app.laa-crime-application-store-production.svc.cluster.local
-  maxFileUploadBytes: 10485760
+  paMaxFileUploadBytes: 10485760
+  nsmMaxFileUploadBytes: 26214400
   eolUrl: https://apply-for-extension-of-upper-limits.form.service.justice.gov.uk/
   enableSyncTriggerEndpoint: 'false'
   allowIndexing: 'true'

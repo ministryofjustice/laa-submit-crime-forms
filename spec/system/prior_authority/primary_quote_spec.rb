@@ -64,10 +64,10 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
 
   describe 'client-side size validation' do
     around do |example|
-      default_size = ENV.fetch('MAX_UPLOAD_SIZE_BYTES')
-      ENV['MAX_UPLOAD_SIZE_BYTES'] = (Rails.root.join('spec/fixtures/files/test_2.png').open.size - 1).to_s
+      default_size = ENV.fetch('PA_MAX_UPLOAD_SIZE_BYTES')
+      ENV['PA_MAX_UPLOAD_SIZE_BYTES'] = (Rails.root.join('spec/fixtures/files/test_2.png').open.size - 1).to_s
       example.run
-      ENV['MAX_UPLOAD_SIZE_BYTES'] = default_size
+      ENV['PA_MAX_UPLOAD_SIZE_BYTES'] = default_size
     end
 
     it 'validates file size client side before attempting upload and save' do

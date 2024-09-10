@@ -25,8 +25,12 @@ module FileUpload
       raise PotentialMalwareError unless result
     end
 
-    def self.human_readable_max_file_size
-      "#{(ENV['MAX_UPLOAD_SIZE_BYTES'].to_i / (1024 * 1024.0)).round}MB"
+    def self.human_readable_nsm_max_file_size
+      "#{(ENV['NSM_MAX_UPLOAD_SIZE_BYTES'].to_i / (1024 * 1024.0)).round}MB"
+    end
+
+    def self.human_readable_pa_max_file_size
+      "#{(ENV['PA_MAX_UPLOAD_SIZE_BYTES'].to_i / (1024 * 1024.0)).round}MB"
     end
   end
 end
