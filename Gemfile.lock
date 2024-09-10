@@ -397,8 +397,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.6)
-      strscan
+    rexml (3.3.7)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -449,7 +448,7 @@ GEM
       rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
     ruby-rc4 (0.1.5)
-    ruby-saml (1.15.0)
+    ruby-saml (1.17.0)
       nokogiri (>= 1.13.10)
       rexml
     ruby2_keywords (0.0.5)
@@ -493,7 +492,6 @@ GEM
       hashie
       version_gem (~> 1.1, >= 1.1.1)
     stringio (3.1.1)
-    strscan (3.1.0)
     super_diff (0.12.1)
       attr_extras (>= 6.2.4)
       diff-lcs
