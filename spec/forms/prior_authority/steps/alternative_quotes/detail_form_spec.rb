@@ -221,6 +221,14 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
         expect(subject.total_cost).to eq 0
       end
     end
+
+    context 'when items is invalid' do
+      let(:items) { '30.5' }
+
+      it 'returns 0' do
+        expect(subject.total_cost).to eq 0
+      end
+    end
   end
 
   describe '#cost_type' do
