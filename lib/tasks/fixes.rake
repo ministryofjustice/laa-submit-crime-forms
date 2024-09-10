@@ -15,19 +15,48 @@ namespace :fixes do
     end
   end
 
-  desc "Find mismatched LAA references for sent back CRM4 applications"
-  task find_mismatched_references: :environment do
-    sent_back_submissions = PriorAuthorityApplication.where(state: "sent_back")
-    sent_back_submissions.each do |submission|
-      app_store_data = AppStoreClient.new.get(submission.id)
-      app_store_reference = app_store_data['application']['laa_reference']
-      if submission.laa_reference != app_store_reference
-        puts "Submission ID: #{submission.id} App Store Reference: #{app_store_reference} Provider Reference: #{submission.laa_reference}"
+  namespace :mismatched_references do
+    desc "Find mismatched LAA references for sent back CRM4 applications"
+    task find: :environment do
+      sent_back_submissions = PriorAuthorityApplication.where(state: "sent_back")
+      sent_back_submissions.each do |submission|
+        app_store_data = AppStoreClient.new.get(submission.id)
+        app_store_reference = app_store_data['application']['laa_reference']
+        if submission.laa_reference != app_store_reference
+          puts "Submission ID: #{submission.id} App Store Reference: #{app_store_reference} Provider Reference: #{submission.laa_reference}"
+        end
+      end
+    rescue StandardError => e
+      puts "Error fetching details"
+      puts e
+    end
+
+    desc "Fix mismatched LAA references for sent back CRM4 applications"
+    task fix: :environment do
+      # retrieved by running mismatched_references:find rake task 9-09-2024 13:00
+      records = [
+          {submission_id: '8db79c28-35fd-42ae-aef8-156fbe28631a', laa_reference: 'LAA-Xcoqqz'}
+        ]
+
+      records.each do |record|
+        id = record[:submission_id]
+        new_reference = record[:laa_reference]
+        fix_laa_reference(id, new_reference)
       end
     end
-  rescue StandardError => e
-    puts "Error fetching details"
-    puts e
+
+    def fix_laa_reference(id, new_reference)
+      submission = PriorAuthorityApplication.find(id)
+      if submission
+        old_reference = submission.laa_reference
+
+        submission.laa_reference = new_reference
+        submission.save!(touch: false)
+        puts "Fixed LAA Reference for Submission: #{id}. Old Reference: #{old_reference}, New Reference: #{new_reference}"
+      else
+        puts "Could not find Submission: #{id}"
+      end
+    end
   end
 
   desc "Amend a contact email address. Typically because user has added a valid but undeliverable address"
