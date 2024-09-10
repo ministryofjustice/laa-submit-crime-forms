@@ -1,6 +1,8 @@
 class WorkItem < ApplicationRecord
   belongs_to :claim
 
+  scope :changed_work_type, -> { where('work_type != allowed_work_type') }
+
   include WorkItemCosts
 
   WORK_TYPE_SUMMARY_ORDER = %w[

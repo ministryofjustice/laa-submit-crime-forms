@@ -49,5 +49,21 @@
         <% end %>
       <% end %>
     <% end %>
+    <% type_changed = @claim.work_items.changed_work_type.order(position: :asc).to_a %>
+    <% if type_changed.any? %>
+      <section class="govuk-!-margin-bottom-6">
+        <p id="fn*" class="govuk-body-s">
+          <%= t('nsm.work_items.type_changes.asterisk') %>
+          <%= t('nsm.work_items.type_changes.types_changed') %>
+          <%= t('nsm.work_items.type_changes.see') %>
+          <% type_changed.each_with_index do |work_item, index| %>
+            <%= link_to(t('nsm.work_items.type_changes.item', position: work_item.position),
+                        item_nsm_steps_view_claim_path(id: work_item.claim_id,
+                                                       item_type: :work_item,
+                                                       item_id: work_item.id)) %><% if index < type_changed.length - 1 %>,<% end %>
+          <% end %>
+        </p>
+      </section>
+    <% end %>
   </div>
 </div>
