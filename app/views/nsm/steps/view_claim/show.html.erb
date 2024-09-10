@@ -50,7 +50,7 @@
       <% end %>
     <% end %>
     <% type_changed = @claim.work_items.changed_work_type.order(position: :asc).to_a %>
-    <% if type_changed.any? %>
+    <% if type_changed.any? && @section == :adjustments %>
       <section class="govuk-!-margin-bottom-6">
         <p id="fn*" class="govuk-body-s">
           <%= t('nsm.work_items.type_changes.asterisk') %>
