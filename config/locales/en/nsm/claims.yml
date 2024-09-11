@@ -35,7 +35,7 @@ en:
         tabs:
           reviewed: Reviewed
           submitted: Submitted
-          drafts: Drafts
+          draft: Drafts
         no_data:
           reviewed: You do not have any reviewed claims
           submitted: You do not have any submitted claims
