@@ -32,54 +32,6 @@ RSpec.describe 'View claim page', type: :system do
     visit provider_saml_omniauth_callback_path
   end
 
-  it 'shows a cost summary card on the main page (overview)' do
-    visit nsm_steps_view_claim_path(claim.id)
-
-    expect(page).to have_selector('.govuk-summary-card', text: 'Cost summary')
-
-    within('.govuk-summary-card', text: 'Cost summary') do
-      expect(page).to have_no_selector('.govuk-table__caption')
-    end
-
-    expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
-      [
-        'Item', 'Net cost', 'VAT', 'Total',
-        'Profit costs', '£305.84', '£61.17', '£367.01',
-        'Disbursements', '£327.50', '£31.50', '£359.00',
-        'Travel', '£10.58', '£2.12', '£12.70',
-        'Waiting', '£10.58', '£2.12', '£12.70',
-        'Total',
-        'Sum of net cost claimed: £654.50',
-        'Sum of VAT on claimed: £96.90',
-        'Sum of net cost and VAT on claimed: £751.40'
-      ]
-    )
-  end
-
-  context 'when firm is NOT VAT registered' do
-    before do
-      claim.firm_office.update(vat_registered: 'no')
-    end
-
-    it 'shows a cost summary on the main page' do
-      visit nsm_steps_view_claim_path(claim.id)
-
-      expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
-        [
-          'Item', 'Net cost', 'VAT', 'Total',
-          'Profit costs', '£305.84', '£0.00', '£305.84',
-          'Disbursements', '£327.50', '£31.50', '£359.00',
-          'Travel', '£10.58', '£0.00', '£10.58',
-          'Waiting', '£10.58', '£0.00', '£10.58',
-          'Total',
-          'Sum of net cost claimed: £654.50',
-          'Sum of VAT on claimed: £31.50',
-          'Sum of net cost and VAT on claimed: £686.00'
-        ]
-      )
-    end
-  end
-
   it 'shows a cost summary table on the claimed costs page' do
     visit claimed_costs_work_items_nsm_steps_view_claim_path(claim.id)
 

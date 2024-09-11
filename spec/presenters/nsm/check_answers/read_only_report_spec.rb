@@ -5,9 +5,10 @@ require 'rails_helper'
 RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
   describe '#section_groups' do
     context 'not in a complete state' do
-      subject { described_class.new(claim) }
+      subject { described_class.new(claim, cost_summary_in_overview:) }
 
       let(:claim) { build(:claim, :complete) }
+      let(:cost_summary_in_overview) { true }
 
       context 'section groups' do
         it 'returns multiple groups' do
@@ -78,6 +79,14 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
       context 'about claim section' do
         it 'returns multiple elements' do
           expect(subject.about_claim_section.count).to eq 4
+        end
+
+        context 'when cost summary is excluded' do
+          let(:cost_summary_in_overview) { false }
+
+          it 'returns fewer elements' do
+            expect(subject.about_claim_section.count).to eq 3
+          end
         end
       end
 
