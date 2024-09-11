@@ -74,21 +74,9 @@
   <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
 
   <% if table.type_changed.any? %>
-    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-    <section>
-      <p id="fn*">
-        <%= t('nsm.work_items.type_changes.asterisk') %>
-        <%= t('nsm.work_items.type_changes.types_changed') %>
-        <%= t('nsm.work_items.type_changes.see') %>
-        <% table.type_changed.each_with_index do |work_item, index| %>
-          <%= link_to(t('nsm.work_items.type_changes.item', position: work_item.position),
-                      item_nsm_steps_view_claim_path(id: work_item.claim_id,
-                                                    item_type: :work_item,
-                                                    item_id: work_item.id)) %><% if index < table.type_changed.length - 1 %>,<% end %>
-        <% end %>
-      </p>
+    <section class="govuk-!-margin-top-9">
       <% table.type_changed.each_with_index do |work_item, index| %>
-        <p id="fn<%= index + 1 %>">
+        <p id="fn<%= index + 1 %>" class="govuk-body-s">
           <%= link_to "[#{index + 1}]", "#changed-#{index + 1}" %>
           <%= t('nsm.work_items.type_changes.type_changed') %>
           <%= t('nsm.work_items.type_changes.see') %>
