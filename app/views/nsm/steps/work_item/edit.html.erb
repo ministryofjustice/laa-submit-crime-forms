@@ -3,11 +3,11 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <% if @vat_included %>
       <p><%= t('.vat_info') %></p>
     <% end %>
-    <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset :work_type, legend: { size: 's' } do %>
         <% @form_object.work_types_with_pricing.each do |work_type, price| %>
