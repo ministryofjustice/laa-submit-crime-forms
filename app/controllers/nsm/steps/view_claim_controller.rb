@@ -86,7 +86,7 @@ module Nsm
       end
 
       def set_claim
-        @report = CheckAnswers::ReadOnlyReport.new(current_application)
+        @report = CheckAnswers::ReadOnlyReport.new(current_application, cost_summary_in_overview: false)
         @claim = current_application
       end
     end
