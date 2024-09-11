@@ -19,12 +19,12 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rails', '>= 7.0.4.3'
 
   spec.add_dependency 'govuk-components', '>= 5.0.0'
-  spec.add_dependency 'govuk_design_system_formbuilder', '>= 5.4', '< 5.6'
+  spec.add_dependency 'govuk_design_system_formbuilder', '>= 5.4', '< 5.7'
 
   # Authentication
   spec.add_dependency 'devise', '~> 4.8'
   spec.add_dependency 'omniauth-rails_csrf_protection', '~> 1.0.1'
-  spec.add_dependency 'omniauth-saml', '~> 2.1.0'
+  spec.add_dependency 'omniauth-saml', '>= 2.1', '< 2.3'
 
   # validations
   spec.add_dependency 'uk_postcode'
