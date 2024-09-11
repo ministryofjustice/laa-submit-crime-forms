@@ -3,8 +3,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <%= step_form @form_object do |f| %>
       <%= f.fields_for :firm_office, as: :firm_details_form do |fo| %>
         <%= fo.govuk_radio_buttons_fieldset :vat_registered, legend: { text: t(".vat_registered"), size: 's', is_page_heading: false } do %>
