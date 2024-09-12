@@ -5,11 +5,11 @@
     <%= govuk_notification_banner(title_text: t('prior_authority.steps.alternative_quotes.important'),
                                   text: t('prior_authority.steps.alternative_quotes.deleted'),
                                   success: true) %>
+
+    <%= govuk_error_summary(@form_object) %>
     <span class="govuk-caption-xl"><%= t(".caption") %></span>
     <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
     <%= step_form @form_object do |form| %>
-
-      <%= govuk_error_summary(@form_object) %>
       <%= form.govuk_radio_buttons_fieldset :alternative_quotes_still_to_add,
                                             legend: { text: t('.add_one'), size: 's' } do %>
         <%= form.govuk_radio_button :alternative_quotes_still_to_add,
