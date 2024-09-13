@@ -30,7 +30,7 @@
                skip_links: true,
                show_all: true %>
 
-    <% if claim.part_grant? || claim.granted? %>
+    <% if claim.part_grant? %>
       <h2 class="govuk-heading-l"><%= t(".adjustments") %></h2>
       <%= render 'nsm/steps/view_claim/allowed_work_items',
                 records: Sorters::WorkItemsSorter.call(claim.work_items, 'line_item', 'ascending').to_a,
