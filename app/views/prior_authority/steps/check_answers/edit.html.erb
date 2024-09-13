@@ -3,9 +3,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-
     <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
     <% if @form_object.application.incorrect_information_explanation %>
       <% if @form_object.errors.of_kind?(:base, :application_not_corrected) %>

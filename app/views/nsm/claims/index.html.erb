@@ -84,7 +84,7 @@
         </li>
 
         <li class="moj-sub-navigation__item">
-          <%= link_to t(".tabs.drafts"),
+          <%= link_to t(".tabs.draft"),
           draft_nsm_applications_path(),
           "aria-current": @scope == :draft ? "page" : nil,
           class: "moj-sub-navigation__link" %>
@@ -94,8 +94,8 @@
 
     <% if @claims.any? %>
       <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-visually-hidden">
-          <%= t('.heading') %>
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          <%= t(".tabs.#{@scope}") %>
         </caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">

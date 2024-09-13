@@ -3,10 +3,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <p class="govuk-body govuk-!-margin-bottom-6"><%= t '.subheading' %></p>
-
-    <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
       <% @form_object.choices.each do |name, pleas| %>

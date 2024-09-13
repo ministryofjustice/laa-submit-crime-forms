@@ -3,8 +3,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
 
     <table class="govuk-table">
       <caption class="govuk-table__caption govuk-table__caption--m"><%= check_missing(@form_object.record.disbursement_date) { @form_object.record.disbursement_date.to_fs(:long) } %></caption>

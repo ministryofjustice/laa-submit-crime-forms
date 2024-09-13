@@ -20,8 +20,9 @@ module Nsm
 
       attr_reader :claim
 
-      def initialize(claim)
+      def initialize(claim, cost_summary_in_overview: true)
         @claim = claim
+        @cost_summary_in_overview = cost_summary_in_overview
       end
 
       def section_groups(section = :overview)
@@ -65,9 +66,9 @@ module Nsm
         [
           ClaimJustificationCard.new(claim),
           ClaimDetailsCard.new(claim),
-          CostSummaryCard.new(claim),
+          (CostSummaryCard.new(claim) if @cost_summary_in_overview),
           OtherInfoCard.new(claim)
-        ]
+        ].compact
       end
 
       def costs_section
