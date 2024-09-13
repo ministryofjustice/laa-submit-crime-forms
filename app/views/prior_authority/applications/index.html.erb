@@ -49,15 +49,8 @@
             "aria-current": @scope == :drafts ? "page" : nil %>
           </li>
         </ul>
-
-        <div class="govuk-tabs__panel">
-          <%= render partial: "prior_authority/applications/#{@scope}",
-          locals: {
-            model: @model,
-            pagy: @pagy,
-          } %>
-        </div>
       </nav>
+      <%= render "prior_authority/applications/#{@scope}", model: @model, pagy: @pagy %>
     </div>
   </div>
 <% end %>
