@@ -12,7 +12,9 @@ class SubmitToAppStore
 
       def payload
         @application.incorrect_informations.map do |incorrect_info|
-          incorrect_info.as_json(only: ATTRIBUTES)
+          incorrect_info.as_json(only: ATTRIBUTES).merge(
+            new: incorrect_info == @application.pending_incorrect_information
+          )
         end
       end
     end

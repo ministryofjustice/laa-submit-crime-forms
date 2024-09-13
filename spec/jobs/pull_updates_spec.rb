@@ -20,6 +20,7 @@ RSpec.describe PullUpdates do
       'application_risk' => 'high',
       'application_type' => application_type,
       'updated_at' => arbitrary_fixed_date,
+      'last_updated_at' => arbitrary_fixed_date,
       'application' => { 'foo' => 'bar' },
       'events' => []
     }

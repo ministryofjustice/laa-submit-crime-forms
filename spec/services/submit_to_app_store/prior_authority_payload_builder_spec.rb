@@ -153,6 +153,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             ],
             information_requested: 'please provide further evidence',
             information_supplied: 'here is the extra information you requested',
+            new: true,
             requested_at: DateTime.new(2024, 1, 1, 1, 1, 1).utc,
           }
         ],
@@ -160,6 +161,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
           {
             caseworker_id: '87e88ac6-d89a-4180-80d4-e03285023fb0',
             information_requested: 'Please update the case details',
+            new: true,
             requested_at: DateTime.new(2024, 1, 1, 1, 1, 1).utc,
             sections_changed: ['case_detail']
           }
