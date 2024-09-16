@@ -1,9 +1,13 @@
 <% title t('.page_title') %>
 <% decision_step_header %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
     <% @report.section_groups(:status).each do |section_group| %>
       <% section_group[:sections].each do |section| %>
         <%= govuk_summary_list(
@@ -12,6 +16,23 @@
         ) %>
       <% end %>
     <% end %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <aside class="app-aside__bar--blue aside-generic" role="complementary" aria-labelledby="aside-title">
+      <h2 id="aside-title" class="govuk-heading-s govuk-!-margin-bottom-4">
+        <%= t('.email_us') %>
+      </h2>
+      <p class="govuk-body-s">
+        <%= link_to Rails.configuration.x.contact.support_email, "mailto:#{Rails.configuration.x.contact.support_email}" %>
+      </p>
+      <h2 class="govuk-heading-s" id="subsection-title"><%= t('.print_a_pdf') %></h2>
+      <p class="govuk-body-s"><%= t('.print_hint') %></p>
+      <%= govuk_button_link_to t('.print'), download_nsm_steps_view_claim_path(@claim), secondary: true, target: '_blank' %>
+    </aside>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
 
     <nav class="moj-sub-navigation" aria-label="Sub navigation" id="claim_nav">
       <ul class="moj-sub-navigation__list">
@@ -33,20 +54,7 @@
     <% @report.section_groups(@section).each do |section_group| %>
 
       <% section_group[:sections].each do |section| %>
-        <% if section.custom %>
-          <% if section.has_card %>
-            <%= govuk_summary_card(title: section.title) do %>
-              <%= render section.custom[:partial], **section.custom[:locals] %>
-            <% end %>
-          <% else %>
-            <%= render section.custom[:partial], **section.custom[:locals] %>
-          <% end %>
-        <% else %>
-          <%= govuk_summary_list(
-            card: { title: section.title },
-            rows: section.rows
-          ) %>
-        <% end %>
+        <%= render 'section', section: %>
       <% end %>
     <% end %>
     <% type_changed = @claim.work_items.changed_work_type.order(position: :asc).to_a %>

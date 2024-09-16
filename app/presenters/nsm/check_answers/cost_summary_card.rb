@@ -7,13 +7,14 @@ module Nsm
 
       attr_reader :claim, :show_adjustments, :has_card
 
-      def initialize(claim, show_adjustments: SKIP_CELL, has_card: true, title_key: 'title')
+      def initialize(claim, show_adjustments: SKIP_CELL, has_card: true, title_key: 'title', skip_links: false)
         @claim = claim
         @show_adjustments = show_adjustments
         @has_card = has_card
         @group = 'about_claim'
         @section = 'cost_summary'
         @title_key = title_key
+        @skip_links = skip_links
       end
 
       def title(**)
@@ -193,7 +194,11 @@ module Nsm
         span = tag.span(I18n.t("nsm.steps.check_answers.groups.cost_summary.with_adjustments.#{name}"),
                         title: I18n.t('nsm.work_items.type_changes.types_changed'))
         sup = tag.sup do
-          tag.a(I18n.t('nsm.work_items.type_changes.asterisk'), href: '#fn*')
+          if @skip_links
+            I18n.t('nsm.work_items.type_changes.asterisk')
+          else
+            tag.a(I18n.t('nsm.work_items.type_changes.asterisk'), href: '#fn*')
+          end
         end
 
         {

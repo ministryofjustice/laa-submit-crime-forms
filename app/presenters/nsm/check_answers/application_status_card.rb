@@ -9,8 +9,9 @@ module Nsm
       include ActionView::Helpers::OutputSafetyHelper
       attr_reader :claim
 
-      def initialize(claim)
+      def initialize(claim, skip_links: false)
         @claim = claim
+        @skip_links = skip_links
         @group = 'application_status'
         @section = 'application_status'
       end
@@ -78,7 +79,7 @@ module Nsm
       end
 
       def edit_links
-        return [] unless claim.part_grant?
+        return [] if @skip_links || !claim.part_grant?
 
         helper = Rails.application.routes.url_helpers
         li_elements = %w[work_items letters_and_calls disbursements].map do |type|

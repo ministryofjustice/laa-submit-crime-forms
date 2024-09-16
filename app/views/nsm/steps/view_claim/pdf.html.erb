@@ -1,0 +1,65 @@
+<% title t('.heading') %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <% report.status_sections_for_print.each do |section| %>
+      <%= render 'nsm/steps/view_claim/section', section: %>
+    <% end %>
+
+    <h2 class="govuk-heading-l"><%= t(".overview") %></h2>
+    <% report.section_groups(:overview).each do |section_group| %>
+
+      <% section_group[:sections].each do |section| %>
+        <%= render 'nsm/steps/view_claim/section', section: %>
+      <% end %>
+    <% end %>
+
+    <h2 class="govuk-heading-l"><%= t(".claimed_costs") %></h2>
+    <%= render 'nsm/steps/view_claim/work_items',
+               records: Sorters::WorkItemsSorter.call(claim.work_items, 'line_item', 'ascending').to_a,
+               claim: claim,
+               skip_links: true,
+               show_all: true,
+               uncollapsed_summary: true %>
+    <%= render 'nsm/steps/view_claim/letters_and_calls',
+               claim: claim,
+               skip_links: true %>
+    <%= render 'nsm/steps/view_claim/disbursements',
+               records: Sorters::DisbursementsSorter.call(claim.disbursements, 'line_item', 'ascending').to_a,
+               claim: claim,
+               skip_links: true,
+               show_all: true %>
+
+    <% if claim.part_grant? %>
+      <h2 class="govuk-heading-l"><%= t(".adjustments") %></h2>
+      <%= render 'nsm/steps/view_claim/allowed_work_items',
+                records: Sorters::WorkItemsSorter.call(claim.work_items, 'line_item', 'ascending').to_a,
+                claim: claim,
+                skip_links: true,
+                show_all: true,
+                uncollapsed_summary: true %>
+      <%= render 'nsm/steps/view_claim/allowed_letters_and_calls',
+                claim: claim,
+                skip_links: true %>
+      <%= render 'nsm/steps/view_claim/allowed_disbursements',
+                records: Sorters::DisbursementsSorter.call(claim.disbursements, 'line_item', 'ascending').to_a,
+                claim: claim,
+                skip_links: true,
+                show_all: true %>
+
+      <% type_changed = claim.work_items.changed_work_type.order(position: :asc).to_a %>
+      <% if type_changed.any? %>
+        <section class="govuk-!-margin-bottom-6">
+          <p id="fn*" class="govuk-body-s">
+            <%= t('nsm.work_items.type_changes.asterisk') %>
+            <%= t('nsm.work_items.type_changes.types_changed') %>
+            <%= t('nsm.work_items.type_changes.see') %>
+            <% type_changed.each_with_index do |work_item, index| %>
+              <%= t('nsm.work_items.type_changes.item', position: work_item.position) %><% if index < type_changed.length - 1 %>,<% end %>
+            <% end %>
+          </p>
+        </section>
+      <% end %>
+    <% end %>
+  </div>
+</div>

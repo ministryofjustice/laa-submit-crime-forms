@@ -12,6 +12,7 @@
   </ul>
 
   <div class="govuk-tabs__panel">
-    <%= render partial: "nsm/steps/view_claim/#{@section == :adjustments ? "allowed_" : ""}#{@scope}", locals: { records: @records, pagy: @pagy } %>
+    <%= render partial: "nsm/steps/view_claim/#{@section == :adjustments ? "allowed_" : ""}#{@scope}",
+               locals: { records: @records, claim: @claim } %>
   </div>
 </div>
