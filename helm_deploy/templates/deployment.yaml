@@ -214,6 +214,13 @@ spec:
                 configMapKeyRef:
                   name: {{ include "laa-submit-crime-forms.fullname" . }}
                   key: MAINTENANCE_MODE
+            - name: PROVIDER_API_HOST
+              value: '{{ .Values.variables.providerApiHost }}'
+            - name: PROVIDER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: provider_api_key
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
