@@ -11,7 +11,7 @@ RSpec.describe AppStoreUpdateProcessor do
         'application_state' => 'granted',
         'application_risk' => 'high',
         'application_type' => 'crm4',
-        'updated_at' => arbitrary_fixed_date,
+        'last_updated_at' => arbitrary_fixed_date,
         'application' => { 'big-blob' => 'of-data' }
       }
     end
