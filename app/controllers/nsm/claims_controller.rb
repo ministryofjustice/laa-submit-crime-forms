@@ -89,9 +89,5 @@ module Nsm
         break random_reference unless Claim.exists?(laa_reference: random_reference)
       end
     end
-
-    def service
-      Providers::Gatekeeper::NSM
-    end
   end
 end

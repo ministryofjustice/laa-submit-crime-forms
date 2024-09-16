@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_18_093306) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_23_091317) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -96,13 +96,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_18_093306) do
     t.float "adjusted_total"
     t.float "adjusted_total_inc_vat"
     t.string "assessment_comment"
-    t.string "wasted_costs"
     t.integer "allowed_letters"
     t.integer "allowed_calls"
     t.integer "allowed_letters_uplift"
     t.integer "allowed_calls_uplift"
     t.string "letters_adjustment_comment"
     t.string "calls_adjustment_comment"
+    t.string "wasted_costs"
     t.date "work_completed_date"
     t.boolean "office_in_undesignated_area"
     t.boolean "court_in_undesignated_area"

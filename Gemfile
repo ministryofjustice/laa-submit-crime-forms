@@ -35,6 +35,7 @@ gem 'sidekiq-cron', '~> 1.12.0'
 gem 'table_print'
 gem 'turbo-rails', '~> 2.0.7'
 gem 'tzinfo-data'
+gem 'with_advisory_lock'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]

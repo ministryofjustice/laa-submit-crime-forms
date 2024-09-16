@@ -23,10 +23,6 @@ module PriorAuthority
       end
       # :nocov:
 
-      def service
-        Providers::Gatekeeper::PAA
-      end
-
       def prune_navigation_stack
         # The default behaviour of prune_navigation_stack assumes linear completion of tasks
         # which doesn't apply to Prior Authority. So we do a noop instead.

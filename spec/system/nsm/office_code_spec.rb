@@ -7,6 +7,7 @@ RSpec.describe 'Office code selection', type: :system do
   before do
     visit provider_saml_omniauth_callback_path
     provider.update(office_codes:)
+    allow(ActiveOfficeCodeService).to receive(:call).with(office_codes).and_return(office_codes)
     visit edit_nsm_steps_claim_type_path(claim.id)
   end
 
