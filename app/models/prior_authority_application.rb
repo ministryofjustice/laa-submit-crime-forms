@@ -67,10 +67,10 @@ class PriorAuthorityApplication < ApplicationRecord
   end
 
   def pending_further_information
-    further_informations.where('created_at > ?', app_store_updated_at).order(:created_at).last
+    further_informations.where(created_at: app_store_updated_at..).order(:created_at).last
   end
 
   def pending_incorrect_information
-    incorrect_informations.where('created_at > ?', app_store_updated_at).order(:created_at).last
+    incorrect_informations.where(created_at: app_store_updated_at..).order(:created_at).last
   end
 end
