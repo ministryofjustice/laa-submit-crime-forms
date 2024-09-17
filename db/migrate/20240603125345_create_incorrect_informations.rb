@@ -11,6 +11,7 @@ class CreateIncorrectInformations < ActiveRecord::Migration[7.1]
     end
 
     # avoid creation of invalid data due to migration
+    # TODO: CRM457-1583 Subsequent PR to drop column should also remove this incorrect_information_explanation reference
     caseworker_ids = FurtherInformation.pluck(:caseworker_id)
     PriorAuthorityApplication.where.not(incorrect_information_explanation: nil).each do |paa|
       paa.incorrect_informations.create(

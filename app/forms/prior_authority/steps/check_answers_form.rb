@@ -19,7 +19,7 @@ module PriorAuthority
         end
 
         application.update!(state: new_state)
-        update_incorrect_information if application.incorrect_information_explanation.present?
+        update_incorrect_information if application.correction_needed?
         SubmitToAppStore.perform_later(submission: application)
 
         true
@@ -44,8 +44,7 @@ module PriorAuthority
       end
 
       def needs_correcting?
-        application.sent_back? &&
-          application.incorrect_information_explanation.present?
+        application.sent_back? && application.correction_needed?
       end
 
       def new_state

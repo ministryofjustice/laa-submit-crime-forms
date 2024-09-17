@@ -182,6 +182,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_22_142103) do
     t.index ["prior_authority_application_id"], name: "index_incorrect_informations_on_prior_authority_application_id"
   end
 
+  # TODO: CRM457-1583 Subsequent PR to drop column should also remove this incorrect_information_explanation
   create_table "prior_authority_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "provider_id"
     t.uuid "firm_office_id"

@@ -132,10 +132,19 @@ FactoryBot.define do
 
     trait :sent_back_for_incorrect_info do
       state { 'sent_back' }
-      incorrect_information_explanation { 'Please correct the following information...' }
       resubmission_deadline { 14.days.from_now }
       resubmission_requested { DateTime.current }
       app_store_updated_at { DateTime.current }
+
+      transient do
+        information_requested { 'Please update the case details' }
+      end
+
+      after(:create) do |paa, evaluator|
+        create(:incorrect_information,
+               prior_authority_application_id: paa.id,
+               information_requested: evaluator.information_requested)
+      end
     end
 
     trait :with_further_information_request do
