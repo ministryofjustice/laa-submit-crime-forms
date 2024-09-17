@@ -10,6 +10,7 @@ RSpec.describe 'Robots' do
 
   context 'when indexing is allowed' do
     before do
+      allow(ENV).to receive(:fetch).with('MAINTENANCE_MODE', 'false')
       allow(ENV).to receive(:fetch).with('ALLOW_INDEXING', false).and_return('true')
     end
 
