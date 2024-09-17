@@ -8,7 +8,8 @@ class SubmitToAppStore
       def payload
         @application.further_informations.map do |further_information|
           further_information.as_json(only: ATTRIBUTES).merge(
-            documents: documents(further_information)
+            documents: documents(further_information),
+            new: further_information == @application.pending_further_information
           )
         end
       end

@@ -18,16 +18,26 @@ class PdfService
 
   class << self
     def prior_authority(locals, url)
-      html = ApplicationController.new.render_to_string(
-        template: 'prior_authority/applications/pdf',
-        layout: 'pdf',
-        locals: locals,
-      )
+      html = generate_html(locals, 'prior_authority/applications/pdf')
+
+      html_to_pdf(html, url)
+    end
+
+    def nsm(locals, url)
+      html = generate_html(locals, 'nsm/steps/view_claim/pdf')
 
       html_to_pdf(html, url)
     end
 
     private
+
+    def generate_html(locals, template)
+      ApplicationController.new.render_to_string(
+        template: template,
+        layout: 'pdf',
+        locals: locals,
+      )
+    end
 
     def html_to_pdf(html, display_url)
       Grover.new(html, **GROVER_OPTIONS.merge(display_url:)).to_pdf

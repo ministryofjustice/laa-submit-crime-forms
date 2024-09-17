@@ -79,7 +79,9 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
       end
 
       context 'when show_adjustments is true' do
-        subject { described_class.new(claim, show_adjustments: true) }
+        subject { described_class.new(claim, show_adjustments: true, skip_links: skip_links) }
+
+        let(:skip_links) { false }
 
         it 'sums them into profit costs' do
           expect(subject.table_fields[0]).to eq(
@@ -111,6 +113,17 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
                 vat: { numeric: true, text: '£0.00' }
               }
             )
+          end
+
+          context 'when skipping links' do
+            let(:skip_links) { true }
+
+            it 'shows appropriate text' do
+              expect(subject.table_fields[0][:name][:text]).to eq(
+                '<span title="One or more of these items were adjusted to be a different work item type.">' \
+                'Profit costs</span> <sup>[*]</sup>'
+              )
+            end
           end
 
           it 'shows allowed amount in travel' do

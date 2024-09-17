@@ -1,14 +1,20 @@
+<% skip_links ||= false %>
+<% show_all ||= false %>
 <% title t('.page_title') %>
 
 <h3 class="govuk-heading-m">
   <%= t('.disbursements') %>
 </h3>
 
-<% if @disbursements.none? %>
+<% if records.none? %>
   <p><%= t('.no_data') %></p>
 <% else %>
   <%
-    pagy, disbursements = pagy_array(@disbursements, items: 100)
+    if show_all
+      disbursements = records
+    else
+      pagy, disbursements = pagy_array(records, items: 100)
+    end
 
     head = {
       'line_item' => false,
@@ -23,10 +29,14 @@
   <%=
     rows = disbursements.map do |disbursement|
 
-      link = link_to(disbursement.record.translated_disbursement_type, item_nsm_steps_view_claim_path(id: current_application.id, item_type: :disbursement, item_id: disbursement.record.id, page: pagy.page))
+      if skip_links
+        link = disbursement.record.translated_disbursement_type
+      else
+        link = link_to(disbursement.record.translated_disbursement_type, item_nsm_steps_view_claim_path(id: claim.id, item_type: :disbursement, item_id: disbursement.record.id, page: pagy.page))
+      end
 
       [
-        { header: true, text: disbursement.position, numeric: true},
+        { header: true, text: disbursement.position, numeric: false},
         { header: true, text: link, numeric: false},
         { text: disbursement.disbursement_date&.to_fs(:short_stamp), numeric: false },
         { text: NumberTo.pounds(disbursement.total_cost_without_vat), numeric: true },
@@ -37,14 +47,22 @@
 
     header_row = head.map.with_index do |(column_key, numeric), index|
       aria_sort, next_direction = sort_variable(column_key, @sort_by, @sort_direction)
-        {
-          text: reorder_form(claimed_costs_disbursements_nsm_steps_view_claim_path(current_application, anchor: "claim_nav"), column_key, next_direction, "nsm.steps.view_claim.disbursements", index),
-          numeric: numeric,
-          html_attributes: { 'aria-sort': aria_sort}
-        }
+      if skip_links
+        text = t(".#{column_key}")
+      else
+        text = reorder_form(claimed_costs_disbursements_nsm_steps_view_claim_path(claim, anchor: "claim_nav"), column_key, next_direction, "nsm.steps.view_claim.disbursements", index)
+      end
+      {
+        text: text,
+        numeric: numeric,
+        html_attributes: { 'aria-sort': aria_sort}
+      }
     end
 
     govuk_table_with_cell(header_row, rows, caption: { text: t('.accessibility.disbursements_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} })
   %>
-  <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
+
+  <% unless show_all %>
+    <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
+  <% end %>
 <% end %>

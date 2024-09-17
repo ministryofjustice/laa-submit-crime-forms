@@ -10,6 +10,10 @@ en:
             overview: Overview
             claimed_costs: Claimed costs
             adjustments: Adjusted costs
+          email_us: Email the LAA case team
+          print_a_pdf: Print a PDF of this claim
+          print_hint: It will include the answers you input into this claim and its current status.
+          print: Create a printable PDF
         section:
           page_title: Claim details
         adjustments:
@@ -205,3 +209,8 @@ en:
           b2: Nottingham Office, 3rd Floor B3.20, 1 Unity Square, Queensbridge Road, Nottingham NG2 1AW, or DX 10035 Nottingham 1
           email: CRM7appeal@justice.gov.uk
           p2: Appeals may be considered by LAA caseworkers or sent to an independent costs assessor (ICA). You can only appeal once. The ICA’s decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).
+        pdf:
+          heading: Claim details
+          overview: Overview
+          claimed_costs: Claimed costs
+          adjustments: Adjusted costs
