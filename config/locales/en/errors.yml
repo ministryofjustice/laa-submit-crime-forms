@@ -484,6 +484,10 @@ en:
               less_than_or_equal_to: Phone calls uplift percentage must be from 1 to 100
               greater_than_or_equal_to: Phone calls uplift percentage must be from 1 to 100
               uplift_on_zero: You cannot add an uplift if there are 0 phone calls
+        nsm/steps/disbursement_add_form:
+          attributes:
+            has_disbursements:
+              blank: Select yes if you need to claim a disbursement
         nsm/steps/disbursement_type_form:
           attributes:
             disbursement_date: *shared_date_errors
