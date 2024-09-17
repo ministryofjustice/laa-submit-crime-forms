@@ -32,18 +32,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-          # https://github.com/ministryofjustice/hmpps-utility-container-images
-        - name: clamav
-          image: ghcr.io/ministryofjustice/hmpps-clamav:latest
-          imagePullPolicy: IfNotPresent
-          ports:
-            - name: clamav
-              containerPort: 3310
-              protocol: TCP
-          resources:
-            {{- toYaml .Values.clamav_resources | nindent 12 }}
-          securityContext:
-            {{- include "laa-submit-crime-forms.defaultSecurityContext" . | nindent 12 }}
         - name: {{ .Chart.Name }}
           securityContext:
             {{- include "laa-submit-crime-forms.defaultSecurityContext" . | nindent 12 }}
@@ -60,7 +48,7 @@ spec:
               port: http
           readinessProbe:
             httpGet:
-              path: /ready
+              path: /ping
               port: http
           resources:
             {{- toYaml .Values.app_resources | nindent 12 }}
