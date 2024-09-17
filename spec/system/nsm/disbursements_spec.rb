@@ -384,4 +384,12 @@ RSpec.describe 'User can manage disbursements', type: :system do
       )
     end
   end
+
+  it 'validates the initial question' do
+    visit edit_nsm_steps_disbursement_add_path(claim.id)
+
+    click_on 'Save and continue'
+
+    expect(page).to have_content 'Select yes if you need to claim a disbursement'
+  end
 end
