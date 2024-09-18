@@ -7,7 +7,11 @@ RSpec.describe 'Prior authority applications, sent back for info correction - ch
     allow(SubmitToAppStore).to receive(:perform_later)
   end
 
-  let(:application) { create(:prior_authority_application, :full, :sent_back_for_incorrect_info) }
+  let(:application) do
+    create(:prior_authority_application, :full,
+           :sent_back_for_incorrect_info,
+           information_requested: 'Please correct the following information...')
+  end
 
   context 'Application has not been updated' do
     before do

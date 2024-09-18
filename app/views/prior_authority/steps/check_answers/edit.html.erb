@@ -6,17 +6,17 @@
     <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-    <% if @form_object.application.incorrect_information_explanation %>
+    <% if @form_object.application.correction_needed? %>
       <% if @form_object.errors.of_kind?(:base, :application_not_corrected) %>
         <div class="govuk-form-group--error">
           <p class="govuk-error-message" id="prior-authority-steps-check-answers-form-base-field-error"><%= t('.incorrect_information_heading') %></p>
-          <p class="govuk-body"><%= simple_format @form_object.application.incorrect_information_explanation %></p>
+          <p class="govuk-body"><%= simple_format @form_object.application.pending_incorrect_information.information_requested %></p>
         </div>
       <% else %>
         <div class="govuk-inset-text">
           <strong><%= t('.incorrect_information_heading') %></strong><br>
           <br>
-          <%= simple_format @form_object.application.incorrect_information_explanation %>
+          <%= simple_format @form_object.application.pending_incorrect_information.information_requested %>
         </div>
       <% end %>
     <% end %>

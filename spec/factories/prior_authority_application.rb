@@ -117,8 +117,6 @@ FactoryBot.define do
       no_alternative_quote_reason { 'a reason' }
       service_type { 'pathologist_report' }
       custom_service_name { nil }
-      further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
-      incorrect_informations { [build(:incorrect_information, :with_edits)] }
       after(:build) do |paa|
         build(:quote, :primary, prior_authority_application_id: paa.id)
         build(:quote, :alternative, document: nil, prior_authority_application_id: paa.id)
@@ -132,10 +130,19 @@ FactoryBot.define do
 
     trait :sent_back_for_incorrect_info do
       state { 'sent_back' }
-      incorrect_information_explanation { 'Please correct the following information...' }
       resubmission_deadline { 14.days.from_now }
       resubmission_requested { DateTime.current }
       app_store_updated_at { DateTime.current }
+
+      transient do
+        information_requested { 'Please update the case details' }
+      end
+
+      after(:create) do |paa, evaluator|
+        create(:incorrect_information,
+               prior_authority_application_id: paa.id,
+               information_requested: evaluator.information_requested)
+      end
     end
 
     trait :with_further_information_request do
@@ -149,6 +156,12 @@ FactoryBot.define do
     trait :with_further_information_supplied do
       after(:create) do |paa|
         create(:further_information, :with_response, :with_supporting_documents, prior_authority_application_id: paa.id)
+      end
+    end
+
+    trait :with_corrections do
+      after(:create) do |paa|
+        create(:incorrect_information, :with_edits, prior_authority_application_id: paa.id)
       end
     end
 

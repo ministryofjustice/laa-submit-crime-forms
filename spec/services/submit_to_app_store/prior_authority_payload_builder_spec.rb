@@ -176,7 +176,9 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
     }
   end
   let(:provider) { create(:provider) }
-  let(:application) { create(:prior_authority_application, :full, state: :submitted) }
+  let(:application) do
+    create(:prior_authority_application, :full, :with_further_information_supplied, :with_corrections, state: :submitted)
+  end
   let(:fixed_arbitrary_date) { DateTime.new(2024, 1, 15, 0, 0, 0) }
 
   before do
