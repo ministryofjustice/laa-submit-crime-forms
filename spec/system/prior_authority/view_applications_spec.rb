@@ -19,6 +19,7 @@ RSpec.describe 'View applications' do
       let(:application) do
         create(:prior_authority_application,
                :full,
+               :with_further_information_supplied,
                :with_alternative_quotes,
                state: 'rejected',
                app_store_updated_at: 1.day.ago,
