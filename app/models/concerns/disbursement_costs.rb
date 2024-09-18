@@ -10,7 +10,7 @@ module DisbursementCosts
 
   # we return 1 here when no pricing data exists to simplify the FE
   def multiplier
-    pricing[record.disbursement_type] || BigDecimal('1')
+    pricing[record.disbursement_type] || BigDecimal(1)
   end
 
   def other_disbursement_type?
@@ -36,13 +36,13 @@ module DisbursementCosts
   def vat
     return nil unless total_cost_pre_vat
 
-    apply_vat? ? (total_cost_pre_vat * vat_rate).round(2) : BigDecimal('0')
+    apply_vat? ? (total_cost_pre_vat * vat_rate).round(2) : BigDecimal(0)
   end
 
   # we alias here to have consistent naming with the `vat` method which exists to
   # avoid overlap with the `vat_amount` method in the form object.
   def allowed_vat
-    allowed_apply_vat? ? (allowed_total_cost_pre_vat * vat_rate).round(2) : BigDecimal('0')
+    allowed_apply_vat? ? (allowed_total_cost_pre_vat * vat_rate).round(2) : BigDecimal(0)
   end
 
   def total_cost
