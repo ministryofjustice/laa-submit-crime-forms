@@ -10,7 +10,7 @@ RSpec.describe 'User can manage defendants', type: :system do
   it 'can add a defendant' do
     visit edit_nsm_steps_defendant_details_path(claim.id, defendant_id: Nsm::StartPage::NEW_RECORD)
 
-    within('.govuk-fieldset', text: 'Main defendant') do
+    within('.govuk-fieldset', text: 'Defendant 1 (lead defendant)') do
       fill_in 'First name', with: 'Jim'
       fill_in 'Last name', with: 'Bob'
       fill_in 'MAAT ID number', with: '1234567'
@@ -37,7 +37,7 @@ RSpec.describe 'User can manage defendants', type: :system do
 
     click_on 'Save and continue'
 
-    within('.govuk-fieldset', text: 'Additional defendant') do
+    within('.govuk-fieldset', text: 'Defendant 2') do
       fill_in 'First name', with: 'Bob'
       fill_in 'Last name', with: 'Jim'
       fill_in 'MAAT ID number', with: '9876543'
