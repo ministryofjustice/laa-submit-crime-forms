@@ -117,8 +117,6 @@ FactoryBot.define do
       no_alternative_quote_reason { 'a reason' }
       service_type { 'pathologist_report' }
       custom_service_name { nil }
-      further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
-      incorrect_informations { [build(:incorrect_information, :with_edits)] }
       after(:build) do |paa|
         build(:quote, :primary, prior_authority_application_id: paa.id)
         build(:quote, :alternative, document: nil, prior_authority_application_id: paa.id)
@@ -158,6 +156,12 @@ FactoryBot.define do
     trait :with_further_information_supplied do
       after(:create) do |paa|
         create(:further_information, :with_response, :with_supporting_documents, prior_authority_application_id: paa.id)
+      end
+    end
+
+    trait :with_corrections do
+      after(:create) do |paa|
+        create(:incorrect_information, :with_edits, prior_authority_application_id: paa.id)
       end
     end
 

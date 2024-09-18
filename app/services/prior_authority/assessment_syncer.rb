@@ -67,8 +67,6 @@ module PriorAuthority
 
     def sync_sent_back_request
       application.update(
-        # TODO: CRM457-1583 Subsequent PR to drop column should also remove this incorrect_information_explanation
-        incorrect_information_explanation: incorrect_information_explanation,
         resubmission_deadline: resubmission_deadline,
         resubmission_requested: DateTime.current
       )
@@ -79,11 +77,6 @@ module PriorAuthority
 
     def further_info_required?
       data['updates_needed'].include?('further_information')
-    end
-
-    # TODO: CRM457-1583 Subsequent PR to drop column should also remove this incorrect_information_explanation
-    def incorrect_information_explanation
-      data['incorrect_information_explanation'] if info_correction_required?
     end
 
     def info_correction_required?
