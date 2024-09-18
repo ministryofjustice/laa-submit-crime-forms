@@ -57,6 +57,10 @@ module Crm7restbackend
 
     config.x.notification_banner = config_for(:notification_banner, env: ENV.fetch('ENV', 'localhost'))
 
+    # The maximum period of inactivity before a user is
+    # automatically signed out.
+    config.x.auth.timeout_in = 1.hour
+
     config.after_initialize do
       Rails.application.reload_routes!
       AppStoreSubscriber.subscribe
