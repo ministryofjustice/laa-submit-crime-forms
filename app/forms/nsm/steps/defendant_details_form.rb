@@ -43,6 +43,10 @@ module Nsm
         application.defendants.count.zero?
       end
 
+      def position
+        record.position || position_attributes[:position]
+      end
+
       private
 
       def persist!
