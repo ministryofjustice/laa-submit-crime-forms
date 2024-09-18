@@ -72,10 +72,14 @@ en:
             other: You've added %{count} defendants
           main_defendant: Defendant 1 (lead)
           headers:
-            full_name: Full name
+            defendant: Defendant
+            name: Name
             maat: MAAT ID number
             change: Change
             delete: Delete
+          cells:
+            defendant_main: Defendant 1 (lead)
+            defendant_additional: Defendant %{count}
           add_another: Do you want to add another defendant?
           change: Change
           delete: Delete
