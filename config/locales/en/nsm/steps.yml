@@ -81,6 +81,7 @@ en:
             defendant_main: Defendant 1 (lead)
             defendant_additional: Defendant %{count}
           add_another: Do you want to add another defendant?
+          add_another_hint: Only add this defendant if you are representing them in the same case
           change: Change
           delete: Delete
       defendant_delete:
