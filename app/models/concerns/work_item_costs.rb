@@ -34,7 +34,7 @@ module WorkItemCosts
   end
 
   def apply_uplift!(val, multipler = uplift)
-    (BigDecimal('1') + (apply_uplift ? (multipler.to_d / 100) : 0)) * val
+    (BigDecimal(1) + (apply_uplift ? (multipler.to_d / 100) : 0)) * val
   end
 
   def pricing
