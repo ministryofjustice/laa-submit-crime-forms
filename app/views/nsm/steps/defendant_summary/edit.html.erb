@@ -48,7 +48,7 @@
 
     <%= step_form @form_object do |f| %>
       <% if @form_object.defendants.all?(&:valid?) %>
-        <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: t('.add_another'), size: 'm' } do %>
+        <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: t('.add_another'), size: 'm' }, hint: { text: t('.add_another_hint') } do %>
           <%= f.govuk_radio_button :add_another, YesNoAnswer::YES.to_s %>
           <%= f.govuk_radio_button :add_another, YesNoAnswer::NO.to_s %>
         <% end %>
