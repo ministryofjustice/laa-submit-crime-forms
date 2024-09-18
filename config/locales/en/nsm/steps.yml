@@ -58,9 +58,10 @@ en:
       defendant_details:
         edit:
           page_title: Defendant details
-          heading: Defendant details
-          main_defendant_field_set: Main defendant
-          defendant_field_set: Additional defendant %{index}
+          heading_main: Defendant 1 (lead defendant)
+          heading_additional: Defendant %{count}
+          main_defendant_field_set: Defendant 1 (lead defendant)
+          defendant_field_set: Defendant %{index}
           main_defendant: main
           defendant: additional %{index}
       defendant_summary:
@@ -69,8 +70,7 @@ en:
           heading:
             one: You've added 1 defendant
             other: You've added %{count} defendants
-          main_defendant: Main defendant details
-          additional_defendant: Additional defendant details
+          main_defendant: Defendant 1 (lead)
           headers:
             full_name: Full name
             maat: MAAT ID number
