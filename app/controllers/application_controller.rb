@@ -29,7 +29,7 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
   end
 
   def check_maintenance_mode
-    return unless FeatureFlags.maintenance_mode.enabled?
+    return unless ENV.fetch('MAINTENANCE_MODE', 'false') == 'true'
 
     render file: 'public/maintenance.html', layout: false
   end

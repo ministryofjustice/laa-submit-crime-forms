@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Maintenance mode' do
-  context 'when maintenance mode is enabled' do
-    let(:mode) { instance_double(FeatureFlags::EnabledFeature, enabled?: true) }
-
-    before { allow(FeatureFlags).to receive(:maintenance_mode).and_return(mode) }
+  context 'when maintenance mode is enabled via env var' do
+    before do
+      allow(ENV).to receive(:fetch).with('MAINTENANCE_MODE', 'false').and_return('true')
+    end
 
     it 'shows the maintenance screen on all URLS' do
       visit nsm_applications_path
