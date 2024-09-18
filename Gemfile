@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.161'
+gem 'aws-sdk-s3', '~> 1.162'
 gem 'bootsnap', '~> 1.18.4', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
@@ -33,7 +33,7 @@ gem 'sidekiq', '~> 7.3'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron', '~> 1.12.0'
 gem 'table_print'
-gem 'turbo-rails', '~> 2.0.6'
+gem 'turbo-rails', '~> 2.0.7'
 gem 'tzinfo-data'
 
 group :development, :test do
