@@ -120,3 +120,16 @@ We have a default [k8s security context ](https://kubernetes.io/docs/reference/g
 - allowPrivilegeEscalation - AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. Currently defaults to false, this limits the level of access for bad actors/destructive processes
 - seccompProfile.type - The Secure Computing Mode (Linux kernel feature that limits syscalls that processes can run) options to use by this container. Currenly defaults to RuntimeDefault which is the [widely accepted default profile](https://docs.docker.com/engine/security/seccomp/#significant-syscalls-blocked-by-the-default-profile)
 - capabilities - The POSIX capabilities to add/drop when running containers. Currently defaults to drop["ALL"] which means all of these capabilities will be dropped - since this doesn't cause any issues, it's best to keep as is for security reasons until there's a need for change
+
+## Maintenance Mode
+This service has a maintenance mode which can be used to prevent users taking actions on the system.
+
+You can use the enable_maintenance_mode/disable_maintenance_mode scripts via `sh bin/enable_maintenance_mode <namespace>` or `sh bin/disable_maintenance_mode <namespace>`.
+
+If you want to change maintenance mode on a branch deployment, add the branch release name as a 2nd arg like this `sh bin/enable_maintenance_mode <namespace> <branch release name>`
+
+The helm_deploy/templates/configuration.yaml file initialises the ConfigMap that is used to store the setting. It only re-generates if the ConfigMap does not exist (using a lookup to check) so that new deployments won't reset the setting and has helm.sh/resource-policy of keep so that the deployment doesn't delete the ConfigMap when we don't want to re-generate it.
+
+If the ConfigMap is deleted for whatever reason, simply restart the deployment and the configmap will get regenerated with default values.
+
+If you want to update the ConfigMap's defaults or metadata, you need to delete the existing resource to allow the updates to feed in. This will also reset the values back to default.
