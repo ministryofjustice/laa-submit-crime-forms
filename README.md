@@ -128,7 +128,7 @@ You can use the enable_maintenance_mode/disable_maintenance_mode scripts via `sh
 
 If you want to change maintenance mode on a branch deployment, add the branch release name as a 2nd arg like this `sh bin/enable_maintenance_mode <namespace> <branch release name>`
 
-The helm_deploy/templates/configuration.yaml file initialises the ConfigMap that is used to store the setting. It only re-generates if the ConfigMap exists (using a lookup to check) so that new deployments won't reset the setting and has helm.sh/resource-policy of keep so that the deployment doesn't delete the ConfigMap when we don't want to re-generate it.
+The helm_deploy/templates/configuration.yaml file initialises the ConfigMap that is used to store the setting. It only re-generates if the ConfigMap does not exist (using a lookup to check) so that new deployments won't reset the setting and has helm.sh/resource-policy of keep so that the deployment doesn't delete the ConfigMap when we don't want to re-generate it.
 
 If the ConfigMap is deleted for whatever reason, simply restart the deployment and the configmap will get regenerated with default values.
 
