@@ -9,7 +9,8 @@
     <table class="govuk-table">
       <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.full_name') %></th>
+        <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.defendant') %></th>
+        <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.name') %></th>
         <% if maat_required?(@form_object) %>
           <th scope="col" class="govuk-table__header govuk-table__space-25"><%= t('.headers.maat') %></th>
         <% end %>
@@ -21,6 +22,11 @@
         <% @form_object.defendants.each do |defendant| %>
 
           <tr class="govuk-table__row">
+               <% if defendant.record.main == true %>
+                <td class="govuk-table__cell"><%= t('.cells.defendant_main') %></td>
+              <% else %>
+                <td class="govuk-table__cell"><%= t('.cells.defendant_additional', count: defendant.position ) %></td>
+              <% end %>
               <td class="govuk-table__cell"><%= check_missing(defendant.full_name_if_valid) %></td>
               <% if maat_required?(@form_object) %>
                 <td class="govuk-table__cell"><%= check_missing(defendant.maat_if_valid) %></td>
