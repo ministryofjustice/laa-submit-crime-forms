@@ -25,7 +25,7 @@ module Nsm
         application.claim_type == ::ClaimType::BREACH_OF_INJUNCTION.to_s ||
           application.office_in_undesignated_area == false ||
           application.court_in_undesignated_area ||
-          !application.transferred_from_undesignated_area.nil?
+          !application.transferred_to_undesignated_area.nil?
       end
 
       def office_code_questions_completed?

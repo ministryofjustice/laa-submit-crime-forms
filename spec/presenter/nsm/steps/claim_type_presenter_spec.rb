@@ -11,7 +11,7 @@ RSpec.describe Nsm::Tasks::ClaimType, type: :system do
       solicitor:,
       court_in_undesignated_area:,
       office_in_undesignated_area:,
-      transferred_from_undesignated_area:,
+      transferred_to_undesignated_area:,
       claim_type:,
       office_code:,
     }
@@ -21,7 +21,7 @@ RSpec.describe Nsm::Tasks::ClaimType, type: :system do
   let(:solicitor) { nil }
   let(:court_in_undesignated_area) { nil }
   let(:office_in_undesignated_area) { nil }
-  let(:transferred_from_undesignated_area) { nil }
+  let(:transferred_to_undesignated_area) { nil }
   let(:claim_type) { nil }
   let(:office_code) { '12356' }
 
@@ -74,13 +74,13 @@ RSpec.describe Nsm::Tasks::ClaimType, type: :system do
           it { expect(subject).not_to be_completed }
 
           context 'when case tranferred' do
-            let(:transferred_from_undesignated_area) { true }
+            let(:transferred_to_undesignated_area) { true }
 
             it { expect(subject).to be_completed }
           end
 
           context 'when not case transferred' do
-            let(:transferred_from_undesignated_area) { false }
+            let(:transferred_to_undesignated_area) { false }
 
             it { expect(subject).to be_completed }
           end

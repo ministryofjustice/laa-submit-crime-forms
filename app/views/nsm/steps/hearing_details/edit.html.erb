@@ -10,7 +10,9 @@
       <%= f.govuk_number_field :number_of_hearing, min: 1, step: 1, width: 3, label: { size: 's' }%>
 
       <%= suggestion_select f, :court, LaaMultiStepForms::Court.all, :name, :name, width: 20,
-                              options: { include_blank: true }, label: { size: 's' }, data: { autoselect: false } %>
+                            options: { include_blank: true },
+                            label: { size: 's', text: t(current_application.transferred_to_undesignated_area ? '.court_if_transferred_to_undesignated_area' : '.court') },
+                            data: { autoselect: false } %>
 
       <%= f.govuk_radio_buttons_fieldset :youth_court, legend: { size: 's' } do %>
         <%= f.govuk_radio_button :youth_court, YesNoAnswer::YES.to_s %>

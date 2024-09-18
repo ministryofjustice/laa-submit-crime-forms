@@ -133,7 +133,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'supplemental_claim' => 'yes',
           'wasted_costs' => 'yes',
           'time_spent' => 121,
-          'transferred_from_undesignated_area' => nil,
+          'transferred_to_undesignated_area' => nil,
           'ufn' => '120423/001',
           'unassigned_counsel' => 'no',
           'updated_at' => '2023-08-17T12:13:14.000Z',

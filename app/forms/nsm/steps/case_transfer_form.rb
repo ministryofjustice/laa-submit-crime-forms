@@ -1,8 +1,8 @@
 module Nsm
   module Steps
     class CaseTransferForm < ::Steps::BaseFormObject
-      attribute :transferred_from_undesignated_area, :boolean
-      validates :transferred_from_undesignated_area, inclusion: { in: [true, false] }
+      attribute :transferred_to_undesignated_area, :boolean
+      validates :transferred_to_undesignated_area, inclusion: { in: [true, false] }
 
       private
 

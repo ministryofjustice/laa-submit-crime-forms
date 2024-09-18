@@ -8,7 +8,7 @@ module StageReachedCalculatable
 
     return :prog if court_in_undesignated_area
 
-    transferred_from_undesignated_area ? :prog : :prom
+    transferred_to_undesignated_area ? :prog : :prom
   end
 
   def prog_stage_reached?

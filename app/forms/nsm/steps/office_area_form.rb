@@ -15,7 +15,7 @@ module Nsm
 
         {
           'court_in_undesignated_area' => nil,
-          'transferred_from_undesignated_area' => nil,
+          'transferred_to_undesignated_area' => nil,
         }
       end
     end
