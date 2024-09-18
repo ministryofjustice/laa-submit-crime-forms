@@ -5,7 +5,7 @@ module TestData
 
       PriorAuthorityApplication.sent_back.order('RANDOM()').limit(percentage * total / 100).find_each do |application|
         add_further_information(application) if application.further_information_needed?
-        make_changes(application) if application.incorrect_information_explanation.present?
+        make_changes(application) if application.correction_needed?
         update(application)
       end
     end
