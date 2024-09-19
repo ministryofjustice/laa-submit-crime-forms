@@ -37,6 +37,7 @@ module Providers
     end
 
     def check_provider_is_enrolled
+      Rails.logger.info auth_hash if ENV.fetch('ENV', false) == 'uat'
       return if gatekeeper.provider_enrolled?
 
       Rails.logger.warn "Not enrolled provider access attempt, UID: #{auth_hash.uid}, " \
