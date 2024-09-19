@@ -14,7 +14,6 @@
         <% if maat_required?(@form_object) %>
           <th scope="col" class="govuk-table__header govuk-table__space-25"><%= t('.headers.maat') %></th>
         <% end %>
-        <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.change') %></th>
         <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.delete') %></th>
       </tr>
       </thead>
@@ -27,13 +26,10 @@
               <% else %>
                 <td class="govuk-table__cell"><%= t('.cells.defendant_additional', count: defendant.position ) %></td>
               <% end %>
-              <td class="govuk-table__cell"><%= check_missing(defendant.full_name_if_valid) %></td>
+              <td class="govuk-table__cell"><%= link_to check_missing(defendant.full_name_if_valid), edit_nsm_steps_defendant_details_path(@form_object.application, defendant_id: defendant.id) %></td>
               <% if maat_required?(@form_object) %>
                 <td class="govuk-table__cell"><%= check_missing(defendant.maat_if_valid) %></td>
               <% end %>
-              <td class="govuk-table__cell">
-                <%= link_to t('.change'), edit_nsm_steps_defendant_details_path(@form_object.application, defendant_id: defendant.id) %>
-              </td>
               <% if defendant.record.main != true %>
                 <td class="govuk-table__cell">
                   <%= link_to t('.delete'), edit_nsm_steps_defendant_delete_path(@form_object.application, defendant_id: defendant.id) %>
