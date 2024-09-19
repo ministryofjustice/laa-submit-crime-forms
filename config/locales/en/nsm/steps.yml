@@ -75,7 +75,6 @@ en:
             defendant: Defendant
             name: Name
             maat: MAAT ID number
-            change: Change
             delete: Delete
           cells:
             defendant_main: Defendant 1 (lead)
