@@ -135,8 +135,7 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
 
       context 'with further info and incorrect info' do
         it 'syncs the incorrect info' do
-          expect(application.incorrect_information_explanation).to eq 'This is incorrect'
-          expect(application.incorrect_informations.exists?).to be true
+          expect(application.incorrect_informations.first.information_requested).to eq 'This is incorrect'
         end
 
         it 'syncs dates' do
@@ -162,7 +161,6 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
         end
 
         it 'nullifies the incorrect info' do
-          expect(application.incorrect_information_explanation).to be_nil
           expect(application.incorrect_informations.exists?).to be false
         end
 
@@ -176,13 +174,20 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
           {
             application: {
               incorrect_information_explanation: 'This is incorrect',
+              incorrect_information: [
+                {
+                  caseworker_id: 'case-worker-uuid',
+                  information_requested: 'This is incorrect',
+                  requested_at: DateTime.current
+                }
+              ],
               updates_needed: ['incorrect_information']
             }
           }.deep_stringify_keys
         end
 
         it 'syncs the incorrect info' do
-          expect(application.incorrect_information_explanation).to eq 'This is incorrect'
+          expect(application.incorrect_informations.first.information_requested).to eq 'This is incorrect'
         end
       end
     end

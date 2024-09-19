@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_22_142103) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_18_093306) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -218,7 +218,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_22_142103) do
     t.string "custom_prison_name"
     t.datetime "app_store_updated_at"
     t.string "assessment_comment"
-    t.string "incorrect_information_explanation"
     t.datetime "resubmission_requested"
     t.datetime "resubmission_deadline"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
