@@ -10,7 +10,7 @@
     <h2 class='govuk-heading-l'><%= t('.your_costs') %></h2>
     <%=
       rows = [
-        [{ text:  t('.work_type'), width: 'govuk-!-width-one-half' }, work_item.translated_work_type[I18n.locale]],
+        [{ text:  t('.work_type'), width: 'govuk-!-width-one-half' }, work_item.translated_work_type],
         [t(".date"), work_item.completed_on.strftime('%-d %B %Y')],
         [t(".fee_earner"), work_item.fee_earner],
         [t(".hours"), format_period(work_item.time_spent)],
@@ -28,7 +28,7 @@
 
       <%=
           rows = [
-            [{ text: t(".allowed_work_type"), width: 'govuk-!-width-one-half'}, work_item.translated_work_type(value: :assessed)[I18n.locale]],
+            [{ text: t(".allowed_work_type"), width: 'govuk-!-width-one-half'}, work_item.translated_work_type(value: :assessed)],
             [t(".allowed_hours"), format_period(work_item.assessed_time_spent)],
             [t(".allowed_uplift"), NumberTo.percentage((work_item.assessed_uplift).to_f, multiplier: 1)],
             [t(".allowed_net_cost"), NumberTo.pounds(work_item.allowed_total_cost)],
