@@ -30,7 +30,7 @@ module Nsm
           },
           {
             head_key: 'type_of_claim',
-            text: translate_table_key(section, claim.claim_type)
+            text: I18n.t("laa_crime_forms_common.nsm.claim_type.#{claim.claim_type}")
           }
         ]
       end

@@ -18,7 +18,7 @@ class WorkItem < ApplicationRecord
 
   def translated_work_type(value: :original)
     key = value == :assessed ? assessed_work_type : work_type
-    I18n.t("nsm.steps.check_answers.show.sections.work_items.#{key}")
+    I18n.t("laa_crime_forms_common.nsm.work_type.#{key}")
   end
 
   # Cache the value if looking at a runtime

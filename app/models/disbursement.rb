@@ -10,21 +10,15 @@ class Disbursement < ApplicationRecord
   def translated_disbursement_type
     if disbursement_type == DisbursementTypes::OTHER.to_s
       known_other = OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(other_type))
-      return translate("other.#{other_type}") if known_other
+      return I18n.t("laa_crime_forms_common.nsm.other_disbursement_type.#{other_type}") if known_other
 
       other_type
     elsif disbursement_type
-      translate("standard.#{disbursement_type}")
+      I18n.t("laa_crime_forms_common.nsm.disbursement_type.#{disbursement_type}")
     end
   end
 
   def position
     super || claim.disbursement_position(self)
-  end
-
-  private
-
-  def translate(key, **)
-    I18n.t("summary.nsm/cost_summary/disbursements.#{key}", **)
   end
 end

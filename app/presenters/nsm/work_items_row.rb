@@ -33,7 +33,7 @@ module Nsm
 
     def item_with_link
       link_to(
-        check_missing(valid_work_type? && work_type) { t("summary.nsm/cost_summary/work_items.#{work_type}") },
+        check_missing(valid_work_type? && work_type) { t("laa_crime_forms_common.nsm.work_type.#{work_type}") },
         view.edit_nsm_steps_work_item_path(current_application, work_item_id: id),
         data: { turbo: 'false' },
         'aria-labelledby': "itemTitle item#{position} workType#{position}",
