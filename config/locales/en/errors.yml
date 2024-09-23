@@ -284,8 +284,8 @@ en:
               inclusion: Select yes if the court that heard this case is in an undesignated area
         nsm/steps/case_transfer_form:
           attributes:
-            transferred_from_undesignated_area:
-              inclusion: Select yes if the case was transferred from a court in an undesignated area
+            transferred_to_undesignated_area:
+              inclusion: Select yes if the case was transferred to a court in an undesignated area
         nsm/steps/firm_details_form:
           attributes:
             firm_office:

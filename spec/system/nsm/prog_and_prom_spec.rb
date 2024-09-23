@@ -60,7 +60,7 @@ RSpec.describe 'Prog/prom calculation', type: :system do
       end
 
       it 'takes me to the court area page' do
-        expect(page).to have_content 'Is the court that heard this case in an undesignated area?'
+        expect(page).to have_content 'Is the first court that heard this case in an undesignated area?'
       end
 
       context 'when I click back' do
@@ -93,14 +93,14 @@ RSpec.describe 'Prog/prom calculation', type: :system do
         end
 
         it 'takes me to the case transfer screen' do
-          expect(page).to have_content 'Was the case transferred from a court in an undesignated area?'
+          expect(page).to have_content 'Was this case transferred to a court in an undesignated area?'
         end
 
         context 'when I click back' do
           before { click_on 'Back' }
 
           it 'takes me back to the court area screen' do
-            expect(page).to have_content 'Is the court that heard this case in an undesignated area?'
+            expect(page).to have_content 'Is the first court that heard this case in an undesignated area?'
           end
         end
 

@@ -18,7 +18,7 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
     instance_double(Claim,
                     office_in_undesignated_area: true,
                     court_in_undesignated_area: true,
-                    transferred_from_undesignated_area: true)
+                    transferred_to_undesignated_area: true)
   end
   let(:ufn) { '230801/001' }
   let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
@@ -86,7 +86,7 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
           expect(subject.send(:attributes_to_reset)).to include(
             'court_in_undesignated_area' => true,
             'office_in_undesignated_area' => true,
-            'transferred_from_undesignated_area' => true,
+            'transferred_to_undesignated_area' => true,
           )
         end
       end
@@ -126,7 +126,7 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
           expect(subject.send(:attributes_to_reset)).to include(
             'court_in_undesignated_area' => nil,
             'office_in_undesignated_area' => nil,
-            'transferred_from_undesignated_area' => nil,
+            'transferred_to_undesignated_area' => nil,
           )
         end
       end

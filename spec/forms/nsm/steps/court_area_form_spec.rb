@@ -12,7 +12,7 @@ RSpec.describe Nsm::Steps::CourtAreaForm do
 
   let(:application) do
     create(:claim,
-           transferred_from_undesignated_area: true,
+           transferred_to_undesignated_area: true,
            court_in_undesignated_area: original_court_in_undesignated_area)
   end
 
@@ -25,7 +25,7 @@ RSpec.describe Nsm::Steps::CourtAreaForm do
 
     it 'does not wipe values on save' do
       expect(application.reload.attributes).to include(
-        'transferred_from_undesignated_area' => true
+        'transferred_to_undesignated_area' => true
       )
     end
   end
@@ -37,7 +37,7 @@ RSpec.describe Nsm::Steps::CourtAreaForm do
 
     it 'wipes values on save' do
       expect(application.reload.attributes).to include(
-        'transferred_from_undesignated_area' => nil
+        'transferred_to_undesignated_area' => nil
       )
     end
   end

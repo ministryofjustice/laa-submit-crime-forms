@@ -14,7 +14,7 @@ module Nsm
         return {} if court_in_undesignated_area == application.court_in_undesignated_area
 
         {
-          'transferred_from_undesignated_area' => nil,
+          'transferred_to_undesignated_area' => nil,
         }
       end
     end
