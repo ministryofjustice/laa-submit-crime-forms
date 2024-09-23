@@ -492,6 +492,10 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
+    solid_cache (1.0.6)
+      activejob (>= 7.2)
+      activerecord (>= 7.2)
+      railties (>= 7.2)
     stringio (3.1.1)
     super_diff (0.12.1)
       attr_extras (>= 6.2.4)
@@ -590,6 +594,7 @@ DEPENDENCIES
   sidekiq_alive (~> 2.4)
   simplecov
   simplecov-rcov
+  solid_cache (~> 1.0)
   super_diff
   table_print
   turbo-rails (~> 2.0.7)
