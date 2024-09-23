@@ -2,9 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
   let(:office_codes) { %w[BBBBBB CCCCCC AAAAAA] }
-  let(:office_codes_from_crm4_config) { ['BBBBBB'] }
-  let(:office_codes_from_crm5_config) { ['CCCCCC'] }
-  let(:office_codes_from_crm7_config) { ['AAAAAA'] }
 
   before do
     # Mimic the router behavior of setting the Devise scope through the env.
@@ -19,22 +16,17 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
         office_codes: office_codes
       }
                                                           })
-
-    allow(Rails.configuration.x.gatekeeper.crm4)
-      .to receive(:office_codes)
-      .and_return(office_codes_from_crm4_config)
-
-    allow(Rails.configuration.x.gatekeeper.crm5)
-      .to receive(:office_codes)
-      .and_return(office_codes_from_crm5_config)
-
-    allow(Rails.configuration.x.gatekeeper.crm7)
-      .to receive(:office_codes)
-      .and_return(office_codes_from_crm7_config)
   end
 
   describe '#saml' do
     context 'can access services' do
+      before do
+        allow(ActiveOfficeCodeService)
+          .to receive(:call)
+          .with(office_codes)
+          .and_return(office_codes)
+      end
+
       it 'redirects to root path' do
         get :saml
         expect(response).to redirect_to(root_path)
@@ -44,17 +36,25 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
     context 'cannot access services' do
       let(:office_codes) { [] }
 
-      it 'redirects to root path' do
+      before do
+        allow(ActiveOfficeCodeService)
+          .to receive(:call)
+          .with(office_codes)
+          .and_return(office_codes)
+      end
+
+      it 'redirects to inactive office path' do
         get :saml
-        expect(response).to redirect_to '/errors/not_enrolled'
+        expect(response).to redirect_to '/errors/inactive_offices'
       end
     end
 
     context 'office codes deactivated' do
       before do
-        allow(Rails.configuration.x.inactive_offices)
-          .to receive(:inactive_office_codes)
-          .and_return(%w[BBBBBB CCCCCC AAAAAA])
+        allow(ActiveOfficeCodeService)
+          .to receive(:call)
+          .with(office_codes)
+          .and_return([])
       end
 
       it 'redirects to inactive offices error page' do
@@ -67,9 +67,10 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
       let(:office_codes) { %w[BBBBBB] }
 
       before do
-        allow(Rails.configuration.x.inactive_offices)
-          .to receive(:inactive_office_codes)
-          .and_return(%w[BBBBBB])
+        allow(ActiveOfficeCodeService)
+          .to receive(:call)
+          .with(office_codes)
+          .and_return([])
       end
 
       it 'redirects to inactive offices error page' do
