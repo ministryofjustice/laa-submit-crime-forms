@@ -115,10 +115,7 @@ spec:
                   name: sentry-dsn
                   key: url
             - name: S3_BUCKET
-              valueFrom:
-                secretKeyRef:
-                  name: s3-bucket-output
-                  key: bucket_name
+              value: 'garbage'
             - name: GOVUK_NOTIFY_API_KEY
               valueFrom:
                 secretKeyRef:
