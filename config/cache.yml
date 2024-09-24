@@ -1,7 +1,7 @@
 default: &default
   store_options:
     namespace: <%= Rails.env %>
-    max_entries: 1000000
+    max_entries: 50000
     max_age: null
 
 development:
