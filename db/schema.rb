@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_18_145718) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_24_081716) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -96,13 +96,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_18_145718) do
     t.float "adjusted_total"
     t.float "adjusted_total_inc_vat"
     t.string "assessment_comment"
-    t.string "wasted_costs"
     t.integer "allowed_letters"
     t.integer "allowed_calls"
     t.integer "allowed_letters_uplift"
     t.integer "allowed_calls_uplift"
     t.string "letters_adjustment_comment"
     t.string "calls_adjustment_comment"
+    t.string "wasted_costs"
     t.date "work_completed_date"
     t.boolean "office_in_undesignated_area"
     t.boolean "court_in_undesignated_area"
@@ -167,8 +167,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_18_145718) do
     t.datetime "requested_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "prior_authority_application_id", null: false
-    t.index ["prior_authority_application_id"], name: "index_further_informations_on_prior_authority_application_id"
+    t.uuid "submission_id", null: false
+    t.string "submission_type"
+    t.index ["submission_id"], name: "index_further_informations_on_submission_id"
   end
 
   create_table "incorrect_informations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -324,7 +325,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_18_145718) do
   add_foreign_key "claims", "solicitors"
   add_foreign_key "disbursements", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
-  add_foreign_key "further_informations", "prior_authority_applications"
   add_foreign_key "incorrect_informations", "prior_authority_applications"
   add_foreign_key "prior_authority_applications", "firm_offices"
   add_foreign_key "prior_authority_applications", "solicitors"
