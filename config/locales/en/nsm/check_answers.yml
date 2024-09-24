@@ -124,6 +124,9 @@ en:
               defendants_ethnicity: Defendants ethnic group
               defendant_identification: Defendant identification
               defendant_disabled: Defendant disability
+            further_information:
+              information_request: Information request
+              your_response: Your response
         groups:
           application_status:
             heading: Claim Status
@@ -137,6 +140,7 @@ en:
               update_further_info: >
                 To update your claim, email %email% with the LAA case reference in the
                 subject of the email and include any supporting information requested.
+              requested_claim_update: Requested claim update
 
           claim_type:
             claim_type:
@@ -183,9 +187,13 @@ en:
             supporting_evidence:
               title: Upload supporting evidence
           equality_answers:
-            heading: Equal Monitoring
+            heading: ''
             equal_monitoring:
               title: Equality Monitoring
+          further_information:
+            heading: Requested claim updates
+            further_information:
+              title: Further information request %{date}
           adjusted_cost_summary:
             heading: Cost summary
           cost_summary:

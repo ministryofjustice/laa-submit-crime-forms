@@ -13,7 +13,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
       context 'section groups' do
         it 'returns multiple groups' do
           expect(subject.section_groups).to be_an_instance_of Array
-          expect(subject.section_groups.count).to eq 7
+          expect(subject.section_groups.count).to eq 8
         end
 
         context 'when status section_group name is passed in' do
@@ -26,7 +26,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
         context 'when overview section_group name is passed in' do
           it 'returns multiple groups' do
             expect(subject.section_groups(:overview)).to be_an_instance_of Array
-            expect(subject.section_groups(:overview).count).to eq 7
+            expect(subject.section_groups(:overview).count).to eq 8
           end
         end
 
@@ -105,7 +105,7 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
       context 'section groups' do
         it 'returns multiple groups' do
           expect(subject.section_groups).to be_an_instance_of Array
-          expect(subject.section_groups.count).to eq 7
+          expect(subject.section_groups.count).to eq 8
         end
       end
 

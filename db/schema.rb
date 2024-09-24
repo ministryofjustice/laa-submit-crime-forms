@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_24_081716) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_24_090158) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -169,6 +169,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_24_081716) do
     t.datetime "updated_at", null: false
     t.uuid "submission_id", null: false
     t.string "submission_type"
+    t.datetime "resubmission_deadline"
     t.index ["submission_id"], name: "index_further_informations_on_submission_id"
   end
 
