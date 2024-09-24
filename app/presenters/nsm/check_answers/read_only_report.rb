@@ -13,6 +13,7 @@ module Nsm
           about_claim
           supporting_evidence
           equality_answers
+          further_information
         ].freeze,
         claimed_costs: %w[cost_summary costs].freeze,
         adjustments: %w[adjusted_cost_summary adjusted_costs].freeze
@@ -33,6 +34,7 @@ module Nsm
 
       def section_group(name, section_list)
         {
+          name: name,
           heading: group_heading(name),
           sections: section_list
         }
@@ -112,6 +114,12 @@ module Nsm
         [
           EqualityAnswersCard.new(claim)
         ]
+      end
+
+      def further_information_section
+        claim.further_informations.order(requested_at: :desc).map do |further_information|
+          FurtherInformationCard.new(further_information)
+        end
       end
 
       private

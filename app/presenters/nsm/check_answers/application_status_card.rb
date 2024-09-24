@@ -39,7 +39,7 @@ module Nsm
           items += [translate(:awaiting_review), tag.br, claimed_amount]
         else
           items += [tag.br, claimed_amount]
-          items += [allowed_amount] unless claim.sent_back?
+          items += [allowed_amount] unless claim.sent_back? || claim.expired?
         end
         join_strings(*items)
       end
@@ -79,7 +79,9 @@ module Nsm
       end
 
       def edit_links
-        return [] if @skip_links || !claim.part_grant?
+        return [] if @skip_links
+        return expiry_links if claim.expired?
+        return unless claim.part_grant?
 
         helper = Rails.application.routes.url_helpers
         li_elements = %w[work_items letters_and_calls disbursements].map do |type|
@@ -100,6 +102,14 @@ module Nsm
         tag.ul safe_join(li_elements), class: 'govuk-list govuk-list--bullet'
       end
 
+      def expiry_links
+        tag.ul(class: 'govuk-list') do
+          tag.li do
+            govuk_link_to(translate('requested_claim_update'), '#further_information')
+          end
+        end
+      end
+
       def update_claim
         return [] unless claim.sent_back?
 
@@ -116,9 +126,17 @@ module Nsm
                         []
                       elsif claim.granted? && claim.assessment_comment.blank?
                         [I18n.t('nsm.steps.view_claim.granted_response')]
+                      elsif claim.expired?
+                        expiry_response
                       else
                         claim.assessment_comment.split("\n")
                       end
+      end
+
+      def expiry_response
+        I18n.t('nsm.steps.view_claim.expiry_explanations',
+               requested: claim.pending_further_information.requested_at.to_fs(:stamp),
+               deadline: claim.pending_further_information.resubmission_deadline.to_fs(:stamp))
       end
 
       def allowed_amount

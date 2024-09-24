@@ -137,6 +137,11 @@ en:
           accessibility:
             disbursements_caption: Adjusted disbursements
         granted_response: The claim has been fully granted.
+        expiry_explanations:
+          - On %{requested} we asked you to update your claim before we could complete the assessment. This was due by %{deadline}.
+          - As this update was not made by the required date this claim has been automatically closed.
+          - If you make a new claim you should include the requested update.
+
         # view pages
         work_item:
           page_title: Work item

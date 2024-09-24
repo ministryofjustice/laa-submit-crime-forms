@@ -109,6 +109,6 @@ class Auditor
   end
 
   def matching_further_informations
-    FurtherInformation.where(prior_authority_application: matching_applications)
+    FurtherInformation.where(submission: matching_applications)
   end
 end

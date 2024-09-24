@@ -180,7 +180,7 @@ RSpec.describe 'View applications' do
         build(:further_information,
               information_requested: 'Tell me more',
               information_supplied: 'More info',
-              created_at: 1.day.ago,
+              requested_at: 1.day.ago,
               # the first dash in the below file name in an en dash, which is not a valid ISO-8859-1 character
               supporting_documents: [build(:supporting_document, file_name: 'evidence–with-weird-char.pdf')])
       end

@@ -18,6 +18,7 @@ class Claim < ApplicationRecord
            inverse_of: :documentable,
            class_name: 'SupportingDocument',
            as: :documentable
+  has_many :further_informations, dependent: :destroy, inverse_of: :submission, as: :submission
 
   scope :reviewed, -> { where(state: %i[granted part_grant rejected sent_back expired further_info]) }
   scope :submitted_or_resubmitted, -> { where(state: %i[submitted provider_updated]) }
@@ -25,7 +26,7 @@ class Claim < ApplicationRecord
   scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(office_code: nil, submitter: provider)) }
 
   enum :state, { draft: 'draft', submitted: 'submitted', granted: 'granted', part_grant: 'part_grant',
-                 sent_back: 'sent_back', rejected: 'rejected' }
+                 sent_back: 'sent_back', rejected: 'rejected', expired: 'expired' }
 
   def date
     rep_order_date || cntp_date
@@ -124,6 +125,10 @@ class Claim < ApplicationRecord
     @cost_summary ||= Nsm::CheckAnswers::CostSummaryCard.new(self, show_adjustments: true)
   end
   delegate :show_adjusted?, to: :cost_summary
+
+  def pending_further_information
+    further_informations.where(created_at: app_store_updated_at..).order(:created_at).last
+  end
 
   private
 
