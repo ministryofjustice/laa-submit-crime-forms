@@ -80,7 +80,7 @@ If branch name contains "redis" then the redis-release-name appends "-master", o
 */}}
 {{- define "helm_deploy.redisUatHost" -}}
   {{- $redis_fullName := (include "common.names.fullname" .Subcharts.redis) -}}
-  {{- printf "%s-master.%s.garbage" $redis_fullName .Release.Namespace -}}
+  {{- printf "%s-master.%s.svc.cluster.local" $redis_fullName .Release.Namespace -}}
 {{- end -}}
 
 {{/*
