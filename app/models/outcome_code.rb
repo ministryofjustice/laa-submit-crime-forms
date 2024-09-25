@@ -1,5 +1,5 @@
 OutcomeCode = Struct.new(:id, :description) do
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength
   def self.all
     @all ||= [
       new('CP01', 'Arrest warrant issued/adjourned indefinitely'),
@@ -26,7 +26,7 @@ OutcomeCode = Struct.new(:id, :description) do
       new('CP24', 'Discharged anti-social behaviour order/ sexual offences order / other order'),
     ]
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength
 
   def self.description_by_id(outcome_id)
     all.find { |item| item.id == outcome_id }.description

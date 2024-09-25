@@ -2,6 +2,7 @@
 
 module Nsm
   module CheckAnswers
+    # rubocop:disable Metrics/ClassLength
     class ApplicationStatusCard < Base
       include GovukLinkHelper
       include GovukVisuallyHiddenHelper
@@ -142,8 +143,9 @@ module Nsm
       end
 
       def further_information_response
-        ApplicationController.helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
-                                                              deadline: further_information.resubmission_deadline.to_fs(:stamp)), %(strong)) +
+        helper = ApplicationController.helpers
+        helper.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
+                                       deadline: further_information.resubmission_deadline.to_fs(:stamp)), %(strong)) +
           further_information.information_requested.split("\n")
       end
 
@@ -182,5 +184,6 @@ module Nsm
         )
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end
