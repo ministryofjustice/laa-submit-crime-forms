@@ -179,6 +179,7 @@ en:
           unknown_date: Unknown date
           add_another: Do you want to add another disbursement?
           duplicate: Duplicate
+          update: Update
           delete: Delete
           add_another_button: Add another disbursement
           accessibility:
