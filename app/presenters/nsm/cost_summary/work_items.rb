@@ -16,7 +16,7 @@ module Nsm
 
         work_types.map do |work_type|
           [
-            { text: translate(work_type.to_s), classes: 'govuk-table__header' },
+            { text: I18n.t("laa_crime_forms_common.nsm.work_type.#{work_type}"), classes: 'govuk-table__header' },
             { text: ApplicationController.helpers.format_period(time_spent_for(work_type), style: :minimal_html) },
             { text: NumberTo.pounds(total_cost_for(work_type) || 0), classes: 'govuk-table__cell--numeric' },
           ]

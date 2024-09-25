@@ -36,65 +36,19 @@ class Claim < ApplicationRecord
     id.first(8)
   end
 
-  def translated_matter_type
-    {
-      value: matter_type,
-      en: MatterType.description_by_id(matter_type)
-    }
-  end
-
-  def translated_hearing_outcome
-    {
-      value: hearing_outcome,
-      en: OutcomeCode.description_by_id(hearing_outcome)
-    }
-  end
-
-  def translated_reasons_for_claim
-    reasons_for_claim.map do |reason|
-      translations(reason, 'helpers.label.nsm_steps_reason_for_claim_form.reasons_for_claim_options')
-    end
-  end
-
-  def translate_plea
-    {
-      'plea' => translations(plea, 'helpers.label.nsm_steps_case_disposal_form.plea_options'),
-      'plea_category' => translations(plea_category, 'helpers.label.nsm_steps_case_disposal_form.plea_category')
-    }
-  end
-
-  def translated_letters_and_calls
+  def letters_and_calls_payload
     pricing = Pricing.for(self)
     [
-      { 'type' => translations('letters', 'helpers.label.nsm_steps_letters_calls_form.type_options'),
-        'count' => letters, 'pricing' => pricing.letters.to_f, 'uplift' => letters_uplift },
-      { 'type' => translations('calls', 'helpers.label.nsm_steps_letters_calls_form.type_options'),
-        'count' => calls, 'pricing' => pricing.calls.to_f, 'uplift' => calls_uplift },
+      { 'type' => 'letters', 'count' => letters, 'pricing' => pricing.letters.to_f, 'uplift' => letters_uplift },
+      { 'type' => 'calls', 'count' => calls, 'pricing' => pricing.calls.to_f, 'uplift' => calls_uplift },
     ]
-  end
-
-  def translated_equality_answers
-    {
-      'answer_equality' => translations(answer_equality,
-                                        'helpers.label.nsm_steps_answer_equality_form.answer_equality_options'),
-      'disability' => translations(disability, 'helpers.label.nsm_steps_equality_questions_form.disability_options'),
-      'ethnic_group' => translations(ethnic_group,
-                                     'helpers.label.nsm_steps_equality_questions_form.ethnic_group_options'),
-      'gender' => translations(gender, 'helpers.label.nsm_steps_equality_questions_form.gender_options')
-    }
   end
 
   def as_json(*)
     super
       .merge(
-        'letters_and_calls' => translated_letters_and_calls,
-        'claim_type' => translations(claim_type, 'helpers.label.nsm_steps_claim_type_form.claim_type_options'),
-        'matter_type' => translated_matter_type,
-        'reasons_for_claim' => translated_reasons_for_claim,
-        'hearing_outcome' => translated_hearing_outcome,
-        **translate_plea,
-        **translated_equality_answers
-      ).slice!('letters', 'letters_uplift', 'calls', 'calls_uplift', 'app_store_updated_at')
+        'letters_and_calls' => letters_and_calls_payload,
+      ).except('letters', 'letters_uplift', 'calls', 'calls_uplift', 'app_store_updated_at')
   end
 
   def work_item_position(work_item)

@@ -21,8 +21,6 @@ en:
               rep_order_date: Date of representation order
               cntp_number: CNTP (contempt) number
               cntp_rep_order: Date of CNTP representation order
-              non_standard_magistrate: Non-standard magistrates' court payment
-              breach_of_injunction: Breach of injunction
               stage_reached: Stage reached
               prog: PROG
               prom: PROM
@@ -97,12 +95,6 @@ en:
             work_items:
               items: Items
               items_total: <strong>Total per item</strong>
-              attendance_with_counsel: Attendance with counsel
-              attendance_without_counsel: Attendance without counsel
-              preparation: Preparation
-              advocacy: Advocacy
-              travel: Travel
-              waiting: Waiting
               total: Total
               total_inc_vat: Total (including VAT)
             other_info:
