@@ -128,7 +128,7 @@ module Nsm
                         [I18n.t('nsm.steps.view_claim.granted_response')]
                       elsif claim.expired?
                         expiry_response
-                      elsif claim.sent_back?
+                      elsif claim.sent_back? && FeatureFlags.nsm_rfi_loop.enabled?
                         further_information_response
                       else
                         claim.assessment_comment.split("\\n")
