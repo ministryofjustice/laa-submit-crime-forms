@@ -128,8 +128,10 @@ module Nsm
                         [I18n.t('nsm.steps.view_claim.granted_response')]
                       elsif claim.expired?
                         expiry_response
+                      elsif claim.sent_back?
+                        further_information.information_requested.split("\\n")
                       else
-                        claim.assessment_comment.split("\n")
+                        claim.assessment_comment.split("\\n")
                       end
       end
 
@@ -155,6 +157,10 @@ module Nsm
         else # 'disbursements'
           claim.disbursements.any?(&:adjustment_comment)
         end
+      end
+
+      def further_information
+        claim.further_informations.last
       end
     end
   end
