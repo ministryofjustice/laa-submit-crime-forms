@@ -142,8 +142,8 @@ module Nsm
       end
 
       def further_information_response
-          ApplicationController.helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
-                deadline: further_information.resubmission_deadline.to_fs(:stamp)), %[strong]) +
+        ApplicationController.helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
+                                                              deadline: further_information.resubmission_deadline.to_fs(:stamp)), %(strong)) +
           further_information.information_requested.split("\n")
       end
 
