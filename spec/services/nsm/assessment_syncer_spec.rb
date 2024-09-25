@@ -134,6 +134,43 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
         expect(claim.calls_uplift).to eq 20
         expect(claim.calls_adjustment_comment).to eq 'Reduced calls and removed uplift'
       end
+
+      context 'when type translations use simple string format' do
+        let(:record) do
+          {
+            application: {
+              letters_and_calls: [
+                {
+                  type: 'letters',
+                  count: 1,
+                  uplift: 0,
+                  uplift_original: 10,
+                  count_original: 2,
+                  adjustment_comment: 'Reduced letters and removed uplift'
+                },
+                {
+                  type: 'calls',
+                  count: 2,
+                  uplift: 0,
+                  uplift_original: 20,
+                  count_original: 3,
+                  adjustment_comment: 'Reduced calls and removed uplift'
+                }
+              ],
+              work_items: [],
+              disbursements: []
+            }
+          }.deep_stringify_keys
+        end
+
+        it 'syncs letters adjustment fields' do
+          expect(claim.allowed_letters).to eq 1
+          expect(claim.letters).to eq 2
+          expect(claim.letters_uplift).to eq 10
+          expect(claim.allowed_letters_uplift).to eq 0
+          expect(claim.letters_adjustment_comment).to eq 'Reduced letters and removed uplift'
+        end
+      end
     end
 
     context 'when part granted with work items adjusted' do
@@ -187,6 +224,41 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
         expect(work_item.allowed_uplift).to be_nil
         expect(work_item.adjustment_comment).to be_nil
         expect(work_item.allowed_work_type).to be_nil
+      end
+
+      context 'when work type uses simple format' do
+        let(:record) do
+          {
+            application: {
+              letters_and_calls: letters_and_calls,
+              work_items: [
+                {
+                  id: uplifted_work_item.id,
+                  uplift: 0,
+                  time_spent: 20,
+                  uplift_original: 15,
+                  adjustment_comment: 'Changed work item',
+                  time_spent_original: 40,
+                  work_type: 'bananas',
+                  work_type_original: 'pyjamas',
+                },
+                {
+                  id: work_item.id,
+                  uplift: 0,
+                  time_spent: 120
+                }
+              ],
+              disbursements: []
+            },
+          }.deep_stringify_keys
+        end
+
+        it 'syncs adjusted work item' do
+          expect(uplifted_work_item.allowed_uplift).to eq 0
+          expect(uplifted_work_item.adjustment_comment).to eq 'Changed work item'
+          expect(uplifted_work_item.allowed_time_spent).to eq 20
+          expect(uplifted_work_item.allowed_work_type).to eq 'bananas'
+        end
       end
     end
 
