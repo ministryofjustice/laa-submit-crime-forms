@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://submit-crime-forms.service.justice.gov.uk/crm4.json",
+  "title": "Prior Authority Application",
+  "description": "An application for prior authority to incur disbursements, previously CRM4",
+  "type": "object",
+  "properties": {
+    "application_id": {
+      "description": "The ID of the application",
+      "type": "string",
+      "x-pii": false
+    },
+    "application_state": {
+      "description": "The state of the application. Must initially be 'submitted'",
+      "type": "string",
+      "x-pii": false
+    },
+    "application": {
+      "type": "object",
+      "properties": {
+        "laa_reference": {
+          "type": "string",
+          "x-pii": false
+        },
+        "firm_office": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "x-pii": true
+            },
+            "account_number": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [ "laa_reference", "firm_office" ]
+    }
+  },
+  "required": [ "application_id", "application_state", "application" ]
+}
