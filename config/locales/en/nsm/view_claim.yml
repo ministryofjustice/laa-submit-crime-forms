@@ -141,6 +141,11 @@ en:
           - On %{requested} we asked you to update your claim before we could complete the assessment. This was due by %{deadline}.
           - As this update was not made by the required date this claim has been automatically closed.
           - If you make a new claim you should include the requested update.
+        further_information_response:
+          - Review the requests and resubmit your application by <strong>%{deadline}<strong>
+          - After this date your application will be automatically closed
+          - <strong>Further information request<strong>
+
 
         # view pages
         work_item:

@@ -129,7 +129,7 @@ module Nsm
                       elsif claim.expired?
                         expiry_response
                       elsif claim.sent_back?
-                        further_information.information_requested.split("\\n")
+                        further_information_response
                       else
                         claim.assessment_comment.split("\\n")
                       end
@@ -139,6 +139,12 @@ module Nsm
         I18n.t('nsm.steps.view_claim.expiry_explanations',
                requested: claim.pending_further_information.requested_at.to_fs(:stamp),
                deadline: claim.pending_further_information.resubmission_deadline.to_fs(:stamp))
+      end
+
+      def further_information_response
+          ApplicationController.helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
+                deadline: further_information.resubmission_deadline.to_fs(:stamp)), %[strong]) +
+          further_information.information_requested.split("\\n")
       end
 
       def allowed_amount
