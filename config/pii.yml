@@ -1,0 +1,13 @@
+# For each database table, and each column in that table, flag whether
+# there is PII in the column:
+firm_offices:
+  name: true
+  address_line_1: true
+  address_line_2: true
+  town: false
+  postcode: true
+  previous_id: false
+  vat_registered: false
+providers:
+  email: true
+  auth_provider: false
