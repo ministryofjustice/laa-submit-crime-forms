@@ -69,8 +69,7 @@ Rails.application.configure do
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
   # Use a different cache store in production.
-  config.cache_store = :redis_cache_store, {
-    url: Rails.configuration.x.redis_url,
+  config.cache_store = :solid_cache_store, {
     error_handler: -> (method:, returning:, exception:) do
       # We want to make sure that if something goes wrong retrieving information from the
       # session/cache both we and the end user know that something is amiss - we definitely

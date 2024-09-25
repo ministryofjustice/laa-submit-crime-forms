@@ -2,15 +2,15 @@
   "name": "laa-submit-crime-forms",
   "private": "true",
   "dependencies": {
-    "@hotwired/turbo-rails": "8.0.9",
-    "@ministryofjustice/frontend": "2.2.1",
+    "@hotwired/turbo-rails": "8.0.10",
+    "@ministryofjustice/frontend": "2.2.3",
     "accessible-autocomplete": "^3.0.1",
     "braces": "^3.0.3",
-    "esbuild": "^0.23.1",
+    "esbuild": "^0.24.0",
     "govuk-frontend": "5.6.0",
     "jquery": "^3.7.1",
     "puppeteer": "^22.15.0",
-    "sass": "^1.79.1",
+    "sass": "^1.79.3",
     "yarn": "^1.22.22"
   },
   "resolutions": {

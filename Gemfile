@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.162'
+gem 'aws-sdk-s3', '~> 1.166'
 gem 'bootsnap', '~> 1.18.4', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
@@ -24,7 +24,7 @@ gem 'pagy', '~> 9.0.9'
 gem 'pg', '~> 1.5'
 gem 'prometheus_exporter'
 gem 'propshaft'
-gem 'puma', '~> 6.4'
+gem 'puma', '~> 6.4.3'
 gem 'rails', '~> 7.2.1'
 gem 'redis'
 gem 'sentry-rails', '~> 5.19.0'
@@ -32,8 +32,9 @@ gem 'sentry-ruby', '~> 5.19.0'
 gem 'sidekiq', '~> 7.3'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron', '~> 1.12.0'
+gem 'solid_cache', '~> 1.0'
 gem 'table_print'
-gem 'turbo-rails', '~> 2.0.7'
+gem 'turbo-rails', '~> 2.0.10'
 gem 'tzinfo-data'
 
 group :development, :test do

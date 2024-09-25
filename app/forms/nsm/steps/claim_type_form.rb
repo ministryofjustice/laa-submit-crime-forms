@@ -43,7 +43,7 @@ module Nsm
           'cntp_date' => breach_claim? ? cntp_date : nil,
           'office_in_undesignated_area' => non_standard_claim? ? application.office_in_undesignated_area : nil,
           'court_in_undesignated_area' => non_standard_claim? ? application.court_in_undesignated_area : nil,
-          'transferred_from_undesignated_area' => non_standard_claim? ? application.transferred_from_undesignated_area : nil,
+          'transferred_to_undesignated_area' => non_standard_claim? ? application.transferred_to_undesignated_area : nil,
         }
       end
     end

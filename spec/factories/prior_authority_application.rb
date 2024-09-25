@@ -155,7 +155,7 @@ FactoryBot.define do
 
     trait :with_further_information_supplied do
       after(:create) do |paa|
-        create(:further_information, :with_response, :with_supporting_documents, prior_authority_application_id: paa.id)
+        create(:further_information, :with_response, :with_supporting_documents, submission: paa)
       end
     end
 

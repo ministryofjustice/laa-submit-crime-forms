@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'system_helper'
 
 RSpec.describe 'View claim page', type: :system do
   let(:claim) { create(:claim, :firm_details, :letters_calls, work_items:, disbursements:, assessment_comment:) }
@@ -767,5 +767,29 @@ RSpec.describe 'View claim page', type: :system do
     click_on 'Create a printable PDF'
     expect(page).to have_current_path download_nsm_steps_view_claim_path(claim)
     expect(page.driver.response.headers['Content-Type']).to eq 'application/pdf'
+  end
+
+  context 'when claim is expired' do
+    let(:claim) { create(:claim, :firm_details, state: :expired) }
+
+    before do
+      create :further_information,
+             submission: claim,
+             requested_at: Date.new(2024, 8, 1),
+             resubmission_deadline: Date.new(2024, 8, 10),
+             information_requested: 'What is your quest?'
+
+      visit nsm_steps_view_claim_path(claim.id)
+    end
+
+    it 'shows me relevant information' do
+      expect(page).to have_content('Expired')
+        .and have_content('What is your quest?')
+        .and have_content(
+          'On 1 August 2024 we asked you to update your claim before we could complete the assessment. ' \
+          'This was due by 10 August 2024. As this update was not made by the required date this ' \
+          'claim has been automatically closed. If you make a new claim you should include the requested update.'
+        )
+    end
   end
 end

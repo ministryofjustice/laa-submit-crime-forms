@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_18_093306) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_24_090158) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -96,17 +96,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_18_093306) do
     t.float "adjusted_total"
     t.float "adjusted_total_inc_vat"
     t.string "assessment_comment"
-    t.string "wasted_costs"
     t.integer "allowed_letters"
     t.integer "allowed_calls"
     t.integer "allowed_letters_uplift"
     t.integer "allowed_calls_uplift"
     t.string "letters_adjustment_comment"
     t.string "calls_adjustment_comment"
+    t.string "wasted_costs"
     t.date "work_completed_date"
     t.boolean "office_in_undesignated_area"
     t.boolean "court_in_undesignated_area"
-    t.boolean "transferred_from_undesignated_area"
+    t.boolean "transferred_to_undesignated_area"
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
@@ -167,8 +167,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_18_093306) do
     t.datetime "requested_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "prior_authority_application_id", null: false
-    t.index ["prior_authority_application_id"], name: "index_further_informations_on_prior_authority_application_id"
+    t.uuid "submission_id", null: false
+    t.string "submission_type"
+    t.datetime "resubmission_deadline"
+    t.index ["submission_id"], name: "index_further_informations_on_submission_id"
   end
 
   create_table "incorrect_informations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -287,6 +289,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_18_093306) do
     t.index ["previous_id"], name: "index_solicitors_on_previous_id"
   end
 
+  create_table "solid_cache_entries", force: :cascade do |t|
+    t.binary "key", null: false
+    t.binary "value", null: false
+    t.datetime "created_at", null: false
+    t.bigint "key_hash", null: false
+    t.integer "byte_size", null: false
+    t.index ["byte_size"], name: "index_solid_cache_entries_on_byte_size"
+    t.index ["key_hash", "byte_size"], name: "index_solid_cache_entries_on_key_hash_and_byte_size"
+    t.index ["key_hash"], name: "index_solid_cache_entries_on_key_hash", unique: true
+  end
+
   create_table "supporting_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "documentable_id", null: false
     t.string "file_name"
@@ -324,7 +337,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_18_093306) do
   add_foreign_key "claims", "solicitors"
   add_foreign_key "disbursements", "claims"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
-  add_foreign_key "further_informations", "prior_authority_applications"
   add_foreign_key "incorrect_informations", "prior_authority_applications"
   add_foreign_key "prior_authority_applications", "firm_offices"
   add_foreign_key "prior_authority_applications", "solicitors"

@@ -21,7 +21,7 @@ class PriorAuthorityApplication < ApplicationRecord
            as: :documentable
 
   has_many :additional_costs, dependent: :destroy
-  has_many :further_informations, dependent: :destroy, inverse_of: :prior_authority_application
+  has_many :further_informations, dependent: :destroy, inverse_of: :submission, as: :submission
   has_many :incorrect_informations, dependent: :destroy, inverse_of: :prior_authority_application
 
   enum :state, {

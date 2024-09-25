@@ -16,12 +16,12 @@ en:
           hint: You may be able to claim travel time and waiting time if the office is in an undesignated area
       court_area:
         edit:
-          page_title: Is the court that heard this case in an undesignated area?
-          hint: You can claim travel time and waiting time if the court the case was heard in is in an undesignated area
+          page_title: Is the first court that heard this case in an undesignated area?
+          hint: You can claim travel time and waiting time if the first court that heard this case is in an undesignated area
       case_transfer:
         edit:
-          page_title: Was the case transferred from a court in an undesignated area?
-          hint: You can claim travel time and waiting time if the case was transferred from a court in an undesignated area
+          page_title: Was this case transferred to a court in an undesignated area?
+          hint: You can claim travel time and waiting time if the case was transferred to a court in an undesignated area
       firm_details:
         edit:
           page_title: Firm details
@@ -53,6 +53,8 @@ en:
         edit:
           page_title: Hearing details
           heading: Hearing details
+          court: Which court was the first case hearing heard at?
+          court_if_transferred_to_undesignated_area: Which court was the last case hearing heard at?
       defendant_details:
         edit:
           page_title: Defendant details

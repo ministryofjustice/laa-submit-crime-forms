@@ -22,6 +22,9 @@ module Nsm
           sync_disbursements
         end
       end
+
+      # TODO: (CRM457-2003) Add further_informations, being sure to populate resubmission_deadline in them
+
       # save here to avoid multiple DB updates on claim during the process
       claim.save!
     rescue StandardError => e

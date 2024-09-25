@@ -1,0 +1,15 @@
+default: &default
+  store_options:
+    namespace: <%= Rails.env %>
+    max_entries: 50000
+    max_age: null
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+  database: production
