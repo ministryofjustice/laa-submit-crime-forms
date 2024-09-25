@@ -131,7 +131,7 @@ module Nsm
                       elsif claim.sent_back? && FeatureFlags.nsm_rfi_loop.enabled?
                         further_information_response << update_claim_button
                       else
-                        claim.assessment_comment.split("\\n")
+                        claim.assessment_comment.split("\n")
                       end
       end
 
@@ -144,7 +144,7 @@ module Nsm
       def further_information_response
           ApplicationController.helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
                 deadline: further_information.resubmission_deadline.to_fs(:stamp)), %[strong]) +
-          further_information.information_requested.split("\\n")
+          further_information.information_requested.split("\n")
       end
 
       def allowed_amount
@@ -171,11 +171,11 @@ module Nsm
 
       def update_claim_button
         helper = Rails.application.routes.url_helpers
-        govuk_button_to(
+        govuk_button_link_to(
           I18n.t('nsm.steps.view_claim.update_claim'),
           helper.url_for(
-            controller: url_for('nsm/steps/view_claim'),
-            action: :show,
+            controller: 'nsm/steps/further_information',
+            action: :edit,
             id: claim.id,
             only_path: true
           )
