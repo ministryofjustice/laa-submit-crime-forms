@@ -136,6 +136,7 @@ en:
           no_data: You do not have any adjusted disbursements
           accessibility:
             disbursements_caption: Adjusted disbursements
+        update_claim: Update claim
         granted_response: The claim has been fully granted.
         expiry_explanations:
           - On %{requested} we asked you to update your claim before we could complete the assessment. This was due by %{deadline}.

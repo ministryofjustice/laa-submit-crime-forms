@@ -111,7 +111,7 @@ module Nsm
       end
 
       def update_claim
-        return [] unless claim.sent_back?
+        return [] unless claim.sent_back? && !FeatureFlags.nsm_rfi_loop.enabled?
 
         rfi_email = Rails.configuration.x.contact.nsm_rfi_email
         email = tag.a(rfi_email, href: "mailto:#{rfi_email}")
@@ -129,7 +129,7 @@ module Nsm
                       elsif claim.expired?
                         expiry_response
                       elsif claim.sent_back? && FeatureFlags.nsm_rfi_loop.enabled?
-                        further_information_response
+                        further_information_response << update_claim_button
                       else
                         claim.assessment_comment.split("\\n")
                       end
@@ -167,6 +167,19 @@ module Nsm
 
       def further_information
         claim.further_informations.last
+      end
+
+      def update_claim_button
+        helper = Rails.application.routes.url_helpers
+        govuk_button_to(
+          I18n.t('nsm.steps.view_claim.update_claim'),
+          helper.url_for(
+            controller: url_for('nsm/steps/view_claim'),
+            action: :show,
+            id: claim.id,
+            only_path: true
+          )
+        )
       end
     end
   end
