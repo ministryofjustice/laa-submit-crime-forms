@@ -112,7 +112,7 @@ module Nsm
       end
 
       def update_claim
-        return [] unless claim.sent_back? && !FeatureFlags.nsm_rfi_loop.enabled?
+        return [] unless claim.sent_back? && FeatureFlags.nsm_rfi_loop.disabled?
 
         rfi_email = Rails.configuration.x.contact.nsm_rfi_email
         email = tag.a(rfi_email, href: "mailto:#{rfi_email}")
