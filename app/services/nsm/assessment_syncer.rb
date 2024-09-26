@@ -85,7 +85,8 @@ module Nsm
         claim.further_informations.find_or_create_by(
           caseworker_id: further_info['caseworker_id'],
           information_requested: further_info['information_requested'],
-          requested_at: further_info['requested_at']
+          requested_at: further_info['requested_at'],
+          resubmission_deadline: further_info['resubmission_deadline']
         )
       end
     end
