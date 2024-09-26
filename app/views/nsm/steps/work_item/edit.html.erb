@@ -11,7 +11,10 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset :work_type, legend: { size: 's' } do %>
         <% @form_object.work_types_with_pricing.each do |work_type, price| %>
-          <%= f.govuk_radio_button :work_type, work_type, hint: { text: t('.work_type_pricing', price: number_to_currency(price, unit: '£')) }, data: { rate_per_hour: price } %>
+          <%= f.govuk_radio_button :work_type, work_type,
+                                   label: { text: t("laa_crime_forms_common.nsm.work_type.#{work_type}") },
+                                   hint: { text: t('.work_type_pricing', price: number_to_currency(price, unit: '£')) },
+                                   data: { rate_per_hour: price } %>
         <% end %>
       <% end %>
 

@@ -19,10 +19,10 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'agent_instructed' => 'no',
           'adjusted_total' => nil,
           'adjusted_total_inc_vat' => nil,
-          'answer_equality' => { en: 'Yes, answer the equality questions (takes 2 minutes)', value: 'yes' },
+          'answer_equality' => 'yes',
           'arrest_warrant_date' => nil,
           'assigned_counsel' => 'no',
-          'claim_type' => { en: 'Non-standard magistrates\' court payment', value: 'non_standard_magistrate' },
+          'claim_type' => 'non_standard_magistrate',
           'cntp_date' => nil,
           'cntp_order' => nil,
           'concluded' => 'no',
@@ -40,16 +40,16 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'main' => true,
             'position' => 1
           }],
-          'disability' => { en: 'No', value: 'n' },
+          'disability' => 'n',
           'disbursements' =>
           [{
             'apply_vat' => 'true',
             'details' => 'Details',
             'disbursement_date' => /\A\d{4}-\d{2}-\d{2}\z/,
-            'disbursement_type' => { en: an_instance_of(String), value: disbursement.disbursement_type },
+            'disbursement_type' => disbursement.disbursement_type,
             'id' => disbursement.id,
             'miles' => disbursement.miles.to_s,
-            'other_type' => { en: nil, value: nil },
+            'other_type' => nil,
             'position' => an_instance_of(Integer),
             'pricing' => pricing[disbursement.disbursement_type],
             'prior_authority' => disbursement.prior_authority,
@@ -57,7 +57,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'vat_amount' => disbursement.vat_amount.to_f,
             'vat_rate' => 0.2
           }],
-          'ethnic_group' => { en: 'White British', value: '01_white_british' },
+          'ethnic_group' => '01_white_british',
           'firm_office' => {
             'account_number' => '1A123B',
             'address_line_1' => '2 Laywer Suite',
@@ -69,47 +69,30 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'vat_registered' => 'no'
           },
           'first_hearing_date' => /\A\d{4}-\d{2}-\d{2}\z/,
-          'gender' => { en: 'Male', value: 'm' },
+          'gender' => 'm',
           'has_disbursements' => nil,
-          'hearing_outcome' => {
-            value: /\ACP\d{2}\z/,
-            en: an_instance_of(String)
-          },
+          'hearing_outcome' => /\ACP\d{2}\z/,
           'id' => claim.id,
           'is_other_info' => 'no',
           'laa_reference' => 'LAA-n4AohV',
           'letters_and_calls' => [
-            { 'count' => 2, 'pricing' => 4.09, 'type' => { en: 'Letters', value: 'letters' }, 'uplift' => nil },
-            { 'count' => 3, 'pricing' => 4.09, 'type' => { en: 'Calls', value: 'calls' }, 'uplift' => nil }
+            { 'count' => 2, 'pricing' => 4.09, 'type' => 'letters', 'uplift' => nil },
+            { 'count' => 3, 'pricing' => 4.09, 'type' => 'calls', 'uplift' => nil }
           ],
           'main_offence' => claim.main_offence,
           'main_offence_date' => /\A\d{4}-\d{2}-\d{2}\z/,
-          'matter_type' => {
-            value: '1',
-            en: 'Offences against the person'
-          },
+          'matter_type' => '1',
           'number_of_hearing' => 1,
           'number_of_witnesses' => 2,
           'office_code' => '1A123B',
           'office_in_undesignated_area' => false,
           'other_info' => nil,
-          'plea' => {
-            value: claim.plea,
-            en: an_instance_of(String)
-          },
-          'plea_category' => {
-            value: claim.plea_category,
-            en: an_instance_of(String)
-          },
+          'plea' => claim.plea,
+          'plea_category' => claim.plea_category,
           'preparation_time' => 'yes',
           'prosecution_evidence' => 1,
           'reason_for_claim_other_details' => nil,
-          'reasons_for_claim' => [
-            {
-              en: 'Enhanced rates claimed',
-              value: 'enhanced_rates_claimed'
-            }
-          ],
+          'reasons_for_claim' => ['enhanced_rates_claimed'],
           'remitted_to_magistrate' => 'no',
           'remitted_to_magistrate_date' => nil,
           'rep_order_date' => /\A\d{4}-\d{2}-\d{2}\z/,
@@ -152,7 +135,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'pricing' => pricing[work_item.work_type],
             'time_spent' => an_instance_of(Integer),
             'uplift' => nil,
-            'work_type' => { en: an_instance_of(String), value: work_item.work_type },
+            'work_type' => work_item.work_type,
           }],
           'youth_court' => 'no',
           'supporting_evidences' =>

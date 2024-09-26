@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe OutcomeCode do
-  subject { described_class.new('ID1', 'Desc1') }
+  subject { described_class.new('CP01') }
 
   describe '#all' do
     it 'returns a know number of outcomes' do
@@ -9,7 +9,7 @@ RSpec.describe OutcomeCode do
     end
   end
 
-  it { expect(subject.id).to eq('ID1') }
-  it { expect(subject.description).to eq('Desc1') }
-  it { expect(subject.name).to eq('ID1 - Desc1') }
+  it { expect(subject.id).to eq('CP01') }
+  it { expect(subject.description).to eq('Arrest warrant issued/adjourned indefinitely') }
+  it { expect(subject.name).to eq('CP01 - Arrest warrant issued/adjourned indefinitely') }
 end

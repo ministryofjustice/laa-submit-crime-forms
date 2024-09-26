@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe MatterType do
-  subject { described_class.new('ID1', 'Desc1') }
+  subject { described_class.new('1') }
 
   describe '#all' do
     it 'returns a know number of outcomes' do
@@ -9,7 +9,7 @@ RSpec.describe MatterType do
     end
   end
 
-  it { expect(subject.id).to eq('ID1') }
-  it { expect(subject.description).to eq('Desc1') }
-  it { expect(subject.name).to eq('ID1 - Desc1') }
+  it { expect(subject.id).to eq('1') }
+  it { expect(subject.description).to eq('Offences against the person') }
+  it { expect(subject.name).to eq('1 - Offences against the person') }
 end
