@@ -26,6 +26,7 @@ en:
           rejected: Rejected
           sent_back: Update needed
           expired: Expired
+          provider_updated: Resubmitted
         state_colour:
           draft: govuk-tag--grey
           submitted: govuk-tag--light-blue
@@ -34,6 +35,7 @@ en:
           rejected: govuk-tag--red
           sent_back: govuk-tag--yellow
           expired: govuk-tag--red
+          provider_updated: govuk-tag--light-blue
         tabs:
           reviewed: Reviewed
           submitted: Submitted

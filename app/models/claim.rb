@@ -26,7 +26,7 @@ class Claim < ApplicationRecord
   scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(office_code: nil, submitter: provider)) }
 
   enum :state, { draft: 'draft', submitted: 'submitted', granted: 'granted', part_grant: 'part_grant',
-                 sent_back: 'sent_back', rejected: 'rejected', expired: 'expired' }
+                 sent_back: 'sent_back', rejected: 'rejected', expired: 'expired', provider_updated: 'provider_updated' }
 
   def date
     rep_order_date || cntp_date

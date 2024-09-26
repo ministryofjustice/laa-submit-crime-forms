@@ -51,6 +51,16 @@
     </nav>
 
     <h2 class="govuk-heading-l"><%= t(".tabs.#{@section}") %></h2>
+    <% if FeatureFlags.nsm_rfi_loop.enabled? && @claim.provider_updated? %>
+      <div class="govuk-inset-text">
+        <p><strong> <%= "#{t('.claim_updated.text')} #{@claim.app_store_updated_at.to_fs(:short_stamp)} " %> </strong></p>
+        <ul class="govuk-list">
+          <li>
+            <a href="#further_information" class="govuk-link--no-visited-state"><%= t('.claim_updated.link')%></a>
+          </li>
+        </ul>
+      </div>
+    <% end %>
     <% @report.section_groups(@section).each do |section_group| %>
       <% if section_group[:sections].any? && section_group[:heading].present? %>
         <h2 class="govuk-heading-m" id="<%= section_group[:name] %>"><%= section_group[:heading] %></h2>

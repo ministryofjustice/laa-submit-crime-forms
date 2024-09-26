@@ -533,6 +533,10 @@ en:
               invalid: |
                 Name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
                 Name must be 2 words or more.
+        nsm/steps/further_information_form:
+          attributes:
+            information_supplied:
+              blank: Enter the requested information
       messages:
         blank_hours: Enter the number of hours
         invalid_hours: The number of hours must be 0 or more

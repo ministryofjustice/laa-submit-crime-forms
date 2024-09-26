@@ -6,6 +6,9 @@ en:
         show:
           page_title: Claim details
           heading: Claim details
+          claim_updated:
+            text: Claim updated
+            link: Requested claim updates
           tabs:
             overview: Overview
             claimed_costs: Claimed costs
