@@ -8,7 +8,7 @@ module Nsm
       end
 
       def update
-        update_and_advance(FurtherInformationForm, as:, after_commit_redirect_path:, record:)
+        update_and_advance(FurtherInformationForm, as:, record:)
       end
 
       def destroy
@@ -28,7 +28,11 @@ module Nsm
       end
 
       def as
-        :further_information
+        :nsm_further_information
+      end
+
+      def decision_tree_class
+        Decisions::DecisionTree
       end
     end
   end
