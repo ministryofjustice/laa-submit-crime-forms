@@ -9,13 +9,11 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset :answer_equality, legend: { text: t('.answer_equality'), size: 'm' }, hint: { text: t('.answer_equality_html'), size: 'm' } do %>
-        <%= f.govuk_radio_button :answer_equality, YesNoAnswer::YES.to_s %>
-        <%= f.govuk_radio_button :answer_equality, YesNoAnswer::NO.to_s %>
-      <% end%>
+        <%= f.govuk_radio_button :answer_equality, YesNoAnswer::YES.to_s, label: { text: t('laa_crime_forms_common.nsm.answer_equality.yes' ) } %>
+        <%= f.govuk_radio_button :answer_equality, YesNoAnswer::NO.to_s, label: { text: t('laa_crime_forms_common.nsm.answer_equality.no' ) } %>
+      <% end %>
 
       <%= f.continue_button %>
     <% end %>
   </div>
 </div>
-
-

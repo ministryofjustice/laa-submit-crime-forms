@@ -25,7 +25,7 @@ module Nsm
       def reasons_text
         check_missing(claim.reasons_for_claim.present?) do
           claim.reasons_for_claim.map do |reason|
-            I18n.t("helpers.label.nsm_steps_reason_for_claim_form.reasons_for_claim_options.#{reason}")
+            I18n.t("laa_crime_forms_common.nsm.reason_for_claim.#{reason}")
           end.join('<br>')
         end
       end

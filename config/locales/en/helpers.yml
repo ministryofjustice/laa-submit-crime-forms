@@ -136,9 +136,6 @@ en:
           'no': 'No, another office is handling this application'
       nsm_steps_claim_type_form:
         ufn: What is your unique file number (UFN)?
-        claim_type_options:
-          non_standard_magistrate: Non-standard magistrates' court payment
-          breach_of_injunction: Breach of injunction
         cntp_order: Clients CNTP (contempt) number
 
       nsm_steps_firm_details_form:
@@ -176,19 +173,6 @@ en:
           'yes': 'Yes'
           'no': 'No'
       nsm_steps_case_disposal_form:
-        plea_options:
-          guilty: Guilty plea
-          uncontested_breach: Uncontested breach
-          bind_over: Bind over
-          deferred_sentence: Deferred sentence hearing
-          change_solicitor: Change of solicitor
-          arrest_warrant: Warrant of arrest
-          not_guilty: Not guilty plea
-          cracked_trial: Cracked trial
-          contested: Contested breach
-          discontinuance_cat1: Discontinuance or withdrawal
-          discontinuance_cat2: Discontinuance or withdrawal
-          mixed: Mixed plea
         plea_category:
           guilty_pleas: Category 1
           not_guilty_pleas: Category 2
@@ -204,13 +188,6 @@ en:
         last_name: Last name
         maat: MAAT ID number
       nsm_steps_reason_for_claim_form:
-        reasons_for_claim_options:
-          core_costs_exceed_higher_limit: Core costs exceed higher limit
-          enhanced_rates_claimed: Enhanced rates claimed
-          counsel_or_agent_assigned: Counsel or agent assigned
-          representation_order_withdrawn: Representation order withdrawn
-          extradition: Extradition
-          other: Other
         reason_for_claim_other_details: Enter details
       nsm_steps_disbursements_form:
         add_another_options:
@@ -244,14 +221,6 @@ en:
           'yes': 'Yes'
           'no': 'No'
       nsm_steps_work_item_form:
-        work_type_options:
-          missing: '*required'
-          preparation: Preparation
-          advocacy: Advocacy
-          attendance_with_counsel: Attendance with counsel
-          attendance_without_counsel: Attendance without counsel
-          travel: Travel
-          waiting: Waiting
         fee_earner: Fee earner initials
         apply_uplift_options:
           'true': Apply an uplift to this work
@@ -272,13 +241,6 @@ en:
         has_disbursements_options:
           'yes': 'Yes'
           'no': 'No'
-      nsm_steps_disbursement_type_form:
-        disbursement_type_options:
-          missing: '*required'
-          car: Car mileage
-          motorcycle: Motorcycle mileage
-          bike: Bike mileage
-          other: Other disbursement type
       nsm_steps_disbursement_cost_form:
         miles: Number of miles
         total_cost_without_vat: Disbursement cost
@@ -300,78 +262,10 @@ en:
       nsm_steps_supporting_evidence_form:
         send_by_post_options:
           'true': I'll send the supporting evidence by post
-      nsm_steps_answer_equality_form:
-        answer_equality_options:
-          'yes': Yes, answer the equality questions (takes 2 minutes)
-          'no': No, skip the equality questions
       nsm_steps_solicitor_declaration_form:
         signatory_name: Full name
-      nsm_steps_equality_questions_form:
-        gender_options:
-          m: Male
-          f: Female
-          u: Other
-        ethnic_group_options:
-          00_other: Other
-          01_white_british: White British
-          02_white_irish: White Irish
-          03_black_or_black_british_african: Black (African)
-          04_black_or_black_british_caribbean: Black (Caribbean)
-          05_black_or_black_british_other: Black (Other)
-          06_asian_or_asian_british_indian: Indian
-          07_asian_or_asian_british_pakistani: Pakistani
-          08_asian_or_asian_british_bangladeshi: Bangladeshi
-          09_chinese: Chinese
-          10_mixed_white_black_caribbean: Mixed White & Black Caribbean
-          11_mixed_white_black_african: Mixed White & Black African
-          12_mixed_white_asian: Mixed White & Asian
-          13_mixed_other: Mixed Other
-          14_white_other: White Other
-          15_asian_or_asian_british_other: Asian or Asian British Other
-          99_unknown: Unknown
-        disability_options:
-          'y': 'Yes'
-          'n': 'No'
-          u: Unknown
       prior_authority_steps_primary_quote_form:
         service_type_autocomplete: Service required
-    other_disbursement_type:
-      accident_reconstruction_report: Accident Reconstruction Report
-      accident_emergency_report: Accident & Emergency Report
-      accountants: Accountants
-      architects_surveyor: Architects/Surveyor
-      back_calculations: Back Calculations
-      car_travel: Car Travel
-      cell_phone_site_analysis: Cell Phone Site Analysis
-      computer_experts: Computer Experts
-      consultant_medical_reports: Consultant Medical Reports
-      dna_testing: DNA Testing
-      drug_expert_report: Drug Expert Report
-      engineer_mechanical_engineer: Engineer/Mechanical Engineer
-      enquiry_agents: Enquiry Agents
-      facial_mapping_experts: Facial Mapping Experts
-      fingerprint_experts: Fingerprint Experts
-      fire_investigation_report: Fire Investigation Report
-      forensic_scientists: Forensic Scientists
-      general_practitioners: General Practitioners
-      handwriting_experts: Handwriting experts
-      interpreters: Interpreters
-      lip_readers: Lip Readers
-      medical_report: Medical Report
-      meteorologist: Meteorologist
-      overnight_expenses: Overnight Expenses
-      paediatricians_report: Paediatricians Report
-      pathologists: Pathologists
-      photocopying: Photocopying
-      plans_photographs: Plans & Photographs
-      psychiatric_reports: Psychiatric Reports
-      psychological_reports: Psychological Reports
-      telecommunications_expert: Telecommunications Expert
-      transcripts: Transcripts
-      translators: Translators
-      travel_expenses_excl_car: Travel expenses (excl car)
-      veterinarian_report: Veterinarian Report
-      voice_recognition_experts: Voice Recognition
     quote_services:
       ae_consultant: A&E consultant
       accident_reconstruction: Accident reconstruction

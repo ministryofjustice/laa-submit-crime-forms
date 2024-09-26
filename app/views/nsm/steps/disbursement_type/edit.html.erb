@@ -10,7 +10,9 @@
 
       <%= f.govuk_radio_buttons_fieldset :disbursement_type, legend: { size: 's' } do %>
         <% DisbursementTypes.values.each do |disbursement_type| %>
-          <%= f.govuk_radio_button :disbursement_type, disbursement_type.to_s, hint: { text: disbursement_type.hint(@form_object.application) } do %>
+          <%= f.govuk_radio_button :disbursement_type, disbursement_type.to_s,
+                                   label: { text: t("laa_crime_forms_common.nsm.disbursement_type.#{disbursement_type}") },
+                                   hint: { text: disbursement_type.hint(@form_object.application) } do %>
             <% if disbursement_type.other? %>
               <%= suggestion_select f, :other_type, OtherDisbursementTypes.values, :to_sym, :translated, width: 20,
                               options: { include_blank: true }, data: { autoselect: true }, label: nil %>
@@ -23,5 +25,3 @@
     <% end %>
   </div>
 </div>
-
-

@@ -41,6 +41,6 @@ class OtherDisbursementTypes < ValueObject
   def translated
     return value unless value.in?(VALUES.map(&:value))
 
-    I18n.t("helpers.other_disbursement_type.#{value}")
+    I18n.t("laa_crime_forms_common.nsm.other_disbursement_type.#{value}")
   end
 end

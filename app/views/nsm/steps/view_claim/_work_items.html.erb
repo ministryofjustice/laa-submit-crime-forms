@@ -21,7 +21,7 @@
     net_cost = work_items_for_type.sum(&:total_cost)
     total_cost += net_cost
     [
-      { text: t("summary.nsm/cost_summary/work_items.#{work_type.to_s}") },
+      { text: t("laa_crime_forms_common.nsm.work_type.#{work_type}") },
       { text: format_period(time, style: :minimal_html), numeric: true },
       { text: NumberTo.pounds(net_cost), numeric: true },
     ]
@@ -71,9 +71,13 @@
   rows = work_items.each_with_index.map do |work_item, index|
 
     item_with_link = if skip_links
-                       t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}")
+                       t("laa_crime_forms_common.nsm.work_type.#{work_item.work_type}")
                      else
-                       link_to(t("summary.nsm/cost_summary/work_items.#{work_item.work_type.to_s}"), item_nsm_steps_view_claim_path(id: current_application.id, item_type: :work_item, item_id: work_item.id, page: pagy.page))
+                       link_to(t("laa_crime_forms_common.nsm.work_type.#{work_item.work_type}"),
+                               item_nsm_steps_view_claim_path(id: current_application.id,
+                                                              item_type: :work_item,
+                                                              item_id: work_item.id,
+                                                              page: pagy.page))
                      end
 
     [

@@ -50,9 +50,9 @@ html_attributes: { class: 'govuk-!-text-break-anywhere govuk-!-width-one-quarter
 
       def item_with_link(work_item)
         if @skip_links
-          I18n.t("summary.nsm/cost_summary/work_items.#{work_item.assessed_work_type}")
+          I18n.t("laa_crime_forms_common.nsm.work_type.#{work_item.assessed_work_type}")
         else
-          link_to(I18n.t("summary.nsm/cost_summary/work_items.#{work_item.assessed_work_type}"),
+          link_to(I18n.t("laa_crime_forms_common.nsm.work_type.#{work_item.assessed_work_type}"),
                   item_path(work_item))
         end
       end

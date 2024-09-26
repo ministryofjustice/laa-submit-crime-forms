@@ -30,7 +30,7 @@ module Nsm
 
       def name_text(work_type, claimed_work_items)
         any_changes = claimed_work_items.any? { _1.assessed_work_type != _1.work_type }
-        work_type_name = I18n.t("summary.nsm/cost_summary/work_items.#{work_type}")
+        work_type_name = I18n.t("laa_crime_forms_common.nsm.work_type.#{work_type}")
 
         return work_type_name unless any_changes
 

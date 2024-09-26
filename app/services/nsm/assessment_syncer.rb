@@ -64,7 +64,7 @@ module Nsm
       record.allowed_time_spent = payload['time_spent'] if payload['time_spent_original'].present?
       record.allowed_uplift = payload['uplift'] if payload['uplift_original'].present?
       record.adjustment_comment = payload['adjustment_comment'] if payload['adjustment_comment'].present?
-      record.allowed_work_type = payload.dig('work_type', 'value') if payload['work_type_original'].present?
+      record.allowed_work_type = translation_field(payload['work_type']) if payload['work_type_original'].present?
       record.save
     end
 
@@ -91,11 +91,11 @@ module Nsm
     end
 
     def letters
-      data['letters_and_calls'].detect { _1['type']['value'] == 'letters' }
+      data['letters_and_calls'].detect { translation_field(_1['type']) == 'letters' }
     end
 
     def calls
-      data['letters_and_calls'].detect { _1['type']['value'] == 'calls' }
+      data['letters_and_calls'].detect { translation_field(_1['type']) == 'calls' }
     end
 
     def work_items
@@ -108,6 +108,10 @@ module Nsm
 
     def data
       app_store_record['application']
+    end
+
+    def translation_field(field)
+      field.is_a?(Hash) ? field['value'] : field
     end
   end
 end

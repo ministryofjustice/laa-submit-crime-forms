@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.162'
+gem 'aws-sdk-s3', '~> 1.166'
 gem 'bootsnap', '~> 1.18.4', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
@@ -13,6 +13,7 @@ gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'grover'
 gem 'httparty'
 gem 'jsbundling-rails'
+gem 'laa_crime_forms_common', github: 'ministryofjustice/laa-crime-forms-common'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'lograge'
 gem 'logstasher', '~> 2.1'
@@ -34,7 +35,7 @@ gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron', '~> 1.12.0'
 gem 'solid_cache', '~> 1.0'
 gem 'table_print'
-gem 'turbo-rails', '~> 2.0.7'
+gem 'turbo-rails', '~> 2.0.10'
 gem 'tzinfo-data'
 
 group :development, :test do

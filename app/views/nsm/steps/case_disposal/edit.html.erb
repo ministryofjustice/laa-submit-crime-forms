@@ -12,7 +12,8 @@
         <%= f.govuk_radio_buttons_fieldset name, legend: { size: 's', class: 'govuk-!-margin-bottom-6' } do %>
           <% pleas.each_with_index do |plea, index| %>
             <span id="<%= plea %>"></span>
-            <%= f.govuk_radio_button :plea, plea.to_s, link_errors: index.zero? do %>
+            <%= f.govuk_radio_button :plea, plea.to_s, link_errors: index.zero?,
+                                     label: { text: t("laa_crime_forms_common.nsm.plea.#{plea}") } do %>
               <% if plea.requires_date_field? %>
                 <%= f.govuk_fully_validatable_date_field :"#{plea}_date", maxlength_enabled: true, legend: { size: 's', class: 'govuk-date-legend-non-bold' } %>
               <% end %>
