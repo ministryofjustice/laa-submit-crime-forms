@@ -21,6 +21,8 @@ module Nsm
           sync_work_items
           sync_disbursements
         end
+      elsif claim.sent_back?
+        sync_further_info_requests
       end
 
       # TODO: (CRM457-2003) Add further_informations, being sure to populate resubmission_deadline in them
@@ -78,20 +80,34 @@ module Nsm
       end
     end
 
+    def sync_further_info_requests
+      data['further_information'].each do |further_info|
+        claim.further_informations.find_or_create_by(
+          caseworker_id: further_info['caseworker_id'],
+          information_requested: further_info['information_requested'],
+          requested_at: further_info['requested_at']
+        )
+      end
+    end
+
     def letters
-      app_store_record['application']['letters_and_calls'].detect { _1['type']['value'] == 'letters' }
+      data['letters_and_calls'].detect { _1['type']['value'] == 'letters' }
     end
 
     def calls
-      app_store_record['application']['letters_and_calls'].detect { _1['type']['value'] == 'calls' }
+      data['letters_and_calls'].detect { _1['type']['value'] == 'calls' }
     end
 
     def work_items
-      app_store_record['application']['work_items']
+      data['work_items']
     end
 
     def disbursements
-      app_store_record['application']['disbursements']
+      data['disbursements']
+    end
+
+    def data
+      app_store_record['application']
     end
   end
 end
