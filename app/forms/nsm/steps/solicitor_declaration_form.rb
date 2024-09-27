@@ -15,12 +15,13 @@ module Nsm
           end
           application.update!(attributes)
         end
+
         SubmitToAppStore.perform_later(submission: application)
         true
       end
 
       def new_state
-        if application.state = 'draft'
+        if application.state == 'draft'
           :submitted
         elsif application.state == 'sent_back' && FeatureFlags.nsm_rfi_loop.enabled?
           :provider_updated

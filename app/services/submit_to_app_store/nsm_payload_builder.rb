@@ -13,7 +13,7 @@ class SubmitToAppStore
       {
         application_id: claim.id,
         json_schema_version: 1,
-        application_state: 'submitted',
+        application_state: claim.state,
         application: data,
         application_risk: scorer.calculate(claim),
         application_type: 'crm7'
