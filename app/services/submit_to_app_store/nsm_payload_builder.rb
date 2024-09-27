@@ -24,17 +24,17 @@ class SubmitToAppStore
 
     def data
       direct_attributes.merge(
-        'status' => claim.state,
-        'disbursements' => disbursement_data,
-        'work_items' => work_item_data,
-        'defendants' => defendant_data,
-        'firm_office' => firm_office_data,
-        'solicitor' => solicitor_data,
-        'submitter' => submitter_data,
-        'supporting_evidences' => supporting_evidence,
-        'vat_rate' => pricing[:vat].to_f,
-        'stage_reached' => claim.stage_reached,
-        'work_item_pricing' => work_item_pricing_data,
+        status: claim.state,
+        vat_rate: pricing[:vat].to_f,
+        stage_reached: claim.stage_reached,
+        disbursements:,
+        work_items:,
+        defendants:,
+        firm_office:,
+        solicitor:,
+        submitter:,
+        supporting_evidences:,
+        work_item_pricing:
       )
     end
 
@@ -44,22 +44,22 @@ class SubmitToAppStore
                                calls_adjustment_comment letters_adjustment_comment state])
     end
 
-    def firm_office_data
+    def firm_office
       claim.firm_office.attributes.except('id', 'account_number', *DEFAULT_IGNORE).merge(
         'account_number' => claim.office_code
       )
     end
 
-    def solicitor_data
+    def solicitor
       claim.solicitor.attributes.except('id', *DEFAULT_IGNORE)
     end
 
-    def submitter_data
+    def submitter
       claim.submitter.attributes.slice('email', 'description')
     end
 
     # rubocop:disable Metrics/AbcSize
-    def disbursement_data
+    def disbursements
       claim.disbursements.map do |disbursement|
         data = disbursement.as_json(except: [*DEFAULT_IGNORE, 'allowed_total_cost_without_vat', 'allowed_vat_amount',
                                              'adjustment_comment', 'allowed_apply_vat', 'allowed_miles'])
@@ -73,7 +73,7 @@ class SubmitToAppStore
     end
     # rubocop:enable Metrics/AbcSize
 
-    def work_item_data
+    def work_items
       claim.work_items.map do |work_item|
         data = work_item.as_json(except: [*DEFAULT_IGNORE, 'allowed_uplift', 'allowed_time_spent', 'adjustment_comment',
                                           'allowed_work_type'])
@@ -83,7 +83,7 @@ class SubmitToAppStore
       end
     end
 
-    def defendant_data
+    def NSM_DEFENDANT_SUMMARY
       claim.defendants.map do |defendant|
         defendant.as_json(only: %i[id maat main position first_name last_name])
       end
@@ -93,13 +93,13 @@ class SubmitToAppStore
       @pricing ||= Pricing.for(claim)
     end
 
-    def supporting_evidence
+    def supporting_evidences
       claim.supporting_evidence.map do |evidence|
         evidence.as_json.slice!('claim_id')
       end
     end
 
-    def work_item_pricing_data
+    def work_item_pricing
       work_types = WorkTypes.values.select { _1.display_to_caseworker?(claim) }.map(&:to_s)
       pricing.as_json.select { |k, _v| k.in?(work_types) }.transform_values(&:to_f)
     end
