@@ -17,7 +17,8 @@ class SubmitToAppStore < ApplicationJob
     payload = PayloadBuilder.call(submission, include_events:)
     client = AppStoreClient.new
 
-    if submission.is_a?(PriorAuthorityApplication)
+    if submission.is_a?(PriorAuthorityApplication) || FeatureFlags.nsm_rfi_loop.enabled?
+      # when removing nsm_rfi_loop feature flag, remove this if statement and replace with the line below
       submission.provider_updated? ? client.put(payload) : client.post(payload)
     else
       client.post(payload)
