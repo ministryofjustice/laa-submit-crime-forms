@@ -24,18 +24,18 @@ class SubmitToAppStore
 
     def data
       direct_attributes.merge(
-        status: claim.state,
-        vat_rate: pricing[:vat].to_f,
-        stage_reached: claim.stage_reached,
-        disbursements: disbursements,
-        work_items: work_items,
-        defendants: defendants,
-        firm_office: firm_office,
-        solicitor: solicitor,
-        submitter: submitter,
-        supporting_evidences: supporting_evidences,
-        work_item_pricing: work_item_pricing,
-        further_information: further_information
+        'status' => claim.state,
+        'vat_rate' => pricing[:vat].to_f,
+        'stage_reached' => claim.stage_reached,
+        'disbursements' => disbursements,
+        'work_items' => work_items,
+        'defendants' => defendants,
+        'firm_office' => firm_office,
+        'solicitor' => solicitor,
+        'submitter' => submitter,
+        'supporting_evidences' => supporting_evidences,
+        'work_item_pricing' => work_item_pricing,
+        'further_information' => further_information
       )
     end
 
