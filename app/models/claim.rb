@@ -90,7 +90,7 @@ class Claim < ApplicationRecord
     @sorted_work_item_ids ||= work_items.sort_by do |workitem|
       [
         workitem.completed_on || Time.new(2000, 1, 1).in_time_zone.to_date,
-        workitem.work_type&.downcase,
+        workitem.work_type&.downcase || '',
         workitem.created_at
       ]
     end.map(&:id)
