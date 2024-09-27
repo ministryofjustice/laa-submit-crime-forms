@@ -36,7 +36,7 @@
             <% if skip_download_links %>
               <%= alternative_quote.document.file_name %>
             <% else %>
-              <%= govuk_link_to alternative_quote.document.file_name, prior_authority_download_path(alternative_quote.document) %>
+              <%= govuk_link_to alternative_quote.document.file_name, download_path(alternative_quote.document) %>
             <% end %>
           <% else %>
             <%= t('.none') %>

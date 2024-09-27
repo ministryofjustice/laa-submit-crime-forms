@@ -85,7 +85,7 @@ module PriorAuthority
         return if quote.document&.file_name.blank?
 
         govuk_link_to(quote.document.file_name,
-                      url_helper.prior_authority_download_path(quote.document))
+                      url_helper.download_path(quote.document))
       end
     end
   end

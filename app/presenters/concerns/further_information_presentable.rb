@@ -30,7 +30,7 @@ module FurtherInformationPresentable
         document.file_name
       else
         govuk_link_to(document.file_name,
-                      url_helper.prior_authority_download_path(document))
+                      Rails.application.routes.url_helpers.download_path(document))
       end
     end
     response = simple_format(further_information.information_supplied)

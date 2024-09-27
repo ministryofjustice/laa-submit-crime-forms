@@ -199,8 +199,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :downloads, only: :show
   end
+
+  resources :downloads, only: :show
 
   if ENV.fetch("ENABLE_SYNC_TRIGGER_ENDPOINT", false) == "true"
     get "sync", to: "sync#sync_all"

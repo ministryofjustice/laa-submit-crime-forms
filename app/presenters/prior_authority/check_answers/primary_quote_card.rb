@@ -96,7 +96,7 @@ module PriorAuthority
           primary_quote.document.file_name
         else
           govuk_link_to(primary_quote.document.file_name,
-                        url_helper.prior_authority_download_path(primary_quote.document))
+                        url_helper.download_path(primary_quote.document))
         end
       end
 

@@ -41,7 +41,7 @@ module PriorAuthority
                                         document.file_name
                                       else
                                         govuk_link_to(document.file_name,
-                                                      url_helper.prior_authority_download_path(document))
+                                                      url_helper.download_path(document))
                                       end
                                     end
                                     sanitize(links.join(tag.br), tags: %w[a br])
