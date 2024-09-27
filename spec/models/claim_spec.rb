@@ -71,6 +71,21 @@ RSpec.describe Claim do
 
       expect(sorted_positions).to eql [1, 2, 3, 4, 5, 6]
     end
+
+    context 'when one work item has no work type' do
+      let(:work_items) { [work_item_a, work_item_b] }
+      let(:work_item_a) { build(:work_item, :waiting, completed_on: 1.day.ago.to_date) }
+      let(:work_item_b) { build(:work_item, work_type: nil, completed_on: 1.day.ago.to_date) }
+
+      it 'returns sensible positions' do
+        sorted_positions = [
+          claim.work_item_position(work_item_b),
+          claim.work_item_position(work_item_a),
+        ]
+
+        expect(sorted_positions).to eql [1, 2]
+      end
+    end
   end
 
   describe '#disbursement_position' do
