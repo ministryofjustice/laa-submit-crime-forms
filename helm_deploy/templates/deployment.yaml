@@ -97,6 +97,8 @@ spec:
               value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
             - name: POSTGRES_DATABASE
               value: {{ .Values.postgresql.auth.database }}
+            - name: DATABASE_SSLMODE
+              value: 'prefer'
           {{ else }}
             - name: DATABASE_URL
               valueFrom:
