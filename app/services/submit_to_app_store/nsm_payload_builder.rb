@@ -35,6 +35,7 @@ class SubmitToAppStore
         'vat_rate' => pricing[:vat].to_f,
         'stage_reached' => claim.stage_reached,
         'work_item_pricing' => work_item_pricing_data,
+        'cost_summary' => cost_summary
       )
     end
 
@@ -102,6 +103,12 @@ class SubmitToAppStore
     def work_item_pricing_data
       work_types = WorkTypes.values.select { _1.display_to_caseworker?(claim) }.map(&:to_s)
       pricing.as_json.select { |k, _v| k.in?(work_types) }.transform_values(&:to_f)
+    end
+
+    def cost_summary
+      Nsm::CheckAnswers::CostSummaryCard.new(claim).table_fields(formatted: false).index_by do |row|
+        row.delete(:name)
+      end
     end
   end
 end
