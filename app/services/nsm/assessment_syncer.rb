@@ -86,7 +86,7 @@ module Nsm
           caseworker_id: further_info['caseworker_id'],
           information_requested: further_info['information_requested'],
           requested_at: further_info['requested_at'],
-          resubmission_deadline: further_info['resubmission_deadline']
+          resubmission_deadline: resubmission_deadline
         )
       end
     end
@@ -105,6 +105,10 @@ module Nsm
 
     def disbursements
       data['disbursements']
+    end
+
+    def resubmission_deadline
+      data['resubmission_deadline']
     end
 
     def data
