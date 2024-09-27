@@ -88,3 +88,5 @@ production:
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
   database: <%= ENV['POSTGRES_DATABASE'] %>
+  sslmode: <%= ENV.fetch('DATABASE_SSLMODE', 'verify-full') %>
+  sslrootcert: <%= ENV.fetch('DATABASE_SSLMODE', 'verify-full') == 'verify-full' ? ENV['RDS_COMBINED_CA_BUNDLE'] : nil %>
