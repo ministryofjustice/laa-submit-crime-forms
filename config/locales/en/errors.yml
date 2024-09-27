@@ -531,8 +531,8 @@ en:
             signatory_name:
               blank: Enter the Legal Representative’s full name
               invalid: |
-                Name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
-                Name must be 2 words or more.
+                The full name must only include letters a to z, and special characters such as hyphens, spaces and apostrophes.
+                The full name must be 2 words or more.
         nsm/steps/further_information_form:
           attributes:
             information_supplied:
