@@ -27,14 +27,15 @@ class SubmitToAppStore
         status: claim.state,
         vat_rate: pricing[:vat].to_f,
         stage_reached: claim.stage_reached,
-        disbursements:,
-        work_items:,
-        defendants:,
-        firm_office:,
-        solicitor:,
-        submitter:,
-        supporting_evidences:,
-        work_item_pricing:
+        disbursements: disbursements,
+        work_items: work_items,
+        defendants: defendants,
+        firm_office: firm_office,
+        solicitor: solicitor,
+        submitter: submitter,
+        supporting_evidences: supporting_evidences,
+        work_item_pricing: work_item_pricing,
+        further_information: further_information
       )
     end
 
@@ -83,7 +84,7 @@ class SubmitToAppStore
       end
     end
 
-    def NSM_DEFENDANT_SUMMARY
+    def defendants
       claim.defendants.map do |defendant|
         defendant.as_json(only: %i[id maat main position first_name last_name])
       end
@@ -103,5 +104,29 @@ class SubmitToAppStore
       work_types = WorkTypes.values.select { _1.display_to_caseworker?(claim) }.map(&:to_s)
       pricing.as_json.select { |k, _v| k.in?(work_types) }.transform_values(&:to_f)
     end
+
+    def further_information
+      claim.further_informations.map do |further_information|
+        further_information.as_json(only: FURTHER_INFO_ATTRIBUTES).merge(
+          documents: further_info_documents(further_information),
+          new: further_information == claim.pending_further_information
+        )
+      end
+    end
+
+    def further_info_documents(further_information)
+      further_information.supporting_documents.map do |document|
+        document.as_json(only: %i[file_name
+                                  file_type
+                                  file_size
+                                  file_path
+                                  document_type])
+      end
+    end
+
+    FURTHER_INFO_ATTRIBUTES = %i[information_requested
+                                 information_supplied
+                                 caseworker_id
+                                 requested_at].freeze
   end
 end
