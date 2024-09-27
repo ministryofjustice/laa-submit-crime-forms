@@ -21,7 +21,7 @@ module Nsm
           sync_work_items
           sync_disbursements
         end
-      elsif claim.sent_back?
+      elsif claim.sent_back? && FeatureFlags.nsm_rfi_loop.enabled?
         sync_further_info_requests
       end
 

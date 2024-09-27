@@ -8,7 +8,7 @@ module Nsm
 
       def persist!
         Claim.transaction do
-          application.state = (FeatureFlags.nsm_rfi_loop.enabled? ? :provider_updated : :submitted)
+          application.state = new_state
           if application.state == 'submitted'
             application.update_work_item_positions!
             application.update_disbursement_positions!
@@ -17,6 +17,14 @@ module Nsm
         end
         SubmitToAppStore.perform_later(submission: application)
         true
+      end
+
+      def new_state
+        if application.state = 'draft'
+          :submitted
+        elsif application.state == 'sent_back' && FeatureFlags.nsm_rfi_loop.enabled?
+          :provider_updated
+        end
       end
     end
   end
