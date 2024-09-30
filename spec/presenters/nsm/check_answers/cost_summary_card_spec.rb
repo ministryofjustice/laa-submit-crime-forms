@@ -70,7 +70,6 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
         it 'sums them into profit costs' do
           expect(subject.table_fields[0]).to eq(
             {
-              allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£654.20' }, name: { numeric: false, text: 'Profit costs', width: nil },
               net_cost: { numeric: true, text: '£654.20' }, vat: { numeric: true, text: '£0.00' }
             }
@@ -155,7 +154,6 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
         it 'summs them all together in profit costs' do
           expect(subject.table_fields[0]).to eq(
             {
-              allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£1,227.85' }, name: { numeric: false, text: 'Profit costs', width: nil },
               net_cost: { numeric: true, text: '£1,227.85' }, vat: { numeric: true, text: '£0.00' }
             }
@@ -177,7 +175,6 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
         it 'they are returned' do
           expect(subject.table_fields[2]).to eq(
             {
-              allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£276.00' },
               name: { numeric: false, text: 'Travel', width: nil }, net_cost: { numeric: true, text: '£276.00' },
               vat: { numeric: true, text: '£0.00' }
@@ -185,7 +182,6 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
           )
           expect(subject.table_fields[3]).to eq(
             {
-              allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£276.00' },
               name: { numeric: false, text: 'Waiting', width: nil }, net_cost: { numeric: true, text: '£276.00' },
               vat: { numeric: true, text: '£0.00' }
@@ -207,7 +203,6 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
         it 'includes a summed table field row' do
           expect(subject.table_fields[0]).to eq(
             {
-              allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£1,373.82' }, name: { numeric: false, text: 'Profit costs', width: nil },
               net_cost: { numeric: true, text: '£1,373.82' }, vat: { numeric: true, text: '£0.00' }
             }
@@ -225,7 +220,6 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
         it 'summs them all together in profit costs' do
           expect(subject.table_fields[1]).to eq(
             {
-              allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£720.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
               net_cost: { numeric: true, text: '£600.00' }, vat: { numeric: true, text: '£120.00' }
             }
@@ -243,7 +237,6 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
         it 'summs them all together in profit costs' do
           expect(subject.table_fields[1]).to eq(
             {
-              allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£600.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
               net_cost: { numeric: true, text: '£600.00' }, vat: { numeric: true, text: '£0.00' }
             }
@@ -259,7 +252,6 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
       it 'sums them into profit costs' do
         expect(subject.table_fields[0]).to eq(
           {
-            allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
             gross_cost: { numeric: true, text: '£61.35' },
             name: { numeric: false, text: 'Profit costs', width: nil },
             net_cost: { numeric: true, text: '£61.35' },
@@ -436,7 +428,6 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
         it 'summs them all together in profit costs' do
           expect(subject.table_fields[1]).to eq(
             {
-              allowed_gross_cost: nil, allowed_net_cost: nil, allowed_vat: nil,
               gross_cost: { numeric: true, text: '£720.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
               net_cost: { numeric: true, text: '£600.00' }, vat: { numeric: true, text: '£120.00' }
             }

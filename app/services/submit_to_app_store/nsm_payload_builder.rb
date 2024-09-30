@@ -34,8 +34,9 @@ class SubmitToAppStore
         'solicitor' => solicitor,
         'submitter' => submitter,
         'supporting_evidences' => supporting_evidences,
+        'further_information' => further_information,
         'work_item_pricing' => work_item_pricing,
-        'further_information' => further_information
+        'cost_summary' => cost_summary
       )
     end
 
@@ -128,5 +129,11 @@ class SubmitToAppStore
                                  information_supplied
                                  caseworker_id
                                  requested_at].freeze
+    
+    def cost_summary
+      Nsm::CheckAnswers::CostSummaryCard.new(claim).table_fields(formatted: false).index_by do |row|
+        row.delete(:name)
+      end
+    end
   end
 end
