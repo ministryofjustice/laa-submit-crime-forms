@@ -27,6 +27,28 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'cntp_order' => nil,
           'concluded' => 'no',
           'conclusion' => nil,
+          'cost_summary' => {
+            'disbursements' => {
+              gross_cost: an_instance_of(BigDecimal),
+              net_cost: an_instance_of(BigDecimal),
+              vat: an_instance_of(BigDecimal)
+            },
+            'profit_costs' => {
+              gross_cost: an_instance_of(BigDecimal),
+              net_cost: an_instance_of(BigDecimal),
+              vat: an_instance_of(BigDecimal)
+            },
+            'travel' => {
+              gross_cost: an_instance_of(BigDecimal),
+              net_cost: an_instance_of(BigDecimal),
+              vat: an_instance_of(BigDecimal)
+            },
+            'waiting' => {
+              gross_cost: an_instance_of(BigDecimal),
+              net_cost: an_instance_of(BigDecimal),
+              vat: an_instance_of(BigDecimal)
+            },
+          },
           'court' => 'A Court',
           'court_in_undesignated_area' => nil,
           'cracked_trial_date' => nil,
