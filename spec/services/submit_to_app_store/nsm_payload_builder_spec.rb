@@ -131,7 +131,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'reference_number' => '111222'
           },
           'stage_reached' => :prom,
-          'status' => 'draft',
+          'status' => 'submitted',
           'submitted_total' => nil,
           'submitted_total_inc_vat' => nil,
           'submitter' => { 'description' => nil, 'email' => 'provider@example.com' },
@@ -179,6 +179,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
               'attendance_without_counsel' => 52.15,
               'preparation' => 52.15
             },
+            'further_information' => []
         },
         application_id: claim.id,
         application_state: 'submitted',
