@@ -23,7 +23,7 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
 
       it 'is valid' do
         expect(form.save).to be_truthy
-        expect(application.state).to eq("submitted")
+        expect(application.state).to eq('submitted')
         expect(application).to have_received(:update!)
       end
 
@@ -36,7 +36,7 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
       it 'updates submission to correct state' do
         form.save
 
-        expect(application.state).to eq("submitted")
+        expect(application.state).to eq('submitted')
       end
     end
 
