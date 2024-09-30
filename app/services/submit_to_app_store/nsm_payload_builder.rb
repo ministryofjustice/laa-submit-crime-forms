@@ -129,7 +129,7 @@ class SubmitToAppStore
                                  information_supplied
                                  caseworker_id
                                  requested_at].freeze
-    
+
     def cost_summary
       Nsm::CheckAnswers::CostSummaryCard.new(claim).table_fields(formatted: false).index_by do |row|
         row.delete(:name)
