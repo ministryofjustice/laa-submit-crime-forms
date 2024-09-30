@@ -1,3 +1,6 @@
+# NOTE: FurtherInformationController and FurtherInformationForm has almost complete shared functionality
+# between Prior Authority and Non-standard Magistrates, but we are not DRYing out the code intentionally
+# to allow more flexibility for the processes to deviate if needed
 module Nsm
   module Steps
     class FurtherInformationController < Nsm::Steps::BaseController
