@@ -131,7 +131,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'reference_number' => '111222'
           },
           'stage_reached' => :prom,
-          'status' => 'submitted',
+          'status' => 'draft',
           'submitted_total' => nil,
           'submitted_total_inc_vat' => nil,
           'submitter' => { 'description' => nil, 'email' => 'provider@example.com' },
@@ -182,7 +182,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'further_information' => []
         },
         application_id: claim.id,
-        application_state: 'submitted',
+        application_state: 'draft',
         application_risk: 'high',
         json_schema_version: 1,
         application_type: 'crm7'

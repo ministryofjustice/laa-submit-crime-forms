@@ -55,7 +55,6 @@ FactoryBot.define do
       is_other_info { 'no' }
       concluded { 'no' }
       signatory_name { Faker::Name.name }
-      completed_state
     end
 
     trait :case_type_magistrates do
