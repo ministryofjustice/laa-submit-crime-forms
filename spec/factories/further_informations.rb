@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :further_information do
     information_requested { 'please provide further evidence' }
+    resubmission_deadline { DateTime.new(2024, 1, 2, 1, 1, 1) }
     information_supplied { nil }
     caseworker_id { '87e88ac6-d89a-4180-80d4-e03285023fb0' }
     requested_at { DateTime.new(2024, 1, 1, 1, 1, 1) }
