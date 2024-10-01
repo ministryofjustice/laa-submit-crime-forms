@@ -15,13 +15,13 @@ module Nsm
       sync_overall_comment
 
       if claim.part_grant? || claim.granted?
-        Claim.transaction do
+        @claim.with_lock do
           sync_letter_adjustments
           sync_call_adjustments
           sync_work_items
           sync_disbursements
         end
-      elsif claim.sent_back? && FeatureFlags.nsm_rfi_loop.enabled?
+      elsif claim.sent_back? && further_information_exists
         sync_further_info_requests
       end
 
@@ -35,6 +35,10 @@ module Nsm
 
     def sync_overall_comment
       claim.assessment_comment = app_store_record.dig('application', 'assessment_comment').presence
+    end
+
+    def further_information_exists
+      data['further_information'].present?
     end
 
     def sync_letter_adjustments
@@ -83,9 +87,10 @@ module Nsm
         claim.further_informations.find_or_create_by(
           caseworker_id: further_info['caseworker_id'],
           information_requested: further_info['information_requested'],
-          requested_at: further_info['requested_at'],
-          resubmission_deadline: resubmission_deadline
-        )
+          requested_at: further_info['requested_at']
+        ) do |new_record|
+          new_record.resubmission_deadline = resubmission_deadline
+        end
       end
     end
 

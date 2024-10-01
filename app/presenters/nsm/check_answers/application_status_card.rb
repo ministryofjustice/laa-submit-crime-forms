@@ -35,6 +35,14 @@ module Nsm
 
       private
 
+      def application_helpers
+        ApplicationController.helpers
+      end
+
+      def url_helpers
+        Rails.application.routes.url_helpers
+      end
+
       def state_text
         items = [state_tag, submitted_date]
         if claim.submitted?
@@ -85,18 +93,17 @@ module Nsm
         return expiry_links if claim.expired?
         return unless claim.part_grant?
 
-        helper = Rails.application.routes.url_helpers
         li_elements = %w[work_items letters_and_calls disbursements].map do |type|
           next unless any_changes?(type)
 
           tag.li do
             govuk_link_to(
               translate(type),
-              helper.url_for(controller: 'nsm/steps/view_claim',
-                             action: "adjusted_#{type}",
-                             id: claim.id,
-                             anchor: 'cost-summary-table',
-                             only_path: true),
+              url_helpers.url_for(controller: 'nsm/steps/view_claim',
+                                  action: "adjusted_#{type}",
+                                  id: claim.id,
+                                  anchor: 'cost-summary-table',
+                                  only_path: true),
               class: 'govuk-link--no-visited-state'
             )
           end
@@ -135,23 +142,19 @@ module Nsm
                       end
       end
 
-      def helpers
-        ApplicationController.helpers
-      end
-
       def expiry_response
-        helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.expiry_explanations',
-                                        requested: claim.pending_further_information.requested_at.to_fs(:stamp),
-                                        deadline:
-                                          tag.strong(claim.pending_further_information.resubmission_deadline.to_fs(:stamp))),
-                                 %(strong))
+        application_helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.expiry_explanations',
+                                                    requested: claim.pending_further_information.requested_at.to_fs(:stamp),
+                                                    deadline:
+                                                      tag.strong(claim.pending_further_information.resubmission_deadline.to_fs(:stamp))),
+                                             %(strong))
       end
 
       def further_information_response
-        helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
-                                        deadline:
-                                          tag.strong(further_information.resubmission_deadline.to_fs(:stamp))),
-                                 %(strong)) + further_information.information_requested.split("\n")
+        application_helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
+                                                    deadline:
+                                                      tag.strong(further_information.resubmission_deadline.to_fs(:stamp))),
+                                             %(strong)) + further_information.information_requested.split("\n")
       end
 
       def allowed_amount
@@ -177,15 +180,9 @@ module Nsm
       end
 
       def update_claim_button
-        helper = Rails.application.routes.url_helpers
         govuk_button_link_to(
           I18n.t('nsm.steps.view_claim.update_claim'),
-          helper.url_for(
-            controller: 'nsm/steps/further_information',
-            action: :edit,
-            id: claim.id,
-            only_path: true
-          )
+          url_helpers.edit_nsm_steps_further_information_path(claim)
         )
       end
     end
