@@ -53,10 +53,10 @@
     <h2 class="govuk-heading-l"><%= t(".tabs.#{@section}") %></h2>
     <% if FeatureFlags.nsm_rfi_loop.enabled? && @claim.provider_updated? %>
       <div class="govuk-inset-text">
-        <p><strong> <%= "#{t('.claim_updated.text')} #{@claim.app_store_updated_at.to_fs(:short_stamp)} " %> </strong></p>
+        <p><strong> <%= "#{t('.claim_updated.text')} #{@claim.updated_at.to_fs(:short_stamp)} " %> </strong></p>
         <ul class="govuk-list">
           <li>
-            <a href="#further_information" class="govuk-link--no-visited-state"><%= t('.claim_updated.link')%></a>
+            <a href="#further_information" class="govuk-link--no-visited-state"><%= t('.claim_updated.link') %></a>
           </li>
         </ul>
       </div>

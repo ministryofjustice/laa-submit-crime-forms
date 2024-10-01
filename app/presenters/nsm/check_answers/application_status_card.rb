@@ -26,7 +26,8 @@ module Nsm
           (if response.any?
              {
                head_key: 'laa_response',
-               text: join_strings(*response, *edit_links, appeal_info, *update_claim)
+               text: join_strings(*response, *edit_links, appeal_info,
+                                  *(claim.sent_back? && !claim.pending_further_information ? update_claim : []))
              }
            end)
         ].compact
@@ -112,8 +113,6 @@ module Nsm
       end
 
       def update_claim
-        return [] unless claim.sent_back? && FeatureFlags.nsm_rfi_loop.disabled?
-
         rfi_email = Rails.configuration.x.contact.nsm_rfi_email
         email = tag.a(rfi_email, href: "mailto:#{rfi_email}")
         [
@@ -130,7 +129,7 @@ module Nsm
                       elsif claim.expired?
                         expiry_response
                       elsif claim.sent_back? && FeatureFlags.nsm_rfi_loop.enabled?
-                        further_information_response << update_claim_button
+                        further_information_response + [update_claim_button]
                       else
                         claim.assessment_comment.split("\n")
                       end
@@ -139,14 +138,14 @@ module Nsm
       def expiry_response
         I18n.t('nsm.steps.view_claim.expiry_explanations',
                requested: claim.pending_further_information.requested_at.to_fs(:stamp),
-               deadline: claim.pending_further_information.resubmission_deadline.to_fs(:stamp))
+               deadline: tag.strong(claim.pending_further_information.resubmission_deadline.to_fs(:stamp)))
       end
 
       def further_information_response
         helper = ApplicationController.helpers
         helper.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
-                                       deadline: further_information.resubmission_deadline.to_fs(:stamp)), %(strong)) +
-          further_information.information_requested.split("\n")
+                                       deadline: tag.strong(further_information.resubmission_deadline.to_fs(:stamp))),
+                                %(strong)) + further_information.information_requested.split("\n")
       end
 
       def allowed_amount

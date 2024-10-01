@@ -19,7 +19,7 @@ RSpec.describe Nsm::Steps::FurtherInformationController, type: :controller do
       end
 
       it 'deletes the file' do
-        delete :destroy, params: { application_id: current_application.id, evidence_id: evidence.id }
+        delete :destroy, params: { id: current_application.id, evidence_id: evidence.id }
 
         expect(response).to be_successful
       end
@@ -27,7 +27,7 @@ RSpec.describe Nsm::Steps::FurtherInformationController, type: :controller do
 
     context 'when there are no files present' do
       it 'returns a 400' do
-        delete :destroy, params: { application_id: current_application.id, evidence_id: SecureRandom.uuid }
+        delete :destroy, params: { id: current_application.id, evidence_id: SecureRandom.uuid }
 
         expect(response).to be_bad_request
       end
