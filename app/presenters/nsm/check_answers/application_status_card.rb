@@ -168,7 +168,7 @@ module Nsm
       end
 
       def further_information
-        claim.further_informations.last
+        claim.pending_further_information
       end
 
       def update_claim_button
