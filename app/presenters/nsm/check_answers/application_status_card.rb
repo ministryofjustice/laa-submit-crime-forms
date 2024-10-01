@@ -135,17 +135,23 @@ module Nsm
                       end
       end
 
+      def helpers
+        ApplicationController.helpers
+      end
+
       def expiry_response
-        I18n.t('nsm.steps.view_claim.expiry_explanations',
-               requested: claim.pending_further_information.requested_at.to_fs(:stamp),
-               deadline: tag.strong(claim.pending_further_information.resubmission_deadline.to_fs(:stamp)))
+        helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.expiry_explanations',
+                                        requested: claim.pending_further_information.requested_at.to_fs(:stamp),
+                                        deadline:
+                                          tag.strong(claim.pending_further_information.resubmission_deadline.to_fs(:stamp))),
+                                 %(strong))
       end
 
       def further_information_response
-        helper = ApplicationController.helpers
-        helper.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
-                                       deadline: tag.strong(further_information.resubmission_deadline.to_fs(:stamp))),
-                                %(strong)) + further_information.information_requested.split("\n")
+        helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
+                                        deadline:
+                                          tag.strong(further_information.resubmission_deadline.to_fs(:stamp))),
+                                 %(strong)) + further_information.information_requested.split("\n")
       end
 
       def allowed_amount
