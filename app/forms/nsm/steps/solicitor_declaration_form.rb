@@ -23,7 +23,7 @@ module Nsm
       def new_state
         if application.state == 'draft'
           :submitted
-        elsif application.state == 'sent_back' && FeatureFlags.nsm_rfi_loop.enabled?
+        elsif application.state == 'sent_back'
           :provider_updated
         end
       end
