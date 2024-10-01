@@ -45,7 +45,6 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
       let(:application) { create(:claim, :complete, state: 'sent_back') }
 
       before do
-        allow(FeatureFlags).to receive(:nsm_rfi_loop).and_return(double(:new, enabled?: true))
         allow(SubmitToAppStore).to receive(:perform_later)
         allow(application).to receive(:update!).and_return(true)
       end
