@@ -146,14 +146,14 @@ module Nsm
         application_helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.expiry_explanations',
                                                     requested: claim.pending_further_information.requested_at.to_fs(:stamp),
                                                     deadline:
-                                                      tag.strong(claim.pending_further_information.resubmission_deadline.to_fs(:stamp))),
+                                                      tag.strong(resubmission_deadline_text)),
                                              %(strong))
       end
 
       def further_information_response
         application_helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
                                                     deadline:
-                                                      tag.strong(further_information.resubmission_deadline.to_fs(:stamp))),
+                                                      tag.strong(resubmission_deadline_text)),
                                              %(strong)) + further_information.information_requested.split("\n")
       end
 
@@ -184,6 +184,10 @@ module Nsm
           I18n.t('nsm.steps.view_claim.update_claim'),
           url_helpers.edit_nsm_steps_further_information_path(claim)
         )
+      end
+
+      def resubmission_deadline_text
+        further_information.resubmission_deadline.to_fs(:stamp)
       end
     end
     # rubocop:enable Metrics/ClassLength
