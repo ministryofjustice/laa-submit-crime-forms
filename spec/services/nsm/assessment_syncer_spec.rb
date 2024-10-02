@@ -491,5 +491,27 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
         )
       end
     end
+
+    context 'when sent_back with further information added' do
+      let(:state) { 'sent_back' }
+      let(:application) do
+        {
+          letters_and_calls: letters_and_calls,
+          work_items: [],
+          disbursements: [],
+          further_information: [
+            {
+              information_requested: 'I need this information',
+              requested_at: '2024-08-22T09:42:53.151Z',
+              caseworker_id:  'ab124-2233-4674-adc8-21212312312'
+            }
+          ]
+        }.deep_stringify_keys
+      end
+
+      it 'syncs the last further information' do
+        expect(claim.further_informations.count).to eq(1)
+      end
+    end
   end
 end
