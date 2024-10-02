@@ -61,6 +61,20 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
         expect(application.state).to eq('provider_updated')
       end
     end
+
+    context 'when claim is in incorrect state' do
+      let(:signatory_name) { 'John Doe' }
+      let(:application) { create(:claim, :complete, state: 'submitted') }
+
+      before do
+        allow(SubmitToAppStore).to receive(:perform_later)
+        allow(application).to receive(:update!).and_return(true)
+      end
+
+      it 'returns an error' do
+        expect{form.save}.to raise_error('Invalid state for claim submission')
+      end
+    end
   end
 
   describe 'form is #valid' do

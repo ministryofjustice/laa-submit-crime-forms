@@ -25,6 +25,8 @@ module Nsm
           :submitted
         elsif application.state == 'sent_back'
           :provider_updated
+        else
+          raise 'Invalid state for claim submission'
         end
       end
     end
