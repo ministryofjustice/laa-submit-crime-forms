@@ -12,5 +12,10 @@ FactoryBot.define do
       contact_last_name { 'Blake' }
       contact_email { 'james@email.com' }
     end
+
+    trait :full_pa do
+      full
+      reference_number { nil }
+    end
   end
 end

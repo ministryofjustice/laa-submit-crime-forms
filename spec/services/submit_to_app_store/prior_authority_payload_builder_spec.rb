@@ -21,7 +21,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         subject_to_poca: true,
         next_hearing_date: '2024-01-16',
         rep_order_date: nil,
-        plea: 'something',
+        plea: 'guilty',
         court_type: 'central_criminal_court',
         youth_court: true,
         psychiatric_liaison: false,
@@ -40,12 +40,12 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         ),
         firm_office: {
           account_number: '1A123B',
-          address_line_1: '2 Laywer Suite',
+          address_line_1: nil,
           address_line_2: nil,
           name: 'Firm A',
-          postcode: 'CR0 1RE',
-          town: 'Lawyer Town',
-          vat_registered: 'yes'
+          postcode: nil,
+          town: nil,
+          vat_registered: nil
         },
         provider: {
           description: nil,
@@ -55,7 +55,7 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
           contact_email: 'james@email.com',
           contact_first_name: 'James',
           contact_last_name: 'Blake',
-          reference_number: '111222'
+          reference_number: nil,
         },
         supporting_documents: [
           {
@@ -188,5 +188,17 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
 
   it 'generates the payload for an application' do
     check_json(builder.payload.deep_symbolize_keys).matches(expected_output)
+  end
+
+  context 'when there is a validation error' do
+    before do
+      allow(LaaCrimeFormsCommon::Validator).to receive(:validate).and_return(['The favourite_fruit field is missing'])
+    end
+
+    it 'raises the error' do
+      expect { builder.payload }.to raise_error(
+        "Validation issues detected for #{application.id}: The favourite_fruit field is missing"
+      )
+    end
   end
 end
