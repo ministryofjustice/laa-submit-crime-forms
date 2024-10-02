@@ -109,8 +109,8 @@ class SubmitToAppStore
     def further_information
       claim.further_informations.map do |further_information|
         further_information.as_json(only: FURTHER_INFO_ATTRIBUTES).merge(
-          documents: further_info_documents(further_information),
-          new: further_information == claim.pending_further_information
+          'documents' => further_info_documents(further_information),
+          'new' => further_information == claim.pending_further_information
         )
       end
     end

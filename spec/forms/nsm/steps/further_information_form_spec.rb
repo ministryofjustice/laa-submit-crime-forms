@@ -49,4 +49,14 @@ RSpec.describe Nsm::Steps::FurtherInformationForm do
       end
     end
   end
+
+  describe '#explanation' do
+    let(:application) { create(:claim, :with_further_information_supplied) }
+    let(:record) { application.further_informations.last }
+    let(:information_supplied) { 'new info' }
+
+    it 'returns the explanation' do
+      expect(form.explanation).to eq('please provide further evidence')
+    end
+  end
 end
