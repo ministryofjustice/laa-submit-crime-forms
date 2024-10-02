@@ -72,7 +72,7 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
       end
 
       it 'returns an error' do
-        expect{form.save}.to raise_error('Invalid state for claim submission')
+        expect { form.save }.to raise_error('Invalid state for claim submission')
       end
     end
   end
