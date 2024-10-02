@@ -148,7 +148,7 @@ en:
         further_information_response:
           - Review the requests and resubmit your application by %{deadline}
           - After this date your application will be automatically closed
-          - <strong>Further information request<strong>
+          - <h3 class="govuk-heading-s">Further information request</h3>
 
 
         # view pages

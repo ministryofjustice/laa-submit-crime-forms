@@ -55,7 +55,7 @@ module Nsm
       end
 
       def join_strings(*strings)
-        safe_join(strings.compact.map { |str| str == tag.br ? str : tag.p(str) })
+        safe_join(strings.compact.map { |str| str == tag.br || str.include?('</h3>') ? str : tag.p(str) })
       end
 
       def claimed_amount
@@ -135,7 +135,7 @@ module Nsm
                         [I18n.t('nsm.steps.view_claim.granted_response')]
                       elsif claim.expired?
                         expiry_response
-                      elsif claim.sent_back? && FeatureFlags.nsm_rfi_loop.enabled?
+                      elsif claim.sent_back? && claim.pending_further_information.present?
                         further_information_response + [update_claim_button]
                       else
                         claim.assessment_comment.split("\n")
@@ -147,14 +147,14 @@ module Nsm
                                                     requested: claim.pending_further_information.requested_at.to_fs(:stamp),
                                                     deadline:
                                                       tag.strong(resubmission_deadline_text)),
-                                             %(strong))
+                                             %w[strong])
       end
 
       def further_information_response
         application_helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
                                                     deadline:
                                                       tag.strong(resubmission_deadline_text)),
-                                             %(strong)) + further_information.information_requested.split("\n")
+                                             %w[strong h3]) + further_information.information_requested.split("\n")
       end
 
       def allowed_amount

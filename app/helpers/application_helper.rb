@@ -14,7 +14,7 @@ module ApplicationHelper
     ApplicationController.helpers.sanitize(string.gsub("\n", '<br>'), tags: %w[br])
   end
 
-  def sanitize_strings(array, *tags)
+  def sanitize_strings(array, tags = [])
     array.map { ApplicationController.helpers.sanitize(_1, tags:) }
   end
 
