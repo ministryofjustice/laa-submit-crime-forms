@@ -128,6 +128,7 @@ module Nsm
         ].compact
       end
 
+      # rubocop:disable Metrics/AbcSize
       def response
         @response ||= if claim.submitted?
                         []
@@ -141,6 +142,7 @@ module Nsm
                         claim.assessment_comment.split("\n")
                       end
       end
+      # rubocop:enable Metrics/AbcSize
 
       def expiry_response
         application_helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.expiry_explanations',
