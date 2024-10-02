@@ -5,7 +5,10 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
 
   let(:scorer) { double(:risk_assessment_scorer, calculate: 'high') }
   let(:assessment_comment) { 'this is an assessment' }
-  let(:claim) { create(:claim, :complete, :case_type_magistrates, assessment_comment:) }
+  let(:claim) do
+    create(:claim, :complete, :case_type_magistrates, :with_further_information_supplied, assessment_comment: assessment_comment,
+  state: 'sent_back')
+  end
   let(:defendant) { claim.defendants.first }
   let(:disbursement) { claim.disbursements.first }
   let(:work_item) { claim.work_items.first }
@@ -131,7 +134,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'reference_number' => '111222'
           },
           'stage_reached' => :prom,
-          'status' => 'draft',
+          'status' => 'sent_back',
           'submitted_total' => nil,
           'submitted_total_inc_vat' => nil,
           'submitter' => { 'description' => nil, 'email' => 'provider@example.com' },
@@ -179,10 +182,17 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
               'attendance_without_counsel' => 52.15,
               'preparation' => 52.15
             },
-            'further_information' => []
+            'further_information' => [
+              { 'caseworker_id' => '87e88ac6-d89a-4180-80d4-e03285023fb0',
+       +       'documents' => [],
+       +       'information_requested' => 'please provide further evidence',
+       +       'information_supplied' => 'here is the extra information you requested',
+       +       'new' => true,
+       +       'requested_at' => '2024-01-01T01:01:01.000Z' }
+            ]
         },
         application_id: claim.id,
-        application_state: 'draft',
+        application_state: 'sent_back',
         application_risk: 'high',
         json_schema_version: 1,
         application_type: 'crm7'
