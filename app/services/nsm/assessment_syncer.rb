@@ -15,7 +15,7 @@ module Nsm
       sync_overall_comment
 
       if claim.part_grant? || claim.granted?
-        @claim.with_lock do
+        claim.with_lock do
           sync_letter_adjustments
           sync_call_adjustments
           sync_work_items
