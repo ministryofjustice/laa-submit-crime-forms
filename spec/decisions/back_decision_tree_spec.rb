@@ -73,4 +73,12 @@ RSpec.describe Decisions::BackDecisionTree do
   it_behaves_like 'a generic decision', from: 'nsm/steps/equality', goto: { action: :show, controller: 'nsm/steps/check_answers' }
   it_behaves_like 'a generic decision', from: 'nsm/steps/equality_questions', goto: { action: :edit, controller: 'nsm/steps/equality' }
   it_behaves_like 'a generic decision', from: 'nsm/steps/solicitor_declaration', goto: { action: :edit, controller: 'nsm/steps/equality' }
+
+  # Further Information
+  context 'when pending further information' do
+    let(:application) { create(:claim, :with_further_information_supplied, id:) }
+
+    it_behaves_like 'a generic decision', from: 'nsm/steps/solicitor_declaration', goto: { action: :edit, controller: 'nsm/steps/further_information' }
+    it_behaves_like 'a generic decision', from: 'nsm/steps/further_information', goto: { action: :show, controller: 'nsm/steps/view_claim' }, additional_param: :id
+  end
 end
