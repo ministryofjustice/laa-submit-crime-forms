@@ -7,7 +7,7 @@ class SubmitToAppStore
     def initialize(claim:, scorer: RiskAssessment::RiskAssessmentScorer)
       @claim = claim
       @scorer = scorer
-      @latest_payload = claim.provider_updated? latest_payload : nil
+      @latest_payload = claim.provider_updated? ? latest_payload : nil
     end
 
     def payload
@@ -24,28 +24,32 @@ class SubmitToAppStore
     private
 
     def data
-      if claim.provider_updated?
-        @latest_payload['application'].merge('further_information' => further_information)
-      else
-        direct_attributes.merge(
-          'status' => claim.state,
-          'vat_rate' => pricing[:vat].to_f,
-          'stage_reached' => claim.stage_reached,
-          'disbursements' => disbursements,
-          'work_items' => work_items,
-          'defendants' => defendants,
-          'firm_office' => firm_office,
-          'solicitor' => solicitor,
-          'submitter' => submitter,
-          'supporting_evidences' => supporting_evidences,
-          'work_item_pricing' => work_item_pricing,
-          'cost_summary' => cost_summary
-        )
-      end
+      claim.provider_updated? ? send_back_payload : submit_payload
     end
 
     def latest_payload
       AppStoreClient.new.get(claim.id)
+    end
+
+    def submit_payload
+      direct_attributes.merge(
+        'status' => claim.state,
+        'vat_rate' => pricing[:vat].to_f,
+        'stage_reached' => claim.stage_reached,
+        'disbursements' => disbursements,
+        'work_items' => work_items,
+        'defendants' => defendants,
+        'firm_office' => firm_office,
+        'solicitor' => solicitor,
+        'submitter' => submitter,
+        'supporting_evidences' => supporting_evidences,
+        'work_item_pricing' => work_item_pricing,
+        'cost_summary' => cost_summary
+      )
+    end
+
+    def send_back_payload
+      @latest_payload['application'].merge('further_information' => further_information)
     end
 
     def direct_attributes
