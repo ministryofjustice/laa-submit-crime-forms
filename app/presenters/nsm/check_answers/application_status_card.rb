@@ -145,18 +145,16 @@ module Nsm
       # rubocop:enable Metrics/AbcSize
 
       def expiry_response
-        application_helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.expiry_explanations',
-                                                    requested: claim.pending_further_information.requested_at.to_fs(:stamp),
-                                                    deadline:
-                                                      tag.strong(resubmission_deadline_text)),
-                                             %w[strong])
+        I18n.t('nsm.steps.view_claim.expiry_explanations',
+               requested: claim.pending_further_information.requested_at.to_fs(:stamp),
+               deadline:
+                 tag.strong(resubmission_deadline_text)).html_safe
       end
 
       def further_information_response
-        application_helpers.sanitize_strings(I18n.t('nsm.steps.view_claim.further_information_response',
-                                                    deadline:
-                                                      tag.strong(resubmission_deadline_text)),
-                                             %w[strong h3]) + further_information.information_requested.split("\n")
+        I18n.t('nsm.steps.view_claim.further_information_response',
+               deadline:
+                 tag.strong(resubmission_deadline_text)).html_safe + further_information.information_requested.split("\n")
       end
 
       def allowed_amount
