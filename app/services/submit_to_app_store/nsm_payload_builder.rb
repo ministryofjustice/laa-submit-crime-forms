@@ -7,7 +7,7 @@ class SubmitToAppStore
     def initialize(claim:, scorer: RiskAssessment::RiskAssessmentScorer)
       @claim = claim
       @scorer = scorer
-      @latest_payload = claim.provider_updated? latest_payload : nil
+      @latest_payload = claim.provider_updated? ? latest_payload : nil
     end
 
     def payload
