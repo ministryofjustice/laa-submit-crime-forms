@@ -13,18 +13,16 @@ module Nsm
 
     def call
       sync_overall_comment
-
-      if claim.part_grant? || claim.granted?
-        claim.with_lock do
+      claim.with_lock do
+        if claim.part_grant? || claim.granted?
           sync_letter_adjustments
           sync_call_adjustments
           sync_work_items
           sync_disbursements
+        elsif claim.sent_back? && further_information_exists
+          sync_further_info_requests
         end
-      elsif claim.sent_back? && further_information_exists
-        sync_further_info_requests
       end
-
       # save here to avoid multiple DB updates on claim during the process
       claim.save!
     rescue StandardError => e
