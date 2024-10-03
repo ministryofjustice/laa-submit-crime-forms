@@ -7,6 +7,7 @@ class SubmitToAppStore
     def initialize(claim:, scorer: RiskAssessment::RiskAssessmentScorer)
       @claim = claim
       @scorer = scorer
+      @latest_payload = claim.provider_updated? latest_payload : nil
     end
 
     def payload
@@ -15,7 +16,7 @@ class SubmitToAppStore
         json_schema_version: 1,
         application_state: claim.state,
         application: data,
-        application_risk: scorer.calculate(claim),
+        application_risk: application_risk,
         application_type: 'crm7'
       }
     end
@@ -23,21 +24,28 @@ class SubmitToAppStore
     private
 
     def data
-      direct_attributes.merge(
-        'status' => claim.state,
-        'vat_rate' => pricing[:vat].to_f,
-        'stage_reached' => claim.stage_reached,
-        'disbursements' => disbursements,
-        'work_items' => work_items,
-        'defendants' => defendants,
-        'firm_office' => firm_office,
-        'solicitor' => solicitor,
-        'submitter' => submitter,
-        'supporting_evidences' => supporting_evidences,
-        'further_information' => further_information,
-        'work_item_pricing' => work_item_pricing,
-        'cost_summary' => cost_summary
-      )
+      if claim.provider_updated?
+        @latest_payload['application'].merge('further_information' => further_information)
+      else
+        direct_attributes.merge(
+          'status' => claim.state,
+          'vat_rate' => pricing[:vat].to_f,
+          'stage_reached' => claim.stage_reached,
+          'disbursements' => disbursements,
+          'work_items' => work_items,
+          'defendants' => defendants,
+          'firm_office' => firm_office,
+          'solicitor' => solicitor,
+          'submitter' => submitter,
+          'supporting_evidences' => supporting_evidences,
+          'work_item_pricing' => work_item_pricing,
+          'cost_summary' => cost_summary
+        )
+      end
+    end
+
+    def latest_payload
+      AppStoreClient.new.get(claim.id)
     end
 
     def direct_attributes
@@ -109,8 +117,7 @@ class SubmitToAppStore
     def further_information
       claim.further_informations.map do |further_information|
         further_information.as_json(only: FURTHER_INFO_ATTRIBUTES).merge(
-          'documents' => further_info_documents(further_information),
-          'new' => further_information == claim.pending_further_information
+          'documents' => further_info_documents(further_information)
         )
       end
     end
@@ -134,6 +141,10 @@ class SubmitToAppStore
       Nsm::CheckAnswers::CostSummaryCard.new(claim).table_fields(formatted: false).index_by do |row|
         row.delete(:name)
       end
+    end
+
+    def application_risk
+      claim.provider_updated? ? @latest_payload['application_risk'] : scorer.calculate(claim)
     end
   end
 end
