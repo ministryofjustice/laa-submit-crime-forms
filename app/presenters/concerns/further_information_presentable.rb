@@ -29,8 +29,7 @@ module FurtherInformationPresentable
       if skip_links
         document.file_name
       else
-        govuk_link_to(document.file_name,
-                      Rails.application.routes.url_helpers.download_path(document))
+        govuk_link_to(document.file_name, url_helper.download_path(document))
       end
     end
     response = simple_format(further_information.information_supplied)
