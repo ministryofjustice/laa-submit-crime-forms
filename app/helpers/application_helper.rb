@@ -14,10 +14,6 @@ module ApplicationHelper
     ApplicationController.helpers.sanitize(string.gsub("\n", '<br>'), tags: %w[br])
   end
 
-  def sanitize_strings(array, tags = [])
-    array.map { ApplicationController.helpers.sanitize(_1, tags:) }
-  end
-
   def relevant_prior_authority_list_anchor(prior_authority_application)
     case prior_authority_application.state
     when 'submitted'
