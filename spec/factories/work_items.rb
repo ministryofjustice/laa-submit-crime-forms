@@ -19,6 +19,12 @@ FactoryBot.define do
       uplift { '100' }
     end
 
+    trait :high_profit_cost do
+      valid
+      work_type { WorkTypes::ATTENDANCE_WITHOUT_COUNSEL }
+      time_spent { 60_000 }
+    end
+
     trait :medium_risk_values do
       work_type { WorkTypes::PREPARATION }
       time_spent { '100' }
