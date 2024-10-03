@@ -9,7 +9,7 @@ module Nsm
       def persist!
         Claim.transaction do
           application.state = new_state
-          if application.state == :submitted
+          if application.submitted?
             application.update_work_item_positions!
             application.update_disbursement_positions!
           end
