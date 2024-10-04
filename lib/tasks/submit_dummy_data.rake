@@ -2,7 +2,8 @@
 namespace :submit_dummy_data do
   desc "Submit dummy prior authority data to the app store"
   task prior_authority: :environment do
-    application = FactoryBot.build(:prior_authority_application, :full, id: SecureRandom.uuid)
+    application = FactoryBot.build(:prior_authority_application, :full, id: SecureRandom.uuid,
+                                   created_at: DateTime.current, updated_at: DateTime.current)
     SubmitToAppStore.new.submit(application)
   end
 

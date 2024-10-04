@@ -24,8 +24,7 @@ module TestData
       )
 
       application.firm_office.update!(
-        name: Faker::Company.name,
-        town: Faker::Address.city,
+        name: Faker::Company.name
       )
 
       latest_incorrect_info = application.incorrect_informations.order(requested_at: :desc).first

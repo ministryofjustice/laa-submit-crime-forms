@@ -9,10 +9,18 @@ class SubmitToAppStore
       { application_id: application.id,
         json_schema_version: 1,
         application_state: application.state,
-        application: data,
+        application: validated_data,
         application_type: 'crm4',
         application_risk: 'N/A',
         events: @include_events ? PriorAuthority::EventBuilder.call(application, data) : [] }
+    end
+
+    def validated_data
+      built_data = data
+      issues = LaaCrimeFormsCommon::Validator.validate(:prior_authority, built_data)
+      raise "Validation issues detected for #{application.id}: #{issues.to_sentence}" if issues.any?
+
+      data
     end
 
     def data
