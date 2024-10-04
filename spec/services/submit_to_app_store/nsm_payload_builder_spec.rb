@@ -209,6 +209,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'status' => 'sent_back',
             'further_information' => [
               { 'caseworker_id' => '87e88ac6-d89a-4180-80d4-e03285023fb0',
+                'signatory_name' => 'John Doe',
                 'documents' => [
                   {
                     'file_name' => 'further_info1.pdf',

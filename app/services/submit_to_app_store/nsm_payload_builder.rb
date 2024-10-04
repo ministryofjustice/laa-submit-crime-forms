@@ -139,7 +139,8 @@ class SubmitToAppStore
     FURTHER_INFO_ATTRIBUTES = %i[information_requested
                                  information_supplied
                                  caseworker_id
-                                 requested_at].freeze
+                                 requested_at
+                                 signatory_name].freeze
 
     def cost_summary
       Nsm::CheckAnswers::CostSummaryCard.new(claim).table_fields(formatted: false).index_by do |row|

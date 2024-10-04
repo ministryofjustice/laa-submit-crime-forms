@@ -42,11 +42,11 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
 
     context 'when rfi is available for pa and nsm' do
       let(:signatory_name) { 'John Doe' }
-      let(:application) { create(:claim, :complete, state: 'sent_back') }
+      let(:application) { create(:claim, :complete, :with_further_information_supplied, state: 'sent_back') }
 
       before do
         allow(SubmitToAppStore).to receive(:perform_later)
-        allow(application).to receive(:update!).and_return(true)
+        allow(application.pending_further_information).to receive(:update!).and_return(true)
       end
 
       it 'notifies the app store' do

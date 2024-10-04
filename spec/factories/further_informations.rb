@@ -9,6 +9,7 @@ FactoryBot.define do
 
     trait :with_response do
       information_supplied { 'here is the extra information you requested' }
+      signatory_name { 'John Doe' }
     end
 
     trait :with_supporting_documents do

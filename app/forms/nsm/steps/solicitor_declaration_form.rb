@@ -12,8 +12,10 @@ module Nsm
           if application.submitted?
             application.update_work_item_positions!
             application.update_disbursement_positions!
+            application.update!(attributes)
+          elsif application.provider_updated?
+            application.pending_further_information.update!(attributes)
           end
-          application.update!(attributes)
         end
 
         SubmitToAppStore.perform_later(submission: application)
