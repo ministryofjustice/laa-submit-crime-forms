@@ -15,7 +15,11 @@ module Nsm
             application.update!(attributes)
           elsif application.provider_updated?
             application.pending_further_information.update!(attributes)
+          # :nocov:
+          else
+            false
           end
+          # :nocov:
         end
 
         SubmitToAppStore.perform_later(submission: application)
