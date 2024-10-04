@@ -254,4 +254,16 @@ updated_at: DateTime.new(2024, 2, 2, 1, 1, 1))
       check_json(subject.payload).matches(application_payload)
     end
   end
+
+  context 'when there is a validation error' do
+    before do
+      allow(LaaCrimeFormsCommon::Validator).to receive(:validate).and_return(['The favourite_fruit field is missing'])
+    end
+
+    it 'raises the error' do
+      expect { subject.payload }.to raise_error(
+        "Validation issues detected for #{claim.id}: The favourite_fruit field is missing"
+      )
+    end
+  end
 end

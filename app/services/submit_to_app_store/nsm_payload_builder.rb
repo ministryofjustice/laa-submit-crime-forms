@@ -15,13 +15,21 @@ class SubmitToAppStore
         application_id: claim.id,
         json_schema_version: 1,
         application_state: claim.state,
-        application: data,
+        application: validated_data,
         application_risk: application_risk,
         application_type: 'crm7'
       }
     end
 
     private
+
+    def validated_data
+      built_data = data
+      issues = LaaCrimeFormsCommon::Validator.validate(:nsm, built_data)
+      raise "Validation issues detected for #{claim.id}: #{issues.to_sentence}" if issues.any?
+
+      data
+    end
 
     def data
       claim.provider_updated? ? send_back_payload : submit_payload

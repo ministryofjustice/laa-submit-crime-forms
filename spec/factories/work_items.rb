@@ -7,6 +7,7 @@ FactoryBot.define do
       time_spent { 50 + (400**rand).to_i } # range: 50 -> 450 with logorithmic distribution
       completed_on { rand(40).days.ago.to_date }
       fee_earner { Faker::Name.name.split.map(&:first).join }
+      uplift { 0 }
     end
 
     trait :partial do

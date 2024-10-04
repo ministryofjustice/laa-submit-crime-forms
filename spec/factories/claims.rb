@@ -36,7 +36,7 @@ FactoryBot.define do
         end
       end
 
-      has_disbursements { disbursements_count.zero? ? 'no' : 'yes' }
+      has_disbursements { 'no' }
     end
 
     trait :complete do
@@ -55,6 +55,7 @@ FactoryBot.define do
       is_other_info { 'no' }
       concluded { 'no' }
       signatory_name { Faker::Name.name }
+      has_disbursements { 'no' }
     end
 
     trait :case_type_magistrates do
