@@ -25,11 +25,10 @@ class SubmitToAppStore
     private
 
     def validated_payload
-      payload = construct_payload
-      issues = LaaCrimeFormsCommon::Validator.validate(:nsm, payload)
-      raise "Validation issues detected for #{claim.id}: #{issues.to_sentence}" if issues.any?
-
-      payload
+      construct_payload.tap do |payload|
+        issues = LaaCrimeFormsCommon::Validator.validate(:nsm, payload)
+        raise "Validation issues detected for #{claim.id}: #{issues.to_sentence}" if issues.any?
+      end
     end
 
     def construct_payload
