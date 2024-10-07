@@ -35,10 +35,6 @@ module Nsm
 
       private
 
-      def url_helpers
-        Rails.application.routes.url_helpers
-      end
-
       def state_text
         items = [state_tag, submitted_date]
         if claim.submitted?
@@ -95,11 +91,11 @@ module Nsm
           tag.li do
             govuk_link_to(
               translate(type),
-              url_helpers.url_for(controller: 'nsm/steps/view_claim',
-                                  action: "adjusted_#{type}",
-                                  id: claim.id,
-                                  anchor: 'cost-summary-table',
-                                  only_path: true),
+              url_helper.url_for(controller: 'nsm/steps/view_claim',
+                                 action: "adjusted_#{type}",
+                                 id: claim.id,
+                                 anchor: 'cost-summary-table',
+                                 only_path: true),
               class: 'govuk-link--no-visited-state'
             )
           end
@@ -178,7 +174,7 @@ module Nsm
       def update_claim_button
         govuk_button_link_to(
           I18n.t('nsm.steps.view_claim.update_claim'),
-          url_helpers.edit_nsm_steps_further_information_path(claim)
+          url_helper.edit_nsm_steps_further_information_path(claim)
         )
       end
 
