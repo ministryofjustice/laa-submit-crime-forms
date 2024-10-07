@@ -34,7 +34,7 @@ module Nsm
             false
           end
           # :nocov:
-          application.save
+          application.save!
         end
       end
     end
