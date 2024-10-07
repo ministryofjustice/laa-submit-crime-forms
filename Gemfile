@@ -15,7 +15,7 @@ gem 'httparty'
 gem 'jsbundling-rails'
 # TODO: Remove ref before merge
 gem 'laa_crime_forms_common', '~> 0.2.2', github: 'ministryofjustice/laa-crime-forms-common',
-    ref: '109327c'
+    ref: 'b2fde5b'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'lograge'
 gem 'logstasher', '~> 2.1'
