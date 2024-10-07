@@ -11,6 +11,7 @@ module Nsm
       @app_store_record = record
     end
 
+    # rubocop:disable Metrics/AbcSize
     def call
       claim.with_lock do
         sync_overall_comment
@@ -28,6 +29,7 @@ module Nsm
     rescue StandardError => e
       Sentry.capture_message("#{self.class.name} encountered error '#{e}' for claim '#{claim.id}'")
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 
