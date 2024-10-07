@@ -196,8 +196,9 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
   end
 
   context 'when the claim is provider updated' do
+    let(:updated_at) { DateTime.current }
     let(:claim) do
-      create(:claim, :complete, :with_further_information_supplied, state: 'provider_updated')
+      create(:claim, :complete, :with_further_information_supplied, state: 'provider_updated', updated_at: updated_at)
     end
 
     let(:application_payload) do
@@ -206,6 +207,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'id' => claim.id,
           'is_other_info' => 'no',
           'laa_reference' => 'LAA-n4AohV',
+          'updated_at' => updated_at,
           'status' => 'sent_back',
             'further_information' => [
               { 'caseworker_id' => '87e88ac6-d89a-4180-80d4-e03285023fb0',

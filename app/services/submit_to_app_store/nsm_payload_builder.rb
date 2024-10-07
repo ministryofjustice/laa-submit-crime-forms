@@ -49,7 +49,8 @@ class SubmitToAppStore
     end
 
     def send_back_payload
-      @latest_payload['application'].merge('further_information' => further_information, 'status' => claim.state)
+      @latest_payload['application'].merge('further_information' => further_information, 'status' => claim.state,
+                                           'updated_at' => claim.updated_at)
     end
 
     def direct_attributes
