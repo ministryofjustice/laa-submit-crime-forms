@@ -2,6 +2,7 @@
 
 module Nsm
   module CheckAnswers
+    # rubocop:disable Metrics/ClassLength
     class ApplicationStatusCard < Base
       include GovukLinkHelper
       include GovukVisuallyHiddenHelper
@@ -25,13 +26,18 @@ module Nsm
           (if response.any?
              {
                head_key: 'laa_response',
-               text: join_strings(*response, *edit_links, appeal_info, *update_claim)
+               text: join_strings(*response, *edit_links, appeal_info,
+                                  *(claim.sent_back? && !claim.pending_further_information ? update_claim : []))
              }
            end)
         ].compact
       end
 
       private
+
+      def url_helpers
+        Rails.application.routes.url_helpers
+      end
 
       def state_text
         items = [state_tag, submitted_date]
@@ -45,7 +51,7 @@ module Nsm
       end
 
       def join_strings(*strings)
-        safe_join(strings.compact.map { |str| str == tag.br ? str : tag.p(str) })
+        safe_join(strings.compact.map { |str| str == tag.br || str.include?('</h3>') ? str : tag.p(str) })
       end
 
       def claimed_amount
@@ -83,18 +89,17 @@ module Nsm
         return expiry_links if claim.expired?
         return unless claim.part_grant?
 
-        helper = Rails.application.routes.url_helpers
         li_elements = %w[work_items letters_and_calls disbursements].map do |type|
           next unless any_changes?(type)
 
           tag.li do
             govuk_link_to(
               translate(type),
-              helper.url_for(controller: 'nsm/steps/view_claim',
-                             action: "adjusted_#{type}",
-                             id: claim.id,
-                             anchor: 'cost-summary-table',
-                             only_path: true),
+              url_helpers.url_for(controller: 'nsm/steps/view_claim',
+                                  action: "adjusted_#{type}",
+                                  id: claim.id,
+                                  anchor: 'cost-summary-table',
+                                  only_path: true),
               class: 'govuk-link--no-visited-state'
             )
           end
@@ -111,8 +116,6 @@ module Nsm
       end
 
       def update_claim
-        return [] unless claim.sent_back?
-
         rfi_email = Rails.configuration.x.contact.nsm_rfi_email
         email = tag.a(rfi_email, href: "mailto:#{rfi_email}")
         [
@@ -121,6 +124,7 @@ module Nsm
         ].compact
       end
 
+      # rubocop:disable Metrics/AbcSize
       def response
         @response ||= if claim.submitted?
                         []
@@ -128,15 +132,25 @@ module Nsm
                         [I18n.t('nsm.steps.view_claim.granted_response')]
                       elsif claim.expired?
                         expiry_response
+                      elsif claim.sent_back? && claim.pending_further_information.present?
+                        further_information_response + [update_claim_button]
                       else
                         claim.assessment_comment.split("\n")
                       end
       end
+      # rubocop:enable Metrics/AbcSize
 
       def expiry_response
         I18n.t('nsm.steps.view_claim.expiry_explanations',
                requested: claim.pending_further_information.requested_at.to_fs(:stamp),
-               deadline: claim.pending_further_information.resubmission_deadline.to_fs(:stamp))
+               deadline:
+                 tag.strong(resubmission_deadline_text)).map(&:html_safe)
+      end
+
+      def further_information_response
+        I18n.t('nsm.steps.view_claim.further_information_response',
+               deadline:
+                 tag.strong(resubmission_deadline_text)).map(&:html_safe) + further_information.information_requested.split("\n")
       end
 
       def allowed_amount
@@ -156,6 +170,22 @@ module Nsm
           claim.disbursements.any?(&:adjustment_comment)
         end
       end
+
+      def further_information
+        claim.pending_further_information
+      end
+
+      def update_claim_button
+        govuk_button_link_to(
+          I18n.t('nsm.steps.view_claim.update_claim'),
+          url_helpers.edit_nsm_steps_further_information_path(claim)
+        )
+      end
+
+      def resubmission_deadline_text
+        further_information.resubmission_deadline.to_fs(:stamp)
+      end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end

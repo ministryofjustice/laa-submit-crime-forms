@@ -121,6 +121,7 @@ Rails.application.routes.draw do
         edit_step :equality
         edit_step :equality_questions
         edit_step :solicitor_declaration
+        upload_step :further_information
         show_step :claim_confirmation
         show_step :check_answers
         show_step :view_claim do
@@ -198,8 +199,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :downloads, only: :show
   end
+
+  resources :downloads, only: :show
 
   if ENV.fetch("ENABLE_SYNC_TRIGGER_ENDPOINT", false) == "true"
     get "sync", to: "sync#sync_all"

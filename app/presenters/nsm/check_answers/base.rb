@@ -5,6 +5,8 @@ module Nsm
       include ActionView::Helpers::TagHelper
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::TextHelper
+      include ActionView::Helpers::UrlHelper
+      include GovukLinkHelper
 
       attr_accessor :group, :section, :has_card
 

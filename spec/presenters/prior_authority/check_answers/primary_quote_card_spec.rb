@@ -63,7 +63,7 @@ RSpec.describe PriorAuthority::CheckAnswers::PrimaryQuoteCard do
           },
           {
             head_key: 'quote_upload',
-            text: "<a class=\"govuk-link\" href=\"/prior-authority/downloads/#{primary_quote.document.id}\">test.png</a>",
+            text: "<a class=\"govuk-link\" href=\"/downloads/#{primary_quote.document.id}\">test.png</a>",
           },
           {
             head_key: 'prior_authority_granted',

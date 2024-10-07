@@ -11,6 +11,7 @@ RSpec.describe SubmitToAppStore do
       .and_return(payload)
     allow(SendNotificationEmail).to receive(:perform_later)
     allow(submission).to receive(:with_lock).and_yield
+    allow(submission).to receive(:provider_updated?).and_return(false)
   end
 
   describe '#perform' do
@@ -51,6 +52,7 @@ RSpec.describe SubmitToAppStore do
       let(:http_client) { instance_double(AppStoreClient, post: true, put: true) }
 
       before do
+        allow(submission).to receive(:provider_updated?).and_return(true)
         allow(AppStoreClient).to receive(:new)
           .and_return(http_client)
       end
@@ -78,8 +80,32 @@ RSpec.describe SubmitToAppStore do
       end
     end
 
-    context 'when submission is a Claim' do
-      let(:http_client) { instance_double(AppStoreClient, post: true) }
+    context 'when submission is a Claim already in app store' do
+      let(:submission) { create(:claim, state: :provider_updated) }
+      let(:http_client) { instance_double(AppStoreClient, post: true, put: true) }
+
+      before do
+        allow(submission).to receive(:provider_updated?).and_return(true)
+        allow(AppStoreClient).to receive(:new)
+          .and_return(http_client)
+      end
+
+      it 'creates a new AppStoreClient instance' do
+        expect(AppStoreClient).to receive(:new)
+
+        subject.submit(submission)
+      end
+
+      it 'sends a HTTP message to PUT' do
+        expect(http_client).to receive(:put).with(payload)
+
+        subject.submit(submission)
+      end
+    end
+
+    context 'when submission is a Claim not already in app store' do
+      let(:submission) { create(:claim, state: :submitted) }
+      let(:http_client) { instance_double(AppStoreClient, post: true, put: true) }
 
       before do
         allow(AppStoreClient).to receive(:new)
@@ -92,7 +118,7 @@ RSpec.describe SubmitToAppStore do
         subject.submit(submission)
       end
 
-      it 'sends a HTTP message' do
+      it 'sends a HTTP message to POST' do
         expect(http_client).to receive(:post).with(payload)
 
         subject.submit(submission)

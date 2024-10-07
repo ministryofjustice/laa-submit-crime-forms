@@ -6,6 +6,9 @@ en:
         show:
           page_title: Claim details
           heading: Claim details
+          claim_updated:
+            text: Claim updated
+            link: Requested claim updates
           tabs:
             overview: Overview
             claimed_costs: Claimed costs
@@ -136,11 +139,17 @@ en:
           no_data: You do not have any adjusted disbursements
           accessibility:
             disbursements_caption: Adjusted disbursements
+        update_claim: Update claim
         granted_response: The claim has been fully granted.
         expiry_explanations:
           - On %{requested} we asked you to update your claim before we could complete the assessment. This was due by %{deadline}.
           - As this update was not made by the required date this claim has been automatically closed.
           - If you make a new claim you should include the requested update.
+        further_information_response:
+          - Review the requests and resubmit your application by %{deadline}
+          - After this date your application will be automatically closed
+          - <h3 class="govuk-heading-s">Further information request</h3>
+
 
         # view pages
         work_item:

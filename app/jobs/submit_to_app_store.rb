@@ -17,11 +17,7 @@ class SubmitToAppStore < ApplicationJob
     payload = PayloadBuilder.call(submission, include_events:)
     client = AppStoreClient.new
 
-    if submission.is_a?(PriorAuthorityApplication)
-      submission.provider_updated? ? client.put(payload) : client.post(payload)
-    else
-      client.post(payload)
-    end
+    submission.provider_updated? ? client.put(payload) : client.post(payload)
   end
 
   def notify(submission)

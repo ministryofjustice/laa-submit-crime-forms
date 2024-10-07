@@ -40,7 +40,7 @@ RSpec.describe PullUpdates do
     let(:claim) do
       instance_double(Claim, id: id, state: 'submitted',
                       save!: true, update!: true, 'assessment_comment=': nil,
-                      sent_back?: false, part_grant?: false, granted?: false)
+                      sent_back?: false, part_grant?: false, granted?: false, with_lock: true)
     end
 
     before do
