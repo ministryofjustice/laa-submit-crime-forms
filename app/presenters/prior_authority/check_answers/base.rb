@@ -2,6 +2,7 @@
 module PriorAuthority
   module CheckAnswers
     class Base
+      include BasePresentable
       include LaaMultiStepForms::CheckMissingHelper
       include ActionView::Helpers::UrlHelper
       include GovukLinkHelper
@@ -68,10 +69,6 @@ module PriorAuthority
                            only_path: true)
           ),
         ]
-      end
-
-      def url_helper
-        Rails.application.routes.url_helpers
       end
     end
   end

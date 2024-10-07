@@ -1,6 +1,7 @@
 module Nsm
   module CheckAnswers
     class Base
+      include BasePresentable
       include LaaMultiStepForms::CheckMissingHelper
       include ActionView::Helpers::TagHelper
       include GovukVisuallyHiddenHelper
