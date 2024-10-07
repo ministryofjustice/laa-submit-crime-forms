@@ -8,13 +8,32 @@ module Nsm
 
       def persist!
         Claim.transaction do
-          application.state = :submitted
-          application.update_work_item_positions!
-          application.update_disbursement_positions!
-          application.update!(attributes)
+          application.state = new_state
+          if application.submitted?
+            application.update_work_item_positions!
+            application.update_disbursement_positions!
+            application.update!(attributes)
+          elsif application.provider_updated?
+            application.pending_further_information.update!(attributes)
+          # :nocov:
+          else
+            false
+          end
+          # :nocov:
         end
+
         SubmitToAppStore.perform_later(submission: application)
         true
+      end
+
+      def new_state
+        if application.state == 'draft'
+          :submitted
+        elsif application.state == 'sent_back'
+          :provider_updated
+        else
+          raise 'Invalid state for claim submission'
+        end
       end
     end
   end

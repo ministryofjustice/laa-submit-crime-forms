@@ -281,5 +281,17 @@ FactoryBot.define do
       end
       firm_office factory: %i[firm_office valid randomised]
     end
+
+    trait :with_further_information_request do
+      further_informations { [build(:further_information)] }
+      state { 'sent_back' }
+      app_store_updated_at { 1.minute.ago }
+    end
+
+    trait :with_further_information_supplied do
+      further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
+      state { 'sent_back' }
+      app_store_updated_at { 1.minute.ago }
+    end
   end
 end

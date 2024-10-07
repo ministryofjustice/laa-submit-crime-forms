@@ -35,8 +35,8 @@ RSpec.describe PriorAuthority::CheckAnswers::ReasonWhyCard do
           },
           {
             head_key: 'supporting_documents',
-            text: "<a class=\"govuk-link\" href=\"/prior-authority/downloads/#{first_doc.id}\">reason_why1.pdf</a><br>" \
-                  "<a class=\"govuk-link\" href=\"/prior-authority/downloads/#{second_doc.id}\">reason_why2.pdf</a>",
+            text: "<a class=\"govuk-link\" href=\"/downloads/#{first_doc.id}\">reason_why1.pdf</a><br>" \
+                  "<a class=\"govuk-link\" href=\"/downloads/#{second_doc.id}\">reason_why2.pdf</a>",
           },
         ]
       )

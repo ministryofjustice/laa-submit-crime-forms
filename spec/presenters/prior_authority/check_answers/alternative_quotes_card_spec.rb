@@ -46,7 +46,7 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
             {
               head_key: 'quote_summary',
               head_opts: { count: 1 },
-              text: "Jim Bob<br><a class=\"govuk-link\" href=\"/prior-authority/downloads/#{document.id}\">test.png</a>" \
+              text: "Jim Bob<br><a class=\"govuk-link\" href=\"/downloads/#{document.id}\">test.png</a>" \
                     '<br>£50.00'
             },
             {

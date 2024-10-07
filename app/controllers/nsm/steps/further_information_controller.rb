@@ -1,6 +1,9 @@
-module PriorAuthority
+# NOTE: FurtherInformationController and FurtherInformationForm has almost complete shared functionality
+# between Prior Authority and Non-standard Magistrates, but we are not DRYing out the code intentionally
+# to allow more flexibility for the processes to deviate if needed
+module Nsm
   module Steps
-    class FurtherInformationController < BaseController
+    class FurtherInformationController < Nsm::Steps::BaseController
       include MultiFileUploadable
 
       def edit
@@ -8,7 +11,7 @@ module PriorAuthority
       end
 
       def update
-        update_and_advance(FurtherInformationForm, as:, after_commit_redirect_path:, record:)
+        update_and_advance(FurtherInformationForm, as:, record:)
       end
 
       def destroy
@@ -28,7 +31,11 @@ module PriorAuthority
       end
 
       def as
-        :further_information
+        :nsm_further_information
+      end
+
+      def decision_tree_class
+        Decisions::DecisionTree
       end
     end
   end

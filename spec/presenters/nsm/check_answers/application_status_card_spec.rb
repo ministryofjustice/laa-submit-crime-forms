@@ -104,7 +104,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               },
               {
                 head_key: 'laa_response',
-                text: '<p>this is a comment</p><p>2nd line</p><p><ul class="govuk-list govuk-list--bullet"></ul></p><p>' \
+                text: '<p>this is a comment</p><p>2nd line</p><p><ul class="govuk-list govuk-list--bullet"></ul></p>' \
                       "<h3 class=\"govuk-heading-s\">Appeal the adjustment</h3>\n<p>If you want to appeal the adjustment, " \
                       'email or post a detailed explanation of the grounds of your appeal and any supporting documents to:' \
                       "</p>\n<ul class=\"govuk-list govuk-list--bullet\">\n  <li><a href=\"mailto:CRM7appeal" \
@@ -112,7 +112,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
                       "email</li>\n  <li>Nottingham Office, 3rd Floor B3.20, 1 Unity Square, Queensbridge Road, " \
                       "Nottingham NG2 1AW, or DX 10035 Nottingham 1</li>\n</ul>\n<p>Appeals may be considered by LAA " \
                       'caseworkers or sent to an independent costs assessor (ICA). You can only appeal once. The ICA’s ' \
-                      "decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).</p>\n</p>"
+                      "decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).</p>\n"
               }
             ]
           )
@@ -132,7 +132,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
               },
               {
                 head_key: 'laa_response',
-                text: '<p>this is a comment</p><p>2nd line</p><p><ul class="govuk-list govuk-list--bullet"></ul></p><p>' \
+                text: '<p>this is a comment</p><p>2nd line</p><p><ul class="govuk-list govuk-list--bullet"></ul></p>' \
                       "<h3 class=\"govuk-heading-s\">Appeal the adjustment</h3>\n<p>If you want to appeal the adjustment, " \
                       'email or post a detailed explanation of the grounds of your appeal and any supporting documents to:' \
                       "</p>\n<ul class=\"govuk-list govuk-list--bullet\">\n  <li><a href=\"mailto:CRM7appeal" \
@@ -140,7 +140,7 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
                       "email</li>\n  <li>Nottingham Office, 3rd Floor B3.20, 1 Unity Square, Queensbridge Road, " \
                       "Nottingham NG2 1AW, or DX 10035 Nottingham 1</li>\n</ul>\n<p>Appeals may be considered by LAA " \
                       'caseworkers or sent to an independent costs assessor (ICA). You can only appeal once. The ICA’s ' \
-                      "decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).</p>\n</p>"
+                      "decision is final (as stated in the Criminal Bills Assessment Manual (CBAM) rule 4.4.1).</p>\n"
               }
             ]
           )
@@ -194,6 +194,32 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
                     'claim</span></p><p>To update your claim, email <a href="mailto:CRM7fi.request@justice.gov.uk">' \
                     'CRM7fi.request@justice.gov.uk</a> with the LAA case reference in the subject of the email and include ' \
                     "any supporting information requested.\n</p>"
+            }
+          ]
+        )
+      end
+    end
+
+    context 'when in sent back requested state and nsm rfi loop enabled' do
+      let(:claim) do
+        create(:claim, :sent_back_state, :firm_details, :build_associates, :updated_at, :with_further_information_request, work_items_count: 1, assessment_comment: assessment_comment)
+      end
+
+      it 'generates sent back rows' do
+        expect(card.row_data).to match(
+          [
+            {
+              head_key: 'application_status',
+              text: Regexp.new('<p><strong class="govuk-tag govuk-tag--yellow">Update needed</strong></p>' \
+                               '<p>1 December 2023</p><br><p>£\d+\.\d\d claimed</p>')
+            },
+            {
+              head_key: 'laa_response',
+              text: '<p>Review the requests and resubmit your application by <strong>2 January 2024</strong></p>' \
+                    '<p>After this date your application will be automatically closed</p>' \
+                    '<h3 class="govuk-heading-s">Further information request</h3>' \
+                    '<p>please provide further evidence</p>' \
+                    "<p><a class=\"govuk-button\" data-module=\"govuk-button\" href=\"/non-standard-magistrates/applications/#{claim.id}/steps/further_information\">Update claim</a></p>"
             }
           ]
         )

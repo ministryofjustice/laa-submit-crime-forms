@@ -6,11 +6,19 @@ RSpec.shared_examples 'a multi file upload controller' do |application:|
   end
 
   describe '#create' do
+    let(:id) do
+      if current_application.is_a?(Claim)
+        :id
+      else
+        :application_id
+      end
+    end
+
     context 'when a file is uploaded' do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
         expect(Clamby).to receive(:safe?).and_return(true)
-        post :create, params: { application_id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
+        post :create, params: { id => '12345', :documents => fixture_file_upload('test.png', 'image/png') }
       end
 
       after do
@@ -29,7 +37,7 @@ RSpec.shared_examples 'a multi file upload controller' do |application:|
     context 'when a file fails to upload' do
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
-        post :create, params: { application_id: '12345', documents: nil }
+        post :create, params: { id => '12345', :documents => nil }
       end
 
       it 'returns a bad request' do
@@ -48,7 +56,7 @@ RSpec.shared_examples 'a multi file upload controller' do |application:|
 
       before do
         post :create,
-             params: { application_id: '12345', documents: fixture_file_upload('test.json', 'application/json') }
+             params: { id => '12345', :documents => fixture_file_upload('test.json', 'application/json') }
       end
 
       it 'returns a bad request' do
@@ -67,7 +75,7 @@ RSpec.shared_examples 'a multi file upload controller' do |application:|
 
       before do
         post :create,
-             params: { application_id: '12345', documents: fixture_file_upload('actually_a_zip.pdf', 'application/pdf') }
+             params: { id => '12345', :documents => fixture_file_upload('actually_a_zip.pdf', 'application/pdf') }
       end
 
       it 'returns a bad request' do
@@ -83,7 +91,7 @@ RSpec.shared_examples 'a multi file upload controller' do |application:|
       before do
         request.env['CONTENT_TYPE'] = 'image/png'
         expect(Clamby).to receive(:safe?).and_return(false)
-        post :create, params: { application_id: '12345', documents: fixture_file_upload('test.png', 'image/png') }
+        post :create, params: { id => '12345', :documents => fixture_file_upload('test.png', 'image/png') }
       end
 
       it 'returns a bad request' do

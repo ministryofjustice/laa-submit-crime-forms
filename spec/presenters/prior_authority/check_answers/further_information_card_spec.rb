@@ -47,8 +47,8 @@ RSpec.describe PriorAuthority::CheckAnswers::FurtherInformationCard do
             },
             {
               head_key: 'supporting_documents',
-              text: "<a class=\"govuk-link\" href=\"/prior-authority/downloads/#{first_doc.id}\">further_info1.pdf</a><br>" \
-                    "<a class=\"govuk-link\" href=\"/prior-authority/downloads/#{second_doc.id}\">further_info2.pdf</a>",
+              text: "<a class=\"govuk-link\" href=\"/downloads/#{first_doc.id}\">further_info1.pdf</a><br>" \
+                    "<a class=\"govuk-link\" href=\"/downloads/#{second_doc.id}\">further_info2.pdf</a>",
             },
           ]
         )
