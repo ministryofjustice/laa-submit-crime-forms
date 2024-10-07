@@ -197,7 +197,8 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
 
   context 'when the claim is provider updated' do
     let(:claim) do
-      create(:claim, :complete, :with_further_information_supplied, state: 'provider_updated', updated_at: DateTime.new(2024, 2, 2, 1, 1, 1))
+      create(:claim, :complete, :with_further_information_supplied, state: 'provider_updated',
+updated_at: DateTime.new(2024, 2, 2, 1, 1, 1))
     end
 
     let(:application_payload) do
