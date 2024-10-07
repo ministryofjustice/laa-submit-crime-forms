@@ -85,7 +85,6 @@ module Nsm
     def sync_further_info_requests
       data['further_information'].each do |further_info|
         record = claim.further_informations.find_or_create_by(
-        claim.further_informations.find_or_create_by(
           caseworker_id: further_info['caseworker_id'],
           information_requested: further_info['information_requested'],
           requested_at: further_info['requested_at']
