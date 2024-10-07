@@ -1,5 +1,6 @@
 module FurtherInformationPresentable
   extend ActiveSupport::Concern
+  include Rails.application.routes.url_helpers
 
   included do
     attr_reader :further_information, :skip_links
@@ -29,7 +30,7 @@ module FurtherInformationPresentable
       if skip_links
         document.file_name
       else
-        govuk_link_to(document.file_name, url_helper.download_path(document))
+        govuk_link_to(document.file_name, download_path(document))
       end
     end
     response = simple_format(further_information.information_supplied)
