@@ -92,10 +92,10 @@ module Nsm
             govuk_link_to(
               translate(type),
               url_helper.url_for(controller: 'nsm/steps/view_claim',
-                                  action: "adjusted_#{type}",
-                                  id: claim.id,
-                                  anchor: 'cost-summary-table',
-                                  only_path: true),
+                                 action: "adjusted_#{type}",
+                                 id: claim.id,
+                                 anchor: 'cost-summary-table',
+                                 only_path: true),
               class: 'govuk-link--no-visited-state'
             )
           end
