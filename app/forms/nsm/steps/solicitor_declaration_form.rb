@@ -4,9 +4,23 @@ module Nsm
       attribute :signatory_name, :string
       validates :signatory_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
 
-      private
-
       def persist!
+        update_application
+        SubmitToAppStore.perform_later(submission: application)
+        true
+      end
+
+      def new_state
+        if application.state == 'draft'
+          :submitted
+        elsif application.state == 'sent_back'
+          :provider_updated
+        else
+          raise 'Invalid state for claim submission'
+        end
+      end
+
+      def update_application
         Claim.transaction do
           application.state = new_state
           if application.submitted?
@@ -20,19 +34,7 @@ module Nsm
             false
           end
           # :nocov:
-        end
-
-        SubmitToAppStore.perform_later(submission: application)
-        true
-      end
-
-      def new_state
-        if application.state == 'draft'
-          :submitted
-        elsif application.state == 'sent_back'
-          :provider_updated
-        else
-          raise 'Invalid state for claim submission'
+          application.save
         end
       end
     end
