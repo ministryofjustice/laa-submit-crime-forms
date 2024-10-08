@@ -1,0 +1,68 @@
+<% title t(".page_title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 id='heading' class="govuk-heading-xl"><%= t(".page_title") %></h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="search-panel govuk-!-margin-bottom-6">
+      <%= form_with(url: search_nsm_applications_path, method: :get, model: @form) do |f| %>
+        <div class="govuk-form-group govuk-!-width-two-thirds" role="search">
+          <%= f.govuk_text_field :search_string, label: { size: 's', text: t(".label") } %>
+        </div>
+
+        <%= f.govuk_submit t('.search') do %>
+          <%= govuk_link_to t('.clear_all'), search_nsm_applications_path %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if @model %>
+      <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="heading">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <% ['ufn', 'defendant', 'account', 'last_updated', 'laa_reference', 'state'].each do |key| %>
+              <%= table_header_with_link(key,
+                                         'nsm.claims.index.header',
+                                         { search_form: @form.attributes, controller: 'nsm/claims', action: 'search' },
+                                         @sort_by,
+                                         @sort_direction) %>
+            <% end %>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body app-task-list__items">
+          <% @model.each do |claim| %>
+            <tr class="govuk-table__row app-task-list__item">
+              <td class="govuk-table__cell">
+                <%= link_to nsm_steps_view_claim_path(claim) do %>
+                  <%= claim.ufn %>
+                <% end %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= claim.main_defendant&.full_name %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= claim.office_code %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= claim.updated_at.to_fs(:stamp) %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= claim.laa_reference %>
+              </td>
+              <td class="govuk-table__cell">
+                <strong class="govuk-tag <%= t("nsm.claims.index.state_colour.#{claim.state}") %>">
+                    <%= t("nsm.claims.index.state.#{claim.state}") %>
+                  </strong>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= render 'shared/pagination', pagy: @pagy, item: t('nsm.claims.index.table_info_item') %>
+    <% end %>
+  </div>
+</div>

@@ -62,6 +62,7 @@ Rails.application.routes.draw do
         get :draft
         get :submitted
         get :reviewed
+        get :search
       end
       member do
         get :delete
@@ -191,6 +192,7 @@ Rails.application.routes.draw do
         get :drafts
         get :submitted
         get :reviewed
+        get :search
       end
       member do
         get 'offboard'

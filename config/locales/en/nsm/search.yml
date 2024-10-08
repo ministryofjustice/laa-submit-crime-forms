@@ -1,0 +1,8 @@
+en:
+  nsm:
+    claims:
+      search:
+        page_title: Search for a claim
+        label: Enter any combination of client, UFN or LAA reference
+        search: Search
+        clear_all: Clear all

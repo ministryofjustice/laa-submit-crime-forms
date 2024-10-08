@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_04_102859) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_07_161008) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,6 +107,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_04_102859) do
     t.boolean "office_in_undesignated_area"
     t.boolean "court_in_undesignated_area"
     t.boolean "transferred_to_undesignated_area"
+    t.virtual "core_search_fields", type: :tsvector, as: "(to_tsvector('simple'::regconfig, COALESCE((laa_reference)::text, ''::text)) || to_tsvector('simple'::regconfig, COALESCE((ufn)::text, ''::text)))", stored: true
+    t.index ["core_search_fields"], name: "index_claims_on_core_search_fields", using: :gin
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
     t.index ["ufn"], name: "index_claims_on_ufn"
@@ -123,6 +125,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_04_102859) do
     t.string "first_name"
     t.string "last_name"
     t.date "date_of_birth"
+    t.virtual "search_fields", type: :tsvector, as: "(to_tsvector('simple'::regconfig, COALESCE((first_name)::text, ''::text)) || to_tsvector('simple'::regconfig, COALESCE((last_name)::text, ''::text)))", stored: true
+    t.index ["search_fields"], name: "index_defendants_on_search_fields", using: :gin
   end
 
   create_table "disbursements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -223,6 +227,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_04_102859) do
     t.string "assessment_comment"
     t.datetime "resubmission_requested"
     t.datetime "resubmission_deadline"
+    t.virtual "core_search_fields", type: :tsvector, as: "(to_tsvector('simple'::regconfig, COALESCE((laa_reference)::text, ''::text)) || to_tsvector('simple'::regconfig, COALESCE((ufn)::text, ''::text)))", stored: true
+    t.index ["core_search_fields"], name: "index_prior_authority_applications_on_core_search_fields", using: :gin
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"

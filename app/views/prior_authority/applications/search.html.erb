@@ -1,0 +1,35 @@
+<% title t(".page_title") %>
+
+<%= render partial: 'shared/notifications' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 id='heading' class="govuk-heading-xl"><%= t(".page_title") %></h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="search-panel govuk-!-margin-bottom-6">
+      <%= form_with(url: search_prior_authority_applications_path, method: :get, model: @form) do |f| %>
+        <div class="govuk-form-group govuk-!-width-two-thirds" role="search">
+          <%= f.govuk_text_field :search_string, label: { size: 's', text: t(".label") } %>
+        </div>
+
+        <%= f.govuk_submit t('.search') do %>
+          <%= govuk_link_to t('.clear_all'), search_prior_authority_applications_path %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if @model %>
+      <%= render 'generic_table',
+                  described_by: 'heading',
+                  params: { search_form: @form.attributes, controller: 'prior_authority/applications', action: 'search' },
+                  pagy: @pagy,
+                  model: @model,
+                  sort_by: @sort_by,
+                  sort_direction: @sort_direction %>
+    <% end %>
+  </div>
+</div>
