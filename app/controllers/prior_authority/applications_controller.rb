@@ -46,6 +46,11 @@ module PriorAuthority
       render 'index'
     end
 
+    def search
+      @form = SearchForm.new(params)
+      @pagy, @model = order_and_paginate { SearchService.call(_1, @form.attributes) } if @form.submitted? && @form.valid?
+    end
+
     def offboard
       @model = PriorAuthorityApplication.for(current_provider).find(params[:id])
     end

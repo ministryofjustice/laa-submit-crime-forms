@@ -1,0 +1,8 @@
+en:
+  prior_authority:
+    applications:
+      search:
+        page_title: Search for an application
+        label: Enter any combination of client, UFN or LAA reference
+        search: Search
+        clear_all: Clear all
