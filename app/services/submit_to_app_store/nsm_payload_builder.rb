@@ -1,4 +1,5 @@
 class SubmitToAppStore
+  # rubocop:disable Metrics/ClassLength
   class NsmPayloadBuilder
     DEFAULT_IGNORE = %w[claim_id created_at updated_at].freeze
 
@@ -15,7 +16,7 @@ class SubmitToAppStore
         application_id: claim.id,
         json_schema_version: 1,
         application_state: claim.state,
-        application: data,
+        application: validated_payload,
         application_risk: application_risk,
         application_type: 'crm7'
       }
@@ -23,7 +24,14 @@ class SubmitToAppStore
 
     private
 
-    def data
+    def validated_payload
+      construct_payload.tap do |payload|
+        issues = LaaCrimeFormsCommon::Validator.validate(:nsm, payload)
+        raise "Validation issues detected for #{claim.id}: #{issues.to_sentence}" if issues.any?
+      end
+    end
+
+    def construct_payload
       claim.provider_updated? ? send_back_payload : submit_payload
     end
 
@@ -153,4 +161,5 @@ class SubmitToAppStore
       claim.provider_updated? ? @latest_payload['application_risk'] : scorer.calculate(claim)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

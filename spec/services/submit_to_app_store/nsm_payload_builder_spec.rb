@@ -5,7 +5,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
 
   let(:scorer) { double(:risk_assessment_scorer, calculate: 'high') }
   let(:assessment_comment) { 'this is an assessment' }
-  let(:claim) { nil }
+  let(:claim) { create(:claim, :complete) }
   let(:defendant) { claim.defendants.first }
   let(:disbursement) { claim.disbursements.first }
   let(:work_item) { claim.work_items.first }
@@ -97,7 +97,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             },
             'first_hearing_date' => /\A\d{4}-\d{2}-\d{2}\z/,
             'gender' => 'm',
-            'has_disbursements' => nil,
+            'has_disbursements' => 'no',
             'hearing_outcome' => /\ACP\d{2}\z/,
             'id' => claim.id,
             'is_other_info' => 'no',
@@ -161,7 +161,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
               'position' => 1,
               'pricing' => pricing[work_item.work_type],
               'time_spent' => an_instance_of(Integer),
-              'uplift' => nil,
+              'uplift' => 0,
               'work_type' => work_item.work_type,
             }],
             'youth_court' => 'no',
@@ -245,6 +245,7 @@ updated_at: DateTime.new(2024, 2, 2, 1, 1, 1))
 
     before do
       allow(AppStoreClient).to receive(:new).and_return(http_client)
+      allow(LaaCrimeFormsCommon::Validator).to receive(:validate).and_return([])
     end
 
     it 'updates data for a send back claim' do
@@ -252,6 +253,18 @@ updated_at: DateTime.new(2024, 2, 2, 1, 1, 1))
       application_payload[:application_state] = 'provider_updated'
 
       check_json(subject.payload).matches(application_payload)
+    end
+  end
+
+  context 'when there is a validation error' do
+    before do
+      allow(LaaCrimeFormsCommon::Validator).to receive(:validate).and_return(['The favourite_fruit field is missing'])
+    end
+
+    it 'raises the error' do
+      expect { subject.payload }.to raise_error(
+        "Validation issues detected for #{claim.id}: The favourite_fruit field is missing"
+      )
     end
   end
 end
