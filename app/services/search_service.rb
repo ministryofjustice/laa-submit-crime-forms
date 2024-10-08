@@ -14,7 +14,7 @@ class SearchService
     private
 
     def with_join(base_query)
-      table_name = base_query.class.to_s.split('::').first.underscore.pluralize
+      table_name = base_query.model.table_name
       query = base_query.joins('LEFT JOIN defendants searchable_defendants ' \
                                "ON searchable_defendants.defendable_id = #{table_name}.id")
       query.distinct
