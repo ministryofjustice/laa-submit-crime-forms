@@ -6,15 +6,6 @@ import accessibleAutocomplete from "accessible-autocomplete";
 // Also includes functions to support requirements to make the autocompletion more fuzzy
 const stopWords = ["a", "the", "of", "in", "and", "at", "&"];
 
-// Maximum amount of partial matches that should count as found
-const MAX_MATCHES = 1;
-
-const matchCompose =
-  (...matchers) =>
-  (option, queryWords) => {
-    return matchers.some((matcher) => matcher(option, queryWords));
-  };
-
 const removePunctuation = (str) => str.replace(/[^\w\s]/g, "");
 
 const sanitizeInput = (str) =>
@@ -24,45 +15,55 @@ const sanitizeInput = (str) =>
     .split(/\s+/)
     .filter((token) => !stopWords.includes(token));
 
-const exactMatch = (option, query) =>
-  query.every((word) => option.some((w) => w.includes(word)));
-
-const partialMatch = (option, query) =>
-  query.filter((word) => option.some((w) => w.includes(word))) >= MAX_MATCHES;
-
-const matcher = matchCompose(exactMatch, partialMatch);
+const fuzzyMatch = (option, query) =>
+  query.some((word) => option.some((w) => w.includes(word)));
 
 export function convertSelectToAutocomplete() {
-  const $acElements = document.querySelectorAll(
-    '[data-module="accessible-autocomplete"]:not([data-converted="true"])',
-  );
-  if ($acElements) {
-    for (let i = 0; i < $acElements.length; i++) {
-      const element = $acElements[i];
-      const name = element.getAttribute("data-name");
-      accessibleAutocomplete.enhanceSelectElement({
-        selectElement: element,
-        defaultValue: "",
-        showNoOptionsFound: name === null,
-        name: name,
-        source: (query, populateResults) => {
-          const trimmed = sanitizeInput(query);
-          const filtered = [...element.options].filter((opt) =>
-            matcher(sanitizeInput(opt.text), trimmed),
-          );
+  [
+    ...document.querySelectorAll(
+      '[data-module="accessible-autocomplete"]:not([data-converted="true"])',
+    ),
+  ].forEach((element) => {
+    const name = element.dataset.name;
+    const values = element.dataset.values;
 
-          const sorted = filtered.sort((a, b) => {
-            const distA = distance(query.toLowerCase(), a.text.toLowerCase());
-            const distB = distance(query.toLowerCase(), b.text.toLowerCase());
-
-            return distA - distB;
-          });
-
-          populateResults(sorted.map((opt) => opt.text));
-        },
-        autoselect: $acElements[i].getAttribute("data-autoselect") === "true",
-      });
-      $acElements[i].setAttribute("data-converted", true);
+    let counts = null;
+    if (values) {
+      try {
+        counts = JSON.parse(values);
+      } catch {}
     }
-  }
+
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: element,
+      defaultValue: "",
+      showNoOptionsFound: name === null,
+      name: name,
+      autoselect: element.dataset.autoselect === "true",
+      source: (query, populateResults) => {
+        const trimmed = sanitizeInput(query);
+        const filtered = [...element.options].filter((opt) =>
+          fuzzyMatch(sanitizeInput(opt.text), trimmed),
+        );
+
+        const sorted = filtered.sort((a, b) => {
+          if (counts) {
+            const countA = counts[a.text] || 0;
+            const countB = counts[b.text] || 0;
+
+            if (countA !== countB) {
+              return countB - countA;
+            }
+          }
+          const distA = distance(query.toLowerCase(), a.text.toLowerCase());
+          const distB = distance(query.toLowerCase(), b.text.toLowerCase());
+
+          return distA - distB;
+        });
+
+        populateResults(sorted.map((opt) => opt.text));
+      },
+    });
+    element.dataset.converted = true;
+  });
 }
