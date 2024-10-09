@@ -20,8 +20,8 @@ FactoryBot.define do
     end
 
     trait :with_firm_and_solicitor do
-      firm_office factory: %i[firm_office valid]
-      solicitor factory: %i[solicitor full]
+      firm_office factory: %i[firm_office valid_pa]
+      solicitor factory: %i[solicitor full_pa]
     end
 
     trait :with_defendant do
@@ -109,7 +109,7 @@ FactoryBot.define do
       prison_id { 'something' }
       subject_to_poca { true }
       next_hearing_date { 1.day.from_now }
-      plea { 'something' }
+      plea { 'guilty' }
       youth_court { 'something' }
       next_hearing { true }
       supporting_documents { build_list(:supporting_document, 2) }
@@ -303,7 +303,7 @@ FactoryBot.define do
         random_date = Faker::Date.between(from: 10.years.ago, to: 1.day.ago)
         "#{random_date.strftime('%d%m%y')}/#{SecureRandom.rand(1000).to_s.rjust(3, '0')}"
       end
-      firm_office factory: %i[firm_office valid randomised]
+      firm_office factory: %i[firm_office valid_pa randomised]
     end
   end
 end

@@ -7,7 +7,7 @@ module Nsm
 
     def index
       @notification_banner = NotificationBanner.active_banner
-      @pagy, @claims = order_and_paginate(Claim.for(current_provider).reviewed.where.not(ufn: nil))
+      @pagy, @claims = order_and_paginate(&:reviewed)
       @scope = :reviewed
       render 'index'
     end
@@ -19,18 +19,23 @@ module Nsm
     end
 
     def reviewed
-      @pagy, @claims = order_and_paginate(Claim.for(current_provider).reviewed.where.not(ufn: nil))
+      @pagy, @claims = order_and_paginate(&:reviewed)
       render 'index'
     end
 
     def submitted
-      @pagy, @claims = order_and_paginate(Claim.for(current_provider).submitted_or_resubmitted.where.not(ufn: nil))
+      @pagy, @claims = order_and_paginate(&:submitted_or_resubmitted)
       render 'index'
     end
 
     def draft
-      @pagy, @claims = order_and_paginate(Claim.for(current_provider).draft.where.not(ufn: nil))
+      @pagy, @claims = order_and_paginate(&:draft)
       render 'index'
+    end
+
+    def search
+      @form = SearchForm.new(params)
+      @pagy, @model = order_and_paginate { SearchService.call(_1, @form.attributes) } if @form.submitted? && @form.valid?
     end
 
     def confirm_delete
@@ -59,7 +64,8 @@ module Nsm
       'ascending' => 'ASC',
     }.freeze
 
-    def order_and_paginate(query)
+    def order_and_paginate
+      query = yield Claim.for(current_provider).where.not(ufn: nil)
       order_template = ORDERS[@sort_by]
       direction = DIRECTIONS[@sort_direction]
       pagy(query.includes(:main_defendant).order(order_template.gsub('?', direction)))

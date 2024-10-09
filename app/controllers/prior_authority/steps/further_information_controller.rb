@@ -24,7 +24,7 @@ module PriorAuthority
       private
 
       def record
-        current_application.further_informations.order(:created_at).last
+        current_application.pending_further_information
       end
 
       def as

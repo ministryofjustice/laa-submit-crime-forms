@@ -39,7 +39,7 @@ module PriorAuthority
           else
             links = further_information.supporting_documents.map do |document|
               govuk_link_to(document.file_name,
-                            url_helper.prior_authority_download_path(document))
+                            url_helper.download_path(document))
             end
             sanitize(links.join(tag.br), tags: %w[a br])
           end

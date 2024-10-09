@@ -36,7 +36,7 @@ FactoryBot.define do
         end
       end
 
-      has_disbursements { disbursements_count.zero? ? 'no' : 'yes' }
+      has_disbursements { 'no' }
     end
 
     trait :complete do
@@ -55,6 +55,7 @@ FactoryBot.define do
       is_other_info { 'no' }
       concluded { 'no' }
       signatory_name { Faker::Name.name }
+      has_disbursements { 'no' }
     end
 
     trait :case_type_magistrates do
@@ -280,6 +281,18 @@ FactoryBot.define do
         "#{random_date.strftime('%d%m%y')}/#{SecureRandom.rand(1000).to_s.rjust(3, '0')}"
       end
       firm_office factory: %i[firm_office valid randomised]
+    end
+
+    trait :with_further_information_request do
+      further_informations { [build(:further_information)] }
+      state { 'sent_back' }
+      app_store_updated_at { 1.minute.ago }
+    end
+
+    trait :with_further_information_supplied do
+      further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
+      state { 'sent_back' }
+      app_store_updated_at { 1.minute.ago }
     end
   end
 end

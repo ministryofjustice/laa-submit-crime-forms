@@ -4,7 +4,11 @@ RSpec.describe TestData::PaResubmitter do
   describe '#resubmit' do
     let(:client) { double(AppStoreClient, put: true, get: old_payload) }
 
-    let(:old_payload) { SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:).payload.deep_stringify_keys }
+    let(:old_payload) do
+      {
+        application: SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:).data
+      }.deep_stringify_keys
+    end
 
     before do
       allow(AppStoreClient).to receive(:new).and_return(client)

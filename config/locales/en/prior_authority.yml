@@ -9,6 +9,7 @@ en:
       none: None
       not_applicable: N/A
     states:
+      draft: Draft
       granted: Granted
       auto_grant: Granted
       part_grant: Part granted
