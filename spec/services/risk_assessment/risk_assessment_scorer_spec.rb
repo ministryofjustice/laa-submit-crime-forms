@@ -7,7 +7,7 @@ RSpec.describe RiskAssessment::RiskAssessmentScorer do
 
   describe '#calculate' do
     context 'returns high risk' do
-      let(:claim) { create(:claim, :with_assigned_council) }
+      let(:claim) { create(:claim, :with_assigned_council, :full_firm_details) }
 
       it do
         expect(described_class.calculate(claim)).to eq('high')
@@ -17,6 +17,7 @@ RSpec.describe RiskAssessment::RiskAssessmentScorer do
     context 'returns medium risk' do
       let(:claim) do
         create(:claim,
+               :full_firm_details,
                prosecution_evidence: 1,
                defence_statement: 1,
                number_of_witnesses: 1,
@@ -44,6 +45,7 @@ RSpec.describe RiskAssessment::RiskAssessmentScorer do
     context 'returns low risk' do
       let(:claim) do
         create(:claim,
+               :full_firm_details,
                prosecution_evidence: 50,
                defence_statement: 1,
                number_of_witnesses: 1,

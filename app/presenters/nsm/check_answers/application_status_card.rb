@@ -138,9 +138,8 @@ module Nsm
 
       def expiry_response
         I18n.t('nsm.steps.view_claim.expiry_explanations',
-               requested: claim.pending_further_information.requested_at.to_fs(:stamp),
-               deadline:
-                 tag.strong(resubmission_deadline_text)).map(&:html_safe)
+               requested: further_information.requested_at.to_fs(:stamp),
+               deadline: tag.strong(resubmission_deadline_text)).map(&:html_safe)
       end
 
       def further_information_response
@@ -168,7 +167,8 @@ module Nsm
       end
 
       def further_information
-        claim.pending_further_information
+        # If a claim is expired, the most recent further information that we want to reference won't be pending
+        claim.pending_further_information || claim.further_informations.order(:requested_at).last
       end
 
       def update_claim_button
