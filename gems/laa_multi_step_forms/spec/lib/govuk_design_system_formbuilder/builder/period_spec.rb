@@ -274,9 +274,7 @@ maxlength: '2' })
 
       before do
         object.time_spent = wrong_hash
-        # rubocop:disable RSpec/MessageChain
         allow(Rails).to receive_message_chain(:logger, :warn)
-        # rubocop:enable RSpec/MessageChain
         subject
       end
 
