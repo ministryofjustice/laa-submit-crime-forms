@@ -6,17 +6,28 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
   describe '#assess' do
     subject(:assessment) { described_class.new(claim).assess }
 
-    let(:claim) { create(:claim, :one_work_item) }
+    let(:claim) { create(:claim, :one_work_item, :full_firm_details) }
 
     it 'returns false when no clauses are triggered' do
       expect(assessment).to be_falsey
     end
 
-    context 'when cost is over £5000' do
-      before { create(:disbursement, :valid_high_cost, claim:) }
+    context 'when vat-inclusive profit-cost is £5000 or more' do
+      before do
+        create(:work_item, :high_profit_cost, claim:)
+        claim.reload
+      end
 
       it 'returns true' do
         expect(assessment).to be_truthy
+      end
+    end
+
+    context 'when non-profit-cost is over £5000' do
+      before { create(:disbursement, :valid_high_cost, claim:) }
+
+      it 'returns false' do
+        expect(assessment).to be_falsey
       end
     end
 

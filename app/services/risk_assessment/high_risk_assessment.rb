@@ -2,14 +2,12 @@
 
 module RiskAssessment
   class HighRiskAssessment
+    HIGH_RISK_THRESHOLD = 5000
+
     def initialize(claim)
       @claim = claim
 
-      @items = {
-        work_items: Nsm::CostSummary::WorkItems.new(@claim.work_items, @claim),
-        letters_calls: Nsm::CostSummary::LettersCalls.new(@claim),
-        disbursements: Nsm::CostSummary::Disbursements.new(@claim.disbursements.by_age, @claim)
-      }
+      @summary = Nsm::CheckAnswers::CostSummaryCard.new(claim)
     end
 
     def assess
@@ -17,7 +15,8 @@ module RiskAssessment
     end
 
     def high_cost?
-      @items.values.filter_map(&:total_cost).sum > 5000
+      profit_cost_summary = @summary.table_fields(formatted: false).find { _1[:name] == 'profit_costs' }
+      profit_cost_summary[:gross_cost] >= HIGH_RISK_THRESHOLD
     end
 
     def counsel_assigned?
