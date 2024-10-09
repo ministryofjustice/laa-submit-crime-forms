@@ -2,6 +2,15 @@ module PriorAuthority
   module Steps
     class PrimaryQuoteController < BaseController
       def edit
+        counts = PriorAuthorityApplication
+                 .where.not(service_type: [nil, ''])
+                 .group(:service_type)
+                 .count
+        values = PriorAuthority::QuoteServices.values.map do |service|
+          [service.translated, counts.fetch(service.value.to_s, 0)]
+        end
+
+        @values = values.sort_by { |_, count| -count }.to_h
         @form_object = PrimaryQuoteForm.build(
           record,
           application: current_application
