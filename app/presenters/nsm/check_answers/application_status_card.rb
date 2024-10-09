@@ -138,9 +138,8 @@ module Nsm
 
       def expiry_response
         I18n.t('nsm.steps.view_claim.expiry_explanations',
-               requested: claim.pending_further_information.requested_at.to_fs(:stamp),
-               deadline:
-                 tag.strong(resubmission_deadline_text)).map(&:html_safe)
+               requested: claim.further_informations.maximum(:requested_at).to_fs(:stamp),
+               deadline: tag.strong(resubmission_deadline_text)).map(&:html_safe)
       end
 
       def further_information_response
