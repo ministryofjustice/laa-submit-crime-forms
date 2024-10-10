@@ -79,6 +79,9 @@ RSpec/ContextWording:
 RSpec/StubbedMock:
   Enabled: false
 
+RSpec/MessageChain:
+  Enabled: false
+
 RSpec/NoExpectationExample:
   Enabled: false
 

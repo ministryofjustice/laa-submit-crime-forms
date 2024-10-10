@@ -10,20 +10,61 @@ RSpec.describe LaaMultiStepForms::ApplicationHelper, type: :helper do
   describe '#title' do
     let(:title) { helper.content_for(:page_title) }
 
-    before do
-      helper.title(value)
+    context 'ignoring layout' do
+      before do
+        helper.title(value)
+      end
+
+      context 'for a blank value' do
+        let(:value) { '' }
+
+        it { expect(title).to eq('DEFAULT_SERVICE_NAME - GOV.UK') }
+      end
+
+      context 'for a provided value' do
+        let(:value) { 'Test page' }
+
+        it { expect(title).to eq('Test page - DEFAULT_SERVICE_NAME - GOV.UK') }
+      end
     end
 
-    context 'for a blank value' do
-      let(:value) { '' }
-
-      it { expect(title).to eq('Claim a non-standard magistrates&#39; court payment - GOV.UK') }
-    end
-
-    context 'for a provided value' do
+    context 'layout-based titles' do
+      let(:lookup_context) { 'context' }
       let(:value) { 'Test page' }
 
-      it { expect(title).to eq('Test page - Claim a non-standard magistrates&#39; court payment - GOV.UK') }
+      before do
+        allow(helper).to receive(:lookup_context).and_return(lookup_context)
+      end
+
+      context 'when current_layout cannot be determined' do
+        before do
+          allow(helper).to receive_message_chain(:controller, :send).with(:_layout, lookup_context, [])
+                                                                    .and_raise(NoMethodError)
+          helper.title(value)
+        end
+
+        it { expect(title).to eq('Test page - DEFAULT_SERVICE_NAME - GOV.UK') }
+      end
+
+      context 'when current_layout is nsm' do
+        before do
+          allow(helper).to receive_message_chain(:controller, :send).with(:_layout, lookup_context, [])
+                                                                    .and_return('nsm')
+          helper.title(value)
+        end
+
+        it { expect(title).to eq('Test page - NSM_SERVICE_NAME - GOV.UK') }
+      end
+
+      context 'when current_layout is oa' do
+        before do
+          allow(helper).to receive_message_chain(:controller, :send).with(:_layout, lookup_context, [])
+                                                                    .and_return('prior_authority')
+          helper.title(value)
+        end
+
+        it { expect(title).to eq('Test page - PA_SERVICE_NAME - GOV.UK') }
+      end
     end
   end
 

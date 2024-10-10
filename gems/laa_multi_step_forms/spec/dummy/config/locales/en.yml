@@ -1,7 +1,11 @@
 
 en:
   service:
-    name: Claim a non-standard magistrates' court payment
+    name: DEFAULT_SERVICE_NAME
+  nsm:
+    service_name: NSM_SERVICE_NAME
+  prior_authority:
+    service_name: PA_SERVICE_NAME
 
   flash:
     success:
