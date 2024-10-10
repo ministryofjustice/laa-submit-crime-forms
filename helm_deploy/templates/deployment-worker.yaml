@@ -185,6 +185,8 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: provider_api_key
+            - name: CLAMD_CONF_FILENAME
+              value: clamd.cloud-platform.conf
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

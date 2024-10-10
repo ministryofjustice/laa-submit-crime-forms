@@ -1,4 +1,4 @@
-{{ if .Values.customErrorService.enabled }}
+{{ if not .Values.branch }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
