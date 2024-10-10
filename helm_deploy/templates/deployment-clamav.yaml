@@ -1,4 +1,8 @@
-{{ if not .Values.branch }}
+{{- /*
+  TODO: delete the below line and replace it with the commented out one
+  {{ if not .Values.branch }}
+*/ -}}
+{{ if .Values.branch }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

@@ -48,6 +48,8 @@ spec:
   - port: 80
     targetPort: 8080
     name: http
+# TODO: Delete the below line before merge
+{{ end }}
 ---
 apiVersion: v1
 kind: Service
@@ -62,4 +64,7 @@ spec:
     targetPort: 3310
   selector:
     app: submit-crime-forms-clamav
-{{ end }}
+{{- /*
+  TODO: reinstate the below line
+  {{ end }}
+*/ -}}
