@@ -215,7 +215,8 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'laa_response',
-              text: '<p>Review the requests and resubmit your application by <strong>2 January 2024</strong></p>' \
+              text: '<p>Updates are needed to proceed with your application.</p>' \
+                    '<p>Review the requests and resubmit your application by <strong>2 January 2024</strong></p>' \
                     '<p>After this date your application will be automatically closed</p>' \
                     '<h3 class="govuk-heading-s">Further information request</h3>' \
                     '<p>please provide further evidence</p>' \
