@@ -8,8 +8,7 @@ replicaCount:
 
 namespace: laa-submit-crime-forms-uat
 
-customErrorService:
-  enabled: true
+branch: false
 
 image:
   repository: nginx
