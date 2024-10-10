@@ -37,7 +37,7 @@ module Nsm
 
       def state_text
         items = [state_tag, submitted_date]
-        if claim.submitted?
+        if claim.submitted? || claim.provider_updated?
           items += [translate(:awaiting_review), tag.br, claimed_amount]
         else
           items += [tag.br, claimed_amount]
@@ -120,9 +120,9 @@ module Nsm
         ].compact
       end
 
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def response
-        @response ||= if claim.submitted?
+        @response ||= if claim.submitted? || claim.provider_updated?
                         []
                       elsif claim.granted? && claim.assessment_comment.blank?
                         [I18n.t('nsm.steps.view_claim.granted_response')]
@@ -134,7 +134,7 @@ module Nsm
                         claim.assessment_comment.split("\n")
                       end
       end
-      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       def expiry_response
         I18n.t('nsm.steps.view_claim.expiry_explanations',

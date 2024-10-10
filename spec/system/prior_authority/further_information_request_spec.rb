@@ -10,7 +10,7 @@ RSpec.describe 'Prior authority applications - provider responds to further info
   end
 
   it 'displays requested information' do
-    expect(page).to have_title('Further information requested')
+    expect(page).to have_title('Further information request')
     expect(page).to have_content('Your application needs the following further information to proceed')
     expect(page).to have_content('please provide further evidence')
   end

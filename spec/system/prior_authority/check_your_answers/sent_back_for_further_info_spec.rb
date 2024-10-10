@@ -36,7 +36,7 @@ RSpec.describe 'Prior authority applications, sent back for further info - check
         .and have_css('.govuk-summary-card__content', text: 'Supporting documentsfurther_info1.pdffurther_info2.pdf')
 
       click_on 'Change'
-      expect(page).to have_title('Further information requested')
+      expect(page).to have_title('Further information request')
     end
 
     click_on 'Save and continue'
