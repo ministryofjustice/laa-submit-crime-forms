@@ -67,9 +67,9 @@
   <div role="navigation">
     <%= yield(:back_link) %>
   </div>
-  <%= render partial: 'shared/flash_banner' %>
 
   <main class="govuk-main-wrapper" id="main-content" role="main">
+    <%= render partial: 'shared/flash_banner' %>
     <%= yield(:content) %>
   </main>
 </div>
