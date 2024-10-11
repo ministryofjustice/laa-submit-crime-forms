@@ -28,7 +28,7 @@ module PriorAuthority
     def destroy
       @model = PriorAuthorityApplication.for(current_provider).find(params[:id])
       @model.destroy
-      redirect_to drafts_prior_authority_applications_path
+      redirect_to drafts_prior_authority_applications_path, flash: { success: t('.deleted') }
     end
 
     def drafts

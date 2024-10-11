@@ -45,7 +45,7 @@ module Nsm
     def destroy
       @model = Claim.for(current_provider).find(params[:id])
       @model.destroy
-      redirect_to draft_nsm_applications_path
+      redirect_to draft_nsm_applications_path, flash: { success: t('.deleted') }
     end
 
     private
