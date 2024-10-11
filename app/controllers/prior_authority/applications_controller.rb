@@ -70,10 +70,6 @@ module PriorAuthority
       current_provider.prior_authority_applications.create!(attributes).tap(&block)
     end
 
-    def service
-      Providers::Gatekeeper::PAA
-    end
-
     ORDERS = {
       'ufn' => 'ufn ?',
       'client' => 'defendants.first_name ?, defendants.last_name ?',

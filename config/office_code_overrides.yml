@@ -1,0 +1,39 @@
+# List of providers office codes that we want to manually mark as inactive or active
+# This takes precedence over what the Provider API returns
+localhost:
+  active_office_codes:
+    - 1A123B
+    - 2A555X
+    - AAAAAA
+    - BBBBBB
+    - CCCCCC
+    - XXXXXX
+    - ZZZZZZ
+  inactive_office_codes:
+    - 3B345C
+    - 4C567D
+    - YYYYYY
+
+development:
+  active_office_codes:
+    - 1A123B
+    - 2A555X
+    - AAAAAA
+    - BBBBBB
+    - CCCCCC
+    - XXXXXX
+    - ZZZZZZ
+  inactive_office_codes:
+    - 3B345C
+    - 4C567D
+    - YYYYYY
+
+uat:
+  active_office_codes: []
+  inactive_office_codes:
+    # Test office for A.CLARKE (see 1Password for login), has eforms role
+    - 0X416R
+
+production:
+  active_office_codes: []
+  inactive_office_codes: []
