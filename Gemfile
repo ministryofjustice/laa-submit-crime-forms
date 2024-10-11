@@ -37,6 +37,7 @@ gem 'solid_cache', '~> 1.0'
 gem 'table_print'
 gem 'turbo-rails', '~> 2.0.10'
 gem 'tzinfo-data'
+gem 'with_advisory_lock'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
