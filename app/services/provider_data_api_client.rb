@@ -3,8 +3,8 @@ class ProviderDataApiClient
     def contract_active?(office_code)
       query(
         "provider-office/#{office_code}/office-contract-details",
-        200 => ->(_) { true },
-        204 => ->(_) { false },
+        200 => true,
+        204 => false,
       )
     end
 
@@ -19,7 +19,7 @@ class ProviderDataApiClient
       query(
         "provider-users/#{user_login}/provider-offices",
         200 => ->(data) { data['officeCodes'] },
-        204 => ->(_) { [] },
+        204 => [],
       )
     end
 
@@ -33,7 +33,11 @@ class ProviderDataApiClient
         raise "Unexpected status code #{response.code} when querying provider API endpoint #{endpoint}"
       end
 
-      return_values[response.code].call(response.parsed_response)
+      if return_values[response.code].respond_to?(:call)
+        return_values[response.code].call(response.parsed_response)
+      else
+        return_values[response.code]
+      end
     end
 
     def base_url
