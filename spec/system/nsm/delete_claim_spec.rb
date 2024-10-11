@@ -15,14 +15,14 @@ RSpec.describe 'NSM application deletion' do
 
   it 'allows the user to delete an application' do
     click_on 'Delete'
-    expect(page).to have_content 'Are you sure you want to delete this draft application?'
+    expect(page).to have_content 'Are you sure you want to delete this draft claim?'
     click_on 'Yes, delete it'
     expect(page).to have_no_content '120423/008'
   end
 
   it 'allows the user to cancel deleting an application' do
     click_on 'Delete'
-    expect(page).to have_content 'Are you sure you want to delete this draft application?'
+    expect(page).to have_content 'Are you sure you want to delete this draft claim?'
     click_on 'No, do not delete it'
     expect(page).to have_content '120423/008'
   end
