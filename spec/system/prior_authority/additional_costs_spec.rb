@@ -61,10 +61,22 @@ RSpec.describe 'Prior authority applications - additional costs' do
           click_on 'Delete'
           expect(page).to have_content 'Are you sure you want to delete this additional cost?'
           click_on 'Yes, delete it'
-          expect(page).to have_content 'Do you want to add another additional cost?'
-          choose 'No'
-          click_on 'Save and continue'
+          expect(page).to have_content 'You have deleted the additional cost'
+          expect(page).to have_content 'Primary quote summary'
           expect(page).to have_content 'No additional costs added'
+        end
+
+        context 'when I have added multiple costs' do
+          before do
+            create :additional_cost, prior_authority_application: PriorAuthorityApplication.first
+          end
+
+          it 'removes the cost then takes me back to the cost list' do
+            click_on 'Delete'
+            click_on 'Yes, delete it'
+            expect(page).to have_content 'You have deleted the additional cost'
+            expect(page).to have_content "You've added 1 additional"
+          end
         end
 
         it 'allows me to travel between quote summary and cost summary' do
