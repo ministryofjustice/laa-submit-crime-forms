@@ -54,7 +54,9 @@ RSpec.describe OfficeCodeService do
     end
 
     it 'raises an error' do
-      expect { subject }.to raise_error 'Unexpected status code 500 when checking for office codes for user LOGIN'
+      expect { subject }.to raise_error(
+        'Unexpected status code 500 when querying provider API endpoint provider-users/LOGIN/provider-offices'
+      )
     end
   end
 
@@ -64,7 +66,9 @@ RSpec.describe OfficeCodeService do
     end
 
     it 'raises an error' do
-      expect { subject }.to raise_error 'Unexpected status code 204 when checking for user with email EMAIL'
+      expect { subject }.to raise_error(
+        'Unexpected status code 204 when querying provider API endpoint provider-users/exists?userEmail=EMAIL'
+      )
     end
   end
 end
