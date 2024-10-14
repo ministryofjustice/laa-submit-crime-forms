@@ -17,7 +17,7 @@ class ProviderDataApiClient
 
     def user_office_details(user_login)
       query(
-        "provider-users/#{user_login}/provider-offices",
+        "provider-users/#{CGI.escape(user_login)}/provider-offices",
         200 => ->(data) { data['officeCodes'] },
         204 => [],
       )
