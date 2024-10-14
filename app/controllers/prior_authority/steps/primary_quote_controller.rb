@@ -2,15 +2,8 @@ module PriorAuthority
   module Steps
     class PrimaryQuoteController < BaseController
       def edit
-        counts = PriorAuthorityApplication
-                 .where.not(service_type: [nil, ''])
-                 .group(:service_type)
-                 .count
-        values = PriorAuthority::QuoteServices.values.map do |service|
-          [service.translated, counts.fetch(service.value.to_s, 0)]
-        end
+        @services = count_services
 
-        @values = values.sort_by { |_, count| -count }.to_h
         @form_object = PrimaryQuoteForm.build(
           record,
           application: current_application
@@ -33,6 +26,19 @@ module PriorAuthority
 
       def additional_permitted_params
         %i[service_type_autocomplete service_type_autocomplete_suggestion file_upload]
+      end
+
+      def count_services
+        counts = PriorAuthorityApplication
+                 .where.not(service_type: [nil, ''])
+                 .group(:service_type)
+                 .count
+
+        values = PriorAuthority::QuoteServices.values.map do |service|
+          [service.translated, counts.fetch(service.value.to_s, 0)]
+        end
+
+        values.sort_by { |_, count| -count }.to_h
       end
     end
   end
