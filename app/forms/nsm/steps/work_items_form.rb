@@ -11,7 +11,7 @@ module Nsm
       end
 
       def all_work_items_valid?
-        application.work_items.all? { WorkItemForm.build(_1, application:).valid? }
+        application.work_items.all?(&:complete?)
       end
     end
   end

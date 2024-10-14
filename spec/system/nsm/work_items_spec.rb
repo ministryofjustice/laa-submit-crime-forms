@@ -24,6 +24,9 @@ RSpec.describe 'User can manage work items', type: :system do
     end
 
     fill_in 'Fee earner initials', with: 'JBJ'
+
+    choose 'No'
+
     click_on 'Save and continue'
 
     expect(claim.reload.work_items).to contain_exactly(
@@ -57,6 +60,7 @@ RSpec.describe 'User can manage work items', type: :system do
     fill_in 'Fee earner initials', with: 'JBJ'
     check 'Apply an uplift to this work'
     fill_in 'Enter an uplift percentage from 1 to 100', with: 10
+    choose 'No'
     click_on 'Save and continue'
 
     expect(claim.reload.work_items).to contain_exactly(
@@ -97,6 +101,7 @@ RSpec.describe 'User can manage work items', type: :system do
     end
 
     fill_in 'Fee earner initials', with: 'JBJ'
+    choose 'No'
 
     click_on 'Save and continue'
 
@@ -160,6 +165,7 @@ RSpec.describe 'User can manage work items', type: :system do
     find('.govuk-table__row', text: 'Advocacy').click_on 'Duplicate'
 
     expect(claim.reload.work_items.count).to eq(2)
+    choose 'No'
 
     click_on 'Save and continue'
 

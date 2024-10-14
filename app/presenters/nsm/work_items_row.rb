@@ -50,7 +50,7 @@ module Nsm
     end
 
     def duplicate_or_update_link
-      if Nsm::Steps::WorkItemForm.build(@work_item, application: current_application).valid?
+      if @work_item.complete?
         duplicate_link
       else
         update_link

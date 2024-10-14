@@ -13,6 +13,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
       fee_earner:,
       apply_uplift:,
       uplift:,
+      add_another:,
     }
   end
 
@@ -34,10 +35,11 @@ RSpec.describe Nsm::Steps::WorkItemForm do
   let(:assigned_counsel) { 'yes' }
   let(:prog_stage_reached) { true }
   let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
+  let(:add_another) { 'yes' }
 
   describe '#validations' do
     context 'require fields' do
-      %w[work_type time_spent completed_on fee_earner].each do |field|
+      %w[work_type time_spent completed_on fee_earner add_another].each do |field|
         describe "#when #{field} is blank" do
           let(field) { nil }
 

@@ -12,7 +12,12 @@ module Nsm
       end
 
       def update
-        update_and_advance(WorkItemForm, as: :work_item, record: work_item)
+        count = current_application.work_items.count + 1
+        flash = { success: t('.added', count: count, work_items: t('.work_item').pluralize(count)) }
+        update_and_advance(WorkItemForm,
+                           as: :work_item,
+                           record: work_item,
+                           flash: flash)
       end
 
       def duplicate
@@ -46,7 +51,7 @@ module Nsm
       end
 
       def additional_permitted_params
-        [:apply_uplift]
+        [:apply_uplift, :add_another]
       end
     end
   end

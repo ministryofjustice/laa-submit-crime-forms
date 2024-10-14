@@ -55,7 +55,17 @@ RSpec.describe Decisions::DecisionTree do
     it_behaves_like 'a generic decision', from: :claim_details, goto: { action: :edit, controller: 'nsm/steps/work_items' }
   end
 
-  it_behaves_like 'a generic decision', from: :work_item, goto: { action: :edit, controller: 'nsm/steps/work_items' }
+  context 'answer yes to add_another for work_item' do
+    before { allow(form).to receive(:add_another).and_return(YesNoAnswer::YES) }
+
+    it_behaves_like 'a generic decision', from: :work_item, goto: { action: :edit, controller: 'nsm/steps/work_item', work_item_id: Nsm::StartPage::NEW_RECORD }
+  end
+
+  context 'answer no to add_another for work_item' do
+    before { allow(form).to receive(:add_another).and_return(YesNoAnswer::NO) }
+
+    it_behaves_like 'a generic decision', from: :work_item, goto: { action: :edit, controller: 'nsm/steps/work_items' }
+  end
 
   context 'when no work items' do
     it_behaves_like 'a generic decision', from: :work_item_delete, goto: { action: :edit, controller: 'nsm/steps/work_item', work_item_id: Nsm::StartPage::NEW_RECORD }
