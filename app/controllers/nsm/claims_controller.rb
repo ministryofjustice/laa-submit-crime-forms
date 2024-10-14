@@ -45,7 +45,7 @@ module Nsm
     def destroy
       @model = Claim.for(current_provider).find(params[:id])
       @model.destroy
-      redirect_to draft_nsm_applications_path
+      redirect_to draft_nsm_applications_path, flash: { success: t('.deleted') }
     end
 
     private
@@ -94,10 +94,6 @@ module Nsm
         random_reference = "LAA-#{SecureRandom.alphanumeric(6)}"
         break random_reference unless Claim.exists?(laa_reference: random_reference)
       end
-    end
-
-    def service
-      Providers::Gatekeeper::NSM
     end
   end
 end

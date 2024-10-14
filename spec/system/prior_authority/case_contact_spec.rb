@@ -89,6 +89,7 @@ RSpec.describe 'Prior authority applications - add case contact' do
     before do
       Provider.first.update(office_codes: %w[1A123B 1K022G])
       PriorAuthorityApplication.first.update!(office_code: nil)
+      allow(ActiveOfficeCodeService).to receive(:call).with(%w[1A123B 1K022G]).and_return(%w[1A123B 1K022G])
     end
 
     context 'when I have filled in the case contact screen' do
