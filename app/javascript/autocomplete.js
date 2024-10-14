@@ -28,6 +28,7 @@ export function convertSelectToAutocomplete() {
   ].forEach((element) => {
     const name = element.dataset.name;
     const values = element.dataset.values;
+    const useCustom = element.dataset.custom === "true";
 
     let counts = null;
     if (values) {
@@ -39,7 +40,7 @@ export function convertSelectToAutocomplete() {
     accessibleAutocomplete.enhanceSelectElement({
       selectElement: element,
       defaultValue: "",
-      showNoOptionsFound: name === null,
+      showNoOptionsFound: name === null && !useCustom,
       name: name,
       autoselect: element.dataset.autoselect === "true",
       source: (query, populateResults) => {
@@ -63,7 +64,13 @@ export function convertSelectToAutocomplete() {
           return distA - distB;
         });
 
-        populateResults(sorted.map((opt) => opt.text));
+        const results = sorted.map((opt) => opt.text);
+
+        if (useCustom) {
+          populateResults([...results, query]);
+        } else {
+          populateResults(results);
+        }
       },
     });
     element.dataset.converted = true;
