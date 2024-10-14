@@ -9,11 +9,14 @@ en:
           vat_info: VAT is not included in any of these items. We'll show you totals including VAT before you submit your claim.
           work_type_pricing: "%{price} per hour"
           calculation: Calculation
-          before_uplift: Before uplift
-          after_uplift: After uplift
-          total: Total
+          before_uplift: Net cost claimed
+          after_uplift: Net cost with uplift
+          total: Net cost claimed
         duplicate:
           duplicate: Work item successfully duplicated
+        update:
+          work_item: work item
+          added: You have added %{count} %{work_items}
       work_items:
         edit:
           page_title: Work Items
@@ -27,9 +30,11 @@ en:
           add_another: Do you want to add another work item?
           add_now: Add another work item
           unknown_date: Unknown date
+          summary: Summary of work items
+          all_work_items: All work items
+          table_info_item: work item
           accessibility:
             item: Item
-            work_items_caption: Claimed work items
             work_summary_caption: 'Summary of work items'
             net_cost: 'Sum of net cost claimed:'
       work_item_delete:

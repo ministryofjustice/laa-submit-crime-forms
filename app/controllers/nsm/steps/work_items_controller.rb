@@ -4,14 +4,16 @@ module Nsm
       before_action :set_default_table_sort_options
 
       def edit
-        @work_items = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
+        @summary = CostSummary::WorkItems.new(current_application.work_items, current_application)
+        @pagy, @work_items = pagy_array(Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction))
         @form_object = WorkItemsForm.build(
           current_application
         )
       end
 
       def update
-        @work_items = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
+        @summary = CostSummary::WorkItems.new(current_application.work_items, current_application)
+        @pagy, @work_items = pagy_array(Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction))
         update_and_advance(WorkItemsForm, as: :work_items)
       end
 

@@ -124,7 +124,8 @@ RSpec.describe 'User can manage work items', type: :system do
   end
 
   it 'can calculate the result without creating duplicate records' do
-    visit edit_nsm_steps_work_item_path(claim.id, work_item_id: Nsm::StartPage::NEW_RECORD)
+    work_item = create(:work_item, claim:)
+    visit edit_nsm_steps_work_item_path(claim.id, work_item_id: work_item.id)
 
     expect { click_on 'Update the calculation' }.not_to change(WorkItem, :count)
   end
@@ -140,7 +141,7 @@ RSpec.describe 'User can manage work items', type: :system do
 
     visit edit_nsm_steps_work_items_path(claim.id)
 
-    find('.govuk-table__row', text: 'Advocacy').click_on 'Delete'
+    click_on 'Delete'
 
     click_on 'Yes, delete it'
 
@@ -160,9 +161,9 @@ RSpec.describe 'User can manage work items', type: :system do
 
     visit edit_nsm_steps_work_items_path(claim.id)
 
-    expect(page).to have_content('Advocacy', count: 1)
+    expect(page).to have_content('Advocacy', count: 2) # 1 line item and 1 summary row
 
-    find('.govuk-table__row', text: 'Advocacy').click_on 'Duplicate'
+    click_on 'Duplicate'
 
     expect(claim.reload.work_items.count).to eq(2)
     choose 'No'
@@ -171,7 +172,7 @@ RSpec.describe 'User can manage work items', type: :system do
 
     expect(claim.reload.work_items.count).to eq(2)
 
-    expect(page).to have_content('Advocacy', count: 2)
+    expect(page).to have_content('Advocacy', count: 3) # 2 line items and 1 summary row
   end
 
   it 'forces me to complete work items before continuing' do
@@ -203,6 +204,7 @@ RSpec.describe 'User can manage work items', type: :system do
     end
 
     fill_in 'Fee earner initials', with: 'JBJ'
+    choose 'No'
     click_on 'Save and continue'
 
     expect(page).to have_content 'Do you want to add another work item?'

@@ -7,6 +7,8 @@ en:
       time: Time
       number: Number
       net_cost: Net cost
+      time_claimed: Time claimed
+      net_cost_claimed: Net cost claimed
     footer:
       total: Total
       total_inc_vat: Total (including VAT)

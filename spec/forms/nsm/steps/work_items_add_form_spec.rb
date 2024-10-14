@@ -342,7 +342,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
 
       it 'returns 0 values' do
         expect(subject.calculation_rows).to eq(
-          [['Before uplift', 'After uplift'],
+          [['Net cost claimed', 'Net cost with uplift'],
            [{ html_attributes: { id: 'without-uplift' }, text: '£' },
             { html_attributes: { id: 'with-uplift' }, text: '£' }]]
         )
@@ -357,7 +357,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
 
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
-            [['Total'],
+            [['Net cost claimed'],
              [{ html_attributes: { id: 'without-uplift' }, text: '£53.52' }]]
           )
         end
@@ -368,7 +368,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
 
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
-            [['Before uplift', 'After uplift'],
+            [['Net cost claimed', 'Net cost with uplift'],
              [{ html_attributes: { id: 'without-uplift' }, text: '£53.52' },
               { html_attributes: { id: 'with-uplift' }, text: '£53.52' }]]
           )
@@ -378,7 +378,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
       context 'when uplift is required and values are set' do
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
-            [['Before uplift', 'After uplift'],
+            [['Net cost claimed', 'Net cost with uplift'],
              [{ html_attributes: { id: 'without-uplift' }, text: '£53.52' },
               { html_attributes: { id: 'with-uplift' }, text: '£58.87' }]]
           )

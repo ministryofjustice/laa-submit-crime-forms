@@ -87,12 +87,16 @@ RSpec.describe Decisions::DecisionTree do
     before { allow(form).to receive(:add_another).and_return(YesNoAnswer::NO) }
 
     context 'existing invalid work_items' do
-      let(:application) { build(:claim, work_items: [build(:work_item)]) }
+      before { allow(form).to receive(:all_work_items_valid?).and_return(false) }
 
       it_behaves_like 'a generic decision', from: :work_items, goto: { action: :edit, controller: 'nsm/steps/work_items' }
     end
 
-    it_behaves_like 'a generic decision', from: :work_items, goto: { action: :edit, controller: 'nsm/steps/letters_calls' }
+    context 'no invalid work_items' do
+      before { allow(form).to receive(:all_work_items_valid?).and_return(true) }
+
+      it_behaves_like 'a generic decision', from: :work_items, goto: { action: :edit, controller: 'nsm/steps/letters_calls' }
+    end
   end
 
   context 'no existing disbursements' do

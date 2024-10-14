@@ -36,7 +36,7 @@ module Nsm
       end
 
       def total_cost
-        @total_cost ||= work_items.sum(&:total_cost)
+        @total_cost ||= work_items.sum { _1.total_cost || 0 }
       end
 
       def total_cost_inc_vat
@@ -58,6 +58,14 @@ module Nsm
           { text: tag.span(translate('.header.item'), class: 'govuk-visually-hidden') },
           { text: translate('.header.time') },
           { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
+        ]
+      end
+
+      def work_item_summary_header_row
+        [
+          { text: tag.span(translate('.header.item'), class: 'govuk-visually-hidden') },
+          { text: translate('.header.time_claimed') },
+          { text: translate('.header.net_cost_claimed'), classes: 'govuk-table__header--numeric' },
         ]
       end
     end
