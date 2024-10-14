@@ -4,16 +4,18 @@ import accessibleAutocomplete from "accessible-autocomplete";
 // Convert select fields to use accessible-autocomplete instead.
 //
 // Also includes functions to support requirements to make the autocompletion more fuzzy
-const stopWords = ["a", "the", "of", "in", "and", "at", "&"];
+const stopWords = ["a", "an", "the", "of", "in", "and", "at", "&"];
 
 const removePunctuation = (str) => str.replace(/[^\w\s]/g, "");
 
-const sanitizeInput = (str) =>
-  removePunctuation(str)
-    .trim()
-    .toLowerCase()
-    .split(/\s+/)
-    .filter((token) => !stopWords.includes(token));
+function sanitizeInput(str) {
+  const words = removePunctuation(str).trim().toLowerCase().split(/\s+/);
+  if (words.length === 1) {
+    return words;
+  }
+
+  return words.filter((token) => !stopWords.includes(token));
+}
 
 const fuzzyMatch = (option, query) =>
   query.some((word) => option.some((w) => w.includes(word)));
