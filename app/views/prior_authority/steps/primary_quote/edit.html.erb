@@ -14,7 +14,7 @@
       <% if @form_object.draft? %>
         <%= suggestion_select form, :service_type_autocomplete, PriorAuthority::QuoteServices.values, :to_sym, :translated, width: 20,
                               options: { include_blank: true }, label: { size: "m" }, hint: { size: "s", text: t(".service_name_hint")},
-                              data: { autoselect: true, values: @values.to_json } %>
+                              data: { autoselect: true, values: @services.to_json } %>
       <% else %>
         <h2 class="govuk-heading-l"><%= @form_object.service_type_translation %></h2>
       <% end %>
