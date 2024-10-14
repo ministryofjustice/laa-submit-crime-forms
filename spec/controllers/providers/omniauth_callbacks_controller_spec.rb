@@ -82,7 +82,7 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
     context 'when not in test mode' do
       before do
         allow(FeatureFlags).to receive(:omniauth_test_mode).and_return(double(:omniauth_test_mode, enabled?: false))
-        allow(OfficeCodeService).to receive(:call).with('provider@example.com').and_return(%w[DDDDDD EEEEEE])
+        allow(OfficeCodeService).to receive(:call).with('test-user').and_return(%w[DDDDDD EEEEEE])
         allow(ActiveOfficeCodeService).to receive(:call).with(%w[DDDDDD EEEEEE]).and_return(['EEEEEE'])
         get :saml
       end

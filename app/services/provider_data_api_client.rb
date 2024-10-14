@@ -8,16 +8,9 @@ class ProviderDataApiClient
       )
     end
 
-    def user_details(email)
-      query(
-        "provider-users/exists?userEmail=#{email}",
-        200 => ->(data) { data['user'] }
-      )
-    end
-
     def user_office_details(user_login)
       query(
-        "provider-users/#{CGI.escape(user_login)}/provider-offices",
+        "provider-users/#{ERB::Util.url_encode(user_login)}/provider-offices",
         200 => ->(data) { data['officeCodes'] },
         204 => [],
       )

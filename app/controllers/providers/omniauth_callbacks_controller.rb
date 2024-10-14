@@ -38,7 +38,7 @@ module Providers
       if FeatureFlags.omniauth_test_mode.enabled?
         auth_data.info.office_codes
       else
-        @office_codes ||= OfficeCodeService.call(auth_data.info.email)
+        @office_codes ||= OfficeCodeService.call(auth_data.uid)
       end
     end
   end
