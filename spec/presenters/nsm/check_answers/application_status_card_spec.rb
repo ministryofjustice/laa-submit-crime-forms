@@ -215,8 +215,9 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
             },
             {
               head_key: 'laa_response',
-              text: '<p>Review the requests and resubmit your application by <strong>2 January 2024</strong></p>' \
-                    '<p>After this date your application will be automatically closed</p>' \
+              text: '<p>Updates are needed to proceed with your claim.</p>' \
+                    '<p>Review the requests and resubmit your claim by <strong>2 January 2024</strong></p>' \
+                    '<p>After this date your claim will be automatically closed</p>' \
                     '<h3 class="govuk-heading-s">Further information request</h3>' \
                     '<p>please provide further evidence</p>' \
                     "<p><a class=\"govuk-button\" data-module=\"govuk-button\" href=\"/non-standard-magistrates/applications/#{claim.id}/steps/further_information\">Update claim</a></p>"
