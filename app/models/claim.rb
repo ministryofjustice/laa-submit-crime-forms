@@ -3,8 +3,8 @@ class Claim < ApplicationRecord
   include StageReachedCalculatable
 
   belongs_to :submitter, class_name: 'Provider'
-  belongs_to :firm_office, optional: true
-  belongs_to :solicitor, optional: true
+  belongs_to :firm_office, optional: true, dependent: :destroy
+  belongs_to :solicitor, optional: true, dependent: :destroy
   has_many :defendants, -> { order(:position) }, dependent: :destroy, as: :defendable, inverse_of: :defendable
   has_one :main_defendant, lambda {
                              where(main: true)
