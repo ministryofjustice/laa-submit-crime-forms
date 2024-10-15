@@ -3,10 +3,10 @@ module Providers
     skip_before_action :verify_authenticity_token
 
     def saml
-      active_office_codes = ActiveOfficeCodeService.call(auth_hash.info.office_codes)
+      active_office_codes = ActiveOfficeCodeService.call(office_codes)
 
       if active_office_codes.any?
-        provider = Provider.from_omniauth(auth_hash)
+        provider = Provider.from_omniauth(auth_data, office_codes)
 
         sign_in_and_redirect(
           provider, event: :authentication
@@ -30,8 +30,16 @@ module Providers
       new_provider_session_path
     end
 
-    def auth_hash
+    def auth_data
       request.env['omniauth.auth']
+    end
+
+    def office_codes
+      if FeatureFlags.omniauth_test_mode.enabled?
+        auth_data.info.office_codes
+      else
+        @office_codes ||= OfficeCodeService.call(auth_data.uid)
+      end
     end
   end
 end

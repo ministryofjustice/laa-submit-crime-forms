@@ -12,25 +12,7 @@ class ActiveOfficeCodeService
     end
 
     def contract_active?(office_code)
-      response = HTTParty.get("#{base_url}/provider-office/#{office_code}/office-contract-details",
-                              headers: { 'X-Authorization': api_key })
-
-      case response.code
-      when 200
-        true
-      when 204
-        false
-      else
-        raise "Unexpected status code #{response.code} when checking office code #{office_code}"
-      end
-    end
-
-    def base_url
-      ENV.fetch('PROVIDER_API_HOST')
-    end
-
-    def api_key
-      ENV.fetch('PROVIDER_API_KEY')
+      ProviderDataApiClient.contract_active?(office_code)
     end
 
     def always_inactive_office_codes

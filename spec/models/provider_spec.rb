@@ -30,7 +30,7 @@ RSpec.describe Provider, type: :model do
   end
 
   describe '#from_omniauth' do
-    let(:info) { double('info', email: 'test@test.com', description: 'desc', roles: 'a,b', office_codes: office_codes) }
+    let(:info) { double('info', email: 'test@test.com', description: 'desc', roles: 'a,b') }
     let(:auth) { double('auth', provider: 'govuk', uid: SecureRandom.uuid, info: info) }
 
     context 'new user' do
@@ -38,7 +38,7 @@ RSpec.describe Provider, type: :model do
         let(:office_codes) { %w[A1 A2] }
 
         it 'creates a new user record' do
-          expect { described_class.from_omniauth(auth) }.to change(described_class, :count).by(1)
+          expect { described_class.from_omniauth(auth, office_codes) }.to change(described_class, :count).by(1)
         end
       end
     end

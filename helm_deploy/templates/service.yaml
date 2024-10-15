@@ -31,7 +31,7 @@ spec:
       name: metrics
   selector:
     metrics-target: {{ include "laa-submit-crime-forms.fullname" . }}-metrics-target
-{{ if .Values.customErrorService.enabled }}
+{{ if not .Values.branch }}
 ---
 apiVersion: v1
 kind: Service
@@ -48,4 +48,18 @@ spec:
   - port: 80
     targetPort: 8080
     name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clamav-service
+  labels:
+    app: submit-crime-forms-clamav
+spec:
+  ports:
+  - port: 3310
+    name: clamav
+    targetPort: 3310
+  selector:
+    app: submit-crime-forms-clamav
 {{ end }}
