@@ -1,6 +1,11 @@
 class SubmitToAppStore < ApplicationJob
   queue_as :default
 
+  def self.perform_later(submission:)
+    submission.update!(submit_to_app_store_completed: false)
+    super
+  end
+
   def perform(submission:)
     # This job may have been enqueued while the submission was locked, before a DB
     # transaction had been committed. So if we read from the DB straight away we
@@ -10,6 +15,7 @@ class SubmitToAppStore < ApplicationJob
     submission.with_lock do
       submit(submission)
       notify(submission)
+      submission.update!(submit_to_app_store_completed: true)
     end
   end
 
