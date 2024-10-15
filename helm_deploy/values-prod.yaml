@@ -5,11 +5,11 @@
 replicaCount:
   app: 4
   worker: 2
+  clamav: 2
 
 namespace: laa-submit-crime-forms-prod
 
-customErrorService:
-  enabled: true
+branch: false
 
 image:
   repository: nginx
