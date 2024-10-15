@@ -64,6 +64,7 @@ en:
           defendant_field_set: Defendant %{index}
           main_defendant: main
           defendant: additional %{index}
+          add_another_hint: Only add this defendant if you are representing them in the same case
       defendant_summary:
         edit:
           page_title: Defendant summary
@@ -75,7 +76,7 @@ en:
             defendant: Defendant
             name: Name
             maat: MAAT ID number
-            delete: Delete
+            action: Action
           cells:
             defendant_main: Defendant 1 (lead)
             defendant_additional: Defendant %{count}

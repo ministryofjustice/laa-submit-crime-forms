@@ -14,14 +14,14 @@
         <% if maat_required?(@form_object) %>
           <th scope="col" class="govuk-table__header govuk-table__space-25"><%= t('.headers.maat') %></th>
         <% end %>
-        <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.delete') %></th>
+        <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.action') %></th>
       </tr>
       </thead>
       <tbody class="govuk-table__body">
         <% @form_object.defendants.each do |defendant| %>
 
           <tr class="govuk-table__row">
-               <% if defendant.record.main == true %>
+               <% if defendant.record.main %>
                 <td class="govuk-table__cell"><%= t('.cells.defendant_main') %></td>
               <% else %>
                 <td class="govuk-table__cell"><%= t('.cells.defendant_additional', count: defendant.position ) %></td>

@@ -4,10 +4,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
-    <% if @form_object.record.main == true %>
+    <% if @form_object.record.main %>
       <h1 class="govuk-heading-l"><%= t('.heading_main') %></h1>
     <% else %>
       <h1 class="govuk-heading-l"><%= t('.heading_additional', count: @form_object.position ) %></h1>
+      <p><%= t('.add_another_hint') %>
     <% end %>
     <%= step_form @form_object, url: nsm_steps_defendant_details_path(@form_object.application, defendant_id: @form_object.record.id) do |f| %>
       <%= f.govuk_fieldset legend: { text: t(@form_object.label_key, index: @form_object.position), hidden: true }, class: 'moj-add-another__item' do %>
