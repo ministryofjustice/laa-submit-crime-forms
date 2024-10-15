@@ -18,17 +18,17 @@ module Nsm
           [
             { text: I18n.t("laa_crime_forms_common.nsm.work_type.#{work_type}"), classes: 'govuk-table__header' },
             { text: ApplicationController.helpers.format_period(time_spent_for(work_type), style: :minimal_html) },
-            { text: NumberTo.pounds(total_cost_for(work_type) || 0), classes: 'govuk-table__cell--numeric' },
+            { text: NumberTo.pounds(total_cost_for(work_type)), classes: 'govuk-table__cell--numeric' },
           ]
         end
       end
 
       def total_cost_for(work_type)
-        forms[work_type.to_s]&.sum(&:total_cost)
+        forms[work_type.to_s]&.sum { _1.total_cost || 0 } || 0
       end
 
       def time_spent_for(work_type)
-        forms[work_type.to_s]&.sum(&:time_spent) || 0
+        forms[work_type.to_s]&.sum { _1.time_spent || 0 } || 0
       end
 
       def forms
@@ -36,7 +36,7 @@ module Nsm
       end
 
       def total_cost
-        @total_cost ||= work_items.sum { _1.total_cost || 0 }
+        @total_cost ||= work_items.sum { _1.total_cost || 0 } || 0
       end
 
       def total_cost_inc_vat
