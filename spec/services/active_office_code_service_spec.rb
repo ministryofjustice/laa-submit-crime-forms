@@ -47,7 +47,9 @@ RSpec.describe ActiveOfficeCodeService do
         let(:status) { 500 }
 
         it 'raises an error' do
-          expect { subject }.to raise_error 'Unexpected status code 500 when checking office code AAAAA'
+          expect { subject }.to raise_error(
+            'Unexpected status code 500 when querying provider API endpoint provider-office/AAAAA/office-contract-details'
+          )
         end
       end
     end

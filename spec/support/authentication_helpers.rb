@@ -14,6 +14,8 @@ module AuthenticationHelpers
 
   def sign_in
     allow(warden).to receive_messages(authenticate!: auth_provider, authenticate: auth_provider)
-    allow(ActiveOfficeCodeService).to receive(:call).with(auth_provider.office_codes).and_return(auth_provider.office_codes)
+    codes = auth_provider.office_codes
+    allow(ActiveOfficeCodeService).to receive(:call).with(codes).and_return(codes)
+    allow(OfficeCodeService).to receive(:call).with(auth_provider.uid).and_return(codes) if auth_provider.respond_to?(:email)
   end
 end
