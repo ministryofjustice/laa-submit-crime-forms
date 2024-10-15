@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SubmitToAppStore do
   subject { described_class.new }
 
-  let(:submission) { instance_double(Claim) }
+  let(:submission) { instance_double(Claim, update!: true) }
   let(:payload) { { some: 'message' } }
 
   before do
@@ -12,6 +12,15 @@ RSpec.describe SubmitToAppStore do
     allow(SendNotificationEmail).to receive(:perform_later)
     allow(submission).to receive(:with_lock).and_yield
     allow(submission).to receive(:provider_updated?).and_return(false)
+  end
+
+  describe '.perform_later' do
+    let(:submission) { create :claim, submit_to_app_store_completed: nil }
+
+    it 'sets a flag' do
+      described_class.perform_later(submission:)
+      expect(submission.reload.submit_to_app_store_completed).to be false
+    end
   end
 
   describe '#perform' do
@@ -43,6 +52,11 @@ RSpec.describe SubmitToAppStore do
         expect(SendNotificationEmail).to receive(:perform_later).with(submission)
         subject.perform(submission:)
       end
+    end
+
+    it 'updates the db record' do
+      expect(submission).to receive(:update!).with(submit_to_app_store_completed: true)
+      subject.perform(submission:)
     end
   end
 
