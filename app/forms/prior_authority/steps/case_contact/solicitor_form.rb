@@ -14,15 +14,8 @@ module PriorAuthority
         private
 
         def persist!
-          existing = application.solicitor
-          existing&.assign_attributes(attributes)
-
-          if existing.nil? || existing.changed?
-            application.create_solicitor!(attributes)
-            application.save!
-          else
-            application.update!(solicitor: existing)
-          end
+          solicitor = application.solicitor || application.build_solicitor
+          solicitor.update!(attributes)
         end
       end
     end
