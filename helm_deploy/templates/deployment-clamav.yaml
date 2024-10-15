@@ -1,0 +1,67 @@
+{{ if not .Values.branch }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: clamav
+spec:
+  replicas: {{ .Values.replicaCount.clamav }}
+  revisionHistoryLimit: 2
+  minReadySeconds: 15
+  serviceName: clamav
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+  selector:
+    matchLabels:
+      app: submit-crime-forms-clamav
+  template:
+    metadata:
+      labels:
+        app: submit-crime-forms-clamav
+        tier: backend
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+      - name: clamav
+        image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed:latest
+        imagePullPolicy: Always
+        command: ['/bin/sh', '-c', 'freshclam && clamd && touch startup.txt && clamdscan startup.txt']
+        securityContext:
+          {{- include "laa-submit-crime-forms.defaultSecurityContext" . | nindent 12 }}
+        ports:
+          - containerPort: 3310
+            protocol: TCP
+        volumeMounts:
+          - mountPath: /var/lib/clamav
+            name: clamav-signatures
+        resources:
+          requests:
+            cpu: 25m
+            memory: 1Gi
+          limits:
+            cpu: 500m
+            memory: 3Gi
+        readinessProbe:
+          tcpSocket:
+            port: 3310
+          initialDelaySeconds: 60
+          periodSeconds: 60
+        livenessProbe:
+          tcpSocket:
+            port: 3310
+          initialDelaySeconds: 60
+          periodSeconds: 60
+  volumeClaimTemplates:
+  - metadata:
+      name: clamav-signatures
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+{{ end }}

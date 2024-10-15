@@ -146,8 +146,9 @@ en:
           - As this update was not made by the required date this claim has been automatically closed.
           - If you make a new claim you should include the requested update.
         further_information_response:
-          - Review the requests and resubmit your application by %{deadline}
-          - After this date your application will be automatically closed
+          - Updates are needed to proceed with your claim.
+          - Review the requests and resubmit your claim by %{deadline}
+          - After this date your claim will be automatically closed
           - <h3 class="govuk-heading-s">Further information request</h3>
 
 

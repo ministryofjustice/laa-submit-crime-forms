@@ -334,9 +334,8 @@ en:
             description: takes 30 seconds
       further_information:
         edit:
-          page_title: Further information requested
-          caption: About the request
-          request_heading: Your application needs the following further information to proceed
+          page_title: Further information request
+          request_heading: Your claim needs the following further information to proceed
           information_supplied: Enter the information requested
           supporting_documentation: Supporting documentation (optional)
           supporting_documentation_caption_html: |
