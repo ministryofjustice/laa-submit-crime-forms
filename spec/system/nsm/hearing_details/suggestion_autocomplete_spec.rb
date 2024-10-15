@@ -34,6 +34,9 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
 
     fill_in 'Which court was the first case hearing heard at?', with: 'Apples'
 
+    # Click the first auto-completion suggestion
+    find_by_id('nsm-steps-hearing-details-form-court-field__option--0').click
+
     click_on 'Save and come back later'
 
     expect(claim.reload).to have_attributes(

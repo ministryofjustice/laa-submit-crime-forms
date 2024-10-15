@@ -39,9 +39,12 @@ RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :sys
     choose 'Yes', visible: :all
     click_on 'Save and continue'
 
-    # Not sure why but this item couldn't be cfound with visible: :all flag
+    # Not sure why but this item couldn't be found with visible: :all flag
     choose 'Other disbursement type', visible: :all
     fill_in other_type_field, with: 'Apples'
+
+    # Click the first auto-completion suggestion
+    find_by_id('nsm-steps-disbursement-type-form-other-type-field__option--0').click
 
     click_on 'Save and come back later'
 
