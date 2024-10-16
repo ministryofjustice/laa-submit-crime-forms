@@ -35,7 +35,7 @@ gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron', '~> 1.12.0'
 gem 'solid_cache', '~> 1.0'
 gem 'table_print'
-gem 'turbo-rails', '~> 2.0.10'
+gem 'turbo-rails', '~> 2.0.11'
 gem 'tzinfo-data'
 gem 'with_advisory_lock'
 
