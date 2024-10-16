@@ -21,6 +21,12 @@
     display: inline-flex;
 }
 
-.fixed-to-right {
-    right: 0 !important;
+/*
+  This workaround addresses an issue where elements with the class `govuk-visually-hidden`
+  within the MOJ Component - Scrollable Pane do not behave as expected.
+  Applying `inset: 0` resolves the issue.
+  It may be worth raising an issue with the GOV.UK Design System team to consider adding inset: 0 to the govuk-visually-hidden component upstream. For now, this solution ensures consistent positioning across all browsers
+*/
+.inset-0 {
+    inset: 0 !important;
 }
