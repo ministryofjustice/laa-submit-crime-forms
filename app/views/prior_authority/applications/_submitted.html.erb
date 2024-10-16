@@ -4,43 +4,45 @@
   <p><%= t('prior_authority.applications.tabs.no_submitted') %></p>
 <% else %>
   <h2 class="govuk-heading-m"><%= t('prior_authority.applications.tabs.submitted') %></h2>
-  <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="tab_submitted">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <% ['ufn', 'client', 'office_code', 'last_updated', 'laa_reference'].each_with_index do |key, index| %>
-          <%= table_header(key,
-                          'prior_authority.applications.tabs.header',
-                           index,
-                           submitted_prior_authority_applications_path,
-                           @sort_by,
-                           @sort_direction) %>
-        <% end %>
-      </tr>
-    </thead>
-
-    <tbody class="govuk-table__body app-task-list__items">
-      <% @model.each do |application| %>
-        <tr class="govuk-table__row app-task-list__item">
-          <td class="govuk-table__cell">
-            <%= link_to prior_authority_application_path(application) do %>
-              <%= application.ufn %>
-            <% end %>
-          </td>
-          <td class="govuk-table__cell">
-            <%= application.defendant&.full_name %>
-          </td>
-          <td class="govuk-table__cell">
-            <%= application.office_code %>
-          </td>
-          <td class="govuk-table__cell">
-            <%= application.updated_at.to_fs(:stamp) %>
-          </td>
-          <td class="govuk-table__cell">
-            <%= application.laa_reference %>
-          </td>
+  <div class="moj-scrollable-pane">
+    <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="tab_submitted">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <% ['ufn', 'client', 'office_code', 'last_updated', 'laa_reference'].each_with_index do |key, index| %>
+            <%= table_header(key,
+                            'prior_authority.applications.tabs.header',
+                            index,
+                            submitted_prior_authority_applications_path,
+                            @sort_by,
+                            @sort_direction) %>
+          <% end %>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody class="govuk-table__body app-task-list__items">
+        <% @model.each do |application| %>
+          <tr class="govuk-table__row app-task-list__item">
+            <td class="govuk-table__cell">
+              <%= link_to prior_authority_application_path(application) do %>
+                <%= application.ufn %>
+              <% end %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= application.defendant&.full_name %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= application.office_code %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= application.updated_at.to_fs(:stamp) %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= application.laa_reference %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
   <%= render 'shared/pagination', pagy: @submitted_pagy, item: t('prior_authority.applications.tabs.application') %>
 <% end %>

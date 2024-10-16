@@ -4,11 +4,13 @@
   <p><%= t('prior_authority.applications.tabs.no_reviewed') %></p>
 <% else %>
   <h2 class="govuk-heading-m"><%= t('prior_authority.applications.tabs.reviewed') %></h2>
-  <%= render 'generic_table',
-             described_by: :tab_reviewed,
-             params: { controller: 'prior_authority/applications', action: 'reviewed' },
-             pagy: pagy,
-             model: model,
-             sort_by: @sort_by,
-             sort_direction: @sort_direction %>
+  <div class="moj-scrollable-pane">
+    <%= render 'generic_table',
+              described_by: :tab_reviewed,
+              params: { controller: 'prior_authority/applications', action: 'reviewed' },
+              pagy: pagy,
+              model: model,
+              sort_by: @sort_by,
+              sort_direction: @sort_direction %>
+  </div>
 <% end %>
