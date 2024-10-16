@@ -21,6 +21,32 @@
     display: inline-flex;
 }
 
+// Default style (mobile)
+
+
+// Desktop-specific style
+@media (min-width: 1024px) {
+  .moj-scrollable-pane.hide-horizontal-scroll {
+      overflow-x: auto; // Allow horizontal scrolling without showing the scrollbar
+      overflow-y: hidden; // Ensure no vertical scroll space appears
+
+      // WebKit-based browsers (Chrome, Safari, etc.)
+      &::-webkit-scrollbar {
+          display: none;
+      }
+
+      // Internet Explorer, Edge (legacy support)
+      -ms-overflow-style: none;
+
+      // Legacy Firefox
+      overflow: -moz-scrollbars-none;
+
+      // Force hiding both scrollbar initially
+      overflow: hidden;
+  }
+}
+
+
 /*
   This workaround addresses an issue where elements with the class `govuk-visually-hidden`
   within the MOJ Component - Scrollable Pane do not behave as expected.
