@@ -10,14 +10,6 @@ module Nsm
         super
       end
 
-      def main_defendant
-        @main_defendant ||= defendants.detect(&:main_record?)
-      end
-
-      def additional_defendants
-        @additional_defendants ||= defendants.reject(&:main_record?)
-      end
-
       def defendants
         @defendants ||= application.defendants.map do |defendant|
           DefendantDetailsForm.build(defendant, application:)
