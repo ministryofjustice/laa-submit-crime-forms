@@ -1,18 +1,40 @@
-export function handleResizeOnScrollablePane() {
-  const scrollablePane = document.querySelector('.moj-scrollable-pane');
+export function handleResizeOnScrollablePane(scrollablePane) {
+  const isLargeScreen = window.innerWidth >= 1024;
 
-  if (window.innerWidth >= 1024) {
-      scrollablePane.classList.add('hide-horizontal-scroll');
-      // Force repaint on Safari by changing overflow values slightly
-      scrollablePane.style.overflow = 'hidden';
-      scrollablePane.style.overflowY = 'hidden'; // Hide vertical scroll space
-      setTimeout(() => {
-          scrollablePane.style.overflow = 'auto';
-          scrollablePane.style.overflowY = 'hidden'; // Ensure no vertical scrollbar space
-      }, 0);
+  if (isLargeScreen) {
+    applyLargeScreenStyles(scrollablePane);
   } else {
-      scrollablePane.classList.remove('hide-horizontal-scroll');
-      scrollablePane.style.overflow = 'scroll';
-      scrollablePane.style.overflowY = 'auto'; // Restore normal behavior on smaller screens
+    applySmallScreenStyles(scrollablePane);
+  }
+}
+
+function applyLargeScreenStyles(element) {
+  if (!element.classList.contains('hide-horizontal-scroll')) {
+    element.classList.add('hide-horizontal-scroll');
+  }
+
+  // Force repaint on Safari by toggling overflow properties
+  element.style.overflow = 'hidden';
+  element.style.overflowY = 'hidden';
+
+  requestAnimationFrame(() => {
+    element.style.overflow = 'auto';
+    element.style.overflowY = 'hidden';
+  });
+}
+
+function applySmallScreenStyles(element) {
+  if (element.classList.contains('hide-horizontal-scroll')) {
+    element.classList.remove('hide-horizontal-scroll');
+  }
+
+  element.style.overflow = 'scroll';
+  element.style.overflowY = 'auto';
+}
+
+export function checkAndHandleResizeOnScrollablePane() {
+  const scrollablePane = document.querySelector('.moj-scrollable-pane');
+  if (scrollablePane) {
+    handleResizeOnScrollablePane(scrollablePane);
   }
 }
