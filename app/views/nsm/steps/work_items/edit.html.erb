@@ -6,7 +6,11 @@
     <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.work_items.count) %></h1>
 
-    <%= govuk_button_to(t('.add_now'), edit_nsm_steps_work_item_path(current_application, work_item_id: Nsm::StartPage::NEW_RECORD), secondary: true, method: :get) %>
+    <%= govuk_table(head: @summary.work_item_summary_header_row,
+                    rows: [*@summary.rows, @summary.footer_row],
+                    first_cell_is_header: true,
+                    caption: t('.summary'),
+                    html_attributes: { class: 'govuk-!-margin-bottom-9' }) %>
 
     <%=
       head = {
@@ -38,8 +42,9 @@
         Nsm::WorkItemsRow.new(work_item, self)
       end
 
-      govuk_table_with_cell(header_row, rows, caption: { text: t('.accessibility.work_items_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} })
+      govuk_table_with_cell(header_row, rows, caption: { text: t('.all_work_items') })
     %>
+    <%= render "shared/pagination",  { pagy: @pagy, item: t('.table_info_item') } %>
 
     <%= step_form @form_object do |f| %>
       <% if @form_object.all_work_items_valid? %>

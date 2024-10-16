@@ -466,6 +466,8 @@ en:
               not_a_number: Uplift percentage must be a number from 1 to 100
               less_than_or_equal_to: Uplift percentage must be from 1 to 100
               greater_than_or_equal_to: Uplift percentage must be from 1 to 100
+            add_another:
+              blank: Choose yes or no to add another record
         nsm/steps/letters_calls_form:
           attributes:
             letters:

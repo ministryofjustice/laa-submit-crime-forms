@@ -24,7 +24,47 @@ RSpec.describe 'User can manage work items', type: :system do
     end
 
     fill_in 'Fee earner initials', with: 'JBJ'
+
+    choose 'No'
+
     click_on 'Save and continue'
+
+    expect(claim.reload.work_items).to contain_exactly(
+      have_attributes(
+        work_type: 'advocacy',
+        time_spent: 61,
+        completed_on: Date.new(2023, 4, 20),
+        fee_earner: 'JBJ',
+        uplift: 0,
+      )
+    )
+  end
+
+  it 'can add two work items on the trot' do
+    visit edit_nsm_steps_work_item_path(id: claim.id, work_item_id: Nsm::StartPage::NEW_RECORD)
+
+    choose 'Advocacy'
+
+    fill_in 'Hours', with: 1
+    fill_in 'Minutes', with: 1
+
+    within('.govuk-fieldset', text: 'Completion date') do
+      fill_in 'Day', with: '20'
+      fill_in 'Month', with: '4'
+      fill_in 'Year', with: '2023'
+    end
+
+    fill_in 'Fee earner initials', with: 'JBJ'
+
+    choose 'Yes'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_current_path(
+      edit_nsm_steps_work_item_path(id: claim.id, work_item_id: Nsm::StartPage::NEW_RECORD)
+    )
+
+    expect(page).to have_content("You've added 1 work item")
 
     expect(claim.reload.work_items).to contain_exactly(
       have_attributes(
@@ -57,6 +97,7 @@ RSpec.describe 'User can manage work items', type: :system do
     fill_in 'Fee earner initials', with: 'JBJ'
     check 'Apply an uplift to this work'
     fill_in 'Enter an uplift percentage from 1 to 100', with: 10
+    choose 'No'
     click_on 'Save and continue'
 
     expect(claim.reload.work_items).to contain_exactly(
@@ -97,6 +138,7 @@ RSpec.describe 'User can manage work items', type: :system do
     end
 
     fill_in 'Fee earner initials', with: 'JBJ'
+    choose 'No'
 
     click_on 'Save and continue'
 
@@ -119,7 +161,8 @@ RSpec.describe 'User can manage work items', type: :system do
   end
 
   it 'can calculate the result without creating duplicate records' do
-    visit edit_nsm_steps_work_item_path(claim.id, work_item_id: Nsm::StartPage::NEW_RECORD)
+    work_item = create(:work_item, claim:)
+    visit edit_nsm_steps_work_item_path(claim.id, work_item_id: work_item.id)
 
     expect { click_on 'Update the calculation' }.not_to change(WorkItem, :count)
   end
@@ -135,7 +178,7 @@ RSpec.describe 'User can manage work items', type: :system do
 
     visit edit_nsm_steps_work_items_path(claim.id)
 
-    find('.govuk-table__row', text: 'Advocacy').click_on 'Delete'
+    click_on 'Delete'
 
     click_on 'Yes, delete it'
 
@@ -155,17 +198,18 @@ RSpec.describe 'User can manage work items', type: :system do
 
     visit edit_nsm_steps_work_items_path(claim.id)
 
-    expect(page).to have_content('Advocacy', count: 1)
+    expect(page).to have_content('Advocacy', count: 2) # 1 line item and 1 summary row
 
-    find('.govuk-table__row', text: 'Advocacy').click_on 'Duplicate'
+    click_on 'Duplicate'
 
-    expect(claim.reload.work_items.count).to eq(2)
+    expect(claim.reload.work_items.count).to eq(1)
+    choose 'No'
 
     click_on 'Save and continue'
 
     expect(claim.reload.work_items.count).to eq(2)
 
-    expect(page).to have_content('Advocacy', count: 2)
+    expect(page).to have_content('Advocacy', count: 3) # 2 line items and 1 summary row
   end
 
   it 'forces me to complete work items before continuing' do
@@ -197,6 +241,7 @@ RSpec.describe 'User can manage work items', type: :system do
     end
 
     fill_in 'Fee earner initials', with: 'JBJ'
+    choose 'No'
     click_on 'Save and continue'
 
     expect(page).to have_content 'Do you want to add another work item?'

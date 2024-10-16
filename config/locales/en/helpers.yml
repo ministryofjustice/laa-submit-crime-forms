@@ -225,6 +225,9 @@ en:
         apply_uplift_options:
           'true': Apply an uplift to this work
         uplift: Enter an uplift percentage from 1 to 100
+        add_another_options:
+          'yes': 'Yes'
+          'no': 'No'
       nsm_steps_letters_calls_form:
         type_options:
           letters: Letters

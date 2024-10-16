@@ -31,4 +31,8 @@ class WorkItem < ApplicationRecord
 
     WorkTypes::VALUES.detect { _1.to_s == work_type }.display?(application)
   end
+
+  def complete?
+    Nsm::Steps::WorkItemForm.build(self, application: claim).tap { _1.add_another = 'no' }.valid?
+  end
 end

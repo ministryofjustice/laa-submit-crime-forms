@@ -96,11 +96,7 @@ Rails.application.routes.draw do
         edit_step :reason_for_claim
         edit_step :claim_details
         edit_step :letters_calls
-        crud_step :work_item, param: :work_item_id, except: [:destroy] do
-          member do
-            get :duplicate
-          end
-        end
+        crud_step :work_item, param: :work_item_id, except: [:destroy]
         edit_step :work_items
         crud_step :work_item_delete, param: :work_item_id, except: [:destroy]
         edit_step :disbursement_add
