@@ -77,6 +77,7 @@ en:
             name: Name
             maat: MAAT ID number
             action: Action
+            second_action: Second action
           cells:
             defendant_main: Defendant 1 (lead)
             defendant_additional: Defendant %{count}

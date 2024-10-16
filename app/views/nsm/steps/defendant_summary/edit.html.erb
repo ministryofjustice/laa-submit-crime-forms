@@ -15,7 +15,9 @@
             <th scope="col" class="govuk-table__header govuk-table__space-25"><%= t('.headers.maat') %></th>
           <% end %>
           <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.action') %></th>
-          <th scope="col" class="govuk-table__header govuk-table__space-15"></th>
+          <th scope="col" class="govuk-table__header govuk-table__space-15">
+            <span class="govuk-visually-hidden"><%= t('.headers.second_action') %></span>
+          </th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
