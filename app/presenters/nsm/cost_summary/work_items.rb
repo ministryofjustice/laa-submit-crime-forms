@@ -65,8 +65,13 @@ module Nsm
         [
           { text: tag.span(translate('.header.item'), class: 'govuk-visually-hidden') },
           { text: translate('.header.time_claimed') },
-          { text: translate('.header.net_cost_claimed'), classes: 'govuk-table__header--numeric' },
+          { text: translate(allow_uplift? ? '.header.net_cost_with_uplift' : '.header.net_cost_claimed'),
+            classes: 'govuk-table__header--numeric' },
         ]
+      end
+
+      def allow_uplift?
+        @claim.reasons_for_claim.include?(ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s)
       end
     end
   end

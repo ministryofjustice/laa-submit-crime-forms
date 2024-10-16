@@ -26,8 +26,9 @@ RSpec.describe Nsm::WorkItemsRow do
           { numeric: true,
             text: '<ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item">' \
                   '<a data-turbo="false" aria-labelledby="duplicate1 itemTitle item1 workType1" id="duplicate1" ' \
-                  "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item/#{work_item.id}/" \
-                  'duplicate">Duplicate</a></li><li class="govuk-summary-list__actions-list-item">' \
+                  "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item/" \
+                  '00000000-0000-0000-0000-000000000000?work_item_to_duplicate=' \
+                  "#{work_item.id}\">Duplicate</a></li><li class=\"govuk-summary-list__actions-list-item\">" \
                   '<a data-turbo="false" aria-labelledby="delete1 itemTitle item1 workType1" id="delete1" ' \
                   "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item_delete/#{work_item.id}\">" \
                   'Delete</a></li></ul>' }
@@ -56,8 +57,9 @@ RSpec.describe Nsm::WorkItemsRow do
           { numeric: true,
             text: '<ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item">' \
                   '<a data-turbo="false" aria-labelledby="duplicate1 itemTitle item1 workType1" id="duplicate1" ' \
-                  "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item/#{work_item.id}/" \
-                  'duplicate">Duplicate</a></li><li class="govuk-summary-list__actions-list-item">' \
+                  "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item/" \
+                  '00000000-0000-0000-0000-000000000000?work_item_to_duplicate=' \
+                  "#{work_item.id}\">Duplicate</a></li><li class=\"govuk-summary-list__actions-list-item\">" \
                   '<a data-turbo="false" aria-labelledby="delete1 itemTitle item1 workType1" id="delete1" ' \
                   "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/work_item_delete/" \
                   "#{work_item.id}\">Delete</a></li></ul>" }

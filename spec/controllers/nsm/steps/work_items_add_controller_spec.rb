@@ -39,6 +39,23 @@ RSpec.describe Nsm::Steps::WorkItemController, type: :controller do
             expect(kwargs).to eq(application:)
           end
         end
+
+        context 'when duplicating an existing work item' do
+          let(:existing_work_item) { create(:work_item, claim: application, time_spent: 504) }
+
+          it 'prepopulates copying from existing item' do
+            allow(Nsm::Steps::WorkItemForm).to receive(:build)
+            get :edit,
+                params: { id: application,
+                          work_item_id: Nsm::StartPage::NEW_RECORD,
+                          work_item_to_duplicate: existing_work_item.id }
+
+            expect(Nsm::Steps::WorkItemForm).to have_received(:build) do |wi, **_kwargs|
+              expect(wi.time_spent).to eq 504
+              expect(wi).to be_new_record
+            end
+          end
+        end
       end
     end
 
@@ -67,53 +84,6 @@ RSpec.describe Nsm::Steps::WorkItemController, type: :controller do
 
           expect(response).to redirect_to(edit_nsm_steps_work_items_path(application))
         end
-      end
-    end
-  end
-
-  describe '#duplicate' do
-    let(:application) { create(:claim) }
-    let(:work_item) { nil }
-
-    before do
-      # initialize the data to ensure the tests work as expected
-      application
-      work_item
-    end
-
-    context 'when existing work_item_id is passed in' do
-      let(:work_item) { create(:work_item, claim: application) }
-
-      it 'creates a duplicate work item and redirects to the edit page' do
-        expect do
-          get :duplicate, params: { id: application, work_item_id: work_item.id }
-        end.to change(application.work_items, :count).by(1)
-
-        new_record_id = application.work_items.pluck(:id).detect { |id| id != work_item.id }
-        expect(response).to redirect_to(edit_nsm_steps_work_item_path(application, work_item_id: new_record_id))
-      end
-    end
-
-    context 'when existing work_item_id is NEW_RECORD' do
-      let(:work_item) { build(:work_item, id: Nsm::StartPage::NEW_RECORD) }
-
-      it 'redirects to the NEW_RECORD page' do
-        expect do
-          get :duplicate, params: { id: application, work_item_id: work_item.id }
-        end.not_to change(application.work_items, :count)
-
-        expect(response).to redirect_to(edit_nsm_steps_work_item_path(application,
-                                                                      work_item_id: Nsm::StartPage::NEW_RECORD))
-      end
-    end
-
-    context 'when unknown work_item_id is passed in' do
-      it 'redirects to the summary page' do
-        expect do
-          get :duplicate, params: { id: application, work_item_id: SecureRandom.uuid }
-        end.not_to change(application.work_items, :count)
-
-        expect(response).to redirect_to(edit_nsm_steps_work_items_path(application))
       end
     end
   end

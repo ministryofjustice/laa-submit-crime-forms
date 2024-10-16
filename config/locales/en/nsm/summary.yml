@@ -9,6 +9,7 @@ en:
       net_cost: Net cost
       time_claimed: Time claimed
       net_cost_claimed: Net cost claimed
+      net_cost_with_uplift: Net cost with uplift
     footer:
       total: Total
       total_inc_vat: Total (including VAT)

@@ -60,7 +60,7 @@ module Nsm
     def duplicate_link
       link_to(
         t('.duplicate'),
-        view.duplicate_nsm_steps_work_item_path(current_application, work_item_id: id),
+        view.edit_nsm_steps_work_item_path(id: application.id, work_item_id: StartPage::NEW_RECORD, work_item_to_duplicate: id),
         data: { turbo: 'false' },
         'aria-labelledby': "duplicate#{position} itemTitle item#{position} workType#{position}",
         id: "duplicate#{position}"

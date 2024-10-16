@@ -40,6 +40,43 @@ RSpec.describe 'User can manage work items', type: :system do
     )
   end
 
+  it 'can add two work items on the trot' do
+    visit edit_nsm_steps_work_item_path(id: claim.id, work_item_id: Nsm::StartPage::NEW_RECORD)
+
+    choose 'Advocacy'
+
+    fill_in 'Hours', with: 1
+    fill_in 'Minutes', with: 1
+
+    within('.govuk-fieldset', text: 'Completion date') do
+      fill_in 'Day', with: '20'
+      fill_in 'Month', with: '4'
+      fill_in 'Year', with: '2023'
+    end
+
+    fill_in 'Fee earner initials', with: 'JBJ'
+
+    choose 'Yes'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_current_path(
+      edit_nsm_steps_work_item_path(id: claim.id, work_item_id: Nsm::StartPage::NEW_RECORD)
+    )
+
+    expect(page).to have_content('You have added 1 work item')
+
+    expect(claim.reload.work_items).to contain_exactly(
+      have_attributes(
+        work_type: 'advocacy',
+        time_spent: 61,
+        completed_on: Date.new(2023, 4, 20),
+        fee_earner: 'JBJ',
+        uplift: 0,
+      )
+    )
+  end
+
   it 'can add a work item with uplift' do
     claim.update!(reasons_for_claim: [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s])
     work_item = claim.work_items.create
@@ -165,7 +202,7 @@ RSpec.describe 'User can manage work items', type: :system do
 
     click_on 'Duplicate'
 
-    expect(claim.reload.work_items.count).to eq(2)
+    expect(claim.reload.work_items.count).to eq(1)
     choose 'No'
 
     click_on 'Save and continue'
