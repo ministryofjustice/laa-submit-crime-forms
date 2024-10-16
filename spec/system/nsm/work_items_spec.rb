@@ -64,7 +64,7 @@ RSpec.describe 'User can manage work items', type: :system do
       edit_nsm_steps_work_item_path(id: claim.id, work_item_id: Nsm::StartPage::NEW_RECORD)
     )
 
-    expect(page).to have_content('You have added 1 work item')
+    expect(page).to have_content("You've added 1 work item")
 
     expect(claim.reload.work_items).to contain_exactly(
       have_attributes(

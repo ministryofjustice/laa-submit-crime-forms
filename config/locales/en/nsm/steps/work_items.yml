@@ -16,8 +16,8 @@ en:
           duplicate: Work item successfully duplicated
         update:
           work_item: work item
-          added: You have added %{count} %{work_items}
-          updated: You updated the work item
+          added: You've added %{count} %{work_items}
+          updated: You've updated the work item
       work_items:
         edit:
           page_title: Work Items
