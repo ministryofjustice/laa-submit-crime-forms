@@ -4,6 +4,7 @@ module Nsm
       include ActionView::Helpers::NumberHelper
       include ActionView::Helpers::TagHelper
       include LaaMultiStepForms::CheckMissingHelper
+      MIDDLE_COLUMN = true
 
       def translate(key, **)
         if key[0] == ('.')
@@ -28,6 +29,14 @@ module Nsm
       def total_cost_cell
         safe_join([tag.span(translate('net_cost'), class: 'govuk-visually-hidden'),
                    tag.strong(NumberTo.pounds(total_cost))])
+      end
+
+      def footer_row
+        [
+          { text: translate('.footer.total'), classes: 'govuk-table__header' },
+          ({} if self.class::MIDDLE_COLUMN),
+          { text: total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
+        ].compact
       end
     end
   end

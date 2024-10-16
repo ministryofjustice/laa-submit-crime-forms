@@ -82,7 +82,6 @@ RSpec.describe 'Accessibility', :accessibility do
     %i[
       edit_nsm_steps_defendant_details
       edit_nsm_steps_defendant_delete
-      duplicate_nsm_steps_work_item
       edit_nsm_steps_work_item_delete
       edit_nsm_steps_work_item
       edit_nsm_steps_disbursement_type

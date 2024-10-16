@@ -26,7 +26,7 @@ module Nsm
             },
             table: {
               head: data.header_row,
-              rows: [*data.rows, footer_row(data, middle_column: name != :disbursements)],
+              rows: [*data.rows, data.footer_row],
               first_cell_is_header: true,
             },
             caption: { text: data.caption, classes: 'govuk-visually-hidden' },
@@ -48,14 +48,6 @@ module Nsm
             helper.url_for(controller: "nsm/steps/#{key}", action: :edit, id: claim.id, only_path: true)
           ),
         ]
-      end
-
-      def footer_row(data, middle_column: false)
-        [
-          { text: translate('.footer.total'), classes: 'govuk-table__header' },
-          ({} if middle_column),
-          { text: data.total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
-        ].compact
       end
     end
   end

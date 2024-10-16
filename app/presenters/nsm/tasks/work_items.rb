@@ -15,9 +15,7 @@ module Nsm
       end
 
       def completed?
-        application.work_items.any? && application.work_items.all? do |record|
-          super(record)
-        end
+        application.work_items.any? && application.work_items.all?(&:complete?)
       end
     end
   end
