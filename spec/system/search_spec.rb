@@ -133,15 +133,31 @@ RSpec.describe 'Search' do
     let(:matching) do
       create :claim, :complete,
              laa_reference: 'LAA-AB1234',
-             office_code: '1A123B',
+             office_code: 'XYZXYZ',
              ufn: '070620/123',
              main_defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
-             state: :submitted
+             state: :submitted,
+             updated_at: DateTime.new(2024, 9, 1, 10, 17, 26),
+             originally_submitted_at: DateTime.new(2024, 9, 1, 10, 17, 26)
     end
 
-    before { visit provider_saml_omniauth_callback_path }
+    let(:non_matching) do
+      create :claim, :complete,
+             laa_reference: 'LAA-99999C',
+             office_code: '1A123B',
+             ufn: '110120/123',
+             main_defendant: build(:defendant, :valid, first_name: 'Jane', last_name: 'Doe'),
+             state: :draft,
+             updated_at: DateTime.new(2024, 10, 1, 10, 17, 26),
+             originally_submitted_at: DateTime.new(2024, 10, 1, 10, 17, 26)
+    end
 
-    context 'when finding a single result' do
+    before do
+      visit provider_saml_omniauth_callback_path
+      Provider.first.update(office_codes: %w[XYZXYZ 1A123B])
+    end
+
+    context 'when finding a single result by query' do
       let(:different_office) do
         create :claim, :complete,
                laa_reference: 'LAA-AB1234',
@@ -151,32 +167,33 @@ RSpec.describe 'Search' do
                state: :rejected
       end
 
-      let(:non_matching) do
-        create :claim, :complete,
-               laa_reference: 'LAA-99999C',
-               office_code: '1A123B',
-               ufn: '110120/123',
-               main_defendant: build(:defendant, :valid, first_name: 'Jane', last_name: 'Doe'),
-               state: :draft
-      end
-
       before do
         matching
         non_matching
         different_office
 
         visit search_nsm_applications_path
-        fill_in 'Enter any combination of client, UFN or LAA reference', with: query
-        click_on 'Search'
+        fill_in 'Enter any combination of defendant, UFN or LAA reference', with: query
+        click_button 'Search'
+      end
+
+      context 'when I enter nothing' do
+        let(:query) { '' }
+
+        it 'shows only the matching record that I am associated with' do
+          expect(page).to have_content 'Enter some details or filter your search criteria'
+        end
       end
 
       context 'when I search by LAA reference' do
         let(:query) { 'laa-ab1234' }
 
         it 'shows only the matching record that I am associated with' do
-          expect(page).to have_content 'Submitted'
-          expect(page).to have_no_content 'Draft'
-          expect(page).to have_no_content 'Rejected'
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
         end
       end
 
@@ -184,9 +201,11 @@ RSpec.describe 'Search' do
         let(:query) { '070620/123' }
 
         it 'shows only the matching record that I am associated with' do
-          expect(page).to have_content 'Submitted'
-          expect(page).to have_no_content 'Draft'
-          expect(page).to have_no_content 'Rejected'
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
         end
       end
 
@@ -194,9 +213,11 @@ RSpec.describe 'Search' do
         let(:query) { 'JOE' }
 
         it 'shows only the matching record that I am associated with' do
-          expect(page).to have_content 'Submitted'
-          expect(page).to have_no_content 'Draft'
-          expect(page).to have_no_content 'Rejected'
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
         end
       end
 
@@ -204,9 +225,11 @@ RSpec.describe 'Search' do
         let(:query) { 'bloggs' }
 
         it 'shows only the matching record that I am associated with' do
-          expect(page).to have_content 'Submitted'
-          expect(page).to have_no_content 'Draft'
-          expect(page).to have_no_content 'Rejected'
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
         end
       end
 
@@ -214,9 +237,150 @@ RSpec.describe 'Search' do
         let(:query) { 'BLOGGS JOE 070620/123' }
 
         it 'shows only the matching record that I am associated with' do
-          expect(page).to have_content 'Submitted'
-          expect(page).to have_no_content 'Draft'
-          expect(page).to have_no_content 'Rejected'
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
+        end
+      end
+    end
+
+    context 'when filtering' do
+      before do
+        matching
+        non_matching
+
+        visit search_nsm_applications_path
+      end
+
+      context 'when I filter by submission date' do
+        before do
+          fill_in 'Submission date from', with: '2024-09-01'
+          fill_in 'Submission date to', with: '2024-09-01'
+          click_button 'Search'
+        end
+
+        it 'shows only the matching record' do
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+          end
+        end
+      end
+
+      context 'when I filter by submission from date' do
+        before do
+          fill_in 'Submission date from', with: '2024-10-01'
+          click_button 'Search'
+        end
+
+        it 'shows only the matching record' do
+          within('#results') do
+            expect(page).to have_content 'Draft'
+            expect(page).to have_no_content 'Submitted'
+          end
+        end
+      end
+
+      context 'when I filter by submission to date' do
+        before do
+          fill_in 'Submission date to', with: '2024-09-02'
+          click_button 'Search'
+        end
+
+        it 'shows only the matching record' do
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+          end
+        end
+      end
+
+      context 'when I filter by update date' do
+        before do
+          fill_in 'Last updated from', with: '2024-09-01'
+          fill_in 'Last updated to', with: '2024-09-01'
+          click_button 'Search'
+        end
+
+        it 'shows only the matching record' do
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+          end
+        end
+      end
+
+      context 'when I filter by update from date' do
+        before do
+          fill_in 'Last updated from', with: '2024-09-02'
+          click_button 'Search'
+        end
+
+        it 'shows only the matching record' do
+          within('#results') do
+            expect(page).to have_content 'Draft'
+            expect(page).to have_no_content 'Submitted'
+          end
+        end
+      end
+
+      context 'when I filter by update to date' do
+        before do
+          fill_in 'Last updated to', with: '2024-09-01'
+          click_button 'Search'
+        end
+
+        it 'shows only the matching record' do
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+          end
+        end
+      end
+
+      context 'when I filter by state' do
+        before do
+          select 'Submitted', from: 'Application status'
+          click_button 'Search'
+        end
+
+        it 'shows only the matching record' do
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+          end
+        end
+      end
+
+      context 'when filtering by granted' do
+        before do
+          matching.granted!
+
+          select 'Granted', from: 'Application status'
+          click_button 'Search'
+        end
+
+        it 'shows only the matching record' do
+          within('#results') do
+            expect(page).to have_content 'Granted'
+            expect(page).to have_no_content 'Draft'
+          end
+        end
+      end
+
+      context 'when I filter by office code' do
+        before do
+          select 'XYZXYZ', from: 'Account'
+          click_button 'Search'
+        end
+
+        it 'shows only the matching record' do
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+          end
         end
       end
     end
@@ -237,8 +401,8 @@ RSpec.describe 'Search' do
         other_matching
 
         visit search_nsm_applications_path
-        fill_in 'Enter any combination of client, UFN or LAA reference', with: 'Joe Bloggs'
-        click_on 'Search'
+        fill_in 'Enter any combination of defendant, UFN or LAA reference', with: 'Joe Bloggs'
+        click_button 'Search'
       end
 
       it 'sorts by updated at by default' do

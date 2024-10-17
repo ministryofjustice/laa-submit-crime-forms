@@ -539,6 +539,10 @@ en:
           attributes:
             information_supplied:
               blank: Enter the requested information
+        search_form:
+          attributes:
+            base:
+              no_attributes_set: Enter some details or filter your search criteria
       messages:
         blank_hours: Enter the number of hours
         invalid_hours: The number of hours must be 0 or more
