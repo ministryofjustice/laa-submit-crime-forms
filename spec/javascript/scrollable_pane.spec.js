@@ -57,7 +57,6 @@ describe('checkAndHandleResizeOnScrollablePane', () => {
   beforeEach(() => {
     jest.useFakeTimers();
     document.body.innerHTML = '<div class="moj-scrollable-pane"></div>';
-    scrollablePane = document.querySelector('.moj-scrollable-pane');
   });
 
   afterEach(() => {
