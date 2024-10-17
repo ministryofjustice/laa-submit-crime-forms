@@ -2,6 +2,7 @@
 import { initAll } from 'govuk-frontend'
 import accessibleAutocomplete from 'accessible-autocomplete'
 import './handle-forms'
+import './date-picker'
 import '@hotwired/turbo-rails'
 import $ from 'jquery'
 import { checkAndHandleResizeOnScrollablePane } from './scrollable_pane'

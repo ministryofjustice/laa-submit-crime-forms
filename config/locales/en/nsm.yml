@@ -1,3 +1,8 @@
 en:
   nsm:
     service_name: Claim a non-standard magistrates' court payment
+  layouts:
+    nsm:
+      primary_navigation:
+        your_claims: Your claims
+        search: Search
