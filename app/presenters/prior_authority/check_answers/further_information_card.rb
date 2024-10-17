@@ -44,6 +44,10 @@ module PriorAuthority
             sanitize(links.join(tag.br), tags: %w[a br])
           end
       end
+
+      def changes_forbidden?
+        false
+      end
     end
   end
 end

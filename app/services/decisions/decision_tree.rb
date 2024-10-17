@@ -195,7 +195,7 @@ module Decisions
       .goto { overwrite_to_cya }
 
     from(:further_information)
-      .goto { overwrite_to_cya }
+      .goto(edit: 'prior_authority/steps/check_answers')
 
     from(:check_answers)
       .goto(show: 'prior_authority/steps/submission_confirmation')

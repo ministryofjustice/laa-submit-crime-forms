@@ -101,9 +101,14 @@ module Decisions
       .goto(edit: DecisionTree::PRIOR_AUTHORITY_ALTERNATIVE_QUOTES)
 
     # check answers
-    from('prior_authority/steps/check_answers').goto(show: 'prior_authority/steps/start_page')
+    from('prior_authority/steps/check_answers')
+      .when(-> { application.sent_back? })
+      .goto(show: '/prior_authority/applications', id: -> { application.id })
+      .goto(show: 'prior_authority/steps/start_page')
 
     # further information
-    from('prior_authority/steps/further_information').goto(show: 'prior_authority/steps/start_page')
+    # We can't use overwrite_to_cya here because in a sent_back loop there will already be
+    # check answers in the navigation stack whether we've just come from there or not
+    from('prior_authority/steps/further_information').goto(show: '/prior_authority/applications', id: -> { application.id })
   end
 end

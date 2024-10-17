@@ -35,6 +35,8 @@ module PriorAuthority
       end
 
       def ufn_change_link
+        return [] if changes_forbidden?
+
         helper = Rails.application.routes.url_helpers
 
         [
