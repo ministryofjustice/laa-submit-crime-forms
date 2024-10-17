@@ -15,7 +15,42 @@
 @import "@ministryofjustice/frontend/moj/utilities/hidden";
 @import "@ministryofjustice/frontend/moj/components/multi-file-upload/multi-file-upload";
 @import "@ministryofjustice/frontend/moj/components/banner/banner";
+@import "@ministryofjustice/frontend/moj/objects/_scrollable-pane";
 
 .govuk-button-group.confirmation-button-group > form {
     display: inline-flex;
+}
+
+.moj-scrollable-pane {
+  .govuk-visually-hidden {
+    /*
+    This workaround addresses an issue where elements with the class `govuk-visually-hidden`
+    within the MOJ Component - Scrollable Pane do not behave as expected.
+    Applying `inset: 0` resolves the issue.
+    It may be worth raising an issue with the GOV.UK Design System team to consider adding inset: 0 to the govuk-visually-hidden component upstream. For now, this solution ensures consistent positioning across all browsers
+    */
+    inset: 0 !important;
+  }
+}
+
+// Desktop-specific style
+@media (min-width: 1024px) {
+  .moj-scrollable-pane.hide-horizontal-scroll {
+      overflow-x: auto; // Allow horizontal scrolling without showing the scrollbar
+      overflow-y: hidden; // Ensure no vertical scroll space appears
+
+      // WebKit-based browsers (Chrome, Safari, etc.)
+      &::-webkit-scrollbar {
+          display: none;
+      }
+
+      // Internet Explorer, Edge (legacy support)
+      -ms-overflow-style: none;
+
+      // Legacy Firefox
+      overflow: -moz-scrollbars-none;
+
+      // Force hiding both scrollbar initially
+      overflow: hidden;
+  }
 }

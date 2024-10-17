@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class WorkItemForm < ::Steps::BaseFormObject
+    class WorkItemForm < ::Steps::AddAnotherForm
       include WorkItemCosts
       attr_writer :apply_uplift
 

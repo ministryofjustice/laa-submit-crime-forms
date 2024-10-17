@@ -68,7 +68,7 @@ RSpec.describe Nsm::Tasks::WorkItems, type: :system do
 
     context 'when work items exist' do
       let(:work_items) { [WorkItem.new] }
-      let(:work_item_form) { double(:work_item_form, valid?: valid) }
+      let(:work_item_form) { double(:work_item_form, valid?: valid, 'add_another=': true) }
 
       before do
         allow(Nsm::Steps::WorkItemForm).to receive(:build).and_return(work_item_form)
