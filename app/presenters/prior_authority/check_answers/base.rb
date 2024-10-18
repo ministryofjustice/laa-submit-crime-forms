@@ -58,6 +58,8 @@ module PriorAuthority
       end
 
       def title_actions
+        return [] if changes_forbidden?
+
         helper = Rails.application.routes.url_helpers
 
         [
@@ -66,9 +68,14 @@ module PriorAuthority
             helper.url_for(controller: "prior_authority/steps/#{section}",
                            action: request_method,
                            application_id: application.id,
-                           only_path: true)
+                           only_path: true,
+                           return_to: :check_answers)
           ),
         ]
+      end
+
+      def changes_forbidden?
+        application.sent_back? && !application.correction_needed?
       end
     end
   end
