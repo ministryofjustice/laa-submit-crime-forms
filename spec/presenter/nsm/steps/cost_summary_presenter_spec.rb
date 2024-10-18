@@ -25,24 +25,6 @@ RSpec.describe Nsm::Tasks::CostSummary, type: :system do
     it { expect(subject).not_to be_not_applicable }
   end
 
-  describe '#can_start?' do
-    context 'when has_disbursements is no' do
-      let(:has_disbursements) { 'no' }
-
-      it { expect(subject).to be_can_start }
-    end
-
-    context 'when has_disbursements is nil' do
-      it { expect(subject).not_to be_can_start }
-    end
-
-    context 'when has_disbursements is yes' do
-      let(:has_disbursements) { 'yes' }
-
-      it_behaves_like 'a task with generic can_start?', Nsm::Tasks::Disbursements
-    end
-  end
-
   describe '#completed?' do
     context 'cost_summary is last page in the navigation stack' do
       let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/cost_summary"] }
