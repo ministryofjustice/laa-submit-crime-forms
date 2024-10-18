@@ -3,17 +3,6 @@ module Nsm
     class CostSummary < Base
       PREVIOUS_TASKS = Disbursements
 
-      def can_start?
-        case application.has_disbursements
-        when YesNoAnswer::NO.to_s
-          true
-        when YesNoAnswer::YES.to_s
-          super
-        else
-          false
-        end
-      end
-
       def path
         nsm_steps_cost_summary_path(application)
       end

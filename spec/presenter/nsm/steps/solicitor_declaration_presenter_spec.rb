@@ -44,7 +44,7 @@ RSpec.describe Nsm::Tasks::SolicitorDeclaration, type: :system do
     context 'when status is COMPLETED' do
       it 'is disabled' do
         allow(subject).to receive_messages(not_applicable?: false, can_start?: true, in_progress?: true,
-                                           completed?: true)
+                                           fully_completed?: true)
 
         expect(subject.status).not_to be_enabled
         expect(subject.status).to eq(TaskStatus::COMPLETED)
