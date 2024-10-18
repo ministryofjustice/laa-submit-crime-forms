@@ -8,5 +8,8 @@
           deadline: application.resubmission_deadline.to_fs(:stamp)).each do |paragraph| %>
       <p><%= paragraph %></p>
     <% end %>
+    <% unless skip_links %>
+      <a href="#rfi"><%= t('prior_authority.applications.show.requested_updates') %></a>
+    <% end %>
   </dt>
 </div>

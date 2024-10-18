@@ -6,6 +6,7 @@ module PriorAuthority
         contact_details
         about_case
         about_request
+        rfi
       ].freeze
 
       attr_reader :application, :skip_links, :verbose
@@ -24,6 +25,7 @@ module PriorAuthority
 
       def section_group(name, section_list)
         {
+          name: name,
           heading: group_heading(name),
           sections: section_list,
         }
@@ -62,8 +64,11 @@ module PriorAuthority
           PrimaryQuoteCard.new(application, verbose:, skip_links:),
           AlternativeQuotesCard.new(application, verbose:),
           ReasonWhyCard.new(application, skip_links:),
-          rfi_cards,
-        ].flatten.compact
+        ]
+      end
+
+      def rfi_section
+        Array(rfi_cards).flatten.compact
       end
 
       private
