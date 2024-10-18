@@ -16,6 +16,7 @@ RSpec.describe PriorAuthority::CheckAnswers::Report do
             'Contact details',
             'About the case',
             'About the request',
+            'Requested application updates',
           )
       end
 
@@ -46,6 +47,7 @@ RSpec.describe PriorAuthority::CheckAnswers::Report do
             'Contact details',
             'About the case',
             'About the request',
+            'Requested application updates',
           )
       end
 
@@ -79,6 +81,7 @@ RSpec.describe PriorAuthority::CheckAnswers::Report do
             'Contact details',
             'About the case',
             'About the request',
+            'Requested application updates',
           )
       end
 

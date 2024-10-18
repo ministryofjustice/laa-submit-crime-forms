@@ -20,25 +20,38 @@
       <% elsif application.sent_back? %>
         <%= render "prior_authority/applications/response_summaries/sent_back", application:, skip_links: %>
       <% elsif application.expired? %>
-        <%= render "prior_authority/applications/response_summaries/expired", application: %>
+        <%= render "prior_authority/applications/response_summaries/expired", application:, skip_links: %>
       <% end %>
     </dl>
   </div>
 </div>
 
+<h2 class="govuk-heading-l"><%= t("prior_authority.applications.show.overview") %></h2>
+<% if application.provider_updated? %>
+  <div class="govuk-inset-text">
+    <p><strong><%= t("prior_authority.applications.show.application_updated", date: application.updated_at.to_fs(:stamp)) %></strong></p>
+    <ul class="govuk-list">
+      <li>
+        <a href="#rfi" class="govuk-link--no-visited-state"><%= t('prior_authority.applications.show.requested_updates') %></a>
+      </li>
+    </ul>
+  </div>
+<% end %>
 <% report.section_groups.each do |section_group| %>
-  <h2 class="govuk-heading-m"><%= section_group[:heading] %></h2>
-  <% section_group[:sections].each do |section| %>
-    <% if section.template %>
-      <%= render(section.template, section: section, show_actions: false, show_adjustments: allowance_type, skip_download_links: skip_links) %>
-    <% else %>
-      <%= govuk_summary_list(
-            card: {
-              title: section.title,
-            },
-            rows: section.rows,
-            actions: false
-          ) %>
+  <% if section_group[:sections].any? %>
+    <h2 id="<%= section_group[:name] %>" class="govuk-heading-m"><%= section_group[:heading] %></h2>
+    <% section_group[:sections].each do |section| %>
+      <% if section.template %>
+        <%= render(section.template, section: section, show_actions: false, show_adjustments: allowance_type, skip_download_links: skip_links) %>
+      <% else %>
+        <%= govuk_summary_list(
+              card: {
+                title: section.title,
+              },
+              rows: section.rows,
+              actions: false
+            ) %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
