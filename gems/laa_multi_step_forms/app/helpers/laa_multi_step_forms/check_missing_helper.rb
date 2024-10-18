@@ -6,11 +6,15 @@ module LaaMultiStepForms
 
         check_value
       else
-        ApplicationController.helpers.sanitize(
-          content_tag(:strong, I18n.t('helpers.missing_data'), class: 'govuk-tag govuk-tag--red'),
-          tags: %w[strong]
-        )
+        missing_tag
       end
+    end
+
+    def missing_tag
+      ApplicationController.helpers.sanitize(
+        content_tag(:strong, I18n.t('helpers.missing_data'), class: 'govuk-tag govuk-tag--red'),
+        tags: %w[strong]
+      )
     end
   end
 end
