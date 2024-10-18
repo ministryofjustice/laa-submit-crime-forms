@@ -13,6 +13,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
       fee_earner:,
       apply_uplift:,
       uplift:,
+      add_another:,
     }
   end
 
@@ -34,10 +35,11 @@ RSpec.describe Nsm::Steps::WorkItemForm do
   let(:assigned_counsel) { 'yes' }
   let(:prog_stage_reached) { true }
   let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
+  let(:add_another) { 'yes' }
 
   describe '#validations' do
     context 'require fields' do
-      %w[work_type time_spent completed_on fee_earner].each do |field|
+      %w[work_type time_spent completed_on fee_earner add_another].each do |field|
         describe "#when #{field} is blank" do
           let(field) { nil }
 
@@ -340,7 +342,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
 
       it 'returns 0 values' do
         expect(subject.calculation_rows).to eq(
-          [['Before uplift', 'After uplift'],
+          [['Net cost claimed', 'Net cost with uplift'],
            [{ html_attributes: { id: 'without-uplift' }, text: '£' },
             { html_attributes: { id: 'with-uplift' }, text: '£' }]]
         )
@@ -355,7 +357,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
 
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
-            [['Total'],
+            [['Net cost claimed'],
              [{ html_attributes: { id: 'without-uplift' }, text: '£53.52' }]]
           )
         end
@@ -366,7 +368,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
 
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
-            [['Before uplift', 'After uplift'],
+            [['Net cost claimed', 'Net cost with uplift'],
              [{ html_attributes: { id: 'without-uplift' }, text: '£53.52' },
               { html_attributes: { id: 'with-uplift' }, text: '£53.52' }]]
           )
@@ -376,7 +378,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
       context 'when uplift is required and values are set' do
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
-            [['Before uplift', 'After uplift'],
+            [['Net cost claimed', 'Net cost with uplift'],
              [{ html_attributes: { id: 'without-uplift' }, text: '£53.52' },
               { html_attributes: { id: 'with-uplift' }, text: '£58.87' }]]
           )

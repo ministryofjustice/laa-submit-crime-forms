@@ -2,6 +2,7 @@ module Nsm
   module CostSummary
     class Disbursements < Base
       TRANSLATION_KEY = self
+      MIDDLE_COLUMN = false
       attr_reader :disbursements, :claim
 
       def initialize(disbursements, claim)

@@ -4,6 +4,7 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 import './handle-forms'
 import '@hotwired/turbo-rails'
 import $ from 'jquery'
+import { checkAndHandleResizeOnScrollablePane } from './scrollable_pane'
 
 initAll()
 
@@ -52,3 +53,6 @@ function convertSelectToAutocomplete(){
     }
   }
 }
+
+document.addEventListener('DOMContentLoaded', checkAndHandleResizeOnScrollablePane);
+window.addEventListener('resize', checkAndHandleResizeOnScrollablePane);

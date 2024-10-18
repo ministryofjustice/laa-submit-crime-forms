@@ -29,6 +29,9 @@ module PriorAuthority
       def persist!
         firm_office.save!
         solicitor.save!
+        # The save! below is to ensure that the in-memory application object has both its
+        # firm_office and solicitor relations populated
+        application.save!
       end
     end
   end

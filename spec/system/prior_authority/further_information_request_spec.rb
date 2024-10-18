@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Prior authority applications - provider responds to further information request',
                :javascript, type: :system do
-  let(:application) { create(:prior_authority_application, :with_further_information_request) }
+  let(:application) { create(:prior_authority_application, :full, :with_further_information_request) }
 
   before do
     visit provider_saml_omniauth_callback_path
@@ -24,6 +24,8 @@ RSpec.describe 'Prior authority applications - provider responds to further info
       .to have_attributes(
         information_supplied: 'here is the information requested'
       )
+
+    expect(page).to have_current_path edit_prior_authority_steps_check_answers_path(application)
   end
 
   it 'allows user to submit further information with attachments' do
@@ -50,5 +52,23 @@ RSpec.describe 'Prior authority applications - provider responds to further info
 
     within('.moj-banner') { expect(page).to have_content('test.png has been deleted') }
     expect(page).to have_no_css('.govuk-table')
+  end
+
+  it 'takes me back to application details' do
+    click_on 'Back'
+    expect(page).to have_current_path prior_authority_application_path(application)
+  end
+
+  it 'can be navigated from check answers' do
+    visit edit_prior_authority_steps_check_answers_path(application)
+    click_on 'Change' # There should only be one of these on the page
+    expect(page).to have_current_path(
+      edit_prior_authority_steps_further_information_path(application, return_to: :check_answers)
+    )
+    click_on 'Back'
+    expect(page).to have_current_path edit_prior_authority_steps_check_answers_path(application)
+
+    click_on 'Back'
+    expect(page).to have_current_path prior_authority_application_path(application)
   end
 end

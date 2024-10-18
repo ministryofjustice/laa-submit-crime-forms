@@ -52,7 +52,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
     end
 
     context 'when an application in progress is found' do
-      let(:existing_case) { create(:claim, submitter: auth_provider) }
+      let(:existing_case) { create(:claim, :firm_details, submitter: auth_provider) }
 
       before do
         allow(form_class).to receive(:new).and_return(form_object)

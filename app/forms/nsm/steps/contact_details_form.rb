@@ -7,8 +7,7 @@ module Nsm
 
       validates :contact_first_name, presence: true
       validates :contact_last_name, presence: true
-      validates :contact_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-      validates :contact_email, presence: true, format: { with: RegularExpressions::EMAIL_DOMAIN_REGEXP }
+      validates :contact_email, presence: true, email_format: true
 
       private
 

@@ -8,21 +8,13 @@ module PriorAuthority
 
         validates :contact_first_name, presence: true
         validates :contact_last_name, presence: true
-        validates :contact_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-        validates :contact_email, presence: true, format: { with: RegularExpressions::EMAIL_DOMAIN_REGEXP }
+        validates :contact_email, presence: true, email_format: true
 
         private
 
         def persist!
-          existing = application.solicitor
-          existing&.assign_attributes(attributes)
-
-          if existing.nil? || existing.changed?
-            application.create_solicitor!(attributes)
-            application.save!
-          else
-            application.update!(solicitor: existing)
-          end
+          solicitor = application.solicitor || application.build_solicitor
+          solicitor.update!(attributes)
         end
       end
     end

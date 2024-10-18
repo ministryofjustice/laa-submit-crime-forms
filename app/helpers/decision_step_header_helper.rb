@@ -7,6 +7,7 @@ module DecisionStepHeaderHelper
 
   def previous_decision_step_path(record:)
     form = Steps::BaseFormObject.new(application: current_application, record: record)
+    return { controller: :check_answers, action: :edit } if params[:return_to] == 'check_answers'
 
     Decisions::BackDecisionTree.new(
       form,

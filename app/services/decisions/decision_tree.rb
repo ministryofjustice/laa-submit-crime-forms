@@ -69,7 +69,10 @@ module Decisions
       .when(-> { application.work_items.none? })
       .goto(edit: NSM_WORK_ITEM, work_item_id: Nsm::StartPage::NEW_RECORD)
       .goto(edit: NSM_WORK_ITEMS)
-    from(:work_item).goto(edit: NSM_WORK_ITEMS)
+    from(:work_item)
+      .when(-> { add_another.yes? })
+      .goto(edit: NSM_WORK_ITEM, work_item_id: Nsm::StartPage::NEW_RECORD)
+      .goto(edit: NSM_WORK_ITEMS)
     from(:work_item_delete)
       .when(-> { application.work_items.none? })
       .goto(edit: NSM_WORK_ITEM, work_item_id: Nsm::StartPage::NEW_RECORD)
@@ -77,9 +80,9 @@ module Decisions
     from(:work_items)
       .when(-> { add_another.yes? })
       .goto(edit: NSM_WORK_ITEM, work_item_id: Nsm::StartPage::NEW_RECORD)
-      .when(-> { any_invalid?(application.work_items, Nsm::Steps::WorkItemForm) })
-      .goto(edit: NSM_WORK_ITEMS)
+      .when(-> { all_work_items_valid? })
       .goto(edit: NSM_LETTERS_CALLS)
+      .goto(edit: NSM_WORK_ITEMS)
     from(:letters_calls)
       .when(-> { application.disbursements.none? })
       .goto(edit: NSM_DISBURSEMENT_ADD)
@@ -192,7 +195,7 @@ module Decisions
       .goto { overwrite_to_cya }
 
     from(:further_information)
-      .goto { overwrite_to_cya }
+      .goto(edit: 'prior_authority/steps/check_answers')
 
     from(:check_answers)
       .goto(show: 'prior_authority/steps/submission_confirmation')

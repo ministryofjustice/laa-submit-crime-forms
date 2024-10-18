@@ -35,5 +35,11 @@ uat:
     - 0X416R
 
 production:
-  active_office_codes: []
+  active_office_codes:
+    # These Office codes are designated for internal agencies that operate under a different contract system than other providers.
+    - 1T524L
+    - 1Q101C
+    - 1M383Y
+    - 1M383Z
+    - 1R281K
   inactive_office_codes: []
