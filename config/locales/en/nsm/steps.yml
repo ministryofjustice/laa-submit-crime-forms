@@ -164,8 +164,9 @@ en:
           page_title: Disbursement cost
           heading: Disbursement cost
           calculation: Calculation
-          before_vat: Before VAT
-          after_vat: After VAT
+          net_cost_claimed: Net cost claimed
+          vat_on_claimed: VAT on claimed
+          total_claimed: Total claimed
       disbursements:
         edit:
           page_title: Disbursements

@@ -21,14 +21,18 @@ module Nsm
 
       def calculation_rows
         [
-          [translate(:before_vat), translate(:after_vat)],
+          [translate(:net_cost_claimed), translate(:vat_on_claimed), translate(:total_claimed)],
           [{
             text: NumberTo.pounds(total_cost_pre_vat),
-            html_attributes: { id: 'total-without-vat' }
+            html_attributes: { id: 'net-cost-claimed' }
           },
            {
+             text: NumberTo.pounds(record.vat_amount),
+             html_attributes: { id: 'vat-on-claimed' }
+           },
+           {
              text: NumberTo.pounds(total_cost),
-             html_attributes: { id: 'total-with-vat' },
+             html_attributes: { id: 'total-claimed' },
            }],
         ]
       end
