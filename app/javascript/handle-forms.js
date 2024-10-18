@@ -5,7 +5,7 @@ window.$ = $
 let formsDisabled = false;
 
 $(function() {
-  $('button[type="submit"]').on("click", function(e) {
+  $('button[type="submit"]:not([data-disable="false"])').on("click", function(e) {
     e.preventDefault()
     let form = $(this).closest("form")
     let formButtons = form.find('button[type="submit"]')

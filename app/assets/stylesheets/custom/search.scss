@@ -1,3 +1,11 @@
+/* override due to nesting govuk-width-container result in no visible margin */
+@media (min-width: 1020px),
+       (min-width: 16rem) {
+  .moj-primary-navigation__container {
+    margin: 0 10px !important;
+  }
+}
+
 .search-panel {
   padding: 15px 20px 1px 20px;
   background-color: govuk-colour("light-grey");
