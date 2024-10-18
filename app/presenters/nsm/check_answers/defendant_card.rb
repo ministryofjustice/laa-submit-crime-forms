@@ -6,36 +6,39 @@ module Nsm
       attr_reader :main_defendant, :additional_defendants, :maat_required
 
       def initialize(claim)
-        @main_defendant, *@additional_defendants = *claim.defendants
+        @claim = claim
+        @main_defendant = claim.main_defendant
+        @additional_defendants = claim.defendants.where(main: false)
         @group = 'about_defendant'
         @section = 'defendant_summary'
         @maat_required = claim.claim_type != ClaimType::BREACH_OF_INJUNCTION.to_s
       end
 
       def row_data
-        generate_rows('main', main_defendant || Defendant.new, 0) +
-          additional_defendants.flat_map.with_index do |defendant, index|
-            generate_rows('additional', defendant, index)
+        [generate_row('main', main_defendant || Defendant.new, 0)] +
+          additional_defendants.each.with_index.map do |defendant, index|
+            generate_row('additional', defendant, index)
           end
       end
 
       private
 
-      def generate_rows(key_prefix, defendant, index)
-        data = [row(key_prefix, :first_name, defendant, index),
-                row(key_prefix, :last_name, defendant, index)]
-
-        data << row(key_prefix, :maat, defendant, index) if maat_required
-
-        data
+      def generate_row(key_prefix, defendant, index)
+        {
+          head_key: "#{key_prefix}_defendant",
+          text: text(defendant),
+          head_opts: { count: index + 2 }
+        }
       end
 
-      def row(key_prefix, key_suffix, defendant, index)
-        {
-          head_key: "#{key_prefix}_defendant_#{key_suffix}",
-          text: check_missing(defendant[key_suffix]),
-          head_opts: { count: index + 1 }
-        }
+      def text(defendant)
+        if defendant.first_name.blank? || defendant.last_name.blank? || (maat_required && defendant.maat.blank?)
+          missing_tag
+        elsif maat_required
+          safe_join([defendant.full_name, tag.br, defendant.maat])
+        else
+          defendant.full_name
+        end
       end
     end
   end

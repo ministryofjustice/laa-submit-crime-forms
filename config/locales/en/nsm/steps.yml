@@ -58,33 +58,39 @@ en:
       defendant_details:
         edit:
           page_title: Defendant details
-          heading: Defendant details
-          main_defendant_field_set: Main defendant
-          defendant_field_set: Additional defendant %{index}
+          heading_main: Defendant 1 (lead defendant)
+          heading_additional: Defendant %{count}
+          main_defendant_field_set: Defendant 1 (lead defendant)
+          defendant_field_set: Defendant %{index}
           main_defendant: main
           defendant: additional %{index}
+          add_another_hint: Only add this defendant if you are representing them in the same case
       defendant_summary:
         edit:
           page_title: Defendant summary
           heading:
             one: You've added 1 defendant
             other: You've added %{count} defendants
-          main_defendant: Main defendant details
-          additional_defendant: Additional defendant details
+          main_defendant: Defendant 1 (lead)
           headers:
-            full_name: Full name
+            defendant: Defendant
+            name: Name
             maat: MAAT ID number
-            change: Change
-            delete: Delete
+            action: Action
+            second_action: Second action
+          cells:
+            defendant_main: Defendant 1 (lead)
+            defendant_additional: Defendant %{count}
           add_another: Do you want to add another defendant?
-          change: Change
+          add_another_hint: Only add this defendant if you are representing them in the same case
+          update: Update
           delete: Delete
       defendant_delete:
         edit:
           page_title: Are you sure you want to delete this defendant?
           heading: Are you sure you want to delete this defendant?
-          main_defendant: Main defendant details
-          additional_defendant: Additional defendant details
+          main_defendant: Defendant 1 (lead)
+          additional_defendant: Defendant %{count}
           headers:
             full_name: Full name
             maat: MAAT ID number

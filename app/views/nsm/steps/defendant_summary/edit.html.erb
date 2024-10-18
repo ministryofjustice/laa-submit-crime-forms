@@ -7,65 +7,55 @@
     <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.defendants.count) %></h1>
 
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m"><%=  t('.main_defendant') %></caption>
       <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.full_name') %></th>
-        <% if maat_required?(@form_object) %>
-          <th scope="col" class="govuk-table__header govuk-table__space-25"><%= t('.headers.maat') %></th>
-        <% end %>
-        <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.change') %></th>
-      </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell"><%= check_missing(@form_object.main_defendant.full_name_if_valid) %></td>
-          <% if maat_required?(@form_object) %>
-            <td class="govuk-table__cell"><%= check_missing(@form_object.main_defendant.maat_if_valid) %></td>
-          <% end %>
-          <td class="govuk-table__cell">
-            <%= link_to t('.change'), edit_nsm_steps_defendant_details_path(@form_object.application, defendant_id: @form_object.main_defendant.id) %>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <% if @form_object.additional_defendants.any? %>
-      <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m"><%=  t('.additional_defendant') %></caption>
-        <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.full_name') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__space-30"><%= t('.headers.defendant') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__space-25"><%= t('.headers.name') %></th>
           <% if maat_required?(@form_object) %>
             <th scope="col" class="govuk-table__header govuk-table__space-25"><%= t('.headers.maat') %></th>
           <% end %>
-          <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.change') %></th>
-          <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.delete') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__space-15"><%= t('.headers.action') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__space-15">
+            <span class="govuk-visually-hidden"><%= t('.headers.second_action') %></span>
+          </th>
         </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <% @form_object.additional_defendants.each do |defendant| %>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @form_object.defendants.each do |defendant| %>
+          <tr class="govuk-table__row">
+              <% if defendant.record.main %>
+              <td class="govuk-table__cell"><%= t('.cells.defendant_main') %></td>
+            <% else %>
+              <td class="govuk-table__cell"><%= t('.cells.defendant_additional', count: defendant.position ) %></td>
+            <% end %>
+            <td class="govuk-table__cell"><%= link_to check_missing(defendant.full_name_if_valid), edit_nsm_steps_defendant_details_path(@form_object.application, defendant_id: defendant.id) %></td>
+            <% if maat_required?(@form_object) %>
+              <td class="govuk-table__cell"><%= check_missing(defendant.maat_if_valid) %></td>
+            <% end %>
+            <% action_column_count = 0 %>
+            <% unless defendant.valid? %>
+              <% action_column_count += 1 %>
+              <td class="govuk-table__cell">
+                <%= link_to t('.update'), edit_nsm_steps_defendant_details_path(@form_object.application, defendant_id: defendant.id) %>
+               </td>
+            <% end %>
+            <% unless defendant.record.main %>
+              <% action_column_count += 1 %>
+              <td class="govuk-table__cell">
+                <%= link_to t('.delete'), edit_nsm_steps_defendant_delete_path(@form_object.application, defendant_id: defendant.id) %>
+              </td>
+            <% end %>
+            <% (2 - action_column_count).times do %>
+              <td class="govuk-table__cell"></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell"><%= check_missing(defendant.full_name_if_valid) %></td>
-                <% if maat_required?(@form_object) %>
-                  <td class="govuk-table__cell"><%= check_missing(defendant.maat_if_valid) %></td>
-                <% end %>
-                <td class="govuk-table__cell">
-                  <%= link_to t('.change'), edit_nsm_steps_defendant_details_path(@form_object.application, defendant_id: defendant.id) %>
-                </td>
-                <td class="govuk-table__cell">
-                  <%= link_to t('.delete'), edit_nsm_steps_defendant_delete_path(@form_object.application, defendant_id: defendant.id) %>
-                </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% end %>
     <%= step_form @form_object do |f| %>
       <% if @form_object.defendants.all?(&:valid?) %>
-        <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: t('.add_another'), size: 'm' } do %>
+        <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: t('.add_another'), size: 'm' }, hint: { text: t('.add_another_hint') } do %>
           <%= f.govuk_radio_button :add_another, YesNoAnswer::YES.to_s %>
           <%= f.govuk_radio_button :add_another, YesNoAnswer::NO.to_s %>
         <% end %>
