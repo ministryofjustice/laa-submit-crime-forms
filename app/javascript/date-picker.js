@@ -4,10 +4,9 @@ import $ from 'jquery'
 window.$ = $
 
 function init() {
-  const $datepickers = document.querySelectorAll('[data-module="moj-date-picker"]')
-  MOJFrontend.nodeListForEach($datepickers, function ($datepicker) {
-    new MOJFrontend.DatePicker($datepicker, {}).init();
-  })
+  [...document.querySelectorAll('[data-module="moj-date-picker"]')].forEach(picker => {
+    new MOJFrontend.DatePicker(picker, {}).init()
+  });
 }
 
 document.addEventListener('DOMContentLoaded', init);
