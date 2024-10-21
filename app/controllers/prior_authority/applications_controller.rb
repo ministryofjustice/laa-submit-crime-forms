@@ -1,5 +1,6 @@
 module PriorAuthority
   class ApplicationsController < ApplicationController
+    include Searchable
     before_action :set_scope, only: %i[reviewed submitted drafts]
     before_action :set_default_table_sort_options
     layout 'prior_authority'
@@ -44,11 +45,6 @@ module PriorAuthority
     def submitted
       @pagy, @model = order_and_paginate(&:submitted_or_resubmitted)
       render 'index'
-    end
-
-    def search
-      @form = SearchForm.new(params)
-      @pagy, @model = order_and_paginate { SearchService.call(_1, @form.attributes) } if @form.submitted? && @form.valid?
     end
 
     def offboard

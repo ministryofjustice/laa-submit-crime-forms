@@ -65,7 +65,7 @@ class SubmitToAppStore
       claim.as_json(except: %w[navigation_stack firm_office_id solicitor_id submitter_id allowed_calls
                                allowed_calls_uplift allowed_letters allowed_letters_uplift
                                calls_adjustment_comment letters_adjustment_comment state core_search_fields
-                               submit_to_app_store_completed send_notification_email_completed])
+                               submit_to_app_store_completed send_notification_email_completed originally_submitted_at])
     end
 
     def firm_office

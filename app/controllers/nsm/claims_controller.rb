@@ -1,5 +1,6 @@
 module Nsm
   class ClaimsController < ApplicationController
+    include Searchable
     layout 'nsm'
 
     before_action :set_scope, only: %i[submitted draft reviewed]
@@ -31,11 +32,6 @@ module Nsm
     def draft
       @pagy, @claims = order_and_paginate(&:draft)
       render 'index'
-    end
-
-    def search
-      @form = SearchForm.new(params)
-      @pagy, @model = order_and_paginate { SearchService.call(_1, @form.attributes) } if @form.submitted? && @form.valid?
     end
 
     def confirm_delete
