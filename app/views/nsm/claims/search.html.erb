@@ -85,6 +85,7 @@
 
     <% if @model %>
       <% if @model.any? %>
+        <h2 class="govuk-heading-m"><%= t('.results', count: @pagy.count, results: t('.result').pluralize(@pagy.count)) %></h2>
         <table id="results" class="govuk-table" data-module="moj-sortable-table" aria-describedby="heading">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">

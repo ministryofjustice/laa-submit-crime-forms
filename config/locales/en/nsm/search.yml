@@ -20,5 +20,7 @@ en:
         updated_to: Last updated to
         status: Application status
         account: Account
+        results: "%{count} search %{results}"
+        result: result
         no_results: There are no results that match the search criteria
         no_result_hint: Check you’ve entered the correct details
