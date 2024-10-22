@@ -5,7 +5,7 @@ module Nsm
       PREVIOUS_STEP_NAME = :claim_details
       FORM = Nsm::Steps::WorkItemForm
 
-      def in_progress?
+      def previously_visited?
         [
           edit_nsm_steps_work_items_path(application),
           edit_nsm_steps_work_item_path(id: application.id, work_item_id: '')

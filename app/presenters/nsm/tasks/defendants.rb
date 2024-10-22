@@ -5,7 +5,7 @@ module Nsm
       FORM = Nsm::Steps::DefendantDetailsForm
       PREVIOUS_STEP_NAME = :firm_details
 
-      def in_progress?
+      def previously_visited?
         [
           edit_nsm_steps_defendant_summary_path(application),
           edit_nsm_steps_defendant_details_path(id: application.id, defendant_id: '')

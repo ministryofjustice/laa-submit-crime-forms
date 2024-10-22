@@ -1,8 +1,26 @@
 en:
+  search:
+    show_all: Show all
+
   nsm:
     claims:
       search:
         page_title: Search for a claim
-        label: Enter any combination of client, UFN or LAA reference
+        instruction: Enter details in at least one field to search for a claim
+        label: Enter any combination of defendant, UFN or LAA reference
         search: Search
         clear_all: Clear all
+        submission_filter_legend: First submission date
+        submission_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
+        submitted_from: Submission date from
+        submitted_to: Submission date to
+        update_filter_legend: Last updated date
+        update_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
+        updated_from: Last updated from
+        updated_to: Last updated to
+        status: Application status
+        account: Account
+        results: "%{count} search %{results}"
+        result: result
+        no_results: There are no results that match the search criteria
+        no_result_hint: Check you’ve entered the correct details
