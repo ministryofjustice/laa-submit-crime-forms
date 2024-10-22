@@ -4,19 +4,24 @@ module Nsm
       before_action :set_default_table_sort_options, only: [:edit, :update]
 
       def edit
-        @disbursements = Sorters::DisbursementsSorter.call(
+        disbursements = Sorters::DisbursementsSorter.call(
           current_application.disbursements.by_age, @sort_by, @sort_direction
         )
+        @pagy, @disbursements = pagy_array(disbursements)
 
         @form_object = DisbursementsForm.build(
           current_application
         )
+
+        @summary = CostSummary::Disbursements.new(current_application.disbursements, current_application)
       end
 
       def update
-        @disbursements = Sorters::DisbursementsSorter.call(
+        disbursements = Sorters::DisbursementsSorter.call(
           current_application.disbursements.by_age, @sort_by, @sort_direction
         )
+        @pagy, @disbursements = pagy_array(disbursements)
+        @summary = CostSummary::Disbursements.new(current_application.disbursements, current_application)
 
         update_and_advance(DisbursementsForm, as: :disbursements)
       end

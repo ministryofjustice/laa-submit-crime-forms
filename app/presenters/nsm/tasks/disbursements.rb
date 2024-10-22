@@ -16,9 +16,7 @@ module Nsm
       def completed?
         return true if application.has_disbursements == YesNoAnswer::NO.to_s
 
-        application.disbursements.any? && application.disbursements.all? do |record|
-          FORMS.all? { |form| super(record, form) }
-        end
+        application.disbursements.any? && application.disbursements.all?(&:complete?)
       end
     end
   end

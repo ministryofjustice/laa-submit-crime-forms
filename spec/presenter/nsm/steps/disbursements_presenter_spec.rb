@@ -71,7 +71,7 @@ RSpec.describe Nsm::Tasks::Disbursements, type: :system do
 
       context 'when disbursement_type exist' do
         let(:disbursement_type_form) { double(:disbursement_type_form, valid?: types_valid) }
-        let(:disbursement_cost_form) { double(:disbursement_type_form, valid?: costs_valid) }
+        let(:disbursement_cost_form) { double(:disbursement_type_form, valid?: costs_valid, 'add_another=': true) }
 
         before do
           allow(Nsm::Steps::DisbursementTypeForm).to receive(:build).and_return(disbursement_type_form)

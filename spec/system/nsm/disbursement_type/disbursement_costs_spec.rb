@@ -45,4 +45,15 @@ RSpec.describe 'Mileage and Other disbursement cost conditional fields', :javasc
       expect(page).to have_content('Have you been granted prior authority for this disbursement?')
     end
   end
+
+  context 'when the update calculation button is clicked' do
+    let(:disbursement_type) { DisbursementTypes::OTHER.to_s }
+    let(:miles) { 100 }
+
+    it 'does not complain about wether the disbursement question is answered' do
+      click_on 'Update the calculation'
+
+      expect(page).not_to have_content('Please select if you want to add another disbursement or not')
+    end
+  end
 end
