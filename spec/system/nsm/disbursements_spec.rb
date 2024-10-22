@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'system_helper'
 
 RSpec.describe 'User can manage disbursements', type: :system do
   let(:claim) { create(:claim, :firm_details) }

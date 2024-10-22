@@ -26,7 +26,7 @@ RSpec.describe Nsm::Steps::DisbursementDeleteController, type: :controller do
       let(:existing_case) { create(:claim) }
       let(:current_application) do
         instance_double(Claim, disbursements: disbursements, navigation_stack: [], 'navigation_stack=': true,
-save!: true)
+        save!: true, draft?: true)
       end
       let(:disbursements) { double(:disbursements, find_by: disbursement) }
       let(:form) { instance_double(Steps::DeleteForm) }
@@ -87,7 +87,7 @@ save!: true)
       let(:existing_case) { create(:claim) }
       let(:current_application) do
         instance_double(Claim, disbursements: disbursements, navigation_stack: [], 'navigation_stack=': true,
-save!: true)
+        save!: true, draft?: true)
       end
       let(:form) { instance_double(Steps::DeleteForm) }
 

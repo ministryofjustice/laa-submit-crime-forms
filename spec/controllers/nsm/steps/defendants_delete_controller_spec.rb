@@ -25,7 +25,7 @@ RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
     context 'when application is found' do
       let(:existing_case) { create(:claim) }
       let(:current_application) do
-        instance_double(Claim, defendants: defendants, navigation_stack: [], 'navigation_stack=': true, save!: true)
+        instance_double(Claim, defendants: defendants, navigation_stack: [], 'navigation_stack=': true, save!: true, draft?: true)
       end
       let(:defendants) { double(:defendants, find_by: defendant) }
       let(:form) { instance_double(Nsm::Steps::DefendantDeleteForm) }
@@ -88,7 +88,7 @@ RSpec.describe Nsm::Steps::DefendantDeleteController, type: :controller do
     context 'when application is found' do
       let(:existing_case) { create(:claim) }
       let(:current_application) do
-        instance_double(Claim, defendants: defendants, navigation_stack: [], 'navigation_stack=': true, save!: true)
+        instance_double(Claim, defendants: defendants, navigation_stack: [], 'navigation_stack=': true, save!: true, draft?: true)
       end
       let(:form) { instance_double(Nsm::Steps::DefendantDeleteForm) }
 

@@ -37,6 +37,10 @@ module Nsm
       def decision_tree_class
         Decisions::DecisionTree
       end
+
+      def step_valid?
+        current_application.sent_back?
+      end
     end
   end
 end

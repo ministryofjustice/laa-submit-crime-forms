@@ -25,7 +25,7 @@ RSpec.describe Nsm::Steps::WorkItemDeleteController, type: :controller do
     context 'when application is found' do
       let(:existing_case) { create(:claim) }
       let(:current_application) do
-        instance_double(Claim, work_items: work_items, navigation_stack: [], 'navigation_stack=': true, save!: true)
+        instance_double(Claim, work_items: work_items, navigation_stack: [], 'navigation_stack=': true, save!: true, draft?: true)
       end
       let(:work_items) { double(:work_items, find_by: work_item) }
       let(:form) { instance_double(Steps::DeleteForm) }
@@ -85,7 +85,7 @@ RSpec.describe Nsm::Steps::WorkItemDeleteController, type: :controller do
     context 'when application is found' do
       let(:existing_case) { create(:claim) }
       let(:current_application) do
-        instance_double(Claim, work_items: work_items, navigation_stack: [], 'navigation_stack=': true, save!: true)
+        instance_double(Claim, work_items: work_items, navigation_stack: [], 'navigation_stack=': true, save!: true, draft?: true)
       end
       let(:form) { instance_double(Steps::DeleteForm) }
 

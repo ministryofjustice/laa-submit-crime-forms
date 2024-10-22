@@ -72,7 +72,7 @@ RSpec.describe 'Prior authority applications, check your answers, submission' do
       application = PriorAuthorityApplication.find_by(ufn: '111111/123')
       visit prior_authority_steps_check_answers_path(application)
 
-      expect(page).to have_title('Your application progress')
+      expect(page).to have_title('Application details')
     end
   end
 end
