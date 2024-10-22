@@ -105,7 +105,7 @@ module GOVUKDesignSystemFormBuilder
           id: id(segment, link_errors),
           class: classes(width),
           name: name(segment),
-          type: 'text',
+          type: 'number',
           inputmode: 'numeric',
           value: value,
           maxlength: (width if maxlength_enabled?),
