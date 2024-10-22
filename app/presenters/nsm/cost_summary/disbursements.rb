@@ -14,7 +14,7 @@ module Nsm
         disbursements.map do |disbursement|
           [
             { text: translated_text(disbursement), classes: 'govuk-table__header' },
-            { text: NumberTo.pounds(disbursement.total_cost_pre_vat), classes: 'govuk-table__cell--numeric' },
+            { text: NumberTo.pounds(disbursement.total_cost_pre_vat || 0), classes: 'govuk-table__cell--numeric' },
           ]
         end
       end
@@ -35,6 +35,14 @@ module Nsm
         [
           { text: translate('.header.item') },
           { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
+        ]
+      end
+
+      def disbursement_summary_header_row
+        [
+          { text: tag.span(translate('.header.item'), class: 'govuk-visually-hidden') },
+          { text: translate('.header.total_claimed'),
+            classes: 'govuk-table__header--numeric' },
         ]
       end
     end

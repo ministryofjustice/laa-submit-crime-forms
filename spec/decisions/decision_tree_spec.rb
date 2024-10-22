@@ -128,8 +128,6 @@ RSpec.describe Decisions::DecisionTree do
     it_behaves_like 'a generic decision', from: :disbursement_type, goto: { action: :edit, controller: 'nsm/steps/disbursement_cost' }, additional_param: :disbursement_id
   end
 
-  it_behaves_like 'a generic decision', from: :disbursement_cost, goto: { action: :edit, controller: 'nsm/steps/disbursements' }
-
   context 'when no disbursements' do
     it_behaves_like 'a generic decision', from: :disbursement_delete, goto: { action: :edit, controller: 'nsm/steps/disbursements' }
   end
@@ -147,16 +145,22 @@ RSpec.describe Decisions::DecisionTree do
   end
 
   context 'answer no to add_another for disbursements' do
-    before { allow(form).to receive(:add_another).and_return(YesNoAnswer::NO) }
+    before do
+      allow(form).to receive_messages(add_another: YesNoAnswer::NO, all_disbursements_valid?: true)
+    end
 
     context 'existing invalid disbursement (type)' do
       let(:application) { build(:claim, disbursements: [build(:disbursement)]) }
+
+      before { allow(form).to receive(:all_disbursements_valid?).and_return(false) }
 
       it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: 'nsm/steps/disbursements' }
     end
 
     context 'existing invalid disbursement (cost)' do
       let(:application) { build(:claim, disbursements: [build(:disbursement, :valid_type)]) }
+
+      before { allow(form).to receive(:all_disbursements_valid?).and_return(false) }
 
       it_behaves_like 'a generic decision', from: :disbursements, goto: { action: :edit, controller: 'nsm/steps/disbursements' }
     end
