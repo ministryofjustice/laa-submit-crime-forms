@@ -9,7 +9,7 @@ module Nsm
       ].freeze
 
       # TODO: is this inefficient? do we care?
-      def in_progress?
+      def previously_visited?
         application.disbursements.any? &&
           [
             edit_nsm_steps_disbursement_type_path(id: application.id, disbursement_id: ''),

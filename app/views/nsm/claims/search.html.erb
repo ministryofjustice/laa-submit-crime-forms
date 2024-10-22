@@ -23,14 +23,20 @@
           <div class="govuk-date-input__item">
             <div class="moj-datepicker" data-module="moj-date-picker">
               <div class="govuk-form-group">
-                <%= f.govuk_text_field :submitted_from, label: { text: t('.submitted_from') }, class: 'moj-js-datepicker-input' %>
+                <%= f.govuk_text_field :submitted_from,
+                                       label: { text: t('.submitted_from') },
+                                       class: 'moj-js-datepicker-input',
+                                       value: @form.submitted_from&.to_fs(:date_picker) %>
               </div>
             </div>
           </div>
           <div class="govuk-date-input__item">
             <div class="moj-datepicker" data-module="moj-date-picker">
               <div class="govuk-form-group">
-                <%= f.govuk_text_field :submitted_to, label: { text: t('.submitted_to') }, class: 'moj-js-datepicker-input' %>
+                <%= f.govuk_text_field :submitted_to,
+                                       label: { text: t('.submitted_to') },
+                                       class: 'moj-js-datepicker-input',
+                                       value: @form.submitted_to&.to_fs(:date_picker) %>
               </div>
             </div>
           </div>
@@ -43,14 +49,20 @@
           <div class="govuk-date-input__item">
             <div class="moj-datepicker" data-module="moj-date-picker">
               <div class="govuk-form-group">
-                <%= f.govuk_text_field :updated_from, label: { text: t('.updated_from') }, class: 'moj-js-datepicker-input' %>
+                <%= f.govuk_text_field :updated_from,
+                                       label: { text: t('.updated_from') },
+                                       class: 'moj-js-datepicker-input',
+                                       value: @form.updated_from&.to_fs(:date_picker) %>
               </div>
             </div>
           </div>
           <div class="govuk-date-input__item">
             <div class="moj-datepicker" data-module="moj-date-picker">
               <div class="govuk-form-group">
-                <%= f.govuk_text_field :updated_to, label: { text: t('.updated_to') }, class: 'moj-js-datepicker-input' %>
+                <%= f.govuk_text_field :updated_to,
+                                       label: { text: t('.updated_to') },
+                                       class: 'moj-js-datepicker-input',
+                                       value: @form.updated_to&.to_fs(:date_picker)  %>
               </div>
             </div>
           </div>
