@@ -15,16 +15,16 @@ module PriorAuthority
         render 'laa_multi_step_forms/task_list/show', locals: { app_type: 'application' }
       end
 
+      private
+
       def start_page_tasklist
-        if current_application.further_information_needed?
-          @tasklist || StartPage::FurtherInformationTaskList.new(
-            view_context, application: current_application
-          )
-        else
-          @tasklist || StartPage::TaskList.new(
-            view_context, application: current_application
-          )
-        end
+        StartPage::TaskList.new(
+          view_context, application: current_application
+        )
+      end
+
+      def step_valid?
+        current_application.draft? || current_application.pre_draft?
       end
     end
   end
