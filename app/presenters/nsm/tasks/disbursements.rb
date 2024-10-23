@@ -10,7 +10,7 @@ module Nsm
 
       # TODO: is this inefficient? do we care?
       def previously_visited?
-        application.disbursements.any? &&
+        application.navigation_stack.include?(edit_nsm_steps_disbursement_add_path(application)) ||
           [
             edit_nsm_steps_disbursement_type_path(id: application.id, disbursement_id: ''),
             edit_nsm_steps_disbursement_cost_path(id: application.id, disbursement_id: ''),

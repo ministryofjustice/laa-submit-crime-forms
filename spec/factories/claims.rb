@@ -294,5 +294,36 @@ FactoryBot.define do
       state { 'sent_back' }
       app_store_updated_at { 1.minute.ago }
     end
+
+    trait :with_full_navigation_stack do
+      after(:create) do |claim, _context|
+        claim.update(
+          navigation_stack:
+            ["/non-standard-magistrates/applications/#{claim.id}/steps/claim_type",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/office_code",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/office_area",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/start_page",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/firm_details",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/contact_details",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/defendant_details/00000000-0000-0000-0000-000000000000",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/defendant_summary",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/case_details",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/hearing_details",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/case_disposal",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/reason_for_claim",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/claim_details",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/work_item/00000000-0000-0000-0000-000000000000",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/work_items",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/letters_calls",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/disbursement_add",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/cost_summary",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/other_info",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/supporting_evidence",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/check_answers",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/equality",
+             "/non-standard-magistrates/applications/#{claim.id}/steps/solicitor_declaration"]
+        )
+      end
+    end
   end
 end
