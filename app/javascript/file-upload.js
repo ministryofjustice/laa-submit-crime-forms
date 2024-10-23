@@ -105,9 +105,9 @@ MOJFrontend.MultiFileUpload.prototype.onFileDeleteClick = function (e) {
                     .text()
 
     $.ajax({
-        url: `${this.params.deleteUrl}?evidence_id=${button.attr('value')}`,
+        url: this.params.deleteUrl,
         type: 'delete',
-
+        data: { evidence_id: button.attr('value') },
         success: function (response) {
             feedback.html(this.getSuccessHtml(`${fileName} has been deleted`));
             button.parents('.moj-multi-file-upload__row').remove();
