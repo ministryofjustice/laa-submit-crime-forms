@@ -92,6 +92,9 @@ en:
           - Review the requests and resubmit your application by %{deadline}.
           - After this date your application will be automatically closed.
         update_application: Update application
+        overview: Overview
+        application_updated: Application updated %{date}
+        requested_updates: Requested application updates
       state_summaries:
         submitted:
           awaiting_review: Awaiting LAA review
