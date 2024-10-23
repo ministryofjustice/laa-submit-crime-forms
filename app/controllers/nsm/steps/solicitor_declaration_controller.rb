@@ -21,6 +21,10 @@ module Nsm
       def record
         current_application.sent_back? ? current_application.pending_further_information : current_application
       end
+
+      def step_valid?
+        current_application.draft? || current_application.sent_back?
+      end
     end
   end
 end

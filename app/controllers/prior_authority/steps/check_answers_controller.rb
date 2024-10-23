@@ -29,6 +29,10 @@ module PriorAuthority
 
         redirect_to prior_authority_steps_start_page_path(current_application)
       end
+
+      def step_valid?
+        current_application.draft? || current_application.sent_back?
+      end
     end
   end
 end

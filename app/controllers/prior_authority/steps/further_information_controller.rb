@@ -30,6 +30,10 @@ module PriorAuthority
       def as
         :further_information
       end
+
+      def step_valid?
+        current_application.sent_back? && current_application.further_information_needed?
+      end
     end
   end
 end

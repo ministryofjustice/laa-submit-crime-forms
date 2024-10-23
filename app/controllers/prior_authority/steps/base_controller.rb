@@ -3,9 +3,7 @@ module PriorAuthority
     class BaseController < ::Steps::BaseStepController
       layout 'prior_authority'
 
-      before_action :check_completed, only: :edit
-
-      def edit; end
+      before_action :check_step_valid
 
       private
 
@@ -28,12 +26,13 @@ module PriorAuthority
         # which doesn't apply to Prior Authority. So we do a noop instead.
       end
 
-      def check_completed
-        redirect_to prior_authority_steps_start_page_path(current_application) if answers_checked?
+      def check_step_valid
+        redirect_to prior_authority_application_path(current_application) unless step_valid?
       end
 
-      def answers_checked?
-        PriorAuthority::Tasks::CheckAnswers.new(application: current_application).completed?
+      def step_valid?
+        current_application.draft? ||
+          current_application.pre_draft? || (current_application.sent_back? && current_application.correction_needed?)
       end
     end
   end

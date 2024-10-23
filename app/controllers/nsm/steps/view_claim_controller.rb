@@ -95,6 +95,14 @@ module Nsm
         @report = CheckAnswers::ReadOnlyReport.new(current_application, cost_summary_in_overview: false)
         @claim = current_application
       end
+
+      def check_step_valid
+        redirect_to nsm_steps_start_page_path(current_application) unless step_valid?
+      end
+
+      def step_valid?
+        !current_application.draft?
+      end
     end
   end
 end

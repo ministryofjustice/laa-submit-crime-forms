@@ -1,11 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::Steps::ClaimConfirmationController, type: :controller do
-  it_behaves_like 'a show step controller'
-
   describe '#show' do
-    let(:claim) { create(:claim) }
+    let(:claim) { create(:claim, state: 'submitted') }
     let(:application) { instance_double(Claim, laa_reference: 'ABC123') }
+
+    context 'when application is not found' do
+      it 'redirects to the application not found error page' do
+        get :show, params: { id: '12345' }
+        expect(response).to redirect_to(controller.laa_msf.application_not_found_errors_path)
+      end
+    end
+
+    context 'when application is found' do
+      it 'responds with HTTP success' do
+        get :show, params: { id: claim.id }
+        expect(response).to be_successful
+      end
+    end
 
     it 'assigns the correct application reference' do
       get :show, params: { id: claim }

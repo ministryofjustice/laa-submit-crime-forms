@@ -1,8 +1,12 @@
 require 'system_helper'
 
 RSpec.describe 'View claim page', type: :system do
-  let(:claim) { create(:claim, :firm_details, :letters_calls, work_items:, disbursements:, assessment_comment:) }
-  let(:assessment_comment) { 'some random text' }
+  let(:claim) do
+    create(:claim, :firm_details, :letters_calls,
+           work_items: work_items,
+           disbursements: disbursements,
+           state: :submitted)
+  end
 
   let(:work_items) do
     [
@@ -87,6 +91,15 @@ RSpec.describe 'View claim page', type: :system do
         'Total', '', 'Sum of net cost claimed: £306.55'
       ]
     )
+  end
+
+  context 'when claim is not yet submitted' do
+    let(:claim) { create(:claim, state: 'draft') }
+
+    it 'redirects me' do
+      visit nsm_steps_view_claim_path(claim)
+      expect(page).to have_current_path nsm_steps_start_page_path(claim)
+    end
   end
 
   context 'when there are more work items than will fit on a page' do
@@ -226,6 +239,8 @@ RSpec.describe 'View claim page', type: :system do
              state:, work_items:, disbursements:, assessment_comment:)
     end
 
+    let(:assessment_comment) { 'some random text' }
+
     let(:state) { :part_grant }
 
     let(:work_items) do
@@ -311,6 +326,13 @@ RSpec.describe 'View claim page', type: :system do
           .to have_link('Overview')
           .and have_link('Claimed costs')
           .and have_no_link('Adjusted costs')
+      end
+
+      it 'lets me download a PDF' do
+        visit nsm_steps_view_claim_path(claim.id)
+        click_on 'Create a printable PDF'
+        expect(page).to have_current_path download_nsm_steps_view_claim_path(claim)
+        expect(page.driver.response.headers['Content-Type']).to eq 'application/pdf'
       end
     end
 
