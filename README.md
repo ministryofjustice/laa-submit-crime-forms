@@ -133,3 +133,9 @@ The helm_deploy/templates/configuration.yaml file initialises the ConfigMap that
 If the ConfigMap is deleted for whatever reason, simply restart the deployment and the configmap will get regenerated with default values.
 
 If you want to update the ConfigMap's defaults or metadata, you need to delete the existing resource to allow the updates to feed in. This will also reset the values back to default.
+
+## Licence
+
+This project is licensed under the [MIT License][mit].
+
+[mit]: LICENCE
