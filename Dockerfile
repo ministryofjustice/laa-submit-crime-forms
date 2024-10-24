@@ -12,8 +12,8 @@ RUN apk add --update \
   gcompat \
   tzdata \
   yarn \
-  clamav-clamdscan \
-  freshclam
+  clamav-clamdscan && \
+  apk del clamav-daemon freshclam
 
 # Alpine does not have a glibc, and this is needed for dart-sass
 # Refer to: https://github.com/sgerrand/alpine-pkg-glibc

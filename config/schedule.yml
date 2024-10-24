@@ -1,4 +1,0 @@
-update_definitions:
-  cron: "0 2 * * *"
-  class: "UpdateVirusDefinitions"
-  queue: clamav
