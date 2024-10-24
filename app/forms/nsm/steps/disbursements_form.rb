@@ -11,8 +11,7 @@ module Nsm
       end
 
       def all_disbursements_valid?
-        application.disbursements.all? { DisbursementTypeForm.build(_1, application:).valid? } &&
-          application.disbursements.all? { DisbursementCostForm.build(_1, application:).valid? }
+        application.disbursements.all?(&:complete?)
       end
     end
   end
