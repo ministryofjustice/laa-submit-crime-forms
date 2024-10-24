@@ -43,7 +43,7 @@ module Nsm
           task_class.new(application: current_application).completed?
         end
 
-        redirect_to nsm_steps_start_page_path(current_application) if incomplete.any?
+        redirect_to nsm_steps_start_page_path(current_application) if incomplete.any? && current_application.draft?
       end
     end
   end
