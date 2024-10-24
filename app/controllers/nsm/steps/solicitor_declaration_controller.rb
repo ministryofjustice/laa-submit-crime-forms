@@ -33,12 +33,17 @@ module Nsm
         # For Nsm you can technically end up with states where check answers is startable
         # but other tasks are incomplete. So we iterate through each task to check it's valid
         task_names = Nsm::StartPage::TaskList::SECTIONS.pluck(1).flatten
-        incomplete = (task_names - ['nsm/solicitor_declaration']).reject do |task_name|
+        known_incomplete_tasks = ['nsm/solicitor_declaration']
+        incomplete = (task_names - known_incomplete_tasks).reject do |task_name|
           task_class = task_name.gsub('nsm', 'nsm/tasks').camelize.constantize
           TaskList::TaskStatus.new.status(task_class: task_class, application: current_application).completed?
         end
 
         redirect_to nsm_steps_start_page_path(current_application) if incomplete.any?
+      end
+
+      def skip_stack
+        true
       end
     end
   end

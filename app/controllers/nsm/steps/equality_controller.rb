@@ -20,6 +20,10 @@ module Nsm
       def additional_permitted_params
         [:answer_equality]
       end
+
+      def skip_stack
+        true
+      end
     end
   end
 end
