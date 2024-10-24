@@ -40,9 +40,9 @@ RSpec.describe Nsm::Tasks::Disbursements, type: :system do
   it_behaves_like 'a task with generic can_start?', Nsm::Tasks::LettersCalls
 
   describe 'in_progress?' do
-    context 'navigation_stack include edit disbursement_type path' do
+    context 'navigation_stack include disbursement add screen' do
       before do
-        navigation_stack << edit_nsm_steps_disbursement_type_path(application, disbursement_id: disbursement.id)
+        navigation_stack << edit_nsm_steps_disbursement_add_path(application)
       end
 
       it { expect(subject).to be_in_progress }

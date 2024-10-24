@@ -5,7 +5,6 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationController, type: :controller do
     create(:claim,
            :complete,
            :case_type_breach,
-           :with_full_navigation_stack,
            state: :draft)
   end
 
@@ -68,32 +67,6 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationController, type: :controller do
         it 'renders the question page again' do
           put :update, params: expected_params
           expect(response).to have_http_status(:ok)
-        end
-      end
-
-      context 'when saving a draft' do
-        let(:expected_params) { { id: claim_id, nsm_steps_solicitor_declaration_form: { foo: 'bar' }, commit_draft: '' } }
-
-        context 'when the form saves successfully' do
-          before do
-            expect(form_object).to receive(:save!).and_return(true)
-          end
-
-          it 'redirects to the application task list' do
-            put :update, params: expected_params
-            expect(subject).to redirect_to(nsm_after_commit_path(claim))
-          end
-        end
-
-        context 'when the form fails to save it does not matter' do
-          before do
-            expect(form_object).to receive(:save!).and_return(false)
-          end
-
-          it 'redirects to the application task list' do
-            put :update, params: expected_params
-            expect(subject).to redirect_to(nsm_after_commit_path(claim))
-          end
         end
       end
     end

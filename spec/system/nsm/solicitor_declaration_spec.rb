@@ -5,7 +5,6 @@ RSpec.describe 'User can fill in solicitor declaration', type: :system do
     create(:claim,
            :complete,
            :case_type_breach,
-           :with_full_navigation_stack,
            state: :draft,
            work_items: [work_item],
            disbursements: [build(:disbursement, :valid)])

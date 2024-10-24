@@ -16,10 +16,6 @@ module Nsm
       def decision_tree_class
         Decisions::DecisionTree
       end
-
-      def skip_stack
-        true
-      end
     end
   end
 end

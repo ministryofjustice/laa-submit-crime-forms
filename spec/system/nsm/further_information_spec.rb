@@ -5,8 +5,7 @@ RSpec.describe 'Nsm - User can fill in further information', :javascript, type: 
     create(:claim,
            :complete,
            :with_further_information_request,
-           :case_type_breach,
-           :with_full_navigation_stack,)
+           :case_type_breach)
   end
 
   before do
