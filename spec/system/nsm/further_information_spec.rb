@@ -2,8 +2,10 @@ require 'system_helper'
 
 RSpec.describe 'Nsm - User can fill in further information', :javascript, type: :system do
   let(:claim) do
-    create(:claim, :complete, :with_further_information_request, work_items: [build(:work_item, :waiting)],
-           disbursements: [build(:disbursement, :valid)])
+    create(:claim,
+           :complete,
+           :with_further_information_request,
+           :case_type_breach)
   end
 
   before do
