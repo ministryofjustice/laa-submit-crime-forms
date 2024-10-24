@@ -1,5 +1,5 @@
-name: "Delete UAT deployment"
-description: 'Deletes a UAT deployment with a name that matches the merged or closed branch'
+name: "Run freshclam"
+description: 'Runs freshclam on a clamav pod in the given K8S cluster and namespace'
 inputs:
   k8s_cluster:
     description: "Kubernetes cluster name"
