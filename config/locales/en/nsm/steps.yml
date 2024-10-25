@@ -166,6 +166,7 @@ en:
           calculation: Calculation
           before_vat: Before VAT
           after_vat: After VAT
+          apply_vat: Apply VAT
       disbursements:
         edit:
           page_title: Disbursements
