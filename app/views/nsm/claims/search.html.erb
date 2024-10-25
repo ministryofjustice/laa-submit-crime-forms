@@ -3,7 +3,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= govuk_error_summary(@form) %>
-    <h1 id='heading' class="govuk-heading-xl"><%= t(".page_title") %></h1>
+    <h1 id='heading' class="govuk-heading-xl"><%= t("nsm.claims.search.page_title") %></h1>
     <p><%= t('.instruction') %></p>
   </div>
 </div>
@@ -11,85 +11,12 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <div class="search-panel govuk-!-margin-bottom-6">
-      <%= form_with(url: search_nsm_applications_path(anchor: :results), method: :get, model: @form) do |f| %>
+      <%= form_with(url: search_nsm_applications_path(anchor: :'results-count'), method: :get, model: @form) do |f| %>
         <div class="govuk-form-group govuk-!-width-two-thirds" role="search">
-          <%= f.govuk_text_field :search_string, label: { size: 's', text: t(".label") } %>
+          <%= f.govuk_text_field :search_string, label: { size: 's', text: t("nsm.claims.search.label") } %>
         </div>
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-            <%= t('.submission_filter_legend') %>
-          </legend>
-          <p><%= t('.submission_filter_hint') %></p>
-          <div class="govuk-date-input__item">
-            <div class="moj-datepicker" data-module="moj-date-picker">
-              <div class="govuk-form-group">
-                <%= f.govuk_text_field :submitted_from,
-                                       label: { text: t('.submitted_from') },
-                                       class: 'moj-js-datepicker-input',
-                                       value: @form.submitted_from&.to_fs(:date_picker) %>
-              </div>
-            </div>
-          </div>
-          <div class="govuk-date-input__item">
-            <div class="moj-datepicker" data-module="moj-date-picker">
-              <div class="govuk-form-group">
-                <%= f.govuk_text_field :submitted_to,
-                                       label: { text: t('.submitted_to') },
-                                       class: 'moj-js-datepicker-input',
-                                       value: @form.submitted_to&.to_fs(:date_picker) %>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-            <%= t('.update_filter_legend') %>
-          </legend>
-          <p><%= t('.update_filter_hint') %></p>
-          <div class="govuk-date-input__item">
-            <div class="moj-datepicker" data-module="moj-date-picker">
-              <div class="govuk-form-group">
-                <%= f.govuk_text_field :updated_from,
-                                       label: { text: t('.updated_from') },
-                                       class: 'moj-js-datepicker-input',
-                                       value: @form.updated_from&.to_fs(:date_picker) %>
-              </div>
-            </div>
-          </div>
-          <div class="govuk-date-input__item">
-            <div class="moj-datepicker" data-module="moj-date-picker">
-              <div class="govuk-form-group">
-                <%= f.govuk_text_field :updated_to,
-                                       label: { text: t('.updated_to') },
-                                       class: 'moj-js-datepicker-input',
-                                       value: @form.updated_to&.to_fs(:date_picker)  %>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-
-        <div>
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <%= f.govuk_collection_select :state,
-                                            @form.states,
-                                            :value,
-                                            :label,
-                                            label: { text: t(".status"), size: 's' } %>
-            </div>
-          </div>
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <%= f.govuk_collection_select :office_code,
-                                            @form.office_codes,
-                                            :value,
-                                            :label,
-                                            label: { text: t(".account"), size: 's' } %>
-            </div>
-          </div>
-        </div>
-
-        <%= f.govuk_submit(t('.search'), 'data-disable' => 'false') do %>
+        <%= render 'shared/search', form: @form, f: %>
+        <%= f.govuk_submit(t('nsm.claims.search.search'), id: 'search', 'data-disable' => 'false') do %>
           <%= govuk_link_to t('.clear_all'), search_nsm_applications_path %>
         <% end %>
       <% end %>
@@ -97,7 +24,7 @@
 
     <% if @model %>
       <% if @model.any? %>
-        <h2 class="govuk-heading-m"><%= t('.results', count: @pagy.count, results: t('.result').pluralize(@pagy.count)) %></h2>
+        <h2 id="results-count" class="govuk-heading-m"><%= t('.results', count: @pagy.count, results: t('.result').pluralize(@pagy.count)) %></h2>
         <table id="results" class="govuk-table" data-module="moj-sortable-table" aria-describedby="heading">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">

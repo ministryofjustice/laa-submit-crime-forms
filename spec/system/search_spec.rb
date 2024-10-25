@@ -39,16 +39,18 @@ RSpec.describe 'Search' do
 
         visit search_prior_authority_applications_path
         fill_in 'Enter any combination of client, UFN or LAA reference', with: query
-        click_on 'Search'
+        find('button.govuk-button#search').click
       end
 
       context 'when I search by LAA reference' do
         let(:query) { 'laa-ab1234' }
 
         it 'shows only the matching record that I am associated with' do
-          expect(page).to have_content 'Submitted'
-          expect(page).to have_no_content 'Draft'
-          expect(page).to have_no_content 'Rejected'
+          within('.govuk-table') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
         end
       end
 
@@ -56,9 +58,11 @@ RSpec.describe 'Search' do
         let(:query) { '070620/123' }
 
         it 'shows only the matching record that I am associated with' do
-          expect(page).to have_content 'Submitted'
-          expect(page).to have_no_content 'Draft'
-          expect(page).to have_no_content 'Rejected'
+          within('.govuk-table') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
         end
       end
 
@@ -66,9 +70,11 @@ RSpec.describe 'Search' do
         let(:query) { 'JOE' }
 
         it 'shows only the matching record that I am associated with' do
-          expect(page).to have_content 'Submitted'
-          expect(page).to have_no_content 'Draft'
-          expect(page).to have_no_content 'Rejected'
+          within('.govuk-table') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
         end
       end
 
@@ -76,9 +82,11 @@ RSpec.describe 'Search' do
         let(:query) { 'bloggs' }
 
         it 'shows only the matching record that I am associated with' do
-          expect(page).to have_content 'Submitted'
-          expect(page).to have_no_content 'Draft'
-          expect(page).to have_no_content 'Rejected'
+          within('.govuk-table') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
         end
       end
 
@@ -86,9 +94,11 @@ RSpec.describe 'Search' do
         let(:query) { 'BLOGGS JOE 070620/123' }
 
         it 'shows only the matching record that I am associated with' do
-          expect(page).to have_content 'Submitted'
-          expect(page).to have_no_content 'Draft'
-          expect(page).to have_no_content 'Rejected'
+          within('.govuk-table') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
         end
       end
     end
@@ -110,7 +120,7 @@ RSpec.describe 'Search' do
 
         visit search_prior_authority_applications_path
         fill_in 'Enter any combination of client, UFN or LAA reference', with: 'Joe Bloggs'
-        click_on 'Search'
+        find('button.govuk-button#search').click
       end
 
       it 'sorts by updated at by default' do
@@ -174,7 +184,7 @@ RSpec.describe 'Search' do
 
         visit search_nsm_applications_path
         fill_in 'Enter any combination of defendant, UFN or LAA reference', with: query
-        click_button 'Search'
+        find('button.govuk-button#search').click
       end
 
       context 'when I enter nothing' do
@@ -258,7 +268,7 @@ RSpec.describe 'Search' do
         before do
           fill_in 'Submission date from', with: '2024-09-01'
           fill_in 'Submission date to', with: '2024-09-01'
-          click_button 'Search'
+          find('button.govuk-button#search').click
         end
 
         it 'shows only the matching record' do
@@ -272,7 +282,7 @@ RSpec.describe 'Search' do
       context 'when I filter by submission from date' do
         before do
           fill_in 'Submission date from', with: '2024-10-01'
-          click_button 'Search'
+          find('button.govuk-button#search').click
         end
 
         it 'shows only the matching record' do
@@ -286,7 +296,7 @@ RSpec.describe 'Search' do
       context 'when I filter by submission to date' do
         before do
           fill_in 'Submission date to', with: '2024-09-02'
-          click_button 'Search'
+          find('button.govuk-button#search').click
         end
 
         it 'shows only the matching record' do
@@ -301,7 +311,7 @@ RSpec.describe 'Search' do
         before do
           fill_in 'Last updated from', with: '2024-09-01'
           fill_in 'Last updated to', with: '2024-09-01'
-          click_button 'Search'
+          find('button.govuk-button#search').click
         end
 
         it 'shows only the matching record' do
@@ -315,7 +325,7 @@ RSpec.describe 'Search' do
       context 'when I filter by update from date' do
         before do
           fill_in 'Last updated from', with: '2024-09-02'
-          click_button 'Search'
+          find('button.govuk-button#search').click
         end
 
         it 'shows only the matching record' do
@@ -329,7 +339,7 @@ RSpec.describe 'Search' do
       context 'when I filter by update to date' do
         before do
           fill_in 'Last updated to', with: '2024-09-01'
-          click_button 'Search'
+          find('button.govuk-button#search').click
         end
 
         it 'shows only the matching record' do
@@ -343,7 +353,7 @@ RSpec.describe 'Search' do
       context 'when I filter by state' do
         before do
           select 'Submitted', from: 'Application status'
-          click_button 'Search'
+          find('button.govuk-button#search').click
         end
 
         it 'shows only the matching record' do
@@ -359,7 +369,7 @@ RSpec.describe 'Search' do
           matching.granted!
 
           select 'Granted', from: 'Application status'
-          click_button 'Search'
+          find('button.govuk-button#search').click
         end
 
         it 'shows only the matching record' do
@@ -373,7 +383,7 @@ RSpec.describe 'Search' do
       context 'when I filter by office code' do
         before do
           select 'XYZXYZ', from: 'Account'
-          click_button 'Search'
+          find('button.govuk-button#search').click
         end
 
         it 'shows only the matching record' do
@@ -402,7 +412,7 @@ RSpec.describe 'Search' do
 
         visit search_nsm_applications_path
         fill_in 'Enter any combination of defendant, UFN or LAA reference', with: 'Joe Bloggs'
-        click_button 'Search'
+        find('button.govuk-button#search').click
       end
 
       it 'sorts by updated at by default' do

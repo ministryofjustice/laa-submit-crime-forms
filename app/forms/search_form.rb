@@ -1,6 +1,5 @@
 class SearchForm
   include ActiveModel::Model
-  include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveRecord::AttributeAssignment
 
@@ -44,6 +43,6 @@ class SearchForm
   end
 
   def show_all
-    @show_all ||= Option.new('', I18n.t('search.show_all'))
+    @show_all ||= Option.new('', I18n.t('shared.search.show_all'))
   end
 end
