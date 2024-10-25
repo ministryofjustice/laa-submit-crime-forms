@@ -1,7 +1,7 @@
 require 'system_helper'
 
 RSpec.describe 'User can manage disbursements', type: :system do
-  let(:claim) { create(:claim, :firm_details) }
+  let(:claim) { create(:claim, :firm_details, :case_type_breach) }
 
   before do
     visit provider_saml_omniauth_callback_path
@@ -192,7 +192,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
   end
 
   it 'can delete a disbursement' do
-    claim = create(:claim)
+    claim = create(:claim, :case_type_breach, :firm_details)
     disbursement = create(:disbursement, :valid, claim:)
 
     visit edit_nsm_steps_disbursements_path(claim.id, disbursement_id: disbursement.id)
@@ -258,7 +258,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
   context 'when disbursements exist' do
     before { visit edit_nsm_steps_disbursements_path(claim.id) }
 
-    let(:claim) { create(:claim, :firm_details, disbursements:) }
+    let(:claim) { create(:claim, :case_type_breach, :firm_details, disbursements:) }
 
     let(:disbursements) do
       [
@@ -428,7 +428,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
   context 'when incomplete disbursements exist' do
     before { visit edit_nsm_steps_disbursements_path(claim.id) }
 
-    let(:claim) { create(:claim, :firm_details, disbursements:) }
+    let(:claim) { create(:claim, :case_type_breach, :firm_details, disbursements:) }
 
     let(:disbursements) do
       [

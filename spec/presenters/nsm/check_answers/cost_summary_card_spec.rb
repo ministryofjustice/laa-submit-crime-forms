@@ -5,7 +5,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
   let(:claim) do
     build(
-      :claim,
+      :claim, :case_type_breach,
       work_items:,
       disbursements:,
       firm_office:,
@@ -63,7 +63,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
   describe '#table_fields' do
     context 'when a single work item exists' do
       let(:work_items) do
-        [build(:work_item, work_type: 'advocacy', time_spent: 600)]
+        [build(:work_item, :valid, work_type: 'advocacy', time_spent: 600)]
       end
 
       context 'when show_adjustments is not passed in' do
@@ -95,7 +95,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
         context 'when the work item has changed to a different group' do
           let(:work_items) do
-            [build(:work_item, work_type: 'advocacy', time_spent: 600, allowed_work_type: 'travel')]
+            [build(:work_item, :valid, work_type: 'advocacy', time_spent: 600, allowed_work_type: 'travel')]
           end
 
           it 'shows claimed amount in profit costs' do
@@ -145,8 +145,8 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
     context 'when multiple work item of diffent types exists' do
       let(:work_items) do
         [
-          build(:work_item, work_type: 'advocacy', time_spent: 600),
-          build(:work_item, work_type: 'preparation', time_spent: 660)
+          build(:work_item, :valid, work_type: 'advocacy', time_spent: 600),
+          build(:work_item, :valid, work_type: 'preparation', time_spent: 660)
         ]
       end
 
@@ -165,9 +165,9 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
     context 'when waiting and travel work items exist' do
       let(:work_items) do
         [
-          build(:work_item, work_type: 'travel', time_spent: 600),
-          build(:work_item, work_type: 'waiting', time_spent: 600),
-          build(:work_item, work_type: 'preparation', time_spent: 660)
+          build(:work_item, :valid, work_type: 'travel', time_spent: 600),
+          build(:work_item, :valid, work_type: 'waiting', time_spent: 600),
+          build(:work_item, :valid, work_type: 'preparation', time_spent: 660)
         ]
       end
 
@@ -194,8 +194,8 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
     context 'when multiple work item of the same types exists' do
       let(:work_items) do
         [
-          build(:work_item, work_type: 'advocacy', time_spent: 600),
-          build(:work_item, work_type: 'advocacy', time_spent: 660)
+          build(:work_item, :valid, work_type: 'advocacy', time_spent: 600),
+          build(:work_item, :valid, work_type: 'advocacy', time_spent: 660)
         ]
       end
 
@@ -213,7 +213,8 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
     context 'when disbursements exists - with vat' do
       let(:disbursements) do
-        [build(:disbursement, :valid, apply_vat: 'true', total_cost_without_vat: 600.0, disbursement_type: 'other')]
+        [build(:disbursement, :valid, apply_vat: 'true', total_cost_without_vat: 600.0, other_type: 'car',
+               disbursement_type: 'other')]
       end
 
       context 'when show_adjustments is not passed in' do
@@ -230,7 +231,8 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
     context 'when disbursements exists - without vat' do
       let(:disbursements) do
-        [build(:disbursement, :valid, apply_vat: 'false', total_cost_without_vat: 600.0, disbursement_type: 'other')]
+        [build(:disbursement, :valid, apply_vat: 'false', total_cost_without_vat: 600.0, other_type: 'car',
+               disbursement_type: 'other')]
       end
 
       context 'when show_adjustments is not passed in' do
@@ -265,7 +267,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
   describe '#footer_fields' do
     context 'when a single work item exists' do
       let(:work_items) do
-        [build(:work_item, work_type: 'advocacy', time_spent: 600)]
+        [build(:work_item, :valid, work_type: 'advocacy', time_spent: 600)]
       end
 
       context 'when show_adjustments is not passed in' do
@@ -334,7 +336,7 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
     context 'when firm is VAT registered' do
       let(:vat_registered) { 'yes' }
       let(:work_items) do
-        [build(:work_item, work_type: 'advocacy', time_spent: 600)]
+        [build(:work_item, :valid, work_type: 'advocacy', time_spent: 600)]
       end
 
       context 'when show_adjustments is not passed in' do
@@ -366,8 +368,8 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
     context 'when multiple work item of diffent types exists' do
       let(:work_items) do
         [
-          build(:work_item, work_type: 'advocacy', time_spent: 600),
-          build(:work_item, work_type: 'travel', time_spent: 600)
+          build(:work_item, :valid, work_type: 'advocacy', time_spent: 600),
+          build(:work_item, :valid, work_type: 'travel', time_spent: 600)
         ]
       end
 
@@ -421,7 +423,8 @@ RSpec.describe Nsm::CheckAnswers::CostSummaryCard do
 
     context 'when disbursements exists' do
       let(:disbursements) do
-        [build(:disbursement, :valid, apply_vat: 'true', total_cost_without_vat: 600.0, disbursement_type: 'other')]
+        [build(:disbursement, :valid, apply_vat: 'true', total_cost_without_vat: 600.0, other_type: 'car',
+               disbursement_type: 'other')]
       end
 
       context 'when show_adjustments is not passed in' do

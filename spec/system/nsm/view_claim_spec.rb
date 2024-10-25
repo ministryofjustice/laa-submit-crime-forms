@@ -2,9 +2,9 @@ require 'system_helper'
 
 RSpec.describe 'View claim page', type: :system do
   let(:claim) do
-    create(:claim, :firm_details, :letters_calls,
-           work_items: work_items,
-           disbursements: disbursements,
+    create(:claim, :case_type_magistrates, :firm_details, :letters_calls,
+           work_items: work_items, office_in_undesignated_area: true, court_in_undesignated_area: true,
+           assigned_counsel: 'yes', disbursements: disbursements,
            state: :submitted)
   end
 
@@ -16,10 +16,10 @@ RSpec.describe 'View claim page', type: :system do
             time_spent: 90,
             completed_on: 1.day.ago,
             allowed_work_type: :attendance_with_counsel),
-      build(:work_item, :advocacy, :with_adjustment, time_spent: 104, completed_on: 1.day.ago),
-      build(:work_item, :advocacy, time_spent: 86, completed_on: 2.days.ago),
-      build(:work_item, :waiting, time_spent: 23, completed_on: 3.days.ago),
-      build(:work_item, :travel, :with_adjustment, time_spent: 23, completed_on: 3.days.ago),
+      build(:work_item, :valid, :advocacy, :with_adjustment, time_spent: 104, completed_on: 1.day.ago, fee_earner: 'AA'),
+      build(:work_item, :valid, :advocacy, time_spent: 86, completed_on: 2.days.ago, fee_earner: 'BB'),
+      build(:work_item, :valid, :waiting, time_spent: 23, completed_on: 3.days.ago),
+      build(:work_item, :valid, :travel, :with_adjustment, time_spent: 23, completed_on: 3.days.ago),
     ]
   end
 
@@ -68,8 +68,8 @@ RSpec.describe 'View claim page', type: :system do
           'Item', 'Cost type', 'Date', 'Fee earner', 'Time claimed', 'Uplift claimed', 'Net cost claimed',
           '1', 'Travel', 3.days.ago.to_fs(:short_stamp), 'TT', '0 hours:23 minutes', '10%', '£10.58',
           '2', 'Waiting', 3.days.ago.to_fs(:short_stamp), 'TT', '0 hours:23 minutes', '10%', '£10.58',
-          '3', 'Advocacy', 2.days.ago.to_fs(:short_stamp), '', '1 hour:26 minutes', '0%', '£93.77',
-          '4', 'Advocacy', 1.day.ago.to_fs(:short_stamp), '', '1 hour:44 minutes', '0%', '£113.39',
+          '3', 'Advocacy', 2.days.ago.to_fs(:short_stamp), 'BB', '1 hour:26 minutes', '0%', '£93.77',
+          '4', 'Advocacy', 1.day.ago.to_fs(:short_stamp), 'AA', '1 hour:44 minutes', '0%', '£113.39',
           '5', 'Attendance without counsel', 1.day.ago.to_fs(:short_stamp), 'AB', '1 hour:30 minutes', '0%', '£78.23'
         ]
       )
@@ -235,8 +235,10 @@ RSpec.describe 'View claim page', type: :system do
 
   context 'when adjustments exist' do
     let(:claim) do
-      create(:claim, :firm_details, :adjusted_letters_calls,
-             state:, work_items:, disbursements:, assessment_comment:)
+      create(:claim, :case_type_magistrates, :firm_details, :adjusted_letters_calls, office_in_undesignated_area: true,
+             court_in_undesignated_area: true,
+             assigned_counsel: 'yes', state: state, work_items: work_items, disbursements: disbursements,
+             assessment_comment: assessment_comment)
     end
 
     let(:assessment_comment) { 'some random text' }
@@ -245,21 +247,21 @@ RSpec.describe 'View claim page', type: :system do
 
     let(:work_items) do
       [
-        build(:work_item, :travel, :with_adjustment, fee_earner: 'BC', time_spent: 60),
-        build(:work_item, :waiting, :with_adjustment, fee_earner: 'BC', time_spent: 60),
-        build(:work_item, :attendance_with_counsel, :with_adjustment, fee_earner: 'AB', time_spent: 90),
-        build(:work_item, :attendance_without_counsel, :with_adjustment, fee_earner: 'AB', time_spent: 90),
-        build(:work_item, :preparation, :with_adjustment, fee_earner: 'BC', time_spent: 104),
-        build(:work_item, :advocacy, :with_adjustment, fee_earner: 'BC', time_spent: 104),
+        build(:work_item, :valid, :travel, :with_adjustment, fee_earner: 'BC', completed_on: 6.days.ago, time_spent: 60),
+        build(:work_item, :valid, :waiting, :with_adjustment, fee_earner: 'BC', completed_on: 5.days.ago, time_spent: 60),
+        build(:work_item, :valid, :attendance_with_counsel, :with_adjustment, fee_earner: 'AB', completed_on: 4.days.ago,
+time_spent: 90),
+        build(:work_item, :valid, :attendance_without_counsel, :with_adjustment, fee_earner: 'AB', completed_on: 3.days.ago,
+time_spent: 90),
+        build(:work_item, :valid, :preparation, :with_adjustment, fee_earner: 'BC', completed_on: 2.days.ago, time_spent: 104),
+        build(:work_item, :valid, :advocacy, :with_adjustment, fee_earner: 'BC', completed_on: 1.day.ago, time_spent: 104),
       ]
     end
 
     let(:disbursements) do
       [
         build(:disbursement, :valid_other, :dna_testing, age: 3, total_cost_without_vat: 130),
-        build(:disbursement, :valid, :with_adjustment, :bike, age: 5,
-              miles: 200, allowed_miles: 100,
-              total_cost_without_vat: 130, allowed_total_cost_without_vat: 110),
+        build(:disbursement, :valid, :with_adjustment, :bike, age: 5, miles: 200, allowed_miles: 100),
         build(:disbursement, :valid_other, :with_adjustment, :dna_testing, age: 4,
               total_cost_without_vat: 150, allowed_total_cost_without_vat: 100),
       ]
@@ -271,7 +273,7 @@ RSpec.describe 'View claim page', type: :system do
       within('.govuk-summary-card', text: 'Claim status') do
         expect(page)
           .to have_content('£833.42 claimed')
-          .and have_content('£606.26 allowed')
+          .and have_content('£504.26 allowed')
       end
 
       expect(page)
@@ -292,7 +294,7 @@ RSpec.describe 'View claim page', type: :system do
         within('.govuk-summary-card', text: 'Claim status') do
           expect(page)
             .to have_content('£833.42 claimed')
-            .and have_content('£606.26 allowed')
+            .and have_content('£504.26 allowed')
         end
       end
 
@@ -346,16 +348,16 @@ RSpec.describe 'View claim page', type: :system do
         [
           'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
           'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
-          'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+          'Disbursements', '£330.00', '£10.00', '£340.00', '£255.00', '£5.00', '£260.00',
           'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
           'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
           'Total',
           'Sum of net cost claimed: £741.18',
           'Sum of VAT on claimed: £92.24',
           'Sum of net cost and VAT on claimed: £833.42',
-          'Sum of net cost allowed: £543.55',
-          'Sum of VAT on allowed: £62.71',
-          'Sum of net cost and VAT on allowed: £606.26'
+          'Sum of net cost allowed: £458.55',
+          'Sum of VAT on allowed: £45.71',
+          'Sum of net cost and VAT on allowed: £504.26'
         ]
       )
     end
@@ -375,16 +377,16 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
             'Profit costs', '£355.98', '£0.00', '£355.98', '£175.95', '£0.00', '£175.95',
-            'Disbursements', '£330.00', '£10.00', '£340.00', '£340.00', '£22.00', '£362.00',
+            'Disbursements', '£330.00', '£10.00', '£340.00', '£255.00', '£5.00', '£260.00',
             'Travel', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
             'Waiting', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
             'Total',
             'Sum of net cost claimed: £741.18',
             'Sum of VAT on claimed: £10.00',
             'Sum of net cost and VAT on claimed: £751.18',
-            'Sum of net cost allowed: £543.55',
-            'Sum of VAT on allowed: £22.00',
-            'Sum of net cost and VAT on allowed: £565.55'
+            'Sum of net cost allowed: £458.55',
+            'Sum of VAT on allowed: £5.00',
+            'Sum of net cost and VAT on allowed: £463.55'
           ]
         )
       end
@@ -419,12 +421,12 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted work items',
             'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-            '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-            '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-            '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-            '4', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-            '5', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-            '6', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80'
+            '1', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+            '2', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+            '3', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+            '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+            '5', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+            '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
           ]
         )
       end
@@ -446,12 +448,12 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted work items',
             'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-            '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-            '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-            '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-            '4', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-            '5', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-            '6', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+            '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+            '3', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+            '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+            '5', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+            '1', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+            '2', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
           ]
         )
       end
@@ -467,12 +469,12 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted work items',
             'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-            '5', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-            '6', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-            '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-            '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-            '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-            '4', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+            '1', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+            '2', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+            '3', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+            '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+            '5', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+            '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
           ]
         )
       end
@@ -488,12 +490,12 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted work items',
             'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-            '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
-            '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-            '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-            '4', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-            '5', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-            '6', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+            '3', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+            '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+            '5', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+            '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+            '1', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+            '2', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
           ]
         )
       end
@@ -509,12 +511,12 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted work items',
             'Item', 'Cost type', 'Reason for adjustment', 'Time allowed', 'Uplift allowed', 'Net cost allowed',
-            '5', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-            '6', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
-            '2', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
-            '3', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
-            '4', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
-            '1', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
+            '1', 'Travel', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+            '2', 'Waiting', 'WI adjustment', '0 hours:30 minutes', '10%', '£13.80',
+            '3', 'Attendance with counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£26.76',
+            '4', 'Attendance without counsel', 'WI adjustment', '0 hours:45 minutes', '0%', '£39.11',
+            '5', 'Preparation', 'WI adjustment', '0 hours:52 minutes', '0%', '£45.20',
+            '6', 'Advocacy', 'WI adjustment', '0 hours:52 minutes', '0%', '£56.70',
           ]
         )
       end
@@ -543,7 +545,7 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted disbursements',
             'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-            '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00', '2', 'DNA Testing', 'Disbursement Test',
+            '1', 'Bike mileage', 'Disbursement Test', '£25.00', '£5.00', '£30.00', '2', 'DNA Testing', 'Disbursement Test',
             '£100.00', '£0.00', '£100.00'
           ]
         )
@@ -560,7 +562,7 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted disbursements',
             'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-            '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+            '1', 'Bike mileage', 'Disbursement Test', '£25.00', '£5.00', '£30.00',
             '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
           ]
         )
@@ -574,7 +576,7 @@ RSpec.describe 'View claim page', type: :system do
             'Adjusted disbursements',
             'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
             '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-            '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+            '1', 'Bike mileage', 'Disbursement Test', '£25.00', '£5.00', '£30.00',
           ]
         )
       end
@@ -590,8 +592,8 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted disbursements',
             'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+            '1', 'Bike mileage', 'Disbursement Test', '£25.00', '£5.00', '£30.00',
             '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-            '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
           ]
         )
       end
@@ -603,8 +605,8 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted disbursements',
             'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-            '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
             '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+            '1', 'Bike mileage', 'Disbursement Test', '£25.00', '£5.00', '£30.00',
           ]
         )
       end
@@ -621,7 +623,7 @@ RSpec.describe 'View claim page', type: :system do
             'Adjusted disbursements',
             'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
             '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-            '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+            '1', 'Bike mileage', 'Disbursement Test', '£25.00', '£5.00', '£30.00',
           ]
         )
       end
@@ -633,7 +635,7 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted disbursements',
             'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-            '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
+            '1', 'Bike mileage', 'Disbursement Test', '£25.00', '£5.00', '£30.00',
             '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
           ]
         )
@@ -650,8 +652,8 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted disbursements',
             'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
+            '1', 'Bike mileage', 'Disbursement Test', '£25.00', '£5.00', '£30.00',
             '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
-            '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
           ]
         )
       end
@@ -663,8 +665,8 @@ RSpec.describe 'View claim page', type: :system do
           [
             'Adjusted disbursements',
             'Item', 'Cost type', 'Reason for adjustment', 'Net cost allowed', 'VAT on allowed', 'Total cost allowed',
-            '1', 'Bike mileage', 'Disbursement Test', '£110.00', '£22.00', '£132.00',
             '2', 'DNA Testing', 'Disbursement Test', '£100.00', '£0.00', '£100.00',
+            '1', 'Bike mileage', 'Disbursement Test', '£25.00', '£5.00', '£30.00',
           ]
         )
       end
@@ -677,7 +679,7 @@ RSpec.describe 'View claim page', type: :system do
         [
           'Provider submission',
           'Work type', 'Advocacy',
-          'Date', Time.current.to_fs(:stamp),
+          'Date', 1.day.ago.to_fs(:stamp),
           'Fee earner initials', 'BC',
           'Time claimed', '1 hour 44 minutes',
           'Uplift claimed', '0%',
@@ -766,15 +768,15 @@ RSpec.describe 'View claim page', type: :system do
         [
           'Adjusted claim',
           'Mileage allowed', '100 miles',
-          'Net cost allowed', '£110.00',
-          'VAT allowed', '£22.00',
-          'Total cost allowed', '£132.00',
+          'Net cost allowed', '£25.00',
+          'VAT allowed', '£5.00',
+          'Total cost allowed', '£30.00',
           'Reason for adjustment', 'Disbursement Test',
           'Your claimed costs',
           'Date', 5.days.ago.to_fs(:stamp),
           'Disbursement type', 'Bike mileage',
           'Disbursement description', 'Details',
-          'Prior authority granted?', 'Yes',
+          'Prior authority granted?', 'No',
           'Mileage', '200 miles',
           'Net cost', '£50.00',
           'VAT', '£10.00',
@@ -792,7 +794,7 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   context 'when claim is expired' do
-    let(:claim) { create(:claim, :firm_details, state: :expired) }
+    let(:claim) { create(:claim, :case_type_magistrates, :firm_details, state: :expired) }
 
     before do
       create :further_information,

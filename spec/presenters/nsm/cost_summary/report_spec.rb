@@ -4,7 +4,7 @@ RSpec.describe Nsm::CostSummary::Report do
   subject { described_class.new(claim) }
 
   let(:claim) do
-    instance_double(Claim, work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id: id)
+    instance_double(Claim, work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id: id, totals: totals)
   end
   let(:disbursements_scope) { double(:scope, by_age: [instance_double(Disbursement)]) }
   let(:id) { SecureRandom.uuid }
@@ -24,6 +24,7 @@ RSpec.describe Nsm::CostSummary::Report do
   let(:summary) do
     instance_double(Nsm::CheckAnswers::CostSummaryCard, total_gross: 230)
   end
+  let(:totals) { { totals: { claimed_total_inc_vat: 230 } } }
   let(:l_title) { 'Letters and Calls' }
   let(:l_rows) { double(:l_row_data) }
   let(:l_total_cost) { 100.00 }

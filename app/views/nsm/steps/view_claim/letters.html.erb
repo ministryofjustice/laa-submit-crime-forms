@@ -22,7 +22,7 @@
     %>
     <%=
       rows = [
-        [{ text: t(".rate"), width: 'govuk-!-width-one-half' }, NumberTo.pounds(@claim.pricing.letters)],
+        [{ text: t(".rate"), width: 'govuk-!-width-one-half' }, NumberTo.pounds(@claim.letter_rate)],
         [t(".number"), @claim.letters.to_s],
         [t(".uplift"), NumberTo.percentage(@claim.letters_uplift.to_f, multiplier: 1)],
         [t(".net_cost"), NumberTo.pounds(@claim.letters_after_uplift)]

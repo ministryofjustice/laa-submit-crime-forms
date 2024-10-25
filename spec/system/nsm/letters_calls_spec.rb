@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User can fill in claim type details', type: :system do
-  let(:claim) { create(:claim, :firm_details) }
+  let(:claim) { create(:claim, :case_type_magistrates, :firm_details) }
 
   before do
     visit provider_saml_omniauth_callback_path

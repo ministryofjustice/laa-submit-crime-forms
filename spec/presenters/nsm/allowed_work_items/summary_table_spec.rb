@@ -1,11 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::AllowedWorkItems::SummaryTable do
-  subject { described_class.new(work_items, skip_links:) }
+  subject { described_class.new(claim, skip_links:) }
 
   let(:work_items) { [work_item] }
   let(:skip_links) { false }
-  let(:work_item) { create(:work_item, work_type: 'advocacy', time_spent: 100, claim: create(:claim)) }
+  let(:work_item) { build(:work_item, :valid, work_type: 'advocacy', time_spent: 100) }
+  let(:claim) do
+    create(:claim,
+           :firm_details,
+           claim_type: 'breach_of_injunction',
+           cntp_date: Date.new(2024, 10, 3),
+           work_items: work_items)
+  end
 
   describe '#rows' do
     it 'has a row for each work item type' do
@@ -30,12 +37,11 @@ RSpec.describe Nsm::AllowedWorkItems::SummaryTable do
 
     context 'when a work item has changed type' do
       let(:work_item) do
-        create(:work_item,
-               work_type: 'advocacy',
-               allowed_work_type: 'travel',
-               adjustment_comment: 'wrong type',
-               time_spent: 100,
-               claim: create(:claim))
+        build(:work_item, :valid,
+              work_type: 'advocacy',
+              allowed_work_type: 'travel',
+              adjustment_comment: 'wrong type',
+              time_spent: 100)
       end
 
       it 'shows the relevant details in the row for the old type' do

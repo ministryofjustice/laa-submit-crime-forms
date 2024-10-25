@@ -3,42 +3,6 @@ require 'rails_helper'
 RSpec.describe Claim do
   let(:claim) { described_class.new(attributes) }
 
-  describe '#date' do
-    context 'when rep_order_date is set' do
-      let(:attributes) { { rep_order_date: } }
-      let(:rep_order_date) { Date.yesterday }
-
-      it 'returns the rep_order_date' do
-        expect(claim.date).to eq(rep_order_date)
-      end
-    end
-
-    context 'when cntp_date is set' do
-      let(:attributes) { { cntp_date: } }
-      let(:cntp_date) { Date.yesterday }
-
-      it 'returns the cntp_date' do
-        expect(claim.date).to eq(cntp_date)
-      end
-    end
-
-    context 'when neither rep_order_date or cntp_date is set' do
-      let(:attributes) { {} }
-
-      it 'returns nil' do
-        expect(claim.date).to be_nil
-      end
-    end
-  end
-
-  context 'short_id' do
-    let(:attributes) { { id: SecureRandom.uuid } }
-
-    it 'returns the first 8 characters of the id' do
-      expect(claim.short_id).to eq(claim.id.first(8))
-    end
-  end
-
   describe '#main_defendant' do
     let(:claim) { create(:claim, :main_defendant) }
 

@@ -26,7 +26,7 @@ module Nsm
 
       def work_types_with_pricing
         WorkTypes.values.filter_map do |work_type|
-          [work_type, pricing[work_type.to_s]] if work_type.display?(application)
+          [work_type, rates.work_items[work_type.to_sym]] if work_type.display?(application)
         end
       end
 

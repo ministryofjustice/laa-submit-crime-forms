@@ -9,7 +9,7 @@ RSpec.describe 'View disbursement after submission', :javascript, type: :system 
   end
 
   let(:some_date) { 1.month.ago.to_date }
-  let(:claim) { create(:claim, state: 'submitted') }
+  let(:claim) { create(:claim, :case_type_magistrates, :firm_details, state: 'submitted') }
 
   context 'With a "mileage" type disbursement' do
     let(:disbursement) do

@@ -2,7 +2,6 @@ class SubmitToAppStore < ApplicationJob
   queue_as :default
 
   def self.perform_later(submission:)
-    # TODO: Backfill by exporting from app store to generate a migration once this is deployed
     submission.originally_submitted_at = DateTime.current if submission.submitted?
     submission.update!(submit_to_app_store_completed: false)
     super

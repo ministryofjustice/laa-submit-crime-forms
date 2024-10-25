@@ -15,14 +15,17 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
     }
   end
 
-  let(:application) { instance_double(Claim, update!: true, date: date, reasons_for_claim: reasons_for_claim) }
+  let(:application) do
+    create :claim, :firm_details, claim_type: 'breach_of_injunction', cntp_date: date,
+            reasons_for_claim: reasons_for_claim
+  end
   let(:letters) { 1 }
   let(:calls) { 1 }
   let(:apply_letters_uplift) { 'true' }
   let(:letters_uplift) { 1 }
   let(:apply_calls_uplift) { 'true' }
   let(:calls_uplift) { 1 }
-  let(:date) { nil }
+  let(:date) { Date.new(2023, 10, 23) }
   let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
 
   describe '#validations' do

@@ -13,7 +13,9 @@ gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'grover'
 gem 'httparty'
 gem 'jsbundling-rails'
-gem 'laa_crime_forms_common', '~> 0.2.7', github: 'ministryofjustice/laa-crime-forms-common'
+# TODO: Delete ref before merge
+gem 'laa_crime_forms_common', '~> 0.3.0', github: 'ministryofjustice/laa-crime-forms-common',
+                                          ref: '57aab10'
 gem 'laa_multi_step_forms', path: './gems/laa_multi_step_forms'
 gem 'lograge'
 gem 'logstasher', '~> 2.1'

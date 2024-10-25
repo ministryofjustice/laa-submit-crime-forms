@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::CheckAnswers::DisbursementCostsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { create(:claim, :one_other_disbursement) }
+  let(:claim) { create(:claim, :case_type_magistrates, :firm_details, :one_other_disbursement) }
 
   describe '#title' do
     it 'shows correct title' do

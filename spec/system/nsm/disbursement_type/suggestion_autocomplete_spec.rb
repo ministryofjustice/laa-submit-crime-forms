@@ -1,7 +1,7 @@
 require 'system_helper'
 
 RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :system do
-  let(:claim) { create(:claim) }
+  let(:claim) { create(:claim, :case_type_breach, :firm_details) }
   let(:other_type_field) { 'nsm_steps_disbursement_type_form[other_type_suggestion]' }
 
   before do

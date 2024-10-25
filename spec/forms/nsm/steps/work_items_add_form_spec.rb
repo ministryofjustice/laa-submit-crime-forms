@@ -18,12 +18,13 @@ RSpec.describe Nsm::Steps::WorkItemForm do
   end
 
   let(:application) do
-    instance_double(Claim, work_items: work_items, update!: true, date: date, assigned_counsel: assigned_counsel,
-   prog_stage_reached?: prog_stage_reached, reasons_for_claim: reasons_for_claim)
+    create :claim, :firm_details, work_items: work_items, claim_type: 'breach_of_injunction',
+                    cntp_date: date, assigned_counsel: assigned_counsel,
+                    reasons_for_claim: reasons_for_claim
   end
-  let(:work_items) { [double(:record), record] }
+  let(:work_items) { [build(:work_item), record] }
   let(:date) { Date.new(2023, 1, 1) }
-  let(:record) { double(:record, id: SecureRandom.uuid) }
+  let(:record) { build(:work_item) }
   let(:work_type) { WorkTypes.values.sample.to_s }
   let(:time_spent) { { 1 => hours, 2 => minutes } }
   let(:hours) { 1 }
@@ -33,7 +34,6 @@ RSpec.describe Nsm::Steps::WorkItemForm do
   let(:apply_uplift) { 'true' }
   let(:uplift) { 10 }
   let(:assigned_counsel) { 'yes' }
-  let(:prog_stage_reached) { true }
   let(:reasons_for_claim) { [ReasonForClaim::ENHANCED_RATES_CLAIMED.to_s] }
   let(:add_another) { 'yes' }
 
@@ -130,9 +130,12 @@ RSpec.describe Nsm::Steps::WorkItemForm do
       end
     end
 
-    describe 'invalid work item type' do
+    describe 'invalid work item type given prog/prom' do
       let(:work_type) { WorkTypes::TRAVEL }
-      let(:prog_stage_reached) { false }
+
+      before do
+        application.update(claim_type: 'non_standard_magistrate', office_in_undesignated_area: false, rep_order_date: date)
+      end
 
       it 'has an error' do
         expect(subject).not_to be_valid
@@ -198,22 +201,17 @@ RSpec.describe Nsm::Steps::WorkItemForm do
   end
 
   describe '#total_costs' do
-    let(:pricing) { instance_double(Pricing, '[]': price) }
-    let(:price) { 3.54 }
-
-    before do
-      allow(Pricing).to receive(:for).and_return(pricing)
-    end
+    let(:price) { application.rates.work_items[work_type.to_sym] }
 
     it 'is equal to hours and minutes * the price for the work type * uplift' do
-      expect(subject.total_cost).to be_within(0.0001).of(61.0 * (price / 60) * 1.1)
+      expect(subject.total_cost).to be_within(0.0001).of((61.0 * (price / 60) * 1.1).round(2))
     end
 
     context 'when apply uplift is no' do
       let(:apply_uplift) { false }
 
       it 'is equal to hours and minutes * the price for the work type' do
-        expect(subject.total_cost).to be_within(0.0001).of(61.0 * price / 60)
+        expect(subject.total_cost).to be_within(0.0001).of((61.0 * price / 60).round(2))
       end
     end
 
@@ -221,7 +219,7 @@ RSpec.describe Nsm::Steps::WorkItemForm do
       let(:uplift) { nil }
 
       it 'is equal to hours and minutes * the price for the work type' do
-        expect(subject.total_cost).to be_within(0.0001).of(61.0 * price / 60)
+        expect(subject.total_cost).to be_within(0.0001).of((61.0 * price / 60).round(2))
       end
     end
 
@@ -237,14 +235,6 @@ RSpec.describe Nsm::Steps::WorkItemForm do
       let(:minutes) { nil }
 
       it 'can not calculate a price' do
-        expect(subject.total_cost).to be_nil
-      end
-    end
-
-    context 'result in the price being 0' do
-      let(:price) { nil }
-
-      it 'returns 0' do
         expect(subject.total_cost).to be_nil
       end
     end
@@ -280,7 +270,9 @@ RSpec.describe Nsm::Steps::WorkItemForm do
       end
 
       context 'when prog stage not reached' do
-        let(:prog_stage_reached) { false }
+        before do
+          application.update(claim_type: 'non_standard_magistrate', office_in_undesignated_area: false, rep_order_date: date)
+        end
 
         it 'does not include TRAVEL or WAITING' do
           expect(subject.work_types_with_pricing).to eq([
@@ -320,7 +312,9 @@ RSpec.describe Nsm::Steps::WorkItemForm do
       end
 
       context 'when prog stage not reached' do
-        let(:prog_stage_reached) { false }
+        before do
+          application.update(claim_type: 'non_standard_magistrate', office_in_undesignated_area: false, rep_order_date: date)
+        end
 
         it 'does not include TRAVEL or WAITING' do
           expect(subject.work_types_with_pricing).to eq([

@@ -6,9 +6,9 @@ RSpec.describe Nsm::CheckAnswers::WorkItemsCard do
   let(:claim) { build(:claim, :case_type_magistrates, :firm_details, work_items:) }
   let(:work_items) do
     [
-      build(:work_item, work_type: WorkTypes::ADVOCACY.to_s, time_spent: 180),
-      build(:work_item, work_type: WorkTypes::ADVOCACY.to_s, time_spent: 180),
-      build(:work_item, work_type: WorkTypes::PREPARATION.to_s, time_spent: 120),
+      build(:work_item, :valid, work_type: WorkTypes::ADVOCACY.to_s, time_spent: 180),
+      build(:work_item, :valid, work_type: WorkTypes::ADVOCACY.to_s, time_spent: 180),
+      build(:work_item, :valid, work_type: WorkTypes::PREPARATION.to_s, time_spent: 120),
     ]
   end
 

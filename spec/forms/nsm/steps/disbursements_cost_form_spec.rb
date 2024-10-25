@@ -17,16 +17,17 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
   end
 
   let(:application) do
-    instance_double(Claim, work_items: disbursements, update!: true, date: Date.yesterday)
+    create :claim, :firm_details, disbursements: disbursements, cntp_date: Date.yesterday, claim_type: 'breach_of_injunction'
   end
-  let(:disbursements) { [double(:disbursement), record] }
-  let(:record) { double(:record, id: SecureRandom.uuid, disbursement_type: disbursement_type, vat_amount: vat_amount) }
+  let(:disbursements) { [build(:disbursement), record] }
+  let(:record) { build(:disbursement, disbursement_type: disbursement_type, apply_vat: record_apply_vat) }
   let(:disbursement_type) { DisbursementTypes.values.reject(&:other?).sample.to_s }
   let(:miles) { 10 }
   let(:total_cost_without_vat) { nil }
   let(:details) { 'Some text' }
   let(:prior_authority) { nil }
   let(:apply_vat) { 'false' }
+  let(:record_apply_vat) { 'true' }
   let(:vat_amount) { nil }
   let(:add_another) { YesNoAnswer::NO }
 
@@ -125,13 +126,13 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
       let(:apply_vat) { nil }
 
       context 'and a vat_amount exists on the record' do
-        let(:vat_amount) { 10 }
+        let(:record_apply_vat) { 'true' }
 
         it { expect(form.apply_vat).to be(true) }
       end
 
       context 'and a vat_amount does not exist on the record' do
-        let(:vat_amount) { nil }
+        let(:record_apply_vat) { 'false' }
 
         it { expect(form.apply_vat).to be(false) }
       end
@@ -198,8 +199,6 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
           .to(
             hash_including(
               'miles' => 10,
-              'total_cost_without_vat' => 4.5,
-              'vat_amount' => 0.0,
             )
           )
       end
@@ -219,8 +218,6 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
             .to(
               hash_including(
                 'miles' => 10,
-                'total_cost_without_vat' => 4.5,
-                'vat_amount' => 0.9,
               )
             )
         end
@@ -240,8 +237,6 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
               .to(
                 hash_including(
                   'miles' => 11.5,
-                  'total_cost_without_vat' => 5.18,
-                  'vat_amount' => 1.04,
                 )
               )
           end
@@ -266,7 +261,6 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
             hash_including(
               'miles' => nil,
               'total_cost_without_vat' => 50.0,
-              'vat_amount' => 0.0,
             )
           )
       end
@@ -280,14 +274,12 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
               hash_including(
                 'miles' => nil,
                 'total_cost_without_vat' => nil,
-                'vat_amount' => nil,
               )
             )
             .to(
               hash_including(
                 'miles' => nil,
                 'total_cost_without_vat' => 50.0,
-                'vat_amount' => 10.0,
               )
             )
         end

@@ -1,7 +1,7 @@
 require 'system_helper'
 
 RSpec.describe 'User can provide supporting evidence', type: :system do
-  let(:claim) { create(:claim, :complete) }
+  let(:claim) { create(:claim, :case_type_magistrates, :complete) }
 
   context 'when postal evidence feature is enabled' do
     before do

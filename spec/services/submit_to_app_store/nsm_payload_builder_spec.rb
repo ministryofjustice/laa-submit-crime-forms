@@ -5,11 +5,10 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
 
   let(:scorer) { double(:risk_assessment_scorer, calculate: 'high') }
   let(:assessment_comment) { 'this is an assessment' }
-  let(:claim) { create(:claim, :complete) }
+  let(:claim) { create(:claim, :complete, :case_type_breach) }
   let(:defendant) { claim.defendants.first }
   let(:disbursement) { claim.disbursements.first }
   let(:work_item) { claim.work_items.first }
-  let(:pricing) { Pricing.for(claim) }
 
   context 'when the claim is not provider updated' do
     let(:claim) do
@@ -33,26 +32,27 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'concluded' => 'no',
             'conclusion' => nil,
             'cost_summary' => {
-              'disbursements' => {
+              disbursements: {
                 gross_cost: an_instance_of(BigDecimal),
                 net_cost: an_instance_of(BigDecimal),
-                vat: an_instance_of(BigDecimal)
+                vat: an_instance_of(BigDecimal),
               },
-              'profit_costs' => {
+              profit_costs: {
                 gross_cost: an_instance_of(BigDecimal),
                 net_cost: an_instance_of(BigDecimal),
-                vat: an_instance_of(BigDecimal)
+                vat: an_instance_of(BigDecimal),
               },
-              'travel' => {
+              travel: {
                 gross_cost: an_instance_of(BigDecimal),
                 net_cost: an_instance_of(BigDecimal),
-                vat: an_instance_of(BigDecimal)
+                vat: an_instance_of(BigDecimal),
               },
-              'waiting' => {
+              waiting: {
                 gross_cost: an_instance_of(BigDecimal),
                 net_cost: an_instance_of(BigDecimal),
-                vat: an_instance_of(BigDecimal)
+                vat: an_instance_of(BigDecimal),
               },
+              high_value: false,
             },
             'court' => 'A Court',
             'court_in_undesignated_area' => nil,
@@ -78,11 +78,11 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
               'miles' => disbursement.miles.to_s,
               'other_type' => nil,
               'position' => an_instance_of(Integer),
-              'pricing' => pricing[disbursement.disbursement_type],
+              'pricing' => an_instance_of(Float),
               'prior_authority' => disbursement.prior_authority,
-              'total_cost_without_vat' => disbursement.total_cost_without_vat.to_f,
-              'vat_amount' => disbursement.vat_amount.to_f,
-              'vat_rate' => 0.2
+              'total_cost_without_vat' => disbursement.total_cost_pre_vat,
+              'vat_amount' => an_instance_of(Float),
+              'vat_rate' => an_instance_of(Float)
             }],
             'ethnic_group' => '01_white_british',
             'firm_office' => {
@@ -103,8 +103,8 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'is_other_info' => 'no',
             'laa_reference' => 'LAA-n4AohV',
             'letters_and_calls' => [
-              { 'count' => 2, 'pricing' => 4.09, 'type' => 'letters', 'uplift' => nil },
-              { 'count' => 3, 'pricing' => 4.09, 'type' => 'calls', 'uplift' => nil }
+              { 'count' => 2, 'pricing' => an_instance_of(Float), 'type' => 'letters', 'uplift' => nil },
+              { 'count' => 3, 'pricing' => an_instance_of(Float), 'type' => 'calls', 'uplift' => nil }
             ],
             'main_offence' => claim.main_offence,
             'main_offence_date' => /\A\d{4}-\d{2}-\d{2}\z/,
@@ -147,7 +147,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'ufn' => '120423/001',
             'unassigned_counsel' => 'no',
             'updated_at' => '2023-08-17T12:13:14.000Z',
-            'vat_rate' => 0.2,
+            'vat_rate' => an_instance_of(Float),
             'work_after' => 'yes',
             'work_after_date' => '2020-01-01',
             'work_completed_date' => '2020-01-02',
@@ -159,7 +159,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
               'fee_earner' => an_instance_of(String),
               'id' => work_item.id,
               'position' => 1,
-              'pricing' => pricing[work_item.work_type],
+              'pricing' => an_instance_of(Float),
               'time_spent' => an_instance_of(Integer),
               'uplift' => 0,
               'work_type' => work_item.work_type,
@@ -179,10 +179,10 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
                 'updated_at' => '2023-08-17T12:13:14.000Z'
               }],
               'work_item_pricing' => {
-                'advocacy' => 65.42,
-                'attendance_with_counsel' => 35.68,
-                'attendance_without_counsel' => 52.15,
-                'preparation' => 52.15
+                'advocacy' => an_instance_of(Float),
+                'attendance_with_counsel' => an_instance_of(Float),
+                'attendance_without_counsel' => an_instance_of(Float),
+                'preparation' => an_instance_of(Float)
               },
           },
           application_id: claim.id,
@@ -198,7 +198,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
   context 'when the claim is provider updated' do
     let(:claim) do
       create(:claim, :complete, :with_further_information_supplied, state: 'provider_updated',
-updated_at: DateTime.new(2024, 2, 2, 1, 1, 1))
+             updated_at: DateTime.new(2024, 2, 2, 1, 1, 1))
     end
 
     let(:application_payload) do

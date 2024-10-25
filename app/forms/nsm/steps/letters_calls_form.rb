@@ -39,13 +39,13 @@ module Nsm
         [
           translate(:letters),
           {
-            text: NumberTo.pounds(letters_before_uplift),
+            text: NumberTo.pounds((letters_before_uplift if letters.presence)),
             html_attributes: { id: 'letters-without-uplift' }
           },
           (
             if allow_uplift?
               {
-                text: NumberTo.pounds(letters_after_uplift),
+                text: NumberTo.pounds((letters_after_uplift if letters.presence)),
                 html_attributes: { id: 'letters-with-uplift' },
               }
             end
@@ -57,13 +57,13 @@ module Nsm
         [
           translate(:calls),
           {
-            text: NumberTo.pounds(calls_before_uplift),
+            text: NumberTo.pounds((calls_before_uplift if calls.presence)),
             html_attributes: { id: 'calls-without-uplift' }
           },
           (
             if allow_uplift?
               {
-                text: NumberTo.pounds(calls_after_uplift),
+                text: NumberTo.pounds((calls_after_uplift if calls.presence)),
                 html_attributes: { id: 'calls-with-uplift' },
               }
             end

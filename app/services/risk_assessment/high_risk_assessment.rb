@@ -6,8 +6,6 @@ module RiskAssessment
 
     def initialize(claim)
       @claim = claim
-
-      @summary = Nsm::CheckAnswers::CostSummaryCard.new(claim)
     end
 
     def assess
@@ -15,8 +13,7 @@ module RiskAssessment
     end
 
     def high_cost?
-      profit_cost_summary = @summary.table_fields(formatted: false).find { _1[:name] == 'profit_costs' }
-      profit_cost_summary[:gross_cost] >= HIGH_RISK_THRESHOLD
+      @claim.totals[:cost_summary][:profit_costs][:claimed_total_inc_vat] >= HIGH_RISK_THRESHOLD
     end
 
     def counsel_assigned?

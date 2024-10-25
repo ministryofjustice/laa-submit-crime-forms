@@ -24,29 +24,19 @@ module Nsm
       end
 
       def total_cost_for(work_type)
-        forms[work_type.to_s]&.sum { _1.total_cost || 0 } || 0
+        claim.totals[:work_types][work_type.to_sym][:claimed_total_exc_vat]
       end
 
       def time_spent_for(work_type)
-        forms[work_type.to_s]&.sum { _1.time_spent || 0 } || 0
-      end
-
-      def forms
-        @forms ||= work_items.group_by(&:work_type)
+        IntegerTimePeriod.new(claim.totals[:work_types][work_type.to_sym][:claimed_time_spent_in_minutes].to_i)
       end
 
       def total_cost
-        @total_cost ||= work_items.sum { _1.total_cost || 0 } || 0
+        claim.totals[:work_types][:total][:claimed_total_exc_vat]
       end
 
       def total_cost_inc_vat
-        @total_cost_inc_vat ||= calculate_vat
-      end
-
-      def calculate_vat
-        return 0 unless vat_registered
-
-        (total_cost * vat_rate) + total_cost
+        claim.totals[:work_types][:total][:claimed_total_inc_vat]
       end
 
       def title

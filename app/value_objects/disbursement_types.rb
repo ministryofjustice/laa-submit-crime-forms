@@ -9,7 +9,7 @@ class DisbursementTypes < ValueObject
   ].freeze
 
   def hint(application)
-    rate = Pricing.for(application)[value]
+    rate = application.rates.disbursements[value]
     I18n.t(translation_key, rate: number_to_currency(rate, unit: '£')) if rate
   end
 
