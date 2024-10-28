@@ -476,11 +476,9 @@ en:
         nsm/steps/letters_calls_form:
           attributes:
             letters:
-              blank: Set the number of letters
               greater_than_or_equal_to: You cannot apply an uplift if there are 0 letters
               not_a_number: The number of letters must be a number, like 25
             calls:
-              blank: Set the number of calls
               greater_than_or_equal_to: You cannot apply an uplift if there are 0 calls
               not_a_number: The number of calls must be a number, like 25
             letters_uplift:
