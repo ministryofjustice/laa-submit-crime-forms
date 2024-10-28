@@ -196,8 +196,6 @@ GEM
       rubocop (>= 1)
       smart_properties
     erubi (1.13.0)
-    et-orbi (1.2.11)
-      tzinfo
     factory_bot (6.4.5)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.4.3)
@@ -210,9 +208,6 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
-    fugit (1.11.1)
-      et-orbi (~> 1, >= 1.2.11)
-      raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
     govuk-components (5.7.0)
@@ -348,7 +343,6 @@ GEM
     public_suffix (6.0.1)
     puma (6.4.3)
       nio4r (~> 2.0)
-    raabro (1.4.0)
     racc (1.8.1)
     rack (2.2.10)
     rack-protection (3.2.0)
@@ -485,10 +479,6 @@ GEM
       logger
       rack (>= 2.2.4)
       redis-client (>= 0.22.2)
-    sidekiq-cron (1.12.0)
-      fugit (~> 1.8)
-      globalid (>= 1.0.1)
-      sidekiq (>= 6)
     sidekiq_alive (2.4.0)
       gserver (~> 0.0.1)
       sidekiq (>= 5, < 8)
@@ -605,7 +595,6 @@ DEPENDENCIES
   sentry-rails (~> 5.21.0)
   sentry-ruby (~> 5.21.0)
   sidekiq (~> 7.3)
-  sidekiq-cron (~> 1.12.0)
   sidekiq_alive (~> 2.4)
   simplecov
   simplecov-rcov
