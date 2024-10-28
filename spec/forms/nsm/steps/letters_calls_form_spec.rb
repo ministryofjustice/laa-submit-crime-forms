@@ -160,7 +160,7 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
           end
         end
 
-        context 'is not an integer'  do
+        context 'is not an integer' do
           let(:letters_uplift) { '1.6' }
 
           it 'have an error' do
