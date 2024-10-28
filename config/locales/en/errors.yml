@@ -380,6 +380,7 @@ en:
             first_hearing_date: *shared_date_errors
             number_of_hearing:
               blank: Number of hearings held cannot be blank
+              not_a_number: Number of hearings must be a number, like 25
             court:
               blank: Count cannot be blank
             youth_court:
@@ -412,12 +413,15 @@ en:
             prosecution_evidence:
               blank: Number of pages of prosecution evidence cannot be blank
               greater_than_or_equal_to:  Number of pages of prosecution evidence cannot be less than 0
+              not_a_number: Number of pages of prosecution evidence must be a number, like 25
             defence_statement:
               blank:  Number of pages of defence statements cannot be blank
               greater_than_or_equal_to: Number of pages of defence statements cannot be less than 0
+              not_a_number: Number of pages of defence statements must be a number, like 25
             number_of_witnesses:
               blank: Number of witnesses cannot be blank
               greater_than_or_equal_to: Number of witnesses cannot be less than 0
+              not_a_number: Number of witnesses must be a number, like 25
             supplemental_claim:
               blank: Select yes or no for supplemental claim
             wasted_costs:
@@ -473,19 +477,23 @@ en:
             letters:
               blank: Set the number of letters
               greater_than_or_equal_to: You cannot apply an uplift if there are 0 letters
+              not_a_number: The number of letters must be a number, like 25
             calls:
               blank: Set the number of calls
               greater_than_or_equal_to: You cannot apply an uplift if there are 0 calls
+              not_a_number: The number of calls must be a number, like 25
             letters_uplift:
               blank: Letters uplift percentage must be from 1 to 100
               less_than_or_equal_to: Letters uplift percentage must be from 1 to 100
               greater_than_or_equal_to: Letters uplift percentage must be from 1 to 100
               uplift_on_zero: You cannot add an uplift if there are 0 letters
+              not_a_number: Letters uplift percentage must be a number, like 25
             calls_uplift:
               blank: Phone calls uplift percentage must be from 1 to 100
               less_than_or_equal_to: Phone calls uplift percentage must be from 1 to 100
               greater_than_or_equal_to: Phone calls uplift percentage must be from 1 to 100
               uplift_on_zero: You cannot add an uplift if there are 0 phone calls
+              not_a_number: Phone calls uplift percentage must be a number, like 25
         nsm/steps/disbursement_add_form:
           attributes:
             has_disbursements:

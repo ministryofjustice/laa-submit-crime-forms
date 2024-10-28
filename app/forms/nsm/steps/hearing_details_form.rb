@@ -2,7 +2,7 @@ module Nsm
   module Steps
     class HearingDetailsForm < ::Steps::BaseFormObject
       attribute :first_hearing_date, :multiparam_date
-      attribute :number_of_hearing, :integer
+      attribute :number_of_hearing, :fully_validatable_integer
       attribute :court, :string
       attribute :youth_court, :value_object, source: YesNoAnswer
       attribute :hearing_outcome, :string
@@ -10,7 +10,7 @@ module Nsm
 
       validates :first_hearing_date, presence: true,
               multiparam_date: { allow_past: true, allow_future: false }
-      validates :number_of_hearing, presence: true, numericality: { only_integer: true, greater_than: 0 }
+      validates :number_of_hearing, presence: true, is_a_number: true, numericality: { only_integer: true, greater_than: 0 }
       validates :court, presence: true
       validates :youth_court, presence: true, inclusion: { in: YesNoAnswer.values }
       validates :hearing_outcome, presence: true
