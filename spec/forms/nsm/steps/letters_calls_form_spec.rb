@@ -161,11 +161,11 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
         end
 
         context 'is not an integer'  do
-          let(:letters_uplift) { 1.6 }
+          let(:letters_uplift) { '1.6' }
 
-          it 'casts the value to abn integer' do
-            expect(subject).to be_valid
-            expect(subject.letters_uplift).to eq(1)
+          it 'have an error' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:letters_uplift, :not_a_number)).to be(true)
           end
         end
       end
@@ -229,11 +229,11 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
         end
 
         context 'is not an integer' do
-          let(:calls_uplift) { 1.6 }
+          let(:calls_uplift) { '1.6' }
 
-          it 'casts the value to abn integer' do
-            expect(subject).to be_valid
-            expect(subject.calls_uplift).to eq(1)
+          it 'casts the value to an integer' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:calls_uplift, :not_a_number)).to be(true)
           end
         end
       end

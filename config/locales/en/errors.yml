@@ -381,6 +381,7 @@ en:
             number_of_hearing:
               blank: Number of hearings held cannot be blank
               not_a_number: Number of hearings must be a number, like 25
+              greater_than: Number of hearings must be greater than 0
             court:
               blank: Count cannot be blank
             youth_court:
