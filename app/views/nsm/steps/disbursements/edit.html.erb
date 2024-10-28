@@ -6,7 +6,7 @@
     <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.disbursements.count) %> </h1>
     <%= govuk_table(head: @summary.disbursement_summary_header_row,
-                    rows: [*@summary.rows, @summary.footer_row],
+                    rows: [*@summary.disbursement_summary_footer_row],
                     first_cell_is_header: true,
                     caption: t('.summary'),
                     html_attributes: { class: 'govuk-!-margin-bottom-9' }) %>
