@@ -20,6 +20,7 @@ module Nsm
       end
 
       def calculation_rows
+        record.errors.add(:total_cost_without_vat, :not_a_decimal) if invalid_number?(total_cost_pre_vat)
         [
           [translate(:before_vat), translate(:after_vat)],
           [{
@@ -51,6 +52,12 @@ module Nsm
           'vat_amount' => vat,
           'apply_vat' => apply_vat ? 'true' : 'false'
         )
+      end
+
+      def invalid_number?(value)
+        if value.is_a?(String)
+          return true if value.strip.gsub(/[0-9,.-]/, '').present?
+        end
       end
     end
   end
