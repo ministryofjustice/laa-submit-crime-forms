@@ -22,7 +22,7 @@ module Nsm
       # rubocop:disable Metrics/MethodLength
       def calculation_rows
         # this logic is needed to prevent invalid values erroring in the NumberTo methods
-        if invalid_number?(total_cost_pre_vat)
+        if total_cost_pre_vat.is_a?(String)
           record.errors.add(:total_cost_without_vat, :not_a_decimal)
           []
         else
@@ -59,12 +59,6 @@ module Nsm
           'vat_amount' => vat,
           'apply_vat' => apply_vat ? 'true' : 'false'
         )
-      end
-
-      def invalid_number?(value)
-        return false unless value.is_a?(String)
-
-        true if value.strip.gsub(/[0-9,.-]/, '').present?
       end
     end
   end
