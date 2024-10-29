@@ -1,7 +1,7 @@
 module Type
   class FullyValidatableDecimal < ActiveModel::Type::Decimal
     def cast(value)
-      if value.is_a?(Integer) || value.is_a?(Decimal) || value.blank? || remove_commas(value).is_a?(Decimal)
+      if check_valid(value)
         super(remove_commas(value))
       else
         # If the user has entered a string that is not straightforwardly parseable
@@ -10,13 +10,21 @@ module Type
       end
     end
 
-    class Decimal < ActiveModel::Type::Decimal
-    end
-
     private
 
     def remove_commas(value)
       value&.to_s&.delete(',')
+    end
+
+    def check_valid(value)
+      checks = [
+        value.is_a?(Integer),
+        value.is_a?(Float),
+        value.blank?,
+        Float(remove_commas(value), exception: false),
+        Integer(remove_commas(value), exception: false)
+      ]
+      (checks - [nil, false]).present?
     end
   end
 end

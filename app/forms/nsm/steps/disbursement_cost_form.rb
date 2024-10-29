@@ -19,20 +19,27 @@ module Nsm
         @apply_vat.nil? ? record.vat_amount.to_f.positive? : @apply_vat == 'true'
       end
 
+      # rubocop:disable Metrics/MethodLength
       def calculation_rows
-        record.errors.add(:total_cost_without_vat, :not_a_decimal) if invalid_number?(total_cost_pre_vat)
-        [
-          [translate(:before_vat), translate(:after_vat)],
-          [{
-            text: NumberTo.pounds(total_cost_pre_vat),
-            html_attributes: { id: 'total-without-vat' }
-          },
-           {
-             text: NumberTo.pounds(total_cost),
-             html_attributes: { id: 'total-with-vat' },
-           }],
-        ]
+        # this logic is needed to prevent invalid values erroring in the NumberTo methods
+        if invalid_number?(total_cost_pre_vat)
+          record.errors.add(:total_cost_without_vat, :not_a_decimal)
+          []
+        else
+          [
+            [translate(:before_vat), translate(:after_vat)],
+            [{
+              text: NumberTo.pounds(total_cost_pre_vat),
+              html_attributes: { id: 'total-without-vat' }
+            },
+             {
+               text: NumberTo.pounds(total_cost),
+               html_attributes: { id: 'total-with-vat' },
+             }],
+          ]
+        end
       end
+      # rubocop:enable Metrics/MethodLength
 
       private
 
