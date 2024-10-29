@@ -92,6 +92,30 @@ RSpec.describe 'User can manage disbursements', type: :system do
     )
   end
 
+  it 'validates values in disbursment costs form' do
+    disbursement = claim.disbursements.create
+    visit edit_nsm_steps_disbursement_type_path(claim.id, disbursement_id: disbursement.id)
+
+    within('.govuk-fieldset', text: 'Date') do
+      fill_in 'Day', with: '20'
+      fill_in 'Month', with: '4'
+      fill_in 'Year', with: '2023'
+    end
+
+    choose 'Other disbursement type'
+    select 'Accountants'
+
+    click_on 'Save and continue'
+
+    choose 'No'
+    fill_in 'Disbursement cost', with: 'garbage!'
+    fill_in 'Enter details of this disbursement', with: 'details'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_content('The total cost without VAT should be a number or decimal, like 25 or 25.5')
+  end
+
   it 'can delete a disbursement' do
     claim = create(:claim)
     disbursement = create(:disbursement, :valid, claim:)
