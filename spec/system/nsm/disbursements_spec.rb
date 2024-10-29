@@ -114,6 +114,19 @@ RSpec.describe 'User can manage disbursements', type: :system do
     click_on 'Save and continue'
 
     expect(page).to have_content('The total cost without VAT should be a number or decimal, like 25 or 25.5')
+
+    click_on 'Back'
+
+    choose 'Car mileage'
+
+    click_on 'Save and continue'
+    fill_in 'Number of miles', with: '33,000.226'
+    fill_in 'Enter details of this disbursement', with: 'details'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_content('Car mileage')
+    expect(page).to have_content('£14,850.10')
   end
 
   it 'can delete a disbursement' do
