@@ -12,7 +12,7 @@ class IsADecimalValidator < ActiveModel::EachValidator
   end
 
   def validate_each(record, attribute, value)
-    record.errors.add(attribute, :not_a_decimal) if !Float(value, exception: false)
+    record.errors.add(attribute, :not_a_decimal) unless Float(value, exception: false)
     record.errors.add(attribute, :greater_than) if value.to_f <= config[:greater_than]
   end
 end
