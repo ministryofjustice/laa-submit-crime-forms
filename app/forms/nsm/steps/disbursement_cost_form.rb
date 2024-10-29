@@ -4,13 +4,13 @@ module Nsm
       include DisbursementCosts
       attr_writer :apply_vat
 
-      attribute :miles, :decimal, precision: 10, scale: 3
-      attribute :total_cost_without_vat, :decimal, precision: 10, scale: 2
+      attribute :miles, :fully_validatable_float, precision: 10, scale: 3
+      attribute :total_cost_without_vat, :fully_validatable_float, precision: 10, scale: 2
       attribute :details, :string
       attribute :prior_authority, :value_object, source: YesNoAnswer
 
-      validates :miles, presence: true, numericality: { greater_than: 0 }, unless: :other_disbursement_type?
-      validates :total_cost_without_vat, presence: true, numericality: { greater_than: 0 },
+      validates :miles, presence: true, is_a_decimal: { greater_than: 0 }, unless: :other_disbursement_type?
+      validates :total_cost_without_vat, presence: true, is_a_decimal: { greater_than: 0 },
                                          if: :other_disbursement_type?
       validates :details, presence: true
       validates :prior_authority, presence: true, inclusion: { in: YesNoAnswer.values }, if: :other_disbursement_type?
