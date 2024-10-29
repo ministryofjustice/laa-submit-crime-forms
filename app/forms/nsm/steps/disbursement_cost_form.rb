@@ -55,9 +55,9 @@ module Nsm
       end
 
       def invalid_number?(value)
-        if value.is_a?(String)
-          return true if value.strip.gsub(/[0-9,.-]/, '').present?
-        end
+        return false unless value.is_a?(String)
+
+        true if value.strip.gsub(/[0-9,.-]/, '').present?
       end
     end
   end
