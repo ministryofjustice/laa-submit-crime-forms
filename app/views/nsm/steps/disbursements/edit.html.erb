@@ -68,7 +68,7 @@
             <%= row.with_cell(numeric: true) do %>
               <ul class="govuk-summary-list__actions-list">
                 <li class="govuk-summary-list__actions-list-item">
-                  <% if @disbursements.all?(&:complete?) %>
+                  <% if disbursement.complete? %>
                     <%= govuk_link_to(t('.duplicate'),
                                       duplicate_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id),
                                       'aria-labelledby': generate_aria_labelledby(t('.accessibility.item_id'), position, t('.accessibility.disbursement_type'), t('.accessibility.duplicate')), id: "#{t('.accessibility.duplicate')}#{position}") %>
