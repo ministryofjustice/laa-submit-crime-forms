@@ -48,12 +48,12 @@ module Nsm
 
       def total_cost_cell
         safe_join([tag.span(translate('.header.total_claimed'), class: 'govuk-visually-hidden'),
-                   tag.strong(NumberTo.pounds(total_cost))])
+                   tag.strong(NumberTo.pounds(net_cost))])
       end
 
-      def net_cost_cell
+      def gross_total_cost_cell
         safe_join([tag.span(translate('.header.net_cost_claimed'), class: 'govuk-visually-hidden'),
-                   tag.strong(NumberTo.pounds(net_cost))])
+                   tag.strong(NumberTo.pounds(total_cost))])
       end
 
       def vat_amount_cell
@@ -65,9 +65,9 @@ module Nsm
         [
           [
             { text: translate('disbursements'), classes: 'govuk-table__header' },
-            { text: net_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
+            { text: total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
             { text: vat_amount_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
-            { text: total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
+            { text: gross_total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
           ].compact
         ]
       end

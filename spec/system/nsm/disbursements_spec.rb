@@ -393,7 +393,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Incomplete', 'Incomplete', 'Incomplete', 'Incomplete', 'Change Delete',
-          '2', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Change Delete',
+          '2', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
         ]
       )
     end
@@ -427,7 +427,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
           '1', 'Incomplete', 'Incomplete', 'Incomplete', 'Incomplete', 'Change Delete',
-          '2', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Change Delete',
+          '2', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
         ]
       )
     end

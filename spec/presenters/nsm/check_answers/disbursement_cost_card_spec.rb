@@ -30,7 +30,7 @@ RSpec.describe Nsm::CheckAnswers::DisbursementCostsCard do
           },
           {
             head_key: 'total_inc_vat',
-            text: '<strong>£90.00</strong>'
+            text: '<strong>£108.00</strong>'
           }
         ]
       )
