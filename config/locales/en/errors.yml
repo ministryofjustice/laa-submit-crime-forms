@@ -509,11 +509,11 @@ en:
             miles:
               blank: Enter the number of miles travelled
               greater_than: The number of miles must be more than 0
-              not_a_decimal: The number of miles should be a number or decimal, like 25 or 25.5
+              not_a_number: The number of miles should be a number or decimal, like 25 or 25.5
             total_cost_without_vat:
               blank: Set total cost
               greater_than: The total cost must be more than 0
-              not_a_decimal: The total cost without VAT should be a number or decimal, like 25 or 25.5
+              not_a_number: The total cost without VAT should be a number or decimal, like 25 or 25.5
             details:
               blank: Provide details of disbursement
             prior_authority:

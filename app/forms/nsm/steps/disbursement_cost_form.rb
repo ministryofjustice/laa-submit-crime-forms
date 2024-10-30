@@ -9,7 +9,7 @@ module Nsm
       attribute :details, :string
       attribute :prior_authority, :value_object, source: YesNoAnswer
 
-      validates :miles, presence: true, is_a_decimal: { greater_than: 0 }, unless: :other_disbursement_type?
+      validates :miles, presence: true, is_a_number: true, numericality: { greater_than: 0 }, unless: :other_disbursement_type?
       validates :total_cost_without_vat, presence: true, numericality: { greater_than: 0 }, is_a_number: true,
                                          if: :other_disbursement_type?
       validates :details, presence: true
@@ -19,27 +19,19 @@ module Nsm
         @apply_vat.nil? ? record.vat_amount.to_f.positive? : @apply_vat == 'true'
       end
 
-      # rubocop:disable Metrics/MethodLength
       def calculation_rows
-        # this logic is needed to prevent invalid values erroring in the NumberTo methods
-        if total_cost_pre_vat.is_a?(String)
-          record.errors.add(:total_cost_without_vat, :not_a_decimal)
-          []
-        else
-          [
-            [translate(:before_vat), translate(:after_vat)],
-            [{
-              text: NumberTo.pounds(total_cost_pre_vat),
-              html_attributes: { id: 'total-without-vat' }
-            },
-             {
-               text: NumberTo.pounds(total_cost),
-               html_attributes: { id: 'total-with-vat' },
-             }],
-          ]
-        end
+        [
+          [translate(:before_vat), translate(:after_vat)],
+          [{
+            text: NumberTo.pounds(total_cost_pre_vat),
+            html_attributes: { id: 'total-without-vat' }
+          },
+           {
+             text: NumberTo.pounds(total_cost),
+             html_attributes: { id: 'total-with-vat' },
+           }],
+        ]
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 
