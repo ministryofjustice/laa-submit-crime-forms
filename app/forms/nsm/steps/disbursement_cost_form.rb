@@ -5,12 +5,12 @@ module Nsm
       attr_writer :apply_vat
 
       attribute :miles, :fully_validatable_decimal, precision: 10, scale: 3
-      attribute :total_cost_without_vat, :fully_validatable_decimal, precision: 10, scale: 2
+      attribute :total_cost_without_vat, :gbp
       attribute :details, :string
       attribute :prior_authority, :value_object, source: YesNoAnswer
 
       validates :miles, presence: true, is_a_decimal: { greater_than: 0 }, unless: :other_disbursement_type?
-      validates :total_cost_without_vat, presence: true, is_a_decimal: { greater_than: 0 },
+      validates :total_cost_without_vat, presence: true, numericality: { greater_than: 0 }, is_a_number: true,
                                          if: :other_disbursement_type?
       validates :details, presence: true
       validates :prior_authority, presence: true, inclusion: { in: YesNoAnswer.values }, if: :other_disbursement_type?
