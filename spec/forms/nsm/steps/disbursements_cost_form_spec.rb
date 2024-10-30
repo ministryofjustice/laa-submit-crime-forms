@@ -98,7 +98,7 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
 
         it 'has an error' do
           expect(form).not_to be_valid
-          expect(form.errors.of_kind?(:total_cost_without_vat, :not_a_decimal)).to be(true)
+          expect(form.errors.of_kind?(:total_cost_without_vat, :not_a_number)).to be(true)
         end
       end
     end
