@@ -28,7 +28,6 @@ class SubmitToAppStore
         {
           cost_type: service_cost_form.cost_type,
           item_type: service_cost_form.item_type,
-          user_chosen_cost_type: service_cost_form.user_chosen_cost_type,
           cost_item_type: service_cost_form.cost_item_type,
           cost_multiplier: service_cost_form.cost_multiplier
         }

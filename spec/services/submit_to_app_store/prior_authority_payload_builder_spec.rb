@@ -102,7 +102,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             travel_cost_per_hour: '50.0',
             travel_cost_reason: 'Reasons',
             travel_time: 150,
-            user_chosen_cost_type: 'per_hour',
             additional_cost_list: nil,
             additional_cost_total: nil,
           },
@@ -128,7 +127,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
             travel_cost_per_hour: '50.0',
             travel_cost_reason: 'Reasons',
             travel_time: 150,
-            user_chosen_cost_type: 'per_hour',
             additional_cost_list: nil,
             additional_cost_total: nil,
           }
