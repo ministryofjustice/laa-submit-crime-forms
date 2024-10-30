@@ -23,11 +23,11 @@ module Nsm
         [
           [translate(:before_vat), translate(:after_vat)],
           [{
-            text: NumberTo.pounds(total_cost_pre_vat),
+            text: NumberTo.pounds(total_cost_pre_vat.to_f),
             html_attributes: { id: 'total-without-vat' }
           },
            {
-             text: NumberTo.pounds(total_cost),
+             text: NumberTo.pounds(total_cost.to_f),
              html_attributes: { id: 'total-with-vat' },
            }],
         ]
