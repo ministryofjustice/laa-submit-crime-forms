@@ -11,7 +11,10 @@ module Nsm
       end
 
       def update
-        update_and_advance(DisbursementCostForm, as: :disbursement_cost, record: disbursement)
+        update_and_advance(DisbursementCostForm,
+                           as: :disbursement_cost,
+                           record: disbursement,
+                           flash: build_flash)
       end
 
       private
@@ -29,7 +32,24 @@ module Nsm
       end
 
       def additional_permitted_params
-        [:apply_vat]
+        [:apply_vat, :add_another]
+      end
+
+      def new_record?
+        disbursement.total_cost_pre_vat.nil? && disbursement.miles.nil?
+      end
+
+      def build_flash
+        if new_record?
+          if params.dig(:nsm_steps_disbursement_cost_form, :add_another) == YesNoAnswer::YES.to_s
+            count = current_application.disbursements.count
+            { success: t('.added', count: count, disbursements: t('.disbursement').pluralize(count)) }
+          else
+            {}
+          end
+        else
+          { success: t('.updated') }
+        end
       end
     end
   end

@@ -253,6 +253,9 @@ en:
           'no': 'No'
         apply_vat_options:
           'true': Apply 20% VAT to this work
+        add_another_options:
+          'yes': 'Yes'
+          'no': 'No'
       nsm_steps_other_info_form:
         other_info: Add other information
         is_other_info_options:

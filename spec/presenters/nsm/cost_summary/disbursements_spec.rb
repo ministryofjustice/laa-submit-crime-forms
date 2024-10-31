@@ -36,7 +36,13 @@ total_cost_pre_vat: 80.0)
 
   describe '#total_cost' do
     it 'delegates to the form' do
-      expect(subject.total_cost).to eq(260.00)
+      expect(subject.total_cost).to eq(300.00)
+    end
+  end
+
+  describe '#net_cost' do
+    it 'delegates to the form' do
+      expect(subject.net_cost).to eq(260.00)
     end
   end
 

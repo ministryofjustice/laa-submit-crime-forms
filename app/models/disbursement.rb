@@ -21,4 +21,9 @@ class Disbursement < ApplicationRecord
   def position
     super || claim.disbursement_position(self)
   end
+
+  def complete?
+    Nsm::Steps::DisbursementTypeForm.build(self, application: claim).valid? &&
+      Nsm::Steps::DisbursementCostForm.build(self, application: claim).tap { _1.add_another = 'no' }.valid?
+  end
 end

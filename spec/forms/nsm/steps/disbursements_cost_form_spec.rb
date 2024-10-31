@@ -12,6 +12,7 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
       details:,
       prior_authority:,
       apply_vat:,
+      add_another:,
     }
   end
 
@@ -27,6 +28,7 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
   let(:prior_authority) { nil }
   let(:apply_vat) { 'false' }
   let(:vat_amount) { nil }
+  let(:add_another) { YesNoAnswer::NO }
 
   describe '#validate' do
     context 'when disbursement_type is not other' do
