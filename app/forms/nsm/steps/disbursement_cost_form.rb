@@ -23,11 +23,11 @@ module Nsm
         [
           [translate(:before_vat), translate(:after_vat)],
           [{
-            text: NumberTo.pounds(total_cost_pre_vat.to_f),
+            text: NumberTo.pounds(nilify_string(total_cost_pre_vat)),
             html_attributes: { id: 'total-without-vat' }
           },
            {
-             text: NumberTo.pounds(total_cost.to_f),
+             text: NumberTo.pounds(nilify_string(total_cost)),
              html_attributes: { id: 'total-with-vat' },
            }],
         ]
@@ -51,6 +51,10 @@ module Nsm
           'vat_amount' => vat,
           'apply_vat' => apply_vat ? 'true' : 'false'
         )
+      end
+
+      def nilify_string(value)
+        value.is_a?(String) ? nil : value
       end
     end
   end
