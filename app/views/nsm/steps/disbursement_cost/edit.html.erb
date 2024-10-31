@@ -7,7 +7,7 @@
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <%= step_form @form_object do |f| %>
       <% if @form_object.other_disbursement_type? %>
-        <%= f.govuk_text_field :total_cost_without_vat, width: 5, label: { tag: 'strong' }, data: { selector: 'valueField', multipler: @form_object.multiplier }, inputmode: 'decimal' %>
+        <%= f.govuk_text_field :total_cost_without_vat, width: 5, label: { tag: 'strong' }, value: gbp_field_value(@form_object.total_cost_without_vat), data: { selector: 'valueField', multipler: @form_object.multiplier }, inputmode: 'decimal' %>
       <% else %>
         <%= f.govuk_text_field :miles, width: 3, suffix_text: 'Miles', label: { tag: 'strong' }, data: { selector: 'valueField', multipler: @form_object.multiplier }, inputmode: 'decimal'  %>
       <% end %>
