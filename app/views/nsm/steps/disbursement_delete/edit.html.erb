@@ -1,5 +1,4 @@
 <% title t('.page_title') %>
-<% decision_step_header %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -11,7 +10,9 @@
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.type') %></th>
-          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.cost') %></th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.date') %></th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.net_cost') %></th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.total_cost') %></th>
           <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.details') %></th>
         </tr>
       </thead>
@@ -28,16 +29,26 @@
               <%= check_missing(@form_object.record.disbursement_type) { t("laa_crime_forms_common.nsm.disbursement_type.#{@form_object.record.disbursement_type}") } %>
             <% end %>
           </td>
+          <td class="govuk-table__cell"><%= check_missing(@form_object.record.disbursement_date) { @form_object.record.disbursement_date.to_fs(:short_stamp) } %></td>
+          <td class="govuk-table__cell"><%= check_missing(@form_object.record.total_cost_without_vat) { NumberTo.pounds(@form_object.record.total_cost_without_vat) } %></td>
           <td class="govuk-table__cell"><%= check_missing(@form_object.record.total_cost) { NumberTo.pounds(@form_object.record.total_cost) } %></td>
           <td class="govuk-table__cell"><%= check_missing(@form_object.record.details)  %></td>
         </tr>
       </tbody>
     </table>
 
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden"><%= t('.warning') %></span>
+        <%= t('.no_undo') %>
+      </strong>
+    </div>
+
     <%= step_form @form_object do |f| %>
-      <%= f.submit_button('delete_it') do %>
+      <%= f.submit_button('delete_it', { 'class' => 'govuk-button govuk-button--warning'}) do %>
         <%= f.hidden_field :id %>
-        <%= link_to 'Cancel', edit_nsm_steps_disbursements_path(@form_object.application), class: 'govuk-button__secondary' %>
+        <%= link_to t('.dont_delete'), edit_nsm_steps_disbursements_path(@form_object.application), class: 'govuk-button' %>
       <% end %>
     <% end %>
   </div>

@@ -5,7 +5,11 @@
   <div class="govuk-grid-column-full">
     <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.disbursements.count) %> </h1>
-    <%= govuk_button_link_to(t('.add_another_button'), edit_nsm_steps_disbursement_type_path(current_application, disbursement_id: Nsm::StartPage::NEW_RECORD), secondary: true) %>
+    <%= govuk_table(head: @summary.disbursement_summary_header_row,
+                    rows: [*@summary.disbursement_summary_footer_row],
+                    first_cell_is_header: true,
+                    caption: t('.summary'),
+                    html_attributes: { class: 'govuk-!-margin-bottom-9' }) %>
 
     <%
       header_row = {
@@ -64,14 +68,13 @@
             <%= row.with_cell(numeric: true) do %>
               <ul class="govuk-summary-list__actions-list">
                 <li class="govuk-summary-list__actions-list-item">
-                  <% if Nsm::Steps::DisbursementTypeForm.build(disbursement, application: @form_object.application).valid? &&
-                        Nsm::Steps::DisbursementCostForm.build(disbursement, application: @form_object.application).valid? %>
+                  <% if disbursement.complete? %>
                     <%= govuk_link_to(t('.duplicate'),
                                       duplicate_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id),
                                       'aria-labelledby': generate_aria_labelledby(t('.accessibility.item_id'), position, t('.accessibility.disbursement_type'), t('.accessibility.duplicate')), id: "#{t('.accessibility.duplicate')}#{position}") %>
                   <% else %>
                     <%= govuk_link_to(
-                                t('.update'),
+                                t('.change'),
                                 edit_nsm_steps_disbursement_type_path(@form_object.application, disbursement_id: disbursement.id),
                                 'aria-labelledby': generate_aria_labelledby(t('.accessibility.item_id'), position, t('.accessibility.disbursement_type')),
                               ) %>
@@ -89,6 +92,7 @@
       <% end %>
       <%# Table body ends %>
     <% end %>
+    <%= render "shared/pagination",  { pagy: @pagy, item: t('.table_info_item') } %>
 
     <%= step_form @form_object do |f| %>
       <% if @form_object.all_disbursements_valid? %>
