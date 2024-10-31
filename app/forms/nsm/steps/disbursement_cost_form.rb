@@ -21,25 +21,33 @@ module Nsm
 
       def calculation_rows
         [
-          [translate(:net_cost_claimed), translate(:vat_on_claimed), translate(:total_claimed)],
-          [
-            {
-              text: NumberTo.pounds(nilify_string(total_cost_pre_vat) || 0),
-              html_attributes: { id: 'net-cost-claimed' }
-            },
-            {
-              text: NumberTo.pounds(record.vat_amount || 0),
-              html_attributes: { id: 'vat-on-claimed' }
-            },
-            {
-              text: NumberTo.pounds(nilify_string(total_cost) || 0),
-              html_attributes: { id: 'total-claimed' },
-            }
-          ],
+          calculation_rows_header,
+          calculation_rows_values
         ]
       end
 
       private
+
+      def calculation_rows_header
+        [translate(:net_cost_claimed), translate(:vat_on_claimed), translate(:total_claimed)]
+      end
+
+      def calculation_rows_values
+        [
+          {
+            text: NumberTo.pounds(nilify_string(total_cost_pre_vat) || 0),
+            html_attributes: { id: 'net-cost-claimed' }
+          },
+          {
+            text: NumberTo.pounds(record.vat_amount || 0),
+            html_attributes: { id: 'vat-on-claimed' }
+          },
+          {
+            text: NumberTo.pounds(nilify_string(total_cost) || 0),
+            html_attributes: { id: 'total-claimed' },
+          }
+        ]
+      end
 
       def translate(key)
         I18n.t("nsm.steps.disbursement_cost.edit.#{key}")
