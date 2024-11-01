@@ -4,13 +4,13 @@ module Nsm
       include DisbursementCosts
       attr_writer :apply_vat
 
-      attribute :miles, :decimal, precision: 10, scale: 3
-      attribute :total_cost_without_vat, :decimal, precision: 10, scale: 2
+      attribute :miles, :fully_validatable_decimal, precision: 10, scale: 3
+      attribute :total_cost_without_vat, :gbp
       attribute :details, :string
       attribute :prior_authority, :value_object, source: YesNoAnswer
 
-      validates :miles, presence: true, numericality: { greater_than: 0 }, unless: :other_disbursement_type?
-      validates :total_cost_without_vat, presence: true, numericality: { greater_than: 0 },
+      validates :miles, presence: true, is_a_number: true, numericality: { greater_than: 0 }, unless: :other_disbursement_type?
+      validates :total_cost_without_vat, presence: true, numericality: { greater_than: 0 }, is_a_number: true,
                                          if: :other_disbursement_type?
       validates :details, presence: true
       validates :prior_authority, presence: true, inclusion: { in: YesNoAnswer.values }, if: :other_disbursement_type?
@@ -21,23 +21,33 @@ module Nsm
 
       def calculation_rows
         [
-          [translate(:net_cost_claimed), translate(:vat_on_claimed), translate(:total_claimed)],
-          [{
-            text: NumberTo.pounds(total_cost_pre_vat || 0),
-            html_attributes: { id: 'net-cost-claimed' }
-          },
-           {
-             text: NumberTo.pounds(record.vat_amount || 0),
-             html_attributes: { id: 'vat-on-claimed' }
-           },
-           {
-             text: NumberTo.pounds(total_cost || 0),
-             html_attributes: { id: 'total-claimed' },
-           }],
+          calculation_rows_header,
+          calculation_rows_values
         ]
       end
 
       private
+
+      def calculation_rows_header
+        [translate(:net_cost_claimed), translate(:vat_on_claimed), translate(:total_claimed)]
+      end
+
+      def calculation_rows_values
+        [
+          {
+            text: NumberTo.pounds(nilify_string(total_cost_pre_vat) || 0),
+            html_attributes: { id: 'net-cost-claimed' }
+          },
+          {
+            text: NumberTo.pounds(record.vat_amount || 0),
+            html_attributes: { id: 'vat-on-claimed' }
+          },
+          {
+            text: NumberTo.pounds(nilify_string(total_cost) || 0),
+            html_attributes: { id: 'total-claimed' },
+          }
+        ]
+      end
 
       def translate(key)
         I18n.t("nsm.steps.disbursement_cost.edit.#{key}")
@@ -55,6 +65,10 @@ module Nsm
           'vat_amount' => vat,
           'apply_vat' => apply_vat ? 'true' : 'false'
         )
+      end
+
+      def nilify_string(value)
+        value.is_a?(String) ? nil : value
       end
     end
   end

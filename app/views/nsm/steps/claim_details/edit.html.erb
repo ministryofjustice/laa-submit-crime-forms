@@ -6,9 +6,9 @@
     <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_number_field :prosecution_evidence,label:{ size: 's'}, min: 1, step: 1, width: 3 %>
-      <%= f.govuk_number_field :defence_statement,label:{ size: 's'}, min: 1, step: 1, width: 3 %>
-      <%= f.govuk_number_field :number_of_witnesses,label:{ size: 's'}, min: 1, step: 1, width: 3 %>
+      <%= f.govuk_text_field :prosecution_evidence,label:{ size: 's'}, width: 3, inputmode: 'numeric' %>
+      <%= f.govuk_text_field :defence_statement,label:{ size: 's'}, width: 3, inputmode: 'numeric' %>
+      <%= f.govuk_text_field :number_of_witnesses,label:{ size: 's'}, width: 3, inputmode: 'numeric' %>
 
       <% @form_object.boolean_fields.each do |field| %>
         <% next if field == :wasted_costs %>

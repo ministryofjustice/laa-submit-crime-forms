@@ -94,6 +94,15 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
           expect(form.errors.of_kind?(:total_cost_without_vat, :blank)).to be(true)
         end
       end
+
+      context 'and total_cost_without_vat is invalid' do
+        let(:total_cost_without_vat) { 'a string' }
+
+        it 'has an error' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:total_cost_without_vat, :not_a_number)).to be(true)
+        end
+      end
     end
   end
 

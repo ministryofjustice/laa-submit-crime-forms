@@ -74,10 +74,10 @@ module LettersAndCallsCosts
   private
 
   def letters_before_uplift
-    letters.to_d * pricing.letters if letters && !letters.zero?
+    letters.to_d * pricing.letters if letters && !letters.to_i.zero?
   end
 
   def calls_before_uplift
-    calls.to_d * pricing.letters if calls && !calls.zero?
+    calls.to_d * pricing.letters if calls && !calls.to_i.zero?
   end
 end

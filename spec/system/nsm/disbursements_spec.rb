@@ -92,6 +92,57 @@ RSpec.describe 'User can manage disbursements', type: :system do
     )
   end
 
+  it 'invalidates invalid strings in disbursement costs form' do
+    disbursement = claim.disbursements.create
+    visit edit_nsm_steps_disbursement_type_path(claim.id, disbursement_id: disbursement.id)
+
+    within('.govuk-fieldset', text: 'Date') do
+      fill_in 'Day', with: '20'
+      fill_in 'Month', with: '4'
+      fill_in 'Year', with: '2023'
+    end
+
+    choose 'Other disbursement type'
+    select 'Accountants'
+
+    click_on 'Save and continue'
+
+    find('#nsm-steps-disbursement-cost-form-prior-authority-no-field').click
+
+    fill_in 'Disbursement cost', with: 'garbage!'
+    fill_in 'Enter details of this disbursement', with: 'details'
+
+    find('.govuk-form-group', text: 'Have you been granted prior authority for this disbursement?').choose 'No'
+    find('.govuk-form-group', text: 'Do you need to add another disbursement?').choose 'No'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_content('The total cost without VAT should be a number or decimal, like 25 or 25.5')
+  end
+
+  it 'validates numbers with commas in disbursement costs form' do
+    disbursement = claim.disbursements.create
+    visit edit_nsm_steps_disbursement_type_path(claim.id, disbursement_id: disbursement.id)
+
+    within('.govuk-fieldset', text: 'Date') do
+      fill_in 'Day', with: '20'
+      fill_in 'Month', with: '4'
+      fill_in 'Year', with: '2023'
+    end
+
+    choose 'Car mileage'
+
+    click_on 'Save and continue'
+    fill_in 'Number of miles', with: '33,000.226'
+    fill_in 'Enter details of this disbursement', with: 'details'
+
+    choose 'No'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_content('£14,850.10')
+  end
+
   it 'can add two disbursements consecutively' do
     visit edit_nsm_steps_disbursement_add_path(claim.id)
 

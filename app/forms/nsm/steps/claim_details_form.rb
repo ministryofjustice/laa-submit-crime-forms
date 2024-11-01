@@ -3,17 +3,20 @@ module Nsm
     class ClaimDetailsForm < ::Steps::BaseFormObject
       BOOLEAN_FIELDS = %i[supplemental_claim preparation_time work_before work_after wasted_costs].freeze
 
-      attribute :prosecution_evidence, :integer
-      attribute :defence_statement, :integer
-      attribute :number_of_witnesses, :integer
+      attribute :prosecution_evidence, :fully_validatable_integer
+      attribute :defence_statement, :fully_validatable_integer
+      attribute :number_of_witnesses, :fully_validatable_integer
       attribute :time_spent, :time_period
       attribute :work_before_date, :multiparam_date
       attribute :work_after_date, :multiparam_date
       attribute :work_completed_date, :multiparam_date
 
-      validates :prosecution_evidence, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-      validates :defence_statement, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-      validates :number_of_witnesses, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+      validates :prosecution_evidence, presence: true, is_a_number: true,
+numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+      validates :defence_statement, presence: true, is_a_number: true,
+numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+      validates :number_of_witnesses, presence: true, is_a_number: true,
+numericality: { only_integer: true, greater_than_or_equal_to: 0 }
       validates :time_spent, presence: true, time_period: true,
         if: -> { preparation_time == YesNoAnswer::YES }
       validates :work_before_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },

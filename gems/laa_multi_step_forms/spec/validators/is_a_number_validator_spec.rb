@@ -29,7 +29,7 @@ RSpec.describe IsANumberValidator do
   context 'attribute is a string' do
     let(:item) { 'four thousand' }
 
-    it 'attribute is marked as valid' do
+    it 'attribute is marked as invalid' do
       expect(subject).not_to be_valid
       expect(subject.errors.of_kind?(:item, :not_a_number)).to be(true)
     end
