@@ -45,6 +45,8 @@ module PriorAuthority
     end
 
     def sync_primary_quote(quote, quote_data)
+      quote_data['user_chosen_cost_type'] = quote_data['cost_type']
+
       base_cost_form = build_form(application, quote, Steps::ServiceCostForm, quote_data)
       travel_cost_form = build_form(application, quote, Steps::TravelDetailForm, quote_data)
 

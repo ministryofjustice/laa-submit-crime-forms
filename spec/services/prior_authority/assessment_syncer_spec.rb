@@ -15,23 +15,27 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
     let(:additional_cost) { build(:additional_cost, :per_item) }
     let(:state) { 'granted' }
 
+    let(:primary_quote_true) do
+      {
+        id: primary_quote.id,
+        cost_type: 'per_hour',
+        travel_time: 180,
+        travel_cost_per_hour: 10.0,
+        primary: true,
+        cost_per_hour: 20.0,
+        cost_per_item: nil,
+        items: nil,
+        period: 180,
+        adjustment_comment: 'Service cost comment',
+        travel_adjustment_comment: 'Travel comment'
+      }
+    end
+
     let(:record) do
       {
         application: {
           quotes: [
-            {
-              id: primary_quote.id,
-              cost_type: 'per_hour',
-              travel_time: 180,
-              travel_cost_per_hour: 10.0,
-              primary: true,
-              cost_per_hour: 20.0,
-              cost_per_item: nil,
-              items: nil,
-              period: 180,
-              adjustment_comment: 'Service cost comment',
-              travel_adjustment_comment: 'Travel comment'
-            }
+            primary_quote_true
           ],
           additional_costs: [
             {
@@ -126,6 +130,40 @@ RSpec.describe PriorAuthority::AssessmentSyncer, :stub_oauth_token do
 
         it 'notifies Sentry' do
           expect(Sentry).to have_received(:capture_message)
+        end
+      end
+
+      context 'custom service' do
+        let(:application) do
+          create(:prior_authority_application, :full,
+                 service_type: 'custom',
+                 state: state,
+                 quotes: [primary_quote],
+                 additional_costs: [additional_cost],
+                 further_informations: [],
+                 incorrect_informations: [])
+        end
+
+        let(:primary_quote_true) do
+          {
+            id: primary_quote.id,
+            cost_type: 'per_item',
+            travel_time: 180,
+            travel_cost_per_hour: 10.0,
+            primary: true,
+            cost_per_hour: nil,
+            cost_per_item: 50,
+            cost_per_item_original: 100,
+            items: 4,
+            period: nil,
+            adjustment_comment: 'Service cost comment',
+            travel_adjustment_comment: 'Travel comment'
+          }
+        end
+
+        it 'syncs the primary quote base quote' do
+          expect(primary_quote.base_cost_allowed).to eq 200
+          expect(primary_quote.travel_cost_allowed).to eq 30
         end
       end
     end
