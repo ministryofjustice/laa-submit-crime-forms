@@ -2,7 +2,12 @@ en:
   prior_authority:
     applications:
       search:
+        instruction: Enter details in at least one field to search for an application
         page_title: Search for an application
         label: Enter any combination of client, UFN or LAA reference
         search: Search
         clear_all: Clear all
+        result: result
+        results: "%{count} search %{results}"
+        no_results: There are no results that match the search criteria
+        no_result_hint: Check you’ve entered the correct details

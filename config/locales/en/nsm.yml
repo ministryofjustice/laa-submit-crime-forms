@@ -6,3 +6,7 @@ en:
       primary_navigation:
         your_claims: Your claims
         search: Search
+    prior_authority:
+      primary_navigation:
+        your_applications: Your applications
+        search: Search

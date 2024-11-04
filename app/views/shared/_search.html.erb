@@ -1,0 +1,72 @@
+<fieldset class="govuk-fieldset">
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+    <%= t('.submission_filter_legend') %>
+  </legend>
+  <p><%= t('.submission_filter_hint') %></p>
+  <div class="govuk-date-input__item">
+    <div class="moj-datepicker" data-module="moj-date-picker">
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :submitted_from,
+          label: { text: t('.submitted_from') },
+          class: 'moj-js-datepicker-input',
+          value: form.submitted_from&.to_fs(:date_picker) %>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-date-input__item">
+    <div class="moj-datepicker" data-module="moj-date-picker">
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :submitted_to,
+          label: { text: t('.submitted_to') },
+          class: 'moj-js-datepicker-input',
+          value: form.submitted_to&.to_fs(:date_picker) %>
+      </div>
+    </div>
+  </div>
+</fieldset>
+<fieldset class="govuk-fieldset">
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+    <%= t('.update_filter_legend') %>
+  </legend>
+  <p><%= t('.update_filter_hint') %></p>
+  <div class="govuk-date-input__item">
+    <div class="moj-datepicker" data-module="moj-date-picker">
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :updated_from,
+          label: { text: t('.updated_from') },
+          class: 'moj-js-datepicker-input',
+          value: form.updated_from&.to_fs(:date_picker) %>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-date-input__item">
+    <div class="moj-datepicker" data-module="moj-date-picker">
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :updated_to,
+          label: { text: t('.updated_to') },
+          class: 'moj-js-datepicker-input',
+          value: form.updated_to&.to_fs(:date_picker)  %>
+      </div>
+    </div>
+  </div>
+</fieldset>
+<div>
+  <div class="govuk-date-input__item">
+    <div class="govuk-form-group">
+      <%= f.govuk_collection_select :state,
+        @form.states,
+        :value,
+        :label,
+        label: { text: t(".status"), size: 's' } %>
+    </div>
+  </div>
+  <div class="govuk-date-input__item">
+    <div class="govuk-form-group">
+      <%= f.govuk_collection_select :office_code,
+        @form.office_codes,
+        :value,
+        :label,
+        label: { text: t(".account"), size: 's' } %>
+    </div>
+  </div>
+</div>

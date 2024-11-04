@@ -5,6 +5,19 @@ en:
   shared:
     notifications:
       title: Important
+    search:
+      submission_filter_legend: First submission date
+      submission_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
+      submitted_from: Submission date from
+      submitted_to: Submission date to
+      update_filter_legend: Last updated date
+      update_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
+      updated_from: Last updated from
+      updated_to: Last updated to
+      status: Application status
+      account: Account
+      show_all: Show all
+
   views:
     pagination:
       title: "Pagination navigation"

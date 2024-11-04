@@ -28,6 +28,10 @@
   <% render partial: 'layouts/phase_banner' %>
 <% end %>
 
+<% content_for(:primary_navigation) do %>
+  <% render partial: 'layouts/prior_authority/primary_navigation' %>
+<% end %>
+
 <% content_for(:content) do %>
   <%= yield %>
 <% end %>
