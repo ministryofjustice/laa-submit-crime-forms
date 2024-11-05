@@ -137,6 +137,52 @@ RSpec.describe 'Search' do
         expect(page).to have_content(/EE1234.*AB1234.*/m)
       end
     end
+
+    context 'change link target based on state' do
+      let(:draft) do
+        create :prior_authority_application, :full,
+               laa_reference: 'LAA-99999C',
+               office_code: '1A123B',
+               ufn: '110120/123',
+               defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Doe', date_of_birth: '1995-10-05'),
+               state: :draft
+      end
+
+      let(:submitted) do
+        create :prior_authority_application, :full,
+               laa_reference: 'LAA-AB1234',
+               office_code: '1A123B',
+               ufn: '070620/123',
+               defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs', date_of_birth: '1995-10-06'),
+               state: :submitted
+      end
+
+      before do
+        draft
+        submitted
+
+        visit search_prior_authority_applications_path
+        fill_in 'Enter any combination of client, UFN or LAA reference', with: 'Joe'
+        find('button.govuk-button#search').click
+      end
+
+      it 'shows only the matching record' do
+        within('#results') do
+          expect(page).to have_content 'Draft'
+          expect(page).to have_content 'Submitted'
+        end
+      end
+
+      it 'click draft link goes to application start page step' do
+        click_link '110120/123'
+        expect(page).to have_content 'Your application progress'
+      end
+
+      it 'click submitted link goes to application claim details' do
+        click_link '070620/123'
+        expect(page).to have_content 'Application details'
+      end
+    end
   end
 
   describe 'NSM' do
