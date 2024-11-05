@@ -29,16 +29,19 @@ module PriorAuthority
       end
 
       def count_services
-        counts = PriorAuthorityApplication
-                 .where.not(service_type: [nil, ''])
-                 .group(:service_type)
-                 .count
+        Rails.cache.fetch('service_counts', expires_in: 5.minutes) do
+          counts = PriorAuthorityApplication
+                   .where.not(service_type: [nil, ''])
+                   .where('created_at > ?', 6.months.ago)
+                   .group(:service_type)
+                   .count
 
-        values = PriorAuthority::QuoteServices.values.map do |service|
-          [service.translated, counts.fetch(service.value.to_s, 0)]
+          values = PriorAuthority::QuoteServices.values.map do |service|
+            [service.translated, counts.fetch(service.value.to_s, 0)]
+          end
+
+          values.sort_by { |_, count| -count }.to_h
         end
-
-        values.sort_by { |_, count| -count }.to_h
       end
     end
   end

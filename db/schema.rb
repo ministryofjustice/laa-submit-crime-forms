@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_21_092835) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_05_114133) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -235,6 +235,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_21_092835) do
     t.boolean "send_notification_email_completed"
     t.datetime "originally_submitted_at"
     t.index ["core_search_fields"], name: "index_prior_authority_applications_on_core_search_fields", using: :gin
+    t.index ["created_at", "service_type"], name: "idx_pas_service_type_created_at", where: "((service_type IS NOT NULL) AND ((service_type)::text <> ''::text))"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
