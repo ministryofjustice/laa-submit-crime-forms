@@ -40,7 +40,7 @@ class PdfService
     end
 
     def html_to_pdf(html, display_url)
-      Grover.new(html, **GROVER_OPTIONS.merge(display_url:)).to_pdf
+      Grover.new(html, **GROVER_OPTIONS, display_url:).to_pdf
     end
   end
 end
