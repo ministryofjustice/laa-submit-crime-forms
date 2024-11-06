@@ -8,6 +8,7 @@ module TagHelper
     expired: 'govuk-tag--red',
     sent_back: 'govuk-tag--yellow',
     provider_updated: 'govuk-tag--light-blue',
+    draft: 'govuk-tag--grey',
   }.freeze
 
   def prior_authority_tag_colour(state)
