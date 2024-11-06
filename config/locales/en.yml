@@ -17,6 +17,11 @@ en:
       status: Application status
       account: Account
       show_all: Show all
+    multifile_upload:
+      uploaded: Uploaded files
+      file_name: File name
+      progress: Upload progress
+      action: Action
 
   views:
     pagination:

@@ -15,12 +15,12 @@
   <%# Uploaded files section %>
   <div class="moj-multi-file__uploaded-files <%= 'moj-hidden' unless supporting_documents.count > 0 %>">
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m">Uploaded files</caption>
+      <caption class="govuk-table__caption govuk-table__caption--m"><%= t('.uploaded') %></caption>
       <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">File name</th>
-        <th scope="col" class="govuk-table__header">Upload progress</th>
-        <th scope="col" class="govuk-table__header">Action</th>
+        <th scope="col" class="govuk-table__header"><%= t('.file_name') %></th>
+        <th scope="col" class="govuk-table__header"><%= t('.progress') %></th>
+        <th scope="col" class="govuk-table__header"><%= t('.action') %></th>
       </tr>
       </thead>
       <%# Uploaded file list   %>
