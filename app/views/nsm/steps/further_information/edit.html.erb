@@ -23,8 +23,9 @@
           supporting_documents: @form_object.supporting_documents,
           form: form,
           service: :nsm,
-          locale_prefix: 'nsm.steps.further_information.edit' %>
-
+          locale_prefix: 'nsm.steps.further_information.edit',
+          single_file: false
+      %>
       <%= form.continue_button %>
     <% end %>
   </div>

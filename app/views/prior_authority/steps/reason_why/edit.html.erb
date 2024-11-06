@@ -30,7 +30,9 @@
                  supporting_documents: @form_object.supporting_documents,
                  form: form,
                   service: :pa,
-                 locale_prefix: 'prior_authority.steps.reason_why.edit' %>
+                 locale_prefix: 'prior_authority.steps.reason_why.edit',
+                 single_file: false
+      %>
       <%= form.continue_button %>
     <% end %>
   </div>

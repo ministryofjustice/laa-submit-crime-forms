@@ -18,7 +18,9 @@
           form: f,
           service: :nsm,
           locale_prefix: 'nsm.steps.supporting_evidence.edit',
-          hint: t('.upload_hint', size: FileUpload::FileUploader.human_readable_nsm_max_file_size) %>
+          hint: t('.upload_hint', size: FileUpload::FileUploader.human_readable_nsm_max_file_size),
+          single_file: false
+      %>
 
       <% if FeatureFlags.postal_evidence.enabled? %>
         <%# Postal address component %>
