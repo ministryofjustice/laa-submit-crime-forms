@@ -1405,10 +1405,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@ministryofjustice/frontend@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-3.0.0.tgz#590f1e73057dd306dda8e131b82abcd987c02a50"
-  integrity sha512-sXdpQUcwrybsHJuhqldb/NXHNbsZTjB146+xDHD/sE88giNzIVIDFzl0AxVXikNPuke3W9GY5mb2+GrfLdYTNw==
+"@ministryofjustice/frontend@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-3.0.2.tgz#ce95924bb18f90f7fd46c75248b73860e6ee4a51"
+  integrity sha512-sEt5LjjeAN4FgBasz19AASLjRNEVKnocXrHm350wtQSGcnkK+8LuMRZ0VBESItgcaN/0XeO/kpd9S4PQ5Dkv7Q==
   dependencies:
     govuk-frontend "^5.0.0"
     moment "^2.27.0"
@@ -3676,15 +3676,16 @@ resolve@^1.14.2, resolve@^1.20.0:
   resolved "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass@^1.80.5:
-  version "1.80.5"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.80.5.tgz#0ba965223d44df22497f2966b498cf5c453fae8f"
-  integrity sha512-TQd2aoQl/+zsxRMEDSxVdpPIqeq9UFc6pr7PzkugiTx3VYCFPUaa3P4RrBQsqok4PO200Vkz0vXQBNlg7W907g==
+sass@^1.80.6:
+  version "1.80.6"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.80.6.tgz#5d0aa55763984effe41e40019c9571ab73e6851f"
+  integrity sha512-ccZgdHNiBF1NHBsWvacvT5rju3y1d/Eu+8Ex6c21nHp2lZGLBEtuwc415QfiI1PJa1TpCo3iXwwSRjRpn2Ckjg==
   dependencies:
-    "@parcel/watcher" "^2.4.1"
     chokidar "^4.0.0"
     immutable "^4.0.0"
     source-map-js ">=0.6.2 <2.0.0"
+  optionalDependencies:
+    "@parcel/watcher" "^2.4.1"
 
 saxes@^6.0.0:
   version "6.0.0"
