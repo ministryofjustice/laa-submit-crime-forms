@@ -16,7 +16,7 @@ module Nsm
       validates :prior_authority, presence: true, inclusion: { in: YesNoAnswer.values }, if: :other_disbursement_type?
 
       def apply_vat
-        @apply_vat.nil? ? record.vat_amount.to_f.positive? : @apply_vat == 'true'
+        @apply_vat.nil? ? record.apply_vat == 'true' : @apply_vat == 'true'
       end
 
       def calculation_rows
@@ -35,15 +35,15 @@ module Nsm
       def calculation_rows_values
         [
           {
-            text: NumberTo.pounds(nilify_string(total_cost_pre_vat) || 0),
+            text: NumberTo.pounds(total_cost_pre_vat || 0),
             html_attributes: { id: 'net-cost-claimed' }
           },
           {
-            text: NumberTo.pounds(record.vat_amount || 0),
+            text: NumberTo.pounds(vat || 0),
             html_attributes: { id: 'vat-on-claimed' }
           },
           {
-            text: NumberTo.pounds(nilify_string(total_cost) || 0),
+            text: NumberTo.pounds(total_cost || 0),
             html_attributes: { id: 'total-claimed' },
           }
         ]
@@ -61,14 +61,9 @@ module Nsm
         attributes.merge(
           'miles' => other_disbursement_type? ? nil : miles,
           'prior_authority' => other_disbursement_type? ? prior_authority : nil,
-          'total_cost_without_vat' => total_cost_pre_vat,
-          'vat_amount' => vat,
+          'total_cost_without_vat' => other_disbursement_type? ? total_cost_without_vat : nil,
           'apply_vat' => apply_vat ? 'true' : 'false'
         )
-      end
-
-      def nilify_string(value)
-        value.is_a?(String) ? nil : value
       end
     end
   end

@@ -15,7 +15,7 @@ RSpec.describe 'Mileage and Other disbursement cost conditional fields', :javasc
            claim: claim)
   end
 
-  let(:claim) { create(:claim) }
+  let(:claim) { create(:claim, :case_type_breach, :firm_details) }
   let(:disbursement_type) { DisbursementTypes::CAR.to_s }
 
   it 'displays the expected title' do

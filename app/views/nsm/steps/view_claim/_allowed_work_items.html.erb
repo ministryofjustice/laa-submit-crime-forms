@@ -27,17 +27,15 @@ end
       { text: t('.allowed_net_cost'), numeric: true },
     ]
 
-    total_cost = records.sum(&:total_cost)
-    allowed_total_cost = records.sum(&:allowed_total_cost)
-
-    rows = Nsm::AllowedWorkItems::SummaryTable.new(records, skip_links:).rows
+    data = @claim.totals[:work_types][:total]
+    rows = Nsm::AllowedWorkItems::SummaryTable.new(@claim, skip_links:).rows
 
     foot = [
       { text: t(".total"), width: 'govuk-!-width-one-quarter' },
       { text: '', numeric: true },
-      { text: safe_join([govuk_visually_hidden(t('.accessibility.net_cost')) , NumberTo.pounds(total_cost)], ' '), numeric: true },
+      { text: safe_join([govuk_visually_hidden(t('.accessibility.net_cost')) , NumberTo.pounds(data[:claimed_total_exc_vat])], ' '), numeric: true },
       { text: '', numeric: true },
-      { text: safe_join([govuk_visually_hidden(t('.accessibility.allowed_net_cost')) , NumberTo.pounds(allowed_total_cost)], ' '), numeric: true },
+      { text: safe_join([govuk_visually_hidden(t('.accessibility.allowed_net_cost')) , NumberTo.pounds(data[:assessed_total_exc_vat])], ' '), numeric: true },
     ]
 
     summary_table = govuk_table do |table|

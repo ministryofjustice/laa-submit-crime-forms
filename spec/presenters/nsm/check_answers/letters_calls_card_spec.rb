@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe Nsm::CheckAnswers::LettersCallsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { build(:claim, :firm_details, letters:, calls:, letters_uplift:, calls_uplift:, reasons_for_claim:) }
+  let(:claim) do
+    build(:claim, :case_type_breach, :firm_details, letters:, calls:, letters_uplift:, calls_uplift:, reasons_for_claim:)
+  end
 
   let(:letters) { 20 }
   let(:calls) { 5 }
@@ -105,7 +107,7 @@ RSpec.describe Nsm::CheckAnswers::LettersCallsCard do
     end
 
     context 'no letters or calls requested' do
-      let(:claim) { build(:claim, :full_firm_details, reasons_for_claim:) }
+      let(:claim) { build(:claim, :case_type_breach, :full_firm_details, reasons_for_claim:) }
 
       it 'generates letters and calls rows' do
         expect(subject.row_data).to eq(

@@ -4,22 +4,22 @@ module Nsm
       include ActionView::Helpers::OutputSafetyHelper
       include ActionView::Helpers::TagHelper
 
-      def initialize(work_items, skip_links: false)
-        @work_items = work_items
+      def initialize(claim, skip_links: false)
+        @claim = claim
         @skip_links = skip_links
       end
 
       def rows
         WorkItem::WORK_TYPE_SUMMARY_ORDER.map do |work_type|
-          claimed_work_items = @work_items.select { _1.work_type == work_type }
-          allowed_work_items = @work_items.select { _1.assessed_work_type == work_type }
-          time = claimed_work_items.sum(&:time_spent)
-          net_cost = claimed_work_items.sum(&:total_cost)
-          allowed_time = allowed_work_items.sum(&:assessed_time_spent)
-          allowed_net_cost = allowed_work_items.sum(&:allowed_total_cost)
+          data = @claim.totals[:work_types][work_type.to_sym]
+          time = data[:claimed_time_spent_in_minutes]
+          net_cost = data[:claimed_total_exc_vat]
+          allowed_time = data[:assessed_time_spent_in_minutes]
+          allowed_net_cost = data[:assessed_total_exc_vat]
 
           [
-            { text: name_text(work_type, claimed_work_items), width: 'govuk-!-width-one-quarter' },
+            { text: name_text(work_type, data[:at_least_one_claimed_work_item_assessed_as_different_type]),
+              width: 'govuk-!-width-one-quarter' },
             { text: time_text(time), numeric: true },
             { text: NumberTo.pounds(net_cost), numeric: true },
             { text: time_text(allowed_time), numeric: true },
@@ -28,8 +28,7 @@ module Nsm
         end
       end
 
-      def name_text(work_type, claimed_work_items)
-        any_changes = claimed_work_items.any? { _1.assessed_work_type != _1.work_type }
+      def name_text(work_type, any_changes)
         work_type_name = I18n.t("laa_crime_forms_common.nsm.work_type.#{work_type}")
 
         return work_type_name unless any_changes
@@ -47,7 +46,7 @@ module Nsm
       end
 
       def time_text(time)
-        ApplicationController.helpers.format_period(time, style: :minimal_html)
+        ApplicationController.helpers.format_period(IntegerTimePeriod.new(time.to_i), style: :minimal_html)
       end
     end
   end

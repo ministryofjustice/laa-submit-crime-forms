@@ -11,7 +11,7 @@
 
     <%= step_form @form_object do |f| %>
       <%=
-        f.govuk_text_field :letters, width: 3, label: { size: 's' }, hint: { value: @form_object.pricing.name }, data: { rate_letters: @form_object.pricing.letters }, inputmode: 'numeric' %>
+        f.govuk_text_field :letters, width: 3, label: { size: 's' }, inputmode: 'numeric' %>
       <% if @form_object.allow_uplift? %>
         <%= f.govuk_check_boxes_fieldset :apply_letters_uplift, multiple: false, legend: nil, data: { cy: 'apply-letters-uplift' } do %>
           <%= f.govuk_check_box :apply_letters_uplift, 'true', 'false', multiple: false do %>
@@ -19,7 +19,7 @@
           <% end %>
         <% end %>
       <% end %>
-      <%= f.govuk_text_field :calls, width: 3, label: { size: 's' }, hint: { value: @form_object.pricing.name }, data: { rate_phone_calls: @form_object.pricing.calls }, inputmode: 'numeric' %>
+      <%= f.govuk_text_field :calls, width: 3, label: { size: 's' }, inputmode: 'numeric' %>
       <% if @form_object.allow_uplift? %>
         <%= f.govuk_check_boxes_fieldset :apply_calls_uplift, multiple: false, legend: nil, data: { cy: 'apply-calls-uplift' } do %>
           <%= f.govuk_check_box :apply_calls_uplift, 'true', 'false', multiple: false  do %>

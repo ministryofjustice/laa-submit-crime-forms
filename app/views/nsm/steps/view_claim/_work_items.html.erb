@@ -13,13 +13,11 @@
     { text: t('.time'), numeric: true },
     { text: t('.net_cost'), numeric: true },
   ]
-  vat_rate = claim.firm_office.vat_registered == 'true' ? Pricing.new(claim).vat : 0
-  total_cost = BigDecimal('0')
+  total_cost = claim.totals[:work_types][:total][:claimed_total_exc_vat]
+
   rows = WorkItem::WORK_TYPE_SUMMARY_ORDER.map do |work_type|
-    work_items_for_type = records.select { _1.work_type == work_type }
-    time = work_items_for_type.sum(&:time_spent)
-    net_cost = work_items_for_type.sum(&:total_cost)
-    total_cost += net_cost
+    time = IntegerTimePeriod.new(claim.totals[:work_types][work_type.to_sym][:claimed_time_spent_in_minutes].to_i)
+    net_cost = claim.totals[:work_types][work_type.to_sym][:claimed_total_exc_vat]
     [
       { text: t("laa_crime_forms_common.nsm.work_type.#{work_type}") },
       { text: format_period(time, style: :minimal_html), numeric: true },

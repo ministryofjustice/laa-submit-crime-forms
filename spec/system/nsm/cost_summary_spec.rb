@@ -1,12 +1,12 @@
 require 'system_helper'
 
 RSpec.describe 'User can see cost breakdowns', type: :system do
-  let(:claim) { create(:claim, :firm_details, :letters_calls, work_items:, disbursements:) }
+  let(:claim) { create(:claim, :case_type_breach, :firm_details, :letters_calls, work_items:, disbursements:) }
   let(:work_items) do
     [
-      build(:work_item, :attendance_without_counsel, time_spent: 90),
-      build(:work_item, :advocacy, time_spent: 104),
-      build(:work_item, :advocacy, time_spent: 86),
+      build(:work_item, :valid, :attendance_without_counsel, time_spent: 90),
+      build(:work_item, :valid, :advocacy, time_spent: 104),
+      build(:work_item, :valid, :advocacy, time_spent: 86),
     ]
   end
   let(:disbursements) do

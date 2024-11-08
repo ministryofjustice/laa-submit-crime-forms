@@ -1,14 +1,4 @@
 module LettersAndCallsCosts
-  class TotalCostAlias < SimpleDelegator
-    def total_cost
-      letters_and_calls_total_cost
-    end
-
-    def allowed_total_cost
-      allowed_letters_and_calls_total_cost
-    end
-  end
-
   extend ActiveSupport::Concern
 
   included do
@@ -29,55 +19,99 @@ module LettersAndCallsCosts
       (@apply_letters_uplift.nil? ? letters_uplift.present? : @apply_letters_uplift == 'true')
   end
 
-  def pricing
-    @pricing ||= Pricing.for(application)
+  delegate :rates, to: :application
+
+  def call_rate
+    rates.letters_and_calls[:calls]
+  end
+
+  def letter_rate
+    rates.letters_and_calls[:letters]
   end
 
   def letters_after_uplift
-    if apply_letters_uplift && letters_before_uplift
-      letters_before_uplift * (1 + (letters_uplift.to_d / 100))
-    elsif letters_before_uplift&.positive?
-      letters_before_uplift
-    end
+    letter_calculation[:claimed_total_exc_vat]
   end
 
   def calls_after_uplift
-    if apply_calls_uplift && calls_before_uplift
-      calls_before_uplift * (1 + (calls_uplift.to_d / 100))
-    elsif calls_before_uplift&.positive?
-      calls_before_uplift
-    end
+    call_calculation[:claimed_total_exc_vat]
   end
 
   def allowed_letters_after_uplift
-    (allowed_letters || letters).to_d * pricing.letters * (1 + ((allowed_letters_uplift || letters_uplift).to_d / 100))
+    letter_calculation[:assessed_total_exc_vat]
   end
 
   def allowed_calls_after_uplift
-    (allowed_calls || calls).to_d * pricing.calls * (1 + ((allowed_calls_uplift || calls_uplift).to_d / 100))
+    call_calculation[:assessed_total_exc_vat]
   end
 
   def letters_and_calls_total_cost
-    return unless letters_after_uplift&.positive? || calls_after_uplift&.positive?
+    return unless letters_after_uplift.positive? || calls_after_uplift.positive?
 
-    letters_after_uplift.to_d + calls_after_uplift.to_d
-  end
-
-  def allowed_letters_and_calls_total_cost
-    allowed_letters_after_uplift.to_d + allowed_calls_after_uplift.to_d
+    current_total[:letters_and_calls][:claimed_total_exc_vat]
   end
 
   def letters_and_calls_total_cost_inc_vat
-    (letters_and_calls_total_cost * pricing.vat) + letters_and_calls_total_cost
+    current_total[:letters_and_calls][:claimed_total_inc_vat]
   end
 
   private
 
+  def current_total
+    # We can't reliably call `application.totals` because in the context
+    # of a LettersCallsForm, the values here are not yet
+    # necessarily the same as the values in the application
+    # object.
+    @current_total ||= LaaCrimeFormsCommon::Pricing::Nsm.totals(
+      application.data_for_calculation.merge(
+        letters_and_calls: letters_and_calls_for_calculation
+      )
+    )
+  end
+
   def letters_before_uplift
-    letters.to_d * pricing.letters if letters && !letters.to_i.zero?
+    letter_calculation[:claimed_subtotal_without_uplift]
   end
 
   def calls_before_uplift
-    calls.to_d * pricing.letters if calls && !calls.to_i.zero?
+    call_calculation[:claimed_subtotal_without_uplift]
+  end
+
+  def letters_and_calls_for_calculation
+    [letters_for_calculation, calls_for_calculation]
+  end
+
+  def calls_for_calculation
+    {
+      type: :calls,
+      claimed_items: calls.to_i || 0,
+      claimed_uplift_percentage: apply_calls_uplift ? calls_uplift : 0,
+      assessed_items: application.allowed_calls || calls || 0,
+      assessed_uplift_percentage: application.allowed_calls_uplift || calls_uplift,
+    }
+  end
+
+  def letters_for_calculation
+    {
+      type: :letters,
+      claimed_items: letters.to_i || 0,
+      claimed_uplift_percentage: apply_letters_uplift ? letters_uplift : 0,
+      assessed_items: application.allowed_letters || letters || 0,
+      assessed_uplift_percentage: application.allowed_letters_uplift || letters_uplift,
+    }
+  end
+
+  def letter_calculation
+    @letter_calculation ||= LaaCrimeFormsCommon::Pricing::Nsm.calculate_letter_or_call(
+      application.data_for_calculation,
+      letters_for_calculation
+    )
+  end
+
+  def call_calculation
+    @call_calculation ||= LaaCrimeFormsCommon::Pricing::Nsm.calculate_letter_or_call(
+      application.data_for_calculation,
+      calls_for_calculation
+    )
   end
 end

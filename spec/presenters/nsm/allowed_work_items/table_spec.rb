@@ -4,7 +4,8 @@ RSpec.describe Nsm::AllowedWorkItems::Table do
   subject { described_class.new(work_items, skip_links:) }
 
   let(:work_items) { [work_item] }
-  let(:work_item) { create(:work_item, work_type: 'advocacy', time_spent: 100, claim: create(:claim)) }
+  let(:work_item) { create(:work_item, work_type: 'advocacy', time_spent: 100, claim: claim) }
+  let(:claim) { create(:claim, :firm_details, claim_type: 'breach_of_injunction', cntp_date: Date.new(2024, 11, 3)) }
   let(:skip_links) { false }
 
   describe '#rows' do
@@ -46,7 +47,7 @@ RSpec.describe Nsm::AllowedWorkItems::Table do
                allowed_work_type: 'travel',
                adjustment_comment: 'wrong type',
                time_spent: 100,
-               claim: create(:claim))
+               claim: claim)
       end
 
       it 'has a row for each work item' do

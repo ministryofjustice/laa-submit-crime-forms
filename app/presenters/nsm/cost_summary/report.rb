@@ -35,7 +35,7 @@ module Nsm
       end
 
       def total_cost
-        NumberTo.pounds summary.total_gross
+        NumberTo.pounds claim.totals[:totals][:claimed_total_inc_vat]
       end
 
       private

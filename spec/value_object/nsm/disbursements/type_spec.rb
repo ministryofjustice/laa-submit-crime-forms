@@ -19,17 +19,13 @@ RSpec.describe DisbursementTypes do
   end
 
   describe '#hint' do
-    let(:pricing) { instance_double(Pricing, '[]': price) }
+    let(:rates) { double(:rates, disbursements: { value.to_sym => price }) }
     let(:price) { 0.45 }
-    let(:application) { instance_double(Claim) }
+    let(:application) { instance_double(Claim, rates:) }
 
-    before do
-      allow(Pricing).to receive(:for).and_return(pricing)
-    end
-
-    it 'get the pricing based on the application' do
+    it 'get the pricing from the application' do
       subject.hint(application)
-      expect(Pricing).to have_received(:for).with(application)
+      expect(application).to have_received(:rates)
     end
 
     context 'when rate exists' do

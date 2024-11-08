@@ -7,8 +7,9 @@ RSpec.describe Nsm::CostSummary::WorkItems do
     instance_double(Claim,
                     assigned_counsel: assigned_counsel,
                     prog_stage_reached?: prog_stage_reached,
-                    date: date,
-                    firm_office: firm_office)
+                    cntp_date: date, claim_type: 'breach_of_injunction',
+                    firm_office: firm_office,
+                    totals: totals)
   end
   let(:firm_office) { build(:firm_office, :valid) }
   let(:assigned_counsel) { 'no' }
@@ -21,6 +22,19 @@ RSpec.describe Nsm::CostSummary::WorkItems do
       instance_double(WorkItem, work_type: WorkTypes::PREPARATION.to_s, total_cost: 40.0, time_spent: 180)
     ]
   end
+  let(:totals) do
+    {
+      work_types: {
+        advocacy: { claimed_total_exc_vat: 10, claimed_time_spent_in_minutes: 20 },
+        preparation: { claimed_total_exc_vat: 10, claimed_time_spent_in_minutes: 20 },
+        travel: { claimed_total_exc_vat: 10, claimed_time_spent_in_minutes: 20 },
+        waiting: { claimed_total_exc_vat: 10, claimed_time_spent_in_minutes: 20 },
+        attendance_with_counsel: { claimed_total_exc_vat: 10, claimed_time_spent_in_minutes: 20 },
+        attendance_without_counsel: { claimed_total_exc_vat: 10, claimed_time_spent_in_minutes: 20 },
+        total: { claimed_total_exc_vat: 10, claimed_total_inc_vat: 20 },
+      }
+    }
+  end
 
   describe '#rows' do
     it 'generates letters and calls rows' do
@@ -28,21 +42,21 @@ RSpec.describe Nsm::CostSummary::WorkItems do
         [
           [
             { classes: 'govuk-table__header', text: 'Attendance without counsel' },
-            { text: '0<span class="govuk-visually-hidden"> hours</span>:00' \
+            { text: '0<span class="govuk-visually-hidden"> hours</span>:20' \
                     '<span class="govuk-visually-hidden"> minutes</span>' },
-            { classes: 'govuk-table__cell--numeric', text: '£0.00' }
+            { classes: 'govuk-table__cell--numeric', text: '£10.00' }
           ],
           [
             { classes: 'govuk-table__header', text: 'Preparation' },
-            { text: '3<span class="govuk-visually-hidden"> hours</span>:00' \
+            { text: '0<span class="govuk-visually-hidden"> hours</span>:20' \
                     '<span class="govuk-visually-hidden"> minutes</span>' },
-            { classes: 'govuk-table__cell--numeric', text: '£40.00' }
+            { classes: 'govuk-table__cell--numeric', text: '£10.00' }
           ],
           [
             { classes: 'govuk-table__header', text: 'Advocacy' },
-            { text: '6<span class="govuk-visually-hidden"> hours</span>:00' \
+            { text: '0<span class="govuk-visually-hidden"> hours</span>:20' \
                     '<span class="govuk-visually-hidden"> minutes</span>' },
-            { classes: 'govuk-table__cell--numeric', text: '£170.00' }
+            { classes: 'govuk-table__cell--numeric', text: '£10.00' }
           ]
         ]
       )
@@ -74,13 +88,13 @@ RSpec.describe Nsm::CostSummary::WorkItems do
   context 'vat registered' do
     describe '#total_cost' do
       it 'delegates to the form' do
-        expect(subject.total_cost).to eq(210.00)
+        expect(subject.total_cost).to eq(10.00)
       end
     end
 
     describe '#total_cost_inc_vat' do
       it 'delegates to the form' do
-        expect(subject.total_cost_inc_vat).to eq(252.00)
+        expect(subject.total_cost_inc_vat).to eq(20.00)
       end
     end
 
@@ -96,13 +110,13 @@ RSpec.describe Nsm::CostSummary::WorkItems do
 
     describe '#total_cost' do
       it 'delegates to the form' do
-        expect(subject.total_cost).to eq(210.00)
+        expect(subject.total_cost).to eq(10.00)
       end
     end
 
     describe '#total_cost_inc_vat' do
       it 'delegates to the form' do
-        expect(subject.total_cost_inc_vat).to eq(0)
+        expect(subject.total_cost_inc_vat).to eq(20)
       end
     end
 

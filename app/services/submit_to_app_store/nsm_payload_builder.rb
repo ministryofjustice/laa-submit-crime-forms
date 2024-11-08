@@ -42,7 +42,7 @@ class SubmitToAppStore
     def submit_payload
       direct_attributes.merge(
         'status' => claim.state,
-        'vat_rate' => pricing[:vat].to_f,
+        'vat_rate' => claim.rates.vat.to_f,
         'stage_reached' => claim.stage_reached,
         'disbursements' => disbursements,
         'work_items' => work_items,
@@ -82,27 +82,30 @@ class SubmitToAppStore
       claim.submitter.attributes.slice('email', 'description')
     end
 
-    # rubocop:disable Metrics/AbcSize
     def disbursements
       claim.disbursements.map do |disbursement|
         data = disbursement.as_json(except: [*DEFAULT_IGNORE, 'allowed_total_cost_without_vat', 'allowed_vat_amount',
                                              'adjustment_comment', 'allowed_apply_vat', 'allowed_miles'])
-        data['disbursement_date'] = data['disbursement_date'].to_s
-        data['pricing'] = pricing[disbursement.disbursement_type].to_f || 1.0
-        data['vat_rate'] = pricing[:vat].to_f
-        data['vat_amount'] = data['vat_amount'].to_f
-        data['total_cost_without_vat'] = data['total_cost_without_vat'].to_f
+        augment_disbursement_data(data, disbursement)
         data
       end
     end
-    # rubocop:enable Metrics/AbcSize
+
+    def augment_disbursement_data(data, disbursement)
+      data['disbursement_date'] = data['disbursement_date'].to_s
+      data['pricing'] = claim.rates.disbursements[disbursement.disbursement_type.to_sym].to_f || 1.0
+      data['vat_rate'] = claim.rates.vat.to_f
+      data['vat_amount'] = disbursement.vat
+      # For backwards compatibility, include the calculated total if there is no direct total
+      data['total_cost_without_vat'] ||= disbursement.total_cost_pre_vat
+    end
 
     def work_items
       claim.work_items.map do |work_item|
         data = work_item.as_json(except: [*DEFAULT_IGNORE, 'allowed_uplift', 'allowed_time_spent', 'adjustment_comment',
                                           'allowed_work_type'])
         data['completed_on'] = data['completed_on'].to_s
-        data['pricing'] = pricing[work_item.work_type].to_f
+        data['pricing'] = claim.rates.work_items[work_item.work_type.to_sym].to_f
         data
       end
     end
@@ -113,10 +116,6 @@ class SubmitToAppStore
       end
     end
 
-    def pricing
-      @pricing ||= Pricing.for(claim)
-    end
-
     def supporting_evidences
       claim.supporting_evidence.map do |evidence|
         evidence.as_json.slice!('claim_id')
@@ -124,8 +123,9 @@ class SubmitToAppStore
     end
 
     def work_item_pricing
-      work_types = WorkTypes.values.select { _1.display_to_caseworker?(claim) }.map(&:to_s)
-      pricing.as_json.select { |k, _v| k.in?(work_types) }.transform_values(&:to_f)
+      WorkTypes.values
+               .select { _1.display_to_caseworker?(claim) }
+               .to_h { [_1.to_s, claim.rates.work_items[_1.to_sym].to_f] }
     end
 
     def further_information
@@ -153,9 +153,18 @@ class SubmitToAppStore
                                  signatory_name].freeze
 
     def cost_summary
-      Nsm::CheckAnswers::CostSummaryCard.new(claim).table_fields(formatted: false).index_by do |row|
-        row.delete(:name)
+      values = claim.totals[:cost_summary].map do |key, value|
+        [
+          key,
+          {
+            gross_cost: value[:claimed_total_inc_vat].to_d,
+            net_cost: value[:claimed_total_exc_vat].to_d,
+            vat: value[:claimed_vat].to_d,
+          }
+        ]
       end
+
+      values.to_h.tap { _1[:high_value] = RiskAssessment::HighRiskAssessment.new(claim).high_cost? }
     end
 
     def application_risk

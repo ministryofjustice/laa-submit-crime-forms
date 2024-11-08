@@ -20,15 +20,15 @@ module Nsm
       end
 
       def total_cost
-        @total_cost ||= disbursements.filter_map(&:total_cost).sum
+        @total_cost ||= claim.totals.dig(:cost_summary, :disbursements, :claimed_total_inc_vat)
       end
 
       def net_cost
-        @net_cost ||= disbursements.filter_map(&:total_cost_pre_vat).sum
+        @net_cost ||= claim.totals.dig(:cost_summary, :disbursements, :claimed_total_exc_vat)
       end
 
       def vat_amount
-        @vat_amount ||= disbursements.filter_map(&:vat_amount).sum
+        @vat_amount ||= claim.totals.dig(:cost_summary, :disbursements, :claimed_vat)
       end
 
       def title

@@ -14,14 +14,6 @@ module Nsm
         end
       end
 
-      def vat_rate
-        Pricing.for(@claim).vat
-      end
-
-      def vat_registered
-        @claim.firm_office.vat_registered == YesNoAnswer::YES.to_s
-      end
-
       def caption
         translate('caption')
       end

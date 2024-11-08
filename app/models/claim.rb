@@ -28,19 +28,11 @@ class Claim < ApplicationRecord
   enum :state, { draft: 'draft', submitted: 'submitted', granted: 'granted', part_grant: 'part_grant',
                  sent_back: 'sent_back', rejected: 'rejected', expired: 'expired', provider_updated: 'provider_updated' }
 
-  def date
-    rep_order_date || cntp_date
-  end
-
-  def short_id
-    id.first(8)
-  end
-
   def letters_and_calls_payload
-    pricing = Pricing.for(self)
     [
-      { 'type' => 'letters', 'count' => letters, 'pricing' => pricing.letters.to_f, 'uplift' => letters_uplift },
-      { 'type' => 'calls', 'count' => calls, 'pricing' => pricing.calls.to_f, 'uplift' => calls_uplift },
+      { 'type' => 'letters', 'count' => letters, 'pricing' => rates.letters_and_calls[:letters].to_f,
+'uplift' => letters_uplift },
+      { 'type' => 'calls', 'count' => calls, 'pricing' => rates.letters_and_calls[:calls].to_f, 'uplift' => calls_uplift },
     ]
   end
 
@@ -75,13 +67,42 @@ class Claim < ApplicationRecord
     end
   end
 
-  def cost_summary
-    @cost_summary ||= Nsm::CheckAnswers::CostSummaryCard.new(self, show_adjustments: true)
+  def show_adjusted?
+    return false unless granted? || part_grant?
+
+    totals[:totals][:claimed_total_inc_vat] != totals[:totals][:assessed_total_inc_vat]
   end
-  delegate :show_adjusted?, to: :cost_summary
 
   def pending_further_information
     further_informations.where(created_at: app_store_updated_at..).order(:created_at).last
+  end
+
+  def totals
+    @totals ||= LaaCrimeFormsCommon::Pricing::Nsm.totals(full_data_for_calculation)
+  end
+
+  def rates
+    @rates ||= LaaCrimeFormsCommon::Pricing::Nsm.rates(data_for_calculation)
+  end
+
+  def full_data_for_calculation
+    data_for_calculation.merge(
+      work_items: work_items_for_calculation,
+      disbursements: disbursements_for_calculation,
+      letters_and_calls: letters_and_calls_for_calculation,
+    )
+  end
+
+  def data_for_calculation
+    {
+      claim_type: claim_type,
+      rep_order_date: rep_order_date,
+      cntp_date: cntp_date,
+      vat_registered: firm_office.vat_registered == 'yes',
+      work_items: [],
+      letters_and_calls: [],
+      disbursements: []
+    }
   end
 
   private
@@ -116,5 +137,13 @@ class Claim < ApplicationRecord
     @sorted_disbursement_positions ||= sorted_disbursement_ids.each_with_object([]).with_index do |(id, memo), idx|
       memo << { id: id, position: idx + 1 }
     end
+  end
+
+  def work_items_for_calculation
+    work_items.select(&:complete?).map(&:data_for_calculation)
+  end
+
+  def disbursements_for_calculation
+    disbursements.select(&:complete?).map(&:data_for_calculation)
   end
 end

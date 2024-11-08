@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe Nsm::CostSummary::Disbursements do
   subject { described_class.new(disbursements, claim) }
 
-  let(:claim) { instance_double(Claim, assigned_counsel: assigned_counsel, prog_stage_reached?: prog_stage_reached) }
+  let(:claim) do
+    instance_double(Claim, assigned_counsel: assigned_counsel, prog_stage_reached?: prog_stage_reached, totals: totals)
+  end
   let(:assigned_counsel) { 'no' }
   let(:prog_stage_reached) { false }
   let(:disbursements) do
@@ -18,6 +20,8 @@ total_cost_pre_vat: 30.0),
 total_cost_pre_vat: 80.0)
     ]
   end
+
+  let(:totals) { { cost_summary: { disbursements: { claimed_total_exc_vat: 260.0, claimed_total_inc_vat: 300.0 } } } }
 
   describe '#rows' do
     it 'generates letters and calls rows' do

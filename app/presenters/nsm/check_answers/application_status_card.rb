@@ -54,10 +54,15 @@ module Nsm
         "#{NumberTo.pounds(total_gross)} claimed"
       end
 
-      def cost_summary
-        @cost_summary ||= Nsm::CheckAnswers::CostSummaryCard.new(claim, show_adjustments: true)
+      delegate :show_adjusted?, to: :claim
+
+      def total_gross
+        claim.totals[:totals][:claimed_total_inc_vat]
       end
-      delegate :total_gross, :total_gross_allowed, :show_adjusted?, to: :cost_summary
+
+      def total_gross_allowed
+        claim.totals[:totals][:assessed_total_inc_vat]
+      end
 
       def translate(key)
         I18n.t("nsm.steps.check_answers.groups.#{group}.#{section}.#{key}")

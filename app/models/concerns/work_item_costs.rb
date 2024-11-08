@@ -2,7 +2,10 @@ module WorkItemCosts
   extend ActiveSupport::Concern
 
   included do
-    alias_method :application, :claim if self == ::WorkItem
+    if self == ::WorkItem
+      alias_method :application, :claim
+      define_method(:record) { self }
+    end
   end
 
   def allow_uplift?
@@ -15,49 +18,51 @@ module WorkItemCosts
   end
 
   def total_cost
-    return if time_spent.nil? || time_spent.is_a?(Hash) || pricing[work_type].nil?
-
-    # We need to use a Rational because some numbers divided by 60 cannot be accurately represented as a decimal,
-    # and when summing up multiple work items with sub-penny precision, those small inaccuracies can lead to
-    # a larger inaccuracy when the total is eventually rounded to 2 decimal places.
-    Rational(apply_uplift!(time_spent.to_d) * pricing[work_type], 60)
+    calculation[:claimed_total_exc_vat]
   end
 
   def allowed_total_cost
-    return total_cost if allowed_time_spent.nil? && allowed_uplift.nil? && allowed_work_type.nil?
-
-    uplifted_time_spent = apply_uplift!(assessed_time_spent.to_d, assessed_uplift)
-    # We need to use a Rational because some numbers divided by 60 cannot be accurately represented as a decimal,
-    # and when summing up multiple work items with sub-penny precision, those small inaccuracies can lead to
-    # a larger inaccuracy when the total is eventually rounded to 2 decimal places.
-    Rational(uplifted_time_spent * pricing[assessed_work_type], 60)
+    calculation[:assessed_total_exc_vat]
   end
 
-  def apply_uplift!(val, multipler = uplift)
-    (BigDecimal(1) + (apply_uplift ? (multipler.to_d / 100) : 0)) * val
-  end
-
-  def pricing
-    @pricing ||= Pricing.for(application)
-  end
+  delegate :rates, to: :application
 
   def assessed_work_type
-    allowed_work_type.presence || work_type
+    record.allowed_work_type.presence || work_type
   end
 
   def assessed_time_spent
-    allowed_time_spent || time_spent
+    record.allowed_time_spent || time_spent
   end
 
   def assessed_uplift
-    allowed_uplift || uplift
+    record.allowed_uplift || uplift
+  end
+
+  def data_for_calculation
+    {
+      claimed_time_spent_in_minutes: time_spent.present? && time_spent.to_i,
+      claimed_work_type: work_type.to_s,
+      claimed_uplift_percentage: apply_uplift ? uplift : 0,
+      assessed_time_spent_in_minutes: assessed_time_spent.present? && assessed_time_spent.to_i,
+      assessed_work_type: assessed_work_type.to_s,
+      assessed_uplift_percentage: apply_uplift ? assessed_uplift : 0,
+    }
   end
 
   private
 
   def total_without_uplift
-    return if time_spent.nil? || time_spent.is_a?(Hash) || pricing[work_type].nil?
+    calculation[:claimed_subtotal_without_uplift]
+  end
 
-    time_spent.to_d / 60 * pricing[work_type]
+  def calculation
+    @calculation ||= LaaCrimeFormsCommon::Pricing::Nsm.calculate_work_item(
+      application.data_for_calculation,
+      data_for_calculation
+    )
+  rescue StandardError
+    # If we don't have enough details yet to do the calculation, this will error out
+    {}
   end
 end

@@ -1,7 +1,7 @@
 require 'system_helper'
 
 RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, type: :system do
-  let(:claim) { create(:claim, :main_defendant) }
+  let(:claim) { create(:claim, :case_type_breach, :main_defendant) }
 
   it 'can select a value from the autocomplete' do
     visit provider_saml_omniauth_callback_path

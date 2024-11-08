@@ -6,7 +6,7 @@ RSpec.describe RiskAssessment::HighRiskAssessment do
   describe '#assess' do
     subject(:assessment) { described_class.new(claim).assess }
 
-    let(:claim) { create(:claim, :one_work_item, :full_firm_details) }
+    let(:claim) { create(:claim, :one_work_item, :full_firm_details, :case_type_breach) }
 
     it 'returns false when no clauses are triggered' do
       expect(assessment).to be_falsey
