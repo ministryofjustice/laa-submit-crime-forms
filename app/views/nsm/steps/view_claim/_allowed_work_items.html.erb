@@ -27,8 +27,8 @@ end
       { text: t('.allowed_net_cost'), numeric: true },
     ]
 
-    data = @claim.totals[:work_types][:total]
-    rows = Nsm::AllowedWorkItems::SummaryTable.new(@claim, skip_links:).rows
+    data = claim.totals[:work_types][:total]
+    rows = Nsm::AllowedWorkItems::SummaryTable.new(claim, skip_links:).rows
 
     foot = [
       { text: t(".total"), width: 'govuk-!-width-one-quarter' },
