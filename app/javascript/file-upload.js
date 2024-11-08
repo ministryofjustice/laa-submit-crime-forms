@@ -31,22 +31,20 @@ MOJFrontend.MultiFileUpload.prototype.uploadFiles = async function(files) {
 MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
     const maxFileSize = document.querySelector('.moj-multi-file-upload').dataset.maxSize;
     const singleFile = document.querySelector('.moj-multi-file-upload').dataset.singleFile;
-
+    let uploadList = $('.moj-multi-file-upload__list');
     this.params.uploadFileEntryHook(this, file);
     let formData = new FormData();
-    let uploadList = this.feedbackContainer.find('.moj-multi-file-upload__list');
 
-    if(singleFile == "true"){
-      console.log("single file");
+    if(singleFile == "true"){ //clear the old file from the list
       formData.set('file_upload', file);
-      while(this.feedbackContainer.find('.moj-multi-file-upload__list').firstChild){
-        this.feedbackContainer.find('.moj-multi-file-upload__list').removeChild(uploadList.firstChild);
-      }
+      uploadList.children().each(function(){
+        this.remove();
+      })
     }
     else{
-      console.log("multi file");
       formData.append('documents', file);
     }
+
     let fileListLength = this.feedbackContainer.find('.govuk-table__row.moj-multi-file-upload__row').length
     let fileRow = $(this.getFileRowHtml(file, fileListLength));
     let feedback = $(".moj-multi-file-upload__message");

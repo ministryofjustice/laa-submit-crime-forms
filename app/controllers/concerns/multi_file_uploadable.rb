@@ -6,10 +6,10 @@ module MultiFileUploadable
   end
 
   def create
-    return return_error('activemodel.errors.messages.forbidden_document_type') unless supported_filetype(params[:documents])
+    return return_error('activemodel.errors.messages.forbidden_document_type') unless supported_filetype(params[param_name])
 
     evidence = upload_file(params)
-    return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
+    return_success({ evidence_id: evidence.id, file_name: params[param_name].original_filename })
   rescue FileUpload::FileUploader::PotentialMalwareError => e
     return_error('activemodel.errors.messages.suspected_malware', e)
   rescue StandardError => e
@@ -23,8 +23,8 @@ module MultiFileUploadable
   end
 
   def upload_file(params)
-    file_path = file_uploader.upload(params[:documents])
-    save_file(params[:documents], file_path)
+    file_path = file_uploader.upload(params[param_name])
+    save_file(params[param_name], file_path)
   end
 
   def save_file(params, file_path)
@@ -54,5 +54,9 @@ module MultiFileUploadable
     render json: {
       error: { message: t(key) }
     }, status: :bad_request
+  end
+
+  def param_name
+    :documents
   end
 end

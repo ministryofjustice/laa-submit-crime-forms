@@ -1,6 +1,7 @@
 module PriorAuthority
   module Steps
     class PrimaryQuoteController < BaseController
+      include MultiFileUploadable
       def edit
         @services = count_services
 
@@ -39,6 +40,10 @@ module PriorAuthority
         end
 
         values.sort_by { |_, count| -count }.to_h
+      end
+
+      def param_name
+        :file_upload
       end
     end
   end

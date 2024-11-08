@@ -89,7 +89,9 @@ en:
           organisation: Organisation
           town: Town
           postcode: Postcode
-          file_upload: Upload the quote
+          file_upload:
+            heading: Upload the quote
+          upload_file: Choose file
           file_upload_hint_html: |
             Friendly file names make it easier for us to assess your case. For example, Client-case.pdf instead of File23.PDF.<br>
             The maximum size for each file is %{size}.
