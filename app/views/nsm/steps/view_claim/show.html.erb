@@ -8,7 +8,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <% @report.section_groups(:status).each do |section_group| %>
+    <% report.section_groups(:status).each do |section_group| %>
       <% section_group[:sections].each do |section| %>
         <%= govuk_summary_list(
           card: { title: section.title },
@@ -27,7 +27,7 @@
       </p>
       <h2 class="govuk-heading-s" id="subsection-title"><%= t('.print_a_pdf') %></h2>
       <p class="govuk-body-s"><%= t('.print_hint') %></p>
-      <%= govuk_button_link_to t('.print'), download_nsm_steps_view_claim_path(@claim), secondary: true, target: '_blank' %>
+      <%= govuk_button_link_to t('.print'), download_nsm_steps_view_claim_path(claim), secondary: true, target: '_blank' %>
     </aside>
   </div>
 </div>
@@ -37,23 +37,23 @@
     <nav class="moj-sub-navigation" aria-label="Sub navigation" id="claim_nav">
       <ul class="moj-sub-navigation__list">
         <li class="moj-sub-navigation__item">
-          <%= link_to t('.tabs.overview'), nsm_steps_view_claim_path(@claim, anchor: 'claim_nav'), class: 'moj-sub-navigation__link', 'aria-current': (@section == :overview ? "page" : nil) %>
+          <%= link_to t('.tabs.overview'), nsm_steps_view_claim_path(claim, anchor: 'claim_nav'), class: 'moj-sub-navigation__link', 'aria-current': (@section == :overview ? "page" : nil) %>
         </li>
         <li class="moj-sub-navigation__item">
-          <%= link_to t('.tabs.claimed_costs'), claimed_costs_work_items_nsm_steps_view_claim_path(@claim, anchor: 'claim_nav'), class: 'moj-sub-navigation__link', 'aria-current': (@section == :claimed_costs ? "page" : nil) %>
+          <%= link_to t('.tabs.claimed_costs'), claimed_costs_work_items_nsm_steps_view_claim_path(claim, anchor: 'claim_nav'), class: 'moj-sub-navigation__link', 'aria-current': (@section == :claimed_costs ? "page" : nil) %>
         </li>
-        <% if @claim.show_adjusted? %>
+        <% if claim.show_adjusted? %>
           <li class="moj-sub-navigation__item">
-            <%= link_to t('.tabs.adjustments'), adjustments_work_items_nsm_steps_view_claim_path(@claim, anchor: 'claim_nav'), class: 'moj-sub-navigation__link', 'aria-current': (@section == :adjustments ? "page" : nil) %>
+            <%= link_to t('.tabs.adjustments'), adjustments_work_items_nsm_steps_view_claim_path(claim, anchor: 'claim_nav'), class: 'moj-sub-navigation__link', 'aria-current': (@section == :adjustments ? "page" : nil) %>
           </li>
         <% end %>
       </ul>
     </nav>
 
     <h2 class="govuk-heading-l"><%= t(".tabs.#{@section}") %></h2>
-    <% if @claim.provider_updated? %>
+    <% if claim.provider_updated? %>
       <div class="govuk-inset-text">
-        <p><strong> <%= "#{t('.claim_updated.text')} #{@claim.updated_at.to_fs(:short_stamp)} " %> </strong></p>
+        <p><strong> <%= "#{t('.claim_updated.text')} #{claim.updated_at.to_fs(:short_stamp)} " %> </strong></p>
         <ul class="govuk-list">
           <li>
             <a href="#further_information" class="govuk-link--no-visited-state"><%= t('.claim_updated.link') %></a>
@@ -61,7 +61,7 @@
         </ul>
       </div>
     <% end %>
-    <% @report.section_groups(@section).each do |section_group| %>
+    <% report.section_groups(@section).each do |section_group| %>
       <% if section_group[:sections].any? && section_group[:heading].present? %>
         <h2 class="govuk-heading-m" id="<%= section_group[:name] %>"><%= section_group[:heading] %></h2>
       <% end %>
@@ -69,7 +69,7 @@
         <%= render 'section', section: %>
       <% end %>
     <% end %>
-    <% type_changed = @claim.work_items.changed_work_type.order(position: :asc).to_a %>
+    <% type_changed = claim.work_items.changed_work_type.order(position: :asc).to_a %>
     <% if type_changed.any? && @section == :adjustments %>
       <section class="govuk-!-margin-bottom-6">
         <p id="fn*" class="govuk-body-s">

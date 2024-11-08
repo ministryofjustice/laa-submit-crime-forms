@@ -3,34 +3,35 @@
 module Nsm
   module Steps
     class ViewClaimController < Nsm::Steps::BaseController
-      before_action :set_claim
       before_action :set_section_and_scope
       before_action :set_default_table_sort_options
 
-      def show; end
+      def show
+        render_show
+      end
 
       def item
-        render report_params[:item_type]
+        render report_params[:item_type], locals: view_locals
       end
 
       def claimed_work_items
         @records = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
 
-        render 'show'
+        render_show
       end
 
       def adjusted_work_items
         @records = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
 
-        render 'show'
+        render_show
       end
 
       def claimed_letters_and_calls
-        render 'show'
+        render_show
       end
 
       def adjusted_letters_and_calls
-        render 'show'
+        render_show
       end
 
       def claimed_disbursements
@@ -38,7 +39,7 @@ module Nsm
           current_application.disbursements.by_age, @sort_by, @sort_direction
         )
 
-        render 'show'
+        render_show
       end
 
       def adjusted_disbursements
@@ -46,14 +47,14 @@ module Nsm
           current_application.disbursements.by_age, @sort_by, @sort_direction
         )
 
-        render 'show'
+        render_show
       end
 
       def download
-        pdf = PdfService.nsm({ claim: @claim, report: @report }, request.url)
+        pdf = PdfService.nsm(view_locals, request.url)
 
         send_data pdf,
-                  filename: "#{@claim.laa_reference}.pdf",
+                  filename: "#{current_application.laa_reference}.pdf",
                   type: 'application/pdf'
       end
 
@@ -91,9 +92,16 @@ module Nsm
         end
       end
 
-      def set_claim
-        @report = CheckAnswers::ReadOnlyReport.new(current_application, cost_summary_in_overview: false)
-        @claim = current_application
+      def render_show
+        render :show, locals: view_locals
+      end
+
+      def view_locals
+        { claim: current_application, report: report }
+      end
+
+      def report
+        CheckAnswers::ReadOnlyReport.new(current_application, cost_summary_in_overview: false)
       end
 
       def check_step_valid
