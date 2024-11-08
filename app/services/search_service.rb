@@ -10,15 +10,20 @@ class SearchService
 
     private
 
+    def escape_string(string)
+      %('''#{string.gsub("'", "''")}''')
+    end
+
     def filter_on_search_string(base_query, params)
       return base_query if params[:search_string].blank?
 
       params[:search_string].split.reduce(base_query) do |built_query, token|
         word = token.strip
+
         if laa_reference_or_ufn?(word)
-          built_query.where("core_search_fields @@ to_tsquery('simple', ?)", word)
+          built_query.where("core_search_fields @@ to_tsquery('simple', ?)", escape_string(word))
         else
-          built_query.where("searchable_defendants.search_fields @@ to_tsquery('simple', ?)", word)
+          built_query.where("searchable_defendants.search_fields @@ to_tsquery('simple', ?)", escape_string(word))
         end
       end
     end

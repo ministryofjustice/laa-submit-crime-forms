@@ -191,7 +191,7 @@ RSpec.describe 'Search' do
              laa_reference: 'LAA-AB1234',
              office_code: 'XYZXYZ',
              ufn: '070620/123',
-             main_defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
+             main_defendant: build(:defendant, :valid, first_name: 'Joe', last_name: "Bloggs-O'Reilly"),
              state: :submitted,
              updated_at: DateTime.new(2024, 9, 1, 10, 17, 26),
              originally_submitted_at: DateTime.new(2024, 9, 1, 10, 17, 26)
@@ -277,8 +277,20 @@ RSpec.describe 'Search' do
         end
       end
 
+      context 'when I search by partial last name' do
+        let(:query) { 'Bloggs' }
+
+        it 'shows only the matching record that I am associated with' do
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
+        end
+      end
+
       context 'when I search by last name' do
-        let(:query) { 'bloggs' }
+        let(:query) { "Bloggs-O'Reilly" }
 
         it 'shows only the matching record that I am associated with' do
           within('#results') do
@@ -290,11 +302,39 @@ RSpec.describe 'Search' do
       end
 
       context 'when I search by combo' do
-        let(:query) { 'BLOGGS JOE 070620/123' }
+        let(:query) { "BLOGGS-O'REILLY JOE 070620/123" }
 
         it 'shows only the matching record that I am associated with' do
           within('#results') do
             expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
+        end
+      end
+
+      context 'when I search for unmatched parentheses' do
+        let(:query) { 'Joe)' }
+
+        it 'shows only the matching record that I am associated with' do
+          expect(page).to have_no_content 'Something went wrong trying to perform this search'
+
+          within('#results') do
+            expect(page).to have_content 'Submitted'
+            expect(page).to have_no_content 'Draft'
+            expect(page).to have_no_content 'Rejected'
+          end
+        end
+      end
+
+      context 'when I search for a query with ampersands' do
+        let(:query) { '&' }
+
+        it 'shows only the matching record that I am associated with' do
+          expect(page).to have_no_content 'Something went wrong trying to perform this search'
+
+          within('#results') do
+            expect(page).to have_no_content 'Submitted'
             expect(page).to have_no_content 'Draft'
             expect(page).to have_no_content 'Rejected'
           end
