@@ -1,6 +1,22 @@
 // A basic file size validator to block single file uploads over
 // a specified size.
 //
+const checkSvg =
+`<svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
+    <path d="M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z"></path>
+</svg>`
+
+const failSvg =
+`<svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
+  <path d="M13.6,15.4h-2.3v-4.5h2.3V15.4z M13.6,19.8h-2.3v-2.2h2.3V19.8z M0,23.2h25L12.5,2L0,23.2z"/>
+</svg>`
+
+const progress =
+`<td class="govuk-table__cell moj-multi-file-upload__progress" data-label="Upload Progress">
+<progress>working</progress>
+</td>`
+
+
 window.addEventListener("DOMContentLoaded", (event) => {
   const fileUploader = document.querySelector('.govuk-file-upload');
   const maxFileSize = fileUploader.dataset.maxSize;
@@ -9,29 +25,65 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const feedback = $(".single-file-upload__message");
   const saveButtons = document.querySelectorAll('button[type="submit"]');
 
-  if (saveButtons) {
-    for(var i = 0; i < saveButtons.length; i++) {
-      saveButtons[i].addEventListener('click', function (event) {
+  if(fileUploader){
+    //logic for file progress indicator
+    fileUploader.addEventListener('change', function(event) {
+      //change upload progress to indicator
+      let uploadProgressCell = document.querySelector('.moj-multi-file-upload__progress');
+      uploadProgressCell.innerHTML = progress;
+      //replace uploaded files text and change indicator to tick if successful
+      let filenameCell = document.querySelector('.moj-multi-file-upload__filename');
+      let uploadedFile = fileUploader.files[0];
+      if(uploadedFile){
+        console.log(uploadedFile);
+        filenameCell.textContent = uploadedFile.name;
+        uploadProgressCell.innerHTML = checkSvg;
+      }
+      else{
+        uploadProgressCell.innerHTML = failSvg;
+      }
+    });
 
-        if (fileUploader) {
-          feedback.html('');
-          removeInlineError(fileUploader);
-          const file = fileUploader.files[0]
-
-          if (file && file.size > maxFileSize) {
-            feedback.html(govukErrorSummary(fileUploader.id, errorMessage, errorHeading));
-            addInlineError(fileUploader, errorMessage)
-            errorSummary = document.querySelector('.govuk-error-summary');
-            errorSummary.scrollIntoView();
-            errorSummary.focus();
+    /*
+      handle checking file size, if exceeds limit,
+      refresh with error shown and move page to file upload section.
+    */
+    if (saveButtons) {
+      for(var i = 0; i < saveButtons.length; i++) {
+        saveButtons[i].addEventListener('click', function (event) {
+          if(!validateFileSize(fileUploader, maxFileSize, feedback)){
+            generateFileSizeError(fileUploader, errorMessage, errorHeading, feedback);
             event.preventDefault();
-            event.stopImmediatePropagation()
+            event.stopImmediatePropagation();
           }
-        }
-      })
+        })
+      }
     }
   }
 });
+
+function validateFileSize(fileUploader, maxFileSize, feedback){
+  if (fileUploader) {
+    feedback.html('');
+    removeInlineError(fileUploader);
+    const file = fileUploader.files[0];
+
+    if (file && file.size > maxFileSize) {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+}
+
+function generateFileSizeError(fileUploader, errorMessage, errorHeading, feedback) {
+  feedback.html(govukErrorSummary(fileUploader.id, errorMessage, errorHeading));
+  addInlineError(fileUploader, errorMessage)
+  errorSummary = document.querySelector('.govuk-error-summary');
+  errorSummary.scrollIntoView();
+  errorSummary.focus();
+}
 
 function addInlineError(element, message) {
   element.classList.add('govuk-file-upload--error');

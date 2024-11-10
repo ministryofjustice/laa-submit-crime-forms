@@ -97,6 +97,7 @@ en:
         uploaded_file_summary:
           uploaded_files: Uploaded files
           file_name: File name
+          upload_progress: Upload progress
 
       psychiatric_liaison:
         edit:

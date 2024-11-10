@@ -5,6 +5,7 @@
     <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header"><%= t('.file_name') %></th>
+      <th scope="col" class="govuk-table__header"><%= t('.upload_progress') %></th>
     </tr>
     </thead>
     <%# Uploaded file list   %>
@@ -12,6 +13,11 @@
       <tr class="govuk-table__row moj-multi-file-upload__row" id="primary_quote_document_details_row" >
         <td class="govuk-table__cell moj-multi-file-upload__filename">
           <span class="moj-multi-file-upload__filename"><%= document.file_name %></span>
+        </td>
+        <td class="govuk-table__cell moj-multi-file-upload__progress" data-label="Upload Progress">
+          <svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
+            <path d="M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z"></path>
+          </svg>
         </td>
       </tr>
     </tbody>
