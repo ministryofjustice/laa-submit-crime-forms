@@ -11,10 +11,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
       logic for file progress indicator
       and uploaded files list
     */
-      fileInput.addEventListener('change', function(event) {
-      if(fileInput.files.length > 0){
-        handleUploadList(fileInput);
-      }
+    fileInput.addEventListener('change', function(event) {
+        if(fileInput.files.length > 0){
+          handleUploadList(fileInput);
+        }
     });
 
     /*
@@ -24,10 +24,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
     if (saveButtons) {
       for(const button of saveButtons) {
         button.addEventListener('click', function (event) {
-          if(!validateFileSize(fileInput, maxFileSize, feedback)){
-            generateFileSizeError(fileInput, errorMessage, errorHeading, feedback);
-            event.preventDefault();
-            event.stopImmediatePropagation();
+          if(fileInput.files.length > 0){
+            if(!validateFileSize(fileInput, maxFileSize, feedback)){
+              generateFileSizeError(fileInput, errorMessage, errorHeading, feedback);
+              event.preventDefault();
+              event.stopImmediatePropagation();
+            }
           }
         })
       }
