@@ -28,7 +28,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
       and uploaded files list
     */
     fileUploader.addEventListener('change', function(event) {
-      handleUploadList(fileUploader);
+      if(fileUploader.length > 0){
+        handleUploadList(fileUploader);
+      }
     });
 
     /*
@@ -36,8 +38,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
       refresh with error shown and move page to file upload section.
     */
     if (saveButtons) {
-      for(var i = 0; i < saveButtons.length; i++) {
-        saveButtons[i].addEventListener('click', function (event) {
+      for(button of saveButtons) {
+        button.addEventListener('click', function (event) {
           if(!validateFileSize(fileUploader, maxFileSize, feedback)){
             generateFileSizeError(fileUploader, errorMessage, errorHeading, feedback);
             event.preventDefault();
@@ -71,12 +73,7 @@ function validateFileSize(fileUploader, maxFileSize, feedback){
     removeInlineError(fileUploader);
     const file = fileUploader.files[0];
 
-    if (file && file.size > maxFileSize) {
-      return false;
-    }
-    else{
-      return true;
-    }
+    return (file && file.size > maxFileSize)
   }
 }
 
