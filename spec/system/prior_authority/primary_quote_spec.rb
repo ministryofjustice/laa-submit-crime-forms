@@ -36,6 +36,21 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
       click_on 'Back'
       expect(page).to have_field 'Service required', with: 'Custom Forensics'
     end
+
+    it 'pre-populates selected file' do
+      click_on 'Save and continue'
+      click_on 'Back'
+      expect(page).to have_content 'test.png'
+    end
+
+    it 'updates selected file table' do
+      click_on 'Save and continue'
+      click_on 'Back'
+      page.attach_file(file_fixture('test_2.png')) do
+        page.find('.govuk-file-upload').click
+      end
+      expect(page.find('.moj-multi-file-upload__filename')).to have_content 'test_2.png'
+    end
   end
 
   it 'validates primary quote form fields' do
