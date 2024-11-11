@@ -356,7 +356,10 @@ jobs:
           command: snyk monitor --all-projects
       - run:
           name: Scan container image for vulnerabilities
-          command: snyk container test app --file=./Dockerfile --policy-path=.snyk --severity-threshold=high
+          command: snyk container test app --file=./Dockerfile --policy-path=.snyk --severity-threshold=high --json | bin/snyk-formatted /tmp/snyk.json
+      - store_artifacts:
+          path: /tmp/snyk.json
+          destination: snyk.json
       - run:
           name: Monitor container image for vulnerabilities
           command: snyk container monitor app

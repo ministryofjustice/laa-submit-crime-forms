@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+require 'json'
+
+# Save stdin to file and parse
+input = $stdin.read
+File.write(ARGV[0], input) unless ARGV.length != 1
+json = JSON.parse(input)
+
+# Process vulnerabilities from applications or root
+vulns = (json['applications'] || [json]).flat_map do |app|
+  next [] unless (app['uniqueCount']).positive?
+
+  app['vulnerabilities'].map do |v|
+    fix = v['upgradePath'][0] ? "Upgrade via #{v['upgradePath'][0]}" : 'Upgrade direct dependency'
+
+    <<~VULN
+
+      #{v['packageName']} [#{v['severity']}] #{v['title']} (CVSS: #{v['cvssScore']})
+
+      https://security.snyk.io/vuln/#{v['id']}
+      [ #{fix} to #{v['upgradePath'][1]} ]
+
+    VULN
+  end
+end
+
+puts vulns
+exit vulns.length
