@@ -11,7 +11,7 @@ MOJFrontend.MultiFileUpload.prototype.uploadFiles = async function(files) {
 
   const uploads = []
 
-  for(file of files) {
+  for(const file of files) {
     uploads.push(
       this.uploadFile(file).then(
         function(response) { console.log(response); }

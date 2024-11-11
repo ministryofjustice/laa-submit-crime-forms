@@ -38,7 +38,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
       refresh with error shown and move page to file upload section.
     */
     if (saveButtons) {
-      for(button of saveButtons) {
+      for(const button of saveButtons) {
         button.addEventListener('click', function (event) {
           if(!validateFileSize(fileUploader, maxFileSize, feedback)){
             generateFileSizeError(fileUploader, errorMessage, errorHeading, feedback);
