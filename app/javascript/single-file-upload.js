@@ -28,7 +28,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
       and uploaded files list
     */
     fileUploader.addEventListener('change', function(event) {
-      if(fileUploader.length > 0){
+      if(fileUploader.files.length > 0){
         handleUploadList(fileUploader);
       }
     });
@@ -72,8 +72,9 @@ function validateFileSize(fileUploader, maxFileSize, feedback){
     feedback.html('');
     removeInlineError(fileUploader);
     const file = fileUploader.files[0];
+    let validationPassed = file && (file.size <= maxFileSize)
 
-    return (file && file.size > maxFileSize)
+    return validationPassed;
   }
 }
 
