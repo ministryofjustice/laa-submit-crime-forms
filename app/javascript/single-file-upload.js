@@ -81,7 +81,7 @@ function validateFileSize(fileUploader, maxFileSize, feedback){
 function generateFileSizeError(fileUploader, errorMessage, errorHeading, feedback) {
   feedback.html(govukErrorSummary(fileUploader.id, errorMessage, errorHeading));
   addInlineError(fileUploader, errorMessage)
-  errorSummary = document.querySelector('.govuk-error-summary');
+  let errorSummary = document.querySelector('.govuk-error-summary');
   errorSummary.scrollIntoView();
   errorSummary.focus();
 }
