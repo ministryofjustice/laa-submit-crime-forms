@@ -23,22 +23,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const saveButtons = document.querySelectorAll('button[type="submit"]');
 
   if(fileUploader){
-    //logic for file progress indicator
+    /*
+      logic for file progress indicator
+      and uploaded files list
+    */
     fileUploader.addEventListener('change', function(event) {
-      //change upload progress to indicator
-      let uploadProgressCell = document.querySelector('.moj-multi-file-upload__progress');
-      uploadProgressCell.innerHTML = progress;
-      //replace uploaded files text and change indicator to tick if successful
-      let filenameCell = document.querySelector('.moj-multi-file-upload__filename');
-      let uploadedFile = fileUploader.files[0];
-      if(uploadedFile){
-        console.log(uploadedFile);
-        filenameCell.textContent = uploadedFile.name;
-        uploadProgressCell.innerHTML = checkSvg;
-      }
-      else{
-        uploadProgressCell.innerHTML = failSvg;
-      }
+      handleUploadList(fileUploader);
     });
 
     /*
@@ -58,6 +48,22 @@ window.addEventListener("DOMContentLoaded", (event) => {
     }
   }
 });
+
+function handleUploadList(fileUploader){
+  //change upload progress to indicator
+  let uploadProgressCell = document.querySelector('.moj-multi-file-upload__progress');
+  uploadProgressCell.innerHTML = progress;
+  //replace uploaded files text and change indicator to tick if successful
+  let filenameCell = document.querySelector('.moj-multi-file-upload__filename');
+  let uploadedFile = fileUploader.files[0];
+  if(uploadedFile){
+    filenameCell.textContent = uploadedFile.name;
+    uploadProgressCell.innerHTML = checkSvg;
+  }
+  else{
+    uploadProgressCell.innerHTML = failSvg;
+  }
+}
 
 function validateFileSize(fileUploader, maxFileSize, feedback){
   if (fileUploader) {
