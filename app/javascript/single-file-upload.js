@@ -1,8 +1,3 @@
-const checkSvg =
-`<svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
-    <path d="M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z"></path>
-</svg>`
-
 const failSvg =
 `<svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
   <path d="M13.6,15.4h-2.3v-4.5h2.3V15.4z M13.6,19.8h-2.3v-2.2h2.3V19.8z M0,23.2h25L12.5,2L0,23.2z"/>
@@ -55,12 +50,12 @@ function handleUploadList(fileUploader){
   //change upload progress to indicator
   let uploadProgressCell = document.querySelector('.moj-multi-file-upload__progress');
   uploadProgressCell.innerHTML = progress;
-  //replace uploaded files text and change indicator to tick if successful
+  //replace uploaded files text and change indicator to cross if unsuccessful
   let filenameCell = document.querySelector('.moj-multi-file-upload__filename');
   let uploadedFile = fileUploader.files[0];
   if(uploadedFile){
     filenameCell.textContent = uploadedFile.name;
-    uploadProgressCell.innerHTML = checkSvg;
+    uploadProgressCell.innerHTML = null;
   }
   else{
     uploadProgressCell.innerHTML = failSvg;

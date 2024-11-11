@@ -95,9 +95,8 @@ en:
             The maximum size for each file is %{size}.
             Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
         uploaded_file_summary:
-          uploaded_files: Uploaded files
+          selected_files: Selected files
           file_name: File name
-          upload_progress: Upload progress
 
       psychiatric_liaison:
         edit:
