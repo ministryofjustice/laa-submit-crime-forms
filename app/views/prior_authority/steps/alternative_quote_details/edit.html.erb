@@ -26,9 +26,7 @@
                                         error_heading: I18n.t('laa_multi_step_forms.errors.error_summary.heading'),
                                         size_error_message: I18n.t('shared.shared_upload_errors.attachment_too_large',
                                                                     size: FileUpload::FileUploader.human_readable_pa_max_file_size) } %>
-      <% if @form_object.document_already_uploaded? %>
-        <%= render "prior_authority/steps/primary_quote/uploaded_file_summary", document: @form_object.document %>
-      <% end %>
+      <%= render "prior_authority/steps/primary_quote/uploaded_file_summary", document_name: @form_object.document.file_name %>
 
       <h2 class="govuk-heading-m"><%= t('.cost', service_name: @form_object.service_name) %></h2>
       <%= render 'prior_authority/steps/service_cost/cost_fields', form: form %>

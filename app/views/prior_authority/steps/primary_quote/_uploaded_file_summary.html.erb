@@ -12,9 +12,9 @@
     <tbody class="govuk-table__body moj-multi-file-upload__list">
       <tr class="govuk-table__row moj-multi-file-upload__row" id="primary_quote_document_details_row" >
         <td class="govuk-table__cell moj-multi-file-upload__filename">
-          <span class="moj-multi-file-upload__filename"><%= document.file_name %></span>
+          <span class="moj-multi-file-upload__filename"><%= document_name || ' ' %></span>
         </td>
-        <td class="govuk-table__cell moj-multi-file-upload__progress" data-label="Upload Progress"></td>
+        <td class="govuk-table__cell moj-multi-file-upload__progress"></td>
       </tr>
     </tbody>
   </table>
