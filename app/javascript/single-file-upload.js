@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const maxFileSize = fileInput.dataset.maxSize;
   const errorHeading = fileInput.dataset.errorHeading;
   const errorMessage = fileInput.dataset.sizeErrorMessage;
-  const feedback = $(".single-file-upload__message");
+  const feedback = document.querySelector(".single-file-upload__message");
   const saveButtons = document.querySelectorAll('button[type="submit"]');
 
   if(fileInput){
@@ -41,7 +41,7 @@ function handleUploadList(fileInput){
   //replace selected file text
   let filenameCell = document.querySelector('.moj-multi-file-upload__filename');
   let uploadedFile = fileInput.files[0];
-  if(uploadedFile){
+  if(uploadedFile && filenameCell){
     filenameCell.textContent = uploadedFile.name;
   }
 }
@@ -61,8 +61,10 @@ function generateFileSizeError(fileInput, errorMessage, errorHeading, feedback) 
   feedback.html(govukErrorSummary(fileInput.id, errorMessage, errorHeading));
   addInlineError(fileInput, errorMessage)
   let errorSummary = document.querySelector('.govuk-error-summary');
-  errorSummary.scrollIntoView();
-  errorSummary.focus();
+  if(errorSummary){
+    errorSummary.scrollIntoView({ behavior: 'smooth' });
+    errorSummary.focus();
+  }
 }
 
 function addInlineError(element, message) {
