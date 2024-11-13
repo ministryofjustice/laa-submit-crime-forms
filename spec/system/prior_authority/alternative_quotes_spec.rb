@@ -34,6 +34,11 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         click_on 'Save and continue'
       end
 
+      it 'shows the empty selected file table' do
+        expect(page.find('.moj-multi-file__uploaded-files')).to have_content 'Selected file'
+        expect(page.find('.moj-multi-file__uploaded-files')).to have_content 'File name'
+      end
+
       it 'allows me to add an alternative quote' do
         fill_in 'First name', with: 'Mrs'
         fill_in 'Last name', with: 'Expert'
