@@ -5,6 +5,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const errorMessage = fileInput.dataset.sizeErrorMessage;
   const feedback = document.querySelector(".single-file-upload__message");
   const saveButtons = document.querySelectorAll('button[type="submit"]');
+  console.log(feedback);
 
   if(fileInput){
     /*
@@ -48,7 +49,7 @@ function handleUploadList(fileInput){
 
 function validateFileSize(fileInput, maxFileSize, feedback){
   if (fileInput) {
-    feedback.html('');
+    feedback.innerHTML = null;
     removeInlineError(fileInput);
     const file = fileInput.files[0];
     let validationPassed = file && (file.size <= maxFileSize)
@@ -58,7 +59,7 @@ function validateFileSize(fileInput, maxFileSize, feedback){
 }
 
 function generateFileSizeError(fileInput, errorMessage, errorHeading, feedback) {
-  feedback.html(govukErrorSummary(fileInput.id, errorMessage, errorHeading));
+  feedback.innerHTML = govukErrorSummary(fileInput.id, errorMessage, errorHeading);
   addInlineError(fileInput, errorMessage)
   let errorSummary = document.querySelector('.govuk-error-summary');
   if(errorSummary){
