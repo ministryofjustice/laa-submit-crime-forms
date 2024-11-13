@@ -145,6 +145,7 @@ RSpec.describe 'Prior authority applications - alternative quote', :javascript, 
           # Charged per hour, not per item
           fill_in 'Service required', with: 'Animal behaviourist'
           click_on 'Save and continue'
+          sleep 5
           expect(page).to have_content 'Service cost'
           fill_in_service_cost(cost_type: :per_hour)
 
