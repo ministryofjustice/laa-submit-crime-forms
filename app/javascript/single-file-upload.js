@@ -1,11 +1,14 @@
+/*
+  Handle size validation and selected files component for
+  single file uploads. Only designed to handle one file input
+  per page.
+*/
 window.addEventListener("DOMContentLoaded", (event) => {
   const fileInput = document.querySelector('.govuk-file-upload');
   const maxFileSize = fileInput.dataset.maxSize;
   const errorHeading = fileInput.dataset.errorHeading;
   const errorMessage = fileInput.dataset.sizeErrorMessage;
   const feedback = document.querySelector(".single-file-upload__message");
-  const saveButtons = document.querySelectorAll('button[type="submit"]');
-  console.log(feedback);
 
   if(fileInput){
     /*
@@ -22,19 +25,17 @@ window.addEventListener("DOMContentLoaded", (event) => {
       handle checking file size, if exceeds limit,
       refresh with error shown and move page to file upload section.
     */
-    if (saveButtons) {
-      for(const button of saveButtons) {
-        button.addEventListener('click', function (event) {
-          if(fileInput.files.length > 0){
-            if(!validateFileSize(fileInput, maxFileSize, feedback)){
-              generateFileSizeError(fileInput, errorMessage, errorHeading, feedback);
-              event.preventDefault();
-              event.stopImmediatePropagation();
-            }
+    document.querySelectorAll('button[type="submit"]')?.forEach(function(button){
+      button.addEventListener('click', function (event) {
+        if(fileInput.files.length > 0){
+          if(!validateFileSize(fileInput, maxFileSize, feedback)){
+            generateFileSizeError(fileInput, errorMessage, errorHeading, feedback);
+            event.preventDefault();
+            event.stopImmediatePropagation();
           }
-        })
-      }
-    }
+        }
+      })
+    });
   }
 });
 
