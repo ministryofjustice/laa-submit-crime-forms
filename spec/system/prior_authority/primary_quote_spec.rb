@@ -16,8 +16,8 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     end
 
     it 'shows the empty selected file table' do
-      expect(page.find '.moj-multi-file__uploaded-files').to have_content 'Selected file'
-      expect(page.find '.moj-multi-file__uploaded-files').to have_content 'File name'
+      expect(page.find('.moj-multi-file__uploaded-files')).to have_content 'Selected file'
+      expect(page.find('.moj-multi-file__uploaded-files')).to have_content 'File name'
     end
   end
 

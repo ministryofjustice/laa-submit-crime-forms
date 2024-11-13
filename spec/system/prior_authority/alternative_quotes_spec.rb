@@ -35,14 +35,14 @@ RSpec.describe 'Prior authority applications - alternative quote', :javascript, 
       end
 
       it 'shows the empty selected file table' do
-        expect(page.find '.moj-multi-file__uploaded-files').to have_content 'Selected file'
-        expect(page.find '.moj-multi-file__uploaded-files').to have_content 'File name'
+        expect(page.find('.moj-multi-file__uploaded-files')).to have_content 'Selected file'
+        expect(page.find('.moj-multi-file__uploaded-files')).to have_content 'File name'
       end
 
       it 'shows the selected file' do
         attach_file(file_fixture('test.png'))
 
-        expect(page.find '.moj-multi-file__uploaded-files').to have_content 'test.png'
+        expect(page.find('.moj-multi-file__uploaded-files')).to have_content 'test.png'
       end
 
       it 'allows me to add an alternative quote' do
