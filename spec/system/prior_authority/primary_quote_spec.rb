@@ -9,6 +9,18 @@ RSpec.describe 'Prior authority applications - add primary quote', :javascript, 
     expect(page).to have_content 'Primary quote Cannot start yet'
   end
 
+  context 'when I have not filled the primary quote form in yet' do
+    before do
+      fill_in_until_step(:primary_quote)
+      click_on 'Primary quote'
+    end
+
+    it 'shows the empty selected file table' do
+      expect(page.find '.moj-multi-file__uploaded-files').to have_content 'Selected file'
+      expect(page.find '.moj-multi-file__uploaded-files').to have_content 'File name'
+    end
+  end
+
   context 'when I fill in a primary quote' do
     before do
       fill_in_until_step(:primary_quote)
