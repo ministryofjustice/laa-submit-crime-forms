@@ -4,7 +4,8 @@ en:
     inactive_offices:
       index:
         title: Your office code is inactive
-        message: Contact your firm's LAA account administrator to get a new office code
+        message_html: |
+          To use this service you must <a class="govuk-link" rel="external" href="https://portal.legalservices.gov.uk/"> sign out of the LAA Online Portal</a> and sign in with a different LAA account, or contact your firm’s LAA account administrator to get access to a different firm office account number.
     generic_login_failed: We could not log you in. This may be because you do not have permission to access this service.
   shared:
     shared_date_errors: &shared_date_errors

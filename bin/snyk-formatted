@@ -1,6 +1,17 @@
 #!/usr/bin/env ruby
 require 'json'
 
+# Simple color helper module
+module Colors
+  class << self
+    def red(str); "\e[31m#{str}\e[0m"; end
+    def yellow(str); "\e[33m#{str}\e[0m"; end
+    def green(str); "\e[32m#{str}\e[0m"; end
+    def cyan(str); "\e[36m#{str}\e[0m"; end
+    def bold(str); "\e[1m#{str}\e[0m"; end
+  end
+end
+
 # Save stdin to file and parse
 input = $stdin.read
 File.write(ARGV[0], input) unless ARGV.length != 1
@@ -9,16 +20,27 @@ json = JSON.parse(input)
 # Process vulnerabilities from applications or root
 vulns = (json['applications'] || [json]).flat_map do |app|
   next [] unless (app['uniqueCount']).positive?
-
   app['vulnerabilities'].map do |v|
-    fix = v['upgradePath'][0] ? "Upgrade via #{v['upgradePath'][0]}" : 'Upgrade direct dependency'
+    if v['upgradePath'].empty? || v['upgradePath'].all?(&:nil?)
+      fix = Colors.red('NO UPGRADE PATH AVAILABLE - Manual intervention required')
+    else
+      fix = v['upgradePath'][0] ? "Upgrade via #{Colors.cyan(v['upgradePath'][0])}" : 'Upgrade direct dependency'
+      fix += " to #{Colors.green(v['upgradePath'][1])}" if v['upgradePath'][1]
+    end
+
+    severity = case v['severity']&.downcase
+      when 'high' then Colors.red(v['severity'])
+      when 'medium' then Colors.yellow(v['severity'])
+      when 'low' then Colors.green(v['severity'])
+      else Colors.cyan(v['severity'])
+    end
 
     <<~VULN
 
-      #{v['packageName']} [#{v['severity']}] #{v['title']} (CVSS: #{v['cvssScore']})
+      #{Colors.bold(v['packageName'])} [#{severity}] #{v['title']} (CVSS: #{v['cvssScore']})
 
-      https://security.snyk.io/vuln/#{v['id']}
-      [ #{fix} to #{v['upgradePath'][1]} ]
+      #{Colors.cyan("https://security.snyk.io/vuln/#{v['id']}")}
+      [ #{fix} ]
 
     VULN
   end
