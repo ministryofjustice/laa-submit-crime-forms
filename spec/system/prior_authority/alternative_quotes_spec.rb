@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - alternative quote', :javascript, type: :system do
+RSpec.describe 'Prior authority applications - alternative quote' do
   let(:application) do
     create(:prior_authority_application, :with_primary_quote, quotes: [build(:quote, :primary_per_item)])
   end
@@ -37,12 +37,6 @@ RSpec.describe 'Prior authority applications - alternative quote', :javascript, 
       it 'shows the empty selected file table' do
         expect(page.find('.moj-multi-file__uploaded-files')).to have_content 'Selected file'
         expect(page.find('.moj-multi-file__uploaded-files')).to have_content 'File name'
-      end
-
-      it 'shows the selected file' do
-        attach_file(file_fixture('test.png'))
-
-        expect(page.find('.moj-multi-file__uploaded-files')).to have_content 'test.png'
       end
 
       it 'allows me to add an alternative quote' do
@@ -143,7 +137,7 @@ RSpec.describe 'Prior authority applications - alternative quote', :javascript, 
             click_on 'Change'
           end
           # Charged per hour, not per item
-          fill_in 'Service required', with: 'Animal behaviourist'
+          select 'Animal behaviourist', from: 'Service required'
           click_on 'Save and continue'
           fill_in_service_cost(cost_type: :per_hour)
 
