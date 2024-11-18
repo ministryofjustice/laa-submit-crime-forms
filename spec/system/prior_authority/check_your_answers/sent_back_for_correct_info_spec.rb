@@ -39,7 +39,10 @@ RSpec.describe 'Prior authority applications, sent back for info correction - ch
 
   context 'Application has been updated' do
     before do
-      allow(PriorAuthority::ChangeLister).to receive(:call).and_return([true])
+      allow(PriorAuthority::ChangeLister).to receive(:call).and_return(['client_details'])
+      stub_request(:put, "https://app-store.example.com/v1/application/#{application.id}").to_return(
+        status: 201, body: { application_state: 'provider_updated' }.to_json
+      )
     end
 
     it 'shows the "incorrect information" details from the caseworker' do

@@ -1,11 +1,11 @@
 class AppStoreUpdateProcessor
   class << self
-    def call(record)
+    def call(record, local_record = nil)
       case record['application_type']
       when 'crm7'
-        update_claim(record)
+        update_claim(record, local_record)
       when 'crm4'
-        update_prior_authority_application(record)
+        update_prior_authority_application(record, local_record)
       end
     end
 
@@ -16,8 +16,8 @@ class AppStoreUpdateProcessor
       }
     end
 
-    def update_claim(record)
-      claim = Claim.find_by(id: record['application_id'])
+    def update_claim(record, local_record)
+      claim = local_record || Claim.find_by(id: record['application_id'])
 
       return unless claim
 
@@ -25,8 +25,8 @@ class AppStoreUpdateProcessor
       Nsm::AssessmentSyncer.call(claim, record:)
     end
 
-    def update_prior_authority_application(record)
-      application = PriorAuthorityApplication.find_by(id: record['application_id'])
+    def update_prior_authority_application(record, local_record)
+      application = local_record || PriorAuthorityApplication.find_by(id: record['application_id'])
       return unless application
 
       application.update!(convert_params(record))

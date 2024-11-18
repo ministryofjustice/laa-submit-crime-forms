@@ -10,6 +10,11 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
       confirm_travel_expenditure:,
     }
   end
+  let(:job) { instance_double(SubmitToAppStore, perform: true) }
+
+  before do
+    allow(SubmitToAppStore).to receive(:new).and_return(job)
+  end
 
   describe '#validate' do
     let(:application) { instance_double(PriorAuthorityApplication, sent_back?: false) }
@@ -75,8 +80,6 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     let(:confirm_excluding_vat) { '' }
     let(:confirm_travel_expenditure) { '' }
 
-    before { allow(SubmitToAppStore).to receive(:perform_later).and_return(nil) }
-
     it 'does NOT validate the form' do
       save
       expect(form.errors).to be_empty
@@ -88,7 +91,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
 
     it 'does NOT submit the application to the app store' do
       save
-      expect(SubmitToAppStore).not_to have_received(:perform_later)
+      expect(job).not_to have_received(:perform)
     end
   end
 
@@ -96,8 +99,6 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
     subject(:save) { form.save }
 
     let(:application) { create(:prior_authority_application, state: 'draft') }
-
-    before { allow(SubmitToAppStore).to receive(:perform_later).and_return(nil) }
 
     context 'with accepted confirmations' do
       let(:confirm_excluding_vat) { 'true' }
@@ -109,7 +110,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
 
       it 'submits the application to the appstore' do
         save
-        expect(SubmitToAppStore).to have_received(:perform_later).with(submission: application)
+        expect(job).to have_received(:perform).with(submission: application)
       end
 
       context 'when update fails' do
@@ -120,7 +121,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
         it 'does NOT submit the application to the app store' do
           save
         rescue StandardError
-          expect(SubmitToAppStore).not_to have_received(:perform_later)
+          expect(job).not_to have_received(:perform)
         end
       end
     end
@@ -140,7 +141,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
 
       it 'does NOT submit the application to the app store' do
         save
-        expect(SubmitToAppStore).not_to have_received(:perform_later)
+        expect(job).not_to have_received(:perform)
       end
     end
 
@@ -159,7 +160,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
 
       it 'does NOT submit the application to the app store' do
         save
-        expect(SubmitToAppStore).not_to have_received(:perform_later)
+        expect(job).not_to have_received(:perform)
       end
     end
 
@@ -170,7 +171,7 @@ RSpec.describe PriorAuthority::Steps::CheckAnswersForm do
 
       it 'does not do a submission' do
         expect { save }.not_to change(application, :state)
-        expect(SubmitToAppStore).not_to have_received(:perform_later)
+        expect(job).not_to have_received(:perform)
       end
     end
   end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SubmitToAppStore do
   subject { described_class.new }
 
-  let(:submission) { instance_double(Claim, update!: true) }
+  let(:submission) { instance_double(Claim, update!: true, state: 'submitted') }
   let(:payload) { { some: 'message' } }
 
   before do
@@ -38,7 +38,8 @@ RSpec.describe SubmitToAppStore do
   end
 
   describe '#perform' do
-    let(:http_client) { instance_double(AppStoreClient, post: true) }
+    let(:new_state) { submission.state }
+    let(:http_client) { instance_double(AppStoreClient, post: { 'application_state' => new_state }) }
 
     before do
       allow(AppStoreClient).to receive(:new)
@@ -71,6 +72,20 @@ RSpec.describe SubmitToAppStore do
     it 'updates the db record' do
       expect(submission).to receive(:update!).with(submit_to_app_store_completed: true)
       subject.perform(submission:)
+    end
+
+    it 'does not update the local record with the app store response by default' do
+      expect(AppStoreUpdateProcessor).not_to receive(:call)
+      subject.perform(submission:)
+    end
+
+    context 'when submission is auto-granted' do
+      let(:new_state) { 'auto_grant' }
+
+      it 'updates the local record with the app store response' do
+        expect(AppStoreUpdateProcessor).to receive(:call)
+        subject.perform(submission:)
+      end
     end
   end
 

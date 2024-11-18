@@ -43,6 +43,12 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     end
 
     context 'when APP_STORE_URL is not present' do
+      around do |example|
+        stored = ENV.delete('APP_STORE_URL')
+        example.run
+        ENV['APP_STORE_URL'] = stored
+      end
+
       it 'get the claims to default localhost url' do
         expect(described_class).to receive(:get)
           .with('http://localhost:8000/v1/applications?since=1&count=2',
@@ -72,8 +78,9 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
   describe '#put' do
     let(:application_id) { SecureRandom.uuid }
     let(:message) { { application_id: } }
-    let(:response) { double(:response, code:) }
+    let(:response) { double(:response, code:, body:) }
     let(:code) { 201 }
+    let(:body) { { foo: :bar }.to_json }
     let(:username) { nil }
 
     before do
@@ -88,7 +95,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
                                      .and_return('http://some.url')
       end
 
-      it 'posts the message to the specified URL' do
+      it 'PUTs the message to the specified URL' do
         expect(described_class).to receive(:put)
           .with("http://some.url/v1/application/#{application_id}",
                 body: message.to_json,
@@ -113,20 +120,9 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       end
     end
 
-    context 'when APP_STORE_URL is not present' do
-      it 'posts the message to default localhost url' do
-        expect(described_class).to receive(:put)
-          .with("http://localhost:8000/v1/application/#{application_id}",
-                body: message.to_json,
-                headers: { authorization: 'Bearer test-bearer-token' })
-
-        subject.put(message)
-      end
-    end
-
     context 'when response code is 201 - created' do
-      it 'returns a created status' do
-        expect(subject.put(message)).to eq(:success)
+      it 'returns the response bodyu' do
+        expect(subject.put(message)).to eq('foo' => 'bar')
       end
     end
 
@@ -143,8 +139,9 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
 
   describe '#post' do
     let(:message) { { application_id: SecureRandom.uuid } }
-    let(:response) { double(:response, code:) }
+    let(:response) { double(:response, code:, body:) }
     let(:code) { 201 }
+    let(:body) { { foo: :bar }.to_json }
     let(:username) { nil }
 
     context 'when stubbing HTTParty' do
@@ -184,20 +181,9 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
         end
       end
 
-      context 'when APP_STORE_URL is not present' do
-        it 'posts the message to default localhost url' do
-          expect(described_class).to receive(:post)
-            .with('http://localhost:8000/v1/application/',
-                  body: message.to_json,
-                  headers: { authorization: 'Bearer test-bearer-token' })
-
-          subject.post(message)
-        end
-      end
-
       context 'when response code is 201 - created' do
-        it 'returns a created status' do
-          expect(subject.post(message)).to eq(:success)
+        it 'returns the response body' do
+          expect(subject.post(message)).to eq('foo' => 'bar')
         end
       end
 
@@ -237,7 +223,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
               'Content-Type' => 'application/json',
               'X-Client-Type' => 'provider'
             }
-          ).to_return(status: 200, body: '', headers: {})
+          ).to_return(status: 200, body: '{"foo":"bar"}', headers: {})
           subject.post(message)
 
           expect(http_stub).to have_been_requested
@@ -256,7 +242,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     let(:response) { { 'foo' => 'bar' } }
 
     it 'gets the the requested item' do
-      http_stub = stub_request(:get, "http://localhost:8000/v1/application/#{id}").with(
+      http_stub = stub_request(:get, "https://app-store.example.com/v1/application/#{id}").with(
         headers: {
           'Content-Type' => 'application/json',
           'X-Client-Type' => 'provider'
