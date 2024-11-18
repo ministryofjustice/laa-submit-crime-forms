@@ -7,7 +7,7 @@ class AppStoreClient
 
     case response.code
     when 200..204
-      JSON.parse(response.body)
+      response.body.present? ? JSON.parse(response.body) : :success
     when 409
       raise "Application ID already exists in AppStore for '#{message[:application_id]}'"
     else

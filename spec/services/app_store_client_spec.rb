@@ -185,6 +185,14 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
         it 'returns the response body' do
           expect(subject.post(message)).to eq('foo' => 'bar')
         end
+
+        context 'when there is no response body' do
+          let(:body) { nil }
+
+          it 'returns a success indicator' do
+            expect(subject.post(message)).to eq(:success)
+          end
+        end
       end
 
       context 'when response code is 409 - conflict' do
