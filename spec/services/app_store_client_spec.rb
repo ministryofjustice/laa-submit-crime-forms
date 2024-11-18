@@ -121,7 +121,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     end
 
     context 'when response code is 201 - created' do
-      it 'returns the response bodyu' do
+      it 'returns the response body' do
         expect(subject.put(message)).to eq('foo' => 'bar')
       end
     end
