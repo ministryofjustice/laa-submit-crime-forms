@@ -13,47 +13,54 @@ RSpec.describe 'User can fill in solicitor declaration', type: :system do
   let(:work_item) { build(:work_item, :waiting) }
 
   before do
-    allow(SubmitToAppStore).to receive(:perform_later)
     visit provider_saml_omniauth_callback_path
   end
 
-  it 'can do green path' do
-    visit edit_nsm_steps_solicitor_declaration_path(claim.id)
+  context 'when submission succeeds' do
+    let(:job) { instance_double(SubmitToAppStore, perform: true) }
 
-    fill_in 'Full name',
-            with: 'John Doe'
-    click_on 'Save and submit'
+    before do
+      allow(SubmitToAppStore).to receive(:new).and_return(job)
+    end
 
-    expect(claim.reload).to have_attributes(
-      signatory_name: 'John Doe',
-      state: 'submitted'
-    )
+    it 'can do green path' do
+      visit edit_nsm_steps_solicitor_declaration_path(claim.id)
 
-    expect(SubmitToAppStore).to have_received(:perform_later)
-  end
+      fill_in 'Full name',
+              with: 'John Doe'
+      click_on 'Save and submit'
 
-  it 'persists work item positions' do
-    visit edit_nsm_steps_solicitor_declaration_path(claim.id)
+      expect(claim.reload).to have_attributes(
+        signatory_name: 'John Doe',
+        state: 'submitted'
+      )
 
-    fill_in 'Full name',
-            with: 'John Doe'
+      expect(job).to have_received(:perform)
+    end
 
-    expect { click_on 'Save and submit' }
-      .to change { claim.work_items.where.not(position: nil).count }
-      .from(0)
-      .to(1)
-  end
+    it 'persists work item positions' do
+      visit edit_nsm_steps_solicitor_declaration_path(claim.id)
 
-  it 'persists disbursement positions' do
-    visit edit_nsm_steps_solicitor_declaration_path(claim.id)
+      fill_in 'Full name',
+              with: 'John Doe'
 
-    fill_in 'Full name',
-            with: 'John Doe'
+      expect { click_on 'Save and submit' }
+        .to change { claim.work_items.where.not(position: nil).count }
+        .from(0)
+        .to(1)
+    end
 
-    expect { click_on 'Save and submit' }
-      .to change { claim.disbursements.where.not(position: nil).count }
-      .from(0)
-      .to(1)
+    it 'persists disbursement positions' do
+      visit edit_nsm_steps_solicitor_declaration_path(claim.id)
+
+      fill_in 'Full name',
+              with: 'John Doe'
+
+      expect { click_on 'Save and submit' }
+        .to change { claim.disbursements.where.not(position: nil).count }
+        .from(0)
+        .to(1)
+    end
   end
 
   context 'when claim is not complete at the point of submission' do
@@ -64,6 +71,24 @@ RSpec.describe 'User can fill in solicitor declaration', type: :system do
       click_on 'Save and submit'
       expect(claim.reload).to be_draft
       expect(page).to have_current_path nsm_steps_start_page_path(claim.id)
+    end
+  end
+
+  context 'when the app store fails', :stub_oauth_token do
+    before do
+      stub_request(:post, 'https://app-store.example.com/v1/application/').to_return(status: 500)
+    end
+
+    it 'errors out without updating state' do
+      visit edit_nsm_steps_solicitor_declaration_path(claim.id)
+
+      fill_in 'Full name',
+              with: 'John Doe'
+      expect { click_on 'Save and submit' }.to raise_error "Unexpected response from AppStore - status 500 for '#{claim.id}'"
+
+      expect(claim.reload).to have_attributes(
+        state: 'draft'
+      )
     end
   end
 end

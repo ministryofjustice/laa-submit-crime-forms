@@ -14,8 +14,9 @@ class SubmitToAppStore < ApplicationJob
     # means waiting until the previous lock is released, at which point any
     # modifications made as part of that transaction will have been committed
     submission.with_lock do
-      submit(submission)
+      new_data = submit(submission)
       notify(submission)
+      update_records(new_data, submission)
       submission.update!(submit_to_app_store_completed: true)
     end
   end
@@ -29,5 +30,11 @@ class SubmitToAppStore < ApplicationJob
 
   def notify(submission)
     SendNotificationEmail.perform_later(submission) if ENV.fetch('SEND_EMAILS', 'false') == 'true'
+  end
+
+  def update_records(new_data, submission)
+    return if new_data['application_state'] == submission.state
+
+    AppStoreUpdateProcessor.call(new_data, submission)
   end
 end

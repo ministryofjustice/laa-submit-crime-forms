@@ -13,8 +13,11 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
   let(:application) { create(:claim, :complete, state: 'draft') }
 
   describe '#save the form' do
+    let(:job) { instance_double(SubmitToAppStore) }
+
     before do
-      allow(SubmitToAppStore).to receive(:perform_later)
+      allow(SubmitToAppStore).to receive(:new).and_return(job)
+      allow(job).to receive(:perform)
       allow(application).to receive(:update!).and_return(true)
     end
 
@@ -30,7 +33,7 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
       it 'notifies the app store' do
         form.save
 
-        expect(SubmitToAppStore).to have_received(:perform_later).with(submission: application)
+        expect(job).to have_received(:perform).with(submission: application)
       end
 
       it 'updates submission to correct state' do
@@ -45,14 +48,13 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
       let(:application) { create(:claim, :complete, :with_further_information_supplied, state: 'sent_back') }
 
       before do
-        allow(SubmitToAppStore).to receive(:perform_later)
         allow(application.pending_further_information).to receive(:update!).and_return(true)
       end
 
       it 'notifies the app store' do
         form.save
 
-        expect(SubmitToAppStore).to have_received(:perform_later).with(submission: application)
+        expect(job).to have_received(:perform).with(submission: application)
       end
 
       it 'updates submission to correct state' do
@@ -67,7 +69,6 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
       let(:application) { create(:claim, :complete, state: 'submitted') }
 
       before do
-        allow(SubmitToAppStore).to receive(:perform_later)
         allow(application).to receive(:update!).and_return(true)
       end
 

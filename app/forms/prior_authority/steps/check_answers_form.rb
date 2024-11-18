@@ -20,7 +20,7 @@ module PriorAuthority
 
         application.update!(state: new_state)
         update_incorrect_information if application.correction_needed?
-        SubmitToAppStore.perform_later(submission: application)
+        SubmitToAppStore.new.perform(submission: application)
 
         true
       end

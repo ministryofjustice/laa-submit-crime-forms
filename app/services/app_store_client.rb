@@ -7,7 +7,7 @@ class AppStoreClient
 
     case response.code
     when 200..204
-      :success
+      response.body.present? ? JSON.parse(response.body) : :success
     when 409
       raise "Application ID already exists in AppStore for '#{message[:application_id]}'"
     else
@@ -20,7 +20,7 @@ class AppStoreClient
 
     case response.code
     when 201
-      :success
+      JSON.parse(response.body)
     else
       raise "Unexpected response from AppStore - status #{response.code} for '#{message[:application_id]}'"
     end

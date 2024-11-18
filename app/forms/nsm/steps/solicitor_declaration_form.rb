@@ -5,8 +5,10 @@ module Nsm
       validates :signatory_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
 
       def persist!
-        update_application
-        SubmitToAppStore.perform_later(submission: application)
+        Claim.transaction do
+          update_application
+          SubmitToAppStore.new.perform(submission: application)
+        end
         true
       end
 
@@ -21,21 +23,19 @@ module Nsm
       end
 
       def update_application
-        Claim.transaction do
-          application.state = new_state
-          if application.submitted?
-            application.update_work_item_positions!
-            application.update_disbursement_positions!
-            application.update!(attributes)
-          elsif application.provider_updated?
-            application.pending_further_information.update!(attributes)
-          # :nocov:
-          else
-            false
-          end
-          # :nocov:
-          application.save!
+        application.state = new_state
+        if application.submitted?
+          application.update_work_item_positions!
+          application.update_disbursement_positions!
+          application.update!(attributes)
+        elsif application.provider_updated?
+          application.pending_further_information.update!(attributes)
+        # :nocov:
+        else
+          false
         end
+        # :nocov:
+        application.save!
       end
     end
   end
