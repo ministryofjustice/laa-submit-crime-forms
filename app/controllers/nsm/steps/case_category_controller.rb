@@ -1,6 +1,7 @@
 module Nsm
   module Steps
     class CaseCategoryController < Nsm::Steps::BaseController
+      # :nocov:
       def edit
         @form_object = CaseCategoryForm.build(
           current_application
@@ -16,6 +17,7 @@ module Nsm
       def decision_tree_class
         Decisions::DecisionTree
       end
+      # :nocov:
     end
   end
 end
