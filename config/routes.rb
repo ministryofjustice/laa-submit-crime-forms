@@ -87,6 +87,7 @@ Rails.application.routes.draw do
         edit_step :contact_details
         edit_step :office_code
         edit_step :case_details
+        edit_step :case_category
         edit_step :case_disposal
         edit_step :hearing_details
         crud_step :defendant_details, param: :defendant_id, except: [:destroy]
