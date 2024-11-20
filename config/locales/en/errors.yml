@@ -552,6 +552,10 @@ en:
           attributes:
             information_supplied:
               blank: Enter the requested information
+        nsm/steps/youth_court_claim_additional_fee_form:
+          attributes:
+            youth_court_fee_claimed:
+              blank: Select the yes if you wish to claim the youth court addition fee
         search_form:
           attributes:
             base:
