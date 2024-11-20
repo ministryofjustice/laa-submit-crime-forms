@@ -1,7 +1,7 @@
 module Nsm
   module Steps
+    # :nocov:
     class YouthCourtClaimAdditionalFeeController < Nsm::Steps::BaseController
-      # nocov:
       def edit
         @form_object = YouthCourtClaimAdditionalFeeForm.build(
           current_application
@@ -11,7 +11,6 @@ module Nsm
       def update
         # update_and_advance(YouthCourtClaimAdditionalFeeForm, as: :youth_court_claim_additional_fee)
       end
-      # :nocov:
 
       private
 
@@ -23,5 +22,6 @@ module Nsm
         [:youth_court_fee_claimed]
       end
     end
+    # :nocov:
   end
 end
