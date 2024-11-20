@@ -347,6 +347,8 @@ en:
           attributes:
             main_offence:
               blank: "Enter the name of the offence"
+            main_offence_type:
+              blank: "Select the offence type"
             main_offence_date:
               blank: Enter the date of the main offence
               invalid: The date of the main offence must be a real date

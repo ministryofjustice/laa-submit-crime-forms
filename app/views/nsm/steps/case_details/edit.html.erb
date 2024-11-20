@@ -8,6 +8,14 @@
     <%= step_form @form_object do |f| %>
       <%= suggestion_select f, :main_offence, MainOffence.all, :name, :name, 'offence-autocomplete', width: 20,
                               options: { include_blank: true }, data: { autoselect: false }, label: { size: 's' } %>
+
+      <%= f.govuk_radio_buttons_fieldset :main_offence_type, legend: { size: 's', class: 'govuk-!-margin-bottom-6' } do %>
+        <% MainOffenceType.values.each_with_index do |main_offence_type, index| %>
+          <span id="<%= main_offence_type %>"></span>
+          <%= f.govuk_radio_button :main_offence_type, main_offence_type.to_s, link_errors: index.zero? %>
+        <% end %>
+      <% end %>
+
       <%= f.govuk_fully_validatable_date_field :main_offence_date, maxlength_enabled: true, legend: { size: 's' } %>
 
       <% @form_object.boolean_fields.each do |field| %>

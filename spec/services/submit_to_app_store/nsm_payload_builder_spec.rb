@@ -109,6 +109,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
               { 'count' => 3, 'pricing' => an_instance_of(Float), 'type' => 'calls', 'uplift' => nil }
             ],
             'main_offence' => claim.main_offence,
+            'main_offence_type' => claim.main_offence_type,
             'main_offence_date' => /\A\d{4}-\d{2}-\d{2}\z/,
             'matter_type' => '1',
             'number_of_hearing' => 1,

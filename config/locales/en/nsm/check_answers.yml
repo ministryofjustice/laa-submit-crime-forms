@@ -40,6 +40,7 @@ en:
             case_details:
               main_offence: Main offence name
               main_offence_date: Offence date
+              main_offence_type: Main offence type
               assigned_counsel: Assigned counsel
               unassigned_counsel: Unassigned counsel
               agent_instructed: Instructed Agent

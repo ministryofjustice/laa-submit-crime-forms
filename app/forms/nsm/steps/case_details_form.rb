@@ -5,6 +5,7 @@ module Nsm
 
       attribute :main_offence, :string
       attribute :main_offence_date, :multiparam_date
+      attribute :main_offence_type, :value_object, source: MainOffenceType
 
       attribute :remitted_to_magistrate, :string
       attribute :remitted_to_magistrate_date, :multiparam_date
@@ -17,6 +18,8 @@ module Nsm
                 presence: true,
                 multiparam_date: { allow_past: true, allow_future: false },
                 if: :remitted_to_magistrate?
+      validates :main_offence_type, presence: true
+      validates_inclusion_of :main_offence_type, in: MainOffenceType.values
 
       BOOLEAN_FIELDS.each do |field|
         attribute field, :value_object, source: YesNoAnswer

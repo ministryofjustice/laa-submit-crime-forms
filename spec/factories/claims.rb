@@ -96,6 +96,7 @@ FactoryBot.define do
 
     trait :case_details do
       main_offence { MainOffence.all.sample.name }
+      main_offence_type { 'summary_only' }
       main_offence_date { Date.yesterday }
 
       assigned_counsel { 'no' }

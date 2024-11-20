@@ -183,6 +183,7 @@ claims:
   reason_for_claim_other_details: true
   main_offence: false
   main_offence_date: false
+  main_offence_type: false
   assigned_counsel: false
   unassigned_counsel: false
   agent_instructed: false

@@ -20,6 +20,10 @@ module Nsm
             text: check_missing(claim.main_offence)
           },
           {
+            head_key: 'main_offence_type',
+            text: check_missing(claim.main_offence_type)
+          },
+          {
             head_key: 'main_offence_date',
             text: check_missing(claim.main_offence_date) do
                     claim.main_offence_date.to_fs(:stamp)

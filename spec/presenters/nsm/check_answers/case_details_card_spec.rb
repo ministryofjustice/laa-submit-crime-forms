@@ -22,6 +22,10 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
             text: 'Theft'
           },
           {
+            head_key: 'main_offence_type',
+            text: 'summary_only'
+          },
+          {
             head_key: 'main_offence_date',
             text: /\A\d{1,2} \w+ \d{4}\z/
           },
@@ -57,6 +61,10 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
             {
               head_key: 'main_offence',
               text: 'Theft'
+            },
+            {
+              head_key: 'main_offence_type',
+              text: 'summary_only'
             },
             {
               head_key: 'main_offence_date',
@@ -95,6 +103,10 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
           [
             {
               head_key: 'main_offence',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+            },
+            {
+              head_key: 'main_offence_type',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
