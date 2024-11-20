@@ -55,7 +55,7 @@ RSpec.describe Nsm::Steps::CaseCategoryForm do
 
   describe '#save' do
     context 'when plea category is set' do
-      let(:plea_category) { PleaCategory::CATEGORY_1A}
+      let(:plea_category) { PleaCategory::CATEGORY_1A }
 
       it 'is valid' do
         expect(form.save).to be_truthy
