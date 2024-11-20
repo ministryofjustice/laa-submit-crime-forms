@@ -52,4 +52,22 @@ RSpec.describe Nsm::Steps::CaseCategoryForm do
       end
     end
   end
+
+  describe '#save' do
+    context 'when plea category is set' do
+      let(:plea_category) { PleaCategory::CATEGORY_1A}
+
+      it 'is valid' do
+        expect(form.save).to be_truthy
+      end
+    end
+
+    context 'when plea category us not set' do
+      it 'is not valid' do
+        expect(form.save).not_to be_truthy
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:plea_category, :blank)).to be(true)
+      end
+    end
+  end
 end
