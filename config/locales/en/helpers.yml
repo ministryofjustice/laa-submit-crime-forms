@@ -270,6 +270,10 @@ en:
           'true': I'll send the supporting evidence by post
       nsm_steps_solicitor_declaration_form:
         signatory_name: Full name
+      nsm_steps_youth_court_claim_additional_fee_form:
+        options:
+          'yes': 'Yes'
+          'no': 'No'
       prior_authority_steps_primary_quote_form:
         service_type_autocomplete: Service required
     quote_services:
