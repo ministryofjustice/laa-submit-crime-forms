@@ -24,6 +24,6 @@ RSpec.describe 'Youth court claim additional fee', type: :system do
 
     click_on 'Save and continue'
 
-    expect(page).to have_content("Select the yes if you wish to claim the youth court addition fee")
+    expect(page).to have_content('Select the yes if you wish to claim the youth court addition fee')
   end
 end

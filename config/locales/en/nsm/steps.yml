@@ -314,7 +314,7 @@ en:
         edit:
           page_title: Do you want to claim the youth court additional fee?
           heading: Do you want to claim the youth court additional fee?
-          subheading: Based on the answers you have provided you are eligible for the youth court additional fee.
+          hint: Based on the answers you have provided you are eligible for the youth court additional fee.
       equality:
         edit:
           page_title: Equality monitoring questions

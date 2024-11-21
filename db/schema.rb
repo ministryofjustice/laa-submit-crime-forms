@@ -96,13 +96,13 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_20_130043) do
     t.float "adjusted_total"
     t.float "adjusted_total_inc_vat"
     t.string "assessment_comment"
-    t.string "wasted_costs"
     t.integer "allowed_letters"
     t.integer "allowed_calls"
     t.integer "allowed_letters_uplift"
     t.integer "allowed_calls_uplift"
     t.string "letters_adjustment_comment"
     t.string "calls_adjustment_comment"
+    t.string "wasted_costs"
     t.date "work_completed_date"
     t.boolean "office_in_undesignated_area"
     t.boolean "court_in_undesignated_area"
@@ -111,7 +111,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_20_130043) do
     t.boolean "submit_to_app_store_completed"
     t.boolean "send_notification_email_completed"
     t.datetime "originally_submitted_at"
-    t.string "youth_court_fee_claimed"
+    t.boolean "youth_court_fee_claimed"
     t.index ["core_search_fields"], name: "index_claims_on_core_search_fields", using: :gin
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
@@ -340,8 +340,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_20_130043) do
     t.integer "allowed_uplift"
     t.integer "allowed_time_spent"
     t.string "adjustment_comment"
-    t.integer "position"
     t.string "allowed_work_type"
+    t.integer "position"
     t.index ["claim_id"], name: "index_work_items_on_claim_id"
   end
 
