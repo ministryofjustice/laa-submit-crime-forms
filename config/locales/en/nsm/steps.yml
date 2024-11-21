@@ -42,7 +42,6 @@ en:
           heading: Case details
       case_category:
         edit:
-          page_title: Case category
           heading: Select the case category
       case_disposal:
         edit:
