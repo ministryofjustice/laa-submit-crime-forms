@@ -13,12 +13,6 @@ RSpec.describe Nsm::Steps::YouthCourtClaimAdditionalFeeForm do
   let(:application) { instance_double(Claim, update!: true) }
   let(:youth_court_fee_claimed) { nil }
 
-  describe '#choices' do
-    it 'returns the possible choices' do
-      expect(subject.choices).to eq(YesNoAnswer.values)
-    end
-  end
-
   describe '#validations' do
     context 'when youth_court_fee_claimed is blank' do
       it 'to have errors' do
