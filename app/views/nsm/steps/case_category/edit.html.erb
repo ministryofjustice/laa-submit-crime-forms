@@ -6,7 +6,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :plea_category, legend: -> { radio_legend(t('.heading')) } do %>
+      <%= f.govuk_radio_buttons_fieldset :plea_category, legend: { text: t('.legend'), size: 'xl', tag: 'h1' } do %>
         <% @form_object.choices.each_with_index do |category, index| %>
           <span id="<%= category %>"></span>
           <%= f.govuk_radio_button :plea_category, category.to_s, link_errors: index.zero?,

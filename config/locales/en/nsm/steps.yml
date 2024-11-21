@@ -43,6 +43,7 @@ en:
       case_category:
         edit:
           heading: Select the case category
+          legend: Select the case category
       case_disposal:
         edit:
           page_title: Case disposal
