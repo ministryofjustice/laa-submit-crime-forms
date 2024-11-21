@@ -15,7 +15,7 @@ RSpec.describe 'Youth court claim additional fee', type: :system do
     click_on 'Save and continue'
 
     expect(claim.reload).to have_attributes(
-      youth_court_fee_claimed: 'yes'
+      youth_court_fee_claimed: true
     )
   end
 
