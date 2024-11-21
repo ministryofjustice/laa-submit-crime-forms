@@ -143,6 +143,7 @@ prior_authority_applications:
   subject_to_poca: false
   next_hearing_date: false
   plea: false
+  plea_category: false
   court_type: false
   youth_court: false
   psychiatric_liaison: false
