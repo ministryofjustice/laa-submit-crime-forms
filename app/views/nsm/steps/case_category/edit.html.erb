@@ -10,7 +10,7 @@
         <% @form_object.choices.each_with_index do |category, index| %>
           <span id="<%= category %>"></span>
           <%= f.govuk_radio_button :plea_category, category.to_s, link_errors: index.zero?,
-                                   label: { text: t("shared.plea_category.#{category}") } %>
+                                   label: { text: t("laa_crime_forms_common.nsm.plea_category.#{category}") } %>
         <% end %>
       <% end %>
 
