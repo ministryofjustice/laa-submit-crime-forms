@@ -7,6 +7,7 @@ RSpec.describe 'Youth court claim additional fee', type: :system do
   before do
     allow(FeatureFlags).to receive(:youth_court_fee).and_return(double(:youth_court_fee, enabled?: youth_court_fee_enabled))
     visit provider_saml_omniauth_callback_path
+    visit edit_nsm_steps_youth_court_claim_additional_fee_path(claim.id)
   end
 
   context 'Feature flag for youth_court_fee is disabled' do
@@ -21,8 +22,6 @@ RSpec.describe 'Youth court claim additional fee', type: :system do
     let(:youth_court_fee_enabled) { true }
 
     it 'Lets me select an option' do
-      visit edit_nsm_steps_youth_court_claim_additional_fee_path(claim.id)
-
       choose 'Yes'
 
       click_on 'Save and continue'
@@ -33,8 +32,6 @@ RSpec.describe 'Youth court claim additional fee', type: :system do
     end
 
     it 'validates' do
-      visit edit_nsm_steps_youth_court_claim_additional_fee_path(claim.id)
-
       click_on 'Save and continue'
 
       expect(page).to have_content('Select the yes if you wish to claim the youth court addition fee')
