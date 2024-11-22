@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_21_092835) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_20_130043) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "additional_costs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
@@ -111,6 +111,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_21_092835) do
     t.boolean "submit_to_app_store_completed"
     t.boolean "send_notification_email_completed"
     t.datetime "originally_submitted_at"
+    t.boolean "youth_court_fee_claimed"
     t.index ["core_search_fields"], name: "index_claims_on_core_search_fields", using: :gin
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
@@ -339,8 +340,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_21_092835) do
     t.integer "allowed_uplift"
     t.integer "allowed_time_spent"
     t.string "adjustment_comment"
-    t.integer "position"
     t.string "allowed_work_type"
+    t.integer "position"
     t.index ["claim_id"], name: "index_work_items_on_claim_id"
   end
 

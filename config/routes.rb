@@ -118,6 +118,9 @@ Rails.application.routes.draw do
           }
         end
         edit_step :equality
+        constraints ->(req) { FeatureFlags.youth_court_fee.enabled? } do
+          edit_step :youth_court_claim_additional_fee
+        end
         edit_step :equality_questions
         edit_step :solicitor_declaration
         upload_step :further_information
