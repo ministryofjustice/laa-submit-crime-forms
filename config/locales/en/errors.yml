@@ -370,6 +370,10 @@ en:
               invalid_month: The remittal date must be a real date
               invalid_year: The remittal date must be a real date
               future_not_allowed: The remittal date must be in the past
+        nsm/steps/case_category_form:
+          attributes:
+            plea_category:
+              blank: Select the case category
         nsm/steps/case_disposal_form:
           attributes:
             plea:

@@ -64,6 +64,8 @@ module Decisions
     from(:case_details).goto(edit: 'nsm/steps/hearing_details')
     from(:hearing_details).goto(edit: 'nsm/steps/case_disposal')
     from(:case_disposal).goto(edit: 'nsm/steps/reason_for_claim')
+    # TODO: CRM457-2288: Remove decision step on line 68 and replace with logic from ticket
+    from(:case_category).goto(edit: 'nsm/steps/reason_for_claim')
     from(:reason_for_claim).goto(edit: NSM_CLAIM_DETAILS)
     from(:claim_details)
       .when(-> { application.work_items.none? })
