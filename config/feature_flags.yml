@@ -10,7 +10,7 @@ feature_flags:
     uat: false
     production: false
   youth_court_fee:
-    local: <%= ENV.fetch("YOUTH_COURT_FEE", false) %>
+    local: <%= ENV.fetch("YOUTH_COURT_FEE", true) %>
     development: true
     uat: true
     production: false
