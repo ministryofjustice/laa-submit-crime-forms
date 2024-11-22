@@ -14,14 +14,16 @@ module Nsm
       # TO DO: update remittal to include date of remittal when CRM457-172 is done
       # rubocop:disable Metrics/AbcSize
       def row_data
-        [
+        row = [
           {
             head_key: 'main_offence',
             text: check_missing(claim.main_offence)
           },
           {
             head_key: 'main_offence_type',
-            text: check_missing(claim.main_offence_type)
+            text: check_missing(claim.main_offence_type.present?) do
+              I18n.t("nsm.steps.check_answers.show.sections.case_details.#{claim.main_offence_type}")
+            end
           },
           {
             head_key: 'main_offence_date',
@@ -53,9 +55,19 @@ module Nsm
                                 value_key: 'remitted_to_magistrate_date') do
             claim.remitted_to_magistrate_date.to_fs(:stamp)
           end
-        ].flatten
+        ]
+
+        remove_main_offence_type(row) unless claim.main_offence_type
+
+        row.flatten
       end
       # rubocop:enable Metrics/AbcSize
+
+      private
+
+      def remove_main_offence_type(row)
+        row.delete_if { |r| r.is_a?(Hash) && r[:head_key] == 'main_offence_type' }
+      end
     end
   end
 end
