@@ -92,6 +92,9 @@ Rails.application.routes.draw do
         end
         edit_step :case_disposal
         edit_step :hearing_details
+        constraints ->(req) { FeatureFlags.youth_court_fee.enabled? } do
+          edit_step :case_outcome
+        end
         crud_step :defendant_details, param: :defendant_id, except: [:destroy]
         edit_step :defendant_summary
         crud_step :defendant_delete, param: :defendant_id, except: [:destroy]
