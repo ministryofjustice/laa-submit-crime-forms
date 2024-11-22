@@ -26,6 +26,8 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'answer_equality' => 'yes',
             'arrest_warrant_date' => nil,
             'assigned_counsel' => 'no',
+            'case_outcome_other_info' => nil,
+            'change_solicitor_date' => nil,
             'claim_type' => 'non_standard_magistrate',
             'cntp_date' => nil,
             'cntp_order' => nil,

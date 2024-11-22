@@ -25,6 +25,8 @@ en:
       nsm_steps_hearing_details_form:
         first_hearing_date: Date of first hearing
         youth_court: Is this court a youth court?
+      nsm_steps_case_outcome_form:
+        case_outcome: Select the case outcome
       nsm_steps_reason_for_claim_form:
         representation_order_withdrawn_date: Withdrawn date
       steps_add_another_form:

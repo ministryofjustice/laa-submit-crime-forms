@@ -1,0 +1,40 @@
+<% title t(".page_title") %>
+<% step_header(path: nsm_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :case_outcome, legend: { size: 'xl', class: 'govuk-!-margin-bottom-6', tag: 'h1' } do %>
+        <% @case_outcomes.each_with_index do |outcome, index| %>
+          <span id="<%= outcome %>"></span>
+          <%= f.govuk_radio_button :plea, outcome, link_errors: index.zero?,
+                                   label: { text: t("laa_crime_forms_common.nsm.plea.#{outcome}")} do %>
+            <% if outcome.requires_date_field? %>
+              <%= f.govuk_fully_validatable_date_field :"#{outcome}_date",
+                                                   maxlength_enabled: true,
+                                                   hint: {
+                                                     text: t(".#{outcome}_date_hint"),
+                                                   },
+                                                   legend: {
+                                                     size: "s",
+                                                     class: "govuk-date-legend-non-bold",
+                                                     text: t(".#{outcome}_date"),
+                                                   } %>
+            <% elsif outcome == CaseOutcome::OTHER %>
+              <%= f.govuk_text_field :case_outcome_other_info,
+                                 width: "one-third",
+                                 autocomplete: "off",
+                                 label: {
+                                   text: t(".case_outcome_other_info"),
+                                 } %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+      <% end %>
+      <%= f.continue_button(secondary: false) %>
+    <% end %>
+  </div>
+</div>

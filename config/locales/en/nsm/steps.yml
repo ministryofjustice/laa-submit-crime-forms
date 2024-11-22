@@ -59,6 +59,14 @@ en:
           heading: Hearing details
           court: Which court was the first case hearing heard at?
           court_if_transferred_to_undesignated_area: Which court was the last case hearing heard at?
+      case_outcome:
+        edit:
+          page_title: Case outcome
+          change_solicitor_date_hint: For example, 27 3 2024
+          change_solicitor_date: Date of change
+          arrest_warrant_date_hint: For example, 27 3 2024
+          arrest_warrant_date: Date of warrant issue
+          case_outcome_other_info: Case outcome
       defendant_details:
         edit:
           page_title: Defendant details
