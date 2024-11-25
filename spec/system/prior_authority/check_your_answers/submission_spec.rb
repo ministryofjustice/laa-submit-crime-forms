@@ -51,15 +51,12 @@ RSpec.describe 'Prior authority applications, check your answers, submission' do
         expect(PriorAuthorityApplication.last).to be_submitted
       end
 
-      it 'can be seen on the list of submitted applications' do
-        visit submitted_prior_authority_applications_path
-
-        expect(page).to have_title('Your applications')
-        expect(page).to have_css('.govuk-table__row', text: '111111/123')
-      end
-
-      it 'stops me getting back to the check your answers page' do
+      it 'stops me getting back to the check your answers page', :stub_oauth_token do
         application = PriorAuthorityApplication.find_by(ufn: '111111/123')
+        stub_request(:get, "https://app-store.example.com/v1/application/#{application.id}").to_return(
+          status: 200,
+          body: SubmitToAppStore::PayloadBuilder.call(application).to_json
+        )
         visit prior_authority_steps_check_answers_path(application)
 
         expect(page).to have_title('Application details')

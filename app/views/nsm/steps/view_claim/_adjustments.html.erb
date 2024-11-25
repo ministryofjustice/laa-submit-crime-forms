@@ -1,13 +1,13 @@
 <div class="govuk-tabs" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :work_items %>">
-      <%= link_to t(".#{prefix}work_items"), polymorphic_path([@section, :work_items, :nsm, :steps_view, claim], anchor: 'claim_nav') %>
+      <%= link_to t(".#{prefix}work_items"), send("#{@section}_work_items_nsm_steps_view_claim_path", claim, anchor: 'claim_nav') %>
     </li>
     <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :letters_and_calls %>">
-      <%= link_to t(".#{prefix}letters_and_calls"), polymorphic_path([@section, :letters_and_calls, :nsm, :steps_view, claim], anchor: 'claim_nav') %>
+      <%= link_to t(".#{prefix}letters_and_calls"), send("#{@section}_letters_and_calls_nsm_steps_view_claim_path", claim, anchor: 'claim_nav') %>
     </li>
     <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :disbursements %>">
-      <%= link_to t(".#{prefix}disbursements"), polymorphic_path([@section, :disbursements, :nsm, :steps_view, claim], anchor: 'claim_nav')%>
+      <%= link_to t(".#{prefix}disbursements"), send("#{@section}_disbursements_nsm_steps_view_claim_path", claim, anchor: 'claim_nav') %>
     </li>
   </ul>
 

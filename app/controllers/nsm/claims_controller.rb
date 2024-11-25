@@ -3,14 +3,15 @@ module Nsm
     include Searchable
     layout 'nsm'
 
-    before_action :set_scope, only: %i[submitted draft reviewed]
+    before_action :set_scope, only: %i[submitted draft]
     before_action :set_default_table_sort_options
 
     def index
       @notification_banner = NotificationBanner.active_banner
-      @pagy, @claims = order_and_paginate(&:reviewed)
       @scope = :reviewed
-      render 'index'
+      model = AppStoreListService.reviewed(current_provider, params, service: :nsm)
+      @pagy = model.pagy
+      @claims = model.rows
     end
 
     def create
@@ -19,13 +20,10 @@ module Nsm
       end
     end
 
-    def reviewed
-      @pagy, @claims = order_and_paginate(&:reviewed)
-      render 'index'
-    end
-
     def submitted
-      @pagy, @claims = order_and_paginate(&:submitted_or_resubmitted)
+      model = AppStoreListService.submitted(current_provider, params, service: :nsm)
+      @pagy = model.pagy
+      @claims = model.rows
       render 'index'
     end
 

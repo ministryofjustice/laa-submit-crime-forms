@@ -1,4 +1,6 @@
 class PriorAuthorityApplication < ApplicationRecord
+  include PriorAuthorityDetails
+
   belongs_to :provider
   belongs_to :firm_office, optional: true, dependent: :destroy
   belongs_to :solicitor, optional: true, dependent: :destroy
@@ -41,30 +43,6 @@ class PriorAuthorityApplication < ApplicationRecord
   scope :submitted_or_resubmitted, -> { where(state: %i[submitted provider_updated]) }
 
   scope :for, ->(provider) { where(office_code: provider.office_codes).or(where(office_code: nil, provider: provider)) }
-
-  def youth_court_applicable?
-    court_type == PriorAuthority::CourtTypeOptions::MAGISTRATE.to_s
-  end
-
-  def psychiatric_liaison_applicable?
-    court_type == PriorAuthority::CourtTypeOptions::CENTRAL_CRIMINAL.to_s
-  end
-
-  def total_cost
-    primary_quote&.total_cost
-  end
-
-  def total_cost_gbp
-    total_cost ? NumberTo.pounds(total_cost) : nil
-  end
-
-  def further_information_needed?
-    pending_further_information.present?
-  end
-
-  def correction_needed?
-    pending_incorrect_information.present?
-  end
 
   def pending_further_information
     further_informations.where(created_at: app_store_updated_at..).order(:created_at).last

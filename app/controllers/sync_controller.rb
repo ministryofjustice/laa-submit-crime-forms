@@ -3,11 +3,6 @@ class SyncController < ApplicationController
   before_action :authenticate_app_store!, only: :sync_individual
   skip_before_action :verify_authenticity_token, only: :sync_individual
 
-  def sync_all
-    PullUpdates.new.perform
-    head :ok
-  end
-
   def sync_individual
     AppStoreUpdateProcessor.call(params[:data].permit!.to_h)
     head :ok

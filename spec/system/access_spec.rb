@@ -1,9 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'System Access', type: :system do
+RSpec.describe 'System Access', :stub_app_store_search, :stub_oauth_token, type: :system do
   before do
     allow(ActiveOfficeCodeService).to receive(:call).with(provider.office_codes).and_return(allowed_office_codes)
-
     visit provider_saml_omniauth_callback_path(
       info: { name: 'Test User', email: 'provider@example.com', office_codes: provider.office_codes }
     )

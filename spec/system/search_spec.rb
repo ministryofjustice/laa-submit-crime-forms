@@ -179,8 +179,7 @@ RSpec.describe 'Search' do
       end
 
       it 'click submitted link goes to application claim details' do
-        click_link '070620/123'
-        expect(page).to have_content 'Application details'
+        expect(find('a', text: '070620/123')[:href]).to eq prior_authority_application_path(submitted)
       end
     end
   end

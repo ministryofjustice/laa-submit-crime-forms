@@ -1,7 +1,13 @@
 require 'system_helper'
 
-RSpec.describe 'View disbursement after submission', :javascript, type: :system do
+RSpec.describe 'View disbursement after submission', :javascript, :stub_oauth_token, type: :system do
   before do
+    disbursement
+    claim.reload
+    stub_request(:get, "https://app-store.example.com/v1/application/#{claim.id}").to_return(
+      status: 200,
+      body: SubmitToAppStore::NsmPayloadBuilder.new(claim:).payload.to_json
+    )
     visit provider_saml_omniauth_callback_path
     click_link 'Accept analytics cookies'
 
@@ -9,7 +15,7 @@ RSpec.describe 'View disbursement after submission', :javascript, type: :system 
   end
 
   let(:some_date) { 1.month.ago.to_date }
-  let(:claim) { create(:claim, :case_type_magistrates, :firm_details, state: 'submitted') }
+  let(:claim) { create(:claim, :complete, :case_type_magistrates, state: 'submitted') }
 
   context 'With a "mileage" type disbursement' do
     let(:disbursement) do

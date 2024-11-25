@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Notification banner' do
+RSpec.describe 'Notification banner', :stub_app_store_search, :stub_oauth_token do
   before do
     visit provider_saml_omniauth_callback_path
   end

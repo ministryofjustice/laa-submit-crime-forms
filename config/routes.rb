@@ -60,7 +60,7 @@ Rails.application.routes.draw do
       collection do
         get :draft
         get :submitted
-        get :reviewed
+        get :reviewed, to: 'claims#index'
         get :search
       end
       member do
@@ -195,7 +195,7 @@ Rails.application.routes.draw do
       collection do
         get :drafts
         get :submitted
-        get :reviewed
+        get :reviewed, to: 'applications#index'
         get :search
       end
       member do
@@ -208,10 +208,6 @@ Rails.application.routes.draw do
   end
 
   resources :downloads, only: :show
-
-  if ENV.fetch("ENABLE_SYNC_TRIGGER_ENDPOINT", false) == "true"
-    get "sync", to: "sync#sync_all"
-  end
 
   get "robots.txt", to: "robots#index"
 

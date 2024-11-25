@@ -8,7 +8,7 @@ module Nsm
       def initialize(claim)
         @claim = claim
         @main_defendant = claim.main_defendant
-        @additional_defendants = claim.defendants.where(main: false)
+        @additional_defendants = claim.additional_defendants
         @group = 'about_defendant'
         @section = 'defendant_summary'
         @maat_required = claim.claim_type != ClaimType::BREACH_OF_INJUNCTION.to_s

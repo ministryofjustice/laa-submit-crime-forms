@@ -79,7 +79,6 @@ variables:
   paMaxFileUploadBytes: 10485760
   nsmMaxFileUploadBytes: 26214400
   eolUrl: https://apply-for-extension-of-upper-limits.dev.form.service.justice.gov.uk/
-  enableSyncTriggerEndpoint: 'false'
   allowIndexing: 'false'
   providerApiHost: https://laa-provider-details-api-preprod.apps.live.cloud-platform.service.justice.gov.uk
 

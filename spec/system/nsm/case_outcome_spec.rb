@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'When filling in the case outcome', type: :system do
+RSpec.describe 'When filling in the case outcome', :stub_app_store_search, :stub_oauth_token, type: :system do
   let(:claim) { create(:claim, plea_category: 'category_1a') }
 
   before do

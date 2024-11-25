@@ -97,11 +97,15 @@ module Nsm
       end
 
       def view_locals
-        { claim: current_application, report: report }
+        { claim: app_store_record, report: report }
+      end
+
+      def app_store_record
+        @app_store_record ||= AppStoreDetailService.nsm(params[:id], current_provider)
       end
 
       def report
-        CheckAnswers::ReadOnlyReport.new(current_application, cost_summary_in_overview: false)
+        CheckAnswers::ReadOnlyReport.new(app_store_record, cost_summary_in_overview: false)
       end
 
       def check_step_valid

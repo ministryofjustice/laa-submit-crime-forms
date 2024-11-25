@@ -1,7 +1,7 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - provider responds to correction request',
-               :javascript, type: :system do
+RSpec.describe 'Prior authority applications - provider responds to correction request', :javascript, :stub_oauth_token,
+               type: :system do
   let(:application) do
     create(:prior_authority_application,
            :with_complete_prison_law,
@@ -11,6 +11,14 @@ RSpec.describe 'Prior authority applications - provider responds to correction r
   end
 
   before do
+    # Fudge the data to make it looks like something the app store would return
+    application.incorrect_informations.first.update(sections_changed: [])
+    data = SubmitToAppStore::PayloadBuilder.call(application).merge(last_updated_at: 1.hour.ago)
+    data[:application][:resubmission_deadline] = 1.day.from_now
+    stub_request(:get, "https://app-store.example.com/v1/application/#{application.id}").to_return(
+      status: 200,
+      body: data.to_json
+    )
     visit provider_saml_omniauth_callback_path
     visit prior_authority_application_path(application)
   end

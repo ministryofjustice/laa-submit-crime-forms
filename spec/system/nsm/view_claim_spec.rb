@@ -1,8 +1,9 @@
 require 'system_helper'
 
-RSpec.describe 'View claim page', type: :system do
+RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
   let(:claim) do
-    create(:claim, :case_type_magistrates, :firm_details, :letters_calls,
+    create(:claim, :case_type_magistrates, :complete, :letters_calls,
+           firm_office: build(:firm_office, :full, :valid), reasons_for_claim: ['extradition'],
            work_items: work_items, office_in_undesignated_area: true, court_in_undesignated_area: true,
            assigned_counsel: 'yes', disbursements: disbursements,
            state: :submitted)
@@ -34,6 +35,7 @@ RSpec.describe 'View claim page', type: :system do
 
   before do
     visit provider_saml_omniauth_callback_path
+    stub_app_store_payload(claim)
   end
 
   it 'shows a cost summary table on the claimed costs page' do
@@ -94,7 +96,7 @@ RSpec.describe 'View claim page', type: :system do
   end
 
   context 'when claim is not yet submitted' do
-    let(:claim) { create(:claim, state: 'draft') }
+    let(:claim) { create(:claim, :complete, :case_type_breach, state: 'draft') }
 
     it 'redirects me' do
       visit nsm_steps_view_claim_path(claim)
@@ -235,11 +237,13 @@ RSpec.describe 'View claim page', type: :system do
 
   context 'when adjustments exist' do
     let(:claim) do
-      create(:claim, :case_type_magistrates, :firm_details, :adjusted_letters_calls, office_in_undesignated_area: true,
-             court_in_undesignated_area: true,
+      create(:claim, :case_type_magistrates, :complete, :adjusted_letters_calls, office_in_undesignated_area: true,
+             court_in_undesignated_area: true, firm_office: firm_office, reasons_for_claim: ['extradition'],
              assigned_counsel: 'yes', state: state, work_items: work_items, disbursements: disbursements,
              assessment_comment: assessment_comment)
     end
+
+    let(:firm_office) { build(:firm_office, :full, :valid) }
 
     let(:assessment_comment) { 'some random text' }
 
@@ -250,9 +254,9 @@ RSpec.describe 'View claim page', type: :system do
         build(:work_item, :valid, :travel, :with_adjustment, fee_earner: 'BC', completed_on: 6.days.ago, time_spent: 60),
         build(:work_item, :valid, :waiting, :with_adjustment, fee_earner: 'BC', completed_on: 5.days.ago, time_spent: 60),
         build(:work_item, :valid, :attendance_with_counsel, :with_adjustment, fee_earner: 'AB', completed_on: 4.days.ago,
-time_spent: 90),
+              time_spent: 90),
         build(:work_item, :valid, :attendance_without_counsel, :with_adjustment, fee_earner: 'AB', completed_on: 3.days.ago,
-time_spent: 90),
+              time_spent: 90),
         build(:work_item, :valid, :preparation, :with_adjustment, fee_earner: 'BC', completed_on: 2.days.ago, time_spent: 104),
         build(:work_item, :valid, :advocacy, :with_adjustment, fee_earner: 'BC', completed_on: 1.day.ago, time_spent: 104),
       ]
@@ -363,9 +367,7 @@ time_spent: 90),
     end
 
     context 'when firm is NOT VAT registered' do
-      before do
-        claim.firm_office.update(vat_registered: 'no')
-      end
+      let(:firm_office) { build(:firm_office, :full, :valid, vat_registered: 'no') }
 
       it 'shows an adjusted cost summary table without VAT' do
         visit adjustments_work_items_nsm_steps_view_claim_path(claim.id)
@@ -794,17 +796,15 @@ time_spent: 90),
   end
 
   context 'when claim is expired' do
-    let(:claim) { create(:claim, :case_type_magistrates, :firm_details, state: :expired) }
-
-    before do
-      create :further_information,
-             submission: claim,
-             requested_at: Date.new(2024, 8, 1),
-             resubmission_deadline: Date.new(2024, 8, 10),
-             information_requested: 'What is your quest?'
-
-      visit nsm_steps_view_claim_path(claim.id)
+    let(:claim) { create(:claim, :complete, :case_type_magistrates, state: :expired, further_informations: [fi]) }
+    let(:fi) do
+      build :further_information,
+            requested_at: Date.new(2024, 8, 1),
+            resubmission_deadline: Date.new(2024, 8, 10),
+            information_requested: 'What is your quest?'
     end
+
+    before { visit nsm_steps_view_claim_path(claim.id) }
 
     it 'shows me relevant information' do
       expect(page).to have_content('Expired')
