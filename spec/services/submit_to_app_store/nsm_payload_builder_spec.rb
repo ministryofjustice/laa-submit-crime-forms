@@ -167,7 +167,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
               'work_type' => work_item.work_type,
             }],
             'youth_court' => 'no',
-            'claimed_include_youth_court_fee' => nil,
+            'include_youth_court_fee' => nil,
             'supporting_evidences' =>
               [{
                 'document_type' => 'supporting_evidence',
