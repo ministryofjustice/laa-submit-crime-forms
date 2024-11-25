@@ -1,5 +1,14 @@
 require 'rails_helper'
 
+module AppStore
+  module V1
+    class Base
+      # Instantiate this class here as the BaseFormObject assumes a class with this name exists
+      attr_reader :no_op
+    end
+  end
+end
+
 RSpec.describe Steps::BaseFormObject do
   describe '.build' do
     let(:favourite_meal_form) do

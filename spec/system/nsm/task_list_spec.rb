@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Task list' do
+RSpec.describe 'Task list', :stub_app_store_search, :stub_oauth_token do
   it 'updates the task list appropriately' do
     visit provider_saml_omniauth_callback_path
     click_on "Claim non-standard magistrates' court payments, previously CRM7"
