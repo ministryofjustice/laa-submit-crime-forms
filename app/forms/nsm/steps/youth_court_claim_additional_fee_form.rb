@@ -3,9 +3,9 @@
 module Nsm
   module Steps
     class YouthCourtClaimAdditionalFeeForm < ::Steps::BaseFormObject
-      attribute :youth_court_fee_claimed, :boolean
+      attribute :claimed_include_youth_court_fee, :boolean
 
-      validates :youth_court_fee_claimed, presence: true, inclusion: { in: [true, false] }
+      validates :claimed_include_youth_court_fee, presence: true, inclusion: { in: [true, false] }
 
       private
 

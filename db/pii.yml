@@ -246,6 +246,6 @@ claims:
   submit_to_app_store_completed: false
   send_notification_email_completed: false
   originally_submitted_at: false
-  youth_court_fee_claimed: false
+  claimed_include_youth_court_fee: false
   change_solicitor_date: false
   case_outcome_other_info: false
