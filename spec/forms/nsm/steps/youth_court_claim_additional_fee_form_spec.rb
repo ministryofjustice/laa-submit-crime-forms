@@ -6,36 +6,36 @@ RSpec.describe Nsm::Steps::YouthCourtClaimAdditionalFeeForm do
   let(:arguments) do
     {
       application:,
-      youth_court_fee_claimed:,
+      include_youth_court_fee:,
     }
   end
 
   let(:application) { instance_double(Claim, update!: true) }
-  let(:youth_court_fee_claimed) { nil }
+  let(:include_youth_court_fee) { nil }
 
   describe '#validations' do
-    context 'when youth_court_fee_claimed is blank' do
+    context 'when include_youth_court_fee is blank' do
       it 'to have errors' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:youth_court_fee_claimed, :inclusion)).to be(true)
+        expect(subject.errors.of_kind?(:include_youth_court_fee, :inclusion)).to be(true)
       end
     end
 
-    context 'when youth_court_fee_claimed is yes' do
-      let(:youth_court_fee_claimed) { 'yes' }
+    context 'when include_youth_court_fee is yes' do
+      let(:include_youth_court_fee) { 'yes' }
 
       it { expect(subject).to be_valid }
     end
 
-    context 'when youth_court_fee_claimed is no' do
-      let(:youth_court_fee_claimed) { 'no' }
+    context 'when include_youth_court_fee is no' do
+      let(:include_youth_court_fee) { 'no' }
 
       it { expect(subject).to be_valid }
     end
   end
 
   describe '#save' do
-    let(:youth_court_fee_claimed) { 'yes' }
+    let(:include_youth_court_fee) { 'yes' }
 
     it 'is valid' do
       expect(subject).to be_valid

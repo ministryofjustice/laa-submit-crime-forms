@@ -6,7 +6,7 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons(
-        :youth_court_fee_claimed,
+        :include_youth_court_fee,
         YesNoAnswer.radio_options,
         :value,
         :label,
