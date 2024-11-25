@@ -13,10 +13,21 @@ module Nsm
         end
       end
 
+      def should_keep_youth_court_claimed?
+        plea_category == PleaCategory::CATEGORY_1A ||
+          plea_category == PleaCategory::CATEGORY_2A
+      end
+
       private
 
       def persist!
-        application.update!(attributes)
+        application.update!(attributes.merge(attributes_to_reset))
+      end
+
+      def attributes_to_reset
+        {
+          'include_youth_court_fee' => should_keep_youth_court_claimed? ? application.include_youth_court_fee : nil,
+        }
       end
     end
   end

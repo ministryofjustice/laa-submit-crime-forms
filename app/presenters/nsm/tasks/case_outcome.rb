@@ -7,6 +7,10 @@ module Nsm
       def path
         edit_nsm_steps_case_outcome_path(application)
       end
+
+      def not_applicable?
+        application.before_youth_court_cutoff?
+      end
     end
   end
 end

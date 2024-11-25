@@ -14,11 +14,31 @@ RSpec.describe Nsm::Tasks::CaseDisposal, type: :system do
   let(:plea) { nil }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/case_disposal") }
+    context 'for an eligible youth court claim' do
+      let(:application) { build(:claim, :valid_youth_court, attributes) }
+
+      it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{application.id}/steps/case_category") }
+    end
+
+    context 'for an ineligible youth court claim' do
+      it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{application.id}/steps/case_disposal") }
+    end
+  end
+
+  describe '#form' do
+    context 'for an eligible youth court claim' do
+      let(:application) { build(:claim, :valid_youth_court, attributes) }
+
+      it { expect(subject.form).to eq(Nsm::Steps::CaseCategoryForm) }
+    end
+
+    context 'for an ineligible youth court claim' do
+      it { expect(subject.form).to eq(Nsm::Steps::CaseDisposalForm) }
+    end
   end
 
   describe '#not_applicable?' do
-    it { expect(subject).not_to be_not_applicable }
+    it { expect(subject).to be_not_applicable }
   end
 
   it_behaves_like 'a task with generic can_start?', Nsm::Tasks::HearingDetails

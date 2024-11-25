@@ -24,10 +24,20 @@ module Nsm
                      end
       end
 
+      def should_reset_youth_court_fields?
+        youth_court == YesNoAnswer::NO
+      end
+
       private
 
       def persist!
-        application.update!(attributes)
+        application.update!(attributes.merge(attributes_to_reset))
+      end
+
+      def attributes_to_reset
+        {
+          'include_youth_court_fee' => should_reset_youth_court_fields? ? nil : application.include_youth_court_fee,
+        }
       end
     end
   end

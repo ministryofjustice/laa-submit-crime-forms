@@ -32,10 +32,17 @@ module Nsm
         claim_type == ClaimType::BREACH_OF_INJUNCTION
       end
 
+      def should_reset_youth_court_fields?
+        (breach_claim? && application.nsm?) ||
+          (!application.before_youth_court_cutoff? &&
+            non_standard_claim? &&
+            rep_order_date <= Constants::YOUTH_COURT_CUTOFF_DATE)
+      end
+
       private
 
       def persist!
-        application.update!(attributes.merge(attributes_to_reset))
+        application.update!(attributes.merge(attributes_to_reset).merge(youth_court_attributes_to_reset))
       end
 
       def attributes_to_reset
@@ -46,6 +53,19 @@ module Nsm
           'office_in_undesignated_area' => non_standard_claim? ? application.office_in_undesignated_area : nil,
           'court_in_undesignated_area' => non_standard_claim? ? application.court_in_undesignated_area : nil,
           'transferred_to_undesignated_area' => non_standard_claim? ? application.transferred_to_undesignated_area : nil,
+
+        }
+      end
+
+      def youth_court_attributes_to_reset
+        return {} unless should_reset_youth_court_fields?
+
+        {
+          'plea' => nil,
+          'plea_category' => nil,
+          'change_solicitor_date' => nil,
+          'arrest_warrant_date' => nil,
+          'include_youth_court_fee' => nil,
         }
       end
     end
