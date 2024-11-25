@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_21_063733) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_25_132952) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -111,7 +111,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_21_063733) do
     t.boolean "submit_to_app_store_completed"
     t.boolean "send_notification_email_completed"
     t.datetime "originally_submitted_at"
-    t.boolean "youth_court_fee_claimed"
+    t.boolean "include_youth_court_fee"
     t.date "change_solicitor_date"
     t.string "case_outcome_other_info"
     t.index ["core_search_fields"], name: "index_claims_on_core_search_fields", using: :gin
