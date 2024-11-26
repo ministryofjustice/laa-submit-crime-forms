@@ -40,11 +40,16 @@ en:
             case_details:
               main_offence: Main offence name
               main_offence_date: Offence date
+              main_offence_type: Offence type
               assigned_counsel: Assigned counsel
               unassigned_counsel: Unassigned counsel
               agent_instructed: Instructed Agent
               remitted_to_magistrate: Case has been remitted from Crown Court to magistrates
               remitted_to_magistrate_date: Remittal date
+              summary_only: Summary only
+              either_way: Either way
+              indictable_only: Indictable only
+              prescribed_proceedings: Prescribed proceedings
             hearing_details:
               hearing_date: Date of first hearing
               number_of_hearing: Number of hearings

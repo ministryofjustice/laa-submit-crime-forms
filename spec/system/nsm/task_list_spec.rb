@@ -57,6 +57,7 @@ RSpec.describe 'Task list' do
 
     # Case details
     select 'Assault (common)', from: 'Main offence'
+    choose 'Summary only'
     within('.govuk-form-group', text: 'Main offence date') do
       fill_in 'Day', with: '20'
       fill_in 'Month', with: '4'

@@ -13,6 +13,7 @@ en:
       nsm_steps_case_details_form:
         main_offence_date: Main offence date
         assigned_counsel: Was there an assigned counsel?
+        main_offence_type: What is the offence type?
         unassigned_counsel: Was there an unassigned counsel?
         agent_instructed: Was there an instructed agent?
         remitted_to_magistrate: Has the case been remitted from the Crown Court to the magistrates' court?
@@ -161,6 +162,11 @@ en:
         contact_last_name: Last name
         contact_email: Email address
       nsm_steps_case_details_form:
+        main_offence_type_options:
+          summary_only: Summary only
+          either_way: Either way
+          indictable_only: Indictable only
+          prescribed_proceedings: Prescribed proceedings
         main_offence: Main offence
         assigned_counsel_options:
           'yes': 'Yes'

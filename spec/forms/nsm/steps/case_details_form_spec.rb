@@ -7,6 +7,7 @@ RSpec.describe Nsm::Steps::CaseDetailsForm do
     {
       application:,
       main_offence:,
+      main_offence_type:,
       main_offence_date:,
       assigned_counsel:,
       unassigned_counsel:,
@@ -20,6 +21,7 @@ RSpec.describe Nsm::Steps::CaseDetailsForm do
 
   let(:main_offence) { MainOffence.all.sample.name }
   let(:main_offence_date) { Date.new(2023, 4, 1) }
+  let(:main_offence_type) { 'summary_only' }
   let(:unassigned_counsel) { 'no' }
   let(:assigned_counsel) { 'yes' }
   let(:agent_instructed) { 'yes' }
@@ -57,7 +59,7 @@ RSpec.describe Nsm::Steps::CaseDetailsForm do
   end
 
   describe '#invalid?' do
-    %i[ main_offence main_offence_date assigned_counsel unassigned_counsel agent_instructed
+    %i[ main_offence main_offence_type main_offence_date assigned_counsel unassigned_counsel agent_instructed
         remitted_to_magistrate].each do |field|
       context "when #{field} is missing" do
         let(field) { nil }
@@ -67,6 +69,15 @@ RSpec.describe Nsm::Steps::CaseDetailsForm do
           expect(form.errors.of_kind?(field, :blank)).to be(true)
         end
       end
+    end
+  end
+
+  context 'when `main_offence_type` is invalid' do
+    let(:main_offence_type) { 'invalid_type' }
+
+    it 'has a validation error on the field' do
+      expect(subject).not_to be_valid
+      expect(subject.errors.of_kind?(:main_offence_type, :inclusion)).to be(true)
     end
   end
 
