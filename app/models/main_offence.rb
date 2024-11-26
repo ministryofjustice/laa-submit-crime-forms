@@ -124,6 +124,7 @@ MainOffence = Struct.new(:type, :description) do
       new(OFFTYPET, 'Removal of articles from places open to the public'),
       new(OFFTYPET, 'Abstraction of electricity'),
       new(OFFTYPET, 'Making off without payment'),
+      new(OFFTYPET, 'Low value shoplifting'),
       new(OFFTYPEFFAOOOD, 'Fraud (common law)'),
       new(OFFTYPEFFAOOOD, 'Forgery'),
       new(OFFTYPEFFAOOOD, 'Copying a false instrument'),
