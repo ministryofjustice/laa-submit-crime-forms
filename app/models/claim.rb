@@ -99,6 +99,7 @@ class Claim < ApplicationRecord
       rep_order_date: rep_order_date,
       cntp_date: cntp_date,
       claimed_youth_court_fee_included: include_youth_court_fee,
+      allowed_youth_court_fee_included: allowed_youth_court_fee,
       youth_court: youth_court == 'yes',
       plea_category: plea_category,
       vat_registered: firm_office.vat_registered == 'yes',
