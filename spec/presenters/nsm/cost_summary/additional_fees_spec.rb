@@ -9,11 +9,13 @@ RSpec.describe Nsm::CostSummary::AdditionalFees do
   let(:firm_office) { build(:firm_office, :valid) }
   let(:totals) do
     {
-      youth_court_fee: {
-        claimed_total_inc_vat: 718.31
-      },
-      total: {
-        claimed_total_inc_vat: 718.31
+      additional_fees: {
+        youth_court_fee: {
+          claimed_total_inc_vat: 718.31
+        },
+        total: {
+          claimed_total_inc_vat: 718.31
+        }
       }
     }
   end
