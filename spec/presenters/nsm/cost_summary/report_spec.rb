@@ -4,22 +4,26 @@ RSpec.describe Nsm::CostSummary::Report do
   subject { described_class.new(claim) }
 
   let(:claim) do
-    instance_double(Claim, work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id: id, totals: totals)
+    instance_double(Claim, has_additional_fees_applicable?: has_additional_fees_applicable, work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id: id, totals: totals)
   end
   let(:disbursements_scope) { double(:scope, by_age: [instance_double(Disbursement)]) }
   let(:id) { SecureRandom.uuid }
   let(:letters_calls) do
     instance_double(Nsm::CostSummary::LettersCalls, title: l_title, rows: l_rows, total_cost: l_total_cost,
-                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: l_header, footer_row: l_footer)
+                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: l_header, footer_row: l_footer, change_key: nil)
   end
   let(:work_items) do
     instance_double(Nsm::CostSummary::WorkItems, title: wi_title, rows: wi_rows, total_cost: wi_total_cost,
                     total_cost_inc_vat: wi_total_cost_inc_vat, total_cost_cell: 'TOTAL', caption: 'CAPTION',
-                    header_row: wi_header, footer_row: wi_footer)
+                    header_row: wi_header, footer_row: wi_footer, change_key: nil)
   end
   let(:disbursements) do
     instance_double(Nsm::CostSummary::Disbursements, title: d_title, rows: d_rows, total_cost: d_total_cost,
-                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: d_header, footer_row: d_footer)
+                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: d_header, footer_row: d_footer, change_key: nil)
+  end
+  let(:additional_fees) do
+    instance_double(Nsm::CostSummary::AdditionalFees, title: add_title, rows: add_rows, total_cost: add_total_cost,
+                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: add_header, footer_row: add_footer, change_key: 'case_category')
   end
   let(:summary) do
     instance_double(Nsm::CheckAnswers::CostSummaryCard, total_gross: 230)
@@ -41,10 +45,17 @@ RSpec.describe Nsm::CostSummary::Report do
   let(:d_total_cost) { 55.00 }
   let(:d_header) { double(:d_header_data) }
   let(:d_footer) { double(:d_footer_data) }
+  let(:add_title) { 'Additional fees' }
+  let(:add_rows) { double(:add_row_data) }
+  let(:add_total_cost) { 718.31 }
+  let(:add_header) { double(:add_header_data) }
+  let(:add_footer) { double(:add_footer_data) }
+  let(:has_additional_fees_applicable) { true }
 
   before do
     allow(Nsm::CostSummary::WorkItems).to receive(:new).and_return(work_items)
     allow(Nsm::CostSummary::LettersCalls).to receive(:new).and_return(letters_calls)
+    allow(Nsm::CostSummary::AdditionalFees).to receive(:new).and_return(additional_fees)
     allow(Nsm::CostSummary::Disbursements).to receive(:new).and_return(disbursements)
     allow(Nsm::CheckAnswers::CostSummaryCard).to receive(:new).and_return(summary)
   end
@@ -54,6 +65,7 @@ RSpec.describe Nsm::CostSummary::Report do
       subject
       expect(Nsm::CostSummary::WorkItems).to have_received(:new).with(claim.work_items, claim)
       expect(Nsm::CostSummary::LettersCalls).to have_received(:new).with(claim)
+      expect(Nsm::CostSummary::AdditionalFees).to have_received(:new).with(claim)
       expect(Nsm::CostSummary::Disbursements).to have_received(:new).with(disbursements_scope.by_age, claim)
     end
   end
@@ -63,70 +75,164 @@ RSpec.describe Nsm::CostSummary::Report do
       expect(subject.sections).to be_a Array
     end
 
-    it 'returns a section for work items' do
-      expect(subject.sections[0]).to eq(
-        {
-          card: {
-            actions: [
-              "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"
-            ],
-            title: 'Work Items'
-          },
-          table: {
-            head: wi_header,
-            rows: [
-              wi_rows,
-              wi_footer
-            ],
-            first_cell_is_header: true,
-          },
-          caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
-        }
-      )
+    context 'Claim is elligible for an additional fee (youth court fee)' do
+      it 'returns a section for work items' do
+        expect(subject.sections[0]).to eq(
+          {
+            card: {
+              actions: [
+                "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"
+              ],
+              title: 'Work Items'
+            },
+            table: {
+              head: wi_header,
+              rows: [
+                wi_rows,
+                wi_footer
+              ],
+              first_cell_is_header: true,
+            },
+            caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
+          }
+        )
+      end
+
+      it 'returns a section for letters and calls' do
+        expect(subject.sections[1]).to eq(
+          {
+            card: {
+              actions: [
+                "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/letters_calls\">Change</a>"
+              ],
+              title: 'Letters and Calls'
+            },
+             table: {
+               head: l_header,
+               rows: [
+                 l_rows,
+                 l_footer
+               ],
+               first_cell_is_header: true,
+             },
+             caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
+          }
+        )
+      end
+
+      it 'returns a section for additional fees' do
+        expect(subject.sections[2]).to eq(
+          {
+            card: {
+              actions: [
+                "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/case_category\">Change</a>"
+              ],
+              title: 'Additional fees'
+            },
+            table: {
+              head: add_header,
+              rows: [
+                add_rows,
+                add_footer
+              ],
+              first_cell_is_header: true,
+            },
+            caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
+          }
+        )
+      end
+
+      it 'returns a section for disbursements' do
+        expect(subject.sections[3]).to eq(
+          {
+            card: {
+              actions: [
+                "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/disbursements\">Change</a>"
+              ],
+              title: 'Disbursements'
+            },
+            table: {
+              head: d_header,
+              rows: [
+                d_rows,
+                d_footer
+              ],
+              first_cell_is_header: true,
+            },
+            caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
+          }
+        )
+      end
     end
 
-    it 'returns a section for letters and calls' do
-      expect(subject.sections[1]).to eq(
-        {
-          card: {
-            actions: [
-              "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/letters_calls\">Change</a>"
-            ],
-            title: 'Letters and Calls'
-          },
-           table: {
-             head: l_header,
-             rows: [
-               l_rows,
-               l_footer
-             ],
-             first_cell_is_header: true,
-           },
-           caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
-        }
-      )
-    end
+    context 'Claim is not elligible for an additional fee (youth court fee)' do
+      let(:has_additional_fees_applicable) { false }
 
-    it 'returns a section for disbursements' do
-      expect(subject.sections[2]).to eq(
-        {
-          card: {
-            actions: [
-              "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/disbursements\">Change</a>"
-            ],
-            title: 'Disbursements'
-          },
-          table: {
-            head: d_header,
-            rows: [
-              d_rows,
-              d_footer
-            ],
-            first_cell_is_header: true,
-          },
-          caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
-        }
-      )
+      it 'returns a section for work items' do
+        expect(subject.sections[0]).to eq(
+          {
+            card: {
+              actions: [
+                "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"
+              ],
+              title: 'Work Items'
+            },
+            table: {
+              head: wi_header,
+              rows: [
+                wi_rows,
+                wi_footer
+              ],
+              first_cell_is_header: true,
+            },
+            caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
+          }
+        )
+      end
+
+      it 'returns a section for letters and calls' do
+        expect(subject.sections[1]).to eq(
+          {
+            card: {
+              actions: [
+                "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/letters_calls\">Change</a>"
+              ],
+              title: 'Letters and Calls'
+            },
+             table: {
+               head: l_header,
+               rows: [
+                 l_rows,
+                 l_footer
+               ],
+               first_cell_is_header: true,
+             },
+             caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
+          }
+        )
+      end
+
+      it 'returns a section for disbursements' do
+        expect(subject.sections[2]).to eq(
+          {
+            card: {
+              actions: [
+                "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/disbursements\">Change</a>"
+              ],
+              title: 'Disbursements'
+            },
+            table: {
+              head: d_header,
+              rows: [
+                d_rows,
+                d_footer
+              ],
+              first_cell_is_header: true,
+            },
+            caption: { classes: 'govuk-visually-hidden', text: 'CAPTION' },
+          }
+        )
+      end
     end
   end
 

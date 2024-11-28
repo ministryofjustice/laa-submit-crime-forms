@@ -22,8 +22,8 @@ module Nsm
         claim.totals[:additional_fees].except(:total)
       end
 
-      def net_cost
-        @net_cost ||= claim.totals.dig(:additional_fees, :total, :claimed_total_inc_vat)
+      def total_cost
+        @total_cost ||= claim.totals.dig(:additional_fees, :total, :claimed_total_inc_vat)
       end
 
       def title
@@ -39,11 +39,6 @@ module Nsm
           {},
           { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
         ]
-      end
-
-      def total_cost_cell
-        safe_join([tag.span(translate('.header.total_claimed'), class: 'govuk-visually-hidden'),
-                   tag.strong(NumberTo.pounds(net_cost))])
       end
 
       def change_key
