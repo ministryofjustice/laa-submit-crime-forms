@@ -110,7 +110,7 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
       end
 
       context 'with a post-6th December rep order date' do
-        let(:rep_order_date) { Date.new(2024, 12, 6) }
+        let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE }
 
         context 'and the previous rep order date being pre-6th December' do
           before { allow(application).to receive(:before_youth_court_cutoff?).and_return(true) }

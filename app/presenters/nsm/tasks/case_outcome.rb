@@ -9,7 +9,8 @@ module Nsm
       end
 
       def not_applicable?
-        application.before_youth_court_cutoff?
+        application.is_nsm? &&
+          application.before_youth_court_cutoff?
       end
     end
   end

@@ -50,7 +50,7 @@ RSpec.describe Decisions::DecisionTree do
   end
 
   context 'post-6th December 2024 youth court flow' do
-    let(:application) { build(:claim, rep_order_date: Date.new(2024, 12, 6), youth_court: 'yes', plea_category: 'category_1a') }
+    let(:application) { build(:claim, rep_order_date: Constants::YOUTH_COURT_CUTOFF_DATE, youth_court: 'yes', plea_category: 'category_1a') }
 
     it_behaves_like 'a generic decision', from: :hearing_details, goto: { action: :edit, controller: 'nsm/steps/case_category' }
     it_behaves_like 'a generic decision', from: :case_category, goto: { action: :edit, controller: 'nsm/steps/case_outcome' }
