@@ -30,3 +30,7 @@ en:
       disbursements: Disbursements
       caption: Summary of disbursements
       net_cost: Total cost of disbursements
+    nsm/cost_summary/additional_fees:
+      additional_fees: Additional fees
+      youth_court_fee: Youth court fee
+      caption: Summary of additional fees
