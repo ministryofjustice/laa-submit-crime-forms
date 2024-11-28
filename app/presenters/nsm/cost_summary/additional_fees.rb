@@ -19,11 +19,11 @@ module Nsm
       end
 
       def additional_fees
-        claim.totals[:additional_fees].reject { |key, value| key == :total }
+        claim.totals[:additional_fees].except(:total)
       end
 
       def net_cost
-        @total_cost ||= claim.totals.dig(:additional_fees, :total, :claimed_total_inc_vat)
+        @net_cost ||= claim.totals.dig(:additional_fees, :total, :claimed_total_inc_vat)
       end
 
       def title
@@ -31,7 +31,7 @@ module Nsm
       end
 
       def translated_text(fee_key)
-        translate("#{fee_key}")
+        translate(fee_key.to_s)
       end
 
       def header_row
