@@ -72,6 +72,15 @@ FactoryBot.define do
       cntp_date { date.strftime('%Y-%m-%d') }
     end
 
+    trait :youth_court_fee_applied do
+      claim_type { 'non_standard_magistrate' }
+      rep_order_date { Date.new(2024, 12, 6) }
+      plea_category { 'category_1a' }
+      plea { 'guilty_plea' }
+      youth_court { 'yes' }
+      include_youth_court_fee { true }
+    end
+
     trait :firm_details do
       firm_office factory: %i[firm_office valid]
       solicitor factory: %i[solicitor valid]
