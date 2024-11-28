@@ -4,7 +4,8 @@ RSpec.describe Nsm::CostSummary::Report do
   subject { described_class.new(claim) }
 
   let(:claim) do
-    instance_double(Claim, has_additional_fees_applicable?: has_additional_fees_applicable, work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id: id, totals: totals)
+    instance_double(Claim, additional_fees_applicable?: additional_fees_applicable,
+work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id: id, totals: totals)
   end
   let(:disbursements_scope) { double(:scope, by_age: [instance_double(Disbursement)]) }
   let(:id) { SecureRandom.uuid }
@@ -50,7 +51,7 @@ RSpec.describe Nsm::CostSummary::Report do
   let(:add_total_cost) { 718.31 }
   let(:add_header) { double(:add_header_data) }
   let(:add_footer) { double(:add_footer_data) }
-  let(:has_additional_fees_applicable) { true }
+  let(:additional_fees_applicable) { true }
 
   before do
     allow(Nsm::CostSummary::WorkItems).to receive(:new).and_return(work_items)
@@ -166,7 +167,7 @@ RSpec.describe Nsm::CostSummary::Report do
     end
 
     context 'Claim is not elligible for an additional fee (youth court fee)' do
-      let(:has_additional_fees_applicable) { false }
+      let(:additional_fees_applicable) { false }
 
       it 'returns a section for work items' do
         expect(subject.sections[0]).to eq(

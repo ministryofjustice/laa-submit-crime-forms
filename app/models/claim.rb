@@ -110,13 +110,13 @@ class Claim < ApplicationRecord
   end
 
   def can_claim_youth_court?
-      claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s &&
-        rep_order_date >= Date.new(2024, 12, 6) &&
-        youth_court == 'yes' &&
-        plea_category.match(/category_[12]a/)
+    claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s &&
+      rep_order_date >= Date.new(2024, 12, 6) &&
+      youth_court == 'yes' &&
+      plea_category.match(/category_[12]a/)
   end
 
-  def has_additional_fees_applicable?
+  def additional_fees_applicable?
     [can_claim_youth_court].excluding(false).present?
   end
 
