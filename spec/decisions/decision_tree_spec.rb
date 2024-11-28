@@ -43,14 +43,14 @@ RSpec.describe Decisions::DecisionTree do
   it_behaves_like 'a generic decision', from: :case_details, goto: { action: :edit, controller: 'nsm/steps/hearing_details' }
 
   context 'pre-6th December 2024 youth court flow' do
-    let(:application) { build(:claim, rep_order_date: Date.new(2024, 12, 5)) }
+    let(:application) { build(:claim, rep_order_date: Constants::YOUTH_COURT_CUTOFF_DATE - 1) }
 
     it_behaves_like 'a generic decision', from: :hearing_details, goto: { action: :edit, controller: 'nsm/steps/case_disposal' }
     it_behaves_like 'a generic decision', from: :case_disposal, goto: { action: :edit, controller: 'nsm/steps/reason_for_claim' }
   end
 
   context 'post-6th December 2024 youth court flow' do
-    let(:application) { build(:claim, rep_order_date: Constants::YOUTH_COURT_CUTOFF_DATE, youth_court: 'yes', plea_category: 'category_1a') }
+    let(:application) { build(:claim, :valid_youth_court) }
 
     it_behaves_like 'a generic decision', from: :hearing_details, goto: { action: :edit, controller: 'nsm/steps/case_category' }
     it_behaves_like 'a generic decision', from: :case_category, goto: { action: :edit, controller: 'nsm/steps/case_outcome' }

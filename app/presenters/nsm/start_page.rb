@@ -25,10 +25,7 @@ module Nsm
             'nsm/case_details',
             'nsm/hearing_details',
             'nsm/case_disposal',
-            # :nocov:
-            FeatureFlags.youth_court_fee.enabled? ? ['nsm/case_category', 'nsm/case_outcome'] : nil
-            # :nocov:
-          ].compact.flatten
+          ]
         ],
         [
           'nsm/claim', [

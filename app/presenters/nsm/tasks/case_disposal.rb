@@ -2,7 +2,6 @@ module Nsm
   module Tasks
     class CaseDisposal < Base
       PREVIOUS_TASKS = HearingDetails
-      FORM = Nsm::Steps::CaseDisposalForm
 
       def path
         if application.nsm? && application.can_claim_youth_court?

@@ -38,7 +38,7 @@ RSpec.describe Nsm::Tasks::CaseDisposal, type: :system do
   end
 
   describe '#not_applicable?' do
-    it { expect(subject).to be_not_applicable }
+    it { expect(subject).not_to be_not_applicable }
   end
 
   it_behaves_like 'a task with generic can_start?', Nsm::Tasks::HearingDetails
