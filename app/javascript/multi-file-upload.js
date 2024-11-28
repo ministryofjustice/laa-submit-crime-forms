@@ -71,8 +71,11 @@ MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
         }.bind(this),
 
         error: function (jqXHR, textStatus, errorThrown) {
-            feedback.html(this.getErrorHtml(jqXHR.responseJSON.error.message));
-            this.status.html(jqXHR.responseJSON.error.message);
+            let errorMessage = jqXHR.responseJSON?.error.message;
+            if (errorMessage) {
+              feedback.html(this.getErrorHtml(errorMessage));
+              this.status.html(errorMessage);
+            }
             fileRow.find('progress').replaceWith(failSvg);
             this.params.uploadFileErrorHook(this, file, jqXHR, textStatus, errorThrown);
         }.bind(this),
