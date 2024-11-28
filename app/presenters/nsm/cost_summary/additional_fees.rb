@@ -2,6 +2,7 @@ module Nsm
   module CostSummary
     class AdditionalFees < Base
       TRANSLATION_KEY = self
+      MIDDLE_COLUMN = false
       attr_reader :claim
 
       def initialize(claim)
@@ -12,7 +13,6 @@ module Nsm
         additional_fees.map do |key, value|
           [
             { text: translated_text(key), classes: 'govuk-table__header' },
-            {},
             { text: NumberTo.pounds(value[:claimed_total_inc_vat]), classes: 'govuk-table__cell--numeric' },
           ]
         end
@@ -36,7 +36,6 @@ module Nsm
 
       def header_row
         [
-          {},
           {},
           { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
         ]
