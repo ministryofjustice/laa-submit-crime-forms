@@ -117,7 +117,7 @@ class Claim < ApplicationRecord
   end
 
   def additional_fees_applicable?
-    [can_claim_youth_court].excluding(false).present?
+    [can_claim_youth_court?].excluding(false).present?
   end
 
   private
