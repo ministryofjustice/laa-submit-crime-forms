@@ -11,7 +11,8 @@ work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id:
   let(:id) { SecureRandom.uuid }
   let(:letters_calls) do
     instance_double(Nsm::CostSummary::LettersCalls, title: l_title, rows: l_rows, total_cost: l_total_cost,
-                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: l_header, footer_row: l_footer, change_key: nil)
+                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: l_header, footer_row: l_footer,
+                    change_key: nil)
   end
   let(:work_items) do
     instance_double(Nsm::CostSummary::WorkItems, title: wi_title, rows: wi_rows, total_cost: wi_total_cost,
@@ -20,11 +21,13 @@ work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id:
   end
   let(:disbursements) do
     instance_double(Nsm::CostSummary::Disbursements, title: d_title, rows: d_rows, total_cost: d_total_cost,
-                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: d_header, footer_row: d_footer, change_key: nil)
+                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: d_header, footer_row: d_footer,
+                    change_key: nil)
   end
   let(:additional_fees) do
     instance_double(Nsm::CostSummary::AdditionalFees, title: add_title, rows: add_rows, total_cost: add_total_cost,
-                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: add_header, footer_row: add_footer, change_key: 'case_category')
+                    total_cost_cell: 'TOTAL', caption: 'CAPTION', header_row: add_header, footer_row: add_footer,
+                    change_key: 'case_category')
   end
   let(:summary) do
     instance_double(Nsm::CheckAnswers::CostSummaryCard, total_gross: 230)
