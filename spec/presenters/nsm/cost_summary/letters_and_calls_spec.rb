@@ -5,7 +5,7 @@ RSpec.describe Nsm::CostSummary::LettersCalls do
 
   let(:claim) do
     instance_double(Claim, firm_office:, letters_after_uplift:, calls_after_uplift:,
-                    letters_and_calls_total_cost:, letters_and_calls_total_cost_inc_vat:, letters:, calls:, allowed_youth_court_fee: false)
+                    letters_and_calls_total_cost:, letters_and_calls_total_cost_inc_vat:, letters:, calls:)
   end
   let(:firm_office) { build(:firm_office, :valid) }
   let(:letters_after_uplift) { 25.0 }
