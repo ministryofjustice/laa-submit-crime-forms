@@ -32,17 +32,6 @@ class AppStoreClient
     process_response(response, url)
   end
 
-  def delete(message, path:)
-    response = self.class.delete("#{host}/#{path}", **options(message))
-
-    case response.code
-    when 200..204
-      :success
-    else
-      raise "Unexpected response from AppStore - status #{response.code} from delete #{path}"
-    end
-  end
-
   def search(payload)
     url = "#{host}/v1/submissions/searches"
     response = self.class.post(url, **options(payload))
