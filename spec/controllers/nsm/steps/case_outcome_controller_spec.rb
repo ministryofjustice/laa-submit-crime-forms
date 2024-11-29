@@ -1,9 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::Steps::CaseOutcomeController, type: :controller do
+  let(:claim) { create(:claim, plea_category: 'category_1a') }
+
   before do
     allow(controller).to receive(:current_application).and_return(claim)
   end
+
+  it_behaves_like 'a generic step controller', Nsm::Steps::CaseOutcomeForm, Decisions::DecisionTree
 
   describe '#set_case_outcomes' do
     context 'with category_1a plea' do

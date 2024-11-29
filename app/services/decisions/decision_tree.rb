@@ -20,6 +20,10 @@ module Decisions
     NSM_LETTERS_CALLS = 'nsm/steps/letters_calls'.freeze
     NSM_DISBURSEMENT_ADD = 'nsm/steps/disbursement_add'.freeze
     NSM_EQUALITY = 'nsm/steps/equality'.freeze
+    NSM_CASE_CATEGORY = 'nsm/steps/case_category'.freeze
+    NSM_CASE_OUTCOME = 'nsm/steps/case_outcome'.freeze
+    NSM_YCF_FEE = 'nsm/steps/youth_court_claim_additional_fee'.freeze
+    NSM_REASON_FOR_CLAIM = 'nsm/steps/reason_for_claim'.freeze
 
     from(:claim_type)
       .when(-> { application.submitter.multiple_offices? })
@@ -62,12 +66,21 @@ module Decisions
       .goto(edit: NSM_DEFENDANT_SUMMARY)
       .goto(edit: 'nsm/steps/case_details')
     from(:case_details).goto(edit: 'nsm/steps/hearing_details')
-    from(:hearing_details).goto(edit: 'nsm/steps/case_disposal')
-    from(:case_disposal).goto(edit: 'nsm/steps/reason_for_claim')
-    # TODO: CRM457-2288: Remove decision step on line 68 and replace with logic from ticket
-    from(:youth_court_claim_additional_fee).goto(edit: 'nsm/steps/reason_for_claim')
-    # TODO: CRM457-2288: Remove decision step on line 68 and replace with logic from ticket
-    from(:case_category).goto(edit: 'nsm/steps/reason_for_claim')
+    from(:hearing_details)
+      .when(-> { application.before_youth_court_cutoff? })
+      .goto(edit: 'nsm/steps/case_disposal')
+      .goto(edit: NSM_CASE_CATEGORY)
+
+    from(:case_disposal).goto(edit: NSM_REASON_FOR_CLAIM)
+    from(:youth_court_claim_additional_fee).goto(edit: NSM_REASON_FOR_CLAIM)
+    from(:case_category)
+      .goto(edit: NSM_CASE_OUTCOME)
+
+    from(:case_outcome)
+      .when(-> { application.can_claim_youth_court? })
+      .goto(edit: NSM_YCF_FEE)
+      .goto(edit: NSM_REASON_FOR_CLAIM)
+
     from(:reason_for_claim).goto(edit: NSM_CLAIM_DETAILS)
     from(:claim_details)
       .when(-> { application.work_items.none? })

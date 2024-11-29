@@ -2,6 +2,9 @@ module Nsm
   module Steps
     class OfficeAreaForm < ::Steps::BaseFormObject
       attribute :office_in_undesignated_area, :boolean
+
+      # Due to how Rails handles HTML forms with radio buttons that
+      # can be blank, we can't use presence validation here
       validates :office_in_undesignated_area, inclusion: { in: [true, false] }
 
       private

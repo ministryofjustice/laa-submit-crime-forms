@@ -109,9 +109,17 @@ class Claim < ApplicationRecord
     }
   end
 
+  def nsm?
+    claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s
+  end
+
+  def before_youth_court_cutoff?
+    rep_order_date&.<(Constants::YOUTH_COURT_CUTOFF_DATE)
+  end
+
   def can_claim_youth_court?
     claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s &&
-      rep_order_date >= Date.new(2024, 12, 6) &&
+      !before_youth_court_cutoff? &&
       youth_court == 'yes' &&
       plea_category.match(/category_[12]a/)
   end

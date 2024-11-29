@@ -304,5 +304,12 @@ FactoryBot.define do
       state { 'sent_back' }
       app_store_updated_at { 1.minute.ago }
     end
+
+    trait :valid_youth_court do
+      claim_type { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
+      rep_order_date { Constants::YOUTH_COURT_CUTOFF_DATE }
+      youth_court { YesNoAnswer::YES.to_s }
+      plea_category { PleaCategory::CATEGORY_1A.to_s }
+    end
   end
 end

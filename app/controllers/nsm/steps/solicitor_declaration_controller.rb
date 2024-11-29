@@ -40,7 +40,8 @@ module Nsm
         known_incomplete_tasks = ['nsm/solicitor_declaration', 'nsm/cost_summary', 'nsm/check_answers']
         incomplete = (task_names - known_incomplete_tasks).reject do |task_name|
           task_class = task_name.gsub('nsm', 'nsm/tasks').camelize.constantize
-          task_class.new(application: current_application).completed?
+          task = task_class.new(application: current_application)
+          task.not_applicable? || task.completed?
         end
 
         redirect_to nsm_steps_start_page_path(current_application) if incomplete.any? && current_application.draft?

@@ -24,7 +24,7 @@ module Nsm
           'nsm/case', [
             'nsm/case_details',
             'nsm/hearing_details',
-            'nsm/case_disposal'
+            'nsm/case_disposal',
           ]
         ],
         [

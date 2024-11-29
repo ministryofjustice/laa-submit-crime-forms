@@ -18,13 +18,22 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
     instance_double(Claim,
                     office_in_undesignated_area: true,
                     court_in_undesignated_area: true,
-                    transferred_to_undesignated_area: true)
+                    transferred_to_undesignated_area: true,
+                    plea: PleaOptions::GUILTY.to_s,
+                    plea_category: PleaCategory::CATEGORY_1A.to_s,
+                    change_solicitor_date: nil,
+                    arrest_warrant_date: nil,
+                    include_youth_court_fee: nil)
   end
   let(:ufn) { '230801/001' }
   let(:claim_type) { ClaimType::NON_STANDARD_MAGISTRATE.to_s }
   let(:rep_order_date) { Date.new(2023, 4, 1) }
   let(:cntp_date) { nil }
   let(:cntp_order) { nil }
+
+  before do
+    allow(application).to receive(:before_youth_court_cutoff?).and_return(true)
+  end
 
   describe '#validations' do
     context 'when `ufn` is blank' do
@@ -99,6 +108,34 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
           expect(subject.errors.of_kind?(:rep_order_date, :blank)).to be(true)
         end
       end
+
+      context 'with a post-6th December rep order date' do
+        let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE }
+
+        context 'and the previous rep order date being pre-6th December' do
+          before { allow(application).to receive(:before_youth_court_cutoff?).and_return(true) }
+
+          it 'resets youth court fields' do
+            attributes = subject.send(:youth_court_attributes_to_reset)
+            expect(attributes).to eq({})
+          end
+        end
+
+        context 'and the previous rep order date being post-6th December' do
+          before { allow(application).to receive(:before_youth_court_cutoff?).and_return(false) }
+
+          it 'resets youth court fields' do
+            attributes = subject.send(:youth_court_attributes_to_reset)
+            expect(attributes).to include(
+              'plea' => nil,
+              'plea_category' => nil,
+              'change_solicitor_date' => nil,
+              'arrest_warrant_date' => nil,
+              'include_youth_court_fee' => nil,
+            )
+          end
+        end
+      end
     end
 
     context 'when breach of injunction claim type' do
@@ -143,10 +180,11 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
         let(:cntp_date) { 3.days.from_now.to_date }
         let(:cntp_order) { 'AAAA' }
 
+        # TODO: CRM457-2313: Remove the feature flag checks here
         it 'is also valid' do
-          expect(subject).not_to be_valid
+          expect(subject.valid?).to eq(FeatureFlags.youth_court_fee.enabled?)
           expect(subject.errors.of_kind?(:cntp_order, :blank)).to be(false)
-          expect(subject.errors.of_kind?(:cntp_date, :future_not_allowed)).to be(true)
+          expect(subject.errors.of_kind?(:cntp_date, :future_not_allowed)).to be(!FeatureFlags.youth_court_fee.enabled?)
         end
       end
     end
