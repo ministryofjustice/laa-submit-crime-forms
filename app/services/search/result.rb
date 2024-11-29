@@ -7,16 +7,7 @@ module Search
     end
 
     def client_name
-      case __getobj__
-      when ListRow
-        (main_defendant || defendant).full_name
-      when Claim
-        main_defendant.full_name
-      when PriorAuthorityApplication
-        defendant.full_name
-      else
-        raise "Don't know how to extract client_name from #{__getobj__.class}"
-      end
+      (try(:main_defendant) || defendant).full_name
     end
 
     def account_number

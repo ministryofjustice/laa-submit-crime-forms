@@ -104,7 +104,7 @@ module Search
     def order(combined_results)
       sorted = combined_results.sort_by do |result|
         raw = result.public_send(unified_sort_by)
-        raw.respond_to?(:downcase) ? raw.downcase : raw
+        raw.try(:downcase) || raw
       end
 
       pagination_params[:sort_direction] == 'descending' ? sorted.reverse : sorted

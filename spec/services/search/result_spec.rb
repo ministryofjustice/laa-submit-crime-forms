@@ -43,14 +43,6 @@ RSpec.describe Search::Result do
 
       it { expect(subject.client_name).to eq 'A B' }
     end
-
-    context 'when wrapping something else' do
-      let(:wrapped_object) do
-        build(:defendant, :valid, first_name: 'A', last_name: 'B')
-      end
-
-      it { expect { subject.client_name }.to raise_error "Don't know how to extract client_name from Defendant" }
-    end
   end
 
   describe '#account_number' do
