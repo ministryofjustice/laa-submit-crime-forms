@@ -86,6 +86,10 @@ module PriorAuthority
       pagy(query.includes(:defendant).order(order_template.gsub('?', direction)))
     end
 
+    def service_for_search
+      :prior_authority
+    end
+
     def set_scope
       @scope = params[:action].to_sym
     end

@@ -65,6 +65,10 @@ module Nsm
       pagy(query.includes(:main_defendant).order(order_template.gsub('?', direction)))
     end
 
+    def service_for_search
+      :nsm
+    end
+
     def set_default_table_sort_options
       @sort_by = params.fetch(:sort_by, 'last_updated')
       @sort_direction = params.fetch(:sort_direction, 'descending')

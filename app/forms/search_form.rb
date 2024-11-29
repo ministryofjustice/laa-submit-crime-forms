@@ -34,7 +34,6 @@ class SearchForm
       submitted
       sent_back
       provider_updated
-      sent_back
       granted
       part_grant
       rejected
