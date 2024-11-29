@@ -98,6 +98,10 @@ class Claim < ApplicationRecord
       claim_type: claim_type,
       rep_order_date: rep_order_date,
       cntp_date: cntp_date,
+      claimed_youth_court_fee_included: include_youth_court_fee || false,
+      assessed_youth_court_fee_included: allowed_youth_court_fee || false,
+      youth_court: youth_court == 'yes',
+      plea_category: plea_category,
       vat_registered: firm_office.vat_registered == 'yes',
       work_items: [],
       letters_and_calls: [],
@@ -118,6 +122,10 @@ class Claim < ApplicationRecord
       !before_youth_court_cutoff? &&
       youth_court == 'yes' &&
       plea_category.match(/category_[12]a/)
+  end
+
+  def additional_fees_applicable?
+    can_claim_youth_court?
   end
 
   private

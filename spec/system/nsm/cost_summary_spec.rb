@@ -66,4 +66,17 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
         .and have_content('Sum of net cost and VAT on claimed: £564.84')
     end
   end
+
+  context 'when an additional fee is applicable (youth court fee)' do
+    let(:claim) { create(:claim, :youth_court_fee_applied, :firm_details, :letters_calls, work_items:, disbursements:) }
+
+    it 'can show additional fees cost summary' do
+      visit nsm_steps_cost_summary_path(claim.id)
+
+      expect(page)
+        .to have_content('Additional fees')
+        .and have_content('Youth court fee£718.31')
+        .and have_content('TotalTotal cost of additional fees£718.31')
+    end
+  end
 end

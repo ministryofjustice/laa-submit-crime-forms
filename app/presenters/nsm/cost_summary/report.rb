@@ -12,8 +12,9 @@ module Nsm
         @items = {
           work_items: WorkItems.new(claim.work_items, claim),
           letters_calls: LettersCalls.new(claim),
+          additional_fees: (AdditionalFees.new(claim) if claim.additional_fees_applicable?),
           disbursements: Disbursements.new(claim.disbursements.by_age, claim)
-        }
+        }.compact
         @summary = CheckAnswers::CostSummaryCard.new(claim, has_card: false, title_key: 'your_cost_summary')
       end
 
@@ -22,7 +23,7 @@ module Nsm
           {
             card: {
               title: data.title,
-              actions: actions(name)
+              actions: actions(data.try(:change_key) || name)
             },
             table: {
               head: data.header_row,
