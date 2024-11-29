@@ -23,7 +23,7 @@ module Nsm
           {
             card: {
               title: data.title,
-              actions: actions(data.change_key || name)
+              actions: actions(data.try(:change_key) || name)
             },
             table: {
               head: data.header_row,

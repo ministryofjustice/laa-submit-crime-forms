@@ -30,11 +30,6 @@ module Nsm
           { text: total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
         ].compact
       end
-
-      # override if route key for change url does not match key of summary
-      def change_key
-        nil
-      end
     end
   end
 end
