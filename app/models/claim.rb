@@ -121,11 +121,11 @@ class Claim < ApplicationRecord
     claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s &&
       !before_youth_court_cutoff? &&
       youth_court == 'yes' &&
-      plea_category.match(/category_[12]a/)
+      plea_category.match(/category_[12]a/).present?
   end
 
   def additional_fees_applicable?
-    [can_claim_youth_court?].excluding(false).present?
+    can_claim_youth_court?
   end
 
   private
