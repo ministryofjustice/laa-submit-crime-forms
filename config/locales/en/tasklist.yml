@@ -30,6 +30,8 @@ en:
       nsm/case_details: Case details
       nsm/case_disposal: Case disposal
       nsm/hearing_details: Hearing details
+      nsm/case_outcome: Case outcome
+      nsm/case_category: Case category
       nsm/reason_for_claim: Claim justification
       nsm/claim_details: Claim details
       nsm/work_items: Work items

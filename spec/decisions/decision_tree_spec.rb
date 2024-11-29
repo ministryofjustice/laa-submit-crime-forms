@@ -41,8 +41,23 @@ RSpec.describe Decisions::DecisionTree do
   end
 
   it_behaves_like 'a generic decision', from: :case_details, goto: { action: :edit, controller: 'nsm/steps/hearing_details' }
-  it_behaves_like 'a generic decision', from: :hearing_details, goto: { action: :edit, controller: 'nsm/steps/case_disposal' }
-  it_behaves_like 'a generic decision', from: :case_disposal, goto: { action: :edit, controller: 'nsm/steps/reason_for_claim' }
+
+  context 'pre-6th December 2024 youth court flow' do
+    let(:application) { build(:claim, rep_order_date: Constants::YOUTH_COURT_CUTOFF_DATE - 1) }
+
+    it_behaves_like 'a generic decision', from: :hearing_details, goto: { action: :edit, controller: 'nsm/steps/case_disposal' }
+    it_behaves_like 'a generic decision', from: :case_disposal, goto: { action: :edit, controller: 'nsm/steps/reason_for_claim' }
+  end
+
+  context 'post-6th December 2024 youth court flow' do
+    let(:application) { build(:claim, :valid_youth_court) }
+
+    it_behaves_like 'a generic decision', from: :hearing_details, goto: { action: :edit, controller: 'nsm/steps/case_category' }
+    it_behaves_like 'a generic decision', from: :case_category, goto: { action: :edit, controller: 'nsm/steps/case_outcome' }
+    it_behaves_like 'a generic decision', from: :case_outcome, goto: { action: :edit, controller: 'nsm/steps/youth_court_claim_additional_fee' }
+    it_behaves_like 'a generic decision', from: :youth_court_claim_additional_fee, goto: { action: :edit, controller: 'nsm/steps/reason_for_claim' }
+  end
+
   it_behaves_like 'a generic decision', from: :reason_for_claim, goto: { action: :edit, controller: 'nsm/steps/claim_details' }
 
   context 'no existing work_items' do

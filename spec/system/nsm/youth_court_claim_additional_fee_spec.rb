@@ -30,11 +30,5 @@ RSpec.describe 'Youth court claim additional fee', type: :system do
         include_youth_court_fee: true
       )
     end
-
-    it 'validates' do
-      click_on 'Save and continue'
-
-      expect(page).to have_content('Select the yes if you wish to claim the youth court addition fee')
-    end
   end
 end

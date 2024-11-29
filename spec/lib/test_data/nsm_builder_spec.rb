@@ -52,7 +52,7 @@ RSpec.describe TestData::NsmBuilder do
     end
 
     context 'when claim is invalid (not completed)' do
-      let(:incomplete_form) { instance_double(Nsm::Tasks::CaseDetails, completed?: false) }
+      let(:incomplete_form) { instance_double(Nsm::Tasks::CaseDetails, completed?: false, not_applicable?: false) }
 
       before do
         allow(Nsm::Tasks::CaseDetails).to receive(:new).and_return(incomplete_form)

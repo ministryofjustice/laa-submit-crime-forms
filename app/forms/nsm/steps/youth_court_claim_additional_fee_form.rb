@@ -5,7 +5,9 @@ module Nsm
     class YouthCourtClaimAdditionalFeeForm < ::Steps::BaseFormObject
       attribute :include_youth_court_fee, :boolean
 
-      validates :include_youth_court_fee, presence: true, inclusion: { in: [true, false] }
+      # Due to how Rails handles HTML forms with radio buttons that
+      # can be blank, we can't use presence validation here
+      validates :include_youth_court_fee, inclusion: { in: [true, false] }
 
       private
 

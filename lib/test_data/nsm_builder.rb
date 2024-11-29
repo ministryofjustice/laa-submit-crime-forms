@@ -40,12 +40,14 @@ module TestData
 
     # we use tasks here as they already know how to build all the required forms for the more complicated scenarios
     def check_tasks(claim)
-      # TODO: CRM457-2288 Remove CaseOutcome from this list
-      skipped_tasks = %w[ClaimConfirmation Base AlwaysDisabled CostSummary CheckAnswers CaseOutcome]
+      skipped_tasks = %w[ClaimConfirmation Base AlwaysDisabled CostSummary CheckAnswers]
       tasks = (Nsm::Tasks.constants.map(&:to_s) - skipped_tasks)
               .map { |name| [name, Nsm::Tasks.const_get(name)] }
 
-      tasks.reject { |_name, klass| klass.new(application: claim).completed? }
+      tasks.reject do |_name, klass|
+        task = klass.new(application: claim)
+        task.completed? || task.not_applicable?
+      end
     end
 
     # rubocop:disable Metrics/MethodLength

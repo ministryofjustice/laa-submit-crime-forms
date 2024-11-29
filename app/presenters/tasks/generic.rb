@@ -34,7 +34,7 @@ module Tasks
     end
 
     def associated_form
-      self.class::FORM
+      self.class.try(:new, application:).try(:form) || self.class::FORM
     end
   end
 end
