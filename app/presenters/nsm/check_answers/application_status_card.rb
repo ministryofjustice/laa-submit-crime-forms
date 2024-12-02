@@ -90,7 +90,7 @@ module Nsm
         return expiry_links if claim.expired?
         return unless claim.part_grant?
 
-        li_elements = %w[work_items letters_and_calls disbursements].map do |type|
+        li_elements = %w[work_items letters_and_calls disbursements additional_fees].map do |type|
           next unless any_changes?(type)
 
           tag.li do
@@ -166,8 +166,10 @@ module Nsm
           claim.work_items.any?(&:adjustment_comment)
         when 'letters_and_calls'
           claim.letters_adjustment_comment || claim.calls_adjustment_comment
-        else # 'disbursements'
+        when 'disbursements'
           claim.disbursements.any?(&:adjustment_comment)
+        else # additional fees (youth court fee)
+          claim.youth_court_fee_adjustment_comment
         end
       end
 

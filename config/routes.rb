@@ -141,6 +141,7 @@ Rails.application.routes.draw do
               get "work_items", to: "view_claim#adjusted_work_items", as: :adjustments_work_items
               get "letters_and_calls", to: "view_claim#adjusted_letters_and_calls", as: :adjustments_letters_and_calls
               get "disbursements", to: "view_claim#adjusted_disbursements", as: :adjustments_disbursements
+              get "additional_fees", to: "view_claim#adjusted_additional_fees", as: :adjustments_additional_fees
             end
 
             get ':item_type/:item_id', as: :item, to: 'view_claim#item',
