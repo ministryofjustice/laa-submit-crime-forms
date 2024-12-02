@@ -96,7 +96,7 @@ module Nsm
     end
 
     def sync_youth_court_fee_adjustment
-      return if data['include_youth_court_fee_original'].blank?
+      return if data['include_youth_court_fee_original'].blank? || FeatureFlags.youth_court_fee.enabled?
 
       claim.allowed_youth_court_fee = data['include_youth_court_fee']
       claim.youth_court_fee_adjustment_comment = data['youth_court_fee_adjustment_comment']
