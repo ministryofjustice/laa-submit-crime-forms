@@ -1,14 +1,11 @@
 <% skip_links ||= false %>
-<% show_all ||= false %>
 <% title t('.page_title') %>
 
 <h3 class="govuk-heading-m">
   <%= t('.additional_fees') %>
 </h3>
 
-<% if disbursements.none? %>
-  <p><%= t('.no_data') %></p>
-<% else %>
+<% if claim.youth_court_fee_adjustment_comment? %>
   <%=
     if skip_links
       youth_court_fee_link = t('.youth_court_fee')
@@ -23,9 +20,14 @@
     ]
 
     rows = [
-      { header: true, text: youth_court_fee_link },
-      { text: NumberTo.pounds(claim.totals[:additional_fees][:youth_court_fee][:claimed_total_inc_vat]), numeric: true },
-    ]
+      [
+        { header: true, text: youth_court_fee_link },
+        { text: NumberTo.pounds(claim.totals[:additional_fees][:youth_court_fee][:claimed_total_inc_vat]), numeric: true },
+      ]
+      ]
 
     govuk_table_with_cell(head, rows, caption: { text: t('.accessibility.additional_fees_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} })
   %>
+<% else %>
+  <p><%= t('.no_data') %></p>
+<% end %>
