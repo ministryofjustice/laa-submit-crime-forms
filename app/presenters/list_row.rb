@@ -15,12 +15,16 @@ class ListRow
   end
 
   def main_defendant
-    defendant_record = @app_store_record['application']['defendants'].detect { _1['main'] }
+    defendant_record = @app_store_record['application']['defendants']&.detect { _1['main'] }
+    return unless defendant_record
+
     Defendant.new(defendant_record.slice('first_name', 'last_name').values.join(' '))
   end
 
   def defendant
     defendant_record = @app_store_record['application']['defendant']
+    return unless defendant_record
+
     Defendant.new(defendant_record.slice('first_name', 'last_name').values.join(' '))
   end
 
