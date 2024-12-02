@@ -19,6 +19,7 @@ module Nsm
           sync_call_adjustments
           sync_work_items
           sync_disbursements
+          sync_youth_court_fee_adjustment
         elsif claim.sent_back? && further_information_exists
           sync_further_info_requests
         end
@@ -90,6 +91,11 @@ module Nsm
           new_record.resubmission_deadline = resubmission_deadline
         end
       end
+    end
+
+    def sync_youth_court_fee_adjustment
+      claim.allowed_youth_court_fee = data['allowed_youth_court_fee']
+      claim.youth_court_fee_adjustment_comment = data['youth_court_fee_adjustment_comment']
     end
 
     def letters
