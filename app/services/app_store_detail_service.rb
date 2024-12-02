@@ -9,21 +9,33 @@
 class AppStoreDetailService
   class << self
     def prior_authority(submission_id, provider)
-      retrieve(submission_id, provider, AppStore::V1::PriorAuthority::Application)
+      retrieve(submission_id, provider, AppStore::V1::PriorAuthority::Application, PriorAuthorityApplication)
     end
 
     def nsm(submission_id, provider)
-      retrieve(submission_id, provider, AppStore::V1::Nsm::Claim)
+      retrieve(submission_id, provider, AppStore::V1::Nsm::Claim, Claim)
     end
 
-    def retrieve(submission_id, provider, klass)
+    def retrieve(submission_id, provider, model_class, local_record_class)
       data = AppStoreClient.new.get(submission_id)
+      sync_if_necessary(data, submission_id, local_record_class)
       combined = data.merge(data.delete('application'))
 
-      submission = klass.new(combined)
+      submission = model_class.new(combined)
       raise Errors::ApplicationNotFound unless submission.office_code.in?(provider.office_codes)
 
       submission
+    end
+
+    # If the app store state is different from the local state, we sync the local record.
+    # This is important only in RFI loops, which is the only time, once an application is
+    # submitted, that we read its data from the local DB
+    def sync_if_necessary(data, submission_id, local_record_class)
+      record = local_record_class.find(submission_id)
+
+      return if record.state == data['application_state']
+
+      AppStoreUpdateProcessor.call(data, record)
     end
   end
 end
