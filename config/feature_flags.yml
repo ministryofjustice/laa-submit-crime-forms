@@ -14,3 +14,8 @@ feature_flags:
     development: true
     uat: true
     production: true
+  import_claims:
+    local: <%= ENV.fetch("IMPORT_CLAIMS", true) %>
+    development: false
+    uat: false
+    production: false

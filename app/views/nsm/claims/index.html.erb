@@ -67,7 +67,12 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-6"><%= t('.heading') %></h1>
-    <%= govuk_button_to t('.start_claim'), nsm_applications_path %>
+    <div class="govuk-button-group">
+      <%= govuk_button_to t('.start_claim'), nsm_applications_path %>
+      <% if FeatureFlags.import_claims.enabled? %>
+        <%= govuk_button_to t('.import_claim'), new_nsm_import_path, method: :get %>
+      <% end %>
+    <div>
     <nav class="moj-sub-navigation" aria-label="Sub navigation">
       <ul class="moj-sub-navigation__list">
         <li class="moj-sub-navigation__item">
