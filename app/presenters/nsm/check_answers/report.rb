@@ -64,7 +64,7 @@ module Nsm
         [
           CaseDetailsCard.new(claim),
           HearingDetailsCard.new(claim),
-          CaseDisposalCard.new(claim)
+          case_disposal_form
         ]
       end
 
@@ -84,6 +84,14 @@ module Nsm
       end
 
       private
+
+      def case_disposal_form
+        ycf_flow = FeatureFlags.youth_court_fee.enabled? && claim.rep_order_date >= Constants::YOUTH_COURT_CUTOFF_DATE
+
+        return CaseCategoryCard.new(claim) if ycf_flow
+
+        CaseDisposalCard.new(claim)
+      end
 
       def actions(key, action)
         return [] if @readonly

@@ -7,7 +7,8 @@ RSpec.describe Nsm::CheckAnswers::Report do
     context 'not in a complete state' do
       subject { described_class.new(claim) }
 
-      let(:claim) { build_stubbed(:claim, :complete) }
+      let(:claim) { build_stubbed(:claim, :complete, rep_order_date:) }
+      let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE - 1.day }
 
       context 'section groups' do
         it 'returns multiple groups' do
@@ -79,7 +80,8 @@ RSpec.describe Nsm::CheckAnswers::Report do
     context 'in a complete state' do
       subject { described_class.new(claim, read_only: true) }
 
-      let(:claim) { build(:claim, :complete, :completed_state) }
+      let(:claim) { build(:claim, :complete, :completed_state, rep_order_date:) }
+      let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE - 1.day }
 
       context 'section groups' do
         it 'returns multiple groups' do

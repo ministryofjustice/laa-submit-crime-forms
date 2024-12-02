@@ -308,6 +308,112 @@ time_spent: 90),
       end
     end
 
+    context 'case disposal' do
+      # rubocop:disable Style/HashSyntax
+      let(:claim) do
+        create(:claim, :case_type_magistrates,
+               :firm_details, :letters_calls,
+               work_items:, disbursements:,
+               plea:, plea_category:,
+               include_youth_court_fee:,
+               rep_order_date:,
+               state: :submitted)
+      end
+      # rubocop:enable Style/HashSyntax
+
+      let(:plea) { :guilty }
+      let(:plea_category) { :category_1a }
+      let(:include_youth_court_fee) { nil }
+      let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE }
+
+      context 'youth_court_fee enabled' do
+        let(:youth_court_fee_enabled) { true }
+
+        before do
+          allow(FeatureFlags).to receive(:youth_court_fee).and_return(double(:youth_court_fee, enabled?: youth_court_fee_enabled))
+        end
+
+        describe 'include_youth_court_fee true' do
+          let(:include_youth_court_fee) { true }
+
+          it 'show case outcome category, plea and additional fee claimed message' do
+            visit nsm_steps_view_claim_path(claim.id)
+
+            within('.govuk-summary-card', text: 'Case disposal') do
+              expect(page).to have_content('Category 1a')
+              expect(page).to have_content('Guilty')
+              expect(page).to have_content('Additional fee')
+              expect(page).to have_content('Youth court fee claimed')
+            end
+          end
+        end
+
+        describe 'include_youth_court_fee false' do
+          let(:include_youth_court_fee) { false }
+
+          it 'show additional fee with fee not claimed message' do
+            visit nsm_steps_view_claim_path(claim.id)
+
+            within('.govuk-summary-card', text: 'Case disposal') do
+              expect(page).to have_content('Category 1a')
+              expect(page).to have_content('Guilty')
+              expect(page).to have_content('Additional fee')
+              expect(page).to have_content('Youth court fee not claimed')
+            end
+          end
+        end
+
+        describe 'include_youth_court_fee is nil' do
+          it 'does not show Additional Fee if ineligible for YCF' do
+            visit nsm_steps_view_claim_path(claim.id)
+
+            within('.govuk-summary-card', text: 'Case disposal') do
+              expect(page).to have_content('Category 1a')
+              expect(page).to have_content('Guilty')
+              expect(page).not_to have_content('Additional fee')
+            end
+          end
+        end
+
+        describe 'backwards compatible with pre-YCF change claims' do
+          let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE - 1.day }
+          let(:plea_category) { :non_guilty_pleas }
+          let(:plea) { :cracked_trial }
+
+          it 'shows pre-6th dec categories' do
+            visit nsm_steps_view_claim_path(claim.id)
+
+            within('.govuk-summary-card', text: 'Case disposal') do
+              expect(page).to have_content('Category 2')
+              expect(page).to have_content('Cracked trial')
+              expect(page).not_to have_content('Additional fee')
+            end
+          end
+        end
+      end
+
+      describe 'include_youth_court_fee disabled' do
+        let(:youth_court_fee_enabled) { false }
+        let(:include_youth_court_fee) { nil }
+
+        before do
+          allow(FeatureFlags).to receive(:youth_court_fee).and_return(double(:youth_court_fee, enabled?: youth_court_fee_enabled))
+        end
+
+        describe 'shows generic category title and plea outcome' do
+          it 'show pre-youth court changes case disposal view' do
+            visit nsm_steps_view_claim_path(claim.id)
+
+            within('.govuk-summary-card', text: 'Case disposal') do
+              expect(page).to have_content('Category')
+              expect(page).to have_content('Guilty plea')
+              expect(page).not_to have_content('Additional fee')
+            end
+          end
+        end
+      end
+    end
+
     context 'with rejected claims' do
       let(:state) { :rejected }
 

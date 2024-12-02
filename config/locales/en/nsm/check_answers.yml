@@ -109,6 +109,23 @@ en:
               not_guilty_pleas: Category 2
               arrest_warrant_date: Date of warrant issued
               cracked_trial_date: Date guilty plea indicated to solicitor
+            case_category:
+              arrest_warrant_date: Date of warrant issued
+              change_solicitor_date: Date of change of solicitor
+              guilty_pleas: Category 1
+              not_guilty_pleas: Category 2
+              pending: Category
+              category_2: Category 2
+              category_1a: Category 1a
+              category_1b: Category 1b
+              category_2a: Category 2a
+              category_2b: Category 2b
+              additional_fee: Additional fee
+              additional_fee_options:
+                'true': Youth court fee claimed
+                'false': Youth court fee not claimed
+              arrest_warrant_date: Date of warrant issued
+              cracked_trial_date: Date guilty plea indicated to solicitor
             supporting_evidence:
               send_by_post: Sending supporting evidence by post
               supporting_evidence: Evidence %{count}
@@ -153,6 +170,8 @@ en:
             hearing_details:
               title: Hearing details
             case_disposal:
+              title: Case disposal
+            case_category:
               title: Case disposal
           about_claim:
             heading: About the claim
