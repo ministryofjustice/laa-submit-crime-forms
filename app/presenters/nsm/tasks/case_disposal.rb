@@ -12,19 +12,25 @@ module Nsm
       end
 
       def form
-        if application.can_claim_youth_court?
-          Steps::CaseCategoryForm
-        else
+        if application.application.before_youth_court_cutoff?
           Steps::CaseDisposalForm
+        else
+          Steps::CaseCategoryForm
         end
       end
 
       def completed?
         if application.can_claim_youth_court?
-          application.plea && application.plea_category && application.include_youth_court_fee
+          plea_details_populated? && !application.include_youth_court_fee.nil?
         else
-          application.plea && application.plea_category
+          plea_details_populated?
         end
+      end
+
+      private
+
+      def plea_details_populated?
+        application.plea.present? && application.plea_category.present?
       end
     end
   end
