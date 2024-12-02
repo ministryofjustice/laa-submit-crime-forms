@@ -11,6 +11,7 @@ module Nsm
       @app_store_record = record
     end
 
+    # rubocop:disable Metrics/AbcSize
     def call
       claim.with_lock do
         sync_overall_comment
@@ -29,6 +30,7 @@ module Nsm
     rescue StandardError => e
       Sentry.capture_message("#{self.class.name} encountered error '#{e}' for claim '#{claim.id}'")
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 
@@ -94,10 +96,10 @@ module Nsm
     end
 
     def sync_youth_court_fee_adjustment
-      if data['include_youth_court_fee_original'].present?
-        claim.allowed_youth_court_fee = data['include_youth_court_fee']
-        claim.youth_court_fee_adjustment_comment = data['youth_court_fee_adjustment_comment']
-      end
+      return if data['include_youth_court_fee_original'].blank?
+
+      claim.allowed_youth_court_fee = data['include_youth_court_fee']
+      claim.youth_court_fee_adjustment_comment = data['youth_court_fee_adjustment_comment']
     end
 
     def letters
