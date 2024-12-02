@@ -7,7 +7,8 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
     context 'not in a complete state' do
       subject { described_class.new(claim, cost_summary_in_overview:) }
 
-      let(:claim) { build(:claim, :complete) }
+      let(:claim) { build(:claim, :complete, rep_order_date:) }
+      let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE - 1.day }
       let(:cost_summary_in_overview) { true }
 
       context 'section groups' do
@@ -100,7 +101,8 @@ RSpec.describe Nsm::CheckAnswers::ReadOnlyReport do
     context 'in a complete state' do
       subject { described_class.new(claim) }
 
-      let(:claim) { build(:claim, :complete, :completed_state) }
+      let(:claim) { build(:claim, :complete, :completed_state, rep_order_date:) }
+      let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE - 1.day }
 
       context 'section groups' do
         it 'returns multiple groups' do
