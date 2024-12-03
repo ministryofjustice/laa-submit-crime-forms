@@ -29,6 +29,8 @@ module Decisions
     from('nsm/steps/reason_for_claim')
       .when(-> { application.can_claim_youth_court? })
       .goto(edit: DecisionTree::NSM_YCF_FEE)
+      .when(-> { application.can_access_youth_court_flow? })
+      .goto(edit: DecisionTree::NSM_CASE_OUTCOME)
       .goto(edit: 'nsm/steps/case_disposal')
 
     from(DecisionTree::NSM_CLAIM_DETAILS).goto(edit: 'nsm/steps/reason_for_claim')

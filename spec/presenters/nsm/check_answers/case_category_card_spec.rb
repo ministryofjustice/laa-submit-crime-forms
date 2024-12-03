@@ -92,13 +92,13 @@ RSpec.describe Nsm::CheckAnswers::CaseCategoryCard do
             text: 'Warrant of arrest'
           },
           {
-            head_key: :additional_fee,
-            text: 'Youth court fee not claimed'
-          },
-          {
             head_key: :arrest_warrant_date,
             text: '1 March 2023'
           },
+          {
+            head_key: :additional_fee,
+            text: 'Youth court fee not claimed'
+          }
         ]
       )
     end
@@ -118,13 +118,13 @@ RSpec.describe Nsm::CheckAnswers::CaseCategoryCard do
             text: 'Change of solicitor'
           },
           {
-            head_key: :additional_fee,
-            text: 'Youth court fee not claimed'
-          },
-          {
             head_key: :change_solicitor_date,
             text: '1 March 2023'
           },
+          {
+            head_key: :additional_fee,
+            text: 'Youth court fee not claimed'
+          }
         ]
       )
     end

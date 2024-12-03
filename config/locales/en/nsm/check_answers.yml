@@ -116,10 +116,10 @@ en:
               not_guilty_pleas: Category 2
               pending: Category
               category_2: Category 2
-              category_1a: Category 1a
-              category_1b: Category 1b
-              category_2a: Category 2a
-              category_2b: Category 2b
+              category_1a: Category 1A
+              category_1b: Category 1B
+              category_2a: Category 2A
+              category_2b: Category 2B
               additional_fee: Additional fee
               additional_fee_options:
                 'true': Youth court fee claimed

@@ -110,10 +110,10 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
       end
 
       context 'with a post-6th December rep order date' do
-        let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE }
+        let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE - 1 }
 
         context 'and the previous rep order date being pre-6th December' do
-          before { allow(application).to receive(:before_youth_court_cutoff?).and_return(true) }
+          before { allow(application).to receive(:after_youth_court_cutoff?).and_return(false) }
 
           it 'resets youth court fields' do
             attributes = subject.send(:youth_court_attributes_to_reset)
@@ -122,7 +122,7 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
         end
 
         context 'and the previous rep order date being post-6th December' do
-          before { allow(application).to receive(:before_youth_court_cutoff?).and_return(false) }
+          before { allow(application).to receive(:after_youth_court_cutoff?).and_return(true) }
 
           it 'resets youth court fields' do
             attributes = subject.send(:youth_court_attributes_to_reset)

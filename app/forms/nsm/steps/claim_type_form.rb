@@ -34,9 +34,9 @@ module Nsm
 
       def should_reset_youth_court_fields?
         (breach_claim? && application.nsm?) ||
-          (!application.before_youth_court_cutoff? &&
+          (application.after_youth_court_cutoff? &&
             non_standard_claim? &&
-            rep_order_date <= Constants::YOUTH_COURT_CUTOFF_DATE)
+            rep_order_date < Constants::YOUTH_COURT_CUTOFF_DATE)
       end
 
       private

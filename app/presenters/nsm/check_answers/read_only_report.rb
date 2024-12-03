@@ -125,7 +125,7 @@ module Nsm
       private
 
       def case_disposal_form
-        ycf_flow = FeatureFlags.youth_court_fee.enabled? && claim.nsm? && !claim.before_youth_court_cutoff?
+        ycf_flow = FeatureFlags.youth_court_fee.enabled? && claim.after_youth_court_cutoff?
 
         return CaseCategoryCard.new(claim) if ycf_flow
 
