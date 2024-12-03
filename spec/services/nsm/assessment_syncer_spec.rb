@@ -538,7 +538,7 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
         let(:youth_court_fee_enabled) { true }
 
         it 'does sync the youth court fee related fields' do
-          expect(claim.allowed_youth_court_fee).to eq(false)
+          expect(claim.allowed_youth_court_fee).to be(false)
           expect(claim.youth_court_fee_adjustment_comment).to eq(youth_court_fee_adjustment_comment)
         end
 
