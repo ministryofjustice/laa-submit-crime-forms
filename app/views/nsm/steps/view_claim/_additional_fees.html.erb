@@ -5,7 +5,7 @@
   <%= t('.additional_fees') %>
 </h3>
 
-<% if claim.youth_court_fee_adjustment_comment? %>
+<% if claim.include_youth_court_fee %>
   <%=
     if skip_links
       youth_court_fee_link = t('.youth_court_fee')
@@ -21,7 +21,7 @@
     rows = [
       [
         { header: true, text: youth_court_fee_link },
-        { text: NumberTo.pounds(claim.totals[:additional_fees][:youth_court_fee][:assessed_total_inc_vat]), numeric: true },
+        { text: NumberTo.pounds(claim.totals[:additional_fees][:youth_court_fee][:claimed_total_inc_vat]), numeric: true },
       ]
       ]
 
