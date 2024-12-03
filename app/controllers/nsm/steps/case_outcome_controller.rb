@@ -23,7 +23,7 @@ module Nsm
         @case_outcomes =
           case current_application.plea_category
           when /\Acategory_1[ab]\z/ then CaseOutcome::CATEGORY_1_OUTCOMES
-          when /\Acategory_2[ab]\z/ then CaseOutcome::CATEGORY_2_OUTCOMES
+          when /\Acategory_2[ab]?\z/ then CaseOutcome::CATEGORY_2_OUTCOMES
           else
             raise "Invalid plea category: '#{current_application.plea_category}'"
           end
