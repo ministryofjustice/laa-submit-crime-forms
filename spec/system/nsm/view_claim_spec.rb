@@ -6,8 +6,8 @@ RSpec.describe 'View claim page', type: :system do
            work_items: work_items, office_in_undesignated_area: true, court_in_undesignated_area: true,
            assigned_counsel: 'yes', disbursements: disbursements, youth_court: youth_court,
            include_youth_court_fee: include_youth_court_fee, plea_category: plea_category, rep_order_date: rep_order_date,
-           youth_court_fee_adjustment_comment: youth_court_fee_adjustment_comment, allowed_youth_court_fee: allowed_youth_court_fee,
-           state: :submitted)
+           youth_court_fee_adjustment_comment: youth_court_fee_adjustment_comment,
+           allowed_youth_court_fee: allowed_youth_court_fee, state: :submitted)
   end
 
   let(:work_items) do
@@ -147,7 +147,6 @@ RSpec.describe 'View claim page', type: :system do
       ]
     )
   end
-
 
   context 'when there is an additional fee claimed' do
     let(:include_youth_court_fee) { true }
