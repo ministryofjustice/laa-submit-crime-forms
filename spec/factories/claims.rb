@@ -56,6 +56,7 @@ FactoryBot.define do
       concluded { 'no' }
       signatory_name { Faker::Name.name }
       has_disbursements { 'no' }
+      include_youth_court_fee { true }
     end
 
     trait :case_type_magistrates do

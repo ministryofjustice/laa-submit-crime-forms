@@ -29,9 +29,16 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
       ]
     end
 
+    let(:include_youth_court_fee) { nil }
+    let(:include_youth_court_fee_original) { nil }
+    let(:youth_court_fee_adjustment_comment) { nil }
+
     let(:application) do
       {
         letters_and_calls: letters_and_calls,
+        include_youth_court_fee: include_youth_court_fee,
+        include_youth_court_fee_original: include_youth_court_fee_original,
+        youth_court_fee_adjustment_comment: youth_court_fee_adjustment_comment,
         work_items: [],
         disbursements: []
       }
@@ -44,8 +51,10 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
     end
 
     let(:arbitrary_fixed_date) { DateTime.new(2024, 2, 1, 15, 23, 27) }
+    let(:youth_court_fee_enabled) { false }
 
     before do
+      allow(FeatureFlags).to receive(:youth_court_fee).and_return(double(:youth_court_fee, enabled?: youth_court_fee_enabled))
       travel_to(arbitrary_fixed_date) do
         described_class.call(claim, record:)
       end
@@ -511,6 +520,36 @@ RSpec.describe Nsm::AssessmentSyncer, :stub_oauth_token do
 
       it 'syncs the last further information' do
         expect(claim.further_informations.count).to eq(1)
+      end
+    end
+
+    context 'when part granted with youth court fee adjusted' do
+      let(:youth_court_fee_adjustment_comment) { 'Removed youth court fee' }
+      let(:include_youth_court_fee_original) { true }
+      let(:include_youth_court_fee) { false }
+      let(:state) { 'part_grant' }
+
+      it 'does not sync youth court fee related fields' do
+        expect(claim.allowed_youth_court_fee).to be_nil
+        expect(claim.youth_court_fee_adjustment_comment).to be_nil
+      end
+
+      context 'when feature flag is enabled' do
+        let(:youth_court_fee_enabled) { true }
+
+        it 'does sync the youth court fee related fields' do
+          expect(claim.allowed_youth_court_fee).to eq(false)
+          expect(claim.youth_court_fee_adjustment_comment).to eq(youth_court_fee_adjustment_comment)
+        end
+
+        context 'when adjustment has not been made' do
+          let(:include_youth_court_fee_original) { nil }
+
+          it 'does not sync the youth court fee related fields' do
+            expect(claim.allowed_youth_court_fee).to be_nil
+            expect(claim.youth_court_fee_adjustment_comment).to be_nil
+          end
+        end
       end
     end
   end
