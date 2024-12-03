@@ -6,7 +6,7 @@
     <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :letters_and_calls %>">
       <%= link_to t(".#{prefix}letters_and_calls"), polymorphic_path([@section, :letters_and_calls, :nsm, :steps_view, claim], anchor: 'claim_nav') %>
     </li>
-    <% if claim.can_claim_youth_court? %>
+    <% if claim.youth_court_fee_adjustment_comment? %>
       <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :additional_fees %>">
         <%= link_to t(".#{prefix}additional_fees"), polymorphic_path([@section, :additional_fees, :nsm, :steps_view, claim], anchor: 'claim_nav') %>
       </li>
