@@ -70,7 +70,7 @@ RSpec.describe 'Check answers page', type: :system do
           visit nsm_steps_check_answers_path(claim.id)
 
           within('.govuk-summary-card', text: 'Case disposal') do
-            expect(page).to have_content('Category 1a')
+            expect(page).to have_content('Category 1A')
             expect(page).to have_content('Guilty')
             expect(page).to have_content('Additional fee')
             expect(page).to have_content('Youth court fee claimed')
@@ -85,7 +85,7 @@ RSpec.describe 'Check answers page', type: :system do
           visit nsm_steps_check_answers_path(claim.id)
 
           within('.govuk-summary-card', text: 'Case disposal') do
-            expect(page).to have_content('Category 1a')
+            expect(page).to have_content('Category 1A')
             expect(page).to have_content('Guilty')
           end
         end

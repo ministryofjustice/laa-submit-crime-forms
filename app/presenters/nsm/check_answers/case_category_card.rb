@@ -23,9 +23,9 @@ module Nsm
           }
         ]
 
-        add_additional_fee(row_data_array, :additional_fee, case_youth_court_fee.include_youth_court_fee)
         add_date_object(row_data_array, :arrest_warrant_date, case_outcome_form.arrest_warrant_date)
         add_date_object(row_data_array, :change_solicitor_date, case_outcome_form.change_solicitor_date)
+        add_additional_fee(row_data_array, :additional_fee, case_youth_court_fee.include_youth_court_fee)
 
         row_data_array
       end

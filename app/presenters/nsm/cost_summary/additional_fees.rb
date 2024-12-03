@@ -42,7 +42,7 @@ module Nsm
       end
 
       def change_key
-        'case_category'
+        'youth_court_claim_additional_fee'
       end
     end
   end
