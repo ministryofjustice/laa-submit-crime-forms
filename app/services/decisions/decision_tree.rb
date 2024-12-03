@@ -67,7 +67,7 @@ module Decisions
       .goto(edit: 'nsm/steps/case_details')
     from(:case_details).goto(edit: 'nsm/steps/hearing_details')
     from(:hearing_details)
-      .when(-> { application.boi? || application.before_youth_court_cutoff? })
+      .when(-> { application.before_youth_court_cutoff? })
       .goto(edit: 'nsm/steps/case_disposal')
       .goto(edit: NSM_CASE_CATEGORY)
 

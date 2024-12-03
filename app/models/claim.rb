@@ -113,16 +113,14 @@ class Claim < ApplicationRecord
     claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s
   end
 
-  def boi?
-    claim_type == ClaimType::BREACH_OF_INJUNCTION.to_s
-  end
-
   def before_youth_court_cutoff?
-    rep_order_date&.<(Constants::YOUTH_COURT_CUTOFF_DATE)
+    rep_order_date&.<(Constants::YOUTH_COURT_CUTOFF_DATE) ||
+      cntp_date&.<(Constants::YOUTH_COURT_CUTOFF_DATE)
   end
 
   def after_youth_court_cutoff?
-    rep_order_date&.>=(Constants::YOUTH_COURT_CUTOFF_DATE)
+    rep_order_date&.>=(Constants::YOUTH_COURT_CUTOFF_DATE) ||
+      cntp_date&.>=(Constants::YOUTH_COURT_CUTOFF_DATE)
   end
 
   def can_access_youth_court_flow?
