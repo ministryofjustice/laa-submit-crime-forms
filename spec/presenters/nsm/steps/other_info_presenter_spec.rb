@@ -4,9 +4,9 @@ RSpec.describe Nsm::Tasks::OtherInfo, type: :system do
   subject { described_class.new(application:) }
 
   let(:application) { build(:claim, attributes) }
-  let(:attributes) { { id:, navigation_stack: } }
+  let(:attributes) { { id:, viewed_steps: } }
   let(:id) { SecureRandom.uuid }
-  let(:navigation_stack) { [] }
+  let(:viewed_steps) { [] }
 
   describe '#path' do
     it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/other_info") }
@@ -19,7 +19,7 @@ RSpec.describe Nsm::Tasks::OtherInfo, type: :system do
 
     context 'cost summary page has been visited' do
       before do
-        navigation_stack << nsm_steps_cost_summary_path(application)
+        viewed_steps << 'cost_summary'
       end
 
       it { expect(subject).to be_can_start }

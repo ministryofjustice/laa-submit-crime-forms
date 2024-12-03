@@ -35,7 +35,7 @@ module Nsm
         work_item || redirect_to(edit_nsm_steps_work_items_path(current_application))
       end
 
-      def skip_stack
+      def do_not_add_to_viewed_steps
         true
       end
     end

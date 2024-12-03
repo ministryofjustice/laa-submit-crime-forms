@@ -11,6 +11,10 @@ module Nsm
       def step_valid?
         current_application.draft?
       end
+
+      def subsequent_steps
+        Decisions::OrderedSteps.nsm_after(controller_name)
+      end
     end
   end
 end

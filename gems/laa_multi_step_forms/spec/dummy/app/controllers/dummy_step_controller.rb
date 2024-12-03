@@ -17,6 +17,10 @@ class DummyStepController < ::Steps::BaseStepController
 
   private
 
+  def subsequent_steps
+    ['step_after_dummy']
+  end
+
   def current_application
     DummyStepImplementation.current_application
   end
@@ -29,7 +33,7 @@ class DummyStepController < ::Steps::BaseStepController
     DummyStepImplementation.decision_tree_class || super
   end
 
-  def skip_stack
-    DummyStepImplementation.skip_stack || super
+  def do_not_add_to_viewed_steps
+    DummyStepImplementation.do_not_add_to_viewed_steps || super
   end
 end

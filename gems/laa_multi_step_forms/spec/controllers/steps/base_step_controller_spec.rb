@@ -2,7 +2,7 @@ require 'rails_helper'
 
 class FakeApp < Steps::BaseFormObject
   attribute :id
-  attribute :navigation_stack
+  attribute :viewed_steps
 
   def save!(*)
     true
@@ -17,9 +17,9 @@ RSpec.describe DummyStepController, type: :controller do
   render_views
 
   let(:application_id) { SecureRandom.uuid }
-  let(:navigation_stack) { [] }
+  let(:viewed_steps) { [] }
   let!(:application) do
-    FakeApp.new(id: application_id, navigation_stack: navigation_stack)
+    FakeApp.new(id: application_id, viewed_steps: viewed_steps)
   end
   let(:form_class) do
     class_double(Steps::BaseFormObject,
@@ -41,69 +41,67 @@ RSpec.describe DummyStepController, type: :controller do
   end
 
   describe 'navigation stack' do
-    let(:dummy_step_path) { "/dummy_step/#{application_id}" }
-
     context 'for show endpoints' do
       context 'when the stack is empty' do
         it 'adds the page to the stack' do
           get :show, params: { id: application_id }
 
-          expect(application.navigation_stack).to eq([dummy_step_path])
+          expect(application.viewed_steps).to eq(['dummy_step'])
         end
 
-        context 'but skip_stack is true' do
+        context 'but do_not_add_to_viewed_steps is true' do
           before do
-            expect(DummyStepImplementation).to receive(:skip_stack).and_return(true)
+            expect(DummyStepImplementation).to receive(:do_not_add_to_viewed_steps).and_return(true)
           end
 
           it 'does not modify the stack' do
             get :show, params: { id: application_id }
 
-            expect(application.navigation_stack).to eq([])
+            expect(application.viewed_steps).to eq([])
           end
         end
       end
 
       context 'when the current page is on the stack' do
-        let(:navigation_stack) { ['/foo', '/bar', dummy_step_path, '/baz'] }
+        let(:viewed_steps) { %w[foo bar dummy_step baz] }
 
         it 'does not change the stack' do
           get :show, params: { id: application_id }
 
-          expect(application.navigation_stack).to eq(['/foo', '/bar', dummy_step_path, '/baz'])
+          expect(application.viewed_steps).to eq(%w[foo bar dummy_step baz])
         end
 
-        context 'but skip_stack is true' do
+        context 'but do_not_add_to_viewed_steps is true' do
           before do
-            expect(DummyStepImplementation).to receive(:skip_stack).and_return(true)
+            expect(DummyStepImplementation).to receive(:do_not_add_to_viewed_steps).and_return(true)
           end
 
           it 'does not modify the stack' do
             get :show, params: { id: application_id }
 
-            expect(application.navigation_stack).to eq(['/foo', '/bar', dummy_step_path, '/baz'])
+            expect(application.viewed_steps).to eq(%w[foo bar dummy_step baz])
           end
         end
       end
 
       context 'when the current page is not on the stack' do
-        let(:navigation_stack) { %w[/foo /bar /baz] }
+        let(:viewed_steps) { %w[foo bar baz] }
 
         it 'adds it to the end of the stack' do
           get :show, params: { id: application_id }
 
-          expect(application.navigation_stack).to eq(navigation_stack + [dummy_step_path])
+          expect(application.viewed_steps).to eq(viewed_steps + ['dummy_step'])
         end
 
-        context 'but skip_stack is true' do
+        context 'but do_not_add_to_viewed_steps is true' do
           before do
-            expect(DummyStepImplementation).to receive(:skip_stack).and_return(true)
+            expect(DummyStepImplementation).to receive(:do_not_add_to_viewed_steps).and_return(true)
           end
 
           it 'does not modify the stack' do
             get :show, params: { id: application_id }
 
-            expect(application.navigation_stack).to eq(navigation_stack)
+            expect(application.viewed_steps).to eq(viewed_steps)
           end
         end
       end
@@ -111,55 +109,55 @@ RSpec.describe DummyStepController, type: :controller do
 
     context 'for update endpoints' do
       context 'when the stack is empty' do
-        let(:navigation_stack) { [] }
+        let(:viewed_steps) { [] }
 
         it 'adds the page to the stack' do
           put :update, params: { id: application_id }
 
-          expect(application.navigation_stack).to eq([dummy_step_path])
+          expect(application.viewed_steps).to eq(['dummy_step'])
         end
       end
 
       context 'when the current page is on the stack' do
-        let(:navigation_stack) { ['/foo', '/bar', dummy_step_path, '/baz'] }
+        let(:viewed_steps) { %w[foo bar step_after_dummy dummy_step] }
 
         it 'rewinds the stack to the appropriate point' do
           put :update, params: { id: application_id }
 
-          expect(application.navigation_stack).to eq(['/foo', '/bar', dummy_step_path])
+          expect(application.viewed_steps).to eq(%w[foo bar dummy_step])
         end
 
-        context 'but skip_stack is true' do
+        context 'but do_not_add_to_viewed_steps is true' do
           before do
-            expect(DummyStepImplementation).to receive(:skip_stack).and_return(true)
+            expect(DummyStepImplementation).to receive(:do_not_add_to_viewed_steps).and_return(true)
           end
 
           it 'does not modify stack' do
             put :update, params: { id: application_id }
 
-            expect(application.navigation_stack).to eq(['/foo', '/bar', dummy_step_path, '/baz'])
+            expect(application.viewed_steps).to eq(%w[foo bar step_after_dummy dummy_step])
           end
         end
       end
 
       context 'when the current page is not on the stack' do
-        let(:navigation_stack) { %w[/foo /bar /baz] }
+        let(:viewed_steps) { %w[foo bar baz] }
 
         it 'adds it to the end of the stack' do
           put :update, params: { id: application_id }
 
-          expect(application.navigation_stack).to eq(navigation_stack + [dummy_step_path])
+          expect(application.viewed_steps).to eq(viewed_steps + ['dummy_step'])
         end
 
-        context 'but skip_stack is true' do
+        context 'but do_not_add_to_viewed_steps is true' do
           before do
-            expect(DummyStepImplementation).to receive(:skip_stack).and_return(true)
+            expect(DummyStepImplementation).to receive(:do_not_add_to_viewed_steps).and_return(true)
           end
 
           it 'does not modify stack' do
             put :update, params: { id: application_id }
 
-            expect(application.navigation_stack).to eq(navigation_stack)
+            expect(application.viewed_steps).to eq(viewed_steps)
           end
         end
       end

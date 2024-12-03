@@ -8,14 +8,14 @@ RSpec.describe Nsm::Tasks::Disbursements, type: :system do
     {
       id:,
       disbursements:,
-      navigation_stack:,
+      viewed_steps:,
       has_disbursements:
     }
   end
   let(:id) { SecureRandom.uuid }
   let(:disbursements) { [disbursement] }
   let(:disbursement) { Disbursement.new(id: SecureRandom.uuid) }
-  let(:navigation_stack) { [] }
+  let(:viewed_steps) { [] }
   let(:has_disbursements) { nil }
 
   describe '#path' do
@@ -40,15 +40,15 @@ RSpec.describe Nsm::Tasks::Disbursements, type: :system do
   it_behaves_like 'a task with generic can_start?', Nsm::Tasks::LettersCalls
 
   describe 'in_progress?' do
-    context 'navigation_stack include disbursement add screen' do
+    context 'viewed_steps include disbursement add screen' do
       before do
-        navigation_stack << edit_nsm_steps_disbursement_add_path(application)
+        viewed_steps << 'disbursement_add'
       end
 
       it { expect(subject).to be_in_progress }
     end
 
-    context 'navigation_stack does not include disbursements paths' do
+    context 'viewed_steps does not include disbursements paths' do
       it { expect(subject).not_to be_in_progress }
     end
   end

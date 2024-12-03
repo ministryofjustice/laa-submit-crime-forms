@@ -32,7 +32,7 @@ module Nsm
         defendant || redirect_to(edit_nsm_steps_defendant_summary_path(current_application))
       end
 
-      def skip_stack
+      def do_not_add_to_viewed_steps
         true
       end
     end

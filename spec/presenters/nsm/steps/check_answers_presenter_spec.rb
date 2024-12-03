@@ -7,11 +7,11 @@ RSpec.describe Nsm::Tasks::CheckAnswers, type: :system do
   let(:attributes) do
     {
       id:,
-      navigation_stack:
+      viewed_steps:
     }
   end
   let(:id) { SecureRandom.uuid }
-  let(:navigation_stack) { [] }
+  let(:viewed_steps) { [] }
 
   describe '#path' do
     it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/check_answers") }
@@ -23,19 +23,19 @@ RSpec.describe Nsm::Tasks::CheckAnswers, type: :system do
 
   describe '#completed?' do
     context 'check_answers is last page in the navigation stack' do
-      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/check_answers"] }
+      let(:viewed_steps) { ['check_answers'] }
 
       it { expect(subject).not_to be_completed }
     end
 
     context 'check_answers is not in the navigation stack' do
-      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/apples"] }
+      let(:viewed_steps) { ['apples'] }
 
       it { expect(subject).not_to be_completed }
     end
 
     context 'check_answers is not the last page in the navigation stack' do
-      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/check_answers", '/foo'] }
+      let(:viewed_steps) { %w[check_answers equality] }
 
       it { expect(subject).to be_completed }
     end

@@ -56,7 +56,7 @@ module Tasks
     end
 
     def in_progress?
-      application.navigation_stack.include?(path)
+      application.viewed_steps.include?(step_name)
     end
 
     def completed?

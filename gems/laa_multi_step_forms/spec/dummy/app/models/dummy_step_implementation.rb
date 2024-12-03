@@ -17,7 +17,7 @@ class DummyStepImplementation
       # This is a placeholder to help with stubbing for tests
     end
 
-    def skip_stack
+    def do_not_add_to_viewed_steps
       # This is a placeholder to help with stubbing for tests
       false
     end

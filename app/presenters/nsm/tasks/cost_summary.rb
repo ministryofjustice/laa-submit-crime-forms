@@ -9,7 +9,7 @@ module Nsm
 
       # completed once user has moved to the next page
       def completed?
-        application.navigation_stack[0..-2].include?(path)
+        viewed_subsequent_step?
       end
     end
   end

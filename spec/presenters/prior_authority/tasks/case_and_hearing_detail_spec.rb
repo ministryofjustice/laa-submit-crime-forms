@@ -31,7 +31,7 @@ RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
       before do
         application.update!(
           ufn: '111111/111',
-          navigation_stack: ["/prior-authority/applications/#{application.id}/steps/ufn"],
+          viewed_steps: ['ufn'],
         )
       end
 
@@ -42,7 +42,7 @@ RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
       before do
         application.update!(
           ufn: nil,
-          navigation_stack: []
+          viewed_steps: []
         )
       end
 

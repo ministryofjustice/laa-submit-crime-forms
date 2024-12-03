@@ -7,13 +7,13 @@ RSpec.describe Nsm::Tasks::CostSummary, type: :system do
   let(:attributes) do
     {
       id:,
-      navigation_stack:,
+      viewed_steps:,
       disbursements:,
       has_disbursements:
     }
   end
   let(:id) { SecureRandom.uuid }
-  let(:navigation_stack) { [] }
+  let(:viewed_steps) { [] }
   let(:disbursements) { [] }
   let(:has_disbursements) { nil }
 
@@ -27,19 +27,19 @@ RSpec.describe Nsm::Tasks::CostSummary, type: :system do
 
   describe '#completed?' do
     context 'cost_summary is last page in the navigation stack' do
-      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/cost_summary"] }
+      let(:viewed_steps) { ['cost_summary'] }
 
       it { expect(subject).not_to be_completed }
     end
 
     context 'cost_summary is not in the navigation stack' do
-      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/apples"] }
+      let(:viewed_steps) { ['apples'] }
 
       it { expect(subject).not_to be_completed }
     end
 
     context 'cost_summary is not the last page in the navigation stack' do
-      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{id}/steps/cost_summary", '/foo'] }
+      let(:viewed_steps) { %w[cost_summary check_answers] }
 
       it { expect(subject).to be_completed }
     end

@@ -1,8 +1,8 @@
 module Steps
   class BaseStepController < ::ApplicationController
     before_action :check_application_presence
-    before_action :prune_navigation_stack, only: [:update]
-    before_action :append_navigation_stack, only: [:show, :edit]
+    before_action :prune_viewed_steps, only: [:update]
+    before_action :update_viewed_steps, only: [:show, :edit]
 
     # :nocov:
     def show
@@ -84,26 +84,34 @@ module Steps
       []
     end
 
-    def prune_navigation_stack
-      return if skip_stack
+    # :nocov:
+    def subsequent_steps
+      []
+    end
+    # :nocov:
 
-      # filter out up to current location
-      current_application.navigation_stack =
-        current_application.navigation_stack.take_while { |path| path != request.fullpath }
+    def prune_viewed_steps
+      return if do_not_add_to_viewed_steps
 
-      current_application.navigation_stack |= [request.fullpath]
+      # filter out all steps that come after the current steps
+      # from the list of viewed steps, to mark that those
+      # steps need re-doing
+      current_application.viewed_steps -= subsequent_steps
+
+      # make sure the current location is included
+      current_application.viewed_steps |= [controller_name]
       current_application.save!(touch: false)
     end
 
-    def append_navigation_stack
-      return if skip_stack
+    def update_viewed_steps
+      return if do_not_add_to_viewed_steps
 
-      current_application.navigation_stack |= [request.fullpath]
+      current_application.viewed_steps |= [controller_name]
       current_application.save!(touch: false)
     end
 
     # Overwrite this when controller shouldn't be in the stack (i.e. delete endpoints)
-    def skip_stack
+    def do_not_add_to_viewed_steps
       false
     end
   end

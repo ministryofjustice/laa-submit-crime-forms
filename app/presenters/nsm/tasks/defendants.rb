@@ -6,12 +6,7 @@ module Nsm
       PREVIOUS_STEP_NAME = :firm_details
 
       def previously_visited?
-        [
-          edit_nsm_steps_defendant_summary_path(application),
-          edit_nsm_steps_defendant_details_path(id: application.id, defendant_id: '')
-        ].any? do |path|
-          application.navigation_stack.any? { |stack| stack.start_with?(path) }
-        end
+        application.viewed_steps.intersect?(%w[defendant_details defendant_summary])
       end
 
       def path

@@ -142,10 +142,7 @@ module Decisions
     # pre-draft application steps
     from(:prison_law).goto(edit: 'prior_authority/steps/authority_value')
     from(:authority_value).goto(edit: 'prior_authority/steps/ufn')
-    from(:ufn)
-      .when(-> { application.navigation_stack[-1].match?('check_answers') })
-      .goto(edit: PRIOR_AUTHORITY_CHECK_ANSWERS)
-      .goto { overwrite_to_cya }
+    from(:ufn).goto { overwrite_to_cya }
 
     # ---------------------------------
     # prior authority application steps

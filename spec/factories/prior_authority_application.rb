@@ -60,13 +60,9 @@ FactoryBot.define do
       ufn { "#{date.strftime('%d%m%y')}/001" }
       with_firm_and_solicitor
       next_hearing { false }
+      viewed_steps { %w[ufn case_contact client_detail next_hearing] }
       after(:create) do |paa, _a|
         create(:defendant, :valid_paa, defendable_id: paa.id, defendable_type: paa.class.to_s)
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/ufn"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/case_contact"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/client_detail"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/next_hearing"
-        paa.save
       end
     end
 
@@ -79,15 +75,9 @@ FactoryBot.define do
       ufn { "#{date.strftime('%d%m%y')}/001" }
       service_type { 'meteorologist' }
       prior_authority_granted { true }
+      viewed_steps { %w[ufn case_contact client_detail case_hearing primary_quote primary_quote_summary] }
       after(:create) do |paa, _a|
         create(:defendant, :valid_paa, defendable_id: paa.id, defendable_type: paa.class.to_s)
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/ufn"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/case_contact"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/client_detail"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/case_detail"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/primary_quote"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/primary_quote_summary"
-        paa.save
       end
     end
 
@@ -241,19 +231,12 @@ FactoryBot.define do
       alternative_quotes_still_to_add { false }
 
       reason_why { 'something' }
-
+      viewed_steps do
+        %w[ufn case_contact client_detail case_detail next_hearing primary_quote primary_quote_summary alternative_quotes
+           reason_why]
+      end
       after(:create) do |paa, _a|
         create(:defendant, :valid_paa, defendable_id: paa.id, defendable_type: paa.class.to_s)
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/ufn"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/case_contact"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/client_detail"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/case_detail"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/next_hearing"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/primary_quote"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/primary_quote_summary"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/alternative_quotes"
-        paa.navigation_stack << "/prior-authority/applications/#{paa.id}/steps/reason_why"
-        paa.save
       end
     end
 
