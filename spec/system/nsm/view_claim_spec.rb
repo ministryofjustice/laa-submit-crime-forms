@@ -7,7 +7,7 @@ RSpec.describe 'View claim page', type: :system do
            assigned_counsel: 'yes', disbursements: disbursements, youth_court: youth_court,
            include_youth_court_fee: include_youth_court_fee, plea_category: plea_category, rep_order_date: rep_order_date,
            youth_court_fee_adjustment_comment: youth_court_fee_adjustment_comment,
-           allowed_youth_court_fee: allowed_youth_court_fee, state: :submitted)
+           allowed_youth_court_fee: allowed_youth_court_fee, assessment_comment: assessment_comment, state: state)
   end
 
   let(:work_items) do
@@ -40,6 +40,8 @@ RSpec.describe 'View claim page', type: :system do
   let(:youth_court) { 'yes' }
   let(:youth_court_fee_adjustment_comment) { nil }
   let(:allowed_youth_court_fee) { nil }
+  let(:assessment_comment) { nil }
+  let(:state) { :submitted }
 
   before do
     visit provider_saml_omniauth_callback_path
@@ -183,8 +185,20 @@ RSpec.describe 'View claim page', type: :system do
     end
 
     context 'when additional fee has been adjusted' do
+      let(:assessment_comment) { 'assessed' }
       let(:youth_court_fee_adjustment_comment) { 'removed fee' }
       let(:allowed_youth_court_fee) { false }
+      let(:state) { :part_grant }
+
+      it 'shows additional fee tab in adjusted costs' do
+        click_on 'Adjusted costs'
+        expect(page).to have_content 'Adjusted additional fees'
+        click_on 'Adjusted additional fees'
+        expect(all('table th, table td').map(&:text)).to include(
+          'Fee type', 'Youth court',
+          'Net cost allowed', '£0.00'
+        )
+      end
 
       it 'shows additional fee page with claimed and adjusted costs' do
         click_on 'Youth court'
