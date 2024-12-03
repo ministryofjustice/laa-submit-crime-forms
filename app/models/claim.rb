@@ -129,7 +129,8 @@ class Claim < ApplicationRecord
   end
 
   def can_claim_youth_court?
-    can_access_youth_court_flow? &&
+    nsm? &&
+      can_access_youth_court_flow? &&
       plea_category.match?(/category_[12]a/)
   end
 
