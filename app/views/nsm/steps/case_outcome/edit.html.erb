@@ -6,7 +6,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :case_outcome, legend: { size: 'xl', class: 'govuk-!-margin-bottom-6', tag: 'h1' } do %>
+      <%= f.govuk_radio_buttons_fieldset :case_outcome, legend: { size: 'l', class: 'govuk-!-margin-bottom-6', tag: 'h1' } do %>
         <% @case_outcomes.each_with_index do |outcome, index| %>
           <span id="<%= outcome %>"></span>
           <%= f.govuk_radio_button :plea, outcome, link_errors: index.zero?,

@@ -400,25 +400,25 @@ en:
         nsm/steps/case_outcome_form:
           attributes:
             plea:
-              blank: Please select an outcome
+              blank: Select the case outcome
             change_solicitor_date:
               blank: Enter the date of change
-              invalid: The date of change must be a real date
-              invalid_day: The date of change must be a real date
-              invalid_month: The date of change must be a real date
-              invalid_year: The date of change must be a real date
-              future_not_allowed: The date of change must be in the past
-              year_too_early: The date of change is too early
+              invalid: Enter a valid date
+              invalid_day: Enter a valid date
+              invalid_month: Enter a valid date
+              invalid_year: Enter a valid date
+              future_not_allowed: The date cannot be in the future
+              year_too_early: Date is too far in the past
             arrest_warrant_date:
               blank: Enter the date of warrant issue
-              invalid: The date of warrant issue must be a real date
-              invalid_day: The date of warrant issue must be a real date
-              invalid_month: The date of warrant issue must be a real date
-              invalid_year: The date of warrant issue must be a real date
-              future_not_allowed: The date of warrant issue must be in the past
-              year_too_early: The date of warrant issue is too early
+              invalid: Enter a valid date
+              invalid_day: Enter a valid date
+              invalid_month: Enter a valid date
+              invalid_year: Enter a valid date
+              future_not_allowed: The date cannot be in the future
+              year_too_early: Date is too far in the past
             case_outcome_other_info:
-              blank: Enter a valid case outcome
+              blank: Enter the case outcome
         nsm/steps/reason_for_claim_form:
           attributes:
             reasons_for_claim:
@@ -583,7 +583,7 @@ en:
         nsm/steps/youth_court_claim_additional_fee_form:
           attributes:
             include_youth_court_fee:
-              blank: Select the yes if you wish to claim the youth court addition fee
+              inclusion: Select the yes if you wish to claim the youth court addition fee
         search_form:
           attributes:
             base:
