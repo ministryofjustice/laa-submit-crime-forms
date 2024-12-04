@@ -34,6 +34,14 @@ module Nsm
         render_show
       end
 
+      def claimed_additional_fees
+        render_show
+      end
+
+      def adjusted_additional_fees
+        render_show
+      end
+
       def claimed_disbursements
         @records = Sorters::DisbursementsSorter.call(
           current_application.disbursements.by_age, @sort_by, @sort_direction

@@ -6,6 +6,11 @@
     <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :letters_and_calls %>">
       <%= link_to t(".#{prefix}letters_and_calls"), polymorphic_path([@section, :letters_and_calls, :nsm, :steps_view, claim], anchor: 'claim_nav') %>
     </li>
+    <% if @section == :adjustments && claim.youth_court_fee_adjustment_comment? || @section != :adjustments && claim.can_claim_youth_court? %>
+      <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :additional_fees %>">
+        <%= link_to t(".#{prefix}additional_fees"), polymorphic_path([@section, :additional_fees, :nsm, :steps_view, claim], anchor: 'claim_nav') %>
+      </li>
+    <% end %>
     <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if @scope == :disbursements %>">
       <%= link_to t(".#{prefix}disbursements"), polymorphic_path([@section, :disbursements, :nsm, :steps_view, claim], anchor: 'claim_nav')%>
     </li>

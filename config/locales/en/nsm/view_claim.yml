@@ -20,11 +20,13 @@ en:
         section:
           page_title: Claim details
         adjustments:
+          additional_fees: Additional fees
           work_items: Work items
           letters_and_calls: Letters and calls
           disbursements: Disbursements
           allowed_work_items: Adjusted work items
           allowed_letters_and_calls: Adjusted letters and calls
+          allowed_additional_fees: Adjusted additional fees
           allowed_disbursements: Adjusted disbursements
         work_items:
           page_title: Claim details
@@ -106,6 +108,28 @@ en:
           no_data: You do not have any adjusted letter or calls
           accessibility:
             letters_and_calls_caption: Adjusted letter and calls
+        additional_fees:
+          page_title: Claim details
+          heading: Additional fees
+          additional_fees: Additional fees
+          your_costs: Your claimed costs
+          adjusted: Adjusted claim
+          fee_type: Fee type
+          net_cost: Net cost
+          allowed_net_cost: Net cost allowed
+          adjustment_comment: Reason for adjustment
+          youth_court_fee: Youth court
+          accessibility:
+            additional_fees_caption: Claimed additional fees
+        allowed_additional_fees:
+          page_title: Claim details
+          additional_fees: Adjusted additional fees
+          no_data: You do not have any adjusted additional fees
+          fee_type: Fee type
+          net_cost: Net cost allowed
+          youth_court_fee: Youth court
+          accessibility:
+            additional_fees_caption: Adjusted additional fees
         disbursements:
           page_title: Claim details
           disbursements: Disbursements

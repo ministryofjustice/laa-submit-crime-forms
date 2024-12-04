@@ -1,0 +1,36 @@
+<% title t('.page_title') %>
+<% decision_step_header(path: :back) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+
+    <% if claim.youth_court_fee_adjustment_comment? %>
+      <%=
+        allowed_fee = claim.totals[:additional_fees][:youth_court_fee][:assessed_total_exc_vat]
+        rows = [
+          [t(".fee_type"), t(".youth_court_fee")],
+          [t(".allowed_net_cost"), NumberTo.pounds(allowed_fee)],
+          [t(".adjustment_comment"), claim.youth_court_fee_adjustment_comment]
+        ]
+
+        govuk_table do |table|
+          table.with_caption(text: t('.adjusted'))
+          table.with_body(rows: rows)
+        end
+      %>
+    <% end %>
+    <%=
+      claimed_fee = claim.totals[:additional_fees][:youth_court_fee][:claimed_total_exc_vat]
+      rows = [
+        [t(".fee_type"), t(".youth_court_fee")],
+        [t(".net_cost"), NumberTo.pounds(claimed_fee)]
+      ]
+
+      govuk_table do |table|
+        table.with_caption(text: t('.your_costs'))
+        table.with_body(rows: rows)
+      end
+    %>
+  </div>
+</div>

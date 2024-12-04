@@ -135,18 +135,21 @@ Rails.application.routes.draw do
               get "work_items", to: "view_claim#claimed_work_items", as: :claimed_costs_work_items
               get "letters_and_calls", to: "view_claim#claimed_letters_and_calls", as: :claimed_costs_letters_and_calls
               get "disbursements", to: "view_claim#claimed_disbursements", as: :claimed_costs_disbursements
+              get "additional_fees", to: "view_claim#claimed_additional_fees", as: :claimed_costs_additional_fees
             end
 
             scope "adjusted" do
               get "work_items", to: "view_claim#adjusted_work_items", as: :adjustments_work_items
               get "letters_and_calls", to: "view_claim#adjusted_letters_and_calls", as: :adjustments_letters_and_calls
               get "disbursements", to: "view_claim#adjusted_disbursements", as: :adjustments_disbursements
+              get "additional_fees", to: "view_claim#adjusted_additional_fees", as: :adjustments_additional_fees
             end
 
             get ':item_type/:item_id', as: :item, to: 'view_claim#item',
                               constraints: { item_type: /(work_item|disbursement)/ }
             get :letters, to: 'view_claim#item', defaults: { item_type: 'letters' }
             get :calls, to: 'view_claim#item', defaults: { item_type: 'calls' }
+            get :additional_fees, to: 'view_claim#item', defaults: { item_type: 'additional_fees' }
             get :download
           end
         end

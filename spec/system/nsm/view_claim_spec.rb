@@ -4,8 +4,10 @@ RSpec.describe 'View claim page', type: :system do
   let(:claim) do
     create(:claim, :case_type_magistrates, :firm_details, :letters_calls,
            work_items: work_items, office_in_undesignated_area: true, court_in_undesignated_area: true,
-           assigned_counsel: 'yes', disbursements: disbursements,
-           state: :submitted)
+           assigned_counsel: 'yes', disbursements: disbursements, youth_court: youth_court,
+           include_youth_court_fee: include_youth_court_fee, plea_category: plea_category, rep_order_date: rep_order_date,
+           youth_court_fee_adjustment_comment: youth_court_fee_adjustment_comment,
+           allowed_youth_court_fee: allowed_youth_court_fee, assessment_comment: assessment_comment, state: state)
   end
 
   let(:work_items) do
@@ -31,6 +33,15 @@ RSpec.describe 'View claim page', type: :system do
       build(:disbursement, :valid, :car, :with_adjustment, allowed_apply_vat: 'false', age: 2, miles: 150),
     ]
   end
+
+  let(:include_youth_court_fee) { false }
+  let(:plea_category) { 'category_1a' }
+  let(:rep_order_date) { Date.new(2024, 12, 6) }
+  let(:youth_court) { 'yes' }
+  let(:youth_court_fee_adjustment_comment) { nil }
+  let(:allowed_youth_court_fee) { nil }
+  let(:assessment_comment) { nil }
+  let(:state) { :submitted }
 
   before do
     visit provider_saml_omniauth_callback_path
@@ -137,6 +148,74 @@ RSpec.describe 'View claim page', type: :system do
         'Calls', '3', '0%', '£12.27'
       ]
     )
+  end
+
+  context 'when there is an additional fee claimed' do
+    let(:include_youth_court_fee) { true }
+
+    before { visit claimed_costs_additional_fees_nsm_steps_view_claim_path(claim.id) }
+
+    it 'show the additional fees tab' do
+      expect(all('table td, table th').map(&:text)).to eq(
+        [
+          'Item', 'Net cost', 'VAT', 'Total',
+          'Profit costs', '£904.43', '£180.89', '£1,085.31',
+          'Disbursements', '£327.50', '£31.50', '£359.00',
+          'Travel', '£10.58', '£2.12', '£12.70',
+          'Waiting', '£10.58', '£2.12', '£12.70',
+          'Total',
+          'Sum of net cost claimed: £1,253.09',
+          'Sum of VAT on claimed: £216.62',
+          'Sum of net cost and VAT on claimed: £1,469.71',
+          'Fee type', 'Net cost', 'Youth court', '£598.59'
+        ]
+      )
+    end
+
+    it 'shows additional fee page with claimed costs' do
+      click_on 'Youth court'
+      expect(find('h1').text).to eq('Additional fees')
+      expect(all('table caption, table td').map(&:text)).to eq(
+        [
+          'Your claimed costs',
+          'Fee type', 'Youth court',
+          'Net cost', '£598.59'
+        ]
+      )
+    end
+
+    context 'when additional fee has been adjusted' do
+      let(:assessment_comment) { 'assessed' }
+      let(:youth_court_fee_adjustment_comment) { 'removed fee' }
+      let(:allowed_youth_court_fee) { false }
+      let(:state) { :part_grant }
+
+      it 'shows additional fee tab in adjusted costs' do
+        click_on 'Adjusted costs'
+        expect(page).to have_content 'Adjusted additional fees'
+        click_on 'Adjusted additional fees'
+        expect(all('table th, table td').map(&:text)).to include(
+          'Fee type', 'Youth court',
+          'Net cost allowed', '£0.00'
+        )
+      end
+
+      it 'shows additional fee page with claimed and adjusted costs' do
+        click_on 'Youth court'
+        expect(find('h1').text).to eq('Additional fees')
+        expect(all('table caption, table td').map(&:text)).to eq(
+          [
+            'Adjusted claim',
+            'Fee type', 'Youth court',
+            'Net cost allowed', '£0.00',
+            'Reason for adjustment', 'removed fee',
+            'Your claimed costs',
+            'Fee type', 'Youth court',
+            'Net cost', '£598.59'
+          ]
+        )
+      end
+    end
   end
 
   it 'show the disbursements page' do

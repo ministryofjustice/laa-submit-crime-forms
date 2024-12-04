@@ -1,0 +1,32 @@
+<% skip_links ||= false %>
+<% title t('.page_title') %>
+
+<h3 class="govuk-heading-m">
+  <%= t('.additional_fees') %>
+</h3>
+
+<% if claim.include_youth_court_fee %>
+  <%=
+    if skip_links
+      youth_court_fee_link = t('.youth_court_fee')
+    else
+      youth_court_fee_link = link_to(t('.youth_court_fee'), additional_fees_nsm_steps_view_claim_path(id: claim.id))
+    end
+
+    head = [
+      { text: t('.fee_type')},
+      { text: t('.net_cost') },
+    ]
+
+    rows = [
+      [
+        { header: true, text: youth_court_fee_link },
+        { text: NumberTo.pounds(claim.totals[:additional_fees][:youth_court_fee][:claimed_total_exc_vat]), numeric: true },
+      ]
+      ]
+
+    govuk_table_with_cell(head, rows, caption: { text: t('.accessibility.additional_fees_caption'), html_attributes: { 'class': 'govuk-visually-hidden'} })
+  %>
+<% else %>
+  <p><%= t('.no_data') %></p>
+<% end %>
