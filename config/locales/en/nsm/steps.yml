@@ -61,6 +61,7 @@ en:
           court_if_transferred_to_undesignated_area: Which court was the last case hearing heard at?
       case_outcome:
         edit:
+          legend: Case outcome
           page_title: Case outcome
           change_solicitor_date_hint: For example, 27 3 2024
           change_solicitor_date: Date of change
