@@ -5,7 +5,7 @@
   <%= t('.additional_fees') %>
 </h3>
 
-<% if claim.include_youth_court_fee %>
+<% if claim.can_claim_youth_court? %>
   <%=
     if skip_links
       youth_court_fee_link = t('.youth_court_fee')
