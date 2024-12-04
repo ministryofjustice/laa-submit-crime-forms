@@ -13,7 +13,7 @@ RSpec.describe 'When filling in the case outcome', type: :system do
     let(:feature_enabled) { true }
 
     it 'the user is able to submit an outcome' do
-      expect(page).to have_content(I18n.t('helpers.legend.nsm_steps_case_outcome_form.case_outcome'))
+      expect(page).to have_content(I18n.t('nsm.steps.case_outcome.edit.legend'))
 
       choose 'Guilty'
       click_on 'Save and continue'
@@ -26,7 +26,7 @@ RSpec.describe 'When filling in the case outcome', type: :system do
     let(:feature_enabled) { false }
 
     it 'the user is not able to visit the page' do
-      expect(page).to have_no_content(I18n.t('helpers.legend.nsm_steps_case_outcome_form.case_outcome'))
+      expect(page).to have_no_content(I18n.t('nsm.steps.case_outcome.edit.legend'))
       expect(page).to have_content('No route matches')
       expect(page).to have_http_status(:not_found)
     end
