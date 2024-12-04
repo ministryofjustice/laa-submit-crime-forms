@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.174'
+gem 'aws-sdk-s3', '~> 1.176'
 gem 'bootsnap', '~> 1.18.4', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
@@ -21,7 +21,7 @@ gem 'logstash-event'
 gem 'marcel'
 gem 'oauth2', '~> 2.0'
 gem 'ostruct'
-gem 'pagy', '~> 9.3.1'
+gem 'pagy', '~> 9.3.2'
 gem 'pg', '~> 1.5'
 gem 'prometheus_exporter'
 gem 'propshaft'
