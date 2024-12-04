@@ -115,7 +115,7 @@ en:
           your_costs: Your claimed costs
           adjusted: Adjusted claim
           fee_type: Fee type
-          net_cost: Net cost
+          net_cost: Net cost claimed
           allowed_net_cost: Net cost allowed
           adjustment_comment: Reason for adjustment
           youth_court_fee: Youth court

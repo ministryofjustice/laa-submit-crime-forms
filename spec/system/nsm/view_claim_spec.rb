@@ -167,7 +167,7 @@ RSpec.describe 'View claim page', type: :system do
           'Sum of net cost claimed: £1,253.09',
           'Sum of VAT on claimed: £216.62',
           'Sum of net cost and VAT on claimed: £1,469.71',
-          'Fee type', 'Net cost', 'Youth court', '£598.59'
+          'Fee type', 'Net cost claimed', 'Youth court', '£598.59'
         ]
       )
     end
@@ -179,7 +179,7 @@ RSpec.describe 'View claim page', type: :system do
         [
           'Your claimed costs',
           'Fee type', 'Youth court',
-          'Net cost', '£598.59'
+          'Net cost claimed', '£598.59'
         ]
       )
     end
@@ -211,7 +211,7 @@ RSpec.describe 'View claim page', type: :system do
             'Reason for adjustment', 'removed fee',
             'Your claimed costs',
             'Fee type', 'Youth court',
-            'Net cost', '£598.59'
+            'Net cost claimed', '£598.59'
           ]
         )
       end
