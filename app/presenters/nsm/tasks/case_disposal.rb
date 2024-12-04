@@ -20,7 +20,7 @@ module Nsm
       end
 
       def completed?
-        if application.nsm? && application.can_access_youth_court_flow?
+        if application.can_claim_youth_court?
           plea_details_populated? && !application.include_youth_court_fee.nil?
         else
           plea_details_populated?
