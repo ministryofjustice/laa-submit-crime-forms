@@ -180,11 +180,10 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
         let(:cntp_date) { 3.days.from_now.to_date }
         let(:cntp_order) { 'AAAA' }
 
-        # TODO: CRM457-2313: Remove the feature flag checks here
         it 'is also valid' do
-          expect(subject.valid?).to eq(FeatureFlags.youth_court_fee.enabled?)
+          expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:cntp_order, :blank)).to be(false)
-          expect(subject.errors.of_kind?(:cntp_date, :future_not_allowed)).to be(!FeatureFlags.youth_court_fee.enabled?)
+          expect(subject.errors.of_kind?(:cntp_date, :future_not_allowed)).to be(true)
         end
       end
     end

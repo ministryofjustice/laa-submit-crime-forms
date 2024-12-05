@@ -10,14 +10,12 @@ module Nsm
 
       validates :ufn, presence: true, ufn: true
       validates_inclusion_of :claim_type, in: :choices
-      # TODO: CRM457-2313: Disable this feature flag check
       validates :rep_order_date, presence: true,
-              multiparam_date: { allow_past: true, allow_future: FeatureFlags.youth_court_fee.enabled? },
+              multiparam_date: { allow_past: true, allow_future: false },
               if: :non_standard_claim?
       validates :cntp_order, presence: true, if: :breach_claim?
-      # TODO: CRM457-2313: Disable this feature flag check
       validates :cntp_date, presence: true,
-              multiparam_date: { allow_past: true, allow_future: FeatureFlags.youth_court_fee.enabled? },
+              multiparam_date: { allow_past: true, allow_future: false },
               if: :breach_claim?
 
       def choices
