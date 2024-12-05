@@ -13,4 +13,4 @@ feature_flags:
     local: <%= ENV.fetch("YOUTH_COURT_FEE", true) %>
     development: true
     uat: true
-    production: false
+    production: true
