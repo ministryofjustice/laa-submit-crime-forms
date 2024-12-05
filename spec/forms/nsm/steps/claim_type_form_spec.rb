@@ -175,6 +175,17 @@ RSpec.describe Nsm::Steps::ClaimTypeForm do
           expect(subject.errors.of_kind?(:cntp_date, :blank)).to be(true)
         end
       end
+
+      context 'without a CNTP date in the future being set' do
+        let(:cntp_date) { 3.days.from_now.to_date }
+        let(:cntp_order) { 'AAAA' }
+
+        it 'is also valid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:cntp_order, :blank)).to be(false)
+          expect(subject.errors.of_kind?(:cntp_date, :future_not_allowed)).to be(true)
+        end
+      end
     end
   end
 end
