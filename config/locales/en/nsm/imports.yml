@@ -1,0 +1,18 @@
+en:
+  nsm:
+    imports:
+      new:
+        title: Import a claim
+        explanation: If your case management software can export your claim as an XML file, you can upload it here and we will automatically load some details from that file.
+        file_upload: Select the XML file for the case you want to claim for.
+      message: We imported %{work_item_count} %{work_item} and %{disbursement_count} %{disbursement}. You will need to enter all other details manually, and check carefully the imported details.
+      disbursement: disbursement
+      work_item: work item
+  activemodel:
+    errors:
+      models:
+        nsm/import_form:
+          attributes:
+            file_upload:
+              forbidden_document_type: The file must be of type 'XML'
+              no_imports: We were unable to read any work items or disbursements from this file. Please try a different file or enter your details manually.

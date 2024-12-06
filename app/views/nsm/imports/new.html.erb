@@ -1,0 +1,16 @@
+<% title t('.title') %>
+<%= link_to t('helpers.back_link'), nsm_applications_path, class: 'govuk-back-link' %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-xl"><%= t('.title') %></h1>
+    <p><%= t('.explanation') %></p>
+    <%= form_with(model: @form_object, url: nsm_imports_path) do |f| %>
+      <%= f.govuk_file_field :file_upload,
+                             label: { text: t(".file_upload"), size: "m" },
+                             accept: 'text/xml' %>
+
+      <%= f.continue_button(secondary: false) %>
+    <% end %>
+  </div>
+</div>

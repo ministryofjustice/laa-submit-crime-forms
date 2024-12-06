@@ -57,6 +57,7 @@ module Nsm
       end
 
       payload[:application]['further_information'] = claim.further_informations.map(&:as_json)
+      payload[:application]['resubmission_deadline'] = claim.further_informations.pluck(:resubmission_deadline).uniq.max
 
       stub_request(:get, "https://app-store.example.com/v1/application/#{claim.id}").to_return(
         status: 200,

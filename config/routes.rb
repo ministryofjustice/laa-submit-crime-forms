@@ -69,6 +69,10 @@ Rails.application.routes.draw do
       end
     end
 
+    constraints ->(_) { FeatureFlags.import_claims.enabled? } do
+      resources :imports, only: %i[new create]
+    end
+
     resources :offences, only: [:index], format: :js
 
     scope 'applications/:id' do

@@ -91,6 +91,7 @@ module AppStore
         attribute :status, :string
         attribute :last_updated_at, :datetime
         attribute :youth_court_fee_adjustment_comment
+        attribute :resubmission_deadline, :datetime
 
         alias state status
         alias app_store_updated_at last_updated_at

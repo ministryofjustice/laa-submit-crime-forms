@@ -1,6 +1,7 @@
 module Nsm
   class ClaimsController < ApplicationController
     include Searchable
+    include ClaimCreatable
     layout 'nsm'
 
     before_action :set_scope, only: %i[submitted draft]
@@ -76,22 +77,6 @@ module Nsm
 
     def set_scope
       @scope = params[:action].to_sym
-    end
-
-    def initialize_application(attributes = {}, &block)
-      attributes.merge!(
-        office_code: (current_provider.office_codes.first unless current_provider.multiple_offices?),
-        submitter: current_provider,
-        laa_reference: generate_laa_reference
-      )
-      Claim.create!(attributes).tap(&block)
-    end
-
-    def generate_laa_reference
-      loop do
-        random_reference = "LAA-#{SecureRandom.alphanumeric(6)}"
-        break random_reference unless Claim.exists?(laa_reference: random_reference)
-      end
     end
   end
 end

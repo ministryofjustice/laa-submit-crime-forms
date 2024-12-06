@@ -6,7 +6,8 @@ module AppStore
       attribute :information_requested, :string
       attribute :information_supplied, :string
       attribute :requested_at, :datetime
-      attribute :resubmission_deadline, :datetime
+
+      delegate :resubmission_deadline, to: :parent
     end
   end
 end
