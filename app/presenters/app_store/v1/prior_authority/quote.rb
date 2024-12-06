@@ -19,7 +19,7 @@ module AppStore
         attribute :travel_cost_reason, :string
         attribute :additional_cost_list, :string
         attribute :additional_cost_total, :decimal
-        attribute :service_adjustment_comment, :string
+        attribute :adjustment_comment, :string
         attribute :travel_adjustment_comment, :string
         attribute :contact_first_name, :string
         attribute :contact_last_name, :string
@@ -55,6 +55,8 @@ module AppStore
 
           (assessed_travel_time * assessed_travel_cost_per_hour / 60).round(2)
         end
+
+        alias service_adjustment_comment adjustment_comment
       end
     end
   end

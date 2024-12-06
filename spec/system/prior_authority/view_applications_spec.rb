@@ -93,7 +93,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
         data = SubmitToAppStore::PayloadBuilder.call(application).merge(last_updated_at: 1.hour.ago)
         data[:application][:assessment_comment] = application.assessment_comment
         data[:application][:quotes][0][:period_original] = 240
-        data[:application][:quotes][0][:service_adjustment_comment] = quote.service_adjustment_comment
+        data[:application][:quotes][0][:adjustment_comment] = quote.service_adjustment_comment
         data[:application][:quotes][0][:travel_cost_per_hour_original] = '75.6'
         data[:application][:quotes][0][:travel_adjustment_comment] = quote.travel_adjustment_comment
         data[:application][:additional_costs][0][:adjustment_comment] = additional_cost.adjustment_comment
