@@ -24,7 +24,6 @@ metadata:
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
-      SecResponseBodyAccess Off
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-forms-team"
       SecDefaultAction "phase:4,pass,log,tag:github_team=laa-crime-forms-team"
     external-dns.alpha.kubernetes.io/aws-weight: "100"
