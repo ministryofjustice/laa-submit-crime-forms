@@ -1,18 +1,29 @@
 require 'system_helper'
 
-RSpec.describe 'View applications' do
+RSpec.describe 'View applications', :stub_oauth_token do
   let(:arbitrary_fixed_date) { DateTime.new(2024, 3, 22, 15, 23, 11) }
+  let(:data) do
+    data = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(
+      application: application,
+      include_events: false
+    ).payload.merge(last_updated_at: application.app_store_updated_at)
+    data[:application][:assessment_comment] = application.assessment_comment
+    data
+  end
 
   before do
     travel_to arbitrary_fixed_date
+    stub_request(:get, "https://app-store.example.com/v1/application/#{application.id}").to_return(
+      status: 200,
+      body: data.to_json
+    )
     visit provider_saml_omniauth_callback_path
     application
   end
 
   context 'that are reviewed' do
     before do
-      visit reviewed_prior_authority_applications_path
-      click_on application.ufn
+      visit prior_authority_application_path(application)
     end
 
     context 'when application has been rejected' do
@@ -70,21 +81,30 @@ RSpec.describe 'View applications' do
       let(:quote) do
         build(:quote, :primary,
               service_adjustment_comment: 'Too much',
-              travel_adjustment_comment: 'Not enough',
-              base_cost_allowed: 29,
-              travel_cost_allowed: 126)
+              travel_adjustment_comment: 'Not enough',)
       end
 
       let(:additional_cost) do
         build(:additional_cost, :per_item,
-              adjustment_comment: 'Nearly right',
-              total_cost_allowed: 119)
+              adjustment_comment: 'Nearly right')
+      end
+
+      let(:data) do
+        data = SubmitToAppStore::PayloadBuilder.call(application).merge(last_updated_at: 1.hour.ago)
+        data[:application][:assessment_comment] = application.assessment_comment
+        data[:application][:quotes][0][:period_original] = 240
+        data[:application][:quotes][0][:adjustment_comment] = quote.service_adjustment_comment
+        data[:application][:quotes][0][:travel_cost_per_hour_original] = '75.6'
+        data[:application][:quotes][0][:travel_adjustment_comment] = quote.travel_adjustment_comment
+        data[:application][:additional_costs][0][:adjustment_comment] = additional_cost.adjustment_comment
+        data[:application][:additional_costs][0][:items_original] = 30
+        data
       end
 
       it 'shows overall details' do
         expect(page).to have_content 'Part granted'
-        expect(page).to have_content '£175.00 requested'
-        expect(page).to have_content '£274.00 allowed'
+        expect(page).to have_content '£529.00 requested'
+        expect(page).to have_content '£175.00 allowed'
         expect(page).to have_content 'Review service cost adjustments'
         expect(page).to have_content 'Review travel cost adjustments'
         expect(page).to have_content 'Review additional cost adjustments'
@@ -93,17 +113,17 @@ RSpec.describe 'View applications' do
 
       it 'shows service cost adjustments' do
         expect(page).to have_content 'Too much'
-        expect(page).to have_content '£30.00 £29.00'
+        expect(page).to have_content '£40.00 £30.00'
       end
 
       it 'shows travel cost adjustments' do
         expect(page).to have_content 'Not enough'
-        expect(page).to have_content '£125.00 £126.00'
+        expect(page).to have_content '£189.00 £125.00'
       end
 
       it 'shows additional cost adjustments' do
         expect(page).to have_content 'Nearly right'
-        expect(page).to have_content '£20.00 £119.00'
+        expect(page).to have_content '£300.00 £20.00'
       end
 
       context 'when no assessment comment exists (part-grant)' do
@@ -111,8 +131,8 @@ RSpec.describe 'View applications' do
 
         it 'shows overall details' do
           expect(page).to have_content 'Part granted'
-          expect(page).to have_content '£175.00 requested'
-          expect(page).to have_content '£274.00 allowed'
+          expect(page).to have_content '£529.00 requested'
+          expect(page).to have_content '£175.00 allowed'
           expect(page).to have_content 'Review service cost adjustments'
           expect(page).to have_content 'Review travel cost adjustments'
           expect(page).to have_content 'Review additional cost adjustments'
@@ -131,6 +151,15 @@ RSpec.describe 'View applications' do
                resubmission_deadline: 12.days.from_now,
                further_informations: [build(:further_information, information_requested: 'Tell me more')],
                incorrect_informations: [build(:incorrect_information, information_requested: 'Fix it')])
+      end
+
+      let(:data) do
+        application.incorrect_informations.first.update!(sections_changed: [])
+        data = SubmitToAppStore::PayloadBuilder.call(application).merge(last_updated_at: application.app_store_updated_at)
+        data[:application][:assessment_comment] = application.assessment_comment
+        data[:application][:resubmission_requested] = application.resubmission_requested
+        data[:application][:resubmission_deadline] = application.resubmission_deadline
+        data
       end
 
       it 'shows send back details' do
@@ -152,6 +181,14 @@ RSpec.describe 'View applications' do
                resubmission_deadline: 1.day.ago)
       end
 
+      let(:data) do
+        data = SubmitToAppStore::PayloadBuilder.call(application).merge(last_updated_at: application.app_store_updated_at)
+        data[:application][:assessment_comment] = application.assessment_comment
+        data[:application][:resubmission_requested] = application.resubmission_requested
+        data[:application][:resubmission_deadline] = application.resubmission_deadline
+        data
+      end
+
       it 'shows expiry details' do
         expect(page).to have_content('Expired')
           .and have_content('£155.00 requested')
@@ -161,10 +198,20 @@ RSpec.describe 'View applications' do
     end
   end
 
+  context 'when application does not belong to provider' do
+    let(:application) do
+      create(:prior_authority_application, :full, state: 'granted', app_store_updated_at: 1.day.ago, office_code: 'QQQQQ')
+    end
+
+    it 'shows an error message' do
+      visit prior_authority_application_path(application)
+      expect(page).to have_content 'not found'
+    end
+  end
+
   context 'that are submitted' do
     before do
-      visit submitted_prior_authority_applications_path
-      click_on application.ufn
+      visit prior_authority_application_path(application)
     end
 
     context 'when application is provider updated' do
@@ -173,7 +220,8 @@ RSpec.describe 'View applications' do
                :full,
                state: 'provider_updated',
                further_informations: [further_information],
-               incorrect_informations: [incorrect_information])
+               incorrect_informations: [incorrect_information],
+               app_store_updated_at: 1.day.ago)
       end
 
       let(:further_information) do

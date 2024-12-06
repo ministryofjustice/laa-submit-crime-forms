@@ -1,10 +1,17 @@
 require 'system_helper'
 
 RSpec.describe 'Prior authority applications - provider responds to further information request',
-               :javascript, type: :system do
+               :javascript, :stub_oauth_token, type: :system do
   let(:application) { create(:prior_authority_application, :full, :with_further_information_request) }
 
   before do
+    # Fudge the data to make it looks like something the app store would return
+    data = SubmitToAppStore::PayloadBuilder.call(application).merge(last_updated_at: 1.hour.ago)
+    data[:application][:resubmission_deadline] = 1.day.from_now
+    stub_request(:get, "https://app-store.example.com/v1/application/#{application.id}").to_return(
+      status: 200,
+      body: data.to_json
+    )
     visit provider_saml_omniauth_callback_path
     visit edit_prior_authority_steps_further_information_path(application)
   end

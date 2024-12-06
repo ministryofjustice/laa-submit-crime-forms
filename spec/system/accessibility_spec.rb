@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # These specs will not run unless the `INCLUDE_ACCESSIBILITY_SPECS` env var is set to `true`
-RSpec.describe 'Accessibility', :accessibility do
+RSpec.describe 'Accessibility', :accessibility, :stub_app_store_search, :stub_oauth_token do
   subject { page }
 
   before do

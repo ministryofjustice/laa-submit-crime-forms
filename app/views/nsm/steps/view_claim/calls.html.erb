@@ -8,8 +8,8 @@
     <%=
       if claim.calls_adjustment_comment
         rows = [
-          [{ text: t(".allowed_number"), width: 'govuk-!-width-one-half' }, (claim.allowed_calls || claim.calls).to_s],
-          [t(".allowed_uplift"), NumberTo.percentage((claim.allowed_calls_uplift || claim.calls_uplift).to_f, multiplier: 1)],
+          [{ text: t(".allowed_number"), width: 'govuk-!-width-one-half' }, (claim.assessed_calls).to_s],
+          [t(".allowed_uplift"), NumberTo.percentage((claim.assessed_calls_uplift).to_f, multiplier: 1)],
           [t(".allowed_net_cost"), NumberTo.pounds(claim.allowed_calls_after_uplift)],
           [t(".adjustment_comment"), claim.calls_adjustment_comment]
         ]

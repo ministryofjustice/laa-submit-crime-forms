@@ -19,8 +19,6 @@ module LettersAndCallsCosts
       (@apply_letters_uplift.nil? ? letters_uplift.present? : @apply_letters_uplift == 'true')
   end
 
-  delegate :rates, to: :application
-
   def call_rate
     rates.letters_and_calls[:calls]
   end

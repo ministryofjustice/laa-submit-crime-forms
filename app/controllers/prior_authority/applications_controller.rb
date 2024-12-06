@@ -1,13 +1,15 @@
 module PriorAuthority
   class ApplicationsController < ApplicationController
     include Searchable
-    before_action :set_scope, only: %i[reviewed submitted drafts]
+    before_action :set_scope, only: %i[submitted drafts]
     before_action :set_default_table_sort_options
     layout 'prior_authority'
 
     def index
       @notification_banner = NotificationBanner.active_banner
-      @pagy, @model = order_and_paginate(&:reviewed)
+      model = AppStoreListService.reviewed(current_provider, params, service: :prior_authority)
+      @pagy = model.pagy
+      @model = model.rows
       @scope = :reviewed
       @empty = PriorAuthorityApplication.for(current_provider).none?
     end
@@ -37,13 +39,10 @@ module PriorAuthority
       render 'index'
     end
 
-    def reviewed
-      @pagy, @model = order_and_paginate(&:reviewed)
-      render 'index'
-    end
-
     def submitted
-      @pagy, @model = order_and_paginate(&:submitted_or_resubmitted)
+      model = AppStoreListService.submitted(current_provider, params, service: :prior_authority)
+      @pagy = model.pagy
+      @model = model.rows
       render 'index'
     end
 
@@ -87,6 +86,10 @@ module PriorAuthority
       pagy(query.includes(:defendant).order(order_template.gsub('?', direction)))
     end
 
+    def service_for_search
+      :prior_authority
+    end
+
     def set_scope
       @scope = params[:action].to_sym
     end
@@ -97,7 +100,8 @@ module PriorAuthority
     end
 
     def application_locals(skip_links: false)
-      application = PriorAuthorityApplication.for(current_provider).find(params[:id])
+      application = AppStoreDetailService.prior_authority(params[:id], current_provider)
+
       {
         application: application,
         primary_quote_summary: PriorAuthority::PrimaryQuoteSummary.new(application),

@@ -26,36 +26,27 @@ class AppStoreClient
     end
   end
 
-  def get_all(since:, count: 20)
-    process_get("/v1/applications?since=#{since.to_i}&count=#{count}")
-  end
-
   def get(submission_id)
-    process_get("/v1/application/#{submission_id}")
+    url = "#{host}/v1/application/#{submission_id}"
+    response = self.class.get(url, **options)
+    process_response(response, url)
   end
 
-  def delete(message, path:)
-    response = self.class.delete("#{host}/#{path}", **options(message))
+  def search(payload)
+    url = "#{host}/v1/submissions/searches"
+    response = self.class.post(url, **options(payload))
 
-    case response.code
-    when 200..204
-      :success
-    else
-      raise "Unexpected response from AppStore - status #{response.code} from delete #{path}"
-    end
+    process_response(response, url)
   end
 
   private
 
-  def process_get(path)
-    url = "#{host}#{path}"
-    response = self.class.get(url, **options)
-
+  def process_response(response, url)
     case response.code
-    when 200
+    when 200..204
       JSON.parse(response.body)
     else
-      raise "Unexpected response from AppStore - status #{response.code} for '#{path}'"
+      raise "Unexpected response from AppStore - status #{response.code} for '#{url}'"
     end
   end
 

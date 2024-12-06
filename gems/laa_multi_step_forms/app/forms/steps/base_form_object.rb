@@ -12,7 +12,9 @@ module Steps
     # Most of the times, `record` is just the main DB table, but sometimes,
     # for example in has_one or has_many, `record` is a different table.
     def self.build(record, application: nil)
-      raise ArgumentError, "expected `ApplicationRecord`, got `#{record.class}`" unless record.is_a?(ApplicationRecord)
+      unless record.is_a?(ApplicationRecord) || record.is_a?(AppStore::V1::Base)
+        raise ArgumentError, "expected `ApplicationRecord`, got `#{record.class}`"
+      end
 
       attrs = record.slice(
         attribute_names & record.attribute_names

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::Steps::ViewClaimController, type: :controller do
+  before { allow(AppStoreDetailService).to receive(:nsm).and_return(claim) }
+
   describe '#show' do
     let(:claim) { create(:claim, :complete, :completed_state) }
     let(:navigation_stack) { [] }

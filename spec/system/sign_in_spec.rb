@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Sign in user journey' do
+RSpec.describe 'Sign in user journey', :stub_app_store_search, :stub_oauth_token do
   context 'user is not signed in' do
     it 'redirects to the login page' do
       visit '/'

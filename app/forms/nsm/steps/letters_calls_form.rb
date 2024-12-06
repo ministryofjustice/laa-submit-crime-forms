@@ -4,6 +4,8 @@ module Nsm
       include LettersAndCallsCosts
       attr_writer :apply_calls_uplift, :apply_letters_uplift
 
+      delegate :rates, to: :application
+
       attribute :letters, :fully_validatable_integer
       attribute :calls, :fully_validatable_integer
       attribute :letters_uplift, :fully_validatable_integer

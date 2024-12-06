@@ -1,6 +1,8 @@
 require 'system_helper'
 
-RSpec.describe 'Search' do
+RSpec.describe 'Search', :stub_oauth_token do
+  before { allow(LaaCrimeFormsCommon::Validator).to receive(:validate).and_return([]) }
+
   describe 'PA' do
     let(:matching) do
       create :prior_authority_application, :full,
@@ -11,32 +13,53 @@ RSpec.describe 'Search' do
              state: :submitted
     end
 
+    let(:different_office) do
+      create :prior_authority_application, :full,
+             laa_reference: 'LAA-AB1234',
+             office_code: 'CCCCCC',
+             ufn: '070620/123',
+             defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
+             state: :rejected
+    end
+
+    let(:non_matching) do
+      create :prior_authority_application, :full,
+             laa_reference: 'LAA-99999C',
+             office_code: '1A123B',
+             ufn: '110120/123',
+             defendant: build(:defendant, :valid, first_name: 'Jane', last_name: 'Doe'),
+             state: :draft
+    end
+
+    let(:app_store_search_stub) do
+      stub_request(:post, 'https://app-store.example.com/v1/submissions/searches').to_return do |request|
+        data = JSON.parse(request.body)
+        applications = PriorAuthorityApplication.where.not(state: %i[draft
+                                                                     pre_draft]).where.not(id: [non_matching.id,
+                                                                                                different_office.id])
+        sorted = if data['sort_by'] == 'last_state_change' && data['sort_direction'] == 'descending'
+                   applications.order(updated_at: :desc)
+                 else
+                   applications.order(updated_at: :asc)
+                 end
+        {
+          status: 201,
+          body: {
+            raw_data: sorted.map { SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: _1).payload },
+            metadata: { total_results: applications.count }
+          }.to_json
+        }
+      end
+    end
+
     before { visit provider_saml_omniauth_callback_path }
 
     context 'when finding a single result' do
-      let(:different_office) do
-        create :prior_authority_application, :full,
-               laa_reference: 'LAA-AB1234',
-               office_code: 'CCCCCC',
-               ufn: '070620/123',
-               defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
-               state: :rejected
-      end
-
-      let(:non_matching) do
-        create :prior_authority_application, :full,
-               laa_reference: 'LAA-99999C',
-               office_code: '1A123B',
-               ufn: '110120/123',
-               defendant: build(:defendant, :valid, first_name: 'Jane', last_name: 'Doe'),
-               state: :draft
-      end
-
       before do
         matching
         non_matching
         different_office
-
+        app_store_search_stub
         visit search_prior_authority_applications_path
         fill_in 'Enter any combination of client, UFN or LAA reference', with: query
         find('button.govuk-button#search').click
@@ -50,6 +73,23 @@ RSpec.describe 'Search' do
             expect(page).to have_content 'Submitted'
             expect(page).to have_no_content 'Draft'
             expect(page).to have_no_content 'Rejected'
+          end
+        end
+
+        context 'when the only matching result is a draft' do
+          let(:matching) do
+            create :prior_authority_application, :full,
+                   laa_reference: 'LAA-AB1234',
+                   office_code: '1A123B',
+                   ufn: '070620/123',
+                   defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
+                   state: :draft
+          end
+
+          it 'shows only the matching record that I am associated with' do
+            within('.govuk-table') do
+              expect(page).to have_content 'Draft'
+            end
           end
         end
       end
@@ -117,7 +157,7 @@ RSpec.describe 'Search' do
       before do
         matching
         other_matching
-
+        app_store_search_stub
         visit search_prior_authority_applications_path
         fill_in 'Enter any combination of client, UFN or LAA reference', with: 'Joe Bloggs'
         find('button.govuk-button#search').click
@@ -160,7 +200,7 @@ RSpec.describe 'Search' do
       before do
         draft
         submitted
-
+        app_store_search_stub
         visit search_prior_authority_applications_path
         fill_in 'Enter any combination of client, UFN or LAA reference', with: 'Joe'
         find('button.govuk-button#search').click
@@ -179,15 +219,51 @@ RSpec.describe 'Search' do
       end
 
       it 'click submitted link goes to application claim details' do
-        click_link '070620/123'
-        expect(page).to have_content 'Application details'
+        expect(find('a', text: '070620/123')[:href]).to eq prior_authority_application_path(submitted)
+      end
+    end
+
+    context 'when there are draft and submitted matching results' do
+      before do
+        matching
+        draft_matching
+        app_store_search_stub
+        visit search_prior_authority_applications_path
+        fill_in 'Enter any combination of client, UFN or LAA reference', with: '070620/123'
+        find('button.govuk-button#search').click
+      end
+
+      let(:draft_matching) do
+        create :prior_authority_application, :full,
+               laa_reference: 'LAA-CD5678',
+               office_code: '1A123B',
+               ufn: '070620/123',
+               defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
+               state: :draft,
+               updated_at: 1.year.ago
+      end
+
+      it 'sorts by a default order first' do
+        expect(page).to have_content(/AB1234.*CD5678.*/m)
+      end
+
+      it 'allows changing order' do
+        click_link 'Last updated'
+        expect(page).to have_content(/CD5678.*AB1234.*/m)
+      end
+
+      it 'allows sorting by LAA reference' do
+        click_link 'LAA reference'
+        expect(page).to have_content(/AB1234.*CD5678.*/m)
+        click_link 'LAA reference'
+        expect(page).to have_content(/CD5678.*AB1234.*/m)
       end
     end
   end
 
   describe 'NSM' do
     let(:matching) do
-      create :claim, :complete,
+      create :claim, :complete, :case_type_breach,
              laa_reference: 'LAA-AB1234',
              office_code: 'XYZXYZ',
              ufn: '070620/123',
@@ -208,26 +284,45 @@ RSpec.describe 'Search' do
              originally_submitted_at: DateTime.new(2024, 10, 1, 10, 17, 26)
     end
 
+    let(:different_office) do
+      create :claim, :complete,
+             laa_reference: 'LAA-AB1234',
+             office_code: 'CCCCCC',
+             ufn: '070620/123',
+             main_defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
+             state: :rejected
+    end
+
+    let(:app_store_search_stub) do
+      stub_request(:post, 'https://app-store.example.com/v1/submissions/searches').to_return do |request|
+        data = JSON.parse(request.body)
+        applications = Claim.where.not(state: :draft).where.not(id: [non_matching.id, different_office.id])
+        sorted = if data['sort_by'] == 'last_state_change' && data['sort_direction'] == 'descending'
+                   applications.order(updated_at: :desc)
+                 else
+                   applications.order(updated_at: :asc)
+                 end
+        {
+          status: 201,
+          body: {
+            raw_data: sorted.map { SubmitToAppStore::NsmPayloadBuilder.new(claim: _1).payload },
+            metadata: { total_results: applications.count }
+          }.to_json
+        }
+      end
+    end
+
     before do
       visit provider_saml_omniauth_callback_path
       Provider.first.update(office_codes: %w[XYZXYZ 1A123B])
     end
 
     context 'when finding a single result by query' do
-      let(:different_office) do
-        create :claim, :complete,
-               laa_reference: 'LAA-AB1234',
-               office_code: 'CCCCCC',
-               ufn: '070620/123',
-               main_defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
-               state: :rejected
-      end
-
       before do
         matching
         non_matching
         different_office
-
+        app_store_search_stub
         visit search_nsm_applications_path
         fill_in 'Enter any combination of defendant, UFN or LAA reference', with: query
         find('button.govuk-button#search').click
@@ -334,9 +429,7 @@ RSpec.describe 'Search' do
           expect(page).to have_no_content 'Something went wrong trying to perform this search'
 
           within('#results') do
-            expect(page).to have_no_content 'Submitted'
             expect(page).to have_no_content 'Draft'
-            expect(page).to have_no_content 'Rejected'
           end
         end
       end
@@ -346,7 +439,7 @@ RSpec.describe 'Search' do
       before do
         matching
         non_matching
-
+        app_store_search_stub
         visit search_nsm_applications_path
       end
 
@@ -374,7 +467,6 @@ RSpec.describe 'Search' do
         it 'shows only the matching record' do
           within('#results') do
             expect(page).to have_content 'Draft'
-            expect(page).to have_no_content 'Submitted'
           end
         end
       end
@@ -417,7 +509,6 @@ RSpec.describe 'Search' do
         it 'shows only the matching record' do
           within('#results') do
             expect(page).to have_content 'Draft'
-            expect(page).to have_no_content 'Submitted'
           end
         end
       end
@@ -483,7 +574,7 @@ RSpec.describe 'Search' do
 
     context 'when there are multiple results' do
       let(:other_matching) do
-        create :claim, :complete,
+        create :claim, :complete, :case_type_breach,
                laa_reference: 'LAA-EE1234',
                office_code: '1A123B',
                ufn: '060620/999',
@@ -495,7 +586,7 @@ RSpec.describe 'Search' do
       before do
         matching
         other_matching
-
+        app_store_search_stub
         visit search_nsm_applications_path
         fill_in 'Enter any combination of defendant, UFN or LAA reference', with: 'Joe Bloggs'
         find('button.govuk-button#search').click

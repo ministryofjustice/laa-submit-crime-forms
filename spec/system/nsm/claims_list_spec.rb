@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'NSM claims lists' do
+RSpec.describe 'NSM claims lists', :stub_oauth_token do
   before do
     visit provider_saml_omniauth_callback_path
 
@@ -9,28 +9,67 @@ RSpec.describe 'NSM claims lists' do
       provider.update!(office_codes: %w[1A123B 9A123B])
     end
 
-    create(:claim,
-           :complete,
-           laa_reference: 'LAA-AAAAA',
-           ufn: '120423/001',
-           state: 'submitted',
-           updated_at: 1.day.ago,
+    first_submitted = create(:claim, :complete, :case_type_magistrates, :with_named_defendant,
+                             ufn: '120423/002', laa_reference: 'LAA-BBBBB', state: 'submitted',
+                             updated_at: 2.days.ago)
+
+    second_submitted = create(:claim, :complete, :case_type_breach,
+                              laa_reference: 'LAA-AAAAA', ufn: '120423/001', state: 'submitted', updated_at: 1.day.ago,
+                              defendants: [build(:defendant, :valid_nsm, first_name: 'Burt', last_name: 'Bacharach')])
+
+    stub_request(:post, 'https://app-store.example.com/v1/submissions/searches').with(
+      body:  {
+        'sort_by' => nil,
+        'per_page' => 10,
+        'application_type' => 'crm7',
+        'account_number' => %w[1A123B 9A123B],
+        'status_with_assignment' => %w[in_progress not_assigned provider_updated]
+      }.to_json
+    ).to_return(
+      status: 201,
+      body: {
+        metadata: { total_results: 2 },
+        raw_data: [
+          SubmitToAppStore::NsmPayloadBuilder.new(claim: second_submitted).payload,
+          SubmitToAppStore::NsmPayloadBuilder.new(claim: first_submitted).payload,
+        ]
+      }.to_json
+    )
+
+    granted = create(:claim, :complete, :case_type_magistrates, ufn: '120423/003', laa_reference: 'LAA-CCCC1',
+           state: 'granted', updated_at: 3.days.ago,
            defendants: [build(:defendant, :valid_nsm, first_name: 'Burt', last_name: 'Bacharach')])
 
-    create(:claim, :with_named_defendant, ufn: '120423/002', laa_reference: 'LAA-BBBBB',
-           state: 'submitted', updated_at: 2.days.ago)
+    sent_back = create(:claim, :complete, :case_type_magistrates, :with_named_defendant, ufn: '120423/004',
+           state: 'sent_back', updated_at: 3.days.ago, laa_reference: 'LAA-CCCC2')
 
-    create(:claim, :with_named_defendant, ufn: '120423/003', laa_reference: 'LAA-CCCC1',
-           state: 'granted', updated_at: 3.days.ago)
+    part_grant = create(:claim, :complete, :case_type_magistrates, :with_named_defendant, ufn: '120423/005',
+           state: 'part_grant', updated_at: 3.days.ago, laa_reference: 'LAA-CCCC3')
 
-    create(:claim, :with_named_defendant, ufn: '120423/004', laa_reference: 'LAA-CCCC2',
-           state: 'sent_back', updated_at: 3.days.ago)
+    rejected = create(:claim, :complete, :case_type_magistrates, :with_named_defendant, ufn: '120423/006',
+           state: 'rejected', updated_at: 3.days.ago, laa_reference: 'LAA-CCCC4')
 
-    create(:claim, :with_named_defendant, ufn: '120423/005', laa_reference: 'LAA-CCCC3',
-           state: 'part_grant', updated_at: 3.days.ago)
-
-    create(:claim, :with_named_defendant, ufn: '120423/006', laa_reference: 'LAA-CCCC4',
-           state: 'rejected', updated_at: 3.days.ago)
+    stub_request(:post, 'https://app-store.example.com/v1/submissions/searches').with do |request|
+      JSON.parse(request.body)['status_with_assignment'] == %w[granted part_grant rejected auto_grant sent_back expired]
+    end.to_return(lambda do |request|
+                    data = JSON.parse(request.body)
+                    claims = [granted, sent_back, part_grant, rejected]
+                    ordered = case data['sort_by']
+                              when 'ufn', 'client_name', 'laa_reference'
+                                data['sort_direction'] == 'descending' ? claims.reverse : claims
+                              when 'status_with_assignment'
+                                data['sort_direction'] == 'descending' ? [sent_back] : [granted]
+                              else
+                                claims.reverse
+                              end
+                    {
+                      status: 201,
+                      body: {
+                        metadata: { total_results: 4 },
+                        raw_data: ordered.map { SubmitToAppStore::NsmPayloadBuilder.new(claim: _1).payload }
+                      }.to_json
+                    }
+                  end)
 
     create(:claim,
            ufn: '120423/008',
@@ -81,18 +120,20 @@ RSpec.describe 'NSM claims lists' do
   end
 
   it 'allows sorting by UFN' do
+    visit reviewed_nsm_applications_path
     click_on 'UFN'
     within top_row_selector do
-      expect(page).to have_content('120423/001')
+      expect(page).to have_content('120423/003')
     end
 
     click_on 'UFN'
     within top_row_selector do
-      expect(page).to have_content('120423/002')
+      expect(page).to have_content('120423/006')
     end
   end
 
   it 'allows sorting by Defendant' do
+    visit reviewed_nsm_applications_path
     click_on 'Defendant'
     within top_row_selector do
       expect(page).to have_content('Burt Bacharach')
@@ -105,6 +146,7 @@ RSpec.describe 'NSM claims lists' do
   end
 
   it 'allows sorting by Account (i.e. Office code)' do
+    visit reviewed_nsm_applications_path
     click_on 'Account'
     within top_row_selector do
       expect(page).to have_content('1A123B')
@@ -117,14 +159,15 @@ RSpec.describe 'NSM claims lists' do
   end
 
   it 'allows sorting by LAA reference' do
+    visit reviewed_nsm_applications_path
     click_on 'LAA reference'
     within top_row_selector do
-      expect(page).to have_content('AAAAA')
+      expect(page).to have_content('CCCC1')
     end
 
     click_on 'LAA reference'
     within top_row_selector do
-      expect(page).to have_content('BBBBB')
+      expect(page).to have_content('CCCC4')
     end
   end
 

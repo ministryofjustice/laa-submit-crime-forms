@@ -150,10 +150,6 @@ Style/HashEachMethods:
     - spec/forms/nsm/steps/case_disposal_form_spec.rb
     - spec/factories/*
 
-Performance/InefficientHashSearch:
-  Exclude:
-    - app/models/disbursement.rb
-
 Naming/PredicateName:
   AllowedMethods:
     - has_nino

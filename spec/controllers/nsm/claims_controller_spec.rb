@@ -5,8 +5,9 @@ RSpec.describe Nsm::ClaimsController do
     let(:scope) { double(:scope, not: [instance_double(Claim)]) }
 
     before do
-      allow(Claim).to receive_message_chain(:where, :not, :order).and_return(scope)
-      allow(scope).to receive_message_chain(:page, :per).and_return(scope)
+      allow(AppStoreListService).to receive(:reviewed).and_return(
+        instance_double(SubmissionList, pagy: :pagy, rows: :rows)
+      )
       get :index
     end
 

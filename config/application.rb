@@ -56,10 +56,5 @@ module Crm7restbackend
     # The maximum period of inactivity before a user is
     # automatically signed out.
     config.x.auth.timeout_in = 1.hour
-
-    config.after_initialize do
-      Rails.application.reload_routes!
-      AppStoreSubscriber.subscribe
-    end
   end
 end
