@@ -21,8 +21,8 @@ module PriorAuthority
       end
       # :nocov:
 
-      def prune_navigation_stack
-        # The default behaviour of prune_navigation_stack assumes linear completion of tasks
+      def prune_viewed_steps
+        # The default behaviour of prune_viewed_steps assumes linear completion of tasks
         # which doesn't apply to Prior Authority. So we do a noop instead.
       end
 

@@ -8,12 +8,12 @@ RSpec.describe Nsm::Tasks::Defendants, type: :system do
     {
       id:,
       defendants:,
-      navigation_stack:,
+      viewed_steps:,
     }
   end
   let(:id) { SecureRandom.uuid }
   let(:defendants) { [] }
-  let(:navigation_stack) { [] }
+  let(:viewed_steps) { [] }
 
   describe '#path' do
     context 'no defendants' do
@@ -44,19 +44,19 @@ RSpec.describe Nsm::Tasks::Defendants, type: :system do
   it_behaves_like 'a task with generic can_start?', Nsm::Tasks::FirmDetails
 
   describe 'in_progress?' do
-    context 'navigation_stack include edit defentant_details path' do
-      before { navigation_stack << edit_nsm_steps_defendant_details_path(application, defendant_id: '345') }
+    context 'viewed_steps include edit defentant_details path' do
+      before { viewed_steps << 'defendant_details' }
 
       it { expect(subject).to be_in_progress }
     end
 
-    context 'navigation_stack include edit defentant_summary path' do
-      before { navigation_stack << edit_nsm_steps_defendant_summary_path(application) }
+    context 'viewed_steps include edit defentant_summary path' do
+      before { viewed_steps << 'defendant_summary' }
 
       it { expect(subject).to be_in_progress }
     end
 
-    context 'navigation_stack does not include defendant paths' do
+    context 'viewed_steps does not include defendant paths' do
       it { expect(subject).not_to be_in_progress }
     end
   end

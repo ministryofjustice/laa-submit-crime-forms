@@ -4,7 +4,7 @@ module Nsm
       FORM = Nsm::Steps::OtherInfoForm
 
       def can_start?
-        application.navigation_stack.include?(nsm_steps_cost_summary_path(application))
+        application.viewed_steps.include?('cost_summary')
       end
 
       def path

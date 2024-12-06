@@ -16,10 +16,8 @@ module Nsm
 
       # we remove the check_answers entry from the list to reset the return
       # location after edits once the task list has been displayed
-      def append_navigation_stack
-        current_application.navigation_stack -= [
-          "/prior-authority/applications/#{current_application.id}/steps/check_answers"
-        ]
+      def update_viewed_steps
+        current_application.viewed_steps -= ['check_answers']
 
         super
       end

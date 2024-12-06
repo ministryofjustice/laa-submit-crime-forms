@@ -6,12 +6,7 @@ module Nsm
       FORM = Nsm::Steps::WorkItemForm
 
       def previously_visited?
-        [
-          edit_nsm_steps_work_items_path(application),
-          edit_nsm_steps_work_item_path(id: application.id, work_item_id: '')
-        ].any? do |path|
-          application.navigation_stack.any? { |stack| stack.start_with?(path) }
-        end
+        application.viewed_steps.intersect?(%w[work_items work_item])
       end
 
       def completed?

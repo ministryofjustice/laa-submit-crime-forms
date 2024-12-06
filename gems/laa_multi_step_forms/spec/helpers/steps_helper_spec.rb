@@ -65,78 +65,10 @@ RSpec.describe StepsHelper, type: :helper do
       allow(view.request).to receive(:fullpath).and_return('/step3')
     end
 
-    context 'there is a previous path in the stack' do
-      it 'renders the back link to the previous path' do
-        helper.step_header
-        expect(view.content_for(:back_link)).to match(%r{<a class="govuk-back-link" href="/step2">Back</a>})
-      end
-    end
-
-    context 'there is no previous path in the stack' do
-      let(:navigation_stack) { nil }
-
-      it 'renders the back link to the root path as fallback' do
-        helper.step_header
-        expect(view.content_for(:back_link)).to match(%r{<a class="govuk-back-link" href="/">Back</a>})
-      end
-    end
-
     context 'a specific path is provided' do
       it 'renders the back link with the provided path' do
         helper.step_header(path: '/another/step')
         expect(view.content_for(:back_link)).to match(%r{<a class="govuk-back-link" href="/another/step">Back</a>})
-      end
-    end
-  end
-
-  describe '#previous_step_path' do
-    let(:current_application) { instance_double(application_klass, navigation_stack:) }
-
-    before do
-      allow(view).to receive(:current_application).and_return(current_application)
-      allow(view.request).to receive(:fullpath).and_return('/rainbow')
-    end
-
-    context 'when the stack is empty' do
-      let(:navigation_stack) { [] }
-
-      it 'returns the root path' do
-        expect(helper.previous_step_path).to eq('/')
-      end
-    end
-
-    context 'when the stack has elements' do
-      let(:navigation_stack) { %w[/somewhere /over /the /rainbow] }
-
-      it 'returns the element before the last page' do
-        expect(helper.previous_step_path).to eq('/the')
-      end
-
-      context 'and current path is in the middle' do
-        let(:navigation_stack) { %w[/somewhere /rainbow /over /the] }
-
-        it 'returns the element before the last page' do
-          expect(helper.previous_step_path).to eq('/somewhere')
-        end
-      end
-
-      # TODO: this is most likley wrong but is the best option at the moment
-      # there is a ticket to rethink this and work out the correct approach
-      context 'and current path is not in the list' do
-        let(:navigation_stack) { %w[/somewhere /over /the] }
-
-        it 'returns the element before the last page' do
-          expect(helper.previous_step_path).to eq(root_path)
-        end
-      end
-    end
-
-    context 'no current_application' do
-      let(:navigation_stack) { nil }
-
-      it 'returns the root path' do
-        allow(view).to receive(:current_application).and_return(nil)
-        expect(helper.previous_step_path).to eq('/')
       end
     end
   end

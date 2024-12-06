@@ -8,12 +8,12 @@ RSpec.describe Nsm::Tasks::WorkItems, type: :system do
     {
       id:,
       work_items:,
-      navigation_stack:,
+      viewed_steps:,
     }
   end
   let(:id) { SecureRandom.uuid }
   let(:work_items) { [] }
-  let(:navigation_stack) { [] }
+  let(:viewed_steps) { [] }
 
   describe '#path' do
     context 'no work_items' do
@@ -44,19 +44,19 @@ RSpec.describe Nsm::Tasks::WorkItems, type: :system do
   it_behaves_like 'a task with generic can_start?', Nsm::Tasks::ClaimDetails
 
   describe 'in_progress?' do
-    context 'navigation_stack include edit work_item path' do
-      before { navigation_stack << edit_nsm_steps_work_item_path(application, work_item_id: '111') }
+    context 'viewed_steps include edit work_item path' do
+      before { viewed_steps << 'work_item' }
 
       it { expect(subject).to be_in_progress }
     end
 
-    context 'navigation_stack include edit work_items path' do
-      before { navigation_stack << edit_nsm_steps_work_items_path(application) }
+    context 'viewed_steps include edit work_items path' do
+      before { viewed_steps << 'work_items' }
 
       it { expect(subject).to be_in_progress }
     end
 
-    context 'navigation_stack does not include work_items paths' do
+    context 'viewed_steps does not include work_items paths' do
       it { expect(subject).not_to be_in_progress }
     end
   end

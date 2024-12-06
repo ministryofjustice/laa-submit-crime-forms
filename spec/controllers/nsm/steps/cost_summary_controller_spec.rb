@@ -6,37 +6,37 @@ RSpec.describe Nsm::Steps::CostSummaryController, type: :controller do
   describe '#show' do
     let(:claim) { create(:claim, :firm_details) }
 
-    before { claim.update(navigation_stack:) }
+    before { claim.update(viewed_steps:) }
 
     context 'when page is already in navigation stack and at the end' do
-      let(:navigation_stack) { ['/foo', "/non-standard-magistrates/applications/#{claim.id}/steps/cost_summary"] }
+      let(:viewed_steps) { %w[claim_type cost_summary] }
 
       it 'does not change the navigation stack' do
         get :show, params: { id: claim }
         expect(claim.reload).to have_attributes(
-          navigation_stack:
+          viewed_steps:
         )
       end
     end
 
     context 'when page is already in navigation stack but not at the end' do
-      let(:navigation_stack) { ["/non-standard-magistrates/applications/#{claim.id}/steps/cost_summary", '/foo'] }
+      let(:viewed_steps) { %w[cost_summary check_answers] }
 
       it 'does not change the stack' do
         get :show, params: { id: claim }
         expect(claim.reload).to have_attributes(
-          navigation_stack: ["/non-standard-magistrates/applications/#{claim.id}/steps/cost_summary", '/foo']
+          viewed_steps: %w[cost_summary check_answers]
         )
       end
     end
 
     context 'when page is not in the navigation stack' do
-      let(:navigation_stack) { ['/foo'] }
+      let(:viewed_steps) { ['claim_type'] }
 
       it 'adds the page to the navigation stack' do
         get :show, params: { id: claim }
         expect(claim.reload).to have_attributes(
-          navigation_stack: ['/foo', "/non-standard-magistrates/applications/#{claim.id}/steps/cost_summary"]
+          viewed_steps: %w[claim_type cost_summary]
         )
       end
     end

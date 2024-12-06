@@ -10,8 +10,11 @@ module Tasks
         form_class.new(application:, record:),
         as: self.class::PREVIOUS_STEP_NAME,
       ).destination
-
       url_for(**destination, only_path: true)
+    end
+
+    def step_name
+      path.split('/').reject { _1.include?('-') }.last
     end
 
     def can_start?

@@ -9,8 +9,7 @@ module Nsm
       ].freeze
 
       def previously_visited?
-        application.navigation_stack.include?(edit_nsm_steps_disbursement_add_path(application)) ||
-          application.navigation_stack.include?(edit_nsm_steps_disbursements_path(application))
+        application.viewed_steps.intersect?(%w[disbursement_add disbursements])
       end
 
       def completed?

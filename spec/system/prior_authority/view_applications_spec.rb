@@ -184,7 +184,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
       let(:data) do
         data = SubmitToAppStore::PayloadBuilder.call(application).merge(last_updated_at: application.app_store_updated_at)
         data[:application][:assessment_comment] = application.assessment_comment
-        data[:application][:resubmission_requested] = application.resubmission_requested
+        data[:application][:further_information] = [{ requested_at: application.resubmission_requested }]
         data[:application][:resubmission_deadline] = application.resubmission_deadline
         data
       end

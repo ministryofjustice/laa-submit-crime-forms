@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_02_095015) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_03_101229) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -117,6 +117,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_02_095015) do
     t.string "main_offence_type"
     t.boolean "allowed_youth_court_fee"
     t.string "youth_court_fee_adjustment_comment"
+    t.jsonb "viewed_steps", default: [], array: true
     t.index ["core_search_fields"], name: "index_claims_on_core_search_fields", using: :gin
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
@@ -240,6 +241,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_02_095015) do
     t.boolean "submit_to_app_store_completed"
     t.boolean "send_notification_email_completed"
     t.datetime "originally_submitted_at"
+    t.jsonb "viewed_steps", default: [], array: true
     t.index ["core_search_fields"], name: "index_prior_authority_applications_on_core_search_fields", using: :gin
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"

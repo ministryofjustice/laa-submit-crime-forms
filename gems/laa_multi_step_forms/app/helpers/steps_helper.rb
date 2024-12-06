@@ -16,25 +16,8 @@ module StepsHelper
     form_for record, opts, &block
   end
 
-  def step_header(path: nil)
-    render partial: 'layouts/step_header', locals: {
-      path: path || previous_step_path
-    }
-  end
-
-  def previous_step_path
-    # as we no longer trim the stack on view we need to determine the current posiiton
-    # and the get the previous location
-    if current_application&.navigation_stack
-      current_position = current_application.navigation_stack.index(request.fullpath)
-      if current_position&.positive?
-        current_application.navigation_stack.slice(current_position - 1)
-      else
-        root_path
-      end
-    else
-      root_path
-    end
+  def step_header(path:)
+    render partial: 'layouts/step_header', locals: { path: }
   end
 
   def govuk_error_summary(form_object)

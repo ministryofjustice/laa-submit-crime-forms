@@ -137,6 +137,7 @@ prior_authority_applications:
   laa_reference: false
   state: false
   navigation_stack: false
+  viewed_steps: false
   reason_why: true
   rep_order_date: false
   client_detained: false
@@ -172,6 +173,7 @@ claims:
   office_code: false
   state: false
   navigation_stack: false
+  viewed_steps: false
   claim_type: false
   rep_order_date: false
   cntp_order: false

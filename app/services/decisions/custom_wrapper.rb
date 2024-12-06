@@ -5,7 +5,7 @@ module Decisions
     end
 
     def overwrite_to_cya(destination: Decisions::DecisionTree::PRIOR_AUTHORITY_START_PAGE, action: :show)
-      if application.navigation_stack.include?("/prior-authority/applications/#{application.id}/steps/check_answers")
+      if application.viewed_steps.include?('check_answers')
         { edit: Decisions::DecisionTree::PRIOR_AUTHORITY_CHECK_ANSWERS }
       else
         { action => destination }
