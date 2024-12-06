@@ -60,10 +60,13 @@ module AppStore
         attribute :updated_at, :datetime
         attribute :last_updated_at, :datetime
         attribute :status, :string
-        attribute :resubmission_requested, :datetime
         attribute :resubmission_deadline, :datetime
         attribute :assessment_comment, :string
         attribute :application_id, :string
+
+        def resubmission_requested
+          (further_informations.map(&:requested_at) + incorrect_informations.map(&:requested_at)).max
+        end
 
         alias state status
         alias app_store_updated_at last_updated_at
