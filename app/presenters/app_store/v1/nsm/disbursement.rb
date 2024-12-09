@@ -12,8 +12,8 @@ module AppStore
 
         attribute :id, :string
         attribute :disbursement_date, :date
-        attribute :disbursement_type, :string
-        attribute :other_type, :string
+        attribute :disbursement_type, :possibly_translated_string
+        attribute :other_type, :possibly_translated_string
         adjustable_attribute :miles, :decimal
         adjustable_attribute :total_cost_without_vat, :decimal
         attribute :details, :string

@@ -8,7 +8,7 @@ module AppStore
         include WorkItemDetails
 
         attribute :id, :string
-        adjustable_attribute :work_type, :string
+        adjustable_attribute :work_type, :possibly_translated_string
         adjustable_attribute :time_spent, :integer
         attribute :completed_on, :date
         attribute :fee_earner, :string

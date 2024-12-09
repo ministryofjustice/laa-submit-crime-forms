@@ -12,7 +12,7 @@ module AppStore
         many :supporting_evidence, AppStore::V1::SupportingDocument, key: :supporting_evidences
         many :further_informations, AppStore::V1::FurtherInformation, key: :further_information
         many :work_items, AppStore::V1::Nsm::WorkItem, collection_class: AppStore::V1::Nsm::WorkItemCollection
-        many :disbursements, AppStore::V1::Nsm::Disbursement
+        many :disbursements, AppStore::V1::Nsm::Disbursement, collection_class: AppStore::V1::Nsm::DisbursementCollection
 
         ::Claim.states.each_key do |state_string|
           define_method(:"#{state_string}?") { state == state_string }
@@ -22,13 +22,13 @@ module AppStore
         attribute :ufn, :string
         attribute :office_code, :string
         attribute :state, :string
-        attribute :claim_type, :string
+        attribute :claim_type, :possibly_translated_string
         attribute :rep_order_date, :date
         attribute :cntp_order, :string
         attribute :cntp_date, :date
         attribute :created_at, :datetime
         attribute :updated_at, :datetime
-        attribute :reasons_for_claim
+        attribute :reasons_for_claim, :possibly_translated_array
         attribute :representation_order_withdrawn_date, :date
         attribute :reason_for_claim_other_details, :string
         attribute :main_offence, :string
@@ -37,15 +37,15 @@ module AppStore
         attribute :unassigned_counsel, :string
         attribute :agent_instructed, :string
         attribute :remitted_to_magistrate, :string
-        attribute :plea, :string
+        attribute :plea, :possibly_translated_string
         attribute :arrest_warrant_date, :date
         attribute :cracked_trial_date, :date
         attribute :first_hearing_date, :date
         attribute :number_of_hearing, :integer
         attribute :court, :string
         attribute :youth_court, :string
-        attribute :hearing_outcome, :string
-        attribute :matter_type, :string
+        attribute :hearing_outcome, :possibly_translated_string
+        attribute :matter_type, :possibly_translated_string
         attribute :prosecution_evidence, :integer
         attribute :defence_statement, :integer
         attribute :number_of_witnesses, :integer
@@ -58,9 +58,9 @@ module AppStore
         attribute :work_before_date, :date
         attribute :work_after_date, :date
         attribute :signatory_name, :string
-        attribute :gender, :string
-        attribute :ethnic_group, :string
-        attribute :disability, :string
+        attribute :gender, :possibly_translated_string
+        attribute :ethnic_group, :possibly_translated_string
+        attribute :disability, :possibly_translated_string
         attribute :send_by_post, :boolean
         attribute :remitted_to_magistrate_date, :date
         attribute :preparation_time, :string
@@ -68,8 +68,8 @@ module AppStore
         attribute :work_after, :string
         attribute :has_disbursements, :string
         attribute :is_other_info, :string
-        attribute :answer_equality, :string
-        attribute :plea_category, :string
+        attribute :answer_equality, :possibly_translated_string
+        attribute :plea_category, :possibly_translated_string
         attribute :submitted_total, :float
         attribute :submitted_total_inc_vat, :float
         attribute :adjusted_total, :float
