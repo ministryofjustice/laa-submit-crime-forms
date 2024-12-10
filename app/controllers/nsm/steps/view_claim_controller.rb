@@ -15,13 +15,13 @@ module Nsm
       end
 
       def claimed_work_items
-        @records = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
+        @records = Sorters::WorkItemsSorter.call(app_store_record.work_items, @sort_by, @sort_direction)
 
         render_show
       end
 
       def adjusted_work_items
-        @records = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
+        @records = Sorters::WorkItemsSorter.call(app_store_record.work_items, @sort_by, @sort_direction)
 
         render_show
       end
@@ -44,7 +44,7 @@ module Nsm
 
       def claimed_disbursements
         @records = Sorters::DisbursementsSorter.call(
-          current_application.disbursements.by_age, @sort_by, @sort_direction
+          app_store_record.disbursements.by_age, @sort_by, @sort_direction
         )
 
         render_show
@@ -52,7 +52,7 @@ module Nsm
 
       def adjusted_disbursements
         @records = Sorters::DisbursementsSorter.call(
-          current_application.disbursements.by_age, @sort_by, @sort_direction
+          app_store_record.disbursements.by_age, @sort_by, @sort_direction
         )
 
         render_show
