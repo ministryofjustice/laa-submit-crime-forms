@@ -12,17 +12,6 @@
         <li><%= t('.agreement_list_2') %></li>
       </ul>
     </div>
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-visually-hidden"><%= t('.warning_title') %></span>
-        <%= t('.warning_content') %>
-        <ul class="govuk-list govuk-list--bullet govuk-!-font-weight-bold">
-          <li><%= t('.warning_list_1') %></li>
-          <li><%= t('.warning_list_2') %></li>
-        </ul>
-      </strong>
-    </div>
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_fieldset legend: { text: t('.legend'), size: 's', class:'govuk-!-margin-bottom-4'} do %>
