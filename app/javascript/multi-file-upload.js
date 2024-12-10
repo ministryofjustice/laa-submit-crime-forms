@@ -97,36 +97,40 @@ MOJFrontend.MultiFileUpload.prototype.getFileRowHtml = function (file, fileListL
             </td>
         </tr>`;
 };
-MOJFrontend.MultiFileUpload.prototype.onFileDeleteClick = function (e) {
+MOJFrontend.MultiFileUpload.prototype.onFileDeleteClick = function(e) {
     e.preventDefault(); // if user refreshes page and then deletes
     let button = $(e.currentTarget);
+    button.addClass("moj-hidden");
+
     let feedback = $(".moj-multi-file-upload__message");
 
     let fileName = button
-                    .parents('.govuk-table__row.moj-multi-file-upload__row')
-                    .find('.moj-multi-file-upload__filename')
-                    .text()
+	.parents('.govuk-table__row.moj-multi-file-upload__row')
+	.find('.moj-multi-file-upload__filename')
+	.text()
 
     $.ajax({
-        url: this.params.deleteUrl,
-        type: 'delete',
-        data: { evidence_id: button.attr('value') },
-        success: function (response) {
-            feedback.html(this.getSuccessHtml(`${fileName} has been deleted`));
-            button.parents('.moj-multi-file-upload__row').remove();
-            if (this.feedbackContainer.find('.moj-multi-file-upload__row').length === 0) {
-                this.feedbackContainer.addClass('moj-hidden');
-            }
-            this.params.fileDeleteHook(this, response);
-        }.bind(this),
+	url: this.params.deleteUrl,
+	type: 'delete',
+	data: { evidence_id: button.attr('value') },
+	success: (response) => {
+	    feedback.html(this.getSuccessHtml(`${fileName} has been deleted`));
+	    button.parents('.moj-multi-file-upload__row').remove();
+	    if (this.feedbackContainer.find('.moj-multi-file-upload__row').length === 0) {
+		this.feedbackContainer.addClass('moj-hidden');
+	    }
+	    this.params.fileDeleteHook(this, response);
+	},
 
-        error: function (jqXHR, textStatus, errorThrown) {
-            feedback.html(this.getErrorHtml(jqXHR.responseJSON.error.message));
-            this.status.html(jqXHR.responseJSON.error.message);
-            this.params.fileDeleteHook(this, jqXHR, textStatus, errorThrown);
-        }.bind(this),
+	error: (jqXHR, textStatus, errorThrown) => {
+	    button.removeClass("moj-hidden");
+	    feedback.html(this.getErrorHtml(jqXHR.responseJSON.error.message));
+	    this.status.html(jqXHR.responseJSON.error.message);
+	    this.params.fileDeleteHook(this, jqXHR, textStatus, errorThrown);
+	},
     });
 };
+
 MOJFrontend.MultiFileUpload.prototype.onDrop = function (e) {
     e.preventDefault();
 
