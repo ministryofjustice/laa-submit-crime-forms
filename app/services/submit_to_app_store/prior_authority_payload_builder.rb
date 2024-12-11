@@ -11,7 +11,6 @@ class SubmitToAppStore
         application_state: application.state,
         application: validated_data,
         application_type: 'crm4',
-        application_risk: 'N/A',
         events: @include_events ? PriorAuthority::EventBuilder.call(application, data) : [] }
     end
 

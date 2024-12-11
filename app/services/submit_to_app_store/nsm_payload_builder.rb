@@ -1,13 +1,11 @@
 class SubmitToAppStore
-  # rubocop:disable Metrics/ClassLength
   class NsmPayloadBuilder
     DEFAULT_IGNORE = %w[claim_id created_at updated_at].freeze
 
-    attr_reader :claim, :scorer
+    attr_reader :claim
 
-    def initialize(claim:, scorer: RiskAssessment::RiskAssessmentScorer)
+    def initialize(claim:)
       @claim = claim
-      @scorer = scorer
       @latest_payload = claim.provider_updated? ? latest_payload : nil
     end
 
@@ -17,7 +15,6 @@ class SubmitToAppStore
         json_schema_version: 1,
         application_state: claim.state,
         application: validated_payload,
-        application_risk: application_risk,
         application_type: 'crm7'
       }
     end
@@ -51,8 +48,7 @@ class SubmitToAppStore
         'solicitor' => solicitor,
         'submitter' => submitter,
         'supporting_evidences' => supporting_evidences,
-        'work_item_pricing' => work_item_pricing,
-        'cost_summary' => cost_summary
+        'work_item_pricing' => work_item_pricing
       )
     end
 
@@ -152,25 +148,5 @@ class SubmitToAppStore
                                  caseworker_id
                                  requested_at
                                  signatory_name].freeze
-
-    def cost_summary
-      values = claim.totals[:cost_summary].map do |key, value|
-        [
-          key,
-          {
-            gross_cost: value[:claimed_total_inc_vat].to_d,
-            net_cost: value[:claimed_total_exc_vat].to_d,
-            vat: value[:claimed_vat].to_d,
-          }
-        ]
-      end
-
-      values.to_h.tap { _1[:high_value] = RiskAssessment::HighRiskAssessment.new(claim).high_cost? }
-    end
-
-    def application_risk
-      claim.provider_updated? ? @latest_payload['application_risk'] : scorer.calculate(claim)
-    end
   end
-  # rubocop:enable Metrics/ClassLength
 end
