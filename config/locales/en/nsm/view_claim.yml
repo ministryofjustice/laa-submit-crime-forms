@@ -128,6 +128,7 @@ en:
           fee_type: Fee type
           net_cost: Net cost allowed
           youth_court_fee: Youth court
+          adjustment_comment: Reason for adjustment
           accessibility:
             additional_fees_caption: Adjusted additional fees
         disbursements:
