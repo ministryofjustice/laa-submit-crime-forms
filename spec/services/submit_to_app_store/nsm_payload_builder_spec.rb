@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
-  subject { described_class.new(claim:, scorer:) }
+  subject { described_class.new(claim:) }
 
-  let(:scorer) { double(:risk_assessment_scorer, calculate: 'high') }
   let(:assessment_comment) { 'this is an assessment' }
   let(:claim) { create(:claim, :complete, :case_type_breach) }
   let(:defendant) { claim.defendants.first }
@@ -33,29 +32,6 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'cntp_order' => nil,
             'concluded' => 'no',
             'conclusion' => nil,
-            'cost_summary' => {
-              disbursements: {
-                gross_cost: an_instance_of(BigDecimal),
-                net_cost: an_instance_of(BigDecimal),
-                vat: an_instance_of(BigDecimal),
-              },
-              profit_costs: {
-                gross_cost: an_instance_of(BigDecimal),
-                net_cost: an_instance_of(BigDecimal),
-                vat: an_instance_of(BigDecimal),
-              },
-              travel: {
-                gross_cost: an_instance_of(BigDecimal),
-                net_cost: an_instance_of(BigDecimal),
-                vat: an_instance_of(BigDecimal),
-              },
-              waiting: {
-                gross_cost: an_instance_of(BigDecimal),
-                net_cost: an_instance_of(BigDecimal),
-                vat: an_instance_of(BigDecimal),
-              },
-              high_value: false,
-            },
             'court' => 'A Court',
             'court_in_undesignated_area' => nil,
             'cracked_trial_date' => nil,
@@ -191,7 +167,6 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           },
           application_id: claim.id,
           application_state: 'submitted',
-          application_risk: 'high',
           json_schema_version: 1,
           application_type: 'crm7'
         )
@@ -239,7 +214,6 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
         },
         application_id: claim.id,
         application_state: 'sent_back',
-        application_risk: 'high',
         json_schema_version: 1,
         application_type: 'crm7'
       }

@@ -171,7 +171,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
       application_state: 'submitted',
       application_type: 'crm4',
       json_schema_version: 1,
-      application_risk: 'N/A',
       events: []
     }
   end
