@@ -27,10 +27,6 @@ module Nsm
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def disbursement
         @disbursement ||=
           if params[:disbursement_id] == StartPage::NEW_RECORD

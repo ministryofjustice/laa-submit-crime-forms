@@ -1,7 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::Steps::FurtherInformationController, type: :controller do
-  let(:current_application) { create(:claim, :with_further_information_request) }
+  before do
+    allow(AppStoreClient).to receive(:new).and_return(dummy_client)
+    allow(dummy_client).to receive(:get).and_return(app_store_record)
+  end
+
+  let(:current_application) { create(:claim, :complete, :case_type_magistrates, :with_further_information_request) }
+  let(:dummy_client) { instance_double(AppStoreClient) }
+  let(:app_store_record) do
+    {
+      application_id: current_application.id,
+      application_state: 'sent_back',
+      application: application_payload,
+    }.deep_stringify_keys
+  end
+  let(:application_payload) do
+    SubmitToAppStore::NsmPayloadBuilder.new(claim: current_application).send(:construct_payload).merge(
+      further_information: [
+        current_application.further_informations.first.as_json
+      ]
+    )
+  end
 
   describe '#destroy' do
     let(:evidence) do
@@ -33,9 +53,4 @@ RSpec.describe Nsm::Steps::FurtherInformationController, type: :controller do
       end
     end
   end
-
-  it_behaves_like 'a multi file upload controller', application: lambda {
-                                                                   create(:claim,
-                                                                          :with_further_information_request)
-                                                                 }
 end

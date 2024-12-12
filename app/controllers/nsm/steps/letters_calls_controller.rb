@@ -14,10 +14,6 @@ module Nsm
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def additional_permitted_params
         %i[apply_letters_uplift apply_calls_uplift]
       end

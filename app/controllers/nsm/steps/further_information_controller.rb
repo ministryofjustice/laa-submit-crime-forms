@@ -5,6 +5,7 @@ module Nsm
   module Steps
     class FurtherInformationController < Nsm::Steps::BaseController
       include MultiFileUploadable
+      skip_before_action :update_viewed_steps, :prune_viewed_steps
 
       def edit
         @form_object = FurtherInformationForm.build(record, application: current_application)
@@ -27,19 +28,19 @@ module Nsm
       private
 
       def record
-        current_application.pending_further_information
+        current_application.pending_further_information.local_record
       end
 
       def as
         :nsm_further_information
       end
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def step_valid?
         current_application.sent_back?
+      end
+
+      def current_application
+        @current_application ||= AppStoreDetailService.nsm(params[:id], current_provider)
       end
     end
   end

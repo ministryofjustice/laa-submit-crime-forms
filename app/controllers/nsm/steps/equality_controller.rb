@@ -10,16 +10,6 @@ module Nsm
       def update
         update_and_advance(AnswerEqualityForm, as: :equality)
       end
-
-      private
-
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
-      def additional_permitted_params
-        [:answer_equality]
-      end
     end
   end
 end

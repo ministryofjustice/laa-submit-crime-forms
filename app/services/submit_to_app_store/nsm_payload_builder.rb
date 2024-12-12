@@ -4,16 +4,22 @@ class SubmitToAppStore
 
     attr_reader :claim
 
+    # If we are submitting for the first time, `claim` will be a Claim object
+    # If this is an RFI look, `claim` will be an AppStore::V1::Nsm::Claim object
     def initialize(claim:)
       @claim = claim
-      @latest_payload = claim.provider_updated? ? latest_payload : nil
+      @latest_payload = first_submission? ? nil : latest_payload
+    end
+
+    def first_submission?
+      claim.is_a?(Claim)
     end
 
     def payload
       {
         application_id: claim.id,
         json_schema_version: 1,
-        application_state: claim.state,
+        application_state: first_submission? ? 'submitted' : 'provider_updated',
         application: validated_payload,
         application_type: 'crm7'
       }
@@ -29,7 +35,7 @@ class SubmitToAppStore
     end
 
     def construct_payload
-      claim.provider_updated? ? send_back_payload : submit_payload
+      first_submission? ? submit_payload : send_back_payload
     end
 
     def latest_payload
@@ -53,8 +59,8 @@ class SubmitToAppStore
     end
 
     def send_back_payload
-      @latest_payload['application'].merge('further_information' => further_information, 'status' => claim.state,
-                                           'updated_at' => claim.updated_at)
+      @latest_payload['application'].merge('further_information' => further_information, 'status' => 'provider_updated',
+                                           'updated_at' => DateTime.current.as_json)
     end
 
     def direct_attributes
@@ -126,27 +132,7 @@ class SubmitToAppStore
     end
 
     def further_information
-      claim.further_informations.map do |further_information|
-        further_information.as_json(only: FURTHER_INFO_ATTRIBUTES).merge(
-          'documents' => further_info_documents(further_information)
-        )
-      end
+      claim.further_informations.map(&:as_json)
     end
-
-    def further_info_documents(further_information)
-      further_information.supporting_documents.map do |document|
-        document.as_json(only: %i[file_name
-                                  file_type
-                                  file_size
-                                  file_path
-                                  document_type])
-      end
-    end
-
-    FURTHER_INFO_ATTRIBUTES = %i[information_requested
-                                 information_supplied
-                                 caseworker_id
-                                 requested_at
-                                 signatory_name].freeze
   end
 end
