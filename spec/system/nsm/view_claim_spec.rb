@@ -186,6 +186,30 @@ RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
       )
     end
 
+    context 'when the claim is not NSM' do
+      let(:claim_type) { ClaimType::BREACH_OF_INJUNCTION.to_s }
+
+      it 'does not show the additional fee tab' do
+        expect(page).to have_no_content 'Additional Fees'
+      end
+    end
+
+    context 'when the youth_court field is no' do
+      let(:youth_court) { 'no' }
+
+      it 'does not show the additional fee tab' do
+        expect(page).to have_no_content 'Additional Fees'
+      end
+    end
+
+    context 'when the date is too early' do
+      let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE - 1 }
+
+      it 'does not show the additional fee tab' do
+        expect(page).to have_no_content 'Additional Fees'
+      end
+    end
+
     context 'when additional fee has been adjusted' do
       let(:assessment_comment) { 'assessed' }
       let(:youth_court_fee_adjustment_comment) { 'removed fee' }
