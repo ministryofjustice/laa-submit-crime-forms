@@ -16,10 +16,6 @@ module Nsm
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def work_item
         @work_item ||= begin
           work_item_id = params[:work_item_id] || params.dig(:steps_delete_form, :id)

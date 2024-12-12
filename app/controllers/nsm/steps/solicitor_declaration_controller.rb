@@ -16,16 +16,8 @@ module Nsm
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def record
-        current_application.sent_back? ? current_application.pending_further_information : current_application
-      end
-
-      def step_valid?
-        current_application.draft? || current_application.sent_back?
+        current_application
       end
 
       def check_complete?
@@ -39,7 +31,7 @@ module Nsm
           task.not_applicable? || task.completed?
         end
 
-        redirect_to nsm_steps_start_page_path(current_application) if incomplete.any? && current_application.draft?
+        redirect_to nsm_steps_start_page_path(current_application) if incomplete.any?
       end
     end
   end

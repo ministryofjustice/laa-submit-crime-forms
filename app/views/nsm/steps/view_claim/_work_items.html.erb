@@ -94,7 +94,7 @@
     text = if skip_links
              t(".#{column_key}")
            else
-             reorder_form(polymorphic_path([@section, @scope, :nsm, :steps_view, current_application], anchor: "claim_nav"), column_key, next_direction, "nsm.steps.view_claim.work_items", index)
+             reorder_form(polymorphic_path([@section, @scope, :nsm, :steps_view, current_application.local_record], anchor: "claim_nav"), column_key, next_direction, "nsm.steps.view_claim.work_items", index)
            end
 
     {

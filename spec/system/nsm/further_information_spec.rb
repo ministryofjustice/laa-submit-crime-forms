@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Nsm - User can fill in further information', :javascript, type: :system do
+RSpec.describe 'Nsm - User can fill in further information', :javascript, :stub_oauth_token, type: :system do
   let(:claim) do
     create(:claim,
            :complete,
@@ -9,6 +9,7 @@ RSpec.describe 'Nsm - User can fill in further information', :javascript, type: 
   end
 
   before do
+    stub_app_store_payload(claim)
     visit provider_saml_omniauth_callback_path
     visit edit_nsm_steps_further_information_path(claim.id)
   end

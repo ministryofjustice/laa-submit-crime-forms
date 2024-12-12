@@ -34,10 +34,6 @@ module Nsm
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def supporting_evidence
         current_application.supporting_evidence
       end

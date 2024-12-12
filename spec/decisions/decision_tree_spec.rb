@@ -199,12 +199,8 @@ RSpec.describe Decisions::DecisionTree do
     it_behaves_like 'a generic decision', from: :equality, goto: { action: :edit, controller: 'nsm/steps/solicitor_declaration' }
   end
 
-  context 'If further Information exists' do
-    let(:application) { build(:claim, :with_further_information_supplied) }
-
-    it_behaves_like 'a generic decision', from: :nsm_further_information, goto: { action: :edit, controller: 'nsm/steps/solicitor_declaration' }
-  end
-
+  it_behaves_like 'a generic decision', from: :nsm_further_information, goto: { action: :edit, controller: 'nsm/steps/rfi_solicitor_declaration' }
   it_behaves_like 'a generic decision', from: :equality_questions, goto: { action: :edit, controller: 'nsm/steps/solicitor_declaration' }
   it_behaves_like 'a generic decision', from: :solicitor_declaration, goto: { action: :show, controller: 'nsm/steps/claim_confirmation' }
+  it_behaves_like 'a generic decision', from: :rfi_solicitor_declaration, goto: { action: :show, controller: 'nsm/steps/claim_confirmation' }
 end

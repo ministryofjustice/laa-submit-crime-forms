@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'system_helper'
 
 # These specs will not run unless the `INCLUDE_ACCESSIBILITY_SPECS` env var is set to `true`
 RSpec.describe 'Accessibility', :accessibility, :stub_app_store_search, :stub_oauth_token do
@@ -69,7 +69,10 @@ RSpec.describe 'Accessibility', :accessibility, :stub_app_store_search, :stub_oa
       nsm_steps_view_claim
     ].each do |path|
       describe "#{path} screen" do
-        before { visit send(:"#{path}_path", claim) }
+        before do
+          stub_app_store_payload(claim)
+          visit send(:"#{path}_path", claim)
+        end
 
         it 'is accessible' do
           expect(page).to(be_axe_clean_with_caveats)

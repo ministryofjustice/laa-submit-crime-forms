@@ -131,7 +131,8 @@ module Decisions
       .goto(edit: 'nsm/steps/solicitor_declaration')
     from(:equality_questions).goto(edit: 'nsm/steps/solicitor_declaration')
     from(:solicitor_declaration).goto(show: 'nsm/steps/claim_confirmation')
-    from(:nsm_further_information).goto(edit: 'nsm/steps/solicitor_declaration')
+    from(:nsm_further_information).goto(edit: 'nsm/steps/rfi_solicitor_declaration')
+    from(:rfi_solicitor_declaration).goto(show: 'nsm/steps/claim_confirmation')
 
     PRIOR_AUTHORITY_START_PAGE = 'prior_authority/steps/start_page'.freeze
     PRIOR_AUTHORITY_CHECK_ANSWERS = 'prior_authority/steps/check_answers'.freeze

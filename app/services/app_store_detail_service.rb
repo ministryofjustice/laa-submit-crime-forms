@@ -31,9 +31,9 @@ class AppStoreDetailService
     # This is important only in RFI loops, which is the only time, once an application is
     # submitted, that we read its data from the local DB
     def sync_if_necessary(data, submission_id, local_record_class)
-      record = local_record_class.find(submission_id)
+      record = local_record_class.find_by(id: submission_id)
 
-      return if record.state == data['application_state']
+      return if record.nil? || record.state == data['application_state']
 
       AppStoreUpdateProcessor.call(data, record)
     end

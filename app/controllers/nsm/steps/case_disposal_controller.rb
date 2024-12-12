@@ -10,12 +10,6 @@ module Nsm
       def update
         update_and_advance(CaseDisposalForm, as: :case_disposal)
       end
-
-      private
-
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
     end
   end
 end

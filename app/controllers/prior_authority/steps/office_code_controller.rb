@@ -13,10 +13,6 @@ module PriorAuthority
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def as
         :pa_office_code
       end

@@ -13,10 +13,6 @@ module Nsm
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def additional_permitted_params
         [
           firm_office_attributes: Nsm::Steps::FirmDetails::FirmOfficeForm.attribute_names,

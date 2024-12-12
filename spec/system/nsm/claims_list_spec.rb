@@ -66,7 +66,9 @@ RSpec.describe 'NSM claims lists', :stub_oauth_token do
                       status: 201,
                       body: {
                         metadata: { total_results: 4 },
-                        raw_data: ordered.map { SubmitToAppStore::NsmPayloadBuilder.new(claim: _1).payload }
+                        raw_data: ordered.map do |claim|
+                          SubmitToAppStore::NsmPayloadBuilder.new(claim:).payload.merge(application_state: claim.state)
+                        end
                       }.to_json
                     }
                   end)

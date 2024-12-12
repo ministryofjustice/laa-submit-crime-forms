@@ -42,8 +42,10 @@
             <% @model.each do |claim| %>
               <tr class="govuk-table__row app-task-list__item">
                 <td class="govuk-table__cell">
-                  <%= link_to nsm_steps_view_claim_path(claim) do %>
-                    <%= claim.ufn %>
+                  <% if claim.draft? %>
+                    <%= link_to claim.ufn, nsm_steps_start_page_path(claim) %>
+                  <% else  %>
+                    <%= link_to claim.ufn, nsm_steps_view_claim_path(claim) %>
                   <% end %>
                 </td>
                 <td class="govuk-table__cell">

@@ -13,10 +13,6 @@ module Nsm
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def additional_permitted_params
         [:preparation_time, :work_before, :work_after]
       end

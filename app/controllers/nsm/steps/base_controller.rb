@@ -15,6 +15,10 @@ module Nsm
       def subsequent_steps
         Decisions::OrderedSteps.nsm_after(controller_name)
       end
+
+      def decision_tree_class
+        Decisions::DecisionTree
+      end
     end
   end
 end

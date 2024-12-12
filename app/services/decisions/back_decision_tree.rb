@@ -63,13 +63,11 @@ module Decisions
     from(DecisionTree::NSM_EQUALITY).goto(show: 'nsm/steps/check_answers')
     from('nsm/steps/equality_questions').goto(edit: DecisionTree::NSM_EQUALITY)
     # TODO: we should be storing the answer to the ask equality question and use that in the decision
-    from('nsm/steps/solicitor_declaration')
-      .when(-> { application.pending_further_information.present? })
-      .goto(edit: 'nsm/steps/further_information')
-      .goto(edit: DecisionTree::NSM_EQUALITY)
+    from('nsm/steps/solicitor_declaration').goto(edit: DecisionTree::NSM_EQUALITY)
+
     # further information
     from('nsm/steps/further_information').goto(show: 'nsm/steps/view_claim', id: -> { application.id })
-
+    from('nsm/steps/rfi_solicitor_declaration').goto(edit: 'nsm/steps/further_information')
     # ---------------------------------
     # prior authority application steps
     # ---------------------------------
