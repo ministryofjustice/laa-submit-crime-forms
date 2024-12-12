@@ -119,6 +119,7 @@ en:
           allowed_net_cost: Net cost allowed
           adjustment_comment: Reason for adjustment
           youth_court_fee: Youth court
+          no_data: You do not have any additional fees
           accessibility:
             additional_fees_caption: Claimed additional fees
         allowed_additional_fees:
