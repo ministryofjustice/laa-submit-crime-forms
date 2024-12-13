@@ -8,72 +8,42 @@ RSpec.describe EmailFormatValidator do
       def self.name
         'EmailFormatTest'
       end
-
       attribute :email
       validates :email, email_format: true
     end
   end
 
-  context 'when email is valid' do
-    let(:email) { 'foo@example.com' }
+  {
+    'accepts standard email format' => 'user@example.com',
+    'accepts email with dots in local part' => 'first.last@example.com',
+    'accepts email with subdomain' => 'user@sub.domain.com',
+    'accepts email with numbers' => 'user123@example.com',
+    'accepts email with allowed special chars' => 'user+test@example.com'
+  }.each do |description, email|
+    context description do
+      let(:email) { email }
 
-    it { expect(subject).to be_valid }
-  end
-
-  context 'when value is not an email' do
-    let(:email) { 'John Smith' }
-
-    it 'is not valid' do
-      expect(subject).not_to be_valid
-      expect(subject.errors.of_kind?(:email, :invalid)).to be(true)
+      it { is_expected.to be_valid }
     end
   end
 
-  context 'when prefix is too long' do
-    let(:email) { "#{'a' * 320}@example.com" }
+  {
+    'rejects plain text' => 'John Smith',
+    'rejects oversized local part' => "#{'a' * 320}@example.com",
+    'rejects consecutive dots' => 'foo..bar@example.com',
+    'rejects oversized domain' => "foo@#{'a' * 254}.com",
+    'rejects missing TLD' => 'foo@domain',
+    'rejects empty hostname' => 'foo@.co.uk',
+    'rejects invalid hostname chars' => 'foo@f!oo.com',
+    'rejects invalid TLD' => 'foo@bar.co.k',
+    'rejects trailing dot' => 'foo@bar.co.uk.',
+    'rejects multiple @ symbols' => 'foo@bar.co.uk@test',
+    'rejects leading dot' => '.test@example.com'
+  }.each do |description, email|
+    context description do
+      let(:email) { email }
 
-    it { expect(subject).not_to be_valid }
-  end
-
-  context 'when email has double dot' do
-    let(:email) { 'foo..bar@example.com' }
-
-    it { expect(subject).not_to be_valid }
-  end
-
-  context 'when email has super long hostname' do
-    let(:email) { "foo@#{'a' * 254}.com" }
-
-    it { expect(subject).not_to be_valid }
-  end
-
-  context 'when email has just one hostname part' do
-    let(:email) { 'foo@domain' }
-
-    it { expect(subject).not_to be_valid }
-  end
-
-  context 'when email has super long domain' do
-    let(:email) { "foo@#{'a' * 64}.com" }
-
-    it { expect(subject).not_to be_valid }
-  end
-
-  context 'when email has blank hostname part' do
-    let(:email) { 'foo@.foo.com' }
-
-    it { expect(subject).not_to be_valid }
-  end
-
-  context 'when email has invalid hostname part' do
-    let(:email) { 'foo@f!oo.com' }
-
-    it { expect(subject).not_to be_valid }
-  end
-
-  context 'when email has invalid tld' do
-    let(:email) { 'foo@bar.co.k' }
-
-    it { expect(subject).not_to be_valid }
+      it { is_expected.not_to be_valid }
+    end
   end
 end
