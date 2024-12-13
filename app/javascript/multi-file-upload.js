@@ -29,6 +29,7 @@ MOJFrontend.MultiFileUpload.prototype.uploadFiles = async function(files) {
 };
 
 MOJFrontend.MultiFileUpload.prototype.uploadFile = function (file) {
+    this.feedbackContainer.find('.govuk-table').removeClass("moj-hidden");
     const maxFileSize = document.querySelector('.moj-multi-file-upload').dataset.maxSize;
     this.params.uploadFileEntryHook(this, file);
     let formData = new FormData();
@@ -97,36 +98,52 @@ MOJFrontend.MultiFileUpload.prototype.getFileRowHtml = function (file, fileListL
             </td>
         </tr>`;
 };
-MOJFrontend.MultiFileUpload.prototype.onFileDeleteClick = function (e) {
+MOJFrontend.MultiFileUpload.prototype.onFileDeleteClick = function(e) {
     e.preventDefault(); // if user refreshes page and then deletes
     let button = $(e.currentTarget);
+
+    if (button.parents('.govuk-table').find('.govuk-table__row.moj-multi-file-upload__row:not(.moj-hidden)').length == 1) {
+	button.parents('.govuk-table').addClass("moj-hidden")
+    }
+
+    button.parents('.govuk-table__row.moj-multi-file-upload__row').addClass("moj-hidden");    
     let feedback = $(".moj-multi-file-upload__message");
 
     let fileName = button
-                    .parents('.govuk-table__row.moj-multi-file-upload__row')
-                    .find('.moj-multi-file-upload__filename')
-                    .text()
+	.parents('.govuk-table__row.moj-multi-file-upload__row')
+	.find('.moj-multi-file-upload__filename')
+	.text()
 
     $.ajax({
-        url: this.params.deleteUrl,
-        type: 'delete',
-        data: { evidence_id: button.attr('value') },
-        success: function (response) {
-            feedback.html(this.getSuccessHtml(`${fileName} has been deleted`));
-            button.parents('.moj-multi-file-upload__row').remove();
-            if (this.feedbackContainer.find('.moj-multi-file-upload__row').length === 0) {
-                this.feedbackContainer.addClass('moj-hidden');
-            }
-            this.params.fileDeleteHook(this, response);
-        }.bind(this),
+	url: this.params.deleteUrl,
+	type: 'delete',
+	data: { evidence_id: button.attr('value') },
+	success: (response) => {
+	    feedback.html(this.getSuccessHtml(`${fileName} has been deleted`));
+	    button.parents('.moj-multi-file-upload__row').remove();
+	    if (this.feedbackContainer.find('.moj-multi-file-upload__row').length === 0) {
+		this.feedbackContainer.addClass('moj-hidden');
+	    }
+	    this.params.fileDeleteHook(this, response);
+	},
 
-        error: function (jqXHR, textStatus, errorThrown) {
-            feedback.html(this.getErrorHtml(jqXHR.responseJSON.error.message));
-            this.status.html(jqXHR.responseJSON.error.message);
+	error: (jqXHR, textStatus, errorThrown) => {
+	    if (errorThrown != "") {
+                button.parents('.govuk-table__row.moj-multi-file-upload__row').removeClass("moj-hidden");
+                button.parents('.govuk-table').removeClass("moj-hidden");               
+            }
+
+            let errorMessage = jqXHR.responseJSON?.error.message;
+            if (errorMessage) {
+                feedback.html(this.getErrorHtml(errorMessage));
+                this.status.html(errorMessage);
+            }
+
             this.params.fileDeleteHook(this, jqXHR, textStatus, errorThrown);
-        }.bind(this),
+        },
     });
 };
+
 MOJFrontend.MultiFileUpload.prototype.onDrop = function (e) {
     e.preventDefault();
 
