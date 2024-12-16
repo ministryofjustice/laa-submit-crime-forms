@@ -13,12 +13,6 @@ module Nsm
         update_and_advance(CaseOutcomeForm, as: :case_outcome)
       end
 
-      private
-
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def set_case_outcomes
         @case_outcomes =
           case current_application.plea_category

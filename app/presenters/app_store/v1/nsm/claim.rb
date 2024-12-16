@@ -88,12 +88,12 @@ module AppStore
         attribute :case_outcome_other_info, :string
         attribute :main_offence_type, :string
         attribute :letters_and_calls
-        attribute :status, :string
+        attribute :application_state, :string
         attribute :last_updated_at, :datetime
         attribute :youth_court_fee_adjustment_comment
         attribute :resubmission_deadline, :datetime
 
-        alias state status
+        alias state application_state
         alias app_store_updated_at last_updated_at
         alias id application_id
         alias to_param id
@@ -180,8 +180,21 @@ module AppStore
         end
 
         def pending_further_information
-          further_informations.select { _1.information_supplied.blank? }.max_by(&:requested_at)
+          further_informations.reject(&:previously_completed?).max_by(&:requested_at)
         end
+
+        def local_record
+          # The reason we're doing a "find_or_create_by" here rather than just "find"
+          # is that in very rare cases (mostly this will be when dealing with dev branches)
+          # there may not be a claim in the local DB to match the app store record.
+          # This only matters if we are in an RFI loop and need a local `further_information`
+          # record to hold the not-yet-resubmitted provider response to the caseworker request.
+          # further_informations map polymortphically to claims, and that mechanism requires
+          # a claim with the appropriate ID to exist in the local db.
+          @local_record ||= ::Claim.find_or_create_by!(id:)
+        end
+
+        delegate :with_lock, :provider_updated!, to: :local_record
       end
       # rubocop:enable Metrics/ClassLength
     end

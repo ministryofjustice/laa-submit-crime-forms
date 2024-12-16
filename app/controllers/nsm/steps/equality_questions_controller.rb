@@ -10,12 +10,6 @@ module Nsm
       def update
         update_and_advance(EqualityQuestionsForm, as: :equality_questions)
       end
-
-      private
-
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
     end
   end
 end

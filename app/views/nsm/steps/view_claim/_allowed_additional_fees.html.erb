@@ -15,12 +15,14 @@
 
     head = [
       { text: t('.fee_type')},
+      { text: t('.adjustment_comment') },
       { text: t('.net_cost'), numeric: true },
     ]
 
     rows = [
       [
         { header: true, text: youth_court_fee_link },
+        { text: simple_format(claim.youth_court_fee_adjustment_comment), numeric: false },
         { text: NumberTo.pounds(claim.totals[:additional_fees][:youth_court_fee][:assessed_total_exc_vat]), numeric: true },
       ]
       ]

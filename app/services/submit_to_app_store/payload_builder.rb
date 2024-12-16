@@ -1,11 +1,11 @@
 class SubmitToAppStore
   class PayloadBuilder
-    def self.call(submission, include_events: true)
+    def self.call(submission)
       case submission
-      when Claim
+      when Claim, AppStore::V1::Nsm::Claim
         NsmPayloadBuilder.new(claim: submission).payload
       when PriorAuthorityApplication
-        PriorAuthorityPayloadBuilder.new(application: submission, include_events: include_events).payload
+        PriorAuthorityPayloadBuilder.new(application: submission).payload
       else
         raise 'Unknown submission type'
       end

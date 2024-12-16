@@ -15,17 +15,17 @@ class SubmitToAppStore < ApplicationJob
     # modifications made as part of that transaction will have been committed
     submission.with_lock do
       new_data = submit(submission)
-      notify(submission)
-      update_records(new_data, submission)
-      submission.update!(submit_to_app_store_completed: true)
+      local_record = submission.try(:local_record) || submission
+      notify(local_record)
+      update_records(new_data, local_record)
+      local_record.update!(submit_to_app_store_completed: true)
     end
   end
 
-  def submit(submission, include_events: true)
-    payload = PayloadBuilder.call(submission, include_events:)
+  def submit(submission)
+    payload = PayloadBuilder.call(submission)
     client = AppStoreClient.new
-
-    submission.provider_updated? ? client.put(payload) : client.post(payload)
+    payload.with_indifferent_access['application_state'] == 'submitted' ? client.post(payload) : client.put(payload)
   end
 
   def notify(submission)

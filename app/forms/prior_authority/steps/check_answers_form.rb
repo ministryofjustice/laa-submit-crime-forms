@@ -26,12 +26,8 @@ module PriorAuthority
       end
 
       def update_incorrect_information
-        builder = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:)
-        events = SubmitToAppStore::PriorAuthority::EventBuilder.new(application, builder.data)
-        sections_changed = events.corrected_info
-
         latest_incorrect_info = application.incorrect_informations.order(requested_at: :desc).first
-        latest_incorrect_info.update(sections_changed:)
+        latest_incorrect_info.update(sections_changed: changes_made_since_request)
       end
 
       def application_corrected
@@ -39,8 +35,14 @@ module PriorAuthority
       end
 
       def application_changed_since_request?
-        content = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:).data
-        ::PriorAuthority::ChangeLister.call(application, content).present?
+        changes_made_since_request.present?
+      end
+
+      def changes_made_since_request
+        @changes_made_since_request ||= ::PriorAuthority::ChangeLister.call(
+          application,
+          SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:).data
+        )
       end
 
       def needs_correcting?

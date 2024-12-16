@@ -127,8 +127,10 @@
           <% @claims.each do |claim| %>
             <tr class="govuk-table__row app-task-list__item">
               <td class="govuk-table__cell">
-                <%= link_to nsm_steps_start_page_path(claim.id) do %>
-                  <%= claim.ufn %>
+                <% if @scope == :draft %>
+                  <%= link_to claim.ufn, nsm_steps_start_page_path(claim.id) %>
+                <% else %>
+                  <%= link_to claim.ufn, nsm_steps_view_claim_path(claim.id) %>
                 <% end %>
               </td>
               <td class="govuk-table__cell"><%= claim.main_defendant&.full_name.presence || I18n.t('helpers.missing_data') %></td>

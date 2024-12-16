@@ -4,7 +4,7 @@ RSpec.describe SubmitToAppStore do
   subject { described_class.new }
 
   let(:submission) { instance_double(Claim, update!: true, state: 'submitted') }
-  let(:payload) { { some: 'message' } }
+  let(:payload) { { 'application_state' => submission.state } }
 
   before do
     allow(described_class::PayloadBuilder).to receive(:call)
@@ -48,7 +48,7 @@ RSpec.describe SubmitToAppStore do
 
     it 'generates a payload' do
       expect(described_class::PayloadBuilder).to receive(:call)
-        .with(submission, include_events: true)
+        .with(submission)
 
       subject.perform(submission:)
     end

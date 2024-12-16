@@ -20,10 +20,6 @@ module Nsm
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def work_item
         @work_item ||=
           if params[:work_item_to_duplicate]

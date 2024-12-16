@@ -1,8 +1,7 @@
 class SubmitToAppStore
   class PriorAuthorityPayloadBuilder
-    def initialize(application:, include_events: true)
+    def initialize(application:)
       @application = application
-      @include_events = include_events
     end
 
     def payload
@@ -11,8 +10,7 @@ class SubmitToAppStore
         application_state: application.state,
         application: validated_data,
         application_type: 'crm4',
-        application_risk: 'N/A',
-        events: @include_events ? PriorAuthority::EventBuilder.call(application, data) : [] }
+        events: PriorAuthority::EventBuilder.call(application) }
     end
 
     def validated_data

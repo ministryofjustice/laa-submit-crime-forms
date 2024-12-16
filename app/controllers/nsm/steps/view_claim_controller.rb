@@ -3,6 +3,7 @@
 module Nsm
   module Steps
     class ViewClaimController < Nsm::Steps::BaseController
+      skip_before_action :update_viewed_steps
       before_action :set_section_and_scope
       before_action :set_default_table_sort_options
 
@@ -15,13 +16,13 @@ module Nsm
       end
 
       def claimed_work_items
-        @records = Sorters::WorkItemsSorter.call(app_store_record.work_items, @sort_by, @sort_direction)
+        @records = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
 
         render_show
       end
 
       def adjusted_work_items
-        @records = Sorters::WorkItemsSorter.call(app_store_record.work_items, @sort_by, @sort_direction)
+        @records = Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction)
 
         render_show
       end
@@ -44,7 +45,7 @@ module Nsm
 
       def claimed_disbursements
         @records = Sorters::DisbursementsSorter.call(
-          app_store_record.disbursements.by_age, @sort_by, @sort_direction
+          current_application.disbursements.by_age, @sort_by, @sort_direction
         )
 
         render_show
@@ -52,7 +53,7 @@ module Nsm
 
       def adjusted_disbursements
         @records = Sorters::DisbursementsSorter.call(
-          app_store_record.disbursements.by_age, @sort_by, @sort_direction
+          current_application.disbursements.by_age, @sort_by, @sort_direction
         )
 
         render_show
@@ -105,15 +106,15 @@ module Nsm
       end
 
       def view_locals
-        { claim: app_store_record, report: report }
+        { claim: current_application, report: report }
       end
 
-      def app_store_record
-        @app_store_record ||= AppStoreDetailService.nsm(params[:id], current_provider)
+      def current_application
+        @current_application ||= AppStoreDetailService.nsm(params[:id], current_provider)
       end
 
       def report
-        CheckAnswers::ReadOnlyReport.new(app_store_record, cost_summary_in_overview: false)
+        CheckAnswers::ReadOnlyReport.new(current_application, cost_summary_in_overview: false)
       end
 
       def check_step_valid
