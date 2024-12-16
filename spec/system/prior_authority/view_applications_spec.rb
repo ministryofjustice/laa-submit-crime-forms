@@ -4,8 +4,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
   let(:arbitrary_fixed_date) { DateTime.new(2024, 3, 22, 15, 23, 11) }
   let(:data) do
     data = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(
-      application: application,
-      include_events: false
+      application:
     ).payload.merge(last_updated_at: application.app_store_updated_at)
     data[:application][:assessment_comment] = application.assessment_comment
     data

@@ -42,7 +42,7 @@ module Fixes
       # We assume that any affected submissions will be manually put into "sent_back"
       #  before this job runs, and then put into their intended state after it runs.
       application.provider_updated!
-      SubmitToAppStore.new.submit(application, include_events: false)
+      SubmitToAppStore.new.submit(application)
       application.update(state: old_state)
     end
 
