@@ -230,7 +230,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
               information_supplied: 'More info',
               requested_at: 1.day.ago,
               # the first dash in the below file name in an en dash, which is not a valid ISO-8859-1 character
-              supporting_documents: [build(:supporting_document, file_name: 'evidence–with-weird-char.pdf')])
+              supporting_documents: [build(:supporting_document, file_path: 'S3-ID', file_name: 'evidence–with-weird-char.pdf')])
       end
 
       let(:incorrect_information) do
@@ -251,7 +251,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
 
       it 'lets me download my uploaded file' do
         click_on 'evidence–with-weird-char.pdf'
-        expect(page).to have_current_path(%r{/test_path})
+        expect(page).to have_current_path(%r{/S3-ID})
         expect(page.driver.request.params['response-content-disposition']).to eq(
           'attachment; filename="evidencewith-weird-char.pdf"'
         )

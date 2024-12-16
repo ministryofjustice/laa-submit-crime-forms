@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-    <% if claim.youth_court_fee_adjustment_comment? %>
+    <% if claim.include_youth_court_fee != claim.allowed_youth_court_fee %>
       <%=
         allowed_fee = claim.totals[:additional_fees][:youth_court_fee][:assessed_total_exc_vat]
         rows = [

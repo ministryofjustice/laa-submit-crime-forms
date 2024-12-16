@@ -6,7 +6,7 @@ class EmailFormatValidator < ActiveModel::EachValidator
   # of entry by a user
   HOST_NAME_PATTERN = /\A(xn|[a-z0-9]+)(-?[a-z0-9]+)*\z/i
   TLD_PATTERN = /\A([a-z]{2,63}|xn--([a-z0-9]+-)*[a-z0-9]+)\z/i
-  EMAIL_REGEX_PATTERN = %r{\A[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@([^.@][^@\s]+)\z}
+  EMAIL_REGEX_PATTERN = %r{\A(?!.*\.$)(?!^\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@([^.@][^@\s]+)\z}
   MAX_LENGTH = 320
   MAX_HOST_NAME_LENGTH = 253
   MIN_HOST_NAME_PARTS = 2
