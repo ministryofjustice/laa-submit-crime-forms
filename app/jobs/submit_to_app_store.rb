@@ -22,8 +22,8 @@ class SubmitToAppStore < ApplicationJob
     end
   end
 
-  def submit(submission, include_events: true)
-    payload = PayloadBuilder.call(submission, include_events:)
+  def submit(submission)
+    payload = PayloadBuilder.call(submission)
     client = AppStoreClient.new
     payload.with_indifferent_access['application_state'] == 'submitted' ? client.post(payload) : client.put(payload)
   end
