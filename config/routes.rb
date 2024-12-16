@@ -130,6 +130,7 @@ Rails.application.routes.draw do
         end
         edit_step :equality_questions
         edit_step :solicitor_declaration
+        edit_step :rfi_solicitor_declaration
         upload_step :further_information
         show_step :claim_confirmation
         show_step :check_answers

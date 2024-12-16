@@ -18,7 +18,6 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
     before do
       allow(SubmitToAppStore).to receive(:new).and_return(job)
       allow(job).to receive(:perform)
-      allow(application).to receive(:update!).and_return(true)
     end
 
     context 'when all fields are set' do
@@ -26,8 +25,7 @@ RSpec.describe Nsm::Steps::SolicitorDeclarationForm do
 
       it 'is valid' do
         expect(form.save).to be_truthy
-        expect(application.state).to eq('submitted')
-        expect(application).to have_received(:update!)
+        expect(application.reload.state).to eq('submitted')
       end
 
       it 'notifies the app store' do

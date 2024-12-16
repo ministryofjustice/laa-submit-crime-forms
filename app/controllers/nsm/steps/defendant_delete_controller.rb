@@ -16,10 +16,6 @@ module Nsm
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def defendant
         @defendant ||= current_application.defendants.find_by(id: params[:defendant_id], main: false)
       end

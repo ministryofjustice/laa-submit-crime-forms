@@ -11,12 +11,6 @@ module Nsm
       def update
         update_and_advance(ContactDetailsForm, as: :contact_details, record: current_application.solicitor)
       end
-
-      private
-
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
     end
   end
 end

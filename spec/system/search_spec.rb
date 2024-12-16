@@ -45,7 +45,9 @@ RSpec.describe 'Search', :stub_oauth_token do
         {
           status: 201,
           body: {
-            raw_data: sorted.map { SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: _1).payload },
+            raw_data: sorted.map do |app|
+              SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: app).payload.merge(applicatioN_state: app.state)
+            end,
             metadata: { total_results: applications.count }
           }.to_json
         }
@@ -305,7 +307,9 @@ RSpec.describe 'Search', :stub_oauth_token do
         {
           status: 201,
           body: {
-            raw_data: sorted.map { SubmitToAppStore::NsmPayloadBuilder.new(claim: _1).payload },
+            raw_data: sorted.map do |claim|
+              SubmitToAppStore::NsmPayloadBuilder.new(claim:).payload.merge(application_state: claim.state)
+            end,
             metadata: { total_results: applications.count }
           }.to_json
         }

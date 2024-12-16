@@ -16,10 +16,6 @@ module Nsm
 
       private
 
-      def decision_tree_class
-        Decisions::DecisionTree
-      end
-
       def disbursement
         @disbursement ||= current_application.disbursements.find_by(id: params[:disbursement_id])
       end

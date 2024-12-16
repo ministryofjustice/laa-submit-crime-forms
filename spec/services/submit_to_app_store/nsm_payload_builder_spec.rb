@@ -175,9 +175,22 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
   end
 
   context 'when the claim is provider updated' do
-    let(:claim) do
+    let(:local_claim) do
       create(:claim, :complete, :with_further_information_supplied, state: 'provider_updated',
              updated_at: DateTime.new(2024, 2, 2, 1, 1, 1))
+    end
+
+    let(:claim) do
+      AppStore::V1::Nsm::Claim.new(
+        'application_id' => local_claim.id,
+        'further_information' => [
+          {
+            'caseworker_id' => '87e88ac6-d89a-4180-80d4-e03285023fb0',
+            'requested_at' => '2024-01-01T01:01:01.000Z',
+            'information_requested' => 'please provide further evidence',
+          }
+        ]
+      )
     end
 
     let(:application_payload) do
@@ -186,31 +199,31 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
           'id' => claim.id,
           'is_other_info' => 'no',
           'laa_reference' => 'LAA-n4AohV',
-          'updated_at' => DateTime.new(2024, 2, 2, 1, 1, 1).utc,
+          'updated_at' => DateTime.new(2024, 2, 2, 1, 1, 1).as_json,
           'status' => 'sent_back',
-            'further_information' => [
-              { 'caseworker_id' => '87e88ac6-d89a-4180-80d4-e03285023fb0',
-                'signatory_name' => 'John Doe',
-                'documents' => [
-                  {
-                    'file_name' => 'further_info1.pdf',
-                    'file_size' => 1234,
-                    'file_path' => 'test_path',
-                    'file_type' => 'image/png',
-                    'document_type' => 'supporting_document'
-                  },
-                  {
-                    'file_name' => 'further_info2.pdf',
-                    'file_size' => 1234,
-                    'file_path' => 'test_path',
-                    'file_type' => 'image/png',
-                    'document_type' => 'supporting_document'
-                  }
-                ],
-              'information_requested' => 'please provide further evidence',
-              'information_supplied' => 'here is the extra information you requested',
-              'requested_at' => '2024-01-01T01:01:01.000Z' }
-            ]
+          'further_information' => [
+            { 'caseworker_id' => '87e88ac6-d89a-4180-80d4-e03285023fb0',
+              'signatory_name' => 'John Doe',
+              'documents' => [
+                {
+                  'file_name' => 'further_info1.pdf',
+                  'file_size' => 1234,
+                  'file_path' => 'test_path',
+                  'file_type' => 'image/png',
+                  'document_type' => 'supporting_document'
+                },
+                {
+                  'file_name' => 'further_info2.pdf',
+                  'file_size' => 1234,
+                  'file_path' => 'test_path',
+                  'file_type' => 'image/png',
+                  'document_type' => 'supporting_document'
+                }
+              ],
+            'information_requested' => 'please provide further evidence',
+            'information_supplied' => 'here is the extra information you requested',
+            'requested_at' => '2024-01-01T01:01:01.000Z' }
+          ]
         },
         application_id: claim.id,
         application_state: 'sent_back',
@@ -222,6 +235,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
     let(:http_client) { double(AppStoreClient, get: application_payload.deep_stringify_keys) }
 
     before do
+      travel_to DateTime.new(2024, 2, 2, 1, 1, 1).utc
       allow(AppStoreClient).to receive(:new).and_return(http_client)
       allow(LaaCrimeFormsCommon::Validator).to receive(:validate).and_return([])
     end

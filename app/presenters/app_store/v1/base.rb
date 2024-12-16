@@ -27,7 +27,7 @@ module AppStore
         super(@app_store_record.slice(*self.class.attribute_names))
       end
 
-      attr_reader :parent
+      attr_reader :parent, :app_store_record
 
       def [](attribute)
         send(attribute)

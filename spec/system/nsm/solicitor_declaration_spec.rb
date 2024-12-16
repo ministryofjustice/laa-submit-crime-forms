@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'User can fill in solicitor declaration', type: :system do
+RSpec.describe 'User can fill in solicitor declaration', :stub_oauth_token, type: :system do
   let(:claim) do
     create(:claim,
            :complete,
@@ -13,6 +13,7 @@ RSpec.describe 'User can fill in solicitor declaration', type: :system do
   let(:work_item) { build(:work_item, :waiting) }
 
   before do
+    stub_app_store_payload(claim, :submitted)
     visit provider_saml_omniauth_callback_path
   end
 
@@ -29,7 +30,6 @@ RSpec.describe 'User can fill in solicitor declaration', type: :system do
       fill_in 'Full name',
               with: 'John Doe'
       click_on 'Save and submit'
-
       expect(claim.reload).to have_attributes(
         signatory_name: 'John Doe',
         state: 'submitted'
