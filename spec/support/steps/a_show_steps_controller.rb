@@ -3,7 +3,7 @@ RSpec.shared_examples 'a show step controller' do
     context 'when application is not found' do
       it 'redirects to the application not found error page' do
         get :show, params: { id: '12345' }
-        expect(response).to redirect_to(controller.laa_msf.application_not_found_errors_path)
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 

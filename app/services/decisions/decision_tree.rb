@@ -1,5 +1,5 @@
 module Decisions
-  class DecisionTree < DslDecisionTree
+  class DecisionTree < BaseDecisionTree
     # used to add custom methods to filter/query the data
     WRAPPER_CLASS = CustomWrapper
 

@@ -13,7 +13,7 @@ module AppStore
         # refer to the local DB.
 
         # ("file_path" is actually a UUID so this isn't as bad as it looks)
-        ::SupportingDocument.find_by(file_path:).id
+        ::SupportingDocument.find_by(file_path:).try(:id) || 'does-not-exist-locally'
       end
     end
   end
