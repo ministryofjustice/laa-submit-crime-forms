@@ -156,10 +156,15 @@ en:
         edit:
           page_title: Are you sure you want to delete this work item?
           heading: Are you sure you want to delete this work item?
+          warning: Warning
+          dont_delete: No, don't delete it
           headers:
             work_type: Type of work
+            cost_type: Cost type
+            date: Date
             period: Time spent
             fee_earner: Fee earner
+            time_spent: Time claimed
           total_cost: Total cost
           deleted_flash: The work item was deleted
           unknown_date: Unknown date
