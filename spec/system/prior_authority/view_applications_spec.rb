@@ -252,7 +252,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
         click_on 'evidence–with-weird-char.pdf'
         expect(page).to have_current_path(%r{/S3-ID})
         expect(page.driver.request.params['response-content-disposition']).to eq(
-          'attachment; filename="evidencewith-weird-char.pdf"'
+          %(attachment; filename="evidence%E2%80%93with-weird-char.pdf"; filename*=UTF-8''evidence%E2%80%93with-weird-char.pdf)
         )
       end
     end
