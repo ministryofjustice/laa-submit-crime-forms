@@ -9,11 +9,9 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_field :contact_first_name, maxlength_enabled: true %>
       <%= f.govuk_text_field :contact_last_name, maxlength_enabled: true %>
-      <%= f.govuk_text_field :contact_email, maxlength_enabled: true %>
+      <%= f.govuk_email_field :contact_email, maxlength_enabled: true, autocomplete: :email %>
 
       <%= f.continue_button %>
     <% end %>
   </div>
 </div>
-
-

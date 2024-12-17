@@ -12,7 +12,7 @@
       <%= form.fields_for :solicitor, as: :firm_detail_form do |solicitor_object| %>
         <%= solicitor_object.govuk_text_field :contact_first_name, width: 20, label: { text: t(".contact_first_name"), size: 's' } %>
         <%= solicitor_object.govuk_text_field :contact_last_name, width: 20, label: { text: t(".contact_last_name"), size: 's' } %>
-        <%= solicitor_object.govuk_text_field :contact_email, width: 20, label: { text: t(".contact_email"), size: 's' } %>
+        <%= solicitor_object.govuk_email_field :contact_email, width: 20, label: { text: t(".contact_email"), size: 's' }, autocomplete: :email %>
       <% end %>
 
       <%= form.fields_for :firm_office, as: :firm_detail_form do |firm_office_object| %>
