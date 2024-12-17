@@ -1,6 +1,4 @@
 <% title t('.page_title') %>
-<% decision_step_header %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
@@ -26,10 +24,18 @@
       </tbody>
     </table>
 
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden"><%= t('nsm.claims.confirm_delete.warning') %></span>
+        <%= t('nsm.claims.confirm_delete.no_undo') %>
+      </strong>
+    </div>
+
     <%= step_form @form_object do |f| %>
-      <%= f.submit_button('delete_it') do %>
+      <%= f.submit_button('delete_it', warning: true) do %>
         <%= f.hidden_field :id %>
-        <%= link_to 'Cancel', edit_nsm_steps_defendant_summary_path(@form_object.application), class: 'govuk-button__secondary' %>
+        <%= govuk_button_link_to t('nsm.claims.confirm_delete.no_delete'), edit_nsm_steps_defendant_summary_path(@form_object.application) %>
       <% end %>
     <% end %>
   </div>
