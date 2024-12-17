@@ -1,6 +1,8 @@
 module PriorAuthority
   class ApplicationsController < ApplicationController
     include Searchable
+    include Cloneable
+
     before_action :set_scope, only: %i[submitted drafts]
     before_action :set_default_table_sort_options
     layout 'prior_authority'
@@ -56,6 +58,17 @@ module PriorAuthority
       send_data pdf,
                 filename: "#{current_application.laa_reference}.pdf",
                 type: 'application/pdf'
+    end
+
+    def clone
+      clone = clone_application
+      clone.save
+
+      redirect_to prior_authority_steps_start_page_path(clone.id), flash: { success: t('.cloned') }
+    end
+
+    def self.model_class
+      PriorAuthorityApplication
     end
 
     private

@@ -32,4 +32,10 @@ class Quote < ApplicationRecord
   def contact_full_name
     "#{contact_first_name} #{contact_last_name}"
   end
+
+  def dup
+    super.tap do |quote|
+      quote.build_document(document.dup.attributes) if document.present?
+    end
+  end
 end
