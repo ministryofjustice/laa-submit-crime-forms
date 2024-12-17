@@ -14,9 +14,9 @@ MOJFrontend.MultiFileUpload.prototype.uploadFiles = async function(files) {
   for(const file of files) {
     uploads.push(this.uploadFile(file)
       .then(() => {
-        true
+        return true
       }).catch(() =>{
-        false
+        return false
       })
     )
   }
