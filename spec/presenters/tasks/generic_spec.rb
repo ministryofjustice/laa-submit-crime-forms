@@ -2,12 +2,12 @@ require 'rails_helper'
 
 module TestModule
   module Tasks
-    class TestSubclass < ::Tasks::BaseTask; end
+    class TestSubclass < ::Tasks::Generic; end
   end
 end
 
-RSpec.describe Tasks::BaseTask do
-  subject { described_class.new(application:) }
+RSpec.describe Tasks::Generic do
+  subject { TestModule::Tasks::TestSubclass.new(application:) }
 
   let(:details_klass) { Class.new(described_class) }
   let(:application) { double(:claim) }
@@ -71,12 +71,8 @@ RSpec.describe Tasks::BaseTask do
     end
   end
 
-  describe '#path' do
-    it { expect(subject.path).to eq('') }
-  end
-
   describe '#not_applicable?' do
-    it { expect(subject.not_applicable?).to be(true) }
+    it { expect(subject.not_applicable?).to be(false) }
   end
 
   describe '#default_url_options' do

@@ -13,14 +13,14 @@ RSpec.describe TaskList::Task do
       allow(subject).to receive(:t!).with('tasklist.task.foobar_task').and_return('Foo Bar Task Locale')
 
       allow(
-        Tasks::BaseTask
+        Tasks::Generic
       ).to receive(:build).with(
         name, application:, task_statuses:
       ).and_return(task_double)
     end
 
     let(:task_double) do
-      instance_double(Tasks::BaseTask, status: status, path: '/steps/foobar')
+      instance_double(Tasks::Generic, status: status, path: '/steps/foobar')
     end
 
     context 'for an enabled task' do

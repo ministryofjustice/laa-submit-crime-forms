@@ -42,7 +42,7 @@ module TaskList
     end
 
     def task
-      @task ||= Tasks::BaseTask.build(name, application:, task_statuses:)
+      @task ||= Tasks::Generic.build(name, application:, task_statuses:)
     end
   end
 end

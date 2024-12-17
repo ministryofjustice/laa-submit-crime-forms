@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Decisions::DslDecisionTree do
+RSpec.describe Decisions::BaseDecisionTree do
   subject { decision_tree.new(form, as:) }
 
   let(:application) { double(:application, id: SecureRandom.uuid) }
