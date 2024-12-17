@@ -1,6 +1,12 @@
 ---
 en:
   tasklist:
+    status:
+      completed: Completed
+      in_progress: In progress
+      not_started: Not yet started
+      unreachable: Cannot start yet
+      not_applicable: Not applicable
     heading:
       nsm/what: Claim details
       nsm/about_you: About you

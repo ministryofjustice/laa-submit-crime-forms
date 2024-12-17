@@ -7,20 +7,6 @@ GIT
       i18n (>= 1.8.11, < 2)
       json-schema (>= 5.0.0, < 6)
 
-PATH
-  remote: gems/laa_multi_step_forms
-  specs:
-    laa_multi_step_forms (0.1.0)
-      devise (~> 4.8)
-      govuk-components (>= 5.0.0)
-      govuk_design_system_formbuilder (>= 5.4, < 5.8)
-      omniauth-rails_csrf_protection (~> 1.0.1)
-      omniauth-saml (>= 2.1, < 2.3)
-      rails (>= 7.0.4.3)
-      sentry-rails
-      sentry-ruby
-      uk_postcode
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -558,22 +544,26 @@ DEPENDENCIES
   clamby (~> 1.6)
   cssbundling-rails
   debug
+  devise (~> 4.8)
   dotenv-rails
   erb_lint (>= 0.6.0)
   factory_bot_rails (>= 6.4.3)
   faker
+  govuk-components (>= 5.0.0)
+  govuk_design_system_formbuilder (>= 5.4, < 5.8)
   govuk_notify_rails (~> 3.0.0)
   grover
   httparty
   jsbundling-rails
   laa_crime_forms_common (~> 0.6.1)!
-  laa_multi_step_forms!
   launchy
   lograge
   logstash-event
   logstasher (~> 2.1)
   marcel
   oauth2 (~> 2.0)
+  omniauth-rails_csrf_protection (~> 1.0.1)
+  omniauth-saml (>= 2.1, < 2.3)
   ostruct
   overcommit
   pagy (~> 9.3.3)
@@ -605,6 +595,7 @@ DEPENDENCIES
   table_print
   turbo-rails (~> 2.0.11)
   tzinfo-data
+  uk_postcode
   webmock (~> 3.24)
   with_advisory_lock
 

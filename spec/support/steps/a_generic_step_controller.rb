@@ -13,7 +13,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
 
       it 'redirects to the application not found error page' do
         get :edit, params: { id: existing_case, **additional_params }
-        expect(response).to redirect_to(controller.laa_msf.application_not_found_errors_path)
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
 
       it 'redirects to the application not found error page' do
         put :update, params: expected_params
-        expect(response).to redirect_to(controller.laa_msf.application_not_found_errors_path)
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 
