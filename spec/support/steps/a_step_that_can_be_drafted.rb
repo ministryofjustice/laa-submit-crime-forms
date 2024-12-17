@@ -18,7 +18,7 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class, additional_pa
 
       it 'redirects to the application not found error page' do
         put :update, params: expected_params
-        expect(response).to redirect_to(controller.laa_msf.application_not_found_errors_path)
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 

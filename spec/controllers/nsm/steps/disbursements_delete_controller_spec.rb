@@ -14,7 +14,7 @@ RSpec.describe Nsm::Steps::DisbursementDeleteController, type: :controller do
 
       it 'redirects to the application not found error page' do
         get :edit, params: { id: '12345', disbursement_id: SecureRandom.uuid }
-        expect(response).to redirect_to(controller.laa_msf.application_not_found_errors_path)
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 
@@ -79,7 +79,7 @@ RSpec.describe Nsm::Steps::DisbursementDeleteController, type: :controller do
 
       it 'redirects to the application not found error page' do
         put :update, params: expected_params
-        expect(response).to redirect_to(controller.laa_msf.application_not_found_errors_path)
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 

@@ -194,30 +194,6 @@ commands:
       - store_artifacts:
           path: ~/repo/tmp/capybara
 
-  rspec-gem-specs:
-    steps:
-      - run:
-          name: Run rspec tests
-          command: |
-            bundle exec rspec \
-             --format progress \
-             --format RspecJunitFormatter \
-             --out /tmp/gem-test-results/rspec/rspec.xml
-      - store_test_results:
-          path: /tmp/gem-test-results/rspec
-      - run:
-          name: Stash coverage results
-          command: |
-            mkdir coverage_results
-            cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}-gem.json
-      - persist_to_workspace:
-          root: .
-          paths:
-            - coverage_results
-      - store_artifacts:
-          path: ~/repo/coverage
-          destination: coverage
-
   build-docker-image-for-scan:
       steps:
         - run:
@@ -291,7 +267,7 @@ jobs:
           environment: prod
 
   rspec-tests:
-    parallelism: 2
+    parallelism: 3
     executor: test-executor
     steps:
       - checkout
@@ -310,15 +286,6 @@ jobs:
           paths:
             - ~/repo
       - rspec
-
-  rspec-gem-tests:
-    executor: test-executor
-    working_directory: ~/repo/gems/laa_multi_step_forms
-    steps:
-      - checkout:
-          path: ~/repo
-      - install-gems
-      - rspec-gem-specs
 
   coverage:
     executor: test-executor
@@ -466,13 +433,9 @@ workflows:
       - rspec-tests:
           requires:
             - build-test-container
-      - rspec-gem-tests:
-          requires:
-            - build-test-container
       - coverage:
           requires:
             - rspec-tests
-            - rspec-gem-tests
       - scan-docker-image:
           requires:
             - build-test-container
@@ -511,13 +474,9 @@ workflows:
       - rspec-tests:
           requires:
             - build-test-container
-      - rspec-gem-tests:
-          requires:
-            - build-test-container
       - coverage:
           requires:
             - rspec-tests
-            - rspec-gem-tests
       - build-to-ecr:
           context: laa-submit-crime-forms-dev
           filters:
@@ -532,7 +491,6 @@ workflows:
             - build-to-ecr
             - linter-tests
             - rspec-tests
-            - rspec-gem-tests
           filters:
             branches:
               only:
