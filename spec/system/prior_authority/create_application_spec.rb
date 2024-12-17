@@ -92,4 +92,60 @@ RSpec.describe 'Prior authority application creation', :stub_app_store_search, :
       expect(PriorAuthorityApplication.first.office_code).to be_nil
     end
   end
+
+  context 'when I clone an application' do
+    let(:claim) { create(:prior_authority_application, :with_all_tasks_completed, :as_draft) }
+    # Ignore fields that `dup` doesn't handle, as well as fields that won't get duplicated
+    # We also have to ignore `viewed_steps` as we redirect to the start page after cloning
+    let(:ignored_attrs) { %w[id created_at updated_at core_search_fields laa_reference viewed_steps] }
+
+    before do
+      claim.save
+      visit drafts_prior_authority_applications_path
+    end
+
+    it 'can see clone button' do
+      expect(page).to have_content(I18n.t('.prior_authority.applications.tabs.clone'))
+    end
+
+    it 'can clone an application' do
+      expect(PriorAuthorityApplication.count).to eq(1)
+      click_on 'Clone'
+      expect(page).to have_content(I18n.t('.prior_authority.applications.clone.cloned'))
+      expect(PriorAuthorityApplication.count).to eq(2)
+
+      expected = PriorAuthorityApplication.first.attributes.except(*ignored_attrs)
+      actual = PriorAuthorityApplication.second.attributes.except(*ignored_attrs)
+
+      expect(expected).to eq(actual)
+    end
+
+    context 'with missing entities' do
+      let(:claim) { create(:prior_authority_application, :as_draft) }
+
+      it 'does not try and duplicate them' do
+        expect(PriorAuthorityApplication.count).to eq(1)
+        click_on 'Clone'
+        expect(page).to have_content(I18n.t('.prior_authority.applications.clone.cloned'))
+        expect(PriorAuthorityApplication.count).to eq(2)
+
+        expected = PriorAuthorityApplication.first.attributes.except(*ignored_attrs)
+        actual = PriorAuthorityApplication.second.attributes.except(*ignored_attrs)
+
+        expect(expected).to eq(actual)
+      end
+    end
+
+    context 'when the app is in production' do
+      before do
+        allow(HostEnv).to receive(:env_name).and_return('production')
+        Rails.application.reload_routes!
+      end
+
+      it 'returns a 404' do
+        get clone_prior_authority_application_path(PriorAuthorityApplication.first.id)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end

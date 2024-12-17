@@ -41,6 +41,16 @@
               <%= application.laa_reference %>
             </td>
             <td class="govuk-table__cell">
+              <% if !HostEnv.production? %>
+                <%= link_to clone_prior_authority_application_path(application.id), class: "govuk-link--no-visited-state" do %>
+                  <%= t("prior_authority.applications.tabs.clone") %>
+                  <span class="govuk-visually-hidden">
+                  <%= t(".application") %>
+                    <%= application.laa_reference %>
+                  </span>
+                <% end %>
+                &nbsp;
+              <% end %>
               <%= link_to confirm_delete_prior_authority_application_path(application), class: "govuk-link--no-visited-state" do %>
                 <%= t("prior_authority.applications.tabs.delete") %>
                 <span class="govuk-visually-hidden">

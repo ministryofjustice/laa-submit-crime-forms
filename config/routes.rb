@@ -207,6 +207,9 @@ Rails.application.routes.draw do
         get 'offboard'
         get :confirm_delete, path: 'confirm-delete'
         get :download
+        constraints ->(_req) { !HostEnv.production? } do
+          get :clone
+        end
       end
     end
 

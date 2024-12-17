@@ -51,4 +51,17 @@ class PriorAuthorityApplication < ApplicationRecord
   def pending_incorrect_information
     incorrect_informations.where(created_at: app_store_updated_at..).order(:created_at).last
   end
+
+  def dup
+    super.tap do |new_record|
+      new_record.defendant = defendant.dup if defendant.present?
+      new_record.quotes = quotes.map(&:dup)
+
+      new_record.supporting_documents = supporting_documents.map(&:dup)
+
+      new_record.additional_costs = additional_costs.map(&:dup)
+      new_record.further_informations = further_informations.map(&:dup)
+      new_record.incorrect_informations = incorrect_informations.map(&:dup)
+    end
+  end
 end
