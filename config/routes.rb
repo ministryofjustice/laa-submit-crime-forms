@@ -17,9 +17,6 @@ Rails.application.routes.draw do
   get :ping, to: 'healthcheck#ping'
   get :ready, to: 'healthcheck#ready'
 
-  # mount this at the route
-  mount LaaMultiStepForms::Engine, at: '/'
-
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   root "home#index"
@@ -220,6 +217,15 @@ Rails.application.routes.draw do
   get "robots.txt", to: "robots#index"
 
   post :app_store_webhook, to: 'sync#sync_individual'
+
+  resource :errors, only: [] do
+    get :application_not_found
+    get :invalid_session
+    get :unhandled
+    get :unauthorized
+    get :not_enrolled
+    get :not_found
+  end
 
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
     lambda { |_request| !Rails.application.config.consider_all_requests_local }

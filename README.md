@@ -88,17 +88,23 @@ kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | j
 
 **7. Documentation**
 
-Documentation related to the below components is available in the `gems/laa_multi_step_forms/docs/` folder on the following items:
+This codebase was originally built by taking a bunch of code from the Crime Apply codebase and extracting it into a gem
+called LaaMultiStepForms, which sat in a sub-folder of this repo. The hope was apparently that Crime Apply would start using
+this gem as well, so both codebases would be kept aligned. But they never did (having no incentive to do so, and no assurances
+about the gem being maintained to suit their needs), and the gem became more and more specific to this repo's needs, to the point
+where having some of our logic in a pseudo-gem just added unnecessary complexity. So we've now moved the code back into the main
+body of the repo, but a lot of logic is still broken up into the semi-generic base logic that used to be in the gem, and then
+some more specific subclasses with NSCC-specific details. The original documentation about the gem base classes is available here:
 
-* [DSLDecisionTree](gems/laa_multi_step_forms/docs/DSLDecisionTree.md)
-* [Setup](gems/laa_multi_step_forms/docs/Setup.md)
-* [Steps](gems/laa_multi_step_forms/docs/Steps.md)
-* [TaskList](gems/laa_multi_step_forms/docs/TaskList.md)
-* [Validations](gems/laa_multi_step_forms/docs/Validations.md)
-* [Javascript_Test](gems/laa_multi_step_forms/docs/Javascript_Test.md)
-* [SharedForms](gems/laa_multi_step_forms/docs/SharedForms.md)
-* [Suggestion](gems/laa_multi_step_forms/docs/Suggestion.md)
-* [TimePeriodAndFormBuilderUpgrade](gems/laa_multi_step_forms/docs/TimePeriodAndFormBuilderUpgrade.md)
+* [DSLDecisionTree](/docs/DSLDecisionTree.md)
+* [Setup](/docs/Setup.md)
+* [Steps](/docs/Steps.md)
+* [TaskList](/docs/TaskList.md)
+* [Validations](/docs/Validations.md)
+* [Javascript_Test](/docs/Javascript_Test.md)
+* [SharedForms](/docs/SharedForms.md)
+* [Suggestion](/docs/Suggestion.md)
+* [TimePeriodAndFormBuilderUpgrade](/docs/TimePeriodAndFormBuilderUpgrade.md)
 
 
 **8. Tests**

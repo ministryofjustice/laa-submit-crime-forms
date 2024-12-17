@@ -30,6 +30,8 @@ module Crm7restbackend
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = :mailers
 
+    config.active_support.to_time_preserves_timezone = :zone
+
     config.x.application.name = 'Claim a non-standard magistrates\' court payment'
 
     config.x.contact.case_enquiries_tel = '0300 200 2020'
