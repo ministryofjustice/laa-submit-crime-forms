@@ -395,6 +395,23 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
         end
       end
 
+      context 'when uplift is required but values are invalid' do
+        let(:letters_uplift) { 'zero' }
+        let(:calls_uplift) { 'lots' }
+
+        it 'returns the values without error' do
+          expect(subject.calculation_rows).to eq(
+            [['Items', 'Before uplift', 'After uplift'],
+             ['Letters',
+              { html_attributes: { id: 'letters-without-uplift' }, text: '£8.18' },
+              { html_attributes: { id: 'letters-with-uplift' }, text: '£8.18' }],
+             ['Phone calls',
+              { html_attributes: { id: 'calls-without-uplift' }, text: '£4.09' },
+              { html_attributes: { id: 'calls-with-uplift' }, text: '£4.09' }]]
+          )
+        end
+      end
+
       context 'when uplift is required and values are set' do
         it 'returns the values' do
           expect(subject.calculation_rows).to eq(
