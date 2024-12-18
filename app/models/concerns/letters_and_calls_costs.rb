@@ -83,9 +83,9 @@ module LettersAndCallsCosts
     {
       type: :calls,
       claimed_items: calls.to_i || 0,
-      claimed_uplift_percentage: apply_calls_uplift ? calls_uplift : 0,
+      claimed_uplift_percentage: apply_calls_uplift ? calls_uplift.to_i : 0,
       assessed_items: application.allowed_calls || calls || 0,
-      assessed_uplift_percentage: application.allowed_calls_uplift || calls_uplift,
+      assessed_uplift_percentage: application.allowed_calls_uplift || calls_uplift.to_i,
     }
   end
 
@@ -93,9 +93,9 @@ module LettersAndCallsCosts
     {
       type: :letters,
       claimed_items: letters.to_i || 0,
-      claimed_uplift_percentage: apply_letters_uplift ? letters_uplift : 0,
+      claimed_uplift_percentage: apply_letters_uplift ? letters_uplift.to_i : 0,
       assessed_items: application.allowed_letters || letters || 0,
-      assessed_uplift_percentage: application.allowed_letters_uplift || letters_uplift,
+      assessed_uplift_percentage: application.allowed_letters_uplift || letters_uplift.to_i,
     }
   end
 
