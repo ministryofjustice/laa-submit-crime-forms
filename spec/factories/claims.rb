@@ -39,6 +39,12 @@ FactoryBot.define do
       has_disbursements { 'no' }
     end
 
+    Claim.states.each_key do |state|
+      trait :"as_#{state}" do
+        state { state }
+      end
+    end
+
     trait :complete do
       claim_details
       full_firm_details

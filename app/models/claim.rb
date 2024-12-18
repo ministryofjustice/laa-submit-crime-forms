@@ -74,6 +74,15 @@ class Claim < ApplicationRecord
     defendants.where(main: false)
   end
 
+  def dup
+    super.tap do |new_record|
+      new_record.defendants = defendants.map(&:dup)
+      new_record.work_items = work_items.map(&:dup)
+      new_record.disbursements = disbursements.map(&:dup)
+      new_record.supporting_evidence = supporting_evidence.map(&:dup)
+    end
+  end
+
   private
 
   def sorted_work_item_ids
