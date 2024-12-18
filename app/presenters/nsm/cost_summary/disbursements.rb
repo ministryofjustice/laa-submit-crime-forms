@@ -60,12 +60,12 @@ module Nsm
       end
 
       def total_cost_cell
-        safe_join([tag.span(translate('.header.total_claimed'), class: 'govuk-visually-hidden'),
+        safe_join([tag.span(translate('.header.net_cost_claimed'), class: 'govuk-visually-hidden'),
                    tag.strong(NumberTo.pounds(net_cost))])
       end
 
       def gross_total_cost_cell
-        safe_join([tag.span(translate('.header.net_cost_claimed'), class: 'govuk-visually-hidden'),
+        safe_join([tag.span(translate('.header.total_claimed'), class: 'govuk-visually-hidden'),
                    tag.strong(NumberTo.pounds(total_cost))])
       end
 
