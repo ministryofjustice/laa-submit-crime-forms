@@ -9,16 +9,7 @@ MOJFrontend.MultiFileUpload.prototype.uploadFiles = async function(files) {
   saveButtons.prop('disabled', true);
   saveButtons.prop('aria-disabled', true);
 
-  const uploads = [];
-
-  for(const file of files) {
-    uploads.push(this.uploadFile(file)
-      .then(() => null)
-      .catch(() => null)
-    );
-  }
-
-  await Promise.all(uploads);
+  await [...files].map(file => Promise.resolve(this.uploadFile(file)));
 
   saveButtons.prop("disabled", false);
   saveButtons.prop("aria-disabled", false);
