@@ -2,7 +2,6 @@ module Nsm
   module CostSummary
     class Disbursements < Base
       TRANSLATION_KEY = self
-      MIDDLE_COLUMN = false
       attr_reader :disbursements, :claim
 
       def initialize(disbursements, claim)
@@ -16,6 +15,8 @@ module Nsm
           [
             { text: translated_text(disbursement), classes: 'govuk-table__header' },
             { text: NumberTo.pounds(disbursement.total_cost_pre_vat || 0), classes: 'govuk-table__cell--numeric' },
+            { text: NumberTo.pounds(disbursement.vat || 0), classes: 'govuk-table__cell--numeric' },
+            { text: NumberTo.pounds(disbursement.total_cost || 0), classes: 'govuk-table__cell--numeric' },
           ]
         end
       end
@@ -44,7 +45,18 @@ module Nsm
         [
           { text: translate('.header.item') },
           { text: translate('.header.net_cost'), classes: 'govuk-table__header--numeric' },
+          { text: translate('.header.vat_on_claimed'), classes: 'govuk-table__header--numeric' },
+          { text: translate('.header.total_claimed'), classes: 'govuk-table__header--numeric' },
         ]
+      end
+
+      def footer_row
+        [
+          { text: translate('.footer.total'), classes: 'govuk-table__header' },
+          { text: total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
+          { text: vat_amount_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
+          { text: gross_total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
+        ].compact
       end
 
       def total_cost_cell
