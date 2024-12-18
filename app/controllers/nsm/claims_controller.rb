@@ -2,6 +2,7 @@ module Nsm
   class ClaimsController < ApplicationController
     include Searchable
     include ClaimCreatable
+    include Cloneable
     layout 'nsm'
 
     before_action :set_scope, only: %i[submitted draft]
@@ -41,6 +42,17 @@ module Nsm
       @model = Claim.for(current_provider).find(params[:id])
       @model.destroy
       redirect_to draft_nsm_applications_path, flash: { success: t('.deleted') }
+    end
+
+    def clone
+      clone = clone_application
+      clone.save
+
+      redirect_to nsm_steps_start_page_path(clone.id), flash: { success: t('.cloned') }
+    end
+
+    def self.model_class
+      Claim
     end
 
     private

@@ -139,6 +139,16 @@
               <td class="govuk-table__cell"><%= claim.laa_reference %></td>
               <% if @scope == :draft %>
                 <td class="govuk-table__cell">
+                  <% if !HostEnv.production? %>
+                    <%= link_to clone_nsm_application_path(claim.id), class: "govuk-link--no-visited-state" do %>
+                      <%= t(".clone") %>
+                      <span class="govuk-visually-hidden">
+                        <%= t(".claim") %>
+                        <%= claim.laa_reference %>
+                      </span>
+                    <% end %>
+                    &nbsp;
+                  <% end %>
                   <%= link_to confirm_delete_nsm_application_path(claim), class: "govuk-link--no-visited-state" do %>
                     <%= t(".delete") %>
                     <span class="govuk-visually-hidden">
