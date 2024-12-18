@@ -15,6 +15,9 @@ module Nsm
 
       def persist!
         record.destroy
+        application.defendants.order(:position).each_with_index do |defendant, index|
+          defendant.update!(position: index + 1)
+        end
       end
     end
   end
