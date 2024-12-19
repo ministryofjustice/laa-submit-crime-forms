@@ -4,9 +4,11 @@ RSpec.describe MatterType do
   subject { described_class.new('1') }
 
   describe '#all' do
+    # rubocop:disable Rails/RedundantActiveRecordAllMethod
     it 'returns a know number of outcomes' do
-      expect(described_class.count).to eq(16)
+      expect(described_class.all.count).to eq(16)
     end
+    # rubocop:enable Rails/RedundantActiveRecordAllMethod
   end
 
   it { expect(subject.id).to eq('1') }
