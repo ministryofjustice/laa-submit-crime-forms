@@ -12,7 +12,7 @@ module Nsm
         super()
       end
 
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def row_data
         [
           {
@@ -59,7 +59,7 @@ module Nsm
           },
         ].flatten
       end
-      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     end
   end
 end

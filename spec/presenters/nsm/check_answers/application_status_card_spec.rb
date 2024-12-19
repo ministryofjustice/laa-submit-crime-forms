@@ -171,10 +171,12 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
         it 'generates links to adjusted items tabs' do
           all_text = card.row_data.pluck(:text).join
 
+          # rubocop:disable Layout/LineLength
           expect(all_text)
             .to match(%r{<a class="govuk-link.*" href=".*/steps/view_claim/adjusted/work_items#cost-summary-table">Review adjustments to work items</a>})
             .and match(%r{<a class="govuk-link.*" href=".*/steps/view_claim/adjusted/letters_and_calls#cost-summary-table">Review adjustments to letters and calls</a>})
             .and match(%r{<a class="govuk-link.*" href=".*/steps/view_claim/adjusted/disbursements#cost-summary-table">Review adjustments to disbursements</a>})
+          # rubocop:enable Layout/LineLength
         end
       end
     end
@@ -212,6 +214,7 @@ assessment_comment: assessment_comment)
       end
 
       it 'generates sent back rows' do
+        # rubocop:disable Layout/LineLength
         expect(card.row_data).to match(
           [
             {
@@ -230,6 +233,7 @@ assessment_comment: assessment_comment)
             }
           ]
         )
+        # rubocop:enable Layout/LineLength
       end
     end
 

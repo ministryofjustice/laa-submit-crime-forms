@@ -86,6 +86,7 @@ module Nsm
         ApplicationController.new.render_to_string(partial: 'nsm/steps/view_claim/appeal', locals: { state: claim.state })
       end
 
+      # rubocop:disable Metrics/MethodLength
       def edit_links
         return [] if @skip_links
         return expiry_links if claim.expired?
@@ -108,6 +109,7 @@ module Nsm
         end
         tag.ul safe_join(li_elements), class: 'govuk-list govuk-list--bullet'
       end
+      # rubocop:enable Metrics/MethodLength
 
       def expiry_links
         tag.ul(class: 'govuk-list') do

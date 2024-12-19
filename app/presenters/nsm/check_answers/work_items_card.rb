@@ -47,6 +47,7 @@ module Nsm
         end
       end
 
+      # rubocop:disable Metrics/MethodLength
       def total_rows
         if @claim.firm_office.vat_registered == YesNoAnswer::YES.to_s
           [
@@ -70,6 +71,7 @@ module Nsm
           ]
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def work_item_total
         format_total(work_items.total_cost)

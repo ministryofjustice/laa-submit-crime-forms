@@ -12,8 +12,7 @@ module Nsm
         super()
       end
 
-      # TO DO: update remittal to include date of remittal when CRM457-172 is done
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def row_data
         row = [
           {
@@ -62,7 +61,7 @@ module Nsm
 
         row.flatten
       end
-      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
       private
 
