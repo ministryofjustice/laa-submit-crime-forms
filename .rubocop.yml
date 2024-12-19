@@ -1,5 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
 require:
   - rubocop-rails
   - rubocop-performance
@@ -26,6 +24,8 @@ AllCops:
 
 # Disabled cops
 ###############
+RSpec/SpecFilePathFormat:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
