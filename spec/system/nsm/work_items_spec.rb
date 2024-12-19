@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/ExampleLength
 RSpec.describe 'User can manage work items', type: :system do
   let(:claim) { create(:claim, :case_type_magistrates, :firm_details, claim_type: ClaimType::NON_STANDARD_MAGISTRATE) }
 
@@ -252,3 +253,4 @@ RSpec.describe 'User can manage work items', type: :system do
     expect(page).to have_no_content 'You cannot save and continue if any work items are incomplete'
   end
 end
+# rubocop:enable RSpec/ExampleLength

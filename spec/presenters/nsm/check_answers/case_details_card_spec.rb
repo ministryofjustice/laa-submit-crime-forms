@@ -16,6 +16,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
   end
 
   describe '#row_data' do
+    # rubocop:disable RSpec/ExampleLength
     it 'generates case detail rows with no remittal' do
       expect(subject.row_data).to match(
         [
@@ -50,6 +51,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
         ]
       )
     end
+    # rubocop:enable RSpec/ExampleLength
 
     context 'when remitted to magistrate is yes' do
       let(:claim) do
@@ -58,6 +60,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
       end
       let(:remitted_to_magistrate_date) { Date.new(2023, 6, 30) }
 
+      # rubocop:disable RSpec/ExampleLength
       it 'generates case detail rows with remittal' do
         expect(subject.row_data).to match(
           [
@@ -96,6 +99,7 @@ RSpec.describe Nsm::CheckAnswers::CaseDetailsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'when no main_offence_type' do
