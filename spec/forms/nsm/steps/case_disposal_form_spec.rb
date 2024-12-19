@@ -50,7 +50,8 @@ RSpec.describe Nsm::Steps::CaseDisposalForm do
     end
 
     context 'when `plea` is valid' do
-      PleaOptions.each_value do |plea_inst|
+      # rubocop:disable Style/HashEachMethods
+      PleaOptions.values.each do |plea_inst|
         context 'and does not require a date field' do
           next if plea_inst.requires_date_field?
 
@@ -131,6 +132,7 @@ RSpec.describe Nsm::Steps::CaseDisposalForm do
           end
         end
       end
+      # rubocop:enable Style/HashEachMethods
     end
   end
 end

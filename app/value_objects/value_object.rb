@@ -31,10 +31,11 @@ class ValueObject
           subclass.const_set(
             :INQUIRY_METHODS, subclass.values.map { |value| "#{value}?" }
           )
-
-          subclass.each_value do |value|
+          # rubocop:disable Style/HashEachMethods
+          subclass.values.each do |value|
             subclass.define_method(:"#{value}?") { value.eql?(self) }
           end
+          # rubocop:enable Style/HashEachMethods
         end
         # :nocov:
       end
