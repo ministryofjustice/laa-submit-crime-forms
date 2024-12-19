@@ -5,7 +5,7 @@ RSpec.describe MatterType do
 
   describe '#all' do
     it 'returns a know number of outcomes' do
-      expect(described_class.all.count).to eq(16)
+      expect(described_class.count).to eq(16)
     end
   end
 

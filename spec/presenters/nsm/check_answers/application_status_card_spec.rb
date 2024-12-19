@@ -17,7 +17,9 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     let(:assessment_comment) { "this is a comment\n2nd line" }
 
     context 'when in submitted state' do
-      let(:claim) { create(:claim, :completed_state, :case_type_breach, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
+      let(:claim) do
+        create(:claim, :completed_state, :case_type_breach, :firm_details, :build_associates, :updated_at, work_items_count: 1)
+      end
 
       it 'generates submitted rows' do
         expect(card.row_data).to match(
@@ -33,7 +35,9 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
     end
 
     context 'when in granted state' do
-      let(:claim) { create(:claim, :granted_state, :case_type_breach, :firm_details, :build_associates, :updated_at, work_items_count: 1) }
+      let(:claim) do
+        create(:claim, :granted_state, :case_type_breach, :firm_details, :build_associates, :updated_at, work_items_count: 1)
+      end
 
       it 'generates granted rows with fallback comment' do
         expect(card.row_data).to match(
@@ -177,7 +181,8 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'when in provider update requested state' do
       let(:claim) do
-        create(:claim, :sent_back_state, :case_type_breach, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
+        create(:claim, :sent_back_state, :case_type_breach, :firm_details, :build_associates, :updated_at, work_items_count: 1,
+assessment_comment: assessment_comment)
       end
 
       it 'generates sent back rows' do
@@ -202,7 +207,8 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'when in sent back requested state and nsm rfi loop enabled' do
       let(:claim) do
-        create(:claim, :sent_back_state, :case_type_breach, :firm_details, :build_associates, :updated_at, :with_further_information_request, work_items_count: 1, assessment_comment: assessment_comment)
+        create(:claim, :sent_back_state, :case_type_breach, :firm_details, :build_associates, :updated_at,
+               :with_further_information_request, work_items_count: 1, assessment_comment: assessment_comment)
       end
 
       it 'generates sent back rows' do
@@ -229,7 +235,8 @@ RSpec.describe Nsm::CheckAnswers::ApplicationStatusCard do
 
     context 'when in rejected state' do
       let(:claim) do
-        create(:claim, :rejected_state, :case_type_breach, :firm_details, :build_associates, :updated_at, work_items_count: 1, assessment_comment: assessment_comment)
+        create(:claim, :rejected_state, :case_type_breach, :firm_details, :build_associates, :updated_at, work_items_count: 1,
+assessment_comment: assessment_comment)
       end
 
       it 'generates rejected rows' do

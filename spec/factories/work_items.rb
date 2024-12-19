@@ -54,7 +54,7 @@ FactoryBot.define do
       adjustment_comment { 'WI adjustment' }
     end
 
-    WorkTypes.values.each do |value|
+    WorkTypes.each_value do |value|
       trait value.to_s.to_sym do
         work_type { value.to_s }
       end

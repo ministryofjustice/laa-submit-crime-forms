@@ -80,14 +80,14 @@ FactoryBot.define do
       adjustment_comment { 'Disbursement Test' }
     end
 
-    DisbursementTypes.values.each do |type|
+    DisbursementTypes.each_value do |type|
       trait type.to_s.to_sym do
         disbursement_type { type.to_s }
         other_type { nil }
       end
     end
 
-    OtherDisbursementTypes.values.each do |type|
+    OtherDisbursementTypes.each_value do |type|
       trait type.to_s.to_sym do
         disbursement_type { DisbursementTypes::OTHER.to_s }
         other_type { type.to_s }

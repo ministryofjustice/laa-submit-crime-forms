@@ -104,9 +104,6 @@ Metrics/ClassLength:
 # To be tweaked until we find the right balance
 Metrics/MethodLength:
   Max: 15
-  Exclude:
-    - app/presenters/nsm/check_answers/**/*
-    - spec/system/support/prior_authority/step_helpers.rb
 
 # To be tweaked until we find the right balance
 Metrics/AbcSize:
@@ -123,9 +120,6 @@ Metrics/ParameterLists:
 
 Layout/LineLength:
   Max: 130
-  Exclude:
-    - spec/decisions/**/*
-    - spec/presenters/nsm/check_answers/application_status_card_spec.rb
 
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:
@@ -141,56 +135,23 @@ Naming/MethodParameterName:
   AllowedNames:
     - as
 
-# Rubocop mistakenly consider `#values` method as being called on a Hash
-Style/HashEachMethods:
-  Exclude:
-    - app/value_objects/value_object.rb
-    - app/forms/nsm/steps/**/*
-    - spec/forms/nsm/steps/case_disposal_form_spec.rb
-    - spec/factories/*
-
 Naming/PredicateName:
   AllowedMethods:
     - has_nino
     - has_codefendants
     - has_one_association
 
-# TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:
   Max: 30
-  Exclude:
-    - spec/forms/nsm/steps/claim_details_form_spec.rb
-    - spec/forms/nsm/steps/work_items_add_form_spec.rb
-    - spec/presenters/nsm/cost_summary/report_spec.rb
-    - spec/presenters/nsm/check_answers/your_details_card_spec.rb
 
 RSpec/MultipleExpectations:
   Max: 7
-  Exclude:
-    - spec/presenters/nsm/summary/sections/*
 
 RSpec/NestedGroups:
   Max: 6
 
 RSpec/ExampleLength:
   Max: 30
-  Exclude:
-    - spec/steps/**/integration_spec.rb
-    - spec/presenters/nsm/check_answers/**/*
-    - spec/services/submit_to_app_store/nsm_payload_builder_spec.rb
-    - spec/system/**/*
-
-Lint/MissingSuper:
-  Exclude:
-    - 'app/components/*'
-    - 'app/presenters/nsm/cost_summary/*'
-    - 'app/presenters/nsm/check_answers/*'
-
-Rails/RedundantActiveRecordAllMethod:
-  Exclude:
-    - 'spec/models/matter_type_spec.rb'
-    - 'spec/models/outcome_code_spec.rb'
-    - 'app/presenters/**/*'
 
 # Causing false positives when implemented in methods
 Rails/ActionControllerFlashBeforeRender:

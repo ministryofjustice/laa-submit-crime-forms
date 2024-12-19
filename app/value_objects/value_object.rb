@@ -32,7 +32,7 @@ class ValueObject
             :INQUIRY_METHODS, subclass.values.map { |value| "#{value}?" }
           )
 
-          subclass.values.each do |value|
+          subclass.each_value do |value|
             subclass.define_method(:"#{value}?") { value.eql?(self) }
           end
         end
