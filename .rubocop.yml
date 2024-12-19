@@ -13,6 +13,8 @@ AllCops:
     - 'config/clamd/*'
     - 'config/laa_portal/*'
     - 'config/locales/*'
+    - 'config/*.yml'
+    - 'config/*.csv'
     - 'lib/tasks/**/*'
     - 'lib/generators/**/*'
     - 'features/**/*'
