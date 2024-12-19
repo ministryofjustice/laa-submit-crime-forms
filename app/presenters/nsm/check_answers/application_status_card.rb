@@ -15,6 +15,7 @@ module Nsm
         @skip_links = skip_links
         @group = 'application_status'
         @section = 'application_status'
+        super()
       end
 
       def row_data

@@ -10,6 +10,7 @@ module Nsm
         @work_items = Nsm::CostSummary::WorkItems.new(claim.work_items, claim)
         @group = 'costs'
         @section = 'work_items'
+        super()
       end
 
       def title(**)

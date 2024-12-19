@@ -10,6 +10,7 @@ module Nsm
         @firm_details_form = Nsm::Steps::FirmDetailsForm.build(claim)
         @group = 'about_you'
         @section = 'firm_details'
+        super()
       end
 
       # rubocop:disable Metrics/AbcSize

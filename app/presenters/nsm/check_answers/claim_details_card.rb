@@ -9,6 +9,7 @@ module Nsm
         @claim = claim
         @group = 'about_claim'
         @section = 'claim_details'
+        super()
       end
 
       # rubocop:disable Metrics/AbcSize

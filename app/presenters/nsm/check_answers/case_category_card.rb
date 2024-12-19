@@ -13,6 +13,7 @@ module Nsm
 
         @group = 'about_case'
         @section = 'case_category'
+        super()
       end
 
       def row_data

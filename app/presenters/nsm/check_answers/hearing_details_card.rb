@@ -9,6 +9,7 @@ module Nsm
         @hearing_details_form = Nsm::Steps::HearingDetailsForm.build(claim)
         @group = 'about_case'
         @section = 'hearing_details'
+        super()
       end
 
       # rubocop:disable Metrics/AbcSize

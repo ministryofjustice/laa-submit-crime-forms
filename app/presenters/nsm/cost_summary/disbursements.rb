@@ -8,6 +8,7 @@ module Nsm
       def initialize(disbursements, claim)
         @claim = claim
         @disbursements = disbursements
+        super()
       end
 
       def rows

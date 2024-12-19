@@ -9,6 +9,7 @@ module Nsm
         @claim = claim
         @group = 'about_case'
         @section = 'case_details'
+        super()
       end
 
       # TO DO: update remittal to include date of remittal when CRM457-172 is done

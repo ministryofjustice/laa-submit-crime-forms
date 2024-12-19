@@ -9,6 +9,7 @@ module Nsm
         @claim = claim
         @group = 'about_claim'
         @section = 'reason_for_claim'
+        super()
       end
 
       def row_data
