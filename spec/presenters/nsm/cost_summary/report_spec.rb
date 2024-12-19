@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Nsm::CostSummary::Report do
   subject { described_class.new(claim) }
 
@@ -244,3 +244,4 @@ work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id:
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

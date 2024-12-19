@@ -20,6 +20,7 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
 
   describe '#row_data' do
     context '2 lines in address' do
+      # rubocop:disable RSpec/ExampleLength
       it 'generates case detail rows with 2 lines of address' do
         expect(subject.row_data).to eq(
           [
@@ -58,11 +59,13 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'with no data' do
       let(:claim) { build(:claim, office_code: nil, solicitor: build(:solicitor)) }
 
+      # rubocop:disable RSpec/ExampleLength
       it 'generates missing data rows for required fields' do
         expect(subject.row_data).to eq(
           [
@@ -101,12 +104,14 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'with partial address - end' do
       let(:firm_office) { build(:firm_office, :valid, town: nil, postcode: nil) }
       let(:claim) { build(:claim, :firm_details, firm_office:) }
 
+      # rubocop:disable RSpec/ExampleLength
       it 'only includes the missing data tag once in the address' do
         expect(subject.row_data).to eq(
           [
@@ -145,12 +150,14 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'with partial address - middle' do
       let(:firm_office) { build(:firm_office, :valid, town: nil) }
       let(:claim) { build(:claim, :firm_details, firm_office:) }
 
+      # rubocop:disable RSpec/ExampleLength
       it 'only includes the missing data tag once in the address' do
         expect(subject.row_data).to eq(
           [
@@ -189,6 +196,7 @@ RSpec.describe Nsm::CheckAnswers::YourDetailsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
   end
 end

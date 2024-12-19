@@ -10,6 +10,7 @@ module Nsm
         @section = 'claim_type'
         @claim = claim
         @firm_details_form = Nsm::Steps::FirmDetailsForm.build(claim)
+        super()
       end
 
       def row_data

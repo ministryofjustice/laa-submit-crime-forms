@@ -7,6 +7,7 @@ RSpec.describe 'User can fill in claim details', type: :system do
     visit provider_saml_omniauth_callback_path
   end
 
+  # rubocop:disable RSpec/ExampleLength
   it 'can do green path' do
     visit edit_nsm_steps_claim_details_path(claim.id)
 
@@ -43,4 +44,5 @@ RSpec.describe 'User can fill in claim details', type: :system do
       work_completed_date: Date.new(2023, 3, 28),
     )
   end
+  # rubocop:enable RSpec/ExampleLength
 end

@@ -9,6 +9,7 @@ module Nsm
         @claim = claim
         @group = 'equality_answers'
         @section = 'equal_monitoring'
+        super()
       end
 
       def row_data

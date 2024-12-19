@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ModuleLength
+# rubocop:disable Metrics/ModuleLength, Metrics/MethodLength
 module PriorAuthority
   module StepHelpers
-    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity,
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize
     def fill_in_until_step(step, prison_law: 'No', client_detained: 'No', court_type: "Magistrates' court")
@@ -254,7 +254,7 @@ module PriorAuthority
     end
   end
 end
-# rubocop:enable Metrics/ModuleLength
+# rubocop:enable Metrics/ModuleLength, Metrics/MethodLength
 
 RSpec.configure do |config|
   config.include PriorAuthority::StepHelpers, type: :system

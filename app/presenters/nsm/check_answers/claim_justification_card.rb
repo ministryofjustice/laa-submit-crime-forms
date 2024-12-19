@@ -9,6 +9,7 @@ module Nsm
         @claim = claim
         @group = 'about_claim'
         @section = 'reason_for_claim'
+        super()
       end
 
       def row_data
@@ -34,22 +35,28 @@ module Nsm
         additional_fields = []
 
         if claim.reasons_for_claim&.include?(ReasonForClaim::REPRESENTATION_ORDER_WITHDRAWN.to_s)
-          additional_fields << {
-            head_key: 'representation_order_withdrawn_date',
-            text: check_missing(claim.representation_order_withdrawn_date) do
-              claim.representation_order_withdrawn_date.to_fs(:stamp)
-            end
-          }
+          additional_fields << rep_order_withdrawn_row
         end
 
-        if claim.reasons_for_claim&.include?(ReasonForClaim::OTHER.to_s)
-          additional_fields << {
-            head_key: 'reason_for_claim_other_details',
-            text: check_missing(claim.reason_for_claim_other_details)
-          }
-        end
+        additional_fields << reason_for_claim_other_row if claim.reasons_for_claim&.include?(ReasonForClaim::OTHER.to_s)
 
         additional_fields
+      end
+
+      def rep_order_withdrawn_row
+        {
+          head_key: 'representation_order_withdrawn_date',
+          text: check_missing(claim.representation_order_withdrawn_date) do
+            claim.representation_order_withdrawn_date.to_fs(:stamp)
+          end
+        }
+      end
+
+      def reason_for_claim_other_row
+        {
+          head_key: 'reason_for_claim_other_details',
+          text: check_missing(claim.reason_for_claim_other_details)
+        }
       end
     end
   end

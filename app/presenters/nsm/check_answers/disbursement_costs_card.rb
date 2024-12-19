@@ -10,6 +10,7 @@ module Nsm
         @disbursements = Nsm::CostSummary::Disbursements.new(claim.disbursements.by_age, claim)
         @section = 'disbursements'
         @group = 'costs'
+        super()
       end
 
       def row_data

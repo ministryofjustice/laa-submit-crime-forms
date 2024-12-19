@@ -54,10 +54,12 @@ FactoryBot.define do
       adjustment_comment { 'WI adjustment' }
     end
 
+    # rubocop:disable Style/HashEachMethods
     WorkTypes.values.each do |value|
       trait value.to_s.to_sym do
         work_type { value.to_s }
       end
     end
+    # rubocop:enable Style/HashEachMethods
   end
 end

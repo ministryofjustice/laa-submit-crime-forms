@@ -9,8 +9,10 @@ module Nsm
         @claim = claim
         @group = 'about_claim'
         @section = 'other_info'
+        super()
       end
 
+      # rubocop:disable Metrics/MethodLength
       def row_data
         [
           {
@@ -29,6 +31,7 @@ module Nsm
           conclusion_row
         ].compact
       end
+      # rubocop:enable Metrics/MethodLength
 
       private
 

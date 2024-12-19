@@ -1,5 +1,6 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
+# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -21,7 +22,7 @@ Rails.application.configure do
   # config.require_master_key = true
 
   # Enable static file serving from the `/public` folder (turn off if using NGINX/Apache for it).
-  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
@@ -54,23 +55,23 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
     config.logger = ActiveSupport::Logger.new($stdout)
-                      .tap  { |logger| logger.formatter = Logger::Formatter.new }
-                      .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+                                         .tap  { |logger| logger.formatter = Logger::Formatter.new }
+                                         .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
   end
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Info include generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
 
   # Use a different cache store in production.
   config.cache_store = :solid_cache_store, {
-    error_handler: -> (method:, returning:, exception:) do
+    error_handler: lambda do |_method:, _returning:, exception:|
       # We want to make sure that if something goes wrong retrieving information from the
       # session/cache both we and the end user know that something is amiss - we definitely
       # don't want to just treat it as a cache miss and move on, as that's a poor UX.
@@ -105,7 +106,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  config.hosts = (ENV["HOSTS"]&.split(',') || []) + [ENV.fetch('INTERNAL_HOST_NAME', nil)].compact
+  config.hosts = (ENV['HOSTS']&.split(',') || []) + [ENV.fetch('INTERNAL_HOST_NAME', nil)].compact
   # Skip DNS rebinding protection for the default health check endpoint.
   config.host_authorization = { exclude: ->(request) { request.path.in?(['/ping', '/ready']) } }
 
@@ -115,3 +116,4 @@ Rails.application.configure do
   config.logstasher.suppress_app_log = false
   config.logstasher.source = "laa-submit-crime-forms-#{ENV.fetch('ENV', nil)}"
 end
+# rubocop:enable Metrics/BlockLength

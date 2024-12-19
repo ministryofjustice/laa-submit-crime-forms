@@ -1,4 +1,5 @@
 module Decisions
+  # rubocop:disable Metrics/ClassLength
   class DecisionTree < BaseDecisionTree
     # used to add custom methods to filter/query the data
     WRAPPER_CLASS = CustomWrapper
@@ -215,4 +216,5 @@ module Decisions
     from(:check_answers)
       .goto(show: 'prior_authority/steps/submission_confirmation')
   end
+  # rubocop:enable Metrics/ClassLength
 end

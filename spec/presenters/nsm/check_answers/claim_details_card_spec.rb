@@ -13,6 +13,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
 
   describe '#row_data' do
     context 'when all boolean field have "Yes" values plus additional fields' do
+      # rubocop:disable RSpec/ExampleLength
       it 'generates case detail rows' do
         expect(subject.row_data).to eq(
           [
@@ -67,11 +68,13 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'when all boolean field have "No" values' do
       let(:claim) { build(:claim, :claim_details, :claim_details_no) }
 
+      # rubocop:disable RSpec/ExampleLength
       it 'generates case detail rows' do
         expect(subject.row_data).to eq(
           [
@@ -114,11 +117,13 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'all fields missing' do
       let(:claim) { build(:claim) }
 
+      # rubocop:disable RSpec/ExampleLength
       it 'generates case detail rows' do
         expect(subject.row_data).to eq(
           [
@@ -161,11 +166,13 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'all boolean field with yes values, but missing additional data' do
       let(:claim) { build(:claim, :claim_details, time_spent: nil, work_before_date: nil, work_after_date: nil) }
 
+      # rubocop:disable RSpec/ExampleLength
       it 'generates case detail rows' do
         expect(subject.row_data).to eq(
           [
@@ -220,6 +227,7 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
   end
 end

@@ -1,5 +1,6 @@
 require 'system_helper'
 
+# rubocop:disable RSpec/ExampleLength
 RSpec.describe 'Task list', :stub_app_store_search, :stub_oauth_token do
   it 'updates the task list appropriately' do
     visit provider_saml_omniauth_callback_path
@@ -101,3 +102,4 @@ RSpec.describe 'Task list', :stub_app_store_search, :stub_oauth_token do
       .and have_content('Case details Cannot start yet')
   end
 end
+# rubocop:enable RSpec/ExampleLength

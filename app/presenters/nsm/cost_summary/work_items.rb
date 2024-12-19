@@ -7,6 +7,7 @@ module Nsm
       def initialize(work_items, claim)
         @claim = claim
         @work_items = work_items
+        super()
       end
 
       ORDER = %w[travel waiting attendance_with_counsel attendance_without_counsel preparation advocacy].freeze

@@ -80,6 +80,7 @@ FactoryBot.define do
       adjustment_comment { 'Disbursement Test' }
     end
 
+    # rubocop:disable Style/HashEachMethods
     DisbursementTypes.values.each do |type|
       trait type.to_s.to_sym do
         disbursement_type { type.to_s }
@@ -93,5 +94,6 @@ FactoryBot.define do
         other_type { type.to_s }
       end
     end
+    # rubocop:enable Style/HashEachMethods
   end
 end

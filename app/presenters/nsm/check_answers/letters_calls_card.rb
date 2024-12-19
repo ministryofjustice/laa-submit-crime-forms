@@ -9,8 +9,10 @@ module Nsm
         @claim = claim
         @group = 'costs'
         @section = 'letters_calls'
+        super()
       end
 
+      # rubocop:disable Metrics/MethodLength
       def row_data
         [
           {
@@ -46,6 +48,7 @@ module Nsm
             }
           ] + total_inc_vat_fields
       end
+      # rubocop:enable Metrics/MethodLength
 
       private
 

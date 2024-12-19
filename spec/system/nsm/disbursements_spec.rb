@@ -1,5 +1,6 @@
 require 'system_helper'
 
+# rubocop:disable RSpec/ExampleLength
 RSpec.describe 'User can manage disbursements', type: :system do
   let(:claim) { create(:claim, :firm_details, :case_type_breach) }
 
@@ -492,3 +493,4 @@ RSpec.describe 'User can manage disbursements', type: :system do
     expect(page).to have_content 'Select yes if you need to claim a disbursement'
   end
 end
+# rubocop:enable RSpec/ExampleLength

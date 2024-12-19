@@ -21,6 +21,7 @@ RSpec.describe Nsm::CheckAnswers::LettersCallsCard do
 
   describe '#row_data' do
     context 'when claim justification includes enhanced rate' do
+      # rubocop:disable RSpec/ExampleLength
       it 'generates letters and calls rows' do
         expect(subject.row_data).to eq(
           [
@@ -64,11 +65,13 @@ RSpec.describe Nsm::CheckAnswers::LettersCallsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'when claim justification does not include enhanced rate' do
       let(:reasons_for_claim) { [ReasonForClaim::COUNSEL_OR_AGENT_ASSIGNED.to_s] }
 
+      # rubocop:disable RSpec/ExampleLength
       it 'does not include the uplift rows' do
         expect(subject.row_data).to eq(
           [
@@ -104,11 +107,13 @@ RSpec.describe Nsm::CheckAnswers::LettersCallsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'no letters or calls requested' do
       let(:claim) { build(:claim, :case_type_breach, :full_firm_details, reasons_for_claim:) }
 
+      # rubocop:disable RSpec/ExampleLength
       it 'generates letters and calls rows' do
         expect(subject.row_data).to eq(
           [
@@ -148,6 +153,7 @@ RSpec.describe Nsm::CheckAnswers::LettersCallsCard do
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
   end
 end
