@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     if FeatureFlags.omniauth_test_mode.enabled?
       get "login", to: "home#dev_login", as: :new_provider_session
     else
-      get 'login', to: 'laa_multi_step_forms/errors#unauthorized', as: :new_provider_session
+      get 'login', to: 'errors#unauthorized', as: :new_provider_session
     end
 
     namespace :providers do
@@ -227,6 +227,6 @@ Rails.application.routes.draw do
     get :not_found
   end
 
-  match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
+  match '*path', to: 'errors#not_found', via: :all, constraints:
     lambda { |_request| !Rails.application.config.consider_all_requests_local }
 end
