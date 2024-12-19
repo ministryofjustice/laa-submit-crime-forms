@@ -10,7 +10,9 @@ AllCops:
   Exclude:
     - 'db/**/*'
     - 'bin/**/*'
-    - 'config/**/*'
+    - 'config/clamd/*'
+    - 'config/laa_portal/*'
+    - 'config/locales/*'
     - 'lib/tasks/**/*'
     - 'lib/generators/**/*'
     - 'features/**/*'
