@@ -81,7 +81,7 @@ FactoryBot.define do
     end
 
     # rubocop:disable Style/HashEachMethods
-    DisbursementTypes.value.each do |type|
+    DisbursementTypes.values.each do |type|
       trait type.to_s.to_sym do
         disbursement_type { type.to_s }
         other_type { nil }
