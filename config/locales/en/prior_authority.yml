@@ -19,6 +19,8 @@ en:
       expired: Expired
       provider_updated: Resubmitted
     applications:
+      clone:
+        cloned: Application cloned successfully
       reviewed:
         page_title: Reviewed
       submitted:
@@ -35,6 +37,7 @@ en:
           submitted: Submitted
           reviewed: Reviewed
       tabs:
+        clone: Clone
         drafts: Drafts
         submitted: Submitted
         reviewed: Reviewed

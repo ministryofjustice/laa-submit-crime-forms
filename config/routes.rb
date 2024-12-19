@@ -7,10 +7,12 @@ Rails.application.routes.draw do
     # - See https://web.archive.org/web/20180709235757/https://thisdata.com/blog/timing-attacks-against-string-comparison/
     # - Use & (do not use &&) so that it doesn't short circuit.
     # - Use digests to stop length information leaking (see also ActiveSupport::SecurityUtils.variable_size_secure_compare)
-    ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_WEB_UI_USERNAME"])) &
-      ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_WEB_UI_PASSWORD"]))
+    ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(username),
+                                                Digest::SHA256.hexdigest(ENV.fetch('SIDEKIQ_WEB_UI_USERNAME', nil))) &
+      ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(password),
+                                                  Digest::SHA256.hexdigest(ENV.fetch('SIDEKIQ_WEB_UI_PASSWORD', nil)))
   end
-  mount Sidekiq::Web => "/sidekiq"
+  mount Sidekiq::Web => '/sidekiq'
 
   extend RouteHelpers
 
@@ -19,7 +21,7 @@ Rails.application.routes.draw do
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  root "home#index"
+  root 'home#index'
 
   devise_for :providers,
              skip: [:all],
@@ -29,7 +31,7 @@ Rails.application.routes.draw do
 
   devise_scope :provider do
     if FeatureFlags.omniauth_test_mode.enabled?
-      get "login", to: "home#dev_login", as: :new_provider_session
+      get 'login', to: 'home#dev_login', as: :new_provider_session
     else
       get 'login', to: 'laa_multi_step_forms/errors#unauthorized', as: :new_provider_session
     end
@@ -63,6 +65,9 @@ Rails.application.routes.draw do
       member do
         get :delete
         get :confirm_delete, path: 'confirm-delete'
+        constraints ->(_req) { !HostEnv.production? } do
+          get :clone
+        end
       end
     end
 
@@ -88,12 +93,12 @@ Rails.application.routes.draw do
         edit_step :contact_details
         edit_step :office_code
         edit_step :case_details
-        constraints ->(req) { FeatureFlags.youth_court_fee.enabled? } do
+        constraints ->(_req) { FeatureFlags.youth_court_fee.enabled? } do
           edit_step :case_category
         end
         edit_step :case_disposal
         edit_step :hearing_details
-        constraints ->(req) { FeatureFlags.youth_court_fee.enabled? } do
+        constraints ->(_req) { FeatureFlags.youth_court_fee.enabled? } do
           edit_step :case_outcome
         end
         crud_step :defendant_details, param: :defendant_id, except: [:destroy]
@@ -117,12 +122,12 @@ Rails.application.routes.draw do
         show_step :cost_summary
         edit_step :other_info
         upload_step :supporting_evidence do
-          collection {
+          collection do
             get :download
-          }
+          end
         end
         edit_step :equality
-        constraints ->(req) { FeatureFlags.youth_court_fee.enabled? } do
+        constraints ->(_req) { FeatureFlags.youth_court_fee.enabled? } do
           edit_step :youth_court_claim_additional_fee
         end
         edit_step :equality_questions
@@ -133,18 +138,18 @@ Rails.application.routes.draw do
         show_step :check_answers
         show_step :view_claim do
           member do
-            scope "claimed_costs" do
-              get "work_items", to: "view_claim#claimed_work_items", as: :claimed_costs_work_items
-              get "letters_and_calls", to: "view_claim#claimed_letters_and_calls", as: :claimed_costs_letters_and_calls
-              get "disbursements", to: "view_claim#claimed_disbursements", as: :claimed_costs_disbursements
-              get "additional_fees", to: "view_claim#claimed_additional_fees", as: :claimed_costs_additional_fees
+            scope 'claimed_costs' do
+              get 'work_items', to: 'view_claim#claimed_work_items', as: :claimed_costs_work_items
+              get 'letters_and_calls', to: 'view_claim#claimed_letters_and_calls', as: :claimed_costs_letters_and_calls
+              get 'disbursements', to: 'view_claim#claimed_disbursements', as: :claimed_costs_disbursements
+              get 'additional_fees', to: 'view_claim#claimed_additional_fees', as: :claimed_costs_additional_fees
             end
 
-            scope "adjusted" do
-              get "work_items", to: "view_claim#adjusted_work_items", as: :adjustments_work_items
-              get "letters_and_calls", to: "view_claim#adjusted_letters_and_calls", as: :adjustments_letters_and_calls
-              get "disbursements", to: "view_claim#adjusted_disbursements", as: :adjustments_disbursements
-              get "additional_fees", to: "view_claim#adjusted_additional_fees", as: :adjustments_additional_fees
+            scope 'adjusted' do
+              get 'work_items', to: 'view_claim#adjusted_work_items', as: :adjustments_work_items
+              get 'letters_and_calls', to: 'view_claim#adjusted_letters_and_calls', as: :adjustments_letters_and_calls
+              get 'disbursements', to: 'view_claim#adjusted_disbursements', as: :adjustments_disbursements
+              get 'additional_fees', to: 'view_claim#adjusted_additional_fees', as: :adjustments_additional_fees
             end
 
             get ':item_type/:item_id', as: :item, to: 'view_claim#item',
@@ -207,14 +212,16 @@ Rails.application.routes.draw do
         get 'offboard'
         get :confirm_delete, path: 'confirm-delete'
         get :download
+        constraints ->(_req) { !HostEnv.production? } do
+          get :clone
+        end
       end
     end
-
   end
 
   resources :downloads, only: :show
 
-  get "robots.txt", to: "robots#index"
+  get 'robots.txt', to: 'robots#index'
 
   post :app_store_webhook, to: 'sync#sync_individual'
 
@@ -228,5 +235,5 @@ Rails.application.routes.draw do
   end
 
   match '*path', to: 'laa_multi_step_forms/errors#not_found', via: :all, constraints:
-    lambda { |_request| !Rails.application.config.consider_all_requests_local }
+    ->(_request) { !Rails.application.config.consider_all_requests_local }
 end

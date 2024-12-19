@@ -23,5 +23,9 @@ module Nsm
         render :new
       end
     end
+
+    def self.model_class
+      Claim
+    end
   end
 end

@@ -19,6 +19,12 @@ FactoryBot.define do
       primary_quotes { build_list(:quote, 1, :primary, service_type_cost_type) }
     end
 
+    PriorAuthorityApplication.states.each_key do |state|
+      trait :"as_#{state}" do
+        state { state }
+      end
+    end
+
     trait :with_firm_and_solicitor do
       firm_office factory: %i[firm_office valid_pa]
       solicitor factory: %i[solicitor full_pa]
