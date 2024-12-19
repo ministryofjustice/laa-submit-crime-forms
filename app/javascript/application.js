@@ -9,7 +9,7 @@ import { convertSelectToAutocomplete } from "./autocomplete.js";
 
 initAll();
 
-// Most of this Turbo setup code is needed for the multi-form gem
+// Most of this Turbo setup code is needed for the multi-form capabilities
 Turbo.setFormMode("optin");
 Turbo.session.drive = false;
 

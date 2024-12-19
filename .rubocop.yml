@@ -17,7 +17,6 @@ AllCops:
     - 'lib/generators/**/*'
     - 'features/**/*'
     - 'vendor/**/*'
-    - 'gems/laa_multi_step_forms/spec/dummy/**/*'
     - 'tmp/**/*'
     - 'node_modules/**/*'
 

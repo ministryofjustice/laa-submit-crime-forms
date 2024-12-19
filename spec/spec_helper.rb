@@ -3,7 +3,6 @@ require 'webmock/rspec'
 
 SimpleCov.start 'rails' do
   add_filter 'spec/'
-  add_filter 'gems/'
   add_filter 'config/'
   add_filter 'lib/tasks/'
 
