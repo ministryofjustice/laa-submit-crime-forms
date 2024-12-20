@@ -44,7 +44,7 @@ module Nsm
         }
       end
 
-      def solicitor_name_rows
+      def solicitor_rows
         [
           {
             head_key: 'solicitor_first_name',
