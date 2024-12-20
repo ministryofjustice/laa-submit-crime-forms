@@ -32,9 +32,9 @@ module Nsm
 
       def calculation_rows
         if allow_uplift?
-          with_uplift_row
+          with_uplift_rows
         else
-          removed_uplift_row
+          removed_uplift_rows
         end
       end
 
@@ -60,7 +60,7 @@ module Nsm
         errors.add(:work_type, :inclusion)
       end
 
-      def with_uplift_row
+      def with_uplift_rows
         [
           [translate(:before_uplift), translate(:after_uplift)],
           [
@@ -76,7 +76,7 @@ module Nsm
         ]
       end
 
-      def removed_uplift_row
+      def removed_uplift_rows
         [
           [translate(:total)],
           [

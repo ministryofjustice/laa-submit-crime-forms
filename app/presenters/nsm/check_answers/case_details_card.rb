@@ -49,7 +49,7 @@ module Nsm
         }
       end
 
-      def main_offence_date
+      def main_offence_date_row
         {
           head_key: 'main_offence_date',
             text: check_missing(claim.main_offence_date) do
