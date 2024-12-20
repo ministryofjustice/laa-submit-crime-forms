@@ -1,5 +1,4 @@
 <% title t('.page_title') %>
-<% decision_step_header %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -7,29 +6,43 @@
     <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
 
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m"><%=  @form_object.record.completed_on&.to_fs(:long) || t('.unknown_date') %></caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header govuk-!-width-one-half"><%= t('.headers.work_type') %></th>
-          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.period') %></th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.cost_type') %></th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.date') %></th>
           <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.fee_earner') %></th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= t('.headers.time_spent') %></th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <td class="govuk-table__cell"><%= check_missing(@form_object.record.work_type) { t("laa_crime_forms_common.nsm.work_type.#{@form_object.record.work_type}") } %></td>
-          <td class="govuk-table__cell"><%= check_missing(format_period(@form_object.record.time_spent))  %></td>
+          <td class="govuk-table__cell"><%= check_missing(@form_object.record.completed_on&.to_fs(:short_stamp)) %></td>
           <td class="govuk-table__cell"><%= check_missing(@form_object.record.fee_earner) %></td>
+          <td class="govuk-table__cell"><%= check_missing(format_period(@form_object.record.time_spent, style: :minimal_html))  %></td>
         </tr>
       </tbody>
     </table>
 
-    <%= step_form @form_object do |f| %>
-      <%= f.submit_button('delete_it') do %>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden"><%= t('nsm.claims.confirm_delete.warning') %></span>
+        <%= t('nsm.claims.confirm_delete.no_undo') %>
+      </strong>
+    </div>
+
+    <div class="govuk-button-group">
+      <%= step_form @form_object do |f| %>
         <%= f.hidden_field :id %>
-        <%= link_to 'Cancel', edit_nsm_steps_work_items_path(@form_object.application), class: 'govuk-button__secondary' %>
+        <%= f.submit_button('delete_it', warning: true) do %>
+          <%= govuk_button_link_to(
+            t(".dont_delete"),
+            edit_nsm_steps_work_items_path(@form_object.application)
+          ) %>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 </div>
 
