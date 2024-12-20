@@ -30,6 +30,9 @@ en:
       disbursements: Disbursements
       caption: Summary of disbursements
       net_cost: Total cost of disbursements
+      vat_on_claimed: Total VAT on claimed
+      total_claimed: Total cost of disbursements
+      net_cost_claimed: Total net cost
     nsm/cost_summary/additional_fees:
       additional_fees: Additional fees
       youth_court_fee: Youth court fee

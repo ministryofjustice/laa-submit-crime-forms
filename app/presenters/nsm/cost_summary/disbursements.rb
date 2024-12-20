@@ -53,24 +53,27 @@ module Nsm
       def footer_row
         [
           { text: translate('.footer.total'), classes: 'govuk-table__header' },
-          { text: total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
-          { text: vat_amount_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
-          { text: gross_total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
+          { text: total_cost_cell(translate('net_cost_claimed')),
+            classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
+          { text: vat_amount_cell(translate('vat_on_claimed')),
+            classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
+          { text: gross_total_cost_cell(translate('total_claimed')),
+            classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
         ].compact
       end
 
-      def total_cost_cell
-        safe_join([tag.span(translate('.header.net_cost_claimed'), class: 'govuk-visually-hidden'),
+      def total_cost_cell(header)
+        safe_join([tag.span(header, class: 'govuk-visually-hidden'),
                    tag.strong(NumberTo.pounds(net_cost))])
       end
 
-      def gross_total_cost_cell
-        safe_join([tag.span(translate('.header.total_claimed'), class: 'govuk-visually-hidden'),
+      def gross_total_cost_cell(header)
+        safe_join([tag.span(header, class: 'govuk-visually-hidden'),
                    tag.strong(NumberTo.pounds(total_cost))])
       end
 
-      def vat_amount_cell
-        safe_join([tag.span(translate('.header.vat_on_claimed'), class: 'govuk-visually-hidden'),
+      def vat_amount_cell(header)
+        safe_join([tag.span(header, class: 'govuk-visually-hidden'),
                    tag.strong(NumberTo.pounds(vat_amount))])
       end
 
@@ -78,9 +81,12 @@ module Nsm
         [
           [
             { text: translate('disbursements'), classes: 'govuk-table__header' },
-            { text: total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
-            { text: vat_amount_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
-            { text: gross_total_cost_cell, classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
+            { text: total_cost_cell(translate('.header.net_cost_claimed')),
+              classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
+            { text: vat_amount_cell(translate('.header.vat_on_claimed')),
+              classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' },
+            { text: gross_total_cost_cell(translate('.header.total_claimed')),
+              classes: 'govuk-table__cell--numeric govuk-summary-list__value-bold' }
           ].compact
         ]
       end
