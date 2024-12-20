@@ -13,8 +13,18 @@ module Nsm
         super()
       end
 
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def row_data
+        [
+          *firm_rows,
+          vat_registered_row,
+          *solicitor_rows,
+          *contact_rows,
+        ]
+      end
+
+      private
+
+      def firm_rows
         [
           {
             head_key: 'firm_name',
@@ -23,11 +33,19 @@ module Nsm
           {
             head_key: 'firm_address',
             text: format_address(firm_details_form.firm_office)
-          },
-          {
-            head_key: 'vat_registered',
-            text: check_missing(firm_details_form.firm_office.vat_registered.to_s.capitalize)
-          },
+          }
+        ]
+      end
+
+      def vat_registered_row
+        {
+          head_key: 'vat_registered',
+          text: check_missing(firm_details_form.firm_office.vat_registered.to_s.capitalize)
+        }
+      end
+
+      def solicitor_name_rows
+        [
           {
             head_key: 'solicitor_first_name',
             text: check_missing(firm_details_form.solicitor.first_name)
@@ -39,7 +57,12 @@ module Nsm
           {
             head_key: 'solicitor_reference_number',
             text: check_missing(firm_details_form.solicitor.reference_number)
-          },
+          }
+        ]
+      end
+
+      def contact_rows
+        [
           {
             head_key: 'contact_full_name',
             text: check_missing(solicitor.contact_full_name)
@@ -50,9 +73,6 @@ module Nsm
           }
         ]
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
-
-      private
 
       def format_address(firm_office)
         address = []

@@ -37,31 +37,16 @@ module PriorAuthority
         @quote_summary ||= PriorAuthority::PrimaryQuoteSummary.new(application)
       end
 
-      # rubocop:disable Metrics/MethodLength
       def base_rows
         [
-          {
-            head_key: 'service_name',
-            text: service_cost_form.service_name,
-          },
-          {
-            head_key: 'service_details',
-            text: service_details_html,
-          },
-          {
-            head_key: 'quote_upload',
-            text: document_link,
-          },
+          *service_rows,
+          quote_upload_row,
           *related_to_post_mortem,
           *ordered_by_court,
-          {
-            head_key: 'prior_authority_granted',
-            text: I18n.t("generic.#{application.prior_authority_granted?}"),
-          },
+          prior_authority_granted_row,
           *travel_cost_reason,
         ]
       end
-      # rubocop:enable Metrics/MethodLength
 
       def template
         'prior_authority/steps/check_answers/primary_quote'
@@ -83,6 +68,33 @@ module PriorAuthority
       private
 
       delegate :primary_quote, to: :application
+
+      def service_rows
+        [
+          {
+            head_key: 'service_name',
+            text: service_cost_form.service_name,
+          },
+          {
+            head_key: 'service_details',
+            text: service_details_html,
+          }
+        ]
+      end
+
+      def quote_upload_row
+        {
+          head_key: 'quote_upload',
+          text: document_link,
+        }
+      end
+
+      def prior_authority_granted_row
+        {
+          head_key: 'prior_authority_granted',
+          text: I18n.t("generic.#{application.prior_authority_granted?}"),
+        }
+      end
 
       def service_details_html
         organisation_details = [primary_quote.organisation, primary_quote.town, primary_quote.postcode].compact.join(', ')
