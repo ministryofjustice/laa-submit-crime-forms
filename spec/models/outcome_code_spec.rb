@@ -5,7 +5,9 @@ RSpec.describe OutcomeCode do
 
   describe '#all' do
     it 'returns a know number of outcomes' do
+      # rubocop:disable Rails/RedundantActiveRecordAllMethod
       expect(described_class.all.count).to eq(22)
+      # rubocop:enable Rails/RedundantActiveRecordAllMethod
     end
   end
 

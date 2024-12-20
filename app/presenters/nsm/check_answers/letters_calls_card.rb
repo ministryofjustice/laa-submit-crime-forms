@@ -9,45 +9,65 @@ module Nsm
         @claim = claim
         @group = 'costs'
         @section = 'letters_calls'
+        super()
       end
 
       def row_data
         [
-          {
-            head_key: 'items',
-            text: ApplicationController.helpers.sanitize(translate_table_key(section, 'items_total'), tags: %w[strong])
-          },
-          {
-            head_key: 'letters',
-            text: letters
-          },
-        ] +
-          letters_uplift_fields +
-          [
-            {
-              head_key: 'letters_payment',
-              text: currency_value(claim.letters_after_uplift)
-            },
-            {
-              head_key: 'calls',
-              text: calls
-            },
-          ] +
-          calls_uplift_fields +
-          [
-            {
-              head_key: 'calls_payment',
-              text: currency_value(claim.calls_after_uplift)
-            },
-            {
-              head_key: 'total',
-              text: total_cost,
-              footer: true
-            }
-          ] + total_inc_vat_fields
+          header_row,
+          *letters_rows,
+          *calls_rows,
+          *cost_rows
+        ]
       end
 
       private
+
+      def header_row
+        {
+          head_key: 'items',
+          text: ApplicationController.helpers.sanitize(translate_table_key(section, 'items_total'), tags: %w[strong])
+        }
+      end
+
+      def letters_rows
+        [
+          {
+            head_key: 'letters',
+          text: letters
+          },
+          *letters_uplift_fields,
+          {
+            head_key: 'letters_payment',
+            text: currency_value(claim.letters_after_uplift)
+          }
+        ]
+      end
+
+      def calls_rows
+        [
+          {
+            head_key: 'calls',
+            text: calls
+          },
+          *calls_uplift_fields,
+          {
+            head_key: 'calls_payment',
+            text: currency_value(claim.calls_after_uplift)
+          }
+        ]
+      end
+
+      def cost_rows
+        [
+          {
+            head_key: 'total',
+            text: total_cost,
+            footer: true
+          },
+          *total_inc_vat_fields
+        ]
+      end
 
       def letters_uplift_fields
         return [] unless claim.allow_uplift?

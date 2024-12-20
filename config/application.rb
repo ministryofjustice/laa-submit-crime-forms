@@ -1,6 +1,6 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 require 'action_mailer/railtie'
 
 # Require the gems listed in Gemfile, including any gems
@@ -15,7 +15,7 @@ module Crm7restbackend
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w(assets tasks))
+    config.autoload_lib(ignore: %w[assets tasks])
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -23,7 +23,7 @@ module Crm7restbackend
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
+    config.assets.paths << Rails.root.join('node_modules/govuk-frontend/dist/govuk/assets')
 
     config.x.office_code_overrides = config_for(:office_code_overrides, env: ENV.fetch('ENV', 'localhost'))
 
@@ -47,7 +47,7 @@ module Crm7restbackend
     config.x.prior_authority.feedback_url = 'https://eu.surveymonkey.com/r/authprior'
 
     config.x.redis_url = if ENV['REDIS_HOST'].present? && ENV['REDIS_PASSWORD'].present?
-                           protocol = ENV.fetch("REDIS_PROTOCOL", "rediss")
+                           protocol = ENV.fetch('REDIS_PROTOCOL', 'rediss')
                            password = ENV.fetch('REDIS_PASSWORD')
                            host = ENV.fetch('REDIS_HOST')
                            "#{protocol}://:#{password}@#{host}:6379"

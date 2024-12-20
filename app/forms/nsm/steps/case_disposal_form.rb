@@ -5,6 +5,7 @@ module Nsm
       attribute :plea_category
       validates :plea, presence: true, inclusion: { in: PleaOptions.values }
 
+      # rubocop:disable Style/HashEachMethods
       PleaOptions.values.each do |plea|
         next unless plea.requires_date_field?
 
@@ -13,6 +14,7 @@ module Nsm
                 multiparam_date: { allow_past: true, allow_future: false },
                 if: ->(obj) { obj.plea == plea }
       end
+      # rubocop:enable Style/HashEachMethods
 
       def choices
         {
@@ -30,11 +32,15 @@ module Nsm
       # ensure we reset any date fields when not the plea
       def attributes_with_resets
         results = attributes.dup
+
+        # rubocop:disable Style/HashEachMethods
         PleaOptions.values.each do |plea_inst|
           next if plea_inst == plea || !plea_inst.requires_date_field?
 
           results["#{plea_inst.value}_date"] = nil
         end
+        # rubocop:enable Style/HashEachMethods
+
         results['plea_category'] = PleaOptions.new(results['plea']).category
         results
       end

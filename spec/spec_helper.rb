@@ -6,11 +6,6 @@ SimpleCov.start 'rails' do
   add_filter 'config/'
   add_filter 'lib/tasks/'
 
-  # TODO: REMOVE ONCE EVIDENCE UPLOAD IS COMPLETE
-  add_filter 'app/presenters/check_answers/evidence_uploads_card.rb'
-  add_filter 'app/jobs/application_job.rb'
-  add_filter 'app/mailers/application_mailer.rb'
-
   add_group 'Forms', '/app/forms'
   add_group 'Presenters', '/app/presenters'
   add_group 'Services', '/app/services'

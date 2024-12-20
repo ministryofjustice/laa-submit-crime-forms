@@ -16,6 +16,7 @@ module Nsm
           disbursements: Disbursements.new(claim.disbursements.by_age, claim)
         }.compact
         @summary = CheckAnswers::CostSummaryCard.new(claim, has_card: false, title_key: 'your_cost_summary')
+        super()
       end
 
       def sections

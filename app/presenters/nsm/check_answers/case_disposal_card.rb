@@ -9,6 +9,7 @@ module Nsm
         @case_disposal_form = Nsm::Steps::CaseDisposalForm.build(claim)
         @group = 'about_case'
         @section = 'case_disposal'
+        super()
       end
 
       def find_key_by_value(value_to_find)

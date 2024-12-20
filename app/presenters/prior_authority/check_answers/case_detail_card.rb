@@ -16,34 +16,52 @@ module PriorAuthority
         base_rows
       end
 
-      # rubocop:disable Metrics/MethodLength
       def base_rows
         [
-          {
-            head_key: 'main_offence',
-            text: main_offence
-          },
-          {
-            head_key: 'rep_order_date',
-            text: application.rep_order_date.to_fs(:stamp),
-          },
-          {
-            head_key: 'maat',
-            text: application.defendant.maat,
-          },
-          {
-            head_key: 'client_detained',
-            text: client_detained,
-          },
-          {
-            head_key: 'subject_to_poca',
-            text: I18n.t("generic.#{application.subject_to_poca}"),
-          },
+          main_offence_row,
+          rep_order_date_row,
+          maat_row,
+          client_detained_row,
+          subject_to_poca_row
         ]
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
+
+      def main_offence_row
+        {
+          head_key: 'main_offence',
+          text: main_offence
+        }
+      end
+
+      def rep_order_date_row
+        {
+          head_key: 'rep_order_date',
+          text: application.rep_order_date.to_fs(:stamp),
+        }
+      end
+
+      def maat_row
+        {
+          head_key: 'maat',
+          text: application.defendant.maat,
+        }
+      end
+
+      def client_detained_row
+        {
+          head_key: 'client_detained',
+          text: client_detained,
+        }
+      end
+
+      def subject_to_poca_row
+        {
+          head_key: 'subject_to_poca',
+          text: I18n.t("generic.#{application.subject_to_poca}"),
+        }
+      end
 
       def client_detained
         @client_detained ||= if application.client_detained?

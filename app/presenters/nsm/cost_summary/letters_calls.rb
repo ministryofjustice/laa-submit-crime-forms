@@ -6,6 +6,7 @@ module Nsm
 
       def initialize(claim)
         @claim = claim
+        super()
       end
 
       def rows

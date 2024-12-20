@@ -9,6 +9,7 @@ module Nsm
         @group = 'supporting_evidence'
         @section = 'supporting_evidence'
         @claim = claim
+        super()
       end
 
       def row_data

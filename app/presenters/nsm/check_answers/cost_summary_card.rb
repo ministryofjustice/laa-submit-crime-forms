@@ -15,6 +15,7 @@ module Nsm
         @section = 'cost_summary'
         @title_key = title_key
         @skip_links = skip_links
+        super()
       end
 
       def title(**)

@@ -9,6 +9,7 @@ module Nsm
         @claim = claim
         @has_card = false
         @prefix = prefix
+        super()
       end
 
       def rows

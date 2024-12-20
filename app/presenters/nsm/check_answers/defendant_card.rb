@@ -12,6 +12,7 @@ module Nsm
         @group = 'about_defendant'
         @section = 'defendant_summary'
         @maat_required = claim.claim_type != ClaimType::BREACH_OF_INJUNCTION.to_s
+        super()
       end
 
       def row_data

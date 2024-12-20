@@ -30,35 +30,13 @@ module Nsm
         end
       end
 
-      # rubocop:disable Metrics/MethodLength
       def calculation_rows
         if allow_uplift?
-          [
-            [translate(:before_uplift), translate(:after_uplift)],
-            [
-              {
-                text: NumberTo.pounds(total_without_uplift),
-                html_attributes: { id: 'without-uplift' }
-              },
-              {
-                text: NumberTo.pounds(total_cost),
-                html_attributes: { id: 'with-uplift' },
-              }
-            ]
-          ]
+          with_uplift_rows
         else
-          [
-            [translate(:total)],
-            [
-              {
-                text: NumberTo.pounds(total_without_uplift),
-                html_attributes: { id: 'without-uplift' }
-              }
-            ]
-          ]
+          removed_uplift_rows
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 
@@ -80,6 +58,34 @@ module Nsm
         return if WorkTypes::VALUES.detect { _1 == work_type }.display?(application)
 
         errors.add(:work_type, :inclusion)
+      end
+
+      def with_uplift_rows
+        [
+          [translate(:before_uplift), translate(:after_uplift)],
+          [
+            {
+              text: NumberTo.pounds(total_without_uplift),
+              html_attributes: { id: 'without-uplift' }
+            },
+            {
+              text: NumberTo.pounds(total_cost),
+              html_attributes: { id: 'with-uplift' },
+            }
+          ]
+        ]
+      end
+
+      def removed_uplift_rows
+        [
+          [translate(:total)],
+          [
+            {
+              text: NumberTo.pounds(total_without_uplift),
+              html_attributes: { id: 'without-uplift' }
+            }
+          ]
+        ]
       end
     end
   end

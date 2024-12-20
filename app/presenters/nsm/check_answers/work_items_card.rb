@@ -10,6 +10,7 @@ module Nsm
         @work_items = Nsm::CostSummary::WorkItems.new(claim.work_items, claim)
         @group = 'costs'
         @section = 'work_items'
+        super()
       end
 
       def title(**)
@@ -48,25 +49,9 @@ module Nsm
 
       def total_rows
         if @claim.firm_office.vat_registered == YesNoAnswer::YES.to_s
-          [
-            {
-              head_key: 'total',
-              text: work_item_total,
-              footer: true
-            },
-            {
-              head_key: 'total_inc_vat',
-              text: work_item_total_inc_vat
-            },
-          ]
+          vat_total_rows
         else
-          [
-            {
-              head_key: 'total',
-              text: work_item_total,
-              footer: true
-            }
-          ]
+          no_vat_total_rows
         end
       end
 
@@ -76,6 +61,30 @@ module Nsm
 
       def work_item_total_inc_vat
         format_total(work_items.total_cost_inc_vat)
+      end
+
+      def vat_total_rows
+        [
+          {
+            head_key: 'total',
+            text: work_item_total,
+            footer: true
+          },
+          {
+            head_key: 'total_inc_vat',
+            text: work_item_total_inc_vat
+          },
+        ]
+      end
+
+      def no_vat_total_rows
+        [
+          {
+            head_key: 'total',
+            text: work_item_total,
+            footer: true
+          }
+        ]
       end
     end
   end

@@ -14,6 +14,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
       create(:claim, :complete, :case_type_magistrates, assessment_comment: assessment_comment, state: 'submitted')
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it 'generates and send the data message for a claim' do
       travel_to(Time.zone.local(2023, 8, 17, 12, 13, 14)) do
         check_json(subject.payload).matches(
@@ -172,6 +173,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
         )
       end
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 
   context 'when the claim is provider updated' do
