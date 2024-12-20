@@ -2,8 +2,8 @@ class PriorAuthorityApplication < ApplicationRecord
   include PriorAuthorityDetails
 
   belongs_to :provider
-  belongs_to :firm_office, optional: true, dependent: :destroy
-  belongs_to :solicitor, optional: true, dependent: :destroy
+  belongs_to :firm_office, optional: true
+  belongs_to :solicitor, optional: true
   has_one :defendant, dependent: :destroy, as: :defendable
   has_many :quotes, dependent: :destroy
   has_one :primary_quote,
