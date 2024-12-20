@@ -20,4 +20,12 @@ RSpec.describe Quote do
       end
     end
   end
+
+  describe '#clone' do
+    let(:attributes) { { document: nil } }
+
+    it 'does not duplicate the nil document' do
+      expect(subject.dup.document).to be_nil
+    end
+  end
 end

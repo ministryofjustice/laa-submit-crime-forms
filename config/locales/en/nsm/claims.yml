@@ -10,6 +10,7 @@ en:
         import_claim: Import a claim
         table_info_item: claims
         delete: Delete
+        clone: Clone
         claim: claim
         header:
           ufn: UFN
@@ -55,3 +56,5 @@ en:
         no_undo: You cannot undo this action
       destroy:
         deleted: You deleted the claim
+      clone:
+        cloned: Claim cloned successfully
