@@ -33,7 +33,6 @@ module StepsHelper
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def link_button(name, href, options = {}, &block)
     html_options = {
       class: 'govuk-button', role: 'button', draggable: false, data: { module: 'govuk-button' },
@@ -55,5 +54,4 @@ module StepsHelper
       link_to name, href, html_options
     end
   end
-  # rubocop:enable Metrics/MethodLength
 end

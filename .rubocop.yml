@@ -103,7 +103,7 @@ Metrics/ClassLength:
 
 # To be tweaked until we find the right balance
 Metrics/MethodLength:
-  Max: 15
+  Max: 20
 
 # To be tweaked until we find the right balance
 Metrics/AbcSize:
