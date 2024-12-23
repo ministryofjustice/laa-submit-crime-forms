@@ -9,11 +9,19 @@ class ProviderDataApiClient
     end
 
     def user_office_details(user_login)
-      query(
-        "provider-users/#{ERB::Util.url_encode(user_login)}/provider-offices",
-        200 => ->(data) { data['officeCodes'] },
-        204 => [],
-      )
+      if FeatureFlags.provider_api_v1.enabled?
+        query(
+          "api/v1/provider-users/#{ERB::Util.url_encode(user_login)}/provider-offices",
+          200 => ->(data) { data['offices'] },
+          204 => [],
+        )
+      else
+        query(
+          "provider-users/#{ERB::Util.url_encode(user_login)}/provider-offices",
+          200 => ->(data) { data['officeCodes'] },
+          204 => [],
+        )
+      end
     end
 
     private

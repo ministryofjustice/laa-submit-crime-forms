@@ -19,3 +19,8 @@ feature_flags:
     development: false
     uat: false
     production: false
+  provider_api_v1:
+    local: <%= ENV.fetch("PROVIDER_API_V1", true) %>
+    development: true
+    uat: true
+    production: false
