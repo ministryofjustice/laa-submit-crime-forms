@@ -43,6 +43,37 @@ RSpec.describe OfficeCodeService do
     end
   end
 
+  context 'when using v1 endpoint' do
+    subject { described_class.call(user_login, 1) }
+
+    let(:user_offices_endpoint) { 'https://provider-api.example.com/api/v1/provider-users/LOGIN/provider-offices' }
+    let(:populated_code_payload) do
+      { offices: [
+        {
+          'officeCodes' => [
+            { 'firmOfficeCode' => 'AAAAAA' },
+            { 'firmOfficeCode' => 'BBBBBB' }
+          ]
+        },
+        {
+          'officeCodes' => [
+            { 'firmOfficeCode' => 'CCCCCC' },
+            { 'firmOfficeCode' => 'DDDDDD' }
+          ]
+        }
+      ] }.to_json
+    end
+    let(:populated_codes) { %w[AAAAAA BBBBBB CCCCCC DDDDDD] }
+
+    before do
+      stub_request(:get, user_offices_endpoint).to_return(status: 200, body: populated_code_payload, headers: headers)
+    end
+
+    it 'retrieves office codes from the provider data API in 2 steps' do
+      expect(subject).to eq populated_codes
+    end
+  end
+
   context 'when endpoint call errors' do
     before do
       stub_request(:get, user_offices_endpoint).to_return(status: 500)
