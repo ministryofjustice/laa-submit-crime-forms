@@ -22,9 +22,11 @@ RSpec.describe OfficeCodeService do
   let(:headers) { { 'Content-type' => 'application/json' } }
   let(:user_offices_endpoint) { 'https://provider-api.example.com/provider-users/LOGIN/provider-offices' }
   let(:populated_codes) { %w[AAAAAA BBBBBB] }
+  let(:v1_enabled) { false }
 
   context 'when all is working correctly' do
     before do
+      allow(FeatureFlags).to receive(:provider_api_v1).and_return(double(:provider_api_v1, enabled?: v1_enabled))
       stub_request(:get, user_offices_endpoint).to_return(status: 200, body: populated_code_payload, headers: headers)
     end
 
@@ -35,6 +37,7 @@ RSpec.describe OfficeCodeService do
 
   context 'when user has no office codes' do
     before do
+      allow(FeatureFlags).to receive(:provider_api_v1).and_return(double(:provider_api_v1, enabled?: v1_enabled))
       stub_request(:get, user_offices_endpoint).to_return(status: 204, headers: headers)
     end
 
@@ -44,8 +47,7 @@ RSpec.describe OfficeCodeService do
   end
 
   context 'when using v1 endpoint' do
-    subject { described_class.call(user_login, 1) }
-
+    let(:v1_enabled) { true }
     let(:user_offices_endpoint) { 'https://provider-api.example.com/api/v1/provider-users/LOGIN/provider-offices' }
     let(:populated_code_payload) do
       { offices: [
@@ -66,6 +68,7 @@ RSpec.describe OfficeCodeService do
     let(:populated_codes) { %w[AAAAAA BBBBBB CCCCCC DDDDDD] }
 
     before do
+      allow(FeatureFlags).to receive(:provider_api_v1).and_return(double(:provider_api_v1, enabled?: v1_enabled))
       stub_request(:get, user_offices_endpoint).to_return(status: 200, body: populated_code_payload, headers: headers)
     end
 
@@ -76,6 +79,7 @@ RSpec.describe OfficeCodeService do
 
   context 'when endpoint call errors' do
     before do
+      allow(FeatureFlags).to receive(:provider_api_v1).and_return(double(:provider_api_v1, enabled?: v1_enabled))
       stub_request(:get, user_offices_endpoint).to_return(status: 500)
     end
 

@@ -1,8 +1,8 @@
 class OfficeCodeService
   class << self
-    def call(username, api_version = nil)
-      office_details = ProviderDataApiClient.user_office_details(username, api_version)
-      if api_version == 1
+    def call(username)
+      office_details = ProviderDataApiClient.user_office_details(username)
+      if FeatureFlags.provider_api_v1.enabled?
         office_details.map { _1['officeCodes'].pluck('firmOfficeCode') }.flatten
       else
         office_details.pluck('firmOfficeCode')

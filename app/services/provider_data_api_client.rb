@@ -8,8 +8,8 @@ class ProviderDataApiClient
       )
     end
 
-    def user_office_details(user_login, api_version = nil)
-      if api_version == 1
+    def user_office_details(user_login)
+      if FeatureFlags.provider_api_v1.enabled?
         query(
           "api/v1/provider-users/#{ERB::Util.url_encode(user_login)}/provider-offices",
           200 => ->(data) { data['offices'] },
