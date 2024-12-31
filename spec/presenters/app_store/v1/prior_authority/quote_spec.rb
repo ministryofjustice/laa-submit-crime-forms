@@ -16,7 +16,19 @@ RSpec.describe AppStore::V1::PriorAuthority::Quote do
       instance = described_class.new(
         'cost_type' => 'per_item',
         'cost_per_item' => '20.15',
-        'items' => 2
+        'items' => 2,
+        'cost_multiplier' => '1'
+      )
+
+      expect(instance.base_cost_allowed).to eq 40.30
+    end
+
+    it 'sums per-item costs with non-default cost multiplier' do
+      instance = described_class.new(
+        'cost_type' => 'per_item',
+        'cost_per_item' => '20.15',
+        'items' => 2000,
+        'cost_multiplier' => '0.001'
       )
 
       expect(instance.base_cost_allowed).to eq 40.30
