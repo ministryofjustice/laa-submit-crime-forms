@@ -14,8 +14,7 @@ module Nsm
       end
 
       def should_keep_youth_court_claimed?
-        plea_category == PleaCategory::CATEGORY_1A ||
-          plea_category == PleaCategory::CATEGORY_2A
+        [PleaCategory::CATEGORY_1A, PleaCategory::CATEGORY_2A].include?(plea_category)
       end
 
       private
