@@ -44,7 +44,7 @@ gem 'uk_postcode'
 gem 'with_advisory_lock'
 
 group :development, :test do
-  gem 'debug', platforms: %i[mri]
+  gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', '>= 0.6.0', require: false
   gem 'overcommit'
