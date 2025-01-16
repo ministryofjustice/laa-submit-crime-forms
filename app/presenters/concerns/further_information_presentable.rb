@@ -2,7 +2,7 @@ module FurtherInformationPresentable
   extend ActiveSupport::Concern
 
   included do
-    attr_reader :further_information, :skip_links
+    attr_reader :further_information, :skip_links, :claim
   end
 
   def title
@@ -25,6 +25,8 @@ module FurtherInformationPresentable
   private
 
   def supporting_documents
+    return render_partial('nsm/steps/view_claim/gdpr_uploaded_files_deleted') if claim.gdpr_documents_deleted
+
     links = further_information.supporting_documents.map do |document|
       if skip_links
         document.file_name
@@ -35,5 +37,9 @@ module FurtherInformationPresentable
     response = simple_format(further_information.information_supplied)
     parts = [response] + links.flat_map { [tag.br, _1] }
     safe_join(parts)
+  end
+
+  def render_partial(partial_path)
+    ApplicationController.render(partial: partial_path)
   end
 end
