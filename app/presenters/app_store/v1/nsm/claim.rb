@@ -195,6 +195,10 @@ module AppStore
           @local_record ||= ::Claim.find_or_create_by!(id:)
         end
 
+        def gdpr_documents_deleted?
+          respond_to?(:gdpr_documents_deleted) && gdpr_documents_deleted
+        end
+
         delegate :with_lock, :provider_updated!, to: :local_record
       end
       # rubocop:enable Metrics/ClassLength
