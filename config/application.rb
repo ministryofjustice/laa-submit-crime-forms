@@ -36,7 +36,7 @@ module Crm7restbackend
 
     config.x.contact.case_enquiries_tel = '0300 200 2020'
     config.x.contact.support_email = 'magsbilling@justice.gov.uk'
-    config.x.contact.technical_support_email = 'CRM457@digital.justice.gov.uk'
+    config.x.contact.technical_support_email = 'nscc@digital.justice.gov.uk'
     config.x.contact.nsm_rfi_email = 'CRM7fi.request@justice.gov.uk'
     config.x.analytics.cookies_consent_name = 'cookies_preferences_set'
     config.x.analytics.cookies_consent_expiration = 1.year
