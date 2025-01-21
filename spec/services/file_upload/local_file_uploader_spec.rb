@@ -32,4 +32,18 @@ RSpec.describe FileUpload::LocalFileUploader do
       end
     end
   end
+
+  describe '#perform_exists?' do
+    context 'development environment' do
+      it 'returns true for a valid file' do
+        result = subject.exists?(Rails.root.join('spec/fixtures/files/test.png'))
+        expect(result).to be(true)
+      end
+
+      it 'returns false for a missing file' do
+        result = subject.exists?(Rails.root.join('spec/fixtures/files/missing.png'))
+        expect(result).to be(false)
+      end
+    end
+  end
 end

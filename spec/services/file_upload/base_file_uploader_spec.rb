@@ -5,7 +5,7 @@ RSpec.describe FileUpload::BaseFileUploader do
     context 'saves file' do
       let(:output) { subject.save(fixture_file_upload('test.json', 'application/json')) }
 
-      it 'stores in in the tmp directory' do
+      it 'throws an expected error' do
         expect { output }.to raise_error(StandardError, 'Implement perform_save in sub class')
       end
     end
@@ -15,8 +15,18 @@ RSpec.describe FileUpload::BaseFileUploader do
     context 'development environment' do
       let(:output) { subject.destroy(Rails.root.join('spec/fixtures/files/12345')) }
 
-      it 'removes the file from tmp directory' do
+      it 'throws an expected error' do
         expect { output }.to raise_error(StandardError, 'Implement perform_destroy in sub class')
+      end
+    end
+  end
+
+  describe '#perform_exists?' do
+    context 'development environment' do
+      let(:output) { subject.exists?('test_path') }
+
+      it 'throws an expected error' do
+        expect { output }.to raise_error(StandardError, 'Implement perform_exists? in sub class')
       end
     end
   end
