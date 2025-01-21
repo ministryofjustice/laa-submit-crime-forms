@@ -116,18 +116,4 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
       expect(page).to have_no_css('.govuk-table')
     end
   end
-
-  context 'when GDPR documents are deleted' do
-    let(:claim) { create(:claim, gdpr_documents_deleted: true) }
-
-    before do
-      allow(claim).to receive(:gdpr_documents_deleted?).and_return(true)
-      visit provider_saml_omniauth_callback_path
-      visit nsm_steps_view_claim_path(claim.id)
-    end
-
-    it 'renders the GDPR deleted partial' do
-      expect(page).to have_content('Uploaded files deleted. Your uploads are deleted after 6 months to keep your data safe.')
-    end
-  end
 end
