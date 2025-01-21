@@ -121,4 +121,26 @@ RSpec.describe Nsm::CheckAnswers::EvidenceUploadsCard do
       end
     end
   end
+
+  describe '#custom' do
+    context 'when gdpr_documents_deleted is true' do
+      before do
+        allow(claim).to receive(:gdpr_documents_deleted?).and_return(true)
+      end
+
+      it 'returns the GDPR deleted partial' do
+        expect(subject.custom).to eq({ partial: 'nsm/steps/view_claim/gdpr_uploaded_files_deleted' })
+      end
+    end
+
+    context 'when gdpr_documents_deleted is false' do
+      before do
+        allow(claim).to receive(:gdpr_documents_deleted?).and_return(false)
+      end
+
+      it 'returns nil' do
+        expect(subject.custom).to be_nil
+      end
+    end
+  end
 end
