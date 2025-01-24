@@ -74,6 +74,9 @@ class Claim < ApplicationRecord
     defendants.where(main: false)
   end
 
+  # This method defaults to false because the GDPR documents would only ever be deleted
+  # once the claim is in the app store. Therefore, we wouldn't be using this logic here,
+  # but rather in the app store claim presenter. app/presenters/app_store/v1/nsm/claim.rb
   def gdpr_documents_deleted?
     false
   end
