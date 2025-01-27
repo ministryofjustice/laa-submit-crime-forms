@@ -75,7 +75,7 @@ variables:
   environment: development
   portalIDPMetadataFile: config/laa_portal/metadata/dev.xml
   spEntityId: LAA_Portal_CRM7_DEV
-  appStore: https://main-nscc-store-dev.cloud-platform.service.justice.gov.uk
+  appStore: https://crm457-1792-gdpr-s-nscc-store-dev.cloud-platform.service.justice.gov.uk/
   paMaxFileUploadBytes: 10485760
   nsmMaxFileUploadBytes: 26214400
   eolUrl: https://apply-for-extension-of-upper-limits.dev.form.service.justice.gov.uk/
