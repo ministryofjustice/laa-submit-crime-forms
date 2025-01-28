@@ -3,8 +3,8 @@
 #
 # This only operates on drafts since the app store regulates the other
 # submissions. For each evidence file in the claim, we destroy the
-# local file if it exists and then delete the object itself. We use
-# `delete` here to save a round-trip from doing `.reload`.
+# file if it exists and then delete the object itself. We use `delete`
+# here to save a round-trip from doing `.reload`.
 class DeleteDocumentService
   class << self
     def call(claim_id)
@@ -12,7 +12,7 @@ class DeleteDocumentService
       return unless claim && claim.state == 'draft'
 
       evidence = claim.supporting_evidence.each do |file|
-        file_uploader.destroy(file.file_path) if File.exist?(file.file_path)
+        file_uploader.destroy(file.file_path) if file_uploader.exists?(file.file_path)
         file.destroy
       end
 

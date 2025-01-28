@@ -18,5 +18,9 @@ module FileUpload
     def perform_destroy(file_path)
       FileUtils.remove file_path
     end
+
+    def perform_exists?(file_path)
+      File.exist?(file_path)
+    end
   end
 end
