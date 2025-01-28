@@ -244,7 +244,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_16_141825) do
     t.datetime "originally_submitted_at"
     t.jsonb "viewed_steps", default: [], array: true
     t.index ["core_search_fields"], name: "index_prior_authority_applications_on_core_search_fields", using: :gin
-    t.index ["created_at", "service_type"], name: "idx_pas_service_type_created_at", where: "((service_type IS NOT NULL) AND ((service_type)::text <> ''::text))"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
