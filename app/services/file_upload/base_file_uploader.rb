@@ -8,6 +8,10 @@ module FileUpload
       perform_destroy(file_path)
     end
 
+    def exists?(file_path)
+      perform_exists?(file_path)
+    end
+
     protected
 
     def perform_save(_file)
@@ -16,6 +20,10 @@ module FileUpload
 
     def perform_destroy(_file_path)
       raise 'Implement perform_destroy in sub class'
+    end
+
+    def perform_exists?(_file_path)
+      raise 'Implement perform_exists? in sub class'
     end
 
     def generate_file_name
