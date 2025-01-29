@@ -9,6 +9,7 @@ class DeleteDocumentService
   class << self
     def call(claim_id)
       claim = Claim.find(claim_id)
+      # TODO: CRM457-2398: Remove this check as it'll be redundant then
       return unless claim && claim.state == 'draft'
 
       evidence = claim.supporting_evidence.each do |file|
