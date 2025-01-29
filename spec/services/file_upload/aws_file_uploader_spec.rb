@@ -16,4 +16,12 @@ RSpec.describe FileUpload::AwsFileUploader do
       end
     end
   end
+
+  describe '#perform_exists?' do
+    context 'development environment' do
+      it 'returns true for a file' do
+        expect(subject.exists?('test_path')).to be(true)
+      end
+    end
+  end
 end

@@ -75,6 +75,7 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
               'vat_registered' => 'no'
             },
             'first_hearing_date' => /\A\d{4}-\d{2}-\d{2}\z/,
+            'gdpr_documents_deleted' => nil,
             'gender' => 'm',
             'has_disbursements' => 'no',
             'hearing_outcome' => /\ACP\d{2}\z/,
