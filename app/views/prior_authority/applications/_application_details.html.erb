@@ -15,12 +15,12 @@
                       primary_quote_summary:, application: %>
         </dd>
       </div>
-      <% if application.assessment_comment.present? || application.part_grant? %>
-        <%= render "prior_authority/applications/response_summaries/assessed", application: %>
-      <% elsif application.sent_back? %>
-        <%= render "prior_authority/applications/response_summaries/sent_back", application:, skip_links: %>
+      <% if application.sent_back? %>
+        <%= render "prior_authority/applications/response_summaries/sent_back", application: application, skip_links: skip_links %>
       <% elsif application.expired? %>
-        <%= render "prior_authority/applications/response_summaries/expired", application:, skip_links: %>
+        <%= render "prior_authority/applications/response_summaries/expired", application: application, skip_links: skip_links %>
+      <% elsif application.assessment_comment.present? || application.part_grant? %>
+        <%= render "prior_authority/applications/response_summaries/assessed", application: application %>
       <% end %>
     </dl>
   </div>
