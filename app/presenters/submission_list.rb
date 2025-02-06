@@ -6,7 +6,7 @@ class SubmissionList
 
   def pagy
     Pagy.new(count: @search_response.dig(:metadata, :total_results),
-             limit: @params[:per_page],
+             limit: @search_response.dig(:metadata, :per_page),
              page: @params[:page])
   end
 
