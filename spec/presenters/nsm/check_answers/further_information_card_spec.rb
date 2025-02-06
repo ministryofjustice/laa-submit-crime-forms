@@ -21,7 +21,7 @@ RSpec.describe Nsm::CheckAnswers::FurtherInformationCard do
     let(:supporting_documents) { [] }
 
     it 'shows correct title' do
-      expect(card.title).to eq("Further information request #{Time.zone.now.strftime('%d %B %Y')}")
+      expect(card.title).to eq("Further information request #{Time.zone.now.strftime('%-d %B %Y')}")
     end
   end
 
