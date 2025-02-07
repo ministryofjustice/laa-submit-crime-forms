@@ -7,6 +7,7 @@ module DisbursementDetails
 
   def translated_disbursement_type
     return '' if other_type.nil? && disbursement_type.nil?
+
     if disbursement_type == DisbursementTypes::OTHER.to_s
       # rubocop:disable Performance/InefficientHashSearch
       # (False positive - Rubocop sees `.values` and wrongly infers OtherDisbursementTypes is a hash)
