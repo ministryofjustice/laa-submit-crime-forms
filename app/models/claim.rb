@@ -112,7 +112,7 @@ class Claim < ApplicationRecord
     @sorted_disbursement_ids ||= disbursements.sort_by do |disb|
       [
         disb.disbursement_date || Time.new(2000, 1, 1).in_time_zone.to_date,
-        disb.translated_disbursement_type&.downcase,
+        disb.translated_disbursement_type.downcase,
         disb.created_at
       ]
     end.map(&:id)
