@@ -27,5 +27,11 @@ RSpec.describe Disbursement do
 
       it { expect(subject.translated_disbursement_type).to eq('Custom') }
     end
+
+    context 'when other type but undefined' do
+      let(:attributes) { { disbursement_type: 'other', other_type: nil } }
+
+      it { expect(subject.translated_disbursement_type).to eq('') }
+    end
   end
 end
