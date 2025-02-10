@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="booleanString">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="yes"/>
+      <xs:enumeration value="no"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="applyVatType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="true"/>
+      <xs:enumeration value="false"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="stageReachedType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="prog"/>
+      <xs:enumeration value="prom"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="genderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="m"/>
+      <xs:enumeration value="f"/>
+      <xs:enumeration value="u"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="claimType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="non_standard_magistrate"/>
+      <xs:enumeration value="breach_of_injunction"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="hearingOutcomeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CP01"/>
+      <xs:enumeration value="CP02"/>
+      <xs:enumeration value="CP03"/>
+      <xs:enumeration value="CP04"/>
+      <xs:enumeration value="CP05"/>
+      <xs:enumeration value="CP06"/>
+      <xs:enumeration value="CP07"/>
+      <xs:enumeration value="CP08"/>
+      <xs:enumeration value="CP09"/>
+      <xs:enumeration value="CP10"/>
+      <xs:enumeration value="CP11"/>
+      <xs:enumeration value="CP12"/>
+      <xs:enumeration value="CP13"/>
+      <xs:enumeration value="CP16"/>
+      <xs:enumeration value="CP17"/>
+      <xs:enumeration value="CP18"/>
+      <xs:enumeration value="CP19"/>
+      <xs:enumeration value="CP20"/>
+      <xs:enumeration value="CP21"/>
+      <xs:enumeration value="CP22"/>
+      <xs:enumeration value="CP23"/>
+      <xs:enumeration value="CP24"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="disbursementType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="car"/>
+      <xs:enumeration value="motorcycle"/>
+      <xs:enumeration value="bike"/>
+      <xs:enumeration value="other"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="otherDisbursementType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="accident_reconstruction_report"/>
+      <xs:enumeration value="accident_emergency_report"/>
+      <xs:enumeration value="accountants"/>
+      <xs:enumeration value="architects_surveyor"/>
+      <xs:enumeration value="back_calculations"/>
+      <xs:enumeration value="car_travel"/>
+      <xs:enumeration value="cell_phone_site_analysis"/>
+      <xs:enumeration value="computer_experts"/>
+      <xs:enumeration value="consultant_medical_reports"/>
+      <xs:enumeration value="dna_testing"/>
+      <xs:enumeration value="drug_expert_report"/>
+      <xs:enumeration value="engineer_mechanical_engineer"/>
+      <xs:enumeration value="enquiry_agents"/>
+      <xs:enumeration value="facial_mapping_experts"/>
+      <xs:enumeration value="fingerprint_experts"/>
+      <xs:enumeration value="fire_investigation_report"/>
+      <xs:enumeration value="forensic_scientists"/>
+      <xs:enumeration value="general_practitioners"/>
+      <xs:enumeration value="handwriting_experts"/>
+      <xs:enumeration value="interpreters"/>
+      <xs:enumeration value="lip_readers"/>
+      <xs:enumeration value="medical_report"/>
+      <xs:enumeration value="meteorologist"/>
+      <xs:enumeration value="overnight_expenses"/>
+      <xs:enumeration value="paediatricians_report"/>
+      <xs:enumeration value="pathologists"/>
+      <xs:enumeration value="photocopying"/>
+      <xs:enumeration value="plans_photographs"/>
+      <xs:enumeration value="psychiatric_reports"/>
+      <xs:enumeration value="psychological_reports"/>
+      <xs:enumeration value="telecommunications_expert"/>
+      <xs:enumeration value="transcripts"/>
+      <xs:enumeration value="translators"/>
+      <xs:enumeration value="travel_expenses_excl_car"/>
+      <xs:enumeration value="veterinarian_report"/>
+      <xs:enumeration value="voice_recognition_experts"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="pleaType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="guilty"/>
+      <xs:enumeration value="uncontested_breach"/>
+      <xs:enumeration value="discontinuance_cat1"/>
+      <xs:enumeration value="bind_over"/>
+      <xs:enumeration value="deferred_sentence"/>
+      <xs:enumeration value="change_solicitor"/>
+      <xs:enumeration value="arrest_warrant"/>
+      <xs:enumeration value="not_guilty"/>
+      <xs:enumeration value="cracked_trial"/>
+      <xs:enumeration value="contested"/>
+      <xs:enumeration value="discontinuance_cat2"/>
+      <xs:enumeration value="mixed"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="pleaCategoryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="category_1a"/>
+      <xs:enumeration value="category_1b"/>
+      <xs:enumeration value="category_2a"/>
+      <xs:enumeration value="category_2b"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="reasonForClaimType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="core_costs_exceed_higher_limit"/>
+      <xs:enumeration value="enhanced_rates_claimed"/>
+      <xs:enumeration value="counsel_or_agent_assigned"/>
+      <xs:enumeration value="representation_order_withdrawn"/>
+      <xs:enumeration value="extradition"/>
+      <xs:enumeration value="other"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="workType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="attendance_with_counsel"/>
+      <xs:enumeration value="attendance_without_counsel"/>
+      <xs:enumeration value="preparation"/>
+      <xs:enumeration value="advocacy"/>
+      <xs:enumeration value="travel"/>
+      <xs:enumeration value="waiting"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="matterType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="claim">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="agent_instructed" type="booleanString" minOccurs="0"/>
+        <xs:element name="arrest_warrant_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="assessment_comment" type="xs:string" minOccurs="0"/>
+        <xs:element name="assigned_counsel" type="booleanString" minOccurs="0"/>
+        <xs:element name="claim_type" type="claimType" minOccurs="0"/>
+        <xs:element name="cntp_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="cntp_order" type="xs:string" minOccurs="0"/>
+        <xs:element name="concluded" type="booleanString" minOccurs="0"/>
+        <xs:element name="conclusion" type="xs:string" minOccurs="0"/>
+        <xs:element name="court" type="xs:string" minOccurs="0"/>
+        <xs:element name="cracked_trial_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="created_at" type="xs:dateTime" minOccurs="0"/>
+        <xs:element name="defence_statement" type="xs:integer" minOccurs="0"/>
+        <xs:element name="defendants" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="defendant" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="first_name" type="xs:string"/>
+                    <xs:element name="last_name" type="xs:string"/>
+                    <xs:element name="maat" type="xs:string" minOccurs="0"/>
+                    <xs:element name="position" type="xs:integer"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="disbursements" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="disbursement" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="disbursement_date" type="xs:date"/>
+                    <xs:element name="disbursement_type" type="disbursementType"/>
+                    <xs:element name="other_type" type="otherDisbursementType" minOccurs="0"/>
+                    <xs:element name="miles" type="xs:decimal" minOccurs="0"/>
+                    <xs:element name="total_cost_without_vat" type="xs:decimal"/>
+                    <xs:element name="details" type="xs:string"/>
+                    <xs:element name="prior_authority" type="booleanString"/>
+                    <xs:element name="apply_vat" type="applyVatType"/>
+                    <xs:element name="vat_amount" type="xs:decimal"/>
+                    <xs:element name="position" type="xs:integer"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="firm_office" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="account_number" type="xs:string"/>
+              <xs:element name="address_line_1" type="xs:string"/>
+              <xs:element name="address_line_2" type="xs:string" minOccurs="0"/>
+              <xs:element name="name" type="xs:string"/>
+              <xs:element name="postcode" type="xs:string"/>
+              <xs:element name="town" type="xs:string"/>
+              <xs:element name="vat_registered" type="booleanString"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="first_hearing_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="gender" type="genderType" minOccurs="0"/>
+        <xs:element name="has_disbursements" type="booleanString" minOccurs="0"/>
+        <xs:element name="hearing_outcome" type="hearingOutcomeType" minOccurs="0"/>
+        <xs:element name="is_other_info" type="booleanString" minOccurs="0"/>
+        <xs:element name="main_offence" type="xs:string" minOccurs="0"/>
+        <xs:element name="main_offence_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="matter_type" type="matterType" minOccurs="0"/>
+        <xs:element name="number_of_hearing" type="xs:integer" minOccurs="0"/>
+        <xs:element name="number_of_witnesses" type="xs:integer" minOccurs="0"/>
+        <xs:element name="office_code" type="xs:string" minOccurs="0"/>
+        <xs:element name="other_info" type="xs:string" minOccurs="0"/>
+        <xs:element name="preparation_time" type="booleanString" minOccurs="0"/>
+        <xs:element name="prosecution_evidence" type="xs:integer" minOccurs="0"/>
+        <xs:element name="plea" type="pleaType" minOccurs="0"/>
+        <xs:element name="plea_category" type="pleaCategoryType" minOccurs="0"/>
+        <xs:element name="reason_for_claim_other_details" type="xs:string" minOccurs="0"/>
+        <xs:element name="reasons_for_claim" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="reason" type="reasonForClaimType" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="rep_order_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="stage_reached" type="stageReachedType" minOccurs="0"/>
+        <xs:element name="ufn" type="xs:string"/>
+        <xs:element name="work_items" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="work_item" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="completed_on" type="xs:date"/>
+                    <xs:element name="fee_earner" type="xs:string"/>
+                    <xs:element name="position" type="xs:integer"/>
+                    <xs:element name="time_spent" type="xs:integer"/>
+                    <xs:element name="uplift" type="xs:integer" minOccurs="0"/>
+                    <xs:element name="work_type" type="workType"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="youth_court" type="booleanString" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,833 +1,106 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<fd:formdata version="1" read_only="false" xmlns:fd="urn:www-toplev-com:officeformsofd">
-  <schema>
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:www-toplev-com:officeformsofd" targetNamespace="urn:www-toplev-com:officeformsofd">
-      <xsd:complexType name="image">
-        <xsd:simpleContent>
-          <xsd:extension base="xsd:base64Binary">
-            <xsd:attribute name="type" type="xsd:string" />
-          </xsd:extension>
-        </xsd:simpleContent>
-      </xsd:complexType>
-      <xsd:complexType name="memo">
-        <xsd:simpleContent>
-          <xsd:extension base="xsd:string"></xsd:extension>
-        </xsd:simpleContent>
-      </xsd:complexType>
-      <xsd:complexType name="rowTypeSchedule">
-        <xsd:sequence>
-          <xsd:element name="Line" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Fe_initials" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Date" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Cost_type_full_list" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cost_type" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Time_travel" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Time_total" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Time_calc" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Time_display" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Hearing_codes_options" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Hearing_codes" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Person_codes_options" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Person_codes" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Basic_claim" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Uplift" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Claim" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Time_travel_cw" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Time_waiting_cw" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Time_attendances_counsel_cw" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Time_attendances_no_counsel_cw" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Time_preparation_cw" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Time_advocacy_cw" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Time_total_cw" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Rate_cw" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Basic_cw" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Uplift_cw" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Claim_cw" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Assessment_cw" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Time_waiting" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Time_attendances_counsel" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Time_attendances_no_counsel" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Time_preparation" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Time_advocacy" type="xsd:dateTime" minOccurs="0" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="tableTypeSchedule">
-        <xsd:sequence>
-          <xsd:element name="row" type="tns:rowTypeSchedule" minOccurs="1" maxOccurs="unbounded" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="rowTypeDb">
-        <xsd:sequence>
-          <xsd:element name="Disbursement" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Details" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Net" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Vat_rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Vat" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Voucherrequired" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Net_cw" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Vat_rate_cw" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Vat_cw" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_cw" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Reason_cw" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Summary_cw" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Mileage" type="xsd:double" minOccurs="0" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="tableTypeDb">
-        <xsd:sequence>
-          <xsd:element name="row" type="tns:rowTypeDb" minOccurs="1" maxOccurs="unbounded" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="fielddata">
-        <xsd:sequence>
-          <xsd:element name="Autonumber" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Fc_testing" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Fc_dummy" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Fc_qa_method" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_initial_processingoffice" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_priority" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Fc_current_user_type" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Provider_eforms_username" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_current_user" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_currentstage" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_processingoffice" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_processingofficefax" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_processingofficeaddress" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_processingofficedx" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_return_info_to_cw" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Fc_cw_requesting" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_info_returned" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Fc_info_returned_flag" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Fc_qa_required" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Fc_integration_info_required" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Fc_referred" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Fc_injected" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Fc_selected_eformsreviewer" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_possible_reject_reasons" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_rfi_options" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_possible_pg_reasons" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_pg_options" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_ok_to_autogrant" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Fc_is_highcourt" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Fc_reject_reasons_selected" type="tns:memo" minOccurs="0" />
-          <xsd:element name="Fc_reject_reasons_text" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_rfi_options_selected" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_rfi_text" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_decision" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_decided_by" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_decision_explanation" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fc_decision_date" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Fc_dtadditionalinforequested" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Fi_dtreceived" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Fi_language" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Fi_form_subtype" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Form_type" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Statutory_charge" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Rbba_category" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Lsc_case_ref" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Provider_case_ref" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Usn" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Date_received" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Time_received" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Submitter_user_id" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Submitter_language" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Match_carried_out" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Cp_rbba_category_before_qc" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cp_rbba_category" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Showrbbawarning" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Cp_rbba_category_cw" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Firm_office" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Lsc_region" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Lsc_accountoffice" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Firm_supplier_no" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Client_surname" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Client_forename" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Client_dob" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Client_ufn" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Maat" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Maat_number" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Rep_order_no" type="xsd:string" minOccurs="0" />
-		  <xsd:element name="Rep_order_date" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Cp_rep_order_attach_method" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sc_prov_case_in_designated_area" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Prom_prov" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Prog_prov" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sc_outcome_code" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sc_matter_type" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sc_eo_1" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sc_eo_2" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sc_eo_3" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sc_date_class_of_work" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Sc_no_of_defendants" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Sc_no_of_court_attendances" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Sc_court_indentifier" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sc_court_identifier" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sc_youth_court" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sc_case_in_designated_area" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Prom" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Prog" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sc_eo_code" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Firm_name" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Firm_address" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sd_address_line_1" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sd_address_line_2" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sd_address_line_3" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sd_address_town" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sd_address_county" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sd_address_postcode" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Provider_account" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Firm_phone" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Contact_name" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Solicitorname" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Solicitorid" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cd_main_offence" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cd_offence_date" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Cd_serious_fraud_case" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cd_indictable_only" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cd_date_charge_laid" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Cd_indictment_attach_method" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cd_wasted_cost_order" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cd_wasted_costs_order_net" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cd_wasted_costs_order_details" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Nsfc_core_costs_exceeded" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Nsfc_enhanced_rates_claimed" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Nsfc_counsel_assigned" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Nsfc_extradition" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Nsfc_rep_order_withdrawn" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Nsfc_other" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Calc" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Nsfc_date_order_withdrawn" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Nsfc_order_withdrawn_details" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cdsp_category" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cat1national" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cat2national" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cat3national" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cat1london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cat2london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cat3london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cdsp_category_1_type" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cdsp_warrant_of_arrest_date" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Cdsp_category_2_type" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cdsp_guilty_plea_date" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Cdsp_category_3_type" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cdsp_other_details" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cld_prosecution_pages" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cld_defence_pages" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cld_no_of_defence_witnesses" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cld_supplemental_claim" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cld_prev_claims_attach_method" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cld_taped_evidence" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cld_tape_running_time" type="xsd:time" minOccurs="0" />
-          <xsd:element name="Cld_remitted_to_mags" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cld_date_remitted_to_mags" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Cld_attach_method" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Pow_claiming" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Pow_date" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Total_travel_time" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_travel_time_display" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Total_waiting_time" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_waiting_time_display" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Total_attendance_time" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_attendance_time_display" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Total_preparation_time" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_preparation_time_display" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Total_advocacy_time" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_advocacy_time_display" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Total_travel_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_waiting_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_attendance_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_preparation_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_advocacy_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cw_total_travel_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cw_total_waiting_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cw_total_attendance_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cw_total_preparation_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cw_total_advocacy_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_basic_claim" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Total_claim" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cw_total_basic_claim" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cw_total_claim" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Preparation_rate_non_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Preparation_rate_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Advocacy_rate_non_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Advocacy_rate_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Travel_rate_non_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Travel_rate_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Waiting_rate_non_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Waiting_rate_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Attendance_rate_non_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Attendance_rate_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_no_of_letters" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_letter_rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_letter_uplift" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_total_letter_cost" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_no_of_calls" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_calls_rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_calls_uplift" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_total_phone_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_total_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_sol_core_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_cw_no_of_letters" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_cw_letters_rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_cw_letters_uplift" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_cw_letters_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_cw_no_of_calls" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_cw_calls_rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_cw_calls_uplift" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_cw_calls_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_cw_total_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_cw_sol_core_costs" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Letter_rate_non_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Letter_rate_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Phone_call_rate_non_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Phone_call_rate_london" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Assessment_reasons" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cfc_disb_total_net" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_disb_total_vat" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_disb_grand_total" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Voucherrequired_count" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_disb_attach_method" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Cfc_disb_total_net_ou" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_disb_total_vat_ou" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Cfc_disb_grand_total_ou" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ct_total" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ct_total_cw" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ct_profit_costs_vat_rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ct_profit_costs_total" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ct_travel_costs_vat_rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ct_travel_costs_total" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ct_waiting_costs_vat_rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ct_waiting_costs_total" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ctou_profit_costs_vat_rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ctou_profit_costs_total" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ctou_travel_costs_vat_rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ctou_travel_costs_total" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ctou_waiting_costs_vat_rate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Ctou_waiting_costs_total" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Taskid" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Actioncode" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Printed" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Coversheet_printed" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Relevant_case_info_details" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Sol_cert" type="xsd:boolean" minOccurs="0" />
-          <xsd:element name="Solicitor_sign_name" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Solicitor_sign_date" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Additional_info" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Destruction_date_cw" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Qc_decision" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Qc_override_reason" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Decision" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Full_grant_notes" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Reason_details" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Destruction_date" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Referral_reason_sol" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Referral_reason_frc_ia" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Decision_original" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Decided_by_original" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Ou_signed_auth" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Ou_signed_auth_date" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Hide" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Referraldate" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Unique_reference_number" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Caseworker" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Client_name" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Tltasktype" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Tldateorig" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Tlseqno" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Tltaskid" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Tlsubstate" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Tltaskstate" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Tlautonumber" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Tlmessage" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Tlnewmessage" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Tlreadonly" type="xsd:double" minOccurs="0" />
-          <xsd:element name="TlStateName" type="xsd:string" minOccurs="0" />
-          <xsd:element name="TlTaskLastUpdated" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="TLActionsOnLine" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_id" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Originator_type" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Originator_uniquename" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_displayname" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_emailaddress" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_routemethod" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Originator_notificationmethod" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Originator_ntlogon" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_routeoffline" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Originator_dtdeleted" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Originator_licencedate" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Originator_department" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_selfregistered" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Originator_dtlastaccessed" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Originator_tl_question" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_tl_qn_answer" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator__dtadded" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Originator_jobtitle" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_firm" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_lscareaoffice" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_supervisor" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_emailflag" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_lscemailaddress" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_tl_dtpasswordlastchanged" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Originator_tl_mustchangepassword" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Originator_tl_failedloginattemptcount" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Originator_tl_dtlastfailedloginattempt" type="xsd:dateTime" minOccurs="0" />
-          <xsd:element name="Originator_tl_passwordneverexpires" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Originator_tl_googleid" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_tl_facebookid" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Originator_tl_usertype" type="xsd:double" minOccurs="0" />
-          <xsd:element name="Tlmultimessage" type="xsd:string" minOccurs="0" />
-          <xsd:element name="Schedule" type="tns:tableTypeSchedule" minOccurs="0" />
-          <xsd:element name="Db" type="tns:tableTypeDb" minOccurs="0" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="schema">
-        <xsd:sequence>
-          <xsd:any processContents="skip" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="attachment">
-        <xsd:simpleContent>
-          <xsd:extension base="xsd:base64Binary">
-            <xsd:attribute name="name" type="xsd:normalizedString" />
-            <xsd:attribute name="encrypted" type="xsd:boolean" />
-          </xsd:extension>
-        </xsd:simpleContent>
-      </xsd:complexType>
-      <xsd:complexType name="attachments">
-        <xsd:sequence>
-          <xsd:element name="encryption_header" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" />
-          <xsd:element name="attachment" type="tns:attachment" minOccurs="1" maxOccurs="unbounded" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="linkedAttachment">
-        <xsd:attribute name="name" type="xsd:normalizedString" />
-        <xsd:attribute name="fileName" type="xsd:NMTOKEN" />
-      </xsd:complexType>
-      <xsd:complexType name="linkedAttachments">
-        <xsd:sequence>
-          <xsd:element name="linkedAttachment" type="tns:linkedAttachment" minOccurs="1" maxOccurs="unbounded" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="sectionstates">
-        <xsd:sequence>
-          <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="formdata">
-        <xsd:sequence>
-          <xsd:element name="schema" type="tns:schema" minOccurs="0" />
-          <xsd:element name="targetpath" type="xsd:string" minOccurs="0" />
-          <xsd:element name="familypath" type="xsd:string" minOccurs="0" />
-          <xsd:element name="fielddata" type="tns:fielddata" />
-          <xsd:element name="attachments" type="tns:attachments" minOccurs="0" />
-          <xsd:element name="encrypted_data" type="xsd:base64Binary" minOccurs="0" />
-          <xsd:element name="signatures" type="xsd:base64Binary" minOccurs="0" />
-          <xsd:element name="embedded_form" type="xsd:base64Binary" minOccurs="0" />
-          <xsd:element name="printinfo" type="xsd:base64Binary" minOccurs="0" />
-          <xsd:element name="SectionStates" type="tns:sectionstates" minOccurs="0" />
-          <xsd:element name="linkedAttachments" type="tns:linkedAttachments" minOccurs="0" />
-        </xsd:sequence>
-        <xsd:attribute name="version" type="xsd:positiveInteger" />
-        <xsd:attribute name="read_only" type="xsd:boolean" />
-      </xsd:complexType>
-      <xsd:element name="formdata" type="tns:formdata" />
-    </xsd:schema>
-  </schema>
-  <targetpath>C:\OFServerForms\CDS7_1.ofm</targetpath>
-  <familypath>&lt;formslib&gt;\CDS7_1.ofm</familypath>
-  <fielddata>
-    <Fc_testing>false</Fc_testing>
-    <Fc_dummy>false</Fc_dummy>
-    <Fc_qa_method>System</Fc_qa_method>
-    <Fc_initial_processingoffice>South Tyneside</Fc_initial_processingoffice>
-    <Fc_priority>0</Fc_priority>
-    <Fc_current_user_type>Provider</Fc_current_user_type>
-    <Fc_current_user>testprovider1</Fc_current_user>
-    <Fc_currentstage>Initial</Fc_currentstage>
-    <Fc_processingoffice>South Tyneside</Fc_processingoffice>
-    <Fc_processingofficefax>0191 428 3794</Fc_processingofficefax>
-    <Provider_eforms_username>admin</Provider_eforms_username>
-    <Fc_processingofficeaddress>
-      Legal Aid Agency
-      Berkley Way
-      Viking Business Park
-      Jarrow
-      NE31 1SF
-    </Fc_processingofficeaddress>
-    <Fc_processingofficedx>DX 742 350 Jarrow 2</Fc_processingofficedx>
-    <Fc_return_info_to_cw>false</Fc_return_info_to_cw>
-    <Fc_cw_requesting></Fc_cw_requesting>
-    <Fc_info_returned>false</Fc_info_returned>
-    <Fc_info_returned_flag>false</Fc_info_returned_flag>
-    <Fc_qa_required>false</Fc_qa_required>
-    <Fc_integration_info_required>false</Fc_integration_info_required>
-    <Fc_referred>false</Fc_referred>
-    <Fc_injected>false</Fc_injected>
-    <Fc_selected_eformsreviewer></Fc_selected_eformsreviewer>
-    <Fc_possible_reject_reasons></Fc_possible_reject_reasons>
-    <Fc_rfi_options></Fc_rfi_options>
-    <Fc_possible_pg_reasons></Fc_possible_pg_reasons>
-    <Fc_pg_options></Fc_pg_options>
-    <Fc_ok_to_autogrant>false</Fc_ok_to_autogrant>
-    <Fc_is_highcourt>false</Fc_is_highcourt>
-    <Fc_reject_reasons_selected></Fc_reject_reasons_selected>
-    <Fc_reject_reasons_text></Fc_reject_reasons_text>
-    <Fc_rfi_options_selected></Fc_rfi_options_selected>
-    <Fc_rfi_text>Please send through the full file</Fc_rfi_text>
-    <Fc_decision></Fc_decision>
-    <Fc_decided_by></Fc_decided_by>
-    <Fc_decision_explanation></Fc_decision_explanation>
-    <Fi_dtreceived>2013-03-18T11:52:04</Fi_dtreceived>
-    <Fi_language></Fi_language>
-    <Fi_form_subtype>H</Fi_form_subtype>
-    <Form_type></Form_type>
-    <Statutory_charge></Statutory_charge>
-    <Rbba_category></Rbba_category>
-    <Lsc_case_ref>151012/002</Lsc_case_ref>
-    <Provider_case_ref></Provider_case_ref>
-    <Usn>588</Usn>
-    <Date_received>2013-03-18T00:00:00</Date_received>
-    <Time_received>11:52:04</Time_received>
-    <Submitter_user_id>testprovider1</Submitter_user_id>
-    <Submitter_language>English</Submitter_language>
-    <Match_carried_out>false</Match_carried_out>
-    <Cp_rbba_category_before_qc>High risk</Cp_rbba_category_before_qc>
-    <Cp_rbba_category>High risk</Cp_rbba_category>
-    <Showrbbawarning>false</Showrbbawarning>
-    <Cp_rbba_category_cw></Cp_rbba_category_cw>
-    <Firm_office>0A018V,27 LONDON ROAD</Firm_office>
-    <Lsc_region>London</Lsc_region>
-    <Lsc_accountoffice>London</Lsc_accountoffice>
-    <Firm_supplier_no>0A018V</Firm_supplier_no>
-    <Client_surname>Richards</Client_surname>
-    <Client_forename>Jack</Client_forename>
-    <Client_dob>1990-09-25T00:00:00</Client_dob>
-    <Client_ufn>151012/002</Client_ufn>
-    <Maat>12084738</Maat>
-    <Maat_number></Maat_number>
-    <Rep_order_no>1274638264</Rep_order_no>
-    <Cp_rep_order_attach_method>Post</Cp_rep_order_attach_method>
-    <Sc_prov_case_in_designated_area>No</Sc_prov_case_in_designated_area>
-    <Prom_prov>PROM</Prom_prov>
-    <Prog_prov>PROG</Prog_prov>
-    <Sc_outcome_code>CP20</Sc_outcome_code>
-    <Sc_matter_type>3</Sc_matter_type>
-    <Sc_eo_1>03</Sc_eo_1>
-    <Sc_eo_2>M</Sc_eo_2>
-    <Sc_eo_3>N</Sc_eo_3>
-    <Sc_date_class_of_work>2013-02-21T00:00:00</Sc_date_class_of_work>
-    <Sc_no_of_defendants>1</Sc_no_of_defendants>
-    <Sc_no_of_court_attendances>3</Sc_no_of_court_attendances>
-    <Sc_court_indentifier>C5436</Sc_court_indentifier>
-    <Sc_court_identifier></Sc_court_identifier>
-    <Sc_youth_court>No</Sc_youth_court>
-    <Sc_case_in_designated_area>No</Sc_case_in_designated_area>
-    <Prom>PROM</Prom>
-    <Prog>PROG</Prog>
-    <Sc_eo_code>03MN</Sc_eo_code>
-    <Firm_name>DOBSONS</Firm_name>
-    <Firm_address>
-      27 LONDON ROAD
-      BROMLEY
-      KENT
-      BR1 1DS
-    </Firm_address>
-    <Sd_address_line_1></Sd_address_line_1>
-    <Sd_address_line_2></Sd_address_line_2>
-    <Sd_address_line_3></Sd_address_line_3>
-    <Sd_address_town></Sd_address_town>
-    <Sd_address_county></Sd_address_county>
-    <Sd_address_postcode></Sd_address_postcode>
-    <Provider_account>0A018V</Provider_account>
-    <Firm_phone>208 315 4450</Firm_phone>
-    <Contact_name>Test Provider 1</Contact_name>
-    <Solicitorname>Test Provider 1</Solicitorname>
-    <Solicitorid></Solicitorid>
-    <Cd_main_offence>GBH</Cd_main_offence>
-    <Cd_offence_date>2012-01-09T00:00:00</Cd_offence_date>
-    <Cd_serious_fraud_case>No</Cd_serious_fraud_case>
-    <Cd_indictable_only>No</Cd_indictable_only>
-    <Cd_indictment_attach_method></Cd_indictment_attach_method>
-    <Cd_wasted_cost_order>Yes</Cd_wasted_cost_order>
-    <Cd_wasted_costs_order_net>700</Cd_wasted_costs_order_net>
-    <Cd_wasted_costs_order_details>These are details of the order.</Cd_wasted_costs_order_details>
-    <Nsfc_core_costs_exceeded>false</Nsfc_core_costs_exceeded>
-    <Nsfc_enhanced_rates_claimed>false</Nsfc_enhanced_rates_claimed>
-    <Nsfc_counsel_assigned>true</Nsfc_counsel_assigned>
-    <Nsfc_extradition>true</Nsfc_extradition>
-    <Nsfc_rep_order_withdrawn>false</Nsfc_rep_order_withdrawn>
-    <Nsfc_other>false</Nsfc_other>
-    <Calc>2</Calc>
-    <Nsfc_order_withdrawn_details></Nsfc_order_withdrawn_details>
-    <Cdsp_category>Category 2</Cdsp_category>
-    <Cat1national>517.1</Cat1national>
-    <Cat2national>854.4</Cat2national>
-    <Cat3national>789.5</Cat3national>
-    <Cat1london>646.85</Cat1london>
-    <Cat2london>1041.6</Cat2london>
-    <Cat3london>841.55</Cat3london>
-    <Cdsp_category_1_type></Cdsp_category_1_type>
-    <Cdsp_category_2_type>Contested breach</Cdsp_category_2_type>
-    <Cdsp_category_3_type></Cdsp_category_3_type>
-    <Cdsp_other_details></Cdsp_other_details>
-    <Cld_prosecution_pages>30</Cld_prosecution_pages>
-    <Cld_defence_pages>25</Cld_defence_pages>
-    <Cld_no_of_defence_witnesses>3</Cld_no_of_defence_witnesses>
-    <Cld_supplemental_claim>Yes</Cld_supplemental_claim>
-    <Cld_prev_claims_attach_method>Post</Cld_prev_claims_attach_method>
-    <Cld_taped_evidence>Yes</Cld_taped_evidence>
-    <Cld_tape_running_time>04:00:00</Cld_tape_running_time>
-    <Cld_remitted_to_mags>Yes</Cld_remitted_to_mags>
-    <Cld_date_remitted_to_mags>2013-02-05T00:00:00</Cld_date_remitted_to_mags>
-    <Cld_attach_method>Post</Cld_attach_method>
-    <Pow_claiming>Yes</Pow_claiming>
-    <Pow_date>2013-01-09T00:00:00</Pow_date>
-    <Total_travel_time>5</Total_travel_time>
-    <Total_travel_time_display>5:00</Total_travel_time_display>
-    <Total_waiting_time>0</Total_waiting_time>
-    <Total_waiting_time_display>0:00</Total_waiting_time_display>
-    <Total_attendance_time>0</Total_attendance_time>
-    <Total_attendance_time_display>0:00</Total_attendance_time_display>
-    <Total_preparation_time>0</Total_preparation_time>
-    <Total_preparation_time_display>0:00</Total_preparation_time_display>
-    <Total_advocacy_time>0</Total_advocacy_time>
-    <Total_advocacy_time_display>0:00</Total_advocacy_time_display>
-    <Total_travel_costs>263</Total_travel_costs>
-    <Total_waiting_costs>0</Total_waiting_costs>
-    <Total_attendance_costs>0</Total_attendance_costs>
-    <Total_preparation_costs>0</Total_preparation_costs>
-    <Total_advocacy_costs>0</Total_advocacy_costs>
-    <Cw_total_travel_costs>263</Cw_total_travel_costs>
-    <Cw_total_waiting_costs>0</Cw_total_waiting_costs>
-    <Cw_total_attendance_costs>0</Cw_total_attendance_costs>
-    <Cw_total_preparation_costs>0</Cw_total_preparation_costs>
-    <Cw_total_advocacy_costs>0</Cw_total_advocacy_costs>
-    <Total_basic_claim>131.5</Total_basic_claim>
-    <Total_claim>263</Total_claim>
-    <Cw_total_basic_claim>131.5</Cw_total_basic_claim>
-    <Cw_total_claim>263</Cw_total_claim>
-    <Preparation_rate_non_london>49.7</Preparation_rate_non_london>
-    <Preparation_rate_london>49.7</Preparation_rate_london>
-    <Advocacy_rate_non_london>62.35</Advocacy_rate_non_london>
-    <Advocacy_rate_london>62.35</Advocacy_rate_london>
-    <Travel_rate_non_london>26.3</Travel_rate_non_london>
-    <Travel_rate_london>26.3</Travel_rate_london>
-    <Waiting_rate_non_london>26.3</Waiting_rate_non_london>
-    <Waiting_rate_london>26.3</Waiting_rate_london>
-    <Attendance_rate_non_london>49.7</Attendance_rate_non_london>
-    <Attendance_rate_london>49.7</Attendance_rate_london>
-    <Cfc_no_of_letters>2</Cfc_no_of_letters>
-    <Cfc_letter_rate>3.9</Cfc_letter_rate>
-    <Cfc_letter_uplift>100</Cfc_letter_uplift>
-    <Cfc_total_letter_cost>15.6</Cfc_total_letter_cost>
-    <Cfc_no_of_calls>6</Cfc_no_of_calls>
-    <Cfc_calls_rate>3.9</Cfc_calls_rate>
-    <Cfc_calls_uplift>0</Cfc_calls_uplift>
-    <Cfc_total_phone_costs>23.4</Cfc_total_phone_costs>
-    <Cfc_total_costs>39</Cfc_total_costs>
-    <Cfc_sol_core_costs>39</Cfc_sol_core_costs>
-    <Cfc_cw_no_of_letters>2</Cfc_cw_no_of_letters>
-    <Cfc_cw_letters_rate>3.9</Cfc_cw_letters_rate>
-    <Cfc_cw_letters_uplift>100</Cfc_cw_letters_uplift>
-    <Cfc_cw_letters_costs>15.6</Cfc_cw_letters_costs>
-    <Cfc_cw_no_of_calls>6</Cfc_cw_no_of_calls>
-    <Cfc_cw_calls_rate>3.9</Cfc_cw_calls_rate>
-    <Cfc_cw_calls_uplift>0</Cfc_cw_calls_uplift>
-    <Cfc_cw_calls_costs>23.4</Cfc_cw_calls_costs>
-    <Cfc_cw_total_costs>39</Cfc_cw_total_costs>
-    <Cfc_cw_sol_core_costs>39</Cfc_cw_sol_core_costs>
-    <Letter_rate_non_london>3.9</Letter_rate_non_london>
-    <Letter_rate_london>3.9</Letter_rate_london>
-    <Phone_call_rate_non_london>3.9</Phone_call_rate_non_london>
-    <Phone_call_rate_london>3.9</Phone_call_rate_london>
-    <Assessment_reasons></Assessment_reasons>
-    <Cfc_disb_total_net>400</Cfc_disb_total_net>
-    <Cfc_disb_total_vat>80</Cfc_disb_total_vat>
-    <Cfc_disb_grand_total>480</Cfc_disb_grand_total>
-    <Voucherrequired_count>1</Voucherrequired_count>
-    <Cfc_disb_attach_method>Post</Cfc_disb_attach_method>
-    <Cfc_disb_total_net_ou>400</Cfc_disb_total_net_ou>
-    <Cfc_disb_total_vat_ou>80</Cfc_disb_total_vat_ou>
-    <Cfc_disb_grand_total_ou>480</Cfc_disb_grand_total_ou>
-    <Ct_total>142.4</Ct_total>
-    <Ct_total_cw>142.4</Ct_total_cw>
-    <Ct_profit_costs_vat_rate>20</Ct_profit_costs_vat_rate>
-    <Ct_profit_costs_total>-653.2</Ct_profit_costs_total>
-    <Ct_travel_costs_vat_rate>20</Ct_travel_costs_vat_rate>
-    <Ct_travel_costs_total>315.6</Ct_travel_costs_total>
-    <Ct_waiting_costs_vat_rate>0</Ct_waiting_costs_vat_rate>
-    <Ct_waiting_costs_total>0</Ct_waiting_costs_total>
-    <Ctou_profit_costs_vat_rate>20</Ctou_profit_costs_vat_rate>
-    <Ctou_profit_costs_total>-653.2</Ctou_profit_costs_total>
-    <Ctou_travel_costs_vat_rate>20</Ctou_travel_costs_vat_rate>
-    <Ctou_travel_costs_total>315.6</Ctou_travel_costs_total>
-    <Ctou_waiting_costs_vat_rate>0</Ctou_waiting_costs_vat_rate>
-    <Ctou_waiting_costs_total>0</Ctou_waiting_costs_total>
-    <Taskid>588</Taskid>
-    <Actioncode>1Q</Actioncode>
-    <Printed>true</Printed>
-    <Coversheet_printed>true</Coversheet_printed>
-    <Relevant_case_info_details>This is some data that contains details of relevant factors in support of time spent on the case.</Relevant_case_info_details>
-    <Sol_cert>true</Sol_cert>
-    <Solicitor_sign_name>Alex Cook</Solicitor_sign_name>
-    <Solicitor_sign_date>2013-03-18T00:00:00</Solicitor_sign_date>
-    <Additional_info>This contains some data of additionla information.</Additional_info>
-    <Qc_decision></Qc_decision>
-    <Qc_override_reason></Qc_override_reason>
-    <Decision></Decision>
-    <Full_grant_notes></Full_grant_notes>
-    <Reason_details></Reason_details>
-    <Referral_reason_sol></Referral_reason_sol>
-    <Referral_reason_frc_ia></Referral_reason_frc_ia>
-    <Decision_original></Decision_original>
-    <Decided_by_original></Decided_by_original>
-    <Ou_signed_auth></Ou_signed_auth>
-    <Hide></Hide>
-    <Unique_reference_number></Unique_reference_number>
-    <Caseworker></Caseworker>
-    <Client_name></Client_name>
-    <Tltasktype>5</Tltasktype>
-    <Tldateorig>2013-03-18T11:44:30</Tldateorig>
-    <Tlseqno>2</Tlseqno>
-    <Tltaskid>588</Tltaskid>
-    <Tlsubstate>Default</Tlsubstate>
-    <Tltaskstate>19</Tltaskstate>
-    <Tlautonumber>0</Tlautonumber>
-    <Tlmessage></Tlmessage>
-    <Tlnewmessage></Tlnewmessage>
-    <Tlreadonly>0</Tlreadonly>
-    <TlStateName>Await Further MR Info</TlStateName>
-    <TlTaskLastUpdated>2013-03-18T11:52:04</TlTaskLastUpdated>
-    <TLActionsOnLine>
-      Name,Type,SignatureButton,SignType&#13;
-      Delete the Form,-1,Solicitor_sign,0&#13;
-      Send for Internal Review,1,Solicitor_sign,0&#13;
-      Submit,1,Solicitor_sign,1
-    </TLActionsOnLine>
-    <Originator_id>2336</Originator_id>
-    <Originator_type>0</Originator_type>
-    <Originator_uniquename>TestProvider1</Originator_uniquename>
-    <Originator_displayname>Test Provider 1</Originator_displayname>
-    <Originator_emailaddress>Test.Provider@Toplev.com</Originator_emailaddress>
-    <Originator_ntlogon></Originator_ntlogon>
-    <Originator_department></Originator_department>
-    <Originator_dtlastaccessed>2013-03-18T11:35:34</Originator_dtlastaccessed>
-    <Originator_tl_question></Originator_tl_question>
-    <Originator_tl_qn_answer></Originator_tl_qn_answer>
-    <Originator__dtadded>2010-11-05T08:54:37</Originator__dtadded>
-    <Originator_jobtitle>Employee</Originator_jobtitle>
-    <Originator_firm>DOBSONS</Originator_firm>
-    <Originator_lscareaoffice>Birmingham</Originator_lscareaoffice>
-    <Originator_supervisor>Test User 1</Originator_supervisor>
-    <Originator_emailflag></Originator_emailflag>
-    <Originator_lscemailaddress>Test.Provider@Toplev.com</Originator_lscemailaddress>
-    <Originator_tl_dtpasswordlastchanged>2010-11-05T08:59:12</Originator_tl_dtpasswordlastchanged>
-    <Originator_tl_failedloginattemptcount>0</Originator_tl_failedloginattemptcount>
-    <Originator_tl_googleid></Originator_tl_googleid>
-    <Originator_tl_facebookid></Originator_tl_facebookid>
-    <Tlmultimessage></Tlmultimessage>
-    <Schedule>
-      <row>
-        <Line>1</Line>
-        <Fe_initials>RT</Fe_initials>
-        <Date>2013-01-21T00:00:00</Date>
-        <Cost_type_full_list></Cost_type_full_list>
-        <Cost_type>Travel</Cost_type>
-        <Time_travel>05:00:00</Time_travel>
-        <Time_total>05:00:00</Time_total>
-        <Time_calc>5</Time_calc>
-        <Time_display>05:00:00</Time_display>
-        <Hearing_codes_options></Hearing_codes_options>
-        <Hearing_codes>PB; MT;</Hearing_codes>
-        <Person_codes_options></Person_codes_options>
-        <Person_codes>D;</Person_codes>
-        <Rate>26.3</Rate>
-        <Basic_claim>131.5</Basic_claim>
-        <Uplift>100</Uplift>
-        <Claim>263</Claim>
-        <Time_travel_cw>05:00:00</Time_travel_cw>
-        <Time_waiting_cw>00:00:00</Time_waiting_cw>
-        <Time_attendances_counsel_cw>00:00:00</Time_attendances_counsel_cw>
-        <Time_attendances_no_counsel_cw>00:00:00</Time_attendances_no_counsel_cw>
-        <Time_preparation_cw>00:00:00</Time_preparation_cw>
-        <Time_advocacy_cw>00:00:00</Time_advocacy_cw>
-        <Time_total_cw>05:00:00</Time_total_cw>
-        <Rate_cw>26.3</Rate_cw>
-        <Basic_cw>131.5</Basic_cw>
-        <Uplift_cw>100</Uplift_cw>
-        <Claim_cw>263</Claim_cw>
-        <Assessment_cw></Assessment_cw>
-      </row>
-    </Schedule>
-    <Db>
-      <row>
-        <Disbursement>DNA Testing</Disbursement>
-        <Details>These are details of DNA testing.</Details>
-        <Net>400</Net>
-        <Vat_rate>20</Vat_rate>
-        <Vat>80</Vat>
-        <Total>480</Total>
-        <Voucherrequired>1</Voucherrequired>
-        <Net_cw>400</Net_cw>
-        <Vat_rate_cw>20</Vat_rate_cw>
-        <Vat_cw>80</Vat_cw>
-        <Total_cw>480</Total_cw>
-        <Reason_cw></Reason_cw>
-        <Summary_cw></Summary_cw>
-      </row>
-      <row>
-        <Disbursement>Car Travel</Disbursement>
-        <Mileage>12</Mileage>
-        <Details>Mileage</Details>
-        <Net>5.40</Net>
-        <Vat_rate>20.00000</Vat_rate>
-      </row>
-    </Db>
-  </fielddata>
-  <signature_data>REaBEAAOAFNvbGljaXRvcl9zaWdughYAFADnMwa5ZnjSfW3fUYKMQeP2vqdzvYMRAA8AVGVzdCBQcm92aWRlciAxhA8ADQB0ZXN0cHJvdmlkZXIxhQIAAACGCAD1Pt7S7zDkQIcCAAAAiAIAAAD//w==</signature_data>
-  <printinfo>QVFQgRSAAgEQAENsYWltX3Byb3BlcnRpZXP/UIENgAIBCQBVbm5hbWVkMjL/UIERgAIBDQBTZWxlY3Rfb2ZmaWNl/1CBDYACAQkAVW5uYW1lZDM4/1CBDYACAQkAVW5uYW1lZDQy/1CBDYACAQkAVW5uYW1lZDU0/1CBDYACAQkAVW5uYW1lZDU3/1CBDYACAQkAVW5uYW1lZDU5/1CBDYACAQkAVW5uYW1lZDYx/1CBDYACAQkAVW5uYW1lZDYz/1CBDYACAQkAVW5uYW1lZDcy/1CBDYACAQkAVW5uYW1lZDc0/1CBDYACAQkAVW5uYW1lZDc3/1CBDYACAQkAVW5uYW1lZDc5/1CBDYACAQkAVW5uYW1lZDg4/1CBDYACAQkAVW5uYW1lZDk2/1CBDYACAQkAVW5uYW1lZDk4/1CBDoACAQoAVW5uYW1lZDEwMv9QgQ6AAgEKAFVubmFtZWQxMDT/UIEOgAIBCgBVbm5hbWVkMTA4/1CBDoACAQoAVW5uYW1lZDExMP9QgQ6AAgEKAFVubmFtZWQxMTL/UIEOgAIBCgBVbm5hbWVkMTIx/1CBDoACAQoAVW5uYW1lZDEzMv9QgQ+AAgELAFNjaGVkdWxlX2N3/1CBDoACAQoAVW5uYW1lZDE1Nf9QgQuAAgEHAEN3X29ubHn/UIEOgAIBCgBVbm5hbWVkMjAw/1CBDoACAQoAVW5uYW1lZDIwN/9QgQ6AAgEKAFVubmFtZWQyMjH/UIEOgAIBCgBVbm5hbWVkMjMx/1CBDoACAQoAVW5uYW1lZDIzM/9QgQ6AAgEKAFVubmFtZWQyNDn/UIEOgAIBCgBVbm5hbWVkMjUz/1CBDoACAQoAVW5uYW1lZDI1Nv9QgRaAAgESAEZ1cnRoZXJpbmZvc2VjdGlvbv9QgRGAAgENAE9mZmljZXVzZW9ubHn/UIEOgAIBCgBVbm5hbWVkMjc4/1CBDoACAQoAVW5uYW1lZDI4MP9QgQ6AAgEKAFVubmFtZWQyODT/UIEOgAIBCgBVbm5hbWVkMjg2/1CBDoACAQoAVW5uYW1lZDI4OP9QgQ6AAgEKAFVubmFtZWQyOTD/UIEUgAIBEABPcmlnaW5hbGRlY2lzaW9u/1CBDoACAQoAVW5uYW1lZDI5Nv9QgQyAAgEIAFJlZmVycmFs/1CBDYACAQkAVW5uYW1lZDIz/1CBD4ACAQsAUmJiYXdhcm5pbmf/UIEPgAIDCwBGaXJtX29mZmljZQeBBoADBAEA//+CMIADBxUAMEEwMThWLDI3IExPTkRPTiBST0FEFQAwQTAxOFYsMjcgTE9ORE9OIFJPQUT//1CBDYACAQkAVW5uYW1lZDM5/1CBDYACAQkAVW5uYW1lZDQz/1CBDYACAQkAUHJvbV9wcm92/1CBDYACAQkAVW5uYW1lZDU1/1CBDYACAQkAVW5uYW1lZDU2/1CBHoACARoAU2NfY2FzZV9pbl9kZXNpZ25hdGVkX2FyZWH/UIENgAIBCQBVbm5hbWVkNTj/UIEIgAIBBABQcm9t/1CBDYACAQkAVW5uYW1lZDYw/1CBCIACAQQAUHJvZ/9QgQ2AAgEJAFVubmFtZWQ2Mv9QgQ6AAgEKAFNjX2VvX2NvZGX/UIETgAIBDwBDd19wcm9maXRfY29zdHP/UIEUgAIBEABDd19kaXNidXJzZW1lbnRz/1CBDYACAQkAVW5uYW1lZDY0/1CBE4ACAQ8AQ3dfdHJhdmVsX2Nvc3Rz/1CBFIACARAAQ3dfd2FpdGluZ19jb3N0c/9QgQ2AAgEJAFVubmFtZWQ3M/9QgReAAgETAENkX2RhdGVfY2hhcmdlX2xhaWT/UIENgAIBCQBVbm5hbWVkNzX/UIEMgAIBCABDd19hbGVydP9QgQ2AAgEJAFVubmFtZWQ3Nv9QgQ2AAgEJAFVubmFtZWQ3OP9QgR+AAgEbAENkX2luZGljdG1lbnRfYXR0YWNoX21ldGhvZP9QgQ2AAgEJAFVubmFtZWQ4MP9QgQ2AAgEJAFVubmFtZWQ4Mf9QgQ2AAgEJAFVubmFtZWQ4Of9QgQ2AAgEJAFVubmFtZWQ5MP9QgQ2AAgEJAFVubmFtZWQ5Mf9QgQ2AAgEJAFVubmFtZWQ5Mv9QgQ2AAgEJAFVubmFtZWQ5N/9QgR2AAgEZAE5zZmNfZGF0ZV9vcmRlcl93aXRoZHJhd27/UIENgAIBCQBVbm5hbWVkOTn/UIEggAIBHABOc2ZjX29yZGVyX3dpdGhkcmF3bl9kZXRhaWxz/1CBDoACAQoAVW5uYW1lZDEwM/9QgRiAAgEUAENkc3BfY2F0ZWdvcnlfMV90eXBl/1CBDoACAQoAVW5uYW1lZDEwNf9QgR+AAgEbAENkc3Bfd2FycmFudF9vZl9hcnJlc3RfZGF0Zf9QgQ6AAgEKAFVubmFtZWQxMDn/UIEZgAIBFQBDZHNwX2d1aWx0eV9wbGVhX2RhdGX/UIEOgAIBCgBVbm5hbWVkMTEx/1CBGIACARQAQ2RzcF9jYXRlZ29yeV8zX3R5cGX/UIEOgAIBCgBVbm5hbWVkMTEz/1CBFoACARIAQ2RzcF9vdGhlcl9kZXRhaWxz/1CBDoACAQoAVW5uYW1lZDEyMv9QgQ6AAgEKAFVubmFtZWQxMzP/UIETgAIDDwBTY2hlZHVsZS5VcGxpZnQHgQaAAwQCAP//ggmAAwcBADACADAlgg2AAwcDADEwMAQAMTAwJf//UIEWgAIBEgBTY2hlZHVsZS5VcGxpZnRfY3cH/GP8ZPxl//9QgQ6AAgEKAFVubmFtZWQxNTb/UIEYgAIBFABDd190b3RhbF9iYXNpY19jbGFpbf9QgRKAAgEOAEN3X3RvdGFsX2NsYWlt/1CBFYACAxEAQ2ZjX2xldHRlcl91cGxpZnQH/GP8ZPxl//9QgRSAAgMQAENmY19jYWxsc191cGxpZnQH/GP8ZPxl//9QgQ6AAgEKAFVubmFtZWQxODn/UIEOgAIBCgBVbm5hbWVkMTkw/1CBDoACAQoAVW5uYW1lZDE5Mf9QgQ6AAgEKAFVubmFtZWQxOTL/UIEOgAIBCgBVbm5hbWVkMTkz/1CBGIACARQAQ2ZjX2N3X25vX29mX2xldHRlcnP/UIEOgAIBCgBVbm5hbWVkMTk0/1CBDoACAQoAVW5uYW1lZDE5Nf9QgReAAgETAENmY19jd19sZXR0ZXJzX3JhdGX/UIEOgAIBCgBVbm5hbWVkMTk2/1CBDoACAQoAVW5uYW1lZDE5N/9QgRmAAgEVAENmY19jd19sZXR0ZXJzX3VwbGlmdAf8Y/xk/GX//1CBDoACAQoAVW5uYW1lZDE5OP9QgQ6AAgEKAFVubmFtZWQxOTn/UIEYgAIBFABDZmNfY3dfbGV0dGVyc19jb3N0c/9QgQ6AAgEKAFVubmFtZWQyMDH/UIEOgAIBCgBVbm5hbWVkMjAy/1CBDoACAQoAVW5uYW1lZDIwM/9QgRaAAgESAENmY19jd19ub19vZl9jYWxsc/9QgQ6AAgEKAFVubmFtZWQyMDT/UIEVgAIBEQBDZmNfY3dfY2FsbHNfcmF0Zf9QgQ6AAgEKAFVubmFtZWQyMDX/UIEXgAIBEwBDZmNfY3dfY2FsbHNfdXBsaWZ0B/xj/GT8Zf//UIEOgAIBCgBVbm5hbWVkMjA2/1CBFoACARIAQ2ZjX2N3X2NhbGxzX2Nvc3Rz/1CBDoACAQoAVW5uYW1lZDIwOP9QgQ6AAgEKAFVubmFtZWQyMDn/UIEOgAIBCgBVbm5hbWVkMjEw/1CBDoACAQoAVW5uYW1lZDIxMf9QgQ6AAgEKAFVubmFtZWQyMTL/UIEOgAIBCgBVbm5hbWVkMjEz/1CBDoACAQoAVW5uYW1lZDIxNP9QgQ6AAgEKAFVubmFtZWQyMTX/UIEOgAIBCgBVbm5hbWVkMjE2/1CBDoACAQoAVW5uYW1lZDIxN/9QgQ6AAgEKAFVubmFtZWQyMTj/UIEWgAIBEgBDZmNfY3dfdG90YWxfY29zdHP/UIEOgAIBCgBVbm5hbWVkMjE5/1CBDoACAQoAVW5uYW1lZDIyMP9QgRmAAgEVAENmY19jd19zb2xfY29yZV9jb3N0c/9QgQ6AAgEKAFVubmFtZWQyMjL/UIEOgAIBCgBVbm5hbWVkMjIz/1CBFoACARIAQXNzZXNzbWVudF9yZWFzb25z/1CBEYACAQ0ARGIuU3VtbWFyeV9jd/9QgQ6AAgEKAFVubmFtZWQyMzL/UIEOgAIBCgBVbm5hbWVkMjM0/1CBGYACARUAQ2ZjX2Rpc2JfdG90YWxfbmV0X291/1CBGYACARUAQ2ZjX2Rpc2JfdG90YWxfdmF0X291/1CBG4ACARcAQ2ZjX2Rpc2JfZ3JhbmRfdG90YWxfb3X/UIEOgAIBCgBVbm5hbWVkMjM1/1CBDoACAQoAVW5uYW1lZDI1MP9QgRmAAgEVAEN0b3VfcHJvZml0X2Nvc3RzX25ldP9QgR6AAgEaAEN0b3VfcHJvZml0X2Nvc3RzX3ZhdF9yYXRl/1CBG4ACARcAQ3RvdV9wcm9maXRfY29zdHNfdG90YWz/UIEOgAIBCgBVbm5hbWVkMjUx/1CBHIACARgAQ3RvdV9kaXNidXJzZW1lbnRzX3RvdGFs/1CBDoACAQoAVW5uYW1lZDI1Mv9QgQ6AAgEKAFVubmFtZWQyNTT/UIEZgAIBFQBDdG91X3RyYXZlbF9jb3N0c19uZXT/UIEegAIBGgBDdG91X3RyYXZlbF9jb3N0c192YXRfcmF0Zf9QgRuAAgEXAEN0b3VfdHJhdmVsX2Nvc3RzX3RvdGFs/1CBDoACAQoAVW5uYW1lZDI1Nf9QgQ6AAgEKAFVubmFtZWQyNTf/UIEagAIBFgBDdG91X3dhaXRpbmdfY29zdHNfbmV0/1CBH4ACARsAQ3RvdV93YWl0aW5nX2Nvc3RzX3ZhdF9yYXRl/1CBHIACARgAQ3RvdV93YWl0aW5nX2Nvc3RzX3RvdGFs/1CBDoACAQoAVW5uYW1lZDI1OP9QgQ6AAgEKAFVubmFtZWQyNzn/UIEPgAIBCwBRY19kZWNpc2lvbv9QgQ6AAgEKAFVubmFtZWQyODH/UIEWgAIBEgBRY19vdmVycmlkZV9yZWFzb27/UIEOgAIBCgBVbm5hbWVkMjg1/1CBFIACARAARnVsbF9ncmFudF9ub3Rlc/9QgQ6AAgEKAFVubmFtZWQyODf/UIESgAIBDgBSZWFzb25fZGV0YWlsc/9QgQ6AAgEKAFVubmFtZWQyODn/UIEUgAIBEABEZXN0cnVjdGlvbl9kYXRl/1CBDoACAQoAVW5uYW1lZDI5Mf9QgReAAgETAFJlZmVycmFsX3JlYXNvbl9zb2z/UIEOgAIBCgBVbm5hbWVkMjky/1CBGoACARYAUmVmZXJyYWxfcmVhc29uX2ZyY19pYf9QgQ6AAgEKAFVubmFtZWQyOTP/UIEOgAIBCgBVbm5hbWVkMjk0/1CBFYACAREARGVjaXNpb25fb3JpZ2luYWz/UIEXgAIBEwBEZWNpZGVkX2J5X29yaWdpbmFs/1CBDoACAQoAVW5uYW1lZDI5Nf9QgQ6AAgEKAFVubmFtZWQyOTf/UIESgAIBDgBPdV9zaWduZWRfYXV0aP9QgReAAgETAE91X3NpZ25lZF9hdXRoX2RhdGX/UIEOgAIBCgBVbm5hbWVkMjk4////</printinfo>
-  <SectionStates>
-    <SectionName>Genericfields</SectionName>
-    <State>INITIAL</State>
-    <SectionName>Standard_properties</SectionName>
-    <State>INITIAL</State>
-    <SectionName>Claim_properties</SectionName>
-    <State>INITIAL</State>
-    <SectionName>Select_office</SectionName>
-    <State>INITIAL</State>
-    <SectionName>Summary_of_claim</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Solicitors_details</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Case_details</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Non_standard_fee_claim</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Case_disposal</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Claim_details</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Pre_order_work</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Schedule_of_time</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Claim_for_costs</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Disbursements</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Claim_totals</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Coversheet</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Relevant_case_info</SectionName>
-    <State>COMPLETE</State>
-    <SectionName>Furtherinfosection</SectionName>
-    <State>INITIAL</State>
-    <SectionName>Officeuseonly</SectionName>
-    <State>INITIAL</State>
-    <SectionName>Referral</SectionName>
-    <State>INITIAL</State>
-  </SectionStates>
-</fd:formdata>
+<?xml version="1.0" encoding="UTF-8"?>
+<claim>
+  <agent_instructed>no</agent_instructed>
+  <arrest_warrant_date>2024-01-03</arrest_warrant_date>
+  <assigned_counsel>no</assigned_counsel>
+  <claim_type>non_standard_magistrate</claim_type>
+  <concluded>yes</concluded>
+  <conclusion>Case concluded due to guilty plea</conclusion>
+  <court>Liverpool Magistrates Court</court>
+  <created_at>2024-02-07T10:00:00Z</created_at>
+  <defence_statement>15</defence_statement>
+  <defendants>
+    <defendant>
+      <first_name>John</first_name>
+      <last_name>Smith</last_name>
+      <maat>12345678</maat>
+      <position>1</position>
+    </defendant>
+    <defendant>
+      <first_name>Jane</first_name>
+      <last_name>Doe</last_name>
+      <maat>87654321</maat>
+      <position>2</position>
+    </defendant>
+  </defendants>
+  <disbursements>
+    <disbursement>
+      <disbursement_date>2024-01-15</disbursement_date>
+      <disbursement_type>car</disbursement_type>
+      <miles>45.5</miles>
+      <total_cost_without_vat>20.47</total_cost_without_vat>
+      <details>Travel to Liverpool Magistrates Court</details>
+      <prior_authority>no</prior_authority>
+      <apply_vat>true</apply_vat>
+      <vat_amount>4.09</vat_amount>
+      <position>1</position>
+    </disbursement>
+    <disbursement>
+      <disbursement_date>2024-01-20</disbursement_date>
+      <disbursement_type>other</disbursement_type>
+      <other_type>psychiatric_reports</other_type>
+      <total_cost_without_vat>350.00</total_cost_without_vat>
+      <details>Expert psychiatric assessment</details>
+      <prior_authority>yes</prior_authority>
+      <apply_vat>true</apply_vat>
+      <vat_amount>70.00</vat_amount>
+      <position>2</position>
+    </disbursement>
+  </disbursements>
+  <firm_office>
+    <account_number>1A234B</account_number>
+    <address_line_1>123 Law Street</address_line_1>
+    <address_line_2>Suite 100</address_line_2>
+    <name>Legal Eagles LLP</name>
+    <postcode>L1 2CD</postcode>
+    <town>Liverpool</town>
+    <vat_registered>yes</vat_registered>
+  </firm_office>
+  <first_hearing_date>2024-01-10</first_hearing_date>
+  <gender>m</gender>
+  <has_disbursements>yes</has_disbursements>
+  <hearing_outcome>CP03</hearing_outcome>
+  <is_other_info>no</is_other_info>
+  <main_offence>Assault occasioning actual bodily harm</main_offence>
+  <main_offence_date>2023-12-25</main_offence_date>
+  <matter_type>1</matter_type>
+  <number_of_hearing>3</number_of_hearing>
+  <number_of_witnesses>4</number_of_witnesses>
+  <office_code>1A234B</office_code>
+  <preparation_time>yes</preparation_time>
+  <prosecution_evidence>45</prosecution_evidence>
+  <plea>guilty</plea>
+  <plea_category>category_1a</plea_category>
+  <reasons_for_claim>
+    <reason>enhanced_rates_claimed</reason>
+    <reason>core_costs_exceed_higher_limit</reason>
+  </reasons_for_claim>
+  <rep_order_date>2023-12-26</rep_order_date>
+  <stage_reached>prog</stage_reached>
+  <ufn>ABC123/001</ufn>
+  <work_items>
+    <work_item>
+      <completed_on>2024-01-15</completed_on>
+      <fee_earner>JS</fee_earner>
+      <position>1</position>
+      <time_spent>120</time_spent>
+      <uplift>20</uplift>
+      <work_type>preparation</work_type>
+    </work_item>
+    <work_item>
+      <completed_on>2024-01-16</completed_on>
+      <fee_earner>JS</fee_earner>
+      <position>2</position>
+      <time_spent>60</time_spent>
+      <work_type>attendance_without_counsel</work_type>
+    </work_item>
+    <work_item>
+      <completed_on>2024-01-20</completed_on>
+      <fee_earner>JS</fee_earner>
+      <position>3</position>
+      <time_spent>90</time_spent>
+      <work_type>travel</work_type>
+    </work_item>
+  </work_items>
+  <youth_court>no</youth_court>
+</claim>
