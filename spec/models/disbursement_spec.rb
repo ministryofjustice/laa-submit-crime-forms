@@ -7,7 +7,7 @@ RSpec.describe Disbursement do
     context 'when not set' do
       let(:attributes) { { disbursement_type: nil } }
 
-      it { expect(subject.translated_disbursement_type).to be_nil }
+      it { expect(subject.translated_disbursement_type).to eq('') }
     end
 
     context 'when standard type' do
@@ -26,6 +26,12 @@ RSpec.describe Disbursement do
       let(:attributes) { { disbursement_type: 'other', other_type: 'Custom' } }
 
       it { expect(subject.translated_disbursement_type).to eq('Custom') }
+    end
+
+    context 'when other type but undefined' do
+      let(:attributes) { { disbursement_type: 'other', other_type: nil } }
+
+      it { expect(subject.translated_disbursement_type).to eq('') }
     end
   end
 end
