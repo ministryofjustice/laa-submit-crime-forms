@@ -29,7 +29,7 @@ en:
           add_another: Do you want to add another work item?
           add_now: Add another work item
           unknown_date: Unknown date
-          summary: Summary of work items
+          summary: Cost type totals
           all_work_items: All work items
           table_info_item: work item
           accessibility:
