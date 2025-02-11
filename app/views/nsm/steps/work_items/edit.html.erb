@@ -4,7 +4,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= govuk_error_summary(@form_object) %>
-    <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.work_items.count) %></h1>
+    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <%= govuk_table(head: @summary.work_item_summary_header_row,
                     rows: [*@summary.rows, @summary.footer_row],
                     first_cell_is_header: true,

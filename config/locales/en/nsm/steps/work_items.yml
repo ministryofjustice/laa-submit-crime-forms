@@ -21,9 +21,7 @@ en:
       work_items:
         edit:
           page_title: Work Items
-          heading:
-            one: You've added %{count} work item
-            other: You've added %{count} work items
+          heading: Work Items
           change: Change
           duplicate: Duplicate
           update: Update
