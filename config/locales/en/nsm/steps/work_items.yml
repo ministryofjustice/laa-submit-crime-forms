@@ -32,6 +32,9 @@ en:
           summary: Cost type totals
           all_work_items: All work items
           table_info_item: work item
+          incomplete_summary:
+            one: '%{count} work item is incomplete'
+            other: '%{count} work items are incomplete'
           accessibility:
             item: Item
             work_summary_caption: 'Summary of work items'

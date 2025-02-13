@@ -1,6 +1,8 @@
 <% title t('.page_title') %>
 <% decision_step_header %>
-
+<% if @items_incomplete_flash.present? %>
+  <%= render partial: 'shared/flash_banner', locals: { flash: @items_incomplete_flash } %>
+<% end %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= govuk_error_summary(@form_object) %>
