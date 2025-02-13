@@ -213,6 +213,7 @@ en:
           incomplete_summary:
             one: '%{count} disbursement is incomplete'
             other: '%{count} disbursements are incomplete'
+          item: item %{index}
           accessibility:
             disbursements_caption: Claimed disbursements
             item_id: itemTitle

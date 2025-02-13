@@ -30,13 +30,25 @@ module Nsm
     def links
       incomplete_items.map do |item|
         govuk_link_to(
-          t("#{path_key}.item", index: item.position),
-          edit_nsm_steps_work_item_path(@claim, work_item_id: item.id)
+          path_title(item),
+          path_url(item)
         )
       end.join(', ')
     end
 
     private
+
+    def path_title(item)
+      t("#{path_key}.item", index: item.position)
+    end
+
+    def path_url(item)
+      if item.is_a? WorkItem
+        edit_nsm_steps_work_item_path(@claim, work_item_id: item.id)
+      elsif item.is_a? Disbursement
+        edit_nsm_steps_disbursements_path(@claim, disbursement_id: item.id)
+      end
+    end
 
     def path_key
       "nsm.steps.#{@type}.edit"

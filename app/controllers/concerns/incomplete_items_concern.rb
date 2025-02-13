@@ -5,7 +5,7 @@ module IncompleteItemsConcern
 
   def incomplete_items_summary
     @incomplete_items_summary ||= Nsm::IncompleteItems.new(items, current_application, item_type,
-                                                          self)
+                                                           self)
   end
 
   def build_items_incomplete_flash

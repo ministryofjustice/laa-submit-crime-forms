@@ -1,9 +1,11 @@
 module Nsm
   module Steps
     class DisbursementsController < Nsm::Steps::BaseController
+      include IncompleteItemsConcern
       before_action :set_default_table_sort_options, only: [:edit, :update]
 
       def edit
+        @items_incomplete_flash = build_items_incomplete_flash
         disbursements = Sorters::DisbursementsSorter.call(
           current_application.disbursements.by_age, @sort_by, @sort_direction
         )
