@@ -31,14 +31,15 @@ module Nsm
       end
 
       def incomplete_work_item_summary
-        @incomplete_work_item_summary ||= IncompleteItems.new(current_application.work_items, current_application, :work_items)
+        @incomplete_work_item_summary ||= IncompleteItems.new(current_application.work_items, current_application, :work_items,
+                                                              self)
       end
 
       def build_items_incomplete_flash
         if incomplete_work_item_summary.incomplete_items.blank?
           @items_incomplete_flash ||= nil
         else
-          @items_incomplete_flash ||= { default: incomplete_work_item_summary.summary }
+          @build_items_incomplete_flash ||= { default: incomplete_work_item_summary.summary }
         end
       end
     end
