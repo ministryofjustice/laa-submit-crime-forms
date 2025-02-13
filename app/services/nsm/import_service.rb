@@ -14,80 +14,45 @@ module Nsm
     end
 
     def call
-      xml = Nokogiri::XML(File.read(@import_form.file_upload.tempfile))
-      xml.xpath('//fielddata/Schedule/row').each { process_work_item(_1) }
-      xml.xpath('//fielddata/Db/row').each { process_disbursement(_1) }
+      xml = validate
 
-      if claim.work_items.none? && claim.disbursements.none?
-        @import_form.errors.add(:file_upload, :no_imports)
-        return false
-      end
+      return false if @import_form.errors.present?
+
+      xml.xpath('//work_items/work_item').each { process_work_item(_1) }
+      xml.xpath('//disbursements/disbursement').each { process_disbursement(_1) }
 
       build_message
     end
 
+    def validate
+      xml = Nokogiri::XML::Document.parse(File.read(@import_form.file_upload.tempfile))
+      schema = Nokogiri::XML::Schema.new(Rails.root.join('config/leap_schema.xml').read)
+
+      schema.validate(xml).map do |error|
+        @import_form.errors.add(:file_upload, error)
+      end
+
+      xml
+    end
+
+    def process_node(node)
+      node.children.each_with_object({}) do |child, hash|
+        next if child.name.to_sym == :text
+
+        hash[child.name.to_sym] = child.text
+      end
+    end
+
     def process_work_item(node)
-      claim.work_items.create(
-        work_type: work_type(node),
-        time_spent: time_spent(node),
-        completed_on: node.css('Date').text,
-        fee_earner: node.css('Fe_initials').text,
-        uplift: node.css('Uplift').text,
-        position: node.css('Line').text
-      )
+      claim.work_items.create(process_node(node))
     rescue StandardError
       # If this work item fails we don't want to blow up the whole process
-    end
-
-    def time_spent(node)
-      # Sometimes there are times for every work type, plus a total, sometimes there is just one time
-      time_string = (node.css('Time_total').presence || node.children.find { _1.name.starts_with?('Time_') }).text
-      hours, minutes, = time_string.split(':').map(&:to_i)
-
-      (hours * 60) + minutes
-    end
-
-    def work_type(node)
-      {
-        'Travel' => 'travel',
-        'Waiting' => 'waiting',
-        'Preparation' => 'preparation',
-        'Advocacy' => 'advocacy',
-        'Attendance With Counsel Assigned' => 'attendance_with_counsel',
-        'Attendance Without Counsel Assigned' => 'attendance_without_counsel',
-      }[node.css('Cost_type').text]
     end
 
     def process_disbursement(node)
-      claim.disbursements.create(
-        disbursement_type: disbursement_type(node),
-        other_type: other_type(node),
-        miles: node.css('Mileage').text,
-        total_cost_without_vat: node.css('Net').text,
-        details: node.css('Details').text,
-        apply_vat: apply_vat(node),
-        vat_amount: node.css('Vat').text,
-      )
+      claim.disbursements.create(process_node(node))
     rescue StandardError
-      # If this work item fails we don't want to blow up the whole process
-    end
-
-    def disbursement_type(node)
-      {
-        'Car Travel' => 'car',
-        'Motorcycle Travel' => 'motorcycle',
-        'Bike Travel' => 'bike',
-      }.fetch(node.css('Disbursement').text, 'other')
-    end
-
-    def other_type(node)
-      return unless disbursement_type(node) == 'other'
-
-      node.css('Disbursement').text
-    end
-
-    def apply_vat(node)
-      node.css('Vat').text.to_i.positive? ? 'true' : 'false'
+      # If this fails we don't want to blow up the whole process
     end
 
     def build_message
