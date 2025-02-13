@@ -1,6 +1,7 @@
 module Nsm
   module Steps
     class WorkItemsController < Nsm::Steps::BaseController
+      include IncompleteItemsConcern
       before_action :set_default_table_sort_options
 
       def edit
@@ -30,13 +31,12 @@ module Nsm
         @sort_direction = params.fetch(:sort_direction, 'ascending')
       end
 
-      def incomplete_work_item_summary
-        @incomplete_work_item_summary ||= IncompleteItems.new(current_application.work_items, current_application, :work_items,
-                                                              self)
+      def item_type
+        :work_items
       end
 
-      def build_items_incomplete_flash
-        incomplete_work_item_summary.incomplete_items.blank? ? nil : { default: incomplete_work_item_summary.summary }
+      def items
+        current_application.work_items
       end
     end
   end

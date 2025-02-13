@@ -210,6 +210,9 @@ en:
           change: Change
           delete: Delete
           add_another_button: Add another disbursement
+          incomplete_summary:
+            one: '%{count} disbursement is incomplete'
+            other: '%{count} disbursements are incomplete'
           accessibility:
             disbursements_caption: Claimed disbursements
             item_id: itemTitle
