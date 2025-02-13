@@ -216,7 +216,7 @@ en:
             delete: delete
             duplicate: duplicate
             disbursement_type: disbursementType
-          summary: Summary of Disbursements
+          summary: Disbursement totals
           table_info_item: disbursement
         update:
           disbursement: disbursement
