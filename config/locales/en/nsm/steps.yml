@@ -196,9 +196,7 @@ en:
       disbursements:
         edit:
           page_title: Disbursements
-          heading:
-            one: You've added %{count} disbursement
-            other: You've added %{count} disbursements
+          heading: Disbursements
           headers:
             line_item: Item
             item: Cost type
