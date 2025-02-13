@@ -38,7 +38,7 @@ module Nsm
         if incomplete_work_item_summary.incomplete_items.blank?
           @items_incomplete_flash ||= nil
         else
-          @build_items_incomplete_flash ||= { default: incomplete_work_item_summary.summary }
+          @items_incomplete_flash ||= { default: incomplete_work_item_summary.summary }
         end
       end
     end

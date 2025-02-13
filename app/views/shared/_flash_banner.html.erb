@@ -1,7 +1,7 @@
 <% flash.each do |type, msg| %>
   <% next unless msg.is_a?(String) %>
 
-  <div class="govuk-notification-banner<%= type == :default ? "" : "govuk-notification-banner--#{type}" %>" role="alert"
+  <div class="govuk-notification-banner<%= type == :default ? "" : " govuk-notification-banner--#{type}" %>" role="alert"
        aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <% if type != :default %>
       <div class="govuk-notification-banner__header">
