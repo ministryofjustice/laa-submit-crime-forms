@@ -6,16 +6,16 @@ module Nsm
 
       def edit
         @items_incomplete_flash = build_items_incomplete_flash
-        @summary = CostSummary::WorkItems.new(current_application.work_items, current_application)
-        @pagy, @work_items = pagy_array(Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction))
+        @summary = CostSummary::WorkItems.new(items, current_application)
+        @pagy, @work_items = pagy_array(Sorters::WorkItemsSorter.call(items, @sort_by, @sort_direction))
         @form_object = WorkItemsForm.build(
           current_application
         )
       end
 
       def update
-        @summary = CostSummary::WorkItems.new(current_application.work_items, current_application)
-        @pagy, @work_items = pagy_array(Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction))
+        @summary = CostSummary::WorkItems.new(items, current_application)
+        @pagy, @work_items = pagy_array(Sorters::WorkItemsSorter.call(items, @sort_by, @sort_direction))
         update_and_advance(WorkItemsForm, as: :work_items)
       end
 
