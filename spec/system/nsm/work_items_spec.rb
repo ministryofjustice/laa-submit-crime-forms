@@ -252,5 +252,21 @@ RSpec.describe 'User can manage work items', type: :system do
 
     expect(page).to have_no_content 'You cannot save and continue if any work items are incomplete'
   end
+
+  it 'can display incomplete work items' do
+    work_item = claim.work_items.create
+
+    visit edit_nsm_steps_work_item_path(id: claim.id, work_item_id: work_item.id)
+
+    fill_in 'Hours', with: 1
+    fill_in 'Minutes', with: 1
+
+    click_on 'Save and come back later'
+
+    click_on 'Work items'
+
+    expect(page).to have_content '1 work item is incomplete: item 1'
+    expect(page).to have_css('.govuk-tag--red', text: 'Incomplete')
+  end
 end
 # rubocop:enable RSpec/ExampleLength
