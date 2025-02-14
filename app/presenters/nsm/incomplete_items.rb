@@ -12,7 +12,11 @@ module Nsm
 
     attr_reader :controller
 
+    EXPECTED_ITEM_TYPES = [:work_items, :disbursements].freeze
+
     def initialize(items, claim, type, controller)
+      raise "Invalid item type: #{type}" unless type.in?(EXPECTED_ITEM_TYPES)
+
       @items = items
       @claim = claim
       @type = type
@@ -37,6 +41,14 @@ module Nsm
     end
 
     private
+
+    def items
+      if type == :work_items
+        claim.work_items
+      elsif type == :disbursements
+        claim.disbursements
+      end
+    end
 
     def path_title(item)
       t("#{path_key}.item", index: item.position)

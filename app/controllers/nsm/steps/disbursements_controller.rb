@@ -15,15 +15,15 @@ module Nsm
           current_application
         )
 
-        @summary = CostSummary::Disbursements.new(items, current_application)
+        @summary = CostSummary::Disbursements.new(current_application.disbursements, current_application)
       end
 
       def update
         disbursements = Sorters::DisbursementsSorter.call(
-          items.by_age, @sort_by, @sort_direction
+          current_application.disbursements.by_age, @sort_by, @sort_direction
         )
         @pagy, @disbursements = pagy_array(disbursements)
-        @summary = CostSummary::Disbursements.new(items, current_application)
+        @summary = CostSummary::Disbursements.new(current_application.disbursements, current_application)
 
         update_and_advance(DisbursementsForm, as: :disbursements)
       end
@@ -42,10 +42,6 @@ module Nsm
 
       def item_type
         :disbursements
-      end
-
-      def items
-        current_application.disbursements
       end
     end
   end
