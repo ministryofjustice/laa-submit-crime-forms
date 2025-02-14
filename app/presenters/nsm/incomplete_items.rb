@@ -44,7 +44,7 @@ module Nsm
     def items
       if @type == :work_items
         @items ||= claim.work_items
-      elsif type == :disbursements
+      elsif @type == :disbursements
         @items ||= claim.disbursements
       end
     end
