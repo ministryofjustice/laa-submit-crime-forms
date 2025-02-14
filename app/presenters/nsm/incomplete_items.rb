@@ -14,17 +14,16 @@ module Nsm
 
     EXPECTED_ITEM_TYPES = [:work_items, :disbursements].freeze
 
-    def initialize(items, claim, type, controller)
+    def initialize(claim, type, controller)
       raise "Invalid item type: #{type}" unless type.in?(EXPECTED_ITEM_TYPES)
 
-      @items = items
       @claim = claim
       @type = type
       @controller = controller
     end
 
     def incomplete_items
-      @items.reject(&:complete?).sort_by(&:position)
+      items.reject(&:complete?).sort_by(&:position)
     end
 
     def summary
@@ -43,10 +42,10 @@ module Nsm
     private
 
     def items
-      if type == :work_items
-        claim.work_items
+      if @type == :work_items
+        @items ||= claim.work_items
       elsif type == :disbursements
-        claim.disbursements
+        @items ||= claim.disbursements
       end
     end
 

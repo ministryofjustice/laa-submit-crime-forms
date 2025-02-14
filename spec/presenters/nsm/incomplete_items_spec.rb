@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::IncompleteItems do
-  subject { described_class.new(items, claim, type, controller) }
+  subject { described_class.new(claim, type, controller) }
 
   let(:claim) { create(:claim) }
   let(:type) { nil }
   let(:controller) { ApplicationController.new }
-  let(:items) { [] }
 
   # context 'when the item type is work items' do
 
