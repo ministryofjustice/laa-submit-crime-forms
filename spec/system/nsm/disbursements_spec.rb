@@ -290,6 +290,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
     click_on 'Disbursements costs'
 
     expect(page).to have_content 'Disbursement totals'
+    expect(page).to have_content '1 disbursement is incomplete: item 1'
   end
 
   context 'when disbursements exist' do
