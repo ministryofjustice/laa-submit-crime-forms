@@ -152,6 +152,9 @@ en:
             duplicate: Duplicate
             delete: Delete
           unknown_date: Unknown date
+          items_imported:
+            one: You imported %{count} work item
+            other: You imported %{count} work items
       work_item_delete:
         edit:
           page_title: Are you sure you want to delete this work item?
@@ -214,6 +217,9 @@ en:
             one: '%{count} disbursement is incomplete'
             other: '%{count} disbursements are incomplete'
           item: item %{index}
+          items_imported:
+            one: You imported %{count} disbursement
+            other: You imported %{count} disbursements
           accessibility:
             disbursements_caption: Claimed disbursements
             item_id: itemTitle
