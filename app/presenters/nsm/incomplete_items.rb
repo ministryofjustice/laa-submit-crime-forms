@@ -42,9 +42,10 @@ module Nsm
     private
 
     def items
-      if @type == :work_items
+      case @type
+      when :work_items
         @items ||= @claim.work_items
-      elsif @type == :disbursements
+      when :disbursements
         @items ||= @claim.disbursements
       end
     end
@@ -54,9 +55,10 @@ module Nsm
     end
 
     def path_url(item)
-      if item.is_a? WorkItem
+      case item.is_a?
+      when WorkItem
         edit_nsm_steps_work_item_path(@claim, work_item_id: item.id)
-      elsif item.is_a? Disbursement
+      when Disbursement
         edit_nsm_steps_disbursements_path(@claim, disbursement_id: item.id)
       end
     end
