@@ -46,7 +46,12 @@ module Nsm
         @items ||= @claim.work_items
       elsif @type == :disbursements
         @items ||= @claim.disbursements
+      # :nocov:
+      else
+        #  no test coverage needed as inaccessible  due to initializer
+        false
       end
+      # :nocov:
     end
 
     def path_title(item)
@@ -58,7 +63,12 @@ module Nsm
         edit_nsm_steps_work_item_path(@claim, work_item_id: item.id)
       elsif item.is_a? Disbursement
         edit_nsm_steps_disbursements_path(@claim, disbursement_id: item.id)
+      # :nocov:
+      else
+        #  no test coverage needed as inaccessible  due to initializer
+        false
       end
+      # :nocov:
     end
 
     def path_key
