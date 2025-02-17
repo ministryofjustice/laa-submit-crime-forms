@@ -3,6 +3,8 @@ FactoryBot.define do
     submitter { Provider.find_by(uid: 'test-user') || create(:provider) }
     office_code { '1A123B' }
     laa_reference { 'LAA-n4AohV' }
+    imported_disbursements_viewed { false }
+    imported_work_items_viewed { false }
 
     transient do
       date { Date.new(2023, 4, 12) }
