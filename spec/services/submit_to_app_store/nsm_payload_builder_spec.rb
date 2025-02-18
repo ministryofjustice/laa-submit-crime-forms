@@ -80,7 +80,6 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'has_disbursements' => 'no',
             'hearing_outcome' => /\ACP\d{2}\z/,
             'id' => claim.id,
-            'import_date' => '2025-01-01T00:00:00.000Z',
             'is_other_info' => 'no',
             'laa_reference' => 'LAA-n4AohV',
             'letters_and_calls' => [
