@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_17_154511) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -120,8 +120,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_154511) do
     t.jsonb "viewed_steps", default: [], array: true
     t.boolean "gdpr_documents_deleted"
     t.datetime "import_date"
-    t.boolean "imported_work_items_viewed", default: false
-    t.boolean "imported_disbursements_viewed", default: false
     t.index ["core_search_fields"], name: "index_claims_on_core_search_fields", using: :gin
     t.index ["firm_office_id"], name: "index_claims_on_firm_office_id"
     t.index ["solicitor_id"], name: "index_claims_on_solicitor_id"
