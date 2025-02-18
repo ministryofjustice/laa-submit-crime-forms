@@ -20,10 +20,16 @@ module Nsm
       @claim = claim
       @type = type
       @controller = controller
+      @items ||= case @type
+                 when :work_items then @claim.work_items
+                 when :disbursements then @claim.disbursements
+                 else
+                   raise 'Cannot create items from this type'
+                 end
     end
 
     def incomplete_items
-      items.reject(&:complete?).sort_by(&:position)
+      @items.reject(&:complete?).sort_by(&:position)
     end
 
     def summary
@@ -40,19 +46,6 @@ module Nsm
     end
 
     private
-
-    def items
-      if @type == :work_items
-        @items ||= @claim.work_items
-      elsif @type == :disbursements
-        @items ||= @claim.disbursements
-      # :nocov:
-      else
-        #  no test coverage needed as inaccessible  due to initializer
-        false
-      end
-      # :nocov:
-    end
 
     def path_title(item)
       t("#{path_key}.item", index: item.position)
