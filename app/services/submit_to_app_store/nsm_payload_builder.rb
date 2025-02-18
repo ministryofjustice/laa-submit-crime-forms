@@ -68,7 +68,7 @@ class SubmitToAppStore
                                allowed_calls_uplift allowed_letters allowed_letters_uplift allowed_youth_court_fee
                                youth_court_fee_adjustment_comment calls_adjustment_comment letters_adjustment_comment
                                state core_search_fields submit_to_app_store_completed send_notification_email_completed
-                               originally_submitted_at imported_work_items_viewed imported_disbursements_viewed import_date])
+                               originally_submitted_at])
     end
 
     def firm_office

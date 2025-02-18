@@ -256,6 +256,4 @@ claims:
   case_outcome_other_info: false
   gdpr_documents_deleted: false
   import_date: false
-  imported_disbursements_viewed: false
-  imported_work_items_viewed: false
 
