@@ -2,8 +2,12 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/ExampleLength
 RSpec.describe 'User can manage work items', type: :system do
-  let(:claim) { create(:claim, :case_type_magistrates, :firm_details, claim_type: ClaimType::NON_STANDARD_MAGISTRATE, import_date: import_date) }
+  let(:claim) do
+    create(:claim, :case_type_magistrates, :firm_details, claim_type: ClaimType::NON_STANDARD_MAGISTRATE,
+import_date: import_date)
+  end
   let(:import_date) { nil }
+
   before do
     visit provider_saml_omniauth_callback_path
   end
@@ -269,12 +273,12 @@ RSpec.describe 'User can manage work items', type: :system do
     expect(page).to have_css('.govuk-tag--red', text: 'Incomplete')
   end
 
-  # TODO (CRM457-2388): these tests aren't how they would naturally happen
-  # we should update them once the import functionality has been completed
+  # TODO: (CRM457-2388): these tests aren't how they would naturally happen
+  #  we should update them once the import functionality has been completed
   context 'claim has been imported' do
     let(:import_date) { Date.new(2025, 1, 12) }
 
-    it 'will show the banner saying work items were imported only once' do
+    it 'shows the banner saying work items were imported only once' do
       work_item = claim.work_items.create
       work_item.update(created_at: Date.new(2025, 1, 11))
 
@@ -304,7 +308,7 @@ RSpec.describe 'User can manage work items', type: :system do
       expect(page).not_to have_css('.govuk-notification-banner__heading', text: 'You imported 1 work item')
     end
 
-    it 'it shows additional content in banner if work items incomplete' do
+    it 'shows additional content in banner if work items incomplete' do
       work_item = claim.work_items.create
       work_item.update(created_at: Date.new(2025, 1, 11))
 
