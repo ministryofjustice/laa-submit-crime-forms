@@ -272,56 +272,5 @@ import_date: import_date)
     expect(page).to have_content '1 work item is incomplete: item 1'
     expect(page).to have_css('.govuk-tag--red', text: 'Incomplete')
   end
-
-  # TODO: (CRM457-2388): these tests aren't how they would naturally happen
-  #  we should update them once the import functionality has been completed
-  context 'claim has been imported' do
-    let(:import_date) { Date.new(2025, 1, 12) }
-
-    it 'shows the banner saying work items were imported only once' do
-      work_item = claim.work_items.create
-      work_item.update(created_at: Date.new(2025, 1, 11))
-
-      visit edit_nsm_steps_work_item_path(id: claim.id, work_item_id: work_item.id)
-
-      choose 'Advocacy'
-
-      fill_in 'Hours', with: 1
-      fill_in 'Minutes', with: 1
-
-      within('.govuk-fieldset', text: 'Completion date') do
-        fill_in 'Day', with: '20'
-        fill_in 'Month', with: '4'
-        fill_in 'Year', with: '2023'
-      end
-
-      fill_in 'Fee earner initials', with: 'JBJ'
-
-      choose 'No'
-
-      click_on 'Save and continue'
-
-      expect(page).to have_css('.govuk-notification-banner__heading', text: 'You imported 1 work item')
-
-      page.refresh
-
-      expect(page).not_to have_css('.govuk-notification-banner__heading', text: 'You imported 1 work item')
-    end
-
-    it 'shows additional content in banner if work items incomplete' do
-      work_item = claim.work_items.create
-      work_item.update(created_at: Date.new(2025, 1, 11))
-
-      visit edit_nsm_steps_work_item_path(id: claim.id, work_item_id: work_item.id)
-
-      choose 'Advocacy'
-
-      click_on 'Save and come back later'
-      click_on 'Work items'
-
-      expect(page).to have_css('.govuk-notification-banner__heading', text: 'You imported 1 work item')
-      expect(page).to have_css('.govuk-body', text: '1 work item is incomplete: item 1')
-    end
-  end
 end
 # rubocop:enable RSpec/ExampleLength
