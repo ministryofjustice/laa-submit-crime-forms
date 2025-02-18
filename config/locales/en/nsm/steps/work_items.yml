@@ -20,8 +20,8 @@ en:
           updated: You've updated the work item
       work_items:
         edit:
-          page_title: Work Items
-          heading: Work Items
+          page_title: Work items
+          heading: Work items
           change: Change
           duplicate: Duplicate
           update: Update
