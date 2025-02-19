@@ -57,7 +57,7 @@ RSpec.describe Nsm::IncompleteItems do
     let(:type) { 'garbage' }
 
     it 'raises error on initialization' do
-      expect { subject }.to raise_error('Cannot create items from type: garbage')
+      expect { subject }.to raise_error("Cannot create items from type: 'garbage'")
     end
   end
 end
