@@ -58,7 +58,7 @@ module Nsm
     end
 
     def path_symbols
-      # disbursements has a custom multi-step flow so need to
+      #  disbursements has a custom multi-step flow so need to
       # explicitly state the path
       {
         route: @type == :disbursements ? :disbursement_type : @type.to_s.singularize.to_sym,
