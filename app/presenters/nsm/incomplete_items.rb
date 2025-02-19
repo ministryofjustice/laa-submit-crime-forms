@@ -22,7 +22,7 @@ module Nsm
                  when :work_items then @claim.work_items
                  when :disbursements then @claim.disbursements
                  else
-                   raise "Cannot create items from type: #{type}"
+                   raise "Cannot create items from type: '#{type}'"
                  end
     end
 
