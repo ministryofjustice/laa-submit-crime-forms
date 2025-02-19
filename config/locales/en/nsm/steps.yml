@@ -216,6 +216,9 @@ en:
           incomplete_summary:
             one: '%{count} disbursement is incomplete'
             other: '%{count} disbursements are incomplete'
+          error_summary:
+            one: 'You cannot save and continue as %{count} disbursement is incomplete:'
+            other: 'You cannot save and continue as %{count} disbursements are incomplete:'
           item: item %{index}
           items_imported:
             one: You imported %{count} disbursement

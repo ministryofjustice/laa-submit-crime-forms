@@ -549,12 +549,10 @@ en:
               blank: Select yes if you have been granted prior authority for this disbursement
             add_another:
               blank: Please select if you want to add another disbursement or not
-              invalid_item: You cannot save and continue if any disbursements are incomplete
         nsm/steps/disbursements_form:
           attributes:
             add_another:
               blank: "Select yes if you want to add another disbursement"
-              invalid_item: "You cannot save and continue if any disbursements are incomplete"
         nsm/steps/defendant_summary_form:
           attributes:
             add_another:
@@ -564,7 +562,6 @@ en:
           attributes:
             add_another:
               blank: "Select yes if you want to add another work item"
-              invalid_item: "You cannot save and continue if any work items are incomplete"
         nsm/steps/supporting_evidence_form:
           attributes:
             supporting_evidence:

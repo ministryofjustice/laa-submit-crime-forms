@@ -31,7 +31,12 @@ module Nsm
     end
 
     def summary
-      "#{t("#{path_key}.incomplete_summary", count: incomplete_items.count)}: #{links}"
+      "#{t("#{path_key}.incomplete_summary", count: incomplete_items.count)} #{links}"
+    end
+
+    def error_summary
+      ApplicationController.helpers.sanitize("#{t("#{path_key}.error_summary", count: incomplete_items.count)} #{links}",
+                                             tags: %w[a])
     end
 
     def links
@@ -52,7 +57,7 @@ module Nsm
     def path_url(item)
       # programatically generate path method with polymorphic path
       # e.g edit_nsm_steps_work_item, id: @claim.id, work_item_id: item.id
-      edit_polymorphic_path([:nsm, :steps, path_symbols[:route]], { path_symbols[:id] => item.id })
+      edit_polymorphic_path([:nsm, :steps, path_symbols[:route]], { path_symbols[:id] => item.id, :id => @claim.id })
     end
 
     def path_symbols
