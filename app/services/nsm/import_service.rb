@@ -56,11 +56,11 @@ module Nsm
     end
 
     def build_message
-      I18n.t('nsm.imports.message',
-             disbursement: I18n.t('nsm.imports.disbursement').pluralize(claim.disbursements.count),
-             disbursement_count: claim.disbursements.count,
-             work_item: I18n.t('nsm.imports.work_item').pluralize(claim.work_items.count),
-             work_item_count: claim.work_items.count)
+      'test'
+    end
+
+    def message_content
+      "#{I18n.t('nsm.imports.disbursements_message', count: claim.disbursements.count)} #{I18n.t('nsm.imports.work_items_message', count: claim.work_items.count)} #{I18n.t('nsm.imports.message_end')}"
     end
   end
 end

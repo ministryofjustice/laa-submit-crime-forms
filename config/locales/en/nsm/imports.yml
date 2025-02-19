@@ -5,9 +5,14 @@ en:
         title: Import a claim
         explanation: If your case management software can export your claim as an XML file, you can upload it here and we will automatically load some details from that file.
         file_upload: Select the XML file for the case you want to claim for.
-      message: We imported %{work_item_count} %{work_item} and %{disbursement_count} %{disbursement}. You will need to enter all other details manually, and check carefully the imported details.
-      disbursement: disbursement
-      work_item: work item
+      disbursements_message:
+        one: 'You%{count} disbursement.'
+        other: '%{count} disbursements.'
+      work_items_message:
+        one: 'You imported %{count} work item'
+        other: 'You imported %{count} work items'
+      message_end: To submit the claim, check the uploaded claim details and update any incomplete information.
+      message_title: Claim imported
   activemodel:
     errors:
       models:

@@ -12,7 +12,7 @@ module Nsm
       if @form_object.valid?
         initialize_application do |claim|
           success_message = ImportService.call(claim, @form_object)
-
+          binding.pry
           if success_message
             redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: success_message }
           else
