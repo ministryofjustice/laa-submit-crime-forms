@@ -4,6 +4,7 @@ module IncompleteItemsConcern
   private
 
   def incomplete_items_summary
+    binding.pry
     @incomplete_items_summary ||= Nsm::IncompleteItems.new(current_application, item_type, self)
   end
 
