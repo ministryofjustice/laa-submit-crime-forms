@@ -12,6 +12,6 @@ class Disbursement < ApplicationRecord
   end
 
   def imported?
-    self.created_at < current_application.import_date
+    created_at < current_application.import_date
   end
 end
