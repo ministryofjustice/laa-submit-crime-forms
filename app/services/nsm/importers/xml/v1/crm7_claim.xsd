@@ -14,13 +14,6 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="stageReachedType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="prog"/>
-      <xs:enumeration value="prom"/>
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:simpleType name="genderType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="m"/>
@@ -168,6 +161,15 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="mainOffenceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="summary_only"/>
+      <xs:enumeration value="either_way"/>
+      <xs:enumeration value="indictable_only"/>
+      <xs:enumeration value="prescribed_proceedings"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:element name="claim">
     <xs:complexType>
       <xs:sequence>
@@ -175,12 +177,15 @@
         <xs:element name="arrest_warrant_date" type="xs:date" minOccurs="0"/>
         <xs:element name="assessment_comment" type="xs:string" minOccurs="0"/>
         <xs:element name="assigned_counsel" type="booleanString" minOccurs="0"/>
+        <xs:element name="calls" type="xs:integer" minOccurs="0"/>
+        <xs:element name="calls_uplift" type="xs:decimal" minOccurs="0"/>
         <xs:element name="claim_type" type="claimType" minOccurs="0"/>
         <xs:element name="cntp_date" type="xs:date" minOccurs="0"/>
         <xs:element name="cntp_order" type="xs:string" minOccurs="0"/>
         <xs:element name="concluded" type="booleanString" minOccurs="0"/>
         <xs:element name="conclusion" type="xs:string" minOccurs="0"/>
         <xs:element name="court" type="xs:string" minOccurs="0"/>
+        <xs:element name="court_in_undesignated_area" type="booleanString" minOccurs="0"/>
         <xs:element name="cracked_trial_date" type="xs:date" minOccurs="0"/>
         <xs:element name="created_at" type="xs:dateTime" minOccurs="0"/>
         <xs:element name="defence_statement" type="xs:integer" minOccurs="0"/>
@@ -194,6 +199,7 @@
                     <xs:element name="last_name" type="xs:string"/>
                     <xs:element name="maat" type="xs:string" minOccurs="0"/>
                     <xs:element name="position" type="xs:integer"/>
+                    <xs:element name="main" type="xs:boolean"/>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
@@ -225,7 +231,6 @@
         <xs:element name="firm_office" minOccurs="0">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="account_number" type="xs:string"/>
               <xs:element name="address_line_1" type="xs:string"/>
               <xs:element name="address_line_2" type="xs:string" minOccurs="0"/>
               <xs:element name="name" type="xs:string"/>
@@ -240,12 +245,16 @@
         <xs:element name="has_disbursements" type="booleanString" minOccurs="0"/>
         <xs:element name="hearing_outcome" type="hearingOutcomeType" minOccurs="0"/>
         <xs:element name="is_other_info" type="booleanString" minOccurs="0"/>
+        <xs:element name="letters" type="xs:integer" minOccurs="0"/>
+        <xs:element name="letters_uplift" type="xs:decimal" minOccurs="0"/>
         <xs:element name="main_offence" type="xs:string" minOccurs="0"/>
         <xs:element name="main_offence_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="main_offence_type" type="mainOffenceType" minOccurs="0"/>
         <xs:element name="matter_type" type="matterType" minOccurs="0"/>
         <xs:element name="number_of_hearing" type="xs:integer" minOccurs="0"/>
         <xs:element name="number_of_witnesses" type="xs:integer" minOccurs="0"/>
         <xs:element name="office_code" type="xs:string" minOccurs="0"/>
+        <xs:element name="office_in_undesignated_area" type="booleanString" minOccurs="0"/>
         <xs:element name="other_info" type="xs:string" minOccurs="0"/>
         <xs:element name="preparation_time" type="booleanString" minOccurs="0"/>
         <xs:element name="prosecution_evidence" type="xs:integer" minOccurs="0"/>
@@ -259,9 +268,32 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="representation_order_withdrawn_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="remitted_to_magistrate" type="booleanString" minOccurs="0"/>
+        <xs:element name="remitted_to_magistrate_date" type="xs:date" minOccurs="0"/>
         <xs:element name="rep_order_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="stage_reached" type="stageReachedType" minOccurs="0"/>
+        <xs:element name="solicitor" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="first_name" type="xs:string"/>
+              <xs:element name="last_name" type="xs:string"/>
+              <xs:element name="reference_number" type="xs:string" minOccurs="0"/>
+              <xs:element name="contact_first_name" type="xs:string"/>
+              <xs:element name="contact_last_name" type="xs:string"/>
+              <xs:element name="contact_email" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="supplemental_claim" type="booleanString" minOccurs="0"/>
+        <xs:element name="time_spent" type="xs:integer"/>
         <xs:element name="ufn" type="xs:string"/>
+        <xs:element name="unassigned_counsel" type="booleanString" minOccurs="0"/>
+        <xs:element name="wasted_costs" type="booleanString" minOccurs="0"/>
+        <xs:element name="work_after" type="booleanString" minOccurs="0"/>
+        <xs:element name="work_after_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="work_before" type="booleanString" minOccurs="0"/>
+        <xs:element name="work_before_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="work_completed_date" type="xs:date" minOccurs="0"/>
         <xs:element name="work_items" minOccurs="0">
           <xs:complexType>
             <xs:sequence>
