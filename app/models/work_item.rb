@@ -26,8 +26,4 @@ class WorkItem < ApplicationRecord
 
     WorkTypes::VALUES.detect { _1.to_s == work_type }.display?(application)
   end
-
-  def imported?
-    created_at < current_application.import_date
-  end
 end
