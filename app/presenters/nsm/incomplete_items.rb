@@ -52,16 +52,18 @@ module Nsm
     end
 
     def path_url(item)
-      if item.is_a? WorkItem
-        edit_nsm_steps_work_item_path(@claim, work_item_id: item.id)
-      elsif item.is_a? Disbursement
-        edit_nsm_steps_disbursements_path(@claim, disbursement_id: item.id)
-      # :nocov:
-      else
-        #  no test coverage needed as inaccessible  due to initializer
-        false
-      end
-      # :nocov:
+      # programatically generate path method with polymorphic path
+      # e.g edit_nsm_steps_work_item, id: @claim.id, work_item_id: item.id
+      edit_polymorphic_path([:nsm, :steps, path_symbols[:route]], { path_symbols[:id] => item.id })
+    end
+
+    def path_symbols
+      # disbursements has a custom multi-step flow so need to
+      # explicitly state the path
+      {
+        route: @type == :disbursements ? :disbursement_type : @type.to_s.singularize.to_sym,
+        id: :"#{@type.to_s.singularize}_id"
+      }
     end
 
     def path_key
