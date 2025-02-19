@@ -10,4 +10,8 @@ class Disbursement < ApplicationRecord
   def position
     super || claim.disbursement_position(self)
   end
+
+  def imported?
+    self.created_at < current_application.import_date
+  end
 end

@@ -10,8 +10,4 @@ module IncompleteItemsConcern
   def build_items_incomplete_flash
     incomplete_items_summary.incomplete_items.blank? ? nil : { default: incomplete_items_summary.summary }
   end
-
-  def imported_items_count
-    current_application.send(item_type).select { _1.created_at < current_application.import_date }.count
-  end
 end
