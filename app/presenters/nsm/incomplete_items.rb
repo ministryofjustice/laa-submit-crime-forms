@@ -15,8 +15,6 @@ module Nsm
     EXPECTED_ITEM_TYPES = [:work_items, :disbursements].freeze
 
     def initialize(claim, type, controller)
-      raise "Invalid item type: #{type}" unless type.in?(EXPECTED_ITEM_TYPES)
-
       @claim = claim
       @type = type
       @controller = controller
@@ -24,7 +22,7 @@ module Nsm
                  when :work_items then @claim.work_items
                  when :disbursements then @claim.disbursements
                  else
-                   raise 'Cannot create items from this type'
+                   raise "Cannot create items from type: #{type}"
                  end
     end
 
