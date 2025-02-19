@@ -233,7 +233,7 @@ import_date: import_date)
 
     click_on 'Save and continue'
 
-    expect(page).to have_content 'You cannot save and continue if any work items are incomplete'
+    expect(page).to have_content 'You cannot save and continue as 1 work item is incomplete: item 1'
 
     click_on 'Incomplete'
 
@@ -254,7 +254,7 @@ import_date: import_date)
     choose 'No'
     click_on 'Save and continue'
 
-    expect(page).to have_no_content 'You cannot save and continue if any work items are incomplete'
+    expect(page).to have_no_content 'You cannot save and continue as 1 work item is incomplete: item 1'
   end
 
   it 'can display incomplete work items' do
