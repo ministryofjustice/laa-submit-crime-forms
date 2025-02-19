@@ -237,7 +237,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
     click_on 'Save and continue'
 
-    expect(page).to have_content 'You cannot save and continue if any disbursements are incomplete'
+    expect(page).to have_content 'You cannot save and continue as 1 disbursement is incomplete: item 1'
 
     click_on 'Car mileage'
     click_on 'Save and continue'
@@ -253,7 +253,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
     choose 'No'
     click_on 'Save and continue'
 
-    expect(page).not_to have_content 'You cannot save and continue if any disbursements are incomplete'
+    expect(page).not_to have_content 'You cannot save and continue as 1 disbursement is incomplete: item 1'
   end
 
   it 'can add a mix of complete and incomplete disbursements' do
@@ -510,7 +510,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
       click_on 'Save and continue'
 
       expect(page).to have_selector('.govuk-error-summary',
-                                    text: 'You cannot save and continue if any disbursements are incomplete')
+                                    text: 'You cannot save and continue as 1 disbursement is incomplete: item 1')
 
       expect(all('table').last.all('td, th').map(&:text)).to eq(
         [

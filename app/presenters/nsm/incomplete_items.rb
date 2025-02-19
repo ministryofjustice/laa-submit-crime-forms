@@ -31,11 +31,11 @@ module Nsm
     end
 
     def summary
-      "#{t("#{path_key}.incomplete_summary", count: incomplete_items.count)} #{links}"
+      "#{t("#{path_key}.incomplete_summary", count: incomplete_items.count)}: #{links}"
     end
 
     def error_summary
-      ApplicationController.helpers.sanitize("#{t("#{path_key}.error_summary", count: incomplete_items.count)} #{links}",
+      ApplicationController.helpers.sanitize("#{t("#{path_key}.error_summary", count: incomplete_items.count)}: #{links}",
                                              tags: %w[a])
     end
 
