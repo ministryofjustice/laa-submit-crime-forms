@@ -150,6 +150,23 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
     end
   end
 
+  describe '#enhanced_rates_if_uplifts' do
+    context 'when no uplifts present' do
+      let(:hash) do
+        xml_hash.except!('calls_uplift', 'letters_uplift')
+        xml_hash.tap { |h| h['work_items']['work_item'].each { _1.delete('uplift') } }
+      end
+
+      it 'enhanced_rates_claimed not included if uplifts absent' do
+        expect(claim.reasons_for_claim).not_to include('enhanced_rates_claimed')
+      end
+    end
+
+    it 'adds enhanced_rates_claimed if uplifts present' do
+      expect(claim.reasons_for_claim).to include('enhanced_rates_claimed')
+    end
+  end
+
   describe '#create_solicitor' do
     it 'creates solicitor if present' do
       expect(claim.solicitor).to have_attributes(first_name: 'Mickey',

@@ -135,7 +135,6 @@
   <xs:simpleType name="reasonForClaimType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="core_costs_exceed_higher_limit"/>
-      <xs:enumeration value="enhanced_rates_claimed"/>
       <xs:enumeration value="counsel_or_agent_assigned"/>
       <xs:enumeration value="representation_order_withdrawn"/>
       <xs:enumeration value="extradition"/>

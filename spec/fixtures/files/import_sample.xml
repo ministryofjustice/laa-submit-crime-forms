@@ -81,7 +81,6 @@
   <plea_category>category_1a</plea_category>
   <reason_for_claim_other_details>test</reason_for_claim_other_details>
   <reasons_for_claim>
-    <reason>enhanced_rates_claimed</reason>
     <reason>core_costs_exceed_higher_limit</reason>
     <reason>other</reason>
     <reason>representation_order_withdrawn</reason>
