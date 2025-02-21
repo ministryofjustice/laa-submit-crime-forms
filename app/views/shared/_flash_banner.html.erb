@@ -20,7 +20,7 @@
           <%= sanitize(msg['title'], tags: %w[a]) %>
         </p>
         <p class="govuk-body">
-          <%= sanitize(msg['content'], tags: %w[a p]) %>
+          <%= sanitize(msg['content'], tags: %w[a p br]) %>
         </p>
       <% end %>
     </div>
