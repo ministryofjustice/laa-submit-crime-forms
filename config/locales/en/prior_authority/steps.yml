@@ -118,6 +118,7 @@ en:
           related_to_post_mortem: Is this related to a post-mortem?
           total_cost: Total cost
         cost_fields:
+          multiple_rates: If there are multiple rates, enter one here and add the others as additional costs.
           user_chosen_cost_type: How are you being charged?
           per_item: Charged per item
           per_hour: Charged by the hour

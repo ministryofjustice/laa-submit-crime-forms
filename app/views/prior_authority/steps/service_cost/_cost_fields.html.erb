@@ -1,3 +1,5 @@
+<p><%= t(".multiple_rates") %></p>
+
 <% if @form_object.variable_cost_type? %>
   <%= form.govuk_radio_buttons_fieldset :user_chosen_cost_type, legend: { text: t('.user_chosen_cost_type'), size: 's' } do %>
     <%= form.govuk_radio_button :user_chosen_cost_type, @form_object.class::PER_ITEM, label: { text: t('.per_item') }, link_errors: true do %>
