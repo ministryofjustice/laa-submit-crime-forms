@@ -40,9 +40,9 @@ module Nsm
     end
 
     def links
-      incomplete_items.map do |item|
+      incomplete_items.each_with_index.map do |item, index|
         govuk_link_to(
-          path_title(item),
+          path_title(item, index + 1),
           path_url(item)
         )
       end.join(', ')
@@ -50,8 +50,8 @@ module Nsm
 
     private
 
-    def path_title(item)
-      t("#{path_key}.item", index: item.position)
+    def path_title(item, index)
+      t("#{path_key}.item", index: index)
     end
 
     def path_url(item)
