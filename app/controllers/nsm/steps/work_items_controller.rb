@@ -1,9 +1,11 @@
 module Nsm
   module Steps
     class WorkItemsController < Nsm::Steps::BaseController
+      include IncompleteItemsConcern
       before_action :set_default_table_sort_options
 
       def edit
+        @items_incomplete_flash = build_items_incomplete_flash
         @summary = CostSummary::WorkItems.new(current_application.work_items, current_application)
         @pagy, @work_items = pagy_array(Sorters::WorkItemsSorter.call(current_application.work_items, @sort_by, @sort_direction))
         @form_object = WorkItemsForm.build(
@@ -27,6 +29,10 @@ module Nsm
         default = 'date'
         @sort_by = params.fetch(:sort_by, default)
         @sort_direction = params.fetch(:sort_direction, 'ascending')
+      end
+
+      def item_type
+        :work_items
       end
     end
   end

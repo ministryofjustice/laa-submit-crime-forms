@@ -63,6 +63,7 @@ FactoryBot.define do
       signatory_name { Faker::Name.name }
       has_disbursements { 'no' }
       include_youth_court_fee { true }
+      import_date { Date.new(2025, 1, 1) }
     end
 
     trait :case_type_magistrates do
