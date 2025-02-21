@@ -35,8 +35,8 @@ module Nsm
 
         def build_message
           {
-            title: I18n.t('nsm.imports.message_title'),
-            content: message_content
+            'title' => I18n.t('nsm.imports.message_title'),
+            'content' => message_content
           }
         end
 

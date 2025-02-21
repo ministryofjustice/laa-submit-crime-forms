@@ -17,10 +17,10 @@
         </p>
       <% elsif msg.is_a?(Hash) %>
         <p class="govuk-notification-banner__heading">
-          <%= sanitize(msg[:title], tags: %w[a]) %>
+          <%= sanitize(msg['title'], tags: %w[a]) %>
         </p>
         <p class="govuk-body">
-          <%= sanitize(msg[:content], tags: %w[a p br]) %>
+          <%= sanitize(msg['content'], tags: %w[a p br]) %>
         </p>
       <% end %>
     </div>
