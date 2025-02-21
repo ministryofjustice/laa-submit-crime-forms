@@ -16,7 +16,7 @@ feature_flags:
     production: true
   import_claims:
     local: <%= ENV.fetch("IMPORT_CLAIMS", true) %>
-    development: false
+    development: true
     uat: false
     production: false
   provider_api_v1:
