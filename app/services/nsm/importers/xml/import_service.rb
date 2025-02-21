@@ -43,7 +43,7 @@ module Nsm
         def message_content
           "#{I18n.t('nsm.imports.work_items_message', count: @claim.work_items.count)}
             #{I18n.t('nsm.imports.disbursements_message', count: @claim.disbursements.count)}
-            <br>#{I18n.t('nsm.imports.message_end')}"
+            <br><br>#{I18n.t('nsm.imports.message_end')}"
         end
 
         def schema
