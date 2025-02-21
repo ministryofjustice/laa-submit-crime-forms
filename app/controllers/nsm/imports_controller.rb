@@ -12,7 +12,6 @@ module Nsm
       if @form_object.valid?
         initialize_application do |claim|
           success_message = Nsm::Importers::Xml::ImportService.call(claim, @form_object)
-          Rails.logger.info success_message
           if success_message
             redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: success_message }
           else
