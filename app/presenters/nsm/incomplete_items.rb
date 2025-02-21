@@ -50,8 +50,8 @@ module Nsm
 
     private
 
-    def path_title(item, index)
-      t("#{path_key}.item", index: index)
+    def path_title(_item, index)
+      t("#{path_key}.item", index:)
     end
 
     def path_url(item)
