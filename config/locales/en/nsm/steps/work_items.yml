@@ -34,11 +34,11 @@ en:
           table_info_item: work item
           item: item %{index}
           incomplete_summary:
-            one: '%{count} work item is incomplete'
-            other: '%{count} work items are incomplete'
+            one: '%{count} work item has incorrect or incomplete information'
+            other: '%{count} work items have incorrect or incomplete information'
           error_summary:
-            one: 'You cannot save and continue as %{count} work item is incomplete'
-            other: 'You cannot save and continue as %{count} work items are incomplete'
+            one: 'You cannot save and continue as %{count} work item has incorrect or incomplete information'
+            other: 'You cannot save and continue as %{count} work items have incorrect or incomplete information'
           accessibility:
             item: Item
             work_summary_caption: 'Summary of work items'
