@@ -18,12 +18,9 @@ module Nsm
       @claim = claim
       @type = type
       @controller = controller
-      @items ||= case @type
-                 when :work_items then @claim.work_items
-                 when :disbursements then @claim.disbursements
-                 else
-                   raise "Cannot create items from type: '#{type}'"
-                 end
+      raise "Cannot create items from '#{type}' for a Claim" unless claim.respond_to?(type)
+
+      @items = claim.send(type)
     end
 
     def incomplete_items
@@ -34,15 +31,10 @@ module Nsm
       "#{t("#{path_key}.incomplete_summary", count: incomplete_items.count)}: #{links}"
     end
 
-    def error_summary
-      ApplicationController.helpers.sanitize("#{t("#{path_key}.error_summary", count: incomplete_items.count)}: #{links}",
-                                             tags: %w[a])
-    end
-
     def links
       incomplete_items.each_with_index.map do |item, index|
         govuk_link_to(
-          path_title(item, index + 1),
+          t("#{path_key}.item", index: index + 1),
           path_url(item)
         )
       end.join(', ')
@@ -50,23 +42,15 @@ module Nsm
 
     private
 
-    def path_title(_item, index)
-      t("#{path_key}.item", index:)
-    end
-
     def path_url(item)
-      # programatically generate path method with polymorphic path
-      # e.g edit_nsm_steps_work_item, id: @claim.id, work_item_id: item.id
-      edit_polymorphic_path([:nsm, :steps, path_symbols[:route]], { path_symbols[:id] => item.id, :id => @claim.id })
+      edit_polymorphic_path([:nsm, :steps, path_route], { "#{@type.to_s.singularize}_id": item.id, id: @claim.id })
     end
 
-    def path_symbols
-      #  disbursements has a custom multi-step flow so need to
-      # explicitly state the path
-      {
-        route: @type == :disbursements ? :disbursement_type : @type.to_s.singularize.to_sym,
-        id: :"#{@type.to_s.singularize}_id"
-      }
+    def path_route
+      case @type
+      when :disbursements then :disbursement_type
+      else @type.to_s.singularize.to_sym
+      end
     end
 
     def path_key

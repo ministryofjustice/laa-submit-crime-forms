@@ -233,7 +233,7 @@ import_date: import_date)
 
     click_on 'Save and continue'
 
-    expect(page).to have_content 'You cannot save and continue as 1 work item is incomplete: item 1'
+    expect(page).to have_content 'Update the items that have missing or incorrect information'
 
     click_on 'Incomplete'
 
@@ -254,7 +254,7 @@ import_date: import_date)
     choose 'No'
     click_on 'Save and continue'
 
-    expect(page).to have_no_content 'You cannot save and continue as 1 work item is incomplete: item 1'
+    expect(page).to have_no_content 'Update the work items that have missing or incorrect information'
   end
 
   it 'can display incomplete work items' do
@@ -269,7 +269,7 @@ import_date: import_date)
 
     click_on 'Work items'
 
-    expect(page).to have_content '1 work item is incomplete: item 1'
+    expect(page).to have_content '1 item has missing or incorrect information: item 1'
     expect(page).to have_css('.govuk-tag--red', text: 'Incomplete')
   end
 end

@@ -214,11 +214,11 @@ en:
           delete: Delete
           add_another_button: Add another disbursement
           incomplete_summary:
-            one: '%{count} disbursement has incorrect or incomplete information'
-            other: '%{count} disbursements have incorrect or incomplete information'
+            one: '%{count} item has missing or incomplete information'
+            other: '%{count} items have missing or incomplete information'
           error_summary:
-            one: 'You cannot save and continue as %{count} disbursement has incorrect or incomplete information'
-            other: 'You cannot save and continue as %{count} disbursements have incorrect or incomplete information'
+            one: 'You cannot save and continue as %{count} item has missing or incorrect information'
+            other: 'You cannot save and continue as %{count} items have missing or incorrect information'
           item: item %{index}
           items_imported:
             one: You imported %{count} disbursement
