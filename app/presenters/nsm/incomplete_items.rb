@@ -12,7 +12,7 @@ module Nsm
 
     attr_reader :controller
 
-    EXPECTED_ITEM_TYPES = [:work_items, :disbursements].freeze
+    EXPECTED_ITEM_TYPES = [:work_items, :disbursements, :defendants].freeze
 
     def initialize(claim, type, controller)
       @claim = claim
@@ -49,6 +49,7 @@ module Nsm
     def path_route
       case @type
       when :disbursements then :disbursement_type
+      when :defendants then :defendant_details
       else @type.to_s.singularize.to_sym
       end
     end

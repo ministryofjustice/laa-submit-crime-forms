@@ -56,6 +56,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
 
       before do
         allow(form_class).to receive(:new).and_return(form_object)
+        allow(form_object).to receive(:valid?).and_return(true)
       end
 
       context 'when the form saves successfully' do

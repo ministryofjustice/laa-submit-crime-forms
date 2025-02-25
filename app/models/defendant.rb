@@ -8,4 +8,8 @@ class Defendant < ApplicationRecord
   def full_name
     [first_name, last_name].join(' ')
   end
+
+  def complete?
+    Nsm::Steps::DefendantDetailsForm.build(self, application: defendable).valid?
+  end
 end
