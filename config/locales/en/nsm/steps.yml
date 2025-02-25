@@ -210,7 +210,7 @@ en:
           unknown_date: Unknown date
           add_another: Do you want to add another disbursement?
           duplicate: Duplicate
-          change: Change
+          change: Update
           delete: Delete
           add_another_button: Add another disbursement
           incomplete_summary:
