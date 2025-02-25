@@ -1,17 +1,28 @@
 <% flash.each do |type, msg| %>
-  <% next unless msg.is_a?(String) %>
+  <% next unless msg.is_a?(String) || msg.is_a?(Hash) %>
 
-  <div class="govuk-notification-banner govuk-notification-banner--<%= type %>" role="alert"
+  <div class="govuk-notification-banner<%= type == :default ? "" : " govuk-notification-banner--#{type}" %>" role="alert"
        aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-    <div class="govuk-notification-banner__header">
-      <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-        <%= t(:title, scope: "flash.#{type}") %>
-      </h2>
-    </div>
+    <% if type != :default %>
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          <%= t(:title, scope: "flash.#{type}") %>
+        </h2>
+      </div>
+    <% end %>
     <div class="govuk-notification-banner__content">
-      <p class="govuk-notification-banner__heading">
-        <%= sanitize(msg, tags: %w[a]) %>
-      </p>
+      <% if msg.is_a?(String) %>
+        <p class="govuk-notification-banner__heading">
+          <%= sanitize(msg, tags: %w[a]) %>
+        </p>
+      <% elsif msg.is_a?(Hash) %>
+        <p class="govuk-notification-banner__heading">
+          <%= sanitize(msg['title'], tags: %w[a]) %>
+        </p>
+        <p class="govuk-body">
+          <%= sanitize(msg['content'], tags: %w[a p br]) %>
+        </p>
+      <% end %>
     </div>
   </div>
 <% end %>

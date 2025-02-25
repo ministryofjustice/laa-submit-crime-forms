@@ -189,7 +189,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
     choose 'No'
     click_on 'Save and continue'
 
-    expect(page).to have_content("You've added 2 disbursements")
+    expect(page).to have_content('Disbursement totals')
   end
 
   it 'can delete a disbursement' do
@@ -237,7 +237,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
     click_on 'Save and continue'
 
-    expect(page).to have_content 'You cannot save and continue if any disbursements are incomplete'
+    expect(page).to have_content 'Update the items that have missing or incorrect information'
 
     click_on 'Car mileage'
     click_on 'Save and continue'
@@ -253,7 +253,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
     choose 'No'
     click_on 'Save and continue'
 
-    expect(page).not_to have_content 'You cannot save and continue if any disbursements are incomplete'
+    expect(page).not_to have_content 'You cannot save and continue as 1 item has missing or incorrect information'
   end
 
   it 'can add a mix of complete and incomplete disbursements' do
@@ -289,7 +289,8 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
     click_on 'Disbursements costs'
 
-    expect(page).to have_content 'Summary of Disbursements'
+    expect(page).to have_content 'Disbursement totals'
+    expect(page).to have_content '1 item has missing or incomplete information: item 1'
   end
 
   context 'when disbursements exist' do
@@ -307,7 +308,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
     end
 
     it 'lists all disbursements' do
-      expect(page).to have_selector('h1', text: "You've added 4 disbursements")
+      expect(page).to have_selector('h1', text: 'Disbursements')
 
       expect(all('table').last.all('td, th').map(&:text)).to eq(
         [
@@ -426,7 +427,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
     end
 
     it 'allows me to duplicate a disbursement' do
-      expect(page).to have_selector('h1', text: "You've added 4 disbursements")
+      expect(page).to have_selector('h1', text: 'Disbursements')
 
       within(all('table tr', text: 'Bike mileage').last) do
         click_on 'Duplicate'
@@ -447,7 +448,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
       expect(page)
         .to have_title('Disbursements')
-        .and have_selector('h1', text: "You've added 5 disbursements")
+        .and have_selector('h1', text: 'Disbursements')
 
       expect(all('table').last.all('td, th').map(&:text)).to eq(
         [
@@ -475,12 +476,12 @@ RSpec.describe 'User can manage disbursements', type: :system do
     end
 
     it 'lists incomplete disbursements' do
-      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+      expect(page).to have_selector('h1', text: 'Disbursements')
 
       expect(all('table').last.all('td, th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '1', 'Incomplete', 'Incomplete', 'Incomplete', 'Incomplete', 'Change Delete',
+          '1', 'Incomplete', 'Incomplete', 'Incomplete', 'Incomplete', 'Update Delete',
           '2', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
         ]
       )
@@ -488,33 +489,33 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
     it 'allows me to sort by any header without error' do
       click_on 'Item'
-      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+      expect(page).to have_selector('h1', text: 'Disbursements')
 
       click_on 'Cost type'
-      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+      expect(page).to have_selector('h1', text: 'Disbursements')
 
       click_on 'Date'
-      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+      expect(page).to have_selector('h1', text: 'Disbursements')
 
       click_on 'Net cost'
-      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+      expect(page).to have_selector('h1', text: 'Disbursements')
 
       click_on 'Total cost'
-      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+      expect(page).to have_selector('h1', text: 'Disbursements')
     end
 
     it 'errors render incompletes in expected order' do
-      expect(page).to have_selector('h1', text: "You've added 2 disbursement")
+      expect(page).to have_selector('h1', text: 'Disbursements')
 
       click_on 'Save and continue'
 
-      expect(page).to have_selector('.govuk-error-summary',
-                                    text: 'You cannot save and continue if any disbursements are incomplete')
+      text = 'Update the items that have missing or incorrect information'
+      expect(page).to have_selector('.govuk-error-summary', text:)
 
       expect(all('table').last.all('td, th').map(&:text)).to eq(
         [
           'Item', 'Cost type', 'Date', 'Net cost', 'Total cost', 'Action',
-          '1', 'Incomplete', 'Incomplete', 'Incomplete', 'Incomplete', 'Change Delete',
+          '1', 'Incomplete', 'Incomplete', 'Incomplete', 'Incomplete', 'Update Delete',
           '2', 'Bike mileage', 5.days.ago.to_fs(:short_stamp), '£50.00', '£60.00', 'Duplicate Delete',
         ]
       )

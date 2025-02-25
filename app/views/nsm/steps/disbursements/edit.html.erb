@@ -1,10 +1,12 @@
 <% title t('.page_title') %>
 <% decision_step_header %>
-
+<% if @items_incomplete_flash.present? %>
+  <%= render partial: 'shared/flash_banner', locals: { flash: @items_incomplete_flash } %>
+<% end %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= govuk_error_summary(@form_object) %>
-    <h1 class="govuk-heading-l"><%= t('.heading', count: @form_object.application.disbursements.count) %> </h1>
+    <h1 class="govuk-heading-l"><%= t('.heading') %> </h1>
     <%= govuk_table(head: @summary.disbursement_summary_header_row,
                     rows: [*@summary.disbursement_summary_footer_row],
                     first_cell_is_header: true,

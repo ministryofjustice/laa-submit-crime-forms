@@ -10,8 +10,8 @@ RSpec.describe 'Import claims' do
     attach_file(file_fixture('import_sample.xml'))
     click_on 'Save and continue'
     expect(page).to have_content(
-      'We imported 3 work items and 2 disbursements. ' \
-      'You will need to enter all other details manually, and check carefully the imported details.'
+      'You imported 3 work items and 2 disbursements. ' \
+      'To submit the claim, check the uploaded claim details and update any incomplete information.'
     )
   end
 

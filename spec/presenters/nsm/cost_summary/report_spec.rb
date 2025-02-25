@@ -36,7 +36,7 @@ work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id:
   let(:l_total_cost) { 100.00 }
   let(:l_header) { double(:l_header_data) }
   let(:l_footer) { double(:l_footer_data) }
-  let(:wi_title) { 'Work Items' }
+  let(:wi_title) { 'Work items' }
   let(:wi_rows) { double(:wi_row_data) }
   let(:wi_total_cost) { 75.00 }
   let(:wi_total_cost_inc_vat) { 85.00 }
@@ -85,7 +85,7 @@ work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id:
               actions: [
                 "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"
               ],
-              title: 'Work Items'
+              title: 'Work items'
             },
             table: {
               head: wi_header,
@@ -177,7 +177,7 @@ work_items: [instance_double(WorkItem)], disbursements: disbursements_scope, id:
               actions: [
                 "<a class=\"govuk-link\" href=\"/non-standard-magistrates/applications/#{id}/steps/work_items\">Change</a>"
               ],
-              title: 'Work Items'
+              title: 'Work items'
             },
             table: {
               head: wi_header,

@@ -20,10 +20,8 @@ en:
           updated: You've updated the work item
       work_items:
         edit:
-          page_title: Work Items
-          heading:
-            one: You've added %{count} work item
-            other: You've added %{count} work items
+          page_title: Work items
+          heading: Work items
           change: Change
           duplicate: Duplicate
           update: Update
@@ -31,9 +29,16 @@ en:
           add_another: Do you want to add another work item?
           add_now: Add another work item
           unknown_date: Unknown date
-          summary: Summary of work items
+          summary: Cost type totals
           all_work_items: All work items
           table_info_item: work item
+          item: item %{index}
+          incomplete_summary:
+            one: '%{count} item has missing or incorrect information'
+            other: '%{count} items have missing or incorrect information'
+          error_summary:
+            one: 'You cannot save and continue as %{count} item has missing or incorrect information'
+            other: 'You cannot save and continue as %{count} items have missing or incorrect information'
           accessibility:
             item: Item
             work_summary_caption: 'Summary of work items'
