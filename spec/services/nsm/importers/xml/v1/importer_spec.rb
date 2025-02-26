@@ -71,13 +71,12 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
 
   describe '#create_work_items' do
     it 'creates work items' do
-      expect(claim.work_items.find_by(position: 1)).to have_attributes(
+      expect(claim.work_items.first).to have_attributes(
         work_type: 'preparation',
         time_spent: 120,
         completed_on: Date.new(2024, 1, 15),
         fee_earner: 'JS',
         uplift: 20,
-        position: 1,
       )
     end
 

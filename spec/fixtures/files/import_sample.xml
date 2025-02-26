@@ -16,14 +16,12 @@
       <first_name>John</first_name>
       <last_name>Smith</last_name>
       <maat>1234567</maat>
-      <position>1</position>
       <main>true</main>
     </defendant>
     <defendant>
       <first_name>Jane</first_name>
       <last_name>Doe</last_name>
       <maat>7654321</maat>
-      <position>2</position>
       <main>false</main>
     </defendant>
   </defendants>
@@ -37,7 +35,6 @@
       <prior_authority>no</prior_authority>
       <apply_vat>true</apply_vat>
       <vat_amount>4.09</vat_amount>
-      <position>1</position>
     </disbursement>
     <disbursement>
       <disbursement_date>2024-01-20</disbursement_date>
@@ -48,7 +45,6 @@
       <prior_authority>yes</prior_authority>
       <apply_vat>true</apply_vat>
       <vat_amount>70.00</vat_amount>
-      <position>2</position>
     </disbursement>
   </disbursements>
   <firm_office>
@@ -111,7 +107,6 @@
     <work_item>
       <completed_on>2024-01-15</completed_on>
       <fee_earner>JS</fee_earner>
-      <position>1</position>
       <time_spent>120</time_spent>
       <uplift>20</uplift>
       <work_type>preparation</work_type>
@@ -119,14 +114,12 @@
     <work_item>
       <completed_on>2024-01-16</completed_on>
       <fee_earner>JS</fee_earner>
-      <position>2</position>
       <time_spent>60</time_spent>
       <work_type>attendance_without_counsel</work_type>
     </work_item>
     <work_item>
       <completed_on>2024-01-20</completed_on>
       <fee_earner>JS</fee_earner>
-      <position>3</position>
       <time_spent>90</time_spent>
       <work_type>travel</work_type>
     </work_item>
