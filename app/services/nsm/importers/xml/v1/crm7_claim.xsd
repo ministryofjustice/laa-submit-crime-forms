@@ -196,8 +196,7 @@
                   <xs:sequence>
                     <xs:element name="first_name" type="xs:string"/>
                     <xs:element name="last_name" type="xs:string"/>
-                    <xs:element name="maat" type="xs:string" minOccurs="0"/>
-                    <xs:element name="position" type="xs:integer"/>
+                    <xs:element name="maat" type="xs:string"/>
                     <xs:element name="main" type="xs:boolean"/>
                   </xs:sequence>
                 </xs:complexType>
@@ -220,7 +219,6 @@
                     <xs:element name="prior_authority" type="booleanString"/>
                     <xs:element name="apply_vat" type="applyVatType"/>
                     <xs:element name="vat_amount" type="xs:decimal"/>
-                    <xs:element name="position" type="xs:integer"/>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
@@ -301,7 +299,6 @@
                   <xs:sequence>
                     <xs:element name="completed_on" type="xs:date"/>
                     <xs:element name="fee_earner" type="xs:string"/>
-                    <xs:element name="position" type="xs:integer"/>
                     <xs:element name="time_spent" type="xs:integer"/>
                     <xs:element name="uplift" type="xs:integer" minOccurs="0"/>
                     <xs:element name="work_type" type="workType"/>
