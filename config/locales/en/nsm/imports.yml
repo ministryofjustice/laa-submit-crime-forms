@@ -11,6 +11,9 @@ en:
       work_items_message:
         one: 'You imported %{count} work item'
         other: 'You imported %{count} work items'
+      defendant_summary_message:
+        one: 'You imported %{count} defendants'
+        other: 'You imported %{count} defandants'
       message_end: To submit the claim, check the uploaded claim details and update any incomplete information.
       message_title: Claim imported
   activemodel:
