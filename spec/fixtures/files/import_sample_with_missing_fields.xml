@@ -20,7 +20,13 @@
     </defendant>
     <defendant>
       <first_name>Jane</first_name>
-      <last_name>Doe</last_name>
+      <last_name></last_name>
+      <maat>7654321</maat>
+      <main>false</main>
+    </defendant>
+    <defendant>
+      <first_name></first_name>
+      <last_name>Smith</last_name>
       <maat>7654321</maat>
       <main>false</main>
     </defendant>

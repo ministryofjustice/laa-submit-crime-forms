@@ -71,11 +71,11 @@ en:
       defendants:
         edit:
           incomplete_summary:
-            one: '%{count} defendant has incorrect or incomplete information'
-            other: '%{count} defendants have incorrect or incomplete information'
+            one: '%{count} defendant has missing or incomplete information'
+            other: '%{count} defendants have missing or incomplete information'
           error_summary:
-            one: 'You cannot save and continue as %{count} defendant has incorrect or incomplete information'
-            other: 'You cannot save and continue as %{count} defendants have incorrect or incomplete information'
+            one: 'You cannot save and continue as %{count} defendant has missing or incomplete information'
+            other: 'You cannot save and continue as %{count} defendants have missing or incomplete information'
           items_imported:
             one: You imported %{count} defendant
             other: You imported %{count} defendants

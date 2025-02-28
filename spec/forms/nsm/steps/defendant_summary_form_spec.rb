@@ -31,7 +31,7 @@ RSpec.describe Nsm::Steps::DefendantSummaryForm do
       it 'adds an appropriate error' do
         subject.save
         expect(subject.errors[:add_another]).to include(
-          'Update the defendants that have missing or incorrect information'
+          'Update the items that have missing or incorrect information'
         )
       end
     end
@@ -46,7 +46,7 @@ RSpec.describe Nsm::Steps::DefendantSummaryForm do
       it 'adds an appropriate error' do
         subject.save
         expect(subject.errors[:add_another]).to include(
-          'Update the defendants that have missing or incorrect information'
+          'Update the items that have missing or incorrect information'
         )
       end
     end

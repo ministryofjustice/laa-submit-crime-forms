@@ -118,7 +118,7 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
 
   describe '#create_defendants' do
     it 'creates defendants' do
-      expect(claim.defendants.count).to be(3)
+      expect(claim.defendants.count).to be(2)
     end
 
     describe 'no defendants' do

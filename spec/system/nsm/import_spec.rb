@@ -17,7 +17,7 @@ RSpec.describe 'Import claims' do
 
   context 'defendants import' do
     before do
-      attach_file(file_fixture('import_sample.xml'))
+      attach_file(file_fixture('import_sample_with_missing_fields.xml'))
       # progress to defendant details form
       click_on 'Save and continue' # 'What you are claiming for'
       click_on 'Save and continue' # 'Which firm office account number is this claim for?'
@@ -29,19 +29,19 @@ RSpec.describe 'Import claims' do
     end
 
     it 'shows defendant info incomplete message and updates messageing after corrections' do
-      expect(page).to have_content('2 defendants have incorrect or incomplete information: defendant 1, defendant 2')
+      expect(page).to have_content('2 defendants have missing or incomplete information: defendant 1, defendant 2')
       first(:link_or_button, 'defendant 1').click
-      fill_in 'MAAT ID number', with: '1234567'
+      fill_in 'Last name', with: 'Genet'
       click_on 'Save and continue'
-      expect(page).to have_content('1 defendant has incorrect or incomplete information: defendant 1')
+      expect(page).to have_content('1 defendant has missing or incomplete information: defendant 1')
     end
 
     it 'shows number of included defendants after incomplete defendants are updated' do
       first(:link_or_button, 'defendant 1').click
-      fill_in 'MAAT ID number', with: '1234567'
+      fill_in 'Last name', with: 'Mansfield'
       click_on 'Save and continue'
       first(:link_or_button, 'defendant 1').click
-      fill_in 'Last name', with: 'Austen'
+      fill_in 'First name', with: 'Mel'
       click_on 'Save and continue'
       expect(page).to have_content("You've added 3 defendants")
     end
