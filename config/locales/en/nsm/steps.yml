@@ -76,9 +76,6 @@ en:
           error_summary:
             one: 'You cannot save and continue as %{count} defendant has incorrect or incomplete information'
             other: 'You cannot save and continue as %{count} defendants have incorrect or incomplete information'
-          items_imported:
-            one: You imported %{count} defendant
-            other: You imported %{count} defendants
           item: defendant  %{index}
       defendant_details:
         edit:
