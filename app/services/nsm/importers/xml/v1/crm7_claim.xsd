@@ -198,6 +198,7 @@
                     <xs:element name="last_name" type="xs:string"/>
                     <xs:element name="maat" type="xs:string"/>
                     <xs:element name="main" type="xs:boolean"/>
+                    <xs:element name="position" type="xs:integer"/>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
