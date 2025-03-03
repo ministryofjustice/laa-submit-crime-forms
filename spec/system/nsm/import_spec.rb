@@ -15,6 +15,41 @@ RSpec.describe 'Import claims' do
     )
   end
 
+  context 'defendants import' do
+    before do
+      attach_file(file_fixture('import_sample_with_missing_fields.xml'))
+      # progress to defendant details form
+      click_on 'Save and continue' # 'What you are claiming for'
+      click_on 'Save and continue' # 'Which firm office account number is this claim for?'
+      click_on 'Save and continue' # 'Was this case worked on in an office in an undesignated area?'
+      click_on 'Save and continue' # 'Is the first court that heard this case in an undesignated area?'
+      click_on 'Firm details' # 'Your claim progress'
+      click_on 'Save and continue' # 'Firm details'
+      click_on 'Save and continue' # 'Contact details'
+    end
+
+    it 'shows defendant info incomplete message and updates messageing after corrections' do
+      expect(page).to have_content('2 defendants have missing or incomplete information: defendant 2, defendant 3')
+      first(:link_or_button, 'defendant 2').click
+      fill_in 'Last name', with: 'Genet'
+      fill_in 'MAAT ID number', with: '1234567'
+      click_on 'Save and continue'
+      expect(page).to have_content('1 defendant has missing or incomplete information: defendant 3')
+    end
+
+    it 'shows number of included defendants after incomplete defendants are updated' do
+      expect(page).to have_content('2 defendants have missing or incomplete information: defendant 2, defendant 3')
+      first(:link_or_button, 'defendant 2').click
+      fill_in 'Last name', with: 'Mansfield'
+      fill_in 'MAAT ID number', with: '1234567'
+      click_on 'Save and continue'
+      first(:link_or_button, 'defendant 3').click
+      fill_in 'First name', with: 'Mel'
+      click_on 'Save and continue'
+      expect(page).to have_content("You've added 3 defendants")
+    end
+  end
+
   it 'validates file type' do
     attach_file(file_fixture('test.json'))
     click_on 'Save and continue'

@@ -1,7 +1,10 @@
 module Nsm
   module Steps
     class DefendantSummaryController < Nsm::Steps::BaseController
+      include IncompleteItemsConcern
+
       def edit
+        @items_incomplete_flash = build_items_incomplete_flash
         @form_object = DefendantSummaryForm.build(
           current_application
         )
@@ -12,6 +15,10 @@ module Nsm
       end
 
       private
+
+      def item_type
+        :defendants
+      end
 
       def additional_permitted_params
         [:add_another]
