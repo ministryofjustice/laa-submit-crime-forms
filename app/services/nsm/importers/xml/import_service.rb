@@ -25,7 +25,7 @@ module Nsm
 
         def validate
           schema.validate(xml).map do |error|
-            @import_form.errors.add(:file_upload, error)
+            @import_form.errors.add(SecureRandom.uuid, error)
           end
         end
 
