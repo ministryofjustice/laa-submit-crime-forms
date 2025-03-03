@@ -45,7 +45,16 @@ module Nsm
             return unless hash['defendants']
 
             defendants = hash.delete('defendants')
-            claim.defendants.create(defendants['defendant'])
+            main_defendant = defendants['defendant'].select { _1['main'] == 'true' }
+            return if main_defendant.count > 1 || main_defendant.empty?
+
+            sorted = defendants['defendant'].sort_by { _1['main'] == 'true' ? 0 : 1 }
+
+            sorted = sorted.each_with_index do |defendant, index|
+              defendant['position'] = index + 1
+            end
+
+            claim.defendants.create(sorted)
           rescue StandardError
             # pass through
           end
