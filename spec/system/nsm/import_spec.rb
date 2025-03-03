@@ -32,6 +32,7 @@ RSpec.describe 'Import claims' do
       expect(page).to have_content('2 defendants have missing or incomplete information: defendant 2, defendant 3')
       first(:link_or_button, 'defendant 2').click
       fill_in 'Last name', with: 'Genet'
+      fill_in 'MAAT ID number', with: '1234567'
       click_on 'Save and continue'
       expect(page).to have_content('1 defendant has missing or incomplete information: defendant 3')
     end
@@ -40,6 +41,7 @@ RSpec.describe 'Import claims' do
       expect(page).to have_content('2 defendants have missing or incomplete information: defendant 2, defendant 3')
       first(:link_or_button, 'defendant 2').click
       fill_in 'Last name', with: 'Mansfield'
+      fill_in 'MAAT ID number', with: '1234567'
       click_on 'Save and continue'
       first(:link_or_button, 'defendant 3').click
       fill_in 'First name', with: 'Mel'

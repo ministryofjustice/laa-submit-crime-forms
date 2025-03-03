@@ -128,6 +128,41 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
         expect(claim.defendants.count).to be_zero
       end
     end
+
+    describe 'no main defendant' do
+      let(:hash) do
+        xml_hash['defendants']['defendant'].detect { _1['main'] == 'true' }['main'] = 'false'
+        xml_hash
+      end
+
+      it 'returns nil if more than one main defendant' do
+        expect(claim.defendants.count).to be_zero
+      end
+    end
+
+    describe 'more than 1 main defendant' do
+      let(:hash) do
+        xml_hash['defendants']['defendant'].detect { _1['main'] == 'false' }['main'] = 'true'
+        xml_hash
+      end
+
+      it 'returns nil if more than one main defendant' do
+        expect(claim.defendants.count).to be_zero
+      end
+    end
+
+    describe 'main defendant has position 1' do
+      it 'position is 1' do
+        expect(claim.defendants.where(main: true).count).to eq(1)
+        expect(claim.defendants.find_by(main: true).position).to eq(1)
+      end
+    end
+
+    describe 'other defendant position is not 1' do
+      it 'position is 1' do
+        expect(claim.defendants.find_by(main: false).position).not_to eq(1)
+      end
+    end
   end
 
   describe '#create_firm_office' do
