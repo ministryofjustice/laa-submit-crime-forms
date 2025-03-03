@@ -17,18 +17,21 @@
       <last_name>Smith</last_name>
       <maat>1234567</maat>
       <main>true</main>
+      <position>1</position>
     </defendant>
     <defendant>
       <first_name>Jane</first_name>
       <last_name></last_name>
       <maat>7654321</maat>
       <main>false</main>
+      <position>2</position>
     </defendant>
     <defendant>
       <first_name></first_name>
       <last_name>Smith</last_name>
       <maat>7654321</maat>
       <main>false</main>
+      <position>3</position>
     </defendant>
   </defendants>
   <disbursements>
@@ -37,7 +40,7 @@
       <disbursement_type>car</disbursement_type>
       <miles>45.5</miles>
       <total_cost_without_vat>20.47</total_cost_without_vat>
-      <details>Travel to Liverpool Magistrates Court</details>
+      <details></details>
       <prior_authority>no</prior_authority>
       <apply_vat>true</apply_vat>
       <vat_amount>4.09</vat_amount>
@@ -48,6 +51,16 @@
       <other_type>psychiatric_reports</other_type>
       <total_cost_without_vat>350.00</total_cost_without_vat>
       <details>Expert psychiatric assessment</details>
+      <prior_authority>yes</prior_authority>
+      <apply_vat>true</apply_vat>
+      <vat_amount>70.00</vat_amount>
+    </disbursement>
+    <disbursement>
+      <disbursement_date>2024-01-21</disbursement_date>
+      <disbursement_type>other</disbursement_type>
+      <other_type>psychiatric_reports</other_type>
+      <total_cost_without_vat>23.45</total_cost_without_vat>
+      <details></details>
       <prior_authority>yes</prior_authority>
       <apply_vat>true</apply_vat>
       <vat_amount>70.00</vat_amount>
@@ -112,7 +125,7 @@
   <work_items>
     <work_item>
       <completed_on>2024-01-15</completed_on>
-      <fee_earner>JS</fee_earner>
+      <fee_earner></fee_earner>
       <time_spent>120</time_spent>
       <uplift>20</uplift>
       <work_type>preparation</work_type>
@@ -125,7 +138,7 @@
     </work_item>
     <work_item>
       <completed_on>2024-01-20</completed_on>
-      <fee_earner>JS</fee_earner>
+      <fee_earner></fee_earner>
       <time_spent>90</time_spent>
       <work_type>travel</work_type>
     </work_item>

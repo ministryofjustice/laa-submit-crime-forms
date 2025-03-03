@@ -17,12 +17,14 @@
       <last_name>Smith</last_name>
       <maat>1234567</maat>
       <main>true</main>
+      <position>1</position>
     </defendant>
     <defendant>
       <first_name>Jane</first_name>
       <last_name>Doe</last_name>
       <maat>7654321</maat>
       <main>false</main>
+      <position>2</position>
     </defendant>
   </defendants>
   <disbursements>

@@ -29,18 +29,19 @@ RSpec.describe 'Import claims' do
     end
 
     it 'shows defendant info incomplete message and updates messageing after corrections' do
-      expect(page).to have_content('2 defendants have missing or incomplete information: defendant 1, defendant 2')
-      first(:link_or_button, 'defendant 1').click
+      expect(page).to have_content('2 defendants have missing or incomplete information: defendant 2, defendant 3')
+      first(:link_or_button, 'defendant 2').click
       fill_in 'Last name', with: 'Genet'
       click_on 'Save and continue'
-      expect(page).to have_content('1 defendant has missing or incomplete information: defendant 1')
+      expect(page).to have_content('1 defendant has missing or incomplete information: defendant 3')
     end
 
     it 'shows number of included defendants after incomplete defendants are updated' do
-      first(:link_or_button, 'defendant 1').click
+      expect(page).to have_content('2 defendants have missing or incomplete information: defendant 2, defendant 3')
+      first(:link_or_button, 'defendant 2').click
       fill_in 'Last name', with: 'Mansfield'
       click_on 'Save and continue'
-      first(:link_or_button, 'defendant 1').click
+      first(:link_or_button, 'defendant 3').click
       fill_in 'First name', with: 'Mel'
       click_on 'Save and continue'
       expect(page).to have_content("You've added 3 defendants")
