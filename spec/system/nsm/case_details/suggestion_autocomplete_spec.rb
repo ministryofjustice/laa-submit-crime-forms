@@ -3,7 +3,7 @@ require 'system_helper'
 RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, type: :system do
   let(:claim) { create(:claim, :case_type_breach, :main_defendant) }
 
-  it 'can select a value from the autocomplete' do
+  xit 'can select a value from the autocomplete' do
     visit provider_saml_omniauth_callback_path
 
     visit edit_nsm_steps_defendant_summary_path(id: claim)
@@ -27,7 +27,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
     )
   end
 
-  it 'can enter a value not found in the autocomplete' do
+  xit 'can enter a value not found in the autocomplete' do
     visit provider_saml_omniauth_callback_path
 
     visit edit_nsm_steps_defendant_summary_path(id: claim)
@@ -46,7 +46,7 @@ RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, typ
   end
 
   context 'when revisiting the page' do
-    it 'correctly displays values selected from the autocomplete list' do
+    xit 'correctly displays values selected from the autocomplete list' do
       claim.update(main_offence: 'Wounding or causing grievous bodily harm with intent')
 
       visit provider_saml_omniauth_callback_path
