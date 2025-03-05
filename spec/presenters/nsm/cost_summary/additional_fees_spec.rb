@@ -11,10 +11,10 @@ RSpec.describe Nsm::CostSummary::AdditionalFees do
     {
       additional_fees: {
         youth_court_fee: {
-          claimed_total_inc_vat: 718.31
+          claimed_total_exc_vat: 598.59
         },
         total: {
-          claimed_total_inc_vat: 718.31
+          claimed_total_exc_vat: 598.59
         }
       }
     }
@@ -26,7 +26,7 @@ RSpec.describe Nsm::CostSummary::AdditionalFees do
         [
           [
             { classes: 'govuk-table__header', text: 'Youth court fee' },
-            { classes: 'govuk-table__cell--numeric', text: '£718.31' }
+            { classes: 'govuk-table__cell--numeric', text: '£598.59' }
           ]
         ]
       )
