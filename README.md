@@ -1,4 +1,3 @@
-#  test
 #  LAA-Claim-non-standard-magistrate-court-fee
 #  A service to apply for a claim for a  non standard magistrate fee
 
