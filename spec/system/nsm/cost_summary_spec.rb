@@ -75,8 +75,8 @@ RSpec.describe 'User can see cost breakdowns', type: :system do
 
       expect(page)
         .to have_content('Additional fees')
-        .and have_content('Youth court fee£718.31')
-        .and have_content('TotalTotal cost of additional fees£718.31')
+        .and have_content('Youth court fee£598.59')
+        .and have_content('TotalTotal cost of additional fees£598.59')
     end
   end
 end

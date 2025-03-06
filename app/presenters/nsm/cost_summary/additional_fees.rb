@@ -14,7 +14,7 @@ module Nsm
         additional_fees.map do |key, value|
           [
             { text: translated_text(key), classes: 'govuk-table__header' },
-            { text: NumberTo.pounds(value[:claimed_total_inc_vat]), classes: 'govuk-table__cell--numeric' },
+            { text: NumberTo.pounds(value[:claimed_total_exc_vat]), classes: 'govuk-table__cell--numeric' },
           ]
         end
       end
@@ -24,7 +24,7 @@ module Nsm
       end
 
       def total_cost
-        @total_cost ||= claim.totals.dig(:additional_fees, :total, :claimed_total_inc_vat)
+        @total_cost ||= claim.totals.dig(:additional_fees, :total, :claimed_total_exc_vat)
       end
 
       def title
