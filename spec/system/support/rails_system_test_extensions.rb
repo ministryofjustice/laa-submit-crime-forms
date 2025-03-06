@@ -34,7 +34,9 @@ RSpec.configure do |config|
 
   config.before(:each, :javascript, type: :system) do
     # Use JS driver
-    driven_by Capybara.javascript_driver
+    driven_by Capybara.javascript_driver do |options|
+      options.browser_version = '133.0.6943.141'
+    end
   end
 
   config.before(:each, type: :system) do
