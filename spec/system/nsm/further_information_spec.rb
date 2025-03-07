@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Nsm - User can fill in further information', :javascript, :stub_oauth_token, type: :system do
+RSpec.describe 'Nsm - User can fill in further information', :stub_oauth_token, type: :system do
   let(:claim) do
     create(:claim,
            :complete,
