@@ -68,6 +68,18 @@ en:
           arrest_warrant_date_hint: For example, 27 3 2024
           arrest_warrant_date: Date of warrant issue
           case_outcome_other_info: Case outcome
+      defendants:
+        edit:
+          incomplete_summary:
+            one: '%{count} defendant has missing or incomplete information'
+            other: '%{count} defendants have missing or incomplete information'
+          error_summary:
+            one: 'You cannot save and continue as %{count} defendant has missing or incomplete information'
+            other: 'You cannot save and continue as %{count} defendants have missing or incomplete information'
+          items_imported:
+            one: You imported %{count} defendant
+            other: You imported %{count} defendants
+          item: defendant  %{index}
       defendant_details:
         edit:
           page_title: Defendant details
@@ -78,8 +90,12 @@ en:
           main_defendant: main
           defendant: additional %{index}
           add_another_hint: Only add this defendant if you are representing them in the same case
+          defendant_count:
+            one: You've added 1 defendant
+            other: You've added %{count} defendants
       defendant_summary:
         edit:
+          header: Defendants
           page_title: Defendant summary
           heading:
             one: You've added 1 defendant
