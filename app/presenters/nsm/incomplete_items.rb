@@ -12,7 +12,7 @@ module Nsm
 
     attr_reader :controller
 
-    EXPECTED_ITEM_TYPES = [:work_items, :disbursements].freeze
+    EXPECTED_ITEM_TYPES = [:work_items, :disbursements, :defendants].freeze
 
     def initialize(claim, type, controller)
       @claim = claim
@@ -32,9 +32,9 @@ module Nsm
     end
 
     def links
-      incomplete_items.each_with_index.map do |item, index|
+      incomplete_items.map do |item|
         govuk_link_to(
-          t("#{path_key}.item", index: index + 1),
+          t("#{path_key}.item", index: item.position),
           path_url(item)
         )
       end.join(', ')
@@ -49,6 +49,7 @@ module Nsm
     def path_route
       case @type
       when :disbursements then :disbursement_type
+      when :defendants then :defendant_details
       else @type.to_s.singularize.to_sym
       end
     end
