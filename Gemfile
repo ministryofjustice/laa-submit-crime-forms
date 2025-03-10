@@ -49,6 +49,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'erb_lint', '>= 0.6.0', require: false
   gem 'overcommit'
+  gem 'pdf-reader'
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec_junit_formatter', require: false

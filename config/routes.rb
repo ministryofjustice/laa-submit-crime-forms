@@ -74,6 +74,7 @@ Rails.application.routes.draw do
 
     constraints ->(_) { FeatureFlags.import_claims.enabled? } do
       resources :imports, only: %i[new create]
+      get '/imports/errors', as: :import_errors
     end
 
     resources :offences, only: [:index], format: :js

@@ -8,12 +8,12 @@ class PdfService
       right: '1cm',
     },
     viewport: {
-      width: 2400,
-      height: 4800,
+      width: 1080,
+      height: 1920,
     },
     emulate_media: 'print',
     scale: 0.9,
-    launch_args: ['--font-render-hinting=medium', '--no-sandbox', '--force-renderer-accessibility'],
+    launch_args: ['--disable-gpu', '--font-render-hinting=medium', '--no-sandbox', '--force-renderer-accessibility'],
   }.freeze
 
   class << self
@@ -29,6 +29,10 @@ class PdfService
       html_to_pdf(html, url)
     end
 
+    def html_to_pdf(html, display_url)
+      Grover.new(html, **GROVER_OPTIONS, display_url:).to_pdf
+    end
+
     private
 
     def generate_html(locals, template)
@@ -37,10 +41,6 @@ class PdfService
         layout: 'pdf',
         locals: locals,
       )
-    end
-
-    def html_to_pdf(html, display_url)
-      Grover.new(html, **GROVER_OPTIONS, display_url:).to_pdf
     end
   end
 end

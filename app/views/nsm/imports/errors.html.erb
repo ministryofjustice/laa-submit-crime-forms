@@ -1,0 +1,17 @@
+<% title t('.title') %>
+<%= link_to t('helpers.back_link'), new_nsm_import_path, class: 'govuk-back-link govuk-!-display-none-print' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.title') %></h1>
+    <p><%= t('.explanation') %></p>
+
+    <%# Ugly formatting because any whitespace in the block is passed through to the frontend %>
+    <pre class="xml-errors"><code><%= capture do
+               @errors.each do |line|
+                   concat(line + "\n")
+               end
+               end %>
+    </code></pre>
+  </div>
+</div>
