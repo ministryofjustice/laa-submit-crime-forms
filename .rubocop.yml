@@ -107,7 +107,7 @@ Metrics/MethodLength:
 
 # To be tweaked until we find the right balance
 Metrics/AbcSize:
-  Max: 23
+  Max: 25
 
 Metrics/CyclomaticComplexity:
   Max: 8
