@@ -3,6 +3,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
+    <% unless !defined?(@validation_errors) || @validation_errors.empty? %>
+      <%= render partial: 'shared/alert', locals: { msg: t('.alert_html', link: nsm_import_errors_path)} %>
+    <% end %>
     <h1 class="govuk-heading-xl"><%= t('.title') %></h1>
     <p><%= t('.explanation') %></p>
     <%= form_with(model: @form_object, url: nsm_imports_path) do |f| %>

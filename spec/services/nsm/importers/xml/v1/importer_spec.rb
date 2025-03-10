@@ -4,10 +4,12 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
   subject { described_class.new(claim, hash) }
 
   let(:import_form) { Nsm::ImportForm.new }
-  let(:file_upload) { double(:file_upload, tempfile: File.new('spec/fixtures/files/import_sample.xml')) }
+  let(:tempfile) { File.new('spec/fixtures/files/import_sample.xml') }
+  let(:file_upload) { double(:file_upload, tempfile:) }
 
   let(:claim) { create(:claim) }
-  let(:xml_hash) { Nsm::Importers::Xml::ImportService.new(claim, import_form).xml_hash }
+  let(:file) { Nokogiri::XML::Document.parse(File.read(tempfile), &:noblanks) }
+  let(:xml_hash) { Hash.from_xml(file.to_s)['claim'] }
   let(:hash) { xml_hash }
 
   before do

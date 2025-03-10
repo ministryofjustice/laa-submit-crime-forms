@@ -43,7 +43,6 @@ module Steps
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
     def process_form(form_object, opts)
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
@@ -60,7 +59,6 @@ module Steps
         render opts.fetch(:render, :edit)
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     # This deals with the case when it is called from the NEW_RECORD endpoint
     # to avoid creating a new record on each click
