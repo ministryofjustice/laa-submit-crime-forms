@@ -62,4 +62,17 @@
       // Force hiding both scrollbar initially
       overflow: hidden;
   }
+
+  // Let code blocks inherit width from parent, but only
+  // in desktop as we want full-width when printing
+  pre {
+      white-space: pre-wrap;
+  }
+}
+
+@media print {
+    pre.xml-errors {
+        white-space: pre-wrap;
+        width: 1024px;
+    }
 }
