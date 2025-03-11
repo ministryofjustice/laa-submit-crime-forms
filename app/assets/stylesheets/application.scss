@@ -71,6 +71,7 @@
 }
 
 @media print {
+    // Ensure that when printing, code blocks don't wrap off the page
     pre.xml-errors {
         white-space: pre-wrap;
         width: 1024px;
