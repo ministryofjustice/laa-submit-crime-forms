@@ -20,7 +20,7 @@ en:
       message_title: Claim imported
       errors:
         title: XML Errors
-        explanation: There is a problem with the XML file and it cannot be uploaded. Give these errors to your case management system provider and ask them to check the export.
+        explanation: There is a problem with the XML file and it cannot be uploaded. Give these errors alongside the original exported file to your case management system provider and ask them to check the export.
   activemodel:
     errors:
       models:
