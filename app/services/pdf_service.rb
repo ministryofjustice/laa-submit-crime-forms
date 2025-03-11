@@ -1,5 +1,6 @@
 class PdfService
   GROVER_OPTIONS = {
+    cache: true,
     format: 'A4',
     margin: {
       top: '2cm',
