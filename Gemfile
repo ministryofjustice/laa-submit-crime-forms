@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.180'
+gem 'aws-sdk-s3', '~> 1.182'
 gem 'bootsnap', '~> 1.18.4', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
@@ -25,7 +25,7 @@ gem 'oauth2', '~> 2.0'
 gem 'omniauth-rails_csrf_protection', '~> 1.0.1'
 gem 'omniauth-saml', '>= 2.1', '< 2.3'
 gem 'ostruct'
-gem 'pagy', '~> 9.3.3'
+gem 'pagy', '~> 9.3.4'
 gem 'pg', '~> 1.5'
 gem 'prometheus_exporter'
 gem 'propshaft'
@@ -39,7 +39,7 @@ gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron'
 gem 'solid_cache', '~> 1.0'
 gem 'table_print'
-gem 'turbo-rails', '~> 2.0.11'
+gem 'turbo-rails', '~> 2.0.13'
 gem 'tzinfo-data'
 gem 'uk_postcode'
 gem 'with_advisory_lock'
