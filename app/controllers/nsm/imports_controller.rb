@@ -15,6 +15,10 @@ module Nsm
           @validation_errors = validate
 
           if @validation_errors.empty?
+            hash = Hash.from_xml(xml_file.to_s)['claim']
+
+            # TODO: CRM457-2473: Refactor this to handle versioning better
+            Nsm::Importers::Xml.const_get("v#{xml_file.version.to_i}".capitalize)::Importer.new(claim, hash).call
             redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) }
             return
           else
@@ -60,11 +64,6 @@ module Nsm
     end
 
     def build_message(claim)
-      hash = Hash.from_xml(xml_file.to_s)['claim']
-
-      # TODO: CRM457-2473: Refactor this to handle versioning better
-      Nsm::Importers::Xml.const_get("v#{xml_file.version.to_i}".capitalize)::Importer.new(claim, hash).call
-
       {
         title: I18n.t('nsm.imports.message_title'),
         content: [

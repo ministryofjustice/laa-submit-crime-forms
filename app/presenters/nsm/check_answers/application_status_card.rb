@@ -126,7 +126,7 @@ module Nsm
         ].compact
       end
 
-      # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def response
         @response ||= if claim.submitted? || claim.provider_updated?
                         []
@@ -140,7 +140,7 @@ module Nsm
                         claim.assessment_comment.split("\n")
                       end
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       def expiry_response
         I18n.t('nsm.steps.view_claim.expiry_explanations',
