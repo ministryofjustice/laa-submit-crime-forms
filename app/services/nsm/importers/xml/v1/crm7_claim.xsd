@@ -229,7 +229,6 @@
           </xs:complexType>
         </xs:element>
         <xs:element name="first_hearing_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="has_disbursements" type="booleanString" minOccurs="0"/>
         <xs:element name="hearing_outcome" type="hearingOutcomeType" minOccurs="0"/>
         <xs:element name="is_other_info" type="booleanString" minOccurs="0"/>
         <xs:element name="letters" type="xs:integer" minOccurs="0"/>
