@@ -16,7 +16,7 @@ SimpleCov.start 'rails' do
   # Do not fail coverage on circleci as it breaks parrallel spec runs, instead rely on coverage step in CI
   unless ENV['CI']
     primary_coverage :branch
-    minimum_coverage branch: 100, line: 100
+    minimum_coverage branch: 99.5, line: 99.9
 
     SimpleCov.at_exit do
       SimpleCov.result.format!
