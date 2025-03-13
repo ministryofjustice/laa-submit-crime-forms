@@ -19,5 +19,6 @@ en:
         nsm/import_form:
           attributes:
             file_upload:
+              blank: Select a file to import
               forbidden_document_type: The file must be of type 'XML'
               no_imports: We were unable to read any work items or disbursements from this file. Please try a different file or enter your details manually.
