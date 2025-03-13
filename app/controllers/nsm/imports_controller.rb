@@ -5,7 +5,14 @@ module Nsm
     def new
       @form_object = ImportForm.new
       @validation_errors = []
-      session['xml_errors'] = nil
+
+      # Ensure we don't keep a leftover file
+      # Can't use Tempfile here as it expires too quickly
+      begin
+        errors_file_path.unlink
+      rescue StandardError
+        nil
+      end
     end
 
     def create
@@ -24,8 +31,7 @@ module Nsm
             redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) }
             return
           else
-            session['xml_errors'] = CompressionService.compress(@validation_errors)
-
+            errors_file_path.write(@validation_errors.to_json)
             @form_object.errors.add(:file_upload, :validation_errors)
           end
         end
@@ -34,7 +40,7 @@ module Nsm
     end
 
     def errors
-      @errors = CompressionService.decompress(session[:xml_errors])
+      @errors = JSON.parse(errors_file_path.read)
 
       page = render_to_string(
         template: 'nsm/imports/errors',
@@ -53,6 +59,10 @@ module Nsm
     end
 
     private
+
+    def errors_file_path
+      Rails.root.join('tmp', "xml_errors_#{current_provider.id}")
+    end
 
     def xml_file
       @xml_file ||= Nokogiri::XML::Document.parse(@form_object.file_upload.tempfile.read, &:noblanks)
