@@ -14,7 +14,7 @@ module Search
           last_state_change_from: filters[:updated_from],
           last_state_change_to: filters[:updated_to],
           status_with_assignment: build_status_with_assignment(filters),
-          account_number: filters[:office_code].presence
+          account_number: filters[:office_code].presence || filters[:current_provider].office_codes
         )
       end
 
