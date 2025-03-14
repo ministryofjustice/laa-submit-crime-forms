@@ -239,7 +239,6 @@
         <xs:element name="matter_type" type="matterType" minOccurs="0"/>
         <xs:element name="number_of_hearing" type="xs:integer" minOccurs="0"/>
         <xs:element name="number_of_witnesses" type="xs:integer" minOccurs="0"/>
-        <xs:element name="office_code" type="xs:string" minOccurs="0"/>
         <xs:element name="office_in_undesignated_area" type="booleanString" minOccurs="0"/>
         <xs:element name="other_info" type="xs:string" minOccurs="0"/>
         <xs:element name="preparation_time" type="booleanString" minOccurs="0"/>
