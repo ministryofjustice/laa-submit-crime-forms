@@ -27,7 +27,6 @@ module Nsm
           end
       end
 
-      # rubocop:disable Metrics/AbcSize
       def process_form(form_object, opts)
         if params.key?(:commit_draft)
           # Validations will not be run when saving a draft
@@ -49,7 +48,6 @@ module Nsm
           render opts.fetch(:render, :edit)
         end
       end
-      # rubocop:enable Metrics/AbcSize
 
       def item_type
         :defendants

@@ -5,22 +5,28 @@ en:
         title: Import a claim
         explanation: If your case management software can export your claim as an XML file, you can upload it here and we will automatically load some details from that file.
         file_upload: Select the XML file for the case you want to claim for.
+        alert_html: |
+          The selected file contains data in the wrong format and cannot be uploaded. Download an <a href="%{link}">error summary (PDF)</a> and ask your case management system provider to check the errors.
       disbursements_message:
         one: 'and %{count} disbursement.'
         other: 'and %{count} disbursements.'
       work_items_message:
-        one: 'You imported %{count} work item'
-        other: 'You imported %{count} work items'
+        one: 'You imported %{count} work item '
+        other: 'You imported %{count} work items '
       defendant_summary_message:
         one: 'You imported %{count} defendants'
         other: 'You imported %{count} defandants'
       message_end: To submit the claim, check the uploaded claim details and update any incomplete information.
       message_title: Claim imported
+      errors:
+        title: XML Errors
+        explanation: There is a problem with the XML file and it cannot be uploaded. Give these errors alongside the original exported file to your case management system provider and ask them to check the export.
   activemodel:
     errors:
       models:
         nsm/import_form:
           attributes:
             file_upload:
+              validation_errors: The XML file must contain data in the correct format
               forbidden_document_type: The file must be of type 'XML'
               no_imports: We were unable to read any work items or disbursements from this file. Please try a different file or enter your details manually.

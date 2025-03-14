@@ -1,5 +1,6 @@
 <% flash.each do |type, msg| %>
   <% next unless msg.is_a?(String) || msg.is_a?(Hash) %>
+  <% msg = msg.is_a?(Hash) ? msg.transform_keys(&:to_sym) : msg %>
 
   <div class="govuk-notification-banner<%= type == :default ? "" : " govuk-notification-banner--#{type}" %>" role="alert"
        aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -17,10 +18,10 @@
         </p>
       <% elsif msg.is_a?(Hash) %>
         <p class="govuk-notification-banner__heading">
-          <%= sanitize(msg['title'], tags: %w[a]) %>
+          <%= sanitize(msg[:title], tags: %w[a]) %>
         </p>
         <p class="govuk-body">
-          <%= sanitize(msg['content'], tags: %w[a p br]) %>
+          <%= sanitize(msg[:content], tags: %w[a p br]) %>
         </p>
       <% end %>
     </div>
