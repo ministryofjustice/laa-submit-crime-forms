@@ -28,8 +28,7 @@ module Nsm
             # TODO: CRM457-2473: Refactor this to handle versioning better
             Nsm::Importers::Xml.const_get("v#{xml_file.version.to_i}".capitalize)::Importer.new(claim, hash).call
 
-            redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) }
-            return
+            redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) } and return
           else
             errors_file_path.write(@validation_errors.to_json)
             @form_object.errors.add(:file_upload, :validation_errors)
