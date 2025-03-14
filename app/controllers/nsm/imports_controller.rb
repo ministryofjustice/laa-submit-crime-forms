@@ -1,6 +1,7 @@
 module Nsm
   class ImportsController < ApplicationController
     include ClaimCreatable
+    before_action :set_current_navigation_item
 
     def new
       @form_object = ImportForm.new
@@ -21,10 +22,20 @@ module Nsm
       else
         render :new
       end
+    rescue ActionController::ParameterMissing
+      @form_object = ImportForm.new
+      @form_object.errors.add(:file_upload, :blank)
+      render :new
     end
 
     def self.model_class
       Claim
+    end
+
+    private
+
+    def set_current_navigation_item
+      @current_navigation_item = :search
     end
   end
 end
