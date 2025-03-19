@@ -7,7 +7,7 @@
     <% end %>
     <h1 class="govuk-heading-l"><%= t('.header') %></h1>
     <% if @items_incomplete_flash.present? %>
-      <%= render partial: 'shared/flash_banner', locals: { flash: @items_incomplete_flash } %>
+      <%= render partial: 'shared/alert', locals: { msg: @items_incomplete_flash } %>
     <% end %>
     <table class="govuk-table">
       <thead class="govuk-table__head">

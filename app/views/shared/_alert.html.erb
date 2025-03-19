@@ -30,7 +30,7 @@
         <% if defined?(heading) %>
             <h2 class="moj-alert__heading"><%= heading %></h2>
         <% end %>
-        <%= msg %>
+        <%= sanitize(msg, tags: %w[a]) %>
     </div>
     <div class="moj-alert__action">
         <button class="moj-alert__dismiss" <%= 'hidden' unless can_dismiss %> >Dismiss</button>

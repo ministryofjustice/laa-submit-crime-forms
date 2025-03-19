@@ -8,6 +8,6 @@ module IncompleteItemsConcern
   end
 
   def build_items_incomplete_flash
-    incomplete_items_summary.incomplete_items.blank? ? nil : { default: incomplete_items_summary.summary }
+    incomplete_items_summary.incomplete_items.blank? ? nil : incomplete_items_summary.summary
   end
 end
