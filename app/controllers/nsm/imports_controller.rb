@@ -1,7 +1,6 @@
 module Nsm
   class ImportsController < ApplicationController
     include ClaimCreatable
-    before_action :set_current_navigation_item
 
     def new
       @form_object = ImportForm.new
@@ -86,5 +85,5 @@ module Nsm
         ].join
       }
     end
-end
+  end
 end
