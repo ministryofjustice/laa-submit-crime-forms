@@ -17,7 +17,7 @@ RSpec.describe Nsm::Steps::WorkItemsController, type: :controller do
 
     it 'generates the correct error summary' do
       get :edit, params: { id: claim.id }
-      expect(controller.instance_variable_get(:@items_incomplete_flash)[:default])
+      expect(controller.instance_variable_get(:@items_incomplete_flash))
         .to include('2 items have missing or incorrect information:')
     end
 
@@ -25,7 +25,7 @@ RSpec.describe Nsm::Steps::WorkItemsController, type: :controller do
       incomplete_work_items = claim.work_items.reject(&:complete?).sort_by(&:position)
       get :edit, params: { id: claim.id }
 
-      flash = controller.instance_variable_get(:@items_incomplete_flash)[:default]
+      flash = controller.instance_variable_get(:@items_incomplete_flash)
       expect(flash).to include(incomplete_work_items[0].id)
       expect(flash).to include(incomplete_work_items[1].id)
     end
