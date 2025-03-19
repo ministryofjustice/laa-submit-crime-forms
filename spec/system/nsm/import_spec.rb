@@ -7,6 +7,11 @@ RSpec.describe 'Import claims' do
     visit new_nsm_import_path
   end
 
+  it 'shows error if no file selected' do
+    click_on 'Save and continue'
+    expect(page).to have_content(I18n.t('activemodel.errors.models.nsm/import_form.attributes.file_upload.blank'))
+  end
+
   it 'lets me import a claim' do
     attach_file(file_fixture('import_sample.xml'))
     click_on 'Save and continue'
