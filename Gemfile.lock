@@ -468,10 +468,9 @@ GEM
       rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
     ruby-rc4 (0.1.5)
-    ruby-saml (1.17.0)
+    ruby-saml (1.18.0)
       nokogiri (>= 1.13.10)
       rexml
-    ruby-saml (1.18.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
     securerandom (0.4.1)
@@ -639,7 +638,7 @@ DEPENDENCIES
   with_advisory_lock
 
 RUBY VERSION
-   ruby 3.3.6
+   ruby 3.4.2
 
 BUNDLED WITH
-   2.5.11
+   2.6.6
