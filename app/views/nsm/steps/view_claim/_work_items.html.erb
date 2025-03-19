@@ -8,7 +8,7 @@
 </h3>
 
 <% if @items_incomplete_flash.present? %>
-  <%= render partial: 'shared/alert', locals: { msg: @items_incomplete_flash } %>
+  <%= render partial: 'shared/alert', locals: { type: :warning, msg: @items_incomplete_flash } %>
 <% end %>
 
 <%
