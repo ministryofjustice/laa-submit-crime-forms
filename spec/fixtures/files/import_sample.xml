@@ -9,7 +9,6 @@
   <conclusion>Case concluded due to guilty plea</conclusion>
   <court>Liverpool Magistrates Court</court>
   <court_in_undesignated_area>yes</court_in_undesignated_area>
-  <created_at>2024-02-07T10:00:00Z</created_at>
   <defence_statement>15</defence_statement>
   <defendants>
     <defendant>
@@ -56,8 +55,6 @@
     <vat_registered>yes</vat_registered>
   </firm_office>
   <first_hearing_date>2024-01-10</first_hearing_date>
-  <gender>m</gender>
-  <has_disbursements>yes</has_disbursements>
   <hearing_outcome>CP03</hearing_outcome>
   <is_other_info>yes</is_other_info>
   <letters>10</letters>
@@ -68,7 +65,6 @@
   <matter_type>1</matter_type>
   <number_of_hearing>3</number_of_hearing>
   <number_of_witnesses>4</number_of_witnesses>
-  <office_code>1A123B</office_code>
   <office_in_undesignated_area>yes</office_in_undesignated_area>
   <other_info>Other info</other_info>
   <preparation_time>yes</preparation_time>

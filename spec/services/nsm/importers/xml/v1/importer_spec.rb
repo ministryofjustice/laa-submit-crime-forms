@@ -4,10 +4,12 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
   subject { described_class.new(claim, hash) }
 
   let(:import_form) { Nsm::ImportForm.new }
-  let(:file_upload) { double(:file_upload, tempfile: File.new('spec/fixtures/files/import_sample.xml')) }
+  let(:tempfile) { File.new('spec/fixtures/files/import_sample.xml') }
+  let(:file_upload) { double(:file_upload, tempfile:) }
 
   let(:claim) { create(:claim) }
-  let(:xml_hash) { Nsm::Importers::Xml::ImportService.new(claim, import_form).xml_hash }
+  let(:file) { Nokogiri::XML::Document.parse(File.read(tempfile), &:noblanks) }
+  let(:xml_hash) { Hash.from_xml(file.to_s)['claim'] }
   let(:hash) { xml_hash }
 
   before do
@@ -19,7 +21,6 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
     # rubocop:disable RSpec::ExampleLength
     it 'updates claim model attributes with hash values' do
       expect(claim.ufn).to eq(hash['ufn'])
-      expect(claim.office_code).to eq(hash['office_code'])
       expect(claim.claim_type).to eq(hash['claim_type'])
       expect(claim.rep_order_date).to eq(Date.parse(hash['rep_order_date']))
       expect(claim.reasons_for_claim).to eq(hash['reasons_for_claim'])
@@ -52,12 +53,10 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
       expect(claim.letters_uplift).to eq(hash['letters_uplift'].to_i)
       expect(claim.work_before_date).to eq(Date.parse(hash['work_before_date']))
       expect(claim.work_after_date).to eq(Date.parse(hash['work_after_date']))
-      expect(claim.gender).to eq(hash['gender'])
       expect(claim.remitted_to_magistrate_date).to eq(Date.parse(hash['remitted_to_magistrate_date']))
       expect(claim.preparation_time).to eq(hash['preparation_time'])
       expect(claim.work_before).to eq(hash['work_before'])
       expect(claim.work_after).to eq(hash['work_after'])
-      expect(claim.has_disbursements).to eq(hash['has_disbursements'])
       expect(claim.is_other_info).to eq(hash['is_other_info'])
       expect(claim.plea_category).to eq(hash['plea_category'])
       expect(claim.wasted_costs).to eq(hash['wasted_costs'])

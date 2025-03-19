@@ -1,3 +1,4 @@
+require 'pdf-reader'
 require 'system_helper'
 
 RSpec.describe 'Import claims' do
@@ -9,10 +10,8 @@ RSpec.describe 'Import claims' do
   it 'lets me import a claim' do
     attach_file(file_fixture('import_sample.xml'))
     click_on 'Save and continue'
-    expect(page).to have_content(
-      'You imported 3 work items and 2 disbursements. ' \
-      'To submit the claim, check the uploaded claim details and update any incomplete information.'
-    )
+    expect(page).to have_content('You imported 3 work items and 2 disbursements.')
+    expect(page).to have_content('To submit the claim, check the uploaded claim details and update any incomplete information.')
   end
 
   context 'defendants import' do
@@ -59,6 +58,13 @@ RSpec.describe 'Import claims' do
   it 'handles unreadable files' do
     attach_file(file_fixture('unreadable_import.xml'))
     click_on 'Save and continue'
-    expect(page).to have_content("ERROR: Element 'claim': Missing child element(s).")
+    expect(page).to have_content('The XML file must contain data in the correct format')
+
+    click_on 'error summary (PDF)'
+
+    output = StringIO.new
+    output.puts(page.body)
+    pdf = PDF::Reader.new(output)
+    expect(pdf.page(1)).to have_content("2:0: ERROR: Element 'claim': Missing child element(s)")
   end
 end

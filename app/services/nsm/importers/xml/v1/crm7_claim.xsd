@@ -14,14 +14,6 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="genderType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="m"/>
-      <xs:enumeration value="f"/>
-      <xs:enumeration value="u"/>
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:simpleType name="claimType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="non_standard_magistrate"/>
@@ -186,7 +178,6 @@
         <xs:element name="court" type="xs:string" minOccurs="0"/>
         <xs:element name="court_in_undesignated_area" type="booleanString" minOccurs="0"/>
         <xs:element name="cracked_trial_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="created_at" type="xs:dateTime" minOccurs="0"/>
         <xs:element name="defence_statement" type="xs:integer" minOccurs="0"/>
         <xs:element name="defendants" minOccurs="0">
           <xs:complexType>
@@ -196,7 +187,7 @@
                   <xs:sequence>
                     <xs:element name="first_name" type="xs:string"/>
                     <xs:element name="last_name" type="xs:string"/>
-                    <xs:element name="maat" type="xs:string"/>
+                    <xs:element name="maat" type="xs:string" minOccurs="1"/>
                     <xs:element name="main" type="xs:boolean"/>
                   </xs:sequence>
                 </xs:complexType>
@@ -238,8 +229,6 @@
           </xs:complexType>
         </xs:element>
         <xs:element name="first_hearing_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="gender" type="genderType" minOccurs="0"/>
-        <xs:element name="has_disbursements" type="booleanString" minOccurs="0"/>
         <xs:element name="hearing_outcome" type="hearingOutcomeType" minOccurs="0"/>
         <xs:element name="is_other_info" type="booleanString" minOccurs="0"/>
         <xs:element name="letters" type="xs:integer" minOccurs="0"/>
@@ -250,7 +239,6 @@
         <xs:element name="matter_type" type="matterType" minOccurs="0"/>
         <xs:element name="number_of_hearing" type="xs:integer" minOccurs="0"/>
         <xs:element name="number_of_witnesses" type="xs:integer" minOccurs="0"/>
-        <xs:element name="office_code" type="xs:string" minOccurs="0"/>
         <xs:element name="office_in_undesignated_area" type="booleanString" minOccurs="0"/>
         <xs:element name="other_info" type="xs:string" minOccurs="0"/>
         <xs:element name="preparation_time" type="booleanString" minOccurs="0"/>

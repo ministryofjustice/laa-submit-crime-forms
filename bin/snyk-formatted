@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
+# rubocop:disable Rails
 require 'json'
 
-# Simple color helper module
 module Colors
   class << self
-    def red(str); "\e[31m#{str}\e[0m"; end
-    def yellow(str); "\e[33m#{str}\e[0m"; end
-    def green(str); "\e[32m#{str}\e[0m"; end
-    def cyan(str); "\e[36m#{str}\e[0m"; end
-    def bold(str); "\e[1m#{str}\e[0m"; end
+    def red(str) = "\e[31m#{str}\e[0m"
+    def yellow(str) = "\e[33m#{str}\e[0m"
+    def green(str) = "\e[32m#{str}\e[0m"
+    def cyan(str) = "\e[36m#{str}\e[0m"
+    def bold(str) = "\e[1m#{str}\e[0m"
   end
 end
 
@@ -17,11 +17,11 @@ input = $stdin.read
 File.write(ARGV[0], input) unless ARGV.length != 1
 json = JSON.parse(input)
 
-# Process vulnerabilities from applications or root
-vulns = (json['applications'] || [json]).flat_map do |app|
-  next [] unless (app['uniqueCount']).positive?
-  app['vulnerabilities'].map do |v|
-    if v['upgradePath'].empty? || v['upgradePath'].all?(&:nil?)
+vulns = []
+
+if json['vulnerabilities'] && !json['vulnerabilities'].empty?
+  vulns = json['vulnerabilities'].map do |v|
+    if !v['upgradePath'] || v['upgradePath'].empty? || v['upgradePath'].all?(&:nil?)
       fix = Colors.red('NO UPGRADE PATH AVAILABLE - Manual intervention required')
     else
       fix = v['upgradePath'][0] ? "Upgrade via #{Colors.cyan(v['upgradePath'][0])}" : 'Upgrade direct dependency'
@@ -29,22 +29,25 @@ vulns = (json['applications'] || [json]).flat_map do |app|
     end
 
     severity = case v['severity']&.downcase
-      when 'high' then Colors.red(v['severity'])
-      when 'medium' then Colors.yellow(v['severity'])
-      when 'low' then Colors.green(v['severity'])
-      else Colors.cyan(v['severity'])
-    end
+               when 'high' then Colors.red(v['severity'])
+               when 'medium' then Colors.yellow(v['severity'])
+               when 'low' then Colors.green(v['severity'])
+               else Colors.cyan(v['severity'])
+               end
 
+    # rubocop:disable Layout/HeredocIndentation#
     <<~VULN
-
-      #{Colors.bold(v['packageName'])} [#{severity}] #{v['title']} (CVSS: #{v['cvssScore']})
-
-      #{Colors.cyan("https://security.snyk.io/vuln/#{v['id']}")}
-      [ #{fix} ]
+#{Colors.bold(v['packageName'])} [#{severity}] #{v['title']} (CVSS: #{v['cvssScore']})
+#{Colors.cyan("https://security.snyk.io/vuln/#{v['id']}")}
+[ #{fix} ]
 
     VULN
+    # rubocop:enable Layout/HeredocIndentation
   end
 end
 
-puts vulns
+puts vulns unless vulns.empty?
+puts 'No vulnerabilities found' if vulns.empty?
+
 exit vulns.length
+# rubocop:enable Rails
