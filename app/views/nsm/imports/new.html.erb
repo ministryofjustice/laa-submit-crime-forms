@@ -1,5 +1,10 @@
-<% title t('.title') %>
+<% content_for(:primary_navigation) do %>
+  <% render partial: 'layouts/nsm/primary_navigation' %>
+<% end %>
 <%= link_to t('helpers.back_link'), nsm_applications_path, class: 'govuk-back-link' %>
+<% title t('.title') %>
+<%= render partial: 'shared/alert', locals: { msg: t('.alert_info') } %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
@@ -10,7 +15,7 @@
     <p><%= t('.explanation') %></p>
     <%= form_with(model: @form_object, url: nsm_imports_path) do |f| %>
       <%= f.govuk_file_field :file_upload,
-                             label: { text: t(".file_upload"), size: "m" },
+                             label: { text: t(".file_upload"), size: "m", hidden: true  },
                              accept: 'text/xml' %>
 
       <%= f.continue_button(secondary: false) %>
