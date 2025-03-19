@@ -13,7 +13,7 @@ module Nsm
           def call
             resolve_reasons_for_claim
             enhanced_rates_if_uplifts
-            populate_has_disbursements
+            populate_other_info
 
             create_work_items
             create_defendants
@@ -80,8 +80,12 @@ module Nsm
             hash['reasons_for_claim'] = hash['reasons_for_claim']['reason']
           end
 
-          def populate_has_disbursements
+          def populate_other_info
             hash['has_disbursements'] = hash['disbursements'].present? ? 'yes' : 'no'
+            hash['is_other_info'] = hash['other_info'].present? ? 'yes' : 'no'
+            hash['preparation_time'] = hash['time_spent'].present? && hash['time_spent'].to_i.positive? ? 'yes' : 'no'
+            hash['work_after'] = hash['work_after_date'].present? ? 'yes' : 'no'
+            hash['work_before'] = hash['work_before_date'].present? ? 'yes' : 'no'
           end
 
           def enhanced_rates_if_uplifts
