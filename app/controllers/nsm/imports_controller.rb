@@ -36,6 +36,10 @@ module Nsm
         end
       end
       render :new
+    rescue StandardError
+      @form_object = ImportForm.new
+      @form_object.errors.add(:file_upload, :blank)
+      render :new
     end
 
     def errors

@@ -31,3 +31,4 @@ en:
               validation_errors: The XML file must contain data in the correct format
               forbidden_document_type: The file must be of type 'XML'
               no_imports: We were unable to read any work items or disbursements from this file. Please try a different file or enter your details manually.
+              blank: Select a file to import

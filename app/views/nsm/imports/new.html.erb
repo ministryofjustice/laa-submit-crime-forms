@@ -1,12 +1,17 @@
 <% content_for(:primary_navigation) do %>
   <% render partial: 'layouts/nsm/primary_navigation' %>
 <% end %>
-<%= link_to t('helpers.back_link'), nsm_applications_path, class: 'govuk-back-link' %>
+<% content_for(:back_link) do %>
+  <%= link_to t('helpers.back_link'), nsm_applications_path, class: 'govuk-back-link' %>
+<% end %>
+
 <% title t('.title') %>
-<%= render partial: 'shared/alert', locals: { msg: t('.alert_info') } %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <% unless @form_object && @form_object.errors.any? %>
+      <%= render partial: 'shared/alert', locals: { msg: t('.alert_info') } %>
+    <% end %>
     <%= govuk_error_summary(@form_object) %>
     <% unless !defined?(@validation_errors) || @validation_errors.empty? %>
       <%= render partial: 'shared/alert', locals: { msg: t('.alert_html', link: nsm_import_errors_path)} %>
