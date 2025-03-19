@@ -2,9 +2,10 @@ en:
   nsm:
     imports:
       new:
-        title: Import a claim
-        explanation: If your case management software can export your claim as an XML file, you can upload it here and we will automatically load some details from that file.
+        title: Import claim
+        explanation: To import a claim, first use your case management system to export it as an XML file.
         file_upload: Select the XML file for the case you want to claim for.
+        alert_info: Check that your case management system has recently been updated so it can export a compatible XML file.
         alert_html: |
           The selected file contains data in the wrong format and cannot be uploaded. Download an <a href="%{link}">error summary (PDF)</a> and ask your case management system provider to check the errors.
       disbursements_message:
@@ -15,7 +16,7 @@ en:
         other: 'You imported %{count} work items '
       defendant_summary_message:
         one: 'You imported %{count} defendants'
-        other: 'You imported %{count} defandants'
+        other: 'You imported %{count} defendants'
       message_end: To submit the claim, check the uploaded claim details and update any incomplete information.
       message_title: Claim imported
       errors:
