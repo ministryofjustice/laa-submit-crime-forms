@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0.0">
   <xs:simpleType name="booleanString">
     <xs:restriction base="xs:string">
       <xs:enumeration value="yes"/>
@@ -162,23 +162,185 @@
   </xs:simpleType>
 
   <xs:element name="claim">
+    <xs:annotation>
+      <xs:appinfo>
+        The top-level element for a claim. Each file is expected to
+        contain just a single claim and any more would constitute an
+        error.
+
+        The way the import works on our side is we pre-populate the
+        form with as much data from this export as we can and then the
+        provider goes through the form as normal with all fields
+        populated to double-check all the data is correct and hit our
+        regular expected validation.
+
+        For the purposes of exporting and to reduce the friction when
+        trying to upload, we've tried to make this schema
+        flexible. Not many fields are marked as required and we've
+        aimed to add in validation for fields where possible.
+
+        Going forth, expect the xs:appinfo element to map to a
+        description of what the field is for, and the xs:documentation
+        element to map to some optional technical details about the field.
+
+        Any non-required fields can be omitted from the export and
+        they just won't be populated as the provider fills out the
+        form.
+      </xs:appinfo>
+    </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="agent_instructed" type="booleanString" minOccurs="0"/>
-        <xs:element name="arrest_warrant_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="assessment_comment" type="xs:string" minOccurs="0"/>
-        <xs:element name="assigned_counsel" type="booleanString" minOccurs="0"/>
-        <xs:element name="calls" type="xs:integer" minOccurs="0"/>
-        <xs:element name="calls_uplift" type="xs:decimal" minOccurs="0"/>
-        <xs:element name="claim_type" type="claimType" minOccurs="0"/>
-        <xs:element name="cntp_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="cntp_order" type="xs:string" minOccurs="0"/>
-        <xs:element name="concluded" type="booleanString" minOccurs="0"/>
-        <xs:element name="conclusion" type="xs:string" minOccurs="0"/>
-        <xs:element name="court" type="xs:string" minOccurs="0"/>
-        <xs:element name="court_in_undesignated_area" type="booleanString" minOccurs="0"/>
-        <xs:element name="cracked_trial_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="defence_statement" type="xs:integer" minOccurs="0"/>
+        <xs:element name="agent_instructed" type="booleanString" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Whether or not an instructed agent was present.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="arrest_warrant_date" type="xs:date" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              If a warrant of arrest is chosen as the case disposal,
+              this field would be used to specify what the date would
+              be.
+            </xs:appinfo>
+            <xs:documentation>
+              This is expected to be a ISO 8601 date notation.
+
+              Examples of valid dates:
+
+              - 2023-01-03
+              - 2024-05-29
+
+              Any invalid dates that don't meet our validation rules
+              will be picked up as the provider runs through the rest
+              of the online form.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="assigned_counsel" type="booleanString" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Whether or not an assigned counsel was present.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="calls" type="xs:integer" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The number of calls that were made as part of the claim.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="calls_uplift" type="xs:decimal" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The uplift percentage to apply to calls.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="claim_type" type="claimType" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The type of claim this is.
+            </xs:appinfo>
+            <xs:documentation>
+              See the associated type for full list of expected values.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="cntp_date" type="xs:date" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The date of the Breach of Injunction.
+            </xs:appinfo>
+            <xs:documentation>
+              Only relevant if claim_type is breach_of_injunction
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="cntp_order" type="xs:string" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The order number of the Breach of Injunction.
+            </xs:appinfo>
+            <xs:documentation>
+              Only relevant if claim_type is breach_of_injunction
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="concluded" type="booleanString" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Whether or not the proceedings concluded over 3 months ago.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="conclusion" type="xs:string" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Why did you not make this claim within 3 months of the
+              conclusion of the proceedings?
+            </xs:appinfo>
+            <xs:documentation>
+              Only relevant if concluded is "yes"
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="court" type="xs:string" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The name and ID of the court present.
+            </xs:appinfo>
+            <xs:documentation>
+              Comes from a the "Guidance for Reporting Crime Lower
+              Work" document that can be found by searching online.
+
+              Some examples of valid data:
+
+              - Aberconwy PSD - C3237
+              - Abergavenny - C3208A
+              - Abergele - C3052B
+
+              The field supports free text, but it would be preferable
+              to match the values we have.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="court_in_undesignated_area" type="booleanString" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Whether or not the court is in an undesignated area.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="cracked_trial_date" type="xs:date" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              If a cracked trial is chosen as the case disposal, this
+              field would be used to specify what the date would be.
+            </xs:appinfo>
+            <xs:documentation>
+              This is expected to be a ISO 8601 date notation.
+
+              Examples of valid dates:
+
+              - 2023-01-03
+              - 2024-05-29
+
+              Any invalid dates that don't meet our validation rules
+              will be picked up as the provider runs through the rest
+              of the online form.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="defence_statement" type="xs:integer" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Number of pages of defence statements.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
         <xs:element name="defendants" minOccurs="0">
           <xs:complexType>
             <xs:sequence>
@@ -196,20 +358,112 @@
           </xs:complexType>
         </xs:element>
         <xs:element name="disbursements" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              A list of disbursements applicable to the case.
+            </xs:appinfo>
+            <xs:documentation>
+              If this node is present, there must be at least 1
+              disbursement element.
+            </xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="disbursement" minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="disbursement" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:appinfo>
+                    A single disbursement for a case.
+                  </xs:appinfo>
+                </xs:annotation>
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="disbursement_date" type="xs:date"/>
-                    <xs:element name="disbursement_type" type="disbursementType"/>
-                    <xs:element name="other_type" type="otherDisbursementType" minOccurs="0"/>
-                    <xs:element name="miles" type="xs:decimal" minOccurs="0"/>
-                    <xs:element name="total_cost_without_vat" type="xs:decimal"/>
-                    <xs:element name="details" type="xs:string"/>
-                    <xs:element name="prior_authority" type="booleanString"/>
-                    <xs:element name="apply_vat" type="applyVatType"/>
-                    <xs:element name="vat_amount" type="xs:decimal"/>
+                    <xs:element name="disbursement_date" type="xs:date">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          The date the disbursement was incurred.
+                        </xs:appinfo>
+                        <xs:documentation>
+                          This is expected to be a ISO 8601 date notation.
+
+                          Examples of valid dates:
+
+                          - 2023-01-03
+                          - 2024-05-29
+
+                          Any invalid dates that don't meet our validation rules
+                          will be picked up as the provider runs through the rest
+                          of the online form.
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="disbursement_type" type="disbursementType">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          The type of the disbursement
+                        </xs:appinfo>
+                        <xs:documentation>
+                          See the associated type for all the supported values.
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="other_type" type="otherDisbursementType" minOccurs="0">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          When "other" is selected as the disbursement type,
+                          this field would have the value of what that would
+                          be.
+                        </xs:appinfo>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="miles" type="xs:decimal" minOccurs="0">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          The number of miles incurred as part of this disbursement
+                        </xs:appinfo>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="total_cost_without_vat" type="xs:decimal">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          The total cost of the disbursement before VAT is applied.
+                        </xs:appinfo>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="details" type="xs:string">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          Details about why this disbursement was incurred.
+                        </xs:appinfo>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="prior_authority" type="booleanString">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          Whether or not prior authority has been granted
+                          for this disbursement.
+                        </xs:appinfo>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="apply_vat" type="applyVatType">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          Whether or not VAT should be applied to this disbursement.
+                        </xs:appinfo>
+                        <xs:documentation>
+                          See the associated type for all supported values.
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="vat_amount" type="xs:decimal">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          The amount of VAT to apply.
+                        </xs:appinfo>
+                        <xs:documentation>
+                          If not applicable, set to 0.
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
@@ -217,86 +471,542 @@
           </xs:complexType>
         </xs:element>
         <xs:element name="firm_office" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The firm office handling the claim.
+            </xs:appinfo>
+          </xs:annotation>
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="address_line_1" type="xs:string"/>
-              <xs:element name="address_line_2" type="xs:string" minOccurs="0"/>
-              <xs:element name="name" type="xs:string"/>
-              <xs:element name="postcode" type="xs:string"/>
-              <xs:element name="town" type="xs:string"/>
-              <xs:element name="vat_registered" type="booleanString"/>
+              <xs:annotation>
+                <xs:appinfo>
+                  The firm office handling the claim.
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:element name="address_line_1" type="xs:string">
+                <xs:annotation>
+                  <xs:appinfo>
+                    The first line of the address the firm office is located at.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="address_line_2" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                  <xs:appinfo>
+                    The second line of the address the firm office is located at.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="name" type="xs:string">
+                <xs:annotation>
+                  <xs:appinfo>
+                    The name of the firm office.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="postcode" type="xs:string">
+                <xs:annotation>
+                  <xs:appinfo>
+                    The postcode the firm office is located at.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="town" type="xs:string">
+                <xs:annotation>
+                  <xs:appinfo>
+                    The town the firm office resides in.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="vat_registered" type="booleanString">
+                <xs:annotation>
+                  <xs:appinfo>
+                    Whether or not the firm is VAT registered.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="first_hearing_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="hearing_outcome" type="hearingOutcomeType" minOccurs="0"/>
-        <xs:element name="is_other_info" type="booleanString" minOccurs="0"/>
-        <xs:element name="letters" type="xs:integer" minOccurs="0"/>
-        <xs:element name="letters_uplift" type="xs:decimal" minOccurs="0"/>
-        <xs:element name="main_offence" type="xs:string" minOccurs="0"/>
-        <xs:element name="main_offence_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="main_offence_type" type="mainOffenceType" minOccurs="0"/>
-        <xs:element name="matter_type" type="matterType" minOccurs="0"/>
-        <xs:element name="number_of_hearing" type="xs:integer" minOccurs="0"/>
-        <xs:element name="number_of_witnesses" type="xs:integer" minOccurs="0"/>
-        <xs:element name="office_in_undesignated_area" type="booleanString" minOccurs="0"/>
-        <xs:element name="other_info" type="xs:string" minOccurs="0"/>
-        <xs:element name="preparation_time" type="booleanString" minOccurs="0"/>
-        <xs:element name="prosecution_evidence" type="xs:integer" minOccurs="0"/>
-        <xs:element name="plea" type="pleaType" minOccurs="0"/>
-        <xs:element name="plea_category" type="pleaCategoryType" minOccurs="0"/>
-        <xs:element name="reason_for_claim_other_details" type="xs:string" minOccurs="0"/>
+        <xs:element name="first_hearing_date" type="xs:date" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The date the of the first hearing, if applicable.
+            </xs:appinfo>
+            <xs:documentation>
+              This is expected to be a ISO 8601 date notation.
+
+              Examples of valid dates:
+
+              - 2023-01-03
+              - 2024-05-29
+
+              Any invalid dates that don't meet our validation rules
+              will be picked up as the provider runs through the rest
+              of the online form.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="hearing_outcome" type="hearingOutcomeType" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The outcome of the hearing, if applicable.
+            </xs:appinfo>
+            <xs:documentation>
+              See the associated type for full list of expected values.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="letters" type="xs:integer" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The number of letters that were made as part of the claim.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="letters_uplift" type="xs:decimal" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The uplift percentage to apply to letters.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="main_offence" type="xs:string" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The main offence that the defendant(s) are supposed to
+              have committed.
+            </xs:appinfo>
+            <xs:documentation>
+              We have a number of offences that we use to populate the
+              combo box on the digital crime form, however it also
+              supports free-text so this one isn't very strict on
+              what's supported.
+
+              The list comes from a the "Guidance for Reporting Crime
+              Lower Work" document that can be found by searching
+              online.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="main_offence_date" type="xs:date" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The date of the offence in question.
+            </xs:appinfo>
+            <xs:documentation>
+              This is expected to be a ISO 8601 date notation.
+
+              Examples of valid dates:
+
+              - 2023-01-03
+              - 2024-05-29
+
+              Any invalid dates that don't meet our validation rules
+              will be picked up as the provider runs through the rest
+              of the online form.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="main_offence_type" type="mainOffenceType" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The type of the offence in question.
+            </xs:appinfo>
+            <xs:documentation>
+              See the associated type for a list of supported values.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="matter_type" type="matterType" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The type of the offence in question.
+            </xs:appinfo>
+            <xs:documentation>
+              See the associated type for a list of supported values.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="number_of_hearing" type="xs:integer" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The number of hearings that occurred as part of the claim.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="number_of_witnesses" type="xs:integer" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The number of witnesses consulted as part of the claim.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="office_in_undesignated_area" type="booleanString" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Whether or not the law office is in an undesignated area.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="other_info" type="xs:string" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Any optional, addition information about the claim.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="prosecution_evidence" type="xs:integer" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Number of pages of prosecution evidence.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="plea" type="pleaType" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The plea the defendant has entered into.
+            </xs:appinfo>
+            <xs:documentation>
+              See the associated type for full list of expected values.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="plea_category" type="pleaCategoryType" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The category of the plea the defendant has entered into.
+            </xs:appinfo>
+            <xs:documentation>
+              See the associated type for full list of expected values.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="reason_for_claim_other_details" type="xs:string" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              If the reason for claim is specified as "Other", this is
+              the field that value is populated into.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
         <xs:element name="reasons_for_claim" minOccurs="0">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="reason" type="reasonForClaimType" minOccurs="1" maxOccurs="unbounded"/>
+              <xs:element name="reason" type="reasonForClaimType" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:appinfo>
+                    A reason why the claim was made.
+                  </xs:appinfo>
+                  <xs:documentation>
+                    See the associated type for full list of expected values.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="representation_order_withdrawn_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="remitted_to_magistrate" type="booleanString" minOccurs="0"/>
-        <xs:element name="remitted_to_magistrate_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="rep_order_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="representation_order_withdrawn_date" type="xs:date" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The date the representation order was withdrawn, if applicable.
+            </xs:appinfo>
+            <xs:documentation>
+              This is expected to be a ISO 8601 date notation.
+
+              Examples of valid dates:
+
+              - 2023-01-03
+              - 2024-05-29
+
+              Any invalid dates that don't meet our validation rules
+              will be picked up as the provider runs through the rest
+              of the online form.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="remitted_to_magistrate" type="booleanString" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Whether or not the case has been remitted from the Crown
+              Court to the Magistrates' Court.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="remitted_to_magistrate_date" type="xs:date" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The date the the case was remitted from the Crown Court
+              to the Magistrates' Court, if applicable.
+            </xs:appinfo>
+            <xs:documentation>
+              This is expected to be a ISO 8601 date notation.
+
+              Examples of valid dates:
+
+              - 2023-01-03
+              - 2024-05-29
+
+              Any invalid dates that don't meet our validation rules
+              will be picked up as the provider runs through the rest
+              of the online form.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="rep_order_date" type="xs:date" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              The date of the representation order, if applicable.
+            </xs:appinfo>
+            <xs:documentation>
+              This is expected to be a ISO 8601 date notation.
+
+              Examples of valid dates:
+
+              - 2023-01-03
+              - 2024-05-29
+
+              Any invalid dates that don't meet our validation rules
+              will be picked up as the provider runs through the rest
+              of the online form.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
         <xs:element name="solicitor" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Information about the solicitor handling the case.
+            </xs:appinfo>
+          </xs:annotation>
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="first_name" type="xs:string"/>
-              <xs:element name="last_name" type="xs:string"/>
-              <xs:element name="reference_number" type="xs:string" minOccurs="0"/>
-              <xs:element name="contact_first_name" type="xs:string"/>
-              <xs:element name="contact_last_name" type="xs:string"/>
-              <xs:element name="contact_email" type="xs:string"/>
+              <xs:element name="first_name" type="xs:string">
+                <xs:annotation>
+                  <xs:appinfo>
+                    The first name of the solicitor handling the case.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="last_name" type="xs:string">
+                <xs:annotation>
+                  <xs:appinfo>
+                    The first name of the solicitor handling the case.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="reference_number" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                  <xs:appinfo>
+                    The reference number of the solicitor handling the case.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="contact_first_name" type="xs:string">
+                <xs:annotation>
+                  <xs:appinfo>
+                    The contactable first name of the solicitor handling the case.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="contact_last_name" type="xs:string">
+                <xs:annotation>
+                  <xs:appinfo>
+                    The contactable last name of the solicitor handling the case.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="contact_email" type="xs:string">
+                <xs:annotation>
+                  <xs:appinfo>
+                    The contactable email address of the solicitor handling the case.
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="supplemental_claim" type="booleanString" minOccurs="0"/>
-        <xs:element name="time_spent" type="xs:integer"/>
-        <xs:element name="ufn" type="xs:string"/>
-        <xs:element name="unassigned_counsel" type="booleanString" minOccurs="0"/>
-        <xs:element name="wasted_costs" type="booleanString" minOccurs="0"/>
-        <xs:element name="work_after" type="booleanString" minOccurs="0"/>
-        <xs:element name="work_after_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="work_before" type="booleanString" minOccurs="0"/>
-        <xs:element name="work_before_date" type="xs:date" minOccurs="0"/>
-        <xs:element name="work_completed_date" type="xs:date" minOccurs="0"/>
+        <xs:element name="supplemental_claim" type="booleanString" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Whether or not this bill represents a supplemental claim.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="time_spent" type="xs:integer" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              How long in seconds has been spent watching/listening to recorded evidence.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ufn" type="xs:string">
+          <xs:annotation>
+            <xs:appinfo>
+              The UFN (Unique File Number) of the case in the format
+              of DDMMYY/NNN.
+            </xs:appinfo>
+            <xs:documentation>
+              One of a few required fields as a case cannot exist
+              without one.
+
+              See the "Guidance for Reporting Crime Lower Work"
+              document that can be found by searching online for rules
+              around a UFN.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="unassigned_counsel" type="booleanString" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Whether or not an unassigned counsel was present.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="wasted_costs" type="booleanString" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Whether or not wasted costs have been applied to this case.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="work_after_date" type="xs:date" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              If work was completed after the last court hearing, this
+              field would have the date of the last hearing.
+            </xs:appinfo>
+            <xs:documentation>
+              This is expected to be a ISO 8601 date notation.
+
+              Examples of valid dates:
+
+              - 2023-01-03
+              - 2024-05-29
+
+              Any invalid dates that don't meet our validation rules
+              will be picked up as the provider runs through the rest
+              of the online form.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="work_before_date" type="xs:date" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              If work was completed before the representation order
+              date, this field is the date work was actually started.
+            </xs:appinfo>
+            <xs:documentation>
+              This is expected to be a ISO 8601 date notation.
+
+              Examples of valid dates:
+
+              - 2023-01-03
+              - 2024-05-29
+
+              Any invalid dates that don't meet our validation rules
+              will be picked up as the provider runs through the rest
+              of the online form.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="work_completed_date" type="xs:date" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Date that work on the case was completed.
+            </xs:appinfo>
+            <xs:documentation>
+              This is expected to be a ISO 8601 date notation.
+
+              Examples of valid dates:
+
+              - 2023-01-03
+              - 2024-05-29
+
+              Any invalid dates that don't meet our validation rules
+              will be picked up as the provider runs through the rest
+              of the online form.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
         <xs:element name="work_items" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              A list of work items applicable to the case.
+            </xs:appinfo>
+            <xs:documentation>
+              If this node is present, there must be at least 1
+              disbursement element.
+            </xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="work_item" minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="work_item" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="completed_on" type="xs:date"/>
-                    <xs:element name="fee_earner" type="xs:string"/>
-                    <xs:element name="time_spent" type="xs:integer"/>
-                    <xs:element name="uplift" type="xs:integer" minOccurs="0"/>
-                    <xs:element name="work_type" type="workType"/>
+                    <xs:element name="completed_on" type="xs:date">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          The date the work item was completed on.
+                        </xs:appinfo>
+                        <xs:documentation>
+                          This is expected to be a ISO 8601 date notation.
+
+                          Examples of valid dates:
+
+                          - 2023-01-03
+                          - 2024-05-29
+
+                          Any invalid dates that don't meet our validation rules
+                          will be picked up as the provider runs through the rest
+                          of the online form.
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="fee_earner" type="xs:string">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          The initials of the solicitor who incurred the work item.
+                        </xs:appinfo>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="time_spent" type="xs:integer">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          How long in seconds did the work item incur.
+                        </xs:appinfo>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="uplift" type="xs:integer" minOccurs="0">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          The uplift percentage to apply to the work item.
+                        </xs:appinfo>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="work_type" type="workType">
+                      <xs:annotation>
+                        <xs:appinfo>
+                          The type of the work item
+                        </xs:appinfo>
+                        <xs:documentation>
+                          See the associated type for all the supported values.
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="youth_court" type="booleanString" minOccurs="0"/>
+        <xs:element name="youth_court" type="booleanString" minOccurs="0">
+          <xs:annotation>
+            <xs:appinfo>
+              Whether or not the case was undertaken in a youth court.
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
