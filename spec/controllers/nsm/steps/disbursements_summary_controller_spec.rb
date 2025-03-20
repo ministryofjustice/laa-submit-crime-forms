@@ -17,14 +17,14 @@ RSpec.describe Nsm::Steps::DisbursementsController, type: :controller do
 
     it 'generates the correct error summary' do
       get :edit, params: { id: claim.id }
-      expect(controller.instance_variable_get(:@items_incomplete_flash)[:default])
+      expect(controller.instance_variable_get(:@items_incomplete_flash))
         .to include('2 items have missing or incomplete information:')
     end
 
     it 'creates the correct link for incomplete disbursement' do
       incomplete_disbursements = claim.disbursements.reject(&:complete?).sort_by(&:position)
       get :edit, params: { id: claim.id }
-      flash = controller.instance_variable_get(:@items_incomplete_flash)[:default]
+      flash = controller.instance_variable_get(:@items_incomplete_flash)
       expect(flash).to include(incomplete_disbursements[0].id)
       expect(flash).to include(incomplete_disbursements[1].id)
     end

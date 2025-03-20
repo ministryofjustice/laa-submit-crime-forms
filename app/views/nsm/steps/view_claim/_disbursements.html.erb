@@ -6,6 +6,10 @@
   <%= t('.disbursements') %>
 </h3>
 
+<% if @items_incomplete_flash.present? %>
+  <%= render partial: 'shared/alert', locals: { type: :warning, msg: @items_incomplete_flash } %>
+<% end %>
+
 <% if records.none? %>
   <p><%= t('.no_data') %></p>
 <% else %>
