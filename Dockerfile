@@ -7,6 +7,7 @@ RUN apk update && apk upgrade --no-cache libcrypto3 libssl3
 
 # dependencies required both at runtime and build time
 RUN apk add --update \
+  yaml-dev \
   build-base \
   postgresql-dev \
   gcompat \
