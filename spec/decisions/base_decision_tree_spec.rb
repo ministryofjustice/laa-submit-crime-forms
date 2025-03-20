@@ -233,7 +233,7 @@ RSpec.describe Decisions::BaseDecisionTree do
     end
 
     it 'raises an error' do
-      expect { subject.destination }.to raise_error('No known verbs found in {:invalid=>:fail}')
+      expect { subject.destination }.to raise_error(/No known verbs found in {invalid: :fail}/)
     end
   end
 end
