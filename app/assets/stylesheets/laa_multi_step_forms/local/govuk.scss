@@ -1,10 +1,6 @@
 // GOV.UK Frontend
 //
-$govuk-new-link-styles: true;
-$govuk-global-styles: true;
-$govuk-assets-path: '/';
 
-@import "govuk-frontend/dist/govuk/all";
 
 $govuk-is-ie8: false;
 $govuk-ie8-breakpoint: ('desktop');
