@@ -2,7 +2,7 @@
   "name": "laa-submit-crime-forms",
   "private": "true",
   "dependencies": {
-    "@hotwired/turbo-rails": "8.0.12",
+    "@hotwired/turbo-rails": "8.0.13",
     "@ministryofjustice/frontend": "3.6.2",
     "accessible-autocomplete": "^3.0.1",
     "braces": "^3.0.3",
