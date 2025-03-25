@@ -72,4 +72,19 @@ RSpec.describe 'Import claims' do
     pdf = PDF::Reader.new(output)
     expect(pdf.page(1)).to have_content("2:0: ERROR: Element 'claim': Missing child element(s)")
   end
+
+  it 'handles unsupported versions' do
+    attach_file(file_fixture('import_sample_incorrect_version.xml'))
+    click_on 'Save and continue'
+    expect(page).to have_content(
+      I18n.t('activemodel.errors.models.nsm/import_form.attributes.file_upload.invalid_version')
+      )
+
+    click_on 'error summary (PDF)'
+
+    output = StringIO.new
+    output.puts(page.body)
+    pdf = PDF::Reader.new(output)
+    expect(pdf.page(1)).to have_content("2:0: ERROR: Element 'claim': Missing child element(s)")
+  end
 end

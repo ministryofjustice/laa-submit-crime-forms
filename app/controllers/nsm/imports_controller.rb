@@ -2,6 +2,10 @@ module Nsm
   class ImportsController < ApplicationController
     include ClaimCreatable
 
+    # Define custom exceptions at the top of the class
+    class MissingVersionError < StandardError; end
+    class UnsupportedVersionError < StandardError; end
+
     def new
       @form_object = ImportForm.new
       @validation_errors = []
@@ -15,20 +19,45 @@ module Nsm
       end
     end
 
+    def extract_version
+      # Try to find version in the XML
+      version_node = xml_file.at_xpath('//version')
+
+      if version_node&.text.present?
+        version = version_node.text.strip.to_i
+        return version if version.positive?
+      end
+
+      # Version is missing or invalid
+      raise MissingVersionError, "XML file missing valid version information"
+    end
+
     def create
-      @form_object = ImportForm.new(params.expect(nsm_import_form: [:file_upload]))
+      @form_object = ImportForm.new(params.require(:nsm_import_form).permit(:file_upload))
 
       if @form_object.valid?
         initialize_application do |claim|
           @validation_errors = validate
 
-          if @validation_errors.empty?
+          # Check specifically for unsupported version errors
+          if @validation_errors.any? { |error| error.include?("version") }
+            raise UnsupportedVersionError, @validation_errors.first
+          elsif @validation_errors.empty?
             hash = Hash.from_xml(xml_file.to_s)['claim']
 
-            # TODO: CRM457-2473: Refactor this to handle versioning better
-            Nsm::Importers::Xml.const_get("v#{xml_file.version.to_i}".capitalize)::Importer.new(claim, hash).call
+            # Get the version from the hash and remove it so it won't be assigned to the claim
+            version = hash.delete('version').to_i
 
-            redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) } and return
+            # Dynamically determine the importer class for this version
+            importer_class = "Nsm::Importers::Xml::V#{version}::Importer"
+
+            # Check if the importer class exists
+            if Object.const_defined?(importer_class)
+              importer_class.constantize.new(claim, hash).call
+              redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) } and return
+            else
+              raise UnsupportedVersionError, "No importer found for XML version #{version}"
+            end
           else
             errors_file_path.write(@validation_errors.to_json)
             @form_object.errors.add(:file_upload, :validation_errors)
@@ -36,9 +65,24 @@ module Nsm
         end
       end
       render :new
-    rescue StandardError
+    rescue MissingVersionError, UnsupportedVersionError => e
+      # Handle version-specific errors separately
+      @form_object ||= ImportForm.new
+      @form_object.errors.add(:file_upload, :invalid_version)
+
+      # Write the error to the file so it's available for the PDF
+      errors_file_path.write(JSON.generate([e.message]))
+      render :new
+    rescue ActionController::ParameterMissing
       @form_object = ImportForm.new
       @form_object.errors.add(:file_upload, :blank)
+      render :new
+    rescue StandardError => e
+      # Log unexpected errors for debugging
+      Rails.logger.error("XML import error: #{e.message}")
+      Rails.logger.error(e.backtrace.join("\n"))
+      @form_object = ImportForm.new
+      @form_object.errors.add(:file_upload, :unexpected_error, message: "An unexpected error occurred")
       render :new
     end
 
@@ -72,9 +116,14 @@ module Nsm
     end
 
     def validate
-      schema_file = Rails.root.join("app/services/nsm/importers/xml/v#{xml_file.version.to_i}/crm7_claim.xsd").read
-      schema = Nokogiri::XML::Schema.new(schema_file)
+      version = extract_version
+      schema_path = Rails.root.join("app/services/nsm/importers/xml/v#{version}/crm7_claim.xsd")
 
+      unless File.exist?(schema_path)
+        return [I18n.t('nsm.imports.errors.unsupported_version', version: version)]
+      end
+
+      schema = Nokogiri::XML::Schema.new(schema_path.read)
       schema.validate(xml_file)
     end
 

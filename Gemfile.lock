@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
-  revision: 7cf4d6b73115edb78164925de29f566481d4e002
+  revision: 1b3b67b3a27c05264d2b02af35ab8be79c37b38e
   specs:
     laa_crime_forms_common (0.9.2)
       httparty (>= 0.22.0, < 1)
@@ -468,9 +468,6 @@ GEM
       rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
     ruby-rc4 (0.1.5)
-    ruby-saml (1.17.0)
-      nokogiri (>= 1.13.10)
-      rexml
     ruby-saml (1.18.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
