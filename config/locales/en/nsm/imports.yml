@@ -23,6 +23,8 @@ en:
         title: XML Errors
         explanation: There is a problem with the XML file and it cannot be uploaded. Give these errors alongside the original exported file to your case management system provider and ask them to check the export.
         unsupported_version: "XML version %{version} is not supported"
+        invalid_version: XML file contains an invalid version number
+        missing_version: XML file missing version information
   activemodel:
     errors:
       models:
@@ -33,4 +35,4 @@ en:
               forbidden_document_type: The file must be of type 'XML'
               no_imports: We were unable to read any work items or disbursements from this file. Please try a different file or enter your details manually.
               blank: Select a file to import
-              invalid_version: Version of the XML file is not supported
+              unsupported_version: "XML version %{version} is not supported"
