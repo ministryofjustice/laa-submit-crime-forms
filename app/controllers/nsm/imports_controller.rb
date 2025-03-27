@@ -5,17 +5,17 @@ module Nsm
     def new
       @form_object = ImportForm.new
       @validation_errors = []
+    end
 
-      # Ensure we don't keep a leftover file
+    def create
+      # Ensure we don't keep a leftover file from last upload attempt
       # Can't use Tempfile here as it expires too quickly
       begin
         errors_file_path.unlink
       rescue StandardError
         nil
       end
-    end
 
-    def create
       @form_object = ImportForm.new(params.expect(nsm_import_form: [:file_upload]))
 
       if @form_object.valid?
