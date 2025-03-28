@@ -1,4 +1,6 @@
 /* override due to nesting govuk-width-container result in no visible margin */
+@use "../_imports.scss" as *;
+
 @media (min-width: 1020px),
        (min-width: 16rem) {
   .moj-primary-navigation__container {
