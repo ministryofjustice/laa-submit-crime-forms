@@ -1,6 +1,8 @@
 class Claim < ApplicationRecord
   include ClaimDetails
 
+  before_destroy :destroy_attachments
+
   belongs_to :submitter, class_name: 'Provider', optional: true
   belongs_to :firm_office, optional: true, dependent: :destroy
   belongs_to :solicitor, optional: true, dependent: :destroy
@@ -91,6 +93,18 @@ class Claim < ApplicationRecord
   end
 
   private
+
+  def file_uploader
+    @file_uploader ||= FileUpload::FileUploader.new
+  end
+
+  def destroy_attachments
+    return unless state == 'draft'
+
+    supporting_evidence.each do |file|
+      file_uploader.destroy(file.file_path) if file_uploader.exists?(file.file_path)
+    end
+  end
 
   def sorted_work_item_ids
     @sorted_work_item_ids ||= work_items.sort_by do |workitem|
