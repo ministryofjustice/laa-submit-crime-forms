@@ -1,6 +1,6 @@
 <% type ||= :information %>
 <% can_dismiss ||= false %>
-<% aria_label = "#{type}: #{defined?(heading) ? heading : msg}" %>
+<% aria_label = defined?(heading) ? "#{type}: #{heading}" : "#{type}" %>
 
 <div role="region"
      class="moj-alert <%= "moj-alert--#{type}" %> <%= 'moj-alert--with-heading' if defined?(heading) %>" data-module="moj-alert"
@@ -30,7 +30,7 @@
         <% if defined?(heading) %>
             <h2 class="moj-alert__heading"><%= heading %></h2>
         <% end %>
-        <%= msg %>
+        <%= sanitize(msg, tags: %w[a]) %>
     </div>
     <div class="moj-alert__action">
         <button class="moj-alert__dismiss" <%= 'hidden' unless can_dismiss %> >Dismiss</button>

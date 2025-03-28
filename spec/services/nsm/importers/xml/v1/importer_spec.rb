@@ -218,4 +218,28 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
       end
     end
   end
+
+  describe '#populate_other_info' do
+    describe 'sets fields to yes correctly' do
+      it 'returns yes if data is present' do
+        expect(claim.has_disbursements).to eq('yes')
+        expect(claim.is_other_info).to eq('yes')
+        expect(claim.preparation_time).to eq('yes')
+        expect(claim.work_after).to eq('yes')
+        expect(claim.work_before).to eq('yes')
+      end
+    end
+
+    describe 'sets fields to no correctly' do
+      let(:hash) { xml_hash.except!('disbursements', 'other_info', 'time_spent', 'work_after_date', 'work_before_date') }
+
+      it 'returns no if no data is present' do
+        expect(claim.has_disbursements).to eq('no')
+        expect(claim.is_other_info).to eq('no')
+        expect(claim.preparation_time).to eq('no')
+        expect(claim.work_after).to eq('no')
+        expect(claim.work_before).to eq('no')
+      end
+    end
+  end
 end
