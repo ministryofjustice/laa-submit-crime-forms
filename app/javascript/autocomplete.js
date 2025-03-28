@@ -43,6 +43,7 @@ export function convertSelectToAutocomplete() {
       showNoOptionsFound: name === null && !useCustom,
       name: name,
       autoselect: element.dataset.autoselect === "true",
+      showAllValues: element.dataset.showAllValues == "true",
       source: (query, populateResults) => {
         const trimmed = sanitizeInput(query);
         const filtered = [...element.options].filter((opt) =>
