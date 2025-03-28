@@ -36,6 +36,34 @@ class SubmitToAppStore
       )
     end
 
+    DIRECT_ATTRIBUTES = %i[
+      office_code
+      prison_law
+      ufn
+      laa_reference
+      rep_order_date
+      reason_why
+      main_offence_id
+      custom_main_offence_name
+      client_detained
+      prison_id
+      custom_prison_name
+      subject_to_poca
+      next_hearing_date
+      plea
+      court_type
+      youth_court
+      psychiatric_liaison
+      psychiatric_liaison_reason_not
+      next_hearing
+      service_type
+      custom_service_name
+      prior_authority_granted
+      no_alternative_quote_reason
+      created_at
+      updated_at
+    ].freeze
+
     private
 
     attr_reader :application
@@ -83,33 +111,5 @@ class SubmitToAppStore
     def status
       application.state
     end
-
-    DIRECT_ATTRIBUTES = %i[
-      office_code
-      prison_law
-      ufn
-      laa_reference
-      rep_order_date
-      reason_why
-      main_offence_id
-      custom_main_offence_name
-      client_detained
-      prison_id
-      custom_prison_name
-      subject_to_poca
-      next_hearing_date
-      plea
-      court_type
-      youth_court
-      psychiatric_liaison
-      psychiatric_liaison_reason_not
-      next_hearing
-      service_type
-      custom_service_name
-      prior_authority_granted
-      no_alternative_quote_reason
-      created_at
-      updated_at
-    ].freeze
   end
 end
