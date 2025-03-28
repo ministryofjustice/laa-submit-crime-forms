@@ -100,4 +100,50 @@ RSpec.describe 'Import claims' do
     pdf = PDF::Reader.new(output)
     expect(pdf.page(1)).to have_content("2:0: ERROR: Element 'claim': Missing child element(s)")
   end
+
+  it 'handles unsupported versions' do
+    attach_file(file_fixture('import_sample_incorrect_version.xml'))
+    click_on 'Save and continue'
+    expect(page).to have_content(
+      I18n.t('activemodel.errors.models.nsm/import_form.attributes.file_upload.validation_errors')
+    )
+
+    click_on 'error summary (PDF)'
+
+    output = StringIO.new
+    output.puts(page.body)
+    pdf = PDF::Reader.new(output)
+    expect(pdf.page(1)).to have_content('XML version 2 is not supported')
+  end
+
+  it 'handles missing version element' do
+    attach_file(file_fixture('import_sample_without_version.xml'))
+    click_on 'Save and continue'
+    expect(page).to have_content(
+      I18n.t('activemodel.errors.models.nsm/import_form.attributes.file_upload.validation_errors')
+    )
+
+    click_on 'error summary (PDF)'
+
+    output = StringIO.new
+    output.puts(page.body)
+    pdf = PDF::Reader.new(output)
+    expect(pdf.page(1)).to have_content(I18n.t('nsm.imports.errors.missing_version'))
+  end
+
+  it 'handles invalid version number' do
+    # Create a fixture with invalid version element
+    attach_file(file_fixture('import_sample_invalid_version.xml'))
+    click_on 'Save and continue'
+    expect(page).to have_content(
+      I18n.t('activemodel.errors.models.nsm/import_form.attributes.file_upload.validation_errors')
+    )
+
+    click_on 'error summary (PDF)'
+
+    output = StringIO.new
+    output.puts(page.body)
+    pdf = PDF::Reader.new(output)
+    expect(pdf.page(1)).to have_content(I18n.t('nsm.imports.errors.invalid_version'))
+  end
 end

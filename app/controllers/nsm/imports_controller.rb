@@ -21,25 +21,20 @@ module Nsm
       if @form_object.valid?
         initialize_application do |claim|
           @validation_errors = validate
-
           if @validation_errors.empty?
-            hash = Hash.from_xml(xml_file.to_s)['claim']
-
-            # TODO: CRM457-2473: Refactor this to handle versioning better
-            Nsm::Importers::Xml.const_get("v#{xml_file.version.to_i}".capitalize)::Importer.new(claim, hash).call
-
-            redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) } and return
+            process_successful_import(claim)
+            return # Exit the action after redirect
           else
-            errors_file_path.write(@validation_errors.to_json)
-            @form_object.errors.add(:file_upload, :validation_errors)
+            handle_validation_errors
           end
         end
       end
+
       render :new
-    rescue StandardError
-      @form_object = ImportForm.new
-      @form_object.errors.add(:file_upload, :blank)
-      render :new
+    rescue ActionController::ParameterMissing
+      handle_missing_parameter
+    rescue StandardError => e
+      handle_standard_error(e)
     end
 
     def errors
@@ -63,6 +58,42 @@ module Nsm
 
     private
 
+    def handle_missing_parameter
+      @form_object = ImportForm.new
+      @form_object.errors.add(:file_upload, :blank)
+      render :new
+    end
+
+    def handle_standard_error(error)
+      @form_object = ImportForm.new
+      @form_object.errors.add(:file_upload, :unexpected_error, message: error.message)
+      render :new
+    end
+
+    def process_successful_import(claim)
+      hash = prepare_claim_hash
+      version = extract_version_from_xml
+
+      import_claim(claim, hash, version)
+
+      redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) }
+    end
+
+    def prepare_claim_hash
+      hash = Hash.from_xml(xml_file.to_s)['claim']
+      hash.delete('version') # Remove version to prevent "unknown attribute" error
+      hash
+    end
+
+    def import_claim(claim, hash, version)
+      Nsm::Importers::Xml.const_get("V#{version}".capitalize)::Importer.new(claim, hash).call
+    end
+
+    def handle_validation_errors
+      errors_file_path.write(@validation_errors.to_json)
+      @form_object.errors.add(:file_upload, :validation_errors)
+    end
+
     def errors_file_path
       Rails.root.join('tmp', "xml_errors_#{current_provider.id}")
     end
@@ -71,10 +102,29 @@ module Nsm
       @xml_file ||= Nokogiri::XML::Document.parse(@form_object.file_upload.tempfile.read, &:noblanks)
     end
 
-    def validate
-      schema_file = Rails.root.join("app/services/nsm/importers/xml/v#{xml_file.version.to_i}/crm7_claim.xsd").read
-      schema = Nokogiri::XML::Schema.new(schema_file)
+    # Extract version from XML
+    def extract_version_from_xml
+      version_node = xml_file.at_xpath('//version')
+      return version_node.text.to_i if version_node&.text.present?
 
+      1 # Default to version 1 if not found
+    end
+
+    def validate
+      # Check if version element exists
+      version_node = xml_file.at_xpath('//version')
+      return [I18n.t('nsm.imports.errors.missing_version')] if version_node.nil? || version_node.text.blank?
+
+      # Get version number
+      version = version_node.text.to_i
+      return [I18n.t('nsm.imports.errors.invalid_version')] if version <= 0
+
+      # Check schema file exists
+      schema_path = Rails.root.join("app/services/nsm/importers/xml/v#{version}/crm7_claim.xsd")
+      return [I18n.t('nsm.imports.errors.unsupported_version', version:)] unless File.exist?(schema_path)
+
+      # Proceed with schema validation - explicitly return the results
+      schema = Nokogiri::XML::Schema.new(schema_path.read)
       schema.validate(xml_file)
     end
 

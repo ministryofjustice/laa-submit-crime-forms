@@ -11,6 +11,7 @@ module Nsm
           end
 
           def call
+            hash.delete('version')
             resolve_reasons_for_claim
             enhanced_rates_if_uplifts
             populate_other_info
