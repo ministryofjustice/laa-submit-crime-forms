@@ -1,0 +1,15 @@
+<% content_for(:primary_navigation) do %>
+  <% render partial: 'layouts/nsm/primary_navigation' %>
+<% end %>
+<% content_for(:back_link) do %>
+  <%= link_to t('helpers.back_link'), new_nsm_import_path, class: 'govuk-back-link' %>
+<% end %>
+
+<% title t('.title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.title') %></h1>
+    <p><%= t('.message') %> <%= link_to t('.link'), new_nsm_import_path, class: 'govuk-link' %></p>
+  </div>
+</div>

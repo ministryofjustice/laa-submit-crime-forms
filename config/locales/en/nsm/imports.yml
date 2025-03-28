@@ -22,6 +22,10 @@ en:
       errors:
         title: XML Errors
         explanation: There is a problem with the XML file and it cannot be uploaded. Give these errors alongside the original exported file to your case management system provider and ask them to check the export.
+      missing_file:
+        title: File not found
+        message: The error summary file has expired.
+        link: Try importing the claim again.
   activemodel:
     errors:
       models:

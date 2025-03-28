@@ -5,37 +5,26 @@ module Nsm
     def new
       @form_object = ImportForm.new
       @validation_errors = []
-
-      # Ensure we don't keep a leftover file
-      # Can't use Tempfile here as it expires too quickly
-      begin
-        errors_file_path.unlink
-      rescue StandardError
-        nil
-      end
     end
 
     def create
       @form_object = ImportForm.new(params.expect(nsm_import_form: [:file_upload]))
-
       if @form_object.valid?
         initialize_application do |claim|
           @validation_errors = validate
 
           if @validation_errors.empty?
-            hash = Hash.from_xml(xml_file.to_s)['claim']
-
-            # TODO: CRM457-2473: Refactor this to handle versioning better
-            Nsm::Importers::Xml.const_get("v#{xml_file.version.to_i}".capitalize)::Importer.new(claim, hash).call
-
+            handle_import(claim)
             redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) } and return
           else
             errors_file_path.write(@validation_errors.to_json)
             @form_object.errors.add(:file_upload, :validation_errors)
+            render :new
           end
         end
+      else
+        render :new
       end
-      render :new
     rescue StandardError
       @form_object = ImportForm.new
       @form_object.errors.add(:file_upload, :blank)
@@ -43,7 +32,13 @@ module Nsm
     end
 
     def errors
-      @errors = JSON.parse(errors_file_path.read)
+      begin
+        @errors = JSON.parse(errors_file_path.read)
+      rescue StandardError
+        render 'nsm/imports/missing_file'
+      end
+
+      return unless @errors
 
       page = render_to_string(
         template: 'nsm/imports/errors',
@@ -62,6 +57,17 @@ module Nsm
     end
 
     private
+
+    def handle_import(claim)
+      hash = Hash.from_xml(xml_file.to_s)['claim']
+
+      # TODO: CRM457-2473: Refactor this to handle versioning better
+      Nsm::Importers::Xml.const_get("v#{xml_file.version.to_i}".capitalize)::Importer.new(claim, hash).call
+
+      # Ensure we don't keep a leftover file from last failed upload attempt
+      # Can't use Tempfile here as it expires too quickly
+      errors_file_path.unlink if File.exist?(errors_file_path)
+    end
 
     def errors_file_path
       Rails.root.join('tmp', "xml_errors_#{current_provider.id}")
