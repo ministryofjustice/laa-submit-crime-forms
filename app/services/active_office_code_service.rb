@@ -11,9 +11,7 @@ class ActiveOfficeCodeService
       contract_active?(office_code)
     end
 
-    def contract_active?(office_code)
-      ProviderDataApiClient.contract_active?(office_code)
-    end
+    delegate :contract_active?, to: :ProviderDataApiClient
 
     def always_inactive_office_codes
       Rails.configuration.x.office_code_overrides.inactive_office_codes
