@@ -22,6 +22,8 @@ module Nsm
             render :new
           end
         end
+      else
+        render :new
       end
     rescue StandardError
       @form_object = ImportForm.new
