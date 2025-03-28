@@ -1,0 +1,12 @@
+// This file MUST now be included in any additional SCSS files
+
+@use "node_modules/govuk-frontend/dist/govuk" as * with (
+    $govuk-global-styles: true,
+    $govuk-new-organisation-colours: true,
+    $govuk-assets-path: '/',
+    $govuk-suppressed-warnings: (
+        "legacy-organisation-colours"
+    )
+);
+
+@forward "node_modules/@ministryofjustice/frontend/moj/all";
