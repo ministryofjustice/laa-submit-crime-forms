@@ -71,13 +71,6 @@ module PriorAuthority
       PriorAuthorityApplication
     end
 
-    private
-
-    def initialize_application(attributes = {}, &block)
-      attributes[:office_code] = current_provider.office_codes.first unless current_provider.multiple_offices?
-      current_provider.prior_authority_applications.create!(attributes).tap(&block)
-    end
-
     ORDERS = {
       'ufn' => 'ufn ?',
       'client' => 'defendants.first_name ?, defendants.last_name ?',
@@ -91,6 +84,13 @@ module PriorAuthority
       'descending' => 'DESC',
       'ascending' => 'ASC',
     }.freeze
+
+    private
+
+    def initialize_application(attributes = {}, &block)
+      attributes[:office_code] = current_provider.office_codes.first unless current_provider.multiple_offices?
+      current_provider.prior_authority_applications.create!(attributes).tap(&block)
+    end
 
     def order_and_paginate
       query = yield PriorAuthorityApplication.for(current_provider)
