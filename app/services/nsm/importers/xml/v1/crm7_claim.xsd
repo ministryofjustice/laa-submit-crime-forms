@@ -57,47 +57,6 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="otherDisbursementType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="accident_reconstruction_report"/>
-      <xs:enumeration value="accident_emergency_report"/>
-      <xs:enumeration value="accountants"/>
-      <xs:enumeration value="architects_surveyor"/>
-      <xs:enumeration value="back_calculations"/>
-      <xs:enumeration value="car_travel"/>
-      <xs:enumeration value="cell_phone_site_analysis"/>
-      <xs:enumeration value="computer_experts"/>
-      <xs:enumeration value="consultant_medical_reports"/>
-      <xs:enumeration value="dna_testing"/>
-      <xs:enumeration value="drug_expert_report"/>
-      <xs:enumeration value="engineer_mechanical_engineer"/>
-      <xs:enumeration value="enquiry_agents"/>
-      <xs:enumeration value="facial_mapping_experts"/>
-      <xs:enumeration value="fingerprint_experts"/>
-      <xs:enumeration value="fire_investigation_report"/>
-      <xs:enumeration value="forensic_scientists"/>
-      <xs:enumeration value="general_practitioners"/>
-      <xs:enumeration value="handwriting_experts"/>
-      <xs:enumeration value="interpreters"/>
-      <xs:enumeration value="lip_readers"/>
-      <xs:enumeration value="medical_report"/>
-      <xs:enumeration value="meteorologist"/>
-      <xs:enumeration value="overnight_expenses"/>
-      <xs:enumeration value="paediatricians_report"/>
-      <xs:enumeration value="pathologists"/>
-      <xs:enumeration value="photocopying"/>
-      <xs:enumeration value="plans_photographs"/>
-      <xs:enumeration value="psychiatric_reports"/>
-      <xs:enumeration value="psychological_reports"/>
-      <xs:enumeration value="telecommunications_expert"/>
-      <xs:enumeration value="transcripts"/>
-      <xs:enumeration value="translators"/>
-      <xs:enumeration value="travel_expenses_excl_car"/>
-      <xs:enumeration value="veterinarian_report"/>
-      <xs:enumeration value="voice_recognition_experts"/>
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:simpleType name="pleaType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="guilty"/>
@@ -406,13 +365,55 @@
                         </xs:documentation>
                       </xs:annotation>
                     </xs:element>
-                    <xs:element name="other_type" type="otherDisbursementType" minOccurs="0">
+                    <xs:element name="other_type" type="xs:string" minOccurs="0">
                       <xs:annotation>
                         <xs:appinfo>
                           When "other" is selected as the disbursement type,
                           this field would have the value of what that would
                           be.
                         </xs:appinfo>
+                        <xs:documentation>
+                          The component on our side accepts the
+                          following, but it also supports free text so
+                          try and map to these if you can:
+
+                          accident_reconstruction_report
+                          accident_emergency_report
+                          accountants
+                          architects_surveyor
+                          back_calculations
+                          car_travel
+                          cell_phone_site_analysis
+                          computer_experts
+                          consultant_medical_reports
+                          dna_testing
+                          drug_expert_report
+                          engineer_mechanical_engineer
+                          enquiry_agents
+                          facial_mapping_experts
+                          fingerprint_experts
+                          fire_investigation_report
+                          forensic_scientists
+                          general_practitioners
+                          handwriting_experts
+                          interpreters
+                          lip_readers
+                          medical_report
+                          meteorologist
+                          overnight_expenses
+                          paediatricians_report
+                          pathologists
+                          photocopying
+                          plans_photographs
+                          psychiatric_reports
+                          psychological_reports
+                          telecommunications_expert
+                          transcripts
+                          translators
+                          travel_expenses_excl_car
+                          veterinarian_report
+                          voice_recognition_experts
+                        </xs:documentation>
                       </xs:annotation>
                     </xs:element>
                     <xs:element name="miles" type="xs:decimal" minOccurs="0">
