@@ -11,13 +11,9 @@ module FileUpload
       @uploader.save(file)
     end
 
-    def destroy(file_path)
-      @uploader.destroy(file_path)
-    end
+    delegate :destroy, to: :@uploader
 
-    def exists?(file_path)
-      @uploader.exists?(file_path)
-    end
+    delegate :exists?, to: :@uploader
 
     def scan_file(file)
       result = if Rails.env.production? || ENV.fetch('CLAMBY_ENABLED', nil) == 'true'
