@@ -7,6 +7,7 @@ module Nsm
     validate :correct_filetype
 
     def supported_filetype?
+      return false unless file_upload.present?
       %w[text/plain application/xml text/xml].include?(Marcel::MimeType.for(file_upload.tempfile))
     end
 
