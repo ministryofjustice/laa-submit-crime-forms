@@ -9,7 +9,6 @@ module Nsm
 
     def create
       @form_object = ImportForm.new(params.expect(nsm_import_form: [:file_upload]))
-
       if @form_object.valid?
         initialize_application do |claim|
           @validation_errors = validate
@@ -20,18 +19,16 @@ module Nsm
             # TODO: CRM457-2473: Refactor this to handle versioning better
             Nsm::Importers::Xml.const_get("v#{xml_file.version.to_i}".capitalize)::Importer.new(claim, hash).call
 
-            # Ensure we don't keep a leftover file from last failed upload attempt
-            # Can't use Tempfile here as it expires too quickly
-            errors_file_path.unlink
-
+            # Delete any previous error files
+            File.delete(errors_file_path)
             redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) } and return
           else
-            errors_file_path.write(@validation_errors.to_json)
+            File.write(errors_file_path, @validation_errors.to_json)
             @form_object.errors.add(:file_upload, :validation_errors)
+            render :new
           end
         end
       end
-      render :new
     rescue StandardError
       @form_object = ImportForm.new
       @form_object.errors.add(:file_upload, :blank)
