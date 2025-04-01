@@ -24,7 +24,6 @@ module Nsm
         initialize_application do |claim|
           @validation_errors = validate
           if @validation_errors.empty?
-            hash = claim_hash
             process_successful_import(claim)
             return # Exit the action after redirect
           else
@@ -34,11 +33,7 @@ module Nsm
       end
 
       render :new
-    rescue ActionController::ParameterMissing
-      handle_missing_parameter
-    rescue StandardError => e
-      handle_standard_error(e)
-end
+    end
 
     def errors
       @errors = JSON.parse(errors_file_path.read)
@@ -61,30 +56,13 @@ end
 
     private
 
-    def handle_missing_parameter
-      @form_object = ImportForm.new
-      @form_object.errors.add(:file_upload, :blank)
-      render :new
-    end
-
-    def handle_standard_error(error)
-      @form_object = ImportForm.new
-      @form_object.errors.add(:file_upload, :unexpected_error, message: error.message)
-      render :new
-    end
-
     def process_successful_import(claim)
-      hash = prepare_claim_hash
+      hash = claim_hash
       version = extract_version_from_xml
 
       import_claim(claim, hash, version)
 
       redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) }
-    end
-
-    def prepare_claim_hash
-      Hash.from_xml(xml_file.to_s)['claim'].except('version')
-      hash
     end
 
     def import_claim(claim, hash, version)
@@ -112,7 +90,7 @@ end
       @xml_file ||= Nokogiri::XML::Document.parse(@form_object.file_upload.tempfile.read, &:noblanks)
     end
 
-    # Extract version from XML
+    # The version of the schema to compare an export against.
     def extract_version_from_xml
       version_node = xml_file.at_xpath('//version')
       if version_node&.text.present?
@@ -133,7 +111,8 @@ end
 
       claim_node.children.each { |child| new_doc.root.add_child(child.dup) }
 
-      Hash.from_xml(new_doc.to_s)['claim']
+      # Make sure to remove version from hash here as well
+      Hash.from_xml(new_doc.to_s)['claim'].except('version')
     end
 
     def validate
