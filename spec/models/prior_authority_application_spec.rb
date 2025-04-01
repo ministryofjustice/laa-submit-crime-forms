@@ -63,4 +63,41 @@ RSpec.describe PriorAuthorityApplication do
       it { expect(prior_authority_application).not_to be_further_information_needed }
     end
   end
+
+  describe '#destroy_attachments' do
+    let(:test_file_path) { 'test_path' }
+    let(:file_evidence) { double('file_evidence', file_path: test_file_path) }
+    let(:quote_document) { double('document', file_path: test_file_path) }
+    let(:quote) { double('quote', document: quote_document) }
+
+    before do
+      allow(application).to receive_messages(supporting_documents: [file_evidence], quotes: [quote])
+    end
+
+    context 'when application is a draft' do
+      let(:application) { create(:prior_authority_application, :full, :as_draft) }
+
+      it 'removes attachments for drafts' do
+        allow_any_instance_of(FileUpload::FileUploader).to receive(:exists?).with(test_file_path).and_return(true)
+        expect_any_instance_of(FileUpload::FileUploader).to receive(:destroy).with(test_file_path).at_least(:twice)
+        application.destroy
+      end
+
+      it 'does not attempt to remove files that do not exist' do
+        allow_any_instance_of(FileUpload::FileUploader).to receive(:exists?).with(test_file_path).and_return(false)
+        expect_any_instance_of(FileUpload::FileUploader).not_to receive(:destroy)
+        application.destroy
+      end
+    end
+
+    context 'when application is not a draft' do
+      let(:application) { create(:prior_authority_application, :full, :as_submitted) }
+
+      it 'does not remove attachments for non-drafts' do
+        expect_any_instance_of(FileUpload::FileUploader).not_to receive(:exists?)
+        expect_any_instance_of(FileUpload::FileUploader).not_to receive(:destroy)
+        application.destroy
+      end
+    end
+  end
 end

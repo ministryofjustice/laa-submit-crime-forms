@@ -139,4 +139,39 @@ RSpec.describe Claim do
       expect(disbursement_a.reload.read_attribute(:position)).to be 6
     end
   end
+
+  describe '#destroy_attachments' do
+    let(:test_file_path) { 'test_path' }
+    let(:file_evidence) { double('file_evidence', file_path: test_file_path) }
+
+    before do
+      allow(claim).to receive(:supporting_evidence).and_return([file_evidence])
+    end
+
+    context 'when claim is a draft' do
+      let(:claim) { create(:claim, :complete, :as_draft) }
+
+      it 'removes attachments for drafts' do
+        allow_any_instance_of(FileUpload::FileUploader).to receive(:exists?).with(test_file_path).and_return(true)
+        expect_any_instance_of(FileUpload::FileUploader).to receive(:destroy).with(test_file_path).at_least(:once)
+        claim.destroy
+      end
+
+      it 'does not attempt to remove files that do not exist' do
+        allow_any_instance_of(FileUpload::FileUploader).to receive(:exists?).with(test_file_path).and_return(false)
+        expect_any_instance_of(FileUpload::FileUploader).not_to receive(:destroy)
+        claim.destroy
+      end
+    end
+
+    context 'when claim is not a draft' do
+      let(:claim) { create(:claim, :complete, :as_submitted) }
+
+      it 'does not remove attachments for non-drafts' do
+        expect_any_instance_of(FileUpload::FileUploader).not_to receive(:exists?)
+        expect_any_instance_of(FileUpload::FileUploader).not_to receive(:destroy)
+        claim.destroy
+      end
+    end
+  end
 end

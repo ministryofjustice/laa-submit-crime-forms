@@ -2,6 +2,8 @@ module Nsm
   class ImportsController < ApplicationController
     include ClaimCreatable
 
+    before_action :ensure_params, only: [:create]
+
     def new
       @form_object = ImportForm.new
       @validation_errors = []
@@ -25,10 +27,6 @@ module Nsm
       else
         render :new
       end
-    rescue StandardError
-      @form_object = ImportForm.new
-      @form_object.errors.add(:file_upload, :blank)
-      render :new
     end
 
     def errors
@@ -59,7 +57,7 @@ module Nsm
     private
 
     def handle_import(claim)
-      hash = Hash.from_xml(xml_file.to_s)['claim']
+      hash = claim_hash
 
       # TODO: CRM457-2473: Refactor this to handle versioning better
       Nsm::Importers::Xml.const_get("v#{xml_file.version.to_i}".capitalize)::Importer.new(claim, hash).call
@@ -69,12 +67,33 @@ module Nsm
       errors_file_path.unlink if File.exist?(errors_file_path)
     end
 
+    def ensure_params
+      return if params[:nsm_import_form].present? && params[:nsm_import_form][:file_upload].present?
+
+      @form_object = ImportForm.new
+      @form_object.errors.add(:file_upload, :blank)
+      render :new
+    end
+
     def errors_file_path
       Rails.root.join('tmp', "xml_errors_#{current_provider.id}")
     end
 
     def xml_file
       @xml_file ||= Nokogiri::XML::Document.parse(@form_object.file_upload.tempfile.read, &:noblanks)
+    end
+
+    # Strip out any attributes on the root claim node
+    # by copying the children over to a new node
+    def claim_hash
+      claim_node = xml_file.at_xpath('//claim')
+
+      new_doc = Nokogiri::XML::Document.new
+      new_doc.root = Nokogiri::XML::Node.new('claim', new_doc)
+
+      claim_node.children.each { |child| new_doc.root.add_child(child.dup) }
+
+      Hash.from_xml(new_doc.to_s)['claim']
     end
 
     def validate
