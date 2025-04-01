@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::ImportsController, type: :controller do
-
   describe '#errors' do
-    let(:error_path) { Rails.root.join('spec', 'fixtures', 'files', 'example_import_error')}
+    let(:error_path) { Rails.root.join('spec', 'fixtures', 'files', 'example_import_error') }
 
     context 'an error file is present' do
       before do
