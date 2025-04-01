@@ -2,6 +2,8 @@ module Nsm
   class ImportsController < ApplicationController
     include ClaimCreatable
 
+    before_action :ensure_params, only: [:create]
+
     def new
       @form_object = ImportForm.new
       @validation_errors = []
@@ -22,6 +24,7 @@ module Nsm
         initialize_application do |claim|
           @validation_errors = validate
           if @validation_errors.empty?
+            hash = claim_hash
             process_successful_import(claim)
             return # Exit the action after redirect
           else
@@ -35,7 +38,7 @@ module Nsm
       handle_missing_parameter
     rescue StandardError => e
       handle_standard_error(e)
-    end
+end
 
     def errors
       @errors = JSON.parse(errors_file_path.read)
@@ -93,6 +96,14 @@ module Nsm
       @form_object.errors.add(:file_upload, :validation_errors)
     end
 
+    def ensure_params
+      return if params[:nsm_import_form].present? && params[:nsm_import_form][:file_upload].present?
+
+      @form_object = ImportForm.new
+      @form_object.errors.add(:file_upload, :blank)
+      render :new
+    end
+
     def errors_file_path
       Rails.root.join('tmp', "xml_errors_#{current_provider.id}")
     end
@@ -110,6 +121,19 @@ module Nsm
       end
 
       raise StandardError, I18n.t('nsm.imports.errors.missing_version')
+    end
+
+    # Strip out any attributes on the root claim node
+    # by copying the children over to a new node
+    def claim_hash
+      claim_node = xml_file.at_xpath('//claim')
+
+      new_doc = Nokogiri::XML::Document.new
+      new_doc.root = Nokogiri::XML::Node.new('claim', new_doc)
+
+      claim_node.children.each { |child| new_doc.root.add_child(child.dup) }
+
+      Hash.from_xml(new_doc.to_s)['claim']
     end
 
     def validate

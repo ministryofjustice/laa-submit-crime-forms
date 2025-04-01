@@ -12,11 +12,11 @@ module FileUpload
     end
 
     def destroy(file_path)
-      @uploader.destroy(file_path)
+      file_path && @uploader.destroy(file_path)
     end
 
     def exists?(file_path)
-      @uploader.exists?(file_path)
+      file_path && @uploader.exists?(file_path)
     end
 
     def scan_file(file)

@@ -3,7 +3,7 @@ class NotificationBanner
     return unless banner_config && date_from && date_to
 
     current_date = DateTime.now
-    date_from <= current_date && date_to >= current_date ? banner_config[:message] : nil
+    current_date.between?(date_from, date_to) ? banner_config[:message] : nil
   end
 
   def self.banner_config

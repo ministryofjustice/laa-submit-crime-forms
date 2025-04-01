@@ -1,3 +1,5 @@
+@use "../../_imports.scss" as *;
+
 $app-uat-colour: govuk-colour("orange");
 $app-staging-colour: govuk-colour("turquoise");
 $app-dev-colour: govuk-colour("pink");
