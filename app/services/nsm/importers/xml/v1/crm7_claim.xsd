@@ -149,6 +149,15 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
+        <xs:element name="version" type="xs:integer" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>
+              XML schema version number. Must be a positive integer that corresponds to a supported schema version.
+              This is not a SemVer number - only use whole numbers like 1, 2, 3, etc.
+              Empty or self-closing tags are not allowed for this element.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
         <xs:element name="agent_instructed" type="booleanString" minOccurs="0">
           <xs:annotation>
             <xs:appinfo>

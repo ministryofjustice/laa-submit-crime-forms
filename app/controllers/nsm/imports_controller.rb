@@ -14,14 +14,11 @@ module Nsm
       if @form_object.valid?
         initialize_application do |claim|
           @validation_errors = validate
-
           if @validation_errors.empty?
-            handle_import(claim)
-            redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) } and return
+            process_successful_import(claim)
+            return # Exit the action after redirect
           else
-            errors_file_path.write(@validation_errors.to_json)
-            @form_object.errors.add(:file_upload, :validation_errors)
-            render :new
+            handle_validation_errors
           end
         end
       else
@@ -56,15 +53,26 @@ module Nsm
 
     private
 
-    def handle_import(claim)
+    def process_successful_import(claim)
       hash = claim_hash
-
-      # TODO: CRM457-2473: Refactor this to handle versioning better
-      Nsm::Importers::Xml.const_get("v#{xml_file.version.to_i}".capitalize)::Importer.new(claim, hash).call
+      version = extract_version_from_xml
+      import_claim(claim, hash, version)
 
       # Ensure we don't keep a leftover file from last failed upload attempt
       # Can't use Tempfile here as it expires too quickly
       errors_file_path.unlink if File.exist?(errors_file_path)
+
+      redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) }
+    end
+
+    def import_claim(claim, hash, version)
+      Nsm::Importers::Xml.const_get("V#{version}".capitalize)::Importer.new(claim, hash).call
+    end
+
+    def handle_validation_errors
+      errors_file_path.write(@validation_errors.to_json)
+      @form_object.errors.add(:file_upload, :validation_errors)
+      render :new
     end
 
     def ensure_params
@@ -83,6 +91,17 @@ module Nsm
       @xml_file ||= Nokogiri::XML::Document.parse(@form_object.file_upload.tempfile.read, &:noblanks)
     end
 
+    # The version of the schema to compare an export against.
+    def extract_version_from_xml
+      version_node = xml_file.at_xpath('//version')
+      if version_node&.text.present?
+        version = version_node.text.to_i
+        return version if version.positive?
+      end
+
+      raise StandardError, I18n.t('nsm.imports.errors.missing_version')
+    end
+
     # Strip out any attributes on the root claim node
     # by copying the children over to a new node
     def claim_hash
@@ -93,13 +112,25 @@ module Nsm
 
       claim_node.children.each { |child| new_doc.root.add_child(child.dup) }
 
-      Hash.from_xml(new_doc.to_s)['claim']
+      # Make sure to remove version from hash here as well
+      Hash.from_xml(new_doc.to_s)['claim'].except('version')
     end
 
     def validate
-      schema_file = Rails.root.join("app/services/nsm/importers/xml/v#{xml_file.version.to_i}/crm7_claim.xsd").read
-      schema = Nokogiri::XML::Schema.new(schema_file)
+      # Check if version element exists
+      version_node = xml_file.at_xpath('//version')
+      return [I18n.t('nsm.imports.errors.missing_version')] if version_node.nil? || version_node.text.blank?
 
+      # Get version number
+      version = version_node.text.to_i
+      return [I18n.t('nsm.imports.errors.invalid_version')] if version <= 0
+
+      # Check schema file exists
+      schema_path = Rails.root.join("app/services/nsm/importers/xml/v#{version}/crm7_claim.xsd")
+      return [I18n.t('nsm.imports.errors.unsupported_version', version:)] unless File.exist?(schema_path)
+
+      # Proceed with schema validation - explicitly return the results
+      schema = Nokogiri::XML::Schema.new(schema_path.read)
       schema.validate(xml_file)
     end
 
