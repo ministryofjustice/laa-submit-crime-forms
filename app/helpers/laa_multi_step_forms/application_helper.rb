@@ -30,7 +30,7 @@ module LaaMultiStepForms
     end
 
     def current_layout
-      controller.send :_layout, lookup_context, []
+      controller.send :_layout, lookup_context, [], []
     rescue NoMethodError # The above does not work in the context of PDF generation
       nil
     end
