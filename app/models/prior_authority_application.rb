@@ -80,8 +80,10 @@ class PriorAuthorityApplication < ApplicationRecord
       file_uploader.destroy(file.file_path) if file_uploader.exists?(file.file_path)
     end
 
-    quotes.each do |file|
-      file_uploader.destroy(file.document.file_path) if file_uploader.exists?(file.document.file_path)
+    quotes.each do |quote|
+      next if quote.document.nil?
+
+      file_uploader.destroy(quote.document.file_path) if file_uploader.exists?(quote.document.file_path)
     end
   end
 end
