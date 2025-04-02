@@ -29,7 +29,7 @@ module Nsm
     def errors
       begin
         @errors = JSON.parse(errors_file_path.read)
-      rescue StandardError
+      rescue Errno::ENOENT
         render 'nsm/imports/missing_file'
       end
 

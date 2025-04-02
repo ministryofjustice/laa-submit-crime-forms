@@ -188,7 +188,7 @@ RSpec.describe Nsm::ImportsController, type: :controller do
 
     context 'an error file is not present' do
       before do
-        allow(JSON).to receive(:parse).and_raise(StandardError)
+        allow(JSON).to receive(:parse).and_raise(Errno::ENOENT)
         get :errors
       end
 
