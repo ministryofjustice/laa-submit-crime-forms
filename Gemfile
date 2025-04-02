@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.182'
+gem 'aws-sdk-s3', '~> 1.183'
 gem 'bootsnap', '~> 1.18.4', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
@@ -30,7 +30,7 @@ gem 'pg', '~> 1.5'
 gem 'prometheus_exporter'
 gem 'propshaft'
 gem 'puma', '~> 6.6.0'
-gem 'rails', '8.0.1'
+gem 'rails', '8.0.2'
 gem 'redis'
 gem 'sentry-rails', '~> 5.23.0'
 gem 'sentry-ruby', '~> 5.23.0'
