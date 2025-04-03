@@ -7,19 +7,10 @@ module Nsm
     def new
       @form_object = ImportForm.new
       @validation_errors = []
-
-      # Ensure we don't keep a leftover file
-      # Can't use Tempfile here as it expires too quickly
-      begin
-        errors_file_path.unlink
-      rescue StandardError
-        nil
-      end
     end
 
     def create
       @form_object = ImportForm.new(params.expect(nsm_import_form: [:file_upload]))
-
       if @form_object.valid?
         initialize_application do |claim|
           @validation_errors = validate
@@ -30,13 +21,19 @@ module Nsm
             handle_validation_errors
           end
         end
+      else
+        render :new
       end
-
-      render :new
     end
 
     def errors
-      @errors = JSON.parse(errors_file_path.read)
+      begin
+        @errors = JSON.parse(errors_file_path.read)
+      rescue Errno::ENOENT
+        render 'nsm/imports/missing_file'
+      end
+
+      return unless @errors
 
       page = render_to_string(
         template: 'nsm/imports/errors',
@@ -59,8 +56,11 @@ module Nsm
     def process_successful_import(claim)
       hash = claim_hash
       version = extract_version_from_xml
-
       import_claim(claim, hash, version)
+
+      # Ensure we don't keep a leftover file from last failed upload attempt
+      # Can't use Tempfile here as it expires too quickly
+      errors_file_path.unlink if File.exist?(errors_file_path)
 
       redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) }
     end
@@ -72,6 +72,7 @@ module Nsm
     def handle_validation_errors
       errors_file_path.write(@validation_errors.to_json)
       @form_object.errors.add(:file_upload, :validation_errors)
+      render :new
     end
 
     def ensure_params
