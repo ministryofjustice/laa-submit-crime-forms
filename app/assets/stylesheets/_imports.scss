@@ -2,11 +2,10 @@
 
 @use "node_modules/govuk-frontend/dist/govuk" as * with (
     $govuk-global-styles: true,
-    $govuk-new-organisation-colours: true,
     $govuk-assets-path: '/',
-    $govuk-suppressed-warnings: (
-        "legacy-organisation-colours"
-    )
+    $govuk-new-organisation-colours: true
 );
 
-@forward "node_modules/@ministryofjustice/frontend/moj/all";
+@forward "node_modules/@ministryofjustice/frontend/moj/all" with (
+    $govuk-new-organisation-colours: true
+);
