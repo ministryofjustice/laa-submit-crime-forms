@@ -77,6 +77,16 @@ RSpec.describe PriorAuthorityApplication do
     context 'when application is a draft' do
       let(:application) { create(:prior_authority_application, :full, :as_draft) }
 
+      context 'and has a quote without a document' do
+        let(:quote) { double('quote', document: nil) }
+
+        it 'removes attachments for drafts without erroring' do
+          allow_any_instance_of(FileUpload::FileUploader).to receive(:exists?).with(test_file_path).and_return(true)
+          expect_any_instance_of(FileUpload::FileUploader).to receive(:destroy).with(test_file_path)
+          application.destroy
+        end
+      end
+
       it 'removes attachments for drafts' do
         allow_any_instance_of(FileUpload::FileUploader).to receive(:exists?).with(test_file_path).and_return(true)
         expect_any_instance_of(FileUpload::FileUploader).to receive(:destroy).with(test_file_path).at_least(:twice)
