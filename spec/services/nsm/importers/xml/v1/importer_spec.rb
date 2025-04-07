@@ -18,7 +18,7 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
   end
 
   describe '#call' do
-    # rubocop:disable RSpec::ExampleLength
+    # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
     it 'updates claim model attributes with hash values' do
       expect(claim.ufn).to eq(hash['ufn'])
       expect(claim.claim_type).to eq(hash['claim_type'])
@@ -65,7 +65,7 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
       expect(claim.court_in_undesignated_area).to eq(ActiveModel::Type::Boolean.new.cast(hash['court_in_undesignated_area']))
       expect(claim.main_offence_type).to eq(hash['main_offence_type'])
     end
-    # rubocop:enable RSpec::ExampleLength
+    # rubocop:enable RSpec/ExampleLength, RSpec/MultipleExpectations
   end
 
   describe '#create_work_items' do

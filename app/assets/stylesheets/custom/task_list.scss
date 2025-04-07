@@ -1,4 +1,6 @@
 // tweaks to the task list on top of the GOVUK styles
+@use "../_imports.scss" as *;
+
 .app-task-list__task-name {
   display: block;
 
