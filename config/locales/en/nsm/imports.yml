@@ -25,6 +25,10 @@ en:
         unsupported_version: "XML version %{version} is not supported"
         invalid_version: XML file contains an invalid version number
         missing_version: XML file missing version information
+      missing_file:
+        title: File not found
+        message: The error summary file has expired.
+        link: Try importing the claim again.
   activemodel:
     errors:
       models:
