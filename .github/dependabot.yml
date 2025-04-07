@@ -17,6 +17,7 @@ updates:
   ignore:
     - dependency-name: "puppeteer"
     - dependency-name: "puppeteer-core"
+    - dependency-name: "govuk-frontend" # Need to ignore for now until we're ready for the banner deprecation
   schedule:
     interval: weekly
     day: wednesday
@@ -51,4 +52,3 @@ updates:
       patterns:
         - "*"
   open-pull-requests-limit: 10
-

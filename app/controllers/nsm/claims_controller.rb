@@ -55,8 +55,6 @@ module Nsm
       Claim
     end
 
-    private
-
     ORDERS = {
       'ufn' => 'ufn ?',
       'defendant' => 'defendants.first_name ?, defendants.last_name ?',
@@ -70,6 +68,8 @@ module Nsm
       'descending' => 'DESC',
       'ascending' => 'ASC',
     }.freeze
+
+    private
 
     def order_and_paginate
       query = yield Claim.for(current_provider).where.not(ufn: nil)

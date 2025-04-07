@@ -1,6 +1,8 @@
 class PriorAuthorityApplication < ApplicationRecord
   include PriorAuthorityDetails
 
+  before_destroy :destroy_attachments
+
   belongs_to :provider
   belongs_to :firm_office, optional: true
   belongs_to :solicitor, optional: true
@@ -62,6 +64,26 @@ class PriorAuthorityApplication < ApplicationRecord
       new_record.additional_costs = additional_costs.map(&:dup)
       new_record.further_informations = further_informations.map(&:dup)
       new_record.incorrect_informations = incorrect_informations.map(&:dup)
+    end
+  end
+
+  private
+
+  def file_uploader
+    @file_uploader ||= FileUpload::FileUploader.new
+  end
+
+  def destroy_attachments
+    return unless state == 'draft'
+
+    supporting_documents.each do |file|
+      file_uploader.destroy(file.file_path) if file_uploader.exists?(file.file_path)
+    end
+
+    quotes.each do |quote|
+      next if quote.document.nil?
+
+      file_uploader.destroy(quote.document.file_path) if file_uploader.exists?(quote.document.file_path)
     end
   end
 end
