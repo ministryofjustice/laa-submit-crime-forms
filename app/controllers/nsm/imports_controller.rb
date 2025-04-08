@@ -62,6 +62,9 @@ module Nsm
       # Can't use Tempfile here as it expires too quickly
       errors_file_path.unlink if File.exist?(errors_file_path)
 
+      claim.import_date = DateTime.now
+      claim.save
+
       redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) }
     end
 
