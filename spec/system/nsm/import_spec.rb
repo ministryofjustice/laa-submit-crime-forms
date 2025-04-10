@@ -44,6 +44,21 @@ RSpec.describe 'Import claims' do
     expect(Claim.first.import_date).to eq(fixed_time)
   end
 
+  it 'handles a single reason_for_claim' do
+    import_file('import_sample_with_one_reason.xml', advance_to_details: true)
+
+    click_on 'Firm details'
+    click_on 'Save and continue' # Firm details
+    click_on 'Save and continue' # Contact details
+    choose 'No'
+    click_on 'Save and continue' # Defendants
+    click_on 'Save and continue' # Case details
+    click_on 'Save and continue' # Hearing details
+    click_on 'Save and continue' # Case Disposal
+
+    expect(all('input[type="checkbox"]').count(&:checked?)).to eq(1)
+  end
+
   context 'defendants import' do
     before do
       import_file('import_sample_with_missing_fields.xml', advance_to_details: true)
