@@ -22,7 +22,11 @@ def check_error_pages(page_body, page, error)
 end
 
 RSpec.describe 'Import claims' do
+  let(:fixed_time) { DateTime.new(2025, 4, 8, 10, 30, 0) }
+
   before do
+    allow(DateTime).to receive(:now).and_return(fixed_time)
+
     visit provider_saml_omniauth_callback_path
     visit new_nsm_import_path
   end
@@ -36,6 +40,23 @@ RSpec.describe 'Import claims' do
     import_file('import_sample.xml')
     expect(page).to have_content('You imported 3 work items and 2 disbursements.')
     expect(page).to have_content('To submit the claim, check the uploaded claim details and update any incomplete information.')
+
+    expect(Claim.first.import_date).to eq(fixed_time)
+  end
+
+  it 'handles a single reason_for_claim' do
+    import_file('import_sample_with_one_reason.xml', advance_to_details: true)
+
+    click_on 'Firm details'
+    click_on 'Save and continue' # Firm details
+    click_on 'Save and continue' # Contact details
+    choose 'No'
+    click_on 'Save and continue' # Defendants
+    click_on 'Save and continue' # Case details
+    click_on 'Save and continue' # Hearing details
+    click_on 'Save and continue' # Case Disposal
+
+    expect(all('input[type="checkbox"]').count(&:checked?)).to eq(1)
   end
 
   context 'defendants import' do
