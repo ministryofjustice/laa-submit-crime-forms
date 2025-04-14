@@ -78,8 +78,7 @@ module Nsm
           end
 
           def resolve_reasons_for_claim
-            hash['reasons_for_claim'] ||= []
-            hash['reasons_for_claim'] = hash['reasons_for_claim']['reason']
+            hash['reasons_for_claim'] = Array(hash['reasons_for_claim']['reason'])
           rescue StandardError
             # pass through
           end
