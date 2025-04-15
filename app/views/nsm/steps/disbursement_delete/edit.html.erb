@@ -19,7 +19,7 @@
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">
-            <% if @form_object.record.disbursement_type == DisbursementTypes::OTHER.to_s %>
+            <% if @form_object.record.disbursement_type == DisbursementTypes::OTHER.to_s && @form_object.record.other_type.present? %>
               <% if OtherDisbursementTypes.values.include?(OtherDisbursementTypes.new(@form_object.record.other_type)) %>
                 <%= t("laa_crime_forms_common.nsm.other_disbursement_type.#{@form_object.record.other_type}") %>
               <% else %>
