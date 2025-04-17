@@ -161,7 +161,7 @@ RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Item', 'Net cost', 'VAT', 'Total',
-          'Profit costs', '£904.43', '£180.89', '£1,085.31',
+          'Profit costs', '£904.43', '£180.89', '£1,085.32',
           'Disbursements', '£327.50', '£31.50', '£359.00',
           'Travel', '£10.58', '£2.12', '£12.70',
           'Waiting', '£10.58', '£2.12', '£12.70',
