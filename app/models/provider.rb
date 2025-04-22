@@ -16,6 +16,7 @@ class Provider < ApplicationRecord
   end
 
   has_many :prior_authority_applications, dependent: :destroy
+  has_many :failed_imports, dependent: :destroy
 
   class << self
     def from_omniauth(auth, office_codes)

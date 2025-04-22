@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_22_144119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -161,6 +161,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
     t.string "allowed_apply_vat"
     t.integer "position"
     t.index ["claim_id"], name: "index_disbursements_on_claim_id"
+  end
+
+  create_table "failed_imports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "firm_offices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
