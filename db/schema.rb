@@ -167,6 +167,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_22_144119) do
     t.string "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "provider_id"
+    t.index ["provider_id"], name: "index_failed_imports_on_provider_id"
   end
 
   create_table "firm_offices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
