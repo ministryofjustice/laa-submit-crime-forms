@@ -272,5 +272,48 @@ import_date: import_date)
     expect(page).to have_content '1 item has missing or incorrect information: item 1'
     expect(page).to have_css('.govuk-tag--red', text: 'Incomplete')
   end
+
+  it 'sums and rounds work items by item type before totalling' do
+    work_item = claim.work_items.create
+    visit edit_nsm_steps_work_item_path(id: claim.id, work_item_id: work_item.id)
+
+    5.times do
+      choose 'Attendance without counsel'
+      fill_in 'Hours', with: 5
+      fill_in 'Minutes', with: 40
+
+      within('.govuk-fieldset', text: 'Completion date') do
+        fill_in 'Day', with: '20'
+        fill_in 'Month', with: '4'
+        fill_in 'Year', with: '2023'
+      end
+
+      fill_in 'Fee earner initials', with: 'JBJ'
+
+      choose 'Yes'
+      click_on 'Save and continue'
+    end
+
+    4.times do
+      choose 'Advocacy'
+      fill_in 'Hours', with: 5
+      fill_in 'Minutes', with: 40
+
+      within('.govuk-fieldset', text: 'Completion date') do
+        fill_in 'Day', with: '20'
+        fill_in 'Month', with: '4'
+        fill_in 'Year', with: '2023'
+      end
+
+      fill_in 'Fee earner initials', with: 'JBJ'
+
+      choose 'Yes'
+      click_on 'Save and continue'
+    end
+
+    visit edit_nsm_steps_work_items_path(claim.id)
+
+    expect(page).to have_css('.govuk-summary-list__value-bold', text: '£2,960.43')
+  end
 end
 # rubocop:enable RSpec/ExampleLength
