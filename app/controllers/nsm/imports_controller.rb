@@ -75,6 +75,7 @@ module Nsm
     def handle_validation_errors
       errors_file_path.write(@validation_errors.to_json)
       @form_object.errors.add(:file_upload, :validation_errors)
+      current_provider.failed_imports.create(details: @validation_errors.to_json)
       render :new
     end
 
