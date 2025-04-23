@@ -149,7 +149,7 @@ RSpec.describe Claim do
     end
 
     context 'when claim is a draft' do
-      let(:claim) { create(:claim, :complete, :as_draft) }
+      let(:claim) { create(:claim, :complete, :with_further_information_supplied, :as_draft) }
 
       it 'removes attachments for drafts' do
         allow_any_instance_of(FileUpload::FileUploader).to receive(:exists?).with(test_file_path).and_return(true)
@@ -165,7 +165,7 @@ RSpec.describe Claim do
     end
 
     context 'when claim is not a draft' do
-      let(:claim) { create(:claim, :complete, :as_submitted) }
+      let(:claim) { create(:claim, :complete, :with_further_information_request, :as_submitted) }
 
       it 'does not remove attachments for non-drafts' do
         expect_any_instance_of(FileUpload::FileUploader).not_to receive(:exists?)
