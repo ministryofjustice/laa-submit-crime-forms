@@ -7,8 +7,9 @@
     <p><%= t('.explanation') %></p>
 
     <%# Ugly formatting because any whitespace in the block is passed through to the frontend %>
+    <% formatted_errors = JSON.parse(FailedImport.find(params[:error_id]).details) %>
     <pre class="xml-errors"><code><%= capture do
-               @errors.each do |line|
+               formatted_errors.each do |line|
                    concat(line + "\n")
                end
                end %>

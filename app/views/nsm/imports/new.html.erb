@@ -1,3 +1,4 @@
+<%# locals: (error_id: nil) -%>
 <% content_for(:primary_navigation) do %>
   <% render partial: 'layouts/nsm/primary_navigation' %>
 <% end %>
@@ -13,8 +14,8 @@
       <%= render partial: 'shared/alert', locals: { msg: t('.alert_info') } %>
     <% end %>
     <%= govuk_error_summary(@form_object) %>
-    <% unless !defined?(@validation_errors) || @validation_errors.empty? %>
-      <%= render partial: 'shared/alert', locals: { msg: t('.alert_html', link: nsm_import_errors_path)} %>
+    <% unless error_id.nil? %>
+      <%= render partial: 'shared/alert', locals: { msg: t('.alert_html', link: nsm_import_errors_path(error_id: error_id))} %>
     <% end %>
     <h1 class="govuk-heading-xl"><%= t('.title') %></h1>
     <p><%= t('.explanation') %></p>

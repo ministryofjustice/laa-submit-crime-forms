@@ -22,23 +22,15 @@ module Nsm
           end
         end
       else
+        current_provider.failed_imports.create
         render :new
       end
     end
 
     def errors
-      begin
-        @errors = JSON.parse(errors_file_path.read)
-      rescue Errno::ENOENT
-        render 'nsm/imports/missing_file'
-      end
-
-      return unless @errors
-
       page = render_to_string(
         template: 'nsm/imports/errors',
-        layout: 'pdf',
-        locals: { errors: @errors }
+        layout: 'pdf'
       )
 
       pdf = PdfService.html_to_pdf(page, request.url)
@@ -58,10 +50,6 @@ module Nsm
       version = extract_version_from_xml
       import_claim(claim, hash, version)
 
-      # Ensure we don't keep a leftover file from last failed upload attempt
-      # Can't use Tempfile here as it expires too quickly
-      errors_file_path.unlink if File.exist?(errors_file_path)
-
       claim.import_date = DateTime.now
       claim.save
 
@@ -73,10 +61,9 @@ module Nsm
     end
 
     def handle_validation_errors
-      errors_file_path.write(@validation_errors.to_json)
       @form_object.errors.add(:file_upload, :validation_errors)
-      current_provider.failed_imports.create(details: @validation_errors.to_json)
-      render :new
+      errors_object = current_provider.failed_imports.create(details: @validation_errors.to_json)
+      render :new, locals: { error_id: errors_object.id }
     end
 
     def ensure_params
@@ -85,10 +72,6 @@ module Nsm
       @form_object = ImportForm.new
       @form_object.errors.add(:file_upload, :blank)
       render :new
-    end
-
-    def errors_file_path
-      Rails.root.join('tmp', "xml_errors_#{current_provider.id}")
     end
 
     def xml_file
