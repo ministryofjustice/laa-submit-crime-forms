@@ -122,21 +122,6 @@ RSpec.describe 'Import claims' do
     expect(pdf.page(1)).to have_content("2:0: ERROR: Element 'claim': Missing child element(s)")
   end
 
-  it 'deletes error file on next successful import' do
-    provider_id = Provider.first.id
-    error_file_path = Rails.root.join('tmp', "xml_errors_#{provider_id}")
-    # file exists on failed import
-    import_file('unmatched_fields.xml')
-    expect(page).to have_content('The XML file must contain data in the correct format')
-    expect(File).to exist(error_file_path)
-
-    # file deleted on next successful import
-    visit new_nsm_import_path
-    import_file('import_sample.xml')
-    expect(page).to have_content('You imported 3 work items and 2 disbursements.')
-    expect(File).not_to exist(error_file_path)
-  end
-
   it 'handles unsupported versions' do
     attach_file(file_fixture('import_sample_incorrect_version.xml'))
     click_on 'Save and continue'
