@@ -28,6 +28,29 @@ module Nsm
     end
 
     def errors
+      error_id = params.fetch(:error_id)
+
+      raise StandardError if error_id.blank?
+
+      begin
+        error_object = FailedImport.find(error_id)
+        if error_object&.details.present?
+          generate_error_download
+        else
+          render 'nsm/imports/missing_file'
+        end
+      rescue StandardError
+        render 'nsm/imports/missing_file'
+      end
+    end
+
+    def self.model_class
+      Claim
+    end
+
+    private
+
+    def generate_error_download
       page = render_to_string(
         template: 'nsm/imports/errors',
         layout: 'pdf'
@@ -38,12 +61,6 @@ module Nsm
                 filename: 'laa_xml_errors.pdf',
                 type: 'application/pdf'
     end
-
-    def self.model_class
-      Claim
-    end
-
-    private
 
     def process_successful_import(claim)
       hash = claim_hash
