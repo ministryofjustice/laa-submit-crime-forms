@@ -173,12 +173,14 @@ RSpec.describe Nsm::ImportsController, type: :controller do
   end
 
   describe '#errors' do
-    let(:error_path) { Rails.root.join('spec', 'fixtures', 'files', 'example_import_error') }
+    let(:provider) { create(:provider, failed_imports:) }
+    let(:failed_imports) { [] }
 
-    context 'an error file is present' do
+    context 'an error record is present with details' do
+      let(:failed_imports) { [FailedImport.new(details: '["XML file contains an invalid version number"]')] }
+
       before do
-        allow(controller).to receive(:errors_file_path).and_return(error_path)
-        get :errors
+        get :errors, params: { error_id: failed_imports.first.id }
       end
 
       it 'generates and downloads error file' do
@@ -186,15 +188,28 @@ RSpec.describe Nsm::ImportsController, type: :controller do
       end
     end
 
-    context 'an error file is not present' do
+    context 'an error record is present without details' do
+      let(:failed_imports) { [FailedImport.new] }
+
       before do
-        allow(JSON).to receive(:parse).and_raise(Errno::ENOENT)
-        get :errors
+        get :errors, params: { error_id: failed_imports.first.id }
       end
 
       it 'shows the missing file page' do
         expect(response).to be_successful
         expect(response).to render_template('nsm/imports/missing_file')
+      end
+    end
+
+    context 'an error_id is present but it is not attached to an error record' do
+      it 'raises an error' do
+        expect { get :errors, params: { error_id: 'garbage' } }.to raise_error ActiveRecord::RecordNotFound
+      end
+    end
+
+    context 'an error_id is not present' do
+      it 'raises an error' do
+        expect { get :errors }.to raise_error ActionController::ParameterMissing
       end
     end
   end
