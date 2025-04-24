@@ -1,3 +1,6 @@
+failed_imports:
+  details: true
+  provider_id: false
 firm_offices:
   name: false
   address_line_1: false
