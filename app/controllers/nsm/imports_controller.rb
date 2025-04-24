@@ -34,6 +34,7 @@ module Nsm
 
       begin
         error_object = FailedImport.find(error_id)
+
         if error_object&.details.present?
           generate_error_download
         else
