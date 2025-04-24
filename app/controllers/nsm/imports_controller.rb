@@ -74,8 +74,11 @@ module Nsm
 
     def handle_validation_errors
       @form_object.errors.add(:file_upload, :validation_errors)
-      errors_object = current_provider.failed_imports.create(details: @validation_errors.to_json)
-      render :new, locals: { error_id: errors_object.id }
+      FailedImport.transaction do
+        errors_object = current_provider.failed_imports.create(details: @validation_errors.to_json)
+        AppStoreClient.new.post_import_error(errors_object)
+        render :new, locals: { error_id: errors_object.id }
+      end
     end
 
     def ensure_params
