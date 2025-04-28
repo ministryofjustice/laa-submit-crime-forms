@@ -20,6 +20,7 @@
 
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', nonce: true, type: 'module' %>
+  <%= capybara_lockstep if defined?(Capybara::Lockstep) %>
 
   <%= yield :head %>
   <%= yield :analytics if @analytics_cookies_accepted %>

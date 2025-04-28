@@ -1,7 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, skip: 'selenium driver failing in chrome 134',
-type: :system do
+RSpec.describe 'Test suggestion autocomplete for main_offence', :javascript, type: :system do
   let(:claim) { create(:claim, :case_type_breach, :main_defendant) }
 
   it 'can select a value from the autocomplete' do

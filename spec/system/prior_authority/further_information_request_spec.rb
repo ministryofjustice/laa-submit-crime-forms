@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'provider responds to further information request', :stub_oauth_token, type: :system do
+RSpec.describe 'provider responds to further information request', :javascript, :stub_oauth_token, type: :system do
   let(:application) { create(:prior_authority_application, :full, :with_further_information_request) }
 
   before do
@@ -34,33 +34,31 @@ RSpec.describe 'provider responds to further information request', :stub_oauth_t
     expect(page).to have_current_path edit_prior_authority_steps_check_answers_path(application)
   end
 
-  describe 'skipped', :javascript, skip: 'selenium driver failing in chrome 134' do
-    it 'allows user to submit further information with attachments' do
-      expect(page).to have_no_content('test.png')
-      fill_in 'Enter the information requested', with: 'here is the information requested'
-      find('.moj-multi-file-upload__dropzone').drop(file_fixture('test.png'))
-      click_on 'Save and continue'
+  it 'allows user to submit further information with attachments' do
+    expect(page).to have_no_content('test.png')
+    fill_in 'Enter the information requested', with: 'here is the information requested'
+    find('.moj-multi-file-upload__dropzone').drop(file_fixture('test.png'))
+    click_on 'Save and continue'
 
-      expect(application.reload.further_informations.first)
-        .to have_attributes(
-          information_supplied: 'here is the information requested'
-        )
+    expect(application.reload.further_informations.first)
+      .to have_attributes(
+        information_supplied: 'here is the information requested'
+      )
 
-      expect(application.further_informations.first.supporting_documents.first.file_name).to eq 'test.png'
-    end
+    expect(application.further_informations.first.supporting_documents.first.file_name).to eq 'test.png'
+  end
 
-    it 'allows user to upload and delete attachments' do
-      expect(page).to have_no_content('test.png')
+  it 'allows user to upload and delete attachments' do
+    expect(page).to have_no_content('test.png')
 
-      find('.moj-multi-file-upload__dropzone').drop(file_fixture('test.png'))
+    find('.moj-multi-file-upload__dropzone').drop(file_fixture('test.png'))
 
-      within('.govuk-table') { expect(page).to have_content(/test.png.*Delete/) }
+    within('.govuk-table') { expect(page).to have_content(/test.png.*Delete/) }
 
-      click_on 'Delete'
+    click_on 'Delete'
 
-      within('.moj-banner') { expect(page).to have_content('test.png has been deleted') }
-      expect(page).to have_no_css('.govuk-table')
-    end
+    within('.moj-banner') { expect(page).to have_content('test.png has been deleted') }
+    expect(page).to have_no_css('.govuk-table')
   end
 
   it 'takes me back to application details' do
