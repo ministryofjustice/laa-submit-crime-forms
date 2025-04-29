@@ -8,7 +8,7 @@ RSpec.describe ClearImportErrorDetails do
   end
 
   describe '#perform' do
-    let(:provider) { create(:provider)}
+    let(:provider) { create(:provider) }
     let(:failed_import) { nil }
 
     before do
@@ -17,7 +17,7 @@ RSpec.describe ClearImportErrorDetails do
     end
 
     context 'when the failed is older than a week old' do
-      let(:failed_import) { create(:failed_import, created_at: 1.weeks.ago, provider_id: provider.id) }
+      let(:failed_import) { create(:failed_import, created_at: 1.week.ago, provider_id: provider.id) }
 
       it 'updates the db record when a week' do
         expect(subject.filtered_records).not_to eq([])
