@@ -67,4 +67,8 @@ Rails.application.configure do
   config.logstasher.log_level = Logger::INFO
   config.logstasher.suppress_app_log = false
   config.logstasher.source = 'laa-submit-crime-forms-test'
+
+  # Install middleware for capybara-lockstep to catch edge cases
+  # https://github.com/makandra/capybara-lockstep?tab=readme-ov-file#including-the-middleware-optional
+  config.middleware.insert_before 0, Capybara::Lockstep::Middleware
 end

@@ -12,19 +12,11 @@ module Nsm
         super()
       end
 
-      def rows
-        nil
-      end
-
       def custom
         {
           partial: 'nsm/steps/view_claim/adjustments',
           locals: { claim:, prefix: }
         }
-      end
-
-      def title
-        nil
       end
     end
   end
