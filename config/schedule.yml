@@ -3,3 +3,8 @@ gdpr_nsm_delete_draft_docs_job:
   cron: "15 6 * * *"
   class: "DeleteDraftDocuments"
   queue: pooling
+gdpr_nsm_delete_import_details_job:
+  # run job daily at 0715
+  cron: "15 7 * * *"
+  class: "ClearImportErrorDetails"
+  queue: pooling
