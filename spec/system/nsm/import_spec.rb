@@ -21,11 +21,15 @@ def check_error_pages(page_body, page, error)
   expect(pdf.page(page)).to have_content(error)
 end
 
-RSpec.describe 'Import claims' do
+RSpec.describe 'Import claims', :stub_oauth_token do
   let(:fixed_time) { DateTime.new(2025, 4, 8, 10, 30, 0) }
 
   before do
     allow(DateTime).to receive(:now).and_return(fixed_time)
+    stub_request(:post, 'https://app-store.example.com/v1/failed_import').to_return(
+      status: 201,
+      body: { id: 'some-id', provider_id: 'some-id' }.to_json
+    )
 
     visit provider_saml_omniauth_callback_path
     visit new_nsm_import_path
