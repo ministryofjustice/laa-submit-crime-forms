@@ -7,7 +7,7 @@ module Nsm
       MIDDLE_COLUMN = true
 
       def translate(key, **)
-        if key[0] == ('.')
+        if key[0] == '.'
           I18n.t("summary.#{key}", **)
         else
           I18n.t("summary.#{self.class::TRANSLATION_KEY.to_s.underscore}.#{key}", **)

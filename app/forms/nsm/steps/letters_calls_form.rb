@@ -38,16 +38,18 @@ module Nsm
       end
 
       def letters_row
+        letters_before = letters_before_uplift if letters.presence
+        letters_after = letters_after_uplift if letters.presence
         [
           translate(:letters),
           {
-            text: NumberTo.pounds((letters_before_uplift if letters.presence)),
+            text: NumberTo.pounds(letters_before),
             html_attributes: { id: 'letters-without-uplift' }
           },
           (
             if allow_uplift?
               {
-                text: NumberTo.pounds((letters_after_uplift if letters.presence)),
+                text: NumberTo.pounds(letters_after),
                 html_attributes: { id: 'letters-with-uplift' },
               }
             end
@@ -56,16 +58,18 @@ module Nsm
       end
 
       def calls_row
+        calls_before = calls_before_uplift if calls.presence
+        calls_after = calls_after_uplift if calls.presence
         [
           translate(:calls),
           {
-            text: NumberTo.pounds((calls_before_uplift if calls.presence)),
+            text: NumberTo.pounds(calls_before),
             html_attributes: { id: 'calls-without-uplift' }
           },
           (
             if allow_uplift?
               {
-                text: NumberTo.pounds((calls_after_uplift if calls.presence)),
+                text: NumberTo.pounds(calls_after),
                 html_attributes: { id: 'calls-with-uplift' },
               }
             end
