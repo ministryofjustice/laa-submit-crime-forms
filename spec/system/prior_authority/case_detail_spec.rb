@@ -1,37 +1,35 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications - add case details', type: :system do
+RSpec.describe 'Prior authority applications - add case details', :javascript, type: :system do
   before do
     fill_in_until_step(:your_application_progress)
   end
 
-  describe 'skipped', :javascript, skip: 'selenium driver failing in chrome 134' do
-    it 'allows case detail creation' do
-      expect(page).to have_content 'Case and hearing details Not yet started'
+  it 'allows case detail creation' do
+    expect(page).to have_content 'Case and hearing details Not yet started'
 
-      click_on 'Case and hearing details'
-      expect(page).to have_title 'Case details'
+    click_on 'Case and hearing details'
+    expect(page).to have_title 'Case details'
 
-      fill_in 'What was the main offence', with: 'Supply a controlled drug of Class A - Heroin'
-      within('.govuk-form-group', text: 'Date of representation order') do
-        fill_in 'Day', with: '27'
-        fill_in 'Month', with: '12'
-        fill_in 'Year', with: '2023'
-      end
-
-      fill_in 'MAAT ID number', with: '1234567'
-      within('.govuk-form-group', text: 'Is your client detained?') do
-        choose 'Yes'
-        fill_in 'Where is your client detained?', with: 'HMP Bedford'
-      end
-
-      within('.govuk-form-group', text: 'Is this case subject to POCA (Proceeds of Crime Act 2002)?') do
-        2.times { choose 'Yes' } # The first time may simply close the autocomplete suggestion box opened above
-      end
-
-      click_on 'Save and continue'
-      expect(page).to have_content 'Hearing details'
+    fill_in 'What was the main offence', with: 'Supply a controlled drug of Class A - Heroin'
+    within('.govuk-form-group', text: 'Date of representation order') do
+      fill_in 'Day', with: '27'
+      fill_in 'Month', with: '12'
+      fill_in 'Year', with: '2023'
     end
+
+    fill_in 'MAAT ID number', with: '1234567'
+    within('.govuk-form-group', text: 'Is your client detained?') do
+      choose 'Yes'
+      fill_in 'Where is your client detained?', with: 'HMP Bedford'
+    end
+
+    within('.govuk-form-group', text: 'Is this case subject to POCA (Proceeds of Crime Act 2002)?') do
+      2.times { choose 'Yes' } # The first time may simply close the autocomplete suggestion box opened above
+    end
+
+    click_on 'Save and continue'
+    expect(page).to have_content 'Hearing details'
   end
 
   it 'validates client detail fields' do

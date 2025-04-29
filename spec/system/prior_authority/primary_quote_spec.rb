@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'PA - add primary quote', :javascript, skip: 'selenium driver failing in chrome 134', type: :system do
+RSpec.describe 'PA - add primary quote', :javascript, type: :system do
   before do
     fill_in_until_step(:your_application_progress)
   end

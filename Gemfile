@@ -64,6 +64,7 @@ end
 group :test do
   gem 'axe-core-rspec'
   gem 'capybara'
+  gem 'capybara-lockstep'
   gem 'capybara-selenium'
   gem 'launchy'
   gem 'rails-controller-testing'
