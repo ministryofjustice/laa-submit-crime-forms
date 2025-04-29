@@ -6,6 +6,7 @@ class ClearImportErrorDetails < ApplicationJob
 
     filtered_records.each do |record|
       record.details = nil
+      record.save
     end
   end
 
