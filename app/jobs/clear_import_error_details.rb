@@ -10,6 +10,6 @@ class ClearImportErrorDetails < ApplicationJob
   end
 
   def filtered_records
-    FailedImport.where(created_at: ..1.weeks.ago.end_of_day)
+    FailedImport.where(created_at: ..1.week.ago.end_of_day)
   end
 end
