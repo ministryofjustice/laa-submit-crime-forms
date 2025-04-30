@@ -30,9 +30,9 @@ module Nsm
     def errors
       error_id = params.fetch(:error_id)
 
-      error_object = AppStoreClient.get_import_error(error_id)
+      error_object = AppStoreClient.new.get_import_error(error_id)
 
-      if error_object.details.present?
+      if error_object['details'].present?
         generate_error_download
       else
         render 'nsm/imports/missing_file'
@@ -78,8 +78,8 @@ module Nsm
     end
 
     def handle_import_error(details = nil)
-      error_id = AppStoreClient.new.post_import_error({ details: details, provider_id: current_provider.id })['id']
-      render :new, locals: { error_id: }
+      error_id = AppStoreClient.new.post_import_error({details: details, provider_id: current_provider.id})['id']
+      render :new, locals: { error_id: error_id }
     end
 
     def ensure_params

@@ -40,7 +40,7 @@ class AppStoreClient
   end
 
   def post_import_error(message)
-    url = "#{host}/v1/failed_import"
+    url = "#{host}/v1/failed_imports"
     response = self.class.post(url, **options(message))
 
     case response.code
@@ -52,7 +52,7 @@ class AppStoreClient
   end
 
   def get_import_error(error_id)
-    url = "#{host}/v1/failed_import/#{error_id}"
+    url = "#{host}/v1/failed_imports/#{error_id}"
     response = self.class.get(url, **options)
     process_response(response, url)
   end
