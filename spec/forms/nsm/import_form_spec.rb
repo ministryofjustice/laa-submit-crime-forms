@@ -36,5 +36,93 @@ RSpec.describe Nsm::ImportForm do
         )
       end
     end
+
+    context 'when file upload has unreadable file' do
+      before do
+        allow(form).to receive(:file_upload).and_return(
+          ActionDispatch::Http::UploadedFile.new(
+            tempfile: file_fixture('unreadable_import.xml'),
+            filename: 'test.xml',
+            type: 'text/xml'
+          )
+        )
+      end
+
+      it 'shows the correct error' do
+        expect(JSON.parse(form.validate_xml_file.to_json)).to include(
+          "2:0: ERROR: Element 'claim': Missing child element(s). " \
+          'Expected is one of ( agent_instructed, arrest_warrant_date, assigned_counsel, ' \
+          'calls, calls_uplift, claim_type, cntp_date, cntp_order, concluded, conclusion ).'
+        )
+      end
+    end
+
+    context 'when file upload has unmatched fields' do
+      before do
+        allow(form).to receive(:file_upload).and_return(
+          ActionDispatch::Http::UploadedFile.new(
+            tempfile: file_fixture('unmatched_fields.xml'),
+            filename: 'test.xml',
+            type: 'text/xml'
+          )
+        )
+      end
+
+      it 'shows the correct error' do
+        expect(JSON.parse(form.validate_xml_file.to_json)).to include(
+          "2:0: ERROR: Element 'claim': Missing child element(s). " \
+          'Expected is one of ( agent_instructed, arrest_warrant_date, assigned_counsel, ' \
+          'calls, calls_uplift, claim_type, cntp_date, cntp_order, concluded, conclusion ).'
+        )
+      end
+    end
+
+    context 'when file upload has unsupported versions' do
+      before do
+        allow(form).to receive(:file_upload).and_return(
+          ActionDispatch::Http::UploadedFile.new(
+            tempfile: file_fixture('import_sample_incorrect_version.xml'),
+            filename: 'test.xml',
+            type: 'text/xml'
+          )
+        )
+      end
+
+      it 'shows the correct error' do
+        expect(JSON.parse(form.validate_xml_file.to_json)).to eq(['XML version 2 is not supported'])
+      end
+    end
+
+    context 'when file upload has a missing version element' do
+      before do
+        allow(form).to receive(:file_upload).and_return(
+          ActionDispatch::Http::UploadedFile.new(
+            tempfile: file_fixture('import_sample_without_version.xml'),
+            filename: 'test.xml',
+            type: 'text/xml'
+          )
+        )
+      end
+
+      it 'shows the correct error' do
+        expect(JSON.parse(form.validate_xml_file.to_json)).to eq([I18n.t('nsm.imports.errors.missing_version')])
+      end
+    end
+
+    context 'when file upload has invalid version number' do
+      before do
+        allow(form).to receive(:file_upload).and_return(
+          ActionDispatch::Http::UploadedFile.new(
+            tempfile: file_fixture('import_sample_invalid_version.xml'),
+            filename: 'test.xml',
+            type: 'text/xml'
+          )
+        )
+      end
+
+      it 'shows the correct error' do
+        expect(JSON.parse(form.validate_xml_file.to_json)).to eq([I18n.t('nsm.imports.errors.invalid_version')])
+      end
+    end
   end
 end

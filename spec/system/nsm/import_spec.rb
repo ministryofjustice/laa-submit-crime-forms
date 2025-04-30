@@ -23,13 +23,19 @@ end
 
 RSpec.describe 'Import claims', :stub_oauth_token do
   let(:fixed_time) { DateTime.new(2025, 4, 8, 10, 30, 0) }
+  let(:error_id) { SecureRandom.uuid }
+  let(:details) { '["XML file contains an invalid version number"]' }
 
   context 'when app store updates successfully' do
     before do
       allow(DateTime).to receive(:now).and_return(fixed_time)
-      stub_request(:post, 'https://app-store.example.com/v1/failed_import').to_return(
+      stub_request(:post, 'https://app-store.example.com/v1/failed_imports').to_return(
         status: 201,
-        body: { provider_id: 'some-id' }.to_json
+        body: { id: error_id }.to_json
+      )
+      stub_request(:get, "https://app-store.example.com/v1/failed_imports/#{error_id}").to_return(
+        status: 201,
+        body: { id: error_id, provider_id: 'some-id', details: details }.to_json
       )
 
       visit provider_saml_omniauth_callback_path
@@ -100,85 +106,12 @@ RSpec.describe 'Import claims', :stub_oauth_token do
 
       expect(page).to have_content "The file must be of type 'XML'"
     end
-
-    it 'handles unreadable files' do
-      import_file('unreadable_import.xml')
-
-      expect(page).to have_content('The XML file must contain data in the correct format')
-
-      click_on 'error summary (PDF)'
-
-      output = StringIO.new
-      output.puts(page.body)
-      pdf = PDF::Reader.new(output)
-      expect(pdf.page(1)).to have_content("2:0: ERROR: Element 'claim': Missing child element(s)")
-    end
-
-    it 'handles unmatched fields' do
-      import_file('unmatched_fields.xml')
-
-      expect(page).to have_content('The XML file must contain data in the correct format')
-      click_on 'error summary (PDF)'
-
-      check_error_pages(page.body, 1, "2:0: ERROR: Element 'claim': Missing child element(s)")
-      output = StringIO.new
-      output.puts(page.body)
-      pdf = PDF::Reader.new(output)
-      expect(pdf.page(1)).to have_content("2:0: ERROR: Element 'claim': Missing child element(s)")
-    end
-
-    it 'handles unsupported versions' do
-      attach_file(file_fixture('import_sample_incorrect_version.xml'))
-      click_on 'Save and continue'
-      expect(page).to have_content(
-        I18n.t('activemodel.errors.models.nsm/import_form.attributes.file_upload.validation_errors')
-      )
-
-      click_on 'error summary (PDF)'
-
-      output = StringIO.new
-      output.puts(page.body)
-      pdf = PDF::Reader.new(output)
-      expect(pdf.page(1)).to have_content('XML version 2 is not supported')
-    end
-
-    it 'handles missing version element' do
-      attach_file(file_fixture('import_sample_without_version.xml'))
-      click_on 'Save and continue'
-      expect(page).to have_content(
-        I18n.t('activemodel.errors.models.nsm/import_form.attributes.file_upload.validation_errors')
-      )
-
-      click_on 'error summary (PDF)'
-
-      output = StringIO.new
-      output.puts(page.body)
-      pdf = PDF::Reader.new(output)
-      expect(pdf.page(1)).to have_content(I18n.t('nsm.imports.errors.missing_version'))
-    end
-
-    it 'handles invalid version number' do
-      # Create a fixture with invalid version element
-      attach_file(file_fixture('import_sample_invalid_version.xml'))
-      click_on 'Save and continue'
-      expect(page).to have_content(
-        I18n.t('activemodel.errors.models.nsm/import_form.attributes.file_upload.validation_errors')
-      )
-
-      click_on 'error summary (PDF)'
-
-      output = StringIO.new
-      output.puts(page.body)
-      pdf = PDF::Reader.new(output)
-      expect(pdf.page(1)).to have_content(I18n.t('nsm.imports.errors.invalid_version'))
-    end
   end
 
   context 'when app store fails to update' do
     before do
       allow(DateTime).to receive(:now).and_return(fixed_time)
-
-      stub_request(:post, 'https://app-store.example.com/v1/failed_import').to_return(
+      stub_request(:post, 'https://app-store.example.com/v1/failed_imports').to_return(
         status: 422,
         body: { provider_id: 'some-id' }.to_json
       )
@@ -186,12 +119,11 @@ RSpec.describe 'Import claims', :stub_oauth_token do
       visit new_nsm_import_path
     end
 
-    it 'rolls back FailedImport creation' do
+    it 'errors' do
       # Create a fixture with invalid version element
       attach_file(file_fixture('import_sample_invalid_version.xml'))
 
       expect { click_on 'Save and continue' }.to raise_error(RuntimeError)
-      expect(FailedImport.count).to eq(0)
     end
   end
 end
