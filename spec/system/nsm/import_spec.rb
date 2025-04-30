@@ -29,7 +29,7 @@ RSpec.describe 'Import claims', :stub_oauth_token do
       allow(DateTime).to receive(:now).and_return(fixed_time)
       stub_request(:post, 'https://app-store.example.com/v1/failed_import').to_return(
         status: 201,
-        body: { id: 'some-id', provider_id: 'some-id' }.to_json
+        body: { provider_id: 'some-id' }.to_json
       )
 
       visit provider_saml_omniauth_callback_path
@@ -180,7 +180,7 @@ RSpec.describe 'Import claims', :stub_oauth_token do
 
       stub_request(:post, 'https://app-store.example.com/v1/failed_import').to_return(
         status: 422,
-        body: { id: 'some-id', provider_id: 'some-id' }.to_json
+        body: { provider_id: 'some-id' }.to_json
       )
       visit provider_saml_omniauth_callback_path
       visit new_nsm_import_path
