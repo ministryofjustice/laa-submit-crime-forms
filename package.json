@@ -3,10 +3,10 @@
   "private": "true",
   "dependencies": {
     "@hotwired/turbo-rails": "8.0.13",
-    "@ministryofjustice/frontend": "4.0.1",
+    "@ministryofjustice/frontend": "5.1.2",
     "accessible-autocomplete": "^3.0.1",
     "braces": "^3.0.3",
-    "esbuild": "^0.25.2",
+    "esbuild": "^0.25.3",
     "govuk-frontend": "5.9.0",
     "fastest-levenshtein": "^1.0.16",
     "jquery": "^3.7.1",
