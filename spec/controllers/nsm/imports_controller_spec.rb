@@ -173,14 +173,25 @@ RSpec.describe Nsm::ImportsController, type: :controller do
   end
 
   describe '#errors' do
-    let(:provider) { create(:provider, failed_imports:) }
-    let(:failed_imports) { [] }
+    let(:dummy_client) { instance_double(AppStoreClient) }
+    let(:failed_import_payload) do
+      {
+        'id' => fail_id,
+        'provider_id' => provider.id,
+        'details' => details
+      }
+    end
+    let(:fail_id) { SecureRandom.uuid }
+    let(:details) { '["XML file contains an invalid version number"]' }
+
+    before do
+      allow(AppStoreClient).to receive(:new).and_return(dummy_client)
+      allow(dummy_client).to receive(:get_import_error).and_return(failed_import_payload)
+    end
 
     context 'an error record is present with details' do
-      let(:failed_imports) { [FailedImport.new(details: '["XML file contains an invalid version number"]')] }
-
       before do
-        get :errors, params: { error_id: failed_imports.first.id }
+        get :errors, params: { error_id: fail_id }
       end
 
       it 'generates and downloads error file' do
@@ -189,10 +200,10 @@ RSpec.describe Nsm::ImportsController, type: :controller do
     end
 
     context 'an error record is present without details' do
-      let(:failed_imports) { [FailedImport.new] }
+      let(:details) { nil }
 
       before do
-        get :errors, params: { error_id: failed_imports.first.id }
+        get :errors, params: { error_id: fail_id }
       end
 
       it 'shows the missing file page' do
@@ -202,8 +213,12 @@ RSpec.describe Nsm::ImportsController, type: :controller do
     end
 
     context 'an error_id is present but it is not attached to an error record' do
+      before do
+        allow(dummy_client).to receive(:get_import_error).and_raise(RuntimeError)
+      end
+
       it 'raises an error' do
-        expect { get :errors, params: { error_id: 'garbage' } }.to raise_error ActiveRecord::RecordNotFound
+        expect { get :errors, params: { error_id: fail_id } }.to raise_error RuntimeError
       end
     end
 
