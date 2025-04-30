@@ -51,6 +51,12 @@ class AppStoreClient
     end
   end
 
+  def get_import_error(error_id)
+    url = "#{host}/v1/failed_import/#{error_id}"
+    response = self.class.get(url, **options)
+    process_response(response, url)
+  end
+
   private
 
   def process_response(response, url)

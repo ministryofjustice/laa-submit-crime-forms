@@ -22,7 +22,7 @@ module Nsm
           end
         end
       else
-        current_provider.failed_imports.create
+        handle_import_error
         render :new
       end
     end
@@ -30,7 +30,7 @@ module Nsm
     def errors
       error_id = params.fetch(:error_id)
 
-      error_object = FailedImport.find(error_id)
+      error_object = AppStoreClient.get_import_error(error_id)
 
       if error_object.details.present?
         generate_error_download
@@ -74,11 +74,12 @@ module Nsm
 
     def handle_validation_errors
       @form_object.errors.add(:file_upload, :validation_errors)
-      FailedImport.transaction do
-        errors_object = current_provider.failed_imports.create(details: @validation_errors.to_json)
-        AppStoreClient.new.post_import_error(errors_object)
-        render :new, locals: { error_id: errors_object.id }
-      end
+      handle_import_error(@validation_errors.to_json)
+    end
+
+    def handle_import_error(details = nil)
+      error_id = AppStoreClient.new.post_import_error({ details: details, provider_id: current_provider.id })['id']
+      render :new, locals: { error_id: }
     end
 
     def ensure_params

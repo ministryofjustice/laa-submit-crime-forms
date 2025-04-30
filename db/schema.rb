@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_22_144119) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -161,14 +161,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_22_144119) do
     t.string "allowed_apply_vat"
     t.integer "position"
     t.index ["claim_id"], name: "index_disbursements_on_claim_id"
-  end
-
-  create_table "failed_imports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "details"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "provider_id"
-    t.index ["provider_id"], name: "index_failed_imports_on_provider_id"
   end
 
   create_table "firm_offices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -367,7 +359,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_22_144119) do
   add_foreign_key "claims", "providers", column: "submitter_id"
   add_foreign_key "claims", "solicitors"
   add_foreign_key "disbursements", "claims"
-  add_foreign_key "failed_imports", "providers"
   add_foreign_key "firm_offices", "firm_offices", column: "previous_id"
   add_foreign_key "incorrect_informations", "prior_authority_applications"
   add_foreign_key "prior_authority_applications", "firm_offices"
