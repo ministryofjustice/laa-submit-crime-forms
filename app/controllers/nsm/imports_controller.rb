@@ -78,8 +78,8 @@ module Nsm
     end
 
     def handle_import_error(details = nil)
-      error_id = AppStoreClient.new.post_import_error({details: details, provider_id: current_provider.id})['id']
-      render :new, locals: { error_id: error_id }
+      error_id = AppStoreClient.new.post_import_error({ details: details, provider_id: current_provider.id })['id']
+      render :new, locals: { error_id: }
     end
 
     def ensure_params
