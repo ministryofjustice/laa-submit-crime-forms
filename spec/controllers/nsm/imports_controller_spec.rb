@@ -9,15 +9,14 @@ RSpec.describe Nsm::ImportsController, type: :controller do
 
   describe '#extract_version_from_xml' do
     let(:controller_instance) { described_class.new }
+    let(:file_upload) { instance_double(ActionDispatch::Http::UploadedFile) }
+    let(:form_object) { instance_double(Nsm::ImportForm, file_upload: file_upload, xml_file: parsed_xml) }
+    let(:tempfile) { instance_double(Tempfile) }
+    let(:xml_content) { nil }
+    let(:parsed_xml) { Nokogiri::XML::Document.parse(xml_content, &:noblanks) }
 
     before do
       allow(controller_instance).to receive(:current_provider).and_return(provider)
-
-      # Set up form_object with XML content
-      form_object = instance_double(Nsm::ImportForm)
-      file_upload = instance_double(ActionDispatch::Http::UploadedFile)
-      tempfile = instance_double(Tempfile)
-
       allow(tempfile).to receive(:read).and_return(xml_content)
       allow(file_upload).to receive(:tempfile).and_return(tempfile)
       allow(form_object).to receive(:file_upload).and_return(file_upload)
@@ -54,15 +53,14 @@ RSpec.describe Nsm::ImportsController, type: :controller do
 
   describe '#claim_hash' do
     let(:controller_instance) { described_class.new }
+    let(:form_object) { instance_double(Nsm::ImportForm, file_upload: file_upload, xml_file: parsed_xml) }
+    let(:file_upload) { instance_double(ActionDispatch::Http::UploadedFile) }
+    let(:tempfile) { instance_double(Tempfile) }
+    let(:xml_content) { nil }
+    let(:parsed_xml) { Nokogiri::XML::Document.parse(xml_content, &:noblanks) }
 
     before do
       allow(controller_instance).to receive(:current_provider).and_return(provider)
-
-      # Set up form_object with XML content
-      form_object = instance_double(Nsm::ImportForm)
-      file_upload = instance_double(ActionDispatch::Http::UploadedFile)
-      tempfile = instance_double(Tempfile)
-
       allow(tempfile).to receive(:read).and_return(xml_content)
       allow(file_upload).to receive(:tempfile).and_return(tempfile)
       allow(form_object).to receive(:file_upload).and_return(file_upload)
