@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Nsm::ImportsController, type: :controller do
+RSpec.describe Nsm::ImportsController, :stub_oauth_token, type: :controller do
   let(:provider) { create(:provider) }
 
   before do
@@ -16,14 +16,17 @@ RSpec.describe Nsm::ImportsController, type: :controller do
 
     context 'there is a validation error in the xml file' do
       let(:validation_errors) { ['XML file contains an invalid version number'] }
+      let(:error_id) { SecureRandom.uuid }
+      let(:params) { { nsm_import_form: { file_upload: ActionDispatch::Http::UploadedFile } } }
 
       before do
         allow_any_instance_of(Nsm::ImportForm).to receive(:valid?).and_return(true)
         allow_any_instance_of(Nsm::ImportForm).to receive(:validate_xml_file).and_return(validation_errors)
+        allow_any_instance_of(AppStoreClient).to receive(:post_import_error).and_return({ 'id' => error_id })
       end
 
       it 're-renders page with error' do
-        post :create
+        post(:create, params:)
         expect(response).to render_template(:new)
       end
     end
