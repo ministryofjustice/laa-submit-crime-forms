@@ -18,6 +18,7 @@ RSpec.describe Nsm::ImportsController, type: :controller do
       let(:validation_errors) { ['XML file contains an invalid version number'] }
 
       before do
+        allow_any_instance_of(Nsm::ImportForm).to receive(:valid?).and_return(true)
         allow_any_instance_of(Nsm::ImportForm).to receive(:validate_xml_file).and_return(validation_errors)
       end
 
