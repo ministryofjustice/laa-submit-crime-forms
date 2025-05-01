@@ -200,4 +200,39 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       )
     end
   end
+
+  describe '#get_import_error' do
+    before do
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with('APP_STORE_TENANT_ID', nil).and_return(nil)
+    end
+
+    let(:id) { 'some-id' }
+    let(:response) { { 'foo' => 'bar' } }
+
+    it 'gets the the requested item' do
+      http_stub = stub_request(:get, "https://app-store.example.com/v1/failed_imports/#{id}").with(
+        headers: {
+          'Content-Type' => 'application/json',
+          'X-Client-Type' => 'provider'
+        }
+      ).to_return(status: 200, body: response.to_json, headers: {})
+      expect(subject.get_import_error(id)).to eq response
+
+      expect(http_stub).to have_been_requested
+    end
+
+    it 'raises on unexpected statuses' do
+      stub_request(:get, "https://app-store.example.com/v1/failed_imports/#{id}").with(
+        headers: {
+          'Content-Type' => 'application/json',
+          'X-Client-Type' => 'provider'
+        }
+      ).to_return(status: 302, body: response.to_json, headers: {})
+
+      expect { subject.get_import_error(id) }.to raise_error(
+        "Unexpected response from AppStore - status 302 for 'https://app-store.example.com/v1/failed_imports/#{id}'"
+      )
+    end
+  end
 end
