@@ -7,6 +7,27 @@ RSpec.describe Nsm::ImportsController, type: :controller do
     allow(controller).to receive_messages(current_provider: provider, authenticate_provider!: true)
   end
 
+  describe '#create' do
+    let(:controller_instance) { described_class.new }
+
+    before do
+      allow(controller_instance).to receive(:current_provider).and_return(provider)
+    end
+
+    context 'there is a validation error in the xml file' do
+      let(:validation_errors) { ['XML file contains an invalid version number'] }
+
+      before do
+        allow_any_instance_of(Nsm::ImportForm).to receive(:validate_xml_file).and_return(validation_errors)
+      end
+
+      it 're-renders page with error' do
+        post :create
+        expect(response).to render_template(:new)
+      end
+    end
+  end
+
   describe '#extract_version_from_xml' do
     let(:controller_instance) { described_class.new }
     let(:file_upload) { instance_double(ActionDispatch::Http::UploadedFile) }
