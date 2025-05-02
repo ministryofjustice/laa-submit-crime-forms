@@ -31,7 +31,7 @@ module Nsm
       error_id = params.fetch(:error_id)
       @error_object = AppStoreClient.new.get_import_error(error_id)
 
-      if error_object['details'].present?
+      if @error_object['details'].present?
         generate_error_download
       else
         render 'nsm/imports/missing_file'
