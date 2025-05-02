@@ -846,7 +846,7 @@
         <xs:element name="time_spent" type="xs:integer" minOccurs="0">
           <xs:annotation>
             <xs:appinfo>
-              How long in seconds has been spent watching/listening to recorded evidence.
+              How long in minutes has been spent watching/listening to recorded evidence.
             </xs:appinfo>
           </xs:annotation>
         </xs:element>
@@ -983,7 +983,7 @@
                     <xs:element name="time_spent" type="xs:integer">
                       <xs:annotation>
                         <xs:appinfo>
-                          How long in seconds did the work item incur.
+                          How long in minutes did the work item incur.
                         </xs:appinfo>
                       </xs:annotation>
                     </xs:element>
