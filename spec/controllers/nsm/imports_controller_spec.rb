@@ -1,23 +1,47 @@
 require 'rails_helper'
 
-RSpec.describe Nsm::ImportsController, type: :controller do
+RSpec.describe Nsm::ImportsController, :stub_oauth_token, type: :controller do
   let(:provider) { create(:provider) }
 
   before do
     allow(controller).to receive_messages(current_provider: provider, authenticate_provider!: true)
   end
 
-  describe '#extract_version_from_xml' do
+  describe '#create' do
     let(:controller_instance) { described_class.new }
 
     before do
       allow(controller_instance).to receive(:current_provider).and_return(provider)
+    end
 
-      # Set up form_object with XML content
-      form_object = instance_double(Nsm::ImportForm)
-      file_upload = instance_double(ActionDispatch::Http::UploadedFile)
-      tempfile = instance_double(Tempfile)
+    context 'there is a validation error in the xml file' do
+      let(:validation_errors) { ['XML file contains an invalid version number'] }
+      let(:error_id) { SecureRandom.uuid }
+      let(:params) { { nsm_import_form: { file_upload: ActionDispatch::Http::UploadedFile } } }
 
+      before do
+        allow_any_instance_of(Nsm::ImportForm).to receive(:valid?).and_return(true)
+        allow_any_instance_of(Nsm::ImportForm).to receive(:validate_xml_file).and_return(validation_errors)
+        allow_any_instance_of(AppStoreClient).to receive(:post_import_error).and_return({ 'id' => error_id })
+      end
+
+      it 're-renders page with error' do
+        post(:create, params:)
+        expect(response).to render_template(:new)
+      end
+    end
+  end
+
+  describe '#extract_version_from_xml' do
+    let(:controller_instance) { described_class.new }
+    let(:file_upload) { instance_double(ActionDispatch::Http::UploadedFile) }
+    let(:form_object) { instance_double(Nsm::ImportForm, file_upload: file_upload, xml_file: parsed_xml) }
+    let(:tempfile) { instance_double(Tempfile) }
+    let(:xml_content) { nil }
+    let(:parsed_xml) { Nokogiri::XML::Document.parse(xml_content, &:noblanks) }
+
+    before do
+      allow(controller_instance).to receive(:current_provider).and_return(provider)
       allow(tempfile).to receive(:read).and_return(xml_content)
       allow(file_upload).to receive(:tempfile).and_return(tempfile)
       allow(form_object).to receive(:file_upload).and_return(file_upload)
@@ -54,15 +78,14 @@ RSpec.describe Nsm::ImportsController, type: :controller do
 
   describe '#claim_hash' do
     let(:controller_instance) { described_class.new }
+    let(:form_object) { instance_double(Nsm::ImportForm, file_upload: file_upload, xml_file: parsed_xml) }
+    let(:file_upload) { instance_double(ActionDispatch::Http::UploadedFile) }
+    let(:tempfile) { instance_double(Tempfile) }
+    let(:xml_content) { nil }
+    let(:parsed_xml) { Nokogiri::XML::Document.parse(xml_content, &:noblanks) }
 
     before do
       allow(controller_instance).to receive(:current_provider).and_return(provider)
-
-      # Set up form_object with XML content
-      form_object = instance_double(Nsm::ImportForm)
-      file_upload = instance_double(ActionDispatch::Http::UploadedFile)
-      tempfile = instance_double(Tempfile)
-
       allow(tempfile).to receive(:read).and_return(xml_content)
       allow(file_upload).to receive(:tempfile).and_return(tempfile)
       allow(form_object).to receive(:file_upload).and_return(file_upload)
@@ -100,85 +123,26 @@ RSpec.describe Nsm::ImportsController, type: :controller do
     end
   end
 
-  describe '#validate' do
-    let(:controller_instance) { described_class.new }
+  describe '#errors' do
+    let(:dummy_client) { instance_double(AppStoreClient) }
+    let(:failed_import_payload) do
+      {
+        'id' => fail_id,
+        'provider_id' => provider.id,
+        'details' => details
+      }
+    end
+    let(:fail_id) { SecureRandom.uuid }
+    let(:details) { '["XML file contains an invalid version number"]' }
 
     before do
-      allow(controller_instance).to receive(:current_provider).and_return(provider)
-
-      # Set up form_object with XML content
-      form_object = instance_double(Nsm::ImportForm)
-      file_upload = instance_double(ActionDispatch::Http::UploadedFile)
-      tempfile = instance_double(Tempfile)
-
-      allow(tempfile).to receive(:read).and_return(xml_content)
-      allow(file_upload).to receive(:tempfile).and_return(tempfile)
-      allow(form_object).to receive(:file_upload).and_return(file_upload)
-
-      controller_instance.instance_variable_set(:@form_object, form_object)
+      allow(AppStoreClient).to receive(:new).and_return(dummy_client)
+      allow(dummy_client).to receive(:get_import_error).and_return(failed_import_payload)
     end
 
-    context 'when version element is missing' do
-      let(:xml_content) { '<claim><some_data>test</some_data></claim>' }
-
-      it 'returns error for missing version' do
-        errors = controller_instance.send(:validate)
-        expect(errors).to include(I18n.t('nsm.imports.errors.missing_version'))
-      end
-    end
-
-    context 'when version is invalid' do
-      let(:xml_content) { '<claim><version>0</version></claim>' }
-
-      it 'returns error for invalid version' do
-        errors = controller_instance.send(:validate)
-        expect(errors).to include(I18n.t('nsm.imports.errors.invalid_version'))
-      end
-    end
-
-    context 'when version is unsupported' do
-      let(:xml_content) { '<claim><version>999</version></claim>' }
-
-      it 'returns error for unsupported version' do
-        errors = controller_instance.send(:validate)
-        expect(errors.first).to match(/XML version 999 is not supported/)
-      end
-    end
-
-    context 'when XML is valid but schema validation fails' do
-      let(:xml_content) { '<claim><version>1</version></claim>' }
-
+    context 'an error record is present with details' do
       before do
-        # Instead of mocking the Nokogiri::XML::Schema class, let's mock the validate method response
-        allow_any_instance_of(Nokogiri::XML::Schema).to receive(:validate).and_return(
-          [
-            double('SchemaError1', message: 'Schema error 1'),
-            double('SchemaError2', message: 'Schema error 2')
-          ]
-        )
-
-        # Mock File.exist? to return true for the schema file
-        allow(File).to receive(:exist?).and_call_original
-        allow(File).to receive(:exist?)
-          .with(Rails.root.join('app/services/nsm/importers/xml/v1/crm7_claim.xsd'))
-          .and_return(true)
-      end
-
-      it 'returns schema validation errors' do
-        errors = controller_instance.send(:validate)
-        expect(errors.length).to eq(2)
-        expect(errors.map(&:message)).to contain_exactly('Schema error 1', 'Schema error 2')
-      end
-    end
-  end
-
-  describe '#errors' do
-    let(:error_path) { Rails.root.join('spec', 'fixtures', 'files', 'example_import_error') }
-
-    context 'an error file is present' do
-      before do
-        allow(controller).to receive(:errors_file_path).and_return(error_path)
-        get :errors
+        get :errors, params: { error_id: fail_id }
       end
 
       it 'generates and downloads error file' do
@@ -186,15 +150,32 @@ RSpec.describe Nsm::ImportsController, type: :controller do
       end
     end
 
-    context 'an error file is not present' do
+    context 'an error record is present without details' do
+      let(:details) { nil }
+
       before do
-        allow(JSON).to receive(:parse).and_raise(Errno::ENOENT)
-        get :errors
+        get :errors, params: { error_id: fail_id }
       end
 
       it 'shows the missing file page' do
         expect(response).to be_successful
         expect(response).to render_template('nsm/imports/missing_file')
+      end
+    end
+
+    context 'an error_id is present but it is not attached to an error record' do
+      before do
+        allow(dummy_client).to receive(:get_import_error).and_raise(RuntimeError)
+      end
+
+      it 'raises an error' do
+        expect { get :errors, params: { error_id: fail_id } }.to raise_error RuntimeError
+      end
+    end
+
+    context 'an error_id is not present' do
+      it 'raises an error' do
+        expect { get :errors }.to raise_error ActionController::ParameterMissing
       end
     end
   end

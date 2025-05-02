@@ -39,6 +39,24 @@ class AppStoreClient
     process_response(response, url)
   end
 
+  def post_import_error(message)
+    url = "#{host}/v1/failed_imports"
+    response = self.class.post(url, **options(message))
+
+    case response.code
+    when 201
+      JSON.parse(response.body)
+    else
+      raise "Unexpected response from AppStore - status #{response.code} for '#{message[:id]}'"
+    end
+  end
+
+  def get_import_error(error_id)
+    url = "#{host}/v1/failed_imports/#{error_id}"
+    response = self.class.get(url, **options)
+    process_response(response, url)
+  end
+
   private
 
   def process_response(response, url)
