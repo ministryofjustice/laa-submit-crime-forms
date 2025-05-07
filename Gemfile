@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.184'
+gem 'aws-sdk-s3', '~> 1.185'
 gem 'bootsnap', '~> 1.18.4', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
@@ -11,7 +11,7 @@ gem 'devise', '~> 4.8'
 gem 'factory_bot_rails', '>= 6.4.3'
 gem 'faker'
 gem 'govuk-components', '>= 5.0.0'
-gem 'govuk_design_system_formbuilder', '>= 5.4', '< 5.10'
+gem 'govuk_design_system_formbuilder', '>= 5.4', '< 5.11'
 gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'grover'
 gem 'httparty'
@@ -53,7 +53,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec_junit_formatter', require: false
-  gem 'rspec-rails', '~> 7.1.1'
+  gem 'rspec-rails', '~> 8.0.0'
 end
 
 group :development do
