@@ -57,7 +57,7 @@ RSpec.describe 'provider responds to further information request', :javascript, 
 
     click_on 'Delete'
 
-    within('.moj-banner') { expect(page).to have_content('test.png has been deleted') }
+    within('.moj-alert') { expect(page).to have_content('test.png has been deleted') }
     expect(page).to have_no_css('.govuk-table')
   end
 
