@@ -140,6 +140,17 @@ If the ConfigMap is deleted for whatever reason, simply restart the deployment a
 
 If you want to update the ConfigMap's defaults or metadata, you need to delete the existing resource to allow the updates to feed in. This will also reset the values back to default.
 
+## Debugging
+
+By default, debugging isn't enabled. This can be changed by setting
+`WEB_ENABLE_DEBUGGING=true` in your `.env.development.local` file and
+restarting the application.
+
+After doing so, you will be able to connect to the running application
+in your editor of choice. If the default selected port is otherwise
+occupied by some other service, then also set `WEB_DEBUG_PORT` to some
+other value.
+
 ## Licence
 
 This project is licensed under the [MIT License][mit].
