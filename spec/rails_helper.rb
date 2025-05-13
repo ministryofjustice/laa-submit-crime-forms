@@ -25,8 +25,6 @@ Capybara.register_driver :headless_chrome do |app|
   )
   options.add_argument('--headless=new')
   options.add_argument('--window-size=1080,1920')
-  options.add_preference(:download, prompt_for_download: false, default_directory: DownloadHelpers::PATH.to_s)
-  options.add_preference(:browser, set_download_behavior: { behavior: 'allow' })
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
@@ -53,11 +51,9 @@ RSpec.configure do |config|
   # Use the faster rack test by default for system specs if possible
   # and handle file downloads before and after system tests
   config.before(:each, type: :system) do
-    DownloadHelpers.clear_downloads
     driven_by :rack_test
   end
 
-  config.after(:each, type: :system) { DownloadHelpers.clear_downloads }
   # swallow sdtdout to keep output from rspec clean
   config.before(:each, type: :task) { allow($stdout).to receive(:write) }
 

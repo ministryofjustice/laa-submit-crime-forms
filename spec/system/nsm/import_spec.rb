@@ -13,18 +13,16 @@ def import_file(file, advance_to_details: false)
   click_on 'Save and continue' # 'Is the first court that heard this case in an undesignated area?'
 end
 
-def check_error_pages(page_body, page, error)
+def check_error_pages(page_body, page_no, error)
   output = StringIO.new
   output.puts(page_body)
   pdf = PDF::Reader.new(output)
 
-  expect(pdf.page(page)).to have_content(error)
+  expect(pdf.page(page_no)).to have_content(error)
 end
 
-RSpec.describe 'Import claims', :javascript, :stub_oauth_token, type: :system do
+RSpec.describe 'Import claims', :stub_oauth_token, type: :system do
   let(:fixed_time) { DateTime.new(2025, 4, 8, 10, 30, 0) }
-  let(:error_id) { SecureRandom.uuid }
-  let(:details) { '["XML file contains an invalid version number"]' }
 
   context 'successful import' do
     before do
@@ -61,12 +59,6 @@ RSpec.describe 'Import claims', :javascript, :stub_oauth_token, type: :system do
       expect(all('input[type="checkbox"]').count(&:checked?)).to eq(1)
     end
 
-    it 'validates file type' do
-      import_file('test.json')
-
-      expect(page).to have_content "The file must be of type 'XML'"
-    end
-
     context 'defendants import' do
       before do
         import_file('import_sample_with_missing_fields.xml', advance_to_details: true)
@@ -100,6 +92,9 @@ RSpec.describe 'Import claims', :javascript, :stub_oauth_token, type: :system do
   end
 
   context 'unsuccessful import' do
+    let(:error_id) { SecureRandom.uuid }
+    let(:details) { '["XML file contains an invalid version number"]' }
+
     before do
       allow(DateTime).to receive(:now).and_return(fixed_time)
       stub_request(:post, 'https://app-store.example.com/v1/failed_imports').to_return(
@@ -123,15 +118,32 @@ RSpec.describe 'Import claims', :javascript, :stub_oauth_token, type: :system do
 
       click_on 'error summary (PDF)'
 
-      expect(DownloadHelpers.downloads.count).to eq(1)
-      expect(DownloadHelpers.downloads.first).to include('laa_xml_errors.pdf')
+      check_error_pages(page.body, 1, 'XML file contains an invalid version number')
     end
 
-    # it 'errors' do
-    #   # Create a fixture with invalid version element
-    #   attach_file(file_fixture('import_sample_invalid_version.xml'))
+    it 'validates file type' do
+      import_file('test.json')
 
-    #   expect { click_on 'Save and continue' }.to raise_error(RuntimeError)
-    # end
+      expect(page).to have_content "The file must be of type 'XML'"
+    end
+  end
+
+  context 'unsuccessful import with app store failure' do
+    before do
+      allow(DateTime).to receive(:now).and_return(fixed_time)
+      stub_request(:post, 'https://app-store.example.com/v1/failed_imports').to_return(
+        status: 422,
+        body: { id: 'some-id' }.to_json
+      )
+      visit provider_saml_omniauth_callback_path
+      visit new_nsm_import_path
+    end
+
+    it 'errors' do
+      # Create a fixture with invalid version element
+      attach_file(file_fixture('import_sample_invalid_version.xml'))
+
+      expect { click_on 'Save and continue' }.to raise_error(RuntimeError)
+    end
   end
 end
