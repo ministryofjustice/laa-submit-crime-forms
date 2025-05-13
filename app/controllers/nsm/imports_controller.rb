@@ -32,6 +32,7 @@ module Nsm
       @error_object = AppStoreClient.new.get_import_error(error_id)
 
       if @error_object['details'].present?
+        @error_object['parsed_details'] = JSON.parse(@error_object['details'])
         generate_error_download
       else
         render 'nsm/imports/missing_file'
