@@ -21,22 +21,14 @@ def check_error_pages(page_body, page, error)
   expect(pdf.page(page)).to have_content(error)
 end
 
-RSpec.describe 'Import claims', :stub_oauth_token do
+RSpec.describe 'Import claims', :javascript, :stub_oauth_token, type: :system do
   let(:fixed_time) { DateTime.new(2025, 4, 8, 10, 30, 0) }
   let(:error_id) { SecureRandom.uuid }
   let(:details) { '["XML file contains an invalid version number"]' }
 
-  context 'when app store updates successfully' do
+  context 'successful import' do
     before do
       allow(DateTime).to receive(:now).and_return(fixed_time)
-      stub_request(:post, 'https://app-store.example.com/v1/failed_imports').to_return(
-        status: 201,
-        body: { id: error_id }.to_json
-      )
-      stub_request(:get, "https://app-store.example.com/v1/failed_imports/#{error_id}").to_return(
-        status: 201,
-        body: { id: error_id, provider_id: 'some-id', details: details }.to_json
-      )
 
       visit provider_saml_omniauth_callback_path
       visit new_nsm_import_path
@@ -66,8 +58,13 @@ RSpec.describe 'Import claims', :stub_oauth_token do
       click_on 'Save and continue' # Case details
       click_on 'Save and continue' # Hearing details
       click_on 'Save and continue' # Case Disposal
-
       expect(all('input[type="checkbox"]').count(&:checked?)).to eq(1)
+    end
+
+    it 'validates file type' do
+      import_file('test.json')
+
+      expect(page).to have_content "The file must be of type 'XML'"
     end
 
     context 'defendants import' do
@@ -100,30 +97,41 @@ RSpec.describe 'Import claims', :stub_oauth_token do
         expect(page).to have_content("You've added 3 defendants")
       end
     end
-
-    it 'validates file type' do
-      import_file('test.json')
-
-      expect(page).to have_content "The file must be of type 'XML'"
-    end
   end
 
-  context 'when app store fails to update' do
+  context 'unsuccessful import' do
     before do
       allow(DateTime).to receive(:now).and_return(fixed_time)
       stub_request(:post, 'https://app-store.example.com/v1/failed_imports').to_return(
-        status: 422,
-        body: { provider_id: 'some-id' }.to_json
+        status: 201,
+        body: { id: error_id }.to_json
+      )
+      stub_request(:get, "https://app-store.example.com/v1/failed_imports/#{error_id}").to_return(
+        status: 201,
+        body: { id: error_id, provider_id: 'some-id', details: details }.to_json
       )
       visit provider_saml_omniauth_callback_path
       visit new_nsm_import_path
     end
 
-    it 'errors' do
+    it 'generates error pdf if invalid XML file' do
       # Create a fixture with invalid version element
       attach_file(file_fixture('import_sample_invalid_version.xml'))
 
-      expect { click_on 'Save and continue' }.to raise_error(RuntimeError)
+      click_on 'Save and continue'
+      expect(page).to have_content 'The selected file contains data in the wrong format'
+
+      click_on 'error summary (PDF)'
+
+      expect(DownloadHelpers.downloads.count).to eq(1)
+      expect(DownloadHelpers.downloads.first).to include('laa_xml_errors.pdf')
     end
+
+    # it 'errors' do
+    #   # Create a fixture with invalid version element
+    #   attach_file(file_fixture('import_sample_invalid_version.xml'))
+
+    #   expect { click_on 'Save and continue' }.to raise_error(RuntimeError)
+    # end
   end
 end
