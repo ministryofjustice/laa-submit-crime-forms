@@ -49,7 +49,11 @@ RSpec.configure do |config|
   # For specific scenarios, the user can be "signed off".
   config.before(:each, type: :controller) { sign_in }
   # Use the faster rack test by default for system specs if possible
-  config.before(:each, type: :system) { driven_by :rack_test }
+  # and handle file downloads before and after system tests
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
   # swallow sdtdout to keep output from rspec clean
   config.before(:each, type: :task) { allow($stdout).to receive(:write) }
 

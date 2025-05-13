@@ -7,9 +7,8 @@
     <p><%= t('.explanation') %></p>
 
     <%# Ugly formatting because any whitespace in the block is passed through to the frontend %>
-    <% formatted_errors = @error_object['details'] %>
     <pre class="xml-errors"><code><%= capture do
-               formatted_errors.each do |line|
+               @errors.each do |line|
                    concat(line + "\n")
                end
                end %>
