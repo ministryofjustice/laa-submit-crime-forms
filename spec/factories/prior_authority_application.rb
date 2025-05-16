@@ -150,9 +150,9 @@ FactoryBot.define do
     end
 
     trait :with_further_information_supplied do
-      after(:create) do |paa|
-        create(:further_information, :with_response, :with_supporting_documents, submission: paa)
-      end
+      further_informations { [build(:further_information, :with_response, :with_supporting_documents)] }
+      state { 'sent_back' }
+      app_store_updated_at { 1.minute.ago }
     end
 
     trait :with_corrections do
