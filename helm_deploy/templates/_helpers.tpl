@@ -89,3 +89,12 @@ Function to return the internal host name of the current service
 {{- define "helm_deploy.internalHostName" -}}
   {{- printf "%s.%s.svc.cluster.local" .Values.nameOverride .Release.Namespace -}}
 {{- end -}}
+
+{{/*
+Function to return a list of whitelisted IPs allowed to access the service.
+*/}}
+{{- define "laa-submit-crime-forms.whitelist" -}}
+{{- if .Values.ingress.whitelist.enabled }}
+    {{- .Values.pingdomIPs }},{{- .Values.sharedIPs }}
+{{- end -}}
+{{- end -}}
