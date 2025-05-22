@@ -6,8 +6,6 @@ module Providers
       active_office_codes = ActiveOfficeCodeService.call(office_codes)
 
       if active_office_codes.any?
-        provider = Provider.from_omniauth(auth_data, office_codes)
-
         sign_in_and_redirect(
           provider, event: :authentication
         )
@@ -34,11 +32,15 @@ module Providers
       request.env['omniauth.auth']
     end
 
+    def provider
+      Provider.from_omniauth(auth_data)
+    end
+
     def office_codes
       if FeatureFlags.omniauth_test_mode.enabled?
         auth_data.info.office_codes
       else
-        @office_codes ||= OfficeCodeService.call(auth_data.uid)
+        @office_codes ||= provider.office_codes
       end
     end
   end
