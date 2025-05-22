@@ -29,7 +29,6 @@ spec:
       - name: clamav
         image: ghcr.io/ministryofjustice/clamav-docker/laa-clamav:latest
         imagePullPolicy: Always
-        command: ['/bin/sh', '-c', 'freshclam && clamd && touch startup.txt && clamdscan startup.txt']
         securityContext:
           {{- include "laa-submit-crime-forms.defaultSecurityContext" . | nindent 12 }}
         env:
