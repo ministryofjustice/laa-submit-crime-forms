@@ -7,7 +7,7 @@
     "accessible-autocomplete": "^3.0.1",
     "braces": "^3.0.3",
     "esbuild": "^0.25.4",
-    "govuk-frontend": "5.9.0",
+    "govuk-frontend": "5.10.0",
     "fastest-levenshtein": "^1.0.16",
     "jquery": "^3.7.1",
     "puppeteer": "^24.6.0",
