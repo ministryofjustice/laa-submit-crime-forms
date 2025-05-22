@@ -33,7 +33,6 @@ ingress:
   whitelist:
     enabled: true
   annotations:
-    nginx.ingress.kubernetes.io/permanent-redirect: https://laa-holding-page-production.apps.live.cloud-platform.service.justice.gov.uk
     external-dns.alpha.kubernetes.io/set-identifier: laa-submit-crime-forms-app-laa-submit-crime-forms-uat-green
   hosts:
     - host: uat.submit-crime-forms.service.justice.gov.uk
