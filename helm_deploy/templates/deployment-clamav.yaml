@@ -27,11 +27,14 @@ spec:
         runAsGroup: 1000
       containers:
       - name: clamav
-        image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed:latest
+        image: ghcr.io/ministryofjustice/clamav-docker/laa-clamav:latest
         imagePullPolicy: Always
         command: ['/bin/sh', '-c', 'freshclam && clamd && touch startup.txt && clamdscan startup.txt']
         securityContext:
           {{- include "laa-submit-crime-forms.defaultSecurityContext" . | nindent 12 }}
+        env:
+          - name: MIRROR_URL
+            value: "https://laa-clamav-mirror-production.apps.live.cloud-platform.service.justice.gov.uk"
         ports:
           - containerPort: 3310
             protocol: TCP
