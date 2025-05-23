@@ -1,3 +1,4 @@
+# :nocov: PDA is disabled for now
 class ProviderDataApiClient
   class << self
     def contract_active?(office_code)
@@ -50,3 +51,4 @@ class ProviderDataApiClient
     end
   end
 end
+# :nocov:
