@@ -1,6 +1,7 @@
 module PriorAuthority
   module Tasks
     class PrimaryQuote < Base
+      KEY = 'primary_quote'.freeze
       PREVIOUS_TASKS = [
         PriorAuthority::Tasks::Ufn,
         PriorAuthority::Tasks::CaseContact,

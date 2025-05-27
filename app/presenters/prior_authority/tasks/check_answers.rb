@@ -18,6 +18,10 @@ module PriorAuthority
       def completed?
         application.submitted?
       end
+
+      def section_link
+        nil
+      end
     end
   end
 end

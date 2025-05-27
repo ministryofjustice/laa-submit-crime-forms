@@ -1,6 +1,7 @@
 module PriorAuthority
   module Tasks
     class CaseContact < Base
+      KEY = 'case_contact'.freeze
       PREVIOUS_TASKS = Ufn
       FORM = PriorAuthority::Steps::CaseContactForm
 

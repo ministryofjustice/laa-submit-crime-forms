@@ -5,6 +5,7 @@ module PriorAuthority
       before_action :build_report
 
       def edit
+        @incomplete_tasks = PriorAuthority::ApplicationValidator.new(current_application).call
         @form_object = CheckAnswersForm.build(
           current_application
         )

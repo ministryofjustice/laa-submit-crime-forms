@@ -1,6 +1,7 @@
 module PriorAuthority
   module Tasks
     class AlternativeQuotes < Base
+      KEY = 'alternative_quotes'.freeze
       FORM = ::PriorAuthority::Steps::AlternativeQuotes::OverviewForm
       PREVIOUS_TASKS = PrimaryQuote
 

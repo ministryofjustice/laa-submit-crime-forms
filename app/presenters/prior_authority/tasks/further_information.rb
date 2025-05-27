@@ -1,6 +1,7 @@
 module PriorAuthority
   module Tasks
     class FurtherInformation < Base
+      KEY = 'further_information'.freeze
       FORM = ::PriorAuthority::Steps::FurtherInformationForm
 
       def path

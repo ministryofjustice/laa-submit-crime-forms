@@ -1,6 +1,7 @@
 module PriorAuthority
   module Tasks
     class ReasonWhy < Base
+      KEY = 'reason_why'.freeze
       PREVIOUS_TASKS = [
         PriorAuthority::Tasks::Ufn,
         PriorAuthority::Tasks::CaseContact,
