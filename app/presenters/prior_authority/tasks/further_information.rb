@@ -1,7 +1,6 @@
 module PriorAuthority
   module Tasks
     class FurtherInformation < Base
-      KEY = 'further_information'.freeze
       FORM = ::PriorAuthority::Steps::FurtherInformationForm
 
       def path
@@ -21,6 +20,12 @@ module PriorAuthority
       # UI otherwise
       def record
         application.further_informations.order(:requested_at).last
+      end
+
+      private
+
+      def key
+        'further_information'
       end
     end
   end

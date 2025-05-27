@@ -1,7 +1,6 @@
 module PriorAuthority
   module Tasks
     class AlternativeQuotes < Base
-      KEY = 'alternative_quotes'.freeze
       FORM = ::PriorAuthority::Steps::AlternativeQuotes::OverviewForm
       PREVIOUS_TASKS = PrimaryQuote
 
@@ -17,6 +16,12 @@ module PriorAuthority
         application.alternative_quotes.all? do |quote|
           ::PriorAuthority::Steps::AlternativeQuotes::DetailForm.build(quote, application:).valid?
         end
+      end
+
+      private
+
+      def key
+        'alternative_quotes'
       end
     end
   end

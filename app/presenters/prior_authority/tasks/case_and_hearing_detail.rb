@@ -1,7 +1,6 @@
 module PriorAuthority
   module Tasks
     class CaseAndHearingDetail < Base
-      KEY = 'case_and_hearing_detail'.freeze
       PREVIOUS_TASKS = Ufn
 
       delegate :prison_law?, :youth_court_applicable?, :psychiatric_liaison_applicable?, to: :application
@@ -28,6 +27,10 @@ module PriorAuthority
         required_forms << ::PriorAuthority::Steps::YouthCourtForm if youth_court_applicable?
         required_forms << ::PriorAuthority::Steps::PsychiatricLiaisonForm if psychiatric_liaison_applicable?
         required_forms
+      end
+
+      def key
+        'case_and_hearing_detail'
       end
     end
   end

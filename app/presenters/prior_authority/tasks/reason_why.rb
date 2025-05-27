@@ -1,7 +1,6 @@
 module PriorAuthority
   module Tasks
     class ReasonWhy < Base
-      KEY = 'reason_why'.freeze
       PREVIOUS_TASKS = [
         PriorAuthority::Tasks::Ufn,
         PriorAuthority::Tasks::CaseContact,
@@ -12,6 +11,12 @@ module PriorAuthority
 
       def path
         edit_prior_authority_steps_reason_why_path(application)
+      end
+
+      private
+
+      def key
+        'reason_why'
       end
     end
   end

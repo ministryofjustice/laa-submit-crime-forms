@@ -1,7 +1,6 @@
 module PriorAuthority
   module Tasks
     class CaseContact < Base
-      KEY = 'case_contact'.freeze
       PREVIOUS_TASKS = Ufn
       FORM = PriorAuthority::Steps::CaseContactForm
 
@@ -11,6 +10,12 @@ module PriorAuthority
 
       def completed?
         super && application.office_code.present?
+      end
+
+      private
+
+      def key
+        'case_contact'
       end
     end
   end

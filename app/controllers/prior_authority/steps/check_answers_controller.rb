@@ -5,7 +5,7 @@ module PriorAuthority
       before_action :build_report
 
       def edit
-        @incomplete_tasks = PriorAuthority::ApplicationValidator.new(current_application).call
+        incomplete_tasks_flash
         @form_object = CheckAnswersForm.build(
           current_application
         )
@@ -33,6 +33,10 @@ module PriorAuthority
 
       def step_valid?
         current_application.draft? || current_application.sent_back?
+      end
+
+      def incomplete_tasks_flash
+        @incomplete_tasks_flash ||= PriorAuthority::ApplicationValidator.new(current_application).call
       end
     end
   end

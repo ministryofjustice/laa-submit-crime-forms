@@ -18,11 +18,11 @@ module PriorAuthority
       private
 
       def section_text
-        I18n.t("tasklist.task.prior_authority/#{KEY}")
+        I18n.t("tasklist.task.prior_authority/#{key}")
       end
 
       def section_url(_params = nil)
-        public_send("edit_prior_authority_steps_#{KEY}_path", application)
+        public_send("edit_prior_authority_steps_#{key}_path", application)
       end
     end
   end

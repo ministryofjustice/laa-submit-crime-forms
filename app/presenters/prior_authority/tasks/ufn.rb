@@ -1,7 +1,6 @@
 module PriorAuthority
   module Tasks
     class Ufn < Base
-      KEY = 'ufn'.freeze
       FORM = ::PriorAuthority::Steps::UfnForm
 
       def path
@@ -10,6 +9,12 @@ module PriorAuthority
 
       def can_start?
         true
+      end
+
+      private
+
+      def key
+        'ufn'
       end
     end
   end
