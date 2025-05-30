@@ -1,5 +1,5 @@
-name: "Delete UAT deployment"
-description: 'Deletes a UAT deployment with a name that matches the merged or closed branch'
+name: "Delete Dev deployment"
+description: 'Deletes a dev deployment with a name that matches the merged or closed branch'
 inputs:
   k8s_cluster:
     description: "Kubernetes cluster name"
