@@ -11,6 +11,12 @@ module PriorAuthority
       def completed?
         super && application.office_code.present?
       end
+
+      private
+
+      def key
+        'case_contact'
+      end
     end
   end
 end

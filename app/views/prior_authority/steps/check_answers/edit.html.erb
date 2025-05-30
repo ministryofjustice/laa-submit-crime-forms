@@ -4,6 +4,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
+    <% if @incomplete_tasks_flash.present? %>
+     <%= render partial: 'shared/alert', locals: { type: :warning, msg: @incomplete_tasks_flash } %>
+    <% end %>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
     <% if @form_object.application.correction_needed? %>

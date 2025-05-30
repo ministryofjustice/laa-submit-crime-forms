@@ -17,6 +17,12 @@ module PriorAuthority
           ::PriorAuthority::Steps::AlternativeQuotes::DetailForm.build(quote, application:).valid?
         end
       end
+
+      private
+
+      def key
+        'alternative_quotes'
+      end
     end
   end
 end

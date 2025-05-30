@@ -21,6 +21,12 @@ module PriorAuthority
       def record
         application.further_informations.order(:requested_at).last
       end
+
+      private
+
+      def key
+        'further_information'
+      end
     end
   end
 end

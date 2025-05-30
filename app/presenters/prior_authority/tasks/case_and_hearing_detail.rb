@@ -28,6 +28,10 @@ module PriorAuthority
         required_forms << ::PriorAuthority::Steps::PsychiatricLiaisonForm if psychiatric_liaison_applicable?
         required_forms
       end
+
+      def key
+        'case_and_hearing_detail'
+      end
     end
   end
 end

@@ -10,6 +10,12 @@ module PriorAuthority
       def can_start?
         true
       end
+
+      private
+
+      def key
+        'ufn'
+      end
     end
   end
 end
