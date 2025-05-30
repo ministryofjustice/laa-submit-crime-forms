@@ -31,7 +31,7 @@ class PdfService
     end
 
     def html_to_pdf(html, display_url)
-      Grover.new(html, **GROVER_OPTIONS, display_url:).to_pdf
+      Grover.new(html, **GROVER_OPTIONS, display_url:, style_tag_options:).to_pdf
     end
 
     private
@@ -42,6 +42,12 @@ class PdfService
         layout: 'pdf',
         locals: locals,
       )
+    end
+
+    def style_tag_options
+      [
+        content: Rails.root.join('app', 'assets', 'builds', 'application.css').read
+      ]
     end
   end
 end
