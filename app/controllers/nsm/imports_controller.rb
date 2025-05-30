@@ -78,8 +78,8 @@ module Nsm
       render :new, locals: { error_id: }
     end
 
-    def generate_import_error(details = nil)
-      AppStoreClient.new.post_import_error({ details: details, provider_id: current_provider.id })['id']
+    def generate_import_error(details = nil, error_type = 'UNKNOWN')
+      AppStoreClient.new.post_import_error({ details: details, provider_id: current_provider.id, error_type: error_type })['id']
     end
 
     def ensure_params
