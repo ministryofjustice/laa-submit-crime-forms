@@ -1,0 +1,38 @@
+{{- $fullName := include "laa-submit-crime-forms.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: public-{{ $fullName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "laa-submit-crime-forms.labels" . | nindent 4 }}
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($request_method !~ ^GET$) {
+        return 405;
+      }
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
+    external-dns.alpha.kubernetes.io/set-identifier: public-{{- index .Values.ingress.annotations "external-dns.alpha.kubernetes.io/set-identifier" }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  rules:
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          - path: /ping
+            pathType: Exact
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          - path: /ready
+            pathType: Exact
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+      {{- end }}
