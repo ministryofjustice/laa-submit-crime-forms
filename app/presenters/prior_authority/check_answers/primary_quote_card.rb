@@ -96,7 +96,8 @@ module PriorAuthority
       def prior_authority_granted_row
         {
           head_key: 'prior_authority_granted',
-          text: check_missing(application.prior_authority_granted?, I18n.t("generic.#{application.prior_authority_granted?}")),
+          text: check_missing(application.prior_authority_granted?,
+                              formatted_value: I18n.t("generic.#{application.prior_authority_granted?}")),
         }
       end
 
@@ -131,7 +132,7 @@ module PriorAuthority
           {
             head_key: 'related_to_post_mortem',
             text: check_missing(primary_quote.related_to_post_mortem?,
-                                I18n.t("generic.#{primary_quote.related_to_post_mortem?}")),
+                                formatted_value: I18n.t("generic.#{primary_quote.related_to_post_mortem?}")),
           },
         ]
       end
@@ -142,7 +143,8 @@ module PriorAuthority
         [
           {
             head_key: 'ordered_by_court',
-            text: check_missing(primary_quote.ordered_by_court?, I18n.t("generic.#{primary_quote.ordered_by_court?}"), true),
+            text: check_missing(primary_quote.ordered_by_court?,
+                                formatted_value: I18n.t("generic.#{primary_quote.ordered_by_court?}"), boolean_field: true),
           },
         ]
       end

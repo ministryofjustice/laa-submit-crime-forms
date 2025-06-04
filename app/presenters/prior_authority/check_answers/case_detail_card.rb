@@ -78,7 +78,8 @@ module PriorAuthority
                                end
                              else
                                check_missing(application.client_detained?,
-                                             formatted_value: I18n.t("generic.#{application.client_detained?}", true))
+                                             formatted_value: I18n.t("generic.#{application.client_detained?}",
+                                                                     boolean_field: true))
                              end
       end
 
