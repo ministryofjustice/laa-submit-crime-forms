@@ -15,7 +15,7 @@ module PriorAuthority
         if incomplete_tasks.blank?
           update_and_advance(CheckAnswersForm, as:, after_commit_redirect_path:)
         else
-          redirect_to prior_authority_steps_check_answers_path(current_application)
+          update_and_advance(CheckAnswersForm, as: as, save_and_refresh: true)
         end
       end
 
