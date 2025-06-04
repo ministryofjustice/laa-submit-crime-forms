@@ -5,14 +5,18 @@ module PriorAuthority
       before_action :build_report
 
       def edit
-        incomplete_tasks_flash
+        incomplete_tasks
         @form_object = CheckAnswersForm.build(
           current_application
         )
       end
 
       def update
-        update_and_advance(CheckAnswersForm, as:, after_commit_redirect_path:)
+        if incomplete_tasks.blank?
+          update_and_advance(CheckAnswersForm, as:, after_commit_redirect_path:)
+        else
+          redirect_to prior_authority_steps_check_answers_path(current_application)
+        end
       end
 
       private
@@ -35,8 +39,8 @@ module PriorAuthority
         current_application.draft? || current_application.sent_back?
       end
 
-      def incomplete_tasks_flash
-        @incomplete_tasks_flash ||= PriorAuthority::ApplicationValidator.new(current_application).call
+      def incomplete_tasks
+        @incomplete_tasks ||= PriorAuthority::ApplicationValidator.new(current_application).call
       end
     end
   end
