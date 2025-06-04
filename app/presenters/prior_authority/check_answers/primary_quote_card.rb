@@ -2,6 +2,7 @@
 
 module PriorAuthority
   module CheckAnswers
+    # rubocop:disable Metrics/ClassLength
     class PrimaryQuoteCard < Base
       attr_reader :application, :service_cost_form, :travel_detail_form, :verbose
 
@@ -96,8 +97,9 @@ module PriorAuthority
       def prior_authority_granted_row
         {
           head_key: 'prior_authority_granted',
-          text: check_missing(application.prior_authority_granted?,
-                              formatted_value: I18n.t("generic.#{application.prior_authority_granted?}")),
+          text: check_missing(application.prior_authority_granted?) do
+                  I18n.t("generic.#{application.prior_authority_granted?}")
+                end
         }
       end
 
@@ -131,8 +133,9 @@ module PriorAuthority
         [
           {
             head_key: 'related_to_post_mortem',
-            text: check_missing(primary_quote.related_to_post_mortem?,
-                                formatted_value: I18n.t("generic.#{primary_quote.related_to_post_mortem?}")),
+            text: check_missing(primary_quote.related_to_post_mortem?) do
+                    I18n.t("generic.#{primary_quote.related_to_post_mortem?}")
+                  end
           },
         ]
       end
@@ -143,8 +146,9 @@ module PriorAuthority
         [
           {
             head_key: 'ordered_by_court',
-            text: check_missing(primary_quote.ordered_by_court?,
-                                formatted_value: I18n.t("generic.#{primary_quote.ordered_by_court?}"), boolean_field: true),
+            text: check_missing(primary_quote.ordered_by_court?) do
+                    I18n.t("generic.#{primary_quote.ordered_by_court?}")
+                  end
           },
         ]
       end
@@ -156,11 +160,13 @@ module PriorAuthority
         [
           {
             head_key: 'travel_cost_reason',
-            text: check_missing(application.primary_quote.travel_cost_reason,
-                                formatted_value: simple_format(application.primary_quote.travel_cost_reason)),
+            text: check_missing(application.primary_quote.travel_cost_reason) do
+                    simple_format(application.primary_quote.travel_cost_reason)
+                  end
           },
         ]
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end

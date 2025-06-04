@@ -56,15 +56,16 @@ module PriorAuthority
       def client_detained_row
         {
           head_key: 'client_detained',
-          text: check_missing(client_detained, boolean_field: true),
+          text: check_missing(client_detained),
         }
       end
 
       def subject_to_poca_row
         {
           head_key: 'subject_to_poca',
-          text: check_missing(application.subject_to_poca,
-                              formatted_value: I18n.t("generic.#{application.subject_to_poca}", boolean_field: true)),
+          text: check_missing(application.subject_to_poca) do
+                  I18n.t("generic.#{application.subject_to_poca}")
+                end
         }
       end
 
@@ -73,13 +74,14 @@ module PriorAuthority
                                if application.prison_id == 'custom'
                                  check_missing(application.custom_prison_name)
                                else
-                                 check_missing(application.prison_id,
-                                               formatted_value: I18n.t("prior_authority.prisons.#{application.prison_id}"))
+                                 check_missing(application.prison_id) do
+                                   I18n.t("prior_authority.prisons.#{application.prison_id}")
+                                 end
                                end
                              else
-                               check_missing(application.client_detained?,
-                                             formatted_value: I18n.t("generic.#{application.client_detained?}",
-                                                                     boolean_field: true))
+                               check_missing(application.client_detained?.present?) do
+                                 I18n.t("generic.#{application.client_detained?}")
+                               end
                              end
       end
 
@@ -87,8 +89,9 @@ module PriorAuthority
         if application.main_offence_id == 'custom'
           check_missing(application.custom_main_offence_name)
         else
-          check_missing(application.main_offence_id,
-                        formatted_value: I18n.t("prior_authority.offences.#{application.main_offence_id}"))
+          check_missing(application.main_offence_id) do
+            I18n.t("prior_authority.offences.#{application.main_offence_id}")
+          end
         end
       end
     end

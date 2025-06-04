@@ -1,15 +1,12 @@
 module LaaMultiStepForms
   module CheckMissingHelper
-    def check_missing(check_value, formatted_value: nil, boolean_field: false)
-      if (boolean_field && check_value.nil?) || check_value.blank?
-        missing_tag
-      else
+    def check_missing(check_value)
+      if check_value.present?
         return yield if block_given?
 
-        check_value = YesNoAnswer::YES.to_s.capitalize if check_value == true
-        check_value = YesNoAnswer::NO.to_s.capitalize if check_value == false
-
-        formatted_value || check_value
+        check_value
+      else
+        missing_tag
       end
     end
 

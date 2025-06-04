@@ -38,13 +38,15 @@ module PriorAuthority
           },
           {
             head_key: 'plea',
-            text: check_missing(application.plea,
-                                formatted_value: I18n.t("plea_description.#{application.plea}", scope: i18n_scope)),
+            text: check_missing(application.plea) do
+                    I18n.t("plea_description.#{application.plea}", scope: i18n_scope)
+                  end
           },
           {
             head_key: 'court_type',
-            text: check_missing(application.court_type,
-                                formatted_value: I18n.t("court_type_description.#{application.court_type}", scope: i18n_scope)),
+            text: check_missing(application.court_type) do
+                    I18n.t("court_type_description.#{application.court_type}", scope: i18n_scope)
+                  end
           },
         ]
       end
@@ -75,8 +77,9 @@ module PriorAuthority
         [
           {
             head_key: 'youth_court',
-            text: check_missing(application.youth_court, formatted_value: I18n.t("generic.#{application.youth_court}"),
-boolean_field: true),
+            text: check_missing(application.youth_court) do
+              I18n.t("generic.#{application.youth_court}")
+            end
           },
         ]
       end
@@ -85,8 +88,9 @@ boolean_field: true),
         [
           {
             head_key: 'psychiatric_liaison',
-            text: check_missing(application.psychiatric_liaison,
-                                formatted_value: I18n.t("generic.#{application.psychiatric_liaison}"), boolean_field: true),
+            text: check_missing(application.psychiatric_liaison) do
+                    I18n.t("generic.#{application.psychiatric_liaison}")
+                  end
           },
           *psychiatric_liaison_reason_not_row,
         ]
@@ -98,8 +102,9 @@ boolean_field: true),
         [
           {
             head_key: 'psychiatric_liaison_reason_not',
-            text: check_missing(application.psychiatric_liaison_reason_not,
-                                formatted_value: simple_format(application.psychiatric_liaison_reason_not)),
+            text: check_missing(application.psychiatric_liaison_reason_not) do
+                    simple_format(application.psychiatric_liaison_reason_not)
+                  end
           },
         ]
       end

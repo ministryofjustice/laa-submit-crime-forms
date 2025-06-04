@@ -21,8 +21,9 @@ module PriorAuthority
           },
           {
             head_key: 'information_supplied',
-            text: check_missing(further_information.information_supplied,
-                                formatted_value: simple_format(further_information.information_supplied)),
+            text: check_missing(further_information.information_supplied) do
+                    simple_format(further_information.information_supplied)
+                  end
           },
           {
             head_key: 'supporting_documents',
