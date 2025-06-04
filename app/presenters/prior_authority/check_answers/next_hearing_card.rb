@@ -17,7 +17,7 @@ module PriorAuthority
       end
 
       def completed?
-        PriorAuthority::Tasks::CaseAndHearingDetail.new(application:).hearing_detail_completed?
+        PriorAuthority::Tasks::CaseAndHearingDetail.new(application:).next_hearing_completed?
       end
 
       private
