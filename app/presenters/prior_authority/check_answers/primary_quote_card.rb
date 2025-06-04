@@ -142,7 +142,7 @@ module PriorAuthority
         [
           {
             head_key: 'ordered_by_court',
-            text: check_missing(primary_quote.ordered_by_court?, I18n.t("generic.#{primary_quote.ordered_by_court?}")),
+            text: check_missing(primary_quote.ordered_by_court?, I18n.t("generic.#{primary_quote.ordered_by_court?}"), true),
           },
         ]
       end
@@ -155,7 +155,7 @@ module PriorAuthority
           {
             head_key: 'travel_cost_reason',
             text: check_missing(application.primary_quote.travel_cost_reason,
-                                simple_format(application.primary_quote.travel_cost_reason)),
+                                formatted_value: simple_format(application.primary_quote.travel_cost_reason)),
           },
         ]
       end

@@ -21,7 +21,7 @@ module PriorAuthority
         [
           {
             head_key: 'reason_why',
-            text: check_missing(application.reason_why, simple_format(application.reason_why)),
+            text: check_missing(application.reason_why, formatted_value: simple_format(application.reason_why)),
           },
           {
             head_key: 'supporting_documents',
