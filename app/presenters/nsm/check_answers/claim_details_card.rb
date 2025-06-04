@@ -52,7 +52,9 @@ module Nsm
       def supplemental_claim_row
         {
           head_key: 'supplemental_claim',
-          text: check_missing(claim.supplemental_claim, formatted_value: claim.supplemental_claim.capitalize)
+          text: check_missing(claim.supplemental_claim.present?) do
+                  claim.supplemental_claim.capitalize
+                end
         }
       end
 

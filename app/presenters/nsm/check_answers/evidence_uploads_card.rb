@@ -29,7 +29,9 @@ module Nsm
         [
           {
             head_key: 'send_by_post',
-            text: check_missing(claim.send_by_post),
+            text: check_missing(!claim.send_by_post.nil?) do
+              (claim.send_by_post ? YesNoAnswer::YES : YesNoAnswer::NO).to_s.capitalize
+            end,
           }
         ]
       end
