@@ -77,7 +77,7 @@ module PriorAuthority
         [
           {
             head_key: 'youth_court',
-            text: check_missing(application.youth_court) do
+            text: check_missing(application.youth_court.present?) do
               I18n.t("generic.#{application.youth_court}")
             end
           },
@@ -88,7 +88,7 @@ module PriorAuthority
         [
           {
             head_key: 'psychiatric_liaison',
-            text: check_missing(application.psychiatric_liaison) do
+            text: check_missing(application.psychiatric_liaison.present?) do
                     I18n.t("generic.#{application.psychiatric_liaison}")
                   end
           },
