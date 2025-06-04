@@ -13,12 +13,6 @@ module PriorAuthority
       def completed?
         application.defendant && super(application.defendant)
       end
-
-      private
-
-      def key
-        'client_detail'
-      end
     end
   end
 end

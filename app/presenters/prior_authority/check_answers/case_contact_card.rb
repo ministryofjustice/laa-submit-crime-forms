@@ -29,6 +29,10 @@ module PriorAuthority
         ]
       end
 
+      def completed?
+        PriorAuthority::Tasks::CaseContact.new(application:).completed?
+      end
+
       private
 
       delegate :solicitor, :firm_office, to: :application

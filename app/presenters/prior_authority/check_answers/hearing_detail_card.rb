@@ -16,6 +16,18 @@ module PriorAuthority
         base_rows + court_type_rows
       end
 
+      def completed?
+        PriorAuthority::Tasks::CaseAndHearingDetail.new(application:).hearing_detail_completed?
+      end
+
+      def change_action
+        helper = Rails.application.routes.url_helpers
+        helper.url_for(controller: "prior_authority/steps/#{section}",
+                       action: request_method,
+                       application_id: application.id,
+                       only_path: true)
+      end
+
       private
 
       def base_rows

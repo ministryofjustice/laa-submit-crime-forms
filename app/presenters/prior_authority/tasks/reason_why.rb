@@ -12,12 +12,6 @@ module PriorAuthority
       def path
         edit_prior_authority_steps_reason_why_path(application)
       end
-
-      private
-
-      def key
-        'reason_why'
-      end
     end
   end
 end

@@ -31,6 +31,10 @@ module PriorAuthority
         alternative_quotes.map { alternative_quote_form(_1) }
       end
 
+      def completed?
+        PriorAuthority::Tasks::AlternativeQuotes.new(application:).completed?
+      end
+
       private
 
       def alternative_quote_summaries

@@ -26,6 +26,10 @@ module PriorAuthority
         ]
       end
 
+      def completed?
+        PriorAuthority::Tasks::CaseAndHearingDetail.new(application:).case_detail_completed?
+      end
+
       private
 
       def main_offence_row
@@ -38,7 +42,7 @@ module PriorAuthority
       def rep_order_date_row
         {
           head_key: 'rep_order_date',
-          text: application.rep_order_date.to_fs(:stamp),
+          text: application.rep_order_date ? application.rep_order_date.to_fs(:stamp) : 'data incomplete',
         }
       end
 

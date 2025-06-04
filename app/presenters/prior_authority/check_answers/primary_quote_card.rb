@@ -65,6 +65,10 @@ module PriorAuthority
         primary_quote.travel_adjustment_comment.presence
       end
 
+      def completed?
+        PriorAuthority::Tasks::PrimaryQuote.new(application:).completed?
+      end
+
       private
 
       delegate :primary_quote, to: :application

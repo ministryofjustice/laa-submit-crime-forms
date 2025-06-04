@@ -51,12 +51,6 @@ module PriorAuthority
       def all_additional_costs_completed?
         !application.additional_costs_still_to_add?
       end
-
-      private
-
-      def key
-        'primary_quote'
-      end
     end
   end
 end

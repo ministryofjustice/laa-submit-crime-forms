@@ -17,6 +17,21 @@ module PriorAuthority
         required_forms.all? { |form| super(rec, form) }
       end
 
+      def case_detail_completed?
+        ::PriorAuthority::Steps::CaseDetailForm.build(record).valid?
+      end
+
+      def hearing_detail_completed?
+        required_forms = [::PriorAuthority::Steps::HearingDetailForm]
+        required_forms << ::PriorAuthority::Steps::YouthCourtForm if youth_court_applicable?
+        required_forms << ::PriorAuthority::Steps::PsychiatricLiaisonForm if psychiatric_liaison_applicable?
+        required_forms.all? { |form| form.build(record).valid? }
+      end
+
+      def next_hearing_completed?
+        ::PriorAuthority::Steps::NextHearingForm.build(record).valid?
+      end
+
       private
 
       def required_forms
@@ -27,10 +42,6 @@ module PriorAuthority
         required_forms << ::PriorAuthority::Steps::YouthCourtForm if youth_court_applicable?
         required_forms << ::PriorAuthority::Steps::PsychiatricLiaisonForm if psychiatric_liaison_applicable?
         required_forms
-      end
-
-      def key
-        'case_and_hearing_detail'
       end
     end
   end

@@ -24,9 +24,13 @@ module PriorAuthority
           },
           {
             head_key: 'date_of_birth',
-            text: application.defendant.date_of_birth.to_fs(:stamp),
+            text: application.defendant.date_of_birth ? application.defendant.date_of_birth.to_fs(:stamp) : 'data incomplete',
           },
         ]
+      end
+
+      def completed?
+        PriorAuthority::Tasks::ClientDetail.new(application:).completed?
       end
     end
   end

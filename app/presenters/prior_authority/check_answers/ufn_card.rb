@@ -53,6 +53,10 @@ module PriorAuthority
       def title_actions
         []
       end
+
+      def completed?
+        PriorAuthority::Tasks::Ufn.new(application:).completed?
+      end
     end
   end
 end

@@ -30,6 +30,10 @@ module PriorAuthority
         ]
       end
 
+      def completed?
+        PriorAuthority::Tasks::FurtherInformation.new(application:).completed?
+      end
+
       private
 
       def supporting_documents
