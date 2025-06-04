@@ -32,8 +32,8 @@ module PriorAuthority
       end
 
       def next_hearing_date
-        if application.next_hearing & application.next_hearing_date
-          application.next_hearing_date.to_fs(:stamp)
+        if application.next_hearing
+          check_missing(application.next_hearing_date&.to_fs(:stamp))
         else
           I18n.t('generic.unknown')
         end

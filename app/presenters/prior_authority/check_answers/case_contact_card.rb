@@ -38,15 +38,21 @@ module PriorAuthority
       delegate :solicitor, :firm_office, to: :application
 
       def contact_details_html
-        contact_details_html = [solicitor.contact_full_name, solicitor.contact_email].compact.join('<br>')
+        contact_details_html = [
+          check_missing(solicitor.contact_full_name),
+          check_missing(solicitor.contact_email)
+        ].compact.join('<br>')
 
-        sanitize(contact_details_html, tags: %w[br])
+        sanitize(contact_details_html, tags: %w[br strong])
       end
 
       def firm_details_html
-        firm_details_html = [firm_office.name, application.office_code].compact.join('<br>')
+        firm_details_html = [
+          check_missing(firm_office.name),
+          check_missing(application.office_code)
+        ].compact.join('<br>')
 
-        sanitize(firm_details_html, tags: %w[br])
+        sanitize(firm_details_html, tags: %w[br strong])
       end
     end
   end

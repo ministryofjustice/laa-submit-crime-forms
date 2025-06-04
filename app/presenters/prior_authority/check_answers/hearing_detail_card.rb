@@ -34,15 +34,16 @@ module PriorAuthority
         [
           {
             head_key: 'next_hearing_date',
-            text: next_hearing_date,
+            text: check_missing(next_hearing_date),
           },
           {
             head_key: 'plea',
-            text: I18n.t("plea_description.#{application.plea}", scope: i18n_scope),
+            text: check_missing(application.plea, I18n.t("plea_description.#{application.plea}", scope: i18n_scope)),
           },
           {
             head_key: 'court_type',
-            text: I18n.t("court_type_description.#{application.court_type}", scope: i18n_scope),
+            text: check_missing(application.court_type,
+                                I18n.t("court_type_description.#{application.court_type}", scope: i18n_scope)),
           },
         ]
       end
@@ -53,7 +54,7 @@ module PriorAuthority
 
       def next_hearing_date
         if application.next_hearing
-          application.next_hearing_date.to_fs(:stamp)
+          check_missing(application.next_hearing_date&.to_fs(:stamp))
         else
           I18n.t('generic.unknown')
         end
@@ -73,7 +74,7 @@ module PriorAuthority
         [
           {
             head_key: 'youth_court',
-            text: I18n.t("generic.#{application.youth_court}"),
+            text: check_missing(application.youth_court, I18n.t("generic.#{application.youth_court}")),
           },
         ]
       end
@@ -82,7 +83,7 @@ module PriorAuthority
         [
           {
             head_key: 'psychiatric_liaison',
-            text: I18n.t("generic.#{application.psychiatric_liaison}"),
+            text: check_missing(application.psychiatric_liaison, I18n.t("generic.#{application.psychiatric_liaison}")),
           },
           *psychiatric_liaison_reason_not_row,
         ]
@@ -94,7 +95,8 @@ module PriorAuthority
         [
           {
             head_key: 'psychiatric_liaison_reason_not',
-            text: simple_format(application.psychiatric_liaison_reason_not),
+            text: check_missing(application.psychiatric_liaison_reason_not,
+                                simple_format(application.psychiatric_liaison_reason_not)),
           },
         ]
       end

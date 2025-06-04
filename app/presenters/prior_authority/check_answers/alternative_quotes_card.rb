@@ -60,7 +60,7 @@ module PriorAuthority
         [
           {
             head_key: 'no_alternatve_quotes',
-            text: simple_format(application.no_alternative_quote_reason),
+            text: check_missing(application.no_alternative_quote_reason, simple_format(application.no_alternative_quote_reason)),
           }
         ]
       end
@@ -73,12 +73,12 @@ module PriorAuthority
         form = alternative_quote_form(quote)
 
         alternative_quote_summary_html = [
-          quote.contact_full_name,
+          check_missing(quote.contact_full_name),
           document_link(quote),
-          NumberTo.pounds(form.total_cost)
+          check_missing(form.total_cost, NumberTo.pounds(form.total_cost))
         ].compact.join('<br>')
 
-        sanitize(alternative_quote_summary_html, tags: %w[a br])
+        sanitize(alternative_quote_summary_html, tags: %w[a br strong])
       end
 
       def alternative_quote_form(quote)

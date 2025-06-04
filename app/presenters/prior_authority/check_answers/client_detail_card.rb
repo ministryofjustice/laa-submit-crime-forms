@@ -20,11 +20,11 @@ module PriorAuthority
         [
           {
             head_key: 'full_name',
-            text: application.defendant.full_name,
+            text: check_missing(application.defendant.full_name),
           },
           {
             head_key: 'date_of_birth',
-            text: application.defendant.date_of_birth ? application.defendant.date_of_birth.to_fs(:stamp) : 'data incomplete',
+            text: check_missing(application.defendant.date_of_birth&.to_fs(:stamp)),
           },
         ]
       end

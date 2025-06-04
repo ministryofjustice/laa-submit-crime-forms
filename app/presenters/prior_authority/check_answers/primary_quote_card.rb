@@ -77,7 +77,7 @@ module PriorAuthority
         [
           {
             head_key: 'service_name',
-            text: service_cost_form.service_name,
+            text: check_missing(service_cost_form.service_name),
           },
           {
             head_key: 'service_details',
@@ -96,15 +96,23 @@ module PriorAuthority
       def prior_authority_granted_row
         {
           head_key: 'prior_authority_granted',
-          text: I18n.t("generic.#{application.prior_authority_granted?}"),
+          text: check_missing(application.prior_authority_granted?, I18n.t("generic.#{application.prior_authority_granted?}")),
         }
       end
 
       def service_details_html
-        organisation_details = [primary_quote.organisation, primary_quote.town, primary_quote.postcode].compact.join(', ')
-        service_details_html = [primary_quote.contact_full_name, organisation_details].compact.join('<br>')
+        organisation_details = [
+          check_missing(primary_quote.organisation),
+          check_missing(primary_quote.town),
+          check_missing(primary_quote.postcode)
+        ].compact.join(', ')
 
-        sanitize(service_details_html, tags: %w[br])
+        service_details_html = [
+          check_missing(primary_quote.contact_full_name),
+          check_missing(organisation_details)
+        ].compact.join('<br>')
+
+        sanitize(service_details_html, tags: %w[br strong])
       end
 
       def document_link
@@ -122,7 +130,8 @@ module PriorAuthority
         [
           {
             head_key: 'related_to_post_mortem',
-            text: I18n.t("generic.#{primary_quote.related_to_post_mortem?}"),
+            text: check_missing(primary_quote.related_to_post_mortem?,
+                                I18n.t("generic.#{primary_quote.related_to_post_mortem?}")),
           },
         ]
       end
@@ -133,7 +142,7 @@ module PriorAuthority
         [
           {
             head_key: 'ordered_by_court',
-            text: I18n.t("generic.#{primary_quote.ordered_by_court?}"),
+            text: check_missing(primary_quote.ordered_by_court?, I18n.t("generic.#{primary_quote.ordered_by_court?}")),
           },
         ]
       end
@@ -145,7 +154,8 @@ module PriorAuthority
         [
           {
             head_key: 'travel_cost_reason',
-            text: simple_format(application.primary_quote.travel_cost_reason),
+            text: check_missing(application.primary_quote.travel_cost_reason,
+                                simple_format(application.primary_quote.travel_cost_reason)),
           },
         ]
       end

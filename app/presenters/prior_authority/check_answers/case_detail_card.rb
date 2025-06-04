@@ -35,28 +35,28 @@ module PriorAuthority
       def main_offence_row
         {
           head_key: 'main_offence',
-          text: main_offence
+          text: check_missing(main_offence)
         }
       end
 
       def rep_order_date_row
         {
           head_key: 'rep_order_date',
-          text: application.rep_order_date ? application.rep_order_date.to_fs(:stamp) : 'data incomplete',
+          text: check_missing(application.rep_order_date&.to_fs(:stamp)),
         }
       end
 
       def maat_row
         {
           head_key: 'maat',
-          text: application.defendant.maat,
+          text: check_missing(application.defendant.maat),
         }
       end
 
       def client_detained_row
         {
           head_key: 'client_detained',
-          text: client_detained,
+          text: check_missing(client_detained),
         }
       end
 
@@ -70,20 +70,20 @@ module PriorAuthority
       def client_detained
         @client_detained ||= if application.client_detained?
                                if application.prison_id == 'custom'
-                                 application.custom_prison_name
+                                 check_missing(application.custom_prison_name)
                                else
-                                 I18n.t("prior_authority.prisons.#{application.prison_id}")
+                                 check_missing(application.prison_id, I18n.t("prior_authority.prisons.#{application.prison_id}"))
                                end
                              else
-                               I18n.t("generic.#{application.client_detained?}")
+                               check_missing(application.client_detained?, I18n.t("generic.#{application.client_detained?}"))
                              end
       end
 
       def main_offence
         if application.main_offence_id == 'custom'
-          application.custom_main_offence_name
+          check_missing(application.custom_main_offence_name)
         else
-          I18n.t("prior_authority.offences.#{application.main_offence_id}")
+          check_missing(application.main_offence_id, I18n.t("prior_authority.offences.#{application.main_offence_id}"))
         end
       end
     end
