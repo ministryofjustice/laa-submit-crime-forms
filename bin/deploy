@@ -3,7 +3,6 @@
 ENVIRONMENT=$1
 # Convert the branch name into a string that can be turned into a valid URL
 BRANCH_RELEASE_NAME=$(echo "$CIRCLE_BRANCH" | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
-PINGDOM_IPS=$(curl -s https://my.pingdom.com/probes/ipv4 | tr -d ' ' | tr '\n' ',' | sed 's/,/\\,/g' | sed 's/\\,$//')
 SHARED_IPS=$(curl -s https://raw.githubusercontent.com/ministryofjustice/laa-ip-allowlist/main/cidrs.txt | tr -d ' ' | tr '\n' ',' | sed 's/,/\\,/g' | sed 's/\\,$//')
 
 deploy_branch() {
@@ -24,7 +23,6 @@ deploy_branch() {
                 --set ingress.tls[0].host="$RELEASE_HOST" \
                 --set nameOverride="$BRANCH_RELEASE_NAME"\
                 --set fullnameOverride="$BRANCH_RELEASE_NAME"\
-                --set-string pingdomIPs="$PINGDOM_IPS" \
                 --set-string sharedIPs="$SHARED_IPS" \
                 --set branch=true
 
@@ -37,7 +35,6 @@ deploy_main() {
                           --values ./helm_deploy/values-"$ENVIRONMENT".yaml \
                           --set image.repository="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}" \
                           --set image.tag="main-$CIRCLE_SHA1" \
-                          --set-string pingdomIPs="$PINGDOM_IPS" \
                           --set-string sharedIPs="$SHARED_IPS"
 }
 
