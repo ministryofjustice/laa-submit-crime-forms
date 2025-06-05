@@ -6,6 +6,8 @@ require_relative '../../lib/govuk_design_system_formbuilder/elements/period'
 
 module LaaMultiStepForms
   module FormBuilderHelper
+    delegate :config, to: GOVUKDesignSystemFormBuilder
+
     # rubocop:disable Metrics/ParameterLists
     def govuk_period_field(attribute_name, hint: {}, legend: {}, caption: {}, widths: {}, maxlength_enabled: false,
                            form_group: {}, **, &block)
@@ -20,7 +22,8 @@ module LaaMultiStepForms
       segments = { day: '3', month: '2', year: '1' }
       GOVUKDesignSystemFormBuilder::Elements::Date.new(
         self, object_name, attribute_name,
-        segments:, hint:, legend:, caption:, date_of_birth:, omit_day:, maxlength_enabled:, form_group:, **, &block
+        segments: segments, hint: hint, legend: legend, caption: caption, date_of_birth: date_of_birth, omit_day: omit_day,
+        maxlength_enabled: maxlength_enabled, form_group: form_group, segment_names: config.default_date_segment_names, **, &block
       ).html
     end
     # rubocop:enable Metrics/ParameterLists

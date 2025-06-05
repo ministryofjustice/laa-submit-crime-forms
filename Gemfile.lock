@@ -87,23 +87,23 @@ GEM
     afm (0.2.2)
     ast (2.4.3)
     attr_extras (7.1.0)
-    aws-eventstream (1.3.2)
-    aws-partitions (1.1106.0)
-    aws-sdk-core (3.224.0)
+    aws-eventstream (1.4.0)
+    aws-partitions (1.1111.0)
+    aws-sdk-core (3.225.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
       base64
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-kms (1.101.0)
-      aws-sdk-core (~> 3, >= 3.216.0)
+    aws-sdk-kms (1.102.0)
+      aws-sdk-core (~> 3, >= 3.225.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.186.1)
-      aws-sdk-core (~> 3, >= 3.216.0)
+    aws-sdk-s3 (1.189.0)
+      aws-sdk-core (~> 3, >= 3.225.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
-    aws-sigv4 (1.11.0)
+    aws-sigv4 (1.12.0)
       aws-eventstream (~> 1, >= 1.0.2)
     axe-core-api (4.10.3)
       dumb_delegator
@@ -118,9 +118,9 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    base64 (0.2.0)
+    base64 (0.3.0)
     bcrypt (3.1.20)
-    benchmark (0.4.0)
+    benchmark (0.4.1)
     better_html (2.1.1)
       actionview (>= 6.0)
       activesupport (>= 6.0)
@@ -128,7 +128,7 @@ GEM
       erubi (~> 1.4)
       parser (>= 2.4)
       smart_properties
-    bigdecimal (3.1.9)
+    bigdecimal (3.2.2)
     bootsnap (1.18.6)
       msgpack (~> 1.2)
     builder (3.3.0)
@@ -220,7 +220,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 3.18, < 3.22)
-    govuk_design_system_formbuilder (5.10.0)
+    govuk_design_system_formbuilder (5.10.1)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -308,7 +308,7 @@ GEM
       racc (~> 1.4)
     notifications-ruby-client (6.2.0)
       jwt (>= 1.5, < 3)
-    oauth2 (2.0.11)
+    oauth2 (2.0.12)
       faraday (>= 0.17.3, < 4.0)
       jwt (>= 1.0, < 4.0)
       logger (~> 1.2)
@@ -415,7 +415,7 @@ GEM
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
-    rake (13.2.1)
+    rake (13.3.0)
     rdoc (6.14.0)
       erb
       psych (>= 4.0.0)
@@ -458,7 +458,7 @@ GEM
     rspec-support (3.13.4)
     rspec_junit_formatter (0.6.0)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (1.75.7)
+    rubocop (1.76.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -466,10 +466,10 @@ GEM
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.9.3, < 3.0)
-      rubocop-ast (>= 1.44.0, < 2.0)
+      rubocop-ast (>= 1.45.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.44.1)
+    rubocop-ast (1.45.0)
       parser (>= 3.3.7.2)
       prism (~> 1.4)
     rubocop-performance (1.25.0)
@@ -505,7 +505,7 @@ GEM
     sentry-ruby (5.24.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    sidekiq (8.0.3)
+    sidekiq (8.0.4)
       connection_pool (>= 2.5.0)
       json (>= 2.9.0)
       logger (>= 1.6.2)
@@ -546,7 +546,7 @@ GEM
     timeout (0.4.3)
     ttfunk (1.8.0)
       bigdecimal (~> 3.1)
-    turbo-rails (2.0.13)
+    turbo-rails (2.0.16)
       actionpack (>= 7.1.0)
       railties (>= 7.1.0)
     tzinfo (2.0.6)
@@ -592,7 +592,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-sdk-s3 (~> 1.186)
+  aws-sdk-s3 (~> 1.189)
   axe-core-rspec
   bootsnap (~> 1.18.6)
   capybara
@@ -652,7 +652,7 @@ DEPENDENCIES
   solid_cache (~> 1.0)
   super_diff
   table_print
-  turbo-rails (~> 2.0.13)
+  turbo-rails (~> 2.0.16)
   tzinfo-data
   uk_postcode
   webmock (~> 3.25)
