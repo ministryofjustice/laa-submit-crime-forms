@@ -79,7 +79,7 @@ module PriorAuthority
                                  end
                                end
                              else
-                               check_missing(application.client_detained?.present?) do
+                               check_missing(!application.client_detained?.nil?) do
                                  I18n.t("generic.#{application.client_detained?}")
                                end
                              end

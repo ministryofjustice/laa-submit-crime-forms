@@ -20,7 +20,9 @@ module PriorAuthority
         [
           {
             head_key: 'prison_law',
-            text: check_missing(application.prison_law, formatted_value: I18n.t("generic.#{application.prison_law}")),
+            text: check_missing(!application.prison_law.nil?) do
+                    I18n.t("generic.#{application.prison_law}")
+                  end
           },
           {
             head_key: 'laa_reference',
