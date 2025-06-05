@@ -63,7 +63,7 @@ module PriorAuthority
       def subject_to_poca_row
         {
           head_key: 'subject_to_poca',
-          text: check_missing(application.subject_to_poca) do
+          text: check_missing(!application.subject_to_poca.nil?) do
                   I18n.t("generic.#{application.subject_to_poca}")
                 end
         }

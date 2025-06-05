@@ -97,7 +97,7 @@ module PriorAuthority
       def prior_authority_granted_row
         {
           head_key: 'prior_authority_granted',
-          text: check_missing(application.prior_authority_granted?) do
+          text: check_missing(!application.prior_authority_granted?.nil?) do
                   I18n.t("generic.#{application.prior_authority_granted?}")
                 end
         }
@@ -133,7 +133,7 @@ module PriorAuthority
         [
           {
             head_key: 'related_to_post_mortem',
-            text: check_missing(primary_quote.related_to_post_mortem?) do
+            text: check_missing(!primary_quote.related_to_post_mortem?.nil?) do
                     I18n.t("generic.#{primary_quote.related_to_post_mortem?}")
                   end
           },
@@ -146,7 +146,7 @@ module PriorAuthority
         [
           {
             head_key: 'ordered_by_court',
-            text: check_missing(primary_quote.ordered_by_court?) do
+            text: check_missing(!primary_quote.ordered_by_court?.nil?) do
                     I18n.t("generic.#{primary_quote.ordered_by_court?}")
                   end
           },
@@ -155,7 +155,7 @@ module PriorAuthority
 
       def travel_cost_reason
         return [] if verbose # In verbose mode, travel costs are handled separately
-        return [] unless travel_detail_form.travel_costs_require_justification?
+        return [] unless travel_detail_form.travel_costs_require_justification? && travel_detail_form.travel_costs_added?
 
         [
           {
