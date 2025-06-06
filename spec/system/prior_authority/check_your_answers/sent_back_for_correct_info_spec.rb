@@ -65,5 +65,45 @@ RSpec.describe 'Prior authority applications, sent back for info correction - ch
         .to have_title('Application complete')
         .and have_content('What happens next')
     end
+
+    it 'does not submit when changes leave an incomplete section', :stub_oauth_token do
+      application.defendant.update!(first_name: nil)
+      application.update(alternative_quotes_still_to_add: false)
+
+      check 'I confirm that all costs are exclusive of VAT'
+      check 'I confirm that any travel expenditure (such as mileage, ' \
+            'parking and travel fares) is included as additional items ' \
+            'in the primary quote, and is not included as part of any hourly rate'
+      click_on 'Accept and send'
+
+      expect(page).to have_text('1 section needs amending: Client details')
+    end
+
+    it 'does not submit when changes leaves multiple incomplete sections', :stub_oauth_token do
+      application.defendant.update!(first_name: nil)
+      application.primary_quote.update!(organisation: nil)
+
+      application.update(alternative_quotes_still_to_add: false)
+
+      check 'I confirm that all costs are exclusive of VAT'
+      check 'I confirm that any travel expenditure (such as mileage, ' \
+            'parking and travel fares) is included as additional items ' \
+            'in the primary quote, and is not included as part of any hourly rate'
+      click_on 'Accept and send'
+
+      expect(page).to have_text('2 sections need amending: Client details, Primary quote')
+    end
+
+    it 'does not submit when changes leave incomplete sections and still validates form', :stub_oauth_token do
+      application.defendant.update!(first_name: nil)
+      application.update(alternative_quotes_still_to_add: false)
+
+      click_on 'Accept and send'
+
+      expect(page)
+        .to have_text('1 section needs amending: Client details')
+        .and have_text('There is a problem on this page')
+        .and have_text('Select if you confirm that all costs are exclusive of VAT')
+    end
   end
 end
