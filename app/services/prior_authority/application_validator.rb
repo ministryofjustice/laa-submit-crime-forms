@@ -11,15 +11,17 @@ module PriorAuthority
     end
 
     def call
-      incomplete_tasks = tasks.reject { _1.new(application).completed? }
-      incomplete_tasks = incomplete_tasks.map do |task|
-        task.new(application).section_link
-      end
-
       return nil if incomplete_tasks.blank?
 
       prefix = I18n.t('prior_authority.steps.check_answers.edit.incomplete_flash', count: incomplete_tasks.count)
       "#{prefix}: #{incomplete_tasks.join(', ')}"
+    end
+
+    def incomplete_tasks
+      incomplete_tasks = tasks.reject { _1.new(application).completed? }
+      incomplete_tasks = incomplete_tasks.map do |task|
+        task.new(application).section_link
+      end
     end
 
     private
