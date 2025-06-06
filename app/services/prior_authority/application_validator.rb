@@ -1,9 +1,5 @@
 module PriorAuthority
   class ApplicationValidator
-    def self.call(application)
-      new(application).call
-    end
-
     attr_reader :application
 
     def initialize(application)
