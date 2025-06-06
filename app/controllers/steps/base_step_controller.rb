@@ -53,6 +53,10 @@ module Steps
       elsif params.key?(:save_and_refresh)
         form_object.save!
         redirect_to_current_object
+      elsif params.key?(:verify)
+        # in cases where we only want to attempt a form save if the form is invalid
+        # so that we can see validation issues
+        render_form_if_invalid(form_object, opts)
       elsif form_object.save
         redirect_to decision_tree_class.new(form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       else
@@ -111,6 +115,15 @@ module Steps
     # Overwrite this when controller shouldn't be in the stack (i.e. delete endpoints)
     def do_not_add_to_viewed_steps
       false
+    end
+
+    def render_form_if_invalid(form_object, opts)
+      form_object.validate
+      if form_object.valid?
+        redirect_to_current_object
+      else
+        render opts.fetch(:render, :edit)
+      end
     end
   end
 end

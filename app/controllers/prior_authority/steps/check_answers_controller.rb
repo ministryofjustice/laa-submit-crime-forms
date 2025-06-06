@@ -12,11 +12,12 @@ module PriorAuthority
       end
 
       def update
-        if incomplete_tasks.blank?
-          update_and_advance(CheckAnswersForm, as:, after_commit_redirect_path:)
-        else
-          update_and_advance(CheckAnswersForm, as: as, save_and_refresh: true)
-        end
+        # Do not try to save form if user has clicked the pre-submit tick boxes,
+        # but there are incomplete items only refresh page.
+        # This allows us to not enforce another validation rule in error summary as per design.
+
+        params[:verify] = true if incomplete_tasks.present?
+        update_and_advance(CheckAnswersForm, as:, after_commit_redirect_path:)
       end
 
       private
