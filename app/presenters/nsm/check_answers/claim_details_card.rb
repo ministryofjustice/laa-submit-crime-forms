@@ -53,8 +53,8 @@ module Nsm
         {
           head_key: 'supplemental_claim',
           text: check_missing(claim.supplemental_claim.present?) do
-            claim.supplemental_claim.capitalize
-          end
+                  claim.supplemental_claim.capitalize
+                end
         }
       end
 
@@ -82,9 +82,7 @@ module Nsm
       def work_completed_row
         {
           head_key: 'work_completed_date',
-          text: check_missing(claim.work_completed_date) do
-            claim.work_completed_date.to_fs(:stamp)
-          end
+          text: check_missing(claim.work_completed_date&.to_fs(:stamp))
         }
       end
 

@@ -31,6 +31,10 @@ module PriorAuthority
         alternative_quotes.map { alternative_quote_form(_1) }
       end
 
+      def completed?
+        PriorAuthority::Tasks::AlternativeQuotes.new(application:).completed?
+      end
+
       private
 
       def alternative_quote_summaries
@@ -56,7 +60,9 @@ module PriorAuthority
         [
           {
             head_key: 'no_alternatve_quotes',
-            text: simple_format(application.no_alternative_quote_reason),
+            text: check_missing(application.no_alternative_quote_reason) do
+                    simple_format(application.no_alternative_quote_reason)
+                  end
           }
         ]
       end
@@ -69,12 +75,14 @@ module PriorAuthority
         form = alternative_quote_form(quote)
 
         alternative_quote_summary_html = [
-          quote.contact_full_name,
+          check_missing(quote.contact_full_name),
           document_link(quote),
-          NumberTo.pounds(form.total_cost)
+          check_missing(form.total_cost) do
+            NumberTo.pounds(form.total_cost)
+          end
         ].compact.join('<br>')
 
-        sanitize(alternative_quote_summary_html, tags: %w[a br])
+        sanitize(alternative_quote_summary_html, tags: %w[a br strong])
       end
 
       def alternative_quote_form(quote)

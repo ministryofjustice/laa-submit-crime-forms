@@ -21,13 +21,19 @@ module PriorAuthority
         [
           {
             head_key: 'reason_why',
-            text: simple_format(application.reason_why),
+            text: check_missing(application.reason_why) do
+              simple_format(application.reason_why)
+            end
           },
           {
             head_key: 'supporting_documents',
             text: supporting_documents,
           },
         ]
+      end
+
+      def completed?
+        PriorAuthority::Tasks::ReasonWhy.new(application:).completed?
       end
 
       private

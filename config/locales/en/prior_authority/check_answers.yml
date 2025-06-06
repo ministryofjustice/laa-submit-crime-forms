@@ -4,6 +4,9 @@ en:
     steps:
       check_answers:
         edit:
+          incomplete_flash:
+            one: "%{count} section needs amending"
+            other: "%{count} sections need amending"
           confirmations:
             blurb: |
               By submitting this application you are confirming that, to the best of your

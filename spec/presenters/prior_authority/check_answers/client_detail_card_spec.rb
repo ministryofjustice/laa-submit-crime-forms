@@ -17,8 +17,8 @@ RSpec.describe PriorAuthority::CheckAnswers::ClientDetailCard do
     let(:application) do
       build(:prior_authority_application, defendant:)
     end
-
-    let(:defendant) { build(:defendant, first_name: 'Jim', last_name: 'Bob', date_of_birth: Date.parse('2001-01-01')) }
+    let(:dob) { Date.parse('2001-01-01') }
+    let(:defendant) { build(:defendant, first_name: 'Jim', last_name: 'Bob', date_of_birth: dob) }
 
     it 'generates expected rows' do
       expect(card.row_data).to eq(
@@ -33,6 +33,19 @@ RSpec.describe PriorAuthority::CheckAnswers::ClientDetailCard do
           },
         ]
       )
+    end
+
+    context 'date of birth not entered' do
+      let(:dob) { nil }
+
+      it 'generates expected rows' do
+        expect(card.row_data).to include(
+          {
+            head_key: 'date_of_birth',
+            text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
+          }
+        )
+      end
     end
   end
 end

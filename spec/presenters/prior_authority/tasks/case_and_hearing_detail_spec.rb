@@ -53,15 +53,15 @@ RSpec.describe PriorAuthority::Tasks::CaseAndHearingDetail, type: :presenter do
   describe '#completed?' do
     before do
       klass = PriorAuthority::Steps::NextHearingForm
-      allow(klass).to receive(:build).and_return(instance_double(klass, valid?: next_hearing_valid))
+      allow(klass).to receive(:build).and_return(instance_double(klass, validate: true, valid?: next_hearing_valid))
       klass = PriorAuthority::Steps::CaseDetailForm
-      allow(klass).to receive(:build).and_return(instance_double(klass, valid?: case_detail_valid))
+      allow(klass).to receive(:build).and_return(instance_double(klass, validate: true, valid?: case_detail_valid))
       klass = PriorAuthority::Steps::HearingDetailForm
-      allow(klass).to receive(:build).and_return(instance_double(klass, valid?: hearing_detail_valid))
+      allow(klass).to receive(:build).and_return(instance_double(klass, validate: true, valid?: hearing_detail_valid))
       klass = PriorAuthority::Steps::PsychiatricLiaisonForm
-      allow(klass).to receive(:build).and_return(instance_double(klass, valid?: psychiatric_liaison_valid))
+      allow(klass).to receive(:build).and_return(instance_double(klass, validate: true, valid?: psychiatric_liaison_valid))
       klass = PriorAuthority::Steps::YouthCourtForm
-      allow(klass).to receive(:build).and_return(instance_double(klass, valid?: youth_court_valid))
+      allow(klass).to receive(:build).and_return(instance_double(klass, validate: true, valid?: youth_court_valid))
     end
 
     context 'when all requisite forms are valid for prison law flow' do

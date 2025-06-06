@@ -267,7 +267,7 @@ jobs:
           environment: prod
 
   rspec-tests:
-    parallelism: 3
+    parallelism: 6
     executor: test-executor
     steps:
       - checkout

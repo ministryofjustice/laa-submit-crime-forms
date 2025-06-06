@@ -16,6 +16,26 @@ RSpec.describe PriorAuthority::CheckAnswers::CaseDetailCard do
   describe '#row_data' do
     let(:defendant) { build(:defendant, maat: '654321') }
 
+    context 'when not client detained and rep order date is blank' do
+      let(:application) do
+        build(:prior_authority_application,
+              main_offence_id: 'robbery',
+              rep_order_date: nil,
+              client_detained: false,
+              subject_to_poca: true,
+              defendant: defendant)
+      end
+
+      it 'shows the rep order date row as incomplete' do
+        expect(card.row_data).to include(
+          {
+            head_key: 'rep_order_date',
+            text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
+          }
+        )
+      end
+    end
+
     context 'when not client detained' do
       let(:application) do
         build(:prior_authority_application,
