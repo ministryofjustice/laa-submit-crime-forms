@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe PriorAuthority::CheckAnswers::HearingDetailCard do
   subject(:card) { described_class.new(application) }
 
+  let(:incomplete_tag) { '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>' }
+
   describe '#title' do
     let(:application) { build(:prior_authority_application) }
 
@@ -48,6 +50,39 @@ RSpec.describe PriorAuthority::CheckAnswers::HearingDetailCard do
       end
     end
 
+    context 'when next hearing date known but not entered' do
+      let(:application) do
+        build(:prior_authority_application,
+              next_hearing: true,
+              next_hearing_date: nil)
+      end
+
+      it 'generates expected rows' do
+        expect(card.row_data).to include(
+          {
+            head_key: 'next_hearing_date',
+            text: incomplete_tag,
+          },
+        )
+      end
+    end
+
+    context 'when court type not entered' do
+      let(:application) do
+        build(:prior_authority_application,
+              court_type: nil)
+      end
+
+      it 'generates expected rows' do
+        expect(card.row_data).to include(
+          {
+            head_key: 'court_type',
+            text: incomplete_tag,
+          },
+        )
+      end
+    end
+
     context 'when magistrates\' court' do
       let(:application) do
         build(:prior_authority_application,
@@ -69,6 +104,32 @@ RSpec.describe PriorAuthority::CheckAnswers::HearingDetailCard do
           {
             head_key: 'youth_court',
             text: 'Yes',
+          },
+        )
+      end
+    end
+
+    context 'when magistrates\' court with missing data' do
+      let(:application) do
+        build(:prior_authority_application,
+              plea: nil,
+              court_type: 'magistrates_court',
+              youth_court: nil)
+      end
+
+      it 'generates expected rows' do
+        expect(card.row_data).to include(
+          {
+            head_key: 'plea',
+            text: incomplete_tag,
+          },
+          {
+            head_key: 'court_type',
+            text: 'Magistrates\' court',
+          },
+          {
+            head_key: 'youth_court',
+            text: incomplete_tag,
           },
         )
       end
