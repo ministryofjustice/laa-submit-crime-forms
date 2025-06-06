@@ -53,6 +53,7 @@ RSpec.describe 'Prior authority applications, sent back for info correction - ch
 
     it 'submits when changes made since it was sent back by caseworker', :stub_oauth_token do
       application.defendant.update!(first_name: 'Billy')
+      application.update(alternative_quotes_still_to_add: false)
 
       check 'I confirm that all costs are exclusive of VAT'
       check 'I confirm that any travel expenditure (such as mileage, ' \
