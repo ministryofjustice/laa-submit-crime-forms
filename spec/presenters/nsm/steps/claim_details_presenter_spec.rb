@@ -42,7 +42,7 @@ RSpec.describe Nsm::Tasks::ClaimDetails, type: :system do
   end
 
   describe '#completed?' do
-    let(:form) { instance_double(Nsm::Steps::ClaimDetailsForm, valid?: valid) }
+    let(:form) { instance_double(Nsm::Steps::ClaimDetailsForm, validate: true, valid?: valid) }
 
     before do
       allow(Nsm::Steps::ClaimDetailsForm).to receive(:new).and_return(form)

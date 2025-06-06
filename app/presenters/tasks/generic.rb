@@ -70,6 +70,8 @@ module Tasks
 
     def completed?(rec = record, form = associated_form)
       form = form.build(rec, application:)
+      # if form hasn't been saved, the valid?/invalid? methods
+      # are not based on current data in form, so run validate beforehand
       form.validate
       form.valid?
     end
