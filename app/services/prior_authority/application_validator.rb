@@ -18,8 +18,8 @@ module PriorAuthority
     end
 
     def incomplete_tasks
-      incomplete_tasks = tasks.reject { _1.new(application).completed? }
-      incomplete_tasks = incomplete_tasks.map do |task|
+      items = tasks.reject { _1.new(application).completed? }
+      items.map do |task|
         task.new(application).section_link
       end
     end
