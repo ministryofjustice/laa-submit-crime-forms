@@ -32,7 +32,7 @@ module PriorAuthority
         UfnCard
       ]
       items << 'CaseDetailCard' unless application.prison_law?
-      items<< 'NextHearingCard' if application.prison_law?
+      items << 'NextHearingCard' if application.prison_law?
       items << 'HearingDetailCard' unless application.prison_law?
       items << 'FurtherInformationCard' if application.further_information_needed?
       items.map { "PriorAuthority::CheckAnswers::#{_1.camelize}".constantize }
