@@ -8,7 +8,7 @@ module PriorAuthority
       end
 
       def completed?
-        FORM.build(record, application:).valid?
+        FORM.build(record, application:).validate
       end
 
       def can_start?
