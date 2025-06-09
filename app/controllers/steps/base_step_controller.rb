@@ -118,8 +118,7 @@ module Steps
     end
 
     def render_form_if_invalid(form_object, opts)
-      form_object.validate
-      if form_object.valid?
+      if form_object.validate
         redirect_to_current_object
       else
         render opts.fetch(:render, :edit)

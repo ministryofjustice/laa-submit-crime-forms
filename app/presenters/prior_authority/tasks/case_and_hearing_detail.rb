@@ -18,18 +18,18 @@ module PriorAuthority
       end
 
       def case_detail_completed?
-        ::PriorAuthority::Steps::CaseDetailForm.build(record).valid?
+        ::PriorAuthority::Steps::CaseDetailForm.build(record).validate
       end
 
       def hearing_detail_completed?
         required_forms = [::PriorAuthority::Steps::HearingDetailForm]
         required_forms << ::PriorAuthority::Steps::YouthCourtForm if youth_court_applicable?
         required_forms << ::PriorAuthority::Steps::PsychiatricLiaisonForm if psychiatric_liaison_applicable?
-        required_forms.all? { |form| form.build(record).valid? }
+        required_forms.all? { |form| form.build(record).validate }
       end
 
       def next_hearing_completed?
-        ::PriorAuthority::Steps::NextHearingForm.build(record).valid?
+        ::PriorAuthority::Steps::NextHearingForm.build(record).validate
       end
 
       private
