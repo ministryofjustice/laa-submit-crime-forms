@@ -16,6 +16,10 @@ module PriorAuthority
         base_rows
       end
 
+      def completed?
+        PriorAuthority::Tasks::CaseAndHearingDetail.new(application:).next_hearing_completed?
+      end
+
       private
 
       def base_rows
@@ -29,7 +33,7 @@ module PriorAuthority
 
       def next_hearing_date
         if application.next_hearing
-          application.next_hearing_date.to_fs(:stamp)
+          check_missing(application.next_hearing_date&.to_fs(:stamp))
         else
           I18n.t('generic.unknown')
         end

@@ -14,7 +14,7 @@ module PriorAuthority
 
       def all_alternative_quotes_valid?
         application.alternative_quotes.all? do |quote|
-          ::PriorAuthority::Steps::AlternativeQuotes::DetailForm.build(quote, application:).valid?
+          ::PriorAuthority::Steps::AlternativeQuotes::DetailForm.build(quote, application:).validate
         end
       end
     end

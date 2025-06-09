@@ -13,6 +13,10 @@ module PriorAuthority
         !application.prison_law && !application.client_detained
       end
 
+      def travel_costs_added?
+        travel_cost_per_hour.present? || travel_time.present?
+      end
+
       def formatted_total_cost
         NumberTo.pounds(total_cost)
       end

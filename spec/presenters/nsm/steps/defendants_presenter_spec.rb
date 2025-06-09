@@ -68,7 +68,7 @@ RSpec.describe Nsm::Tasks::Defendants, type: :system do
 
     context 'when defendants exist' do
       let(:defendants) { [Defendant.new(first_name: 'Jim', last_name: 'Bob')] }
-      let(:defendant_form) { double(:defendant_form, valid?: valid) }
+      let(:defendant_form) { double(:defendant_form, validate: valid) }
 
       before do
         allow(Nsm::Steps::DefendantDetailsForm).to receive(:build).and_return(defendant_form)

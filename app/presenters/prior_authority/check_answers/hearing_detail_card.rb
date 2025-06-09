@@ -16,21 +16,37 @@ module PriorAuthority
         base_rows + court_type_rows
       end
 
+      def completed?
+        PriorAuthority::Tasks::CaseAndHearingDetail.new(application:).hearing_detail_completed?
+      end
+
+      def change_action
+        helper = Rails.application.routes.url_helpers
+        helper.url_for(controller: "prior_authority/steps/#{section}",
+                       action: request_method,
+                       application_id: application.id,
+                       only_path: true)
+      end
+
       private
 
       def base_rows
         [
           {
             head_key: 'next_hearing_date',
-            text: next_hearing_date,
+            text: check_missing(next_hearing_date),
           },
           {
             head_key: 'plea',
-            text: I18n.t("plea_description.#{application.plea}", scope: i18n_scope),
+            text: check_missing(application.plea) do
+                    I18n.t("plea_description.#{application.plea}", scope: i18n_scope)
+                  end
           },
           {
             head_key: 'court_type',
-            text: I18n.t("court_type_description.#{application.court_type}", scope: i18n_scope),
+            text: check_missing(application.court_type) do
+                    I18n.t("court_type_description.#{application.court_type}", scope: i18n_scope)
+                  end
           },
         ]
       end
@@ -41,7 +57,7 @@ module PriorAuthority
 
       def next_hearing_date
         if application.next_hearing
-          application.next_hearing_date.to_fs(:stamp)
+          check_missing(application.next_hearing_date&.to_fs(:stamp))
         else
           I18n.t('generic.unknown')
         end
@@ -61,7 +77,9 @@ module PriorAuthority
         [
           {
             head_key: 'youth_court',
-            text: I18n.t("generic.#{application.youth_court}"),
+            text: check_missing(!application.youth_court.nil?) do
+              I18n.t("generic.#{application.youth_court}")
+            end
           },
         ]
       end
@@ -70,7 +88,9 @@ module PriorAuthority
         [
           {
             head_key: 'psychiatric_liaison',
-            text: I18n.t("generic.#{application.psychiatric_liaison}"),
+            text: check_missing(!application.psychiatric_liaison.nil?) do
+                    I18n.t("generic.#{application.psychiatric_liaison}")
+                  end
           },
           *psychiatric_liaison_reason_not_row,
         ]
@@ -82,7 +102,9 @@ module PriorAuthority
         [
           {
             head_key: 'psychiatric_liaison_reason_not',
-            text: simple_format(application.psychiatric_liaison_reason_not),
+            text: check_missing(application.psychiatric_liaison_reason_not) do
+                    simple_format(application.psychiatric_liaison_reason_not)
+                  end
           },
         ]
       end

@@ -2,6 +2,7 @@
 
 module PriorAuthority
   module CheckAnswers
+    # rubocop:disable Metrics/ClassLength
     class PrimaryQuoteCard < Base
       attr_reader :application, :service_cost_form, :travel_detail_form, :verbose
 
@@ -65,6 +66,10 @@ module PriorAuthority
         primary_quote.travel_adjustment_comment.presence
       end
 
+      def completed?
+        PriorAuthority::Tasks::PrimaryQuote.new(application:).completed?
+      end
+
       private
 
       delegate :primary_quote, to: :application
@@ -73,7 +78,7 @@ module PriorAuthority
         [
           {
             head_key: 'service_name',
-            text: service_cost_form.service_name,
+            text: check_missing(service_cost_form.service_name),
           },
           {
             head_key: 'service_details',
@@ -92,15 +97,25 @@ module PriorAuthority
       def prior_authority_granted_row
         {
           head_key: 'prior_authority_granted',
-          text: I18n.t("generic.#{application.prior_authority_granted?}"),
+          text: check_missing(!application.prior_authority_granted?.nil?) do
+                  I18n.t("generic.#{application.prior_authority_granted?}")
+                end
         }
       end
 
       def service_details_html
-        organisation_details = [primary_quote.organisation, primary_quote.town, primary_quote.postcode].compact.join(', ')
-        service_details_html = [primary_quote.contact_full_name, organisation_details].compact.join('<br>')
+        organisation_details = [
+          check_missing(primary_quote.organisation),
+          check_missing(primary_quote.town),
+          check_missing(primary_quote.postcode)
+        ].compact.join(', ')
 
-        sanitize(service_details_html, tags: %w[br])
+        service_details_html = [
+          check_missing(primary_quote.contact_full_name),
+          check_missing(organisation_details)
+        ].compact.join('<br>')
+
+        sanitize(service_details_html, tags: %w[br strong])
       end
 
       def document_link
@@ -118,7 +133,9 @@ module PriorAuthority
         [
           {
             head_key: 'related_to_post_mortem',
-            text: I18n.t("generic.#{primary_quote.related_to_post_mortem?}"),
+            text: check_missing(!primary_quote.related_to_post_mortem?.nil?) do
+                    I18n.t("generic.#{primary_quote.related_to_post_mortem?}")
+                  end
           },
         ]
       end
@@ -129,22 +146,27 @@ module PriorAuthority
         [
           {
             head_key: 'ordered_by_court',
-            text: I18n.t("generic.#{primary_quote.ordered_by_court?}"),
+            text: check_missing(!primary_quote.ordered_by_court?.nil?) do
+                    I18n.t("generic.#{primary_quote.ordered_by_court?}")
+                  end
           },
         ]
       end
 
       def travel_cost_reason
         return [] if verbose # In verbose mode, travel costs are handled separately
-        return [] unless travel_detail_form.travel_costs_require_justification?
+        return [] unless travel_detail_form.travel_costs_require_justification? && travel_detail_form.travel_costs_added?
 
         [
           {
             head_key: 'travel_cost_reason',
-            text: simple_format(application.primary_quote.travel_cost_reason),
+            text: check_missing(application.primary_quote.travel_cost_reason) do
+                    simple_format(application.primary_quote.travel_cost_reason)
+                  end
           },
         ]
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end

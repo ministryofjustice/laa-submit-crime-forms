@@ -21,13 +21,19 @@ module PriorAuthority
           },
           {
             head_key: 'information_supplied',
-            text: simple_format(further_information.information_supplied),
+            text: check_missing(further_information.information_supplied) do
+                    simple_format(further_information.information_supplied)
+                  end
           },
           {
             head_key: 'supporting_documents',
             text: supporting_documents,
           },
         ]
+      end
+
+      def completed?
+        PriorAuthority::Tasks::FurtherInformation.new(application:).completed?
       end
 
       private

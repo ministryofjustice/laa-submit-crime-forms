@@ -36,8 +36,8 @@ module PriorAuthority
 
       def first_steps_completed?
         record &&
-          FORM.build(record, application:).valid? &&
-          PriorAuthority::Steps::ServiceCostForm.build(record, application:).valid?
+          FORM.build(record, application:).validate &&
+          PriorAuthority::Steps::ServiceCostForm.build(record, application:).validate
       end
 
       def travel_costs_complete?
@@ -45,7 +45,7 @@ module PriorAuthority
         return true unless record
 
         form = ::PriorAuthority::Steps::TravelDetailForm.build(record, application:)
-        form.valid? || form.empty?
+        form.validate || form.empty?
       end
 
       def all_additional_costs_completed?

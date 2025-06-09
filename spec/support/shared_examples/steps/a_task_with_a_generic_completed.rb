@@ -1,6 +1,6 @@
 RSpec.shared_examples 'a task with generic complete?' do |form_class|
   describe '#completed?' do
-    let(:form) { instance_double(form_class, valid?: valid) }
+    let(:form) { instance_double(form_class, validate: valid) }
     let(:valid) { true }
 
     before do
