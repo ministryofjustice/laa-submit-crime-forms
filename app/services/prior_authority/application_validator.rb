@@ -7,14 +7,14 @@ module PriorAuthority
     end
 
     def call
-      return nil if incomplete_tasks.blank?
+      return nil if incomplete_sections.blank?
 
-      prefix = I18n.t('prior_authority.steps.check_answers.edit.incomplete_flash', count: incomplete_tasks.count)
-      "#{prefix}: #{incomplete_tasks.join(', ')}"
+      prefix = I18n.t('prior_authority.steps.check_answers.edit.incomplete_flash', count: incomplete_sections.count)
+      "#{prefix}: #{incomplete_sections.join(', ')}"
     end
 
-    def incomplete_tasks
-      items = tasks.reject { _1.new(application).completed? }
+    def incomplete_sections
+      items = sections.reject { _1.new(application).completed? }
       items.map do |task|
         task.new(application).section_link
       end
@@ -22,8 +22,8 @@ module PriorAuthority
 
     private
 
-    def tasks
-      sections = %w[
+    def sections
+      items = %w[
         AlternativeQuotesCard
         CaseContactCard
         ClientDetailCard
@@ -31,11 +31,11 @@ module PriorAuthority
         ReasonWhyCard
         UfnCard
       ]
-      sections << 'CaseDetailCard' unless application.prison_law?
-      sections << 'NextHearingCard' if application.prison_law?
-      sections << 'HearingDetailCard' unless application.prison_law?
-      sections << 'FurtherInformationCard' if application.further_information_needed?
-      sections.map { "PriorAuthority::CheckAnswers::#{_1.camelize}".constantize }
+      items << 'CaseDetailCard' unless application.prison_law?
+      items<< 'NextHearingCard' if application.prison_law?
+      items << 'HearingDetailCard' unless application.prison_law?
+      items << 'FurtherInformationCard' if application.further_information_needed?
+      items.map { "PriorAuthority::CheckAnswers::#{_1.camelize}".constantize }
     end
   end
 end
