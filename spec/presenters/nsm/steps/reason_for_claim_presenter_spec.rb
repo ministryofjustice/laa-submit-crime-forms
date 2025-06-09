@@ -24,7 +24,7 @@ RSpec.describe Nsm::Tasks::ReasonForClaim, type: :system do
   it_behaves_like 'a task with generic can_start?', Nsm::Tasks::CaseDisposal
 
   describe '#completed?' do
-    let(:form) { instance_double(Nsm::Steps::ReasonForClaimForm, validate: true, valid?: valid) }
+    let(:form) { instance_double(Nsm::Steps::ReasonForClaimForm, validate: valid) }
     let(:valid) { true }
 
     before do
