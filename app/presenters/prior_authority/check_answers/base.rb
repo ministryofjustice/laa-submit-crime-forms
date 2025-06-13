@@ -60,18 +60,25 @@ module PriorAuthority
       def title_actions
         return [] if changes_forbidden?
 
-        helper = Rails.application.routes.url_helpers
-
         [
           govuk_link_to(
             I18n.t('generic.change'),
-            helper.url_for(controller: "prior_authority/steps/#{section}",
-                           action: request_method,
-                           application_id: application.id,
-                           only_path: true,
-                           return_to: :check_answers)
+            change_action
           ),
         ]
+      end
+
+      def change_action
+        helper = Rails.application.routes.url_helpers
+        helper.url_for(controller: "prior_authority/steps/#{section}",
+                       action: request_method,
+                       application_id: application.id,
+                       only_path: true,
+                       return_to: :check_answers)
+      end
+
+      def section_link
+        govuk_link_to(title, change_action)
       end
 
       def changes_forbidden?

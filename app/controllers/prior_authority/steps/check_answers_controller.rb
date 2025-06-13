@@ -5,12 +5,18 @@ module PriorAuthority
       before_action :build_report
 
       def edit
+        incomplete_sections
         @form_object = CheckAnswersForm.build(
           current_application
         )
       end
 
       def update
+        # Do not try to save form if user has clicked the pre-submit tick boxes,
+        # but there are incomplete items only refresh page.
+        # This allows us to not enforce another validation rule in error summary as per design.
+
+        params[:verify] = true if incomplete_sections.present?
         update_and_advance(CheckAnswersForm, as:, after_commit_redirect_path:)
       end
 
@@ -32,6 +38,10 @@ module PriorAuthority
 
       def step_valid?
         current_application.draft? || current_application.sent_back?
+      end
+
+      def incomplete_sections
+        @incomplete_sections ||= PriorAuthority::ApplicationValidator.new(current_application).call
       end
     end
   end

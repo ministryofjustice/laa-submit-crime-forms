@@ -20,15 +20,17 @@ module PriorAuthority
         [
           {
             head_key: 'prison_law',
-            text: I18n.t("generic.#{application.prison_law}"),
+            text: check_missing(!application.prison_law.nil?) do
+                    I18n.t("generic.#{application.prison_law}")
+                  end
           },
           {
             head_key: 'laa_reference',
-            text: application.laa_reference,
+            text: check_missing(application.laa_reference),
           },
           {
             head_key: 'ufn',
-            text: application.ufn,
+            text: check_missing(application.ufn),
             actions: ufn_change_link,
           },
         ]
@@ -52,6 +54,10 @@ module PriorAuthority
 
       def title_actions
         []
+      end
+
+      def completed?
+        PriorAuthority::Tasks::Ufn.new(application:).completed?
       end
     end
   end

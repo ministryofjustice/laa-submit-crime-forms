@@ -33,10 +33,10 @@ RSpec.describe PriorAuthority::CheckAnswers::NextHearingCard do
       end
     end
 
-    context 'when next hearing date NOT known' do
+    context 'when next hearing date known but not entered' do
       let(:application) do
         build(:prior_authority_application,
-              next_hearing: false,
+              next_hearing: true,
               next_hearing_date: nil)
       end
 
@@ -45,7 +45,7 @@ RSpec.describe PriorAuthority::CheckAnswers::NextHearingCard do
           [
             {
               head_key: 'next_hearing_date',
-              text: 'Not known',
+              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>',
             },
           ]
         )

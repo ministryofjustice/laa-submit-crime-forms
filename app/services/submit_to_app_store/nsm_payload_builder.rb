@@ -96,7 +96,7 @@ class SubmitToAppStore
 
     def augment_disbursement_data(data, disbursement)
       data['disbursement_date'] = data['disbursement_date'].to_s
-      data['pricing'] = claim.rates.disbursements[disbursement.disbursement_type.to_sym].to_f || 1.0
+      data['pricing'] = (claim.rates.disbursements[disbursement.disbursement_type.to_sym] || 1.0).to_f
       data['vat_rate'] = claim.rates.vat.to_f
       data['vat_amount'] = disbursement.vat
       # For backwards compatibility, include the calculated total if there is no direct total
