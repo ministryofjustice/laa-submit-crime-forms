@@ -1,27 +1,29 @@
-<div class="moj-primary-navigation">
-
-  <div class="moj-primary-navigation__container">
-
-    <div class="moj-primary-navigation__nav">
-
-      <nav class="moj-primary-navigation" aria-label="Primary navigation">
-
-        <ul class="moj-primary-navigation__list">
-            <li class="moj-primary-navigation__item">
-              <a class="moj-primary-navigation__link"
-                 <%= 'aria-current="page"' if @current_navigation_item != :search %>
-                 href="<%= nsm_applications_path %>"><%= t('.your_claims') %></a>
+<section
+  class="govuk-service-navigation"
+  aria-label="Service information"
+  data-module="govuk-service-navigation"
+  data-govuk-service-navigation-init
+>
+  <div class="govuk-width-container">
+    <div class="govuk-service-navigation__container">
+      <span class="govuk-service-navigation__service-name">
+        <%= link_to t('nsm.service_name'), nsm_applications_path,
+                    class: 'govuk-service-navigation__link', id: 'header-service-name'
+        %>
+      </span>
+      <nav
+        class="govuk-service-navigation__wrapper service-switch-navigation_flex-grow"
+        aria-label="Main service navigation"
+      >
+        <ul id="navigation" class="govuk-service-navigation__list">
+            <li class="govuk-service-navigation__item<%= ' govuk-service-navigation__item--active' if @current_navigation_item != :search %>">
+              <%= link_to t('.your_claims'), nsm_applications_path, class: 'govuk-service-navigation__link', 'aria-current': ('page' if @current_navigation_item != :search) %>
             </li>
-
-            <li class="moj-primary-navigation__item">
-              <a class="moj-primary-navigation__link"
-                 <%= 'aria-current="page"' if @current_navigation_item == :search %>
-                 href="<%= search_nsm_applications_path %>"><%= t('.search') %></a>
+            <li class="govuk-service-navigation__item<%= ' govuk-service-navigation__item--active' if @current_navigation_item == :search %>">
+              <%= link_to t('.search'), search_nsm_applications_path, class: 'govuk-service-navigation__link', 'aria-current': ('page' if @current_navigation_item == :search) %>
             </li>
           </ul>
-
       </nav>
-
-    </div></div>
-
-</div>
+    </div>
+  </div>
+</section>
