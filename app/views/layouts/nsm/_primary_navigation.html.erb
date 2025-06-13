@@ -22,6 +22,9 @@
             <li class="govuk-service-navigation__item<%= ' govuk-service-navigation__item--active' if @current_navigation_item == :search %>">
               <%= link_to t('.search'), search_nsm_applications_path, class: 'govuk-service-navigation__link', 'aria-current': ('page' if @current_navigation_item == :search) %>
             </li>
+            <li class="govuk-service-navigation__item service-switch-navigation_item">
+              <%= link_to t('layouts.header_navigation.switch_service'), root_path, class: 'govuk-link--no-visited-state' %>
+            </li>
           </ul>
       </nav>
     </div>
