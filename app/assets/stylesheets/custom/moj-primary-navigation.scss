@@ -1,0 +1,15 @@
+/* Service switch navigation */
+nav.govuk-service-navigation__wrapper {
+  flex-grow: 1;
+
+  li:last-child {
+    margin-left: auto;
+    font-size: 1rem;
+  }
+}
+
+
+.moj-header__navigation-list.app-header-menu-hidden-on-load {
+display: flex;
+align-items: center;
+}
