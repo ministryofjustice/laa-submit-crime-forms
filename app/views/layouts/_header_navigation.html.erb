@@ -11,7 +11,7 @@
       <li class="moj-header__navigation-item header-navigation-link">
         <%# Signing out will reset the session ID which will reset the CSP nonce token, so turbo-based page replacement
           will fail as inline scripts will no longer have a valid nonce %>
-        <%= govuk_link_to t('.sign_out'), main_app.providers_logout_path, class: 'moj-header__link govuk-!-font-weight-bold' %>
+        <%= govuk_link_to t('.sign_out'), main_app.providers_logout_path, class: 'moj-header__navigation-link govuk-!-font-weight-bold' %>
       </li>
     </ul>
   <% end %>
