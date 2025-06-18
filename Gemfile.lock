@@ -1,8 +1,9 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
-  revision: 2133e4471448295b172a625eb6f9f48ddc9a08cf
+  revision: a3631253ed17fe61efa72921f7dac4a088a31ff3
   specs:
-    laa_crime_forms_common (0.10.1)
+    laa_crime_forms_common (0.10.2)
+      activesupport
       httparty (>= 0.22.0, < 1)
       i18n (>= 1.8.11, < 2)
       json-schema (>= 5.0.0, < 6)
@@ -166,9 +167,9 @@ GEM
       unicode (>= 0.4.4.5)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
-    csv (3.3.3)
+    csv (3.3.5)
     date (3.4.1)
-    debug (1.10.0)
+    debug (1.11.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
     descendants_tracker (0.0.4)
@@ -198,11 +199,11 @@ GEM
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
-    factory_bot (6.5.0)
-      activesupport (>= 5.0.0)
-    factory_bot_rails (6.4.4)
+    factory_bot (6.5.4)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.5.0)
       factory_bot (~> 6.5)
-      railties (>= 5.0.0)
+      railties (>= 6.1.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
     faraday (2.13.1)
@@ -364,7 +365,7 @@ GEM
     psych (5.2.6)
       date
       stringio
-    public_suffix (6.0.1)
+    public_suffix (6.0.2)
     puma (6.6.0)
       nio4r (~> 2.0)
     raabro (1.4.0)
@@ -458,7 +459,7 @@ GEM
     rspec-support (3.13.4)
     rspec_junit_formatter (0.6.0)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (1.76.1)
+    rubocop (1.76.2)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -466,7 +467,7 @@ GEM
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.9.3, < 3.0)
-      rubocop-ast (>= 1.45.0, < 2.0)
+      rubocop-ast (>= 1.45.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
     rubocop-ast (1.45.1)
@@ -499,10 +500,10 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sentry-rails (5.24.0)
+    sentry-rails (5.25.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.24.0)
-    sentry-ruby (5.24.0)
+      sentry-ruby (~> 5.25.0)
+    sentry-ruby (5.25.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     sidekiq (8.0.4)
@@ -612,7 +613,7 @@ DEPENDENCIES
   grover
   httparty
   jsbundling-rails
-  laa_crime_forms_common (~> 0.10.1)!
+  laa_crime_forms_common (~> 0.10.2)!
   launchy
   lograge
   logstash-event
@@ -642,8 +643,8 @@ DEPENDENCIES
   rubocop-rails (>= 2.25.1)
   rubocop-rspec
   selenium-webdriver
-  sentry-rails (~> 5.24.0)
-  sentry-ruby (~> 5.24.0)
+  sentry-rails (~> 5.25.0)
+  sentry-ruby (~> 5.25.0)
   sidekiq (~> 8.0)
   sidekiq-cron
   sidekiq_alive (~> 2.4)
