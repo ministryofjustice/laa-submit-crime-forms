@@ -1,6 +1,6 @@
 class Provider < ApplicationRecord
   devise :lockable, :timeoutable, :trackable,
-         :omniauthable, omniauth_providers: %i[saml]
+         :omniauthable, omniauth_providers: %i[entra_id]
 
   store_accessor :settings,
                  :legal_rep_first_name,
@@ -8,7 +8,9 @@ class Provider < ApplicationRecord
                  :legal_rep_telephone
 
   def display_name
-    email
+    return email if first_name.nil? && last_name.nil?
+
+    "#{first_name} #{last_name}"
   end
 
   def multiple_offices?
@@ -27,6 +29,9 @@ class Provider < ApplicationRecord
 
       user.tap do |record|
         record.assign_attributes(
+          first_name: auth.info.first_name,
+          last_name: auth.info.last_name,
+
           email: auth.info.email,
           description: auth.info.description,
           roles: auth.info.roles,

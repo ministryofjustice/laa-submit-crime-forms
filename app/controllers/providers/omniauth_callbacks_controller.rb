@@ -2,7 +2,7 @@ module Providers
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     skip_before_action :verify_authenticity_token
 
-    def saml
+    def entra_id
       active_office_codes = ActiveOfficeCodeService.call(office_codes)
 
       if active_office_codes.any?
@@ -35,7 +35,8 @@ module Providers
     end
 
     def office_codes
-      auth_data.info.office_codes
+      # auth_data.info.office_codes
+      %w[AAAAAA BBBBBB]
     end
   end
 end

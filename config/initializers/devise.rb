@@ -50,8 +50,15 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :saml,
-                  name: 'saml',
-                  setup: LaaPortal::SamlSetup,
-                  strategy_class: LaaPortal::SamlStrategy
+
+  config.omniauth(
+    :entra_id,
+    {
+      client_id:     ENV.fetch('ENTRA_CLIENT_ID', nil),
+      #      client_secret: ENV.fetch('ENTRA_CLIENT_SECRET', nil),
+      certificate_path: Rails.root.join('saml/saml_sp.p12'),
+      tenant_id:     ENV.fetch('ENTRA_TENANT_ID', nil),
+      scope:         'openid profile email'
+    }
+  )
 end
