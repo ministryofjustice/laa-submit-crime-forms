@@ -19,13 +19,21 @@ class Provider < ApplicationRecord
 
   class << self
     def from_omniauth(auth, office_codes)
-      find_or_initialize_by(auth_provider: auth.provider, uid: auth.uid).tap do |record|
-        record.update(
+      user = find_by(email: auth.info.email) ||
+             find_by(auth_provider: auth.provider, uid: auth.uid) ||
+             new
+
+      user.tap do |record|
+        record.assign_attributes(
           email: auth.info.email,
           description: auth.info.description,
           roles: auth.info.roles,
           office_codes: office_codes,
+          auth_provider: auth.provider,
+          uid: auth.uid
         )
+
+        record.save! if record.changed?
       end
     end
   end
