@@ -8,7 +8,7 @@ module Nsm
       validates :first_name, presence: true
       validates :last_name, presence: true
       with_options if: :maat_required? do
-        validates :maat, presence: true, format: /\A\d{7}\z/
+        validates :maat, presence: true, maat: true
       end
 
       delegate :id, to: :record

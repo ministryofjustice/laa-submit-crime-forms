@@ -3,7 +3,7 @@ module PriorAuthority
     module CaseDetail
       class DefendantForm < ::Steps::BaseFormObject
         attribute :maat, :string
-        validates :maat, presence: true, format: /\A\d{7}\z/
+        validates :maat, presence: true, maat: true
 
         private
 
