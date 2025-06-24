@@ -42,5 +42,54 @@ RSpec.describe Provider, type: :model do
         end
       end
     end
+
+    context 'migration scenarios' do
+      let!(:existing_user) do
+        described_class.create!(
+          email: 'test@test.com',
+          auth_provider: 'old_saml',
+          uid: 'old-uid-123',
+          office_codes: %w[A1 B2],
+          description: 'old desc'
+        )
+      end
+
+      context 'user with same email migrating to new provider' do
+        it 'updates existing user with new auth info' do
+          expect { described_class.from_omniauth(auth, office_codes) }
+            .not_to change(described_class, :count)
+
+          existing_user.reload
+          expect(existing_user.auth_provider).to eq('govuk')
+          expect(existing_user.uid).to eq(auth.uid)
+          expect(existing_user.office_codes).to eq(office_codes)
+        end
+      end
+
+      context 'user changed email but kept same provider/uid temporarily' do
+        let(:info) { double('info', email: 'newemail@test.com', description: 'desc', roles: 'a,b') }
+        let(:auth) { double('auth', provider: 'old_saml', uid: 'old-uid-123', info: info) }
+
+        it 'finds by auth info and updates email' do
+          expect { described_class.from_omniauth(auth, office_codes) }
+            .not_to change(described_class, :count)
+
+          existing_user.reload
+          expect(existing_user.email).to eq('newemail@test.com')
+          expect(existing_user.office_codes).to eq(office_codes)
+        end
+      end
+
+      context 'user has different office codes after migration' do
+        let(:new_office_codes) { %w[C3 D4] }
+
+        it 'updates office codes for existing user' do
+          described_class.from_omniauth(auth, new_office_codes)
+
+          existing_user.reload
+          expect(existing_user.office_codes).to eq(new_office_codes)
+        end
+      end
+    end
   end
 end
