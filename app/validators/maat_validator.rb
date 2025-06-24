@@ -1,7 +1,7 @@
 class MaatValidator < ActiveModel::EachValidator
   attr_reader :record, :attribute
 
-  HARDCODED_VALUES = %w[900900].freeze
+  HARDCODED_VALUES = %w[4900900].freeze
 
   def validate_each(record, attribute, value)
     # this will trigger a `:blank` error when `presence: true`
