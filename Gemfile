@@ -48,6 +48,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', '>= 0.6.0', require: false
+  gem 'flatware-rspec', require: false
   gem 'overcommit'
   gem 'pdf-reader'
   gem 'pry'
@@ -75,6 +76,7 @@ group :test do
   gem 'rubocop-rspec', require: false
   gem 'selenium-webdriver'
   gem 'simplecov'
+  gem 'simplecov-console'
   gem 'simplecov-rcov'
   gem 'super_diff'
   gem 'webmock', '~> 3.25'

@@ -5,8 +5,12 @@ require 'active_support/core_ext/integer/time'
 # your test database is "scratch space" for the test suite and is wiped
 # and recreated between test runs. Don't rely on the data there!
 
+# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+
+  # Preserve full timezone
+  config.active_support.to_time_preserves_timezone = :zone
 
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
@@ -72,3 +76,4 @@ Rails.application.configure do
   # https://github.com/makandra/capybara-lockstep?tab=readme-ov-file#including-the-middleware-optional
   config.middleware.insert_before 0, Capybara::Lockstep::Middleware
 end
+# rubocop:enable Metrics/BlockLength

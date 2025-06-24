@@ -1,5 +1,11 @@
 require 'simplecov'
+require 'simplecov-console'
 require 'webmock/rspec'
+
+SimpleCov.formatter = SimpleCov::Formatter::Console if ENV['TEST_ENV_NUMBER']
+
+SimpleCov.use_merging true
+SimpleCov.merge_timeout 3600
 
 SimpleCov.start 'rails' do
   add_filter 'spec/'
@@ -10,6 +16,10 @@ SimpleCov.start 'rails' do
   add_group 'Presenters', '/app/presenters'
   add_group 'Services', '/app/services'
   add_group 'Value objects', '/app/value_objects'
+
+  add_group 'Ignored Code' do |src_file|
+    File.readlines(src_file.filename).grep(/:nocov:/).any?
+  end
 
   enable_coverage :branch
 
@@ -42,6 +52,9 @@ WebMock.disable_net_connect!(allow_localhost: true)
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  # Reduce noise when running tests in parallel
+  config.silence_filter_announcements = true if ENV['TEST_ENV_NUMBER']
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

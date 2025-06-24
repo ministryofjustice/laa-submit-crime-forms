@@ -108,10 +108,11 @@ some more specific subclasses with NSCC-specific details. The original documenta
 
 
 **8. Tests**
+The test suite is setup with `flatware` to allow tests to run in parallel. In order to set this up, first do `RAILS_ENV=test bundle exec flatware fan rake db:test:prepare`.
 
-To run the test suite, run `bundle exec rspec`.
+To run the test suite, run `bundle exec flatware rspec`.
 This will run everything except for the accessibility tests, which are slow, and by default only run on CI.
-To run those, run `INCLUDE_ACCESSIBILITY_SPECS=true bundle exec rspec`.
+To run those, run `INCLUDE_ACCESSIBILITY_SPECS=true bundle exec flatware rspec`.
 Our test suite will report as failing if line and branch coverage is not at 100%.
 We expect every feature's happy path to have a system test, and every screen to have an accessibility test.
 
