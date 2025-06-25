@@ -169,14 +169,13 @@ commands:
       - run:
           name: Run rspec tests
           command: |
-            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings --timings-type=filename)
             RUBYOPT=-W:no-deprecated \
             INCLUDE_ACCESSIBILITY_SPECS=true \
             bundle exec rspec \
              --format progress \
              --format RspecJunitFormatter \
              --out /tmp/test-results/rspec/rspec.xml \
-            -- ${TESTFILES}
+             -- $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings --timings-type=filename)
       - store_test_results:
           path: /tmp/test-results/rspec
       - run:
