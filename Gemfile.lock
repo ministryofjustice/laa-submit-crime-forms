@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
-  revision: a3631253ed17fe61efa72921f7dac4a088a31ff3
+  revision: 56a6baa4d27d6ff117242a943444395bec8d3d22
   specs:
     laa_crime_forms_common (0.10.2)
       activesupport
@@ -89,18 +89,18 @@ GEM
     ast (2.4.3)
     attr_extras (7.1.0)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1115.0)
-    aws-sdk-core (3.225.2)
+    aws-partitions (1.1120.0)
+    aws-sdk-core (3.226.1)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
       base64
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-kms (1.104.0)
+    aws-sdk-kms (1.105.0)
       aws-sdk-core (~> 3, >= 3.225.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.189.1)
+    aws-sdk-s3 (1.190.0)
       aws-sdk-core (~> 3, >= 3.225.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
@@ -217,11 +217,11 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    govuk-components (5.10.1)
+    govuk-components (5.11.0)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 3.18, < 3.24)
-    govuk_design_system_formbuilder (5.10.1)
+    govuk_design_system_formbuilder (5.11.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -327,9 +327,9 @@ GEM
     omniauth-saml (2.2.4)
       omniauth (~> 2.1)
       ruby-saml (~> 1.18)
-    optimist (3.2.0)
+    optimist (3.2.1)
     orm_adapter (0.5.0)
-    ostruct (0.6.1)
+    ostruct (0.6.2)
     overcommit (0.67.1)
       childprocess (>= 0.6.3, < 6)
       iniparse (~> 1.4)
@@ -417,7 +417,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.0)
-    rdoc (6.14.0)
+    rdoc (6.14.1)
       erb
       psych (>= 4.0.0)
     redis (5.4.0)
@@ -437,7 +437,7 @@ GEM
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
       rspec-mocks (~> 3.13.0)
-    rspec-core (3.13.3)
+    rspec-core (3.13.4)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -445,10 +445,10 @@ GEM
     rspec-html-matchers (0.10.0)
       nokogiri (~> 1)
       rspec (>= 3.0.0.a)
-    rspec-mocks (3.13.4)
+    rspec-mocks (3.13.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-rails (8.0.0)
+    rspec-rails (8.0.1)
       actionpack (>= 7.2)
       activesupport (>= 7.2)
       railties (>= 7.2)
@@ -459,7 +459,7 @@ GEM
     rspec-support (3.13.4)
     rspec_junit_formatter (0.6.0)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (1.76.2)
+    rubocop (1.77.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -537,7 +537,7 @@ GEM
       activerecord (>= 7.2)
       railties (>= 7.2)
     stringio (3.1.7)
-    super_diff (0.15.0)
+    super_diff (0.16.0)
       attr_extras (>= 6.2.4)
       diff-lcs
       patience_diff
@@ -593,7 +593,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-sdk-s3 (~> 1.189)
+  aws-sdk-s3 (~> 1.190)
   axe-core-rspec
   bootsnap (~> 1.18.6)
   capybara
@@ -608,7 +608,7 @@ DEPENDENCIES
   factory_bot_rails (>= 6.4.3)
   faker
   govuk-components (>= 5.0.0)
-  govuk_design_system_formbuilder (>= 5.4, < 5.11)
+  govuk_design_system_formbuilder (>= 5.4, < 5.12)
   govuk_notify_rails (~> 3.0.0)
   grover
   httparty
@@ -636,7 +636,7 @@ DEPENDENCIES
   redis
   rspec-expectations
   rspec-html-matchers
-  rspec-rails (~> 8.0.0)
+  rspec-rails (~> 8.0.1)
   rspec_junit_formatter
   rubocop (>= 1.65.1)
   rubocop-performance
