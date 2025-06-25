@@ -20,7 +20,7 @@ RSpec.describe PriorAuthority::Steps::CaseDetail::DefendantForm do
     end
 
     context 'with a valid, hardcoded MAAT ID number' do
-      let(:maat) { '900900' }
+      let(:maat) { '4900900' }
 
       it { is_expected.to be_valid }
     end

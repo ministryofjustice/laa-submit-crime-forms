@@ -86,7 +86,7 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
     end
 
     context 'when MAAT ID number is an expected value' do
-      let(:maat) { '900900' }
+      let(:maat) { '4900900' }
 
       it { is_expected.to be_valid }
     end
