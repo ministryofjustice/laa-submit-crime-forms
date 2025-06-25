@@ -6,7 +6,7 @@ module MultiFileUploadable
   end
 
   def create
-    return return_error('activemodel.errors.messages.forbidden_document_type') unless supported_filetype(params[:documents])
+    return return_error('activemodel.errors.messages.forbidden_document_type') unless supported_filetype?(params[:documents])
 
     evidence = upload_file(params)
     return_success({ evidence_id: evidence.id, file_name: params[:documents].original_filename })
@@ -37,7 +37,7 @@ module MultiFileUploadable
     )
   end
 
-  def supported_filetype(params)
+  def supported_filetype?(params)
     SupportedFileTypes::SUPPORTED_FILE_TYPES.include?(
       Marcel::MimeType.for(params.tempfile)
     )

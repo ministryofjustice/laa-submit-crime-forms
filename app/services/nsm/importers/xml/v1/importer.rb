@@ -48,7 +48,7 @@ module Nsm
 
             defendants = hash.delete('defendants')
             main_defendant = defendants['defendant'].select { _1['main'] == 'true' }
-            return if main_defendant.count > 1 || main_defendant.empty?
+            return if main_defendant.many? || main_defendant.empty?
 
             sorted = defendants['defendant'].sort_by { _1['main'] == 'true' ? 0 : 1 }
 

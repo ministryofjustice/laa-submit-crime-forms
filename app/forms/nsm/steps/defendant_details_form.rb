@@ -40,7 +40,7 @@ module Nsm
         return true if record.main
 
         # DB query to check if any records in DB - ignoring this one which is unsaved
-        application.defendants.count.zero?
+        !application.defendants.exists?
       end
 
       def position
