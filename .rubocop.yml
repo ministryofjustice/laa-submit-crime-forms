@@ -147,6 +147,8 @@ Naming/PredicateMethod:
     - persist!
     - do_not_add_to_viewed_steps
     - apply_vat
+    - check_valid
+    - corrected_info
 
 RSpec/MultipleMemoizedHelpers:
   Max: 30

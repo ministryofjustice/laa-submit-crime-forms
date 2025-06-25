@@ -45,13 +45,13 @@ RSpec.describe Nsm::Steps::DefendantDetailsForm do
       let(:main) { false }
 
       context 'and defendant count is zero' do
-        let(:defendants) { double(:defendants, count: 0) }
+        let(:defendants) { double(:defendants, count: 0, exists?: false) }
 
         it { expect(subject.label_key).to eq('.main_defendant_field_set') }
       end
 
       context 'and defendant count is non-zero' do
-        let(:defendants) { double(:defendants, count: 1) }
+        let(:defendants) { double(:defendants, count: 1, exists?: true) }
 
         it { expect(subject.label_key).to eq('.defendant_field_set') }
       end

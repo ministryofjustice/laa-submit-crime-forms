@@ -20,7 +20,7 @@ module Nsm
           sync_work_items
           sync_disbursements
           sync_youth_court_fee_adjustment
-        elsif claim.sent_back? && further_information_exists
+        elsif claim.sent_back? && further_information_exists?
           sync_further_info_requests
         end
       end
@@ -36,7 +36,7 @@ module Nsm
       claim.assessment_comment = app_store_record.dig('application', 'assessment_comment').presence
     end
 
-    def further_information_exists
+    def further_information_exists?
       data['further_information'].present?
     end
 
