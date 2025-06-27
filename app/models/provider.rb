@@ -19,7 +19,9 @@ class Provider < ApplicationRecord
 
   class << self
     def from_omniauth(auth, office_codes)
-      user = find_by(email: auth.info.email) ||
+      sorted_office_codes = office_codes.sort
+      user = where(email: auth.info.email)
+             .find { |u| u.office_codes.sort == sorted_office_codes } ||
              find_by(auth_provider: auth.provider, uid: auth.uid) ||
              new
 
@@ -28,7 +30,7 @@ class Provider < ApplicationRecord
           email: auth.info.email,
           description: auth.info.description,
           roles: auth.info.roles,
-          office_codes: office_codes,
+          office_codes: sorted_office_codes,
           auth_provider: auth.provider,
           uid: auth.uid
         )
