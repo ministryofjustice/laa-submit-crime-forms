@@ -93,6 +93,7 @@ module AppStore
         attribute :youth_court_fee_adjustment_comment
         attribute :resubmission_deadline, :datetime
         attribute :gdpr_documents_deleted, :boolean
+        attribute :subscribers, :possibly_translated_array
 
         alias state application_state
         alias app_store_updated_at last_updated_at

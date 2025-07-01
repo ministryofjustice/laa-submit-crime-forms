@@ -160,6 +160,8 @@ Rails.application.routes.draw do
             get :calls, to: 'view_claim#item', defaults: { item_type: 'calls' }
             get :additional_fees, to: 'view_claim#item', defaults: { item_type: 'additional_fees' }
             get :download
+            post :subscribe
+            delete :unsubscribe
           end
         end
       end

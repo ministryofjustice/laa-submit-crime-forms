@@ -57,12 +57,26 @@ class AppStoreClient
     process_response(response, url)
   end
 
+  def subscribe(submission_id)
+    url = "#{host}/v1/submissions/#{submission_id}/subscribe"
+    response = self.class.post(url, **options)
+
+    process_response(response, url)
+  end
+
+  def unsubscribe(submission_id)
+    url = "#{host}/v1/submissions/#{submission_id}/unsubscribe"
+    response = self.class.delete(url, **options)
+
+    process_response(response, url)
+  end
+
   private
 
   def process_response(response, url)
     case response.code
     when 200..204
-      JSON.parse(response.body)
+      JSON.parse(response.body) if response.content_type == 'application/json'
     else
       raise "Unexpected response from AppStore - status #{response.code} for '#{url}'"
     end

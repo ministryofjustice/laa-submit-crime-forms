@@ -28,6 +28,15 @@
       <h2 class="govuk-heading-s" id="subsection-title"><%= t('.print_a_pdf') %></h2>
       <p class="govuk-body-s"><%= t('.print_hint') %></p>
       <%= govuk_button_link_to t('.print'), download_nsm_steps_view_claim_path(claim), secondary: true, target: '_blank' %>
+      <% if subscribed %>
+          <h2 class="govuk-heading-s" id="subsection-title"><%= t('.unsubscribe') %></h2>
+          <p class="govuk-body-s"><%= t('.unsubscribe_hint') %></p>
+          <%= button_to t('.unsubscribe_link'), unsubscribe_nsm_steps_view_claim_path(claim), method: :delete, class: "btn btn-secondary" %>
+      <% else %>
+          <h2 class="govuk-heading-s" id="subsection-title"><%= t('.subscribe') %></h2>
+          <p class="govuk-body-s"><%= t('.subscribe_hint') %></p>
+          <%= button_to t('.subscribe_link'), subscribe_nsm_steps_view_claim_path(claim), method: :post, class: "btn btn-primary" %>
+      <% end %>
     </aside>
   </div>
 </div>

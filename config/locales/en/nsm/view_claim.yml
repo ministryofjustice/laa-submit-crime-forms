@@ -17,6 +17,12 @@ en:
           print_a_pdf: Print a PDF of this claim
           print_hint: It will include the answers you input into this claim and its current status.
           print: Create a printable PDF
+          subscribe: Subscribe to updates
+          subscribe_hint: Click the button below to be notified about state changes for this claim
+          subscribe_link: Subscribe
+          unsubscribe: Unsubscribe to updates
+          unsubscribe_hint: Click the button below to stop being notified about state changes for this claim
+          unsubscribe_link: Unsubscribe
         section:
           page_title: Claim details
         adjustments:

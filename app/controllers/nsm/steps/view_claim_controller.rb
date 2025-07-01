@@ -67,6 +67,24 @@ module Nsm
                   type: 'application/pdf'
       end
 
+      def subscribed?
+        current_application.subscribers.include?(current_provider.email)
+      end
+
+      def subscribe
+        client = AppStoreClient.new
+        client.subscribe(current_application.id) unless subscribed?
+
+        redirect_to nsm_steps_view_claim_path(current_application)
+      end
+
+      def unsubscribe
+        client = AppStoreClient.new
+        client.unsubscribe(current_application.id) if subscribed?
+
+        redirect_to nsm_steps_view_claim_path(current_application)
+      end
+
       private
 
       def report_params
@@ -106,7 +124,7 @@ module Nsm
       end
 
       def view_locals
-        { claim: current_application, report: report }
+        { claim: current_application, report: report, subscribed: subscribed? }
       end
 
       def current_application
