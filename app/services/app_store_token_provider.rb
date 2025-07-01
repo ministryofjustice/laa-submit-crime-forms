@@ -21,7 +21,7 @@ class AppStoreTokenProvider
   end
 
   def bearer_token
-    access_token.token
+    create_composite_token
   end
 
   def authentication_configured?
@@ -31,7 +31,19 @@ class AppStoreTokenProvider
   private
 
   def new_access_token
-    oauth_client.client_credentials.get_token(scope: "api://#{app_store_client_id}/.default")
+    oauth_client.client_credentials.get_token(
+      scope: "api://#{app_store_client_id}/.default"
+    )
+  end
+
+  def create_composite_token
+    payload = {
+      entra_token: access_token.token,
+      email: GlobalContext.current_user&.email,
+      exp: 1.hour.from_now.to_i
+    }
+
+    JWT.encode(payload, client_secret, 'HS256')
   end
 
   def client_id
