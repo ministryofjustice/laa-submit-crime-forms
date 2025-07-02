@@ -68,7 +68,7 @@ module Nsm
       end
 
       def subscribed?
-        current_application.subscribers.include?(current_provider.email)
+        current_application&.subscribers&.include?(current_provider.email)
       end
 
       def subscribe
