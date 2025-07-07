@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Notification banner', :stub_app_store_search, :stub_oauth_token do
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
   end
 
   context 'when there is a notifcation banner to be displayed' do

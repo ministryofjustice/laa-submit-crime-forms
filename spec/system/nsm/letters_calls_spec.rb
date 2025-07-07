@@ -4,7 +4,7 @@ RSpec.describe 'User can fill in claim type details', type: :system do
   let(:claim) { create(:claim, :case_type_magistrates, :firm_details) }
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
   end
 
   it 'can do green path' do

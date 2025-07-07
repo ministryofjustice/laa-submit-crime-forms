@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Mileage and Other disbursement cost conditional fields', :javascript, type: :system do
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     click_link 'Accept analytics cookies'
 
     visit edit_nsm_steps_disbursement_cost_path(id: claim, disbursement_id: disbursement.id)

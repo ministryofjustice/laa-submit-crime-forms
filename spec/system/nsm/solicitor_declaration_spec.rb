@@ -14,7 +14,7 @@ RSpec.describe 'User can fill in solicitor declaration', :stub_oauth_token, type
 
   before do
     stub_app_store_payload(claim, :submitted)
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
   end
 
   context 'when submission succeeds' do

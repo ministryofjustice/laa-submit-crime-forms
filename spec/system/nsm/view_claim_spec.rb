@@ -45,7 +45,7 @@ RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
   let(:state) { :submitted }
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     stub_app_store_payload(claim)
   end
 

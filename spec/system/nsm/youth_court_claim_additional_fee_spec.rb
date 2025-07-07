@@ -6,7 +6,7 @@ RSpec.describe 'Youth court claim additional fee', type: :system do
 
   before do
     allow(FeatureFlags).to receive(:youth_court_fee).and_return(double(:youth_court_fee, enabled?: youth_court_fee_enabled))
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     visit edit_nsm_steps_youth_court_claim_additional_fee_path(claim.id)
   end
 

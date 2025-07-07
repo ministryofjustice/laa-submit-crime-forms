@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'NSM application deletion' do
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
 
     create(:claim,
            ufn: '120423/008',
