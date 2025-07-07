@@ -1,7 +1,7 @@
 <% title 'Dev login' %>
 <% if FeatureFlags.omniauth_test_mode.enabled? %>
 
-  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'test-user', info: { name: 'Test User', email: 'provider@example.com', office_codes: ['1A123B', '2A555X'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+  <%= link_button nil, provider_entra_id_omniauth_callback_path(provider: :entra_id, uid: 'test-user', info: { name: 'Test User', email: 'provider@example.com', office_codes: ['1A123B', '2A555X'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
     Log in as primary test user (CRM7/4/5)
     <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
       <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
@@ -9,7 +9,7 @@
   <% end %>
   <br>
 
-  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'same-office', info: { name: 'Same Office', email: 'same@office.com', office_codes: ['1A123B', '2A555X'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+  <%= link_button nil, provider_entra_id_omniauth_callback_path(provider: :entra_id, uid: 'same-office', info: { name: 'Same Office', email: 'same@office.com', office_codes: ['1A123B', '2A555X'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
     Log in as different user at same offices (CRM7/4/5)
     <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
       <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
@@ -17,7 +17,7 @@
   <% end %>
   <br>
 
-  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'diff-office', info: { name: 'Different Office', email: 'different@office.com', office_codes: ['XXXXXX'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+  <%= link_button nil, provider_entra_id_omniauth_callback_path(provider: :entra_id, uid: 'diff-office', info: { name: 'Different Office', email: 'different@office.com', office_codes: ['XXXXXX'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
     Log in as different user at different office (CRM7/4/5)
     <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
       <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
@@ -25,7 +25,7 @@
   <% end %>
   <br>
 
-  <%= link_button nil, provider_saml_omniauth_callback_path(uid: 'diff-office', info: { name: 'Different Office', email: 'different@office.com', office_codes: ['YYYYYY'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+  <%= link_button nil, provider_entra_id_omniauth_callback_path(provider: :entra_id, uid: 'diff-office', info: { name: 'Different Office', email: 'different@office.com', office_codes: ['YYYYYY'] }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
     Log in as provider with single office code that is not active
     <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
       <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />

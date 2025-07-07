@@ -34,7 +34,7 @@ class Provider < ApplicationRecord
 
           email: auth.info.email,
           description: auth.info.description,
-          roles: auth.info.roles,
+          roles: auth.info.roles || [],
           office_codes: sorted_office_codes,
           auth_provider: auth.provider,
           uid: auth.uid

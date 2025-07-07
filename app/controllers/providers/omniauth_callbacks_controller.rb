@@ -35,8 +35,7 @@ module Providers
     end
 
     def office_codes
-      # auth_data.info.office_codes
-      %w[AAAAAA BBBBBB]
+      %w[1A123B 2A555X]
     end
   end
 end
