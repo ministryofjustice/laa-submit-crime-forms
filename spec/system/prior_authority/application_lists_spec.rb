@@ -11,7 +11,7 @@ RSpec.describe 'Prior authority application lists', :stub_oauth_token do
   end
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     chosen
     submitted = create(:prior_authority_application, :full, laa_reference: 'LAA-BBBBB', state: 'submitted',
                         updated_at: 2.days.ago)

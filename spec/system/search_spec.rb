@@ -54,7 +54,7 @@ RSpec.describe 'Search', :stub_oauth_token do
       end
     end
 
-    before { visit provider_saml_omniauth_callback_path }
+    before { visit provider_entra_id_omniauth_callback_path }
 
     context 'when finding a single result' do
       before do
@@ -317,7 +317,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
 
     before do
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
       Provider.first.update(office_codes: %w[XYZXYZ 1A123B])
     end
 

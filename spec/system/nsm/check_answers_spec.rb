@@ -21,7 +21,7 @@ RSpec.describe 'Check answers page', type: :system do
   end
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
   end
 
   it 'shows a cost summary on the main page' do
@@ -55,7 +55,7 @@ RSpec.describe 'Check answers page', type: :system do
     let(:rep_order_date) { Constants::YOUTH_COURT_CUTOFF_DATE }
 
     before do
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
     end
 
     context 'enabled' do

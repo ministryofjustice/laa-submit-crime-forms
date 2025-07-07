@@ -56,7 +56,7 @@ RSpec.describe 'Route Authentication', type: :routing do
   before do
     allow(HostEnv).to receive(:env_name).and_return(environment)
     Rails.application.reload_routes!
-    post provider_saml_omniauth_callback_path
+    post provider_entra_id_omniauth_callback_path
   end
 
   routes do

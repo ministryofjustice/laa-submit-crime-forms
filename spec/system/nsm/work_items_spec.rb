@@ -9,7 +9,7 @@ import_date: import_date)
   let(:import_date) { nil }
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
   end
 
   it 'can add a work item' do

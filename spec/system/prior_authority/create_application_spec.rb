@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Prior authority application creation', :stub_app_store_search, :stub_oauth_token do
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     visit prior_authority_applications_path
   end
 

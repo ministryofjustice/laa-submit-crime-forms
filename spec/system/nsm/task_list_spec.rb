@@ -3,7 +3,7 @@ require 'system_helper'
 # rubocop:disable RSpec/ExampleLength
 RSpec.describe 'Task list', :stub_app_store_search, :stub_oauth_token do
   it 'updates the task list appropriately' do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     click_on "Claim non-standard magistrates' court payments, previously CRM7"
     click_on 'Start a new claim'
 

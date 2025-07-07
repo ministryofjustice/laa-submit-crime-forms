@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Ensure no duplicates in list' do
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
   end
 
   it 'for primary quote service_type' do

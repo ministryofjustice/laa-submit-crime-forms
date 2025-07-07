@@ -9,7 +9,7 @@ RSpec.describe 'Prior authority authentication', :stub_app_store_search, :stub_o
   end
 
   context 'when user is signed in' do
-    before { visit provider_saml_omniauth_callback_path }
+    before { visit provider_entra_id_omniauth_callback_path }
 
     it 'allows the user to access the page' do
       visit prior_authority_applications_path
