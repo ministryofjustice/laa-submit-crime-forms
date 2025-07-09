@@ -12,7 +12,20 @@ RSpec.describe Provider, type: :model do
   let(:office_codes) { %w[A1 B2 C3] }
 
   describe '#display_name' do
-    it { expect(subject.display_name).to eq('provider@example.com') }
+    describe 'shows email when no name' do
+      it { expect(subject.display_name).to eq('provider@example.com') }
+    end
+
+    describe 'shows name when a name is set' do
+      let(:attributes) do
+        {
+          first_name: 'Test',
+          last_name: 'User'
+        }
+      end
+
+      it { expect(subject.display_name).to eq('Test User') }
+    end
   end
 
   describe '#multiple_offices?' do
@@ -28,7 +41,9 @@ RSpec.describe Provider, type: :model do
   end
 
   describe '#from_omniauth' do
-    let(:info) { double('info', email: 'test@test.com', description: 'desc', roles: 'a,b') }
+    let(:info) do
+      double('info', email: 'test@test.com', description: 'desc', roles: 'a,b', first_name: 'Test', last_name: 'User')
+    end
     let(:auth) { double('auth', provider: 'govuk', uid: SecureRandom.uuid, info: info) }
 
     context 'new user' do
@@ -71,7 +86,9 @@ RSpec.describe Provider, type: :model do
       end
 
       context 'user changed email but kept same provider/uid temporarily' do
-        let(:info) { double('info', email: 'newemail@test.com', description: 'desc', roles: 'a,b') }
+        let(:info) do
+          double('info', email: 'newemail@test.com', description: 'desc', roles: 'a,b', first_name: 'Test', last_name: 'User')
+        end
         let(:auth) { double('auth', provider: 'old_saml', uid: 'old-uid-123', info: info) }
 
         it 'finds by auth info and updates email' do
