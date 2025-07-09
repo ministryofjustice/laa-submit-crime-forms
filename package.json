@@ -6,7 +6,7 @@
     "@ministryofjustice/frontend": "5.1.4",
     "accessible-autocomplete": "^3.0.1",
     "braces": "^3.0.3",
-    "esbuild": "^0.25.5",
+    "esbuild": "^0.25.6",
     "govuk-frontend": "5.10.0",
     "fastest-levenshtein": "^1.0.16",
     "jquery": "^3.7.1",
@@ -25,10 +25,10 @@
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css --no-source-map --load-path=. --load-path=node_modules  --quiet-deps"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.27.2",
-    "babel-jest": "^30.0.2",
-    "jest": "^30.0.3",
-    "jest-environment-jsdom": "^30.0.2",
+    "@babel/preset-env": "^7.28.0",
+    "babel-jest": "^30.0.4",
+    "jest": "^30.0.4",
+    "jest-environment-jsdom": "^30.0.4",
     "jest-extended": "^6.0.0"
   }
 }
