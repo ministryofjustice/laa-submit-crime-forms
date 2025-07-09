@@ -4,7 +4,7 @@ RSpec.describe 'When filling in the case outcome', :stub_app_store_search, :stub
   let(:claim) { create(:claim, plea_category: 'category_1a') }
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     allow(FeatureFlags).to receive(:youth_court_fee).and_return(double(:youth_court_fee, enabled?: feature_enabled))
     visit edit_nsm_steps_case_outcome_path(claim.id)
   end

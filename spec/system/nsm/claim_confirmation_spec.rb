@@ -5,7 +5,7 @@ RSpec.describe 'User can see an application status', :stub_app_store_search, :st
 
   before do
     stub_app_store_payload(claim)
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     visit nsm_steps_claim_confirmation_path(claim.id)
   end
 

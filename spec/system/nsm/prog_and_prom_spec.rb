@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Prog/prom calculation', :stub_app_store_search, :stub_oauth_token, type: :system do
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     click_on "Claim non-standard magistrates' court payments, previously CRM7"
     click_on 'Start a new claim'
     fill_in 'What is your unique file number (UFN)?', with: '120223/001'

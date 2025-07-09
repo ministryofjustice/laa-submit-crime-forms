@@ -4,7 +4,7 @@ RSpec.describe 'User can manage work items', type: :system do
   let(:claim) { create(:claim) }
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
   end
 
   it 'can add a work item' do

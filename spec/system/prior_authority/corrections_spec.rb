@@ -19,7 +19,7 @@ RSpec.describe 'Prior authority applications - provider responds to correction r
       status: 200,
       body: data.to_json
     )
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     visit prior_authority_application_path(application)
   end
 

@@ -8,7 +8,7 @@ RSpec.describe 'User can fill in case category', type: :system do
 
   before do
     allow(FeatureFlags).to receive(:youth_court_fee).and_return(double(:youth_court_fee, enabled?: youth_court_fee_enabled))
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     visit edit_nsm_steps_case_category_path(claim.id)
   end
 

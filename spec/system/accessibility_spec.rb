@@ -6,7 +6,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_app_store_search, :stub_oa
 
   before do
     driven_by(:headless_chrome)
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
   end
 
   let(:provider) { create(:provider) }

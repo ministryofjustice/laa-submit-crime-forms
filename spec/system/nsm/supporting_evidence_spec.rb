@@ -9,7 +9,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
     end
 
     it 'does not show the mail address' do
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
 
       visit edit_nsm_steps_supporting_evidence_path(claim.id)
 
@@ -23,7 +23,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
     end
 
     it 'does shows the mail address' do
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
 
       visit edit_nsm_steps_supporting_evidence_path(claim.id)
 
@@ -42,7 +42,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
   context 'when postal evidence feature is disabled' do
     before do
       allow(FeatureFlags).to receive(:postal_evidence).and_return(double(:postal_evidence, enabled?: false))
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
       visit edit_nsm_steps_supporting_evidence_path(claim.id)
     end
 
@@ -65,7 +65,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
       claim.update!(assigned_counsel: 'yes', remitted_to_magistrate: 'yes', supplemental_claim: 'yes')
       claim.disbursements.first.update!(prior_authority: 'yes')
 
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
       visit edit_nsm_steps_supporting_evidence_path(claim.id)
     end
 
@@ -85,7 +85,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
       claim.update!(assigned_counsel: 'no', remitted_to_magistrate: 'no', supplemental_claim: 'no', wasted_costs: 'no')
       claim.disbursements.map { |d| d.update!(prior_authority: 'no') }
 
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
       visit edit_nsm_steps_supporting_evidence_path(claim.id)
     end
 
@@ -99,7 +99,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
     let(:claim) { create(:claim) }
 
     before do
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
       visit edit_nsm_steps_supporting_evidence_path(claim.id)
     end
 
