@@ -55,10 +55,14 @@ Devise.setup do |config|
     :entra_id,
     {
       client_id:     ENV.fetch('ENTRA_CLIENT_ID', nil),
-      #      client_secret: ENV.fetch('ENTRA_CLIENT_SECRET', nil),
       certificate_path: Rails.root.join('saml/saml_sp.p12'),
       tenant_id:     ENV.fetch('ENTRA_TENANT_ID', nil),
-      scope:         'openid profile email'
+      scope:         'openid profile email',
+      # We set this so the login prompt always goes to the "select
+      # account" menu
+      authorize_params: {
+        prompt: 'select_account'
+      }
     }
   )
 end
