@@ -34,8 +34,10 @@ module Providers
       request.env['omniauth.auth']
     end
 
+    # :nocov:
     def office_codes
-      %w[1A123B 2A555X]
+      auth_data.info&.office_codes || %w[1A123B 2A555X]
     end
+    # :nocov:
   end
 end
