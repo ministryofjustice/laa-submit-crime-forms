@@ -2,10 +2,12 @@
 
 def cert_path
   cert_path = Rails.root.join('tmp', 'omniauth-cert.p12')
+  cert_data = ENV.fetch('ENTRA_CERTIFICATE_DATA', nil)
 
   return cert_path if File.exist?(cert_path)
+  return nil if cert_data.blank?
 
-  cert_data = Base64.strict_decode64(ENV.fetch('ENTRA_CERTIFICATE_DATA', nil))
+  cert_data = Base64.strict_decode64(cert_data)
 
   File.binwrite(cert_path, cert_data)
   File.chmod(0o600, cert_path)
