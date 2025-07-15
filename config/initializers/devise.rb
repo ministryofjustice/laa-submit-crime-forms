@@ -17,6 +17,7 @@ end
 
 Devise.setup do |config|
   require 'devise/orm/active_record'
+  require Rails.root.join('app/lib/silas/silas_strategy')
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
@@ -68,14 +69,15 @@ Devise.setup do |config|
     :entra_id,
     {
       client_id:     ENV.fetch('ENTRA_CLIENT_ID', nil),
-      certificate_path: cert_path,
       tenant_id:     ENV.fetch('ENTRA_TENANT_ID', nil),
-      scope:         'openid profile email',
+      certificate_path: cert_path,
+
       # We set this so the login prompt always goes to the "select
       # account" menu
       authorize_params: {
         prompt: 'select_account'
-      }
+      },
+      strategy_class: Silas::SilasStrategy
     }
   )
 end
