@@ -1,4 +1,6 @@
 class Provider < ApplicationRecord
+  has_person_name
+
   devise :lockable, :timeoutable, :trackable,
          :omniauthable, omniauth_providers: %i[entra_id]
 
@@ -10,7 +12,7 @@ class Provider < ApplicationRecord
   def display_name
     return email if first_name.nil? && last_name.nil?
 
-    "#{first_name} #{last_name}"
+    name.full
   end
 
   def multiple_offices?

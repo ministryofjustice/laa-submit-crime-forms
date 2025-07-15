@@ -81,3 +81,5 @@ group :test do
   gem 'super_diff'
   gem 'webmock', '~> 3.25'
 end
+
+gem "name_of_person", "~> 1.1"
