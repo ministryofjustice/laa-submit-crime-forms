@@ -1,5 +1,20 @@
 # frozen_string_literal: true
 
+def cert_path
+  cert_path = Rails.root.join('tmp', 'omniauth-cert.p12')
+
+  return cert_path if File.exist?(cert_path)
+
+  cert_data = Base64.strict_decode64(ENV.fetch('ENTRA_CERTIFICATE_DATA', nil))
+
+  File.binwrite(cert_path, cert_data)
+  File.chmod(0o600, cert_path)
+
+  at_exit { File.delete(cert_path) }
+
+  cert_path
+end
+
 Devise.setup do |config|
   require 'devise/orm/active_record'
 
@@ -53,7 +68,7 @@ Devise.setup do |config|
     :entra_id,
     {
       client_id:     ENV.fetch('ENTRA_CLIENT_ID', nil),
-      certificate_path: Rails.root.join('saml/saml_sp.p12'),
+      certificate_path: cert_path,
       tenant_id:     ENV.fetch('ENTRA_TENANT_ID', nil),
       scope:         'openid profile email',
       # We set this so the login prompt always goes to the "select
