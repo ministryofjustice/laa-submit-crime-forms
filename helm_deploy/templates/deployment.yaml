@@ -126,6 +126,21 @@ spec:
               value: {{ .Values.variables.appStore }}
             - name: ENV
               value: {{ .Values.variables.environment}}
+            - name: ENTRA_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: portal-sp-certificate
+                  key: entra-client-id
+            - name: ENTRA_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: portal-sp-certificate
+                  key: entra-tenant-id
+            - name: ENTRA_CERTIFICATE_DATA
+              valueFrom:
+                secretKeyRef:
+                  name: portal-sp-certificate
+                  key: entra-certificate-data
             - name: LAA_PORTAL_SP_CERT
               valueFrom:
                 secretKeyRef:
