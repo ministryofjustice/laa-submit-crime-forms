@@ -8,11 +8,15 @@ module Silas
     # or multiple office codes (as an array). Here we normalizes the value to always
     # return an array.
     def office_codes
-      [*user_info.raw_attributes.fetch('LAA_ACCOUNTS')]
+      [*@raw_info.fetch('LAA_ACCOUNTS')]
     end
 
     def email
-      user_info.email
+      @raw_info.fetch('email')
+    end
+
+    def roles
+      [] # Can't get them just yet
     end
 
     class << self
