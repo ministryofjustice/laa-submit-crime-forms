@@ -103,6 +103,12 @@ module PriorAuthority
       fill_in 'Email address', with: 'john@does.com'
       fill_in 'Firm name', with: 'LegalCorp Ltd'
       click_on 'Save and continue'
+
+      # Office code page
+      return unless page.has_content?(I18n.t('.prior_authority.steps.office_code.edit.page_title'))
+
+      first('.govuk-radios__label').click
+      click_on 'Save and continue'
     end
 
     def fill_in_client_detail

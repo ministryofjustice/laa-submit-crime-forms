@@ -17,6 +17,9 @@ RSpec.describe 'Task list', :stub_app_store_search, :stub_oauth_token do
     end
     click_on 'Save and continue'
 
+    first('.govuk-radios__label').click
+    click_on 'Save and continue'
+
     # Firm in undesignated area
     choose 'No'
     click_on 'Save and continue'

@@ -15,6 +15,9 @@ RSpec.describe 'Prior authority applications - add case contact' do
     fill_in 'Firm name', with: 'LegalCorp Ltd'
     click_on 'Save and continue'
 
+    first('.govuk-radios__label').click
+    click_on 'Save and continue'
+
     expect(page).to have_content 'Case contact Completed'
   end
 
@@ -72,6 +75,8 @@ RSpec.describe 'Prior authority applications - add case contact' do
       click_on 'Case contact'
       fill_in 'First name', with: 'Jane'
       click_on 'Save and continue'
+      first('.govuk-radios__label').click
+      click_on 'Save and continue'
 
       expect(page).to have_content 'Case contact Completed'
     end
@@ -79,6 +84,8 @@ RSpec.describe 'Prior authority applications - add case contact' do
     it 'allows firm detail updating' do
       click_on 'Case contact'
       fill_in 'Firm name', with: 'LegalCorp 2 Electic Boogaloo'
+      click_on 'Save and continue'
+      first('.govuk-radios__label').click
       click_on 'Save and continue'
 
       expect(page).to have_content 'Case contact Completed'

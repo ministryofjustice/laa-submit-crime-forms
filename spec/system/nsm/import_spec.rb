@@ -9,6 +9,9 @@ def import_file(file, advance_to_details: false)
   return unless advance_to_details
 
   click_on 'Save and continue' # 'Which firm office account number is this claim for?'
+  first('.govuk-radios__label').click
+  click_on 'Save and continue'
+
   click_on 'Save and continue' # 'Was this case worked on in an office in an undesignated area?'
   click_on 'Save and continue' # 'Is the first court that heard this case in an undesignated area?'
 end
