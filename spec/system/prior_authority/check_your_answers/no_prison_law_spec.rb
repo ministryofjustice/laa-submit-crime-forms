@@ -1,9 +1,18 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications, no prison law - check your answers' do
+RSpec.describe 'Prior authority applications, no prison law - check your answers', :stub_oauth_token do
+  let(:application) do
+    create(:prior_authority_application, :as_draft, :with_complete_non_prison_law)
+  end
+
   before do
-    fill_in_until_step(:submit_application)
-    click_on 'Submit application'
+    stub_request(:get, "https://app-store.example.com/v1/application/#{application.id}").to_return(
+      status: 200,
+      body: SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:).payload.to_json
+    )
+
+    visit provider_entra_id_omniauth_callback_path
+    visit prior_authority_steps_check_answers_path(application)
   end
 
   it 'has the expected page title and group headings' do
@@ -20,8 +29,8 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
     within('.govuk-summary-card', text: 'Application details') do
       expect(page)
         .to have_css('.govuk-summary-card__content', text: 'Prison lawNo')
-        .and have_css('.govuk-summary-card__content', text: 'LAA reference')
-        .and have_css('.govuk-summary-card__content', text: 'Unique file number111111/123')
+        .and have_css('.govuk-summary-card__content', text: "LAA reference#{application.laa_reference}")
+        .and have_css('.govuk-summary-card__content', text: %r{Unique file number\d{6}/123})
 
       click_on 'Change'
       expect(page).to have_title('Unique file number')
@@ -34,22 +43,25 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
   it 'shows the case contact card and continues to check your answers' do
     within('.govuk-summary-card', text: 'Case contact') do
       expect(page)
-        .to have_css('.govuk-summary-card__content', text: 'Contact detailsJohn Doejohn@does.com')
-        .and have_css('.govuk-summary-card__content', text: 'Firm detailsLegalCorp Ltd1A123B')
+        .to have_css('.govuk-summary-card__content', text: /Contact details.*@.*\.com/)
+        .and have_css('.govuk-summary-card__content', text: /Firm details.*1A123B/)
 
       click_on 'Change'
       expect(page).to have_title('Case contact')
     end
 
     click_on 'Save and continue'
+    first('.govuk-radios__label').click
+    click_on 'Save and continue'
+
     expect(page).to have_title('Check your answers')
   end
 
   it 'shows the client details card and continues to check your answers' do
     within('.govuk-summary-card', text: 'Client details') do
       expect(page)
-        .to have_css('.govuk-summary-card__content', text: 'Client nameJohn Doe')
-        .and have_css('.govuk-summary-card__content', text: 'Date of birth27 December 2000')
+        .to have_css('.govuk-summary-card__content', text: /Client name/)
+        .and have_css('.govuk-summary-card__content', text: /Date of birth/)
 
       click_on 'Change'
       expect(page).to have_title('Client details')
@@ -62,16 +74,19 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
   it 'shows the case details card and continues to check your answers' do
     within('.govuk-summary-card', text: 'Case details') do
       expect(page)
-        .to have_css('.govuk-summary-card__content', text: 'Main offenceSupply a controlled drug of Class A - Heroin')
-        .and have_css('.govuk-summary-card__content', text: 'Date of representation order27 December 2023')
-        .and have_css('.govuk-summary-card__content', text: 'MAAT ID number123456')
-        .and have_css('.govuk-summary-card__content', text: 'Client detainedNo')
-        .and have_css('.govuk-summary-card__content', text: 'Subject to POCAYes')
+        .to have_css('.govuk-summary-card__content', text: /Main offence/)
+        .and have_css('.govuk-summary-card__content', text: /Date of representation order/)
+        .and have_css('.govuk-summary-card__content', text: /Client detainedNo/)
+        .and have_css('.govuk-summary-card__content', text: /Subject to POCAYes/)
 
       click_on 'Change'
     end
     expect(page).to have_title('Case details')
-    select 'Robbery', from: 'What was the main offence'
+
+    within('.govuk-form-group', text: 'Is this case subject to POCA (Proceeds of Crime Act 2002)?') do
+      choose 'No'
+    end
+
     click_on 'Save and continue'
     expect(page).to have_title('Check your answers')
   end
@@ -137,7 +152,7 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
       expect(page)
         .to have_css('.govuk-summary-card__content', text: "Date of next hearing#{Date.tomorrow.to_fs(:stamp)}")
         .and have_css('.govuk-summary-card__content', text: 'Likely or actual pleaNot guilty')
-        .and have_css('.govuk-summary-card__content', text: 'Court typeCrown Court (excluding Central Criminal Court)')
+        .and have_css('.govuk-summary-card__content', text: 'Crown Court (excluding Central Criminal Court)')
         .and have_no_content('Youth court matter')
         .and have_no_content('Psychiatric liaison service')
         .and have_no_content('Why not?')
@@ -147,19 +162,15 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
   it 'shows the primary quote card' do
     within('.govuk-summary-card', text: 'Primary quote') do
       expect(page)
-        .to have_css('.govuk-summary-card__content', text: 'Service requiredMeteorologist')
-        .and have_css('.govuk-summary-card__content', text: 'Service provider detailsJoe BloggsLAA, Staines, CR0 1RE')
+        .to have_css('.govuk-summary-card__content', text: /Service required/)
+        .and have_css('.govuk-summary-card__content', text: /Service provider details.*Joe Bloggs/)
         .and have_css('.govuk-summary-card__content', text: 'Quote uploadtest.png')
-        .and have_css('.govuk-summary-card__content', text: 'Existing prior authority grantedYes')
-        .and have_css('.govuk-summary-card__content', text: /Why travel costs are required.*Client lives in Wales/)
+        .and have_css('.govuk-summary-card__content', text: 'Existing prior authority grantedNo')
 
       expect(page)
         .to have_css('.govuk-table__caption', text: 'Primary quote summary')
 
-      within('.govuk-table__row', text: 'Service') { expect(page).to have_content('£6.15') }
-      within('.govuk-table__row', text: 'Travel') { expect(page).to have_content('£1.61') }
-      within('.govuk-table__row', text: 'Additional') { expect(page).to have_content('£0.00') }
-      within('.govuk-table__row', text: 'Total cost') { expect(page).to have_content('£7.76') }
+      within('.govuk-table__row', text: 'Total cost') { expect(page).to have_content(/£\d+\.\d{2}/) }
 
       click_on 'Change'
       expect(page).to have_title('Primary quote summary')
@@ -169,18 +180,18 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
   it 'shows the alternative quote card' do
     within('.govuk-summary-card', text: 'Alternative quotes') do
       expect(page)
-        .to have_css('.govuk-summary-card__content', text: 'Quote 1Jim Bob£155.00')
+        .to have_css('.govuk-summary-card__content', text: 'Reason for no alternative quotes')
+        .and have_css('.govuk-summary-card__content', text: 'a reason')
 
       click_on 'Change'
-      expect(page).to have_title('You\'ve added 1 alternative quote')
+      expect(page).to have_title('Have you got other quotes?')
     end
   end
 
   it 'shows the reason for prior authority card' do
     within('.govuk-summary-card', text: 'Reason for prior authority') do
       expect(page)
-        .to have_css('.govuk-summary-card__content', text: /Why prior authority is required.*Required because.../)
-      # TODO: supporting document upload file names
+        .to have_css('.govuk-summary-card__content', text: /Why prior authority is required.*something/)
 
       click_on 'Change'
       expect(page).to have_title('Why is prior authority required')

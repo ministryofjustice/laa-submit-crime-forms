@@ -2,10 +2,10 @@ require 'system_helper'
 
 RSpec.describe 'NSM claims lists', :stub_oauth_token do
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
 
     # Add office code to test provider to test account number sorting
-    Provider.find_by(uid: 'test-user').tap do |provider|
+    Provider.first.tap do |provider|
       provider.update!(office_codes: %w[1A123B 9A123B])
     end
 

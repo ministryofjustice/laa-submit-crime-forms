@@ -74,7 +74,7 @@ module PriorAuthority
     # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 
     def fill_in_prison_law_and_authority_value(prison_law)
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
       stub_request(:post, %r{https.*/oauth2/v2.0/token}).to_return(
         status: 200,
         body: '{"access_token":"test-bearer-token","token_type":"Bearer","expires_in":3600,"created_at":1582809000}',
@@ -102,6 +102,12 @@ module PriorAuthority
       fill_in 'Last name', with: 'Doe'
       fill_in 'Email address', with: 'john@does.com'
       fill_in 'Firm name', with: 'LegalCorp Ltd'
+      click_on 'Save and continue'
+
+      # Office code page
+      return unless page.has_content?(I18n.t('.prior_authority.steps.office_code.edit.page_title'))
+
+      first('.govuk-radios__label').click
       click_on 'Save and continue'
     end
 

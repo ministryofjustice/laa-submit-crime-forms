@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Prior authority applications, sent back for info correction - check your answers' do
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     visit prior_authority_steps_check_answers_path(application)
     allow(SubmitToAppStore).to receive(:perform_later)
   end

@@ -11,7 +11,7 @@ RSpec.describe 'Sign in user journey', :stub_app_store_search, :stub_oauth_token
 
   context 'user is signed in' do
     before do
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
     end
 
     it 'authenticates the user and redirects to the dashboard' do
@@ -37,7 +37,7 @@ RSpec.describe 'Sign in user journey', :stub_app_store_search, :stub_oauth_token
 
   context 'user has implicit permission from an all' do
     before do
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
     end
 
     it 'authenticates the user and redirects to the dashboard' do

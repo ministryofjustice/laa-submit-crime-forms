@@ -37,6 +37,7 @@ defendants:
   date_of_birth: true
   search_fields: false
 incorrect_informations:
+  extra_info: false
   information_requested: false
   sections_changed: false
   caseworker_id: false
@@ -105,6 +106,8 @@ additional_costs:
 providers:
   auth_provider: false
   uid: false
+  first_name: true
+  last_name: true
   email: true
   description: false
   roles: false

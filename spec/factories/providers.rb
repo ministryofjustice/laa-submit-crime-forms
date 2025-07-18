@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :provider do
-    auth_provider { 'saml' }
+    auth_provider { 'entra_id' }
     uid { 'test-user' }
     office_codes { ['1A123B'] }
     email { 'provider@example.com' }

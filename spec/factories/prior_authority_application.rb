@@ -111,8 +111,14 @@ FactoryBot.define do
       supporting_documents { build_list(:supporting_document, 2) }
       prior_authority_granted { false }
       no_alternative_quote_reason { 'a reason' }
+      alternative_quotes_still_to_add { false }
       service_type { 'pathologist_report' }
       custom_service_name { nil }
+      viewed_steps do
+        %w[ufn case_contact client_detail case_detail next_hearing primary_quote primary_quote_summary alternative_quotes
+           reason_why]
+      end
+
       after(:build) do |paa|
         build(:quote, :primary, prior_authority_application_id: paa.id)
         build(:quote, :alternative, document: nil, prior_authority_application_id: paa.id)
@@ -192,6 +198,10 @@ FactoryBot.define do
 
       further_informations { [build(:further_information, :with_response)] }
       reason_why { 'something' }
+      viewed_steps do
+        %w[ufn case_contact client_detail case_detail next_hearing primary_quote primary_quote_summary alternative_quotes
+           reason_why]
+      end
     end
 
     trait :with_complete_prison_law do

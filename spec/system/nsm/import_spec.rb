@@ -9,6 +9,9 @@ def import_file(file, advance_to_details: false)
   return unless advance_to_details
 
   click_on 'Save and continue' # 'Which firm office account number is this claim for?'
+  first('.govuk-radios__label').click
+  click_on 'Save and continue'
+
   click_on 'Save and continue' # 'Was this case worked on in an office in an undesignated area?'
   click_on 'Save and continue' # 'Is the first court that heard this case in an undesignated area?'
 end
@@ -28,7 +31,7 @@ RSpec.describe 'Import claims', :stub_oauth_token, type: :system do
     before do
       allow(DateTime).to receive(:now).and_return(fixed_time)
 
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
       visit new_nsm_import_path
     end
 
@@ -105,7 +108,7 @@ RSpec.describe 'Import claims', :stub_oauth_token, type: :system do
         status: 201,
         body: { id: error_id, provider_id: 'some-id', details: details }.to_json
       )
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
       visit new_nsm_import_path
     end
 
@@ -135,7 +138,7 @@ RSpec.describe 'Import claims', :stub_oauth_token, type: :system do
         status: 422,
         body: { id: 'some-id' }.to_json
       )
-      visit provider_saml_omniauth_callback_path
+      visit provider_entra_id_omniauth_callback_path
       visit new_nsm_import_path
     end
 

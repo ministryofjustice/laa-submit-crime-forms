@@ -4,7 +4,7 @@ RSpec.describe 'Prior authority applications - add case contact', :javascript, t
   let(:application) { create(:prior_authority_application, :about_request_enabled) }
 
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     visit prior_authority_steps_start_page_path(application)
 
     expect(page).to have_link 'Reason for prior authority'

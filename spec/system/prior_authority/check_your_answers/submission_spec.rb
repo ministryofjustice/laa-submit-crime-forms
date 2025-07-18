@@ -1,9 +1,13 @@
 require 'system_helper'
 
-RSpec.describe 'Prior authority applications, check your answers, submission' do
+RSpec.describe 'Prior authority applications, check your answers, submission', :stub_app_store_search, :stub_oauth_token do
+  let(:application) do
+    create(:prior_authority_application, :as_draft, :with_complete_non_prison_law)
+  end
+
   before do
-    fill_in_until_step(:submit_application)
-    click_on 'Submit application'
+    visit provider_entra_id_omniauth_callback_path
+    visit prior_authority_steps_check_answers_path(application)
   end
 
   it 'has the expected content relating to submission' do
@@ -29,8 +33,9 @@ RSpec.describe 'Prior authority applications, check your answers, submission' do
     expect(page).to have_title('Your applications')
   end
 
-  context 'when I have confirmed conditions I must abide by', :stub_oauth_token do
+  context 'when I have confirmed conditions I must abide by', :javascript, :stub_oauth_token do
     before do
+      visit prior_authority_steps_check_answers_path(application)
       check 'I confirm that all costs are exclusive of VAT'
       check 'I confirm that any travel expenditure (such as mileage, ' \
             'parking and travel fares) is included as additional items ' \
@@ -52,7 +57,8 @@ RSpec.describe 'Prior authority applications, check your answers, submission' do
       end
 
       it 'stops me getting back to the check your answers page', :stub_oauth_token do
-        application = PriorAuthorityApplication.find_by(ufn: '111111/123')
+        application = create(:prior_authority_application, :submitted, :with_complete_non_prison_law)
+
         stub_request(:get, "https://app-store.example.com/v1/application/#{application.id}").to_return(
           status: 200,
           body: SubmitToAppStore::PayloadBuilder.call(application).to_json
@@ -64,15 +70,26 @@ RSpec.describe 'Prior authority applications, check your answers, submission' do
     end
 
     context 'when the app store fails' do
+      let(:application) do
+        create(:prior_authority_application, :as_draft, :with_all_tasks_completed)
+      end
+
       before do
         stub_request(:post, 'https://app-store.example.com/v1/application/').to_return(status: 500)
       end
 
+      around do |example|
+        original_setting = Capybara.raise_server_errors
+        Capybara.raise_server_errors = false
+        example.run
+      ensure
+        Capybara.raise_server_errors = original_setting
+      end
+
       it 'shows an error message' do
         application = PriorAuthorityApplication.last
-        expect do
-          click_on 'Accept and send'
-        end.to raise_error "Unexpected response from AppStore - status 500 for '#{application.id}'"
+        click_on 'Accept and send'
+        expect(page).to have_content("Unexpected response from AppStore - status 500 for '#{application.id}")
         expect(application.reload).to be_draft
       end
     end

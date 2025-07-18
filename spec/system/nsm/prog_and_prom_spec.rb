@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Prog/prom calculation', :stub_app_store_search, :stub_oauth_token, type: :system do
   before do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     click_on "Claim non-standard magistrates' court payments, previously CRM7"
     click_on 'Start a new claim'
     fill_in 'What is your unique file number (UFN)?', with: '120223/001'
@@ -17,6 +17,9 @@ RSpec.describe 'Prog/prom calculation', :stub_app_store_search, :stub_oauth_toke
         fill_in 'Month', with: '4'
         fill_in 'Year', with: '2023'
       end
+      click_on 'Save and continue'
+
+      first('.govuk-radios__label').click
       click_on 'Save and continue'
     end
 
@@ -39,6 +42,9 @@ RSpec.describe 'Prog/prom calculation', :stub_app_store_search, :stub_oauth_toke
       end
 
       click_on 'Save and continue'
+
+      first('.govuk-radios__label').click
+      click_on 'Save and continue'
     end
 
     it 'takes me to the office area page' do
@@ -49,7 +55,7 @@ RSpec.describe 'Prog/prom calculation', :stub_app_store_search, :stub_oauth_toke
       before { click_on 'Back' }
 
       it 'takes me back to the claim type screen' do
-        expect(page).to have_content 'What you are claiming for'
+        expect(page).to have_content I18n.t('.nsm.steps.office_code.edit.page_title')
       end
     end
 

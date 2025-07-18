@@ -54,11 +54,10 @@ RSpec.describe 'Error pages' do
     context 'when the sign in fails' do
       before do
         allow(OmniAuth.config).to receive(:test_mode).and_return(false)
-        allow_any_instance_of(LaaPortal::SamlSetup).to receive(:setup).and_raise(StandardError)
       end
 
       it 'redirects to the home' do
-        post provider_saml_omniauth_authorize_path
+        post provider_entra_id_omniauth_authorize_path
         expect(response).to redirect_to(new_provider_session_path)
       end
     end

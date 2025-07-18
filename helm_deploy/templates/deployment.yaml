@@ -126,20 +126,21 @@ spec:
               value: {{ .Values.variables.appStore }}
             - name: ENV
               value: {{ .Values.variables.environment}}
-            - name: LAA_PORTAL_SP_CERT
+            - name: ENTRA_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: portal-sp-certificate
-                  key: tls.crt
-            - name: LAA_PORTAL_SP_PRIVATE_KEY
+                  name: entra-idam-secrets
+                  key: entra-client-id
+            - name: ENTRA_TENANT_ID
               valueFrom:
                 secretKeyRef:
-                  name: portal-sp-certificate
-                  key: tls.key
-            - name: LAA_PORTAL_IDP_METADATA_FILE
-              value: {{ .Values.variables.portalIDPMetadataFile }}
-            - name: SP_ENTITY_ID
-              value: {{ .Values.variables.spEntityId }}
+                  name: entra-idam-secrets
+                  key: entra-tenant-id
+            - name: ENTRA_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: entra-idam-secrets
+                  key: entra-client-secret
             - name: NSM_MAX_UPLOAD_SIZE_BYTES
               value: {{ mul .Values.variables.nsmMaxFileUploadBytes 1 | quote }}
             - name: PA_MAX_UPLOAD_SIZE_BYTES

@@ -11,7 +11,7 @@ RSpec.describe 'provider responds to further information request', :javascript, 
       status: 200,
       body: data.to_json
     )
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     visit edit_prior_authority_steps_further_information_path(application)
   end
 

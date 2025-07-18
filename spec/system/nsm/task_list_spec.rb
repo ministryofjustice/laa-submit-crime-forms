@@ -3,7 +3,7 @@ require 'system_helper'
 # rubocop:disable RSpec/ExampleLength
 RSpec.describe 'Task list', :stub_app_store_search, :stub_oauth_token do
   it 'updates the task list appropriately' do
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     click_on "Claim non-standard magistrates' court payments, previously CRM7"
     click_on 'Start a new claim'
 
@@ -15,6 +15,9 @@ RSpec.describe 'Task list', :stub_app_store_search, :stub_oauth_token do
       fill_in 'Month', with: '4'
       fill_in 'Year', with: '2023'
     end
+    click_on 'Save and continue'
+
+    first('.govuk-radios__label').click
     click_on 'Save and continue'
 
     # Firm in undesignated area

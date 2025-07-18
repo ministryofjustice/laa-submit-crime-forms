@@ -22,8 +22,8 @@ gem 'logstasher', '~> 2.1'
 gem 'logstash-event'
 gem 'marcel'
 gem 'oauth2', '~> 2.0'
+gem 'omniauth-entra-id'
 gem 'omniauth-rails_csrf_protection', '~> 1.0.1'
-gem 'omniauth-saml', '>= 2.1', '< 2.3'
 gem 'ostruct'
 gem 'pagy', '~> 9.3.5'
 gem 'pg', '~> 1.5'
@@ -81,3 +81,5 @@ group :test do
   gem 'super_diff'
   gem 'webmock', '~> 3.25'
 end
+
+gem "name_of_person", "~> 1.1"

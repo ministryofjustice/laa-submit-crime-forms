@@ -8,7 +8,7 @@ RSpec.describe 'View disbursement after submission', :javascript, :stub_oauth_to
       status: 200,
       body: SubmitToAppStore::NsmPayloadBuilder.new(claim:).payload.to_json
     )
-    visit provider_saml_omniauth_callback_path
+    visit provider_entra_id_omniauth_callback_path
     click_link 'Accept analytics cookies'
 
     visit item_nsm_steps_view_claim_path(id: claim, item_type: 'disbursement', item_id: disbursement.id)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_19_150857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -96,13 +96,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
     t.float "adjusted_total"
     t.float "adjusted_total_inc_vat"
     t.string "assessment_comment"
+    t.string "wasted_costs"
     t.integer "allowed_letters"
     t.integer "allowed_calls"
     t.integer "allowed_letters_uplift"
     t.integer "allowed_calls_uplift"
     t.string "letters_adjustment_comment"
     t.string "calls_adjustment_comment"
-    t.string "wasted_costs"
     t.date "work_completed_date"
     t.boolean "office_in_undesignated_area"
     t.boolean "court_in_undesignated_area"
@@ -111,9 +111,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
     t.boolean "submit_to_app_store_completed"
     t.boolean "send_notification_email_completed"
     t.datetime "originally_submitted_at"
-    t.boolean "include_youth_court_fee"
     t.date "change_solicitor_date"
     t.string "case_outcome_other_info"
+    t.boolean "include_youth_court_fee"
     t.string "main_offence_type"
     t.boolean "allowed_youth_court_fee"
     t.string "youth_court_fee_adjustment_comment"
@@ -198,6 +198,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
     t.uuid "prior_authority_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "extra_info"
     t.index ["prior_authority_application_id"], name: "index_incorrect_informations_on_prior_authority_application_id"
   end
 
@@ -214,17 +215,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "reason_why"
-    t.date "rep_order_date"
-    t.boolean "client_detained"
-    t.boolean "subject_to_poca"
+    t.boolean "next_hearing"
     t.date "next_hearing_date"
     t.string "plea"
     t.string "court_type"
     t.boolean "youth_court"
     t.boolean "psychiatric_liaison"
     t.string "psychiatric_liaison_reason_not"
-    t.boolean "next_hearing"
+    t.date "rep_order_date"
+    t.boolean "client_detained"
+    t.boolean "subject_to_poca"
+    t.text "reason_why"
     t.boolean "additional_costs_still_to_add"
     t.boolean "prior_authority_granted"
     t.text "no_alternative_quote_reason"
@@ -245,6 +246,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
     t.datetime "originally_submitted_at"
     t.jsonb "viewed_steps", default: [], array: true
     t.index ["core_search_fields"], name: "index_prior_authority_applications_on_core_search_fields", using: :gin
+    t.index ["created_at", "service_type"], name: "idx_pas_service_type_created_at", where: "((service_type IS NOT NULL) AND ((service_type)::text <> ''::text))"
     t.index ["firm_office_id"], name: "index_prior_authority_applications_on_firm_office_id"
     t.index ["provider_id"], name: "index_prior_authority_applications_on_provider_id"
     t.index ["solicitor_id"], name: "index_prior_authority_applications_on_solicitor_id"
@@ -267,6 +269,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
     t.string "last_sign_in_ip"
     t.integer "failed_attempts", default: 0, null: false
     t.datetime "locked_at"
+    t.string "first_name"
+    t.string "last_name"
     t.index ["auth_provider", "uid"], name: "index_providers_on_auth_provider_and_uid", unique: true
   end
 
@@ -349,8 +353,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_120704) do
     t.integer "allowed_uplift"
     t.integer "allowed_time_spent"
     t.string "adjustment_comment"
-    t.string "allowed_work_type"
     t.integer "position"
+    t.string "allowed_work_type"
     t.index ["claim_id"], name: "index_work_items_on_claim_id"
   end
 

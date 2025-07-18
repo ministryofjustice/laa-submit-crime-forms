@@ -8,17 +8,16 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
     request.env['devise.mapping'] = Devise.mappings[:provider]
 
     request.env['omniauth.auth'] = OmniAuth::AuthHash.new(
-      provider: 'saml',
+      provider: 'entra_id',
       uid: 'test-user',
       info: {
         email: 'provider@example.com',
-        roles: 'EFORMS,EFORMS_eFormsAuthor,CRIMEAPPLY',
         office_codes: office_codes,
       }
     )
   end
 
-  describe '#saml' do
+  describe '#entra_id' do
     context 'can access services' do
       before do
         allow(ActiveOfficeCodeService)
@@ -28,7 +27,7 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
       end
 
       it 'redirects to root path' do
-        get :saml
+        get :entra_id
         expect(response).to redirect_to(root_path)
       end
     end
@@ -44,7 +43,7 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
       end
 
       it 'redirects to inactive office path' do
-        get :saml
+        get :entra_id
         expect(response).to redirect_to '/errors/inactive_offices'
       end
     end
@@ -58,7 +57,7 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
       end
 
       it 'redirects to inactive offices error page' do
-        get :saml
+        get :entra_id
         expect(response).to redirect_to '/errors/inactive_offices'
       end
     end
@@ -74,7 +73,7 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
       end
 
       it 'redirects to inactive offices error page' do
-        get :saml
+        get :entra_id
         expect(response).to redirect_to '/errors/inactive_offices'
       end
     end
