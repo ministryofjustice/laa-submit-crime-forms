@@ -1,25 +1,9 @@
 # frozen_string_literal: true
 
-def cert_path
-  cert_path = Rails.root.join('tmp', 'omniauth-cert.p12')
-  cert_data = ENV.fetch('ENTRA_CERTIFICATE_DATA', nil)
-
-  return cert_path if File.exist?(cert_path)
-  return nil if cert_data.blank?
-
-  cert_data = Base64.strict_decode64(cert_data)
-
-  File.binwrite(cert_path, cert_data)
-  File.chmod(0o600, cert_path)
-
-  at_exit { File.delete(cert_path) }
-
-  cert_path
-end
-
 Devise.setup do |config|
   require 'devise/orm/active_record'
   require Rails.root.join('app/lib/silas/silas_strategy')
+  require Rails.root.join('app/lib/silas/silas_provider')
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
@@ -69,17 +53,6 @@ Devise.setup do |config|
 
   config.omniauth(
     :entra_id,
-    {
-      client_id:     ENV.fetch('ENTRA_CLIENT_ID', nil),
-      tenant_id:     ENV.fetch('ENTRA_TENANT_ID', nil),
-      certificate_path: cert_path,
-
-      # We set this so the login prompt always goes to the "select
-      # account" menu
-      authorize_params: {
-        prompt: 'select_account'
-      },
-      strategy_class: Silas::SilasStrategy
-    }
+    Silas::SilasProvider
   )
 end
