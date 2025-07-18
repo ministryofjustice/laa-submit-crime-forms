@@ -36,7 +36,7 @@ module Providers
 
     # :nocov:
     def office_codes
-      auth_data.info&.office_codes || %w[1A123B 2A555X]
+      auth_data.info.office_codes
     end
     # :nocov:
   end
