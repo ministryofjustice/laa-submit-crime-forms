@@ -6,7 +6,7 @@ en:
       index:
         title: Your office code is inactive
         message_html: |
-          To use this service you must <a class="govuk-link" rel="external" href="https://portal.legalservices.gov.uk/"> sign out of the LAA Online Portal</a> and sign in with a different LAA account, or contact your firm’s LAA account administrator to get access to a different firm office account number.
+          To use this service you must contact your firm’s LAA account administrator to get access to a different firm office account number.
     generic_login_failed: We could not log you in. This may be because you do not have permission to access this service.
     invalid_session:
       page_title: Sorry, you’ll have to start again
@@ -26,8 +26,8 @@ en:
     unauthorized:
       page_title: Unauthorized
       heading: Access restricted
-      lead_text: This page requires you to be signed in to LAA Portal. You will be redirected back to this service after you sign in.
-      sign_in_button: Sign in with LAA Portal
+      lead_text: This page requires you to be signed in to SILAS (Sign In to Legal Aid Services). You will be redirected back to this service after you sign in.
+      sign_in_button: Sign in with SILAS
     not_enrolled:
       page_title: Account not enrolled
       heading: Your account cannot use this service yet

@@ -76,8 +76,6 @@ worker_resources:
 
 variables:
   environment: production
-  portalIDPMetadataFile: config/laa_portal/metadata/prod.xml
-  spEntityId: LAA_Portal_CRM7_Prod
   appStore: http://laa-crime-application-store-app.laa-crime-application-store-production.svc.cluster.local
   paMaxFileUploadBytes: 10485760
   nsmMaxFileUploadBytes: 26214400

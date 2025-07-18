@@ -80,8 +80,6 @@ worker_resources:
 
 variables:
   environment: uat
-  portalIDPMetadataFile: config/laa_portal/metadata/uat.xml
-  spEntityId: LAA_Portal_CRM7_UAT
   appStore: http://laa-crime-application-store-app.laa-crime-application-store-uat.svc.cluster.local
   paMaxFileUploadBytes: 10485760
   nsmMaxFileUploadBytes: 26214400
