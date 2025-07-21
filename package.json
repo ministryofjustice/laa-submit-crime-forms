@@ -10,7 +10,7 @@
     "govuk-frontend": "5.10.0",
     "fastest-levenshtein": "^1.0.16",
     "jquery": "^3.7.1",
-    "puppeteer": "^24.8.0",
+    "puppeteer": "^24.11.1",
     "sass": "^1.89.2",
     "yarn": "^1.22.22"
   },
