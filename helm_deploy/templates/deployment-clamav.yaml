@@ -86,7 +86,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: clamav-configmap-staging
-  namespace: laa-apply-for-criminal-legal-aid-staging
+  namespace: {{ .Values.namespace }}
 data:
   freshclam.conf: |
     PrivateMirror https://laa-clamav-mirror-production.apps.live.cloud-platform.service.justice.gov.uk
