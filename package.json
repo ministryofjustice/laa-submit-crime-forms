@@ -3,10 +3,10 @@
   "private": "true",
   "dependencies": {
     "@hotwired/turbo-rails": "8.0.16",
-    "@ministryofjustice/frontend": "5.1.4",
+    "@ministryofjustice/frontend": "5.1.5",
     "accessible-autocomplete": "^3.0.1",
     "braces": "^3.0.3",
-    "esbuild": "^0.25.6",
+    "esbuild": "^0.25.8",
     "govuk-frontend": "5.10.0",
     "fastest-levenshtein": "^1.0.16",
     "jquery": "^3.7.1",
@@ -26,9 +26,9 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.0",
-    "babel-jest": "^30.0.4",
-    "jest": "^30.0.4",
-    "jest-environment-jsdom": "^30.0.4",
+    "babel-jest": "^30.0.5",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
     "jest-extended": "^6.0.0"
   }
 }
