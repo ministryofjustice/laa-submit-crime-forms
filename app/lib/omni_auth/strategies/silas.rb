@@ -15,7 +15,7 @@ module OmniAuth
 
       # Here we normalizes the value to always return an array.
       def office_codes
-        [*@raw_info.fetch('LAA_ACCOUNTS')]
+        [*@raw_info.fetch('LAA_ACCOUNTS', [])]
       end
 
       def email
