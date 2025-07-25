@@ -34,12 +34,13 @@ Rails.application.routes.draw do
     if FeatureFlags.omniauth_test_mode.enabled?
       get 'login', to: 'home#dev_login', as: :new_provider_session
     else
-      get 'login', to: 'errors#unauthorized', as: :new_provider_session
+      get 'login', to: 'providers/sessions#silent_auth', as: :new_provider_session
     end
 
     namespace :providers do
       delete 'logout', to: 'sessions#destroy', as: :logout
       get 'logout', to: 'sessions#destroy'
+      get 'retry_auth', to: 'sessions#retry_auth'
     end
   end
 

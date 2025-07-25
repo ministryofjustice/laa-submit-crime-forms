@@ -56,9 +56,9 @@ RSpec.describe 'Error pages' do
         allow(OmniAuth.config).to receive(:test_mode).and_return(false)
       end
 
-      it 'redirects to the home' do
+      it 'redirects to unauthorized errors' do
         post provider_entra_id_omniauth_authorize_path
-        expect(response).to redirect_to(new_provider_session_path)
+        expect(response).to redirect_to(unauthorized_errors_path)
       end
     end
   end
