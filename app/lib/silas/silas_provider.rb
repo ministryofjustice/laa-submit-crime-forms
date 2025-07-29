@@ -27,13 +27,14 @@ module Silas
 
       if @strategy.request
         ap[:prompt] = @strategy.request.params[:prompt] if @strategy.request.params[:prompt]
-        login_hint = @strategy.request.cookies[:login_hint] || @strategy.request.params[:login_hint]
+        login_hint = @strategy.request.cookies["login_hint"]
 
-        if login_hint
+        if login_hint.present?
           ap[:login_hint] = login_hint
           ap[:prompt] = 'none'
         end
       end
+
       ap
     end
 
