@@ -2,6 +2,7 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
   include Pagy::Backend
   include ApplicationHelper
   include CookieConcern
+
   helper_method :pagy, :pagy_array
 
   before_action :check_maintenance_mode

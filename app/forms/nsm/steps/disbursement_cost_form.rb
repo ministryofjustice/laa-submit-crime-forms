@@ -2,6 +2,7 @@ module Nsm
   module Steps
     class DisbursementCostForm < ::Steps::AddAnotherForm
       include DisbursementCosts
+
       attr_writer :apply_vat
 
       attribute :miles, :fully_validatable_decimal, precision: 10, scale: 3

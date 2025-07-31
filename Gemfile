@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.193'
+gem 'aws-sdk-s3', '~> 1.194'
 gem 'bootsnap', '~> 1.18.6', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
@@ -16,7 +16,7 @@ gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'grover'
 gem 'httparty'
 gem 'jsbundling-rails'
-gem 'laa_crime_forms_common', '~> 0.10.2', github: 'ministryofjustice/laa-crime-forms-common'
+gem 'laa_crime_forms_common', '~> 0.11.0', github: 'ministryofjustice/laa-crime-forms-common'
 gem 'lograge'
 gem 'logstasher', '~> 2.1'
 gem 'logstash-event'
@@ -26,7 +26,7 @@ gem 'omniauth-entra-id'
 gem 'omniauth-rails_csrf_protection', '~> 1.0.1'
 gem 'ostruct'
 gem 'pagy', '~> 9.3.5'
-gem 'pg', '~> 1.5'
+gem 'pg', '~> 1.6'
 gem 'prometheus_exporter'
 gem 'propshaft'
 gem 'puma', '~> 6.6.0'

@@ -4,6 +4,7 @@ module Nsm
       include ActionView::Helpers::NumberHelper
       include ActionView::Helpers::TagHelper
       include LaaMultiStepForms::CheckMissingHelper
+
       MIDDLE_COLUMN = true
 
       def translate(key, **)

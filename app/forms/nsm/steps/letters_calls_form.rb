@@ -2,6 +2,7 @@ module Nsm
   module Steps
     class LettersCallsForm < ::Steps::BaseFormObject
       include LettersAndCallsCosts
+
       attr_writer :apply_calls_uplift, :apply_letters_uplift
 
       delegate :rates, to: :application

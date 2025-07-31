@@ -1,6 +1,7 @@
 module LaaMultiStepForms
   class ApplicationController < ActionController::Base
     include ErrorHandling
+
     helper StepsHelper
     include ApplicationHelper
 

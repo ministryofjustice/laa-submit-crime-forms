@@ -3,6 +3,7 @@ module Nsm
     class ReadOnlyReport
       include GovukLinkHelper
       include ActionView::Helpers::UrlHelper
+
       GROUPS = {
         status: %w[application_status].freeze,
         overview: %w[
