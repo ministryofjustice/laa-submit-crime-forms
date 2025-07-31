@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 RSpec.describe ActiveOfficeCodeService do
   describe '.call' do
     subject { described_class.call(office_codes) }
@@ -7,12 +6,20 @@ RSpec.describe ActiveOfficeCodeService do
     let(:office_codes) { %w[AAAAA BBBBB] }
     let(:status) { 200 }
     let(:office_code_a_stub) do
-      stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/office-contract-details')
-        .to_return(status:)
+      stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
+        .to_return(
+          status: status,
+          body: { schedules: [{ areaOfLaw: 'CRIME LOWER' }] }.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
     end
     let(:office_code_b_stub) do
-      stub_request(:get, 'https://provider-api.example.com/provider-office/BBBBB/office-contract-details')
-        .to_return(status:)
+      stub_request(:get, 'https://provider-api.example.com/provider-office/BBBBB/schedules')
+        .to_return(
+          status: status,
+          body: { schedules: [{ areaOfLaw: 'CRIME LOWER' }] }.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
     end
 
     before do
@@ -48,8 +55,68 @@ RSpec.describe ActiveOfficeCodeService do
 
         it 'raises an error' do
           expect { subject }.to raise_error(
-            'Unexpected status code 500 when querying provider API endpoint provider-office/AAAAA/office-contract-details'
+            'Unexpected status code 500 when querying provider API endpoint provider-office/AAAAA/schedules'
           )
+        end
+      end
+
+      context 'when the schedule has CRIME LOWER area of law' do
+        let(:office_code_a_stub) do
+          stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
+            .to_return(
+              status: 200,
+              body: { schedules: [{ areaOfLaw: 'CRIME LOWER' }] }.to_json,
+              headers: { 'Content-Type' => 'application/json' }
+            )
+        end
+
+        it 'returns the office code as active' do
+          expect(subject).to eq office_codes
+        end
+      end
+
+      context 'when the schedule has FAMILY area of law' do
+        let(:office_code_a_stub) do
+          stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
+            .to_return(
+              status: 200,
+              body: { schedules: [{ areaOfLaw: 'FAMILY' }] }.to_json,
+              headers: { 'Content-Type' => 'application/json' }
+            )
+        end
+
+        it 'removes the office code from the result' do
+          expect(subject).to eq []
+        end
+      end
+
+      context 'when schedules is nil' do
+        let(:office_code_a_stub) do
+          stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
+            .to_return(
+              status: 200,
+              body: { schedules: nil }.to_json,
+              headers: { 'Content-Type' => 'application/json' }
+            )
+        end
+
+        it 'removes the office code from the result' do
+          expect(subject).to eq []
+        end
+      end
+
+      context 'when areaOfLaw is nil' do
+        let(:office_code_a_stub) do
+          stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
+            .to_return(
+              status: 200,
+              body: { schedules: [{ areaOfLaw: nil }] }.to_json,
+              headers: { 'Content-Type' => 'application/json' }
+            )
+        end
+
+        it 'removes the office code from the result' do
+          expect(subject).to eq []
         end
       end
     end
