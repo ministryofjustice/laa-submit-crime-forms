@@ -3,6 +3,7 @@ module Nsm
     include Searchable
     include ClaimCreatable
     include Cloneable
+
     layout 'nsm'
 
     before_action :set_scope, only: %i[submitted draft]

@@ -2,6 +2,7 @@ module Nsm
   module Steps
     class WorkItemsController < Nsm::Steps::BaseController
       include IncompleteItemsConcern
+
       before_action :set_default_table_sort_options
 
       def edit

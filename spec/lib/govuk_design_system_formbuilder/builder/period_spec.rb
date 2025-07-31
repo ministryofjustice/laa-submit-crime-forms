@@ -7,6 +7,7 @@ require 'rails_helper'
 # Can be removed once merged back in (need to add time_spent and time_spent_required to Person)
 class Person
   include ActiveModel::Model
+
   attr_accessor :name, :time_spent, :time_spent_required
 
   validates :time_spent, presence: true, if: :time_spent_required

@@ -5,6 +5,7 @@ module Nsm
   module Steps
     class FurtherInformationController < Nsm::Steps::BaseController
       include MultiFileUploadable
+
       skip_before_action :update_viewed_steps, :prune_viewed_steps
 
       def edit

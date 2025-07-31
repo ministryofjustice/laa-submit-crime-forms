@@ -2,6 +2,7 @@ require 'rails_helper'
 
 class Person
   include ActiveModel::Model
+
   attr_accessor :date_of_birth
 
   validates :date_of_birth, presence: true

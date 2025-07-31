@@ -4,6 +4,7 @@ module Nsm
   module Steps
     class SupportingEvidenceController < Nsm::Steps::BaseController
       include MultiFileUploadable
+
       before_action :supporting_evidence
 
       def edit

@@ -8,6 +8,7 @@ module Nsm
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
       include ActionView::Helpers::OutputSafetyHelper
+
       attr_reader :claim
 
       def initialize(claim, skip_links: false)

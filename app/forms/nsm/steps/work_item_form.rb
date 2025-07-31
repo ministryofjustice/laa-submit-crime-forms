@@ -2,6 +2,7 @@ module Nsm
   module Steps
     class WorkItemForm < ::Steps::AddAnotherForm
       include WorkItemCosts
+
       attr_writer :apply_uplift
 
       attribute :work_type, :value_object, source: WorkTypes

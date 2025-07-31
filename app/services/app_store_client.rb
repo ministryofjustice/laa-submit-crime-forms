@@ -1,5 +1,6 @@
 class AppStoreClient
   include HTTParty
+
   headers 'Content-Type' => 'application/json'
 
   def post(message, path: 'v1/application/')
