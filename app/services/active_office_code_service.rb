@@ -9,8 +9,9 @@ class ActiveOfficeCodeService
     def active?(office_code)
       return true if always_active_office_codes.include?(office_code)
       return false if always_inactive_office_codes.include?(office_code)
+      return contract_active?(office_code) if FeatureFlags.provider_api_login_check.enabled?
 
-      contract_active?(office_code)
+      true
     end
 
     def always_inactive_office_codes

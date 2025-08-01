@@ -23,6 +23,7 @@ RSpec.describe ActiveOfficeCodeService do
     end
 
     before do
+      allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: true))
       office_code_a_stub
       office_code_b_stub
     end
