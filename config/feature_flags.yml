@@ -25,3 +25,9 @@ feature_flags:
     development: true
     uat: true
     production: true
+  # TODO: Remove this flag and code when PDA data issues are resolved
+  provider_api_login_check:
+    local: <%= ENV.fetch("PROVIDER_API_LOGIN_CHECK", false) %>
+    development: false
+    uat: true
+    production: true

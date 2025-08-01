@@ -23,8 +23,23 @@ RSpec.describe ActiveOfficeCodeService do
     end
 
     before do
+      allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: true))
       office_code_a_stub
       office_code_b_stub
+    end
+
+    context 'when the login check is disabled' do
+      before do
+        allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: false))
+        office_code_a_stub
+        office_code_b_stub
+      end
+
+      it 'does not call the API and allows access' do
+        expect(subject).to eq(office_codes)
+        expect(office_code_a_stub).not_to have_been_requested
+        expect(office_code_b_stub).not_to have_been_requested
+      end
     end
 
     it 'calls the API for each office code' do
