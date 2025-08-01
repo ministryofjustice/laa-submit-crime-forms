@@ -1,10 +1,9 @@
-# :nocov: PDA is disabled for now
 class ProviderDataApiClient
   class << self
     def contract_active?(office_code)
       query(
-        "provider-office/#{office_code}/office-contract-details",
-        200 => true,
+        "provider-office/#{office_code}/schedules",
+        200 => ->(data) { data['schedules']&.any? { |schedule| schedule['areaOfLaw']&.upcase&.start_with?('CRIME') } },
         204 => false,
       )
     end
@@ -51,4 +50,3 @@ class ProviderDataApiClient
     end
   end
 end
-# :nocov:
