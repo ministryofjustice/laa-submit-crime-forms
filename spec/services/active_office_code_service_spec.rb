@@ -51,12 +51,6 @@ RSpec.describe ActiveOfficeCodeService do
     context 'when dealing with a single office code' do
       let(:office_codes) { ['AAAAA'] }
 
-      context 'when the contract is active' do
-        it 'returns the office code' do
-          expect(subject).to eq office_codes
-        end
-      end
-
       context 'when there is no active contract but there was before' do
         let(:status) { 204 }
 
@@ -80,7 +74,13 @@ RSpec.describe ActiveOfficeCodeService do
           stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
             .to_return(
               status: 200,
-              body: { schedules: [{ areaOfLaw: 'CRIME LOWER' }] }.to_json,
+              body: {
+                schedules: [{
+                  areaOfLaw: 'CRIME LOWER',
+                  contractStatus: 'Open',
+                  scheduleEndDate: (Date.current + 1).to_s
+                }]
+              }.to_json,
               headers: { 'Content-Type' => 'application/json' }
             )
         end
@@ -120,12 +120,33 @@ RSpec.describe ActiveOfficeCodeService do
         end
       end
 
-      context 'when areaOfLaw is nil' do
+      context 'when the contract is closed' do
         let(:office_code_a_stub) do
           stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
             .to_return(
               status: 200,
-              body: { schedules: [{ areaOfLaw: nil }] }.to_json,
+              body: { schedules: [{ areaOfLaw: 'CRIME LOWER', contractStatus: 'Closed' }] }.to_json,
+              headers: { 'Content-Type' => 'application/json' }
+            )
+        end
+
+        it 'removes the office code from the result' do
+          expect(subject).to eq []
+        end
+      end
+
+      context 'when the schedule end date is in the past' do
+        let(:office_code_a_stub) do
+          stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
+            .to_return(
+              status: 200,
+              body: {
+                schedules: [{
+                  areaOfLaw: 'CRIME LOWER',
+                  contractStatus: 'Open',
+                  scheduleEndDate: (Date.current - 1).to_s
+                }]
+              }.to_json,
               headers: { 'Content-Type' => 'application/json' }
             )
         end
