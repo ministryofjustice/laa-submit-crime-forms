@@ -6,20 +6,13 @@ RSpec.describe ActiveOfficeCodeService do
     let(:office_codes) { %w[AAAAA BBBBB] }
     let(:status) { 200 }
     let(:office_code_a_stub) do
-      stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
-        .to_return(
-          status: status,
-          body: { schedules: [{ areaOfLaw: 'CRIME LOWER' }] }.to_json,
-          headers: { 'Content-Type' => 'application/json' }
-        )
+      stub_request(:head, 'https://provider-api.example.com/provider-office/AAAAA/schedules?areaOfLaw=CRIME%20LOWER')
+        .to_return(status:)
     end
+
     let(:office_code_b_stub) do
-      stub_request(:get, 'https://provider-api.example.com/provider-office/BBBBB/schedules')
-        .to_return(
-          status: status,
-          body: { schedules: [{ areaOfLaw: 'CRIME LOWER' }] }.to_json,
-          headers: { 'Content-Type' => 'application/json' }
-        )
+      stub_request(:head, 'https://provider-api.example.com/provider-office/BBBBB/schedules?areaOfLaw=CRIME%20LOWER')
+        .to_return(status:)
     end
 
     before do
@@ -50,6 +43,13 @@ RSpec.describe ActiveOfficeCodeService do
 
     context 'when dealing with a single office code' do
       let(:office_codes) { ['AAAAA'] }
+      let(:url) { "/provider-office/#{office_codes.first}/schedules?areaOfLaw=CRIME%20LOWER" }
+
+      context 'when the contract is active' do
+        it 'returns the office code' do
+          expect(subject).to eq office_codes
+        end
+      end
 
       context 'when there is no active contract but there was before' do
         let(:status) { 204 }
@@ -64,95 +64,8 @@ RSpec.describe ActiveOfficeCodeService do
 
         it 'raises an error' do
           expect { subject }.to raise_error(
-            'Unexpected status code 500 when querying provider API endpoint provider-office/AAAAA/schedules'
+            "Unexpected status code 500 when querying provider API endpoint #{url}"
           )
-        end
-      end
-
-      context 'when the schedule has CRIME LOWER area of law' do
-        let(:office_code_a_stub) do
-          stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
-            .to_return(
-              status: 200,
-              body: {
-                schedules: [{
-                  areaOfLaw: 'CRIME LOWER',
-                  contractStatus: 'Open',
-                  scheduleEndDate: (Date.current + 1).to_s
-                }]
-              }.to_json,
-              headers: { 'Content-Type' => 'application/json' }
-            )
-        end
-
-        it 'returns the office code as active' do
-          expect(subject).to eq office_codes
-        end
-      end
-
-      context 'when the schedule has FAMILY area of law' do
-        let(:office_code_a_stub) do
-          stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
-            .to_return(
-              status: 200,
-              body: { schedules: [{ areaOfLaw: 'FAMILY' }] }.to_json,
-              headers: { 'Content-Type' => 'application/json' }
-            )
-        end
-
-        it 'removes the office code from the result' do
-          expect(subject).to eq []
-        end
-      end
-
-      context 'when schedules is nil' do
-        let(:office_code_a_stub) do
-          stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
-            .to_return(
-              status: 200,
-              body: { schedules: nil }.to_json,
-              headers: { 'Content-Type' => 'application/json' }
-            )
-        end
-
-        it 'removes the office code from the result' do
-          expect(subject).to eq []
-        end
-      end
-
-      context 'when the contract is closed' do
-        let(:office_code_a_stub) do
-          stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
-            .to_return(
-              status: 200,
-              body: { schedules: [{ areaOfLaw: 'CRIME LOWER', contractStatus: 'Closed' }] }.to_json,
-              headers: { 'Content-Type' => 'application/json' }
-            )
-        end
-
-        it 'removes the office code from the result' do
-          expect(subject).to eq []
-        end
-      end
-
-      context 'when the schedule end date is in the past' do
-        let(:office_code_a_stub) do
-          stub_request(:get, 'https://provider-api.example.com/provider-office/AAAAA/schedules')
-            .to_return(
-              status: 200,
-              body: {
-                schedules: [{
-                  areaOfLaw: 'CRIME LOWER',
-                  contractStatus: 'Open',
-                  scheduleEndDate: (Date.current - 1).to_s
-                }]
-              }.to_json,
-              headers: { 'Content-Type' => 'application/json' }
-            )
-        end
-
-        it 'removes the office code from the result' do
-          expect(subject).to eq []
         end
       end
     end
