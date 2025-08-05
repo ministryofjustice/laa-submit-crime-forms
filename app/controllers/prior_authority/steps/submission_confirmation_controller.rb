@@ -2,7 +2,7 @@ module PriorAuthority
   module Steps
     class SubmissionConfirmationController < BaseController
       def show
-        @ufn = current_application.ufn
+        @laa_reference = current_application.laa_reference
       end
 
       private
@@ -12,6 +12,10 @@ module PriorAuthority
         # have been autogranted, but we still want them to see this screen, which is why auto_grant is
         # included here.
         current_application.submitted? || current_application.provider_updated? || current_application.auto_grant?
+      end
+
+      def current_application
+        @current_application ||= AppStoreDetailService.prior_authority(params[:id], current_provider)
       end
     end
   end

@@ -4,7 +4,7 @@ module Nsm
       skip_before_action :update_viewed_steps, :prune_viewed_steps
 
       def show
-        @ufn = current_application.ufn
+        @laa_reference = current_application.laa_reference
       end
 
       def step_valid?
