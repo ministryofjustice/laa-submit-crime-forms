@@ -4,7 +4,6 @@ RSpec.describe 'Prior authority application lists', :stub_oauth_token do
   let(:chosen) do
     create(:prior_authority_application,
            :full,
-           laa_reference: 'LAA-AAAAA',
            ufn: '120423/818',
            state: 'submitted',
            updated_at: 1.day.ago)
@@ -13,20 +12,20 @@ RSpec.describe 'Prior authority application lists', :stub_oauth_token do
   before do
     visit provider_entra_id_omniauth_callback_path
     chosen
-    submitted = create(:prior_authority_application, :full, laa_reference: 'LAA-BBBBB', state: 'submitted',
+    submitted = create(:prior_authority_application, :full, state: 'submitted',
                         updated_at: 2.days.ago)
-    granted = create(:prior_authority_application, :full, laa_reference: 'LAA-CCCC1', state: 'granted',
+    granted = create(:prior_authority_application, :full, state: 'granted',
                         updated_at: 3.days.ago)
-    sent_back = create(:prior_authority_application, :full, laa_reference: 'LAA-CCCC2', state: 'sent_back',
+    sent_back = create(:prior_authority_application, :full, state: 'sent_back',
                         updated_at: 3.days.ago)
-    part_grant = create(:prior_authority_application, :full, laa_reference: 'LAA-CCCC3', state: 'part_grant',
+    part_grant = create(:prior_authority_application, :full, state: 'part_grant',
                         updated_at: 3.days.ago)
-    rejected = create(:prior_authority_application, :full, laa_reference: 'LAA-CCCC4', state: 'rejected',
+    rejected = create(:prior_authority_application, :full, state: 'rejected',
                         updated_at: 3.days.ago)
-    auto_grant = create(:prior_authority_application, :full, laa_reference: 'LAA-CCCC5', state: 'auto_grant',
+    auto_grant = create(:prior_authority_application, :full, state: 'auto_grant',
                         updated_at: 3.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-DDDDD', state: 'draft', updated_at: 4.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-EEEEE', state: 'draft',
+    create(:prior_authority_application, state: 'draft', updated_at: 4.days.ago)
+    create(:prior_authority_application, state: 'draft',
            office_code: 'OTHER', provider: create(:provider, :other))
 
     stub_request(:post, 'https://app-store.example.com/v1/submissions/searches').with do |request|

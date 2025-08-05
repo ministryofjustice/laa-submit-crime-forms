@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User can see an application status', :stub_app_store_search, :stub_oauth_token, type: :system do
-  let(:claim) { create(:claim, :complete, :case_type_breach, laa_reference: 'ABC123', state: :submitted) }
+  let(:claim) { create(:claim, :complete, :case_type_breach, state: :submitted) }
 
   before do
     stub_app_store_payload(claim)
