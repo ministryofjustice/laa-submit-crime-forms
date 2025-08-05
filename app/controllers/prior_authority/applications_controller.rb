@@ -56,7 +56,7 @@ module PriorAuthority
       pdf = PdfService.prior_authority(application_locals(skip_links: true), request.url)
 
       send_data pdf,
-                filename: "#{current_application.ufn}.pdf",
+                filename: "#{current_application.ufn.gsub('\\/', '')}.pdf",
                 type: 'application/pdf'
     end
 
