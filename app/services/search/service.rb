@@ -155,7 +155,6 @@ module Search
       'ufn' => 'ufn ?',
       'client_name' => 'defendants.first_name ?, defendants.last_name ?',
       'last_state_change' => 'updated_at ?',
-      'laa_reference' => 'laa_reference ?',
       'status_with_assignment' => 'state ?',
       'account_number' => 'office_code ?',
     }.freeze

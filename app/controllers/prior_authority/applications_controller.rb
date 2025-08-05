@@ -56,7 +56,7 @@ module PriorAuthority
       pdf = PdfService.prior_authority(application_locals(skip_links: true), request.url)
 
       send_data pdf,
-                filename: "#{current_application.laa_reference}.pdf",
+                filename: "#{current_application.ufn}.pdf",
                 type: 'application/pdf'
     end
 
@@ -75,7 +75,6 @@ module PriorAuthority
       'ufn' => 'ufn ?',
       'client' => 'defendants.first_name ?, defendants.last_name ?',
       'last_updated' => 'updated_at ?',
-      'laa_reference' => 'laa_reference ?',
       'state' => 'state ?',
       'office_code' => 'office_code ?'
     }.freeze

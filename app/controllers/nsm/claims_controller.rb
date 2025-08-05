@@ -60,7 +60,6 @@ module Nsm
       'ufn' => 'ufn ?',
       'defendant' => 'defendants.first_name ?, defendants.last_name ?',
       'last_updated' => 'updated_at ?',
-      'laa_reference' => 'laa_reference ?',
       'state' => 'state ?',
       'account' => 'office_code ?'
     }.freeze

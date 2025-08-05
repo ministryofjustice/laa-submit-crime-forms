@@ -1,7 +1,7 @@
 <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="<%= described_by %>">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <% ['ufn', 'client', 'office_code', 'last_updated', 'laa_reference', 'state'].each do |key| %>
+      <% ['ufn', 'client', 'office_code', 'last_updated', 'state'].each do |key| %>
         <%= table_header_with_link(key, 'prior_authority.applications.tabs.header', params, sort_by, sort_direction) %>
       <% end %>
     </tr>
@@ -23,9 +23,6 @@
         </td>
         <td class="govuk-table__cell">
           <%= application.updated_at.to_fs(:stamp) %>
-        </td>
-        <td class="govuk-table__cell">
-          <%= application.laa_reference %>
         </td>
         <td class="govuk-table__cell">
           <div class="govuk-tag <%= prior_authority_tag_colour(application.state) %>">

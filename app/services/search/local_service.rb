@@ -21,7 +21,7 @@ module Search
         params[:search_string].split.reduce(base_query) do |built_query, token|
           word = token.strip
 
-          if laa_reference_or_ufn?(word)
+          if ufn?(word)
             built_query.where("core_search_fields @@ to_tsquery('simple', ?)", escape_string(word))
           else
             built_query.where("searchable_defendants.search_fields @@ to_tsquery('simple', ?)", escape_string(word))
@@ -64,8 +64,8 @@ module Search
         query.distinct
       end
 
-      def laa_reference_or_ufn?(word)
-        word.downcase.starts_with?('laa-') || %r{\A\d+/\d+\z}.match?(word)
+      def ufn?(word)
+        %r{\A\d+/\d+\z}.match?(word)
       end
     end
   end

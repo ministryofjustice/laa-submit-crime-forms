@@ -55,7 +55,7 @@ RSpec.describe PriorAuthority::Steps::AuthorityValueForm do
   describe '#save' do
     subject(:save) { form.save }
 
-    let(:application) { create(:prior_authority_application, laa_reference: nil) }
+    let(:application) { create(:prior_authority_application) }
 
     context 'with authority value value of true' do
       let(:authority_value) { 'true  ' }

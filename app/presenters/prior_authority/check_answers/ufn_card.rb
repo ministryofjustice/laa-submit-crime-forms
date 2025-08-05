@@ -25,10 +25,6 @@ module PriorAuthority
                   end
           },
           {
-            head_key: 'laa_reference',
-            text: check_missing(application.laa_reference),
-          },
-          {
             head_key: 'ufn',
             text: check_missing(application.ufn),
             actions: ufn_change_link,

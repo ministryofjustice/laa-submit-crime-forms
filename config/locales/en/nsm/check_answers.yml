@@ -15,7 +15,6 @@ en:
               returned: Date Returned
               laa_response: LAA response
             claim_type:
-              laa_reference: LAA reference
               file_ufn: Unique file number
               type_of_claim: Type of claim
               rep_order_date: Date of representation order

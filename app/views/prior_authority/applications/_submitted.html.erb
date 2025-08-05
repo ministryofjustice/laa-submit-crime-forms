@@ -8,7 +8,7 @@
     <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="tab_submitted">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <% ['ufn', 'client', 'office_code', 'last_updated', 'laa_reference'].each_with_index do |key, index| %>
+          <% ['ufn', 'client', 'office_code', 'last_updated'].each_with_index do |key, index| %>
             <%= table_header(key,
                             'prior_authority.applications.tabs.header',
                             index,
@@ -35,9 +35,6 @@
             </td>
             <td class="govuk-table__cell">
               <%= application.updated_at.to_fs(:stamp) %>
-            </td>
-            <td class="govuk-table__cell">
-              <%= application.laa_reference %>
             </td>
           </tr>
         <% end %>

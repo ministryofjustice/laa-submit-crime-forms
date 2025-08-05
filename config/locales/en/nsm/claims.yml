@@ -17,7 +17,6 @@ en:
           defendant: Defendant
           account: Account
           last_updated: Last updated
-          laa_reference: LAA reference
           state: Status
           actions: Actions
         state:
@@ -48,7 +47,6 @@ en:
           draft: You do not have any draft claims
       confirm_delete:
         page_title: Are you sure you want to delete this draft claim?
-        laa_reference: "LAA reference:"
         ufn_reference: "UFN reference:"
         yes_delete: "Yes, delete it"
         no_delete: "No, do not delete it"

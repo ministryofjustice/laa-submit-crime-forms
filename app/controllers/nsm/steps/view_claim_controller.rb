@@ -63,7 +63,7 @@ module Nsm
         pdf = PdfService.nsm(view_locals, request.url)
 
         send_data pdf,
-                  filename: "#{current_application.laa_reference}.pdf",
+                  filename: "#{current_application.ufn}.pdf",
                   type: 'application/pdf'
       end
 

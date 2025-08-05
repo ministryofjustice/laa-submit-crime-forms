@@ -140,7 +140,6 @@ prior_authority_applications:
   prison_law: false
   authority_value: false
   ufn: false
-  laa_reference: false
   state: false
   navigation_stack: false
   viewed_steps: false
@@ -216,7 +215,6 @@ claims:
   other_info: true
   conclusion: true
   concluded: false
-  laa_reference: false
   letters_uplift: false
   work_before_date: false
   work_after_date: false

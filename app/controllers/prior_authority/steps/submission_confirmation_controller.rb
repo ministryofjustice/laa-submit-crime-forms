@@ -2,7 +2,7 @@ module PriorAuthority
   module Steps
     class SubmissionConfirmationController < BaseController
       def show
-        @laa_reference = current_application.laa_reference
+        @ufn = current_application.ufn
       end
 
       private

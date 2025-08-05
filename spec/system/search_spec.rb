@@ -6,7 +6,6 @@ RSpec.describe 'Search', :stub_oauth_token do
   describe 'PA' do
     let(:matching) do
       create :prior_authority_application, :full,
-             laa_reference: 'LAA-AB1234',
              office_code: '1A123B',
              ufn: '070620/123',
              defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
@@ -15,7 +14,6 @@ RSpec.describe 'Search', :stub_oauth_token do
 
     let(:different_office) do
       create :prior_authority_application, :full,
-             laa_reference: 'LAA-AB1234',
              office_code: 'CCCCCC',
              ufn: '070620/123',
              defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
@@ -24,7 +22,6 @@ RSpec.describe 'Search', :stub_oauth_token do
 
     let(:non_matching) do
       create :prior_authority_application, :full,
-             laa_reference: 'LAA-99999C',
              office_code: '1A123B',
              ufn: '110120/123',
              defendant: build(:defendant, :valid, first_name: 'Jane', last_name: 'Doe'),
@@ -81,7 +78,6 @@ RSpec.describe 'Search', :stub_oauth_token do
         context 'when the only matching result is a draft' do
           let(:matching) do
             create :prior_authority_application, :full,
-                   laa_reference: 'LAA-AB1234',
                    office_code: '1A123B',
                    ufn: '070620/123',
                    defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
@@ -148,7 +144,6 @@ RSpec.describe 'Search', :stub_oauth_token do
     context 'when there are multiple results' do
       let(:other_matching) do
         create :prior_authority_application, :full,
-               laa_reference: 'LAA-EE1234',
                office_code: '1A123B',
                ufn: '060620/999',
                defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
@@ -183,7 +178,6 @@ RSpec.describe 'Search', :stub_oauth_token do
     context 'change link target based on state' do
       let(:draft) do
         create :prior_authority_application, :full,
-               laa_reference: 'LAA-99999C',
                office_code: '1A123B',
                ufn: '110120/123',
                defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Doe', date_of_birth: '1995-10-05'),
@@ -192,7 +186,6 @@ RSpec.describe 'Search', :stub_oauth_token do
 
       let(:submitted) do
         create :prior_authority_application, :full,
-               laa_reference: 'LAA-AB1234',
                office_code: '1A123B',
                ufn: '070620/123',
                defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs', date_of_birth: '1995-10-06'),
@@ -237,7 +230,6 @@ RSpec.describe 'Search', :stub_oauth_token do
 
       let(:draft_matching) do
         create :prior_authority_application, :full,
-               laa_reference: 'LAA-CD5678',
                office_code: '1A123B',
                ufn: '070620/123',
                defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
@@ -266,7 +258,6 @@ RSpec.describe 'Search', :stub_oauth_token do
   describe 'NSM' do
     let(:matching) do
       create :claim, :complete, :case_type_breach,
-             laa_reference: 'LAA-AB1234',
              office_code: 'XYZXYZ',
              ufn: '070620/123',
              main_defendant: build(:defendant, :valid, first_name: 'Joe', last_name: "Bloggs-O'Reilly"),
@@ -277,7 +268,6 @@ RSpec.describe 'Search', :stub_oauth_token do
 
     let(:non_matching) do
       create :claim, :complete,
-             laa_reference: 'LAA-99999C',
              office_code: '1A123B',
              ufn: '110120/123',
              main_defendant: build(:defendant, :valid, first_name: 'Jane', last_name: 'Doe'),
@@ -288,7 +278,6 @@ RSpec.describe 'Search', :stub_oauth_token do
 
     let(:different_office) do
       create :claim, :complete,
-             laa_reference: 'LAA-AB1234',
              office_code: 'CCCCCC',
              ufn: '070620/123',
              main_defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
@@ -579,7 +568,6 @@ RSpec.describe 'Search', :stub_oauth_token do
     context 'when there are multiple results' do
       let(:other_matching) do
         create :claim, :complete, :case_type_breach,
-               laa_reference: 'LAA-EE1234',
                office_code: '1A123B',
                ufn: '060620/999',
                main_defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
