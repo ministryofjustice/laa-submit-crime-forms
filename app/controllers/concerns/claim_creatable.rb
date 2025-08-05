@@ -1,6 +1,5 @@
 module ClaimCreatable
   extend ActiveSupport::Concern
-  include GeneratesLaaReference
 
   def initialize_application(&block)
     attributes = {
