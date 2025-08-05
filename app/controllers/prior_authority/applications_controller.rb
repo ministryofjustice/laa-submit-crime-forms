@@ -75,7 +75,6 @@ module PriorAuthority
       'ufn' => 'ufn ?',
       'client' => 'defendants.first_name ?, defendants.last_name ?',
       'last_updated' => 'updated_at ?',
-      'laa_reference' => 'laa_reference ?',
       'state' => 'state ?',
       'office_code' => 'office_code ?'
     }.freeze
