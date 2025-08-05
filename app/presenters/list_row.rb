@@ -32,6 +32,10 @@ class ListRow
     @app_store_record['application']['office_code']
   end
 
+  def laa_reference
+    @app_store_record['application']['laa_reference']
+  end
+
   def updated_at
     DateTime.parse(@app_store_record['application']['updated_at'])
   end
