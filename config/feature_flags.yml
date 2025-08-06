@@ -24,5 +24,5 @@ feature_flags:
   provider_api_login_check:
     local: <%= ENV.fetch("PROVIDER_API_LOGIN_CHECK", false) %>
     development: false
-    uat: true
-    production: true
+    uat: false
+    production: false
