@@ -43,7 +43,7 @@ RSpec.describe 'Search', :stub_oauth_token do
           status: 201,
           body: {
             raw_data: sorted.map do |app|
-              SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: app).payload.merge(applicatioN_state: app.state)
+              SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: app).payload.merge(application_state: app.state)
             end,
             metadata: { total_results: applications.count }
           }.to_json
