@@ -4,6 +4,10 @@ RSpec.describe Nsm::Steps::ClaimConfirmationController, type: :controller do
   describe '#show' do
     let(:claim) { create(:claim, state: 'submitted') }
 
+    before do 
+      allow(claim).to receive(:laa_reference).and_return 'LAA-ABC123'
+    end
+
     context 'when application is not found' do
       before { allow(AppStoreDetailService).to receive(:nsm).and_return(nil) }
 
