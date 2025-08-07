@@ -4,7 +4,7 @@ RSpec.describe Nsm::Steps::ClaimConfirmationController, type: :controller do
   describe '#show' do
     let(:claim) { create(:claim, state: 'submitted') }
 
-    before do 
+    before do
       allow(claim).to receive(:laa_reference).and_return 'LAA-ABC123'
     end
 

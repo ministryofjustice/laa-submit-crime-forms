@@ -148,10 +148,10 @@ RSpec.describe 'Prior authority application lists', :stub_oauth_token do
   end
 
   def attach_ref_to_payload(app)
-      # TODO: this method is only needed because we are 
-      # equating an app store payload with a local record
-      # it should be considered tech debt that we aim to get rid of 
-      # when unifying submissions into one db
+    # TODO: this method is only needed because we are
+    # equating an app store payload with a local record
+    # it should be considered tech debt that we aim to get rid of
+    # when unifying submissions into one db
     payload = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: app).payload
     ref = laa_references.select { _1[:id] == payload[:application_id] }.first[:laa_reference]
     payload[:application][:laa_reference] = ref
