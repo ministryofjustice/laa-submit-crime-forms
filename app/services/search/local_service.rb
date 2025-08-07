@@ -22,7 +22,7 @@ module Search
           word = token.strip
 
           if ufn?(word)
-            built_query.where("core_search_fields @@ to_tsquery('simple', ?)", escape_string(word))
+            built_query.where("ufn @@ to_tsquery('simple', ?)", escape_string(word))
           else
             built_query.where("searchable_defendants.search_fields @@ to_tsquery('simple', ?)", escape_string(word))
           end

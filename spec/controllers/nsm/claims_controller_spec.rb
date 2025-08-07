@@ -56,7 +56,7 @@ RSpec.describe Nsm::ClaimsController do
     let(:claim) { create(:claim, :complete, :as_draft) }
     # Ignore fields that `dup` doesn't handle, as well as fields that won't get duplicated
     # We also have to ignore `viewed_steps` as we redirect to the start page after cloning
-    let(:ignored_attrs) { %w[id created_at updated_at core_search_fields viewed_steps] }
+    let(:ignored_attrs) { %w[id created_at updated_at viewed_steps] }
 
     before do
       claim.save

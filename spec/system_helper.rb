@@ -10,7 +10,14 @@ def attach_ref_to_payload(app)
   # equating an app store payload with a local record
   # it should be considered tech debt that we aim to get rid of
   # when unifying submissions into one db
-  payload = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: app).payload
+  payload = nil
+  case app.class.name
+  when 'PriorAuthorityApplication'
+    payload = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: app).payload
+  when 'Claim'
+    payload = SubmitToAppStore::NsmPayloadBuilder.new(claim: app).payload
+  end
+
   ref = laa_references.select { _1[:id] == payload[:application_id] }.first[:laa_reference]
   payload[:application][:laa_reference] = ref
   payload

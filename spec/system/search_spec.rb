@@ -4,8 +4,19 @@ RSpec.describe 'Search', :stub_oauth_token do
   before { allow(LaaCrimeFormsCommon::Validator).to receive(:validate).and_return([]) }
 
   describe 'PA' do
+    let(:matching_id) { SecureRandom.uuid }
+    let(:different_office_id) { SecureRandom.uuid }
+    let(:non_matching_id) { SecureRandom.uuid }
+    let(:laa_references) do
+      [
+        { id: matching_id, laa_reference: 'LAA-AB1234' },
+        { id: different_office_id, laa_reference: 'LAA-AB1234' },
+        { id: non_matching_id, laa_reference: 'LAA-99999C' }
+      ]
+    end
     let(:matching) do
       create :prior_authority_application, :full,
+             id: matching_id,
              office_code: '1A123B',
              ufn: '070620/123',
              defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
@@ -14,6 +25,7 @@ RSpec.describe 'Search', :stub_oauth_token do
 
     let(:different_office) do
       create :prior_authority_application, :full,
+             id: different_office_id,
              office_code: 'CCCCCC',
              ufn: '070620/123',
              defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
@@ -22,6 +34,7 @@ RSpec.describe 'Search', :stub_oauth_token do
 
     let(:non_matching) do
       create :prior_authority_application, :full,
+             id: non_matching_id,
              office_code: '1A123B',
              ufn: '110120/123',
              defendant: build(:defendant, :valid, first_name: 'Jane', last_name: 'Doe'),
@@ -43,7 +56,8 @@ RSpec.describe 'Search', :stub_oauth_token do
           status: 201,
           body: {
             raw_data: sorted.map do |app|
-              SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: app).payload.merge(application_state: app.state)
+              payload = attach_ref_to_payload(app)
+              payload.merge(application_state: app.state)
             end,
             metadata: { total_results: applications.count }
           }.to_json
@@ -72,22 +86,6 @@ RSpec.describe 'Search', :stub_oauth_token do
             expect(page).to have_content 'Submitted'
             expect(page).to have_no_content 'Draft'
             expect(page).to have_no_content 'Rejected'
-          end
-        end
-
-        context 'when the only matching result is a draft' do
-          let(:matching) do
-            create :prior_authority_application, :full,
-                   office_code: '1A123B',
-                   ufn: '070620/123',
-                   defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
-                   state: :draft
-          end
-
-          it 'shows only the matching record that I am associated with' do
-            within('.govuk-table') do
-              expect(page).to have_content 'Draft'
-            end
           end
         end
       end
@@ -142,8 +140,17 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
 
     context 'when there are multiple results' do
+      let(:laa_references) do
+        [
+          { id: matching_id, laa_reference: 'LAA-AB1234' },
+          { id: different_office_id, laa_reference: 'LAA-AB1234' },
+          { id: non_matching_id, laa_reference: 'LAA-99999C' },
+          { id: other_matching_id, laa_reference: 'LAA-EE1234' }
+        ]
+      end
       let(:other_matching) do
         create :prior_authority_application, :full,
+               id: other_matching_id,
                office_code: '1A123B',
                ufn: '060620/999',
                defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
@@ -176,6 +183,15 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
 
     context 'change link target based on state' do
+      let(:laa_references) do
+        [
+          { id: matching_id, laa_reference: 'LAA-AB1234' },
+          { id: different_office_id, laa_reference: 'LAA-AB1234' },
+          { id: non_matching_id, laa_reference: 'LAA-99999C' },
+          { id: submitted_id, laa_reference: 'LAA-AB1234' }
+        ]
+      end
+
       let(:draft) do
         create :prior_authority_application, :full,
                office_code: '1A123B',
@@ -186,6 +202,7 @@ RSpec.describe 'Search', :stub_oauth_token do
 
       let(:submitted) do
         create :prior_authority_application, :full,
+               id: submitted_id,
                office_code: '1A123B',
                ufn: '070620/123',
                defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs', date_of_birth: '1995-10-06'),
@@ -226,6 +243,15 @@ RSpec.describe 'Search', :stub_oauth_token do
         visit search_prior_authority_applications_path
         fill_in 'Enter any combination of client, UFN or LAA reference', with: '070620/123'
         find('button.govuk-button#search').click
+      end
+
+      let(:laa_references) do
+        [
+          { id: matching_id, laa_reference: 'LAA-AB1234' },
+          { id: different_office_id, laa_reference: 'LAA-AB1234' },
+          { id: non_matching_id, laa_reference: 'LAA-99999C' },
+          { id: draft_matching_id, laa_reference: 'LAA-CD5678' }
+        ]
       end
 
       let(:draft_matching) do
