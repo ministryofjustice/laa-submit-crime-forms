@@ -657,6 +657,7 @@ DEPENDENCIES
   rails (= 8.0.2)
   rails-controller-testing
   redis
+  rexml
   rspec-expectations
   rspec-html-matchers
   rspec-rails (~> 8.0.1)

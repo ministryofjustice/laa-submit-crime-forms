@@ -32,6 +32,7 @@ gem 'propshaft'
 gem 'puma', '~> 6.6.1'
 gem 'rails', '8.0.2'
 gem 'redis'
+gem 'rexml'
 gem 'sentry-rails', '~> 5.26.0'
 gem 'sentry-ruby', '~> 5.26.0'
 gem 'sidekiq', '~> 8.0'
@@ -82,4 +83,4 @@ group :test do
   gem 'webmock', '~> 3.25'
 end
 
-gem "name_of_person", "~> 1.1"
+gem 'name_of_person', '~> 1.1'
