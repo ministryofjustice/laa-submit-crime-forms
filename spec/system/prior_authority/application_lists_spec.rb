@@ -97,8 +97,8 @@ RSpec.describe 'Prior authority application lists', :stub_oauth_token do
     visit submitted_prior_authority_applications_path
 
     expect(page).to have_content(/AAAAA.*BBBBB.*/m)
-    click_on 'LAA reference'
-    click_on 'LAA reference'
+    click_on 'Status'
+    click_on 'Status'
     expect(page).to have_content(/BBBBB.*AAAAA.*/m)
   end
 

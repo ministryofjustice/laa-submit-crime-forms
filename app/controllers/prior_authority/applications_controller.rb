@@ -53,10 +53,11 @@ module PriorAuthority
     end
 
     def download
+      app_store_application = AppStoreDetailService.prior_authority(params[:id], current_provider)
       pdf = PdfService.prior_authority(application_locals(skip_links: true), request.url)
 
       send_data pdf,
-                filename: "#{current_application.laa_reference}.pdf",
+                filename: "#{app_store_application.laa_reference}.pdf",
                 type: 'application/pdf'
     end
 
@@ -85,10 +86,6 @@ module PriorAuthority
     }.freeze
 
     private
-
-    def current_application
-      @current_application ||= AppStoreDetailService.prior_authority(params[:id], current_provider)
-    end
 
     def initialize_application(attributes = {}, &block)
       attributes[:office_code] = current_provider.office_codes.first unless current_provider.multiple_offices?
