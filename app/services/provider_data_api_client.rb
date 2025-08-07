@@ -1,54 +1,41 @@
-# :nocov: PDA is disabled for now
 class ProviderDataApiClient
+  include HTTParty
+
+  base_uri ENV.fetch('PROVIDER_API_HOST')
+  headers 'X-Authorization' => ENV.fetch('PROVIDER_API_KEY')
+  format :json
+
   class << self
     def contract_active?(office_code)
       query(
-        "provider-office/#{office_code}/office-contract-details",
+        :head,
+        "/provider-office/#{office_code}/schedules?areaOfLaw=CRIME%20LOWER",
         200 => true,
-        204 => false,
+        204 => false
       )
     end
 
     def user_office_details(user_login)
-      if FeatureFlags.provider_api_v1.enabled?
-        query(
-          "api/v1/provider-users/#{ERB::Util.url_encode(user_login)}/provider-offices",
-          200 => ->(data) { data['offices'] },
-          204 => [],
-        )
-      else
-        query(
-          "provider-users/#{ERB::Util.url_encode(user_login)}/provider-offices",
-          200 => ->(data) { data['officeCodes'] },
-          204 => [],
-        )
-      end
+      encoded_login = ERB::Util.url_encode(user_login)
+
+      query(
+        :get,
+        "/api/v1/provider-users/#{encoded_login}/provider-offices",
+        200 => ->(data) { data['offices'] },
+        204 => []
+      )
     end
 
     private
 
-    def query(endpoint, return_values)
-      response = HTTParty.get("#{base_url}/#{endpoint}",
-                              headers: { 'X-Authorization': api_key })
-
-      unless return_values.key?(response.code)
+    def query(method, endpoint, handlers)
+      response = send(method, endpoint)
+      unless handlers.key?(response.code)
         raise "Unexpected status code #{response.code} when querying provider API endpoint #{endpoint}"
       end
 
-      if return_values[response.code].respond_to?(:call)
-        return_values[response.code].call(response.parsed_response)
-      else
-        return_values[response.code]
-      end
-    end
-
-    def base_url
-      ENV.fetch('PROVIDER_API_HOST')
-    end
-
-    def api_key
-      ENV.fetch('PROVIDER_API_KEY')
+      handler = handlers[response.code]
+      handler.respond_to?(:call) ? handler.call(response.parsed_response) : handler
     end
   end
 end
-# :nocov:
