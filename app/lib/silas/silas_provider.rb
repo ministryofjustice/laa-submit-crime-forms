@@ -25,15 +25,7 @@ module Silas
         prompt: 'none'
       }
 
-      if @strategy.request
-        ap[:prompt] = @strategy.request.params[:prompt] if @strategy.request.params[:prompt]
-        login_hint = @strategy.request.cookies["login_hint"]
-
-        if login_hint.present?
-          ap[:login_hint] = login_hint
-          ap[:prompt] = 'none'
-        end
-      end
+      ap[:prompt] = @strategy.request.params[:prompt] if @strategy.request && @strategy.request.params[:prompt]
 
       ap
     end

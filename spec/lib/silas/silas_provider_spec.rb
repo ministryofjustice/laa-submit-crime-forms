@@ -46,10 +46,9 @@ RSpec.describe Silas::SilasProvider do
 
     context 'when strategy has request' do
       let(:mock_params) { {} }
-      let(:mock_cookies) { {} }
 
       before do
-        allow(mock_request).to receive_messages(params: mock_params, cookies: mock_cookies)
+        allow(mock_request).to receive_messages(params: mock_params)
       end
 
       it 'returns default params when no prompt or login_hint' do
@@ -60,52 +59,6 @@ RSpec.describe Silas::SilasProvider do
         mock_params[:prompt] = 'select_account'
 
         expect(provider.authorize_params).to eq({ prompt: 'select_account' })
-      end
-
-      it 'uses login_hint from cookies and sets prompt to none' do
-        mock_cookies[:login_hint] = 'test@example.com'
-
-        expect(provider.authorize_params).to eq(
-          {
-            prompt: 'none',
-            login_hint: 'test@example.com'
-          }
-        )
-      end
-
-      it 'uses login_hint from params and sets prompt to none' do
-        mock_params[:login_hint] = 'test@example.com'
-
-        expect(provider.authorize_params).to eq(
-          {
-            prompt: 'none',
-             login_hint: 'test@example.com'
-          }
-        )
-      end
-
-      it 'prioritizes login_hint from cookies over params' do
-        mock_cookies[:login_hint] = 'cookies@example.com'
-        mock_params[:login_hint] = 'params@example.com'
-
-        expect(provider.authorize_params).to eq(
-          {
-            prompt: 'none',
-             login_hint: 'cookies@example.com'
-          }
-        )
-      end
-
-      it 'overrides prompt when login_hint is present' do
-        mock_params[:prompt] = 'select_account'
-        mock_params[:login_hint] = 'test@example.com'
-
-        expect(provider.authorize_params).to eq(
-          {
-            prompt: 'none',
-             login_hint: 'test@example.com'
-          }
-        )
       end
     end
   end

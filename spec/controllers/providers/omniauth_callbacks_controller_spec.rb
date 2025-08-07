@@ -90,20 +90,8 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
         allow(controller).to receive(:params).and_return(error: 'login_required')
       end
 
-      context 'when tried_silent_auth is already set' do
-        it 'clears the flag and returns unauthorized path' do
-          session[:tried_silent_auth] = true
-
-          expect(controller.send(:after_omniauth_failure_path_for)).to eq(unauthorized_errors_path)
-          expect(session[:tried_silent_auth]).to be_nil
-        end
-      end
-
-      context 'when tried_silent_auth is not set' do
-        it 'sets the flag and returns retry auth path' do
-          expect(controller.send(:after_omniauth_failure_path_for)).to eq(providers_retry_auth_path)
-          expect(session[:tried_silent_auth]).to be true
-        end
+      it 'redirects to the retry_auth redirect page' do
+        expect(controller.send(:after_omniauth_failure_path_for)).to eq(providers_retry_auth_path)
       end
     end
 

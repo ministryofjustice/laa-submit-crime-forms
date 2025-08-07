@@ -95,8 +95,8 @@ RSpec.describe 'Route Authentication', type: :routing do
 
       it 'routes /login to errors#unauthorized' do
         expect(Rails.application.routes.recognize_path('/login')).to eq(
-          controller: 'providers/sessions',
-          action: 'silent_auth'
+          controller: 'errors',
+          action: 'unauthorized'
         )
       end
     end

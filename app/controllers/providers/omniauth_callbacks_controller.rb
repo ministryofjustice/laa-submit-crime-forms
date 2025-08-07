@@ -23,7 +23,6 @@ module Providers
     private
 
     def after_sign_in_path_for(*)
-      cookies.delete(:login_hint)
       root_path
     end
 
@@ -32,20 +31,14 @@ module Providers
     # If we get an error that requires some input, this (most likely)
     # means that the user is logged in with multiple accounts
     #
-    # In that case, try silent auth again without the login_hint, and
-    # if that still fails then we go to the "login" page
+    # In that case, we redirect to the authorize path with
+    # 'select_account' passed in
     def after_omniauth_failure_path_for(*)
-      error = params[:error] || params[:message]
+      error = params[:error]
 
       case error
       when 'login_required', 'interaction_required'
-        if session[:tried_silent_auth]
-          session.delete(:tried_silent_auth)
-          unauthorized_errors_path
-        else
-          session[:tried_silent_auth] = true
-          providers_retry_auth_path
-        end
+        providers_retry_auth_path
       else
         unauthorized_errors_path
       end
