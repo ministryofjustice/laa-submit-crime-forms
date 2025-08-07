@@ -13,6 +13,7 @@ module PriorAuthority
       @pagy = model.pagy
       @model = model.rows
       @scope = :reviewed
+      @table_params = { controller: 'prior_authority/applications', action: 'index' }
       @empty = PriorAuthorityApplication.for(current_provider).none?
     end
 

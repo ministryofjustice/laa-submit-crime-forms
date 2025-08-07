@@ -19,6 +19,7 @@ en:
           last_updated: Last updated
           state: Status
           actions: Actions
+          laa_reference: LAA reference
         state:
           draft: Draft
           submitted: Submitted
