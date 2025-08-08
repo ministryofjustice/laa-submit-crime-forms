@@ -13,6 +13,10 @@ module PriorAuthority
         # included here.
         current_application.submitted? || current_application.provider_updated? || current_application.auto_grant?
       end
+
+      def current_application
+        @current_application ||= AppStoreDetailService.prior_authority(params[:id], current_provider)
+      end
     end
   end
 end

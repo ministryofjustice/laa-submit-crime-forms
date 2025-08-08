@@ -82,7 +82,6 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
             'id' => claim.id,
             'import_date' => '2025-01-01T00:00:00.000Z',
             'is_other_info' => 'no',
-            'laa_reference' => 'LAA-n4AohV',
             'letters_and_calls' => [
               { 'count' => 2, 'pricing' => an_instance_of(Float), 'type' => 'letters', 'uplift' => nil },
               { 'count' => 3, 'pricing' => an_instance_of(Float), 'type' => 'calls', 'uplift' => nil }
@@ -202,7 +201,6 @@ RSpec.describe SubmitToAppStore::NsmPayloadBuilder do
         application: {
           'id' => claim.id,
           'is_other_info' => 'no',
-          'laa_reference' => 'LAA-n4AohV',
           'updated_at' => DateTime.new(2024, 2, 2, 1, 1, 1).as_json,
           'status' => 'sent_back',
           'further_information' => [

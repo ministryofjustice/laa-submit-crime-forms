@@ -21,12 +21,6 @@ RSpec.describe 'Prior authority applications - add Unique file number' do
       click_on 'Save and continue'
       expect(page).to have_title 'Your application progress'
     end
-
-    it 'generates an LAA reference' do
-      fill_in 'What is your unique file number (UFN)?', with: '111111/111'
-      click_on 'Save and continue'
-      expect(page).to have_content PriorAuthorityApplication.first.laa_reference
-    end
   end
 
   context 'when coming from the tasklist' do
@@ -39,13 +33,6 @@ RSpec.describe 'Prior authority applications - add Unique file number' do
       expect(page).to have_title 'Unique file number'
       click_on 'Back'
       expect(page).to have_title 'Your application progress'
-    end
-
-    it 'does not overwrite the LAA reference' do
-      application = PriorAuthorityApplication.first
-      old_reference = application.laa_reference
-      click_on 'Save and continue'
-      expect(application.reload.laa_reference).to eq old_reference
     end
   end
 

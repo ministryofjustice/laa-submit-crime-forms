@@ -28,7 +28,7 @@
         <table id="results" class="govuk-table" data-module="moj-sortable-table" aria-describedby="heading">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-              <% ['ufn', 'defendant', 'account', 'last_updated', 'laa_reference', 'state'].each do |key| %>
+              <% ['ufn', 'defendant', 'account', 'last_updated', 'state'].each do |key| %>
                 <%= table_header_with_link(key,
                                           'nsm.claims.index.header',
                                           { search_form: @form.attributes, controller: 'nsm/claims', action: 'search' },
@@ -58,7 +58,7 @@
                   <%= claim.updated_at.to_fs(:stamp) %>
                 </td>
                 <td class="govuk-table__cell">
-                  <%= claim.laa_reference %>
+                  <%= claim.ufn %>
                 </td>
                 <td class="govuk-table__cell">
                   <strong class="govuk-tag <%= t("nsm.claims.index.state_colour.#{claim.state}") %>">

@@ -29,7 +29,6 @@ RSpec.describe 'Prior authority applications, no prison law - check your answers
     within('.govuk-summary-card', text: 'Application details') do
       expect(page)
         .to have_css('.govuk-summary-card__content', text: 'Prison lawNo')
-        .and have_css('.govuk-summary-card__content', text: "LAA reference#{application.laa_reference}")
         .and have_css('.govuk-summary-card__content', text: %r{Unique file number\d{6}/123})
 
       click_on 'Change'
