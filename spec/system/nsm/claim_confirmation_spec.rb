@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User can see an application status', :stub_app_store_search, :stub_oauth_token, type: :system do
-  let(:claim) { create(:claim, :complete, :case_type_breach, state: :submitted) }
+  let(:claim) { create(:claim, :complete, :case_type_breach, ufn: '12122025/001' ,state: :submitted) }
 
   before do
     stub_app_store_payload(claim)
@@ -17,7 +17,7 @@ RSpec.describe 'User can see an application status', :stub_app_store_search, :st
     click_on 'View your claims'
     expect(page).to have_current_path(nsm_applications_path)
     expect(claim.reload).to have_attributes(
-      laa_reference: 'ABC123',
+      ufn: '12122025/001',
       state: 'submitted',
     )
   end
