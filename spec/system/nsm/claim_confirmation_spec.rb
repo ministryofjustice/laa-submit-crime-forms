@@ -4,13 +4,13 @@ RSpec.describe 'User can see an application status', :stub_app_store_search, :st
   let(:claim) { create(:claim, :complete, :case_type_breach, ufn: '12122025/001', state: :submitted) }
 
   before do
-    stub_app_store_payload(claim)
+    stub_app_store_payload(claim, :submitted, 'LAA-ABC321')
     visit provider_entra_id_omniauth_callback_path
     visit nsm_steps_claim_confirmation_path(claim.id)
   end
 
   it 'shows LAA reference on the claim confirmation page' do
-    expect(page).to have_css('div.govuk-panel__body', text: claim.laa_reference)
+    expect(page).to have_css('div.govuk-panel__body', text: 'LAA-ABC321')
   end
 
   it 'can show all claims for a provider when clicking on view your claims button' do
