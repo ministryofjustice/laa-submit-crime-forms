@@ -66,7 +66,7 @@ module Nsm
       )
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-  
+
     def attach_ref_to_payload(app)
       # TODO: this method is only needed because we are
       # equating an app store payload with a local record
