@@ -1,0 +1,23 @@
+<% title t('.page_title') %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+          <%= t('.page_title') %>
+      </h1>
+
+      <p>
+          <%= t('.content') %>
+      </p>
+      <%= button_to provider_entra_id_omniauth_authorize_path(prompt: 'select_account'), method: :post,
+                    class: 'govuk-button govuk-!-margin-top-2',
+                    id: 'auto-submit',
+                    data: { module: 'govuk-button' } do; t('.sign_in_button') end %>
+
+  </div>
+</div>
+
+<script nonce="<%= content_security_policy_nonce %>">
+    document.getElementById('auto-submit').click();
+</script>

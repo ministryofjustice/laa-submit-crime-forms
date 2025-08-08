@@ -26,18 +26,30 @@ module Providers
       root_path
     end
 
+    # Handle Entra errors as part of SSO flow
+    #
+    # If we get an error that requires some input, this (most likely)
+    # means that the user is logged in with multiple accounts
+    #
+    # In that case, we redirect to the authorize path with
+    # 'select_account' passed in
     def after_omniauth_failure_path_for(*)
-      new_provider_session_path
+      error = params[:error]
+
+      case error
+      when 'login_required', 'interaction_required'
+        providers_retry_auth_path
+      else
+        unauthorized_errors_path
+      end
     end
 
     def auth_data
       request.env['omniauth.auth']
     end
 
-    # :nocov:
     def office_codes
       auth_data.info.office_codes
     end
-    # :nocov:
   end
 end

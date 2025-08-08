@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     namespace :providers do
       delete 'logout', to: 'sessions#destroy', as: :logout
       get 'logout', to: 'sessions#destroy'
+      get 'retry_auth', to: 'sessions#retry_auth'
     end
   end
 

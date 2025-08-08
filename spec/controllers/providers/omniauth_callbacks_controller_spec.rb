@@ -78,4 +78,29 @@ RSpec.describe Providers::OmniauthCallbacksController, type: :controller do
       end
     end
   end
+
+  describe '#after_omniauth_failure_path_for' do
+    before do
+      request.env['devise.mapping'] = Devise.mappings[:provider]
+      request.env['omniauth.error'] = double('error')
+    end
+
+    context 'when error is login_required' do
+      before do
+        allow(controller).to receive(:params).and_return(error: 'login_required')
+      end
+
+      it 'redirects to the retry_auth redirect page' do
+        expect(controller.send(:after_omniauth_failure_path_for)).to eq(providers_retry_auth_path)
+      end
+    end
+
+    context 'when error is not login_required or interaction_required' do
+      it 'returns unauthorized path' do
+        allow(controller).to receive(:params).and_return(error: 'access_denied')
+
+        expect(controller.send(:after_omniauth_failure_path_for)).to eq(unauthorized_errors_path)
+      end
+    end
+  end
 end
