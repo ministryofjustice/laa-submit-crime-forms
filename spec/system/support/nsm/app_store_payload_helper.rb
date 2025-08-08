@@ -1,12 +1,12 @@
 module Nsm
   module AppStorePayloadHelper
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-    def stub_app_store_payload(claim, state = nil)
+    def stub_app_store_payload(claim, laa_reference: 'LAA-ABC123', state: nil)
       claim.reload
 
       payload = SubmitToAppStore::NsmPayloadBuilder.new(claim:).payload.with_indifferent_access
       payload[:application_state] = state || claim.state
-
+      payload[:application][:laa_reference] = laa_reference
       claim.work_items.each do |work_item|
         element = payload.dig(:application, :work_items).find { _1[:id] == work_item.id }
         if work_item.allowed_time_spent

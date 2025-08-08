@@ -4,10 +4,6 @@ RSpec.describe Nsm::Steps::ClaimConfirmationController, type: :controller do
   describe '#show' do
     let(:claim) { create(:claim, state: 'submitted') }
 
-    before do
-      allow(claim).to receive(:laa_reference).and_return 'LAA-ABC123'
-    end
-
     context 'when application is not found' do
       before { allow(AppStoreDetailService).to receive(:nsm).and_return(nil) }
 
@@ -18,7 +14,13 @@ RSpec.describe Nsm::Steps::ClaimConfirmationController, type: :controller do
     end
 
     context 'when application is found' do
-      before { allow(AppStoreDetailService).to receive(:nsm).with(claim.id, claim.submitter).and_return(claim) }
+      before do
+        allow_any_instance_of(AppStoreClient).to receive(:get).and_return({
+                                                                            'application_id' => claim.id,
+          'application_state' => claim.state,
+          'application' => claim.attributes.merge({ laa_reference: 'LAA-ABC123' })
+                                                                          })
+      end
 
       it 'responds with HTTP success' do
         get :show, params: { id: claim.id }
