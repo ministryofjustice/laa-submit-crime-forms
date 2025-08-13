@@ -20,12 +20,12 @@
       <% if costs.per_item? %>
         <td class="govuk-table__cell"><%= "#{costs.items.to_s} #{t("prior_authority.steps.service_cost.items.#{costs.item_type}").pluralize(2)}" %></td>
         <td class="govuk-table__cell"><%= t('.per_item',
-                cost: NumberTo.pounds(costs.cost_per_item),
+                cost: LaaCrimeFormsCommon::NumberTo.pounds(costs.cost_per_item),
                 item: t("prior_authority.steps.service_cost.items.#{costs.cost_item_type}")) %></td>
       <% else %>
           <td class="govuk-table__cell"><%= format_period(costs.period) %></td>
           <td class="govuk-table__cell"><%=t('.per_item',
-                cost: NumberTo.pounds(costs.cost_per_hour),
+                cost: LaaCrimeFormsCommon::NumberTo.pounds(costs.cost_per_hour),
                 item: t('.hour')) %></td>
       <% end %>
       <% if show_adjustments %>

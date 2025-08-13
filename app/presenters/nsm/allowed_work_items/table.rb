@@ -22,8 +22,8 @@ module Nsm
 html_attributes: { class: 'govuk-!-text-break-anywhere govuk-!-width-one-quarter' } },
             { text: ApplicationController.helpers.format_period(work_item.assessed_time_spent, style: :minimal_html),
                     numeric: true },
-            { text: NumberTo.percentage(work_item.assessed_uplift.to_f, multiplier: 1), numeric: true },
-            { text: NumberTo.pounds(work_item.allowed_total_cost), numeric: true },
+            { text: LaaCrimeFormsCommon::NumberTo.percentage(work_item.assessed_uplift.to_f, multiplier: 1), numeric: true },
+            { text: LaaCrimeFormsCommon::NumberTo.pounds(work_item.allowed_total_cost), numeric: true },
           ]
         end
       end

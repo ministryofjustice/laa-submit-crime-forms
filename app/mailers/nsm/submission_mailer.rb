@@ -58,7 +58,7 @@ module Nsm
         disbursements: Nsm::CostSummary::Disbursements.new(@claim.disbursements.by_age, @claim)
       }
 
-      NumberTo.pounds(items.values.filter_map(&:total_cost).sum)
+      LaaCrimeFormsCommon::NumberTo.pounds(items.values.filter_map(&:total_cost).sum)
     end
 
     def submission_date

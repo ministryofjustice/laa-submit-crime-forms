@@ -33,7 +33,7 @@
           <% end %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-table__header"><%= t('.total') %></td>
-            <td class="govuk-table__cell govuk-table__header"><%= NumberTo.pounds(form.total_cost) %></td>
+            <td class="govuk-table__cell govuk-table__header"><%= LaaCrimeFormsCommon::NumberTo.pounds(form.total_cost) %></td>
           </tr>
         </tbody>
       </table>

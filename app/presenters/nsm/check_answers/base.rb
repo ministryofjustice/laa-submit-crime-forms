@@ -67,7 +67,7 @@ module Nsm
       end
 
       def currency_value(value)
-        NumberTo.pounds(value || 0)
+        LaaCrimeFormsCommon::NumberTo.pounds(value || 0)
       end
 
       def custom

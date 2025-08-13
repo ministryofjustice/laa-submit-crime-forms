@@ -14,7 +14,7 @@ module PriorAuthorityDetails
   end
 
   def total_cost_gbp
-    total_cost ? NumberTo.pounds(total_cost) : nil
+    total_cost ? LaaCrimeFormsCommon::NumberTo.pounds(total_cost) : nil
   end
 
   def further_information_needed?
