@@ -20,7 +20,11 @@ module Nsm
       private
 
       def disbursement
-        @disbursement ||= current_application.disbursements.find_by(id: params[:disbursement_id])
+        if instance_variable_defined?(:@disbursement)
+          @disbursement
+        else
+          @disbursement = current_application.disbursements.find_by(id: params[:disbursement_id])
+        end
       end
 
       def ensure_disbursement
