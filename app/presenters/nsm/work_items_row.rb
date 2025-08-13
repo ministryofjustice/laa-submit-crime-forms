@@ -25,7 +25,10 @@ module Nsm
         { text: check_missing(completed_on) { completed_on.to_fs(:short_stamp) }, numeric: false },
         { text: check_missing(fee_earner), numeric: false },
         { text: check_missing(time_spent) { format_period(time_spent, style: :minimal_html) }, numeric: true },
-        ({ text: LaaCrimeFormsCommon::NumberTo.percentage(uplift.to_f, multiplier: 1), numeric: true } if current_application.allow_uplift?),
+        (if current_application.allow_uplift?
+           { text: LaaCrimeFormsCommon::NumberTo.percentage(uplift.to_f, multiplier: 1),
+numeric: true }
+         end),
         { text: action_links, numeric: true }
       ].compact
     end

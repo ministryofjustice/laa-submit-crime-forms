@@ -14,7 +14,8 @@ module Nsm
         disbursements.map do |disbursement|
           [
             { text: translated_text(disbursement), classes: 'govuk-table__header' },
-            { text: LaaCrimeFormsCommon::NumberTo.pounds(disbursement.total_cost_pre_vat || 0), classes: 'govuk-table__cell--numeric' },
+            { text: LaaCrimeFormsCommon::NumberTo.pounds(disbursement.total_cost_pre_vat || 0),
+classes: 'govuk-table__cell--numeric' },
             { text: LaaCrimeFormsCommon::NumberTo.pounds(disbursement.vat || 0), classes: 'govuk-table__cell--numeric' },
             { text: LaaCrimeFormsCommon::NumberTo.pounds(disbursement.total_cost || 0), classes: 'govuk-table__cell--numeric' },
           ]
