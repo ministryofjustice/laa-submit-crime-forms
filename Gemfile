@@ -25,7 +25,7 @@ gem 'oauth2', '~> 2.0'
 gem 'omniauth-entra-id'
 gem 'omniauth-rails_csrf_protection', '~> 1.0.1'
 gem 'ostruct'
-gem 'pagy', '~> 9.3.5'
+gem 'pagy', '~> 9.4.0'
 gem 'pg', '~> 1.6'
 gem 'prometheus_exporter'
 gem 'propshaft'
@@ -55,7 +55,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec_junit_formatter', require: false
-  gem 'rspec-rails', '~> 8.0.1'
+  gem 'rspec-rails', '~> 8.0.2'
 end
 
 group :development do
