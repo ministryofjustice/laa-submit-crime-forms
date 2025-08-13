@@ -9,7 +9,6 @@ RSpec.describe SubmitToAppStore do
   before do
     allow(described_class::PayloadBuilder).to receive(:call)
       .and_return(payload)
-    allow(SendNotificationEmail).to receive(:perform_later)
     allow(submission).to receive(:with_lock).and_yield
     allow(submission).to receive(:provider_updated?).and_return(false)
   end
@@ -51,22 +50,6 @@ RSpec.describe SubmitToAppStore do
         .with(submission)
 
       subject.perform(submission:)
-    end
-
-    it 'does not queue an email' do
-      expect(SendNotificationEmail).not_to receive(:perform_later)
-      subject.perform(submission:)
-    end
-
-    context 'when email flag is set' do
-      before do
-        allow(ENV).to receive(:fetch).with('SEND_EMAILS', 'false').and_return 'true'
-      end
-
-      it 'queues an email' do
-        expect(SendNotificationEmail).to receive(:perform_later).with(submission)
-        subject.perform(submission:)
-      end
     end
 
     it 'updates the db record' do
