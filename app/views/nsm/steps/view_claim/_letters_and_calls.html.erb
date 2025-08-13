@@ -23,14 +23,14 @@
     ([
       { header: true, text: letters_link },
       { text: claim.letters, numeric: true },
-      { text: NumberTo.percentage(claim.letters_uplift.to_f, multiplier: 1), numeric: true },
-      { text: NumberTo.pounds(claim.letters_after_uplift), numeric: true }
+      { text: LaaCrimeFormsCommon::NumberTo.percentage(claim.letters_uplift.to_f, multiplier: 1), numeric: true },
+      { text: LaaCrimeFormsCommon::NumberTo.pounds(claim.letters_after_uplift), numeric: true }
     ] unless claim.letters.zero?),
     ([
       { header: true, text: calls_link },
       { text: claim.calls, numeric: true },
-      { text: NumberTo.percentage(claim.calls_uplift.to_f, multiplier: 1), numeric: true },
-      { text: NumberTo.pounds(claim.calls_after_uplift), numeric: true }
+      { text: LaaCrimeFormsCommon::NumberTo.percentage(claim.calls_uplift.to_f, multiplier: 1), numeric: true },
+      { text: LaaCrimeFormsCommon::NumberTo.pounds(claim.calls_after_uplift), numeric: true }
     ] unless claim.calls.zero?)
   ].compact
 %>

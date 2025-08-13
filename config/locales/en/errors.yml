@@ -26,7 +26,10 @@ en:
     unauthorized:
       page_title: Unauthorized
       heading: Access restricted
-      lead_text: This page requires you to be signed in to SILAS (Sign In to Legal Aid Services). You will be redirected back to this service after you sign in.
+      lead_text_html: |
+        This page requires you to be signed in to SILAS (Sign In to Legal Aid Services). You will be redirected back to this service after you sign in.
+        <br><br>
+        You could also be seeing this page if you're signed in with multiple accounts and we can't work out which one to use.
       sign_in_button: Sign in with SILAS
     not_enrolled:
       page_title: Account not enrolled

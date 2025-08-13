@@ -21,7 +21,7 @@ module Nsm
 
       def total_cost_cell
         safe_join([tag.span(translate('net_cost'), class: 'govuk-visually-hidden'),
-                   tag.strong(NumberTo.pounds(total_cost))])
+                   tag.strong(LaaCrimeFormsCommon::NumberTo.pounds(total_cost))])
       end
 
       def footer_row

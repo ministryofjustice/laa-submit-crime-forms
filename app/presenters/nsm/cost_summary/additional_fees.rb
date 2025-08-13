@@ -14,7 +14,7 @@ module Nsm
         additional_fees.map do |key, value|
           [
             { text: translated_text(key), classes: 'govuk-table__header' },
-            { text: NumberTo.pounds(value[:claimed_total_exc_vat]), classes: 'govuk-table__cell--numeric' },
+            { text: LaaCrimeFormsCommon::NumberTo.pounds(value[:claimed_total_exc_vat]), classes: 'govuk-table__cell--numeric' },
           ]
         end
       end

@@ -17,7 +17,9 @@ module Nsm
       private
 
       def disbursement
-        @disbursement ||= current_application.disbursements.find_by(id: params[:disbursement_id])
+        return @disbursement if defined?(@disbursement)
+
+        @disbursement = current_application.disbursements.find_by(id: params[:disbursement_id])
       end
 
       def flash_msg

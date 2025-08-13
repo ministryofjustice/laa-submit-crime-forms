@@ -9,8 +9,8 @@
       if claim.calls_adjustment_comment
         rows = [
           [{ text: t(".allowed_number"), width: 'govuk-!-width-one-half' }, (claim.assessed_calls).to_s],
-          [t(".allowed_uplift"), NumberTo.percentage((claim.assessed_calls_uplift).to_f, multiplier: 1)],
-          [t(".allowed_net_cost"), NumberTo.pounds(claim.allowed_calls_after_uplift)],
+          [t(".allowed_uplift"), LaaCrimeFormsCommon::NumberTo.percentage((claim.assessed_calls_uplift).to_f, multiplier: 1)],
+          [t(".allowed_net_cost"), LaaCrimeFormsCommon::NumberTo.pounds(claim.allowed_calls_after_uplift)],
           [t(".adjustment_comment"), claim.calls_adjustment_comment]
         ]
 
@@ -22,10 +22,10 @@
     %>
     <%=
       rows = [
-        [{ text: t(".rate"), width: 'govuk-!-width-one-half' }, NumberTo.pounds(claim.call_rate)],
+        [{ text: t(".rate"), width: 'govuk-!-width-one-half' }, LaaCrimeFormsCommon::NumberTo.pounds(claim.call_rate)],
         [t(".number"), claim.calls.to_s],
-        [t(".uplift"), NumberTo.percentage(claim.calls_uplift.to_f, multiplier: 1)],
-        [t(".net_cost"), NumberTo.pounds(claim.calls_after_uplift)]
+        [t(".uplift"), LaaCrimeFormsCommon::NumberTo.percentage(claim.calls_uplift.to_f, multiplier: 1)],
+        [t(".net_cost"), LaaCrimeFormsCommon::NumberTo.pounds(claim.calls_after_uplift)]
       ]
 
       govuk_table do |table|

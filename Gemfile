@@ -16,7 +16,7 @@ gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'grover'
 gem 'httparty'
 gem 'jsbundling-rails'
-gem 'laa_crime_forms_common', '~> 0.11.1', github: 'ministryofjustice/laa-crime-forms-common'
+gem 'laa_crime_forms_common', '~> 0.11.3', github: 'ministryofjustice/laa-crime-forms-common'
 gem 'lograge'
 gem 'logstasher', '~> 2.1'
 gem 'logstash-event'
@@ -25,13 +25,14 @@ gem 'oauth2', '~> 2.0'
 gem 'omniauth-entra-id'
 gem 'omniauth-rails_csrf_protection', '~> 1.0.1'
 gem 'ostruct'
-gem 'pagy', '~> 9.3.5'
+gem 'pagy', '~> 9.4.0'
 gem 'pg', '~> 1.6'
 gem 'prometheus_exporter'
 gem 'propshaft'
 gem 'puma', '~> 6.6.1'
 gem 'rails', '8.0.2'
 gem 'redis'
+gem 'rexml'
 gem 'sentry-rails', '~> 5.26.0'
 gem 'sentry-ruby', '~> 5.26.0'
 gem 'sidekiq', '~> 8.0'
@@ -54,7 +55,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec_junit_formatter', require: false
-  gem 'rspec-rails', '~> 8.0.1'
+  gem 'rspec-rails', '~> 8.0.2'
 end
 
 group :development do
@@ -82,4 +83,4 @@ group :test do
   gem 'webmock', '~> 3.25'
 end
 
-gem "name_of_person", "~> 1.1"
+gem 'name_of_person', '~> 1.1'

@@ -14,9 +14,10 @@ module Nsm
         disbursements.map do |disbursement|
           [
             { text: translated_text(disbursement), classes: 'govuk-table__header' },
-            { text: NumberTo.pounds(disbursement.total_cost_pre_vat || 0), classes: 'govuk-table__cell--numeric' },
-            { text: NumberTo.pounds(disbursement.vat || 0), classes: 'govuk-table__cell--numeric' },
-            { text: NumberTo.pounds(disbursement.total_cost || 0), classes: 'govuk-table__cell--numeric' },
+            { text: LaaCrimeFormsCommon::NumberTo.pounds(disbursement.total_cost_pre_vat || 0),
+classes: 'govuk-table__cell--numeric' },
+            { text: LaaCrimeFormsCommon::NumberTo.pounds(disbursement.vat || 0), classes: 'govuk-table__cell--numeric' },
+            { text: LaaCrimeFormsCommon::NumberTo.pounds(disbursement.total_cost || 0), classes: 'govuk-table__cell--numeric' },
           ]
         end
       end
@@ -64,17 +65,17 @@ module Nsm
 
       def total_cost_cell(header)
         safe_join([tag.span(header, class: 'govuk-visually-hidden'),
-                   tag.strong(NumberTo.pounds(net_cost))])
+                   tag.strong(LaaCrimeFormsCommon::NumberTo.pounds(net_cost))])
       end
 
       def gross_total_cost_cell(header)
         safe_join([tag.span(header, class: 'govuk-visually-hidden'),
-                   tag.strong(NumberTo.pounds(total_cost))])
+                   tag.strong(LaaCrimeFormsCommon::NumberTo.pounds(total_cost))])
       end
 
       def vat_amount_cell(header)
         safe_join([tag.span(header, class: 'govuk-visually-hidden'),
-                   tag.strong(NumberTo.pounds(vat_amount))])
+                   tag.strong(LaaCrimeFormsCommon::NumberTo.pounds(vat_amount))])
       end
 
       def disbursement_summary_footer_row

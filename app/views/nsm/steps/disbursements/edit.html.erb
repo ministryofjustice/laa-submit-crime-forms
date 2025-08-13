@@ -61,10 +61,10 @@
               <%= check_missing(disbursement.disbursement_date) { disbursement.disbursement_date.to_fs(:short_stamp) } %>
             <% end %>
             <%= row.with_cell(numeric: true) do %>
-              <%= check_missing(disbursement.total_cost_pre_vat) { NumberTo.pounds(disbursement.total_cost_pre_vat) } %>
+              <%= check_missing(disbursement.total_cost_pre_vat) { LaaCrimeFormsCommon::NumberTo.pounds(disbursement.total_cost_pre_vat) } %>
             <% end %>
             <%= row.with_cell(numeric: true) do %>
-              <%= check_missing(disbursement.total_cost) { NumberTo.pounds(disbursement.total_cost) } %>
+              <%= check_missing(disbursement.total_cost) { LaaCrimeFormsCommon::NumberTo.pounds(disbursement.total_cost) } %>
             <% end %>
             <%# Action Buttons %>
             <%= row.with_cell(numeric: true) do %>

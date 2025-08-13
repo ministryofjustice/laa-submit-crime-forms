@@ -53,7 +53,7 @@ module Nsm
       end
 
       def claimed_amount
-        "#{NumberTo.pounds(total_gross)} claimed"
+        "#{LaaCrimeFormsCommon::NumberTo.pounds(total_gross)} claimed"
       end
 
       delegate :show_adjusted?, to: :claim
@@ -157,9 +157,9 @@ module Nsm
 
       def allowed_amount
         return '£0.00 allowed' if claim.rejected?
-        return "#{NumberTo.pounds(total_gross_allowed)} allowed" if show_adjusted?
+        return "#{LaaCrimeFormsCommon::NumberTo.pounds(total_gross_allowed)} allowed" if show_adjusted?
 
-        "#{NumberTo.pounds(total_gross)} allowed"
+        "#{LaaCrimeFormsCommon::NumberTo.pounds(total_gross)} allowed"
       end
 
       def any_changes?(type)

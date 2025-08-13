@@ -44,13 +44,13 @@ module Nsm
         [
           translate(:letters),
           {
-            text: NumberTo.pounds(letters_before),
+            text: LaaCrimeFormsCommon::NumberTo.pounds(letters_before),
             html_attributes: { id: 'letters-without-uplift' }
           },
           (
             if allow_uplift?
               {
-                text: NumberTo.pounds(letters_after),
+                text: LaaCrimeFormsCommon::NumberTo.pounds(letters_after),
                 html_attributes: { id: 'letters-with-uplift' },
               }
             end
@@ -64,13 +64,13 @@ module Nsm
         [
           translate(:calls),
           {
-            text: NumberTo.pounds(calls_before),
+            text: LaaCrimeFormsCommon::NumberTo.pounds(calls_before),
             html_attributes: { id: 'calls-without-uplift' }
           },
           (
             if allow_uplift?
               {
-                text: NumberTo.pounds(calls_after),
+                text: LaaCrimeFormsCommon::NumberTo.pounds(calls_after),
                 html_attributes: { id: 'calls-with-uplift' },
               }
             end

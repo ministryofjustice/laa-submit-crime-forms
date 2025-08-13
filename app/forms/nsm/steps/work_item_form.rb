@@ -66,11 +66,11 @@ module Nsm
           [translate(:before_uplift), translate(:after_uplift)],
           [
             {
-              text: NumberTo.pounds(total_without_uplift),
+              text: LaaCrimeFormsCommon::NumberTo.pounds(total_without_uplift),
               html_attributes: { id: 'without-uplift' }
             },
             {
-              text: NumberTo.pounds(total_cost),
+              text: LaaCrimeFormsCommon::NumberTo.pounds(total_cost),
               html_attributes: { id: 'with-uplift' },
             }
           ]
@@ -82,7 +82,7 @@ module Nsm
           [translate(:total)],
           [
             {
-              text: NumberTo.pounds(total_without_uplift),
+              text: LaaCrimeFormsCommon::NumberTo.pounds(total_without_uplift),
               html_attributes: { id: 'without-uplift' }
             }
           ]

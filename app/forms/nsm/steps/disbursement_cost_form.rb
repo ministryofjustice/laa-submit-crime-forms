@@ -36,15 +36,15 @@ module Nsm
       def calculation_rows_values
         [
           {
-            text: NumberTo.pounds(total_cost_pre_vat || 0),
+            text: LaaCrimeFormsCommon::NumberTo.pounds(total_cost_pre_vat || 0),
             html_attributes: { id: 'net-cost-claimed' }
           },
           {
-            text: NumberTo.pounds(vat || 0),
+            text: LaaCrimeFormsCommon::NumberTo.pounds(vat || 0),
             html_attributes: { id: 'vat-on-claimed' }
           },
           {
-            text: NumberTo.pounds(total_cost || 0),
+            text: LaaCrimeFormsCommon::NumberTo.pounds(total_cost || 0),
             html_attributes: { id: 'total-claimed' },
           }
         ]

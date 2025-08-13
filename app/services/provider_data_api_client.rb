@@ -9,7 +9,7 @@ class ProviderDataApiClient
     def contract_active?(office_code)
       query(
         :head,
-        "/provider-office/#{office_code}/schedules?areaOfLaw=CRIME%20LOWER",
+        "/provider-offices/#{office_code}/schedules?areaOfLaw=CRIME%20LOWER",
         200 => true,
         204 => false
       )

@@ -7,7 +7,7 @@ module PriorAuthority
     attr_reader :application
 
     def formatted_total_cost
-      NumberTo.pounds(
+      LaaCrimeFormsCommon::NumberTo.pounds(
         service_cost_form.total_cost +
         (travel_detail_form.valid? ? travel_detail_form.total_cost : 0) +
         additional_cost_overview_form.total_cost
@@ -15,7 +15,7 @@ module PriorAuthority
     end
 
     def formatted_total_allowed_cost
-      NumberTo.pounds(
+      LaaCrimeFormsCommon::NumberTo.pounds(
         @application.primary_quote.base_cost_allowed + @application.primary_quote.travel_cost_allowed +
         @application.additional_costs.sum(&:total_cost_allowed)
       )

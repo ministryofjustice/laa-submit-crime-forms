@@ -17,7 +17,9 @@ module Nsm
       private
 
       def defendant
-        @defendant ||= current_application.defendants.find_by(id: params[:defendant_id], main: false)
+        return @defendant if defined?(@defendant)
+
+        @defendant = current_application.defendants.find_by(id: params[:defendant_id], main: false)
       end
 
       def flash_msg

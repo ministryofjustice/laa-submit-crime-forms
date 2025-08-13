@@ -33,9 +33,9 @@ end
     foot = [
       { text: t(".total"), width: 'govuk-!-width-one-quarter' },
       { text: '', numeric: true },
-      { text: safe_join([govuk_visually_hidden(t('.accessibility.net_cost')) , NumberTo.pounds(data[:claimed_total_exc_vat])], ' '), numeric: true },
+      { text: safe_join([govuk_visually_hidden(t('.accessibility.net_cost')) , LaaCrimeFormsCommon::NumberTo.pounds(data[:claimed_total_exc_vat])], ' '), numeric: true },
       { text: '', numeric: true },
-      { text: safe_join([govuk_visually_hidden(t('.accessibility.allowed_net_cost')) , NumberTo.pounds(data[:assessed_total_exc_vat])], ' '), numeric: true },
+      { text: safe_join([govuk_visually_hidden(t('.accessibility.allowed_net_cost')) , LaaCrimeFormsCommon::NumberTo.pounds(data[:assessed_total_exc_vat])], ' '), numeric: true },
     ]
 
     summary_table = govuk_table do |table|

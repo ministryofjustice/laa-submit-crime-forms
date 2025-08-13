@@ -25,14 +25,14 @@
     [
       { text: t("laa_crime_forms_common.nsm.work_type.#{work_type}") },
       { text: format_period(time, style: :minimal_html), numeric: true },
-      { text: NumberTo.pounds(net_cost), numeric: true },
+      { text: LaaCrimeFormsCommon::NumberTo.pounds(net_cost), numeric: true },
     ]
   end
 
   foot = [
     { text: t(".total") },
     { text: '', numeric: true },
-    { text: safe_join([govuk_visually_hidden(t('.accessibility.net_cost')), NumberTo.pounds(total_cost)], ' '), numeric: true },
+    { text: safe_join([govuk_visually_hidden(t('.accessibility.net_cost')), LaaCrimeFormsCommon::NumberTo.pounds(total_cost)], ' '), numeric: true },
   ]
 
   summary_table = govuk_table do |table|
@@ -88,8 +88,8 @@
       { text: work_item.completed_on&.to_fs(:short_stamp), numeric: false},
       { text: work_item.fee_earner, numeric: false},
       { text: format_period(work_item.time_spent, style: :minimal_html), numeric: true },
-      { text: NumberTo.percentage(work_item.uplift.to_f, multiplier: 1), numeric: true },
-      { text: NumberTo.pounds(work_item.total_cost), numeric: true }
+      { text: LaaCrimeFormsCommon::NumberTo.percentage(work_item.uplift.to_f, multiplier: 1), numeric: true },
+      { text: LaaCrimeFormsCommon::NumberTo.pounds(work_item.total_cost), numeric: true }
     ]
   end
 

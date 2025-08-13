@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Silas::SilasStrategy do
+describe OmniAuth::Strategies::Silas do
   let(:strategy) { described_class.new(nil) }
 
   describe '#info' do

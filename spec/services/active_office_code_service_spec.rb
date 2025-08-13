@@ -6,12 +6,12 @@ RSpec.describe ActiveOfficeCodeService do
     let(:office_codes) { %w[AAAAA BBBBB] }
     let(:status) { 200 }
     let(:office_code_a_stub) do
-      stub_request(:head, 'https://provider-api.example.com/provider-office/AAAAA/schedules?areaOfLaw=CRIME%20LOWER')
+      stub_request(:head, 'https://provider-api.example.com/provider-offices/AAAAA/schedules?areaOfLaw=CRIME%20LOWER')
         .to_return(status:)
     end
 
     let(:office_code_b_stub) do
-      stub_request(:head, 'https://provider-api.example.com/provider-office/BBBBB/schedules?areaOfLaw=CRIME%20LOWER')
+      stub_request(:head, 'https://provider-api.example.com/provider-offices/BBBBB/schedules?areaOfLaw=CRIME%20LOWER')
         .to_return(status:)
     end
 
@@ -43,7 +43,7 @@ RSpec.describe ActiveOfficeCodeService do
 
     context 'when dealing with a single office code' do
       let(:office_codes) { ['AAAAA'] }
-      let(:url) { "/provider-office/#{office_codes.first}/schedules?areaOfLaw=CRIME%20LOWER" }
+      let(:url) { "/provider-offices/#{office_codes.first}/schedules?areaOfLaw=CRIME%20LOWER" }
 
       context 'when the contract is active' do
         it 'returns the office code' do

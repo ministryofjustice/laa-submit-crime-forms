@@ -68,24 +68,24 @@
         <tr class="govuk-table__row">
           <td class="govuk-table__cell"><%= t('.service') %></td>
           <td class="govuk-table__cell">
-            <%= NumberTo.pounds(alternative_quote.main_cost) %>
+            <%= LaaCrimeFormsCommon::NumberTo.pounds(alternative_quote.main_cost) %>
           </td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell"><%= t('.travel') %></td>
           <td class="govuk-table__cell">
-            <%= NumberTo.pounds(alternative_quote.travel_cost) %>
+            <%= LaaCrimeFormsCommon::NumberTo.pounds(alternative_quote.travel_cost) %>
           </td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell"><%= t('.additional') %></td>
           <td class="govuk-table__cell">
-            <%= NumberTo.pounds(alternative_quote.additional_cost) %>
+            <%= LaaCrimeFormsCommon::NumberTo.pounds(alternative_quote.additional_cost) %>
           </td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-table__header"><%= t('.total_cost') %></td>
-          <td class="govuk-table__cell"><strong><%= NumberTo.pounds(alternative_quote.total_cost) %></strong></td>
+          <td class="govuk-table__cell"><strong><%= LaaCrimeFormsCommon::NumberTo.pounds(alternative_quote.total_cost) %></strong></td>
         </tr>
     </tbody>
     </table>

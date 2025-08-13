@@ -1,0 +1,7 @@
+en:
+  providers:
+    sessions:
+      retry_auth:
+        page_title: Redirecting
+        content: The page should redirect you to login with Sign In to Legal Aid Services automatically. If not, click the button below to continue logging in.
+        sign_in_button: Sign in with SILAS
