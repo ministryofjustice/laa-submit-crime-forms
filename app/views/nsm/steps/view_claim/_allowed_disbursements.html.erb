@@ -43,9 +43,9 @@
         { header: true, text: disbursement.position, numeric: true},
         { header: true, text: link, numeric: false},
         { text: simple_format(disbursement.adjustment_comment), numeric: false},
-        { text: NumberTo.pounds(disbursement.allowed_total_cost_pre_vat), numeric: true },
-        { text: NumberTo.pounds(disbursement.allowed_vat), numeric: true },
-        { text: NumberTo.pounds(disbursement.allowed_total_cost), numeric: true },
+        { text: LaaCrimeFormsCommon::NumberTo.pounds(disbursement.allowed_total_cost_pre_vat), numeric: true },
+        { text: LaaCrimeFormsCommon::NumberTo.pounds(disbursement.allowed_vat), numeric: true },
+        { text: LaaCrimeFormsCommon::NumberTo.pounds(disbursement.allowed_total_cost), numeric: true },
       ]
     end
 

@@ -21,7 +21,7 @@
     rows = [
       [
         { header: true, text: youth_court_fee_link },
-        { text: NumberTo.pounds(claim.totals[:additional_fees][:youth_court_fee][:claimed_total_exc_vat]), numeric: true },
+        { text: LaaCrimeFormsCommon::NumberTo.pounds(claim.totals[:additional_fees][:youth_court_fee][:claimed_total_exc_vat]), numeric: true },
       ]
       ]
 

@@ -78,7 +78,7 @@ module PriorAuthority
           check_missing(quote.contact_full_name),
           document_link(quote),
           check_missing(form.total_cost) do
-            NumberTo.pounds(form.total_cost)
+            LaaCrimeFormsCommon::NumberTo.pounds(form.total_cost)
           end
         ].compact.join('<br>')
 

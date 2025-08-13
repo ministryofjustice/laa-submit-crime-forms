@@ -10,7 +10,7 @@
         allowed_fee = claim.totals[:additional_fees][:youth_court_fee][:assessed_total_exc_vat]
         rows = [
           [t(".fee_type"), t(".youth_court_fee")],
-          [t(".allowed_net_cost"), NumberTo.pounds(allowed_fee)],
+          [t(".allowed_net_cost"), LaaCrimeFormsCommon::NumberTo.pounds(allowed_fee)],
           [t(".adjustment_comment"), claim.youth_court_fee_adjustment_comment]
         ]
 
@@ -24,7 +24,7 @@
       claimed_fee = claim.totals[:additional_fees][:youth_court_fee][:claimed_total_exc_vat]
       rows = [
         [t(".fee_type"), t(".youth_court_fee")],
-        [t(".net_cost"), NumberTo.pounds(claimed_fee)]
+        [t(".net_cost"), LaaCrimeFormsCommon::NumberTo.pounds(claimed_fee)]
       ]
 
       govuk_table do |table|

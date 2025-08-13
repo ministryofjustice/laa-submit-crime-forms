@@ -6,7 +6,7 @@ module AllowedValueHelper
     when :na
       I18n.t('prior_authority.generic.not_applicable')
     else
-      NumberTo.pounds(adjusted_cost)
+      LaaCrimeFormsCommon::NumberTo.pounds(adjusted_cost)
     end
   end
 end

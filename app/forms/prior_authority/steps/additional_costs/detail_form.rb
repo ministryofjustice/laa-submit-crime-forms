@@ -32,7 +32,7 @@ module PriorAuthority
         end
 
         def formatted_total_cost
-          NumberTo.pounds(total_cost)
+          LaaCrimeFormsCommon::NumberTo.pounds(total_cost)
         end
 
         def total_cost

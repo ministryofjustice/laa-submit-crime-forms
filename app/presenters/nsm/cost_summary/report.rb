@@ -37,7 +37,7 @@ module Nsm
       end
 
       def total_cost
-        NumberTo.pounds claim.totals[:totals][:claimed_total_inc_vat]
+        LaaCrimeFormsCommon::NumberTo.pounds claim.totals[:totals][:claimed_total_inc_vat]
       end
 
       private

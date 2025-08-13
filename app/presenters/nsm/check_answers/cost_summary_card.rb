@@ -95,9 +95,9 @@ module Nsm
 
       def format(value, accessibility_key: '')
         if accessibility_key.present?
-          { text: accessible_text(accessibility_key, NumberTo.pounds(value)), numeric: true }
+          { text: accessible_text(accessibility_key, LaaCrimeFormsCommon::NumberTo.pounds(value)), numeric: true }
         else
-          { text: NumberTo.pounds(value), numeric: true }
+          { text: LaaCrimeFormsCommon::NumberTo.pounds(value), numeric: true }
         end
       end
 

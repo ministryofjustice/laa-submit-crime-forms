@@ -21,9 +21,9 @@ module Nsm
             { text: name_text(work_type, data[:at_least_one_claimed_work_item_assessed_as_different_type]),
               width: 'govuk-!-width-one-quarter' },
             { text: time_text(time), numeric: true },
-            { text: NumberTo.pounds(net_cost), numeric: true },
+            { text: LaaCrimeFormsCommon::NumberTo.pounds(net_cost), numeric: true },
             { text: time_text(allowed_time), numeric: true },
-            { text: NumberTo.pounds(allowed_net_cost), numeric: true },
+            { text: LaaCrimeFormsCommon::NumberTo.pounds(allowed_net_cost), numeric: true },
           ]
         end
       end
