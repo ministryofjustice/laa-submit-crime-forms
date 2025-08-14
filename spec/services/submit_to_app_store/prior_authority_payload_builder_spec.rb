@@ -10,7 +10,6 @@ RSpec.describe SubmitToAppStore::PriorAuthorityPayloadBuilder do
         updated_at: fixed_arbitrary_date.utc,
         prison_law: true,
         ufn: '120423/123',
-        laa_reference: 'LAA-n4AohV',
         status: 'submitted',
         reason_why: 'something',
         main_offence_id: 'something',

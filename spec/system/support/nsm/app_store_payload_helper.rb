@@ -1,12 +1,12 @@
 module Nsm
   module AppStorePayloadHelper
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-    def stub_app_store_payload(claim, state = nil)
+    def stub_app_store_payload(claim, state = nil, laa_reference = 'LAA-ABC123')
       claim.reload
 
       payload = SubmitToAppStore::NsmPayloadBuilder.new(claim:).payload.with_indifferent_access
       payload[:application_state] = state || claim.state
-
+      payload[:application][:laa_reference] = laa_reference
       claim.work_items.each do |work_item|
         element = payload.dig(:application, :work_items).find { _1[:id] == work_item.id }
         if work_item.allowed_time_spent
@@ -66,6 +66,24 @@ module Nsm
       )
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+
+    def attach_ref_to_payload(app)
+      # TODO: this method is only needed because we are
+      # equating an app store payload with a local record
+      # it should be considered tech debt that we aim to get rid of
+      # when unifying submissions into one db
+      payload = nil
+      case app.class.name
+      when 'PriorAuthorityApplication'
+        payload = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: app).payload
+      when 'Claim'
+        payload = SubmitToAppStore::NsmPayloadBuilder.new(claim: app).payload
+      end
+
+      ref = laa_references.select { _1[:id] == payload[:application_id] }.first[:laa_reference]
+      payload[:application][:laa_reference] = ref
+      payload
+    end
   end
 end
 

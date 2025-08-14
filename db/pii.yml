@@ -140,7 +140,6 @@ prior_authority_applications:
   prison_law: false
   authority_value: false
   ufn: false
-  laa_reference: false
   state: false
   navigation_stack: false
   viewed_steps: false
@@ -170,7 +169,6 @@ prior_authority_applications:
   assessment_comment: true
   resubmission_requested: false
   resubmission_deadline: false
-  core_search_fields: false
   submit_to_app_store_completed: false
   send_notification_email_completed: false
   originally_submitted_at: false
@@ -216,7 +214,6 @@ claims:
   other_info: true
   conclusion: true
   concluded: false
-  laa_reference: false
   letters_uplift: false
   work_before_date: false
   work_after_date: false
@@ -251,7 +248,6 @@ claims:
   office_in_undesignated_area: false
   court_in_undesignated_area: false
   transferred_to_undesignated_area: false
-  core_search_fields: false
   submit_to_app_store_completed: false
   send_notification_email_completed: false
   originally_submitted_at: false

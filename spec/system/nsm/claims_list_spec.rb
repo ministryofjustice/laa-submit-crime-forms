@@ -10,11 +10,11 @@ RSpec.describe 'NSM claims lists', :stub_oauth_token do
     end
 
     first_submitted = create(:claim, :complete, :case_type_magistrates, :with_named_defendant,
-                             ufn: '120423/002', laa_reference: 'LAA-BBBBB', state: 'submitted',
+                             ufn: '120423/002', state: 'submitted',
                              updated_at: 2.days.ago)
 
     second_submitted = create(:claim, :complete, :case_type_breach,
-                              laa_reference: 'LAA-AAAAA', ufn: '120423/001', state: 'submitted', updated_at: 1.day.ago,
+                              ufn: '120423/001', state: 'submitted', updated_at: 1.day.ago,
                               defendants: [build(:defendant, :valid_nsm, first_name: 'Burt', last_name: 'Bacharach')])
 
     stub_request(:post, 'https://app-store.example.com/v1/submissions/searches').with(
@@ -36,18 +36,18 @@ RSpec.describe 'NSM claims lists', :stub_oauth_token do
       }.to_json
     )
 
-    granted = create(:claim, :complete, :case_type_magistrates, ufn: '120423/003', laa_reference: 'LAA-CCCC1',
+    granted = create(:claim, :complete, :case_type_magistrates, ufn: '120423/003',
            state: 'granted', updated_at: 3.days.ago,
            defendants: [build(:defendant, :valid_nsm, first_name: 'Burt', last_name: 'Bacharach')])
 
     sent_back = create(:claim, :complete, :case_type_magistrates, :with_named_defendant, ufn: '120423/004',
-           state: 'sent_back', updated_at: 3.days.ago, laa_reference: 'LAA-CCCC2')
+           state: 'sent_back', updated_at: 3.days.ago)
 
     part_grant = create(:claim, :complete, :case_type_magistrates, :with_named_defendant, ufn: '120423/005',
-           state: 'part_grant', updated_at: 3.days.ago, laa_reference: 'LAA-CCCC3')
+           state: 'part_grant', updated_at: 3.days.ago)
 
     rejected = create(:claim, :complete, :case_type_magistrates, :with_named_defendant, ufn: '120423/006',
-           state: 'rejected', updated_at: 3.days.ago, laa_reference: 'LAA-CCCC4')
+           state: 'rejected', updated_at: 3.days.ago)
 
     stub_request(:post, 'https://app-store.example.com/v1/submissions/searches').with do |request|
       JSON.parse(request.body)['status_with_assignment'] == %w[granted part_grant rejected auto_grant sent_back expired]
@@ -55,7 +55,7 @@ RSpec.describe 'NSM claims lists', :stub_oauth_token do
                     data = JSON.parse(request.body)
                     claims = [granted, sent_back, part_grant, rejected]
                     ordered = case data['sort_by']
-                              when 'ufn', 'client_name', 'laa_reference'
+                              when 'ufn', 'client_name'
                                 data['sort_direction'] == 'descending' ? claims.reverse : claims
                               when 'status_with_assignment'
                                 data['sort_direction'] == 'descending' ? [sent_back] : [granted]
@@ -75,14 +75,12 @@ RSpec.describe 'NSM claims lists', :stub_oauth_token do
 
     create(:claim,
            ufn: '120423/008',
-           laa_reference: 'LAA-DDDDD',
            defendants: [build(:defendant, :valid_nsm, first_name: 'Zoe', last_name: 'Zeigler')],
            state: 'draft',
            updated_at: 4.days.ago)
 
     create(:claim,
            ufn: '111111/111',
-           laa_reference: 'LAA-EEEEE',
            state: 'draft',
            office_code: 'OTHER',
            submitter: create(:provider, :other))
@@ -157,19 +155,6 @@ RSpec.describe 'NSM claims lists', :stub_oauth_token do
     click_on 'Account'
     within top_row_selector do
       expect(page).to have_content('1A123B')
-    end
-  end
-
-  it 'allows sorting by LAA reference' do
-    visit reviewed_nsm_applications_path
-    click_on 'LAA reference'
-    within top_row_selector do
-      expect(page).to have_content('CCCC1')
-    end
-
-    click_on 'LAA reference'
-    within top_row_selector do
-      expect(page).to have_content('CCCC4')
     end
   end
 

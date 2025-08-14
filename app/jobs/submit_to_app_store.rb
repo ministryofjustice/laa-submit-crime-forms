@@ -16,7 +16,6 @@ class SubmitToAppStore < ApplicationJob
     submission.with_lock do
       new_data = submit(submission)
       local_record = submission.try(:local_record) || submission
-      notify(local_record)
       update_records(new_data, local_record)
       local_record.update!(submit_to_app_store_completed: true)
     end
@@ -26,10 +25,6 @@ class SubmitToAppStore < ApplicationJob
     payload = PayloadBuilder.call(submission)
     client = AppStoreClient.new
     payload.with_indifferent_access['application_state'] == 'submitted' ? client.post(payload) : client.put(payload)
-  end
-
-  def notify(submission)
-    SendNotificationEmail.perform_later(submission) if ENV.fetch('SEND_EMAILS', 'false') == 'true'
   end
 
   def update_records(new_data, submission)

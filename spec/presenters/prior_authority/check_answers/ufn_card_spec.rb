@@ -17,7 +17,6 @@ RSpec.describe PriorAuthority::CheckAnswers::UfnCard do
     let(:application) do
       build_stubbed(
         :prior_authority_application,
-        laa_reference: 'LAA-u2u2u2',
         prison_law: false,
         ufn: '111111/111'
       )
@@ -29,10 +28,6 @@ RSpec.describe PriorAuthority::CheckAnswers::UfnCard do
           {
             head_key: 'prison_law',
             text: 'No'
-          },
-          {
-            head_key: 'laa_reference',
-            text: 'LAA-u2u2u2'
           },
           {
             head_key: 'ufn',
