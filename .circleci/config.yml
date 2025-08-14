@@ -481,10 +481,18 @@ workflows:
                 - main
       - deploy-dev:
           context: laa-submit-crime-forms-dev
+          requires:
+            - build-to-ecr
+            - linter-tests
+            - rspec-tests
       - deploy-uat:
           context:
             - laa-submit-crime-forms-uat
             - laa-non-standard-crime-claims-alerting
+          requires:
+            - build-to-ecr
+            - linter-tests
+            - rspec-tests
           filters:
             branches:
               only:
