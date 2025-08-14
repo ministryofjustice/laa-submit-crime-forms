@@ -493,14 +493,10 @@ workflows:
                 - main
       - deploy-dev:
           context: laa-submit-crime-forms-dev
-          requires:
-            - e2e-test-main
       - deploy-uat:
           context:
             - laa-submit-crime-forms-uat
             - laa-non-standard-crime-claims-alerting
-          requires:
-            - e2e-test-main
           filters:
             branches:
               only:
