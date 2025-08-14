@@ -18,6 +18,10 @@
   <% end %>
 
   <li class="govuk-footer__inline-list-item">
+      <%= link_to 'Join our research panel', Rails.configuration.x.research_url, class: 'govuk-footer__link', target: '_blank' %>
+  </li>
+
+  <li class="govuk-footer__inline-list-item">
     <%= link_to 'Privacy policy', main_app.about_privacy_path, class: 'govuk-footer__link' %>
   </li>
 
