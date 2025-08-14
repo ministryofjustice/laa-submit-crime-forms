@@ -384,7 +384,6 @@ jobs:
           channel: laa-non-standard-crime-claims-prod-alerts
           event: fail
           template: basic_fail_1
-          branch_pattern: .main|main.
 
   deploy-dev:
     executor: cloud-platform-executor
