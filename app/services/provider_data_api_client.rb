@@ -10,8 +10,9 @@ class ProviderDataApiClient
       query(
         :head,
         "/provider-offices/#{office_code}/schedules?areaOfLaw=CRIME%20LOWER",
-        200 => true,
-        204 => false
+        200 => :active,
+        404 => :unavailable,
+        204 => :inactive
       )
     end
 

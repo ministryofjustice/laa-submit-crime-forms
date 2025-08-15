@@ -22,7 +22,7 @@ module Silas
     # users to the account selection dialog in Entra
     def authorize_params
       ap = {
-        prompt: 'none'
+        prompt: 'select_account'
       }
 
       ap[:prompt] = @strategy.request.params[:prompt] if @strategy.request && @strategy.request.params[:prompt]

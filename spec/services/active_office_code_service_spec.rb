@@ -24,6 +24,7 @@ RSpec.describe ActiveOfficeCodeService do
     context 'when the login check is disabled' do
       before do
         allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: false))
+        Rails.configuration.x.office_code_overrides.active_office_codes = office_codes
         office_code_a_stub
         office_code_b_stub
       end
@@ -74,6 +75,7 @@ RSpec.describe ActiveOfficeCodeService do
       let(:office_codes) { ['1A123B'] }
 
       before do
+        allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: false))
         Rails.configuration.x.office_code_overrides.active_office_codes = office_codes
       end
 
@@ -85,12 +87,47 @@ RSpec.describe ActiveOfficeCodeService do
     context 'when there is a local negative override' do
       let(:office_codes) { ['3B345C'] }
 
-      before do
-        Rails.configuration.x.office_code_overrides.inactive_office_codes = office_codes
+      context 'when PDA is disabled' do
+        before do
+          allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: false))
+        end
+
+        context 'with local negative override' do
+          before do
+            Rails.configuration.x.office_code_overrides.inactive_office_codes = office_codes
+          end
+
+          it 'returns it as inactive' do
+            expect(subject).to eq []
+          end
+        end
+
+        context 'with no override' do
+          before do
+            Rails.configuration.x.office_code_overrides.inactive_office_codes = []
+            Rails.configuration.x.office_code_overrides.active_office_codes = []
+          end
+
+          it 'returns it as inactive' do
+            expect(subject).to eq []
+          end
+        end
       end
 
-      it 'returns it as inactive' do
-        expect(subject).to eq []
+      context 'when PDA is enabled and API returns 404' do
+        let(:status) { 404 }
+        let(:office_code_stub) do
+          stub_request(:head, "https://provider-api.example.com/provider-offices/#{office_codes.first}/schedules?areaOfLaw=CRIME%20LOWER")
+            .to_return(status:)
+        end
+
+        before do
+          office_code_stub
+        end
+
+        it 'returns it as inactive' do
+          expect(subject).to eq []
+        end
       end
     end
   end
