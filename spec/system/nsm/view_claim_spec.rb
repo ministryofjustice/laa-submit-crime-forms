@@ -46,7 +46,7 @@ RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
 
   before do
     visit provider_entra_id_omniauth_callback_path
-    stub_app_store_payload(claim)
+    stub_nsm_app_store_payload(claim)
   end
 
   it 'shows a cost summary table on the claimed costs page' do

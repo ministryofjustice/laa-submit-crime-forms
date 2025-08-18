@@ -2,8 +2,8 @@ module PriorAuthority
   module Steps
     class StartPageController < BaseController
       def show
-        # TODO: requires more routes and logic so leaving for future iterations once a completed PA is available
-        # return redirect_to nsm_steps_view_claim_path(current_application.id) unless current_application.draft?
+        redirect_to show_prior_authority_applications_path(current_application) unless current_application.draft?
+
         @pre_tasklist = StartPage::PreTaskList.new(
           view_context, application: current_application, show_index: false
         )

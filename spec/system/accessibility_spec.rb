@@ -70,7 +70,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_app_store_search, :stub_oa
     ].each do |path|
       describe "#{path} screen" do
         before do
-          stub_app_store_payload(claim)
+          stub_nsm_app_store_payload(claim)
           visit send(:"#{path}_path", claim)
         end
 

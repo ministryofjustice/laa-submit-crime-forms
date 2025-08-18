@@ -6,6 +6,7 @@ RSpec.describe 'Prior authority applications, check your answers, submission', :
   end
 
   before do
+    stub_pa_app_store_payload(application, 'submitted')
     visit provider_entra_id_omniauth_callback_path
     visit prior_authority_steps_check_answers_path(application)
   end
@@ -56,16 +57,16 @@ RSpec.describe 'Prior authority applications, check your answers, submission', :
         expect(PriorAuthorityApplication.last).to be_submitted
       end
 
-      it 'stops me getting back to the check your answers page', :stub_oauth_token do
-        application = create(:prior_authority_application, :submitted, :with_complete_non_prison_law)
+      context 'application is already submitted' do
+        let(:application) do
+          create(:prior_authority_application, :submitted, :with_complete_non_prison_law)
+        end
 
-        stub_request(:get, "https://app-store.example.com/v1/application/#{application.id}").to_return(
-          status: 200,
-          body: SubmitToAppStore::PayloadBuilder.call(application).to_json
-        )
-        visit prior_authority_steps_check_answers_path(application)
+        it 'stops me getting back to the check your answers page', :stub_oauth_token do
+          visit prior_authority_steps_check_answers_path(application)
 
-        expect(page).to have_title('Application details')
+          expect(page).to have_title('Application details')
+        end
       end
     end
 

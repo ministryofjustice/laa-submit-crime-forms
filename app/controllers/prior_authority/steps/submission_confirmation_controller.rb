@@ -1,6 +1,7 @@
 module PriorAuthority
   module Steps
     class SubmissionConfirmationController < BaseController
+      skip_before_action :update_viewed_steps, :prune_viewed_steps
       def show
         @laa_reference = current_application.laa_reference
       end
@@ -15,7 +16,7 @@ module PriorAuthority
       end
 
       def current_application
-        @current_application ||= AppStoreDetailService.prior_authority(params[:id], current_provider)
+        @current_application ||= AppStoreDetailService.prior_authority(params[:application_id], current_provider)
       end
     end
   end
