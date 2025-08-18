@@ -192,8 +192,6 @@ spec:
               value: {{ template "helm_deploy.internalHostName" . }}
             - name: ALLOW_INDEXING
               value: '{{ .Values.variables.allowIndexing }}'
-            - name: SEND_EMAILS
-              value: 'true'
             - name: ENABLE_PROMETHEUS_EXPORTER
               value: 'true'
             - name: MAINTENANCE_MODE
