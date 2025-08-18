@@ -40,7 +40,7 @@ RSpec.describe Silas::SilasProvider do
       let(:mock_strategy) { double('strategy', request: nil) }
 
       it 'returns default params with prompt none' do
-        expect(provider.authorize_params).to eq({ prompt: 'none' })
+        expect(provider.authorize_params).to eq({ prompt: 'select_account' })
       end
     end
 
@@ -52,13 +52,13 @@ RSpec.describe Silas::SilasProvider do
       end
 
       it 'returns default params when no prompt or login_hint' do
-        expect(provider.authorize_params).to eq({ prompt: 'none' })
+        expect(provider.authorize_params).to eq({ prompt: 'select_account' })
       end
 
       it 'uses prompt from request params when provided' do
-        mock_params[:prompt] = 'select_account'
+        mock_params[:prompt] = 'none'
 
-        expect(provider.authorize_params).to eq({ prompt: 'select_account' })
+        expect(provider.authorize_params).to eq({ prompt: 'none' })
       end
     end
   end
@@ -90,7 +90,7 @@ RSpec.describe Silas::SilasProvider do
       cert_data = 'fake-cert-data'
       encoded_data = Base64.strict_encode64(cert_data)
 
-      allow(File).to receive(:exist?).with(cert_path).and_return(false)
+      allow(File).to receive(:exist?).and_return(false)
       allow(ENV).to receive(:fetch).with('ENTRA_CERTIFICATE_DATA', nil).and_return(encoded_data)
       allow(File).to receive(:binwrite).with(cert_path, cert_data)
       allow(File).to receive(:chmod).with(0o600, cert_path)

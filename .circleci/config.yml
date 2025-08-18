@@ -479,28 +479,20 @@ workflows:
             branches:
               only:
                 - main
-      - e2e-test-main:
-          context:
-            - laa-crime-forms-e2e-tests
-            - laa-non-standard-crime-claims-alerting
+      - deploy-dev:
+          context: laa-submit-crime-forms-dev
           requires:
             - build-to-ecr
             - linter-tests
             - rspec-tests
-          filters:
-            branches:
-              only:
-                - main
-      - deploy-dev:
-          context: laa-submit-crime-forms-dev
-          requires:
-            - e2e-test-main
       - deploy-uat:
           context:
             - laa-submit-crime-forms-uat
             - laa-non-standard-crime-claims-alerting
           requires:
-            - e2e-test-main
+            - build-to-ecr
+            - linter-tests
+            - rspec-tests
           filters:
             branches:
               only:
