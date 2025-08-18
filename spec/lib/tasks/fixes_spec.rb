@@ -2,18 +2,17 @@ require 'rails_helper'
 
 describe 'fixes:', type: :task do
   describe 'update_contact_email' do
-    before do
-      Rails.application.load_tasks if Rake::Task.tasks.empty?
-    end
-
     subject(:run) do
       Rake::Task['fixes:update_contact_email'].execute(arguments)
     end
 
+    before do
+      Rails.application.load_tasks if Rake::Task.tasks.empty?
+      allow($stdin).to receive_message_chain(:gets, :strip).and_return('y')
+    end
+
     let(:arguments) { Rake::TaskArguments.new [:id, :new_contact_email], [submission.id, 'correct@email.address'] }
     let(:solicitor) { Solicitor.create(contact_email: 'wrong@email.address') }
-
-    before { allow($stdin).to receive_message_chain(:gets, :strip).and_return('y') }
 
     context 'with a claim' do
       let(:submission) { create(:claim, solicitor:) }
