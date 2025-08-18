@@ -2,8 +2,6 @@ module PriorAuthority
   module Steps
     class StartPageController < BaseController
       def show
-        redirect_to prior_authority_application_path(current_application) unless current_application.draft?
-
         @pre_tasklist = StartPage::PreTaskList.new(
           view_context, application: current_application, show_index: false
         )
