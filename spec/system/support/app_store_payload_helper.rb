@@ -1,8 +1,11 @@
 module AppStorePayloadHelper
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
   def stub_pa_app_store_payload(application, state = nil, laa_reference = 'LAA-ABC123')
-    application.reload
+    application.incorrect_informations.each do |incorrect_info|
+      incorrect_info.update(sections_changed: []) if incorrect_info.sections_changed.nil?
+    end
 
+    application.reload
     payload = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:).payload.with_indifferent_access
     payload[:application_state] = state || application.state
     payload[:application][:status] = state || application.state
