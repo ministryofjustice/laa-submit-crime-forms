@@ -45,6 +45,7 @@ module Crm7restbackend
 
     config.x.nsm.feedback_url = 'https://www.smartsurvey.co.uk/s/D07AXK/'
     config.x.prior_authority.feedback_url = 'https://www.smartsurvey.co.uk/s/JCMEZ8/'
+    config.x.research_url = 'https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2BpeqOUlDIpGmeYA_28YLbNUMjJaNVJIMzdQMkRLRUFEM05VVEFNSlpCQS4u'
 
     config.x.redis_url = if ENV['REDIS_HOST'].present? && ENV['REDIS_PASSWORD'].present?
                            protocol = ENV.fetch('REDIS_PROTOCOL', 'rediss')
