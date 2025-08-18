@@ -141,6 +141,7 @@ RSpec.describe 'Search', :stub_oauth_token do
 
     context 'when finding no results' do
       let(:query) { 'anything' }
+
       before do
         app_store_search_stub
         visit search_prior_authority_applications_path
