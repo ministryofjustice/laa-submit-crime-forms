@@ -52,10 +52,6 @@ module Nsm
       redirect_to nsm_steps_start_page_path(clone.id), flash: { success: t('.cloned') }
     end
 
-    def self.model_class
-      Claim
-    end
-
     ORDERS = {
       'ufn' => 'ufn ?',
       'defendant' => 'defendants.first_name ?, defendants.last_name ?',

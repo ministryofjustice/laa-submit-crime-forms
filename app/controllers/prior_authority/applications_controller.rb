@@ -69,10 +69,6 @@ module PriorAuthority
       redirect_to prior_authority_steps_start_page_path(clone.id), flash: { success: t('.cloned') }
     end
 
-    def self.model_class
-      PriorAuthorityApplication
-    end
-
     ORDERS = {
       'ufn' => 'ufn ?',
       'client' => 'defendants.first_name ?, defendants.last_name ?',
