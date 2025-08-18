@@ -2,6 +2,10 @@ require 'rails_helper'
 
 describe 'fixes:', type: :task do
   describe 'update_contact_email' do
+    before do
+      Rails.application.load_tasks if Rake::Task.tasks.empty?
+    end
+
     subject(:run) do
       Rake::Task['fixes:update_contact_email'].execute(arguments)
     end
