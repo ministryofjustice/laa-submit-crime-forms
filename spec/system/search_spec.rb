@@ -198,6 +198,35 @@ RSpec.describe 'Search', :stub_oauth_token do
       end
     end
 
+    context 'when there are only draft results' do
+      before do
+        draft
+        stub_request(:post, 'https://app-store.example.com/v1/submissions/searches').to_return({
+                                                                                                 status: 201,
+          body: {
+            raw_data: [],
+            metadata: { total_results: 0 }
+          }.to_json
+                                                                                               })
+        visit search_prior_authority_applications_path
+        fill_in 'Enter any combination of client, UFN or LAA reference', with: '070620/123'
+        find('button.govuk-button#search').click
+      end
+
+      let(:draft) do
+        create :prior_authority_application, :full,
+               office_code: '1A123B',
+               ufn: '070620/123',
+               defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
+               state: :draft,
+               updated_at: 1.year.ago
+      end
+
+      it 'shows the draft record' do
+        expect(page).to have_content('070620/123')
+      end
+    end
+
     context 'change link target based on state' do
       let(:submitted_id) { SecureRandom.uuid }
       let(:laa_references) do
