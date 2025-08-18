@@ -5,6 +5,7 @@ module AppStorePayloadHelper
 
     payload = SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application:).payload.with_indifferent_access
     payload[:application_state] = state || application.state
+    payload[:application][:status] = state || application.state
     payload[:application][:laa_reference] = laa_reference
     stub_request(:get, "https://app-store.example.com/v1/application/#{application.id}").to_return(
       status: 200,

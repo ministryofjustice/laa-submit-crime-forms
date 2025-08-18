@@ -6,7 +6,6 @@ RSpec.describe 'Prior authority applications, check your answers, submission', :
   end
 
   before do
-    stub_pa_app_store_payload(application, 'submitted')
     visit provider_entra_id_omniauth_callback_path
     visit prior_authority_steps_check_answers_path(application)
   end
@@ -36,6 +35,7 @@ RSpec.describe 'Prior authority applications, check your answers, submission', :
 
   context 'when I have confirmed conditions I must abide by', :javascript, :stub_oauth_token do
     before do
+      stub_pa_app_store_payload(application, 'submitted')
       visit prior_authority_steps_check_answers_path(application)
       check 'I confirm that all costs are exclusive of VAT'
       check 'I confirm that any travel expenditure (such as mileage, ' \
