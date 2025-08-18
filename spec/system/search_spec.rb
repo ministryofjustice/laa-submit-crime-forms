@@ -139,6 +139,20 @@ RSpec.describe 'Search', :stub_oauth_token do
       end
     end
 
+    context 'when finding no results' do
+      let(:query) { 'anything' }
+      before do
+        app_store_search_stub
+        visit search_prior_authority_applications_path
+        fill_in 'Enter any combination of client, UFN or LAA reference', with: query
+        find('button.govuk-button#search').click
+      end
+
+      it 'shows that there are no results' do
+        expect(page).to have_content 'There are no results that match the search criteria'
+      end
+    end
+
     context 'when there are multiple results' do
       let(:other_matching_id) { SecureRandom.uuid }
       let(:laa_references) do
