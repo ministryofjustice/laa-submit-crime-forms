@@ -276,6 +276,11 @@ RSpec.describe 'Search', :stub_oauth_token do
         expect(page).to have_content 'Your application progress'
       end
 
+      it 'can reverse sort' do
+        click_link 'UFN'
+        expect(page).to have_content(/070620.*110120.*/m)
+      end
+
       it 'click submitted link goes to application claim details' do
         expect(find('a', text: '070620/123')[:href]).to eq prior_authority_application_path(submitted)
       end
