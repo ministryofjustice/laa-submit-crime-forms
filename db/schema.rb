@@ -110,9 +110,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_05_120900) do
     t.boolean "send_notification_email_completed"
     t.datetime "originally_submitted_at"
     t.boolean "include_youth_court_fee"
+    t.string "main_offence_type"
     t.date "change_solicitor_date"
     t.string "case_outcome_other_info"
-    t.string "main_offence_type"
     t.boolean "allowed_youth_court_fee"
     t.string "youth_court_fee_adjustment_comment"
     t.jsonb "viewed_steps", default: [], array: true
@@ -210,7 +210,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_05_120900) do
     t.jsonb "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "reason_why"
     t.date "rep_order_date"
     t.boolean "client_detained"
     t.boolean "subject_to_poca"
@@ -220,6 +219,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_05_120900) do
     t.boolean "youth_court"
     t.boolean "psychiatric_liaison"
     t.string "psychiatric_liaison_reason_not"
+    t.text "reason_why"
     t.boolean "next_hearing"
     t.boolean "additional_costs_still_to_add"
     t.boolean "prior_authority_granted"

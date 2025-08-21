@@ -27,7 +27,7 @@ class PriorAuthorityApplication < ApplicationRecord
   has_many :additional_costs, dependent: :destroy
   has_many :further_informations, dependent: :destroy, inverse_of: :submission, as: :submission
   has_many :incorrect_informations, dependent: :destroy, inverse_of: :prior_authority_application
-
+  attribute :state, :string
   enum :state, {
     pre_draft: 'pre_draft',
     draft: 'draft',
