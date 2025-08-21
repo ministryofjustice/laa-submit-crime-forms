@@ -97,7 +97,7 @@
         </caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <% ['ufn', 'defendant', 'account', 'last_updated', 'state'].each_with_index do |key, index| %>
+            <% @row_headers.each_with_index do |key, index| %>
               <%= next if key == 'state' and %i[submitted draft].include?(@scope) %>
               <%= table_header(
                 key,
@@ -119,16 +119,14 @@
           <% @claims.each do |claim| %>
             <tr class="govuk-table__row app-task-list__item">
               <td class="govuk-table__cell">
-                <% if @scope == :draft %>
-                  <%= link_to claim.ufn, nsm_steps_start_page_path(claim.id) %>
-                <% else %>
-                  <%= link_to claim.ufn, nsm_steps_view_claim_path(claim.id) %>
-                <% end %>
+                <%= link_to claim.ufn, nsm_steps_start_page_path(claim.id) %>
               </td>
               <td class="govuk-table__cell"><%= claim.main_defendant&.full_name.presence || I18n.t('helpers.missing_data') %></td>
               <td class="govuk-table__cell"><%= claim.office_code.presence || I18n.t('helpers.missing_data') %></td>
               <td class="govuk-table__cell"><%= claim.updated_at.to_fs(:stamp) %></td>
-              <td class="govuk-table__cell"><%= claim.ufn %></td>
+              <% unless @scope == :draft %>
+                <td class="govuk-table__cell"><%= claim.laa_reference %></td>
+              <% end %>
               <% if @scope == :draft %>
                 <td class="govuk-table__cell">
                   <% if !HostEnv.production? %>
