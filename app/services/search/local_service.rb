@@ -1,4 +1,16 @@
 module Search
+  class UfnChecker
+    include ActiveModel::Validations
+
+    attr_accessor :ufn
+
+    def initialize(ufn)
+      @ufn = ufn
+    end
+
+    validates :ufn, ufn: true
+  end
+
   class LocalService
     class << self
       def call(base_query, params)
@@ -65,7 +77,7 @@ module Search
       end
 
       def ufn?(word)
-        %r{\A\d+/\d+\z}.match?(word)
+        UfnChecker.new(word).validate
       end
     end
   end
