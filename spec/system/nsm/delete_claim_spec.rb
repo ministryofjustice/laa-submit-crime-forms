@@ -6,7 +6,6 @@ RSpec.describe 'NSM application deletion' do
 
     create(:claim,
            ufn: '120423/008',
-           laa_reference: 'LAA-DDDDD',
            defendants: [build(:defendant, :valid_nsm, first_name: 'Zoe', last_name: 'Zeigler')],
            state: 'draft',
            updated_at: 4.days.ago)

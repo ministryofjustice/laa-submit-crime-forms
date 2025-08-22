@@ -35,6 +35,7 @@ RSpec.describe 'Prior authority applications, check your answers, submission', :
 
   context 'when I have confirmed conditions I must abide by', :javascript, :stub_oauth_token do
     before do
+      stub_pa_app_store_payload(application, 'submitted')
       visit prior_authority_steps_check_answers_path(application)
       check 'I confirm that all costs are exclusive of VAT'
       check 'I confirm that any travel expenditure (such as mileage, ' \
@@ -57,14 +58,7 @@ RSpec.describe 'Prior authority applications, check your answers, submission', :
       end
 
       it 'stops me getting back to the check your answers page', :stub_oauth_token do
-        application = create(:prior_authority_application, :submitted, :with_complete_non_prison_law)
-
-        stub_request(:get, "https://app-store.example.com/v1/application/#{application.id}").to_return(
-          status: 200,
-          body: SubmitToAppStore::PayloadBuilder.call(application).to_json
-        )
         visit prior_authority_steps_check_answers_path(application)
-
         expect(page).to have_title('Application details')
       end
     end
@@ -96,6 +90,7 @@ RSpec.describe 'Prior authority applications, check your answers, submission', :
 
     context 'when the app store autogrants' do
       before do
+        stub_pa_app_store_payload(application, 'auto_grant')
         stub_request(:post, 'https://app-store.example.com/v1/application/').to_return(status: 201, body: {
           application_state: 'auto_grant',
           application_type: 'crm4',

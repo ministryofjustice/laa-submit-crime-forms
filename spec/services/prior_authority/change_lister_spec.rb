@@ -7,7 +7,6 @@ RSpec.describe PriorAuthority::ChangeLister do
       {
         prison_law: prison_law,
         ufn: '120423/123',
-        laa_reference: 'LAA-n4AohV',
         status: 'pre_draft',
         reason_why: 'something',
         main_offence_id: 'something',

@@ -39,10 +39,6 @@ module Nsm
       end
     end
 
-    def self.model_class
-      Claim
-    end
-
     private
 
     def generate_error_download

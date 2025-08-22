@@ -12,7 +12,7 @@ RSpec.describe 'Nsm - User can fill in further information', :stub_oauth_token, 
 
   before do
     allow(SubmitToAppStore).to receive(:new).and_return(job)
-    stub_app_store_payload(claim)
+    stub_nsm_app_store_payload(claim)
     visit provider_entra_id_omniauth_callback_path
     visit edit_nsm_steps_rfi_solicitor_declaration_path(claim.id)
   end

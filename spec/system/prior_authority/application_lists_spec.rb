@@ -1,10 +1,30 @@
 require 'system_helper'
 
 RSpec.describe 'Prior authority application lists', :stub_oauth_token do
+  let(:chosen_id) { SecureRandom.uuid }
+  let(:submitted_id) { SecureRandom.uuid }
+  let(:granted_id) { SecureRandom.uuid }
+  let(:sent_back_id) { SecureRandom.uuid }
+  let(:part_grant_id) { SecureRandom.uuid }
+  let(:rejected_id) { SecureRandom.uuid }
+  let(:auto_grant_id) { SecureRandom.uuid }
+
+  let(:laa_references) do
+    [
+      { id: chosen_id, laa_reference: 'LAA-AAAAA' },
+      { id: submitted_id, laa_reference: 'LAA-BBBBB' },
+      { id: granted_id, laa_reference: 'LAA-CCCC1' },
+      { id: sent_back_id, laa_reference: 'LAA-CCCC2' },
+      { id: part_grant_id, laa_reference: 'LAA-CCCC3' },
+      { id: rejected_id, laa_reference: 'LAA-CCCC4' },
+      { id: auto_grant_id, laa_reference: 'LAA-CCCC5' }
+    ]
+  end
+
   let(:chosen) do
     create(:prior_authority_application,
            :full,
-           laa_reference: 'LAA-AAAAA',
+           id: chosen_id,
            ufn: '120423/818',
            state: 'submitted',
            updated_at: 1.day.ago)
@@ -13,20 +33,32 @@ RSpec.describe 'Prior authority application lists', :stub_oauth_token do
   before do
     visit provider_entra_id_omniauth_callback_path
     chosen
-    submitted = create(:prior_authority_application, :full, laa_reference: 'LAA-BBBBB', state: 'submitted',
-                        updated_at: 2.days.ago)
-    granted = create(:prior_authority_application, :full, laa_reference: 'LAA-CCCC1', state: 'granted',
+    submitted = create(:prior_authority_application, :full,
+                       id: submitted_id,
+                       state: 'submitted',
+                       updated_at: 2.days.ago)
+    granted = create(:prior_authority_application, :full,
+                     id: granted_id,
+                     state: 'granted',
+                     updated_at: 3.days.ago)
+    sent_back = create(:prior_authority_application, :full,
+                       id: sent_back_id,
+                       state: 'sent_back',
+                       updated_at: 3.days.ago)
+    part_grant = create(:prior_authority_application, :full,
+                        id: part_grant_id,
+                        state: 'part_grant',
                         updated_at: 3.days.ago)
-    sent_back = create(:prior_authority_application, :full, laa_reference: 'LAA-CCCC2', state: 'sent_back',
+    rejected = create(:prior_authority_application, :full,
+                      id: rejected_id,
+                      state: 'rejected',
+                      updated_at: 3.days.ago)
+    auto_grant = create(:prior_authority_application, :full,
+                        id: auto_grant_id,
+                        state: 'auto_grant',
                         updated_at: 3.days.ago)
-    part_grant = create(:prior_authority_application, :full, laa_reference: 'LAA-CCCC3', state: 'part_grant',
-                        updated_at: 3.days.ago)
-    rejected = create(:prior_authority_application, :full, laa_reference: 'LAA-CCCC4', state: 'rejected',
-                        updated_at: 3.days.ago)
-    auto_grant = create(:prior_authority_application, :full, laa_reference: 'LAA-CCCC5', state: 'auto_grant',
-                        updated_at: 3.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-DDDDD', state: 'draft', updated_at: 4.days.ago)
-    create(:prior_authority_application, laa_reference: 'LAA-EEEEE', state: 'draft',
+    create(:prior_authority_application, ufn: '01012025/001', state: 'draft', updated_at: 4.days.ago)
+    create(:prior_authority_application, ufn: '02022025/002', state: 'draft',
            office_code: 'OTHER', provider: create(:provider, :other))
 
     stub_request(:post, 'https://app-store.example.com/v1/submissions/searches').with do |request|
@@ -44,7 +76,9 @@ RSpec.describe 'Prior authority application lists', :stub_oauth_token do
                       status: 201,
                       body: {
                         metadata: { total_results: 4 },
-                        raw_data: ordered.map { SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: _1).payload }
+                        raw_data: ordered.map do |app|
+                          attach_ref_to_payload(app)
+                        end
                       }.to_json
                     }
                   end)
@@ -56,7 +90,7 @@ RSpec.describe 'Prior authority application lists', :stub_oauth_token do
       body: {
         metadata: { total_results: 4 },
         raw_data: [granted, sent_back, part_grant, rejected, auto_grant].map do |app|
-          SubmitToAppStore::PriorAuthorityPayloadBuilder.new(application: app).payload
+          attach_ref_to_payload(app)
         end
       }.to_json
     )
@@ -84,7 +118,7 @@ RSpec.describe 'Prior authority application lists', :stub_oauth_token do
     it 'for draft applications' do
       visit drafts_prior_authority_applications_path
 
-      expect(page).to have_content 'DDDDD'
+      expect(page).to have_content '01012025/001'
     end
   end
 
@@ -104,7 +138,7 @@ RSpec.describe 'Prior authority application lists', :stub_oauth_token do
   end
 
   it 'does not show applications from other offices' do
-    expect(page).to have_no_content 'EEEEE'
+    expect(page).to have_no_content '02022025/002'
   end
 
   it 'links through to a readonly summary page for submitted applications' do

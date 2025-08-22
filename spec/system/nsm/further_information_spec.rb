@@ -9,7 +9,7 @@ RSpec.describe 'Nsm - User can fill in further information', :stub_oauth_token, 
   end
 
   before do
-    stub_app_store_payload(claim)
+    stub_nsm_app_store_payload(claim)
     visit provider_entra_id_omniauth_callback_path
     visit edit_nsm_steps_further_information_path(claim.id)
   end

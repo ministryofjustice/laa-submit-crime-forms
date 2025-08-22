@@ -15,6 +15,7 @@ module Nsm
       model = AppStoreListService.reviewed(current_provider, params, service: :nsm)
       @pagy = model.pagy
       @claims = model.rows
+      @row_headers = row_headers
     end
 
     def create
@@ -27,10 +28,12 @@ module Nsm
       model = AppStoreListService.submitted(current_provider, params, service: :nsm)
       @pagy = model.pagy
       @claims = model.rows
+      @row_headers = row_headers
       render 'index'
     end
 
     def draft
+      @row_headers = row_headers({ include_laa_ref: false })
       @pagy, @claims = order_and_paginate(&:draft)
       render 'index'
     end
@@ -52,15 +55,10 @@ module Nsm
       redirect_to nsm_steps_start_page_path(clone.id), flash: { success: t('.cloned') }
     end
 
-    def self.model_class
-      Claim
-    end
-
     ORDERS = {
       'ufn' => 'ufn ?',
       'defendant' => 'defendants.first_name ?, defendants.last_name ?',
       'last_updated' => 'updated_at ?',
-      'laa_reference' => 'laa_reference ?',
       'state' => 'state ?',
       'account' => 'office_code ?'
     }.freeze
@@ -71,6 +69,15 @@ module Nsm
     }.freeze
 
     private
+
+    def row_headers(opts = { include_laa_ref: true })
+      if opts[:include_laa_ref]
+        %w[ufn defendant account last_updated laa_reference
+           state]
+      else
+        %w[ufn defendant account laa_reference state]
+      end
+    end
 
     def order_and_paginate
       query = yield Claim.for(current_provider).where.not(ufn: nil)

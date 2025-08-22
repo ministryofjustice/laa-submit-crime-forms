@@ -2,7 +2,6 @@ FactoryBot.define do
   factory :claim do
     submitter { Provider.find_by(uid: 'test-user') || create(:provider) }
     office_code { '1A123B' }
-    laa_reference { 'LAA-n4AohV' }
 
     transient do
       date { Date.new(2023, 4, 12) }
@@ -293,7 +292,6 @@ FactoryBot.define do
     end
 
     trait :randomised do
-      laa_reference { "LAA-#{SecureRandom.alphanumeric(6)}" }
       ufn do
         random_date = Faker::Date.between(from: 10.years.ago, to: 1.day.ago)
         "#{random_date.strftime('%d%m%y')}/#{SecureRandom.rand(1000).to_s.rjust(3, '0')}"

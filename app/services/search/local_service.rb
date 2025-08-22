@@ -1,4 +1,16 @@
 module Search
+  class UfnChecker
+    include ActiveModel::Validations
+
+    attr_accessor :ufn
+
+    def initialize(ufn)
+      @ufn = ufn
+    end
+
+    validates :ufn, ufn: true
+  end
+
   class LocalService
     class << self
       def call(base_query, params)
@@ -21,8 +33,8 @@ module Search
         params[:search_string].split.reduce(base_query) do |built_query, token|
           word = token.strip
 
-          if laa_reference_or_ufn?(word)
-            built_query.where("core_search_fields @@ to_tsquery('simple', ?)", escape_string(word))
+          if ufn?(word)
+            built_query.where("ufn @@ to_tsquery('simple', ?)", escape_string(word))
           else
             built_query.where("searchable_defendants.search_fields @@ to_tsquery('simple', ?)", escape_string(word))
           end
@@ -64,8 +76,8 @@ module Search
         query.distinct
       end
 
-      def laa_reference_or_ufn?(word)
-        word.downcase.starts_with?('laa-') || %r{\A\d+/\d+\z}.match?(word)
+      def ufn?(word)
+        UfnChecker.new(word).validate
       end
     end
   end

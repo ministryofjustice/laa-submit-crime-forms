@@ -97,7 +97,7 @@ RSpec.describe 'Prior authority application creation', :stub_app_store_search, :
     let(:claim) { create(:prior_authority_application, :with_all_tasks_completed, :as_draft) }
     # Ignore fields that `dup` doesn't handle, as well as fields that won't get duplicated
     # We also have to ignore `viewed_steps` as we redirect to the start page after cloning
-    let(:ignored_attrs) { %w[id created_at updated_at core_search_fields laa_reference viewed_steps] }
+    let(:ignored_attrs) { %w[id created_at updated_at viewed_steps] }
 
     before do
       claim.save

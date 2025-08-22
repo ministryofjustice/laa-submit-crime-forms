@@ -40,7 +40,6 @@ class SubmitToAppStore
       office_code
       prison_law
       ufn
-      laa_reference
       rep_order_date
       reason_why
       main_offence_id

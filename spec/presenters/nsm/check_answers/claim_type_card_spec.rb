@@ -22,10 +22,6 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
         expect(subject.row_data).to match(
           [
             {
-              head_key: 'laa_reference',
-              text: claim.laa_reference
-            },
-            {
               head_key: 'file_ufn',
               text: '120423/001'
             },
@@ -63,10 +59,6 @@ RSpec.describe Nsm::CheckAnswers::ClaimTypeCard do
       it 'generates magistrates rows' do
         expect(subject.row_data).to match(
           [
-            {
-              head_key: 'laa_reference',
-              text: claim.laa_reference
-            },
             {
               head_key: 'file_ufn',
               text: '120423/002'

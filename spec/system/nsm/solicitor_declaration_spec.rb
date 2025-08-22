@@ -13,7 +13,7 @@ RSpec.describe 'User can fill in solicitor declaration', :stub_oauth_token, type
   let(:work_item) { build(:work_item, :waiting) }
 
   before do
-    stub_app_store_payload(claim, :submitted)
+    stub_nsm_app_store_payload(claim, :submitted)
     visit provider_entra_id_omniauth_callback_path
   end
 

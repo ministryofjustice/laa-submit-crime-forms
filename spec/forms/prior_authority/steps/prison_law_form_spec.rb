@@ -39,7 +39,7 @@ RSpec.describe PriorAuthority::Steps::PrisonLawForm do
   describe '#save' do
     subject(:save) { form.save }
 
-    let(:application) { create(:prior_authority_application, laa_reference: nil) }
+    let(:application) { create(:prior_authority_application) }
 
     context 'with prison law value of true' do
       let(:prison_law) { 'true  ' }
