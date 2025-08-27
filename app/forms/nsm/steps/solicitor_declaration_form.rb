@@ -2,7 +2,7 @@ module Nsm
   module Steps
     class SolicitorDeclarationForm < ::Steps::BaseFormObject
       attribute :signatory_name, :string
-      validates :signatory_name, presence: true, format: { with: /\A[a-z,.'\-]+( +[a-z,.'\-]+)+\z/i }
+      validates :signatory_name, presence: true, format: { with: /\A[a-z,.'-]+( +[a-z,.'-]+)+\z/i }
 
       def persist!
         Claim.transaction do

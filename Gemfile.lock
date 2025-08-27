@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
-  revision: 32ac136ee59893e1bcb26128febb6b8d295b6ba8
+  revision: 53f169973be08a25e91f8e9526c2dc5e00ea2157
   specs:
     laa_crime_forms_common (0.11.3)
       activesupport
@@ -91,8 +91,8 @@ GEM
     ast (2.4.3)
     attr_extras (7.1.0)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1148.0)
-    aws-sdk-core (3.229.0)
+    aws-partitions (1.1151.0)
+    aws-sdk-core (3.231.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -100,11 +100,11 @@ GEM
       bigdecimal
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-kms (1.110.0)
-      aws-sdk-core (~> 3, >= 3.228.0)
+    aws-sdk-kms (1.111.0)
+      aws-sdk-core (~> 3, >= 3.231.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.197.0)
-      aws-sdk-core (~> 3, >= 3.228.0)
+    aws-sdk-s3 (1.198.0)
+      aws-sdk-core (~> 3, >= 3.231.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.12.1)
@@ -447,7 +447,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.4.1)
+    rexml (3.4.2)
     rspec (3.13.1)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -474,7 +474,7 @@ GEM
     rspec-support (3.13.4)
     rspec_junit_formatter (0.6.0)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (1.79.2)
+    rubocop (1.80.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -575,7 +575,7 @@ GEM
       tzinfo (>= 1.0.0)
     uk_postcode (2.1.8)
     unicode (0.4.4.5)
-    unicode-display_width (3.1.4)
+    unicode-display_width (3.1.5)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
     uri (1.0.3)
@@ -614,7 +614,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-sdk-s3 (~> 1.197)
+  aws-sdk-s3 (~> 1.198)
   axe-core-rspec
   bootsnap (~> 1.18.6)
   capybara
