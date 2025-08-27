@@ -24,6 +24,9 @@ deploy_branch() {
                 --set nameOverride="$BRANCH_RELEASE_NAME"\
                 --set fullnameOverride="$BRANCH_RELEASE_NAME"\
                 --set-string sharedIPs="$SHARED_IPS" \
+                --set postgresql.image.repository=bitnamilegacy/postgresql \
+                --set redis.image.repository=bitnamilegacy/redis \
+                --set postgresql.global.security.allowInsecureImages=true \
                 --set branch=true
 
 }
