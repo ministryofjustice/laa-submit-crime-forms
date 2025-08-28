@@ -29,8 +29,8 @@ class ActiveOfficeCodeService
     private
 
     def known_active_code?(office_code)
-      return true if always_active_office_codes.include?(office_code)
       return false if always_inactive_office_codes.include?(office_code)
+      return true if always_active_office_codes.include?(office_code)
 
       false
     end
