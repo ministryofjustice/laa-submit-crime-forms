@@ -19,12 +19,12 @@ RSpec.describe ActiveOfficeCodeService do
       allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: true))
       office_code_a_stub
       office_code_b_stub
+      Rails.configuration.x.office_code_overrides.active_office_codes = office_codes
     end
 
     context 'when the login check is disabled' do
       before do
         allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: false))
-        Rails.configuration.x.office_code_overrides.active_office_codes = office_codes
         office_code_a_stub
         office_code_b_stub
       end
@@ -63,10 +63,8 @@ RSpec.describe ActiveOfficeCodeService do
       context 'when there is an error with the HTTP request' do
         let(:status) { 500 }
 
-        it 'raises an error' do
-          expect { subject }.to raise_error(
-            "Unexpected status code 500 when querying provider API endpoint #{url}"
-          )
+        it 'fallsback to active office code list' do
+          expect(subject).to eq(office_codes)
         end
       end
     end
@@ -111,22 +109,6 @@ RSpec.describe ActiveOfficeCodeService do
           it 'returns it as inactive' do
             expect(subject).to eq []
           end
-        end
-      end
-
-      context 'when PDA is enabled and API returns 404' do
-        let(:status) { 404 }
-        let(:office_code_stub) do
-          stub_request(:head, "https://provider-api.example.com/provider-offices/#{office_codes.first}/schedules?areaOfLaw=CRIME%20LOWER")
-            .to_return(status:)
-        end
-
-        before do
-          office_code_stub
-        end
-
-        it 'returns it as inactive' do
-          expect(subject).to eq []
         end
       end
     end
