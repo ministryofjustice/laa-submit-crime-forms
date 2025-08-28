@@ -30,7 +30,9 @@ development:
     - YYYYYY
 
 uat:
-  active_office_codes: []
+  active_office_codes:
+    # Test office for 2nd SILAS test account
+    - 0Z981E
   inactive_office_codes:
     # Test office for A.CLARKE (see 1Password for login), has eforms role
     - 0X416R
