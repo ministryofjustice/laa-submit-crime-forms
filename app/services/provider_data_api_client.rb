@@ -10,9 +10,11 @@ class ProviderDataApiClient
       query(
         :head,
         "/provider-offices/#{office_code}/schedules?areaOfLaw=CRIME%20LOWER",
-        200 => :active,
-        404 => :unavailable,
-        204 => :inactive
+        {
+          200 => :active,
+          204 => :inactive
+        },
+        :unavailable
       )
     end
 
@@ -22,16 +24,20 @@ class ProviderDataApiClient
       query(
         :get,
         "/api/v1/provider-users/#{encoded_login}/provider-offices",
-        200 => ->(data) { data['offices'] },
-        204 => []
+        {
+          200 => ->(data) { data['offices'] },
+          204 => []
+        }
       )
     end
 
     private
 
-    def query(method, endpoint, handlers)
+    def query(method, endpoint, handlers, fallback = nil)
       response = send(method, endpoint)
       unless handlers.key?(response.code)
+        return fallback if fallback
+
         raise "Unexpected status code #{response.code} when querying provider API endpoint #{endpoint}"
       end
 
