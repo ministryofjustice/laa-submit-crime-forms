@@ -632,7 +632,7 @@ RSpec.describe 'Search', :stub_oauth_token do
                ufn: '060620/999',
                main_defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
                state: :submitted,
-               updated_at: 1.year.ago
+               updated_at: DateTime.new(2024, 8, 1, 10, 17, 26)
       end
 
       before do
