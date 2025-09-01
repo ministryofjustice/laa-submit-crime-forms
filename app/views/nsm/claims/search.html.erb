@@ -58,12 +58,9 @@
                   <%= claim.updated_at.to_fs(:stamp) %>
                 </td>
                 <td class="govuk-table__cell">
-                  <%= claim.ufn %>
-                </td>
-                <td class="govuk-table__cell">
                   <strong class="govuk-tag <%= t("nsm.claims.index.state_colour.#{claim.state}") %>">
-                      <%= t("nsm.claims.index.state.#{claim.state}") %>
-                    </strong>
+                    <%= t("nsm.claims.index.state.#{claim.state}") %>
+                  </strong>
               </tr>
             <% end %>
           </tbody>
