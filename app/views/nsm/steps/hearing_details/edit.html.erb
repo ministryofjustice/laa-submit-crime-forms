@@ -9,7 +9,7 @@
       <%= f.govuk_fully_validatable_date_field :first_hearing_date, maxlength_enabled: true, id: 'steps-hearing_details-form-first-hearing-date', legend: { size: 's'  } %>
       <%= f.govuk_text_field :number_of_hearing, width: 3, label: { size: 's' }, inputmode: 'numeric' %>
 
-      <%= suggestion_select f, :court, LaaMultiStepForms::Court.all, :name, :name, width: 20,
+      <%= suggestion_select f, :court, LaaCrimeFormsCommon::Court.all, :name, :name, width: 20,
                             options: { include_blank: true },
                             label: { size: 's', text: t(current_application.transferred_to_undesignated_area ? '.court_if_transferred_to_undesignated_area' : '.court') },
                             data: { autoselect: false } %>
