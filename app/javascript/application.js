@@ -5,7 +5,7 @@ import "./date-picker";
 import "@hotwired/turbo-rails";
 import $ from "jquery";
 import { checkAndHandleResizeOnScrollablePane } from "./scrollable_pane";
-import { convertSelectToAutocomplete } from "./autocomplete.js";
+import { convertSelectToAutocomplete } from "laa-crime-forms-common";
 
 initAll();
 

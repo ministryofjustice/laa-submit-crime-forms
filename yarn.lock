@@ -3615,6 +3615,11 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+laa-crime-forms-common@1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/laa-crime-forms-common/-/laa-crime-forms-common-1.0.5.tgz#afcebfbb6e8bb386a6ce9320c480913528ff2666"
+  integrity sha512-7DBNfwk4WCDDbTPb0C32x50TE0TMmJ2RBaKX7Os6TcLGh8majFkkPdcAI3mIntzLCPrhDp6iLfZmTEiaVdLEUQ==
+
 leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/leven/-/leven-3.1.0.tgz"
