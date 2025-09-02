@@ -1,6 +1,7 @@
 module Nsm
   module Steps
     class WorkItemForm < ::Steps::AddAnotherForm
+      include LaaCrimeFormsCommon::Validators
       include WorkItemCosts
 
       attr_writer :apply_uplift

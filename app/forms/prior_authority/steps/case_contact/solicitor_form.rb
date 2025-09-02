@@ -2,6 +2,8 @@ module PriorAuthority
   module Steps
     module CaseContact
       class SolicitorForm < ::Steps::BaseFormObject
+        include LaaCrimeFormsCommon::Validators
+
         attribute :contact_first_name, :string
         attribute :contact_last_name, :string
         attribute :contact_email, :string

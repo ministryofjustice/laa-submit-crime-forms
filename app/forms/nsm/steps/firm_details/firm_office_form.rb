@@ -2,6 +2,8 @@ module Nsm
   module Steps
     module FirmDetails
       class FirmOfficeForm < ::Steps::BaseFormObject
+        include LaaCrimeFormsCommon::Validators
+
         attribute :name, :string
         attribute :address_line_1, :string
         attribute :address_line_2, :string

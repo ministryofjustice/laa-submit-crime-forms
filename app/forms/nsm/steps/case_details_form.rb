@@ -1,6 +1,8 @@
 module Nsm
   module Steps
     class CaseDetailsForm < ::Steps::BaseFormObject
+      include LaaCrimeFormsCommon::Validators
+
       BOOLEAN_FIELDS = %i[assigned_counsel unassigned_counsel agent_instructed remitted_to_magistrate].freeze
 
       attribute :main_offence, :string

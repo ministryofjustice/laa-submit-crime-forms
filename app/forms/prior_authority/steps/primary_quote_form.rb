@@ -1,6 +1,8 @@
 module PriorAuthority
   module Steps
     class PrimaryQuoteForm < ::Steps::BaseFormObject
+      include LaaCrimeFormsCommon::Validators
+
       def self.attribute_names
         super - %w[service_type custom_service_name file_upload]
       end

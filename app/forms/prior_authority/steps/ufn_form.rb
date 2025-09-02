@@ -1,6 +1,8 @@
 module PriorAuthority
   module Steps
     class UfnForm < ::Steps::BaseFormObject
+      include LaaCrimeFormsCommon::Validators
+
       attribute :ufn, :string
       validates :ufn, presence: true, ufn: true
 

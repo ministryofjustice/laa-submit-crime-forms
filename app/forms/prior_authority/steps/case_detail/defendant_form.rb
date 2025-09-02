@@ -2,6 +2,8 @@ module PriorAuthority
   module Steps
     module CaseDetail
       class DefendantForm < ::Steps::BaseFormObject
+        include LaaCrimeFormsCommon::Validators
+
         attribute :maat, :string
         validates :maat, presence: true, maat: true
 

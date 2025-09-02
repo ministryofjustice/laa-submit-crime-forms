@@ -1,6 +1,7 @@
 module Nsm
   module Steps
     class DisbursementCostForm < ::Steps::AddAnotherForm
+      include LaaCrimeFormsCommon::Validators
       include DisbursementCosts
 
       attr_writer :apply_vat

@@ -2,6 +2,7 @@ module PriorAuthority
   module Steps
     module AlternativeQuotes
       class DetailForm < PriorAuthority::Steps::QuoteCostForm
+        include LaaCrimeFormsCommon::Validators
         include Rails.application.routes.url_helpers
 
         def self.attribute_names

@@ -1,6 +1,8 @@
 module PriorAuthority
   module Steps
     class ClientDetailForm < ::Steps::BaseFormObject
+      include LaaCrimeFormsCommon::Validators
+
       attribute :first_name, :string
       attribute :last_name, :string
       attribute :date_of_birth, :multiparam_date

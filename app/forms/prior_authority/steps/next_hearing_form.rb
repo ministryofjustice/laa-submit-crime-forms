@@ -1,6 +1,8 @@
 module PriorAuthority
   module Steps
     class NextHearingForm < ::Steps::BaseFormObject
+      include LaaCrimeFormsCommon::Validators
+
       attribute :next_hearing, :boolean
       attribute :next_hearing_date, :multiparam_date
 

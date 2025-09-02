@@ -1,6 +1,8 @@
 module Nsm
   module Steps
     class ClaimTypeForm < ::Steps::BaseFormObject
+      include LaaCrimeFormsCommon::Validators
+
       attribute :ufn, :string
       attribute :claim_type, :value_object, source: ClaimType
 
