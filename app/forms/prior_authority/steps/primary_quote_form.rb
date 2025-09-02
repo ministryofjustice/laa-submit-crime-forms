@@ -78,6 +78,7 @@ module PriorAuthority
 
       def persist!
         return false unless save_file
+
         save_quote
         reset_quote_cost_fields
         application.update(service_type:, custom_service_name:) if service_type
