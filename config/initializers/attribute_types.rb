@@ -1,5 +1,3 @@
-Dir["#{File.join(__dir__, '../../app/attributes/type')}/*.rb"].each { |f| require f }
-
 ActiveModel::Type.register(:string, LaaCrimeFormsCommon::Type::StrippedString)
 ActiveModel::Type.register(:value_object, LaaCrimeFormsCommon::Type::ValueObject)
 ActiveModel::Type.register(:multiparam_date, LaaCrimeFormsCommon::Type::MultiparamDate)
