@@ -1,8 +1,6 @@
 module Nsm
   module Steps
     class ReasonForClaimForm < ::Steps::BaseFormObject
-      include LaaCrimeFormsCommon::Validators
-
       attribute :reasons_for_claim, array: true, default: []
       attribute :representation_order_withdrawn_date, :multiparam_date
       attribute :reason_for_claim_other_details, :string

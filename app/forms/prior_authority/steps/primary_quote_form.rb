@@ -1,8 +1,6 @@
 module PriorAuthority
   module Steps
     class PrimaryQuoteForm < ::Steps::BaseFormObject
-      include LaaCrimeFormsCommon::Validators
-
       def self.attribute_names
         super - %w[service_type custom_service_name file_upload]
       end
@@ -80,7 +78,7 @@ module PriorAuthority
 
       def persist!
         return false unless save_file
-
+        binding.pry
         save_quote
         reset_quote_cost_fields
         application.update(service_type:, custom_service_name:) if service_type

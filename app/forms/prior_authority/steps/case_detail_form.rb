@@ -1,8 +1,6 @@
 module PriorAuthority
   module Steps
     class CaseDetailForm < ::Steps::BaseFormObject
-      include LaaCrimeFormsCommon::Validators
-
       attribute :rep_order_date, :multiparam_date
       attribute :client_detained, :boolean
       attribute :subject_to_poca, :boolean

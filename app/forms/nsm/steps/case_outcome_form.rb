@@ -1,8 +1,6 @@
 module Nsm
   module Steps
     class CaseOutcomeForm < ::Steps::BaseFormObject
-      include LaaCrimeFormsCommon::Validators
-
       attribute :plea, :value_object, source: CaseOutcome
       attribute :arrest_warrant_date, :multiparam_date
       attribute :change_solicitor_date, :multiparam_date

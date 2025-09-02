@@ -1,8 +1,6 @@
 module Nsm
   module Steps
     class HearingDetailsForm < ::Steps::BaseFormObject
-      include LaaCrimeFormsCommon::Validators
-
       attribute :first_hearing_date, :multiparam_date
       attribute :number_of_hearing, :fully_validatable_integer
       attribute :court, :string

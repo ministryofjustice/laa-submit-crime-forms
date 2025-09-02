@@ -2,7 +2,6 @@ module PriorAuthority
   module Steps
     module AdditionalCosts
       class DetailForm < ::Steps::BaseFormObject
-        include LaaCrimeFormsCommon::Validators
         include Rails.application.routes.url_helpers
 
         PER_ITEM = 'per_item'.freeze

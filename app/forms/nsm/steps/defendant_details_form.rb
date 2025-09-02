@@ -1,8 +1,6 @@
 module Nsm
   module Steps
     class DefendantDetailsForm < ::Steps::BaseFormObject
-      include LaaCrimeFormsCommon::Validators
-
       attribute :first_name, :string
       attribute :last_name, :string
       attribute :maat, :string

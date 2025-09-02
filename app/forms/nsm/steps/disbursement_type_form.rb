@@ -1,8 +1,6 @@
 module Nsm
   module Steps
     class DisbursementTypeForm < ::Steps::BaseFormObject
-      include LaaCrimeFormsCommon::Validators
-
       attribute :disbursement_date, :multiparam_date
       attribute :disbursement_type, :value_object, source: DisbursementTypes
       attribute :other_type, :value_object, source: OtherDisbursementTypes

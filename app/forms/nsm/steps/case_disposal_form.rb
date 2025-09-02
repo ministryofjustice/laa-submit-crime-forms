@@ -1,8 +1,6 @@
 module Nsm
   module Steps
     class CaseDisposalForm < ::Steps::BaseFormObject
-      include LaaCrimeFormsCommon::Validators
-
       attribute :plea, :value_object, source: PleaOptions
       attribute :plea_category
       validates :plea, presence: true, inclusion: { in: PleaOptions.values }
