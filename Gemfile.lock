@@ -361,7 +361,6 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
-    pg (1.6.2)
     pg (1.6.2-x86_64-darwin)
     pp (0.6.2)
       prettyprint
@@ -628,7 +627,7 @@ DEPENDENCIES
   factory_bot_rails (>= 6.4.3)
   faker
   flatware-rspec
-  govuk-components (= 5.11.1)
+  govuk-components (>= 5.0.0)
   govuk_design_system_formbuilder (>= 5.4, < 5.12)
   govuk_notify_rails (~> 3.0.0)
   grover

@@ -6,6 +6,7 @@ module Nsm
     # govuk_link_to required modules
     include GovukLinkHelper
     include GovukVisuallyHiddenHelper
+    include GovukComponentsHelper
     include ActionView::Helpers::UrlHelper
     # for path methods
     include Routing
