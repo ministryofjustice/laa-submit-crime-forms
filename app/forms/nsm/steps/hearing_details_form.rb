@@ -17,7 +17,7 @@ module Nsm
       validates :matter_type, presence: true
 
       def court_suggestion=(value)
-        self.court = if !value.in?(LaaMultiStepForms::Court.all.map(&:name)) && court != value
+        self.court = if !value.in?(LaaCrimeFormsCommon::Court.all.map(&:name)) && court != value
                        "#{value} - n/a"
                      else
                        value
