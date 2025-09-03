@@ -226,10 +226,10 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    govuk-components (5.11.3)
+    govuk-components (5.11.1)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
-      view_component (>= 4.0, < 4.1)
+      view_component (>= 3.18, < 3.24)
     govuk_design_system_formbuilder (5.11.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
@@ -316,21 +316,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.4)
-    nokogiri (1.18.9-aarch64-linux-gnu)
-      racc (~> 1.4)
-    nokogiri (1.18.9-aarch64-linux-musl)
-      racc (~> 1.4)
-    nokogiri (1.18.9-arm-linux-gnu)
-      racc (~> 1.4)
-    nokogiri (1.18.9-arm-linux-musl)
-      racc (~> 1.4)
-    nokogiri (1.18.9-arm64-darwin)
-      racc (~> 1.4)
     nokogiri (1.18.9-x86_64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.18.9-x86_64-linux-gnu)
-      racc (~> 1.4)
-    nokogiri (1.18.9-x86_64-linux-musl)
       racc (~> 1.4)
     notifications-ruby-client (6.2.0)
       jwt (>= 1.5, < 3)
@@ -376,12 +362,7 @@ GEM
       ruby-rc4
       ttfunk
     pg (1.6.2)
-    pg (1.6.2-aarch64-linux)
-    pg (1.6.2-aarch64-linux-musl)
-    pg (1.6.2-arm64-darwin)
     pg (1.6.2-x86_64-darwin)
-    pg (1.6.2-x86_64-linux)
-    pg (1.6.2-x86_64-linux-musl)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -601,9 +582,10 @@ GEM
     uuid (2.3.9)
       macaddr (~> 1.0)
     version_gem (1.1.9)
-    view_component (4.0.2)
-      activesupport (>= 7.1.0, < 8.1)
+    view_component (3.23.2)
+      activesupport (>= 5.2.0, < 8.1)
       concurrent-ruby (~> 1)
+      method_source (~> 1.0)
     virtus (2.0.0)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -628,7 +610,7 @@ GEM
     zeitwerk (2.7.3)
 
 PLATFORMS
-  ruby
+  x86_64-darwin-24
 
 DEPENDENCIES
   aws-sdk-s3 (~> 1.198)
@@ -646,7 +628,7 @@ DEPENDENCIES
   factory_bot_rails (>= 6.4.3)
   faker
   flatware-rspec
-  govuk-components (>= 5.0.0)
+  govuk-components (= 5.11.1)
   govuk_design_system_formbuilder (>= 5.4, < 5.12)
   govuk_notify_rails (~> 3.0.0)
   grover
