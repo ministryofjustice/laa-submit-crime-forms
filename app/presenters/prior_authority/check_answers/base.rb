@@ -5,10 +5,14 @@ module PriorAuthority
       include BasePresentable
       include LaaMultiStepForms::CheckMissingHelper
       include ActionView::Helpers::UrlHelper
-      include GovukLinkHelper
-      include GovukVisuallyHiddenHelper
       include ActionView::Helpers::TagHelper
       include ActionView::Helpers::TextHelper
+
+      # govuk_component required helpers
+      include GovukVisuallyHiddenHelper
+      include GovukLinkHelper
+      include GovukComponentsHelper
+      include GovukListHelper
 
       attr_accessor :group, :section
 
