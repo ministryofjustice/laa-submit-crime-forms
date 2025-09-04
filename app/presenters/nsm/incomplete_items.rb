@@ -4,9 +4,8 @@ module Nsm
     include ActionView::Helpers::TranslationHelper
 
     # govuk_link_to required modules
-    include GovukVisuallyHiddenHelper
     include GovukLinkHelper
-    include GovukComponentsHelper
+    include GovukVisuallyHiddenHelper
     include ActionView::Helpers::UrlHelper
     # for path methods
     include Routing
