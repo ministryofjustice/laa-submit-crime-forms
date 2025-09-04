@@ -1,6 +1,6 @@
 feature_flags:
   omniauth_test_mode:
-    local: <%= ENV.fetch("OMNIAUTH_TEST_MODE", false) %>
+    local: true
     # TODO: Unset this before go-live
     development: false
     uat: false
