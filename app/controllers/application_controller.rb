@@ -2,12 +2,6 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
   include Pagy::Backend
   include ApplicationHelper
   include CookieConcern
-  
-  # govuk_component required helpers
-  include GovukVisuallyHiddenHelper
-  include GovukLinkHelper
-  include GovukComponentsHelper
-  include GovukListHelper
 
   helper_method :pagy, :pagy_array
 

@@ -3,12 +3,10 @@ module Nsm
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::TranslationHelper
 
-    # govuk_component required helpers
+    # govuk_link_to required modules
     include GovukVisuallyHiddenHelper
     include GovukLinkHelper
     include GovukComponentsHelper
-    include GovukListHelper
-
     include ActionView::Helpers::UrlHelper
     # for path methods
     include Routing

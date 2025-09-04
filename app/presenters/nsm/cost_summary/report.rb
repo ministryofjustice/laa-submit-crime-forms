@@ -1,12 +1,8 @@
 module Nsm
   module CostSummary
     class Report < Base
-      # govuk_component required helpers
-      include GovukVisuallyHiddenHelper
       include GovukLinkHelper
-      include GovukComponentsHelper
-      include GovukListHelper
-
+      include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
 
       attr_reader :claim, :items, :summary

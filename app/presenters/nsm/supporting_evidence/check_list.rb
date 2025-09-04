@@ -4,12 +4,9 @@ module Nsm
       include ActionView::Helpers::TagHelper
       include ActionView::Helpers::TranslationHelper
 
-      # govuk_component required helpers
-      include GovukVisuallyHiddenHelper
+      # govuk_link_to required modules
       include GovukLinkHelper
-      include GovukComponentsHelper
-      include GovukListHelper
-
+      include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
 
       attr_reader :claim

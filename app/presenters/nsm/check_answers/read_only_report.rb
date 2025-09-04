@@ -1,12 +1,7 @@
 module Nsm
   module CheckAnswers
     class ReadOnlyReport
-      # govuk_component required helpers
-      include GovukVisuallyHiddenHelper
       include GovukLinkHelper
-      include GovukComponentsHelper
-      include GovukListHelper
-
       include ActionView::Helpers::UrlHelper
 
       GROUPS = {

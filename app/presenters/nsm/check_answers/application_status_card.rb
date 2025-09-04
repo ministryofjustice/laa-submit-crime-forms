@@ -4,12 +4,8 @@ module Nsm
   module CheckAnswers
     # rubocop:disable Metrics/ClassLength
     class ApplicationStatusCard < Base
-      # govuk_component required helpers
-      include GovukVisuallyHiddenHelper
       include GovukLinkHelper
-      include GovukComponentsHelper
-      include GovukListHelper
-
+      include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
       include ActionView::Helpers::OutputSafetyHelper
 

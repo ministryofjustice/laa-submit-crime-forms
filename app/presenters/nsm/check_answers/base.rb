@@ -4,14 +4,10 @@ module Nsm
       include BasePresentable
       include LaaMultiStepForms::CheckMissingHelper
       include ActionView::Helpers::TagHelper
+      include GovukVisuallyHiddenHelper
       include ActionView::Helpers::TextHelper
       include ActionView::Helpers::UrlHelper
-
-      # govuk_component required helpers
-      include GovukVisuallyHiddenHelper
       include GovukLinkHelper
-      include GovukComponentsHelper
-      include GovukListHelper
 
       attr_accessor :group, :section, :has_card
 
