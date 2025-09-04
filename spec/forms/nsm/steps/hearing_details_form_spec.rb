@@ -18,7 +18,7 @@ RSpec.describe Nsm::Steps::HearingDetailsForm do
   let(:application) { instance_double(Claim, update!: true) }
   let(:first_hearing_date) { Date.yesterday }
   let(:number_of_hearing) { 1 }
-  let(:court) { LaaMultiStepForms::Court.all.sample.name }
+  let(:court) { LaaCrimeFormsCommon::Court.all.sample.name }
   let(:youth_court) { 'no' }
   let(:hearing_outcome) { OutcomeCode.all.sample.id }
   let(:matter_type) { MatterType.all.sample.id }

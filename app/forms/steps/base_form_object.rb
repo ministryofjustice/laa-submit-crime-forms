@@ -3,6 +3,7 @@ module Steps
     include ActiveModel::Model
     include ActiveModel::Attributes
     include ActiveRecord::AttributeAssignment
+    include LaaCrimeFormsCommon::Validators
 
     attr_accessor :application,
                   :record

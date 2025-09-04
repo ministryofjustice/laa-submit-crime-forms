@@ -1,6 +1,7 @@
 module Search
   class UfnChecker
     include ActiveModel::Validations
+    include LaaCrimeFormsCommon::Validators
 
     attr_accessor :ufn
 
