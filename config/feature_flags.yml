@@ -2,7 +2,7 @@ feature_flags:
   omniauth_test_mode:
     local: <%= ENV.fetch("OMNIAUTH_TEST_MODE", false) %>
     # TODO: Unset this before go-live
-    development: false
+    development: true
     uat: false
     production: false # must never be enabled in the live service
   postal_evidence:
