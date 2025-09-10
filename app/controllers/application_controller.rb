@@ -11,8 +11,12 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
   private
 
   def check_maintenance_mode
-    return unless ENV.fetch('MAINTENANCE_MODE', 'false') == 'true'
+    return unless !business_hours? && ENV.fetch('MAINTENANCE_MODE', 'false') == 'true'
 
     render file: 'public/maintenance.html', layout: false
+  end
+
+  def business_hours?
+    (7..19).cover?(Time.current.hour) && Time.current.on_weekday?
   end
 end
