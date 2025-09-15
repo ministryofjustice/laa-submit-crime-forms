@@ -53,6 +53,13 @@
 
 <div class="govuk-width-container">
   <%= yield(:phase_banner) %>
+
+  <div class="govuk-grid-row govuk-!-padding-top-7">
+    <div class="govuk-grid-column-full">
+       <%= render partial: 'shared/alert', locals: { heading: t('layouts.availability_banner.heading'), msg: t('layouts.availability_banner.body') } %>
+    </div>
+  </div>
+
   <div role="navigation">
     <%= yield(:back_link) %>
   </div>

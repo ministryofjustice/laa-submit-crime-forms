@@ -1,5 +1,8 @@
 ---
 en:
   layouts:
+    availability_banner:
+      heading: Availability of this service has changed
+      body: This service can only be used from 7am to 7pm, Monday to Friday
     phase_banner:
       phase: Beta
