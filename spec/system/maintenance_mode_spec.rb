@@ -7,10 +7,10 @@ RSpec.describe 'Maintenance mode' do
   context 'when MAINTENANCE_MODE=true' do
     before { ENV['MAINTENANCE_MODE'] = 'true' }
 
-    it 'allows access during business hours (7am-7pm weekdays)' do
+    it 'does not allow access during business hours' do
       travel_to Time.zone.parse('2025-09-10 12:00') do
         visit nsm_applications_path
-        expect(page).not_to have_content 'Sorry, the service is unavailable'
+        expect(page).to have_content 'Sorry, the service is unavailable'
       end
     end
 
@@ -39,17 +39,17 @@ RSpec.describe 'Maintenance mode' do
       end
     end
 
-    it 'allows access outside business hours' do
+    it 'does not allow access outside business hours' do
       travel_to Time.zone.parse('2025-09-10 03:00') do
         visit nsm_applications_path
-        expect(page).not_to have_content 'Sorry, the service is unavailable'
+        expect(page).to have_content 'Sorry, the service is unavailable'
       end
     end
 
-    it 'allows access on weekends' do
+    it 'does not allow access on weekends' do
       travel_to Time.zone.parse('2025-09-13 12:00') do
         visit nsm_applications_path
-        expect(page).not_to have_content 'Sorry, the service is unavailable'
+        expect(page).to have_content 'Sorry, the service is unavailable'
       end
     end
   end
