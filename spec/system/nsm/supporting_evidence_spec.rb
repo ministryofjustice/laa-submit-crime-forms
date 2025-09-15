@@ -112,7 +112,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
 
       click_on 'Delete'
 
-      within('.moj-alert') { expect(page).to have_content('test.png has been deleted') }
+      expect(page).to have_content('test.png has been deleted')
       expect(page).to have_no_css('.govuk-table')
     end
   end
