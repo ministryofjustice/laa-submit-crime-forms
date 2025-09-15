@@ -41,7 +41,7 @@ RSpec.describe 'Prior authority applications - add case contact', :javascript, t
 
     click_on 'Delete'
 
-    within('.moj-alert') { expect(page).to have_content('test.png has been deleted') }
+    expect(page).to have_content('test.png has been deleted')
     expect(page).to have_no_css('.govuk-table')
   end
 end

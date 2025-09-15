@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Error pages' do
-  context 'when invalid session' do
-    before { allow(ENV).to receive(:fetch).and_raise(Errors::InvalidSession) }
+  context 'when invalid session error occurs' do
+    before do
+      allow_any_instance_of(ErrorsController).to receive(:unhandled)
+        .and_raise(Errors::InvalidSession)
+    end
 
-    it 'redirects to appropriate path' do
+    it 'redirects to invalid session error path' do
       get '/errors/unhandled'
       expect(response).to redirect_to(invalid_session_errors_path)
     end
