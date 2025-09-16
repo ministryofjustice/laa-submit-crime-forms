@@ -75,7 +75,7 @@ worker_resources:
 
 variables:
   environment: development
-  appStore: https://main-nscc-store-dev.cloud-platform.service.justice.gov.uk
+  appStore: https://crm457-2746-fix-no.laa-crime-application-store-dev.svc.cluster.local
   paMaxFileUploadBytes: 10485760
   nsmMaxFileUploadBytes: 26214400
   eolUrl: https://apply-for-extension-of-upper-limits.dev.form.service.justice.gov.uk/
