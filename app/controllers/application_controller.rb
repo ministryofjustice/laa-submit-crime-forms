@@ -17,6 +17,7 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
   end
 
   def business_hours?
-    (7..19).cover?(Time.current.hour) && Time.current.on_weekday?
+    uk_time = Time.current.in_time_zone('Europe/London')
+    (7..18).cover?(uk_time.hour) && uk_time.on_weekday?
   end
 end
