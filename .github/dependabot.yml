@@ -7,6 +7,8 @@ updates:
     day: wednesday
     time: "03:00"
     timezone: Europe/London
+  ignore:
+    - dependency-name: "govuk-components" # TODO: CRM457-2751: Need to ignore until we can upgrade
   groups:
     bundler:
       patterns:
