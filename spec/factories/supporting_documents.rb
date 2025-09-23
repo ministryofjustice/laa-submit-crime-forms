@@ -18,6 +18,7 @@ FactoryBot.define do
     end
 
     factory :quote_document do
+      documentable_type { 'Quote' }
       document_type { 'quote_document' }
     end
   end
