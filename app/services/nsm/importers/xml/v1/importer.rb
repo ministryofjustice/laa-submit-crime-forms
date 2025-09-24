@@ -94,6 +94,7 @@ module Nsm
           def enhanced_rates_if_uplifts
             work_uplift = hash.dig('work_items', 'work_item')&.detect { _1['uplift'].present? }
             uplifts = work_uplift || hash['calls_uplift'].present? || hash['letters_uplift'].present?
+            hash['reasons_for_claim'] ||= []
             hash['reasons_for_claim'] << 'enhanced_rates_claimed' if uplifts
           end
         end
