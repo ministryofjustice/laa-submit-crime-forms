@@ -195,6 +195,27 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
       end
     end
 
+    context 'when no reasons for claim present and no uplifts present' do
+      let(:hash) do
+        xml_hash.except!('calls_uplift', 'letters_uplift', 'reasons_for_claim')
+        xml_hash.tap { |h| h['work_items']['work_item'].each { _1.delete('uplift') } }
+      end
+
+      it 'returns an empty array' do
+        expect(claim.reasons_for_claim).to eq []
+      end
+    end
+
+    context 'when no reasons for claim present' do
+      let(:hash) do
+        xml_hash.except('reasons_for_claim')
+      end
+
+      it 'adds enhanced_rates_claimed if uplifts present' do
+        expect(claim.reasons_for_claim).to include('enhanced_rates_claimed')
+      end
+    end
+
     it 'adds enhanced_rates_claimed if uplifts present' do
       expect(claim.reasons_for_claim).to include('enhanced_rates_claimed')
     end
