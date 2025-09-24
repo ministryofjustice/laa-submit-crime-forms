@@ -21,7 +21,7 @@ module Nsm
 
       def rows
         row_data.map do |row|
-          row_content(row[:head_key], row[:text], row[:head_opts] || {}, footer: row[:footer])
+          row_content(row[:head_key], row[:text], row[:href], row[:head_opts] || {}, footer: row[:footer])
         end
       end
 
@@ -29,8 +29,9 @@ module Nsm
         []
       end
 
-      def row_content(head_key, text, head_opts = {}, footer: false)
+      def row_content(head_key, text, href, head_opts = {}, footer: false)
         heading = head_opts[:text] || translate_table_key(section, head_key, **head_opts)
+        text = tag.a(text, href:) if href
         row = {
           key: {
             text: heading
