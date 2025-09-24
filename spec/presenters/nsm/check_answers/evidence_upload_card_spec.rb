@@ -7,10 +7,10 @@ RSpec.describe Nsm::CheckAnswers::EvidenceUploadsCard do
   let(:supporting_evidence) { [first_evidence, second_evidence] }
   let(:send_by_post) { false }
   let(:first_evidence) do
-    { file_name: 'Defendant Report.pdf' }
+    { id: 'test', file_name: 'Defendant Report.pdf' }
   end
   let(:second_evidence) do
-    { file_name: 'Offences.pdf' }
+    { id: 'test', file_name: 'Offences.pdf' }
   end
 
   before do
@@ -39,11 +39,13 @@ RSpec.describe Nsm::CheckAnswers::EvidenceUploadsCard do
               },
               {
                 head_key: 'supporting_evidence',
+                href: '/downloads/test?file_name=Defendant+Report.pdf',
                 text: 'Defendant Report.pdf',
                 head_opts: { count: 1 }
               },
               {
                 head_key: 'supporting_evidence',
+                href: '/downloads/test?file_name=Offences.pdf',
                 text: 'Offences.pdf',
                 head_opts: { count: 2 }
               }
@@ -96,11 +98,13 @@ RSpec.describe Nsm::CheckAnswers::EvidenceUploadsCard do
             [
               {
                 head_key: 'supporting_evidence',
+                href: '/downloads/test?file_name=Defendant+Report.pdf',
                 text: 'Defendant Report.pdf',
                 head_opts: { count: 1 }
               },
               {
                 head_key: 'supporting_evidence',
+                 href: '/downloads/test?file_name=Offences.pdf',
                 text: 'Offences.pdf',
                 head_opts: { count: 2 }
               }
