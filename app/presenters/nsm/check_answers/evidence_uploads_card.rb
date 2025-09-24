@@ -41,6 +41,7 @@ module Nsm
           {
             head_key: 'supporting_evidence',
             text: evidence[:file_name],
+            href: url_helper.download_path(evidence),
             head_opts: { count: index + 1 }
           }
         end

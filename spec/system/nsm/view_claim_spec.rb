@@ -49,6 +49,23 @@ RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
     stub_nsm_app_store_payload(claim)
   end
 
+  context 'when viewing a claim', :javascript do
+    before do
+      visit nsm_steps_view_claim_path(claim)
+    end
+
+    context 'and I should be able to download attachments' do
+      it 'I can download attachments' do
+        file_name = SupportingDocument.first.file_name
+        click_on file_name
+
+        expect(page).to have_current_path(/X-Amz-Signature/)
+        expect(current_url).to include('response-content-disposition=attachment')
+        expect(current_url).to include("filename%3D%22#{CGI.escape(file_name)}%22")
+      end
+    end
+  end
+
   it 'shows a cost summary table on the claimed costs page' do
     visit claimed_costs_work_items_nsm_steps_view_claim_path(claim.id)
 
