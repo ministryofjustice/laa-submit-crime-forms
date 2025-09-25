@@ -1,6 +1,7 @@
 module AppStore
   module V1
     class SupportingDocument < AppStore::V1::Base
+      attribute :id, :string
       attribute :file_name, :string
       attribute :file_type, :string
       attribute :file_size, :integer

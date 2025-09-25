@@ -214,11 +214,18 @@ RSpec.describe 'View applications', :stub_oauth_token do
     end
 
     context 'when application is provider updated' do
+      # the first dash in the below file name in an en dash, which is not a valid ISO-8859-1 character
+      let(:file_name) { 'evidence–with-weird-char.pdf' }
+
+      let(:document) { build(:quote_document, file_name: 'quote.pdf') }
+      let(:quote) { build(:quote, :primary, document:) }
+
       let(:application) do
         create(:prior_authority_application,
                :full,
                state: 'provider_updated',
                further_informations: [further_information],
+               primary_quote: quote,
                incorrect_informations: [incorrect_information],
                app_store_updated_at: 1.day.ago)
       end
@@ -228,8 +235,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
               information_requested: 'Tell me more',
               information_supplied: 'More info',
               requested_at: 1.day.ago,
-              # the first dash in the below file name in an en dash, which is not a valid ISO-8859-1 character
-              supporting_documents: [build(:supporting_document, file_path: 'S3-ID', file_name: 'evidence–with-weird-char.pdf')])
+              supporting_documents: [build(:supporting_document, file_path: 'S3-ID', file_name: file_name)])
       end
 
       let(:incorrect_information) do
@@ -248,12 +254,31 @@ RSpec.describe 'View applications', :stub_oauth_token do
           .and have_content('Client details and alternative quote 1 amended')
       end
 
-      it 'lets me download my uploaded file' do
-        click_on 'evidence–with-weird-char.pdf'
+      it 'lets me download my uploaded evidence file' do
+        click_on file_name
         expect(page).to have_current_path(%r{/S3-ID})
         expect(page.driver.request.params['response-content-disposition']).to eq(
           %(attachment; filename="evidence%E2%80%93with-weird-char.pdf"; filename*=UTF-8''evidence%E2%80%93with-weird-char.pdf)
         )
+      end
+
+      it 'lets me download my uploaded quote file' do
+        file_name = quote.document.file_name
+        click_on file_name
+
+        expect(page).to have_current_path(/X-Amz-Signature/)
+        expect(current_url).to include('response-content-disposition=attachment')
+        expect(current_url).to include("filename%3D%22#{CGI.escape(file_name)}%22")
+      end
+
+      context 'when the application is not mine' do
+        it 'does not let me download the file' do
+          application.update!(office_code: 'XXXYYY')
+
+          click_on file_name
+
+          expect(page.driver.response.status).to eq(403)
+        end
       end
     end
   end
