@@ -6,10 +6,15 @@ class ProviderDataApiClient
   format :json
 
   class << self
-    def contract_active?(office_code)
+    def contract_active?(office_code, effective_date = nil)
+      params = {
+        'areaOfLaw' => 'CRIME LOWER',
+        'effectiveDate' => effective_date
+      }.compact
+
       query(
         :head,
-        "/provider-offices/#{office_code}/schedules?areaOfLaw=CRIME%20LOWER",
+        "/provider-offices/#{office_code}/schedules?#{URI.encode_www_form(params)}",
         {
           200 => :active,
           204 => :inactive
