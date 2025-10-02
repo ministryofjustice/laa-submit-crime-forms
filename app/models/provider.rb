@@ -24,13 +24,9 @@ class Provider < ApplicationRecord
   class << self
     def from_omniauth(auth, office_codes)
       sorted_office_codes = office_codes.sort
-      user = where(email: auth.info.email)
-             .find { |u| u.office_codes.sort == sorted_office_codes } ||
-             find_by(auth_provider: auth.provider, uid: auth.uid) ||
-             new
 
-      user.tap do |record|
-        record.assign_attributes(
+      get_user(auth, sorted_office_codes).tap do |record|
+        attributes = {
           first_name: auth.info.first_name,
           last_name: auth.info.last_name,
 
@@ -40,10 +36,24 @@ class Provider < ApplicationRecord
           office_codes: sorted_office_codes,
           auth_provider: auth.provider,
           uid: auth.uid
-        )
+        }
 
-        record.save! if record.changed?
+        if record.persisted?
+          record.update!(attributes)
+        else
+          record.assign_attributes(attributes)
+          record.save!
+        end
       end
+    end
+
+    private
+
+    def get_user(auth, office_codes)
+      where(email: auth.info.email)
+        .find { |u| u.office_codes.sort == office_codes } ||
+        find_by(auth_provider: auth.provider, uid: auth.uid) ||
+        new
     end
   end
 end
