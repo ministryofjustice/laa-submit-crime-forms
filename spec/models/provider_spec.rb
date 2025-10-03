@@ -85,6 +85,28 @@ RSpec.describe Provider, type: :model do
         )
       end
 
+      context 'multiple users with same email, finds by matching office codes' do
+        let!(:user_with_matching_offices) do
+          described_class.create!(
+            email: 'test@test.com',
+            auth_provider: 'another_provider',
+            uid: 'different-uid-2',
+            office_codes: %w[A1 B2 C3]
+          )
+        end
+
+        let(:office_codes) { %w[C3 A1 B2] }
+
+        it 'finds the user with matching office codes' do
+          expect { described_class.from_omniauth(auth, office_codes) }
+            .not_to change(described_class, :count)
+
+          result = described_class.from_omniauth(auth, office_codes)
+          expect(result.id).to eq(user_with_matching_offices.id)
+          expect(result.uid).to eq(auth.uid)
+        end
+      end
+
       context 'user changed email but kept same provider/uid temporarily' do
         let(:info) do
           double('info', email: 'newemail@test.com', description: 'desc', roles: 'a,b', first_name: 'Test', last_name: 'User')
