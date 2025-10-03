@@ -50,9 +50,9 @@ class Provider < ApplicationRecord
     private
 
     def get_user(auth, office_codes)
-      where(email: auth.info.email)
-        .find { |u| u.office_codes.sort == office_codes } ||
-        find_by(auth_provider: auth.provider, uid: auth.uid) ||
+      find_by(auth_provider: auth.provider, uid: auth.uid) ||
+        where(email: auth.info.email)
+          .find { |u| u.office_codes.sort == office_codes } ||
         new
     end
   end
