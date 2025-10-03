@@ -63,7 +63,7 @@ module Nsm
         {
           head_key: 'hearing_outcome',
           text: check_missing(hearing_details_form.hearing_outcome.present?) do
-            get_value_obj_desc(OutcomeCode, hearing_details_form.hearing_outcome)
+            get_value_obj_desc(LaaCrimeFormsCommon::OutcomeCode, hearing_details_form.hearing_outcome)
           end
         }
       end
@@ -72,7 +72,7 @@ module Nsm
         {
           head_key: 'matter_type',
           text: check_missing(hearing_details_form.matter_type.present?) do
-            get_value_obj_desc(MatterType, hearing_details_form.matter_type)
+            get_value_obj_desc(LaaCrimeFormsCommon::MatterType, hearing_details_form.matter_type)
           end
         }
       end

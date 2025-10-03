@@ -20,8 +20,8 @@ RSpec.describe Nsm::Steps::HearingDetailsForm do
   let(:number_of_hearing) { 1 }
   let(:court) { LaaCrimeFormsCommon::Court.all.sample.name }
   let(:youth_court) { 'no' }
-  let(:hearing_outcome) { OutcomeCode.all.sample.id }
-  let(:matter_type) { MatterType.all.sample.id }
+  let(:hearing_outcome) { LaaCrimeFormsCommon::OutcomeCode.all.sample.id }
+  let(:matter_type) { LaaCrimeFormsCommon::MatterType.all.sample.id }
 
   describe '#save' do
     context 'when all fields are provided' do

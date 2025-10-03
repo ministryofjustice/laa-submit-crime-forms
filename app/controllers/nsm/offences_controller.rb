@@ -13,7 +13,7 @@ module Nsm
     private
 
     def offences
-      MainOffence.all.map(&:as_json)
+      LaaCrimeFormsCommon::MainOffence.all.map(&:as_json)
     end
   end
 end

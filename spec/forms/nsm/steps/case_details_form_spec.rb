@@ -19,7 +19,7 @@ RSpec.describe Nsm::Steps::CaseDetailsForm do
 
   let(:application) { instance_double(Claim, update!: true) }
 
-  let(:main_offence) { MainOffence.all.sample.name }
+  let(:main_offence) { LaaCrimeFormsCommon::MainOffence.all.sample.name }
   let(:main_offence_date) { Date.new(2023, 4, 1) }
   let(:main_offence_type) { 'summary_only' }
   let(:unassigned_counsel) { 'no' }

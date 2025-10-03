@@ -111,7 +111,7 @@ FactoryBot.define do
     end
 
     trait :case_details do
-      main_offence { MainOffence.all.sample.name }
+      main_offence { LaaCrimeFormsCommon::MainOffence.all.sample.name }
       main_offence_type { 'summary_only' }
       main_offence_date { Date.yesterday }
 
@@ -131,7 +131,7 @@ FactoryBot.define do
       number_of_hearing { 1 }
       youth_court { 'no' }
       court { 'A Court' }
-      hearing_outcome { OutcomeCode.all.sample.id }
+      hearing_outcome { LaaCrimeFormsCommon::OutcomeCode.all.sample.id }
       matter_type { '1' }
     end
 
