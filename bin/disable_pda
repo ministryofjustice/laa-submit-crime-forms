@@ -1,0 +1,10 @@
+#!/bin/sh
+
+NAMESPACE=$1
+
+# Default to main deployment if 2nd arg not provided
+BRANCH_RELEASE_NAME=${2:-laa-submit-crime-forms-app}
+
+echo "Creating configmap with maintenance mode enabled"
+kubectl create configmap $BRANCH_RELEASE_NAME -n $NAMESPACE --from-literal=PDA_LOGIN_CHECK=false --dry-run=client -o yaml | kubectl -n $NAMESPACE apply -f -
+kubectl rollout restart deployment -n $NAMESPACE $BRANCH_RELEASE_NAME
