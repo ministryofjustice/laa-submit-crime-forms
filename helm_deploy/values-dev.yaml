@@ -88,6 +88,11 @@ service_account:
 # This is used to configure the temporary non-RDS postgres DB
 postgresql:
   enabled: true
+  image:
+    repository: bitnamilegacy/postgresql
+  global:
+    security:
+      allowInsecureImages: true
   resources:
     limits:
       cpu: 250m
@@ -115,6 +120,11 @@ postgresql:
 redis:
   enabled: true
   architecture: standalone
+  image:
+    repository: bitnamilegacy/redis
+  global:
+    security:
+      allowInsecureImages: true
   master:
     resources:
       limits:
