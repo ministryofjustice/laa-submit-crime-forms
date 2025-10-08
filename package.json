@@ -3,7 +3,7 @@
   "private": "true",
   "dependencies": {
     "@hotwired/turbo-rails": "8.0.18",
-    "@ministryofjustice/frontend": "5.2.1",
+    "@ministryofjustice/frontend": "6.0.0",
     "accessible-autocomplete": "^3.0.1",
     "braces": "^3.0.3",
     "esbuild": "^0.25.10",
