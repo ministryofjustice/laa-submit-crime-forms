@@ -7,4 +7,5 @@ metadata:
     helm.sh/resource-policy: keep
 data:
   MAINTENANCE_MODE: 'false'
+  PDA_LOGIN_CHECK: 'false'
 {{ end }}

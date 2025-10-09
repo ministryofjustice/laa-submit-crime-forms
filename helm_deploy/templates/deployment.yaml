@@ -199,6 +199,11 @@ spec:
                 configMapKeyRef:
                   name: {{ include "laa-submit-crime-forms.fullname" . }}
                   key: MAINTENANCE_MODE
+            - name: PDA_LOGIN_CHECK
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "laa-submit-crime-forms.fullname" . }}
+                  key: PDA_LOGIN_CHECK
             - name: PROVIDER_API_HOST
               value: '{{ .Values.variables.providerApiHost }}'
             - name: PROVIDER_API_KEY
