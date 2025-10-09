@@ -121,7 +121,7 @@ redis:
   enabled: true
   architecture: standalone
   image:
-    repository: bitnamilegacy/redis
+    repository: bitnamisecure/redis
   global:
     security:
       allowInsecureImages: true
