@@ -58,6 +58,8 @@ WORKDIR /usr/src/app
 
 # Install Chromium and Puppeteer for PDF generation
 # Installs latest Chromium package available on Alpine (Chromium 108)
+RUN apk update libxml2
+
 RUN apk add --no-cache \
         gdk-pixbuf>2.42.12-r0 \
         chromium \
