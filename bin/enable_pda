@@ -5,6 +5,15 @@ NAMESPACE=$1
 # Default to main deployment if 2nd arg not provided
 BRANCH_RELEASE_NAME=${2:-laa-submit-crime-forms-app}
 
-echo "Creating configmap with maintenance mode enabled"
-kubectl create configmap $BRANCH_RELEASE_NAME -n $NAMESPACE --from-literal=PDA_LOGIN_CHECK=true --dry-run=client -o yaml | kubectl -n $NAMESPACE apply -f -
-kubectl rollout restart deployment -n $NAMESPACE $BRANCH_RELEASE_NAME
+echo "Updating configmap with PDA enabled"
+kubectl patch configmap $BRANCH_RELEASE_NAME -n $NAMESPACE \
+  --type merge \
+  -p '{"data":{"PDA_LOGIN_CHECK":"true"}}'
+
+if [ $? -eq 0 ]; then
+  echo "ConfigMap updated successfully"
+  kubectl rollout restart deployment -n $NAMESPACE $BRANCH_RELEASE_NAME
+else
+  echo "Failed to update ConfigMap"
+  exit 1
+fi
