@@ -1,5 +1,5 @@
-#  LAA-Claim-non-standard-magistrate-court-fee
-#  A service to apply for a claim for a  non standard magistrate fee
+#  laa-submit-crime-forms [![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/laa-submit-crime-forms/badge)](https://github-community.service.justice.gov.uk/repository-standards/laa-submit-crime-forms)
+#  A service to apply for a claim for a  non standard magistrate fee & application for prior authority
 
 * Ruby version
 ruby 3.3.6
