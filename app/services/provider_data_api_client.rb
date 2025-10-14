@@ -7,10 +7,12 @@ class ProviderDataApiClient
 
   class << self
     def contract_active?(office_code, effective_date = nil)
+      # :nocov: Querying an external API
       params = {
         'areaOfLaw' => 'CRIME LOWER',
-        'effectiveDate' => effective_date
+        'effectiveDate' => effective_date&.strftime('%d-%m-%Y')
       }.compact
+      # :nocov:
 
       query(
         :head,
