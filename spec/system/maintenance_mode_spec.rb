@@ -65,10 +65,10 @@ RSpec.describe 'Maintenance mode' do
     end
 
     # Saturday
-    it 'does not allow access on weekends' do
+    it 'does allow access on weekends' do
       travel_to Time.find_zone('Europe/London').parse('2025-09-13 12:00') do
         visit nsm_applications_path
-        expect(page).to have_content 'Sorry, the service is unavailable'
+        expect(page).not_to have_content 'Sorry, the service is unavailable'
       end
     end
   end
