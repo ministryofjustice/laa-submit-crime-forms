@@ -207,61 +207,85 @@ jobs:
           name: coverage-final
           path: coverage
 
-  build-for-scan:
-    name: Build image for scanning
+  build:
+    name: Build and push to ECR
     runs-on: ubuntu-latest
+    needs: [rubocop, test, helm-lint]
     permissions:
+      id-token: write
       contents: read
+    outputs:
+      image-tag: ${{ steps.set-tags.outputs.image-tag }}
+    env:
+      ECR_REGISTRY_ID: ${{ secrets.ECR_REGISTRY_ID }}
+      ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+      ECR_REGION: ${{ secrets.ECR_REGION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build Docker image
-        uses: docker/build-push-action@v5
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          context: .
-          push: false
-          load: true
-          outputs: type=docker,dest=/tmp/app-image.tar
-          tags: app:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          provenance: false
-          build-args: |
-            APP_BUILD_DATE=${{ github.event.head_commit.timestamp }}
-            APP_BUILD_TAG=${{ github.sha }}
-            APP_GIT_COMMIT=${{ github.sha }}
-            APP_BRANCH_NAME=${{ github.ref_name }}
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.ECR_REGION }}
+          mask-aws-account-id: true
 
-      - name: Upload Docker image artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: docker-image
-          path: /tmp/app-image.tar
-          retention-days: 1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        run: |
+          aws ecr get-login-password --region ${ECR_REGION} | docker login \
+            --username AWS --password-stdin \
+            ${ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+
+      - name: Set ECR tags
+        id: set-tags
+        run: |
+          IMAGE_TAG="branch-${{ github.sha }}"
+          echo "image-tag=${IMAGE_TAG}" >> $GITHUB_OUTPUT
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
+          echo "APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z)" >> $GITHUB_ENV
+          echo "ECR_IMAGE=${ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}" >> $GITHUB_ENV
+
+      - name: Build and push Docker image to ECR
+        run: |
+          docker build \
+            --build-arg APP_BUILD_DATE=${APP_BUILD_DATE} \
+            --build-arg APP_BUILD_TAG=${{ github.sha }} \
+            --build-arg APP_GIT_COMMIT=${{ github.sha }} \
+            --build-arg APP_BRANCH_NAME=${{ github.ref_name }} \
+            --tag ${ECR_IMAGE}:${IMAGE_TAG} \
+            --file Dockerfile .
+          
+          docker push ${ECR_IMAGE}:${IMAGE_TAG}
 
   trivy-scan:
     name: Trivy security scan
     runs-on: ubuntu-latest
     permissions:
+      id-token: write
       contents: read
       security-events: write
-    needs: build-for-scan
+    needs: build
+    env:
+      ECR_REGISTRY_ID: ${{ secrets.ECR_REGISTRY_ID }}
+      ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+      ECR_REGION: ${{ secrets.ECR_REGION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download Docker image
-        uses: actions/download-artifact@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          name: docker-image
-          path: /tmp
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.ECR_REGION }}
+          mask-aws-account-id: true
 
-      - name: Load Docker image
-        run: docker load --input /tmp/app-image.tar
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          mask-password: true
 
       - name: Run Trivy vulnerability scanner on filesystem
         uses: aquasecurity/trivy-action@master
@@ -284,7 +308,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'image'
-          image-ref: 'app:latest'
+          image-ref: '${{ env.ECR_REGISTRY_ID }}.dkr.ecr.${{ env.ECR_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ needs.build.outputs.image-tag }}'
           format: 'sarif'
           output: 'trivy-image-results.sarif'
           severity: 'CRITICAL,HIGH'
@@ -318,8 +342,13 @@ jobs:
     name: Snyk security scan
     runs-on: ubuntu-latest
     permissions:
+      id-token: write
       contents: read
-    needs: build-for-scan
+    needs: build
+    env:
+      ECR_REGISTRY_ID: ${{ secrets.ECR_REGISTRY_ID }}
+      ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+      ECR_REGION: ${{ secrets.ECR_REGION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -329,14 +358,20 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Download Docker image
-        uses: actions/download-artifact@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          name: docker-image
-          path: /tmp
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.ECR_REGION }}
+          mask-aws-account-id: true
 
-      - name: Load Docker image
-        run: docker load --input /tmp/app-image.tar
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          mask-password: true
+
+      - name: Pull Docker image from ECR
+        run: docker pull ${ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${{ needs.build.outputs.image-tag }}
 
       - name: Install Snyk CLI
         uses: snyk/actions/setup@master
@@ -346,13 +381,69 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
           # Test for vulnerabilities
-          snyk test --all-projects --severity-threshold=high || true
+          snyk test --all-projects --severity-threshold=high
           # Monitor dependencies for ongoing tracking
           snyk monitor --all-projects
-        continue-on-error: true
 
       - name: Snyk container monitor
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk container monitor app:latest --file=./Dockerfile
-        continue-on-error: true
+        run: snyk container monitor ${ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${{ needs.build.outputs.image-tag }} --file=./Dockerfile
+
+  deploy-feature-branch:
+    name: Deploy feature branch to dev
+    runs-on: ubuntu-latest
+    needs: [build, trivy-scan, snyk-scan]
+    permissions:
+      id-token: write
+      contents: read
+    env:
+      ECR_REGISTRY_ID: ${{ secrets.ECR_REGISTRY_ID }}
+      ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+      ECR_REGION: ${{ secrets.ECR_REGION }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.ECR_REGION }}
+
+      - name: Authenticate to Kubernetes cluster
+        env:
+          K8S_CLUSTER_NAME: ${{ secrets.AUTOGENERATED_SUBMIT_FORMS_DEV_K8S_CLUSTER_NAME }}
+          K8S_CLUSTER_CERT: ${{ secrets.AUTOGENERATED_SUBMIT_FORMS_DEV_K8S_CLUSTER_CERT }}
+          K8S_CLUSTER_URL: https://${{ secrets.AUTOGENERATED_SUBMIT_FORMS_DEV_K8S_CLUSTER_NAME }}
+          K8S_NAMESPACE: ${{ secrets.AUTOGENERATED_SUBMIT_FORMS_DEV_K8S_NAMESPACE }}
+          K8S_TOKEN: ${{ secrets.AUTOGENERATED_SUBMIT_FORMS_DEV_K8S_TOKEN }}
+        run: |
+          set +x  # Disable command echoing to prevent token leakage
+          echo -n "${K8S_CLUSTER_CERT}" | base64 -d > ./ca.crt
+          kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_URL}
+          kubectl config set-credentials github-actions --token=${K8S_TOKEN}
+          kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=github-actions --namespace=${K8S_NAMESPACE}
+          kubectl config use-context ${K8S_CLUSTER_NAME}
+          kubectl --namespace=${K8S_NAMESPACE} get pods
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: '3.7.2'
+
+      - name: Deploy feature branch using bin/deploy script
+        env:
+          CIRCLE_BRANCH: ${{ github.head_ref }}
+          CIRCLE_SHA1: ${{ github.sha }}
+          AWS_ECR_REGISTRY_ID: ${{ env.ECR_REGISTRY_ID }}
+          K8S_NAMESPACE: ${{ secrets.AUTOGENERATED_SUBMIT_FORMS_DEV_K8S_NAMESPACE }}
+        run: |
+          ./bin/deploy dev
+
+      - name: Output deployment URL
+        run: |
+          BRANCH_RELEASE_NAME=$(echo "${{ github.head_ref }}" | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
+          RELEASE_HOST="${BRANCH_RELEASE_NAME}-nscc-provider-dev.cloud-platform.service.justice.gov.uk"
+          echo "### 🚀 Feature branch deployed!" >> $GITHUB_STEP_SUMMARY
+          echo "URL: https://${RELEASE_HOST}" >> $GITHUB_STEP_SUMMARY
