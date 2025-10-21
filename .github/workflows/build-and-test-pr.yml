@@ -148,6 +148,34 @@ jobs:
             --format RspecJunitFormatter \
             --out tmp/test-results/rspec/rspec.xml
 
+      - name: Merge JUnit XML files from Flatware workers
+        if: always()
+        run: |
+          cd tmp/test-results/rspec
+          if [ $(ls -1 *.xml 2>/dev/null | wc -l) -gt 1 ]; then
+            echo "Merging multiple XML files from Flatware workers..."
+            
+            # Create merged file with single XML declaration
+            echo '<?xml version="1.0" encoding="UTF-8"?>' > rspec-merged.xml
+            echo '<testsuites>' >> rspec-merged.xml
+            
+            # Extract testsuite contents from each file (skip XML declarations)
+            for file in *.xml; do
+              if [ "$file" != "rspec-merged.xml" ]; then
+                # Extract content between <testsuite> tags, skip XML declaration
+                sed -n '/<testsuite/,/<\/testsuite>/p' "$file" >> rspec-merged.xml
+              fi
+            done
+            
+            echo '</testsuites>' >> rspec-merged.xml
+            
+            # Replace original with merged version
+            mv rspec-merged.xml rspec.xml
+            echo "Merged XML files successfully"
+          else
+            echo "Single XML file found, no merge needed"
+          fi
+
       - name: Publish test results to PR
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
