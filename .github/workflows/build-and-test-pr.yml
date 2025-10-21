@@ -1,4 +1,4 @@
-name: Test, Lint & Scan
+name: PR Checks - Test, Build, Scan & Deploy
 
 on:
   pull_request:
@@ -17,11 +17,14 @@ permissions:
 env:
   RACK_ENV: test
   RAILS_ENV: test
-  DATABASE_URL: postgres://postgres:postgres@localhost:5432/laa_claim_non_standard_magistrate_fee_test
 
 jobs:
+  # ============================================================================
+  # PHASE 1: Fast quality checks (run in parallel)
+  # ============================================================================
+  
   rubocop:
-    name: Rubocop
+    name: Code quality - Rubocop
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -29,12 +32,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Ruby
+      - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
 
-      - name: Run Rubocop
+      - name: Run Rubocop linter
         run: bundle exec rubocop --format github --format progress
 
   helm-lint:
@@ -50,12 +53,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Helm
+      - name: Install Helm
         uses: azure/setup-helm@v4
         with:
           version: '3.7.2'
 
-      - name: Cache pip packages
+      - name: Cache Python pip packages
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
@@ -63,16 +66,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Install yamllint
+      - name: Install yamllint for YAML validation
         run: pip install yamllint
 
-      - name: Lint helm chart for ${{ matrix.environment }}
+      - name: Lint Helm chart templates for ${{ matrix.environment }}
         run: |
           helm lint helm_deploy --values helm_deploy/values-${{ matrix.environment }}.yaml \
             --set redis.auth.password=dummy \
             --set postgresql.auth.password=dummy
 
-      - name: Check helm template for ${{ matrix.environment }}
+      - name: Validate rendered Helm templates for ${{ matrix.environment }}
         run: |
           helm template --debug helm_deploy --values helm_deploy/values-${{ matrix.environment }}.yaml > /tmp/helm-output.yaml
           yamllint /tmp/helm-output.yaml -f github
@@ -102,21 +105,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Ruby
+      - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
 
-      - name: Set up Node
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
 
-      - name: Install dependencies
+      - name: Install JavaScript dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Cache Puppeteer
+      - name: Cache Puppeteer browser binaries
         uses: actions/cache@v4
         with:
           path: |
@@ -126,25 +129,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-puppeteer-
 
-      - name: Build assets
+      - name: Build frontend assets
         run: |
           yarn build
           yarn build:css
 
-      - name: Install Chrome
+      - name: Install Chrome for system tests
         uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: stable
 
-      - name: Install Puppeteer
+      - name: Install Puppeteer for browser automation
         run: yarn add puppeteer@22.15.0
 
-      - name: Setup database
+      - name: Set up test database
         run: |
           bundle exec rails db:setup
           bundle exec flatware fan rails db:test:prepare
 
-      - name: Run RSpec tests with Flatware
+      - name: Run RSpec tests with Flatware (parallel execution)
         env:
           RUBYOPT: -W:no-deprecated
           INCLUDE_ACCESSIBILITY_SPECS: true
@@ -154,7 +157,7 @@ jobs:
             --format RspecJunitFormatter \
             --out tmp/test-results/rspec/rspec.xml
 
-      - name: Publish test results
+      - name: Publish test results to PR
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
@@ -162,20 +165,20 @@ jobs:
           check_name: RSpec Test Results
           comment_mode: off
 
-      - name: Upload test results
+      - name: Upload test results as artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: tmp/test-results/rspec
 
-      - name: Upload coverage results
+      - name: Upload code coverage results
         uses: actions/upload-artifact@v4
         with:
           name: coverage-results
           path: coverage
 
-      - name: Upload capybara screenshots
+      - name: Upload Capybara screenshots (on test failure)
         if: failure()
         uses: actions/upload-artifact@v4
         with:
@@ -183,32 +186,36 @@ jobs:
           path: tmp/capybara
 
   coverage:
-    name: Process coverage
+    name: Process code coverage
     runs-on: ubuntu-latest
     needs: test
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Ruby
+      - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
 
-      - name: Download coverage results
+      - name: Download coverage results from test job
         uses: actions/download-artifact@v4
         with:
           name: coverage-results
           path: coverage
 
-      - name: Upload final coverage
+      - name: Upload final coverage artifact
         uses: actions/upload-artifact@v4
         with:
           name: coverage-final
           path: coverage
 
+  # ============================================================================
+  # PHASE 2: Build Docker image (depends on tests passing)
+  # ============================================================================
+
   build:
-    name: Build and push to ECR
+    name: Build and push Docker image to ECR
     runs-on: ubuntu-latest
     needs: [rubocop, test, helm-lint]
     permissions:
@@ -224,7 +231,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials for ECR access
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
@@ -238,7 +245,7 @@ jobs:
             --username AWS --password-stdin \
             ${ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
 
-      - name: Set ECR tags
+      - name: Generate Docker image tags
         id: set-tags
         run: |
           IMAGE_TAG="branch-${{ github.sha }}"
@@ -247,7 +254,7 @@ jobs:
           echo "APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z)" >> $GITHUB_ENV
           echo "ECR_IMAGE=${ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}" >> $GITHUB_ENV
 
-      - name: Build and push Docker image to ECR
+      - name: Build Docker image and push to ECR
         run: |
           docker build \
             --build-arg APP_BUILD_DATE=${APP_BUILD_DATE} \
@@ -259,8 +266,12 @@ jobs:
           
           docker push ${ECR_IMAGE}:${IMAGE_TAG}
 
+  # ============================================================================
+  # PHASE 3: Security scans and E2E tests (run in parallel after build)
+  # ============================================================================
+
   trivy-scan:
-    name: Trivy security scan
+    name: Trivy security scanning
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -275,7 +286,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials for ECR access
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
@@ -287,7 +298,7 @@ jobs:
         with:
           mask-password: true
 
-      - name: Run Trivy vulnerability scanner on filesystem
+      - name: Scan filesystem for vulnerabilities
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
@@ -297,14 +308,14 @@ jobs:
           severity: 'CRITICAL,HIGH'
           exit-code: '0'
 
-      - name: Upload Trivy filesystem scan results to GitHub Security tab
+      - name: Upload filesystem scan results to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: 'trivy-fs-results.sarif'
           category: 'trivy-filesystem'
 
-      - name: Run Trivy vulnerability scanner on Docker image
+      - name: Scan Docker image for vulnerabilities
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'image'
@@ -314,14 +325,14 @@ jobs:
           severity: 'CRITICAL,HIGH'
           exit-code: '0'
 
-      - name: Upload Trivy image scan results to GitHub Security tab
+      - name: Upload Docker image scan results to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: 'trivy-image-results.sarif'
           category: 'trivy-image'
 
-      - name: Run Trivy config scanner
+      - name: Scan infrastructure configuration for issues
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'config'
@@ -331,7 +342,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
           exit-code: '0'
 
-      - name: Upload Trivy config scan results to GitHub Security tab
+      - name: Upload config scan results to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
@@ -339,7 +350,7 @@ jobs:
           category: 'trivy-config'
 
   snyk-scan:
-    name: Snyk security scan
+    name: Snyk security scanning
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -353,12 +364,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Ruby
+      - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
 
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials for ECR access
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
@@ -370,30 +381,51 @@ jobs:
         with:
           mask-password: true
 
-      - name: Pull Docker image from ECR
+      - name: Pull Docker image from ECR for scanning
         run: docker pull ${ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${{ needs.build.outputs.image-tag }}
 
       - name: Install Snyk CLI
         uses: snyk/actions/setup@master
 
-      - name: Snyk test and monitor dependencies
+      - name: Test dependencies for vulnerabilities and monitor
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          # Test for vulnerabilities
           snyk test --all-projects --severity-threshold=high
-          # Monitor dependencies for ongoing tracking
           snyk monitor --all-projects
 
-      - name: Snyk container monitor
+      - name: Scan and monitor Docker container for vulnerabilities
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk container monitor ${ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${{ needs.build.outputs.image-tag }} --file=./Dockerfile
 
+  e2e-test:
+    name: End-to-end tests
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      ECR_REGISTRY_ID: ${{ secrets.ECR_REGISTRY_ID }}
+      ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+      ECR_REGION: ${{ secrets.ECR_REGION }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run end-to-end test suite
+        uses: ministryofjustice/crime-forms-end-to-end-tests@main
+        with:
+          e2e_current_image_var: NSCC_PROVIDER_IMAGE
+          e2e_current_image: ${{ env.ECR_REGISTRY_ID }}.dkr.ecr.${{ env.ECR_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ needs.build.outputs.image-tag }}
+          e2e_branch: main
+
+  # ============================================================================
+  # PHASE 4: Deploy to dev environment (only after all checks pass)
+  # ============================================================================
+
   deploy-feature-branch:
     name: Deploy feature branch to dev
     runs-on: ubuntu-latest
-    needs: [build, trivy-scan, snyk-scan]
+    needs: [build, trivy-scan, snyk-scan, e2e-test]
     permissions:
       id-token: write
       contents: read
@@ -419,7 +451,7 @@ jobs:
           K8S_NAMESPACE: ${{ secrets.AUTOGENERATED_SUBMIT_FORMS_DEV_K8S_NAMESPACE }}
           K8S_TOKEN: ${{ secrets.AUTOGENERATED_SUBMIT_FORMS_DEV_K8S_TOKEN }}
         run: |
-          set +x  # Disable command echoing to prevent token leakage
+          set +x
           echo -n "${K8S_CLUSTER_CERT}" | base64 -d > ./ca.crt
           kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_URL}
           kubectl config set-credentials github-actions --token=${K8S_TOKEN}
@@ -432,18 +464,18 @@ jobs:
         with:
           version: '3.7.2'
 
-      - name: Deploy feature branch using bin/deploy script
+      - name: Deploy feature branch to dev environment
         env:
           CIRCLE_BRANCH: ${{ github.head_ref }}
           CIRCLE_SHA1: ${{ github.sha }}
           AWS_ECR_REGISTRY_ID: ${{ env.ECR_REGISTRY_ID }}
           K8S_NAMESPACE: ${{ secrets.AUTOGENERATED_SUBMIT_FORMS_DEV_K8S_NAMESPACE }}
-        run: |
-          ./bin/deploy dev
+        run: ./bin/deploy dev
 
-      - name: Output deployment URL
+      - name: Output deployment URL to PR
         run: |
           BRANCH_RELEASE_NAME=$(echo "${{ github.head_ref }}" | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
           RELEASE_HOST="${BRANCH_RELEASE_NAME}-nscc-provider-dev.cloud-platform.service.justice.gov.uk"
           echo "### 🚀 Feature branch deployed!" >> $GITHUB_STEP_SUMMARY
-          echo "URL: https://${RELEASE_HOST}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**URL:** https://${RELEASE_HOST}" >> $GITHUB_STEP_SUMMARY
