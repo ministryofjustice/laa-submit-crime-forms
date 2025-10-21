@@ -91,7 +91,6 @@ jobs:
         image: postgres:13.12
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: laa_claim_non_standard_magistrate_fee_test
         ports:
           - 5432:5432
@@ -119,16 +118,6 @@ jobs:
       - name: Install JavaScript dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Cache Puppeteer browser binaries
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/puppeteer
-            node_modules/puppeteer
-          key: ${{ runner.os }}-puppeteer-22.15.0
-          restore-keys: |
-            ${{ runner.os }}-puppeteer-
-
       - name: Build frontend assets
         run: |
           yarn build
@@ -138,9 +127,6 @@ jobs:
         uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: stable
-
-      - name: Install Puppeteer for browser automation
-        run: yarn add puppeteer@22.15.0
 
       - name: Set up test database
         run: |
@@ -403,20 +389,76 @@ jobs:
     name: End-to-end tests
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      id-token: write
+      contents: read
     env:
       ECR_REGISTRY_ID: ${{ secrets.ECR_REGISTRY_ID }}
       ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
       ECR_REGION: ${{ secrets.ECR_REGION }}
+      E2E_WORKING_DIR: /tmp/nsm-end-to-end-tests
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run end-to-end test suite
-        uses: ministryofjustice/crime-forms-end-to-end-tests@main
+      - name: Configure AWS credentials for ECR access
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          e2e_current_image_var: NSCC_PROVIDER_IMAGE
-          e2e_current_image: ${{ env.ECR_REGISTRY_ID }}.dkr.ecr.${{ env.ECR_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ needs.build.outputs.image-tag }}
-          e2e_branch: main
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.ECR_REGION }}
+          mask-aws-account-id: true
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          mask-password: true
+
+      - name: Clone E2E test repository
+        run: |
+          git clone https://github.com/ministryofjustice/nsm-e2e-test.git ${{ env.E2E_WORKING_DIR }}
+
+      - name: Pull application Docker images from ECR
+        working-directory: ${{ env.E2E_WORKING_DIR }}
+        env:
+          NSCC_PROVIDER_IMAGE: ${{ env.ECR_REGISTRY_ID }}.dkr.ecr.${{ env.ECR_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ needs.build.outputs.image-tag }}
+        run: |
+          echo "Pulling NSCC provider image: ${NSCC_PROVIDER_IMAGE}"
+          docker pull ${NSCC_PROVIDER_IMAGE}
+
+      - name: Start application services with Docker Compose
+        working-directory: ${{ env.E2E_WORKING_DIR }}
+        env:
+          NSCC_PROVIDER_IMAGE: ${{ env.ECR_REGISTRY_ID }}.dkr.ecr.${{ env.ECR_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ needs.build.outputs.image-tag }}
+        run: |
+          docker compose up -d
+          docker compose ps
+
+      - name: Wait for services to be ready
+        working-directory: ${{ env.E2E_WORKING_DIR }}
+        run: |
+          echo "Waiting for services to be healthy..."
+          timeout 120 bash -c 'until docker compose ps | grep -q "healthy"; do sleep 2; done' || true
+          docker compose ps
+
+      - name: Install Node.js dependencies for E2E tests
+        working-directory: ${{ env.E2E_WORKING_DIR }}
+        run: npm ci
+
+      - name: Run Playwright E2E tests
+        working-directory: ${{ env.E2E_WORKING_DIR }}
+        run: npm run e2e-test
+
+      - name: Output container logs on failure
+        if: failure()
+        working-directory: ${{ env.E2E_WORKING_DIR }}
+        run: |
+          echo "=== Docker Compose Services ==="
+          docker compose ps
+          echo ""
+          echo "=== Container Logs ==="
+          docker compose logs
+
+      - name: Cleanup Docker containers
+        if: always()
+        working-directory: ${{ env.E2E_WORKING_DIR }}
+        run: docker compose down -v
 
   # ============================================================================
   # PHASE 4: Deploy to dev environment (only after all checks pass)
