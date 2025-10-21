@@ -1,4 +1,4 @@
-name: PR Checks - Test, Build, Scan & Deploy
+name: Test, Build, Scan & Deploy
 
 on:
   pull_request:
@@ -86,11 +86,16 @@ jobs:
     permissions:
       contents: read
       checks: write
+    env:
+      BASE_DATABASE_HOST: localhost
+      BASE_DATABASE_USERNAME: postgres
+      BASE_DATABASE_PASSWORD: postgres
     services:
       postgres:
         image: postgres:13.12
         env:
           POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: laa_claim_non_standard_magistrate_fee_test
         ports:
           - 5432:5432
