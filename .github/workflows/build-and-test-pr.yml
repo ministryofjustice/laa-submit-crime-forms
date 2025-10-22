@@ -81,11 +81,21 @@ jobs:
           yamllint /tmp/helm-output.yaml -f github
 
   test:
-    name: RSpec tests
+    name: RSpec tests - ${{ matrix.test-type }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
       checks: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - test-type: "non-system"
+            tag: "~type:system"
+            needs-chrome: false
+          - test-type: "system"
+            tag: "type:system"
+            needs-chrome: true
     env:
       BASE_DATABASE_HOST: localhost
       BASE_DATABASE_USERNAME: postgres
@@ -129,6 +139,7 @@ jobs:
           yarn build:css
 
       - name: Install Chrome for system tests
+        if: matrix.needs-chrome
         uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: stable
@@ -138,29 +149,24 @@ jobs:
           bundle exec rails db:setup
           bundle exec flatware fan rails db:test:prepare
 
-      - name: Run RSpec system tests
+      - name: Run RSpec tests (${{ matrix.test-type }})
         env:
           RUBYOPT: -W:no-deprecated
           INCLUDE_ACCESSIBILITY_SPECS: true
-        run: bundle exec flatware rspec --tag type:system
+        run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format progress
 
-      - name: Run RSpec non-system tests
-        env:
-          RUBYOPT: -W:no-deprecated
-          INCLUDE_ACCESSIBILITY_SPECS: true
-        run: bundle exec flatware rspec --tag ~type:system
-        
       - name: Upload code coverage results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-results
+          name: coverage-results-${{ matrix.test-type }}
           path: coverage
 
       - name: Upload Capybara screenshots (on test failure)
-        if: failure()
+        if: failure() && matrix.needs-chrome
         uses: actions/upload-artifact@v4
         with:
-          name: capybara-screenshots
+          name: capybara-screenshots-${{ matrix.test-type }}
           path: tmp/capybara
 
   coverage:
@@ -176,13 +182,36 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Download coverage results from test job
+      - name: Download coverage results from all test types
         uses: actions/download-artifact@v4
         with:
-          name: coverage-results
-          path: coverage
+          pattern: coverage-results-*
+          path: coverage_results
+          merge-multiple: true
+
+      - name: Merge coverage results from both test types
+        run: bundle exec rake simplecov:process_coverage
+
+      - name: Check coverage meets 100% threshold
+        run: |
+          # SimpleCov generates coverage/index.html with the coverage percentage
+          # Extract the coverage percentage and fail if it's not 100%
+          if [ -f coverage/.last_run.json ]; then
+            COVERAGE=$(ruby -e "require 'json'; data = JSON.parse(File.read('coverage/.last_run.json')); puts data['result']['line']")
+            echo "Coverage: ${COVERAGE}%"
+            if (( $(echo "$COVERAGE < 100" | bc -l) )); then
+              echo "❌ Coverage is below 100% (${COVERAGE}%)"
+              exit 1
+            else
+              echo "✅ Coverage is 100%"
+            fi
+          else
+            echo "❌ Coverage results not found"
+            exit 1
+          fi
 
       - name: Upload final coverage artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage-final
