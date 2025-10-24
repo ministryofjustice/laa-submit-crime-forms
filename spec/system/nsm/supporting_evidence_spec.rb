@@ -115,5 +115,14 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
       expect(page).to have_content('test.png has been deleted')
       expect(page).to have_no_css('.govuk-table')
     end
+
+    it 'Shows error when trying to upload invalid file' do
+      find('.moj-multi-file-upload__dropzone').drop(file_fixture('actually_a_zip.pdf'))
+      within('.govuk-table') do
+        expect(page).to have_content('actually_a_zip.pdf')
+        expect(page).to have_css('.moj-alert__icon')
+      end
+      expect(page).to have_content('The selected file must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF')
+    end
   end
 end
