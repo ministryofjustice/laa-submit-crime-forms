@@ -171,9 +171,9 @@ class MultiFileUpload extends ConfigurableComponent {
     }
     getErrorHtml(message) {
         return `
-        <div role="region" class="moj-alert moj-alert--error" aria-label="error: This case has been assigned to someone else" data-module="moj-alert">
+        <div role="region" class="moj-alert moj-alert--error" aria-label=error: ${message}" data-module="moj-alert">
         <div>${this.getErrorIcon()}</div>
-          <div class="moj-alert__content">This case has been assigned to someone else, so you can no longer make changes.</div>
+          <div class="moj-alert__content">${message}</div>
         </div>
         `
     }
@@ -234,7 +234,7 @@ class MultiFileUpload extends ConfigurableComponent {
                     feedback.html(this.getErrorHtml(errorMessage));
                     this.status.innerHTML = errorMessage;
                 }
-                fileRow.find('progress').replaceWith(this.getSuccessIcon());
+                fileRow.find('progress').replaceWith(this.getErrorIcon());
             }.bind(this),
         });
     }
