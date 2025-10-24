@@ -1,0 +1,66 @@
+name: Build and Deploy Main
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and push to ECR
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    outputs:
+      image-tag: ${{ steps.set-tags.outputs.main-tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.ECR_REGION }}
+          mask-aws-account-id: true
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          mask-password: true
+
+      - name: Set ECR tags
+        id: set-tags
+        run: |
+          MAIN_TAG="main-${{ github.sha }}"
+          echo "main-tag=${MAIN_TAG}" >> $GITHUB_OUTPUT
+          echo "MAIN_TAG=${MAIN_TAG}" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.AWS_ECR_REGISTRY_ID }}.dkr.ecr.${{ secrets.ECR_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:${{ env.MAIN_TAG }}
+            ${{ secrets.AWS_ECR_REGISTRY_ID }}.dkr.ecr.${{ secrets.ECR_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
+          build-args: |
+            APP_BUILD_DATE=${{ github.event.head_commit.timestamp }}
+            APP_BUILD_TAG=${{ github.sha }}
+            APP_GIT_COMMIT=${{ github.sha }}
+            APP_BRANCH_NAME=${{ github.ref_name }}
