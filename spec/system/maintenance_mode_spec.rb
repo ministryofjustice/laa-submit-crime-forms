@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Maintenance mode' do
+  before do
+    allow(Rails.env).to receive(:test?).and_return(false)
+  end
+
   after do
     ENV.delete('MAINTENANCE_MODE')
   end
@@ -51,14 +55,14 @@ RSpec.describe 'Maintenance mode' do
     end
 
     it 'allows access just before the end of business hours' do
-      travel_to Time.find_zone('Europe/London').parse('2025-09-10 18:59:59') do
+      travel_to Time.find_zone('Europe/London').parse('2025-09-10 21:29:59') do
         visit nsm_applications_path
         expect(page).not_to have_content 'Sorry, the service is unavailable'
       end
     end
 
     it 'does not allow access after business hours' do
-      travel_to Time.find_zone('Europe/London').parse('2025-09-10 19:00') do
+      travel_to Time.find_zone('Europe/London').parse('2025-09-10 21:30') do
         visit nsm_applications_path
         expect(page).to have_content 'Sorry, the service is unavailable'
       end

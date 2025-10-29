@@ -3,6 +3,6 @@ en:
   layouts:
     availability_banner:
       heading: Availability of this service has changed
-      body: This service can only be used from 7am to 7pm
+      body: This service can only be used from 7am to 9:30pm
     phase_banner:
       phase: Beta
