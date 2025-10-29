@@ -268,10 +268,6 @@ FactoryBot.define do
       state { :rejected }
     end
 
-    trait :updated_at do
-      updated_at { Date.new(2023, 12, 1) }
-    end
-
     trait :with_evidence do
       supporting_evidence { [build(:supporting_evidence)] }
     end
@@ -316,6 +312,12 @@ FactoryBot.define do
       rep_order_date { Constants::YOUTH_COURT_CUTOFF_DATE }
       youth_court { YesNoAnswer::YES.to_s }
       plea_category { PleaCategory::CATEGORY_1A.to_s }
+    end
+
+    trait :updated_at do
+      after(:all) do |claim|
+        claim.updated_at = Date.new(2023, 12, 1)
+      end
     end
   end
 end
