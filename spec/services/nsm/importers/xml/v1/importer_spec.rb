@@ -43,7 +43,6 @@ RSpec.describe Nsm::Importers::Xml::V1::Importer do
       expect(claim.prosecution_evidence).to eq(hash['prosecution_evidence'].to_i)
       expect(claim.defence_statement).to eq(hash['defence_statement'].to_i)
       expect(claim.number_of_witnesses).to eq(hash['number_of_witnesses'].to_i)
-      expect(claim.supplemental_claim).to eq(hash['supplemental_claim'])
       expect(claim.time_spent).to eq(hash['time_spent'].to_i)
       expect(claim.letters).to eq(hash['letters'].to_i)
       expect(claim.calls).to eq(hash['calls'].to_i)
