@@ -170,13 +170,14 @@ RSpec.describe 'Search', :stub_oauth_token do
                office_code: '1A123B',
                ufn: '060620/999',
                defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
-               state: :submitted,
-               updated_at: 1.year.ago
+               state: :submitted
       end
 
       before do
         matching
         other_matching
+        other_matching.updated_at = 1.year.ago
+        other_matching.save
         app_store_search_stub
         visit search_prior_authority_applications_path
         fill_in 'Enter any combination of client, UFN or LAA reference', with: 'Joe Bloggs'
@@ -307,7 +308,6 @@ RSpec.describe 'Search', :stub_oauth_token do
              ufn: '070620/123',
              main_defendant: build(:defendant, :valid, first_name: 'Joe', last_name: "Bloggs-O'Reilly"),
              state: :submitted,
-             updated_at: DateTime.new(2024, 9, 1, 10, 17, 26),
              originally_submitted_at: DateTime.new(2024, 9, 1, 10, 17, 26)
     end
 
@@ -318,7 +318,6 @@ RSpec.describe 'Search', :stub_oauth_token do
              ufn: '110120/123',
              main_defendant: build(:defendant, :valid, first_name: 'Jane', last_name: 'Doe'),
              state: :draft,
-             updated_at: DateTime.new(2024, 10, 1, 10, 17, 26),
              originally_submitted_at: DateTime.new(2024, 10, 1, 10, 17, 26)
     end
 
@@ -354,6 +353,11 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
 
     before do
+      matching.updated_at = DateTime.new(2024, 9, 1, 10, 17, 26)
+      matching.save
+      non_matching.updated_at = DateTime.new(2024, 10, 1, 10, 17, 26)
+      non_matching.save
+
       visit provider_entra_id_omniauth_callback_path
       Provider.first.update(office_codes: %w[XYZXYZ 1A123B])
     end
@@ -631,13 +635,14 @@ RSpec.describe 'Search', :stub_oauth_token do
                office_code: '1A123B',
                ufn: '060620/999',
                main_defendant: build(:defendant, :valid, first_name: 'Joe', last_name: 'Bloggs'),
-               state: :submitted,
-               updated_at: DateTime.new(2024, 8, 1, 10, 17, 26)
+               state: :submitted
       end
 
       before do
         matching
         other_matching
+        other_matching.updated_at = DateTime.new(2024, 8, 1, 10, 17, 26)
+        other_matching.save
         app_store_search_stub
         visit search_nsm_applications_path
         fill_in 'Enter any combination of defendant, UFN or LAA reference', with: 'Joe Bloggs'

@@ -10,12 +10,15 @@ RSpec.describe 'NSM claims lists', :stub_oauth_token do
     end
 
     first_submitted = create(:claim, :complete, :case_type_magistrates, :with_named_defendant,
-                             ufn: '120423/002', state: 'submitted',
-                             updated_at: 2.days.ago)
+                             ufn: '120423/002', state: 'submitted')
+    first_submitted.updated_at = 2.days.ago
+    first_submitted.save
 
     second_submitted = create(:claim, :complete, :case_type_breach,
-                              ufn: '120423/001', state: 'submitted', updated_at: 1.day.ago,
+                              ufn: '120423/001', state: 'submitted',
                               defendants: [build(:defendant, :valid_nsm, first_name: 'Burt', last_name: 'Bacharach')])
+    second_submitted.updated_at = 1.day.ago
+    second_submitted.save
 
     stub_request(:post, 'https://app-store.example.com/v1/submissions/searches').with(
       body:  {
@@ -37,17 +40,25 @@ RSpec.describe 'NSM claims lists', :stub_oauth_token do
     )
 
     granted = create(:claim, :complete, :case_type_magistrates, ufn: '120423/003',
-           state: 'granted', updated_at: 3.days.ago,
+           state: 'granted',
            defendants: [build(:defendant, :valid_nsm, first_name: 'Burt', last_name: 'Bacharach')])
+    granted.updated_at = 3.days.ago
+    granted.save
 
     sent_back = create(:claim, :complete, :case_type_magistrates, :with_named_defendant, ufn: '120423/004',
            state: 'sent_back', updated_at: 3.days.ago)
+    sent_back.updated_at = 3.days.ago
+    sent_back.save
 
     part_grant = create(:claim, :complete, :case_type_magistrates, :with_named_defendant, ufn: '120423/005',
            state: 'part_grant', updated_at: 3.days.ago)
+    part_grant.updated_at = 3.days.ago
+    part_grant.save
 
     rejected = create(:claim, :complete, :case_type_magistrates, :with_named_defendant, ufn: '120423/006',
            state: 'rejected', updated_at: 3.days.ago)
+    rejected.updated_at = 3.days.ago
+    rejected.save
 
     stub_request(:post, 'https://app-store.example.com/v1/submissions/searches').with do |request|
       JSON.parse(request.body)['status_with_assignment'] == %w[granted part_grant rejected auto_grant sent_back expired]
@@ -73,11 +84,13 @@ RSpec.describe 'NSM claims lists', :stub_oauth_token do
                     }
                   end)
 
-    create(:claim,
-           ufn: '120423/008',
-           defendants: [build(:defendant, :valid_nsm, first_name: 'Zoe', last_name: 'Zeigler')],
-           state: 'draft',
-           updated_at: 4.days.ago)
+    new_claim = create(:claim,
+                       ufn: '120423/008',
+                       defendants: [build(:defendant, :valid_nsm, first_name: 'Zoe', last_name: 'Zeigler')],
+                       state: 'draft',
+                       updated_at: 4.days.ago)
+    new_claim.updated_at = 4.days.ago
+    new_claim.save
 
     create(:claim,
            ufn: '111111/111',
