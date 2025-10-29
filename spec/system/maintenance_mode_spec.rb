@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Maintenance mode' do
+  before do
+    allow(Rails.env).to receive(:test?).and_return(false)
+  end
+
   after do
     ENV.delete('MAINTENANCE_MODE')
   end

@@ -11,6 +11,7 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
   private
 
   def check_maintenance_mode
+    return if Rails.env.test?
     return unless !business_hours? || ENV.fetch('MAINTENANCE_MODE', 'false') == 'true'
 
     render file: 'public/maintenance.html', layout: false
