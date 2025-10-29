@@ -65,7 +65,6 @@ en:
               prosecution_evidence: Number of pages of prosecution evidence
               defence_statement: Number of pages of defence statements
               number_of_witnesses: Number of witnesses
-              supplemental_claim: Supplemental claim
               preparation_time: Recorded evidence used
               time_spent: Recorded evidence time
               work_before: Work before order was granted

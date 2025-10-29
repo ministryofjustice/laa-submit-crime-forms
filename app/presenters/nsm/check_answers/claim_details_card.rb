@@ -17,7 +17,6 @@ module Nsm
           prosecution_evidence_row,
           defence_statement_row,
           number_of_witnesses_row,
-          supplemental_claim_row,
           preparation_time_row,
           work_before_row,
           work_after_row,
@@ -46,15 +45,6 @@ module Nsm
         {
           head_key: 'number_of_witnesses',
           text: check_missing(claim.number_of_witnesses)
-        }
-      end
-
-      def supplemental_claim_row
-        {
-          head_key: 'supplemental_claim',
-          text: check_missing(claim.supplemental_claim.present?) do
-                  claim.supplemental_claim.capitalize
-                end
         }
       end
 
