@@ -1,7 +1,6 @@
 module Nsm
   class ClaimsController < ApplicationController
     include Searchable
-    include ClaimCreatable
     include Cloneable
 
     layout 'nsm'
@@ -16,12 +15,6 @@ module Nsm
       @pagy = model.pagy
       @claims = model.rows
       @row_headers = row_headers
-    end
-
-    def create
-      initialize_application do |claim|
-        redirect_to edit_nsm_steps_claim_type_path(claim.id)
-      end
     end
 
     def submitted

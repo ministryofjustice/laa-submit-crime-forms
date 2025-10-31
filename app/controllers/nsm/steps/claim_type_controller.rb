@@ -1,14 +1,36 @@
 module Nsm
   module Steps
-    class ClaimTypeController < Nsm::Steps::BaseController
+    class ClaimTypeController < ApplicationController
       def edit
-        @form_object = ClaimTypeForm.build(
-          current_application
-        )
+        @form_object = ClaimTypeForm.new
       end
 
       def update
-        update_and_advance(ClaimTypeForm, as: :claim_type)
+        @form_object = ClaimTypeForm.new(permitted_params)
+        case @form_object.claim_type
+        when ClaimType::NON_STANDARD_MAGISTRATE
+          redirect_to new_nsm_steps_details_path(StartPage::NEW_RECORD)
+        when ClaimType::BREACH_OF_INJUNCTION
+          redirect_to new_nsm_steps_nsm_details_path(StartPage::NEW_RECORD)
+        when ClaimType::SUPPLEMENTAL
+          false
+        else
+          redirect_to nsm_applications_steps_claim_type_path, flash: { error: 'FAIL' }
+        end
+      end
+
+      private
+
+      def permitted_params
+        params
+        .fetch(ClaimTypeForm.model_name.singular, {})
+        .permit(ClaimTypeForm.attribute_names)
+      end
+
+      def error_flash
+        {
+
+        }
       end
     end
   end

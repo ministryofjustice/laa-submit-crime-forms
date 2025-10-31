@@ -80,6 +80,9 @@ Rails.application.routes.draw do
 
     resources :offences, only: [:index], format: :js
 
+    get '/applications/steps/claim_type', to: 'steps/claim_type#edit'
+    put '/applications/steps/claim_type', to: 'steps/claim_type#update'
+
     scope 'applications/:id' do
       # This is used as a generic redirect once a draft has been commited
       # The idea is that this can be custom to the implementation without
@@ -87,7 +90,10 @@ Rails.application.routes.draw do
       get '/steps/start_page', to: 'steps/start_page#show', as: 'after_commit'
 
       namespace :steps do
-        edit_step :claim_type
+
+        resource :boi_details, only: [:new, :edit, :update]
+        resource :details, only: [:new, :edit, :update]
+        edit_step :nsm_details
         edit_step :office_area
         edit_step :court_area
         edit_step :case_transfer

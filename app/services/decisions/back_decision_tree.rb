@@ -4,11 +4,16 @@ module Decisions
     WRAPPER_CLASS = CustomWrapper
 
     # start_page - takes use back to previous page
-    from(DecisionTree::NSM_OFFICE_CODE).goto(edit: DecisionTree::NSM_CLAIM_TYPE)
+    from(DecisionTree::NSM_OFFICE_CODE)
+      .when(-> { application.claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s })
+      .goto(edit: DecisionTree::NSM_DETAILS)
+      .when(-> { application.claim_type == ClaimType::BREACH_OF_INJUNCTION.to_s })
+      .goto(edit: DecisionTree::NSM_BOI_DETAILS)
+      .goto(index: NSM_CLAIMS)
     from(DecisionTree::NSM_OFFICE_AREA)
       .when(-> { application.submitter.multiple_offices? })
       .goto(edit: DecisionTree::NSM_OFFICE_CODE)
-      .goto(edit: DecisionTree::NSM_CLAIM_TYPE)
+      .goto(edit: DecisionTree::NSM_NSM_DETAILS)
     from(DecisionTree::NSM_COURT_AREA).goto(edit: DecisionTree::NSM_OFFICE_AREA)
     from(DecisionTree::NSM_CASE_TRANSFER).goto(edit: DecisionTree::NSM_COURT_AREA)
 

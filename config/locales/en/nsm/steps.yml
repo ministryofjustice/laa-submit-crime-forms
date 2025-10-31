@@ -5,11 +5,24 @@ en:
       claim_type:
         edit:
           page_title: What you are claiming for
-          heading: What you are claiming for
-          other_details:
-            line_1: This form can only be used to claim for a Non-standard magistrate or a Breach for injunction payment.
-            line_2: To claim for a Crime Lower standard payment, please use CWA via the LAA online portal.
-            line_3: To claim for a Crime Higher payment, please use CCCD via the CCCD portal.
+          heading: What do you want to claim?
+      details:
+        edit:
+          page_title: What are you claiming for
+          heading: Non-standard magistrates' court payment
+          ufn: What is your unique file number (UFN)?
+          ufn_hint: For example 310223/001
+          rep_order_date: Representation order date
+          rep_order_hint: For example, 27 03 2025
+      boi_details:
+        edit:
+          page_title: What are you claiming for
+          heading: Breach of injunction
+          ufn: What is your unique file number (UFN)?
+          cntp_order: Client's CNTP (contempt) number
+          cntp_order_hint: Must be between 6 and 8 digits long
+          cntp_date: Date the CNTP representation order was issued
+          cntp_date_hint: For example, 27 03 2025
       office_area:
         edit:
           page_title: Was this case worked on in an office in an undesignated area?

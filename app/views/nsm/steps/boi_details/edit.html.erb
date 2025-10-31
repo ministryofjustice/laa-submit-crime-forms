@@ -1,0 +1,27 @@
+<% title t('.page_title') %>
+<% step_header(path: nsm_applications_steps_claim_type_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+
+    <%= step_form @form_object do |f| %>
+      <%=
+        f.govuk_text_field :ufn, width: 'one-third', autocomplete: 'off',
+        label: { text: t('.ufn') }, hint: { text: t('.ufn_hint') }
+      %>
+      <%=
+        f.govuk_text_field :cntp_order, width: 'one-third', autocomplete: 'off',
+        label: { text: t('.cntp_order') }, hint: { text: t('.cntp_order_hint') }
+      %>
+      <%=
+        f.govuk_fully_validatable_date_field :cntp_date,
+        maxlength_enabled: true, legend: { text: t('.cntp_date'), size: 's', class: 'govuk-!-font-weight-regular' },
+        hint: { text: t('.date_hint') }
+      %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

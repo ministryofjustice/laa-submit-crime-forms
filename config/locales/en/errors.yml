@@ -265,16 +265,22 @@ en:
             information_supplied:
               blank: Enter the requested information
 
-        nsm/steps/claim_type_form:
+
+        nsm/steps/details_form:
           attributes:
             ufn:
               blank: "Enter a unique file number"
               invalid: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
               invalid_characters: Unique file number must only include numbers and a forward slash
               future_date: First 6 digits of the unique file number cannot be a future date
-            claim_type:
-              inclusion: Select what you are claiming for
             rep_order_date: *shared_date_errors
+        nsm/steps/boi_details_form:
+          attributes:
+            ufn:
+              blank: "Enter a unique file number"
+              invalid: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
+              invalid_characters: Unique file number must only include numbers and a forward slash
+              future_date: First 6 digits of the unique file number cannot be a future date
             cntp_order:
               blank: Enter a CNTP number
             cntp_date: *shared_date_errors
