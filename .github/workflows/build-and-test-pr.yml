@@ -387,7 +387,7 @@ jobs:
 
   e2e-test:
     name: Run E2E Tests
-    uses: ministryofjustice/nsm-e2e-test/.github/workflows/run-e2e-tests.yml@4485f6da019c2bb0c4f0c7d29400c698468c55e6
+    uses: ministryofjustice/nsm-e2e-test/.github/workflows/run-e2e-tests.yml@hotfix/update-gha-branch
     needs: build
     secrets: inherit
     permissions:
