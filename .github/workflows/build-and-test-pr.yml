@@ -455,6 +455,7 @@ jobs:
   e2e-test:
     name: Run E2E Tests
     uses: ministryofjustice/nsm-e2e-test/.github/workflows/run-e2e-tests.yml@feature/CRM457-1781-migrate-pipeline-to-github-actions
+    needs: build
     secrets: inherit
     permissions:
       id-token: write
