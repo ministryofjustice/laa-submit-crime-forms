@@ -460,6 +460,8 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    with:
+      submit-sha: ${{ needs.build.outputs.image-tag }}
 
   # ============================================================================
   # PHASE 4: Deploy to dev environment (only after all checks pass)
