@@ -8,7 +8,6 @@ module Nsm
       validates :rep_order_date, presence: true,
               multiparam_date: { allow_past: true, allow_future: false }
 
-
       def should_reset_youth_court_fields?
         application.after_youth_court_cutoff? && rep_order_date < Constants::YOUTH_COURT_CUTOFF_DATE
       end
@@ -19,7 +18,8 @@ module Nsm
         if application.claim_type
           application.update!(attributes.merge(attributes_to_reset).merge(youth_court_attributes_to_reset))
         else
-          application.create!(attributes.merge(initialized_attributes))
+          application.save
+          application.update!(attributes.merge(initialized_attributes))
         end
       end
 

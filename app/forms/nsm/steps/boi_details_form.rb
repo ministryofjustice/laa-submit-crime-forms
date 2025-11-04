@@ -10,14 +10,14 @@ module Nsm
       validates :cntp_date, presence: true,
               multiparam_date: { allow_past: true, allow_future: false }
 
-
       private
 
       def persist!
         if application.claim_type
           application.update!(attributes.merge(attributes_to_reset).merge(youth_court_attributes_to_reset))
         else
-          application.create!(attributes.merge(initialized_attributes))
+          application.save
+          application.update!(attributes.merge(initialized_attributes))
         end
       end
 

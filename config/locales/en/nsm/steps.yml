@@ -19,6 +19,7 @@ en:
           page_title: What are you claiming for
           heading: Breach of injunction
           ufn: What is your unique file number (UFN)?
+          ufn_hint: For example 310223/001
           cntp_order: Client's CNTP (contempt) number
           cntp_order_hint: Must be between 6 and 8 digits long
           cntp_date: Date the CNTP representation order was issued

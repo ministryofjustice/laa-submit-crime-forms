@@ -4,7 +4,7 @@ module Decisions
     # used to add custom methods to filter/query the data
     WRAPPER_CLASS = CustomWrapper
 
-    NSM_CLAIMS = 'nsm/claims'
+    NSM_CLAIMS = 'nsm/claims'.freeze
     NSM_DETAILS = 'nsm/steps/details'.freeze
     NSM_BOI_DETAILS = 'nsm/steps/boi_details'.freeze
     NSM_OFFICE_CODE = 'nsm/steps/office_code'.freeze
@@ -37,7 +37,6 @@ module Decisions
       .when(-> { application.submitter.multiple_offices? })
       .goto(edit: NSM_OFFICE_CODE)
       .goto(edit: NSM_OFFICE_AREA)
-
 
     from(:office_code)
       .when(-> { application.claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s })

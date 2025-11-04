@@ -11,7 +11,7 @@ module Nsm
         when ClaimType::NON_STANDARD_MAGISTRATE
           redirect_to new_nsm_steps_details_path(StartPage::NEW_RECORD)
         when ClaimType::BREACH_OF_INJUNCTION
-          redirect_to new_nsm_steps_nsm_details_path(StartPage::NEW_RECORD)
+          redirect_to new_nsm_steps_boi_details_path(StartPage::NEW_RECORD)
         when ClaimType::SUPPLEMENTAL
           false
         else
@@ -23,14 +23,8 @@ module Nsm
 
       def permitted_params
         params
-        .fetch(ClaimTypeForm.model_name.singular, {})
-        .permit(ClaimTypeForm.attribute_names)
-      end
-
-      def error_flash
-        {
-
-        }
+          .fetch(ClaimTypeForm.model_name.singular, {})
+          .permit(ClaimTypeForm.attribute_names)
       end
     end
   end

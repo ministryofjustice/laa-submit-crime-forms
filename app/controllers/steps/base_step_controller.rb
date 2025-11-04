@@ -58,7 +58,8 @@ module Steps
         # so that we can see validation issues
         render_form_if_invalid(form_object, opts)
       elsif form_object.save
-        redirect_to decision_tree_class.new(form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
+        id = form_object.application.id
+        redirect_to decision_tree_class.new(form_object, as: opts.fetch(:as)).destination.merge(id:), flash: opts[:flash]
       else
         render opts.fetch(:render, :edit)
       end

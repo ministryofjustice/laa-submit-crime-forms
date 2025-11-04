@@ -90,7 +90,6 @@ Rails.application.routes.draw do
       get '/steps/start_page', to: 'steps/start_page#show', as: 'after_commit'
 
       namespace :steps do
-
         resource :boi_details, only: [:new, :edit, :update]
         resource :details, only: [:new, :edit, :update]
         edit_step :nsm_details

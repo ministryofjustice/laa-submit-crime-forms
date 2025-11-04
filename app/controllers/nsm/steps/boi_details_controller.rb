@@ -18,7 +18,7 @@ module Nsm
 
       def current_application
         if params[:id] == StartPage::NEW_RECORD
-          @current_application ||= Claim.build(id: params[:id])
+          @current_application ||= Claim.new(submitter: current_provider)
         else
           super
         end

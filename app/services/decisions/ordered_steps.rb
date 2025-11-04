@@ -9,7 +9,8 @@ module Decisions
       # There are some steps in NSM that are not linked directly from other steps. You can only get to them
       # by clicking a link on the start page, or clicking the new claim button. Therefore we have
       # to hard-code these here in order, as the decision tree doesn't know how to get there
-      %i[details boi_details firm_details other_info equality nsm_further_information].each_with_object([]) do |step, previous_steps|
+      %i[details boi_details firm_details other_info equality
+         nsm_further_information].each_with_object([]) do |step, previous_steps|
         build_chain(step, previous_steps:)
       end
     end
