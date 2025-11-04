@@ -13,7 +13,7 @@ module Nsm
         when ClaimType::BREACH_OF_INJUNCTION
           redirect_to new_nsm_steps_boi_details_path(StartPage::NEW_RECORD)
         when ClaimType::SUPPLEMENTAL
-          false
+          redirect_to nsm_applications_steps_supplemental_claim_path
         else
           redirect_to nsm_applications_steps_claim_type_path, flash: { error: 'FAIL' }
         end

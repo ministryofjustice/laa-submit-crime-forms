@@ -82,6 +82,7 @@ Rails.application.routes.draw do
 
     get '/applications/steps/claim_type', to: 'steps/claim_type#edit'
     put '/applications/steps/claim_type', to: 'steps/claim_type#update'
+    get '/applications/steps/supplemental_claim', to: 'steps/supplemental_claim#show'
 
     scope 'applications/:id' do
       # This is used as a generic redirect once a draft has been commited
