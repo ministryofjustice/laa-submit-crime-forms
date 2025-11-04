@@ -3,9 +3,9 @@ module Nsm
     class ClaimType < Base
       def path
         if application.claim_type == ::ClaimType::NON_STANDARD_MAGISTRATE.to_s
-          edit_nsm_steps_boi_details_path(application)
-        elsif application.claim_type == ::ClaimType::BREACH_OF_INJUNCTION.to_s
           edit_nsm_steps_details_path(application)
+        elsif application.claim_type == ::ClaimType::BREACH_OF_INJUNCTION.to_s
+          edit_nsm_steps_boi_details_path(application)
         else
           raise "Claim with id: #{application.id} has an invalid claim type"
         end

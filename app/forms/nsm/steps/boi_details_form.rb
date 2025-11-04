@@ -16,8 +16,8 @@ module Nsm
         if application.claim_type
           application.update!(attributes.merge(attributes_to_reset).merge(youth_court_attributes_to_reset))
         else
-          application.save
-          application.update!(attributes.merge(initialized_attributes))
+          application.assign_attributes(initialized_attributes)
+          application.update!(attributes)
         end
       end
 
