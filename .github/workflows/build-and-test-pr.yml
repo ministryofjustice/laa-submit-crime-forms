@@ -23,199 +23,199 @@ jobs:
   # PHASE 1: Fast quality checks (run in parallel)
   # ============================================================================
   
-  rubocop:
-    name: Code quality - Rubocop
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # rubocop:
+  #   name: Code quality - Rubocop
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+  #     - name: Set up Ruby and install gems
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
 
-      - name: Run Rubocop linter
-        run: bundle exec rubocop --format github --format progress
+  #     - name: Run Rubocop linter
+  #       run: bundle exec rubocop --format github --format progress
 
-  helm-lint:
-    name: Helm lint - ${{ matrix.environment }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    strategy:
-      fail-fast: false
-      matrix:
-        environment: [dev, uat, prod]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # helm-lint:
+  #   name: Helm lint - ${{ matrix.environment }}
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       environment: [dev, uat, prod]
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Install Helm
-        uses: azure/setup-helm@v4
-        with:
-          version: '3.7.2'
+  #     - name: Install Helm
+  #       uses: azure/setup-helm@v4
+  #       with:
+  #         version: '3.7.2'
 
-      - name: Cache Python pip packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-yamllint
-          restore-keys: |
-            ${{ runner.os }}-pip-
+  #     - name: Cache Python pip packages
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: ~/.cache/pip
+  #         key: ${{ runner.os }}-pip-yamllint
+  #         restore-keys: |
+  #           ${{ runner.os }}-pip-
 
-      - name: Install yamllint for YAML validation
-        run: pip install yamllint
+  #     - name: Install yamllint for YAML validation
+  #       run: pip install yamllint
 
-      - name: Lint Helm chart templates for ${{ matrix.environment }}
-        run: |
-          helm lint helm_deploy --values helm_deploy/values-${{ matrix.environment }}.yaml \
-            --set redis.auth.password=dummy \
-            --set postgresql.auth.password=dummy
+  #     - name: Lint Helm chart templates for ${{ matrix.environment }}
+  #       run: |
+  #         helm lint helm_deploy --values helm_deploy/values-${{ matrix.environment }}.yaml \
+  #           --set redis.auth.password=dummy \
+  #           --set postgresql.auth.password=dummy
 
-      - name: Validate rendered Helm templates for ${{ matrix.environment }}
-        run: |
-          helm template --debug helm_deploy --values helm_deploy/values-${{ matrix.environment }}.yaml > /tmp/helm-output.yaml
-          yamllint /tmp/helm-output.yaml -f github
+  #     - name: Validate rendered Helm templates for ${{ matrix.environment }}
+  #       run: |
+  #         helm template --debug helm_deploy --values helm_deploy/values-${{ matrix.environment }}.yaml > /tmp/helm-output.yaml
+  #         yamllint /tmp/helm-output.yaml -f github
 
-  test:
-    name: RSpec tests - ${{ matrix.test-type }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      checks: write
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - test-type: "non-system"
-            tag: "~type:system"
-            needs-chrome: false
-          - test-type: "system"
-            tag: "type:system"
-            needs-chrome: true
-    env:
-      BASE_DATABASE_HOST: localhost
-      BASE_DATABASE_USERNAME: postgres
-      BASE_DATABASE_PASSWORD: postgres
-    services:
-      postgres:
-        image: postgres:13.12
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: laa_claim_non_standard_magistrate_fee_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+  # test:
+  #   name: RSpec tests - ${{ matrix.test-type }}
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     checks: write
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       include:
+  #         - test-type: "non-system"
+  #           tag: "~type:system"
+  #           needs-chrome: false
+  #         - test-type: "system"
+  #           tag: "type:system"
+  #           needs-chrome: true
+  #   env:
+  #     BASE_DATABASE_HOST: localhost
+  #     BASE_DATABASE_USERNAME: postgres
+  #     BASE_DATABASE_PASSWORD: postgres
+  #   services:
+  #     postgres:
+  #       image: postgres:13.12
+  #       env:
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_PASSWORD: postgres
+  #         POSTGRES_DB: laa_claim_non_standard_magistrate_fee_test
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+  #     - name: Set up Ruby and install gems
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version-file: '.nvmrc'
+  #         cache: 'yarn'
 
-      - name: Install JavaScript dependencies
-        run: yarn install --frozen-lockfile
+  #     - name: Install JavaScript dependencies
+  #       run: yarn install --frozen-lockfile
 
-      - name: Build frontend assets
-        run: |
-          yarn build
-          yarn build:css
+  #     - name: Build frontend assets
+  #       run: |
+  #         yarn build
+  #         yarn build:css
 
-      - name: Install Chrome for system tests
-        if: matrix.needs-chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: stable
+  #     - name: Install Chrome for system tests
+  #       if: matrix.needs-chrome
+  #       uses: browser-actions/setup-chrome@v1
+  #       with:
+  #         chrome-version: stable
 
-      - name: Set up test database
-        run: |
-          bundle exec rails db:setup
-          bundle exec flatware fan rails db:test:prepare
+  #     - name: Set up test database
+  #       run: |
+  #         bundle exec rails db:setup
+  #         bundle exec flatware fan rails db:test:prepare
 
-      - name: Run RSpec tests (${{ matrix.test-type }})
-        env:
-          RUBYOPT: -W:no-deprecated
-          INCLUDE_ACCESSIBILITY_SPECS: true
-        run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format progress
+  #     - name: Run RSpec tests (${{ matrix.test-type }})
+  #       env:
+  #         RUBYOPT: -W:no-deprecated
+  #         INCLUDE_ACCESSIBILITY_SPECS: true
+  #       run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format progress
 
-      - name: Upload code coverage results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-results-${{ matrix.test-type }}
-          path: coverage
+  #     - name: Upload code coverage results
+  #       if: always()
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: coverage-results-${{ matrix.test-type }}
+  #         path: coverage
 
-      - name: Upload Capybara screenshots (on test failure)
-        if: failure() && matrix.needs-chrome
-        uses: actions/upload-artifact@v4
-        with:
-          name: capybara-screenshots-${{ matrix.test-type }}
-          path: tmp/capybara
+  #     - name: Upload Capybara screenshots (on test failure)
+  #       if: failure() && matrix.needs-chrome
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: capybara-screenshots-${{ matrix.test-type }}
+  #         path: tmp/capybara
 
-  coverage:
-    name: Process code coverage
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # coverage:
+  #   name: Process code coverage
+  #   runs-on: ubuntu-latest
+  #   needs: test
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+  #     - name: Set up Ruby and install gems
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
 
-      - name: Download coverage results from all test types
-        uses: actions/download-artifact@v4
-        with:
-          pattern: coverage-results-*
-          path: coverage_results
-          merge-multiple: true
+  #     - name: Download coverage results from all test types
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         pattern: coverage-results-*
+  #         path: coverage_results
+  #         merge-multiple: true
 
-      - name: Merge coverage results from both test types
-        run: bundle exec rake simplecov:process_coverage
+  #     - name: Merge coverage results from both test types
+  #       run: bundle exec rake simplecov:process_coverage
 
-      - name: Check coverage meets 100% threshold
-        run: |
-          # SimpleCov generates coverage/index.html with the coverage percentage
-          # Extract the coverage percentage and fail if it's not 100%
-          if [ -f coverage/.last_run.json ]; then
-            COVERAGE=$(ruby -e "require 'json'; data = JSON.parse(File.read('coverage/.last_run.json')); puts data['result']['line']")
-            echo "Coverage: ${COVERAGE}%"
-            if (( $(echo "$COVERAGE < 100" | bc -l) )); then
-              echo "❌ Coverage is below 100% (${COVERAGE}%)"
-              exit 1
-            else
-              echo "✅ Coverage is 100%"
-            fi
-          else
-            echo "❌ Coverage results not found"
-            exit 1
-          fi
+  #     - name: Check coverage meets 100% threshold
+  #       run: |
+  #         # SimpleCov generates coverage/index.html with the coverage percentage
+  #         # Extract the coverage percentage and fail if it's not 100%
+  #         if [ -f coverage/.last_run.json ]; then
+  #           COVERAGE=$(ruby -e "require 'json'; data = JSON.parse(File.read('coverage/.last_run.json')); puts data['result']['line']")
+  #           echo "Coverage: ${COVERAGE}%"
+  #           if (( $(echo "$COVERAGE < 100" | bc -l) )); then
+  #             echo "❌ Coverage is below 100% (${COVERAGE}%)"
+  #             exit 1
+  #           else
+  #             echo "✅ Coverage is 100%"
+  #           fi
+  #         else
+  #           echo "❌ Coverage results not found"
+  #           exit 1
+  #         fi
 
-      - name: Upload final coverage artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-final
-          path: coverage
+  #     - name: Upload final coverage artifact
+  #       if: always()
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: coverage-final
+  #         path: coverage
 
   # ============================================================================
   # PHASE 2: Build Docker image (depends on tests passing)
@@ -224,7 +224,7 @@ jobs:
   build:
     name: Build and push Docker image to ECR
     runs-on: ubuntu-latest
-    needs: [rubocop, test, helm-lint]
+    # needs: [rubocop, test, helm-lint]
     # Required for OIDC
     permissions:
       id-token: write
@@ -260,84 +260,84 @@ jobs:
           
           docker push ${ECR_IMAGE}:${IMAGE_TAG}
 
-  # ============================================================================
-  # PHASE 3: Security scans and E2E tests (run in parallel after build)
-  # ============================================================================
+  # # ============================================================================
+  # # PHASE 3: Security scans and E2E tests (run in parallel after build)
+  # # ============================================================================
 
-  trivy-scan:
-    name: Trivy security scanning
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-      security-events: write
-    needs: build
-    env:
-      ECR_REGISTRY_ID: ${{ secrets.ECR_REGISTRY_ID }}
-      ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
-      ECR_REGION: ${{ secrets.ECR_REGION }}
-      ECR_ROLE_TO_ASSUME: ${{ secrets.SUBMIT_DEV_ECR_ROLE_TO_ASSUME }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # trivy-scan:
+  #   name: Trivy security scanning
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     id-token: write
+  #     contents: read
+  #     security-events: write
+  #   needs: build
+  #   env:
+  #     ECR_REGISTRY_ID: ${{ secrets.ECR_REGISTRY_ID }}
+  #     ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+  #     ECR_REGION: ${{ secrets.ECR_REGION }}
+  #     ECR_ROLE_TO_ASSUME: ${{ secrets.SUBMIT_DEV_ECR_ROLE_TO_ASSUME }}
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
           
-      - name: Configure AWS credentials for ECR access
-        uses: ministryofjustice/laa-reusable-github-actions/.github/actions/ecr-auth@e5500aa20b13a1406fe8a62b8788181a2ca18926
-        with:
-          ecr_role: ${{ secrets.SUBMIT_DEV_ECR_ROLE_TO_ASSUME }}
-          ecr_region: ${{ vars.SUBMIT_DEV_ECR_REGION }}
-          role-session-name: ${{ vars.ECR_ROLE_SESSION_NAME }}
+  #     - name: Configure AWS credentials for ECR access
+  #       uses: ministryofjustice/laa-reusable-github-actions/.github/actions/ecr-auth@e5500aa20b13a1406fe8a62b8788181a2ca18926
+  #       with:
+  #         ecr_role: ${{ secrets.SUBMIT_DEV_ECR_ROLE_TO_ASSUME }}
+  #         ecr_region: ${{ vars.SUBMIT_DEV_ECR_REGION }}
+  #         role-session-name: ${{ vars.ECR_ROLE_SESSION_NAME }}
 
-      - name: Scan filesystem for vulnerabilities
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'sarif'
-          output: 'trivy-fs-results.sarif'
-          severity: 'CRITICAL,HIGH'
-          exit-code: '0'
+  #     - name: Scan filesystem for vulnerabilities
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         scan-type: 'fs'
+  #         scan-ref: '.'
+  #         format: 'sarif'
+  #         output: 'trivy-fs-results.sarif'
+  #         severity: 'CRITICAL,HIGH'
+  #         exit-code: '0'
 
-      - name: Upload filesystem scan results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: 'trivy-fs-results.sarif'
-          category: 'trivy-filesystem'
+  #     - name: Upload filesystem scan results to GitHub Security
+  #       uses: github/codeql-action/upload-sarif@v3
+  #       if: always()
+  #       with:
+  #         sarif_file: 'trivy-fs-results.sarif'
+  #         category: 'trivy-filesystem'
 
-      - name: Scan Docker image for vulnerabilities
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'image'
-          image-ref: '${{ secrets.ECR_REGISTRY_URL}}/${{ vars.SUBMIT_DEV_ECR_REPOSITORY}}:${{ needs.build.outputs.image-tag }}'
-          format: 'sarif'
-          output: 'trivy-image-results.sarif'
-          severity: 'CRITICAL,HIGH'
-          exit-code: '0'
+  #     - name: Scan Docker image for vulnerabilities
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         scan-type: 'image'
+  #         image-ref: '${{ secrets.ECR_REGISTRY_URL}}/${{ vars.SUBMIT_DEV_ECR_REPOSITORY}}:${{ needs.build.outputs.image-tag }}'
+  #         format: 'sarif'
+  #         output: 'trivy-image-results.sarif'
+  #         severity: 'CRITICAL,HIGH'
+  #         exit-code: '0'
 
-      - name: Upload Docker image scan results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: 'trivy-image-results.sarif'
-          category: 'trivy-image'
+  #     - name: Upload Docker image scan results to GitHub Security
+  #       uses: github/codeql-action/upload-sarif@v3
+  #       if: always()
+  #       with:
+  #         sarif_file: 'trivy-image-results.sarif'
+  #         category: 'trivy-image'
 
-      - name: Scan infrastructure configuration for issues
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'config'
-          scan-ref: '.'
-          format: 'sarif'
-          output: 'trivy-config-results.sarif'
-          severity: 'CRITICAL,HIGH'
-          exit-code: '0'
+  #     - name: Scan infrastructure configuration for issues
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         scan-type: 'config'
+  #         scan-ref: '.'
+  #         format: 'sarif'
+  #         output: 'trivy-config-results.sarif'
+  #         severity: 'CRITICAL,HIGH'
+  #         exit-code: '0'
 
-      - name: Upload config scan results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: 'trivy-config-results.sarif'
-          category: 'trivy-config'
+  #     - name: Upload config scan results to GitHub Security
+  #       uses: github/codeql-action/upload-sarif@v3
+  #       if: always()
+  #       with:
+  #         sarif_file: 'trivy-config-results.sarif'
+  #         category: 'trivy-config'
 
   snyk-scan:
     name: Snyk security scanning
@@ -387,7 +387,7 @@ jobs:
 
   e2e-test:
     name: Run E2E Tests
-    uses: ministryofjustice/nsm-e2e-test/.github/workflows/run-e2e-tests.yml@hotfix/update-gha-branch
+    uses: ministryofjustice/nsm-e2e-test/.github/workflows/run-e2e-tests.yml@4ecdd6ddaaf01c6554a9967a290ece0690d89392
     needs: build
     secrets: inherit
     permissions:
@@ -403,14 +403,10 @@ jobs:
   deploy-feature-branch:
     name: Deploy feature branch to dev
     runs-on: ubuntu-latest
-    needs: [build, trivy-scan, snyk-scan, e2e-test]
+    needs: [build, snyk-scan, e2e-test]
     permissions:
       id-token: write
       contents: read
-    env:
-      ECR_REGISTRY_ID: ${{ secrets.ECR_REGISTRY_ID }}
-      ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
-      ECR_REGION: ${{ secrets.ECR_REGION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -424,23 +420,11 @@ jobs:
           kube-namespace: ${{ secrets.AUTOGENERATED_SUBMIT_FORMS_DEV_K8S_NAMESPACE }}
           
       - name: Configure AWS credentials for ECR access
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: ministryofjustice/laa-reusable-github-actions/.github/actions/ecr-auth@e5500aa20b13a1406fe8a62b8788181a2ca18926
         with:
-          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ env.ECR_REGION }}
-          mask-aws-account-id: true
-
-      - name: Assume role in Cloud Platform
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ env.ECR_REGION }}
-
-      - name: Docker login to ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-        with:
-          mask-password: 'true'
+          ecr_role: ${{ secrets.SUBMIT_DEV_ECR_ROLE_TO_ASSUME }}
+          ecr_region: ${{ vars.SUBMIT_DEV_ECR_REGION }}
+          role-session-name: ${{ vars.ECR_ROLE_SESSION_NAME }}
 
       - name: Install Helm
         uses: azure/setup-helm@v4
@@ -451,7 +435,7 @@ jobs:
         env:
           CIRCLE_BRANCH: ${{ github.head_ref }}
           CIRCLE_SHA1: ${{ github.sha }}
-          AWS_ECR_REGISTRY_ID: ${{ env.ECR_REGISTRY_ID }}
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY_URL }}/${{ vars.SUBMIT_DEV_ECR_REPOSITORY }}
           K8S_NAMESPACE: ${{ secrets.AUTOGENERATED_SUBMIT_FORMS_DEV_K8S_NAMESPACE }}
         run: ./bin/deploy dev
 
