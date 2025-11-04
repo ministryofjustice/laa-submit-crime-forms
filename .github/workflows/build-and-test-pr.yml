@@ -377,6 +377,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
+          bundle install
           snyk test --all-projects --severity-threshold=high
           snyk monitor --all-projects
 
