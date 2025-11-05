@@ -377,6 +377,11 @@ jobs:
 
       - name: Scan for secrets
         uses: trufflesecurity/trufflehog@690e5c7aff8347c3885096f3962a0633d9129607
+        with:
+          path: ./
+          base: "${{ github.event.repository.default_branch }}"
+          head: HEAD
+          extra_args: --debug --only-verified ﻿
 
   e2e-test:
     name: Run E2E Tests
