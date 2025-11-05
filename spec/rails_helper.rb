@@ -23,25 +23,8 @@ Capybara.register_driver :headless_chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
     unhandled_prompt_behavior: 'ignore'
   )
-
-  # Chrome args for headless mode
   options.add_argument('--headless=new')
   options.add_argument('--window-size=1080,1920')
-
-  # Required for CI environments and parallel execution
-  options.add_argument('--no-sandbox')
-  options.add_argument('--disable-dev-shm-usage')
-  options.add_argument('--disable-gpu')
-
-  # Prevent port conflicts in parallel execution
-  # Each Flatware worker gets a unique remote debugging port
-  worker_number = ENV['TEST_ENV_NUMBER'].to_i
-  remote_debugging_port = 9222 + worker_number
-  options.add_argument("--remote-debugging-port=#{remote_debugging_port}")
-
-  # Additional stability flags
-  options.add_argument('--disable-software-rasterizer')
-  options.add_argument('--disable-extensions')
 
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
