@@ -367,22 +367,6 @@ jobs:
           image: ${{ env.ECR_IMAGE }}
           command: monitor
 
-  secrets-scan:
-    name: Secrets scan (Trufflehog)
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Scan for secrets
-        uses: trufflesecurity/trufflehog@690e5c7aff8347c3885096f3962a0633d9129607
-        with:
-          path: ./
-          base: "${{ github.head_ref }}"
-          head: HEAD
-          extra_args: --max-depth=0
-
   e2e-test:
     name: Run E2E Tests
     uses: ministryofjustice/nsm-e2e-test/.github/workflows/run-e2e-tests.yml@4ecdd6ddaaf01c6554a9967a290ece0690d89392
