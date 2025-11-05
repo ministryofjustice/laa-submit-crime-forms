@@ -6,13 +6,13 @@
     "@ministryofjustice/frontend": "7.1.0",
     "accessible-autocomplete": "^3.0.1",
     "braces": "^3.0.3",
-    "esbuild": "^0.25.11",
+    "esbuild": "^0.25.12",
     "fastest-levenshtein": "^1.0.16",
     "govuk-frontend": "5.10.0",
     "jquery": "^3.7.1",
     "laa-crime-forms-common": "1.0.6",
     "puppeteer": "^24.11.1",
-    "sass": "^1.93.2",
+    "sass": "^1.93.3",
     "yarn": "^1.22.22"
   },
   "resolutions": {
