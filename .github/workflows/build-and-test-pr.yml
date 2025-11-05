@@ -192,7 +192,9 @@ jobs:
           path: coverage_results
 
       - name: Merge coverage results from both test types
-        run: bundle exec rake simplecov:process_coverage
+        run: |
+          ls -al coverage_results/*/*
+          bundle exec rake simplecov:process_coverage
 
       - name: Check SimpleCov coverage
         uses: alexremn/simplecov-github-action@v1

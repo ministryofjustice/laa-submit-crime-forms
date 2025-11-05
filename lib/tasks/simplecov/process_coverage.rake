@@ -6,7 +6,7 @@ if ENV['CI']
     task process_coverage: :environment do
       require 'simplecov'
 
-      SimpleCov.collate Dir['./coverage_results/.resultset*.json'], 'rails' do
+      SimpleCov.collate Dir['./coverage_results/**/.resultset*.json'], 'rails' do
         enable_coverage :branch
         primary_coverage :branch
         minimum_coverage branch: 100, line: 100
