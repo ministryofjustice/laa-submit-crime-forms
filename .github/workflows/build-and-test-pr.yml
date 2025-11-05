@@ -160,6 +160,7 @@ jobs:
         with:
           name: coverage-results-${{ matrix.test-type }}
           path: coverage
+          include-hidden-files: true
 
       - name: Upload Capybara screenshots (on test failure)
         if: failure() && matrix.needs-chrome == true
@@ -192,9 +193,7 @@ jobs:
           path: coverage_results
 
       - name: Merge coverage results from both test types
-        run: |
-          ls -al coverage_results/*/*
-          bundle exec rake simplecov:process_coverage
+        run: bundle exec rake simplecov:process_coverage
 
       - name: Check SimpleCov coverage
         uses: alexremn/simplecov-github-action@v1
