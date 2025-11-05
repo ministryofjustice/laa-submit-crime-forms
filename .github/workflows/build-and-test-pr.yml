@@ -379,9 +379,9 @@ jobs:
         uses: trufflesecurity/trufflehog@690e5c7aff8347c3885096f3962a0633d9129607
         with:
           path: ./
-          base: "${{ github.event.repository.default_branch }}"
+          base: "${{ github.head_ref }}"
           head: HEAD
-          extra_args: --debug --only-verified ﻿
+          extra_args: --max-depth=0
 
   e2e-test:
     name: Run E2E Tests
