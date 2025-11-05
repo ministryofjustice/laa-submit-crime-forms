@@ -17,12 +17,13 @@ module Nsm
           prosecution_evidence_row,
           defence_statement_row,
           number_of_witnesses_row,
+          supplemental_claim_row,
           preparation_time_row,
           work_before_row,
           work_after_row,
           work_completed_row,
           wasted_costs_row,
-        ].flatten
+        ].compact.flatten
       end
 
       private
@@ -38,6 +39,17 @@ module Nsm
         {
           head_key: 'defence_statement',
           text: check_missing(claim.defence_statement)
+        }
+      end
+
+      def supplemental_claim_row
+        return if claim.supplemental_claim.nil?
+
+        {
+          head_key: 'supplemental_claim',
+          text: check_missing(claim.supplemental_claim.present?) do
+                  claim.supplemental_claim.capitalize
+                end
         }
       end
 
