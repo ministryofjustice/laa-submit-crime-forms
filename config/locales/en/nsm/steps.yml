@@ -48,6 +48,7 @@ en:
               row_2_html: |
                 Unique submission number (USN)<br>A copy of the original claim and supporting evidence
               row_3: A copy of the original claim and supporting evidence
+          claims_link: Back to your claims
 
       details:
         edit:
