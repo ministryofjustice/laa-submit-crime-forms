@@ -23,6 +23,10 @@ module Nsm
         claim_type_questions_completed? && office_code_questions_completed? && office_area_questions_completed?
       end
 
+      def previously_visited?
+        application.claim_type.present?
+      end
+
       def claim_type_questions_completed?
         application.claim_type.present?
       end
