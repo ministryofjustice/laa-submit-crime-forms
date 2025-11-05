@@ -401,7 +401,7 @@ jobs:
   deploy-feature-branch:
     name: Deploy feature branch to dev
     runs-on: ubuntu-latest
-    needs: [build, snyk-scan, e2e-test]
+    needs: [build, snyk-scan, e2e-test, coverage]
     permissions:
       id-token: write
       contents: read
