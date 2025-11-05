@@ -150,7 +150,14 @@ jobs:
         env:
           RUBYOPT: -W:no-deprecated
           INCLUDE_ACCESSIBILITY_SPECS: true
-        run: bundle exec flatware rspec --format progress
+        run: bundle exec flatware rspec --format json --out tmp/rspec_results.json --format progress
+
+      - name: RSpec Report
+        if: always()
+        uses: SonicGarden/rspec-report-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          json-path: tmp/rspec_results.json
 
       - name: Upload code coverage results
         if: always()
