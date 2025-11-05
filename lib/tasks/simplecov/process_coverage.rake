@@ -14,7 +14,7 @@ if ENV['CI']
           minimum_coverage branch: 100, line: 100
           refuse_coverage_drop :line, :branch
         end
-      rescue SimpleCov::ExitCodeException => e
+      rescue SystemExit => e
         # Coverage check failed - write summary to GitHub step summary and annotate uncovered lines
         result = SimpleCov::Result.from_hash(JSON.parse(File.read('coverage/.resultset.json')))
 
