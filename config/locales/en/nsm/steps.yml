@@ -6,6 +6,8 @@ en:
         edit:
           page_title: What you are claiming for
           heading: What do you want to claim?
+        update:
+          no_type_selected: Please select a claim type
       supplemental_claim:
         show:
           page_title: Make supplemental claim

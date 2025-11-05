@@ -15,7 +15,7 @@ module Nsm
         when ClaimType::SUPPLEMENTAL
           redirect_to nsm_applications_steps_supplemental_claim_path
         else
-          redirect_to nsm_applications_steps_claim_type_path, flash: { error: 'FAIL' }
+          redirect_to nsm_applications_steps_claim_type_path, flash: { alert: t('.no_type_selected') }
         end
       end
 
