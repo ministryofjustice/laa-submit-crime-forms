@@ -130,10 +130,16 @@ jobs:
           yarn build:css
 
       - name: Install Chrome for system tests
+        id: setup-chrome
         uses: browser-actions/setup-chrome@v1
         with:
-          chrome-version: 128
-          install-chromedriver: true
+          chrome-version: 127
+          include-chromedriver: true
+
+      - name: Replace built-in Chrome
+        run: |
+          sudo ln -sf ${{ steps.setup-chrome.outputs.chrome-path }} /usr/bin/google-chrome
+          sudo ln -sf ${{ steps.setup-chrome.outputs.chromedriver-path }} /usr/bin/chromedriver
 
       - name: Set up test database
         run: |
