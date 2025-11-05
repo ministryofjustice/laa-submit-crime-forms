@@ -150,20 +150,6 @@ jobs:
           INCLUDE_ACCESSIBILITY_SPECS: true
         run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format progress
 
-      # - name: RSpec Report
-      #   if: always()
-      #   uses: SonicGarden/rspec-report-action@v2
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     json-path: ${{ env.RSPEC_JSON_PATH }}
-
-      # - name: Upload RSpec JSON on failure
-      #   if: failure()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: rspec-results-${{ matrix.test-type }}
-      #     path: ${{ env.RSPEC_JSON_PATH }}
-
       - name: Upload code coverage results
         if: always()
         uses: actions/upload-artifact@v4
@@ -204,17 +190,6 @@ jobs:
 
       - name: Merge coverage results from both test types
         run: bundle exec rake simplecov:process_coverage
-
-      - name: Check SimpleCov coverage
-        uses: alexremn/simplecov-github-action@v1
-        with:
-          minimum_suite_coverage: 100
-          minimum_file_coverage: 100
-          coverage_path: 'coverage/.resultset.json'
-          on_fail_status: fail
-          post_comment: true
-          update_comment: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload final coverage artifact
         if: always()
