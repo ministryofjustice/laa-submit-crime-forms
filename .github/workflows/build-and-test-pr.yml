@@ -100,6 +100,7 @@ jobs:
       BASE_DATABASE_HOST: localhost
       BASE_DATABASE_USERNAME: postgres
       BASE_DATABASE_PASSWORD: postgres
+      RSPEC_JSON_PATH: tmp/rspec-results-${{ matrix.test-type }}.json
     services:
       postgres:
         image: postgres:13.12
@@ -147,14 +148,21 @@ jobs:
         env:
           RUBYOPT: -W:no-deprecated
           INCLUDE_ACCESSIBILITY_SPECS: true
-        run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format json --out tmp/rspec_results.json
+        run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format json --out $RSPEC_JSON_PATH
 
       - name: RSpec Report
         if: always()
         uses: SonicGarden/rspec-report-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          json-path: tmp/rspec_results.json
+          json-path: ${{ env.RSPEC_JSON_PATH }}
+
+      - name: Upload RSpec JSON on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rspec-results-${{ matrix.test-type }}
+          path: ${{ env.RSPEC_JSON_PATH }}
 
       - name: Upload code coverage results
         if: always()
