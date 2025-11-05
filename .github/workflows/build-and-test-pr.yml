@@ -148,21 +148,21 @@ jobs:
         env:
           RUBYOPT: -W:no-deprecated
           INCLUDE_ACCESSIBILITY_SPECS: true
-        run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format json --out $RSPEC_JSON_PATH
+        run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format progress
 
-      - name: RSpec Report
-        if: always()
-        uses: SonicGarden/rspec-report-action@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          json-path: ${{ env.RSPEC_JSON_PATH }}
+      # - name: RSpec Report
+      #   if: always()
+      #   uses: SonicGarden/rspec-report-action@v2
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     json-path: ${{ env.RSPEC_JSON_PATH }}
 
-      - name: Upload RSpec JSON on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: rspec-results-${{ matrix.test-type }}
-          path: ${{ env.RSPEC_JSON_PATH }}
+      # - name: Upload RSpec JSON on failure
+      #   if: failure()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: rspec-results-${{ matrix.test-type }}
+      #     path: ${{ env.RSPEC_JSON_PATH }}
 
       - name: Upload code coverage results
         if: always()
