@@ -7,8 +7,4 @@ class HomeController < ApplicationController
   end
 
   def dev_login; end
-
-  def uncovered
-    render plain: 'I am not covered'
-  end
 end
