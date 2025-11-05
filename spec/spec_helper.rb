@@ -3,6 +3,7 @@ require 'simplecov-console'
 require 'webmock/rspec'
 
 SimpleCov.formatter = SimpleCov::Formatter::Console if ENV['TEST_ENV_NUMBER']
+SimpleCov.enable_for_subprocesses true
 
 SimpleCov.use_merging true
 SimpleCov.merge_timeout 3600

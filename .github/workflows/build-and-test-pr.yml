@@ -139,13 +139,15 @@ jobs:
           yarn build:css
 
       - name: Set up test database
-        run: bundle exec rails db:setup
+        run: |
+          bundle exec rails db:setup
+          bundle exec flatware fan rails db:test:prepare
 
       - name: Run RSpec ${{ matrix.test-type }} tests
         env:
           RUBYOPT: -W:no-deprecated
           INCLUDE_ACCESSIBILITY_SPECS: true
-        run: bundle exec rspec --tag ${{ matrix.tag }} --format json --out tmp/rspec_results.json --format progress
+        run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format json --out tmp/rspec_results.json
 
       - name: RSpec Report
         if: always()
