@@ -81,12 +81,22 @@ jobs:
           yamllint /tmp/helm-output.yaml -f github
 
   test:
-    name: RSpec tests
+    name: RSpec ${{ matrix.test-type }} tests
     runs-on: ubuntu-latest
     permissions:
       contents: read
       checks: write
       pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - test-type: "non-system"
+            tag: "~type:system"
+            needs-chrome: false
+          - test-type: "system"
+            tag: "type:system"
+            needs-chrome: true
     env:
       BASE_DATABASE_HOST: localhost
       BASE_DATABASE_USERNAME: postgres
@@ -129,28 +139,16 @@ jobs:
           yarn build
           yarn build:css
 
-      - name: Install Chrome for system tests
-        id: setup-chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: 127
-          install-chromedriver: true
-
-      - name: Replace built-in Chrome
-        run: |
-          sudo ln -sf ${{ steps.setup-chrome.outputs.chrome-path }} /usr/bin/google-chrome
-          sudo ln -sf ${{ steps.setup-chrome.outputs.chromedriver-path }} /usr/bin/chromedriver
-
       - name: Set up test database
         run: |
           bundle exec rails db:setup
           bundle exec flatware fan rails db:test:prepare
 
-      - name: Run RSpec tests
+      - name: Run RSpec ${{ matrix.test-type }} tests
         env:
           RUBYOPT: -W:no-deprecated
           INCLUDE_ACCESSIBILITY_SPECS: true
-        run: bundle exec flatware rspec --format json --out tmp/rspec_results.json --format progress
+        run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format json --out tmp/rspec_results.json --format progress
 
       - name: RSpec Report
         if: always()
@@ -178,7 +176,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Capybara screenshots (on test failure)
-        if: failure()
+        if: failure() && matrix.needs-chrome == true
         uses: actions/upload-artifact@v4
         with:
           name: capybara-screenshots
