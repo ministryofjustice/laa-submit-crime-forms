@@ -16,23 +16,37 @@ if ENV['CI']
         end
       rescue SystemExit => e
         # Coverage check failed - write summary to GitHub step summary and annotate uncovered lines
-        result = SimpleCov::Result.from_hash(JSON.parse(File.read('coverage/.resultset.json')))
+        resultset = JSON.parse(File.read('coverage/.resultset.json'))
 
-        summary = "## Coverage Report\n"
-        summary += "- Line coverage: #{format('%.2f', result.line_coverage)}%\n"
-        summary += "- Branch coverage: #{format('%.2f', result.branch_coverage)}%\n"
+        # Flatten all coverage data from all subprocess results
+        all_coverage = {}
+        resultset.each do |_source, data|
+          all_coverage.merge!(data['coverage'])
+        end
 
-        File.write(ENV.fetch('GITHUB_STEP_SUMMARY', nil), summary, mode: 'a')
+        # Annotate uncovered line ranges
+        all_coverage.each do |file_path, file_data|
+          next unless file_data['lines']
 
-        # Annotate uncovered lines
-        result.files.each do |file_path, file_coverage|
-          next unless file_coverage.lines
+          relative_path = file_path.sub(%r{^\./}, '')
+          range_start = nil
 
-          file_coverage.lines.each_with_index do |coverage, line_index|
-            next if coverage.nil? || coverage > 0
+          file_data['lines'].each_with_index do |coverage, line_index|
+            is_uncovered = coverage.nil? ? false : coverage == 0
 
-            relative_path = file_path.sub(%r{^\./}, '')
-            puts "::error file=#{relative_path},line=#{line_index + 1}::Line not covered"
+            if is_uncovered
+              range_start ||= line_index + 1
+            elsif range_start
+              # End of uncovered range
+              puts "::error file=#{relative_path},line=#{range_start},endLine=#{line_index},title=Uncovered lines::Lines #{range_start}-#{line_index} are not covered by tests"
+              range_start = nil
+            end
+          end
+
+          # Handle uncovered range at end of file
+          if range_start
+            last_line = file_data['lines'].length
+            puts "::error file=#{relative_path},line=#{range_start},endLine=#{last_line},title=Uncovered lines::Lines #{range_start}-#{last_line} are not covered by tests"
           end
         end
 
