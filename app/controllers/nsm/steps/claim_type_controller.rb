@@ -9,9 +9,9 @@ module Nsm
         @form_object = ClaimTypeForm.new(permitted_params)
         case @form_object.claim_type
         when ClaimType::NON_STANDARD_MAGISTRATE
-          redirect_to new_nsm_steps_details_path(StartPage::NEW_RECORD)
+          redirect_to new_nsm_steps_details_path(claim_id)
         when ClaimType::BREACH_OF_INJUNCTION
-          redirect_to new_nsm_steps_boi_details_path(StartPage::NEW_RECORD)
+          redirect_to new_nsm_steps_boi_details_path(claim_id)
         when ClaimType::SUPPLEMENTAL
           redirect_to nsm_applications_steps_supplemental_claim_path
         else
@@ -25,6 +25,10 @@ module Nsm
         params
           .fetch(ClaimTypeForm.model_name.singular, {})
           .permit(ClaimTypeForm.attribute_names)
+      end
+
+      def claim_id
+        params[:id] || StartPage::NEW_RECORD
       end
     end
   end
