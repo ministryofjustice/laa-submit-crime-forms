@@ -46,10 +46,14 @@ spec:
             httpGet:
               path: /ping
               port: http
+            initialDelaySeconds: 20
+            periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /ready
               port: http
+            initialDelaySeconds: 20
+            periodSeconds: 30
           resources:
             {{- toYaml .Values.app_resources | nindent 12 }}
           lifecycle:
