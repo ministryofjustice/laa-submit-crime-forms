@@ -23,7 +23,7 @@ module Search
         when 'granted'
           %w[granted auto_grant]
         when 'submitted'
-          %w[not_assigned in_progriess]
+          %w[not_assigned in_progress]
         else
           filters[:state].presence
         end
