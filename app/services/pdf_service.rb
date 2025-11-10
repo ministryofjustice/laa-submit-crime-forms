@@ -31,7 +31,11 @@ class PdfService
     end
 
     def html_to_pdf(html, display_url)
-      Grover.new(html, **GROVER_OPTIONS, display_url:, style_tag_options:).to_pdf
+      Grover.new(html,
+                 **GROVER_OPTIONS,
+                 display_url: display_url,
+                 style_tag_options: style_tag_options,
+                 debug: { headless: 'shell' }).to_pdf
     end
 
     private
