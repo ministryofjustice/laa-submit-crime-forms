@@ -97,7 +97,7 @@ jobs:
         with:
           version: '3.7.2'
 
-      - name: Deploy feature branch to dev environment
+      - name: Deploy to ${{ matrix.env }} environment
         env:
           CIRCLE_BRANCH: ${{ github.head_ref }}
           CIRCLE_SHA1: ${{ github.sha }}
@@ -137,7 +137,7 @@ jobs:
         with:
           version: '3.7.2'
 
-      - name: Deploy feature branch to prod environment
+      - name: Deploy branch to production environment
         env:
           CIRCLE_BRANCH: ${{ github.head_ref }}
           CIRCLE_SHA1: ${{ github.sha }}
