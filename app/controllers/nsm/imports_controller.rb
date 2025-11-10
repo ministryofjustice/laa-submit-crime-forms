@@ -62,11 +62,11 @@ module Nsm
       claim.save
 
       if claim.claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s
-        redirect_to edit_nsm_steps_details_path(claim.id), flash: { success: build_message(claim) }
+        redirect_to edit_nsm_steps_details_path(claim), flash: { success: build_message(claim) }
       elsif claim.claim_type == ClaimType::BREACH_OF_INJUNCTION.to_s
-        redirect_to edit_nsm_steps_boi_details_path(claim.id), flash: { success: build_message(claim) }
+        redirect_to edit_nsm_steps_boi_details_path(claim), flash: { success: build_message(claim) }
       else
-        redirect_to nsm_applications_steps_claim_type_path(claim.id), flash: { success: build_message(claim) }
+        redirect_to edit_nsm_steps_claim_type_path(claim), flash: { success: build_message(claim) }
       end
     end
 

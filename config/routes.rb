@@ -80,8 +80,6 @@ Rails.application.routes.draw do
 
     resources :offences, only: [:index], format: :js
 
-    get '/applications/steps/claim_type', to: 'steps/claim_type#edit'
-    put '/applications/steps/claim_type', to: 'steps/claim_type#update'
     get '/applications/steps/supplemental_claim', to: 'steps/supplemental_claim#show'
 
     scope 'applications/:id' do
@@ -91,6 +89,7 @@ Rails.application.routes.draw do
       get '/steps/start_page', to: 'steps/start_page#show', as: 'after_commit'
 
       namespace :steps do
+        resources :claim_type, only: [:new, :edit, :update]
         resource :boi_details, only: [:new, :edit, :update]
         resource :details, only: [:new, :edit, :update]
         edit_step :nsm_details

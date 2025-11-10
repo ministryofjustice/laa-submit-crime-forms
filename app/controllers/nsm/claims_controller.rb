@@ -7,6 +7,7 @@ module Nsm
 
     before_action :set_scope, only: %i[submitted draft]
     before_action :set_default_table_sort_options
+    before_action :set_new_record
 
     def index
       @notification_banner = NotificationBanner.active_banner
@@ -62,6 +63,10 @@ module Nsm
     }.freeze
 
     private
+
+    def set_new_record
+      @new_record = StartPage::NEW_RECORD
+    end
 
     def row_headers(opts = { include_laa_ref: true })
       if opts[:include_laa_ref]
