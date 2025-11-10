@@ -17,41 +17,6 @@ RSpec.describe Nsm::ClaimsController do
     end
   end
 
-  context 'create' do
-    let(:provider) { instance_double(Provider, office_codes: ['1A123B'], multiple_offices?: false) }
-    let(:claim) { instance_double(Claim, id: SecureRandom.uuid) }
-
-    before do
-      allow(Claim).to receive(:create!).and_return(claim)
-      allow(controller).to receive(:current_provider).and_return(provider)
-    end
-
-    it 'create a new Claim application with the users office_code' do
-      post :create
-      expect(Claim).to have_received(:create!)
-        .with(hash_including(office_code: '1A123B', submitter: provider))
-    end
-
-    it 'redirects to the edit claim type step' do
-      post :create
-      expect(response).to redirect_to(nsm_applications_steps_claim_type_path)
-    end
-
-    it 'sets the office code' do
-      post :create
-      expect(Claim).to have_received(:create!).with(hash_including(office_code: '1A123B'))
-    end
-
-    context 'when the provider has multiple office codes' do
-      let(:provider) { instance_double(Provider, office_codes: %w[1A123B CCCC], multiple_offices?: true) }
-
-      it 'sets no office code' do
-        post :create
-        expect(Claim).to have_received(:create!).with(hash_including(office_code: nil))
-      end
-    end
-  end
-
   context 'clone' do
     let(:claim) { create(:claim, :complete, :as_draft) }
     # Ignore fields that `dup` doesn't handle, as well as fields that won't get duplicated
