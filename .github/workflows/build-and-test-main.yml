@@ -36,7 +36,7 @@ jobs:
       - name: Build Docker image and push to ECR
         id: build
         run: |
-          IMAGE_TAG="branch-${{ github.sha }}"
+          IMAGE_TAG="main-${{ github.sha }}"
           echo "image-tag=${IMAGE_TAG}" >> $GITHUB_OUTPUT
 
           ECR_IMAGE=${{ secrets.ECR_REGISTRY_URL }}/${{ vars.SUBMIT_DEV_ECR_REPOSITORY }}
@@ -50,7 +50,7 @@ jobs:
             --file Dockerfile .
 
           docker push ${ECR_IMAGE}:${IMAGE_TAG}
-          
+
   deploy-dev-uat:
     name: Deploy branch to ${{ matrix.env }}
     runs-on: ubuntu-latest
