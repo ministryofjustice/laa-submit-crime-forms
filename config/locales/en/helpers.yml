@@ -186,7 +186,7 @@ en:
           'no': 'No, another office is handling this application'
       nsm_steps_claim_type_form:
         ufn: What is your unique file number (UFN)?
-        cntp_order: Clients CNTP (contempt) number
+        cntp_order: Client's CNTP (contempt) number
 
       nsm_steps_firm_details_form:
         firm_office_attributes:
