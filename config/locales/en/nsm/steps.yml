@@ -2,7 +2,7 @@
 en:
   nsm:
     steps:
-      claim_type:
+      claim_types:
         edit:
           page_title: What you are claiming for
           heading: What do you want to claim?

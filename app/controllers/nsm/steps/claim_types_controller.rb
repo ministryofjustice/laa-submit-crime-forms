@@ -1,6 +1,6 @@
 module Nsm
   module Steps
-    class ClaimTypeController < ApplicationController
+    class ClaimTypesController < ApplicationController
       def new
         @form_object = ClaimTypeForm.new
         render :edit
