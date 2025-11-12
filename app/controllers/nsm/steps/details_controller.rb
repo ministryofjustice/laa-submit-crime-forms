@@ -13,7 +13,7 @@ module Nsm
       end
 
       def update
-        update_and_advance(DetailsForm, as: :details)
+        update_and_advance(DetailsForm, as: :details, initialize: true)
       end
 
       def current_application
