@@ -30,7 +30,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -51,7 +51,7 @@ jobs:
         environment: [dev, uat, prod]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Helm
         uses: azure/setup-helm@v4
@@ -118,7 +118,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -126,7 +126,7 @@ jobs:
           bundler-cache: true
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -152,7 +152,7 @@ jobs:
 
       - name: Upload code coverage results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: coverage-results-${{ matrix.test-type }}
           path: coverage
@@ -160,7 +160,7 @@ jobs:
 
       - name: Upload Capybara screenshots (on test failure)
         if: failure() && matrix.needs-chrome == true
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: capybara-screenshots
           path: tmp/capybara
@@ -175,7 +175,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -183,7 +183,7 @@ jobs:
           bundler-cache: true
 
       - name: Download coverage results from all test types
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           pattern: coverage-results-*
           path: coverage_results
@@ -193,7 +193,7 @@ jobs:
 
       - name: Upload final coverage artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: coverage-final
           path: coverage
@@ -214,7 +214,7 @@ jobs:
       image-tag: ${{ steps.build.outputs.image-tag }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Configure AWS credentials for ECR access
         uses: ministryofjustice/laa-reusable-github-actions/.github/actions/ecr-auth@e5500aa20b13a1406fe8a62b8788181a2ca18926
@@ -255,7 +255,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Configure AWS credentials for ECR access
         uses: ministryofjustice/laa-reusable-github-actions/.github/actions/ecr-auth@e5500aa20b13a1406fe8a62b8788181a2ca18926
@@ -276,7 +276,7 @@ jobs:
           exit-code: '0'
 
       - name: Upload filesystem scan results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-fs-results.sarif'
@@ -294,7 +294,7 @@ jobs:
           exit-code: '0'
 
       - name: Upload Docker image scan results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-image-results.sarif'
@@ -312,7 +312,7 @@ jobs:
           exit-code: '0'
 
       - name: Upload config scan results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-config-results.sarif'
@@ -330,7 +330,7 @@ jobs:
       ECR_IMAGE: ${{ secrets.ECR_REGISTRY_URL}}/${{ vars.SUBMIT_DEV_ECR_REPOSITORY}}:${{ needs.build.outputs.image-tag }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -357,7 +357,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Upload results to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: snyk_sarif
 
@@ -393,7 +393,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Authenticate to the cluster
         uses: ministryofjustice/laa-reusable-github-actions/.github/actions/authenticate_to_cluster@2aa2676c3cd9876ec7037ee8b3d729d0306cb7c6
