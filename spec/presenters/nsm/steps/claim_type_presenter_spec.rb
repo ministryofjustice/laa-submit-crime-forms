@@ -26,7 +26,8 @@ RSpec.describe Nsm::Tasks::ClaimType, type: :system do
   let(:office_code) { '12356' }
 
   describe '#path' do
-    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/claim_type") }
+    let(:claim_type) { 'non_standard_magistrate' }
+    it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/details/edit") }
   end
 
   describe '#not_applicable?' do
