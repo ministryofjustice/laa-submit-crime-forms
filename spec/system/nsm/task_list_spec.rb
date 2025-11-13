@@ -6,10 +6,10 @@ RSpec.describe 'Task list', :stub_app_store_search, :stub_oauth_token do
     visit provider_entra_id_omniauth_callback_path
     click_on "Claim non-standard magistrates' court payments, previously CRM7"
     click_on 'Start a new claim'
-    
+
     # Claim type
     choose "Non-standard magistrates' court payment"
-    click_on "Save and continue"
+    click_on 'Save and continue'
     fill_in 'What is your unique file number (UFN)?', with: '120223/001'
     fill_in 'Day', with: '20'
     fill_in 'Month', with: '4'
