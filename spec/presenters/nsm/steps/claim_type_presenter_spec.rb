@@ -27,6 +27,7 @@ RSpec.describe Nsm::Tasks::ClaimType, type: :system do
 
   describe '#path' do
     let(:claim_type) { 'non_standard_magistrate' }
+
     it { expect(subject.path).to eq("/non-standard-magistrates/applications/#{id}/steps/details/edit") }
   end
 

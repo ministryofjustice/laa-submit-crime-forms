@@ -13,7 +13,7 @@ module Nsm
       end
 
       def update
-        params[:boi_details] = true
+        params[:initialize] = true
         update_and_advance(BoiDetailsForm, as: :boi_details)
       end
 
