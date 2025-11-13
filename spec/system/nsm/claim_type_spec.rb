@@ -74,5 +74,11 @@ RSpec.describe 'User can fill in claim type details', :stub_app_store_search, :s
       click_on 'Back'
       expect(page).to have_content 'What do you want to claim?'
     end
+
+    it 'reloads page with error when no option selected' do
+      click_on 'Save and continue'
+      expect(page).to have_content 'What do you want to claim?'
+      expect(page).to have_content 'Please select a claim type'
+    end
   end
 end

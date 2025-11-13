@@ -1,11 +1,6 @@
 module Nsm
   module Steps
     class BoiDetailsController < Nsm::Steps::BaseController
-      def new
-        @form_object = BoiDetailsForm.new
-        render :edit
-      end
-
       def edit
         @form_object = BoiDetailsForm.build(
           current_application
