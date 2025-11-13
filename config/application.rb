@@ -59,5 +59,20 @@ module Crm7restbackend
     # The maximum period of inactivity before a user is
     # automatically signed out.
     config.x.auth.timeout_in = 1.hour
+
+    if defined?(LogStasher::Railtie)
+      # Rails 8+ enforces unique initializer names. LogStasher 2.1.5 registers two
+      # ':logstasher' initializers, causing a dependency cycle (TSort::Cyclic).
+      # We rename the second one to break the cycle until the gem is updated
+      #
+      # https://github.com/shadabahmed/logstasher/pull/187
+      LogStasher::Railtie.instance.initializers.each do |initializer|
+        # Look for the second, dependent initializer
+        next unless initializer.name == :logstasher && initializer.after == :logstasher
+
+        # Rename it to something unique like :logstasher_after
+        initializer.instance_variable_set(:@name, :logstasher_after)
+      end
+    end
   end
 end
