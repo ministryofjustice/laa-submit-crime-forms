@@ -4,6 +4,7 @@ module Nsm
       skip_before_action :update_viewed_steps, :prune_viewed_steps
 
       def show
+        @new_record = StartPage::NEW_RECORD
         @laa_reference = current_application.laa_reference
       end
 
