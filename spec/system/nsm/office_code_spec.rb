@@ -19,6 +19,8 @@ RSpec.describe 'Office code selection', type: :system do
       fill_in 'Day', with: '01'
       fill_in 'Month', with: '02'
       fill_in 'Year', with: '2003'
+
+      click_on 'Save and continue'
     end
 
     context 'when the provider has multiple office codes' do
@@ -29,18 +31,15 @@ RSpec.describe 'Office code selection', type: :system do
       let(:office_codes) { %w[1A123B 1K022G] }
 
       it 'prompts me to choose an office code' do
-        click_on 'Save and continue'
         expect(page).to have_content office_code_question
       end
 
       it "validates if I don't make a selection" do
         click_on 'Save and continue'
-        click_on 'Save and continue'
         expect(page).to have_content 'Select your firm office account number'
       end
 
       it 'Saves my choice' do
-        click_on 'Save and continue'
         choose '1A123B'
         click_on 'Save and continue'
         expect(page).to have_content 'Was this case worked on in an office in an undesignated area?'
@@ -53,7 +52,6 @@ RSpec.describe 'Office code selection', type: :system do
       let(:office_codes) { %w[1A123B] }
 
       it 'skips the office code screen and goes straight to office area' do
-        click_on 'Save and continue'
         expect(page).to have_content 'Was this case worked on in an office in an undesignated area?'
       end
     end
@@ -68,6 +66,8 @@ RSpec.describe 'Office code selection', type: :system do
       fill_in 'Day', with: '01'
       fill_in 'Month', with: '02'
       fill_in 'Year', with: '2003'
+
+      click_on 'Save and continue'
     end
 
     context 'when the provider has multiple office codes' do
@@ -76,7 +76,6 @@ RSpec.describe 'Office code selection', type: :system do
       let(:office_codes) { %w[1A123B 1K022G] }
 
       it 'saves my answer and forwards me on to the task list' do
-        click_on 'Save and continue'
         choose '1A123B'
         click_on 'Save and continue'
         expect(page).to have_content 'Your claim progress'
@@ -89,7 +88,6 @@ RSpec.describe 'Office code selection', type: :system do
       let(:office_codes) { %w[1A123B] }
 
       it 'skips the office code screen and goes straight to task list' do
-        click_on 'Save and continue'
         expect(page).to have_content 'Your claim progress'
       end
     end
