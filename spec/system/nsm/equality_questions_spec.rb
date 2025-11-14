@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User can manage work items', type: :system do
-  let(:claim) { create(:claim) }
+  let(:claim) { create(:claim, claim_type: 'non_standard_magistrate') }
 
   before do
     visit provider_entra_id_omniauth_callback_path

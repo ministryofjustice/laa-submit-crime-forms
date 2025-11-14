@@ -23,7 +23,7 @@ module Nsm
           work_after_row,
           work_completed_row,
           wasted_costs_row,
-        ].flatten
+        ].compact.flatten
       end
 
       private
@@ -42,19 +42,21 @@ module Nsm
         }
       end
 
-      def number_of_witnesses_row
-        {
-          head_key: 'number_of_witnesses',
-          text: check_missing(claim.number_of_witnesses)
-        }
-      end
-
       def supplemental_claim_row
+        return if claim.supplemental_claim.nil?
+
         {
           head_key: 'supplemental_claim',
           text: check_missing(claim.supplemental_claim.present?) do
                   claim.supplemental_claim.capitalize
                 end
+        }
+      end
+
+      def number_of_witnesses_row
+        {
+          head_key: 'number_of_witnesses',
+          text: check_missing(claim.number_of_witnesses)
         }
       end
 

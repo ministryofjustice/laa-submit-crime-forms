@@ -62,7 +62,7 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
 
   context 'when all supporting evidence required options chosen' do
     before do
-      claim.update!(assigned_counsel: 'yes', remitted_to_magistrate: 'yes', supplemental_claim: 'yes')
+      claim.update!(assigned_counsel: 'yes', remitted_to_magistrate: 'yes')
       claim.disbursements.first.update!(prior_authority: 'yes')
 
       visit provider_entra_id_omniauth_callback_path
@@ -75,14 +75,13 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
         .and have_content('If you do not upload this evidence, it might take longer to assess your claim.')
         .and have_content('CRM8 form')
         .and have_content('evidence of remittal')
-        .and have_content('evidence of supplemental claim')
         .and have_content('prior authority certification')
     end
   end
 
   context 'when no supporting evidence required options chosen' do
     before do
-      claim.update!(assigned_counsel: 'no', remitted_to_magistrate: 'no', supplemental_claim: 'no', wasted_costs: 'no')
+      claim.update!(assigned_counsel: 'no', remitted_to_magistrate: 'no', wasted_costs: 'no')
       claim.disbursements.map { |d| d.update!(prior_authority: 'no') }
 
       visit provider_entra_id_omniauth_callback_path

@@ -25,7 +25,6 @@ module Nsm
         @items = []
         @items << li_crm8_form_link if assigned_counsel?
         @items << li_for_translation('remittal') if remitted_to_magistrate?
-        @items << li_for_translation('supplemental') if supplemental_claim?
         @items << li_for_translation('authority') if any_prior_authority?
         @items << li_for_translation('wasted_costs') if wasted_costs?
         @items
@@ -58,10 +57,6 @@ module Nsm
 
       def remitted_to_magistrate?
         claim.remitted_to_magistrate == 'yes'
-      end
-
-      def supplemental_claim?
-        claim.supplemental_claim == 'yes'
       end
 
       def any_prior_authority?

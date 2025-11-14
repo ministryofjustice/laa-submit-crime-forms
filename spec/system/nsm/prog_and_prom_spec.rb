@@ -5,18 +5,17 @@ RSpec.describe 'Prog/prom calculation', :stub_app_store_search, :stub_oauth_toke
     visit provider_entra_id_omniauth_callback_path
     click_on "Claim non-standard magistrates' court payments, previously CRM7"
     click_on 'Start a new claim'
-    fill_in 'What is your unique file number (UFN)?', with: '120223/001'
   end
 
   context 'when I claim for breach of injunction' do
     before do
       choose 'Breach of injunction'
-      fill_in 'Clients CNTP (contempt) number', with: '123456'
-      within('.govuk-radios__conditional', text: 'Date the CNTP rep order was issued') do
-        fill_in 'Day', with: '20'
-        fill_in 'Month', with: '4'
-        fill_in 'Year', with: '2023'
-      end
+      click_on 'Save and continue'
+      fill_in 'What is your unique file number (UFN)?', with: '120223/001'
+      fill_in "Client's CNTP (contempt) number", with: '123456'
+      fill_in 'Day', with: '20'
+      fill_in 'Month', with: '4'
+      fill_in 'Year', with: '2023'
       click_on 'Save and continue'
 
       first('.govuk-radios__label').click
@@ -35,11 +34,11 @@ RSpec.describe 'Prog/prom calculation', :stub_app_store_search, :stub_oauth_toke
   context 'when I claim for a court payment' do
     before do
       choose "Non-standard magistrates' court payment"
-      within('.govuk-radios__conditional', text: 'Representation order date') do
-        fill_in 'Day', with: '20'
-        fill_in 'Month', with: '4'
-        fill_in 'Year', with: '2023'
-      end
+      click_on 'Save and continue'
+      fill_in 'What is your unique file number (UFN)?', with: '120223/001'
+      fill_in 'Day', with: '20'
+      fill_in 'Month', with: '4'
+      fill_in 'Year', with: '2023'
 
       click_on 'Save and continue'
 

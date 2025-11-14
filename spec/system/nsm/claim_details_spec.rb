@@ -7,7 +7,6 @@ RSpec.describe 'User can fill in claim details', type: :system do
     visit provider_entra_id_omniauth_callback_path
   end
 
-  # rubocop:disable RSpec/ExampleLength
   it 'can do green path' do
     visit edit_nsm_steps_claim_details_path(claim.id)
 
@@ -15,7 +14,6 @@ RSpec.describe 'User can fill in claim details', type: :system do
     fill_in 'Number of pages of defence statements', with: '2'
     fill_in 'Number of witnesses', with: '3'
 
-    find('.govuk-form-group', text: 'Does this bill represent a supplemental claim?').choose 'Yes'
     find('.govuk-form-group',
          text: 'Did you spend time watching or listening to recorded evidence?').choose 'Yes'
     fill_in 'Hours', with: 10
@@ -44,5 +42,4 @@ RSpec.describe 'User can fill in claim details', type: :system do
       work_completed_date: Date.new(2023, 3, 28),
     )
   end
-  # rubocop:enable RSpec/ExampleLength
 end

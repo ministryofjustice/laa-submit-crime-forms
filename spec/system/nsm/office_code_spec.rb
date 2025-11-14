@@ -8,18 +8,17 @@ RSpec.describe 'Office code selection', type: :system do
     visit provider_entra_id_omniauth_callback_path
     provider.update(office_codes:)
     allow(ActiveOfficeCodeService).to receive(:call).with(office_codes).and_return(office_codes)
-    visit edit_nsm_steps_claim_type_path(claim.id)
+    visit edit_nsm_steps_claim_type_path(claim)
   end
 
   context 'when I complete claim type screen as NSM' do
     before do
-      fill_in 'What is your unique file number (UFN)?', with: '121212/001'
       choose "Non-standard magistrates' court payment"
-      within('.govuk-radios__conditional', text: 'Representation order date') do
-        fill_in 'Day', with: '01'
-        fill_in 'Month', with: '02'
-        fill_in 'Year', with: '2003'
-      end
+      click_on 'Save and continue'
+      fill_in 'What is your unique file number (UFN)?', with: '121212/001'
+      fill_in 'Day', with: '01'
+      fill_in 'Month', with: '02'
+      fill_in 'Year', with: '2003'
 
       click_on 'Save and continue'
     end
@@ -60,14 +59,13 @@ RSpec.describe 'Office code selection', type: :system do
 
   context 'when I complete claim type screen as BOI' do
     before do
-      fill_in 'What is your unique file number (UFN)?', with: '121212/001'
       choose 'Breach of injunction'
-      fill_in 'Clients CNTP (contempt) number', with: 'CNTP1234'
-      within('.govuk-radios__conditional', text: 'Date the CNTP rep order was issued') do
-        fill_in 'Day', with: '01'
-        fill_in 'Month', with: '02'
-        fill_in 'Year', with: '2003'
-      end
+      click_on 'Save and continue'
+      fill_in 'What is your unique file number (UFN)?', with: '121212/001'
+      fill_in "Client's CNTP (contempt) number", with: 'CNTP1234'
+      fill_in 'Day', with: '01'
+      fill_in 'Month', with: '02'
+      fill_in 'Year', with: '2003'
 
       click_on 'Save and continue'
     end

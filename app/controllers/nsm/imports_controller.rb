@@ -1,7 +1,5 @@
 module Nsm
   class ImportsController < ApplicationController
-    include ClaimCreatable
-
     before_action :ensure_params, only: [:create]
 
     def new
@@ -41,6 +39,14 @@ module Nsm
 
     private
 
+    def initialize_application(&block)
+      attributes = {
+        office_code: (current_provider.office_codes.first unless current_provider.multiple_offices?),
+        submitter: current_provider,
+      }
+      Claim.create!(attributes).tap(&block)
+    end
+
     def generate_error_download
       page = render_to_string(
         template: 'nsm/imports/errors',
@@ -61,7 +67,13 @@ module Nsm
       claim.import_date = DateTime.now
       claim.save
 
-      redirect_to edit_nsm_steps_claim_type_path(claim.id), flash: { success: build_message(claim) }
+      if claim.claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s
+        redirect_to edit_nsm_steps_details_path(claim), flash: { success: build_message(claim) }
+      elsif claim.claim_type == ClaimType::BREACH_OF_INJUNCTION.to_s
+        redirect_to edit_nsm_steps_boi_details_path(claim), flash: { success: build_message(claim) }
+      else
+        redirect_to edit_nsm_steps_claim_type_path(claim), flash: { success: build_message(claim) }
+      end
     end
 
     def import_claim(claim, hash, version)

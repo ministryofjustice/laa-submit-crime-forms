@@ -6,8 +6,21 @@ RSpec.describe Decisions::DecisionTree do
   let(:record) { application }
   let(:form) { double(:form, application:, record:) }
 
-  it_behaves_like 'a generic decision', from: :claim_type, goto: { action: :show, controller: 'nsm/steps/start_page' }
   it_behaves_like 'a generic decision', from: :firm_details, goto: { action: :edit, controller: 'nsm/steps/contact_details' }
+
+  context 'non-standard mag claim type' do
+    let(:application) { build(:claim, :case_type_magistrates, id:) }
+
+    it_behaves_like 'a generic decision', from: :details,
+    goto: { action: :edit, controller: 'nsm/steps/office_area' }
+  end
+
+  context 'breach of injunction' do
+    let(:application) { build(:claim, :case_type_breach, id:) }
+
+    it_behaves_like 'a generic decision', from: :boi_details,
+    goto: { action: :show, controller: 'nsm/steps/start_page' }
+  end
 
   context 'no existing defendants' do
     it_behaves_like 'a generic decision', from: :contact_details,

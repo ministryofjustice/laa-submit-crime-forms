@@ -2,14 +2,72 @@
 en:
   nsm:
     steps:
-      claim_type:
+      claim_types:
         edit:
           page_title: What you are claiming for
-          heading: What you are claiming for
-          other_details:
-            line_1: This form can only be used to claim for a Non-standard magistrate or a Breach for injunction payment.
-            line_2: To claim for a Crime Lower standard payment, please use CWA via the LAA online portal.
-            line_3: To claim for a Crime Higher payment, please use CCCD via the CCCD portal.
+          heading: What do you want to claim?
+        update:
+          no_type_selected: Please select a claim type
+      supplemental_claim:
+        show:
+          page_title: Make supplemental claim
+          heading: Supplemental claims
+          sub-heading: How to make supplemental claims for non-standard magistrates court payments.
+          line_1: You must send supplemental claims by email or post.
+          list_heading: 'What to include:'
+          include_list_item_1_html: |
+            a <a href="https://assets.publishing.service.gov.uk/media/67616af9f666d2e4faef3968/crm7-v14-dec-2024.pdf">non-standard magistrates’ court claim form (CRM7)</a>
+          include_list_item_2: a copy of the representation order, plus any new or amended representation orders
+          include_list_item_3: evidence of extra work – for example, file notes or disbursement invoices
+          line_2: 'Include additional information related to how the original claim was made:'
+          email: Email
+          line_3: 'In the email subject put:'
+          email_list_item_1: LAA reference if original was on Portal
+          email_list_item_2: USN if original was on eForms
+          email_list_item_3: Unique file number (UFN) if original was by post
+          post: Post
+          post_address_html: |
+            <p>
+            LAA Magistrates' Billing Team<br>
+            3rd Floor B3.20<br>
+            1 Unity Square<br>
+            Queensbridge Road<br>
+            Nottingham
+            </p>
+          supplemental_link: CRM7supplemental@justice.gov.uk
+          table:
+            original_claim:
+              heading: Original claim
+              row_1: Online (this service)
+              row_2: eForms
+              row_3: Paper
+            additional_info:
+              heading: Additional information
+              row_1_html: |
+                LAA reference<br>All supporting evidence if it’s been more than 6 months
+              row_2_html: |
+                Unique submission number (USN)<br>A copy of the original claim and supporting evidence
+              row_3: A copy of the original claim and supporting evidence
+          claims_link: Back to your claims
+
+      details:
+        edit:
+          page_title: What are you claiming for
+          heading: Non-standard magistrates' court payment
+          ufn: What is your unique file number (UFN)?
+          ufn_hint: For example 310223/001
+          rep_order_date: Representation order date
+          rep_order_hint: For example, 27 03 2025
+      boi_details:
+        edit:
+          page_title: What are you claiming for
+          heading: Breach of injunction
+          ufn: What is your unique file number (UFN)?
+          ufn_hint: For example 310223/001
+          cntp_order: Client's CNTP (contempt) number
+          cntp_order_hint: Must be between 6 and 8 digits long
+          cntp_date: Date the CNTP representation order was issued
+          cntp_date_hint: For example, 27 03 2025
       office_area:
         edit:
           page_title: Was this case worked on in an office in an undesignated area?
@@ -296,7 +354,6 @@ en:
             heading: "Based on your answers, you must upload:"
             crm8: CRM8 form
             remittal: evidence of remittal
-            supplemental: evidence of supplemental claim
             authority: prior authority certification
             wasted_costs: wasted costs court order
           para2:

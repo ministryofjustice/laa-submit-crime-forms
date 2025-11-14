@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'system_helper'
 
 RSpec.describe 'User can see an application status', :stub_app_store_search, :stub_oauth_token, type: :system do
   let(:claim) { create(:claim, :complete, :case_type_breach, ufn: '12122025/001', state: :submitted) }
@@ -23,11 +23,7 @@ RSpec.describe 'User can see an application status', :stub_app_store_search, :st
   end
 
   it 'can start a new claim when clicking on start a new claim button' do
-    expect { click_on 'Start a new claim' }.to change(Claim, :count).by(1)
-    new_claim = Claim.order(:created_at).last
-    expect(page).to have_content('What are you claiming for')
-    expect(new_claim).to have_attributes(
-      state: 'draft',
-    )
+    click_on 'Start a new claim'
+    expect(page).to have_content('What do you want to claim?')
   end
 end

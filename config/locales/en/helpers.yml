@@ -54,10 +54,6 @@ en:
           other: '%{minutes}<span class="govuk-visually-hidden"> minutes</span>'
     missing_data: Incomplete
     legend:
-      nsm_steps_claim_type_form:
-        claim_type: What are you claiming for?
-        rep_order_date: Representation order date
-        cntp_date: Date the CNTP rep order was issued
       nsm_steps_firm_details_form:
         solicitor_details: Solicitor details
       nsm_steps_case_details_form:
@@ -85,7 +81,6 @@ en:
       nsm_steps_claim_details_form:
         claim_details: Claim Details
         number_of_witnesses: Number of Defence witnesses
-        supplemental_claim: Does this bill represent a supplemental claim?
         preparation_time: Did you spend time watching or listening to recorded evidence?
         time_spent: Running time of the recording
         work_before_date: Date you started this work
@@ -143,8 +138,6 @@ en:
         defence_statement: For example the total number of pages of defence evidence including any
           statements by the defendant and defence witnesses
         prosecution_evidence: Where applicable, give the approximate number of pages
-        supplemental_claim_options:
-          'yes': We’ll ask you to upload evidence of this before you submit this claim
         time_spent: For example, 1 hour and 30 minutes
         work_before_date: For example, 27 3 2023
         work_after_date: For example, 27 3 2023
@@ -189,7 +182,7 @@ en:
           'no': 'No, another office is handling this application'
       nsm_steps_claim_type_form:
         ufn: What is your unique file number (UFN)?
-        cntp_order: Clients CNTP (contempt) number
+        cntp_order: Client's CNTP (contempt) number
 
       nsm_steps_firm_details_form:
         firm_office_attributes:
@@ -263,9 +256,6 @@ en:
         prosecution_evidence: Number of pages of prosecution evidence
         defence_statement: Number of pages of defence statements
         number_of_witnesses: Number of witnesses
-        supplemental_claim_options:
-          'yes': 'Yes'
-          'no': 'No'
         preparation_time_options:
           'yes': 'Yes'
           'no': 'No'

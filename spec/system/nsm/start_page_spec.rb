@@ -19,4 +19,13 @@ RSpec.describe 'User can see an application status', type: :system do
       expect(page).to have_content('In progress')
     end
   end
+
+  context 'when claim_type is not set' do
+    let(:claim_type) { nil }
+
+    it 'raises an error when generating the path' do
+      error_msg = "Claim with id: #{claim.id} has an invalid claim type"
+      expect { visit nsm_steps_start_page_path(claim.id) }.to raise_error error_msg
+    end
+  end
 end

@@ -44,18 +44,6 @@ RSpec.describe Nsm::SupportingEvidence::CheckList do
       it { is_expected.not_to include('remittal') }
     end
 
-    context 'with supplemental claim' do
-      before { claim.supplemental_claim = 'yes' }
-
-      it { is_expected.to include('<li>evidence of supplemental claim</li>') }
-    end
-
-    context 'without supplemental claim' do
-      before { claim.supplemental_claim = 'no' }
-
-      it { is_expected.not_to include('supplemental claim') }
-    end
-
     context 'with disbursement with prior authority' do
       before { claim.disbursements.first.update!(prior_authority: 'yes') }
 

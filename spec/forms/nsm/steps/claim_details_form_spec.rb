@@ -9,7 +9,6 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
       prosecution_evidence:,
       defence_statement:,
       number_of_witnesses:,
-      supplemental_claim:,
       preparation_time:,
       time_spent:,
       work_before:,
@@ -26,7 +25,6 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
   let(:prosecution_evidence) { 1 }
   let(:defence_statement) { 2 }
   let(:number_of_witnesses) { 3 }
-  let(:supplemental_claim) { 'yes' }
   let(:preparation_time) { 'yes' }
   let(:work_before) { 'yes' }
   let(:work_after) { 'yes' }
@@ -85,7 +83,6 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
 
   describe '#validations' do
     context 'with nil boolean fields' do
-      let(:supplemental_claim) { nil }
       let(:preparation_time) { nil }
       let(:work_before) { nil }
       let(:work_after) { nil }
@@ -94,13 +91,12 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
 
       it 'they must be present' do
         expect(form).not_to be_valid
-        expect(form.errors).to include(:supplemental_claim, :preparation_time, :work_before, :work_after, :wasted_costs,
+        expect(form.errors).to include(:preparation_time, :work_before, :work_after, :wasted_costs,
                                        :work_completed_date)
       end
     end
 
     context 'with invalid value boolean fields' do
-      let(:supplemental_claim) { 1 }
       let(:preparation_time) { 'y' }
       let(:work_before) { true }
       let(:work_after) { false }
@@ -108,12 +104,11 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
 
       it 'they can only be yes or no' do
         expect(form).not_to be_valid
-        expect(form.errors).to include(:supplemental_claim, :preparation_time, :work_before, :work_after, :wasted_costs)
+        expect(form.errors).to include(:preparation_time, :work_before, :work_after, :wasted_costs)
       end
     end
 
     context 'with valid value boolean fields' do
-      let(:supplemental_claim) { 'yes' }
       let(:preparation_time) { 'yes' }
       let(:work_before) { 'no' }
       let(:work_after) { 'no' }
