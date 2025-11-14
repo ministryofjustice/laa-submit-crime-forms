@@ -7,9 +7,9 @@ module Nsm
 
     before_action :set_scope, only: %i[submitted draft]
     before_action :set_default_table_sort_options
-    before_action :access_placeholder
 
     def index
+      access_placeholder
       @notification_banner = NotificationBanner.active_banner
       @scope = :reviewed
       model = AppStoreListService.reviewed(current_provider, params, service: :nsm)
@@ -19,6 +19,7 @@ module Nsm
     end
 
     def submitted
+      access_placeholder
       model = AppStoreListService.submitted(current_provider, params, service: :nsm)
       @pagy = model.pagy
       @claims = model.rows
@@ -27,6 +28,7 @@ module Nsm
     end
 
     def draft
+      access_placeholder
       @row_headers = row_headers({ include_laa_ref: false })
       @pagy, @claims = order_and_paginate(&:draft)
       render 'index'
