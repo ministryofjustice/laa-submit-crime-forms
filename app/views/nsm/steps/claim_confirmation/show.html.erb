@@ -28,7 +28,7 @@
 
     <div class="govuk-button-group confirmation-button-group">
       <%= link_button t('helpers.view_claims'), nsm_applications_path, class: 'govuk-button' %>
-      <%= button_to edit_nsm_steps_claim_type_path(@new_record), method: :get, class: "govuk-button govuk-button--secondary" do %>
+      <%= button_to edit_nsm_steps_claim_type_path(@placeholder_record_id), method: :get, class: "govuk-button govuk-button--secondary" do %>
         <%= t('helpers.start_new_claim')%>
       <% end %>
     </div>
