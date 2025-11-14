@@ -1,7 +1,5 @@
 module Nsm
   class ImportsController < ApplicationController
-    include ClaimCreatable
-
     before_action :ensure_params, only: [:create]
 
     def new
@@ -40,6 +38,14 @@ module Nsm
     end
 
     private
+
+    def initialize_application(&block)
+      attributes = {
+        office_code: (current_provider.office_codes.first unless current_provider.multiple_offices?),
+        submitter: current_provider,
+      }
+      Claim.create!(attributes).tap(&block)
+    end
 
     def generate_error_download
       page = render_to_string(

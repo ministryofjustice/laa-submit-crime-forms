@@ -4,7 +4,7 @@ module Decisions
     # used to add custom methods to filter/query the data
     WRAPPER_CLASS = CustomWrapper
 
-    NSM_CLAIMS = 'nsm/claims'.freeze
+    NSM_CLAIM_TYPE = 'nsm/steps/claim_types'.freeze
     NSM_DETAILS = 'nsm/steps/details'.freeze
     NSM_BOI_DETAILS = 'nsm/steps/boi_details'.freeze
     NSM_OFFICE_CODE = 'nsm/steps/office_code'.freeze

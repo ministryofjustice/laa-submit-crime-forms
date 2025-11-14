@@ -9,7 +9,7 @@ module Decisions
       .goto(edit: DecisionTree::NSM_DETAILS)
       .when(-> { application.claim_type == ClaimType::BREACH_OF_INJUNCTION.to_s })
       .goto(edit: DecisionTree::NSM_BOI_DETAILS)
-      .goto(index: DecisionTree::NSM_CLAIMS)
+      .goto(edit: DecisionTree::NSM_CLAIM_TYPE)
     from(DecisionTree::NSM_OFFICE_AREA)
       .when(-> { application.submitter.multiple_offices? })
       .goto(edit: DecisionTree::NSM_OFFICE_CODE)
