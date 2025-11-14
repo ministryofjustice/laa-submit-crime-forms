@@ -8,7 +8,6 @@ namespace :CRM457_2738 do
     counter = 0
     draft_claims.each do |claim|
       claim.update!(supplemental_claim: nil)
-      claim.save
       counter += 1
     end
     puts "#{counter} claims reset"
