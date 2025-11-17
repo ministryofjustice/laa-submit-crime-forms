@@ -35,7 +35,7 @@ RSpec.describe Nsm::CheckAnswers::Report do
         it 'has option to change' do
           expect(section[0][:card][:actions]).to include(
             '<a class="govuk-link" ' \
-            "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/claim_type\">Change</a>"
+            "href=\"/non-standard-magistrates/applications/#{claim.id}/steps/claim_type/edit\">Change</a>"
           )
         end
       end

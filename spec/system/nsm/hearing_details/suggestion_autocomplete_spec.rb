@@ -1,7 +1,7 @@
 require 'system_helper'
 
 RSpec.describe 'Test suggestion autocomplete for court', :javascript, type: :system do
-  let(:claim) { create(:claim, :case_details) }
+  let(:claim) { create(:claim, :case_details, claim_type: 'non_standard_magistrate') }
 
   before do
     visit provider_entra_id_omniauth_callback_path

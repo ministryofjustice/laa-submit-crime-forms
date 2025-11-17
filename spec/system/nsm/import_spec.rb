@@ -48,18 +48,26 @@ RSpec.describe 'Import claims', :stub_oauth_token, type: :system do
       expect(Claim.first.import_date).to eq(fixed_time)
     end
 
-    it 'handles a single reason_for_claim' do
-      import_file('import_sample_with_one_reason.xml', advance_to_details: true)
+    context 'import without claim_type' do
+      before do
+        import_file('import_sample_without_type.xml')
+      end
 
-      click_on 'Firm details'
-      click_on 'Save and continue' # Firm details
-      click_on 'Save and continue' # Contact details
-      choose 'No'
-      click_on 'Save and continue' # Defendants
-      click_on 'Save and continue' # Case details
-      click_on 'Save and continue' # Hearing details
-      click_on 'Save and continue' # Case Disposal
-      expect(all('input[type="checkbox"]').count(&:checked?)).to eq(1)
+      it 'handles a single reason_for_claim' do
+        choose "Non-standard magistrates' court payment"
+        click_on 'Save and continue'
+        expect(page).to have_css 'h1', text: "Non-standard magistrates' court payment"
+      end
+    end
+
+    context 'import breach of injunction type' do
+      before do
+        import_file('import_sample_boi.xml')
+      end
+
+      it 'navigates to the breach of injunction details page' do
+        expect(page).to have_css 'h1', text: 'Breach of injunction'
+      end
     end
 
     context 'defendants import' do

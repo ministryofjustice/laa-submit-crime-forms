@@ -1,7 +1,7 @@
 module Nsm
   module Steps
     class ClaimDetailsForm < ::Steps::BaseFormObject
-      BOOLEAN_FIELDS = %i[supplemental_claim preparation_time work_before work_after wasted_costs].freeze
+      BOOLEAN_FIELDS = %i[preparation_time work_before work_after wasted_costs].freeze
 
       attribute :prosecution_evidence, :fully_validatable_integer
       attribute :defence_statement, :fully_validatable_integer

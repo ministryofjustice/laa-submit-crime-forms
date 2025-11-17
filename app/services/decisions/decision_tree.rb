@@ -4,7 +4,9 @@ module Decisions
     # used to add custom methods to filter/query the data
     WRAPPER_CLASS = CustomWrapper
 
-    NSM_CLAIM_TYPE = 'nsm/steps/claim_type'.freeze
+    NSM_CLAIM_TYPE = 'nsm/steps/claim_types'.freeze
+    NSM_DETAILS = 'nsm/steps/details'.freeze
+    NSM_BOI_DETAILS = 'nsm/steps/boi_details'.freeze
     NSM_OFFICE_CODE = 'nsm/steps/office_code'.freeze
     NSM_OFFICE_AREA = 'nsm/steps/office_area'.freeze
     NSM_COURT_AREA = 'nsm/steps/court_area'.freeze
@@ -26,12 +28,15 @@ module Decisions
     NSM_YCF_FEE = 'nsm/steps/youth_court_claim_additional_fee'.freeze
     NSM_REASON_FOR_CLAIM = 'nsm/steps/reason_for_claim'.freeze
 
-    from(:claim_type)
+    from(:boi_details)
       .when(-> { application.submitter.multiple_offices? })
       .goto(edit: NSM_OFFICE_CODE)
-      .when(-> { application.claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s })
-      .goto(edit: NSM_OFFICE_AREA)
       .goto(show: NSM_START_PAGE)
+
+    from(:details)
+      .when(-> { application.submitter.multiple_offices? })
+      .goto(edit: NSM_OFFICE_CODE)
+      .goto(edit: NSM_OFFICE_AREA)
 
     from(:office_code)
       .when(-> { application.claim_type == ClaimType::NON_STANDARD_MAGISTRATE.to_s })

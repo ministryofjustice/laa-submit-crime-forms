@@ -1,7 +1,6 @@
 module Nsm
   class ClaimsController < ApplicationController
     include Searchable
-    include ClaimCreatable
     include Cloneable
 
     layout 'nsm'
@@ -10,6 +9,7 @@ module Nsm
     before_action :set_default_table_sort_options
 
     def index
+      access_placeholder
       @notification_banner = NotificationBanner.active_banner
       @scope = :reviewed
       model = AppStoreListService.reviewed(current_provider, params, service: :nsm)
@@ -18,13 +18,8 @@ module Nsm
       @row_headers = row_headers
     end
 
-    def create
-      initialize_application do |claim|
-        redirect_to edit_nsm_steps_claim_type_path(claim.id)
-      end
-    end
-
     def submitted
+      access_placeholder
       model = AppStoreListService.submitted(current_provider, params, service: :nsm)
       @pagy = model.pagy
       @claims = model.rows
@@ -33,6 +28,7 @@ module Nsm
     end
 
     def draft
+      access_placeholder
       @row_headers = row_headers({ include_laa_ref: false })
       @pagy, @claims = order_and_paginate(&:draft)
       render 'index'
@@ -69,6 +65,10 @@ module Nsm
     }.freeze
 
     private
+
+    def access_placeholder
+      @placeholder_record_id = StartPage::NEW_RECORD
+    end
 
     def row_headers(opts = { include_laa_ref: true })
       if opts[:include_laa_ref]

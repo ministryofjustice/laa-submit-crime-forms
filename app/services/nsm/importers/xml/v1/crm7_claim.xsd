@@ -836,13 +836,6 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="supplemental_claim" type="booleanString" minOccurs="0">
-          <xs:annotation>
-            <xs:appinfo>
-              Whether or not this bill represents a supplemental claim.
-            </xs:appinfo>
-          </xs:annotation>
-        </xs:element>
         <xs:element name="time_spent" type="xs:integer" minOccurs="0">
           <xs:annotation>
             <xs:appinfo>
