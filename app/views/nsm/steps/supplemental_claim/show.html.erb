@@ -1,0 +1,52 @@
+<% title t('.page_title') %>
+<% step_header(path: edit_nsm_steps_claim_type_path(id: @record_id)) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <div class="govuk-body-l"><%= t('.sub-heading') %></div>
+    <div class="govuk-body"><%= t('.line_1') %></div>
+    <div class="govuk-heading-m"><%= t('.list_heading') %></div>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t('.include_list_item_1_html')%></li>
+      <li><%= t('.include_list_item_2')%></li>
+      <li><%= t('.include_list_item_3')%></li>
+    </ul>
+    <p><div class="govuk-body"><%= t('.line_2') %></div></p>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header"><%= t('.table.original_claim.heading') %></th>
+          <th scope="col" class="govuk-table__header"><%= t('.table.additional_info.heading') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= t('.table.original_claim.row_1') %></td>
+          <td class="govuk-table__cell"><%= t('.table.additional_info.row_1_html') %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= t('.table.original_claim.row_2') %></td>
+          <td class="govuk-table__cell"><%= t('.table.additional_info.row_2_html') %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= t('.table.original_claim.row_3') %></td>
+          <td class="govuk-table__cell"><%= t('.table.additional_info.row_3') %></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 class="govuk-heading-m"><%= t('.email') %></h2>
+    <div class="govuk-body">
+      <p><a href="mailto:<%= t('.supplemental_link') %>"><%= t('.supplemental_link') %></a></p>
+      <p><%= t('.line_3') %>
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= t('.email_list_item_1')%></li>
+        <li><%= t('.email_list_item_2')%></li>
+        <li><%= t('.email_list_item_3')%></li>
+      </ul>
+    </div>
+    <h2 class="govuk-heading-m"><%= t('.post') %></h2>
+    <div class="govuk-body"><%= t('.post_address_html') %></div>
+    <p><%= govuk_link_to t('.claims_link'), reviewed_nsm_applications_path %></p>
+  </div>
+</div>

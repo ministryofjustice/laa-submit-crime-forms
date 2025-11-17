@@ -140,10 +140,6 @@ RSpec.describe Nsm::CheckAnswers::ClaimDetailsCard do
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },
             {
-              head_key: 'supplemental_claim',
-              text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
-            },
-            {
               head_key: 'preparation_time',
               text: '<strong class="govuk-tag govuk-tag--red">Incomplete</strong>'
             },

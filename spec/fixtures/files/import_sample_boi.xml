@@ -5,11 +5,12 @@
   <arrest_warrant_date>2024-01-03</arrest_warrant_date>
   <assigned_counsel>no</assigned_counsel>
   <calls>10</calls>
-  <claim_type>non_standard_magistrate</claim_type>
+  <claim_type>breach_of_injunction</claim_type>
+  <cntp_date>2023-12-26</cntp_date>
+  <cntp_order>1234567</cntp_order>
   <concluded>yes</concluded>
   <conclusion>Case concluded due to guilty plea</conclusion>
   <court>Liverpool Magistrates Court</court>
-  <court_in_undesignated_area>yes</court_in_undesignated_area>
   <defence_statement>15</defence_statement>
   <defendants>
     <defendant>
@@ -65,7 +66,6 @@
   <matter_type>1</matter_type>
   <number_of_hearing>3</number_of_hearing>
   <number_of_witnesses>4</number_of_witnesses>
-  <office_in_undesignated_area>yes</office_in_undesignated_area>
   <other_info>Other info</other_info>
   <prosecution_evidence>45</prosecution_evidence>
   <plea>guilty</plea>
@@ -79,7 +79,6 @@
   <representation_order_withdrawn_date>2023-12-25</representation_order_withdrawn_date>
   <remitted_to_magistrate>yes</remitted_to_magistrate>
   <remitted_to_magistrate_date>2023-12-25</remitted_to_magistrate_date>
-  <rep_order_date>2023-12-26</rep_order_date>
   <solicitor>
     <first_name>Mickey</first_name>
     <last_name>Dolenz</last_name>

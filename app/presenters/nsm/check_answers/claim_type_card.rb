@@ -7,7 +7,7 @@ module Nsm
 
       def initialize(claim)
         @group = 'claim_type'
-        @section = 'claim_type'
+        @section = 'claim_types'
         @claim = claim
         @firm_details_form = Nsm::Steps::FirmDetailsForm.build(claim)
         super()

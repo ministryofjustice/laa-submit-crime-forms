@@ -8,13 +8,12 @@ RSpec.describe 'Task list', :stub_app_store_search, :stub_oauth_token do
     click_on 'Start a new claim'
 
     # Claim type
-    fill_in 'What is your unique file number (UFN)?', with: '120223/001'
     choose "Non-standard magistrates' court payment"
-    within('.govuk-radios__conditional', text: 'Representation order date') do
-      fill_in 'Day', with: '20'
-      fill_in 'Month', with: '4'
-      fill_in 'Year', with: '2023'
-    end
+    click_on 'Save and continue'
+    fill_in 'What is your unique file number (UFN)?', with: '120223/001'
+    fill_in 'Day', with: '20'
+    fill_in 'Month', with: '4'
+    fill_in 'Year', with: '2023'
     click_on 'Save and continue'
 
     first('.govuk-radios__label').click

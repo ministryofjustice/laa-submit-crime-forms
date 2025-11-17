@@ -2,7 +2,13 @@ module Nsm
   module Tasks
     class ClaimType < Base
       def path
-        edit_nsm_steps_claim_type_path(application)
+        if application.claim_type == ::ClaimType::NON_STANDARD_MAGISTRATE.to_s
+          edit_nsm_steps_details_path(application)
+        elsif application.claim_type == ::ClaimType::BREACH_OF_INJUNCTION.to_s
+          edit_nsm_steps_boi_details_path(application)
+        else
+          raise "Claim with id: #{application.id} has an invalid claim type"
+        end
       end
 
       def in_progress?
@@ -15,6 +21,10 @@ module Nsm
 
       def completed?
         claim_type_questions_completed? && office_code_questions_completed? && office_area_questions_completed?
+      end
+
+      def previously_visited?
+        application.claim_type.present?
       end
 
       def claim_type_questions_completed?
