@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 replicaCount:
-  app: 1
+  app: 3
   worker: 1
   clamav: 1
 
