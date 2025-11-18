@@ -387,7 +387,7 @@ jobs:
   deploy-feature-branch:
     name: Deploy feature branch to dev
     runs-on: ubuntu-latest
-    needs: [build, snyk-scan, e2e-test, trivy-scan, coverage]
+    needs: [build, snyk-scan, trivy-scan, coverage]
     permissions:
       id-token: write
       contents: read
