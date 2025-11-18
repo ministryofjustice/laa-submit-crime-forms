@@ -49,7 +49,7 @@ jobs:
             --tag ${ECR_IMAGE}:${IMAGE_TAG} \
             --file Dockerfile .
 
-          docker push ${ECR_IMAGE}:${IMAGE_TAG}
+          docker push ${ECR_IMAGE} --all-tags
 
   deploy-dev-uat:
     name: Deploy branch to ${{ matrix.env }}
