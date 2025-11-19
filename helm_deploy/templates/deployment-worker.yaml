@@ -48,12 +48,14 @@ spec:
               port: {{ .Values.service.workerPort }}
             initialDelaySeconds: 20
             periodSeconds: 30
+            timeoutSeconds: 10
           readinessProbe:
             httpGet:
               path: /
               port: {{ .Values.service.workerPort }}
             initialDelaySeconds: 20
             periodSeconds: 30
+            timeoutSeconds: 10
           resources:
             {{- toYaml .Values.worker_resources | nindent 12 }}
           env:
