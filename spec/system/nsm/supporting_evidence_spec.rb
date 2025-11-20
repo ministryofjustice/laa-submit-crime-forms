@@ -1,7 +1,8 @@
 require 'system_helper'
 
 RSpec.describe 'User can provide supporting evidence', type: :system do
-  let(:claim) { create(:claim, :case_type_magistrates, :complete) }
+  let(:claim) { create(:claim, :case_type_magistrates, :complete, gdpr_documents_deleted:) }
+  let(:gdpr_documents_deleted) { true }
 
   context 'when postal evidence feature is enabled' do
     before do
@@ -56,6 +57,16 @@ RSpec.describe 'User can provide supporting evidence', type: :system do
       it 'validates' do
         click_on 'Save and continue'
         expect(page).to have_content 'Select a file to upload'
+      end
+    end
+
+    context 'when files have been deleted due to gdpr' do
+      let(:gdpr_documents_deleted) { true }
+
+      it 'shows flash indicating provider needs to check supporting evidence once' do
+        expect(page).to have_content('Your uploaded files have been deleted because there was no activity')
+        click_on 'Save and continue'
+        expect(page).not_to have_content('Your uploaded files have been deleted because there was no activity')
       end
     end
   end
