@@ -8,8 +8,8 @@ RSpec.describe Nsm::Steps::SupportingEvidenceForm do
       send_by_post:
     }
   end
-
-  let(:application) { instance_double(Claim, update!: true) }
+  let(:application) { build(:claim) }
+  let(:gdpr_documents_deleted) { false }
 
   context 'when send_by_post is yes' do
     let(:send_by_post) { 'yes' }
@@ -31,7 +31,13 @@ RSpec.describe Nsm::Steps::SupportingEvidenceForm do
     end
 
     context 'when there is already supporting evidence' do
-      let(:application) { instance_double(Claim, supporting_evidence: [:something], update!: true) }
+      let(:application) do
+        build(
+          :claim,
+          :with_evidence,
+          gdpr_documents_deleted:
+        )
+      end
 
       it 'is valid' do
         expect(form).to be_valid
@@ -39,6 +45,15 @@ RSpec.describe Nsm::Steps::SupportingEvidenceForm do
 
       it 'saves the form' do
         expect(form.save).to be_truthy
+      end
+
+      context 'when the gdpr_documents_deleted is true' do
+        let(:gdpr_documents_deleted) { true }
+
+        it 'resets the gdpr_documents_deleted flag when form saved' do
+          form.save
+          expect(application.gdpr_documents_deleted).to be false
+        end
       end
     end
   end

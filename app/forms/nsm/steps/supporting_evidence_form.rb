@@ -26,7 +26,7 @@ module Nsm
         attrs = attributes.slice('send_by_post')
         #  reset gdpr_documents_deleted if there is any evidence on the claim regardless of
         # whether provider has added new evidence or not as a stopgap
-        attrs.merge(gdpr_documents_deleted: false) if application.supporting_evidence.any?
+        application.supporting_evidence.any? ? attrs.merge({ gdpr_documents_deleted: false }) : attrs
       end
     end
   end
