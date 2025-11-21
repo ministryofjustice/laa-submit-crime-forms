@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe Nsm::CheckAnswers::EvidenceUploadsCard do
   subject { described_class.new(claim) }
 
-  let(:claim) { instance_double(Claim, supporting_evidence:, send_by_post:) }
+  let(:claim) { instance_double(Claim, supporting_evidence:, send_by_post:, state:) }
   let(:supporting_evidence) { [first_evidence, second_evidence] }
   let(:send_by_post) { false }
+  let(:state) { 'draft' }
   let(:first_evidence) do
     { id: 'test', file_name: 'Defendant Report.pdf' }
   end
@@ -128,12 +129,15 @@ RSpec.describe Nsm::CheckAnswers::EvidenceUploadsCard do
 
   describe '#custom' do
     context 'when gdpr_documents_deleted is true' do
+      let(:state) { 'granted' }
+
       before do
         allow(claim).to receive(:gdpr_documents_deleted?).and_return(true)
       end
 
       it 'returns the GDPR deleted partial' do
-        expect(subject.custom).to eq({ partial: 'nsm/steps/view_claim/gdpr_uploaded_files_deleted' })
+        expect(subject.custom).to eq({ partial: 'nsm/steps/view_claim/gdpr_uploaded_files_deleted',
+locals: { state: claim.state } })
       end
     end
 
