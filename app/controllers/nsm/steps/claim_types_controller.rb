@@ -24,7 +24,7 @@ module Nsm
           #  here for the page's back button
           redirect_to nsm_applications_steps_supplemental_claim_path(claim_id:)
         else
-          redirect_to new_nsm_steps_claim_type_path, flash: { alert: t('.no_type_selected') }
+          redirect_to new_nsm_steps_claim_type_path, flash: { warning: t('.no_type_selected') }
         end
       end
 

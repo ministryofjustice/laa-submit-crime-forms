@@ -11,7 +11,7 @@ module Nsm
         # passed in separately to current_application to
         # allow it to be wrapped in a presenter in the future
         @application = current_application
-        flash.now[:alert] = t('nsm.steps.supporting_evidence.edit.gdpr_msg') if current_application.gdpr_documents_deleted?
+        flash.now[:warning] = t('nsm.steps.supporting_evidence.edit.gdpr_msg') if current_application.gdpr_documents_deleted?
         render 'laa_multi_step_forms/task_list/show', locals: { app_type: 'claim' }
       end
 

@@ -33,8 +33,10 @@ en:
       title: Success
     notice:
       title: Notice
-    alert:
-      title: Alert
+    error:
+      title: Error
+    warning:
+      title: Warning
 
   layouts:
     header_navigation:
