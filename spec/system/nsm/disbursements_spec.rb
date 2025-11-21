@@ -435,7 +435,7 @@ RSpec.describe 'User can manage disbursements', type: :system do
 
       expect(page)
         .to have_title('Disbursement type')
-        .and have_selector('.govuk-notification-banner', text: 'Disbursement successfully duplicated')
+        .and have_selector('.moj-alert__content', text: 'Disbursement successfully duplicated')
 
       click_on 'Save and continue'
 
