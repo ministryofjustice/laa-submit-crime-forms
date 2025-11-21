@@ -18,7 +18,10 @@ module Nsm
       end
 
       def custom
-        claim.gdpr_documents_deleted? ? { partial: 'nsm/steps/view_claim/gdpr_uploaded_files_deleted' } : nil
+        return unless claim.gdpr_documents_deleted?
+
+        { partial: 'nsm/steps/view_claim/gdpr_uploaded_files_deleted',
+      locals: { state: claim.state } }
       end
 
       private

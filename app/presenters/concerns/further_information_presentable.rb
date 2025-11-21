@@ -25,19 +25,7 @@ module FurtherInformationPresentable
   private
 
   def supporting_documents
-    if should_render_gdpr_deleted_partial?
-      render_gdpr_deleted_partial
-    else
-      render_supporting_documents
-    end
-  end
-
-  def should_render_gdpr_deleted_partial?
-    submission.is_a?(AppStore::V1::Nsm::Claim) && submission.gdpr_documents_deleted?
-  end
-
-  def render_gdpr_deleted_partial
-    render_partial('nsm/steps/view_claim/gdpr_uploaded_files_deleted')
+    render_supporting_documents
   end
 
   def render_supporting_documents

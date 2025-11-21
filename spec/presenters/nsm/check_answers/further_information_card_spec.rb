@@ -50,19 +50,4 @@ RSpec.describe Nsm::CheckAnswers::FurtherInformationCard do
       end
     end
   end
-
-  describe '#supporting_documents' do
-    context 'when gdpr documents are deleted' do
-      let(:supporting_documents) { [] }
-
-      before do
-        allow(claim).to receive(:is_a?).with(AppStore::V1::Nsm::Claim).and_return(true)
-        allow(claim).to receive(:gdpr_documents_deleted?).and_return(true)
-      end
-
-      it 'renders the gdpr deleted partial' do
-        expect(card.send(:supporting_documents)).to include('Uploaded files deleted. Your uploads are deleted after 6 months to keep your data safe.') # rubocop:disable Layout/LineLength
-      end
-    end
-  end
 end

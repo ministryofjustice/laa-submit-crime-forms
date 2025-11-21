@@ -177,7 +177,10 @@ en:
           - After this date your claim will be automatically closed
           - <h3 class="govuk-heading-s">Further information request</h3>
         gdpr_uploaded_files_deleted:
-          message: Uploaded files deleted. Your uploads are deleted after 6 months to keep your data safe.
+          granted: The uploaded files have been deleted because the claim was granted more than 6 months ago.
+          part_grant: The uploaded files have been deleted because the claim was part granted more than 6 months ago.
+          rejected: The uploaded files have been deleted because the claim was rejected more than 6 months ago.
+          expired: The uploaded files have been deleted because the claim expired more than 6 months ago.
 
         # view pages
         work_item:
