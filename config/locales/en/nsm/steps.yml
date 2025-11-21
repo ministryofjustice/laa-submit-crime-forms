@@ -349,6 +349,7 @@ en:
           upload_hint: The maximum size for each file is %{size}. Files must be a DOC, DOCX, XLSX, XLS, RTF, ODT, JPG, BMP, PNG, TIF or PDF.
           uploaded_files: Uploaded files
           upload_file: Upload file
+          gdpr_msg: Your uploaded files have been deleted because there was no activity on this claim/application for 6 months. You need to upload evidence again to submit your claim/application.
         content:
           para1:
             heading: "Based on your answers, you must upload:"

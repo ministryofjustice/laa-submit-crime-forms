@@ -13,13 +13,20 @@ module Nsm
       private
 
       def persist!
-        application.update!(attributes.slice('send_by_post'))
+        application.update!(attributes_to_update)
       end
 
       def supporting_evidence_provided
         return if send_by_post || application.supporting_evidence.any?
 
         errors.add(:supporting_evidence, :blank)
+      end
+
+      def attributes_to_update
+        attrs = attributes.slice('send_by_post')
+        #  reset gdpr_documents_deleted if there is any evidence on the claim regardless of
+        # whether provider has added new evidence or not as a stopgap
+        application.supporting_evidence.any? ? attrs.merge({ gdpr_documents_deleted: false }) : attrs
       end
     end
   end

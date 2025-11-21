@@ -12,6 +12,9 @@ module Nsm
           current_application
         )
         @supporting_documents = supporting_evidence
+        return unless current_application.gdpr_documents_deleted?
+
+        flash.now[:warning] = t('.gdpr_msg')
       end
 
       def update
