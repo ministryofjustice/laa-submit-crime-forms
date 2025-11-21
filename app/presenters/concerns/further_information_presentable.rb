@@ -17,16 +17,12 @@ module FurtherInformationPresentable
       },
       {
         head_key: 'your_response',
-        text: supporting_documents,
+        text: render_supporting_documents,
       },
     ]
   end
 
   private
-
-  def supporting_documents
-    render_supporting_documents
-  end
 
   def render_supporting_documents
     links = further_information.supporting_documents.map do |document|
@@ -39,9 +35,5 @@ module FurtherInformationPresentable
     response = simple_format(further_information.information_supplied)
     parts = [response] + links.flat_map { [tag.br, _1] }
     safe_join(parts)
-  end
-
-  def render_partial(partial_path)
-    ApplicationController.render(partial: partial_path)
   end
 end
