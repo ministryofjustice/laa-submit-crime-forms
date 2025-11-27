@@ -43,7 +43,6 @@ module Steps
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
     def process_form(form_object, opts)
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
@@ -58,19 +57,16 @@ module Steps
         # in cases where we only want to attempt a form save if the form is invalid
         # so that we can see validation issues
         render_form_if_invalid(form_object, opts)
-      elsif params.key?(:initialize)
-        form_object.save!
+      elsif form_object.save
+        destination = decision_tree_class.new(form_object, as: opts.fetch(:as)).destination
         # this is needed in cases where forms start with a "fake" application and end with a real, persisted application
         # i.e. the when creating a new claim after the claim type page (see CRM457-2738)
-        id = form_object.application.id
-        redirect_to decision_tree_class.new(form_object, as: opts.fetch(:as)).destination.merge(id:), flash: opts[:flash]
-      elsif form_object.save
-        redirect_to decision_tree_class.new(form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
+        destination = destination.merge(id: form_object.application.id) if params.key?(:initialize)
+        redirect_to destination, flash: opts[:flash]
       else
         render opts.fetch(:render, :edit)
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     # This deals with the case when it is called from the NEW_RECORD endpoint
     # to avoid creating a new record on each click
