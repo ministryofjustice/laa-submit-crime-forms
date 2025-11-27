@@ -62,6 +62,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
       context 'when the form saves successfully' do
         before do
           expect(form_object).to receive(:save).and_return(true)
+          expect(form_object).to receive(:application).and_return(existing_case)
         end
 
         let(:decision_tree) { instance_double(decision_tree_class, destination: '/expected_destination') }
