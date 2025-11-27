@@ -58,11 +58,10 @@ module Steps
         # so that we can see validation issues
         render_form_if_invalid(form_object, opts)
       elsif form_object.save
-        id = form_object.application.id
         destination = decision_tree_class.new(form_object, as: opts.fetch(:as)).destination
         # this is needed in cases where forms start with a "fake" application and end with a real, persisted application
         # i.e. the when creating a new claim after the claim type page (see CRM457-2738)
-        destination = destination.merge(id:) if params.key?(:initialize)
+        destination = destination.merge(id: form_object.application.id) if params.key?(:initialize)
         redirect_to destination, flash: opts[:flash]
       else
         render opts.fetch(:render, :edit)
