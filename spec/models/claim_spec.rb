@@ -187,7 +187,7 @@ RSpec.describe Claim do
       end
 
       it 'returns false' do
-        expect(claim.can_claim_youth_court?).to be nil
+        expect(claim.can_claim_youth_court?).to be_nil
       end
     end
   end
