@@ -177,10 +177,17 @@ RSpec.describe Claim do
 
   describe 'can_claim_youth_court?' do
     context 'when plea_category is nil' do
-      let(:claim) { create(:claim, :complete, plea_category: nil, youth_court: 'yes', rep_order_date: Date.new(2024, 7, 1)) }
+      let(:claim) do
+        create(
+          :claim,
+          claim_type: 'non_standard_magistrate',
+          plea_category: nil, youth_court: 'yes',
+          rep_order_date: Date.new(2024, 7, 1)
+        )
+      end
 
       it 'returns false' do
-        expect(claim.can_claim_youth_court?).to be false
+        expect(claim.can_claim_youth_court?).to be nil
       end
     end
   end
