@@ -181,8 +181,9 @@ RSpec.describe Claim do
         create(
           :claim,
           claim_type: 'non_standard_magistrate',
-          plea_category: nil, youth_court: 'yes',
-          rep_order_date: Date.new(2024, 7, 1)
+          plea_category: nil,
+          youth_court: 'yes',
+          rep_order_date: Date.new(2024, 12, 10)
         )
       end
 
