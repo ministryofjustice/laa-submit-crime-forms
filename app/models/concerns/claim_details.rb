@@ -74,7 +74,7 @@ module ClaimDetails
   def can_claim_youth_court?
     nsm? &&
       can_access_youth_court_flow? &&
-      plea_category.match?(/category_(?:2|[12]a)$/)
+      plea_category&.match?(/category_(?:2|[12]a)$/)
   end
 
   def additional_fees_applicable?
