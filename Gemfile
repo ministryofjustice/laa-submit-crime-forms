@@ -16,7 +16,7 @@ gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'grover'
 gem 'httparty'
 gem 'jsbundling-rails'
-gem 'laa_crime_forms_common', '~> 0.12.4', github: 'ministryofjustice/laa-crime-forms-common'
+gem 'laa_crime_forms_common', github: 'ministryofjustice/laa-crime-forms-common', branch: "CRM457-2842-uplift"
 gem 'lograge'
 gem 'logstasher', '~> 2.1'
 gem 'logstash-event'
