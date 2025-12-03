@@ -14,7 +14,7 @@ RSpec.describe AppStore::V1::Nsm::Claim do
       let(:reasons_for_claim) { ['enhanced_rates_claimed'] }
 
       it 'applies uplift' do
-        expect(subject.dig(:letters_and_calls, :claimed_total_exc_vat)).to eq(16.36)
+        expect(subject.dig(:letters_and_calls, :claimed_total_exc_vat)).to eq(18.0)
       end
     end
 
@@ -22,7 +22,7 @@ RSpec.describe AppStore::V1::Nsm::Claim do
       let(:reasons_for_claim) { ['extradition'] }
 
       it 'does not apply uplift' do
-        expect(subject.dig(:letters_and_calls, :claimed_total_exc_vat)).to eq(8.18)
+        expect(subject.dig(:letters_and_calls, :claimed_total_exc_vat)).to eq(9.0)
       end
     end
   end
