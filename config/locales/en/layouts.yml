@@ -2,7 +2,7 @@
 en:
   layouts:
     availability_banner:
-      heading: Availability of this service has changed
-      body: This service can only be used from 7am to 9:30pm
+      heading: Service availability
+      body: This service will be closed on 25, 26 December and 1 January. It is otherwise available daily from 7:00 am to 9:30 pm
     phase_banner:
       phase: Beta
