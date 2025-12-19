@@ -75,5 +75,25 @@ RSpec.describe 'Maintenance mode' do
         expect(page).not_to have_content 'Sorry, the service is unavailable'
       end
     end
+
+    context 'OOH 2025' do
+      it 'does not allow access on 25/12/25, 26/12/25, 01/01/26' do
+        ['2025-12-25 10:00', '2025-12-26 14:00', '2026-01-01 00:01'].each do |date|
+          travel_to Time.find_zone('Europe/London').parse(date) do
+            visit nsm_applications_path
+            expect(page).to have_content 'Sorry, the service is unavailable'
+          end
+        end
+      end
+
+      it 'bau allows access on 24/12/25, 29/12/25, 02/01/26' do
+        ['2025-12-24 10:00', '2026-12-29 09:00', '2026-01-02 07:00'].each do |date|
+          travel_to Time.find_zone('Europe/London').parse(date) do
+            visit nsm_applications_path
+            expect(page).not_to have_content 'Sorry, the service is unavailable'
+          end
+        end
+      end
+    end
   end
 end
