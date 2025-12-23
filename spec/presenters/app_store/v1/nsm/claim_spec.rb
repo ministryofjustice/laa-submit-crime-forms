@@ -8,7 +8,7 @@ RSpec.describe AppStore::V1::Nsm::Claim do
     let(:letters_and_calls) { [{ type: 'letters', uplift: 100, count: 1 }, { type: 'calls', uplift: 100, count: 1 }] }
     let(:firm_office) { { vat_registered: 'no' } }
     let(:claim_type) { 'non_standard_magistrate' }
-    let(:rep_order_date) { 1.day.ago }
+    let(:rep_order_date) { Date.new(2025, 12, 20) }
 
     context 'when upliftable' do
       let(:reasons_for_claim) { ['enhanced_rates_claimed'] }
