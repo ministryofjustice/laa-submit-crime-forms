@@ -30,7 +30,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -51,7 +51,7 @@ jobs:
         environment: [dev, uat, prod]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install Helm
         uses: azure/setup-helm@v4
@@ -59,7 +59,7 @@ jobs:
           version: '3.7.2'
 
       - name: Cache Python pip packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-yamllint
@@ -118,7 +118,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -152,7 +152,7 @@ jobs:
 
       - name: Upload code coverage results
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: coverage-results-${{ matrix.test-type }}
           path: coverage
@@ -160,7 +160,7 @@ jobs:
 
       - name: Upload Capybara screenshots (on test failure)
         if: failure() && matrix.needs-chrome == true
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: capybara-screenshots
           path: tmp/capybara
@@ -175,7 +175,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -183,7 +183,7 @@ jobs:
           bundler-cache: true
 
       - name: Download coverage results from all test types
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           pattern: coverage-results-*
           path: coverage_results
@@ -193,7 +193,7 @@ jobs:
 
       - name: Upload final coverage artifact
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: coverage-final
           path: coverage
@@ -214,7 +214,7 @@ jobs:
       image-tag: ${{ steps.build.outputs.image-tag }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Configure AWS credentials for ECR access
         uses: ministryofjustice/laa-reusable-github-actions/.github/actions/ecr-auth@e5500aa20b13a1406fe8a62b8788181a2ca18926
@@ -255,7 +255,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Configure AWS credentials for ECR access
         uses: ministryofjustice/laa-reusable-github-actions/.github/actions/ecr-auth@e5500aa20b13a1406fe8a62b8788181a2ca18926
@@ -330,7 +330,7 @@ jobs:
       ECR_IMAGE: ${{ secrets.ECR_REGISTRY_URL}}/${{ vars.SUBMIT_DEV_ECR_REPOSITORY}}:${{ needs.build.outputs.image-tag }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -393,7 +393,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Authenticate to the cluster
         uses: ministryofjustice/laa-reusable-github-actions/.github/actions/authenticate_to_cluster@2aa2676c3cd9876ec7037ee8b3d729d0306cb7c6
