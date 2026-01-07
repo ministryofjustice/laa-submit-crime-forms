@@ -16,7 +16,7 @@
           <%= f.govuk_text_field :search_string, label: { size: 's', text: t("nsm.claims.search.label") } %>
         </div>
         <%= render 'shared/search', form: @form, f: %>
-        <%= f.govuk_submit(t('nsm.claims.search.search'), id: 'search', 'data-disable' => 'false') do %>
+        <%= f.govuk_submit(t('nsm.claims.search.search'), id: 'search') do %>
           <%= govuk_link_to t('.clear_all'), search_nsm_applications_path %>
         <% end %>
       <% end %>
