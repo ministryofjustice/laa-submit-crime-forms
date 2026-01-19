@@ -172,5 +172,23 @@ RSpec.describe Nsm::Steps::ClaimDetailsForm do
         end
       end
     end
+
+    context 'when prosecution_evidence exceeds the integer limit' do
+      let(:prosecution_evidence) { NumericLimits::MAX_INTEGER + 1 }
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:prosecution_evidence, :less_than_or_equal_to)).to be(true)
+      end
+    end
+
+    context 'when time_spent hours exceeds the integer limit' do
+      let(:hours) { NumericLimits::MAX_INTEGER + 1 }
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:time_spent, :max_hours)).to be(true)
+      end
+    end
   end
 end

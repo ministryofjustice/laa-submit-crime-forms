@@ -15,6 +15,17 @@ RSpec.describe ActiveOfficeCodeService do
         .to_return(status:)
     end
 
+    around do |example|
+      overrides = Rails.configuration.x.office_code_overrides
+      original_active = overrides.active_office_codes
+      original_inactive = overrides.inactive_office_codes
+
+      example.run
+    ensure
+      overrides.active_office_codes = original_active
+      overrides.inactive_office_codes = original_inactive
+    end
+
     before do
       allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: true))
       office_code_a_stub

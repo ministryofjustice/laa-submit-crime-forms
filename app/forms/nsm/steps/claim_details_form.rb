@@ -12,13 +12,14 @@ module Nsm
       attribute :work_completed_date, :multiparam_date
 
       validates :prosecution_evidence, presence: true, is_a_number: true,
-numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
       validates :defence_statement, presence: true, is_a_number: true,
-numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
       validates :number_of_witnesses, presence: true, is_a_number: true,
-numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
       validates :time_spent, presence: true, time_period: true,
         if: -> { preparation_time == YesNoAnswer::YES }
+      validate :time_spent_hours_within_limit, if: -> { preparation_time == YesNoAnswer::YES }
       validates :work_before_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
         if: -> { work_before == YesNoAnswer::YES }
       validates :work_after_date, presence: true, multiparam_date: { allow_past: true, allow_future: false },
@@ -46,6 +47,10 @@ numericality: { only_integer: true, greater_than_or_equal_to: 0 }
           work_before_date: work_before == YesNoAnswer::YES ? work_before_date : nil,
           work_after_date: work_after == YesNoAnswer::YES ? work_after_date : nil,
         )
+      end
+
+      def time_spent_hours_within_limit
+        validate_time_period_max_hours(:time_spent, max_hours: NumericLimits::MAX_INTEGER)
       end
     end
   end

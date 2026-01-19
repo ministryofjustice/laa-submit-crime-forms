@@ -597,6 +597,7 @@ en:
       messages:
         blank_hours: Enter the number of hours
         invalid_hours: The number of hours must be 0 or more
+        max_hours: The number of hours must be %{count} or less
         blank_minutes: Enter the number of minutes
         invalid_minutes: The number of minutes must be between 0 and 59
         invalid_period: Time must be more than 0

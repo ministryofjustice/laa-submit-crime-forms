@@ -12,8 +12,10 @@ module Nsm
       attribute :letters_uplift, :fully_validatable_integer
       attribute :calls_uplift, :fully_validatable_integer
 
-      validates :letters, is_a_number: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
-      validates :calls, is_a_number: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
+      validates :letters, is_a_number: true,
+        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER, allow_blank: true }
+      validates :calls, is_a_number: true,
+        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER, allow_blank: true }
       validate :zero_letters_uplift_applied
       validates :letters_uplift, presence: true,
         is_a_number: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
