@@ -13,6 +13,18 @@ RSpec.describe 'Error pages' do
     end
   end
 
+  context 'when record not found error occurs' do
+    before do
+      allow_any_instance_of(ErrorsController).to receive(:unhandled)
+        .and_raise(ActiveRecord::RecordNotFound)
+    end
+
+    it 'redirects to not found error path' do
+      get '/errors/unhandled'
+      expect(response).to redirect_to(not_found_errors_path)
+    end
+  end
+
   context 'invalid session' do
     it 'renders the expected page and has expected status code' do
       get '/errors/invalid_session'
