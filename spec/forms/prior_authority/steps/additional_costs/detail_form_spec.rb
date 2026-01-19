@@ -52,4 +52,15 @@ RSpec.describe PriorAuthority::Steps::AdditionalCosts::DetailForm do
       end
     end
   end
+
+  describe '#validation' do
+    context 'when per_item items exceed the integer limit' do
+      let(:attributes) { { unit_type: 'per_item', cost_per_item: 10, items: NumericLimits::MAX_INTEGER + 1 } }
+
+      it 'is not valid' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:items, :less_than_or_equal_to)).to be(true)
+      end
+    end
+  end
 end

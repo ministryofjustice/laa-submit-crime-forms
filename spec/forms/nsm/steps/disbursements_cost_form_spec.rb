@@ -56,6 +56,15 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
 
         it { is_expected.to be_valid }
       end
+
+      context 'and miles exceeds the float limit' do
+        let(:miles) { NumericLimits::MAX_FLOAT + 1 }
+
+        it 'has an error' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:miles, :less_than_or_equal_to)).to be(true)
+        end
+      end
     end
 
     context 'when disbursement_type is other' do
@@ -102,6 +111,15 @@ RSpec.describe Nsm::Steps::DisbursementCostForm do
         it 'has an error' do
           expect(form).not_to be_valid
           expect(form.errors.of_kind?(:total_cost_without_vat, :not_a_number)).to be(true)
+        end
+      end
+
+      context 'and total_cost_without_vat exceeds the float limit' do
+        let(:total_cost_without_vat) { NumericLimits::MAX_FLOAT + 1 }
+
+        it 'has an error' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:total_cost_without_vat, :less_than_or_equal_to)).to be(true)
         end
       end
     end

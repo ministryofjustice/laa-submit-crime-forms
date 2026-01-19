@@ -32,6 +32,18 @@ RSpec.describe PriorAuthority::Steps::TravelDetailForm do
       it { is_expected.to be_valid }
     end
 
+    context 'when travel_hours exceeds the integer limit' do
+      let(:travel_cost_reason) { 'Because I say so' }
+      let(:travel_hours) { (NumericLimits::MAX_INTEGER + 1).to_s }
+      let(:travel_minutes) { '0' }
+      let(:travel_cost_per_hour) { '15.2' }
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:travel_time, :max_hours)).to be(true)
+      end
+    end
+
     context 'with invalid values' do
       let(:travel_cost_reason) { '   ' }
       let(:travel_hours) { '' }

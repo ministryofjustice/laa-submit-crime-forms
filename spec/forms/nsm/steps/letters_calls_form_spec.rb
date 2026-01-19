@@ -58,6 +58,16 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
 
         it { expect(subject).to be_valid }
       end
+
+      context 'exceeds the integer limit' do
+        let(:letters) { NumericLimits::MAX_INTEGER + 1 }
+        let(:apply_letters_uplift) { 'false' }
+
+        it 'has an error' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:letters, :less_than_or_equal_to)).to be(true)
+        end
+      end
     end
 
     describe '#calls' do
@@ -100,6 +110,16 @@ RSpec.describe Nsm::Steps::LettersCallsForm do
         let(:calls) { 1 }
 
         it { expect(subject).to be_valid }
+      end
+
+      context 'exceeds the integer limit' do
+        let(:calls) { NumericLimits::MAX_INTEGER + 1 }
+        let(:apply_calls_uplift) { 'false' }
+
+        it 'has an error' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:calls, :less_than_or_equal_to)).to be(true)
+        end
       end
     end
 

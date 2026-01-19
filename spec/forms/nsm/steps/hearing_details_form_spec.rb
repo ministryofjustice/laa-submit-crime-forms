@@ -51,6 +51,15 @@ RSpec.describe Nsm::Steps::HearingDetailsForm do
         end
       end
     end
+
+    context 'when number_of_hearing exceeds the integer limit' do
+      let(:number_of_hearing) { NumericLimits::MAX_INTEGER + 1 }
+
+      it 'is not valid' do
+        expect(subject.save).to be(false)
+        expect(subject.errors.of_kind?(:number_of_hearing, :less_than_or_equal_to)).to be(true)
+      end
+    end
   end
 
   describe 'court' do
