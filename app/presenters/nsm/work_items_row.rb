@@ -62,7 +62,7 @@ numeric: true }
 
     def duplicate_link
       link_to(
-        t('.duplicate'),
+        t('nsm.steps.work_items.edit.duplicate'),
         view.edit_nsm_steps_work_item_path(id: application.id, work_item_id: StartPage::NEW_RECORD, work_item_to_duplicate: id),
         data: { turbo: 'false' },
         'aria-labelledby': "duplicate#{position} itemTitle item#{position} workType#{position}",
@@ -72,7 +72,7 @@ numeric: true }
 
     def update_link
       link_to(
-        t('.update'),
+        t('nsm.steps.work_items.edit.update'),
         view.edit_nsm_steps_work_item_path(current_application, work_item_id: id),
         data: { turbo: 'false' },
         'aria-labelledby': "itemTitle item#{position} workType#{position}"
@@ -81,7 +81,7 @@ numeric: true }
 
     def delete_link
       link_to(
-        t('.delete'),
+        t('nsm.steps.work_items.edit.delete'),
         view.edit_nsm_steps_work_item_delete_path(current_application, work_item_id: id),
         data: { turbo: 'false' },
         'aria-labelledby': "delete#{position} itemTitle item#{position} workType#{position}",
