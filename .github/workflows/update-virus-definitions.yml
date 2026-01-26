@@ -12,7 +12,7 @@ jobs:
   update_virus_definitions:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Update the dev definitions
         if: github.event.schedule == '0 2 * * *'
         id: update_dev_0
