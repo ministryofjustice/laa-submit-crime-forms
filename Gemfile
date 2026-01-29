@@ -16,7 +16,7 @@ gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'grover'
 gem "httparty", '>= 0.24.0'
 gem 'jsbundling-rails'
-gem 'laa_crime_forms_common', '~> 0.12.5', github: 'ministryofjustice/laa-crime-forms-common'
+gem 'laa_crime_forms_common', '~> 0.12.9', github: 'ministryofjustice/laa-crime-forms-common'
 gem 'lograge'
 gem 'logstasher', '~> 2.1'
 gem 'logstash-event'
@@ -38,6 +38,9 @@ gem 'sentry-ruby', '~> 6.0.0'
 gem 'sidekiq', '~> 8.0'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron'
+# Pin connection_pool to avoid bumping connection pool inadvertently to 3~ since this will break with our version of rails/sidekiq
+# See: https://github.com/rails/rails/issues/56461
+gem "connection_pool", "~> 2.5"
 gem 'solid_cache', '~> 1.0'
 gem 'table_print'
 gem 'turbo-rails', '~> 2.0.20'
