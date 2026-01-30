@@ -44,5 +44,5 @@
       </tbody>
     </table>
   </div>
-  <%= render 'shared/pagination', pagy: @submitted_pagy, item: t('prior_authority.applications.tabs.application') %>
+  <%= render 'shared/pagination', pagy: @pagy, model: @model, item: t('prior_authority.applications.tabs.application') %>
 <% end %>
