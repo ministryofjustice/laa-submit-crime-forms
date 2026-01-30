@@ -22,8 +22,8 @@ def should_skip_auth(controller)
             .select { |callback| callback.filter.is_a?(Symbol) }
             .select { |callback| callback.instance_variable_get(:@if).blank? }
             .any? do |callback|
-              name = callback.filter.to_s
-              callback.instance_variable_get(:@negated) && ignored_actions.include?(name)
+    name = callback.filter.to_s
+    callback.instance_variable_get(:@negated) && ignored_actions.include?(name)
   end
 end
 

@@ -35,12 +35,9 @@ gem 'redis'
 gem 'rexml'
 gem 'sentry-rails', '~> 6.3.0'
 gem 'sentry-ruby', '~> 6.3.0'
-gem 'sidekiq', '~> 8.0'
-gem 'sidekiq_alive', '~> 2.4'
+gem 'sidekiq', '~> 8.1'
+gem 'sidekiq_alive', '~> 2.5'
 gem 'sidekiq-cron'
-# Pin connection_pool to avoid bumping connection pool inadvertently to 3~ since this will break with our version of rails/sidekiq
-# See: https://github.com/rails/rails/issues/56461
-gem "connection_pool", "~> 3.0"
 gem 'solid_cache', '~> 1.0'
 gem 'table_print'
 gem 'turbo-rails', '~> 2.0.22'
