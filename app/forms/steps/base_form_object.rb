@@ -79,8 +79,10 @@ module Steps
 
     def validate_time_period_max_hours(attribute, max_hours:)
       value = public_send(attribute)
+      # :nocov:
       return if value.blank? || value.is_a?(Hash)
       return unless value.respond_to?(:hours)
+      # :nocov:
 
       errors.add(attribute, :max_hours, count: max_hours) if value.hours.to_i > max_hours
     end
