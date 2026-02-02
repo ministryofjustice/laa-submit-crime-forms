@@ -91,10 +91,10 @@ module PriorAuthority
         application.further_informations
                    .order(requested_at: :desc)
                    .map do |further_information|
-                     {
-                       date: further_information.requested_at,
-                       card: CompactFurtherInformationCard.new(further_information, skip_links:),
-                     }
+          {
+            date: further_information.requested_at,
+            card: CompactFurtherInformationCard.new(further_information, skip_links:),
+          }
         end
       end
 
@@ -102,10 +102,10 @@ module PriorAuthority
         application.incorrect_informations
                    .order(requested_at: :desc)
                    .map do |incorrect_information|
-                     {
-                       date: incorrect_information.requested_at,
-                       card: IncorrectInformationCard.new(incorrect_information),
-                     }
+          {
+            date: incorrect_information.requested_at,
+            card: IncorrectInformationCard.new(incorrect_information),
+          }
         end
       end
     end
