@@ -44,6 +44,18 @@ RSpec.describe PriorAuthority::Steps::TravelDetailForm do
       end
     end
 
+    context 'when travel_cost_per_hour exceeds the float limit' do
+      let(:travel_cost_reason) { 'Because I say so' }
+      let(:travel_hours) { '1' }
+      let(:travel_minutes) { '0' }
+      let(:travel_cost_per_hour) { (NumericLimits::MAX_FLOAT + 1).to_s }
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:travel_cost_per_hour, :less_than_or_equal_to)).to be(true)
+      end
+    end
+
     context 'with invalid values' do
       let(:travel_cost_reason) { '   ' }
       let(:travel_hours) { '' }
