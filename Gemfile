@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby File.read('.ruby-version').strip
 
 gem "aws-sdk-s3", '~> 1.213'
-gem 'bootsnap', '~> 1.21.1', require: false
+gem 'bootsnap', '~> 1.22.0', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
 gem 'devise', '~> 5.0'
@@ -40,7 +40,7 @@ gem 'sidekiq_alive', '~> 2.5'
 gem 'sidekiq-cron'
 gem 'solid_cache', '~> 1.0'
 gem 'table_print'
-gem 'turbo-rails', '~> 2.0.22'
+gem 'turbo-rails', '~> 2.0.23'
 gem 'tzinfo-data'
 gem 'uk_postcode'
 gem 'with_advisory_lock'
