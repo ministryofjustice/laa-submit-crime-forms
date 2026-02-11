@@ -24,6 +24,18 @@ RSpec.describe 'Prior authority applications - travel costs' do
       expect(page).to have_title 'Error: Travel cost'
     end
 
+    it 'shows validation error when hours or cost per hour exceed database limits' do
+      fill_in 'Why are there travel costs if your client is not detained?', with: 'because'
+      fill_in 'Hours', with: '9999999999'
+      fill_in 'Minutes', with: '0'
+      fill_in 'What is the cost per hour?', with: '9999999999'
+
+      click_on 'Save and continue'
+
+      expect(page).to have_content('Enter a valid number of hours').or have_content('There is a problem')
+      expect(page).to have_content('99999999.99').or have_content('less than or equal to')
+    end
+
     context 'when user fills in valid information' do
       before do
         fill_in 'Why are there travel costs if your client is not detained?', with: 'because'
