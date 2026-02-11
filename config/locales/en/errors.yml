@@ -207,15 +207,18 @@ en:
             cost_per_hour:
               blank: Enter the hourly cost
               greater_than: The hourly cost must be more than 0
+              less_than_or_equal_to: The hourly cost must be %{count} or less
               not_a_number: The cost per hour must be a number, like 25
             items:
               blank: Enter the number of %{item_type}
               greater_than: The number of %{item_type} must be more than 0
+              less_than_or_equal_to: The number of %{item_type} must be %{count} or less
               not_a_number: The number of %{item_type} must be a number, like 25
               not_a_whole_number: The number of %{item_type} must be a whole number, like 25
             cost_per_item:
               blank: Enter the cost per %{item_type}
               greater_than: The cost per %{item_type} must be more than 0
+              less_than_or_equal_to: The cost per %{item_type} must be %{count} or less
               not_a_number: The cost per %{item_type} must be a number, like 25
         prior_authority/steps/travel_detail_form:
           attributes:
@@ -227,6 +230,7 @@ en:
             travel_cost_per_hour:
               blank: Enter the cost per hour
               greater_than: The cost per hour must be more than 0
+              less_than_or_equal_to: The cost per hour must be %{count} or less
               not_a_number: The cost per hour must be a number, like 25
         prior_authority/steps/additional_costs/overview_form:
           attributes:
@@ -246,14 +250,17 @@ en:
             cost_per_hour:
               blank: Enter the hourly cost
               greater_than: The hourly cost must be more than 0
+              less_than_or_equal_to: The hourly cost must be %{count} or less
               not_a_number: The hourly cost must be a number, like 25
             items:
               blank: Enter the number of items
               greater_than: The number of items must be more than 0
+              less_than_or_equal_to: The number of items must be %{count} or less
               not_a_number: The number of items must be a number, like 25
             cost_per_item:
               blank: Enter the cost per item
               greater_than: The cost per item must be more than 0
+              less_than_or_equal_to: The cost per item must be %{count} or less
               not_a_number: The cost per item must be a number, like 25
         prior_authority/steps/reason_why_form:
           attributes:
@@ -398,6 +405,7 @@ en:
               blank: Number of hearings held cannot be blank
               not_a_number: Number of hearings must be a number, like 25
               greater_than: Number of hearings must be greater than 0
+              less_than_or_equal_to: Number of hearings must be %{count} or less
             court:
               blank: Count cannot be blank
             youth_court:
@@ -452,14 +460,17 @@ en:
             prosecution_evidence:
               blank: Number of pages of prosecution evidence cannot be blank
               greater_than_or_equal_to:  Number of pages of prosecution evidence cannot be less than 0
+              less_than_or_equal_to: Number of pages of prosecution evidence must be %{count} or less
               not_a_number: Number of pages of prosecution evidence must be a number, like 25
             defence_statement:
               blank:  Number of pages of defence statements cannot be blank
               greater_than_or_equal_to: Number of pages of defence statements cannot be less than 0
+              less_than_or_equal_to: Number of pages of defence statements must be %{count} or less
               not_a_number: Number of pages of defence statements must be a number, like 25
             number_of_witnesses:
               blank: Number of witnesses cannot be blank
               greater_than_or_equal_to: Number of witnesses cannot be less than 0
+              less_than_or_equal_to: Number of witnesses must be %{count} or less
               not_a_number: Number of witnesses must be a number, like 25
             wasted_costs:
               blank: Select yes if wasted costs have been applied to this case
@@ -513,9 +524,11 @@ en:
           attributes:
             letters:
               greater_than_or_equal_to: You cannot apply an uplift if there are 0 letters
+              less_than_or_equal_to: The number of letters must be %{count} or less
               not_a_number: The number of letters must be a number, like 25
             calls:
               greater_than_or_equal_to: You cannot apply an uplift if there are 0 calls
+              less_than_or_equal_to: The number of calls must be %{count} or less
               not_a_number: The number of calls must be a number, like 25
             letters_uplift:
               blank: Letters uplift percentage must be from 1 to 100
@@ -545,10 +558,12 @@ en:
             miles:
               blank: Enter the number of miles travelled
               greater_than: The number of miles must be more than 0
+              less_than_or_equal_to: The number of miles must be %{count} or less
               not_a_number: The number of miles should be a number or decimal, like 25 or 25.5
             total_cost_without_vat:
               blank: Set total cost
               greater_than: The total cost must be more than 0
+              less_than_or_equal_to: The total cost must be %{count} or less
               not_a_number: The total cost without VAT should be a number or decimal, like 25 or 25.5
             details:
               blank: Provide details of disbursement
