@@ -42,4 +42,22 @@ RSpec.describe 'User can fill in claim details', type: :system do
       work_completed_date: Date.new(2023, 3, 28),
     )
   end
+
+  it 'shows validation error when numeric values exceed database limits' do
+    visit edit_nsm_steps_claim_details_path(claim.id)
+
+    fill_in 'Number of pages of prosecution evidence', with: '9999999999'
+    fill_in 'Number of pages of defence statements', with: '2'
+    fill_in 'Number of witnesses', with: '3'
+    find('.govuk-form-group',
+         text: 'Did you spend time watching or listening to recorded evidence?').choose 'No'
+    find('.govuk-form-group', text: 'Did you do any work before the representation order date?').choose 'No'
+    find('.govuk-form-group', text: 'Did you do any further work after the last court hearing?').choose 'No'
+    find('.govuk-form-group', text: 'Have wasted costs been applied to this case?').choose 'Yes'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_content('There is a problem on this page')
+    expect(page).to have_content('2147483647').or have_content('less than or equal to')
+  end
 end

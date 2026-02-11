@@ -22,13 +22,17 @@ module PriorAuthority
         validates :unit_type, inclusion: { in: UNIT_TYPES, allow_nil: false }
 
         with_options if: :per_item? do
-          validates :items, presence: true, numericality: { greater_than: 0 }, is_a_number: true
-          validates :cost_per_item, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+          validates :items, presence: true,
+            numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }, is_a_number: true
+          validates :cost_per_item, presence: true,
+            numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT }, is_a_number: true
         end
 
         with_options if: :per_hour? do
           validates :period, presence: true, time_period: true
-          validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+          validate :period_hours_within_limit
+          validates :cost_per_hour, presence: true,
+            numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT }, is_a_number: true
         end
 
         def formatted_total_cost
@@ -68,6 +72,10 @@ module PriorAuthority
         end
 
         private
+
+        def period_hours_within_limit
+          validate_time_period_max_hours(:period, max_hours: NumericLimits::MAX_INTEGER)
+        end
 
         def persist!
           record.update!(attributes.except('id'))

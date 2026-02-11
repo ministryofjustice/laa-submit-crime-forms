@@ -87,6 +87,19 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         expect(page).to have_content "Enter the service provider's first name"
       end
 
+      it 'shows validation error when items or cost exceed database limits' do
+        fill_in 'First name', with: 'Mrs'
+        fill_in 'Last name', with: 'Expert'
+        fill_in 'Organisation', with: 'ExpertiseCo'
+        fill_in 'Postcode', with: 'SW1 1AA'
+        fill_in 'Number of items', with: '9999999999'
+        fill_in 'What is the cost per item?', with: '9999999999'
+
+        click_on 'Save and continue'
+
+        expect(page).to have_content('There is a problem').or have_content('2147483647').or have_content('99999999.99')
+      end
+
       context 'When I have added a quote' do
         before do
           fill_in 'First name', with: 'Mrs'

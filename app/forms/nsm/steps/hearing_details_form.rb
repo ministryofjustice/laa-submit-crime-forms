@@ -10,7 +10,8 @@ module Nsm
 
       validates :first_hearing_date, presence: true,
               multiparam_date: { allow_past: true, allow_future: false }
-      validates :number_of_hearing, presence: true, is_a_number: true, numericality: { only_integer: true, greater_than: 0 }
+      validates :number_of_hearing, presence: true, is_a_number: true,
+        numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
       validates :court, presence: true
       validates :youth_court, presence: true, inclusion: { in: YesNoAnswer.values }
       validates :hearing_outcome, presence: true

@@ -14,6 +14,7 @@ module Nsm
       validates :work_type, presence: true, inclusion: { in: WorkTypes.values }
       validate :work_type_allowed
       validates :time_spent, presence: true, time_period: true
+      validate :time_spent_hours_within_limit
       validates :completed_on, presence: true,
               multiparam_date: { allow_past: true, allow_future: false }
       validates :fee_earner, presence: true
@@ -59,6 +60,10 @@ module Nsm
         return if WorkTypes::VALUES.detect { _1 == work_type }.display?(application)
 
         errors.add(:work_type, :inclusion)
+      end
+
+      def time_spent_hours_within_limit
+        validate_time_period_max_hours(:time_spent, max_hours: NumericLimits::MAX_INTEGER)
       end
 
       def with_uplift_rows

@@ -47,4 +47,16 @@ RSpec.describe 'User can fill in claim type details', type: :system do
       expect(page.text).to eq('Letters£4.09Phone calls£8.18')
     end
   end
+
+  it 'shows validation error when letters or calls exceed database limit' do
+    visit edit_nsm_steps_letters_calls_path(claim.id)
+
+    fill_in 'Number of letters', with: '9999999999'
+    fill_in 'Number of phone calls', with: '0'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_content('There is a problem on this page')
+    expect(page).to have_content('2147483647').or have_content('less than or equal to')
+  end
 end

@@ -93,6 +93,31 @@ RSpec.describe 'User can manage disbursements', type: :system do
     )
   end
 
+  it 'shows validation error when disbursement cost exceeds database limit' do
+    disbursement = claim.disbursements.create
+    visit edit_nsm_steps_disbursement_type_path(claim.id, disbursement_id: disbursement.id)
+
+    within('.govuk-fieldset', text: 'Date') do
+      fill_in 'Day', with: '20'
+      fill_in 'Month', with: '4'
+      fill_in 'Year', with: '2023'
+    end
+
+    choose 'Other disbursement type'
+    select 'Accountants'
+
+    click_on 'Save and continue'
+
+    fill_in 'Disbursement cost', with: '9999999999'
+    fill_in 'Enter details of this disbursement', with: 'details'
+    find('.govuk-form-group', text: 'Have you been granted prior authority for this disbursement?').choose 'No'
+    find('.govuk-form-group', text: 'Do you need to add another disbursement?').choose 'No'
+
+    click_on 'Save and continue'
+
+    expect(page).to have_content('There is a problem').or have_content('99999999.99').or have_content('less than or equal to')
+  end
+
   it 'invalidates invalid strings in disbursement costs form' do
     disbursement = claim.disbursements.create
     visit edit_nsm_steps_disbursement_type_path(claim.id, disbursement_id: disbursement.id)

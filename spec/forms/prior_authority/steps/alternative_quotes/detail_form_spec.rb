@@ -241,4 +241,66 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
       end
     end
   end
+
+  describe 'numeric limit validations (QuoteCostValidations)' do
+    let(:file_upload) { nil }
+
+    context 'when items exceeds the integer limit' do
+      let(:items) { NumericLimits::MAX_INTEGER + 1 }
+      let(:cost_per_item) { '10' }
+      let(:service_type) { 'photocopying' }
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:items, :less_than_or_equal_to)).to be(true)
+      end
+    end
+
+    context 'when cost_per_item exceeds the float limit' do
+      let(:items) { '5' }
+      let(:cost_per_item) { NumericLimits::MAX_FLOAT + 1 }
+      let(:service_type) { 'photocopying' }
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:cost_per_item, :less_than_or_equal_to)).to be(true)
+      end
+    end
+
+    context 'when cost_per_hour exceeds the float limit' do
+      let(:period) { 60 }
+      let(:cost_per_hour) { NumericLimits::MAX_FLOAT + 1 }
+      let(:user_chosen_cost_type) { 'per_hour' }
+      let(:service_type) { 'meteorologist' }
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:cost_per_hour, :less_than_or_equal_to)).to be(true)
+      end
+    end
+
+    context 'when period hours exceeds the integer limit' do
+      let(:arguments) do
+        {
+          record: record,
+          application: application,
+          contact_first_name: 'John',
+          contact_last_name: 'Smith',
+          organisation: 'Acme Ltd',
+          postcode: 'SW1 1AA',
+          file_upload: nil,
+          'period(1)': (NumericLimits::MAX_INTEGER + 1).to_s,
+          'period(2)': '0',
+          cost_per_hour: '50',
+          user_chosen_cost_type: 'per_hour',
+        }
+      end
+      let(:service_type) { 'meteorologist' }
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:period, :max_hours)).to be(true)
+      end
+    end
+  end
 end

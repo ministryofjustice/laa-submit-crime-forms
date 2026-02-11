@@ -10,8 +10,11 @@ module Nsm
       attribute :details, :string
       attribute :prior_authority, :value_object, source: YesNoAnswer
 
-      validates :miles, presence: true, is_a_number: true, numericality: { greater_than: 0 }, unless: :other_disbursement_type?
-      validates :total_cost_without_vat, presence: true, numericality: { greater_than: 0 }, is_a_number: true,
+      validates :miles, presence: true, is_a_number: true,
+        numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT },
+        unless: :other_disbursement_type?
+      validates :total_cost_without_vat, presence: true,
+        numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT }, is_a_number: true,
                                          if: :other_disbursement_type?
       validates :details, presence: true
       validates :prior_authority, presence: true, inclusion: { in: YesNoAnswer.values }, if: :other_disbursement_type?
