@@ -36,6 +36,8 @@ metadata:
       SecRuleRemoveById 921110
       SecRuleRemoveById 933210
       SecRuleRemoveById 942230
+      SecRuleRemoveById 932115
+      SecRuleRemoveById 932380
       SecRuleRemoveById 951120
       SecRuleRemoveById 951220
       SecRuleRemoveById 952100
