@@ -73,7 +73,7 @@ runs:
         kubectl config set-context ${K8S_CLUSTER} --cluster=${K8S_CLUSTER} --user=circleci --namespace=${K8S_NAMESPACE}
         kubectl config use-context ${K8S_CLUSTER}
 
-    - name: Delete UAT release
+    - name: Delete Dev release
       id: delete_release
       shell: bash
       run: |
@@ -83,9 +83,20 @@ runs:
         if [[ ! -z "$found" ]]
         then
           helm delete $release_name
-          kubectl delete pvc data-$release_name-postgresql-0
-          kubectl delete pvc redis-data-$release_name-redis-master-0
-          echo "message=\"Deleted UAT release ${release_name}\"" >> $GITHUB_OUTPUT
+          kubectl delete pvc data-$release_name-postgresql-0 --ignore-not-found
+          kubectl delete pvc redis-data-$release_name-redis-master-0 --ignore-not-found
+          # delete any remaining pvcs with the release label
+          kubectl delete pvc -l "release=$release_name" --ignore-not-found
+          # Explicitly delete common resource types with the release label
+          kubectl delete configmap -l "release=$release_name" --ignore-not-found
+          kubectl delete secret -l "release=$release_name" --ignore-not-found
+          kubectl delete service -l "release=$release_name" --ignore-not-found
+          kubectl delete ingress -l "release=$release_name" --ignore-not-found
+          kubectl delete job -l "release=$release_name" --ignore-not-found
+          kubectl delete deployment -l "release=$release_name" --ignore-not-found
+          kubectl delete statefulset -l "release=$release_name" --ignore-not-found
+          kubectl delete replicaset -l "release=$release_name" --ignore-not-found
+          echo "message=\"Deleted Dev release ${release_name}\"" >> $GITHUB_OUTPUT
         else
-          echo "message=\"UAT release, ${release_name}, not found\"" >> $GITHUB_OUTPUT
+          echo "message=\"Dev release, ${release_name}, not found\"" >> $GITHUB_OUTPUT
         fi
