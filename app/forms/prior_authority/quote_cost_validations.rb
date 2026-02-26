@@ -14,11 +14,10 @@ module PriorAuthority
         validates :cost_per_item, cost_item_type_dependant: true
 
         validates :items,
-                  numericality: { only_integer: true, greater_than: 0,
-                                  less_than_or_equal_to: NumericLimits::MAX_INTEGER, allow_blank: true },
+                  numericality: { only_integer: true, less_than_or_equal_to: NumericLimits::MAX_INTEGER, allow_blank: true },
                   is_a_number: true
         validates :cost_per_item,
-                  numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT, allow_blank: true },
+                  numericality: { less_than_or_equal_to: NumericLimits::MAX_FLOAT, allow_blank: true },
                   is_a_number: true
       end
 
