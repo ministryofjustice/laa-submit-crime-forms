@@ -212,13 +212,13 @@ en:
             items:
               blank: Enter the number of %{item_type}
               greater_than: The number of %{item_type} must be more than 0
-              less_than_or_equal_to: The number must be %{count} or less
+              less_than_or_equal_to: The number of %{item_type} must be %{count} or less
               not_a_number: The number of %{item_type} must be a number, like 25
               not_a_whole_number: The number of %{item_type} must be a whole number, like 25
             cost_per_item:
               blank: Enter the cost per %{item_type}
               greater_than: The cost per %{item_type} must be more than 0
-              less_than_or_equal_to: The cost must be %{count} or less
+              less_than_or_equal_to: The cost per %{item_type} must be %{count} or less
               not_a_number: The cost per %{item_type} must be a number, like 25
         prior_authority/steps/travel_detail_form:
           attributes:
