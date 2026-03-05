@@ -36,14 +36,14 @@ module PriorAuthority
     private
 
     def items_within_limit
-      return if items.blank? || !items.is_a?(Numeric)
+      return unless items.present? && items.is_a?(Numeric)
       return unless items > NumericLimits::MAX_INTEGER
 
       errors.add(:items, :less_than_or_equal_to, count: NumericLimits::MAX_INTEGER, item_type: item_type.pluralize)
     end
 
     def cost_per_item_within_limit
-      return if cost_per_item.blank? || !cost_per_item.is_a?(Numeric)
+      return unless cost_per_item.present? && cost_per_item.is_a?(Numeric)
       return unless cost_per_item > NumericLimits::MAX_FLOAT
 
       errors.add(:cost_per_item, :less_than_or_equal_to, count: NumericLimits::MAX_FLOAT,
@@ -51,7 +51,7 @@ module PriorAuthority
     end
 
     def items_greater_than_zero
-      return if items.blank? || !items.is_a?(Numeric)
+      return unless items.present? && items.is_a?(Numeric)
 
       errors.add(:items, :greater_than, item_type: item_type.pluralize) if items.zero?
     end
