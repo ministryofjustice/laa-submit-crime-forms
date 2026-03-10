@@ -253,6 +253,7 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
       it 'is not valid' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:items, :less_than_or_equal_to)).to be(true)
+        expect { form.errors.full_messages }.not_to raise_error
       end
     end
 
@@ -264,6 +265,31 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
       it 'is not valid' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:cost_per_item, :less_than_or_equal_to)).to be(true)
+        expect { form.errors.full_messages }.not_to raise_error
+      end
+    end
+
+    context 'when items is zero' do
+      let(:items) { '0' }
+      let(:cost_per_item) { '10' }
+      let(:service_type) { 'photocopying' }
+
+      it 'uses an item_type-aware greater_than validation message' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:items, :greater_than)).to be(true)
+        expect { form.errors.full_messages }.not_to raise_error
+      end
+    end
+
+    context 'when cost_per_item is zero' do
+      let(:items) { '5' }
+      let(:cost_per_item) { '0' }
+      let(:service_type) { 'photocopying' }
+
+      it 'uses an item_type-aware validation message without raising interpolation errors' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:cost_per_item, :greater_than)).to be(true)
+        expect { form.errors.full_messages }.not_to raise_error
       end
     end
 
