@@ -112,5 +112,34 @@ RSpec.describe ActiveOfficeCodeService do
         end
       end
     end
+
+    context 'when supplying effectiveDate parameter in PDA call' do
+      let(:office_code) { 'AAAAA' }
+      let(:base_url) { "https://provider-api.example.com/provider-offices/#{office_code}/schedules?areaOfLaw=CRIME%20LOWER" }
+
+      context 'when in uat environment' do
+        before do
+          allow(HostEnv).to receive(:uat?).and_return(true)
+          stub_request(:head, "#{base_url}&effectiveDate=01-01-2025").to_return(status: 200)
+        end
+
+        it 'includes effectiveDate of 01-01-2025' do
+          expect(ProviderDataApiClient.contract_active?(office_code)).to eq(:active)
+          expect(WebMock).to have_requested(:head, "#{base_url}&effectiveDate=01-01-2025")
+        end
+      end
+
+      context 'when not in uat environment' do
+        before do
+          allow(HostEnv).to receive(:uat?).and_return(false)
+          stub_request(:head, base_url).to_return(status: 200)
+        end
+
+        it 'does not include effectiveDate' do
+          expect(ProviderDataApiClient.contract_active?(office_code)).to eq(:active)
+          expect(WebMock).to have_requested(:head, base_url)
+        end
+      end
+    end
   end
 end

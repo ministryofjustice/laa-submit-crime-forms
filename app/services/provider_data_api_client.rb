@@ -5,12 +5,16 @@ class ProviderDataApiClient
   headers 'X-Authorization' => ENV.fetch('PROVIDER_API_KEY')
   format :json
 
+  PDA_EFFECTIVE_DATE = '01-01-2025'.freeze
+
   class << self
-    def contract_active?(office_code, effective_date = nil)
+    def contract_active?(office_code)
+      # Set effective_date based on environment
+      effective_date = HostEnv.uat? ? PDA_EFFECTIVE_DATE : nil
       # :nocov: Querying an external API
       params = {
         'areaOfLaw' => 'CRIME LOWER',
-        'effectiveDate' => effective_date&.strftime('%d-%m-%Y')
+        'effectiveDate' => effective_date
       }.compact
       # :nocov:
 
