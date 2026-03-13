@@ -81,6 +81,7 @@ variables:
   eolUrl: https://apply-for-extension-of-upper-limits.dev.form.service.justice.gov.uk/
   allowIndexing: 'false'
   providerApiHost: https://laa-provider-details-api-preprod.apps.live.cloud-platform.service.justice.gov.uk
+  providerApiEffectiveDate: 01-01-2025
 
 service_account:
   name: laa-submit-crime-forms-uat-irsa
