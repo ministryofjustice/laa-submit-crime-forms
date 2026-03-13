@@ -218,7 +218,7 @@ spec:
                   name: app-secrets
                   key: provider_api_key
             - name: PDA_EFFECTIVE_DATE_PARAM
-              value: '{{ .Values.variables.providerApiEffectiveDateParam }}'
+              value: '{{ .Values.variables.providerApiEffectiveDate }}'
             - name: CLAMD_CONF_FILENAME
               value: clamd.cloud-platform.conf
       {{- with .Values.nodeSelector }}
