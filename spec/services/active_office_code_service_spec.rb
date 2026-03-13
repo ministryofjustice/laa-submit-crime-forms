@@ -132,7 +132,6 @@ RSpec.describe ActiveOfficeCodeService do
       context 'when not in uat environment' do
         before do
           allow(HostEnv).to receive(:uat?).and_return(false)
-          stub_request(:head, base_url).to_return(status: 200)
         end
 
         it 'does not include effectiveDate' do
