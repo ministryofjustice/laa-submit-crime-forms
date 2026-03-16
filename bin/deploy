@@ -6,7 +6,6 @@ BRANCH_RELEASE_NAME=$(echo "$CIRCLE_BRANCH" | tr '[:upper:]' '[:lower:]' | sed '
 SHARED_IPS=$(curl -s https://raw.githubusercontent.com/ministryofjustice/laa-ip-allowlist/main/cidrs.txt | tr -d ' ' | tr '\n' ',' | sed 's/,/\\,/g' | sed 's/\\,$//')
 
 deploy_branch() {
-  set_ingress_classname
   # Set the deployment host, this will add the prefix of the branch name e.g crm457-1062-tempor
   RELEASE_HOST="${BRANCH_RELEASE_NAME}-nscc-provider-dev.beta.cloud-platform.service.justice.gov.uk"
   # Set the ingress name, needs release name, namespace and -green suffix
@@ -42,9 +41,6 @@ deploy_main() {
 if [[ "$CIRCLE_BRANCH" == "main" ]]; then
   deploy_main
 else
-  # CRM457-2974 - Remove before merging
-  echo "Ingress Class Name: $INGRESS_CLASS_NAME"
-  echo "Release Host: $RELEASE_HOST"
   if deploy_branch; then
     echo "Deploy succeeded"
   else
