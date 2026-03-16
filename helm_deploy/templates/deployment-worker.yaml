@@ -184,6 +184,11 @@ spec:
                 configMapKeyRef:
                   name: {{ include "laa-submit-crime-forms.fullname" . }}
                   key: PDA_LOGIN_CHECK
+            - name: INGRESS_BETA_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "laa-submit-crime-forms.fullname" . }}
+                  key: INGRESS_BETA_ENABLED
             - name: PROVIDER_API_HOST
               value: '{{ .Values.variables.providerApiHost }}'
             - name: PROVIDER_API_KEY

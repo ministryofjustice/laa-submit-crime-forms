@@ -1,0 +1,20 @@
+#!/bin/sh
+
+NAMESPACE=$1
+
+# Default to main deployment if 2nd arg not provided
+BRANCH_RELEASE_NAME=${2:-laa-submit-crime-forms-app}
+
+echo "Updating configmap with ingress beta on"
+
+kubectl patch configmap $BRANCH_RELEASE_NAME -n $NAMESPACE \
+  --type merge \
+  -p '{"data":{"INGRESS_BETA_ENABLED":"true"}}'
+
+if [ $? -eq 0 ]; then
+  echo "ConfigMap updated successfully"
+  kubectl rollout restart deployment -n $NAMESPACE $BRANCH_RELEASE_NAME
+else
+  echo "Failed to update ConfigMap"
+  exit 1
+fi

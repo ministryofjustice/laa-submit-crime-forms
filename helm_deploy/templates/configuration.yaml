@@ -8,4 +8,5 @@ metadata:
 data:
   MAINTENANCE_MODE: 'false'
   PDA_LOGIN_CHECK: 'false'
+  INGRESS_BETA_ENABLED: 'false'
 {{ end }}
