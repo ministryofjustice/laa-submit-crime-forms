@@ -22,7 +22,6 @@ deploy_branch() {
     --set ingress.annotations."external-dns\.alpha\.kubernetes\.io/set-identifier"="$IDENTIFIER" \
     --set ingress.hosts[0].host="$RELEASE_HOST" \
     --set ingress.tls[0].host="$RELEASE_HOST" \
-    --set ingress.spec.ingressClassName="beta" \
     --set nameOverride="$BRANCH_RELEASE_NAME" \
     --set fullnameOverride="$BRANCH_RELEASE_NAME" \
     --set-string sharedIPs="$SHARED_IPS" \

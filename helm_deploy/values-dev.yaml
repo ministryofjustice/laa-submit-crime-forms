@@ -29,7 +29,7 @@ service:
 
 ingress:
   enabled: true
-  className: modsec
+  className: beta
   whitelist:
     enabled: true
   annotations:
