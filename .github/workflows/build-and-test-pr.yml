@@ -426,10 +426,7 @@ jobs:
 
       - name: Output deployment URL to PR
         run: |
-          RELEASE_HOST="${BRANCH_RELEASE_NAME}-nscc-provider-dev.cloud-platform.service.justice.gov.uk"
-          if [[ "$INGRESS_BETA_ENABLED" == "true" ]]; then
-            RELEASE_HOST="${BRANCH_RELEASE_NAME}-nscc-provider-dev.beta.cloud-platform.service.justice.gov.uk"
-          fi
+          RELEASE_HOST="${BRANCH_RELEASE_NAME}-nscc-provider-dev.beta.cloud-platform.service.justice.gov.uk"
           BRANCH_RELEASE_NAME=$(echo "${{ github.head_ref }}" | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
           echo "### 🚀 Feature branch deployed!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY

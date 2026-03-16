@@ -4,21 +4,11 @@ ENVIRONMENT=$1
 # Convert the branch name into a string that can be turned into a valid URL
 BRANCH_RELEASE_NAME=$(echo "$CIRCLE_BRANCH" | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
 SHARED_IPS=$(curl -s https://raw.githubusercontent.com/ministryofjustice/laa-ip-allowlist/main/cidrs.txt | tr -d ' ' | tr '\n' ',' | sed 's/,/\\,/g' | sed 's/\\,$//')
-INGRESS_CLASS_NAME="modsec"
-
-set_ingress_classname(){
-  if [[ "$INGRESS_BETA_ENABLED" == "true" ]]; then
-    INGRESS_CLASS_NAME="beta"
-  fi
-}
 
 deploy_branch() {
   set_ingress_classname
   # Set the deployment host, this will add the prefix of the branch name e.g crm457-1062-tempor
-  RELEASE_HOST="${BRANCH_RELEASE_NAME}-nscc-provider-dev.cloud-platform.service.justice.gov.uk"
-  if [[ "$INGRESS_BETA_ENABLED" == "true" ]]; then
-    RELEASE_HOST="${BRANCH_RELEASE_NAME}-nscc-provider-dev.beta.cloud-platform.service.justice.gov.uk"
-  fi
+  RELEASE_HOST="${BRANCH_RELEASE_NAME}-nscc-provider-dev.beta.cloud-platform.service.justice.gov.uk"
   # Set the ingress name, needs release name, namespace and -green suffix
   IDENTIFIER="$BRANCH_RELEASE_NAME-laa-submit-crime-forms-dev-green"
   echo "Deploying under release name: '$BRANCH_RELEASE_NAME' with identifier '$IDENTIFIER'..."
@@ -32,7 +22,7 @@ deploy_branch() {
     --set ingress.annotations."external-dns\.alpha\.kubernetes\.io/set-identifier"="$IDENTIFIER" \
     --set ingress.hosts[0].host="$RELEASE_HOST" \
     --set ingress.tls[0].host="$RELEASE_HOST" \
-    --set ingress.spec.ingressClassName="$INGRESS_CLASS_NAME" \
+    --set ingress.spec.ingressClassName="beta" \
     --set nameOverride="$BRANCH_RELEASE_NAME" \
     --set fullnameOverride="$BRANCH_RELEASE_NAME" \
     --set-string sharedIPs="$SHARED_IPS" \
