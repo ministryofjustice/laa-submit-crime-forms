@@ -242,56 +242,14 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
     end
   end
 
-  describe 'numeric limit validations (QuoteCostValidations)' do
+  describe 'per-item validation safety' do
     let(:file_upload) { nil }
 
-    context 'when items exceeds the integer limit' do
-      let(:items) { NumericLimits::MAX_INTEGER + 1 }
-      let(:cost_per_item) { '10' }
-      let(:service_type) { 'photocopying' }
+    it_behaves_like 'safe per-item quote validations'
+  end
 
-      it 'is not valid' do
-        expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:items, :less_than_or_equal_to)).to be(true)
-        expect { form.errors.full_messages }.not_to raise_error
-      end
-    end
-
-    context 'when cost_per_item exceeds the float limit' do
-      let(:items) { '5' }
-      let(:cost_per_item) { NumericLimits::MAX_FLOAT + 1 }
-      let(:service_type) { 'photocopying' }
-
-      it 'is not valid' do
-        expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:cost_per_item, :less_than_or_equal_to)).to be(true)
-        expect { form.errors.full_messages }.not_to raise_error
-      end
-    end
-
-    context 'when items is zero' do
-      let(:items) { '0' }
-      let(:cost_per_item) { '10' }
-      let(:service_type) { 'photocopying' }
-
-      it 'uses an item_type-aware greater_than validation message' do
-        expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:items, :greater_than)).to be(true)
-        expect { form.errors.full_messages }.not_to raise_error
-      end
-    end
-
-    context 'when cost_per_item is zero' do
-      let(:items) { '5' }
-      let(:cost_per_item) { '0' }
-      let(:service_type) { 'photocopying' }
-
-      it 'uses an item_type-aware validation message without raising interpolation errors' do
-        expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:cost_per_item, :greater_than)).to be(true)
-        expect { form.errors.full_messages }.not_to raise_error
-      end
-    end
+  describe 'numeric limit validations (QuoteCostValidations)' do
+    let(:file_upload) { nil }
 
     context 'when cost_per_hour exceeds the float limit' do
       let(:period) { 60 }

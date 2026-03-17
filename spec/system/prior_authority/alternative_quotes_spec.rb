@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Prior authority applications - alternative quote' do
   let(:application) do
-    create(:prior_authority_application, :with_primary_quote, quotes: [build(:quote, :primary_per_item)])
+    create(:prior_authority_application, :with_primary_quote_per_item, service_type: 'photocopying')
   end
 
   before do
@@ -44,8 +44,8 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         fill_in 'Last name', with: 'Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'
         fill_in 'Postcode', with: 'SW1 1AA'
-        fill_in 'Number of items', with: '2'
-        fill_in 'What is the cost per item?', with: '3'
+        fill_in 'Number of pages', with: '2'
+        fill_in 'What is the cost per page?', with: '3'
         click_on 'Save and continue'
 
         expect(page).to have_content "You've added 1 alternative quote"
@@ -57,8 +57,8 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         fill_in 'Last name', with: 'Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'
         fill_in 'Postcode', with: 'SW1 1AA'
-        fill_in 'Number of items', with: '2'
-        fill_in 'What is the cost per item?', with: '3'
+        fill_in 'Number of pages', with: '2'
+        fill_in 'What is the cost per page?', with: '3'
         attach_file(file_fixture('test.png'))
         click_on 'Save and continue'
 
@@ -71,8 +71,8 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         fill_in 'Last name', with: 'Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'
         fill_in 'Postcode', with: 'SW1 1AA'
-        fill_in 'Number of items', with: '1'
-        fill_in 'What is the cost per item?', with: '100'
+        fill_in 'Number of pages', with: '1'
+        fill_in 'What is the cost per page?', with: '100'
         fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_1', with: '1'
         fill_in 'prior_authority_steps_alternative_quotes_detail_form_travel_time_2', with: '0'
         fill_in 'What is the hourly cost?', with: '50'
@@ -92,8 +92,8 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         fill_in 'Last name', with: 'Expert'
         fill_in 'Organisation', with: 'ExpertiseCo'
         fill_in 'Postcode', with: 'SW1 1AA'
-        fill_in 'Number of items', with: '9999999999'
-        fill_in 'What is the cost per item?', with: '9999999999'
+        fill_in 'Number of pages', with: '9999999999'
+        fill_in 'What is the cost per page?', with: '9999999999'
 
         click_on 'Save and continue'
 
@@ -106,8 +106,8 @@ RSpec.describe 'Prior authority applications - alternative quote' do
           fill_in 'Last name', with: 'Expert'
           fill_in 'Organisation', with: 'ExpertiseCo'
           fill_in 'Postcode', with: 'SW1 1AA'
-          fill_in 'Number of items', with: '2'
-          fill_in 'What is the cost per item?', with: '3'
+          fill_in 'Number of pages', with: '2'
+          fill_in 'What is the cost per page?', with: '3'
           click_on 'Save and continue'
         end
 
@@ -212,6 +212,21 @@ RSpec.describe 'Prior authority applications - alternative quote' do
         expect(page)
           .to have_content('Enter the number of pages')
           .and have_content('Enter the cost per page')
+      end
+
+      it 'shows a whole-number validation instead of raising a 500 for decimal page counts' do
+        fill_in 'First name', with: 'Mrs'
+        fill_in 'Last name', with: 'Expert'
+        fill_in 'Organisation', with: 'ExpertiseCo'
+        fill_in 'Postcode', with: 'SW1 1AA'
+        fill_in 'Number of pages', with: '205.70'
+        fill_in 'What is the cost per page?', with: '3'
+
+        click_on 'Save and continue'
+
+        expect(page)
+          .to have_content('There is a problem')
+          .and have_content('The number of pages must be a whole number, like 25')
       end
     end
 
