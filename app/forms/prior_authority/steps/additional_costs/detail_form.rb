@@ -22,17 +22,17 @@ module PriorAuthority
         validates :unit_type, inclusion: { in: UNIT_TYPES, allow_nil: false }
 
         with_options if: :per_item? do
-          validates :items, presence: true,
-            numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }, is_a_number: true
-          validates :cost_per_item, presence: true,
-            numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT }, is_a_number: true
+          validates :items, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+          validate :items_within_limit
+          validates :cost_per_item, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+          validate :cost_per_item_within_limit
         end
 
         with_options if: :per_hour? do
           validates :period, presence: true, time_period: true
           validate :period_hours_within_limit
-          validates :cost_per_hour, presence: true,
-            numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT }, is_a_number: true
+          validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+          validate :cost_per_hour_within_limit
         end
 
         def formatted_total_cost
@@ -73,12 +73,36 @@ module PriorAuthority
 
         private
 
-        def period_hours_within_limit
-          validate_time_period_max_hours(:period, max_hours: NumericLimits::MAX_INTEGER)
-        end
-
         def persist!
           record.update!(attributes.except('id'))
+        end
+
+        def items_within_limit
+          return unless items.present? && items.is_a?(Numeric)
+          return unless items > NumericLimits::MAX_INTEGER
+
+          errors.add(:items, :less_than_or_equal_to, count: NumericLimits::MAX_INTEGER)
+        end
+
+        def cost_per_item_within_limit
+          return unless cost_per_item.present? && cost_per_item.is_a?(Numeric)
+          return unless cost_per_item > NumericLimits::MAX_FLOAT
+
+          errors.add(:cost_per_item, :less_than_or_equal_to, count: NumericLimits::MAX_FLOAT)
+        end
+
+        def period_hours_within_limit
+          return unless period.present? && !period.is_a?(Hash) && period.respond_to?(:hours)
+          return unless period.hours.to_i > NumericLimits::MAX_INTEGER
+
+          errors.add(:period, :max_hours, count: NumericLimits::MAX_INTEGER)
+        end
+
+        def cost_per_hour_within_limit
+          return unless cost_per_hour.present? && cost_per_hour.is_a?(Numeric)
+          return unless cost_per_hour > NumericLimits::MAX_FLOAT
+
+          errors.add(:cost_per_hour, :less_than_or_equal_to, count: NumericLimits::MAX_FLOAT)
         end
 
         def item_cost

@@ -245,6 +245,30 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
   describe 'numeric limit validations (QuoteCostValidations)' do
     let(:file_upload) { nil }
 
+    context 'when items is a decimal string' do
+      let(:items) { '205.70' }
+      let(:cost_per_item) { '10' }
+      let(:service_type) { 'photocopying' }
+
+      it 'adds an item error without raising interpolation errors' do
+        expect(form).not_to be_valid
+        expect(form.errors[:items]).not_to be_empty
+        expect { form.errors.full_messages }.not_to raise_error
+      end
+    end
+
+    context 'when cost_per_item is not numeric' do
+      let(:items) { '5' }
+      let(:cost_per_item) { 'abc' }
+      let(:service_type) { 'photocopying' }
+
+      it 'adds an item-aware error without raising interpolation errors' do
+        expect(form).not_to be_valid
+        expect(form.errors[:cost_per_item]).not_to be_empty
+        expect { form.errors.full_messages }.not_to raise_error
+      end
+    end
+
     context 'when items exceeds the integer limit' do
       let(:items) { NumericLimits::MAX_INTEGER + 1 }
       let(:cost_per_item) { '10' }

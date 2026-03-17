@@ -11,7 +11,8 @@ module Nsm
       validates :first_hearing_date, presence: true,
               multiparam_date: { allow_past: true, allow_future: false }
       validates :number_of_hearing, presence: true, is_a_number: true,
-        numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
+        numericality: { only_integer: true, greater_than: 0 }
+      validate :number_of_hearing_within_limit
       validates :court, presence: true
       validates :youth_court, presence: true, inclusion: { in: YesNoAnswer.values }
       validates :hearing_outcome, presence: true
@@ -39,6 +40,13 @@ module Nsm
         {
           'include_youth_court_fee' => should_reset_youth_court_fields? ? nil : application.include_youth_court_fee,
         }
+      end
+
+      def number_of_hearing_within_limit
+        return unless number_of_hearing.present? && number_of_hearing.is_a?(Numeric)
+        return unless number_of_hearing > NumericLimits::MAX_INTEGER
+
+        errors.add(:number_of_hearing, :less_than_or_equal_to, count: NumericLimits::MAX_INTEGER)
       end
     end
   end

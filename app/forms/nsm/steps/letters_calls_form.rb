@@ -13,9 +13,11 @@ module Nsm
       attribute :calls_uplift, :fully_validatable_integer
 
       validates :letters, is_a_number: true,
-        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER, allow_blank: true }
+        numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
+      validate :letters_within_limit
       validates :calls, is_a_number: true,
-        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER, allow_blank: true }
+        numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
+      validate :calls_within_limit
       validate :zero_letters_uplift_applied
       validates :letters_uplift, presence: true,
         is_a_number: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
@@ -103,6 +105,20 @@ module Nsm
 
       def zero_calls_uplift_applied
         errors.add(:calls_uplift, :uplift_on_zero) if apply_calls_uplift && calls.to_i.zero?
+      end
+
+      def letters_within_limit
+        return unless letters.present? && letters.is_a?(Numeric)
+        return unless letters > NumericLimits::MAX_INTEGER
+
+        errors.add(:letters, :less_than_or_equal_to, count: NumericLimits::MAX_INTEGER)
+      end
+
+      def calls_within_limit
+        return unless calls.present? && calls.is_a?(Numeric)
+        return unless calls > NumericLimits::MAX_INTEGER
+
+        errors.add(:calls, :less_than_or_equal_to, count: NumericLimits::MAX_INTEGER)
       end
     end
   end

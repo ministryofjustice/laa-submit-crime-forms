@@ -12,24 +12,16 @@ module PriorAuthority
       with_options if: :per_item? do
         validates :items, item_type_dependant: true
         validates :cost_per_item, cost_item_type_dependant: true
+        validate :items_greater_than_zero
         validate :items_within_limit
         validate :cost_per_item_within_limit
-        validate :items_greater_than_zero
-
-        validates :items,
-                  numericality: { only_integer: true, allow_blank: true },
-                  is_a_number: true
-        validates :cost_per_item,
-                  numericality: { allow_blank: true },
-                  is_a_number: true
       end
 
       with_options if: :per_hour? do
         validates :period, presence: true, time_period: true
         validate :period_hours_within_limit
-        validates :cost_per_hour, presence: true,
-                  numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT },
-                  is_a_number: true
+        validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+        validate :cost_per_hour_within_limit
       end
     end
 
@@ -60,8 +52,18 @@ module PriorAuthority
       I18n.t("laa_crime_forms_common.prior_authority.service_costs.items.#{cost_item_type}")
     end
 
+    def cost_per_hour_within_limit
+      return unless cost_per_hour.present? && cost_per_hour.is_a?(Numeric)
+      return unless cost_per_hour > NumericLimits::MAX_FLOAT
+
+      errors.add(:cost_per_hour, :less_than_or_equal_to, count: NumericLimits::MAX_FLOAT)
+    end
+
     def period_hours_within_limit
-      validate_time_period_max_hours(:period, max_hours: NumericLimits::MAX_INTEGER)
+      return unless period.present? && !period.is_a?(Hash) && period.respond_to?(:hours)
+      return unless period.hours.to_i > NumericLimits::MAX_INTEGER
+
+      errors.add(:period, :max_hours, count: NumericLimits::MAX_INTEGER)
     end
   end
 end

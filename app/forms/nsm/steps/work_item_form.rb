@@ -63,7 +63,10 @@ module Nsm
       end
 
       def time_spent_hours_within_limit
-        validate_time_period_max_hours(:time_spent, max_hours: NumericLimits::MAX_INTEGER)
+        return unless time_spent.present? && !time_spent.is_a?(Hash) && time_spent.respond_to?(:hours)
+        return unless time_spent.hours.to_i > NumericLimits::MAX_INTEGER
+
+        errors.add(:time_spent, :max_hours, count: NumericLimits::MAX_INTEGER)
       end
 
       def with_uplift_rows

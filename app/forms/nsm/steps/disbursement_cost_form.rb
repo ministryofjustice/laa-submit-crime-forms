@@ -10,12 +10,12 @@ module Nsm
       attribute :details, :string
       attribute :prior_authority, :value_object, source: YesNoAnswer
 
-      validates :miles, presence: true, is_a_number: true,
-        numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT },
+      validates :miles, presence: true, is_a_number: true, numericality: { greater_than: 0 },
         unless: :other_disbursement_type?
-      validates :total_cost_without_vat, presence: true,
-        numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT }, is_a_number: true,
+      validate :miles_within_limit, unless: :other_disbursement_type?
+      validates :total_cost_without_vat, presence: true, numericality: { greater_than: 0 }, is_a_number: true,
                                          if: :other_disbursement_type?
+      validate :total_cost_without_vat_within_limit, if: :other_disbursement_type?
       validates :details, presence: true
       validates :prior_authority, presence: true, inclusion: { in: YesNoAnswer.values }, if: :other_disbursement_type?
 
@@ -68,6 +68,20 @@ module Nsm
           'total_cost_without_vat' => other_disbursement_type? ? total_cost_without_vat : nil,
           'apply_vat' => apply_vat ? 'true' : 'false'
         )
+      end
+
+      def miles_within_limit
+        return unless miles.present? && miles.is_a?(Numeric)
+        return unless miles > NumericLimits::MAX_FLOAT
+
+        errors.add(:miles, :less_than_or_equal_to, count: NumericLimits::MAX_FLOAT)
+      end
+
+      def total_cost_without_vat_within_limit
+        return unless total_cost_without_vat.present? && total_cost_without_vat.is_a?(Numeric)
+        return unless total_cost_without_vat > NumericLimits::MAX_FLOAT
+
+        errors.add(:total_cost_without_vat, :less_than_or_equal_to, count: NumericLimits::MAX_FLOAT)
       end
     end
   end

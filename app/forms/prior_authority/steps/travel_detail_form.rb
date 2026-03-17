@@ -8,9 +8,8 @@ module PriorAuthority
       validates :travel_cost_reason, presence: true, if: :travel_costs_require_justification?
       validates :travel_time, presence: true, time_period: true
       validate :travel_time_hours_within_limit
-      validates :travel_cost_per_hour, presence: true,
-        numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT },
-        is_a_number: true
+      validates :travel_cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+      validate :travel_cost_per_hour_within_limit
 
       def travel_costs_require_justification?
         !application.prison_law && !application.client_detained
@@ -42,12 +41,22 @@ module PriorAuthority
 
       private
 
-      def travel_time_hours_within_limit
-        validate_time_period_max_hours(:travel_time, max_hours: NumericLimits::MAX_INTEGER)
-      end
-
       def persist!
         record.update!(attributes)
+      end
+
+      def travel_time_hours_within_limit
+        return unless travel_time.present? && !travel_time.is_a?(Hash) && travel_time.respond_to?(:hours)
+        return unless travel_time.hours.to_i > NumericLimits::MAX_INTEGER
+
+        errors.add(:travel_time, :max_hours, count: NumericLimits::MAX_INTEGER)
+      end
+
+      def travel_cost_per_hour_within_limit
+        return unless travel_cost_per_hour.present? && travel_cost_per_hour.is_a?(Numeric)
+        return unless travel_cost_per_hour > NumericLimits::MAX_FLOAT
+
+        errors.add(:travel_cost_per_hour, :less_than_or_equal_to, count: NumericLimits::MAX_FLOAT)
       end
     end
   end

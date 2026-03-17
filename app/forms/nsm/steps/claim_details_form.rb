@@ -12,11 +12,14 @@ module Nsm
       attribute :work_completed_date, :multiparam_date
 
       validates :prosecution_evidence, presence: true, is_a_number: true,
-        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
+        numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+      validate :prosecution_evidence_within_limit
       validates :defence_statement, presence: true, is_a_number: true,
-        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
+        numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+      validate :defence_statement_within_limit
       validates :number_of_witnesses, presence: true, is_a_number: true,
-        numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
+        numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+      validate :number_of_witnesses_within_limit
       validates :time_spent, presence: true, time_period: true,
         if: -> { preparation_time == YesNoAnswer::YES }
       validate :time_spent_hours_within_limit, if: -> { preparation_time == YesNoAnswer::YES }
@@ -49,8 +52,32 @@ module Nsm
         )
       end
 
+      def prosecution_evidence_within_limit
+        return unless prosecution_evidence.present? && prosecution_evidence.is_a?(Numeric)
+        return unless prosecution_evidence > NumericLimits::MAX_INTEGER
+
+        errors.add(:prosecution_evidence, :less_than_or_equal_to, count: NumericLimits::MAX_INTEGER)
+      end
+
+      def defence_statement_within_limit
+        return unless defence_statement.present? && defence_statement.is_a?(Numeric)
+        return unless defence_statement > NumericLimits::MAX_INTEGER
+
+        errors.add(:defence_statement, :less_than_or_equal_to, count: NumericLimits::MAX_INTEGER)
+      end
+
+      def number_of_witnesses_within_limit
+        return unless number_of_witnesses.present? && number_of_witnesses.is_a?(Numeric)
+        return unless number_of_witnesses > NumericLimits::MAX_INTEGER
+
+        errors.add(:number_of_witnesses, :less_than_or_equal_to, count: NumericLimits::MAX_INTEGER)
+      end
+
       def time_spent_hours_within_limit
-        validate_time_period_max_hours(:time_spent, max_hours: NumericLimits::MAX_INTEGER)
+        return unless time_spent.present? && !time_spent.is_a?(Hash) && time_spent.respond_to?(:hours)
+        return unless time_spent.hours.to_i > NumericLimits::MAX_INTEGER
+
+        errors.add(:time_spent, :max_hours, count: NumericLimits::MAX_INTEGER)
       end
     end
   end
