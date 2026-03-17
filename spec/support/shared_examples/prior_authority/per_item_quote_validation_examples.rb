@@ -1,4 +1,4 @@
-RSpec.shared_examples 'safe per-item quote validations' do
+RSpec.shared_examples 'per-item quote validation behaviour' do
   let(:service_type) { 'photocopying' }
   let(:items) { '1' }
   let(:cost_per_item) { '10' }
@@ -6,7 +6,7 @@ RSpec.shared_examples 'safe per-item quote validations' do
   let(:cost_per_hour) { nil }
   let(:user_chosen_cost_type) { nil }
 
-  def expect_single_validation_error(attribute, expected_error, expected_message)
+  def expect_single_error(attribute, expected_error, expected_message)
     expect(form).not_to be_valid
     expect(form.errors.details.fetch(attribute).map { |detail| detail.fetch(:error) }).to eq([expected_error])
 
@@ -19,7 +19,7 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:items) { nil }
 
     it 'uses an item-aware blank message' do
-      expect_single_validation_error(:items, :blank, 'Enter the number of pages')
+      expect_single_error(:items, :blank, 'Enter the number of pages')
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:items) { '' }
 
     it 'uses an item-aware blank message' do
-      expect_single_validation_error(:items, :blank, 'Enter the number of pages')
+      expect_single_error(:items, :blank, 'Enter the number of pages')
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:items) { 'abc' }
 
     it 'uses an item-aware number message only' do
-      expect_single_validation_error(:items, :not_a_number, 'The number of pages must be a number, like 25')
+      expect_single_error(:items, :not_a_number, 'The number of pages must be a number, like 25')
     end
   end
 
@@ -43,8 +43,8 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:items) { '205.70' }
 
     it 'uses an item-aware whole-number message only' do
-      expect_single_validation_error(:items, :not_a_whole_number,
-                                     'The number of pages must be a whole number, like 25')
+      expect_single_error(:items, :not_a_whole_number,
+                          'The number of pages must be a whole number, like 25')
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:items) { '0' }
 
     it 'uses an item-aware greater-than message only' do
-      expect_single_validation_error(:items, :greater_than, 'The number of pages must be more than 0')
+      expect_single_error(:items, :greater_than, 'The number of pages must be more than 0')
     end
   end
 
@@ -60,7 +60,7 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:items) { '-1' }
 
     it 'uses an item-aware greater-than message only' do
-      expect_single_validation_error(:items, :greater_than, 'The number of pages must be more than 0')
+      expect_single_error(:items, :greater_than, 'The number of pages must be more than 0')
     end
   end
 
@@ -68,8 +68,8 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:items) { (NumericLimits::MAX_INTEGER + 1).to_s }
 
     it 'uses an item-aware limit message only' do
-      expect_single_validation_error(:items, :less_than_or_equal_to,
-                                     "The number of pages must be #{NumericLimits::MAX_INTEGER} or less")
+      expect_single_error(:items, :less_than_or_equal_to,
+                          "The number of pages must be #{NumericLimits::MAX_INTEGER} or less")
     end
   end
 
@@ -77,7 +77,7 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:cost_per_item) { nil }
 
     it 'uses an item-aware blank message' do
-      expect_single_validation_error(:cost_per_item, :blank, 'Enter the cost per page')
+      expect_single_error(:cost_per_item, :blank, 'Enter the cost per page')
     end
   end
 
@@ -85,7 +85,7 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:cost_per_item) { '' }
 
     it 'uses an item-aware blank message' do
-      expect_single_validation_error(:cost_per_item, :blank, 'Enter the cost per page')
+      expect_single_error(:cost_per_item, :blank, 'Enter the cost per page')
     end
   end
 
@@ -93,7 +93,7 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:cost_per_item) { 'abc' }
 
     it 'uses an item-aware number message only' do
-      expect_single_validation_error(:cost_per_item, :not_a_number, 'The cost per page must be a number, like 25')
+      expect_single_error(:cost_per_item, :not_a_number, 'The cost per page must be a number, like 25')
     end
   end
 
@@ -101,7 +101,7 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:cost_per_item) { '0' }
 
     it 'uses an item-aware greater-than message only' do
-      expect_single_validation_error(:cost_per_item, :greater_than, 'The cost per page must be more than 0')
+      expect_single_error(:cost_per_item, :greater_than, 'The cost per page must be more than 0')
     end
   end
 
@@ -109,7 +109,7 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:cost_per_item) { '-1' }
 
     it 'uses an item-aware greater-than message only' do
-      expect_single_validation_error(:cost_per_item, :greater_than, 'The cost per page must be more than 0')
+      expect_single_error(:cost_per_item, :greater_than, 'The cost per page must be more than 0')
     end
   end
 
@@ -117,8 +117,8 @@ RSpec.shared_examples 'safe per-item quote validations' do
     let(:cost_per_item) { (NumericLimits::MAX_FLOAT + 1).to_s }
 
     it 'uses an item-aware limit message only' do
-      expect_single_validation_error(:cost_per_item, :less_than_or_equal_to,
-                                     "The cost per page must be #{NumericLimits::MAX_FLOAT} or less")
+      expect_single_error(:cost_per_item, :less_than_or_equal_to,
+                          "The cost per page must be #{NumericLimits::MAX_FLOAT} or less")
     end
   end
 

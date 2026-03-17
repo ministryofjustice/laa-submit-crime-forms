@@ -242,10 +242,10 @@ RSpec.describe PriorAuthority::Steps::AlternativeQuotes::DetailForm do
     end
   end
 
-  describe 'per-item validation safety' do
+  describe 'per-item validation behaviour' do
     let(:file_upload) { nil }
 
-    it_behaves_like 'safe per-item quote validations'
+    it_behaves_like 'per-item quote validation behaviour'
   end
 
   describe 'numeric limit validations (QuoteCostValidations)' do

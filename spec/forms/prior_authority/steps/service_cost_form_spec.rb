@@ -42,8 +42,8 @@ RSpec.describe PriorAuthority::Steps::ServiceCostForm do
     rule.cost_type == :variable ? 'per_item' : nil
   end
 
-  describe 'per-item validation safety' do
-    it_behaves_like 'safe per-item quote validations'
+  describe 'per-item validation behaviour' do
+    it_behaves_like 'per-item quote validation behaviour'
   end
 
   describe 'item-aware validation messages across per-item services' do
