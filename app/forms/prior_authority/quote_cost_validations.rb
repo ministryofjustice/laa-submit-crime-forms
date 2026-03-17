@@ -4,24 +4,16 @@ module PriorAuthority
   module QuoteCostValidations
     extend ActiveSupport::Concern
 
+    DECIMAL_NUMBER_PATTERN = /\A-?(?:\d[\d,]*\.\d+|\.\d+)\z/
+
     included do
       validates :user_chosen_cost_type,
                 inclusion: { in: PriorAuthority::Steps::QuoteCostForm::COST_TYPES, allow_nil: false },
                 if: :variable_cost_type?
 
       with_options if: :per_item? do
-        validates :items, item_type_dependant: true
-        validates :cost_per_item, cost_item_type_dependant: true
-        validate :items_within_limit
-        validate :cost_per_item_within_limit
-        validate :items_greater_than_zero
-
-        validates :items,
-                  numericality: { only_integer: true, allow_blank: true },
-                  is_a_number: true
-        validates :cost_per_item,
-                  numericality: { allow_blank: true },
-                  is_a_number: true
+        validate :validate_items
+        validate :validate_cost_per_item
       end
 
       with_options if: :per_hour? do
@@ -35,29 +27,41 @@ module PriorAuthority
 
     private
 
-    def items_within_limit
-      return unless items.present? && items.is_a?(Numeric)
-      return unless items > NumericLimits::MAX_INTEGER
-
-      errors.add(:items, :less_than_or_equal_to, count: NumericLimits::MAX_INTEGER, item_type: item_type.pluralize)
+    def validate_items
+      if items.blank?
+        errors.add(:items, :blank, item_type: translated_item_type)
+      elsif items.is_a?(String)
+        errors.add(:items, decimal_number?(items) ? :not_a_whole_number : :not_a_number, item_type: translated_item_type)
+      elsif items <= 0
+        errors.add(:items, :greater_than, item_type: translated_item_type)
+      elsif items > NumericLimits::MAX_INTEGER
+        errors.add(:items, :less_than_or_equal_to, count: NumericLimits::MAX_INTEGER, item_type: translated_item_type)
+      end
     end
 
-    def cost_per_item_within_limit
-      return unless cost_per_item.present? && cost_per_item.is_a?(Numeric)
-      return unless cost_per_item > NumericLimits::MAX_FLOAT
-
-      errors.add(:cost_per_item, :less_than_or_equal_to, count: NumericLimits::MAX_FLOAT,
-                 item_type: translated_cost_item_type)
-    end
-
-    def items_greater_than_zero
-      return unless items.present? && items.is_a?(Numeric)
-
-      errors.add(:items, :greater_than, item_type: item_type.pluralize) if items.zero?
+    def validate_cost_per_item
+      if cost_per_item.blank?
+        errors.add(:cost_per_item, :blank, item_type: translated_cost_item_type)
+      elsif cost_per_item.is_a?(String)
+        errors.add(:cost_per_item, :not_a_number, item_type: translated_cost_item_type)
+      elsif cost_per_item <= 0
+        errors.add(:cost_per_item, :greater_than, item_type: translated_cost_item_type)
+      elsif cost_per_item > NumericLimits::MAX_FLOAT
+        errors.add(:cost_per_item, :less_than_or_equal_to, count: NumericLimits::MAX_FLOAT,
+                   item_type: translated_cost_item_type)
+      end
     end
 
     def translated_cost_item_type
       I18n.t("laa_crime_forms_common.prior_authority.service_costs.items.#{cost_item_type}")
+    end
+
+    def translated_item_type
+      item_type.pluralize
+    end
+
+    def decimal_number?(value)
+      value.delete(',').match?(DECIMAL_NUMBER_PATTERN)
     end
 
     def period_hours_within_limit
