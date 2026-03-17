@@ -44,6 +44,18 @@ RSpec.describe PriorAuthority::Steps::ServiceCostForm do
 
   describe 'per-item validation behaviour' do
     it_behaves_like 'per-item quote validation behaviour'
+
+    context 'when a raw item string normalizes to blank during decimal detection' do
+      before do
+        allow(form).to receive(:items).and_return(' , ')
+      end
+
+      it 'treats the value as not a number without raising an interpolation error' do
+        expect(form).not_to be_valid
+        expect(form.errors.details.fetch(:items).map { |detail| detail.fetch(:error) }).to eq([:not_a_number])
+        expect { form.errors.full_messages }.not_to raise_error
+      end
+    end
   end
 
   describe 'item-aware validation messages across per-item services' do
