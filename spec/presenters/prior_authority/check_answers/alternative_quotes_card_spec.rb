@@ -41,20 +41,19 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
       end
 
       it 'generates expected rows' do
-        rows = card.row_data.sort_by { |row| row[:head_opts][:count] }
-        expect(rows).to eq(
+        expect(card.row_data).to eq(
           [
             {
               head_key: 'quote_summary',
               head_opts: { count: 1 },
-              text: 'John Boy<br>£100.00'
+              text: "Jim Bob<br><a class=\"govuk-link\" href=\"/downloads/#{document.id}\">test.png</a>" \
+                    '<br>£50.00'
             },
             {
               head_key: 'quote_summary',
               head_opts: { count: 2 },
-              text: "Jim Bob<br><a class=\"govuk-link\" href=\"/downloads/#{document.id}\">test.png</a>" \
-                    '<br>£50.00'
-            }
+              text: 'John Boy<br>£100.00'
+            },
           ]
         )
       end
