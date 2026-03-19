@@ -8,4 +8,5 @@ metadata:
 data:
   MAINTENANCE_MODE: 'false'
   PDA_LOGIN_CHECK: 'false'
+  OFFICE_CODE_CHECK_FALLBACK: 'false'
 {{ end }}
