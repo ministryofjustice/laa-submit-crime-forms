@@ -16,7 +16,10 @@ RSpec.describe ActiveOfficeCodeService do
     end
 
     before do
-      allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: true))
+      allow(FeatureFlags).to receive_messages(
+        provider_api_login_check: double(:provider_api_login_check, enabled?: true),
+        office_code_check_fallback: double(:office_code_check_fallback, enabled?: true)
+      )
       office_code_a_stub
       office_code_b_stub
       Rails.configuration.x.office_code_overrides.active_office_codes = office_codes
@@ -24,7 +27,10 @@ RSpec.describe ActiveOfficeCodeService do
 
     context 'when the login check is disabled' do
       before do
-        allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: false))
+        allow(FeatureFlags).to receive_messages(
+          provider_api_login_check: double(:provider_api_login_check, enabled?: false),
+          office_code_check_fallback: double(:office_code_check_fallback, enabled?: true)
+        )
         office_code_a_stub
         office_code_b_stub
       end
@@ -73,12 +79,26 @@ RSpec.describe ActiveOfficeCodeService do
       let(:office_codes) { ['1A123B'] }
 
       before do
-        allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: false))
+        allow(FeatureFlags).to receive_messages(
+          provider_api_login_check: double(:provider_api_login_check, enabled?: false),
+          office_code_check_fallback: double(:office_code_check_fallback, enabled?: true)
+        )
         Rails.configuration.x.office_code_overrides.active_office_codes = office_codes
       end
 
       it 'returns it as active' do
         expect(subject).to eq office_codes
+      end
+
+      context 'when the office code fallback is disabled' do
+        before do
+          allow(FeatureFlags).to receive(:office_code_check_fallback).and_return(double(:office_code_check_fallback,
+                                                                                        enabled?: false))
+        end
+
+        it 'returns it as inactive' do
+          expect(subject).to eq []
+        end
       end
     end
 
@@ -87,7 +107,10 @@ RSpec.describe ActiveOfficeCodeService do
 
       context 'when PDA is disabled' do
         before do
-          allow(FeatureFlags).to receive(:provider_api_login_check).and_return(double(:provider_api_login_check, enabled?: false))
+          allow(FeatureFlags).to receive_messages(
+            provider_api_login_check: double(:provider_api_login_check, enabled?: false),
+            office_code_check_fallback: double(:office_code_check_fallback, enabled?: true)
+          )
         end
 
         context 'with local negative override' do
