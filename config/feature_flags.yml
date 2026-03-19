@@ -26,7 +26,7 @@ feature_flags:
     uat: <%= ENV.fetch("PDA_LOGIN_CHECK", true) %>
     production: <%= ENV.fetch("PDA_LOGIN_CHECK", true) %>
   office_code_check_fallback:
-    local: <%= ENV.fetch("OFFICE_CODE_CHECK_FALLBACK", false) %>
-    development: <%= ENV.fetch("OFFICE_CODE_CHECK_FALLBACK", false) %>
+    local: true
+    development: true
     uat: <%= ENV.fetch("OFFICE_CODE_CHECK_FALLBACK", false) %>
     production: <%= ENV.fetch("OFFICE_CODE_CHECK_FALLBACK", false) %>
