@@ -210,11 +210,6 @@ spec:
                 configMapKeyRef:
                   name: {{ include "laa-submit-crime-forms.fullname" . }}
                   key: PDA_LOGIN_CHECK
-            - name: OFFICE_CODE_CHECK_FALLBACK
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "laa-submit-crime-forms.fullname" . }}
-                  key: OFFICE_CODE_CHECK_FALLBACK
             - name: PROVIDER_API_HOST
               value: '{{ .Values.variables.providerApiHost }}'
             - name: PROVIDER_API_KEY

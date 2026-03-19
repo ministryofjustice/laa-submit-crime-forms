@@ -28,5 +28,5 @@ feature_flags:
   office_code_check_fallback:
     local: true
     development: true
-    uat: <%= ENV.fetch("OFFICE_CODE_CHECK_FALLBACK", false) %>
-    production: <%= ENV.fetch("OFFICE_CODE_CHECK_FALLBACK", false) %>
+    uat: false
+    production: false
