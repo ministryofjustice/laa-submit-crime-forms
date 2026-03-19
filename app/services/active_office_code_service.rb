@@ -16,7 +16,7 @@ class ActiveOfficeCodeService
       case result
       when :active then true
       when :inactive then false
-      when :unavailable then known_active_code?(office_code)
+      when :unavailable then FeatureFlags.office_code_check_fallback.enabled? && known_active_code?(office_code)
       # Can't trigger this as contract_active? only returns on the
       # the symbols above
       # :nocov:
