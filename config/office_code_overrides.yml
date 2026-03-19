@@ -1,7 +1,7 @@
 # List of providers office codes that we want to manually mark as inactive or active
 # This takes precedence over what the Provider API returns
 # Note from 19/03/2026: This list is out of date, we should only use it in production if permission is explicitly granted.
-# Login will not fallback to this list unless the OFFICE_CODE_CHECK_FALLBACK feature flag is enabled, which is disabled by default in all environments.
+# Login will not fallback to this list unless the OFFICE_CODE_CHECK_FALLBACK feature flag is enabled (enabled in local/development, disabled by default in uat/production).
 localhost:
   active_office_codes:
     - 1A123B
