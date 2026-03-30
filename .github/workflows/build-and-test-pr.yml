@@ -152,7 +152,7 @@ jobs:
 
       - name: Upload code coverage results
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
         with:
           name: coverage-results-${{ matrix.test-type }}
           path: coverage
@@ -160,7 +160,7 @@ jobs:
 
       - name: Upload Capybara screenshots (on test failure)
         if: failure() && matrix.needs-chrome == true
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
         with:
           name: capybara-screenshots
           path: tmp/capybara
@@ -183,7 +183,7 @@ jobs:
           bundler-cache: true
 
       - name: Download coverage results from all test types
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
           pattern: coverage-results-*
           path: coverage_results
@@ -193,7 +193,7 @@ jobs:
 
       - name: Upload final coverage artifact
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
         with:
           name: coverage-final
           path: coverage
