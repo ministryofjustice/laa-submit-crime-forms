@@ -3,15 +3,15 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem "aws-sdk-s3", '~> 1.213'
-gem 'bootsnap', '~> 1.21.1', require: false
+gem "aws-sdk-s3", '~> 1.218'
+gem 'bootsnap', '~> 1.23.0', require: false
 gem 'clamby', '~> 1.6'
 gem 'cssbundling-rails'
 gem 'devise', '~> 5.0'
 gem 'factory_bot_rails', '>= 6.4.3'
 gem 'faker'
 gem 'govuk-components', '5.13.1'
-gem 'govuk_design_system_formbuilder', '>= 5.4', '< 5.14'
+gem 'govuk_design_system_formbuilder', '>= 5.4', '< 6.1'
 gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'grover'
 gem "httparty", '>= 0.24.0'
@@ -30,17 +30,17 @@ gem 'pg', '~> 1.6'
 gem 'prometheus_exporter'
 gem 'propshaft'
 gem 'puma', '~> 7.2.0'
-gem 'rails', '~> 8.1.2'
+gem 'rails', '~> 8.1.3'
 gem 'redis'
 gem 'rexml'
-gem 'sentry-rails', '~> 6.3.0'
+gem 'sentry-rails', '~> 6.3.1'
 gem 'sentry-ruby', '~> 6.3.0'
 gem 'sidekiq', '~> 8.1'
 gem 'sidekiq_alive', '~> 2.5'
 gem 'sidekiq-cron'
 gem 'solid_cache', '~> 1.0'
 gem 'table_print'
-gem 'turbo-rails', '~> 2.0.22'
+gem 'turbo-rails', '~> 2.0.23'
 gem 'tzinfo-data'
 gem 'uk_postcode'
 gem 'with_advisory_lock'
@@ -55,7 +55,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec_junit_formatter', require: false
-  gem 'rspec-rails', '~> 8.0.2'
+  gem 'rspec-rails', '~> 8.0.4'
 end
 
 group :development do
