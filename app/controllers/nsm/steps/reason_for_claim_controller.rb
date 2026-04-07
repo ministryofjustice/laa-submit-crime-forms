@@ -14,7 +14,7 @@ module Nsm
       private
 
       def additional_permitted_params
-        [reasons_for_claim: []]
+        [{ reasons_for_claim: [] }]
       end
     end
   end
