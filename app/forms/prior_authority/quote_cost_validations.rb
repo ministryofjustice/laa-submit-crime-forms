@@ -18,10 +18,12 @@ module PriorAuthority
 
         validates :items,
                   numericality: { only_integer: true, allow_blank: true },
-                  is_a_number: true
+                  is_a_number: true,
+                  unless: -> { items.is_a?(String) }
         validates :cost_per_item,
                   numericality: { allow_blank: true },
-                  is_a_number: true
+                  is_a_number: true,
+                  unless: -> { cost_per_item.is_a?(String) }
       end
 
       with_options if: :per_hour? do
