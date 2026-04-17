@@ -44,7 +44,8 @@ After you've defined your DB configuration in the above files, run the following
 We utilise [ClamAV](https://www.clamav.net/) and [Clamby](https://github.com/kobaltz/clamby) within this
 application to scan files before saving them to ensure that they are clear of malware where possible. The
 brewfile above will install ClamAV on your system but will not configure it. Run the following script to
-both brew install clamav (if needed) and configure for use with this app.
+both brew install clamav (if needed) and configure for use with this app. Note that if you don't want to 
+use ClamAV when running the services locally, you can set the `CLAMBY_ENABLED` environment variable to `false`. 
 
 ```shell
 bin/install_clamav_on_mac
