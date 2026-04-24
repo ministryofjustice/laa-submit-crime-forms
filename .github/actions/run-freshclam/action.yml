@@ -20,6 +20,12 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Mask sensitive inputs
+      shell: bash
+      run: |
+        echo "::add-mask::${{ inputs.k8s_token }}"
+        echo "::add-mask::${{ inputs.k8s_cluster_cert }}"
+
     - name: Authenticate to the cluster
       id: authenticate_to_cluster
       shell: bash
