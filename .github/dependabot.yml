@@ -3,10 +3,13 @@ updates:
 - package-ecosystem: bundler
   directory: "/"
   schedule:
-    interval: weekly
-    day: wednesday
+    interval: daily
     time: "03:00"
     timezone: Europe/London
+  cooldown:
+    semver-major-days: 14
+    semver-minor-days: 7
+    semver-patch-days: 2
   ignore:
     - dependency-name: "govuk-components" # TODO: CRM457-2751: Need to ignore until we can upgrade
   groups:
@@ -21,10 +24,13 @@ updates:
     - dependency-name: "puppeteer-core"
     - dependency-name: "govuk-frontend" # Need to ignore for now until we're ready for the banner deprecation
   schedule:
-    interval: weekly
-    day: wednesday
+    interval: daily
     time: "03:00"
     timezone: Europe/London
+  cooldown:
+    semver-major-days: 14
+    semver-minor-days: 7
+    semver-patch-days: 2
   groups:
     npm-babel:
       patterns:
