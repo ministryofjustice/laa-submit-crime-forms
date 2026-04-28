@@ -131,7 +131,6 @@ module Search
     # and so for simplicity we translate the app store's preferred names for these
     # as our standard
     def unified_sort_by
-      # rubocop:disable Lint/DuplicateBranch
       case query_params[:sort_by]
       when 'defendant', 'client'
         'client_name'
@@ -146,9 +145,8 @@ module Search
       when 'laa_reference'
         'laa_reference'
       else
-        'last_state_change'
+        'test'
       end
-      # rubocop:enable Lint/DuplicateBranch
     end
 
     def local_order
