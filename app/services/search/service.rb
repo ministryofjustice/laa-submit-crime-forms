@@ -131,6 +131,7 @@ module Search
     # and so for simplicity we translate the app store's preferred names for these
     # as our standard
     def unified_sort_by
+      # rubocop:disable Lint/DuplicateBranch
       case query_params[:sort_by]
       when 'defendant', 'client'
         'client_name'
@@ -140,9 +141,14 @@ module Search
         'last_state_change'
       when 'state'
         'status_with_assignment'
+      when 'ufn'
+        'ufn'
+      when 'laa_reference'
+        'laa_reference'
       else
-        query_params.fetch(:sort_by, 'last_state_change')
+        'last_state_change'
       end
+      # rubocop:enable Lint/DuplicateBranch
     end
 
     def local_order

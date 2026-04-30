@@ -18,6 +18,10 @@ The instructions assume you have [Homebrew](https://brew.sh) installed in your m
 * `gem install bundler`
 * `bundle install`
 
+#### Install Prek for the pre-commit hooks to work
+* `brew install prek`
+* execute `prek install` in the repository to install the pre-commit hooks
+
 **2. Configuration**
 
 * Copy `.env.development` to `.env.development.local` and modify with suitable values for your local machine
@@ -44,7 +48,8 @@ After you've defined your DB configuration in the above files, run the following
 We utilise [ClamAV](https://www.clamav.net/) and [Clamby](https://github.com/kobaltz/clamby) within this
 application to scan files before saving them to ensure that they are clear of malware where possible. The
 brewfile above will install ClamAV on your system but will not configure it. Run the following script to
-both brew install clamav (if needed) and configure for use with this app.
+both brew install clamav (if needed) and configure for use with this app. Note that if you don't want to
+use ClamAV when running the services locally, you can set the `CLAMBY_ENABLED` environment variable to `false`.
 
 ```shell
 bin/install_clamav_on_mac

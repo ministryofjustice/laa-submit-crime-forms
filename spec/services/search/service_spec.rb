@@ -27,5 +27,11 @@ RSpec.describe Search::Service do
 
       it { expect(subject).to eq('status_with_assignment') }
     end
+
+    context 'when sorting by LAA reference' do
+      let(:sort_by) { 'laa_reference' }
+
+      it { expect(subject).to eq('laa_reference') }
+    end
   end
 end
