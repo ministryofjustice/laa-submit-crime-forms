@@ -35,6 +35,33 @@ RSpec.describe TestData::DataProfile do
     end
   end
 
+  describe '.normalize_ratio' do
+    it 'accepts ratios between zero and one' do
+      expect(described_class.normalize_ratio('HIGH_VOLUME_CLAIM_RATIO', '0.6')).to eq 0.6
+    end
+
+    it 'rejects ratios below zero' do
+      expect { described_class.normalize_ratio('HIGH_VOLUME_CLAIM_RATIO', '-0.1') }.to raise_error(
+        ArgumentError,
+        'HIGH_VOLUME_CLAIM_RATIO must be a decimal between 0 and 1'
+      )
+    end
+
+    it 'rejects ratios above one' do
+      expect { described_class.normalize_ratio('HIGH_VOLUME_OFFICE_RATIO', '1.1') }.to raise_error(
+        ArgumentError,
+        'HIGH_VOLUME_OFFICE_RATIO must be a decimal between 0 and 1'
+      )
+    end
+
+    it 'rejects malformed ratios' do
+      expect { described_class.normalize_ratio('HIGH_VOLUME_OFFICE_RATIO', 'many') }.to raise_error(
+        ArgumentError,
+        'HIGH_VOLUME_OFFICE_RATIO must be a decimal between 0 and 1'
+      )
+    end
+  end
+
   describe '#providers' do
     it 'creates provider users with generated office codes' do
       profile = described_class.new(provider_count: 2, office_code_count: 4, seed: 1)

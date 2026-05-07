@@ -1,14 +1,23 @@
 # rubocop:disable Metrics/BlockLength
 namespace :submit_dummy_data do
+  prevent_production_run = lambda do
+    raise 'Do not run on production' if HostEnv.production?
+  end
+
   desc 'Submit dummy prior authority data to the app store'
   task prior_authority: :environment do
+    prevent_production_run.call
+
     application = FactoryBot.build(:prior_authority_application, :full, id: SecureRandom.uuid,
                                    created_at: DateTime.current, updated_at: DateTime.current, state: :submitted)
     SubmitToAppStore.new.submit(application)
   end
 
-  desc 'Submit bulk dummy prior authority data to the app store for a given year'
+  desc 'Submit bulk dummy PA data; args: [bulk,year,providers,office_codes,max_versions]; ' \
+       'ENV: SLEEP, VERSION_MIX, HIGH_VOLUME_OFFICE_RATIO, HIGH_VOLUME_CLAIM_RATIO'
   task :bulk_prior_authority, [:bulk, :year, :providers, :office_codes, :max_versions] => :environment do |_task, args|
+    prevent_production_run.call
+
     args.with_defaults(bulk: 100, year: 2023, providers: 1, office_codes: 1, max_versions: 1)
 
     $stdout.print "Will create #{args[:bulk]} PA/CRM4's for the year #{args[:year]} " \
@@ -32,14 +41,19 @@ namespace :submit_dummy_data do
 
   desc 'Resubmit a proportion of sent-back prior authority applications'
   task :prior_authority_rfi, [:percentage] => :environment do |_task, args|
+    prevent_production_run.call
+
     $stdout.print "Will resubmit #{args[:percentage]}% of PA/CRM4's in the sent_back state: Are you sure? (y/n): "
     input = $stdin.gets.strip
 
     TestData::PaResubmitter.new.resubmit(args[:percentage].to_i) if input.downcase.in?(%w[yes y])
   end
 
-  desc 'Submit bulk dummy NSM data to the app store for a given year'
+  desc 'Submit bulk dummy NSM data; args: [bulk,large,year,providers,office_codes,max_versions]; ' \
+       'ENV: SLEEP, VERSION_MIX, CLAIM_TYPE_MIX, HIGH_VOLUME_OFFICE_RATIO, HIGH_VOLUME_CLAIM_RATIO'
   task :bulk_nsm, [:bulk, :large, :year, :providers, :office_codes, :max_versions] => :environment do |_task, args|
+    prevent_production_run.call
+
     args.with_defaults(bulk: 100, large: 4, year: 2023, providers: 1, office_codes: 1, max_versions: 1)
 
     $stdout.print "Will create #{args[:bulk]} NSM/CRM7's, #{args[:large]} large, for the year #{args[:year]} " \

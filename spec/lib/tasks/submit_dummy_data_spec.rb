@@ -33,6 +33,15 @@ describe 'submit_dummy_data:', type: :task do
                                                          max_versions: 1, seed: nil, version_mix: nil, sleep: true)
     end
 
+    it 'does not run in production' do
+      allow(HostEnv).to receive(:production?).and_return(true)
+
+      expect { Rake::Task['submit_dummy_data:bulk_prior_authority'].execute }.to raise_error(
+        'Do not run on production'
+      )
+      expect(builder).not_to have_received(:build_many)
+    end
+
     it 'builds the test data for the specified args' do
       Rake::Task['submit_dummy_data:bulk_prior_authority'].invoke(200, 2020)
       expect(builder).to have_received(:build_many).with(bulk: 200, year: 2020, providers: 1, office_codes: 1,
@@ -71,6 +80,13 @@ describe 'submit_dummy_data:', type: :task do
       expect(builder).to have_received(:build_many).with(bulk: 100, large: 4, year: 2023, providers: 1,
                                                          office_codes: 1, max_versions: 1, seed: nil,
                                                          version_mix: nil, sleep: true, claim_type_mix: nil)
+    end
+
+    it 'does not run in production' do
+      allow(HostEnv).to receive(:production?).and_return(true)
+
+      expect { Rake::Task['submit_dummy_data:bulk_nsm'].execute }.to raise_error('Do not run on production')
+      expect(builder).not_to have_received(:build_many)
     end
 
     it 'builds the test data for the specified args' do

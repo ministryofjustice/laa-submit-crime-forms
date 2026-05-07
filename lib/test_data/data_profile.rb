@@ -5,6 +5,7 @@ module TestData
     DEFAULT_HIGH_VOLUME_OFFICE_RATIO = 0.1
     DEFAULT_HIGH_VOLUME_CLAIM_RATIO = 0.6
     DEFAULT_VERSION_MIX = { 1 => 80, 2 => 15, 3 => 5 }.freeze
+    RATIO_ERROR = '%<name>s must be a decimal between 0 and 1'.freeze
 
     attr_reader :provider_count, :office_code_count, :max_versions
 
@@ -31,14 +32,22 @@ module TestData
       raise ArgumentError, 'VERSION_MIX must use positive integer version:weight pairs, e.g. 1:80,2:15,3:5'
     end
 
+    def self.normalize_ratio(name, raw_value)
+      Float(raw_value).tap do |ratio|
+        raise ArgumentError unless ratio.between?(0, 1)
+      end
+    rescue ArgumentError, TypeError
+      raise ArgumentError, format(RATIO_ERROR, name:)
+    end
+
     def initialize(provider_count: 1, office_code_count: 1, max_versions: 1, seed: nil,
                    high_volume_office_ratio: DEFAULT_HIGH_VOLUME_OFFICE_RATIO,
                    high_volume_claim_ratio: DEFAULT_HIGH_VOLUME_CLAIM_RATIO, version_mix: nil)
       @provider_count = [provider_count.to_i, 1].max
       @office_code_count = [office_code_count.to_i, 1].max
       @random = seed.present? ? Random.new(seed.to_i) : Random.new
-      @high_volume_office_ratio = high_volume_office_ratio.to_f
-      @high_volume_claim_ratio = high_volume_claim_ratio.to_f
+      @high_volume_office_ratio = self.class.normalize_ratio('HIGH_VOLUME_OFFICE_RATIO', high_volume_office_ratio)
+      @high_volume_claim_ratio = self.class.normalize_ratio('HIGH_VOLUME_CLAIM_RATIO', high_volume_claim_ratio)
       @version_mix = self.class.normalize_version_mix(version_mix) || default_version_mix_for(max_versions.to_i)
       @max_versions = @version_mix.present? ? @version_mix.keys.max : [max_versions.to_i, 1].max
     end
