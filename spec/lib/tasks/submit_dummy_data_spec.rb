@@ -22,18 +22,46 @@ describe 'submit_dummy_data:', type: :task do
 
     before do
       Rails.application.load_tasks if Rake::Task.tasks.empty?
+      Rake::Task['submit_dummy_data:bulk_prior_authority'].reenable
       allow($stdin).to receive(:gets).and_return 'y'
       allow(TestData::PaBuilder).to receive(:new).and_return(builder)
     end
 
     it 'builds the test data with defaults' do
       Rake::Task['submit_dummy_data:bulk_prior_authority'].execute
-      expect(builder).to have_received(:build_many).with(bulk: 100, year: 2023)
+      expect(builder).to have_received(:build_many).with(bulk: 100, year: 2023, providers: 1, office_codes: 1,
+                                                         max_versions: 1, seed: nil, version_mix: nil, sleep: true)
+    end
+
+    it 'does not run in production' do
+      allow(HostEnv).to receive(:production?).and_return(true)
+
+      expect { Rake::Task['submit_dummy_data:bulk_prior_authority'].execute }.to raise_error(
+        'Do not run on production'
+      )
+      expect(builder).not_to have_received(:build_many)
     end
 
     it 'builds the test data for the specified args' do
       Rake::Task['submit_dummy_data:bulk_prior_authority'].invoke(200, 2020)
-      expect(builder).to have_received(:build_many).with(bulk: 200, year: 2020)
+      expect(builder).to have_received(:build_many).with(bulk: 200, year: 2020, providers: 1, office_codes: 1,
+                                                         max_versions: 1, seed: nil, version_mix: nil, sleep: true)
+    end
+
+    it 'passes optional volume data controls to the builder' do
+      Rake::Task['submit_dummy_data:bulk_prior_authority'].invoke(200, 2020, 12, 80, 3)
+      expect(builder).to have_received(:build_many).with(bulk: 200, year: 2020, providers: 12, office_codes: 80,
+                                                         max_versions: 3, seed: nil, version_mix: nil, sleep: true)
+    end
+
+    it 'passes configured version weights to the builder' do
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with('VERSION_MIX', nil).and_return('1:80,2:15,3:5')
+
+      Rake::Task['submit_dummy_data:bulk_prior_authority'].invoke(200, 2020, 12, 80, 3)
+      expect(builder).to have_received(:build_many).with(bulk: 200, year: 2020, providers: 12, office_codes: 80,
+                                                         max_versions: 3, seed: nil,
+                                                         version_mix: { 1 => 80, 2 => 15, 3 => 5 }, sleep: true)
     end
   end
 
@@ -42,18 +70,59 @@ describe 'submit_dummy_data:', type: :task do
 
     before do
       Rails.application.load_tasks if Rake::Task.tasks.empty?
+      Rake::Task['submit_dummy_data:bulk_nsm'].reenable
       allow($stdin).to receive(:gets).and_return 'y'
       allow(TestData::NsmBuilder).to receive(:new).and_return(builder)
     end
 
     it 'builds the test data with defaults' do
       Rake::Task['submit_dummy_data:bulk_nsm'].execute
-      expect(builder).to have_received(:build_many).with(bulk: 100, large: 4, year: 2023)
+      expect(builder).to have_received(:build_many).with(bulk: 100, large: 4, year: 2023, providers: 1,
+                                                         office_codes: 1, max_versions: 1, seed: nil,
+                                                         version_mix: nil, sleep: true, claim_type_mix: nil)
+    end
+
+    it 'does not run in production' do
+      allow(HostEnv).to receive(:production?).and_return(true)
+
+      expect { Rake::Task['submit_dummy_data:bulk_nsm'].execute }.to raise_error('Do not run on production')
+      expect(builder).not_to have_received(:build_many)
     end
 
     it 'builds the test data for the specified args' do
       Rake::Task['submit_dummy_data:bulk_nsm'].invoke(300, 30, 2020)
-      expect(builder).to have_received(:build_many).with(bulk: 300, large: 30, year: 2020)
+      expect(builder).to have_received(:build_many).with(bulk: 300, large: 30, year: 2020, providers: 1,
+                                                         office_codes: 1, max_versions: 1, seed: nil,
+                                                         version_mix: nil, sleep: true, claim_type_mix: nil)
+    end
+
+    it 'passes optional volume data controls to the builder' do
+      Rake::Task['submit_dummy_data:bulk_nsm'].invoke(300, 30, 2020, 12, 80, 3)
+      expect(builder).to have_received(:build_many).with(bulk: 300, large: 30, year: 2020, providers: 12,
+                                                         office_codes: 80, max_versions: 3, seed: nil,
+                                                         version_mix: nil, sleep: true, claim_type_mix: nil)
+    end
+
+    it 'passes configured version weights to the builder' do
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with('VERSION_MIX', nil).and_return('1:80,2:15,3:5')
+
+      Rake::Task['submit_dummy_data:bulk_nsm'].invoke(300, 30, 2020, 12, 80, 3)
+      expect(builder).to have_received(:build_many).with(bulk: 300, large: 30, year: 2020, providers: 12,
+                                                         office_codes: 80, max_versions: 3, seed: nil,
+                                                         version_mix: { 1 => 80, 2 => 15, 3 => 5 }, sleep: true,
+                                                         claim_type_mix: nil)
+    end
+
+    it 'rejects invalid claim type weights before building' do
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with('CLAIM_TYPE_MIX', nil).and_return('nsm:80,bio:20')
+
+      expect { Rake::Task['submit_dummy_data:bulk_nsm'].invoke(300, 30, 2020, 12, 80, 3) }.to raise_error(
+        ArgumentError,
+        'CLAIM_TYPE_MIX supports nsm, boi, breach, supplemental, enhanced_rates with positive integer weights'
+      )
+      expect(builder).not_to have_received(:build_many)
     end
   end
 

@@ -73,7 +73,34 @@ Also, some functionality in the dashboard will make use of this datastore.
 For active development, and to debug or diagnose issues, running the datastore locally along the Apply application is
 the recommended way. Follow the instructions in the above repository to setup and run the datastore locally.
 
-**6. Sidekiq Auth**
+**6. Generate submitted test data**
+
+The dummy data tasks submit CRM4 and CRM7 records to the app store, so the app store must be running first.
+
+```shell
+bin/rails 'submit_dummy_data:bulk_prior_authority[bulk,year,providers,office_codes,max_versions]'
+bin/rails 'submit_dummy_data:bulk_nsm[bulk,large,year,providers,office_codes,max_versions]'
+```
+
+The existing leading arguments keep their original meaning. The extra arguments are optional and let you create
+broader provider and office-code cardinality plus multiple app store versions per submission.
+
+For example:
+
+```shell
+SLEEP=false HIGH_VOLUME_OFFICE_RATIO=0.1 HIGH_VOLUME_CLAIM_RATIO=0.6 VERSION_MIX=1:80,2:15,3:5 \
+  CLAIM_TYPE_MIX=nsm:80,boi:5,supplemental:15 \
+  bin/rails 'submit_dummy_data:bulk_nsm[1000,25,2025,20,200,3]'
+```
+
+This creates 1,000 normal CRM7 claims, 25 large CRM7 claims, 20 providers, 200 office codes, and 1-3 versions
+per claim. `HIGH_VOLUME_OFFICE_RATIO` controls how many office codes are treated as high-volume, and
+`HIGH_VOLUME_CLAIM_RATIO` controls how many claims are routed to those office codes. `VERSION_MIX` controls the
+weighted version distribution; when `max_versions` is greater than 1 and `VERSION_MIX` is omitted, the provisional
+default is `1:80,2:15,3:5`. `CLAIM_TYPE_MIX` is CRM7-only and supports `nsm`, `boi`, `supplemental`, and
+`enhanced_rates`.
+
+**7. Sidekiq Auth**
 
 We currently protect the sidekiq UI on production servers (Dev, UAT, Prod, Dev-CRM4) with basic auth.
 
@@ -91,7 +118,7 @@ kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | j
 kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | jq -r '.password' | base64 --decode && echo " "
 ```
 
-**7. Documentation**
+**8. Documentation**
 
 This codebase was originally built by taking a bunch of code from the Crime Apply codebase and extracting it into a gem
 called LaaMultiStepForms, which sat in a sub-folder of this repo. The hope was apparently that Crime Apply would start using
@@ -112,7 +139,7 @@ some more specific subclasses with NSCC-specific details. The original documenta
 * [TimePeriodAndFormBuilderUpgrade](/docs/TimePeriodAndFormBuilderUpgrade.md)
 
 
-**8. Tests**
+**9. Tests**
 The test suite is setup with `flatware` to allow tests to run in parallel. In order to set this up, first do `RAILS_ENV=test bundle exec flatware fan rake db:test:prepare`.
 
 To run the test suite, run `bundle exec flatware rspec`.
@@ -121,7 +148,7 @@ To run those, run `INCLUDE_ACCESSIBILITY_SPECS=true bundle exec flatware rspec`.
 Our test suite will report as failing if line and branch coverage is not at 100%.
 We expect every feature's happy path to have a system test, and every screen to have an accessibility test.
 
-**9. Development end-to-end setup**
+**10. Development end-to-end setup**
 
 see [Development e2e setup](docs/development-e2e-setup.md)
 
