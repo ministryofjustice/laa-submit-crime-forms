@@ -19,7 +19,7 @@ if ENV.fetch('SENTRY_DSN', nil).present?
       transaction_context = sampling_context[:transaction_context]
       transaction_name = transaction_context[:name]
 
-      transaction_name.in?(EXCLUDE_PATHS) ? 0.0 : 0.05
+      transaction_name.in?(EXCLUDE_PATHS) ? 0.0 : 0.2
     end
 
     # Opt in to new Rails error reporting API
