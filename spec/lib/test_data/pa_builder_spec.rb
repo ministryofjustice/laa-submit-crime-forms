@@ -12,9 +12,41 @@ RSpec.describe TestData::PaBuilder do
       expect { subject.build_many(bulk: 2, sleep: false) }.to change(PriorAuthorityApplication, :count).by(2)
     end
 
+    it 'creates applications across generated providers and office codes' do
+      subject.build_many(bulk: 4, providers: 2, office_codes: 4, high_volume_claim_ratio: 0, sleep: false)
+
+      expect(Provider.where("email LIKE 'test-data-provider-%@example.com'").count).to eq 2
+      expect(PriorAuthorityApplication.distinct.pluck(:office_code).count).to be > 1
+      expect(PriorAuthorityApplication.includes(:provider)).to all(
+        satisfy { |application| application.provider.office_codes.include?(application.office_code) }
+      )
+    end
+
+    it 'returns summary statistics for the generated data' do
+      result = subject.build_many(bulk: 3, providers: 2, office_codes: 3, sleep: false)
+
+      expect(result).to include(
+        providers: 2,
+        office_codes: 3,
+        applications: 3,
+        versions: 3,
+      )
+      expect(result[:applications_per_office_code].values.sum).to eq 3
+    end
+
+    it 'submits additional app store versions when configured' do
+      submitter = instance_spy(SubmitToAppStore, submit: true)
+      allow(SubmitToAppStore).to receive(:new).and_return(submitter)
+
+      result = subject.build_many(bulk: 3, version_mix: { 1 => 1, 2 => 1, 3 => 1 }, sleep: false)
+
+      expect(result[:versions]).to eq 6
+      expect(submitter).to have_received(:submit).exactly(6).times
+    end
+
     it 'can applications claims for a specific year' do
       subject.build_many(bulk: 2, year: 2020, sleep: false)
-      data = PriorAuthorityApplication.pluck(:ufn)
+      data = PriorAuthorityApplication.order(:created_at).last(2).pluck(:ufn)
 
       expect(data.count).to eq(2)
 
@@ -51,6 +83,15 @@ RSpec.describe TestData::PaBuilder do
       it 'runs raises and error' do
         expect { subject.build_many }.to raise_error('Invalid for CaseContact')
       end
+    end
+  end
+
+  describe '#log' do
+    it 'prints outside the test environment' do
+      allow(Rails.env).to receive(:test?).and_return(false)
+      expect(subject).to receive(:print).with('message')
+
+      subject.send(:log, 'message')
     end
   end
 
