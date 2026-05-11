@@ -62,6 +62,15 @@ bin/rails submit_dummy_data:bulk_prior_authority[10]
 bin/rails submit_dummy_data:bulk_nsm[10]
 ```
 
+The same tasks can generate broader volume-test datasets with optional provider, office-code, and version controls:
+
+```sh
+SLEEP=false bin/rails 'submit_dummy_data:bulk_prior_authority[1000,2025,20,200,3]'
+SLEEP=false HIGH_VOLUME_OFFICE_RATIO=0.1 HIGH_VOLUME_CLAIM_RATIO=0.6 VERSION_MIX=1:80,2:15,3:5 \
+  CLAIM_TYPE_MIX=nsm:80,boi:5,supplemental:15 \
+  bin/rails 'submit_dummy_data:bulk_nsm[1000,25,2025,20,200,3]'
+```
+
 ## Trouble shooting
 
 - Missing translation errors in provider app
@@ -80,4 +89,3 @@ bin/rails submit_dummy_data:bulk_nsm[10]
   # .env.development.local
   GOVUK_NOTIFY_API_KEY=not-a-real-key
   ```
-
