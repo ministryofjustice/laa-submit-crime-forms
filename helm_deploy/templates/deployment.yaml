@@ -221,6 +221,8 @@ spec:
               value: '{{ .Values.variables.providerApiEffectiveDate }}'
             - name: CLAMD_CONF_FILENAME
               value: clamd.cloud-platform.conf
+            - name: SENTRY_TRACE_SAMPLE_RATE
+              value: '{{ .Values.variables.sentryTraceSampleRate }}'
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
