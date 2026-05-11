@@ -93,3 +93,5 @@ postgresql:
 # Instead of a temporary redis pod we use Elasticache
 redis:
   enabled: false
+
+sentryTraceSampleRate: 0.2

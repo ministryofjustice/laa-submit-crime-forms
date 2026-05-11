@@ -143,4 +143,5 @@ redis:
   auth:
     enabled: true
     password: redis
-
+    
+sentryTraceSampleRate: 0.05
