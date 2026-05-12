@@ -24,6 +24,7 @@ RSpec.describe 'NSM claims lists', :stub_oauth_token do
       body:  {
         'sort_by' => nil,
         'per_page' => 10,
+        'include_total_results' => false,
         'application_type' => 'crm7',
         'account_number' => %w[1A123B 9A123B],
         'status_with_assignment' => %w[in_progress not_assigned provider_updated]
