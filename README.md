@@ -82,13 +82,27 @@ bin/rails 'submit_dummy_data:bulk_prior_authority[bulk,year,providers,office_cod
 bin/rails 'submit_dummy_data:bulk_nsm[bulk,large,year,providers,office_codes,max_versions]'
 ```
 
+By default in local/development environments, the bulk tasks use the primary dev login provider
+`provider@example.com` with office codes `1A123B` and `2A555X`, so generated records are visible when logging in
+as the primary test user.
+
+To use a specific existing provider, pass `PROVIDER_EMAIL` or `PROVIDER_UID`. `OFFICE_CODES` is optional, and must be
+a comma-separated subset of the selected provider's office codes.
+
+```shell
+SLEEP=false PROVIDER_EMAIL=provider@example.com OFFICE_CODES=1A123B,2A555X \
+  bin/rails 'submit_dummy_data:bulk_nsm[100,0,2025]'
+```
+
 The existing leading arguments keep their original meaning. The extra arguments are optional and let you create
-broader provider and office-code cardinality plus multiple app store versions per submission.
+broader provider and office-code cardinality plus multiple app store versions per submission. Set
+`PROVIDER_MODE=generated` when you want generated providers and generated office codes for high-cardinality testing.
 
 For example:
 
 ```shell
-SLEEP=false HIGH_VOLUME_OFFICE_RATIO=0.1 HIGH_VOLUME_CLAIM_RATIO=0.6 VERSION_MIX=1:80,2:15,3:5 \
+SLEEP=false PROVIDER_MODE=generated \
+  HIGH_VOLUME_OFFICE_RATIO=0.1 HIGH_VOLUME_CLAIM_RATIO=0.6 VERSION_MIX=1:80,2:15,3:5 \
   CLAIM_TYPE_MIX=nsm:80,boi:5,supplemental:15 \
   bin/rails 'submit_dummy_data:bulk_nsm[1000,25,2025,20,200,3]'
 ```

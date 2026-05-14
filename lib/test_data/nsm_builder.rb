@@ -44,7 +44,8 @@ module TestData
         seed: seed,
         high_volume_office_ratio: high_volume_office_ratio,
         high_volume_claim_ratio: high_volume_claim_ratio,
-        version_mix: version_mix
+        version_mix: version_mix,
+        provider_source: ProviderSource.from_environment(provider_count: providers, office_code_count: office_codes)
       )
       summary = summary_for(profile)
 

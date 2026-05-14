@@ -1,7 +1,14 @@
 <% title 'Dev login' %>
 <% if FeatureFlags.omniauth_test_mode.enabled? %>
+  <%
+    primary_dev_login_path = provider_entra_id_omniauth_callback_path(
+      provider: :entra_id,
+      uid: DevLoginProvider::UID,
+      info: DevLoginProvider.info
+    )
+  %>
 
-  <%= link_button nil, provider_entra_id_omniauth_callback_path(provider: :entra_id, uid: 'test-user', info: {  email: 'provider@example.com', office_codes: ['1A123B', '2A555X'], first_name: 'Test', last_name: 'User', }), class: 'govuk-button--start govuk-!-margin-top-4' do %>
+  <%= link_button nil, primary_dev_login_path, class: 'govuk-button--start govuk-!-margin-top-4' do %>
     Log in as primary test user (CRM7/4/5)
       <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
           <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
@@ -32,4 +39,41 @@
     </svg>
   <% end %>
   <br>
+
+  <% if @test_data_providers.any? %>
+    <h2 class="govuk-heading-m">Generated test providers</h2>
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-visually-hidden">Generated test providers</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Email</th>
+          <th scope="col" class="govuk-table__header">Office codes</th>
+          <th scope="col" class="govuk-table__header">Action</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @test_data_providers.each do |provider| %>
+          <%
+            generated_provider_login_path = provider_entra_id_omniauth_callback_path(
+              provider: :entra_id,
+              uid: provider.uid,
+              info: {
+                email: provider.email,
+                office_codes: provider.office_codes,
+                first_name: provider.first_name,
+                last_name: provider.last_name
+              }
+            )
+          %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= provider.email %></td>
+            <td class="govuk-table__cell"><%= provider.office_codes.join(', ') %></td>
+            <td class="govuk-table__cell">
+              <%= link_button "Log in as #{provider.email}", generated_provider_login_path, class: 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
 <% end %>

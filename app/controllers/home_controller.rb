@@ -6,5 +6,7 @@ class HomeController < ApplicationController
     @notification_banner = NotificationBanner.active_banner
   end
 
-  def dev_login; end
+  def dev_login
+    @test_data_providers = Provider.where('email LIKE ?', 'test-data-provider-%@example.com').order(:email)
+  end
 end
