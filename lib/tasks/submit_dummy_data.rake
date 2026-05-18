@@ -14,7 +14,7 @@ namespace :submit_dummy_data do
   end
 
   desc 'Submit bulk dummy PA data; args: [bulk,year,providers,office_codes,max_versions]; ' \
-       'ENV: SLEEP, VERSION_MIX, HIGH_VOLUME_OFFICE_RATIO, HIGH_VOLUME_CLAIM_RATIO'
+       'ENV: SLEEP, VERSION_MIX, HIGH_VOLUME_OFFICE_RATIO, HIGH_VOLUME_CLAIM_RATIO, PROVIDER_MODE'
   task :bulk_prior_authority, [:bulk, :year, :providers, :office_codes, :max_versions] => :environment do |_task, args|
     prevent_production_run.call
 
@@ -50,7 +50,7 @@ namespace :submit_dummy_data do
   end
 
   desc 'Submit bulk dummy NSM data; args: [bulk,large,year,providers,office_codes,max_versions]; ' \
-       'ENV: SLEEP, VERSION_MIX, CLAIM_TYPE_MIX, HIGH_VOLUME_OFFICE_RATIO, HIGH_VOLUME_CLAIM_RATIO'
+       'ENV: SLEEP, VERSION_MIX, CLAIM_TYPE_MIX, HIGH_VOLUME_OFFICE_RATIO, HIGH_VOLUME_CLAIM_RATIO, PROVIDER_MODE'
   task :bulk_nsm, [:bulk, :large, :year, :providers, :office_codes, :max_versions] => :environment do |_task, args|
     prevent_production_run.call
 
