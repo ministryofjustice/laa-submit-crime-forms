@@ -21,7 +21,7 @@
 }
 
 .aside-task-list {
-  border-top: 3px solid $govuk-brand-colour;
+  border-top: 3px solid govuk-functional-colour(brand);
   @include govuk-responsive-margin(5, "left", $adjustment: 0);
   @include govuk-responsive-padding(5, "top", $adjustment: 0);
 }

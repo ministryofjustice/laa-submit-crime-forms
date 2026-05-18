@@ -1,6 +1,6 @@
 @use "../_imports.scss" as *;
 
 .aside-generic {
-  border-top: 2px solid $govuk-brand-colour;
+  border-top: 2px solid govuk-functional-colour(brand);
   @include govuk-responsive-padding(2, "top", $adjustment: 0);
 }
