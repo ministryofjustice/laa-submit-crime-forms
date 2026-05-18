@@ -1,9 +1,9 @@
 @use "../../_imports.scss" as *;
 
-$app-uat-colour: govuk-colour("orange");
-$app-staging-colour: govuk-colour("turquoise");
-$app-dev-colour: govuk-colour("pink");
-$app-local-colour: govuk-colour("bright-purple");
+$app-uat-colour: govuk-colour("orange",$variant: "primary");
+$app-staging-colour: govuk-colour("teal", $variant: "primary");
+$app-dev-colour: govuk-colour("magenta", $variant: "primary");
+$app-local-colour: govuk-colour("purple", $variant: "primary");
 
 .app-environment-uat {
   .govuk-header__container {
