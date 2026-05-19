@@ -396,7 +396,7 @@ RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
 
       within('.govuk-summary-card', text: 'Claim status') do
         expect(page)
-          .to have_content('£833.42 claimed')
+          .to have_content('£833.43 claimed')
           .and have_content('£504.26 allowed')
       end
 
@@ -417,7 +417,7 @@ RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
         # the fact that granteds should show adjusted amounts for transpanrency.
         within('.govuk-summary-card', text: 'Claim status') do
           expect(page)
-            .to have_content('£833.42 claimed')
+            .to have_content('£833.43 claimed')
             .and have_content('£504.26 allowed')
         end
       end
@@ -547,7 +547,7 @@ RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
 
         within('.govuk-summary-card', text: 'Claim status') do
           expect(page)
-            .to have_content('£833.42 claimed')
+            .to have_content('£833.43 claimed')
             .and have_content('£0.00 allowed')
         end
       end
@@ -578,14 +578,14 @@ RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
       expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
         [
           'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-          'Profit costs', '£355.98', '£71.20', '£427.18', '£175.95', '£35.19', '£211.14',
+          'Profit costs', '£355.99', '£71.20', '£427.19', '£175.95', '£35.19', '£211.14',
           'Disbursements', '£330.00', '£10.00', '£340.00', '£255.00', '£5.00', '£260.00',
           'Travel', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
           'Waiting', '£27.60', '£5.52', '£33.12', '£13.80', '£2.76', '£16.56',
           'Total',
-          'Sum of net cost claimed: £741.18',
+          'Sum of net cost claimed: £741.19',
           'Sum of VAT on claimed: £92.24',
-          'Sum of net cost and VAT on claimed: £833.42',
+          'Sum of net cost and VAT on claimed: £833.43',
           'Sum of net cost allowed: £458.55',
           'Sum of VAT on allowed: £45.71',
           'Sum of net cost and VAT on allowed: £504.26'
@@ -605,14 +605,14 @@ RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
         expect(all('#cost-summary-table table td, #cost-summary-table table th').map(&:text)).to eq(
           [
             'Item', 'Net cost claimed', 'VAT claimed', 'Total claimed', 'Net cost allowed', 'VAT allowed', 'Total allowed',
-            'Profit costs', '£355.98', '£0.00', '£355.98', '£175.95', '£0.00', '£175.95',
+            'Profit costs', '£355.99', '£0.00', '£355.99', '£175.95', '£0.00', '£175.95',
             'Disbursements', '£330.00', '£10.00', '£340.00', '£255.00', '£5.00', '£260.00',
             'Travel', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
             'Waiting', '£27.60', '£0.00', '£27.60', '£13.80', '£0.00', '£13.80',
             'Total',
-            'Sum of net cost claimed: £741.18',
+            'Sum of net cost claimed: £741.19',
             'Sum of VAT on claimed: £10.00',
-            'Sum of net cost and VAT on claimed: £751.18',
+            'Sum of net cost and VAT on claimed: £751.19',
             'Sum of net cost allowed: £458.55',
             'Sum of VAT on allowed: £5.00',
             'Sum of net cost and VAT on allowed: £463.55'
@@ -636,8 +636,8 @@ RSpec.describe 'View claim page', :stub_oauth_token, type: :system do
           'Attendance with counsel', '1 hour:30 minutes', '£53.52', '0 hours:45 minutes', '£26.76',
           'Attendance without counsel', '1 hour:30 minutes', '£78.23', '0 hours:45 minutes', '£39.11',
           'Preparation', '1 hour:44 minutes', '£90.39', '0 hours:52 minutes', '£45.20',
-          'Advocacy', '1 hour:44 minutes', '£113.39', '0 hours:52 minutes', '£56.70',
-          'Total', '', 'Sum of net cost claimed: £390.73', '', 'Sum of net cost allowed: £195.37'
+          'Advocacy', '1 hour:44 minutes', '£113.40', '0 hours:52 minutes', '£56.70',
+          'Total', '', 'Sum of net cost claimed: £390.74', '', 'Sum of net cost allowed: £195.37'
         ]
       )
     end
