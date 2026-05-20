@@ -78,6 +78,17 @@ RSpec.describe TestData::DataProfile do
 
       expect(provider_office_codes.combination(2).map { |left, right| left & right }).to all(be_empty)
     end
+
+    it 'uses a selected provider source when configured' do
+      provider = create(:provider, :other, office_codes: %w[1A123B 2A555X])
+      source = TestData::ProviderSource.new(providers: [provider], office_codes: provider.office_codes)
+      profile = described_class.new(provider_source: source)
+
+      expect(profile.providers).to eq [provider]
+      expect(profile.office_codes).to eq %w[1A123B 2A555X]
+      expect(profile.provider_count).to eq 1
+      expect(profile.office_code_count).to eq 2
+    end
   end
 
   describe '#assignment_for' do
