@@ -1,7 +1,7 @@
 module PriorAuthority
   module Steps
     class ReasonWhyForm < ::Steps::BaseFormObject
-      attribute :reason_why, :string
+      attribute :reason_why, :uri_decoded_string
       validates :reason_why, presence: true, length: { maximum: 2000 }
 
       delegate :supporting_documents, to: :application

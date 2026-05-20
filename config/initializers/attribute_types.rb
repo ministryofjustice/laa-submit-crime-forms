@@ -1,3 +1,5 @@
+require Rails.root.join('app/attributes/type/uri_decoded_string')
+
 ActiveModel::Type.register(:string, LaaCrimeFormsCommon::Type::StrippedString)
 ActiveModel::Type.register(:value_object, LaaCrimeFormsCommon::Type::ValueObject)
 ActiveModel::Type.register(:multiparam_date, LaaCrimeFormsCommon::Type::MultiparamDate)
@@ -7,3 +9,4 @@ ActiveModel::Type.register(:fully_validatable_integer, LaaCrimeFormsCommon::Type
 ActiveModel::Type.register(:fully_validatable_decimal, LaaCrimeFormsCommon::Type::FullyValidatableDecimal)
 ActiveModel::Type.register(:possibly_translated_string, LaaCrimeFormsCommon::Type::PossiblyTranslatedString)
 ActiveModel::Type.register(:possibly_translated_array, LaaCrimeFormsCommon::Type::PossiblyTranslatedArray)
+ActiveModel::Type.register(:uri_decoded_string, Type::UriDecodedString)
