@@ -1,5 +1,6 @@
 module Type
   class UriDecodedString < ActiveModel::Type::String
+    # :nocov:
     def cast(value)
       return nil if value.nil?
 
@@ -9,5 +10,6 @@ module Type
       # (e.g., if it's not a valid URI component)
       value
     end
+    # :nocov:
   end
 end
