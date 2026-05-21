@@ -63,6 +63,17 @@ RSpec.describe TestData::NsmBuilder do
       expect(Claim.includes(:submitter)).to all(satisfy { |claim| claim.submitter.office_codes.include?(claim.office_code) })
     end
 
+    it 'uses the primary dev provider for the default local data shape' do
+      allow(HostEnv).to receive_messages(local?: true, development?: false)
+
+      subject.build_many(bulk: 1, large: 0, sleep: false)
+
+      expect(Claim.last).to have_attributes(
+        submitter: have_attributes(email: 'provider@example.com'),
+        office_code: be_in(%w[1A123B 2A555X])
+      )
+    end
+
     it 'returns summary statistics for the generated data' do
       result = subject.build_many(bulk: 2, large: 1, providers: 2, office_codes: 3, sleep: false)
 
