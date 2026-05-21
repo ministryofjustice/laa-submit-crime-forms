@@ -41,8 +41,6 @@ metadata:
       SecRuleRemoveById 952100
       SecRuleUpdateTargetById 932115 "!ARGS"
       SecRuleUpdateTargetById 932380 "!ARGS"
-      SecRule REQUEST_URI "@endsWith /steps/reason_why" "id:1001001,phase:1,pass,log,msg:\"Excluding RCE rules (932230/235/250) for reason_why\",ctl:ruleRemoveTargetById=932230;ARGS:prior_authority_steps_reason_why_form[reason_why],ctl:ruleRemoveTargetById=932235;ARGS:prior_authority_steps_reason_why_form[reason_why],ctl:ruleRemoveTargetById=932250;ARGS:prior_authority_steps_reason_why_form[reason_why]"
-      SecRule REQUEST_URI "@endsWith /steps/alternative_quotes" "id:1001002,phase:1,pass,log,msg:\"Excluding RCE rules (932230/235/250) for no_alternative_quote_reason\",ctl:ruleRemoveTargetById=932230;ARGS:prior_authority_steps_alternative_quotes_overview_form[no_alternative_quote_reason],ctl:ruleRemoveTargetById=932235;ARGS:prior_authority_steps_alternative_quotes_overview_form[no_alternative_quote_reason],ctl:ruleRemoveTargetById=932250;ARGS:prior_authority_steps_alternative_quotes_overview_form[no_alternative_quote_reason]"
     external-dns.alpha.kubernetes.io/aws-weight: "100"
     {{- toYaml . | nindent 4 }}
   {{- end }}
