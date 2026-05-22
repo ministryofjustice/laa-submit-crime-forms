@@ -11,7 +11,7 @@ module ApplicationHelper
   end
 
   def multiline_text(string)
-    simple_format(h(string))
+    ApplicationController.helpers.sanitize(string.gsub("\n", '<br>'), tags: %w[br])
   end
 
   def relevant_prior_authority_list_anchor(prior_authority_application)
