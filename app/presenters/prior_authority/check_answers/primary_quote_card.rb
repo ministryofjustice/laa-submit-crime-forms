@@ -115,7 +115,7 @@ module PriorAuthority
           check_missing(organisation_details)
         ].compact.join('<br>')
 
-        sanitize(service_details_html, tags: %w[br strong])
+        simple_format(service_details_html)
       end
 
       def document_link

@@ -16,7 +16,7 @@ module Nsm
         [
           {
             head_key: 'reasons_for_claim',
-            text: ApplicationController.helpers.sanitize(reasons_text, tags: %w[br strong])
+            text: simple_format(reasons_text)
           }
         ] + additional_fields
       end

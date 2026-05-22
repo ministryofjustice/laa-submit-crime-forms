@@ -83,7 +83,7 @@ module Nsm
 
         formatted_string = address.compact.join('<br>')
 
-        ApplicationController.helpers.sanitize(formatted_string, tags: %w[br strong])
+        simple_format(formatted_string)
       end
 
       # we only want to add the missing data tag

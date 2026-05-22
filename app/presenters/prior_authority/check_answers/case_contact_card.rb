@@ -43,7 +43,7 @@ module PriorAuthority
           check_missing(solicitor.contact_email)
         ].compact.join('<br>')
 
-        sanitize(contact_details_html, tags: %w[br strong])
+        simple_format(contact_details_html)
       end
 
       def firm_details_html
@@ -52,7 +52,7 @@ module PriorAuthority
           check_missing(application.office_code)
         ].compact.join('<br>')
 
-        sanitize(firm_details_html, tags: %w[br strong])
+        simple_format(firm_details_html)
       end
     end
   end
