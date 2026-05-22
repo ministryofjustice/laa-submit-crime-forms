@@ -1,4 +1,4 @@
-function stringProcessor(string){
+function processString(string){
     //replace new lines with <br> tags to preserve formatting when displaying the string in HTML
     string.replace("/\n/g", '<br>')
     return string
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   submitButton.addEventListener('click', () => {
     fields.forEach(field => {
       if (field?.value) {
-        field.value = encodeURIComponent(field.value)
+        field.value = processString(field.value)
       }
     });
   });
