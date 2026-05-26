@@ -22,7 +22,7 @@ RSpec.describe TaskList::StatusTag do
 
       it {
         expect(status_tag.render).to eq(
-          '<div id="foobar_task-status" class="app-task-list__tag govuk-tag govuk-tag--light-blue">' \
+          '<div id="foobar_task-status" class="app-task-list__tag govuk-tag govuk-tag--light-teal">' \
           'In progress</div>'
         )
       }

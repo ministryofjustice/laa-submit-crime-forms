@@ -6,7 +6,7 @@ module TaskList
 
     STATUS_CLASSES = {
       ::TaskStatus::COMPLETED => nil,
-      ::TaskStatus::IN_PROGRESS => 'govuk-tag govuk-tag--light-blue',
+      ::TaskStatus::IN_PROGRESS => 'govuk-tag govuk-tag--light-teal',
       ::TaskStatus::NOT_STARTED => 'govuk-tag govuk-tag--blue',
       ::TaskStatus::UNREACHABLE => nil,
       ::TaskStatus::NOT_APPLICABLE => 'govuk-tag govuk-tag--grey',
