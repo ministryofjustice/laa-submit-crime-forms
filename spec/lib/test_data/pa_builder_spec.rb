@@ -22,6 +22,17 @@ RSpec.describe TestData::PaBuilder do
       )
     end
 
+    it 'uses the primary dev provider for the default local data shape' do
+      allow(HostEnv).to receive_messages(local?: true, development?: false)
+
+      subject.build_many(bulk: 1, sleep: false)
+
+      expect(PriorAuthorityApplication.last).to have_attributes(
+        provider: have_attributes(email: 'provider@example.com'),
+        office_code: be_in(%w[1A123B 2A555X])
+      )
+    end
+
     it 'returns summary statistics for the generated data' do
       result = subject.build_many(bulk: 3, providers: 2, office_codes: 3, sleep: false)
 
