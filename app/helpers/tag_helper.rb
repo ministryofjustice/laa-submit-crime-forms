@@ -1,13 +1,13 @@
 module TagHelper
   TAG_COLOURS = {
-    submitted: 'govuk-tag--light-teal',
+    submitted: 'govuk-tag--teal',
     granted: 'govuk-tag--green',
     auto_grant: 'govuk-tag--green',
     part_grant: 'govuk-tag--blue',
     rejected: 'govuk-tag--red',
     expired: 'govuk-tag--red',
     sent_back: 'govuk-tag--yellow',
-    provider_updated: 'govuk-tag--light-teal',
+    provider_updated: 'govuk-tag--teal',
     draft: 'govuk-tag--grey',
   }.freeze
 
