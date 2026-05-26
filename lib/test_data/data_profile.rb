@@ -40,24 +40,28 @@ module TestData
       raise ArgumentError, format(RATIO_ERROR, name:)
     end
 
+    # rubocop:disable Metrics/ParameterLists
     def initialize(provider_count: 1, office_code_count: 1, max_versions: 1, seed: nil,
                    high_volume_office_ratio: DEFAULT_HIGH_VOLUME_OFFICE_RATIO,
-                   high_volume_claim_ratio: DEFAULT_HIGH_VOLUME_CLAIM_RATIO, version_mix: nil)
-      @provider_count = [provider_count.to_i, 1].max
-      @office_code_count = [office_code_count.to_i, 1].max
+                   high_volume_claim_ratio: DEFAULT_HIGH_VOLUME_CLAIM_RATIO, version_mix: nil,
+                   provider_source: ProviderSource.generated)
+      @provider_source = provider_source
+      @provider_count = provider_source.generated? ? [provider_count.to_i, 1].max : provider_source.providers.count
+      @office_code_count = provider_source.generated? ? [office_code_count.to_i, 1].max : provider_source.office_codes.count
       @random = seed.present? ? Random.new(seed.to_i) : Random.new
       @high_volume_office_ratio = self.class.normalize_ratio('HIGH_VOLUME_OFFICE_RATIO', high_volume_office_ratio)
       @high_volume_claim_ratio = self.class.normalize_ratio('HIGH_VOLUME_CLAIM_RATIO', high_volume_claim_ratio)
       @version_mix = self.class.normalize_version_mix(version_mix) || default_version_mix_for(max_versions.to_i)
       @max_versions = @version_mix.present? ? @version_mix.keys.max : [max_versions.to_i, 1].max
     end
+    # rubocop:enable Metrics/ParameterLists
 
     def providers
-      @providers ||= build_providers
+      @providers ||= provider_source.generated? ? build_providers : provider_source.providers
     end
 
     def office_codes
-      @office_codes ||= Array.new(office_code_count) { |index| format('T%05d', index + 1) }
+      @office_codes ||= provider_source.generated? ? generated_office_codes : provider_source.office_codes
     end
 
     def assignment_for(index)
@@ -74,7 +78,11 @@ module TestData
 
     private
 
-    attr_reader :random, :high_volume_office_ratio, :high_volume_claim_ratio, :version_mix
+    attr_reader :random, :high_volume_office_ratio, :high_volume_claim_ratio, :version_mix, :provider_source
+
+    def generated_office_codes
+      Array.new(office_code_count) { |index| format('T%05d', index + 1) }
+    end
 
     def build_providers
       office_groups = office_codes.each_slice(codes_per_provider).to_a
