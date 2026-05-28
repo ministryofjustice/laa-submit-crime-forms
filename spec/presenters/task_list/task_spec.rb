@@ -34,7 +34,7 @@ RSpec.describe TaskList::Task do
           '<div class="app-task-list__task-name govuk-task-list__name-and-hint">' \
           '<a class="govuk-link govuk-task-list__link" href="/steps/foobar" aria-describedby="foobar_task-status">' \
           'Foo Bar Task Locale</a></div>' \
-          '<div id="foobar_task-status" class="app-task-list__tag govuk-tag govuk-tag--light-blue">In progress</div>' \
+          '<div id="foobar_task-status" class="app-task-list__tag govuk-tag govuk-tag--teal">In progress</div>' \
           '</li>'
         )
       end
