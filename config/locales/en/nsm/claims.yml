@@ -31,13 +31,13 @@ en:
           provider_updated: Resubmitted
         state_colour:
           draft: govuk-tag--grey
-          submitted: govuk-tag--light-blue
+          submitted: govuk-tag--teal
           granted: govuk-tag--green
           part_grant: govuk-tag--blue
           rejected: govuk-tag--red
           sent_back: govuk-tag--yellow
           expired: govuk-tag--red
-          provider_updated: govuk-tag--light-blue
+          provider_updated: govuk-tag--teal
         tabs:
           reviewed: Reviewed
           submitted: Submitted

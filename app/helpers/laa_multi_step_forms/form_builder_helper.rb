@@ -23,7 +23,8 @@ module LaaMultiStepForms
       GOVUKDesignSystemFormBuilder::Elements::Date.new(
         self, object_name, attribute_name,
         segments: segments, hint: hint, legend: legend, caption: caption, date_of_birth: date_of_birth, omit_day: omit_day,
-        maxlength_enabled: maxlength_enabled, form_group: form_group, segment_names: config.default_date_segment_names, **, &block
+        maxlength_enabled: maxlength_enabled, form_group: form_group, segment_names: config.default_date_segment_names,
+        before_inputs: nil, after_inputs: nil, **, &block
       ).html
     end
     # rubocop:enable Metrics/ParameterLists

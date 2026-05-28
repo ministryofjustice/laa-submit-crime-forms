@@ -10,7 +10,7 @@
 
 .search-panel {
   padding: 15px 20px 1px 20px;
-  background-color: govuk-colour("light-grey");
+  background-color: govuk-colour("black", $variant: "tint-95");
 
   .govuk-fieldset__legend--s {
     font-weight: 700;
