@@ -13,7 +13,7 @@ module FurtherInformationPresentable
     [
       {
         head_key: 'information_request',
-        text: simple_format(further_information.information_requested),
+        text: safer_simple_format(further_information.information_requested),
       },
       {
         head_key: 'your_response',
@@ -32,7 +32,7 @@ module FurtherInformationPresentable
         govuk_link_to(document.file_name, url_helper.download_path(document))
       end
     end
-    response = simple_format(further_information.information_supplied)
+    response = safer_simple_format(further_information.information_supplied)
     parts = [response] + links.flat_map { [tag.br, _1] }
     safe_join(parts)
   end

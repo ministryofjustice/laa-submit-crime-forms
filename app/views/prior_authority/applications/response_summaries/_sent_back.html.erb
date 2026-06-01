@@ -10,11 +10,11 @@
 
     <% if application.further_information_needed? %>
       <h3 class="govuk-heading-s"><%= t('.further_information_request') %></h3>
-      <%= simple_format(application.pending_further_information.information_requested) %>
+      <%= safer_simple_format(application.pending_further_information.information_requested) %>
     <% end %>
     <% if application.correction_needed? %>
       <h3 class="govuk-heading-s"><%= t('.amendment_request') %></h3>
-      <%= simple_format(application.pending_incorrect_information.information_requested) %>
+      <%= safer_simple_format(application.pending_incorrect_information.information_requested) %>
     <% end %>
     <% unless skip_links %>
       <% if application.further_information_needed? %>

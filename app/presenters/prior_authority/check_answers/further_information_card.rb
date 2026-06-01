@@ -17,12 +17,12 @@ module PriorAuthority
         [
           {
             head_key: 'information_requested',
-            text: simple_format(further_information.information_requested),
+            text: safer_simple_format(further_information.information_requested),
           },
           {
             head_key: 'information_supplied',
             text: check_missing(further_information.information_supplied) do
-                    simple_format(further_information.information_supplied)
+                    safer_simple_format(further_information.information_supplied)
                   end
           },
           {

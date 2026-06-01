@@ -47,7 +47,7 @@
         <dt class="govuk-summary-list__key"><%= t('.additional_items') %></dt>
         <dd class="govuk-summary-list__value">
           <% if alternative_quote.additional_cost_list.present? %>
-            <%= simple_format(alternative_quote.additional_cost_list) %>
+            <%= safer_simple_format(alternative_quote.additional_cost_list) %>
           <% else %>
             <%= t('.none') %>
           <% end %>
