@@ -32,7 +32,7 @@
             [t(".allowed_hours"), format_period(work_item.assessed_time_spent)],
             [t(".allowed_uplift"), LaaCrimeFormsCommon::NumberTo.percentage((work_item.assessed_uplift).to_f, multiplier: 1)],
             [t(".allowed_net_cost"), LaaCrimeFormsCommon::NumberTo.pounds(work_item.allowed_total_cost)],
-            [t(".adjustment_comment"), simple_format(work_item.adjustment_comment)]
+            [t(".adjustment_comment"), safer_simple_format(work_item.adjustment_comment)]
           ]
 
           govuk_table do |table|

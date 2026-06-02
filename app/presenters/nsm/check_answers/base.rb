@@ -8,6 +8,7 @@ module Nsm
       include ActionView::Helpers::TextHelper
       include ActionView::Helpers::UrlHelper
       include GovukLinkHelper
+      include ApplicationHelper
 
       attr_accessor :group, :section, :has_card
 

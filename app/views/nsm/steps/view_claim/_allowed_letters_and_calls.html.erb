@@ -25,14 +25,14 @@
   rows = [
     ([
       { header: true, text: letters_link },
-      { text: simple_format(claim.letters_adjustment_comment), numeric: false },
+      { text: safer_simple_format(claim.letters_adjustment_comment), numeric: false },
       { text: claim.assessed_letters, numeric: true },
       { text: LaaCrimeFormsCommon::NumberTo.percentage((claim.assessed_letters_uplift).to_f, multiplier: 1), numeric: true },
       { text: LaaCrimeFormsCommon::NumberTo.pounds(claim.allowed_letters_after_uplift), numeric: true },
     ] if claim.letters_adjustment_comment),
     ([
       { header: true, text: calls_link },
-      { text: simple_format(claim.calls_adjustment_comment), numeric: false },
+      { text: safer_simple_format(claim.calls_adjustment_comment), numeric: false },
       { text: claim.assessed_calls, numeric: true },
       { text: LaaCrimeFormsCommon::NumberTo.percentage((claim.assessed_calls_uplift).to_f, multiplier: 1), numeric: true },
       { text: LaaCrimeFormsCommon::NumberTo.pounds(claim.allowed_calls_after_uplift), numeric: true },

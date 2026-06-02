@@ -9,6 +9,7 @@ module PriorAuthority
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::TagHelper
       include ActionView::Helpers::TextHelper
+      include ApplicationHelper
 
       attr_accessor :group, :section
 

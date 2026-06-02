@@ -61,7 +61,7 @@ module PriorAuthority
           {
             head_key: 'no_alternatve_quotes',
             text: check_missing(application.no_alternative_quote_reason) do
-                    simple_format(application.no_alternative_quote_reason)
+                    safer_simple_format(application.no_alternative_quote_reason)
                   end
           }
         ]
