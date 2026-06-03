@@ -115,6 +115,16 @@ jobs:
       id-token: write
       contents: read
     steps:
+      - name: Wait for approval to deploy
+        uses: trstringer/manual-approval@v1.9.0
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: robinsk1,ivanELEC,cmrgov,RobBoothMOJ
+          minimum-approvals: 1
+          issue-title: "Production Deployment - Approval Required"
+          issue-body: "Please approve deployment to production."
+
+
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
