@@ -111,6 +111,8 @@ jobs:
     name: Deploy branch to prod
     runs-on: ubuntu-latest
     needs: [build, deploy-dev-uat]
+    environment:
+        name: production
     permissions:
       id-token: write
       contents: read
