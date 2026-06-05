@@ -103,7 +103,7 @@ module PriorAuthority
           {
             head_key: 'psychiatric_liaison_reason_not',
             text: check_missing(application.psychiatric_liaison_reason_not) do
-                    simple_format(application.psychiatric_liaison_reason_not)
+                    safer_simple_format(application.psychiatric_liaison_reason_not)
                   end
           },
         ]

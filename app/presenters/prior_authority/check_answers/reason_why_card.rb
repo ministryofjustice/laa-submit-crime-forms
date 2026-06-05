@@ -22,7 +22,7 @@ module PriorAuthority
           {
             head_key: 'reason_why',
             text: check_missing(application.reason_why) do
-              simple_format(application.reason_why)
+              safer_simple_format(application.reason_why)
             end
           },
           {

@@ -161,7 +161,7 @@ module PriorAuthority
           {
             head_key: 'travel_cost_reason',
             text: check_missing(application.primary_quote.travel_cost_reason) do
-                    simple_format(application.primary_quote.travel_cost_reason)
+                    safer_simple_format(application.primary_quote.travel_cost_reason)
                   end
           },
         ]

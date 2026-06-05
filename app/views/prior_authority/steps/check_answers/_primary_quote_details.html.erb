@@ -4,7 +4,7 @@
 <% if section.service_adjustment_comment %>
   <div class="govuk-inset-text">
     <strong><%= t('.laa_adjustment') %></strong><br>
-    <%= simple_format section.service_adjustment_comment %>
+    <%= safer_simple_format section.service_adjustment_comment %>
   </div>
 <% end %>
 <%= render 'prior_authority/steps/primary_quote_summary/service_cost_subtable',
@@ -15,14 +15,14 @@
   <% if section.travel_adjustment_comment %>
     <div class="govuk-inset-text">
       <strong><%= t('.laa_adjustment') %></strong><br>
-      <%= simple_format section.travel_adjustment_comment %>
+      <%= safer_simple_format section.travel_adjustment_comment %>
     </div>
   <% end %>
   <% if section.travel_detail_form.travel_cost_reason.present? %>
     <p>
       <%= t('.travel_reason') %>
     </p>
-    <%= simple_format section.travel_detail_form.travel_cost_reason %>
+    <%= safer_simple_format section.travel_detail_form.travel_cost_reason %>
   <% end %>
   <%= render 'prior_authority/steps/primary_quote_summary/travel_cost_subtable',
              form: section.travel_detail_form, show_adjustments: show_adjustments %>
@@ -33,12 +33,12 @@
   <% if additional_cost.adjustment_comment %>
     <div class="govuk-inset-text">
       <strong><%= t('.laa_adjustment') %></strong><br>
-      <%= simple_format additional_cost.adjustment_comment %>
+      <%= safer_simple_format additional_cost.adjustment_comment %>
     </div>
   <% end %>
   <p>
     <%= t('.cost_description', name: additional_cost.name) %>
   </p>
-  <%= simple_format additional_cost.description %>
+  <%= safer_simple_format additional_cost.description %>
   <%= render 'prior_authority/steps/additional_costs/subtable', additional_cost:, show_adjustments: %>
 <% end %>

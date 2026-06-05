@@ -21,7 +21,7 @@ module PriorAuthority
         [
           {
             head_key: 'information_requested',
-            text: simple_format(incorrect_information.information_requested),
+            text: safer_simple_format(incorrect_information.information_requested),
           },
           response,
         ].compact

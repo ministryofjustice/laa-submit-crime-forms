@@ -13,13 +13,13 @@
       <% if @form_object.errors.of_kind?(:base, :application_not_corrected) %>
         <div class="govuk-form-group--error">
           <p class="govuk-error-message" id="prior-authority-steps-check-answers-form-base-field-error"><%= t('.incorrect_information_heading') %></p>
-          <p class="govuk-body"><%= simple_format @form_object.application.pending_incorrect_information.information_requested %></p>
+          <p class="govuk-body"><%= safer_simple_format @form_object.application.pending_incorrect_information.information_requested %></p>
         </div>
       <% else %>
         <div class="govuk-inset-text">
           <strong><%= t('.incorrect_information_heading') %></strong><br>
           <br>
-          <%= simple_format @form_object.application.pending_incorrect_information.information_requested %>
+          <%= safer_simple_format @form_object.application.pending_incorrect_information.information_requested %>
         </div>
       <% end %>
     <% end %>
