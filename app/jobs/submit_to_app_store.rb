@@ -21,8 +21,10 @@ class SubmitToAppStore < ApplicationJob
     end
   end
 
-  def submit(submission)
+  def submit(submission, current_date: nil)
     payload = PayloadBuilder.call(submission)
+    payload[:current_date] = current_date unless current_date.blank? || HostEnv.production?
+
     client = AppStoreClient.new
     payload.with_indifferent_access['application_state'] == 'submitted' ? client.post(payload) : client.put(payload)
   end

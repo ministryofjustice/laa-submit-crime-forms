@@ -1,9 +1,15 @@
+require 'active_support/testing/time_helpers'
+
 module TestData
+  # rubocop: disable Metrics/ClassLength
   class PaBuilder
+    include ActiveSupport::Testing::TimeHelpers
+
     # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
     def build_many(bulk: 100, year: 2023, providers: 1, office_codes: 1, max_versions: 1, seed: nil,
                    high_volume_office_ratio: default_high_volume_office_ratio,
-                   high_volume_claim_ratio: default_high_volume_claim_ratio, version_mix: nil, sleep: true)
+                   high_volume_claim_ratio: default_high_volume_claim_ratio, version_mix: nil, sleep: true,
+                   date_from: nil, date_to: nil)
       raise 'Do not run on production' if HostEnv.production?
 
       profile = DataProfile.new(
@@ -17,12 +23,15 @@ module TestData
         provider_source: ProviderSource.from_environment(provider_count: providers, office_code_count: office_codes)
       )
       summary = summary_for(profile)
-
+      dates = (date_from.to_date..date_to.to_date).to_a if date_from && date_to
       bulk.times do |index|
+        travel_to(dates.sample.to_datetime) if dates
         assignment = profile.assignment_for(index)
-        application_id = build(year: year, provider: assignment.provider, office_code: assignment.office_code)
+        application_id = build(year: year, provider: assignment.provider, office_code: assignment.office_code,
+                               current_date: DateTime.current)
         version_count = profile.versions_for(index)
-        submit_additional_versions(PriorAuthorityApplication.find(application_id), version_count - 1)
+        submit_additional_versions(PriorAuthorityApplication.find(application_id), version_count - 1,
+                                   current_date: DateTime.current)
 
         summary[:applications] += 1
         summary[:versions] += version_count
@@ -39,8 +48,8 @@ module TestData
 
     def build(**build_options)
       ActiveRecord::Base.transaction do
-        assignment_attributes = build_options.slice(:provider, :office_code)
-        generator_options = build_options.except(:provider, :office_code)
+        assignment_attributes = build_options.slice(:provider, :office_code).except(:current_date)
+        generator_options = build_options.except(:provider, :office_code).except(:current_date)
         args, kwfct = *options(**generator_options).values.sample
         kwargs = kwfct.call
         paa = FactoryBot.create(*args, :randomised, further_informations: [], incorrect_informations: [],
@@ -51,7 +60,7 @@ module TestData
 
         raise "Invalid for #{invalid_tasks.map(&:first).join(', ')}" if invalid_tasks.any?
 
-        SubmitToAppStore.new.submit(paa)
+        SubmitToAppStore.new.submit(paa, current_date: DateTime.current)
         paa.id
       end
     end
@@ -116,10 +125,10 @@ module TestData
       ENV.fetch('HIGH_VOLUME_CLAIM_RATIO', DataProfile::DEFAULT_HIGH_VOLUME_CLAIM_RATIO)
     end
 
-    def submit_additional_versions(application, count)
+    def submit_additional_versions(application, count, current_date: nil)
       count.times do
         application.provider_updated!
-        SubmitToAppStore.new.submit(application)
+        SubmitToAppStore.new.submit(application, current_date:)
       end
     end
 
@@ -155,4 +164,5 @@ module TestData
     end
     # rubocop:enable Rails/Output
   end
+  # rubocop: enable Metrics/ClassLength
 end
