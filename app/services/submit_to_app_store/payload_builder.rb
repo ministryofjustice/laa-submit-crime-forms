@@ -1,14 +1,17 @@
 class SubmitToAppStore
   class PayloadBuilder
-    def self.call(submission)
+    def self.call(submission, current_date: nil)
+      payload = {}
       case submission
       when Claim, AppStore::V1::Nsm::Claim
-        NsmPayloadBuilder.new(claim: submission).payload
+        payload = NsmPayloadBuilder.new(claim: submission).payload
       when PriorAuthorityApplication
-        PriorAuthorityPayloadBuilder.new(application: submission).payload
+        payload = PriorAuthorityPayloadBuilder.new(application: submission).payload
       else
         raise 'Unknown submission type'
       end
+      payload[:current_date] = current_date unless current_date.blank? || HostEnv.production?
+      payload
     end
   end
 end

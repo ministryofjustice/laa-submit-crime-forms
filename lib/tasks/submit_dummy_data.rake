@@ -13,15 +13,17 @@ namespace :submit_dummy_data do
     SubmitToAppStore.new.submit(application)
   end
 
-  desc 'Submit bulk dummy PA data; args: [bulk,year,providers,office_codes,max_versions]; ' \
+  desc 'Submit bulk dummy PA data; args: [bulk,year,providers,office_codes,max_versions,date_from,date_to]; ' \
        'ENV: SLEEP, VERSION_MIX, HIGH_VOLUME_OFFICE_RATIO, HIGH_VOLUME_CLAIM_RATIO, PROVIDER_MODE'
-  task :bulk_prior_authority, [:bulk, :year, :providers, :office_codes, :max_versions] => :environment do |_task, args|
+  task :bulk_prior_authority,
+       [:bulk, :year, :providers, :office_codes, :max_versions, :date_from, :date_to] => :environment do |_task, args|
     prevent_production_run.call
 
-    args.with_defaults(bulk: 100, year: 2023, providers: 1, office_codes: 1, max_versions: 1)
+    args.with_defaults(bulk: 100, year: 2023, providers: 1, office_codes: 1, max_versions: 1, date_from: nil, date_to: nil)
 
     $stdout.print "Will create #{args[:bulk]} PA/CRM4's for the year #{args[:year]} " \
                   "using #{args[:providers]} provider(s), #{args[:office_codes]} office code(s), " \
+                  "#{"between dates #{args[:date_from]} and #{args[:date_to]}, " if args[:date_from] && args[:date_to]}" \
                   "and up to #{args[:max_versions]} version(s): Are you sure? (y/n): "
     input = $stdin.gets.strip
 
@@ -32,6 +34,8 @@ namespace :submit_dummy_data do
         providers: args[:providers].to_i,
         office_codes: args[:office_codes].to_i,
         max_versions: args[:max_versions].to_i,
+        date_from: args[:date_from],
+        date_to: args[:date_to],
         seed: ENV.fetch('SEED', nil),
         version_mix: TestData::DataProfile.parse_version_mix(ENV.fetch('VERSION_MIX', nil)),
         sleep: ENV.fetch('SLEEP', 'true') != 'false'
