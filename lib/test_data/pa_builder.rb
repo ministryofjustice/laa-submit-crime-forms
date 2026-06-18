@@ -1,4 +1,5 @@
 module TestData
+  # rubocop:disable Metrics/ClassLength
   class PaBuilder
     # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
     def build_many(bulk: 100, year: 2023, providers: 1, office_codes: 1, max_versions: 1, seed: nil,
@@ -118,9 +119,39 @@ module TestData
 
     def submit_additional_versions(application, count)
       count.times do
-        application.provider_updated!
-        SubmitToAppStore.new.submit(application)
+        if application.sent_back?
+          submit_provider_update(application)
+        else
+          submit_sent_back(application)
+        end
       end
+    end
+
+    def submit_sent_back(application)
+      requested_at = DateTime.current
+      application.update!(
+        state: :sent_back,
+        resubmission_requested: requested_at,
+        resubmission_deadline: 14.days.from_now,
+        app_store_updated_at: requested_at
+      )
+      application.further_informations.create!(
+        information_requested: Faker::Lorem.sentence,
+        caseworker_id: SecureRandom.uuid,
+        requested_at: requested_at,
+        resubmission_deadline: 14.days.from_now
+      )
+
+      AppStoreClient.new.put(SubmitToAppStore::PayloadBuilder.call(application), client_type: :caseworker)
+    end
+
+    def submit_provider_update(application)
+      application.pending_further_information.update!(
+        information_supplied: Faker::Lorem.paragraph,
+        signatory_name: Faker::Name.name
+      )
+      application.provider_updated!
+      SubmitToAppStore.new.submit(application)
     end
 
     def summary_for(profile)
@@ -155,4 +186,5 @@ module TestData
     end
     # rubocop:enable Rails/Output
   end
+  # rubocop:enable Metrics/ClassLength
 end

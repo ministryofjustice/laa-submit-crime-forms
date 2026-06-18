@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe TestData::PaBuilder do
   describe '#build_many' do
-    let(:client) { double(AppStoreClient, post: true) }
+    let(:client) { instance_spy(AppStoreClient, post: true, put: true) }
 
     before do
       allow(AppStoreClient).to receive(:new).and_return(client)
@@ -52,7 +52,25 @@ RSpec.describe TestData::PaBuilder do
       result = subject.build_many(bulk: 3, version_mix: { 1 => 1, 2 => 1, 3 => 1 }, sleep: false)
 
       expect(result[:versions]).to eq 6
-      expect(submitter).to have_received(:submit).exactly(6).times
+      expect(submitter).to have_received(:submit).exactly(4).times
+      expect(client).to have_received(:put)
+        .with(hash_including(application_state: 'sent_back'), client_type: :caseworker)
+        .twice
+    end
+
+    it 'creates valid sent-back transitions before provider-updated versions' do
+      existing_application_ids = PriorAuthorityApplication.pluck(:id)
+
+      subject.build_many(bulk: 1, version_mix: { 3 => 1 }, sleep: false)
+
+      application = PriorAuthorityApplication.where.not(id: existing_application_ids).sole
+      expect(application).to be_provider_updated
+      expect(application.further_informations.last.information_supplied).to be_present
+      expect(client).to have_received(:post).with(hash_including(application_state: 'submitted')).ordered
+      expect(client).to have_received(:put)
+        .with(hash_including(application_state: 'sent_back'), client_type: :caseworker)
+        .ordered
+      expect(client).to have_received(:put).with(hash_including(application_state: 'provider_updated')).ordered
     end
 
     it 'can applications claims for a specific year' do
