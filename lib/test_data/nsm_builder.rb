@@ -197,11 +197,74 @@ module TestData
     end
 
     def submit_additional_versions(claim, count)
+      latest_payload = nil
+
       count.times do
-        app_store_claim = app_store_claim_for(claim)
-        app_store_claim.provider_updated!
-        SubmitToAppStore.new.submit(app_store_claim)
+        latest_payload = if claim.sent_back?
+                           submit_provider_update(claim, latest_payload)
+                         else
+                           submit_sent_back(claim, latest_payload)
+                         end
       end
+    end
+
+    def submit_sent_back(claim, latest_payload)
+      requested_at = DateTime.current
+      claim.update!(state: :sent_back, app_store_updated_at: requested_at)
+      claim.further_informations.create!(
+        information_requested: Faker::Lorem.sentence,
+        caseworker_id: SecureRandom.uuid,
+        requested_at: requested_at,
+        resubmission_deadline: 14.days.from_now
+      )
+
+      version_payload = version_payload_for(claim, latest_payload || app_store_payload_for(claim), 'sent_back')
+      AppStoreClient.new.put(version_payload, client_type: :caseworker)
+      version_payload.deep_stringify_keys
+    end
+
+    def submit_provider_update(claim, latest_payload)
+      claim.pending_further_information.update!(
+        information_supplied: Faker::Lorem.paragraph,
+        signatory_name: Faker::Name.name
+      )
+      claim.provider_updated!
+
+      version_payload = version_payload_for(claim, latest_payload || app_store_payload_for(claim), 'provider_updated')
+      AppStoreClient.new.put(version_payload)
+      version_payload.deep_stringify_keys
+    end
+
+    def app_store_payload_for(claim)
+      AppStoreClient.new.get(claim.id)
+    end
+
+    def version_payload_for(claim, latest_payload, state)
+      latest_payload = latest_payload.deep_stringify_keys
+      application = latest_payload.fetch('application').merge(
+        'status' => state,
+        'updated_at' => DateTime.current.as_json,
+        'further_information' => further_information_payload_for(claim),
+        'resubmission_deadline' => claim.further_informations.maximum(:resubmission_deadline)&.as_json
+      )
+      validate_version_payload!(claim, application)
+
+      {
+        application_id: claim.id,
+        json_schema_version: latest_payload.fetch('json_schema_version', 1),
+        application_state: state,
+        application_type: 'crm7',
+        application: application
+      }
+    end
+
+    def further_information_payload_for(claim)
+      claim.further_informations.map { _1.as_json.compact }
+    end
+
+    def validate_version_payload!(claim, application)
+      issues = LaaCrimeFormsCommon::Validator.validate(:nsm, application)
+      raise "Validation issues detected for #{claim.id}: #{issues.to_sentence}" if issues.any?
     end
 
     def app_store_claim_for(claim)

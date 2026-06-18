@@ -37,9 +37,21 @@ RSpec.describe TestData::NsmBuilder do
   end
 
   describe '#build_many' do
-    let(:client) { double(AppStoreClient, post: true) }
+    let(:client) { instance_double(AppStoreClient) }
+    let(:stored_payloads) { {} }
 
     before do
+      allow(client).to receive(:post) do |payload|
+        stored_payloads[payload[:application_id]] = payload.deep_stringify_keys
+        true
+      end
+      allow(client).to receive(:put) do |payload, **_kwargs|
+        stored_payloads[payload[:application_id]] = payload.deep_stringify_keys
+        true
+      end
+      allow(client).to receive(:get) do |application_id|
+        stored_payloads.fetch(application_id).deep_dup
+      end
       allow(AppStoreClient).to receive(:new).and_return(client)
     end
 
@@ -87,16 +99,27 @@ RSpec.describe TestData::NsmBuilder do
     end
 
     it 'submits additional app store versions when configured' do
-      app_store_claim = instance_spy(AppStore::V1::Nsm::Claim)
-      submitter = instance_spy(SubmitToAppStore, submit: true)
-      allow(SubmitToAppStore).to receive(:new).and_return(submitter)
-      allow(subject).to receive(:app_store_claim_for).and_return(app_store_claim)
-
       result = subject.build_many(bulk: 3, large: 0, version_mix: { 1 => 1, 2 => 1, 3 => 1 }, sleep: false)
 
       expect(result[:versions]).to eq 6
-      expect(submitter).to have_received(:submit).exactly(6).times
-      expect(app_store_claim).to have_received(:provider_updated!).exactly(3).times
+      expect(client).to have_received(:post).exactly(3).times
+      expect(client).to have_received(:put)
+        .with(hash_including(application_state: 'sent_back'), client_type: :caseworker)
+        .twice
+      expect(client).to have_received(:put).with(hash_including(application_state: 'provider_updated')).once
+    end
+
+    it 'creates valid sent-back transitions before provider-updated versions' do
+      subject.build_many(bulk: 1, large: 0, version_mix: { 3 => 1 }, sleep: false)
+
+      claim = Claim.last
+      expect(claim).to be_provider_updated
+      expect(claim.further_informations.last.information_supplied).to be_present
+      expect(client).to have_received(:post).with(hash_including(application_state: 'submitted')).ordered
+      expect(client).to have_received(:put)
+        .with(hash_including(application_state: 'sent_back'), client_type: :caseworker)
+        .ordered
+      expect(client).to have_received(:put).with(hash_including(application_state: 'provider_updated')).ordered
     end
 
     it 'can create claims for a specific year' do
