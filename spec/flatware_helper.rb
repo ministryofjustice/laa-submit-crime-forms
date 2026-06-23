@@ -1,11 +1,11 @@
 return unless defined?(Flatware)
 
 ENV['PGGSSENCMODE'] = 'disable'
+ENV['RAILS_ENV'] ||= 'test'
 
 Flatware.configure do |conf|
   conf.before_fork do
-    require 'rails_helper'
-
+    require File.expand_path('../config/environment', __dir__)
     ActiveRecord::Base.connection.disconnect!
   end
 

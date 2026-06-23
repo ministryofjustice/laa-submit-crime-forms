@@ -7,6 +7,8 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'axe-rspec'
+require 'rspec-html-matchers'
+require 'view_component/test_helpers'
 
 Rails.root.glob('spec/support/**/*.rb').each { |f| require f }
 

@@ -59,6 +59,43 @@ RSpec.describe PriorAuthority::CheckAnswers::AlternativeQuotesCard do
       end
     end
 
+    context 'when alternative quotes are array-backed' do
+      let(:application) do
+        instance_double(
+          PriorAuthorityApplication,
+          alternative_quotes: [quote],
+          service_type: 'meteorologist',
+          primary_quote: build_stubbed(:quote, :primary),
+          prior_authority_granted: true,
+        )
+      end
+      let(:quote) do
+        build_stubbed(
+          :quote,
+          :alternative,
+          contact_first_name: 'Array',
+          contact_last_name: 'Quote',
+          document: nil,
+          cost_per_hour: 20,
+          period: 60,
+          travel_cost_per_hour: 0,
+          travel_time: 0,
+        )
+      end
+
+      it 'generates expected rows' do
+        expect(card.row_data).to eq(
+          [
+            {
+              head_key: 'quote_summary',
+              head_opts: { count: 1 },
+              text: 'Array Quote<br>£20.00'
+            },
+          ]
+        )
+      end
+    end
+
     context 'when no alternative quotes exist' do
       let(:application) do
         create(

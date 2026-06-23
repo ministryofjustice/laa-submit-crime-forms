@@ -68,7 +68,10 @@ module PriorAuthority
       end
 
       def alternative_quotes
-        @alternative_quotes ||= application.alternative_quotes
+        @alternative_quotes ||= begin
+          quotes = application.alternative_quotes
+          quotes.respond_to?(:order) ? quotes.order(:created_at, :id) : quotes
+        end
       end
 
       def alternative_quote_summary_html(quote)
