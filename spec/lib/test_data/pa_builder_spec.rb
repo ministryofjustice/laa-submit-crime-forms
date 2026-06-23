@@ -58,6 +58,33 @@ RSpec.describe TestData::PaBuilder do
         .twice
     end
 
+    it 'adds realistic send-back metadata to generated sent-back versions' do
+      sent_back_payload = nil
+      allow(client).to receive(:put) do |payload, **kwargs|
+        sent_back_payload = [payload, kwargs] if payload[:application_state] == 'sent_back'
+      end
+
+      subject.build_many(bulk: 1, version_mix: { 2 => 1 }, sleep: false)
+
+      payload, kwargs = sent_back_payload
+      explanation = payload[:application][:further_information_explanation]
+      expect(kwargs).to eq(client_type: :caseworker)
+      expect(payload[:application]).to include(
+        updates_needed: ['further_information'],
+        further_information_explanation: be_present,
+        resubmission_deadline: be_present
+      )
+      expect(payload[:events]).to contain_exactly(
+        hash_including(
+          event_type: 'send_back',
+          details: {
+            updates_needed: ['further_information'],
+            comments: { further_information: explanation }
+          }
+        )
+      )
+    end
+
     it 'creates valid sent-back transitions before provider-updated versions' do
       existing_application_ids = PriorAuthorityApplication.pluck(:id)
 
