@@ -61,14 +61,6 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
         )
       end
     end
-
-    context 'when authentication is configured and a client type override is requested' do
-      it 'raises an error' do
-        expect { subject.put(message, client_type: :caseworker) }.to raise_error(
-          'AppStore client type override is only supported without OAuth'
-        )
-      end
-    end
   end
 
   describe '#post' do

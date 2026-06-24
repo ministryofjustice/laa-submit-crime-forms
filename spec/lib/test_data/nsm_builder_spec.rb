@@ -38,6 +38,7 @@ RSpec.describe TestData::NsmBuilder do
 
   describe '#build_many' do
     let(:client) { instance_double(AppStoreClient) }
+    let(:caseworker_client) { instance_double(TestData::AppStoreCaseworkerClient) }
     let(:stored_payloads) { {} }
 
     before do
@@ -49,10 +50,15 @@ RSpec.describe TestData::NsmBuilder do
         stored_payloads[payload[:application_id]] = payload.deep_stringify_keys
         true
       end
+      allow(caseworker_client).to receive(:put) do |payload|
+        stored_payloads[payload[:application_id]] = payload.deep_stringify_keys
+        true
+      end
       allow(client).to receive(:get) do |application_id|
         stored_payloads.fetch(application_id).deep_dup
       end
       allow(AppStoreClient).to receive(:new).and_return(client)
+      allow(TestData::AppStoreCaseworkerClient).to receive(:new).and_return(caseworker_client)
     end
 
     it 'can create multiple bulk claims' do
@@ -103,8 +109,8 @@ RSpec.describe TestData::NsmBuilder do
 
       expect(result[:versions]).to eq 6
       expect(client).to have_received(:post).exactly(3).times
-      expect(client).to have_received(:put)
-        .with(hash_including(application_state: 'sent_back'), client_type: :caseworker)
+      expect(caseworker_client).to have_received(:put)
+        .with(hash_including(application_state: 'sent_back'))
         .twice
       expect(client).to have_received(:put).with(hash_including(application_state: 'provider_updated')).once
     end
@@ -116,8 +122,8 @@ RSpec.describe TestData::NsmBuilder do
       expect(claim).to be_provider_updated
       expect(claim.further_informations.last.information_supplied).to be_present
       expect(client).to have_received(:post).with(hash_including(application_state: 'submitted')).ordered
-      expect(client).to have_received(:put)
-        .with(hash_including(application_state: 'sent_back'), client_type: :caseworker)
+      expect(caseworker_client).to have_received(:put)
+        .with(hash_including(application_state: 'sent_back'))
         .ordered
       expect(client).to have_received(:put).with(hash_including(application_state: 'provider_updated')).ordered
     end

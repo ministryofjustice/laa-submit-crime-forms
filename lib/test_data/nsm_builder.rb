@@ -219,7 +219,7 @@ module TestData
       )
 
       version_payload = version_payload_for(claim, latest_payload || app_store_payload_for(claim), 'sent_back')
-      AppStoreClient.new.put(version_payload, client_type: :caseworker)
+      AppStoreCaseworkerClient.new.put(version_payload)
       version_payload.deep_stringify_keys
     end
 

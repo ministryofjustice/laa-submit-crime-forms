@@ -16,8 +16,8 @@ class AppStoreClient
     end
   end
 
-  def put(message, client_type: :provider)
-    response = self.class.put("#{host}/v1/application/#{message[:application_id]}", **options(message, client_type:))
+  def put(message)
+    response = self.class.put("#{host}/v1/application/#{message[:application_id]}", **options(message))
 
     case response.code
     when 201
@@ -69,21 +69,19 @@ class AppStoreClient
     end
   end
 
-  def options(message = nil, client_type: :provider)
+  def options(message = nil)
     options = message ? { body: message.to_json } : {}
-    options.merge(headers: headers(client_type:))
+    options.merge(headers:)
   end
 
-  def headers(client_type: :provider)
+  def headers
     if AppStoreTokenProvider.instance.authentication_configured?
-      raise 'AppStore client type override is only supported without OAuth' unless client_type.to_sym == :provider
-
       {
         authorization: "Bearer #{AppStoreTokenProvider.instance.bearer_token}"
       }
     else
       {
-        'X-Client-Type': client_type.to_s
+        'X-Client-Type': 'provider'
       }
     end
   end

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
 RSpec.describe About::CookiesController, type: :request do
   context 'update_cookies' do
     context 'update analytics' do

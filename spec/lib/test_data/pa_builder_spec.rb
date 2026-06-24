@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe TestData::PaBuilder do
   describe '#build_many' do
     let(:client) { instance_spy(AppStoreClient, post: true, put: true) }
+    let(:caseworker_client) { instance_spy(TestData::AppStoreCaseworkerClient, put: true) }
 
     before do
       allow(AppStoreClient).to receive(:new).and_return(client)
+      allow(TestData::AppStoreCaseworkerClient).to receive(:new).and_return(caseworker_client)
     end
 
     it 'can create multiple applications' do
@@ -53,22 +55,21 @@ RSpec.describe TestData::PaBuilder do
 
       expect(result[:versions]).to eq 6
       expect(submitter).to have_received(:submit).exactly(4).times
-      expect(client).to have_received(:put)
-        .with(hash_including(application_state: 'sent_back'), client_type: :caseworker)
+      expect(caseworker_client).to have_received(:put)
+        .with(hash_including(application_state: 'sent_back'))
         .twice
     end
 
     it 'adds realistic send-back metadata to generated sent-back versions' do
       sent_back_payload = nil
-      allow(client).to receive(:put) do |payload, **kwargs|
-        sent_back_payload = [payload, kwargs] if payload[:application_state] == 'sent_back'
+      allow(caseworker_client).to receive(:put) do |payload|
+        sent_back_payload = payload if payload[:application_state] == 'sent_back'
       end
 
       subject.build_many(bulk: 1, version_mix: { 2 => 1 }, sleep: false)
 
-      payload, kwargs = sent_back_payload
+      payload = sent_back_payload
       explanation = payload[:application][:further_information_explanation]
-      expect(kwargs).to eq(client_type: :caseworker)
       expect(payload[:application]).to include(
         updates_needed: ['further_information'],
         further_information_explanation: be_present,
@@ -94,8 +95,8 @@ RSpec.describe TestData::PaBuilder do
       expect(application).to be_provider_updated
       expect(application.further_informations.last.information_supplied).to be_present
       expect(client).to have_received(:post).with(hash_including(application_state: 'submitted')).ordered
-      expect(client).to have_received(:put)
-        .with(hash_including(application_state: 'sent_back'), client_type: :caseworker)
+      expect(caseworker_client).to have_received(:put)
+        .with(hash_including(application_state: 'sent_back'))
         .ordered
       expect(client).to have_received(:put).with(hash_including(application_state: 'provider_updated')).ordered
     end

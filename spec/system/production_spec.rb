@@ -41,8 +41,6 @@ def get_route_info(route)
     verb: route.verb.downcase.split('|'),
     action: route.defaults[:action],
   }
-rescue NameError
-  nil
 end
 
 def get_routes(public)
