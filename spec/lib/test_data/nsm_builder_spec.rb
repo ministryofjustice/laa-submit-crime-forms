@@ -224,6 +224,46 @@ RSpec.describe TestData::NsmBuilder do
     end
   end
 
+  describe '#version_payload_for' do
+    let(:claim) { create(:claim) }
+    let(:latest_payload) do
+      {
+        application: {
+          status: 'submitted',
+        },
+      }
+    end
+
+    before do
+      allow(LaaCrimeFormsCommon::Validator).to receive(:validate).and_return([])
+    end
+
+    it 'includes a nil resubmission deadline when none exists' do
+      payload = subject.send(:version_payload_for, claim, latest_payload, 'sent_back')
+
+      expect(payload[:application]).to include(
+        'further_information' => [],
+        'resubmission_deadline' => nil,
+        'status' => 'sent_back'
+      )
+    end
+  end
+
+  describe '#validate_version_payload!' do
+    it 'raises validation issues' do
+      claim = build_stubbed(:claim)
+      application = { 'status' => 'sent_back' }
+
+      allow(LaaCrimeFormsCommon::Validator).to receive(:validate)
+        .with(:nsm, application)
+        .and_return(['invalid status'])
+
+      expect { subject.send(:validate_version_payload!, claim, application) }.to raise_error(
+        "Validation issues detected for #{claim.id}: invalid status"
+      )
+    end
+  end
+
   describe '#log' do
     it 'prints outside the test environment' do
       allow(Rails.env).to receive(:test?).and_return(false)
