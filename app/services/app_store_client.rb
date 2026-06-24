@@ -75,6 +75,10 @@ class AppStoreClient
   end
 
   def headers
+    client_headers.merge(OutboundRequestId.headers)
+  end
+
+  def client_headers
     if AppStoreTokenProvider.instance.authentication_configured?
       {
         authorization: "Bearer #{AppStoreTokenProvider.instance.bearer_token}"

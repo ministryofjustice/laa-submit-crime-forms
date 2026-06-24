@@ -5,10 +5,15 @@ class ApplicationController < LaaMultiStepForms::ApplicationController
 
   helper_method :pagy, :pagy_array
 
+  before_action :store_outbound_request_id
   before_action :check_maintenance_mode
   before_action :set_default_cookies
 
   private
+
+  def store_outbound_request_id
+    OutboundRequestId.set(request.request_id)
+  end
 
   def check_maintenance_mode
     return if Rails.env.test?
