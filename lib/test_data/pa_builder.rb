@@ -1,10 +1,13 @@
 module TestData
   class PaBuilder
+    class InvalidGeneratedDataError < StandardError; end
+    class UnsafeEnvironmentError < StandardError; end
+
     # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
     def build_many(bulk: 100, year: 2023, providers: 1, office_codes: 1, max_versions: 1, seed: nil,
                    high_volume_office_ratio: default_high_volume_office_ratio,
                    high_volume_claim_ratio: default_high_volume_claim_ratio, version_mix: nil, sleep: true)
-      raise 'Do not run on production' if HostEnv.production?
+      raise UnsafeEnvironmentError, 'Do not run on production' if HostEnv.production?
 
       profile = DataProfile.new(
         provider_count: providers,
@@ -49,7 +52,7 @@ module TestData
 
         invalid_tasks = check_tasks(paa)
 
-        raise "Invalid for #{invalid_tasks.map(&:first).join(', ')}" if invalid_tasks.any?
+        raise InvalidGeneratedDataError, "Invalid for #{invalid_tasks.map(&:first).join(', ')}" if invalid_tasks.any?
 
         SubmitToAppStore.new.submit(paa)
         paa.id
@@ -117,10 +120,7 @@ module TestData
     end
 
     def submit_additional_versions(application, count)
-      count.times do
-        application.provider_updated!
-        SubmitToAppStore.new.submit(application)
-      end
+      PaVersionSubmitter.new.submit(application, count)
     end
 
     def summary_for(profile)
