@@ -38,6 +38,7 @@ RSpec.describe TestData::AppStoreCaseworkerClient do
 
       it 'raises an error' do
         expect { put }.to raise_error(
+          described_class::ResponseError,
           "Unexpected response from AppStore - status 501 for '#{application_id}'"
         )
       end
@@ -50,6 +51,7 @@ RSpec.describe TestData::AppStoreCaseworkerClient do
 
       it 'raises an error before submitting test data as a caseworker' do
         expect { put }.to raise_error(
+          described_class::AuthenticationError,
           'Caseworker test data submissions require local App Store without OAuth'
         )
       end

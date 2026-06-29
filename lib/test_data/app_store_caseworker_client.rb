@@ -1,11 +1,14 @@
 module TestData
   class AppStoreCaseworkerClient
+    class AuthenticationError < StandardError; end
+    class ResponseError < StandardError; end
+
     include HTTParty
 
     headers 'Content-Type' => 'application/json'
 
     def put(message)
-      raise 'Caseworker test data submissions require local App Store without OAuth' if oauth_configured?
+      raise AuthenticationError, 'Caseworker test data submissions require local App Store without OAuth' if oauth_configured?
 
       response = self.class.put(
         "#{host}/v1/application/#{message[:application_id]}",
@@ -17,7 +20,7 @@ module TestData
       when 201
         JSON.parse(response.body)
       else
-        raise "Unexpected response from AppStore - status #{response.code} for '#{message[:application_id]}'"
+        raise ResponseError, "Unexpected response from AppStore - status #{response.code} for '#{message[:application_id]}'"
       end
     end
 

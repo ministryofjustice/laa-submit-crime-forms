@@ -147,7 +147,10 @@ RSpec.describe TestData::NsmBuilder do
       end
 
       it 'runs does not run' do
-        expect { subject.build_many(bulk: 1, large: 0) }.to raise_error('Do not run on production')
+        expect { subject.build_many(bulk: 1, large: 0) }.to raise_error(
+          described_class::UnsafeEnvironmentError,
+          'Do not run on production'
+        )
       end
     end
 
@@ -167,7 +170,10 @@ RSpec.describe TestData::NsmBuilder do
       end
 
       it 'runs raises and error' do
-        expect { subject.build_many }.to raise_error('Invalid for CaseDetails')
+        expect { subject.build_many }.to raise_error(
+          described_class::InvalidGeneratedDataError,
+          'Invalid for CaseDetails'
+        )
       end
     end
   end
@@ -265,6 +271,7 @@ RSpec.describe TestData::NsmBuilder do
         .and_return(['invalid status'])
 
       expect { subject.send(:validate_version_payload!, claim, application) }.to raise_error(
+        described_class::ValidationError,
         "Validation issues detected for #{claim.id}: invalid status"
       )
     end

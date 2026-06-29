@@ -118,7 +118,10 @@ RSpec.describe TestData::PaBuilder do
       end
 
       it 'runs does not run' do
-        expect { subject.build_many(bulk: 1) }.to raise_error('Do not run on production')
+        expect { subject.build_many(bulk: 1) }.to raise_error(
+          described_class::UnsafeEnvironmentError,
+          'Do not run on production'
+        )
       end
     end
 
@@ -138,7 +141,10 @@ RSpec.describe TestData::PaBuilder do
       end
 
       it 'runs raises and error' do
-        expect { subject.build_many }.to raise_error('Invalid for CaseContact')
+        expect { subject.build_many }.to raise_error(
+          described_class::InvalidGeneratedDataError,
+          'Invalid for CaseContact'
+        )
       end
     end
   end

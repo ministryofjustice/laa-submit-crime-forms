@@ -1,6 +1,10 @@
 module TestData
   # rubocop:disable Metrics/ClassLength
   class NsmBuilder
+    class InvalidGeneratedDataError < StandardError; end
+    class UnsafeEnvironmentError < StandardError; end
+    class ValidationError < StandardError; end
+
     CLAIM_TYPE_OPTIONS = {
       nsm: :vanilla_nsm,
       boi: :breach,
@@ -35,7 +39,7 @@ module TestData
     def build_many(bulk: 100, large: 4, year: 2023, providers: 1, office_codes: 1, max_versions: 1, seed: nil,
                    claim_type_mix: nil, high_volume_office_ratio: default_high_volume_office_ratio,
                    high_volume_claim_ratio: default_high_volume_claim_ratio, version_mix: nil, sleep: true)
-      raise 'Do not run on production' if HostEnv.production?
+      raise UnsafeEnvironmentError, 'Do not run on production' if HostEnv.production?
 
       profile = DataProfile.new(
         provider_count: providers,
@@ -90,7 +94,7 @@ module TestData
         claim.update!(state: submit ? :submitted : claim.state, updated_at: claim.updated_at + 1.minute)
 
         invalid_tasks = check_tasks(claim)
-        raise "Invalid for #{invalid_tasks.map(&:first).join(', ')}" if invalid_tasks.any?
+        raise InvalidGeneratedDataError, "Invalid for #{invalid_tasks.map(&:first).join(', ')}" if invalid_tasks.any?
 
         SubmitToAppStore.new.submit(claim) if submit
         claim.id
@@ -264,7 +268,7 @@ module TestData
 
     def validate_version_payload!(claim, application)
       issues = LaaCrimeFormsCommon::Validator.validate(:nsm, application)
-      raise "Validation issues detected for #{claim.id}: #{issues.to_sentence}" if issues.any?
+      raise ValidationError, "Validation issues detected for #{claim.id}: #{issues.to_sentence}" if issues.any?
     end
 
     def app_store_claim_for(claim)
