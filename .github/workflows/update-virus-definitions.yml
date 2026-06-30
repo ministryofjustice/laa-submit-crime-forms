@@ -15,6 +15,9 @@ on:
     - cron: '20 */3 * * *'
     - cron: '35 */3 * * *'
 
+permissions:
+  contents: read
+
 jobs:
   update_dev:
     if: github.event.schedule == '0 */3 * * *' || github.event.schedule == '15 */3 * * *'
