@@ -28,11 +28,11 @@ module PriorAuthority
     end
 
     def confirm_delete
-      @model = PriorAuthorityApplication.for(current_provider).find(params[:id])
+      @model = PriorAuthorityApplication.for(current_provider).find(params.expect(:id))
     end
 
     def destroy
-      @model = PriorAuthorityApplication.for(current_provider).find(params[:id])
+      @model = PriorAuthorityApplication.for(current_provider).find(params.expect(:id))
       @model.destroy
       redirect_to drafts_prior_authority_applications_path, flash: { success: t('.deleted') }
     end
@@ -50,7 +50,7 @@ module PriorAuthority
     end
 
     def offboard
-      @model = PriorAuthorityApplication.for(current_provider).find(params[:id])
+      @model = PriorAuthorityApplication.for(current_provider).find(params.expect(:id))
     end
 
     def download
@@ -101,7 +101,7 @@ module PriorAuthority
     end
 
     def set_scope
-      @scope = params[:action].to_sym
+      @scope = params.expect(:action).to_sym
     end
 
     def set_default_table_sort_options

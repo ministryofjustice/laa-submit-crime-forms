@@ -15,8 +15,10 @@ module Nsm
 
       def additional_permitted_params
         [
-          firm_office_attributes: Nsm::Steps::FirmDetails::FirmOfficeForm.attribute_names,
-          solicitor_attributes: Nsm::Steps::FirmDetails::SolicitorForm.attribute_names,
+          {
+            firm_office_attributes: Nsm::Steps::FirmDetails::FirmOfficeForm.attribute_names,
+          solicitor_attributes: Nsm::Steps::FirmDetails::SolicitorForm.attribute_names
+          },
         ]
       end
     end
