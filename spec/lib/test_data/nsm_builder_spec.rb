@@ -298,10 +298,10 @@ RSpec.describe TestData::NsmBuilder do
 
       it 'has the kwargs' do
         expect(options[1].call).to match(
-          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
-          disbursements_count: (0..25),
-          work_items_count: (1..50),
-          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31))
+          date: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
+          disbursements_count: be_between(0, 25),
+          work_items_count: be_between(1, 50),
+          updated_at: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31))
         )
       end
 
@@ -312,10 +312,10 @@ RSpec.describe TestData::NsmBuilder do
 
         it 'uses appropriate date ranges' do
           expect(options[1].call).to match(
-            date: (Date.new(2024, 1, 1)...Date.current),
-            updated_at: (Date.new(2024, 1, 1)...Date.current),
-            disbursements_count: (0..25),
-            work_items_count: (1..50),
+            date: be_between(Date.new(2024, 1, 1), Date.current),
+            updated_at: be_between(Date.new(2024, 1, 1), Date.current),
+            disbursements_count: be_between(0, 25),
+            work_items_count: be_between(1, 50),
           )
         end
       end
@@ -346,10 +346,10 @@ RSpec.describe TestData::NsmBuilder do
 
       it 'has the kwargs' do
         expect(options[1].call).to match(
-          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
-          disbursements_count: (0..25),
-          work_items_count: (1..50),
-          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31))
+          date: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
+          disbursements_count: be_between(0, 25),
+          work_items_count: be_between(1, 50),
+          updated_at: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31))
         )
       end
     end
@@ -363,10 +363,10 @@ RSpec.describe TestData::NsmBuilder do
 
       it 'has the kwargs' do
         expect(options[1].call).to match(
-          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
+          date: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
           disbursements_count: 0,
-          work_items_count: (1..50),
-          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31))
+          work_items_count: be_between(1, 50),
+          updated_at: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31))
         )
       end
     end
@@ -380,10 +380,10 @@ RSpec.describe TestData::NsmBuilder do
 
       it 'has the kwargs' do
         expect(options[1].call).to match(
-          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
-          disbursements_count: (0..25),
-          work_items_count: (1..50),
-          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31))
+          date: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
+          disbursements_count: be_between(0, 25),
+          work_items_count: be_between(1, 50),
+          updated_at: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31))
         )
       end
     end
