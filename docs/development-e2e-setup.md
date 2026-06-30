@@ -75,6 +75,11 @@ SLEEP=false PROVIDER_MODE=generated \
 Without `PROVIDER_MODE=generated`, the default local/development task shape uses the primary dev login provider and
 its office codes so generated records are visible when logging in as the primary test user.
 
+When `max_versions` or `VERSION_MIX` generates more than one App Store version, extra versions alternate through
+valid state transitions: sent back with a generated further-information request, then provider updated with a
+generated response. The sent-back transition uses the local App Store `X-Client-Type: caseworker` test header, so
+multi-version generation is intended for local App Store instances without OAuth client credentials configured.
+
 ## Trouble shooting
 
 - Missing translation errors in provider app

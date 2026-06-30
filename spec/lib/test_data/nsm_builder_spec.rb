@@ -37,10 +37,28 @@ RSpec.describe TestData::NsmBuilder do
   end
 
   describe '#build_many' do
-    let(:client) { double(AppStoreClient, post: true) }
+    let(:client) { instance_double(AppStoreClient) }
+    let(:caseworker_client) { instance_double(TestData::AppStoreCaseworkerClient) }
+    let(:stored_payloads) { {} }
 
     before do
+      allow(client).to receive(:post) do |payload|
+        stored_payloads[payload[:application_id]] = payload.deep_stringify_keys
+        true
+      end
+      allow(client).to receive(:put) do |payload, **_kwargs|
+        stored_payloads[payload[:application_id]] = payload.deep_stringify_keys
+        true
+      end
+      allow(caseworker_client).to receive(:put) do |payload|
+        stored_payloads[payload[:application_id]] = payload.deep_stringify_keys
+        true
+      end
+      allow(client).to receive(:get) do |application_id|
+        stored_payloads.fetch(application_id).deep_dup
+      end
       allow(AppStoreClient).to receive(:new).and_return(client)
+      allow(TestData::AppStoreCaseworkerClient).to receive(:new).and_return(caseworker_client)
     end
 
     it 'can create multiple bulk claims' do
@@ -87,16 +105,27 @@ RSpec.describe TestData::NsmBuilder do
     end
 
     it 'submits additional app store versions when configured' do
-      app_store_claim = instance_spy(AppStore::V1::Nsm::Claim)
-      submitter = instance_spy(SubmitToAppStore, submit: true)
-      allow(SubmitToAppStore).to receive(:new).and_return(submitter)
-      allow(subject).to receive(:app_store_claim_for).and_return(app_store_claim)
-
       result = subject.build_many(bulk: 3, large: 0, version_mix: { 1 => 1, 2 => 1, 3 => 1 }, sleep: false)
 
       expect(result[:versions]).to eq 6
-      expect(submitter).to have_received(:submit).exactly(6).times
-      expect(app_store_claim).to have_received(:provider_updated!).exactly(3).times
+      expect(client).to have_received(:post).exactly(3).times
+      expect(caseworker_client).to have_received(:put)
+        .with(hash_including(application_state: 'sent_back'))
+        .twice
+      expect(client).to have_received(:put).with(hash_including(application_state: 'provider_updated')).once
+    end
+
+    it 'creates valid sent-back transitions before provider-updated versions' do
+      subject.build_many(bulk: 1, large: 0, version_mix: { 3 => 1 }, sleep: false)
+
+      claim = Claim.last
+      expect(claim).to be_provider_updated
+      expect(claim.further_informations.last.information_supplied).to be_present
+      expect(client).to have_received(:post).with(hash_including(application_state: 'submitted')).ordered
+      expect(caseworker_client).to have_received(:put)
+        .with(hash_including(application_state: 'sent_back'))
+        .ordered
+      expect(client).to have_received(:put).with(hash_including(application_state: 'provider_updated')).ordered
     end
 
     it 'can create claims for a specific year' do
@@ -118,7 +147,10 @@ RSpec.describe TestData::NsmBuilder do
       end
 
       it 'runs does not run' do
-        expect { subject.build_many(bulk: 1, large: 0) }.to raise_error('Do not run on production')
+        expect { subject.build_many(bulk: 1, large: 0) }.to raise_error(
+          described_class::UnsafeEnvironmentError,
+          'Do not run on production'
+        )
       end
     end
 
@@ -138,7 +170,10 @@ RSpec.describe TestData::NsmBuilder do
       end
 
       it 'runs raises and error' do
-        expect { subject.build_many }.to raise_error('Invalid for CaseDetails')
+        expect { subject.build_many }.to raise_error(
+          described_class::InvalidGeneratedDataError,
+          'Invalid for CaseDetails'
+        )
       end
     end
   end
@@ -197,6 +232,47 @@ RSpec.describe TestData::NsmBuilder do
       expect(subject.send(:app_store_claim_for, claim)).to have_attributes(
         id: claim.id,
         office_code: 'T00001'
+      )
+    end
+  end
+
+  describe '#version_payload_for' do
+    let(:claim) { create(:claim) }
+    let(:latest_payload) do
+      {
+        application: {
+          status: 'submitted',
+        },
+      }
+    end
+
+    before do
+      allow(LaaCrimeFormsCommon::Validator).to receive(:validate).and_return([])
+    end
+
+    it 'includes a nil resubmission deadline when none exists' do
+      payload = subject.send(:version_payload_for, claim, latest_payload, 'sent_back')
+
+      expect(payload[:application]).to include(
+        'further_information' => [],
+        'resubmission_deadline' => nil,
+        'status' => 'sent_back'
+      )
+    end
+  end
+
+  describe '#validate_version_payload!' do
+    it 'raises validation issues' do
+      claim = build_stubbed(:claim)
+      application = { 'status' => 'sent_back' }
+
+      allow(LaaCrimeFormsCommon::Validator).to receive(:validate)
+        .with(:nsm, application)
+        .and_return(['invalid status'])
+
+      expect { subject.send(:validate_version_payload!, claim, application) }.to raise_error(
+        described_class::ValidationError,
+        "Validation issues detected for #{claim.id}: invalid status"
       )
     end
   end
