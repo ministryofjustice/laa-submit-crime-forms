@@ -170,8 +170,8 @@ RSpec.describe TestData::PaBuilder do
 
       it 'has the kwargs' do
         expect(options[1].call).to match(
-          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
-          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
+          date: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
+          updated_at: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
           service_type_cost_type: be_one_of(:per_item, :per_hour)
         )
       end
@@ -183,8 +183,8 @@ RSpec.describe TestData::PaBuilder do
 
         it 'uses appropriate date ranges' do
           expect(options[1].call).to match(
-            date: (Date.new(2024, 1, 1)...Date.current),
-            updated_at: (Date.new(2024, 1, 1)...Date.current),
+            date: be_between(Date.new(2024, 1, 1), Date.current),
+            updated_at: be_between(Date.new(2024, 1, 1), Date.current),
             service_type_cost_type: be_one_of(:per_item, :per_hour),
           )
         end
@@ -200,8 +200,8 @@ RSpec.describe TestData::PaBuilder do
 
       it 'has the kwargs' do
         expect(options[1].call).to match(
-          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
-          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
+          date: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
+          updated_at: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
           service_type_cost_type: be_one_of(:per_item, :per_hour)
         )
       end
@@ -217,10 +217,10 @@ RSpec.describe TestData::PaBuilder do
 
       it 'has the kwargs' do
         expect(options[1].call).to match(
-          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
-          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
+          date: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
+          updated_at: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
           service_type_cost_type: be_one_of(:per_item, :per_hour),
-          quote_count: (1..2)
+          quote_count: be_between(1, 2)
         )
       end
     end
@@ -235,10 +235,10 @@ RSpec.describe TestData::PaBuilder do
 
       it 'has the kwargs' do
         expect(options[1].call).to match(
-          date: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
-          updated_at: (Date.new(2023, 1, 1)..Date.new(2023, 12, 31)),
+          date: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
+          updated_at: be_between(Date.new(2023, 1, 1), Date.new(2023, 12, 31)),
           service_type_cost_type: be_one_of(:per_item, :per_hour),
-          quote_count: (1..2)
+          quote_count: be_between(1, 2)
         )
       end
     end

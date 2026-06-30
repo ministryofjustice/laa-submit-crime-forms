@@ -71,7 +71,7 @@ class Auditor
     clause = %i[prior_authority_applications firm_offices solicitors
                 defendants quotes additional_costs further_informations
                 incorrect_informations].map { "#{_1}.updated_at > :since" }
-             .join(' OR ')
+                                       .join(' OR ')
     matching_applications
       .left_joins(:firm_office,
                   :solicitor,

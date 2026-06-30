@@ -46,6 +46,9 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInArguments:
   Enabled: false
 
+Style/HashAsLastArrayItem:
+  Enabled: false
+
 Layout/HashAlignment:
   Enabled: false
 

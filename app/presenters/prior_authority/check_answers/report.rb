@@ -77,7 +77,7 @@ module PriorAuthority
         if @verbose
           (compact_further_information_cards + incorrect_information_cards).sort_by { _1[:date] }
                                                                            .reverse
-                                                                           .pluck(:card)
+            .pluck(:card)
         elsif application.further_information_needed?
           FurtherInformationCard.new(application)
         end
