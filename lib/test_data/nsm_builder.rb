@@ -1,6 +1,10 @@
 module TestData
   # rubocop:disable Metrics/ClassLength
   class NsmBuilder
+    class InvalidGeneratedDataError < StandardError; end
+    class UnsafeEnvironmentError < StandardError; end
+    class ValidationError < StandardError; end
+
     CLAIM_TYPE_OPTIONS = {
       nsm: :vanilla_nsm,
       boi: :breach,
@@ -35,7 +39,7 @@ module TestData
     def build_many(bulk: 100, large: 4, year: 2023, providers: 1, office_codes: 1, max_versions: 1, seed: nil,
                    claim_type_mix: nil, high_volume_office_ratio: default_high_volume_office_ratio,
                    high_volume_claim_ratio: default_high_volume_claim_ratio, version_mix: nil, sleep: true)
-      raise 'Do not run on production' if HostEnv.production?
+      raise UnsafeEnvironmentError, 'Do not run on production' if HostEnv.production?
 
       profile = DataProfile.new(
         provider_count: providers,
@@ -90,7 +94,7 @@ module TestData
         claim.update!(state: submit ? :submitted : claim.state, updated_at: claim.updated_at + 1.minute)
 
         invalid_tasks = check_tasks(claim)
-        raise "Invalid for #{invalid_tasks.map(&:first).join(', ')}" if invalid_tasks.any?
+        raise InvalidGeneratedDataError, "Invalid for #{invalid_tasks.map(&:first).join(', ')}" if invalid_tasks.any?
 
         SubmitToAppStore.new.submit(claim) if submit
         claim.id
@@ -197,11 +201,74 @@ module TestData
     end
 
     def submit_additional_versions(claim, count)
+      latest_payload = nil
+
       count.times do
-        app_store_claim = app_store_claim_for(claim)
-        app_store_claim.provider_updated!
-        SubmitToAppStore.new.submit(app_store_claim)
+        latest_payload = if claim.sent_back?
+                           submit_provider_update(claim, latest_payload)
+                         else
+                           submit_sent_back(claim, latest_payload)
+                         end
       end
+    end
+
+    def submit_sent_back(claim, latest_payload)
+      requested_at = DateTime.current
+      claim.update!(state: :sent_back, app_store_updated_at: requested_at)
+      claim.further_informations.create!(
+        information_requested: Faker::Lorem.sentence,
+        caseworker_id: SecureRandom.uuid,
+        requested_at: requested_at,
+        resubmission_deadline: 14.days.from_now
+      )
+
+      version_payload = version_payload_for(claim, latest_payload || app_store_payload_for(claim), 'sent_back')
+      AppStoreCaseworkerClient.new.put(version_payload)
+      version_payload.deep_stringify_keys
+    end
+
+    def submit_provider_update(claim, latest_payload)
+      claim.pending_further_information.update!(
+        information_supplied: Faker::Lorem.paragraph,
+        signatory_name: Faker::Name.name
+      )
+      claim.provider_updated!
+
+      version_payload = version_payload_for(claim, latest_payload || app_store_payload_for(claim), 'provider_updated')
+      AppStoreClient.new.put(version_payload)
+      version_payload.deep_stringify_keys
+    end
+
+    def app_store_payload_for(claim)
+      AppStoreClient.new.get(claim.id)
+    end
+
+    def version_payload_for(claim, latest_payload, state)
+      latest_payload = latest_payload.deep_stringify_keys
+      application = latest_payload.fetch('application').merge(
+        'status' => state,
+        'updated_at' => DateTime.current.as_json,
+        'further_information' => further_information_payload_for(claim),
+        'resubmission_deadline' => claim.further_informations.maximum(:resubmission_deadline)&.as_json
+      )
+      validate_version_payload!(claim, application)
+
+      {
+        application_id: claim.id,
+        json_schema_version: latest_payload.fetch('json_schema_version', 1),
+        application_state: state,
+        application_type: 'crm7',
+        application: application
+      }
+    end
+
+    def further_information_payload_for(claim)
+      claim.further_informations.map { _1.as_json.compact }
+    end
+
+    def validate_version_payload!(claim, application)
+      issues = LaaCrimeFormsCommon::Validator.validate(:nsm, application)
+      raise ValidationError, "Validation issues detected for #{claim.id}: #{issues.to_sentence}" if issues.any?
     end
 
     def app_store_claim_for(claim)

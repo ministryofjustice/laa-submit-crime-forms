@@ -53,7 +53,7 @@ RSpec.describe TestData::PaResubmitter do
       it 'respects percentages' do
         subject.resubmit(50)
         expect(client).to have_received(:put).exactly(1).time
-        expect(PriorAuthorityApplication.provider_updated.count).to eq 1
+        expect([application, other_application].select { _1.reload.provider_updated? }.size).to eq 1
       end
     end
   end
