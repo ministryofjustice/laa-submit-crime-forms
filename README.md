@@ -106,6 +106,13 @@ weighted version distribution; when `max_versions` is greater than 1 and `VERSIO
 default is `1:80,2:15,3:5`. `CLAIM_TYPE_MIX` is CRM7-only and supports `nsm`, `boi`, `supplemental`, and
 `enhanced_rates`.
 
+Additional versions are generated through valid App Store state transitions. The first version is submitted,
+the next extra version is sent back with a generated further-information request, and the following extra
+version is provider updated with a generated response. Further extra versions continue alternating between
+sent back and provider updated. The sent-back step uses the local App Store `X-Client-Type: caseworker` test
+header, so multi-version generation is intended for local development App Store instances without OAuth
+client credentials configured.
+
 **7. Sidekiq Auth**
 
 We currently protect the sidekiq UI on production servers (Dev, UAT, Prod, Dev-CRM4) with basic auth.

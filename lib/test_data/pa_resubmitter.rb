@@ -3,7 +3,9 @@ module TestData
     def resubmit(percentage)
       total = PriorAuthorityApplication.sent_back.count
 
-      PriorAuthorityApplication.sent_back.order('RANDOM()').limit(percentage * total / 100).find_each do |application|
+      applications = PriorAuthorityApplication.sent_back.order(Arel.sql('RANDOM()')).limit(percentage * total / 100).to_a
+
+      applications.each do |application|
         add_further_information(application) if application.further_information_needed?
         make_changes(application) if application.correction_needed?
         update(application)
