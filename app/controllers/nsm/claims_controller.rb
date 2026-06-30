@@ -35,11 +35,11 @@ module Nsm
     end
 
     def confirm_delete
-      @model = Claim.for(current_provider).find(params[:id])
+      @model = Claim.for(current_provider).find(params.expect(:id))
     end
 
     def destroy
-      @model = Claim.for(current_provider).find(params[:id])
+      @model = Claim.for(current_provider).find(params.expect(:id))
       @model.destroy
       redirect_to draft_nsm_applications_path, flash: { success: t('.deleted') }
     end
@@ -96,7 +96,7 @@ module Nsm
     end
 
     def set_scope
-      @scope = params[:action].to_sym
+      @scope = params.expect(:action).to_sym
     end
   end
 end

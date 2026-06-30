@@ -40,7 +40,7 @@ module AddAnotherMethods
   end
 
   def build_edit_record
-    @record = object_collection.find(params[:id])
+    @record = object_collection.find(params.expect(:id))
   end
 
   # :nocov:
