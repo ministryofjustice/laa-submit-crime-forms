@@ -109,10 +109,10 @@ runs:
         echo "  Successes:  $SUCCESS"
         echo "  Failures:   $FAIL"
 
-        if [ "$SUCCESS" -gt 0 ]; then
-          echo "Overall result: SUCCESS"
+        if [ "$SUCCESS" -eq "$TOTAL" ]; then
+          echo "Overall result: SUCCESS (all pods updated)"
           exit 0
         else
-          echo "Overall result: FAILURE (no pods updated)"
+          echo "Overall result: FAILURE ($FAIL pod(s) failed)"
           exit 1
         fi
