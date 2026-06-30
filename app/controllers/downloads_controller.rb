@@ -1,6 +1,6 @@
 class DownloadsController < ApplicationController
   def show
-    document = SupportingDocument.find(params[:id])
+    document = SupportingDocument.find(params.expect(:id))
     return head :forbidden unless current_provider.office_codes.include?(parent(document).office_code)
 
     download_url = LaaCrimeFormsCommon::S3Files.temporary_download_url(

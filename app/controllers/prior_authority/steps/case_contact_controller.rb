@@ -13,8 +13,10 @@ module PriorAuthority
 
       def additional_permitted_params
         [
-          firm_office_attributes: PriorAuthority::Steps::CaseContact::FirmDetailForm.attribute_names,
-          solicitor_attributes: PriorAuthority::Steps::CaseContact::SolicitorForm.attribute_names,
+          {
+            firm_office_attributes: PriorAuthority::Steps::CaseContact::FirmDetailForm.attribute_names,
+          solicitor_attributes: PriorAuthority::Steps::CaseContact::SolicitorForm.attribute_names
+          },
         ]
       end
 
