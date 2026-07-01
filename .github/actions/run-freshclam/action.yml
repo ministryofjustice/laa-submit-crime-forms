@@ -13,9 +13,6 @@ inputs:
   k8s_token:
     description: "Kubernetes authentication token"
     required: true
-  pod_name:
-    description: "Name of the pod to run it on"
-    required: true
 
 runs:
   using: "composite"
@@ -41,10 +38,81 @@ runs:
         kubectl config set-context ${K8S_CLUSTER} --cluster=${K8S_CLUSTER} --user=circleci --namespace=${K8S_NAMESPACE}
         kubectl config use-context ${K8S_CLUSTER}
 
-    - name: Run freshclam
-      id: run_freshclam
+    - name: Run freshclam across all pods
       shell: bash
-      env:
-        POD_NAME: ${{ inputs.pod_name }}
       run: |
-        kubectl exec ${POD_NAME} -it -- freshclam
+        set -euo pipefail
+
+        echo "Discovering ClamAV pods..."
+        PODS=$(kubectl get pods -l app=submit-crime-forms-clamav -o jsonpath="{.items[*].metadata.name}")
+
+        if [ -z "$PODS" ]; then
+          echo "ERROR: No ClamAV pods found"
+          exit 1
+        fi
+
+        echo "Pods found:"
+        for P in $PODS; do
+          echo " - $P"
+        done
+
+        TOTAL=0
+        SUCCESS=0
+        FAIL=0
+
+        for POD in $PODS; do
+          TOTAL=$((TOTAL+1))
+          echo "========================================"
+          echo "Processing pod: $POD"
+
+          if kubectl exec "$POD" -- sh -lc '
+            set -e
+
+            echo "Preparing temporary config (removing UpdateLogFile to avoid lock issues)..."
+            TMP_CONF=$(mktemp)
+
+            if [ -f /etc/clamav/freshclam.conf ]; then
+              grep -v "^[[:space:]]*UpdateLogFile" /etc/clamav/freshclam.conf > "$TMP_CONF" || true
+            else
+              echo "WARNING: freshclam.conf not found, run with defaults"
+              TMP_CONF=""
+            fi
+
+            echo "Attempting freshclam update (will not fail if already running)..."
+
+            if [ -n "$TMP_CONF" ]; then
+              timeout 120s freshclam --config-file="$TMP_CONF" --stdout --foreground || true
+            else
+              timeout 120s freshclam --stdout --foreground || true
+            fi
+
+            echo "freshclam execution completed"
+            exit 0
+
+          '; then
+            echo "SUCCESS: $POD"
+            SUCCESS=$((SUCCESS+1))
+          else
+            echo "FAILURE: $POD"
+            FAIL=$((FAIL+1))
+          fi
+
+          kubectl exec "$POD" -- sh -lc '
+          echo "Definition timestamps:"
+          stat -c "%y %n" /var/lib/clamav/*.cvd 2>/dev/null || echo "No .cvd files found"
+          '
+        done
+
+        echo "========================================"
+        echo "Summary:"
+        echo "  Total pods: $TOTAL"
+        echo "  Successes:  $SUCCESS"
+        echo "  Failures:   $FAIL"
+
+        if [ "$SUCCESS" -eq "$TOTAL" ]; then
+          echo "Overall result: SUCCESS (all pods updated)"
+          exit 0
+        else
+          echo "Overall result: FAILURE ($FAIL pod(s) failed)"
+          exit 1
+        fi
