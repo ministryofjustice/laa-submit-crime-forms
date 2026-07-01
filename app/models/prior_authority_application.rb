@@ -76,14 +76,30 @@ class PriorAuthorityApplication < ApplicationRecord
   def destroy_attachments
     return unless state == 'draft'
 
+    destroy_supporting_documents
+    destroy_quote_documents
+    destroy_further_informations
+  end
+
+  def destroy_supporting_documents
     supporting_documents.each do |file|
       file_uploader.destroy(file.file_path) if file_uploader.exists?(file.file_path)
     end
+  end
 
+  def destroy_quote_documents
     quotes.each do |quote|
       next if quote.document.nil?
 
       file_uploader.destroy(quote.document.file_path) if file_uploader.exists?(quote.document.file_path)
+    end
+  end
+
+  def destroy_further_informations
+    further_informations.each do |fi|
+      fi.supporting_documents.each do |file|
+        file_uploader.destroy(file.file_path) if file_uploader.exists?(file.file_path)
+      end
     end
   end
 end
