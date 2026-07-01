@@ -1,10 +1,16 @@
 <% if local_assigns[:pagy] %>
   <div class="app-pagination__container govuk-grid-row govuk-!-display-none-print">
-    <div class="govuk-grid-column-one-half">
-      <%= pagy.series.size > 1 ? govuk_pagination(pagy:) : "&nbsp;".html_safe %>
-    </div>
-    <div class="govuk-grid-column-one-half govuk-!-text-align-right">
-      <%= render 'shared/pagination_info', { pagy: , item: } %>
-    </div>
+    <% if pagy.class.name.demodulize == "Countless" %>
+      <div class="govuk-grid-column-full">
+        <%= govuk_pagination(pagy:) %>
+      </div>
+    <% else %>
+      <div class="govuk-grid-column-one-half">
+        <%= pagy.series.size > 1 ? govuk_pagination(pagy:) : "&nbsp;".html_safe %>
+      </div>
+      <div class="govuk-grid-column-one-half govuk-!-text-align-right">
+        <%= render 'shared/pagination_info', { pagy: , item: } %>
+      </div>
+    <%end%>
   </div>
 <% end %>

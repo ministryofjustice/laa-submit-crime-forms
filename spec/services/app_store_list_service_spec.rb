@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AppStoreListService do
   describe '.submitted' do
-    let(:client) { instance_double(AppStoreClient, search: response) }
+    let(:client) { instance_double(AppStoreClient) }
     let(:response) do
       {
         metadata: { total_results: 0 },
@@ -15,13 +15,14 @@ RSpec.describe AppStoreListService do
     let(:service) { :nsm }
     let(:expected_payload) do
       {
-        'page' => 5,
-        'sort_direction' => 'ascending',
-        :sort_by => expected_sort_by,
-        :per_page => 10,
-        :application_type => expected_application_type,
-        :account_number => %w[a b],
-        :status_with_assignment => %i[in_progress not_assigned provider_updated]
+        page: 5,
+        sort_direction: 'ascending',
+        sort_by: expected_sort_by,
+        per_page: 10,
+        include_total_results: false,
+        application_type: expected_application_type,
+        account_number: %w[a b],
+        status_with_assignment: %i[in_progress not_assigned provider_updated]
       }
     end
     let(:expected_sort_by) { 'ufn' }
@@ -29,6 +30,7 @@ RSpec.describe AppStoreListService do
 
     before do
       allow(AppStoreClient).to receive(:new).and_return(client)
+      allow(client).to receive(:search).and_return(response)
     end
 
     it 'searches for submitted applications' do
