@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
-  revision: 41fa1cec56a56340ed1d011b3c1964f1072cb906
+  revision: 8f73e4d29e099b028bd2635bd81821954509b4b5
   specs:
     laa_crime_forms_common (0.13.0)
       httparty (>= 0.22.0, < 1)
@@ -130,7 +130,7 @@ GEM
       parser (>= 2.4)
       smart_properties
     bigdecimal (3.3.1)
-    bootsnap (1.23.0)
+    bootsnap (1.24.6)
       msgpack (~> 1.2)
     builder (3.3.0)
     capybara (3.40.0)
@@ -223,10 +223,10 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 4.9, < 4.10)
-    govuk_design_system_formbuilder (6.1.0)
-      actionview (>= 6.1)
-      activemodel (>= 6.1)
-      activesupport (>= 6.1)
+    govuk_design_system_formbuilder (6.2.1)
+      actionview (>= 7.2)
+      activemodel (>= 7.2)
+      activesupport (>= 7.2)
       html-attributes-utils (~> 1)
     govuk_notify_rails (3.0.0)
       notifications-ruby-client (~> 6.2)
@@ -517,10 +517,10 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
-    sentry-rails (6.3.1)
+    sentry-rails (6.6.2)
       railties (>= 5.2.0)
-      sentry-ruby (~> 6.3.1)
-    sentry-ruby (6.3.1)
+      sentry-ruby (~> 6.6.2)
+    sentry-ruby (6.6.2)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
       logger
@@ -617,7 +617,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-s3 (~> 1.219)
   axe-core-rspec
-  bootsnap (~> 1.23.0)
+  bootsnap (~> 1.24.6)
   capybara
   capybara-lockstep
   capybara-selenium
@@ -631,7 +631,7 @@ DEPENDENCIES
   faker
   flatware-rspec
   govuk-components (= 6.2.0)
-  govuk_design_system_formbuilder (= 6.1.0)
+  govuk_design_system_formbuilder (= 6.2.1)
   govuk_notify_rails (~> 3.0.0)
   grover
   httparty (>= 0.24.0)
@@ -668,8 +668,8 @@ DEPENDENCIES
   rubocop-rails (>= 2.25.1)
   rubocop-rspec
   selenium-webdriver
-  sentry-rails (~> 6.3.1)
-  sentry-ruby (~> 6.3.0)
+  sentry-rails (~> 6.6.2)
+  sentry-ruby (~> 6.6.2)
   sidekiq (~> 8.1)
   sidekiq-cron
   sidekiq_alive (~> 2.5)
