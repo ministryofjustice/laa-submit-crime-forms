@@ -45,7 +45,7 @@ class ProviderDataApiClient
     private
 
     def query(method, endpoint, handlers, fallback = nil)
-      response = send(method, endpoint)
+      response = send(method, endpoint, headers: OutboundRequestId.headers)
       unless handlers.key?(response.code)
         return fallback if fallback
 
