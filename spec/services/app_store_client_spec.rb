@@ -1,6 +1,13 @@
 require 'rails_helper'
+require 'request_store'
 
 RSpec.describe AppStoreClient, :stub_oauth_token do
+  let(:request_id) { 'rails-request-id' }
+
+  before { RequestStore.store[:outbound_request_id] = request_id }
+
+  after { RequestStore.clear! }
+
   describe '#put' do
     let(:application_id) { SecureRandom.uuid }
     let(:message) { { application_id: } }
@@ -25,7 +32,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
         expect(described_class).to receive(:put)
           .with("http://some.url/v1/application/#{application_id}",
                 body: message.to_json,
-                headers: { authorization: 'Bearer test-bearer-token' })
+                headers: { :authorization => 'Bearer test-bearer-token', 'request-id' => request_id })
 
         subject.put(message)
       end
@@ -39,7 +46,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
           expect(described_class).to receive(:put)
             .with("http://some.url/v1/application/#{application_id}",
                   body: message.to_json,
-                  headers: { 'X-Client-Type': 'provider' })
+                  headers: { :'X-Client-Type' => 'provider', 'request-id' => request_id })
 
           subject.put(message)
         end
@@ -86,7 +93,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
           expect(described_class).to receive(:post)
             .with('http://some.url/v1/application/',
                   body: message.to_json,
-                  headers: { authorization: 'Bearer test-bearer-token' })
+                  headers: { :authorization => 'Bearer test-bearer-token', 'request-id' => request_id })
 
           subject.post(message)
         end
@@ -100,7 +107,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
             expect(described_class).to receive(:post)
               .with('http://some.url/v1/application/',
                     body: message.to_json,
-                    headers: { 'X-Client-Type': 'provider' })
+                    headers: { :'X-Client-Type' => 'provider', 'request-id' => request_id })
 
             subject.post(message)
           end
@@ -155,7 +162,8 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
             body: message.to_json,
             headers: {
               'Content-Type' => 'application/json',
-              'X-Client-Type' => 'provider'
+              'X-Client-Type' => 'provider',
+              'request-id' => request_id
             }
           ).to_return(status: 200, body: '{"foo":"bar"}', headers: {})
           subject.post(message)
@@ -179,7 +187,8 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       http_stub = stub_request(:get, "https://app-store.example.com/v1/application/#{id}").with(
         headers: {
           'Content-Type' => 'application/json',
-          'X-Client-Type' => 'provider'
+          'X-Client-Type' => 'provider',
+          'request-id' => request_id
         }
       ).to_return(status: 200, body: response.to_json, headers: {})
       expect(subject.get(id)).to eq response
@@ -191,7 +200,8 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       stub_request(:get, "https://app-store.example.com/v1/application/#{id}").with(
         headers: {
           'Content-Type' => 'application/json',
-          'X-Client-Type' => 'provider'
+          'X-Client-Type' => 'provider',
+          'request-id' => request_id
         }
       ).to_return(status: 302, body: response.to_json, headers: {})
 
@@ -214,7 +224,8 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       http_stub = stub_request(:get, "https://app-store.example.com/v1/failed_imports/#{id}").with(
         headers: {
           'Content-Type' => 'application/json',
-          'X-Client-Type' => 'provider'
+          'X-Client-Type' => 'provider',
+          'request-id' => request_id
         }
       ).to_return(status: 200, body: response.to_json, headers: {})
       expect(subject.get_import_error(id)).to eq response
@@ -226,7 +237,8 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       stub_request(:get, "https://app-store.example.com/v1/failed_imports/#{id}").with(
         headers: {
           'Content-Type' => 'application/json',
-          'X-Client-Type' => 'provider'
+          'X-Client-Type' => 'provider',
+          'request-id' => request_id
         }
       ).to_return(status: 302, body: response.to_json, headers: {})
 
